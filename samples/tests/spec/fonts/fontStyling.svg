@@ -63,7 +63,7 @@
                 <!-- in SVG format (as allowed in the license). For the -->
                 <!-- true type version of this font, refer to           -->
                 <!-- http://www.microsoft.com/truetype                  -->
-                <!-- It has been converted to SVG using Batik's         -->
+                <!-- It has been converted to SVG using EchoSVG's         -->
                 <!-- true type to SVG converter (ttf2svg).              -->
                 <!-- Styling has been added for testing purposes.       -->
 
@@ -266,8 +266,8 @@
     </g>
 
     <!-- ============================================================= -->
-    <!-- Batik sample mark                                             -->
+    <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="../../../batikLogo.svg#Batik_Tag_Box" />
+    <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" />
 
 </svg>

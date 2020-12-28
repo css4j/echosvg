@@ -135,20 +135,20 @@
      }
     ]]></script>
   <defs>
-     <symbol id="Batik_Squiggle" viewBox="0 0 540 570">
-        <path id="Batik_Squiggle_Blue" 
+     <symbol id="EchoSVG_Squiggle" viewBox="0 0 540 570">
+        <path id="EchoSVG_Squiggle_Blue" 
          d="M172,44C137,60,31,135,11,199c-8,27,22,48,44,33
             C14,306-1,332,0,356c0,14,13,42,44,27c8-4,35-25,52-41
             c14-1,24-11,42-28c17,14,36,10,52-7c22,2,82-78,44-108
             c-3-24-30-37-53-18c-6-2-13-1-18,1c22-35,43-82,49-105
             C219,47,188,36,172,44z"/>
-        <path id="Batik_Squiggle_Red" 
+        <path id="EchoSVG_Squiggle_Red" 
          d="M400,0c-18,3-49,31-49,31c-29,23-43,58-28,95
             c-13,14-29,44-29,67c0,28,20,52,50,29c7,8,21,16,37,5
             c-5,29,3,48,26,49c1,10,13,31,36,17c16-10,58-39,79-56
             c25-23,25-94-18-89c33-59-3-96-27-84c-10,4-46,25-52,30
             c-1-7-5-12-11-14C436,45,436-5,401,0z"/>
-        <path id="Batik_Squiggle_Green"
+        <path id="EchoSVG_Squiggle_Green"
          d="M275,353c-46,12-88,43-114,91c-9,16,6,37,25,33
             c-14,24-40,67-15,81c28,16,52-8,60-15c18,21,50,10,81-17
             c41,14,68-2,103-53c8-12,30-43,30-65c0-16-15-30-35-21
@@ -224,7 +224,7 @@
               <text id="n-t" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="n-u">
                 <use x="190" y="5" width="20" height="20" stroke-width="20"
-                     xlink:href="#Batik_Squiggle"/>
+                     xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="n-i" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -236,7 +236,7 @@
               <text id="nft" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="nfu">
                 <use x="190" y="5" width="20" height="20" stroke-width="20"
-                     xlink:href="#Batik_Squiggle"/>
+                     xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="nfi" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -248,7 +248,7 @@
               <text id="nst" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="nsu">
                  <use x="190" y="5" width="20" height="20" stroke-width="20"
-                      xlink:href="#Batik_Squiggle"/>
+                      xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="nsi" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -260,7 +260,7 @@
               <text id="nfst" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="nfsu">
                  <use x="190" y="5" width="20" height="20" stroke-width="20"
-                      xlink:href="#Batik_Squiggle"/>
+                      xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="nfsi" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -275,7 +275,7 @@
               <text id="v-t" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="v-u">
                 <use x="190" y="5" width="20" height="20" stroke-width="20"
-                     xlink:href="#Batik_Squiggle"/>
+                     xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="v-i" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -288,7 +288,7 @@
               <text id="vft" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="vfu">
                 <use x="190" y="5" width="20" height="20" stroke-width="20"
-                     xlink:href="#Batik_Squiggle"/>
+                     xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="vfi" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -300,7 +300,7 @@
               <text id="vst" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="vsu">
                  <use x="190" y="5" width="20" height="20" stroke-width="20"
-                      xlink:href="#Batik_Squiggle"/>
+                      xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="vsi" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -313,7 +313,7 @@
               <text id="vfst" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="vfsu">
                  <use x="190" y="5" width="20" height="20" stroke-width="20"
-                      xlink:href="#Batik_Squiggle"/>
+                      xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="vfsi" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -328,7 +328,7 @@
               <text id="d-t" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="d-u">
                 <use x="190" y="5" width="20" height="20" stroke-width="20"
-                     xlink:href="#Batik_Squiggle"/>
+                     xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="d-i" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -340,7 +340,7 @@
               <text id="dft" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="dfu">
                 <use x="190" y="5" width="20" height="20" stroke-width="20"
-                     xlink:href="#Batik_Squiggle"/>
+                     xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="dfi" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -352,7 +352,7 @@
               <text id="dst" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="dsu">
                  <use x="190" y="5" width="20" height="20" stroke-width="20"
-                      xlink:href="#Batik_Squiggle"/>
+                      xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="dsi" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -364,7 +364,7 @@
               <text id="dfst" x="120" y="20" stroke-width=".5">getBBox</text>
               <g id="dfsu">
                  <use x="190" y="5" width="20" height="20" stroke-width="20"
-                      xlink:href="#Batik_Squiggle"/>
+                      xlink:href="#EchoSVG_Squiggle"/>
               </g>
               <image id="dfsi" x="261" y="5" width="43" height="20"
                      xlink:href="../../resources/images/tde.jpg"/>
@@ -379,7 +379,7 @@
               <text id="u-t" x="120" y="20" stroke-width=".5">sm</text>
               <g id="u-u"
                  ><use x="195" y="10" width="10" height="10" stroke-width="20"
-                     xlink:href="#Batik_Squiggle"/></g>
+                     xlink:href="#EchoSVG_Squiggle"/></g>
               <image id="u-i" x="271.75" y="10" width="21.5" height="10"
                      xlink:href="../../resources/images/tde.jpg"/>
            </g>
@@ -390,7 +390,7 @@
               <text id="ufst" x="120" y="20" stroke-width=".5">sm</text>
               <g id="ufsu"
                  ><use x="195" y="10" width="10" height="10" stroke-width="20"
-                     xlink:href="#Batik_Squiggle"/></g>
+                     xlink:href="#EchoSVG_Squiggle"/></g>
               <image id="ufsi" x="271.75" y="10" width="21.5" height="10"
                      xlink:href="../../resources/images/tde.jpg"/>
            </g>

@@ -40,12 +40,12 @@
    <g id="content">
      <text x="110" y="70" text-anchor="middle">One complex flow Region</text>
      <g transform="translate(8,70), scale(.6), rotate(25, 200, 200)" >
-      <use width="400" height="400" xlink:href="../../../batikLogo.svg#Batik_Squiggle" opacity="0.5"/>
+      <use width="400" height="400" xlink:href="../../../batikLogo.svg#EchoSVG_Squiggle" opacity="0.5"/>
 
       <g transform="rotate(-45, 200, 200)">
       <flowRoot font-size="15.75">
          <flowRegion>
-            <use transform="rotate(45, 200, 200)" width="400" height="400" visibility="hidden" xlink:href="../../../batikLogo.svg#Batik_Squiggle" />
+            <use transform="rotate(45, 200, 200)" width="400" height="400" visibility="hidden" xlink:href="../../../batikLogo.svg#EchoSVG_Squiggle" />
          </flowRegion>
 
          <flowDiv>
@@ -68,19 +68,19 @@
      <text x="300" y="480" text-anchor="middle">Three flow Regions</text>
      <g transform="translate(190,225), scale(.6), rotate(25, 200, 200)" >
         <g transform="scale(.73,.73)" fill-opacity="0.5">
-           <use xlink:href="../../../batikLogo.svg#Batik_Squiggle_Blue"/>
-           <use xlink:href="../../../batikLogo.svg#Batik_Squiggle_Red"/>
-           <use xlink:href="../../../batikLogo.svg#Batik_Squiggle_Green"/>
+           <use xlink:href="../../../batikLogo.svg#EchoSVG_Squiggle_Blue"/>
+           <use xlink:href="../../../batikLogo.svg#EchoSVG_Squiggle_Red"/>
+           <use xlink:href="../../../batikLogo.svg#EchoSVG_Squiggle_Green"/>
         </g>
       <g transform="rotate(-45, 200, 200)">
       <flowRoot font-size="16.5">
          <flowRegion>
            <use transform="rotate(45, 200, 200), scale(.73,.73)" visibility="hidden" 
-                xlink:href="../../../batikLogo.svg#Batik_Squiggle_Blue"/>
+                xlink:href="../../../batikLogo.svg#EchoSVG_Squiggle_Blue"/>
            <use transform="rotate(45, 200, 200), scale(.73,.73)" visibility="hidden" 
-                xlink:href="../../../batikLogo.svg#Batik_Squiggle_Red"/>
+                xlink:href="../../../batikLogo.svg#EchoSVG_Squiggle_Red"/>
            <use transform="rotate(45, 200, 200), scale(.73,.73)" visibility="hidden" 
-                xlink:href="../../../batikLogo.svg#Batik_Squiggle_Green"/>
+                xlink:href="../../../batikLogo.svg#EchoSVG_Squiggle_Green"/>
          </flowRegion>
 
          <flowDiv>
@@ -102,7 +102,7 @@
    </g>
 
     <!-- ============================================================= -->
-    <!-- Batik sample mark                                             -->
+    <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="../../../batikLogo.svg#Batik_Tag_Box" />
+    <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" />
 </svg>

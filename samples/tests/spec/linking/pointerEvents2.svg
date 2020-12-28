@@ -132,8 +132,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">Batik</text>
-        <text x="105" y="170" style="visibility:hidden">Batik</text>
+        <text x="50" y="170">EchoSVG</text>
+        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
     </a>
 </g>
 
@@ -145,8 +145,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">Batik</text>
-        <text x="105" y="170" style="visibility:hidden">Batik</text>
+        <text x="50" y="170">EchoSVG</text>
+        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
     </a>
 </g>
 
@@ -158,8 +158,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">Batik</text>
-        <text x="105" y="170" style="visibility:hidden">Batik</text>
+        <text x="50" y="170">EchoSVG</text>
+        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
     </a>
 </g>
 
@@ -171,8 +171,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">Batik</text>
-        <text x="105" y="170" style="visibility:hidden">Batik</text>
+        <text x="50" y="170">EchoSVG</text>
+        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
     </a>
 </g>
 
@@ -184,8 +184,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">Batik</text>
-        <text x="105" y="170" style="visibility:hidden">Batik</text>
+        <text x="50" y="170">EchoSVG</text>
+        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
     </a>
 </g>
 
@@ -197,8 +197,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">Batik</text>
-        <text x="105" y="170" style="visibility:hidden">Batik</text>
+        <text x="50" y="170">EchoSVG</text>
+        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
     </a>
 </g>
 
@@ -210,8 +210,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">Batik</text>
-        <text x="105" y="170" style="visibility:hidden">Batik</text>
+        <text x="50" y="170">EchoSVG</text>
+        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
     </a>
 </g>
 
@@ -223,8 +223,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">Batik</text>
-        <text x="105" y="170" style="visibility:hidden">Batik</text>
+        <text x="50" y="170">EchoSVG</text>
+        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
     </a>
 </g>
 
@@ -236,8 +236,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">Batik</text>
-        <text x="105" y="170" style="visibility:hidden">Batik</text>
+        <text x="50" y="170">EchoSVG</text>
+        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
     </a>
 </g>
 
@@ -249,8 +249,8 @@
     </g><!-- "content" -->
 
     <!-- ============================================================= -->
-    <!-- Batik sample mark                                             -->
+    <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="../../../batikLogo.svg#Batik_Tag_Box" />
+    <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" />
 
 </svg>

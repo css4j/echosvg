@@ -129,8 +129,8 @@
   </g>
 
   <!-- ============================================================= -->
-  <!-- Batik sample mark                                             -->
+  <!-- EchoSVG sample mark                                             -->
   <!-- ============================================================= -->
-  <use transform="scale(0.02, 0.02)" xlink:href="../../../batikLogo.svg#Batik_Tag_Box" />
+  <use transform="scale(0.02, 0.02)" xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" />
 
 </svg>

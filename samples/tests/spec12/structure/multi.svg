@@ -81,7 +81,7 @@ p9VtNb3uGE1vloUJG75WUYxyBjsVxXTHHcsno7HNLBylFWaueZCfzI/kHlxDnA6mrURJUPIS
     </g>
 
     <!-- ============================================================= -->
-    <!-- Batik sample mark                                             -->
+    <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="../../../batikLogo.svg#Batik_Tag_Box" />
+    <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" />
 </svg>

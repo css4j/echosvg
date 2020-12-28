@@ -21,7 +21,7 @@
 
 -->
 <!-- ====================================================================== -->
-<!-- Defines the Batik Logo using an SVG font.                              -->
+<!-- Defines the EchoSVG Logo using an SVG font.                              -->
 <!--                                                                        -->
 <!-- @author vhardy@apache.org                                              -->
 <!-- @author thomas.deweese@kodak.com                                       -->
@@ -30,23 +30,23 @@
 <!-- ====================================================================== -->
 
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="body" width="450" height="500" viewBox="0 0 450 500">
-    <title>Batik Logo</title>
+    <title>EchoSVG Logo</title>
     <g id="content">
         <defs>
-            <symbol id="Batik_Squiggle" stroke="none" viewBox="0 0 540 570">
-                <path id="Batik_Squiggle_Blue" fill="#6666FF"
+            <symbol id="EchoSVG_Squiggle" stroke="none" viewBox="0 0 540 570">
+                <path id="EchoSVG_Squiggle_Blue" fill="#6666FF"
                  d="M172,44C137,60,31,135,11,199c-8,27,22,48,44,33
                     C14,306-1,332,0,356c0,14,13,42,44,27c8-4,35-25,52-41
                     c14-1,24-11,42-28c17,14,36,10,52-7c22,2,82-78,44-108
                     c-3-24-30-37-53-18c-6-2-13-1-18,1c22-35,43-82,49-105
                     C219,47,188,36,172,44z"/>
-                <path id="Batik_Squiggle_Red" fill="#FF0000"
+                <path id="EchoSVG_Squiggle_Red" fill="#FF0000"
                  d="M400,0c-18,3-49,31-49,31c-29,23-43,58-28,95
                     c-13,14-29,44-29,67c0,28,20,52,50,29c7,8,21,16,37,5
                     c-5,29,3,48,26,49c1,10,13,31,36,17c16-10,58-39,79-56
                     c25-23,25-94-18-89c33-59-3-96-27-84c-10,4-46,25-52,30
                     c-1-7-5-12-11-14C436,45,436-5,401,0z"/>
-                <path id="Batik_Squiggle_Green" fill="#33CC33"
+                <path id="EchoSVG_Squiggle_Green" fill="#33CC33"
                  d="M275,353c-46,12-88,43-114,91c-9,16,6,37,25,33
                     c-14,24-40,67-15,81c28,16,52-8,60-15c18,21,50,10,81-17
                     c41,14,68-2,103-53c8-12,30-43,30-65c0-16-15-30-35-21
@@ -55,12 +55,12 @@
             </symbol>
 
           <!-- ============================= -->
-          <!-- Batik SVG Font Definition     -->
+          <!-- EchoSVG SVG Font Definition     -->
           <!-- ============================= -->
           
-          <font horiz-adv-x="150" id="Batik">
+          <font horiz-adv-x="150" id="EchoSVG">
               <font-face
-                  font-family="Batik SVGFont"
+                  font-family="EchoSVG SVGFont"
                   units-per-em="240"
                   ascent="190"
                   descent="50"
@@ -82,7 +82,7 @@
                                c0,6.539,1.789,10.953,5.371,13.242c3.578,2.293,11.16,3.438,22.746,3.438c14.172,0,24.82-3.031,31.945-9.094s10.688-15.156,10.688-27.281c0-13.031-4.234-23.188-12.695-30.461s-20.316-10.914-35.563-10.914H47.463c-3.578,0-5.84,0.477-6.793,1.426
                                s-1.426,3.285-1.426,7.004v52.641z"/>
                      <!-- Put the Squiggle in the B -->
-                     <use xlink:href="#Batik_Squiggle" width="54" height="57"
+                     <use xlink:href="#EchoSVG_Squiggle" width="54" height="57"
                           transform="translate(45,103)" />
                    </g>
               </glyph>
@@ -126,7 +126,7 @@
 
                <glyph unicode="*" glyph-name="*" horiz-adv-x="120">
                 <g transform="scale(1, -1)">
-                  <use xlink:href="#Batik_Squiggle" width="108" height="114"
+                  <use xlink:href="#EchoSVG_Squiggle" width="108" height="114"
                           transform="translate(0,-130)" />
                 </g>
                </glyph>
@@ -138,7 +138,7 @@
                <hkern g1="ti" g2="k"  k="6"/>
           </font>
 
-          <g id="Batik_Logo_Underline" transform="scale(.75,.75)" >
+          <g id="EchoSVG_Logo_Underline" transform="scale(.75,.75)" >
              <path d="M37.886,60c-0.018,0.1-0.377,1.375-0.439,1.492c-0.15,0.285-1.382,2.046-1.598,2.291c0.206-0.233,0.428-0.452,0.65-0.67c-6.851,6.751-0.262,0.713,0.893-0.499c1.893-1.986-2.124,1.712,0.112-0.08
                               c0.604-0.484,1.242-0.925,1.886-1.355c-2.574,1.719,0.458-0.228,1.417-0.868c-2.634,1.761-1.231,0.788-0.605,0.423c1.799-1.049,3.686-1.946,5.591-2.783c0.978-0.43,1.97-0.828,2.964-1.217c1.844-0.723-1.918,0.683-0.003,0.012
                               c0.706-0.264,1.412-0.528,2.117-0.792c-1.224,0.456-1.388,0.521-0.491,0.195c2.531-0.908,5.102-1.708,7.683-2.461c5.73-1.672,11.556-3.013,17.401-4.216c30.689-6.315,61.555-8.765,92.723-10.467c35.225-1.924,70.559-2.313,105.819-1.278
@@ -148,7 +148,7 @@
                               c10.537-11.719,25.017-18.668,40.974-22.714c18.159-4.604,37.034-5.719,55.666-6.747c37.146-2.049,77.822-2.405,109.506-24.634c4.136-2.902,8.771-12.048,2.026-14.939c-7.868-3.373-16.687-4.781-25.083-6.132c-12.447-2.004-25.032-3.156-37.6-4.075
                               c-33.215-2.427-66.599-2.839-99.887-2.247c-34.872,0.621-69.791,2.496-104.432,6.637c-24.317,2.907-50.972,6.112-73.187,17.171c-4.951,2.465-9.505,5.587-13.309,9.623c-1.027,1.089-2.19,2.464-2.986,3.643c0.137-0.203-3.419,6.639-1.518,3.165
                               c-0.205,0.374-0.38,0.762-0.549,1.151c-1.126,2.59-2.056,5.322-2.196,8.168c-0.222,4.484,4.48,3.091,6.917,1.551c3.856-2.437,7.345-6.516,8.167-11.093z"/>
-          </g> <!-- End Batik_Logo_Underline -->
+          </g> <!-- End EchoSVG_Logo_Underline -->
 
           <filter id="dropShadow"  filterUnits="objectBoundingBox" 
                   filterRes="200" width="1.4" height="1.4">
@@ -160,27 +160,27 @@
               <feComposite in2="shadow" in="SourceGraphic"/>
           </filter>
           
-          <g id="Batik_Logo_Shadow" filter="url(#dropShadow)">
-              <g id="Batik_Logo">
-                 <text id="text" x="0" y="0" font-family="Batik SVGFont" 
-                       font-size="180">Batik</text>
-                 <use xlink:href="#Batik_Logo_Underline"/>
-              </g> <!-- End Batik_Logo -->
-          </g> <!-- End Batik_Logo_Shadow -->
+          <g id="EchoSVG_Logo_Shadow" filter="url(#dropShadow)">
+              <g id="EchoSVG_Logo">
+                 <text id="text" x="0" y="0" font-family="EchoSVG SVGFont" 
+                       font-size="180">EchoSVG</text>
+                 <use xlink:href="#EchoSVG_Logo_Underline"/>
+              </g> <!-- End EchoSVG_Logo -->
+          </g> <!-- End EchoSVG_Logo_Shadow -->
           
-          <g id="Batik_Tag_Box" >
+          <g id="EchoSVG_Tag_Box" >
               <rect x="1" y="1" width="446" height="496" 
                     style="fill:none; stroke:black" />
-              <use xlink:href="#Batik_Squiggle" width="27" height="28"
+              <use xlink:href="#EchoSVG_Squiggle" width="27" height="28"
                    transform="translate(418,467)" />
-          </g> <!-- End Batik_Tag_Box -->
+          </g> <!-- End EchoSVG_Tag_Box -->
         </defs>
 
-        <use x="65" y="233" xlink:href="#Batik_Logo_Shadow" />
+        <use x="65" y="233" xlink:href="#EchoSVG_Logo_Shadow" />
     </g>
 
     <!-- ============================================================= -->
-    <!-- Batik sample mark                                             -->
+    <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="#Batik_Tag_Box" /> 
+    <use xlink:href="#EchoSVG_Tag_Box" /> 
 </svg>

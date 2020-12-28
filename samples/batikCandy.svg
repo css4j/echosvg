@@ -21,7 +21,7 @@
 
 -->
 <!-- ========================================================================= -->
-<!-- Batik Logo - looks like Techno-Candy                                      -->
+<!-- EchoSVG Logo - looks like Techno-Candy                                      -->
 <!--                                                                           -->
 <!-- @author tkormann@ilog.fr                                                  -->
 <!-- @version $Id$ -->
@@ -90,9 +90,9 @@
 </defs>
 
 <g style="font-size:128; font-family:SVGImpact; text-anchor:middle;">
-  <text x="50%" y="35%" style="filter:url(#dropShadow)">Batik</text>
-  <text x="50%" y="35%" style="fill:rgb(172,20,20)">Batik</text>
-  <text x="50%" y="35%" style="filter:url(#emboss)">Batik</text>
+  <text x="50%" y="35%" style="filter:url(#dropShadow)">EchoSVG</text>
+  <text x="50%" y="35%" style="fill:rgb(172,20,20)">EchoSVG</text>
+  <text x="50%" y="35%" style="filter:url(#emboss)">EchoSVG</text>
 </g>
 
 <!-- ############################# -->
@@ -136,8 +136,8 @@
 </g>
 
     <!-- ============================================================= -->
-    <!-- Batik sample mark                                             -->
+    <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="batikLogo.svg#Batik_Tag_Box" />
+    <use xlink:href="batikLogo.svg#EchoSVG_Tag_Box" />
 
 </svg>

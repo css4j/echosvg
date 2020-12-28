@@ -1,0 +1,179 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+        http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<!-- ========================================================================= -->
+<!-- @author vincent.hardy@eng.sun.com                                         -->
+<!-- @author shillion@ilog.fr                                                  -->
+<!-- @version $Id$  -->
+<!-- ========================================================================= -->
+<testSuite id="dom.unitTesting" name="io.sf.carte.echosvg.dom package - Unit Testing">
+
+    <!-- ========================================================================== -->
+    <!-- ECMAScript based DOM test                                                  -->
+    <!-- ========================================================================== -->
+    <testGroup id="ecmaDOM" name="Basic DOM Tests from ECMA Scripts"
+               class="io.sf.carte.echosvg.dom.EcmaScriptDOMTest">
+        <test id="bug18143" />
+        <test id="bug20331" />
+        <test id="bug20332" />
+    </testGroup>
+
+    <!-- ========================================================================== -->
+    <!-- setAttribute test                                                          -->
+    <!-- ========================================================================== -->
+    <test id="setAttribute" class="io.sf.carte.echosvg.dom.SetAttributeTest" >
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML.xml" />
+        <arg class="java.lang.String" value="doc" />
+        <arg class="java.lang.String" value="root" />
+        <arg class="java.lang.String" value="targetAttribute" />
+        <arg class="java.lang.String" value="targetValue" />
+        <property name="ParserClassName"
+                  class="java.lang.String"
+                  value="org.apache.xerces.parsers.SAXParser" />
+    </test>
+
+    <!-- ========================================================================== -->
+    <!-- cloneNode test                                                          -->
+    <!-- ========================================================================== -->
+    <test id="cloneElement"
+          class="io.sf.carte.echosvg.dom.CloneElementTest" >
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML3.xml" />
+        <arg class="java.lang.String" value="doc" />
+        <arg class="java.lang.String" value="elt2" />
+    </test>
+
+    <!-- ========================================================================== -->
+    <!-- null namespace test                                                        -->
+    <!-- ========================================================================== -->
+    <test id="nullNamespace1" class="io.sf.carte.echosvg.dom.NullNamespaceTest" >
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML3.xml" />
+        <arg class="java.lang.String" value="doc" />
+        <arg class="java.lang.String" value="root" />
+    </test>
+
+    <test id="nullNamespace2" class="io.sf.carte.echosvg.dom.NullNamespaceTest" >
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML3.xml" />
+        <arg class="java.lang.String" value="doc" />
+        <arg class="java.lang.String" value="elt2" />
+    </test>
+
+    <!-- ========================================================================== -->
+    <!-- hasChildNodes test                                                         -->
+    <!-- ========================================================================== -->
+    <test id="hasChildNodes" class="io.sf.carte.echosvg.dom.HasChildNodesTest" >
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML3.xml" />
+        <arg class="java.lang.String" value="doc" />
+        <arg class="java.lang.String" value="root" />
+    </test>
+
+    <!-- ========================================================================== -->
+    <!-- replaceChild test                                                          -->
+    <!-- ========================================================================== -->
+    <test id="replaceChild" class="io.sf.carte.echosvg.dom.ReplaceChildTest" >
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML3.xml" />
+        <arg class="java.lang.String" value="doc" />
+        <arg class="java.lang.String" value="root" />
+    </test>
+
+    <!-- ========================================================================== -->
+    <!-- appendChild test                                                          -->
+    <!-- ========================================================================== -->
+    <test id="appendChild" class="io.sf.carte.echosvg.dom.AppendChildTest" >
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML3.xml" />
+        <arg class="java.lang.String" value="doc" />
+        <arg class="java.lang.String" value="root" />
+    </test>
+
+    <!-- ========================================================================== -->
+    <!-- removeAttribute test                                                       -->
+    <!-- ========================================================================== -->
+    <test id="removeAttribute1"
+          class="io.sf.carte.echosvg.dom.RemoveAttributeTest" >
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML3.xml" />
+        <arg class="java.lang.String" value="doc" />
+        <arg class="java.lang.String" value="root" />
+        <arg class="java.lang.String" value="attr" />
+    </test>
+
+    <test id="removeAttribute2"
+          class="io.sf.carte.echosvg.dom.RemoveAttributeTest" >
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML3.xml" />
+        <arg class="java.lang.String" value="doc" />
+        <arg class="java.lang.String" value="root" />
+        <arg class="java.lang.String" value="attr2" />
+    </test>
+
+    <!-- ========================================================================== -->
+    <!-- Serialization test                                                         -->
+    <!-- ========================================================================== -->
+    <test id="serialization1" class="io.sf.carte.echosvg.dom.SerializationTest">
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML.xml"/>
+        <arg class="java.lang.String" value="doc"/>
+    </test>
+
+    <test id="serialization2" class="io.sf.carte.echosvg.dom.SerializationTest">
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML2.xml"/>
+        <arg class="java.lang.String" value="doc"/>
+    </test>
+
+    <!-- ========================================================================== -->
+    <!-- getElementsByTagNameNS test                                                -->
+    <!-- ========================================================================== -->
+    <test id="getElementsByTagNameNS" class="io.sf.carte.echosvg.dom.GetElementsByTagNameNSTest" >
+        <arg class="java.lang.String"
+             value="test-resources/io/sf/carte/echosvg/dom/dummyXML4.xml"/>
+        <arg class="java.lang.String" value="doc" />
+        <arg class="java.lang.String" value="elt4" />
+    </test>
+
+    <!-- ========================================================================== -->
+    <!-- DOMUtilities character escaping test                                       -->
+    <!-- ========================================================================== -->
+    <test id="DOMUtilities.character.escaping" class="io.sf.carte.echosvg.dom.DOMUtilitiesCharacterEscaping" />
+
+    <!-- ========================================================================== -->
+    <!-- DOM 3 tests                                                                -->
+    <!-- ========================================================================== -->
+    <test id="DOM3.Attr.isId" class="io.sf.carte.echosvg.dom.AttrIsIdTest"/>
+    <test id="DOM3.Document.adoptNode" class="io.sf.carte.echosvg.dom.DocumentAdoptNodeTest"/>
+    <test id="DOM3.Document.renameNode" class="io.sf.carte.echosvg.dom.DocumentRenameNodeTest"/>
+    <test id="DOM3.Document.normalizeDocument" class="io.sf.carte.echosvg.dom.DocumentNormalizeDocumentTest"/>
+    <test id="DOM3.Element.setIdAttributeNS" class="io.sf.carte.echosvg.dom.ElementSetIdAttributeNSTest"/>
+    <test id="DOM3.Node.baseURI" class="io.sf.carte.echosvg.dom.NodeBaseURITest"/>
+    <test id="DOM3.Node.textContent" class="io.sf.carte.echosvg.dom.NodeTextContentTest"/>
+    <test id="DOM3.Node.setUserData" class="io.sf.carte.echosvg.dom.NodeGetUserDataTest"/>
+    <test id="DOM3.Node.compareDocumentPosition" class="io.sf.carte.echosvg.dom.NodeCompareDocumentPositionTest"/>
+    <test id="DOM3.Text.wholeText" class="io.sf.carte.echosvg.dom.TextWholeTextTest"/>
+    <test id="DOM3.Text.replaceWholeText" class="io.sf.carte.echosvg.dom.TextReplaceWholeTextTest"/>
+    <test id="DOM3.EventTarget.addEventListenerNS" class="io.sf.carte.echosvg.dom.EventTargetAddEventListenerNSTest"/>
+
+    <!-- ========================================================================== -->
+    <!-- ElementTraversal test                                                      -->
+    <!-- ========================================================================== -->
+    <test id="ElementTraversal" class="io.sf.carte.echosvg.dom.ElementTraversalTest"/>
+</testSuite>

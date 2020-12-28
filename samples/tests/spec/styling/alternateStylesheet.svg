@@ -116,8 +116,8 @@
     <g>
 
       <g style="text-anchor:middle; font-size:128; font-family:SVGImpact;">
-        <text x="50%" y="50%" style="filter:url(#dropShadow); fill:black">Batik</text>
-        <text x="50%" y="50%" class="logo" style="filter:url(#emboss);">Batik</text>
+        <text x="50%" y="50%" style="filter:url(#dropShadow); fill:black">EchoSVG</text>
+        <text x="50%" y="50%" class="logo" style="filter:url(#emboss);">EchoSVG</text>
       </g>
 
     </g>
@@ -125,8 +125,8 @@
   </g>
 
   <!-- ============================================================= -->
-  <!-- Batik sample mark                                             -->
+  <!-- EchoSVG sample mark                                             -->
   <!-- ============================================================= -->
-  <use xlink:href="../../../batikLogo.svg#Batik_Tag_Box" />
+  <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" />
     
 </svg>

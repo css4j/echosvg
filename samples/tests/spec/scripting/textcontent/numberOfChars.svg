@@ -323,9 +323,9 @@ viewBox="0 0 450 600" onmouseover="showNumberOfChars(evt)" >
 
 
     <!-- ============================================================= -->
-    <!-- Batik sample mark                                             -->
+    <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="../../../../batikLogo.svg#Batik_Tag_Box" />
+    <use xlink:href="../../../../batikLogo.svg#EchoSVG_Tag_Box" />
 
 
 <text class="filename" id="numberOfChars" x="90%" y="520" 
@@ -345,7 +345,7 @@ viewBox="0 0 450 600" onmouseover="showNumberOfChars(evt)" >
 <text class="filename" x="25%" y="530" onclick="switchTo(evt,'../../fonts/fontAltGlyph.svg#content')" >fontAltGlyph</text>
 <text class="filename" x="25%" y="545" onclick="switchTo(evt,'../../fonts/fontAltGlyph2.svg#content')" >fontAltGlyph2</text>
 <text class="filename" x="25%" y="560" onclick="switchTo(evt,'../../fonts/fontAltGlyph3.svg#content')" >fontAltGlyph3</text>
-<text class="filename" x="25%" y="575" onclick="switchTo(evt,'../../fonts/BatikFont.svg#content')" >BatikFont</text>
+<text class="filename" x="25%" y="575" onclick="switchTo(evt,'../../fonts/EchoSVGFont.svg#content')" >EchoSVGFont</text>
 <text class="filename" x="25%" y="590" onclick="switchTo(evt,'../../fonts/fontDecorations.svg#content')" >fontDecorations</text>
 
 <text class="filename" x="45%" y="545" onclick="switchTo(evt,'../../fonts/fontOnPath.svg#content')" >fontOnPath</text>

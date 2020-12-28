@@ -38,9 +38,9 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
-import org.apache.batik.anim.dom.SVGOMDocument;
-import org.apache.batik.bridge.ScriptHandler;
-import org.apache.batik.w3c.dom.Window;
+import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
+import io.sf.carte.echosvg.bridge.ScriptHandler;
+import io.sf.carte.echosvg.w3c.dom.Window;
 
 /**
  * This class implements the ScriptHandler interface and represents an 
@@ -295,7 +295,7 @@ public class UntrustedScriptHandler implements ScriptHandler {
     }
 
     @Override
-    public void run(Document doc, org.apache.batik.bridge.Window win) {
+    public void run(Document doc, io.sf.carte.echosvg.bridge.Window win) {
         // TODO Auto-generated method stub
 
     }

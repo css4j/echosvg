@@ -32,9 +32,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="body" width="450" height="500" viewBox="0 0 450 500">
     <title>XML Base Test</title>
     <g id="content" xml:base="../../../batikLogo.svg">
-       <font-face font-family="Batik SVGFont">
+       <font-face font-family="EchoSVG SVGFont">
           <font-face-src>
-              <font-face-uri xlink:href="#Batik"/>
+              <font-face-uri xlink:href="#EchoSVG"/>
           </font-face-src>
        </font-face>
 
@@ -43,25 +43,25 @@
         </text>
 
        <use transform="translate(25, 200) scale(.5)"
-        xlink:href="#Batik_Logo_Shadow" />
+        xlink:href="#EchoSVG_Logo_Shadow" />
 
 
        <g transform="translate(250,200) scale(.5)" filter="url(#dropShadow)">
-        <use xlink:href="#Batik_Logo" />
-       </g> <!-- End Batik_Logo_Shadow -->
+        <use xlink:href="#EchoSVG_Logo" />
+       </g> <!-- End EchoSVG_Logo_Shadow -->
        
        
        <g transform="translate(25, 350) scale(.5)" filter="url(#dropShadow)">
-          <text x="0" y="0" font-family="Batik SVGFont" 
-                font-size="180">Batik</text>
-          <use xlink:href="#Batik_Logo_Underline"/>
-       </g> <!-- End Batik_Logo_Shadow -->
+          <text x="0" y="0" font-family="EchoSVG SVGFont" 
+                font-size="180">EchoSVG</text>
+          <use xlink:href="#EchoSVG_Logo_Underline"/>
+       </g> <!-- End EchoSVG_Logo_Shadow -->
 
        <g xml:base="tests/">
            <use transform="translate(250 350) scale(.5)" 
-                xlink:href="../batikLogo.svg#Batik_Logo_Shadow" />
+                xlink:href="../batikLogo.svg#EchoSVG_Logo_Shadow" />
        </g>
     </g>
 
-    <use xlink:href="../../../batikLogo.svg#Batik_Tag_Box" /> 
+    <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" /> 
 </svg>

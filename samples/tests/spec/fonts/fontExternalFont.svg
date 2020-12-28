@@ -41,20 +41,20 @@
         <text class="title" x="50%" y="40">External SVG Font Test</text>
 
         <defs>
-            <font-face font-family="Batik SVGFont">
+            <font-face font-family="EchoSVG SVGFont">
                 <font-face-src>
-                    <font-face-uri xlink:href="batikFont.svg#Batik"/>
+                    <font-face-uri xlink:href="batikFont.svg#EchoSVG"/>
                 </font-face-src>     
             </font-face>
         </defs>
 
-        <text x="80" y="250" font-family="'Batik SVGFont'" font-size="50">Batik Batik</text>
+        <text x="80" y="250" font-family="'EchoSVG SVGFont'" font-size="50">EchoSVG EchoSVG</text>
        
     </g>
 
     <!-- ============================================================= -->
-    <!-- Batik sample mark                                             -->
+    <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="../../../batikLogo.svg#Batik_Tag_Box" />
+    <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" />
 
 </svg>

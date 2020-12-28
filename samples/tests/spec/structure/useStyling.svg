@@ -67,7 +67,7 @@
   </g>
 
   <!-- ============================================================= -->
-  <!-- Batik sample mark                                             -->
+  <!-- EchoSVG sample mark                                             -->
   <!-- ============================================================= -->
-  <use xlink:href="../../../batikLogo.svg#Batik_Tag_Box" />
+  <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" />
 </svg>

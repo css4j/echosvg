@@ -85,23 +85,23 @@
      <!-- x attribute defines new text chunks extra text after tspan        -->
      <!-- ################################################################# -->
 
-     <text transform="translate(150  94)"><tspan x="0 40 80 120 160" y="0 0 0 0 10" style="text-anchor:start">Batik</tspan><tspan fill="crimson"> rules!</tspan></text>
-     <text transform="translate(150 134)"><tspan x="0 40 80 120 160" y="0 0 0 0 10" style="text-anchor:middle">Batik</tspan><tspan fill="crimson"> rules!</tspan></text>
-     <text transform="translate(150 174)"><tspan x="0 40 80 120 160" y="0 0 0 0 10" style="text-anchor:end">Batik</tspan><tspan fill="crimson"> rules!</tspan></text>
+     <text transform="translate(150  94)"><tspan x="0 40 80 120 160" y="0 0 0 0 10" style="text-anchor:start">EchoSVG</tspan><tspan fill="crimson"> rules!</tspan></text>
+     <text transform="translate(150 134)"><tspan x="0 40 80 120 160" y="0 0 0 0 10" style="text-anchor:middle">EchoSVG</tspan><tspan fill="crimson"> rules!</tspan></text>
+     <text transform="translate(150 174)"><tspan x="0 40 80 120 160" y="0 0 0 0 10" style="text-anchor:end">EchoSVG</tspan><tspan fill="crimson"> rules!</tspan></text>
 
      <!-- ################################################################# -->
      <!-- x attribute defines new text chunks for only some chars           -->
      <!-- ################################################################# -->
-     <text transform="translate(150 240)"><tspan x="0 40 80" style="text-anchor:start">Batik</tspan></text>
-     <text transform="translate(150 280)"><tspan x="0 40 80" style="text-anchor:middle">Batik</tspan></text>
-     <text transform="translate(150 320)"><tspan x="0 40 80" style="text-anchor:end">Batik</tspan></text>
+     <text transform="translate(150 240)"><tspan x="0 40 80" style="text-anchor:start">EchoSVG</tspan></text>
+     <text transform="translate(150 280)"><tspan x="0 40 80" style="text-anchor:middle">EchoSVG</tspan></text>
+     <text transform="translate(150 320)"><tspan x="0 40 80" style="text-anchor:end">EchoSVG</tspan></text>
 
      <!-- ################################################################# -->
      <!-- both x and y attributes define new text chunks                    -->
      <!-- ################################################################# -->
-     <text transform="translate(150 390)" x="0 0 0 120"><tspan x="0 40 80" y="0 10 0 10" style="text-anchor:start">Batik</tspan><tspan fill="crimson"> rules!</tspan></text>
-     <text transform="translate(150 430)" x="0 0 0 120"><tspan x="0 40 80" y="0 10 0 10" style="text-anchor:middle">Batik</tspan><tspan fill="crimson"> rules!</tspan></text>
-     <text transform="translate(150 470)" x="0 0 0 120"><tspan x="0 40 80" y="0 10 0 10" style="text-anchor:end">Batik</tspan><tspan fill="crimson"> rules!</tspan></text>
+     <text transform="translate(150 390)" x="0 0 0 120"><tspan x="0 40 80" y="0 10 0 10" style="text-anchor:start">EchoSVG</tspan><tspan fill="crimson"> rules!</tspan></text>
+     <text transform="translate(150 430)" x="0 0 0 120"><tspan x="0 40 80" y="0 10 0 10" style="text-anchor:middle">EchoSVG</tspan><tspan fill="crimson"> rules!</tspan></text>
+     <text transform="translate(150 470)" x="0 0 0 120"><tspan x="0 40 80" y="0 10 0 10" style="text-anchor:end">EchoSVG</tspan><tspan fill="crimson"> rules!</tspan></text>
 
    </g>
 

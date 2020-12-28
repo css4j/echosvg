@@ -72,7 +72,7 @@
 
       <text x="0" y="0" 
          style="fill:orange; text-anchor:middle;font-size:48" 
-         onload="transform(evt, 'translate(220 420)')">Batik</text>
+         onload="transform(evt, 'translate(220 420)')">EchoSVG</text>
 
       <image x="0" y="0" width="50" height="50" 
          xlink:href="../../resources/images/png2.png"
@@ -100,7 +100,7 @@
 
       <text x="0" y="0" 
              style="stroke:black; fill:none; text-anchor:middle;font-size:48" 
-             transform="translate(220 420)">Batik</text>
+             transform="translate(220 420)">EchoSVG</text>
       <rect x="0" y="0" width="50" height="50" transform="translate(320 400)" 
             style="stroke:black; fill:none;"/>
       <rect x="0" y="0" width="50" height="50" transform="translate(370 400)"

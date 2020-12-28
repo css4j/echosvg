@@ -33,52 +33,52 @@
      xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <style type="text/css"><![CDATA[
-    @font-face { font-family: "CSS Batik SVGFont"; 
-                 src: url(batikFont.svg#Batik); }
+    @font-face { font-family: "CSS EchoSVG SVGFont"; 
+                 src: url(batikFont.svg#EchoSVG); }
 
-    @font-face { font-family: "CSS Batik TrueType"; 
+    @font-face { font-family: "CSS EchoSVG TrueType"; 
                  src: url(../../resources/ttf/glb12.ttf); }
 
-    @font-face { font-family: "CSS Batik LCL"; 
-                 src: 'Courier', 'Courier New', url(batikFont.svg#Batik); }
+    @font-face { font-family: "CSS EchoSVG LCL"; 
+                 src: 'Courier', 'Courier New', url(batikFont.svg#EchoSVG); }
 
-    @font-face { font-family: "CSS Batik FB"; 
-                 src: 'No Font', url(batikFont.svg#Batik); }
-    @font-face { font-family: "CSS Batik FB2"; 
-                 src: url(badLink.svg#Batik), url(badLink.ttf), 'Courier', 'Courier New'; }
+    @font-face { font-family: "CSS EchoSVG FB"; 
+                 src: 'No Font', url(batikFont.svg#EchoSVG); }
+    @font-face { font-family: "CSS EchoSVG FB2"; 
+                 src: url(badLink.svg#EchoSVG), url(badLink.ttf), 'Courier', 'Courier New'; }
     ]]></style>
   
   <defs>
-    <font-face font-family="SVG Batik SVGFont">
+    <font-face font-family="SVG EchoSVG SVGFont">
       <font-face-src>
-        <font-face-uri xlink:href="batikFont.svg#Batik"/>
+        <font-face-uri xlink:href="batikFont.svg#EchoSVG"/>
       </font-face-src>     
     </font-face>
     
-    <font-face font-family="SVG Batik TrueType">
+    <font-face font-family="SVG EchoSVG TrueType">
       <font-face-src>
         <font-face-uri xlink:href="../../resources/ttf/glb12.ttf"/>
       </font-face-src>     
     </font-face>
     
-    <font-face font-family="SVG Batik LCL">
+    <font-face font-family="SVG EchoSVG LCL">
       <font-face-src>
         <font-face-name name="Courier"/>
         <font-face-name name="Courier New"/>
-        <font-face-uri xlink:href="batikFont.svg#Batik"/>
+        <font-face-uri xlink:href="batikFont.svg#EchoSVG"/>
       </font-face-src>     
     </font-face>
     
-    <font-face font-family="SVG Batik FB">
+    <font-face font-family="SVG EchoSVG FB">
       <font-face-src>
         <font-face-name name="NoFont"/>
-        <font-face-uri xlink:href="batikFont.svg#Batik"/>
+        <font-face-uri xlink:href="batikFont.svg#EchoSVG"/>
       </font-face-src>     
     </font-face>
     
-    <font-face font-family="SVG Batik FB2">
+    <font-face font-family="SVG EchoSVG FB2">
       <font-face-src>
-        <font-face-uri xlink:href="badLink.svg#Batik"/>
+        <font-face-uri xlink:href="badLink.svg#EchoSVG"/>
         <font-face-uri xlink:href="badLink.ttf"/>
         <font-face-name name="Courier"/>
         <font-face-name name="Courier New"/>
@@ -91,34 +91,34 @@
     >&lt;font-face&gt; and @font-face test</text>
 
   <g id="content">
-    <text x="40" y="100" font-family="'SVG Batik SVGFont'" font-size="20"
-      >SVG Batik Batik</text>
-    <text x="240" y="100" font-family="'CSS Batik SVGFont'" font-size="20"
-      >CSS Batik Batik</text>
+    <text x="40" y="100" font-family="'SVG EchoSVG SVGFont'" font-size="20"
+      >SVG EchoSVG EchoSVG</text>
+    <text x="240" y="100" font-family="'CSS EchoSVG SVGFont'" font-size="20"
+      >CSS EchoSVG EchoSVG</text>
     
-    <text x="40" y="150" font-family="'SVG Batik TrueType'" font-size="20"
-      >SVG Batik Batik</text>
-    <text x="240" y="150" font-family="'CSS Batik TrueType'" font-size="20"
-      >CSS Batik Batik</text>
+    <text x="40" y="150" font-family="'SVG EchoSVG TrueType'" font-size="20"
+      >SVG EchoSVG EchoSVG</text>
+    <text x="240" y="150" font-family="'CSS EchoSVG TrueType'" font-size="20"
+      >CSS EchoSVG EchoSVG</text>
     
-    <text x="40" y="200" font-family="'SVG Batik LCL'" font-size="20"
-      >SVG Batik Batik</text>
-    <text x="240" y="200" font-family="'CSS Batik LCL'" font-size="20"
-      >CSS Batik Batik</text>
+    <text x="40" y="200" font-family="'SVG EchoSVG LCL'" font-size="20"
+      >SVG EchoSVG EchoSVG</text>
+    <text x="240" y="200" font-family="'CSS EchoSVG LCL'" font-size="20"
+      >CSS EchoSVG EchoSVG</text>
     
-    <text x="40" y="250" font-family="'SVG Batik FB'" font-size="20"
-      >SVG Batik Batik</text>
-    <text x="240" y="250" font-family="'CSS Batik FB'" font-size="20"
-      >CSS Batik Batik</text>
+    <text x="40" y="250" font-family="'SVG EchoSVG FB'" font-size="20"
+      >SVG EchoSVG EchoSVG</text>
+    <text x="240" y="250" font-family="'CSS EchoSVG FB'" font-size="20"
+      >CSS EchoSVG EchoSVG</text>
     
-    <text x="40" y="300" font-family="'SVG Batik FB2'" font-size="20"
-      >SVG Batik Batik</text>
-    <text x="240" y="300" font-family="'CSS Batik FB2'" font-size="20"
-      >CSS Batik Batik</text>
+    <text x="40" y="300" font-family="'SVG EchoSVG FB2'" font-size="20"
+      >SVG EchoSVG EchoSVG</text>
+    <text x="240" y="300" font-family="'CSS EchoSVG FB2'" font-size="20"
+      >CSS EchoSVG EchoSVG</text>
   </g>
 
   <!-- ============================================================= -->
-  <!-- Batik sample mark                                             -->
+  <!-- EchoSVG sample mark                                             -->
   <!-- ============================================================= -->
-  <use xlink:href="../../../batikLogo.svg#Batik_Tag_Box" />
+  <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" />
 </svg>

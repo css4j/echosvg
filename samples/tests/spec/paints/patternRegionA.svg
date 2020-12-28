@@ -22,7 +22,7 @@
 -->
 <!-- ========================================================================= -->
 <!-- This test file checks that the various combinations of units and viewbox  -->
-<!-- work in Batik for patternRegions                                          -->
+<!-- work in EchoSVG for patternRegions                                          -->
 <!--                                                                           -->
 <!-- @author vhardy@eng.sun.com                                                -->
 <!-- @version $Id$  -->
@@ -220,8 +220,8 @@
     </g>
 
     <!-- ============================================================= -->
-    <!-- Batik sample mark                                             -->
+    <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="../../../batikLogo.svg#Batik_Tag_Box" />
+    <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" />
     
 </svg>

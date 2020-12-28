@@ -57,7 +57,7 @@
                   <g id="g2">
                      <batik:star fill="gold" r="90" ir="80" sides="48"/>
                      <batik:star fill="crimson" r="50" ir="40" sides="24"/>
-               <text fill="gold" text-anchor="middle">Batik Rules!</text>
+               <text fill="gold" text-anchor="middle">EchoSVG Rules!</text>
              </g>
                </g>
                <g transform="translate(100, 165), rotate(15)">
@@ -70,7 +70,7 @@
    </g>
 
     <!-- ============================================================= -->
-    <!-- Batik sample mark                                             -->
+    <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="../batikLogo.svg#Batik_Tag_Box" />
+    <use xlink:href="../batikLogo.svg#EchoSVG_Tag_Box" />
 </svg>

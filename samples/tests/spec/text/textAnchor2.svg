@@ -85,23 +85,23 @@
     <!-- x attribute defines new text chunks                               -->
     <!-- ################################################################# -->
 
-    <text transform="translate(145 94)"><tspan x="0 40 80 120 160" style="text-anchor:start">Batik</tspan></text>
-    <text transform="translate(145 134)"><tspan x="0 40 80 120 160" style="text-anchor:middle">Batik</tspan></text>
-    <text transform="translate(145 174)"><tspan x="0 40 80 120 160" style="text-anchor:end">Batik</tspan></text>
+    <text transform="translate(145 94)"><tspan x="0 40 80 120 160" style="text-anchor:start">EchoSVG</tspan></text>
+    <text transform="translate(145 134)"><tspan x="0 40 80 120 160" style="text-anchor:middle">EchoSVG</tspan></text>
+    <text transform="translate(145 174)"><tspan x="0 40 80 120 160" style="text-anchor:end">EchoSVG</tspan></text>
 
     <!-- ################################################################# -->
     <!-- y attribute does not define new text chunk                        -->
     <!-- ################################################################# -->
-    <text transform="translate(225 240)"><tspan y="0 10 0 10 0" style="text-anchor:start">Batik</tspan></text>
-    <text transform="translate(225 280)"><tspan y="0 10 0 10 0" style="text-anchor:middle">Batik</tspan></text>
-    <text transform="translate(225 320)"><tspan y="0 10 0 10 0" style="text-anchor:end">Batik</tspan></text>
+    <text transform="translate(225 240)"><tspan y="0 10 0 10 0" style="text-anchor:start">EchoSVG</tspan></text>
+    <text transform="translate(225 280)"><tspan y="0 10 0 10 0" style="text-anchor:middle">EchoSVG</tspan></text>
+    <text transform="translate(225 320)"><tspan y="0 10 0 10 0" style="text-anchor:end">EchoSVG</tspan></text>
 
     <!-- ################################################################# -->
     <!-- both x and y attributes define new text chunks                    -->
     <!-- ################################################################# -->
-    <text transform="translate(145 390)"><tspan x="0 40 80 120 160" y="0 10 0 10 0" style="text-anchor:start">Batik</tspan></text>
-    <text transform="translate(145 430)"><tspan x="0 40 80 120 160" y="0 10 0 10 0" style="text-anchor:middle">Batik</tspan></text>
-    <text transform="translate(145 470)"><tspan x="0 40 80 120 160" y="0 10 0 10 0" style="text-anchor:end">Batik</tspan></text>
+    <text transform="translate(145 390)"><tspan x="0 40 80 120 160" y="0 10 0 10 0" style="text-anchor:start">EchoSVG</tspan></text>
+    <text transform="translate(145 430)"><tspan x="0 40 80 120 160" y="0 10 0 10 0" style="text-anchor:middle">EchoSVG</tspan></text>
+    <text transform="translate(145 470)"><tspan x="0 40 80 120 160" y="0 10 0 10 0" style="text-anchor:end">EchoSVG</tspan></text>
 
   </g>
 

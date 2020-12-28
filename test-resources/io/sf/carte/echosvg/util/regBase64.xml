@@ -1,0 +1,146 @@
+<!--
+
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ====================================================================== -->
+<!-- @author deweese@apache.org                                             -->
+<!-- @version $Id$     -->
+<!-- ====================================================================== -->
+
+<testSuite name="Base64 test Suite">
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="ENCODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/zeroByte" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/zeroByte.64" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="DECODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/zeroByte.64" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/zeroByte" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/zeroByte" />
+    </test>
+
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="ENCODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/oneByte" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/oneByte.64" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="DECODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/oneByte.64" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/oneByte" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/oneByte" />
+    </test>
+
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="ENCODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/twoByte" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/twoByte.64" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="DECODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/twoByte.64" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/twoByte" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/twoByte" />
+    </test>
+
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="ENCODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/threeByte" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/threeByte.64" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="DECODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/threeByte.64" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/threeByte" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/threeByte" />
+    </test>
+
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="ENCODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/fourByte" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/fourByte.64" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="DECODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/fourByte.64" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/fourByte" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/fourByte" />
+    </test>
+
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="ENCODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/tenByte" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/tenByte.64" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="DECODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/tenByte.64" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/tenByte" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/tenByte" />
+    </test>
+
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="ENCODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/small" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/small.64" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="DECODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/small.64" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/small" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/small" />
+    </test>
+
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="ENCODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/medium" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/medium.64" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="DECODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/medium.64" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/medium" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.lang.String" value="DECODE" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/medium.pc.64" />
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/medium" />
+    </test>
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/medium" />
+    </test>
+
+    <test class="io.sf.carte.echosvg.util.Base64Test">
+        <arg class="java.net.URL" value="file:test-references/io/sf/carte/echosvg/util/large" />
+    </test>
+
+</testSuite>
