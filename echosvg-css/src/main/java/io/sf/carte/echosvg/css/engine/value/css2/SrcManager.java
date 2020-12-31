@@ -60,6 +60,7 @@ public class SrcManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return false;
     }
@@ -67,6 +68,7 @@ public class SrcManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return false;
     }
@@ -74,6 +76,7 @@ public class SrcManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -81,6 +84,7 @@ public class SrcManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_FONT_DESCRIPTOR_SRC_VALUE;
     }
@@ -89,6 +93,7 @@ public class SrcManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_SRC_PROPERTY;
     }
@@ -97,6 +102,7 @@ public class SrcManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return ValueConstants.NONE_VALUE;
     }
@@ -105,6 +111,7 @@ public class SrcManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
 
@@ -194,6 +201,7 @@ public class SrcManager extends IdentifierManager {
     /**
      * Implements {@link IdentifierManager#getIdentifiers()}.
      */
+    @Override
     public StringMap getIdentifiers() {
         return values;
     }

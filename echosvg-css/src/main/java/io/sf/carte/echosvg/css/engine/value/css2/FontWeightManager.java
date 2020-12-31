@@ -62,6 +62,7 @@ public class FontWeightManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -69,6 +70,7 @@ public class FontWeightManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -76,6 +78,7 @@ public class FontWeightManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -83,6 +86,7 @@ public class FontWeightManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_FONT_WEIGHT_VALUE;
     }
@@ -90,6 +94,7 @@ public class FontWeightManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_FONT_WEIGHT_PROPERTY;
     }
@@ -97,6 +102,7 @@ public class FontWeightManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return ValueConstants.NORMAL_VALUE;
     }
@@ -104,6 +110,7 @@ public class FontWeightManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INTEGER) {
@@ -136,6 +143,7 @@ public class FontWeightManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#createFloatValue(short,float)}.
      */
+    @Override
     public Value createFloatValue(short type, float floatValue)
         throws DOMException {
         if (type == CSSPrimitiveValue.CSS_NUMBER) {
@@ -170,6 +178,7 @@ public class FontWeightManager extends IdentifierManager {
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,
@@ -239,6 +248,7 @@ public class FontWeightManager extends IdentifierManager {
     /**
      * Implements {@link IdentifierManager#getIdentifiers()}.
      */
+    @Override
     public StringMap getIdentifiers() {
         return values;
     }

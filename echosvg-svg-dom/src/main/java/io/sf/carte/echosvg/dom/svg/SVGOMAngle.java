@@ -53,6 +53,7 @@ public class SVGOMAngle implements SVGAngle {
     /**
      * <b>DOM</b>: Implements {@link SVGAngle#getUnitType()}.
      */
+    @Override
     public short getUnitType() {
         revalidate();
         return unitType;
@@ -61,6 +62,7 @@ public class SVGOMAngle implements SVGAngle {
     /**
      * <b>DOM</b>: Implements {@link SVGAngle#getValue()}.
      */
+    @Override
     public float getValue() {
         revalidate();
         return toUnit(getUnitType(), value, SVG_ANGLETYPE_DEG);
@@ -69,6 +71,7 @@ public class SVGOMAngle implements SVGAngle {
     /**
      * <b>DOM</b>: Implements {@link SVGAngle#setValue(float)}.
      */
+    @Override
     public void setValue(float value) throws DOMException {
         revalidate();
         this.setUnitType(SVG_ANGLETYPE_DEG);
@@ -79,6 +82,7 @@ public class SVGOMAngle implements SVGAngle {
     /**
      * <b>DOM</b>: Implements {@link SVGAngle#getValueInSpecifiedUnits()}.
      */
+    @Override
     public float getValueInSpecifiedUnits() {
         revalidate();
         return value;
@@ -88,6 +92,7 @@ public class SVGOMAngle implements SVGAngle {
      * <b>DOM</b>: Implements {@link
      * SVGAngle#setValueInSpecifiedUnits(float)}.
      */
+    @Override
     public void setValueInSpecifiedUnits(float value) throws DOMException {
         revalidate();
         this.value = value;
@@ -97,6 +102,7 @@ public class SVGOMAngle implements SVGAngle {
     /**
      * <b>DOM</b>: Implements {@link SVGAngle#getValueAsString()}.
      */
+    @Override
     public String getValueAsString() {
         revalidate();
         return Float.toString(value) + UNITS[getUnitType()];
@@ -105,6 +111,7 @@ public class SVGOMAngle implements SVGAngle {
     /**
      * <b>DOM</b>: Implements {@link SVGAngle#setValueAsString(String)}.
      */
+    @Override
     public void setValueAsString(String value) throws DOMException {
         parse(value);
         reset();
@@ -114,6 +121,7 @@ public class SVGOMAngle implements SVGAngle {
      * <b>DOM</b>: Implements {@link
      * SVGAngle#newValueSpecifiedUnits(short,float)}.
      */
+    @Override
     public void newValueSpecifiedUnits(short unit, float value) {
         setUnitType(unit);
         this.value = value;
@@ -124,6 +132,7 @@ public class SVGOMAngle implements SVGAngle {
      * <b>DOM</b>: Implements {@link
      * SVGAngle#convertToSpecifiedUnits(short)}.
      */
+    @Override
     public void convertToSpecifiedUnits(short unit) {
         value = toUnit(getUnitType(), value, unit);
         setUnitType(unit);
@@ -152,15 +161,19 @@ public class SVGOMAngle implements SVGAngle {
         try {
             AngleParser angleParser = new AngleParser();
             angleParser.setAngleHandler(new DefaultAngleHandler() {
+                @Override
                 public void angleValue(float v) throws ParseException {
                     value = v;
                 }
+                @Override
                 public void deg() throws ParseException {
                     setUnitType(SVG_ANGLETYPE_DEG);
                 }
+                @Override
                 public void rad() throws ParseException {
                     setUnitType(SVG_ANGLETYPE_RAD);
                 }
+                @Override
                 public void grad() throws ParseException {
                     setUnitType(SVG_ANGLETYPE_GRAD);
                 }

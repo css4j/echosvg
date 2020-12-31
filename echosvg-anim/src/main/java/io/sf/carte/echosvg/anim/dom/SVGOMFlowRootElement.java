@@ -49,6 +49,7 @@ public class SVGOMFlowRootElement extends SVGGraphicsElement {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG12Constants.SVG_FLOW_ROOT_TAG;
     }
@@ -56,6 +57,7 @@ public class SVGOMFlowRootElement extends SVGGraphicsElement {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFlowRootElement();
     }

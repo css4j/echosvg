@@ -63,7 +63,9 @@ public abstract class AbstractNode
      * An empty instance of NodeList.
      */
     public static final NodeList EMPTY_NODE_LIST = new NodeList() {
+        @Override
         public Node item(int i) { return null; }
+        @Override
         public int  getLength() { return 0; }
     };
 
@@ -96,12 +98,14 @@ public abstract class AbstractNode
      * Sets the name of this node.
      * Do nothing.
      */
+    @Override
     public void setNodeName(String v) {
     }
 
     /**
      * Sets the owner document of this node.
      */
+    @Override
     public void setOwnerDocument(Document doc) {
         ownerDocument = (AbstractDocument)doc;
     }
@@ -110,6 +114,7 @@ public abstract class AbstractNode
      * Sets the value of the specified attribute. This method only applies
      * to Attr objects.
      */
+    @Override
     public void setSpecified(boolean v) {
         throw createDOMException(DOMException.INVALID_STATE_ERR,
                                  "node.type",
@@ -121,6 +126,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeValue()}.
      * @return null.
      */
+    @Override
     public String getNodeValue() throws DOMException {
         return null;
     }
@@ -129,6 +135,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setNodeValue(String)}.
      * Do nothing.
      */
+    @Override
     public void setNodeValue(String nodeValue) throws DOMException {
     }
 
@@ -136,6 +143,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getParentNode()}.
      * @return null.
      */
+    @Override
     public Node getParentNode() {
         return null;
     }
@@ -144,6 +152,7 @@ public abstract class AbstractNode
      * Sets the parent node.
      * Throws a HIERARCHY_REQUEST_ERR {@link org.w3c.dom.DOMException}.
      */
+    @Override
     public void setParentNode(Node v) {
         throw createDOMException(DOMException.HIERARCHY_REQUEST_ERR,
                                  "parent.not.allowed",
@@ -155,6 +164,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getChildNodes()}.
      * @return {@link #EMPTY_NODE_LIST}.
      */
+    @Override
     public NodeList getChildNodes() {
         return EMPTY_NODE_LIST;
     }
@@ -163,6 +173,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getFirstChild()}.
      * @return null.
      */
+    @Override
     public Node getFirstChild() {
         return null;
     }
@@ -171,6 +182,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLastChild()}.
      * @return null.
      */
+    @Override
     public Node getLastChild() {
         return null;
     }
@@ -179,6 +191,7 @@ public abstract class AbstractNode
      * Sets the node immediately preceding this node.
      * Throws a HIERARCHY_REQUEST_ERR {@link org.w3c.dom.DOMException}.
      */
+    @Override
     public void setPreviousSibling(Node n) {
         throw createDOMException(DOMException.HIERARCHY_REQUEST_ERR,
                                  "sibling.not.allowed",
@@ -190,6 +203,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getPreviousSibling()}.
      * @return null.
      */
+    @Override
     public Node getPreviousSibling() {
         return null;
     }
@@ -198,6 +212,7 @@ public abstract class AbstractNode
      * Sets the node immediately following this node.
      * Throws a HIERARCHY_REQUEST_ERR {@link org.w3c.dom.DOMException}.
      */
+    @Override
     public void setNextSibling(Node n) {
         throw createDOMException(DOMException.HIERARCHY_REQUEST_ERR,
                                  "sibling.not.allowed",
@@ -209,6 +224,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNextSibling()}.
      * @return null.
      */
+    @Override
     public Node getNextSibling() {
         return null;
     }
@@ -217,6 +233,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#hasAttributes()}.
      * @return false.
      */
+    @Override
     public boolean hasAttributes() {
         return false;
     }
@@ -225,6 +242,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getAttributes()}.
      * @return null.
      */
+    @Override
     public NamedNodeMap getAttributes() {
         return null;
     }
@@ -233,6 +251,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getOwnerDocument()}.
      * @return {@link #ownerDocument}.
      */
+    @Override
     public Document getOwnerDocument() {
         return ownerDocument;
     }
@@ -241,6 +260,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
      * @return null.
      */
+    @Override
     public String getNamespaceURI() {
         return null;
     }
@@ -250,6 +270,7 @@ public abstract class AbstractNode
      * org.w3c.dom.Node#insertBefore(Node, Node)}.
      * Throws a HIERARCHY_REQUEST_ERR {@link org.w3c.dom.DOMException}.
      */
+    @Override
     public Node insertBefore(Node newChild, Node refChild)
         throws DOMException {
         throw createDOMException(DOMException.HIERARCHY_REQUEST_ERR,
@@ -263,6 +284,7 @@ public abstract class AbstractNode
      * org.w3c.dom.Node#replaceChild(Node, Node)}.
      * Throws a HIERARCHY_REQUEST_ERR {@link org.w3c.dom.DOMException}.
      */
+    @Override
     public Node replaceChild(Node newChild, Node oldChild)
         throws DOMException {
         throw createDOMException(DOMException.HIERARCHY_REQUEST_ERR,
@@ -275,6 +297,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#removeChild(Node)}.
      * Throws a HIERARCHY_REQUEST_ERR {@link org.w3c.dom.DOMException}.
      */
+    @Override
     public Node removeChild(Node oldChild) throws DOMException {
         throw createDOMException(DOMException.HIERARCHY_REQUEST_ERR,
                                  "children.not.allowed",
@@ -286,6 +309,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#appendChild(Node)}.
      * Throws a HIERARCHY_REQUEST_ERR {@link org.w3c.dom.DOMException}.
      */
+    @Override
     public Node appendChild(Node newChild) throws DOMException {
         throw createDOMException(DOMException.HIERARCHY_REQUEST_ERR,
                                  "children.not.allowed",
@@ -297,6 +321,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#hasChildNodes()}.
      * @return false.
      */
+    @Override
     public boolean hasChildNodes() {
         return false;
     }
@@ -304,6 +329,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#cloneNode(boolean)}.
      */
+    @Override
     public Node cloneNode(boolean deep) {
         Node n = deep ? deepCopyInto(newNode()) : copyInto(newNode());
         fireUserDataHandlers(UserDataHandler.NODE_CLONED, this, n);
@@ -314,6 +340,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#normalize()}.
      * Do nothing.
      */
+    @Override
     public void normalize() {
     }
 
@@ -321,6 +348,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Node#isSupported(String,String)}.
      */
+    @Override
     public boolean isSupported(String feature, String version) {
         return getCurrentDocument().getImplementation().hasFeature(feature,
                                                                    version);
@@ -329,6 +357,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getPrefix()}.
      */
+    @Override
     public String getPrefix() {
         return (getNamespaceURI() == null)
             ? null
@@ -338,6 +367,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setPrefix(String)}.
      */
+    @Override
     public void setPrefix(String prefix) throws DOMException {
         if (isReadonly()) {
             throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -376,9 +406,9 @@ public abstract class AbstractNode
                                                     prefix });
         }
         if ((prefix.equals("xml") &&
-             !XMLSupport.XML_NAMESPACE_URI.equals(uri)) ||
+             !XMLConstants.XML_NAMESPACE_URI.equals(uri)) ||
             (prefix.equals("xmlns") &&
-             !XMLSupport.XMLNS_NAMESPACE_URI.equals(uri))) {
+             !XMLConstants.XMLNS_NAMESPACE_URI.equals(uri))) {
             throw createDOMException(DOMException.NAMESPACE_ERR,
                                      "namespace.uri",
                                      new Object[] {(int) getNodeType(),
@@ -391,6 +421,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return (getNamespaceURI() == null)
             ? null
@@ -456,6 +487,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getBaseURI()}.
      */
+    @Override
     public String getBaseURI() {
         return getCascadedXMLBase(this);
     }
@@ -479,6 +511,7 @@ public abstract class AbstractNode
      * {@link org.w3c.dom.Node#compareDocumentPosition(Node)}.
      * XXX Doesn't handle notation or entity nodes.
      */
+    @Override
     public short compareDocumentPosition(Node other) throws DOMException {
         if (this == other) {
             return 0;
@@ -565,6 +598,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getTextContent()}.
      */
+    @Override
     public String getTextContent() {
         return null;
     }
@@ -572,6 +606,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setTextContent(String)}.
      */
+    @Override
     public void setTextContent(String s) throws DOMException {
         if (isReadonly()) {
             throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -590,6 +625,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#isSameNode(Node)}.
      */
+    @Override
     public boolean isSameNode(Node other) {
         return this == other;
     }
@@ -597,6 +633,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#lookupPrefix(String)}.
      */
+    @Override
     public String lookupPrefix(String namespaceURI) {
         if (namespaceURI == null || namespaceURI.length() == 0) {
             return null;
@@ -677,6 +714,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.Node#isDefaultNamespace(String)}.
      */
+    @Override
     public boolean isDefaultNamespace(String namespaceURI) {
         switch (getNodeType()) {
             case DOCUMENT_NODE:
@@ -727,6 +765,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.Node#lookupNamespaceURI(String)}.
      */
+    @Override
     public String lookupNamespaceURI(String prefix) {
         switch (getNodeType()) {
             case DOCUMENT_NODE:
@@ -786,6 +825,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#isEqualNode(Node)}.
      */
+    @Override
     public boolean isEqualNode(Node other) {
         if (other == null) {
             return false;
@@ -867,6 +907,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.Node#getFeature(String,String)}.
      */
+    @Override
     public Object getFeature(String feature, String version) {
         return null;
     }
@@ -874,6 +915,7 @@ public abstract class AbstractNode
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getUserData(String)}.
      */
+    @Override
     public Object getUserData(String key) {
         if (userData == null) {
             return null;
@@ -885,6 +927,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.Node#setUserData(String,Object,UserDataHandler)}.
      */
+    @Override
     public Object setUserData(String key, Object data, UserDataHandler handler) {
         if (userData == null) {
             userData = new HashMap();
@@ -928,6 +971,7 @@ public abstract class AbstractNode
      * {@link
      * org.w3c.dom.events.EventTarget#addEventListener(String,EventListener,boolean)}.
      */
+    @Override
     public void addEventListener(String type,
                                  EventListener listener,
                                  boolean useCapture) {
@@ -942,6 +986,7 @@ public abstract class AbstractNode
      * {@link
      * NodeEventTarget#addEventListenerNS(String,String,EventListener,boolean,Object)}.
      */
+    @Override
     public void addEventListenerNS(String namespaceURI,
                                    String type,
                                    EventListener listener,
@@ -965,6 +1010,7 @@ public abstract class AbstractNode
      * {@link
      * org.w3c.dom.events.EventTarget#removeEventListener(String,EventListener,boolean)}.
      */
+    @Override
     public void removeEventListener(String type,
                                     EventListener listener,
                                     boolean useCapture) {
@@ -978,6 +1024,7 @@ public abstract class AbstractNode
      * {@link
      * NodeEventTarget#removeEventListenerNS(String,String,EventListener,boolean)}.
      */
+    @Override
     public void removeEventListenerNS(String namespaceURI,
                                       String type,
                                       EventListener listener,
@@ -997,6 +1044,7 @@ public abstract class AbstractNode
      * Implements {@link
      * io.sf.carte.echosvg.dom.events.NodeEventTarget#getParentNodeEventTarget()}.
      */
+    @Override
     public NodeEventTarget getParentNodeEventTarget() {
         return (NodeEventTarget) getXblParentNode();
     }
@@ -1005,6 +1053,7 @@ public abstract class AbstractNode
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.events.EventTarget#dispatchEvent(Event)}.
      */
+    @Override
     public boolean dispatchEvent(Event evt) throws EventException {
         if (eventSupport == null) {
             initializeEventSupport();
@@ -1039,6 +1088,7 @@ public abstract class AbstractNode
     /**
      * Returns the event support instance for this node, or null if any.
      */
+    @Override
     public EventSupport getEventSupport() {
         return eventSupport;
     }
@@ -1189,6 +1239,7 @@ public abstract class AbstractNode
     /**
      * Get the parent of this node in the fully flattened tree.
      */
+    @Override
     public Node getXblParentNode() {
         return ownerDocument.getXBLManager().getXblParentNode(this);
     }
@@ -1196,6 +1247,7 @@ public abstract class AbstractNode
     /**
      * Get the list of child nodes of this node in the fully flattened tree.
      */
+    @Override
     public NodeList getXblChildNodes() {
         return ownerDocument.getXBLManager().getXblChildNodes(this);
     }
@@ -1204,6 +1256,7 @@ public abstract class AbstractNode
      * Get the list of child nodes of this node in the fully flattened tree
      * that are within the same shadow scope.
      */
+    @Override
     public NodeList getXblScopedChildNodes() {
         return ownerDocument.getXBLManager().getXblScopedChildNodes(this);
     }
@@ -1211,6 +1264,7 @@ public abstract class AbstractNode
     /**
      * Get the first child node of this node in the fully flattened tree.
      */
+    @Override
     public Node getXblFirstChild() {
         return ownerDocument.getXBLManager().getXblFirstChild(this);
     }
@@ -1218,6 +1272,7 @@ public abstract class AbstractNode
     /**
      * Get the last child node of this node in the fully flattened tree.
      */
+    @Override
     public Node getXblLastChild() {
         return ownerDocument.getXBLManager().getXblLastChild(this);
     }
@@ -1226,6 +1281,7 @@ public abstract class AbstractNode
      * Get the node which directly precedes the current node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Node getXblPreviousSibling() {
         return ownerDocument.getXBLManager().getXblPreviousSibling(this);
     }
@@ -1234,6 +1290,7 @@ public abstract class AbstractNode
      * Get the node which directly follows the current node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Node getXblNextSibling() {
         return ownerDocument.getXBLManager().getXblNextSibling(this);
     }
@@ -1241,6 +1298,7 @@ public abstract class AbstractNode
     /**
      * Get the first element child of this node in the fully flattened tree.
      */
+    @Override
     public Element getXblFirstElementChild() {
         return ownerDocument.getXBLManager().getXblFirstElementChild(this);
     }
@@ -1248,6 +1306,7 @@ public abstract class AbstractNode
     /**
      * Get the last element child of this node in the fully flattened tree.
      */
+    @Override
     public Element getXblLastElementChild() {
         return ownerDocument.getXBLManager().getXblLastElementChild(this);
     }
@@ -1256,6 +1315,7 @@ public abstract class AbstractNode
      * Get the first element that precedes the current node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Element getXblPreviousElementSibling() {
         return ownerDocument.getXBLManager().getXblPreviousElementSibling(this);
     }
@@ -1264,6 +1324,7 @@ public abstract class AbstractNode
      * Get the first element that follows the current node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Element getXblNextElementSibling() {
         return ownerDocument.getXBLManager().getXblNextElementSibling(this);
     }
@@ -1271,6 +1332,7 @@ public abstract class AbstractNode
     /**
      * Get the bound element whose shadow tree this current node resides in.
      */
+    @Override
     public Element getXblBoundElement() {
         return ownerDocument.getXBLManager().getXblBoundElement(this);
     }
@@ -1278,6 +1340,7 @@ public abstract class AbstractNode
     /**
      * Get the shadow tree of this node.
      */
+    @Override
     public Element getXblShadowTree() {
         return ownerDocument.getXBLManager().getXblShadowTree(this);
     }
@@ -1285,6 +1348,7 @@ public abstract class AbstractNode
     /**
      * Get the xbl:definition elements currently binding this element.
      */
+    @Override
     public NodeList getXblDefinitions() {
         return ownerDocument.getXBLManager().getXblDefinitions(this);
     }
@@ -1294,6 +1358,7 @@ public abstract class AbstractNode
     /**
      * Returns the XBL manager associated data for this node.
      */
+    @Override
     public Object getManagerData() {
         return managerData;
     }
@@ -1301,6 +1366,7 @@ public abstract class AbstractNode
     /**
      * Sets the XBL manager associated data for this node.
      */
+    @Override
     public void setManagerData(Object data) {
         managerData = data;
     }

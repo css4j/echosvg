@@ -71,6 +71,7 @@ public class JSVGRenderingAccuracyTest extends SamplesRenderingTest
         return new JSVGCanvasHandler(this, this);
     }
 
+    @Override
     public TestReport encode(URL srcURL, FileOutputStream fos) {
         this.srcURL = srcURL;
         this.fos    = fos;
@@ -96,23 +97,28 @@ public class JSVGRenderingAccuracyTest extends SamplesRenderingTest
     }
 
     /* JSVGCanvasHandler.Delegate Interface */
+    @Override
     public boolean canvasInit(JSVGCanvas canvas) {
         canvas.setURI(srcURL.toString());
         return true;
     }
 
+    @Override
     public void canvasLoaded(JSVGCanvas canvas) {
     }
 
+    @Override
     public void canvasRendered(JSVGCanvas canvas) {
     }
 
+    @Override
     public boolean canvasUpdated(JSVGCanvas canvas) {
         synchronized (this) {
             return done;
         }
     }
 
+    @Override
     public void canvasDone(JSVGCanvas canvas) {
         synchronized (this) {
             done = true;
@@ -151,6 +157,7 @@ public class JSVGRenderingAccuracyTest extends SamplesRenderingTest
         }
     }
 
+    @Override
     public void failure(TestReport report) {
         synchronized (this) {
             done = true;

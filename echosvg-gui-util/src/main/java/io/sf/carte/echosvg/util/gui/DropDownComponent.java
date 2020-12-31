@@ -134,7 +134,8 @@ public class DropDownComponent extends JPanel {
             popupMenu.addPropertyChangeListener
                 ("enabled",
                  new PropertyChangeListener() {
-                     public void propertyChange(PropertyChangeEvent evt) {
+                     @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
                          setEnabled
                             ((Boolean) evt.getNewValue());
                      }
@@ -144,11 +145,13 @@ public class DropDownComponent extends JPanel {
             popupMenu.addListener
                 (new ScrollablePopupMenuAdapter() {
 
-                     public void itemsWereAdded(ScrollablePopupMenuEvent ev) {
+                     @Override
+                    public void itemsWereAdded(ScrollablePopupMenuEvent ev) {
                          updateMainButtonTooltip(ev.getDetails());
                      }
 
-                     public void itemsWereRemoved(ScrollablePopupMenuEvent ev) {
+                     @Override
+                    public void itemsWereRemoved(ScrollablePopupMenuEvent ev) {
                          updateMainButtonTooltip(ev.getDetails());
                      }
                  });
@@ -156,6 +159,7 @@ public class DropDownComponent extends JPanel {
         return popupMenu;
     }
 
+    @Override
     public void setEnabled(boolean enable) {
         isDropDownEnabled = enable;
         mainButton.setEnabled(enable);
@@ -163,6 +167,7 @@ public class DropDownComponent extends JPanel {
         dropDownButton.setIcon(enable ? enabledDownArrow : disabledDownArrow);
     }
 
+    @Override
     public boolean isEnabled() {
         return isDropDownEnabled;
     }
@@ -181,6 +186,7 @@ public class DropDownComponent extends JPanel {
      * Shows the pop up menu when clicked.
      */
     private class DropDownListener extends MouseAdapter {
+        @Override
         public void mousePressed(MouseEvent e) {
             if (popupMenu.isShowing() && isDropDownEnabled) {
                 popupMenu.setVisible(false);
@@ -189,9 +195,11 @@ public class DropDownComponent extends JPanel {
                     ((Component) e.getSource(), DropDownComponent.this);
             }
         }
+        @Override
         public void mouseEntered(MouseEvent ev) {
             dropDownButton.setBorderPainted(true);
         }
+        @Override
         public void mouseExited(MouseEvent ev) {
             dropDownButton.setBorderPainted(false);
         }
@@ -207,6 +215,7 @@ public class DropDownComponent extends JPanel {
          */
         protected Color arrowColor = Color.black;
 
+        @Override
         public void paintIcon(Component c, Graphics g, int x, int y) {
             g.setColor(arrowColor);
             g.drawLine(x, y, x + 4, y);
@@ -214,10 +223,12 @@ public class DropDownComponent extends JPanel {
             g.drawLine(x + 2, y + 2, x + 2, y + 2);
         }
 
+        @Override
         public int getIconWidth() {
             return 6;
         }
 
+        @Override
         public int getIconHeight() {
             return 4;
         }
@@ -235,6 +246,7 @@ public class DropDownComponent extends JPanel {
             arrowColor = new Color(140, 140, 140);
         }
 
+        @Override
         public void paintIcon(Component c, Graphics g, int x, int y) {
             super.paintIcon(c, g, x, y);
             g.setColor(Color.white);
@@ -339,13 +351,14 @@ public class DropDownComponent extends JPanel {
             this.setUI(BasicButtonUI.createUI(this));
             setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 20));
             setMenuItemDefaultColors();
-            this.setAlignmentX(JButton.LEFT_ALIGNMENT);
+            this.setAlignmentX(Component.LEFT_ALIGNMENT);
             setSelected(false);
 
             this.addMouseListener
                 (new MouseAdapter() {
 
-                     public void mouseEntered(MouseEvent e) {
+                     @Override
+                    public void mouseEntered(MouseEvent e) {
                          if (DefaultScrollablePopupMenuItem.this.isEnabled()) {
                              setSelected(true);
                              parent.selectionChanged
@@ -353,7 +366,8 @@ public class DropDownComponent extends JPanel {
                          }
                      }
 
-                     public void mouseExited(MouseEvent e) {
+                     @Override
+                    public void mouseExited(MouseEvent e) {
                          if (DefaultScrollablePopupMenuItem.this.isEnabled()) {
                              setSelected(false);
                              parent.selectionChanged
@@ -361,7 +375,8 @@ public class DropDownComponent extends JPanel {
                          }
                      }
 
-                     public void mouseClicked(MouseEvent e) {
+                     @Override
+                    public void mouseClicked(MouseEvent e) {
                          parent.processItemClicked();
                      }
                  });
@@ -375,6 +390,7 @@ public class DropDownComponent extends JPanel {
             setForeground(MENUITEM_FG_COLOR);
         }
 
+        @Override
         public void setSelected(boolean selected) {
             super.setSelected(selected);
             if (selected) {
@@ -385,14 +401,17 @@ public class DropDownComponent extends JPanel {
             }
         }
 
+        @Override
         public String getText() {
             return super.getText();
         }
 
+        @Override
         public void setText(String text) {
             super.setText(text);
         }
 
+        @Override
         public void setEnabled(boolean b) {
             super.setEnabled(b);
         }
@@ -609,6 +628,7 @@ public class DropDownComponent extends JPanel {
                     + ((Component) footer).getPreferredSize().height;
         }
 
+        @Override
         public Dimension getPreferredSize() {
             return new Dimension(getPreferredWidth(), getPreferredHeight());
         }
@@ -867,9 +887,11 @@ public class DropDownComponent extends JPanel {
     public static class ScrollablePopupMenuAdapter
             implements ScrollablePopupMenuListener {
 
+        @Override
         public void itemsWereAdded(ScrollablePopupMenuEvent ev) {
         }
 
+        @Override
         public void itemsWereRemoved(ScrollablePopupMenuEvent ev) {
         }
     }

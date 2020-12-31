@@ -51,6 +51,7 @@ public class SVGClipPathElementBridge extends AnimatableGenericSVGBridge
     /**
      * Returns 'clipPath'.
      */
+    @Override
     public String getLocalName() {
         return SVG_CLIP_PATH_TAG;
     }
@@ -63,6 +64,7 @@ public class SVGClipPathElementBridge extends AnimatableGenericSVGBridge
      * @param clipedElement the element that references the clip element
      * @param clipedNode the graphics node to clip
      */
+    @Override
     public ClipRable createClip(BridgeContext ctx,
                                 Element clipElement,
                                 Element clipedElement,

@@ -47,6 +47,7 @@ public class SVGMaskElementBridge extends AnimatableGenericSVGBridge
     /**
      * Returns 'mask'.
      */
+    @Override
     public String getLocalName() {
         return SVG_MASK_TAG;
     }
@@ -59,6 +60,7 @@ public class SVGMaskElementBridge extends AnimatableGenericSVGBridge
      * @param maskedElement the element that references the mask element
      * @param maskedNode the graphics node to mask
      */
+    @Override
     public Mask createMask(BridgeContext ctx,
                            Element maskElement,
                            Element maskedElement,

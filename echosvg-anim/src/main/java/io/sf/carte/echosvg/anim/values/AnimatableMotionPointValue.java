@@ -64,6 +64,7 @@ public class AnimatableMotionPointValue extends AnimatableValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to,
                                        float interpolation,
@@ -131,6 +132,7 @@ public class AnimatableMotionPointValue extends AnimatableValue {
      * Returns whether two values of this type can have their distance
      * computed, as needed by paced animation.
      */
+    @Override
     public boolean canPace() {
         return true;
     }
@@ -139,6 +141,7 @@ public class AnimatableMotionPointValue extends AnimatableValue {
      * Returns the absolute distance between this value and the specified other
      * value.
      */
+    @Override
     public float distanceTo(AnimatableValue other) {
         AnimatableMotionPointValue o = (AnimatableMotionPointValue) other;
         float dx = x - o.x;
@@ -149,6 +152,7 @@ public class AnimatableMotionPointValue extends AnimatableValue {
     /**
      * Returns a zero value of this AnimatableValue's type.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         return new AnimatableMotionPointValue(target, 0f, 0f, 0f);
     }
@@ -156,6 +160,7 @@ public class AnimatableMotionPointValue extends AnimatableValue {
     /**
      * Returns a string representation of this object.
      */
+    @Override
     public String toStringRep() {
         StringBuffer sb = new StringBuffer();
         sb.append(formatNumber(x));

@@ -76,13 +76,16 @@ public class Base64DecodeStream extends InputStream {
         pem_array['/'] = (byte)idx++;
     }
 
+    @Override
     public boolean markSupported() { return false; }
 
+    @Override
     public void close()
         throws IOException {
         EOF = true;
     }
 
+    @Override
     public int available()
         throws IOException {
         return 3-out_offset;
@@ -93,6 +96,7 @@ public class Base64DecodeStream extends InputStream {
     int  out_offset = 3;
     boolean EOF = false;
 
+    @Override
     public int read() throws IOException {
 
         if (out_offset == 3) {
@@ -105,6 +109,7 @@ public class Base64DecodeStream extends InputStream {
         return out_buffer[out_offset++] &0xFF;
     }
 
+    @Override
     public int read(byte []out, int offset, int len)
         throws IOException {
 

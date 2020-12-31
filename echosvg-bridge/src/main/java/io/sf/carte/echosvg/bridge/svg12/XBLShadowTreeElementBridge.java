@@ -47,6 +47,7 @@ public class XBLShadowTreeElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns 'shadowTree'.
      */
+    @Override
     public String getLocalName() {
         return XBLConstants.XBL_SHADOW_TREE_TAG;
     }
@@ -54,6 +55,7 @@ public class XBLShadowTreeElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns the XBL namespace.
      */
+    @Override
     public String getNamespaceURI() {
         return XBLConstants.XBL_NAMESPACE_URI;
     }
@@ -61,6 +63,7 @@ public class XBLShadowTreeElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new XBLShadowTreeElementBridge();
     }
@@ -72,6 +75,7 @@ public class XBLShadowTreeElementBridge extends AbstractGraphicsNodeBridge {
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         // 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
         if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
@@ -88,6 +92,7 @@ public class XBLShadowTreeElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Creates a <code>CompositeGraphicsNode</code>.
      */
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         // Not needed, since createGraphicsNode is overridden
         return null;
@@ -101,6 +106,7 @@ public class XBLShadowTreeElementBridge extends AbstractGraphicsNodeBridge {
      * @param e the element that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -111,6 +117,7 @@ public class XBLShadowTreeElementBridge extends AbstractGraphicsNodeBridge {
      * Returns true if the graphics node has to be displayed, false
      * otherwise.
      */
+    @Override
     public boolean getDisplay(Element e) {
         return true;
     }
@@ -118,6 +125,7 @@ public class XBLShadowTreeElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns true as the &lt;xbl:template&gt; element is a container.
      */
+    @Override
     public boolean isComposite() {
         return true;
     }
@@ -127,6 +135,7 @@ public class XBLShadowTreeElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
      */
+    @Override
     public void handleDOMNodeInsertedEvent(MutationEvent evt) {
         if (evt.getTarget() instanceof Element) {
             handleElementAdded((CompositeGraphicsNode)node, 

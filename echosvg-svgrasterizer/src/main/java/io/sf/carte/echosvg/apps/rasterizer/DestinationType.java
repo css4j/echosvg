@@ -70,6 +70,7 @@ public final class DestinationType {
         return extension;
     }
 
+    @Override
     public String toString(){
         return type;
     }

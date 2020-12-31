@@ -84,6 +84,7 @@ public class SVGOMFontElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -101,6 +102,7 @@ public class SVGOMFontElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FONT_TAG;
     }
@@ -111,6 +113,7 @@ public class SVGOMFontElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
      */
+    @Override
     public SVGAnimatedBoolean getExternalResourcesRequired() {
         return externalResourcesRequired;
     }
@@ -118,6 +121,7 @@ public class SVGOMFontElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFontElement();
     }
@@ -125,6 +129,7 @@ public class SVGOMFontElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

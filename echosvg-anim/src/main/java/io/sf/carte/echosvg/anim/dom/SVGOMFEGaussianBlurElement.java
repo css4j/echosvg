@@ -75,6 +75,7 @@ public class SVGOMFEGaussianBlurElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -90,6 +91,7 @@ public class SVGOMFEGaussianBlurElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_GAUSSIAN_BLUR_TAG;
     }
@@ -97,6 +99,7 @@ public class SVGOMFEGaussianBlurElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEGaussianBlurElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -105,6 +108,7 @@ public class SVGOMFEGaussianBlurElement
      * <b>DOM</b>: Implements {@link
      * SVGFEGaussianBlurElement#getStdDeviationX()}.
      */
+    @Override
     public SVGAnimatedNumber getStdDeviationX() {
         throw new UnsupportedOperationException
             ("SVGFEGaussianBlurElement.getStdDeviationX is not implemented"); // XXX
@@ -114,6 +118,7 @@ public class SVGOMFEGaussianBlurElement
      * <b>DOM</b>: Implements {@link
      * SVGFEGaussianBlurElement#getStdDeviationY()}.
      */
+    @Override
     public SVGAnimatedNumber getStdDeviationY() {
         throw new UnsupportedOperationException
             ("SVGFEGaussianBlurElement.getStdDeviationY is not implemented"); // XXX
@@ -123,6 +128,7 @@ public class SVGOMFEGaussianBlurElement
      * <b>DOM</b>: Implements {@link
      * SVGFEGaussianBlurElement#setStdDeviation(float,float)}.
      */
+    @Override
     public void setStdDeviation(float devX, float devY) {
         setAttributeNS(null, SVG_STD_DEVIATION_ATTRIBUTE,
                        Float.toString(devX) + " " + Float.toString(devY));
@@ -131,6 +137,7 @@ public class SVGOMFEGaussianBlurElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEGaussianBlurElement();
     }
@@ -138,6 +145,7 @@ public class SVGOMFEGaussianBlurElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

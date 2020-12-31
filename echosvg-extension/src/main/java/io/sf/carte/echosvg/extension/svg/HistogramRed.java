@@ -89,11 +89,13 @@ public class HistogramRed extends AbstractRed {
         return bins;
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         copyToRaster(wr);
         return wr;
     }
 
+    @Override
     public Raster getTile(int tileX, int tileY) {
         int yt = tileY-getMinTileY();
         int xt = tileX-getMinTileX();

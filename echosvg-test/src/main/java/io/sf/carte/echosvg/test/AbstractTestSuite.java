@@ -38,6 +38,7 @@ public abstract class AbstractTestSuite implements TestSuite {
     /**
      * Adds a <code>Test</code> to the suite
      */
+    @Override
     public void addTest(Test test){
         if(test != null){
             children.add(test);

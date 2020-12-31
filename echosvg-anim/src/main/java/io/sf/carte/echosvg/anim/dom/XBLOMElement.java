@@ -58,6 +58,7 @@ public abstract class XBLOMElement extends SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link Node#getNodeName()}.
      */
+    @Override
     public String getNodeName() {
         if (prefix == null || prefix.equals("")) {
             return getLocalName();
@@ -69,6 +70,7 @@ public abstract class XBLOMElement extends SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link Node#getNamespaceURI()}.
      */
+    @Override
     public String getNamespaceURI() {
         return XBL_NAMESPACE_URI;
     }
@@ -76,6 +78,7 @@ public abstract class XBLOMElement extends SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link Node#setPrefix(String)}.
      */
+    @Override
     public void setPrefix(String prefix) throws DOMException {
         if (isReadonly()) {
             throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -98,6 +101,7 @@ public abstract class XBLOMElement extends SVGOMElement
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         XBLOMElement e = (XBLOMElement)n;
@@ -108,6 +112,7 @@ public abstract class XBLOMElement extends SVGOMElement
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         XBLOMElement e = (XBLOMElement)n;
@@ -119,6 +124,7 @@ public abstract class XBLOMElement extends SVGOMElement
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         XBLOMElement e = (XBLOMElement)n;
@@ -130,6 +136,7 @@ public abstract class XBLOMElement extends SVGOMElement
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         XBLOMElement e = (XBLOMElement)n;

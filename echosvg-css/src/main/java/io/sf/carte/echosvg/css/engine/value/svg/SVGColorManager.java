@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.CIELCHColor;
 import io.sf.carte.echosvg.css.engine.value.svg12.CIELabColor;
@@ -58,7 +59,7 @@ public class SVGColorManager extends ColorManager {
      * The default value is black.
      */
     public SVGColorManager(String prop) {
-        this(prop, SVGValueConstants.BLACK_RGB_VALUE);
+        this(prop, ValueConstants.BLACK_RGB_VALUE);
     }
 
     /**
@@ -72,6 +73,7 @@ public class SVGColorManager extends ColorManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return false;
     }
@@ -79,6 +81,7 @@ public class SVGColorManager extends ColorManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -86,6 +89,7 @@ public class SVGColorManager extends ColorManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return true;
     }
@@ -93,6 +97,7 @@ public class SVGColorManager extends ColorManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_COLOR;
     }
@@ -100,6 +105,7 @@ public class SVGColorManager extends ColorManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return property;
     }
@@ -109,6 +115,7 @@ public class SVGColorManager extends ColorManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return defaultValue;
     }
@@ -116,6 +123,7 @@ public class SVGColorManager extends ColorManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
@@ -291,6 +299,7 @@ public class SVGColorManager extends ColorManager {
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,

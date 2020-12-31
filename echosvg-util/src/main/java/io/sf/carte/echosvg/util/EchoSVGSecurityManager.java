@@ -37,6 +37,7 @@ public class EchoSVGSecurityManager extends SecurityManager {
      *
      * @return  the execution stack.
      */
+    @Override
     public Class[] getClassContext(){
         return super.getClassContext();
     }

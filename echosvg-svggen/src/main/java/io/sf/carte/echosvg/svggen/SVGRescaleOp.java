@@ -58,6 +58,7 @@ public class SVGRescaleOp extends AbstractSVGFilterConverter {
      *         the input filter
      * @see io.sf.carte.echosvg.svggen.SVGFilterDescriptor
      */
+    @Override
     public SVGFilterDescriptor toSVG(BufferedImageOp filter,
                                      Rectangle filterRect) {
         if(filter instanceof RescaleOp)

@@ -25,6 +25,7 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -53,6 +54,7 @@ public class SpacingManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -60,6 +62,7 @@ public class SpacingManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -67,6 +70,7 @@ public class SpacingManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return true;
     }
@@ -74,6 +78,7 @@ public class SpacingManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_SPACING_VALUE;
     }
@@ -81,6 +86,7 @@ public class SpacingManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return property;
     }
@@ -88,23 +94,25 @@ public class SpacingManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
-        return SVGValueConstants.NORMAL_VALUE;
+        return ValueConstants.NORMAL_VALUE;
     }
 
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
         case INHERIT:
-            return SVGValueConstants.INHERIT_VALUE;
+            return ValueConstants.INHERIT_VALUE;
 
         case IDENT:
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_NORMAL_VALUE)) {
-                return SVGValueConstants.NORMAL_VALUE;
+                return ValueConstants.NORMAL_VALUE;
             }
             throw createInvalidIdentifierDOMException(lu.getStringValue());
         }
@@ -115,13 +123,14 @@ public class SpacingManager extends LengthManager {
      * Implements {@link
      * ValueManager#createStringValue(short,String,CSSEngine)}.
      */
+    @Override
     public Value createStringValue(short type, String value, CSSEngine engine)
         throws DOMException {
         if (type != CSSPrimitiveValue.CSS_IDENT) {
             throw createInvalidStringTypeDOMException(type);
         }
         if (value.equalsIgnoreCase(CSSConstants.CSS_NORMAL_VALUE)) {
-            return SVGValueConstants.NORMAL_VALUE;
+            return ValueConstants.NORMAL_VALUE;
         }
         throw createInvalidIdentifierDOMException(value);
     }
@@ -130,6 +139,7 @@ public class SpacingManager extends LengthManager {
      * Indicates the orientation of the property associated with
      * this manager.
      */
+    @Override
     protected int getOrientation() {
         return BOTH_ORIENTATION;
     }

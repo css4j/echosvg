@@ -42,12 +42,14 @@ public class DefaultLengthListHandler
     /**
      * Implements {@link LengthListHandler#startLengthList()}.
      */
+    @Override
     public void startLengthList() throws ParseException {
     }
 
     /**
      * Implements {@link LengthListHandler#endLengthList()}.
      */
+    @Override
     public void endLengthList() throws ParseException {
     }
 }

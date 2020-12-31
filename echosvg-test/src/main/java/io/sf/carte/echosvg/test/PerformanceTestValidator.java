@@ -31,6 +31,7 @@ import java.awt.image.BufferedImage;
  * @version $Id$
  */
 public class PerformanceTestValidator extends AbstractTest {
+    @Override
     public TestReport runImpl() throws Exception {
         // First, work with SimplePerformanceTest to check the life
         // cycle of using a performance test.
@@ -89,6 +90,7 @@ public class PerformanceTestValidator extends AbstractTest {
     }
 
     static class SimplePerformanceTest extends PerformanceTest {
+        @Override
         public void runOp() {
             // runRef();
             BufferedImage buf = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);

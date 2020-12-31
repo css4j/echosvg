@@ -51,6 +51,7 @@ public class SVGFeMergeElementBridge
     /**
      * Returns 'feMerge'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_MERGE_TAG;
     }
@@ -72,6 +73,7 @@ public class SVGFeMergeElementBridge
      *        can then access a filter node from the filterMap if they
      *        know its name.
      */
+    @Override
     public Filter createFilter(BridgeContext ctx,
                                Element filterElement,
                                Element filteredElement,
@@ -192,6 +194,7 @@ public class SVGFeMergeElementBridge
         /**
          * Returns 'feMergeNode'.
          */
+        @Override
         public String getLocalName() {
             return SVG_FE_MERGE_NODE_TAG;
         }

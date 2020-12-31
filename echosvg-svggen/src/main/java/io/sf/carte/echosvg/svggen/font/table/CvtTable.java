@@ -38,6 +38,7 @@ public class CvtTable implements Table {
         }
     }
 
+    @Override
     public int getType() {
         return cvt;
     }

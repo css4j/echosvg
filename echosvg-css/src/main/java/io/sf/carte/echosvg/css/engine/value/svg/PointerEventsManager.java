@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -39,19 +40,19 @@ public class PointerEventsManager extends IdentifierManager {
     protected static final StringMap values = new StringMap();
     static {
         values.put(CSSConstants.CSS_ALL_VALUE,
-                   SVGValueConstants.ALL_VALUE);
+                   ValueConstants.ALL_VALUE);
         values.put(CSSConstants.CSS_FILL_VALUE,
                    SVGValueConstants.FILL_VALUE);
         values.put(CSSConstants.CSS_FILLSTROKE_VALUE,
                    SVGValueConstants.FILLSTROKE_VALUE);
         values.put(CSSConstants.CSS_NONE_VALUE,
-                   SVGValueConstants.NONE_VALUE);
+                   ValueConstants.NONE_VALUE);
         values.put(CSSConstants.CSS_PAINTED_VALUE,
-                   SVGValueConstants.PAINTED_VALUE);
+                   ValueConstants.PAINTED_VALUE);
         values.put(CSSConstants.CSS_STROKE_VALUE,
-                   SVGValueConstants.STROKE_VALUE);
+                   ValueConstants.STROKE_VALUE);
         values.put(CSSConstants.CSS_VISIBLE_VALUE,
-                   SVGValueConstants.VISIBLE_VALUE);
+                   ValueConstants.VISIBLE_VALUE);
         values.put(CSSConstants.CSS_VISIBLEFILL_VALUE,
                    SVGValueConstants.VISIBLEFILL_VALUE);
         values.put(CSSConstants.CSS_VISIBLEFILLSTROKE_VALUE,
@@ -66,6 +67,7 @@ public class PointerEventsManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -73,6 +75,7 @@ public class PointerEventsManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -80,6 +83,7 @@ public class PointerEventsManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -87,6 +91,7 @@ public class PointerEventsManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_IDENT;
     }
@@ -95,6 +100,7 @@ public class PointerEventsManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_POINTER_EVENTS_PROPERTY;
     }
@@ -103,6 +109,7 @@ public class PointerEventsManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return SVGValueConstants.VISIBLEPAINTED_VALUE;
     }
@@ -110,6 +117,7 @@ public class PointerEventsManager extends IdentifierManager {
     /**
      * Implements {@link IdentifierManager#getIdentifiers()}.
      */
+    @Override
     public StringMap getIdentifiers() {
         return values;
     }

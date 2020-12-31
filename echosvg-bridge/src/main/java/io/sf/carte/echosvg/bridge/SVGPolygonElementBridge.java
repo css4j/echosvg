@@ -55,6 +55,7 @@ public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
     /**
      * Returns 'polygon'.
      */
+    @Override
     public String getLocalName() {
         return SVG_POLYGON_TAG;
     }
@@ -62,6 +63,7 @@ public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGPolygonElementBridge();
     }
@@ -73,6 +75,7 @@ public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
      * @param e the element that describes a rect element
      * @param shapeNode the shape node to initialize
      */
+    @Override
     protected void buildShape(BridgeContext ctx,
                               Element e,
                               ShapeNode shapeNode) {
@@ -106,6 +109,7 @@ public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
     /**
      * Invoked when the animated value of an animatable attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged
             (AnimatedLiveAttributeValue alav) {
         if (alav.getNamespaceURI() == null) {
@@ -119,6 +123,7 @@ public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
         super.handleAnimatedAttributeChanged(alav);
     }
 
+    @Override
     protected void handleCSSPropertyChanged(int property) {
         switch(property) {
         case SVGCSSEngine.FILL_RULE_INDEX:

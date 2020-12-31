@@ -41,6 +41,7 @@ public abstract class AbstractCharacterData
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeValue()}.
      * @return {@link #nodeValue}.
      */
+    @Override
     public String getNodeValue() throws DOMException {
         return nodeValue;
     }
@@ -48,6 +49,7 @@ public abstract class AbstractCharacterData
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setNodeValue(String)}.
      */
+    @Override
     public void setNodeValue(String nodeValue) throws DOMException {
         if (isReadonly()) {
             throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -71,6 +73,7 @@ public abstract class AbstractCharacterData
      * <b>DOM</b>: Implements {@link org.w3c.dom.CharacterData#getData()}.
      * @return {@link #getNodeValue()}.
      */
+    @Override
     public String getData() throws DOMException {
         return getNodeValue();
     }
@@ -79,6 +82,7 @@ public abstract class AbstractCharacterData
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.CharacterData#setData(String)}.
      */
+    @Override
     public void setData(String data) throws DOMException {
         setNodeValue(data);
     }
@@ -87,6 +91,7 @@ public abstract class AbstractCharacterData
      * <b>DOM</b>: Implements {@link org.w3c.dom.CharacterData#getLength()}.
      * @return {@link #nodeValue}.length().
      */
+    @Override
     public int getLength() {
         return nodeValue.length();
     }
@@ -95,6 +100,7 @@ public abstract class AbstractCharacterData
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.CharacterData#substringData(int,int)}.
      */
+    @Override
     public String substringData(int offset, int count) throws DOMException {
         checkOffsetCount(offset, count);
 
@@ -106,6 +112,7 @@ public abstract class AbstractCharacterData
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.CharacterData#appendData(String)}.
      */
+    @Override
     public void appendData(String arg) throws DOMException {
         if (isReadonly()) {
             throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -120,6 +127,7 @@ public abstract class AbstractCharacterData
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.CharacterData#insertData(int,String)}.
      */
+    @Override
     public void insertData(int offset, String arg) throws DOMException {
         if (isReadonly()) {
             throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -141,6 +149,7 @@ public abstract class AbstractCharacterData
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.CharacterData#deleteData(int,int)}.
      */
+    @Override
     public void deleteData(int offset, int count) throws DOMException {
         if (isReadonly()) {
             throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -160,6 +169,7 @@ public abstract class AbstractCharacterData
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.CharacterData#replaceData(int,int,String)}.
      */
+    @Override
     public void replaceData(int offset, int count, String arg)
         throws DOMException {
         if (isReadonly()) {
@@ -197,6 +207,7 @@ public abstract class AbstractCharacterData
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         AbstractCharacterData cd = (AbstractCharacterData)n;
@@ -207,6 +218,7 @@ public abstract class AbstractCharacterData
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         AbstractCharacterData cd = (AbstractCharacterData)n;
@@ -218,6 +230,7 @@ public abstract class AbstractCharacterData
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         AbstractCharacterData cd = (AbstractCharacterData)n;
@@ -229,6 +242,7 @@ public abstract class AbstractCharacterData
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         AbstractCharacterData cd = (AbstractCharacterData)n;

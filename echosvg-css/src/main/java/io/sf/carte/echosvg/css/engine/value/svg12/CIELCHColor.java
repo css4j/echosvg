@@ -49,6 +49,7 @@ public class CIELCHColor extends AbstractCIEColor {
     }
 
     /** {@inheritDoc} */
+    @Override
     public String getFunctionName() {
         return CIE_LCH_COLOR_FUNCTION;
     }

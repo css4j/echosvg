@@ -178,6 +178,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The horizontal kerning value.
      */
+    @Override
     public float getHKern(int glyphCode1, int glyphCode2) {
         if (glyphCode1 < 0 || glyphCode1 >= glyphUnicodes.length
             || glyphCode2 < 0 || glyphCode2 >= glyphUnicodes.length) {
@@ -200,6 +201,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The vertical kerning value.
      */
+    @Override
     public float getVKern(int glyphCode1, int glyphCode2) {
         if (glyphCode1 < 0 || glyphCode1 >= glyphUnicodes.length
             || glyphCode2 < 0 || glyphCode2 >= glyphUnicodes.length) {
@@ -432,6 +434,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return true if the character can be displayed.
      */
+    @Override
     public boolean canDisplay(char c) {
         for (int i = 0; i < glyphUnicodes.length; i++) {
             if (glyphUnicodes[i].indexOf(c) != -1
@@ -454,6 +457,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      * @return The index of the first character it can't display or -1 if
      * it can display the whole string.
      */
+    @Override
     public int canDisplayUpTo(char[] text, int start, int limit) {
         StringCharacterIterator sci =
             new StringCharacterIterator(new String(text));
@@ -471,6 +475,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      * @return The index of the first character it can't display or -1 if
      * it can display the whole string.
      */
+    @Override
     public int canDisplayUpTo(CharacterIterator iter, int start, int limit) {
 
         AttributedCharacterIterator aci = null;
@@ -538,6 +543,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      * @return The index of the first character it can't display or -1 if
      * it can display the whole string.
      */
+    @Override
     public int canDisplayUpTo(String str) {
         StringCharacterIterator sci = new StringCharacterIterator(str);
         return canDisplayUpTo(sci, 0, str.length());
@@ -552,6 +558,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The new glyph vector.
      */
+    @Override
     public GVTGlyphVector createGlyphVector(FontRenderContext frc,
                                             char[] chars) {
          StringCharacterIterator sci =
@@ -568,6 +575,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The new glyph vector.
      */
+    @Override
     public GVTGlyphVector createGlyphVector(FontRenderContext frc,
                                             CharacterIterator ci) {
 
@@ -676,6 +684,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The new glyph vector.
      */
+    @Override
     public GVTGlyphVector createGlyphVector(FontRenderContext frc,
                                             int[] glyphCodes,
                                             CharacterIterator ci) {
@@ -697,6 +706,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The new glyph vector.
      */
+    @Override
     public GVTGlyphVector createGlyphVector(FontRenderContext frc,
                                             String str) {
         StringCharacterIterator sci = new StringCharacterIterator(str);
@@ -711,6 +721,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The new font object.
      */
+    @Override
     public GVTFont deriveFont(float size) {
         return new SVGGVTFont(size, fontFace, glyphUnicodes, glyphNames,
                               glyphLangs, glyphOrientations, glyphForms, ctx,
@@ -718,6 +729,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
                               hkernElements, vkernElements, textElement);
     }
 
+    @Override
     public String getFamilyName() {
         return fontFace.getFamilyName();
     }
@@ -764,6 +776,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The new GVTLineMetrics object.
      */
+    @Override
     public GVTLineMetrics getLineMetrics(char[] chars, int beginIndex,
                                          int limit,
                                          FontRenderContext frc) {
@@ -780,6 +793,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The new GVTLineMetrics object.
      */
+    @Override
     public GVTLineMetrics getLineMetrics(CharacterIterator ci, int beginIndex,
                                          int limit, FontRenderContext frc) {
         return getLineMetrics(beginIndex, limit);
@@ -793,6 +807,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The new GVTLineMetrics object.
      */
+    @Override
     public GVTLineMetrics getLineMetrics(String str, FontRenderContext frc) {
         StringCharacterIterator sci = new StringCharacterIterator(str);
         return getLineMetrics(sci, 0, str.length(), frc);
@@ -808,6 +823,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The new GVTLineMetrics object.
      */
+    @Override
     public GVTLineMetrics getLineMetrics(String str, int beginIndex, int limit,
                                          FontRenderContext frc) {
         StringCharacterIterator sci = new StringCharacterIterator(str);
@@ -819,6 +835,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return The font size.
      */
+    @Override
     public float getSize() {
         return fontSize;
     }
@@ -829,6 +846,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      *
      * @return A string representation of this font.
      */
+    @Override
     public String toString() {
         return fontFace.getFamilyName() + " " + fontFace.getFontWeight() + " "
               + fontFace.getFontStyle();

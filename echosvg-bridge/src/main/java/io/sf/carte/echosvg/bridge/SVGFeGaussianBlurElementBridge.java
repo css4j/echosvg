@@ -49,6 +49,7 @@ public class SVGFeGaussianBlurElementBridge
     /**
      * Returns 'feGaussianBlur'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_GAUSSIAN_BLUR_TAG;
     }
@@ -71,6 +72,7 @@ public class SVGFeGaussianBlurElementBridge
      *        can then access a filter node from the filterMap if they
      *        know its name.
      */
+    @Override
     public Filter createFilter(BridgeContext ctx,
                                Element filterElement,
                                Element filteredElement,

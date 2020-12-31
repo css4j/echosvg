@@ -54,6 +54,7 @@ public class JSVGCanvasBeanInfo extends SimpleBeanInfo {
     /**
      * Returns an icon for the specified type.
      */
+    @Override
     public Image getIcon(int iconType) {
         switch(iconType) {
         case ICON_COLOR_16x16:

@@ -86,6 +86,7 @@ public class TimingSpecifierListProducer
     /**
      * Invoked when an offset value timing specifier is parsed.
      */
+    @Override
     public void offset(float offset) {
         TimingSpecifier ts = new OffsetTimingSpecifier(owner, isBegin, offset);
         timingSpecifiers.add(ts);
@@ -94,6 +95,7 @@ public class TimingSpecifierListProducer
     /**
      * Invoked when a syncbase value timing specifier is parsed.
      */
+    @Override
     public void syncbase(float offset, String syncbaseID,
                          String timeSymbol) {
         TimingSpecifier ts = new SyncbaseTimingSpecifier
@@ -104,6 +106,7 @@ public class TimingSpecifierListProducer
     /**
      * Invoked when an eventbase value timing specifier is parsed.
      */
+    @Override
     public void eventbase(float offset, String eventbaseID,
                           String eventType) {
         TimingSpecifier ts = new EventbaseTimingSpecifier
@@ -115,6 +118,7 @@ public class TimingSpecifierListProducer
      * Invoked when a repeat value timing specifier with no iteration
      * is parsed.
      */
+    @Override
     public void repeat(float offset, String syncbaseID) {
         TimingSpecifier ts = new RepeatTimingSpecifier
             (owner, isBegin, offset, syncbaseID);
@@ -125,6 +129,7 @@ public class TimingSpecifierListProducer
      * Invoked when a repeat value timing specifier with an iteration
      * is parsed.
      */
+    @Override
     public void repeat(float offset, String syncbaseID,
                        int repeatIteration) {
         TimingSpecifier ts = new RepeatTimingSpecifier
@@ -135,6 +140,7 @@ public class TimingSpecifierListProducer
     /**
      * Invoked when an accesskey value timing specifier is parsed.
      */
+    @Override
     public void accesskey(float offset, char key) {
         TimingSpecifier ts = new AccesskeyTimingSpecifier
             (owner, isBegin, offset, key);
@@ -144,6 +150,7 @@ public class TimingSpecifierListProducer
     /**
      * Invoked when an SVG 1.2 accessKey value timing specifier is parsed.
      */
+    @Override
     public void accessKeySVG12(float offset, String keyName) {
         TimingSpecifier ts = new AccesskeyTimingSpecifier
             (owner, isBegin, offset, keyName);
@@ -153,6 +160,7 @@ public class TimingSpecifierListProducer
     /**
      * Invoked when a media marker value timing specifier is parsed.
      */
+    @Override
     public void mediaMarker(String syncbaseID, String markerName) {
         TimingSpecifier ts = new MediaMarkerTimingSpecifier
             (owner, isBegin, syncbaseID, markerName);
@@ -162,6 +170,7 @@ public class TimingSpecifierListProducer
     /**
      * Invoked when a wallclock value timing specifier is parsed.
      */
+    @Override
     public void wallclock(Calendar time) {
         TimingSpecifier ts = new WallclockTimingSpecifier(owner, isBegin, time);
         timingSpecifiers.add(ts);
@@ -170,6 +179,7 @@ public class TimingSpecifierListProducer
     /**
      * Invoked when an indefinite value timing specifier is parsed.
      */
+    @Override
     public void indefinite() {
         TimingSpecifier ts = new IndefiniteTimingSpecifier(owner, isBegin);
         timingSpecifiers.add(ts);

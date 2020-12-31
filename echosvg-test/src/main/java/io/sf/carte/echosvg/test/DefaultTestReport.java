@@ -48,18 +48,22 @@ public class DefaultTestReport implements TestReport {
         this.test = test;
     }
 
+    @Override
     public TestSuiteReport getParentReport(){
         return parent;
     }
 
+    @Override
     public void setParentReport(TestSuiteReport parent){
         this.parent = parent;
     }
 
+    @Override
     public Test getTest(){
         return test;
     }
 
+    @Override
     public String getErrorCode(){
         return errorCode;
     }
@@ -75,6 +79,7 @@ public class DefaultTestReport implements TestReport {
         this.errorCode = errorCode;
     }
 
+    @Override
     public boolean hasPassed(){
         return passed;
     }
@@ -89,6 +94,7 @@ public class DefaultTestReport implements TestReport {
         this.passed = passed;
     }
     
+    @Override
     public Entry[] getDescription(){
         return description;
     }
@@ -97,6 +103,7 @@ public class DefaultTestReport implements TestReport {
         this.description = description;
     }
 
+    @Override
     public void addDescriptionEntry(String key,
                                     Object value){
         addDescriptionEntry(new Entry(key, value));

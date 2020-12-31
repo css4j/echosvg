@@ -214,6 +214,7 @@ public class JErrorPane extends JPanel implements ActionMap {
      * @param key the key mapped with the action to get
      * @throws MissingListenerException if the action is not found
      */
+    @Override
     public Action getAction(String key) throws MissingListenerException {
         return (Action)listeners.get(key);
     }
@@ -223,6 +224,7 @@ public class JErrorPane extends JPanel implements ActionMap {
      */
     protected class OKButtonAction extends AbstractAction {
 
+        @Override
         public void actionPerformed(ActionEvent evt) {
             ((JDialog)getTopLevelAncestor()).dispose();
         }
@@ -233,6 +235,7 @@ public class JErrorPane extends JPanel implements ActionMap {
      */
     protected class ShowDetailButtonAction extends AbstractAction {
 
+        @Override
         public void actionPerformed(ActionEvent evt) {
             if (isDetailShown) {
                 subpanel.remove(detailsArea);

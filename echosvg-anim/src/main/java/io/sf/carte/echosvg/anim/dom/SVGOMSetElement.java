@@ -85,6 +85,7 @@ public class SVGOMSetElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_SET_TAG;
     }
@@ -92,6 +93,7 @@ public class SVGOMSetElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMSetElement();
     }

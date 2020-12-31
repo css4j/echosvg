@@ -37,6 +37,7 @@ public class SVGAnimateColorElementBridge extends SVGAnimateElementBridge {
     /**
      * Returns 'animateColor'.
      */
+    @Override
     public String getLocalName() {
         return SVG_ANIMATE_COLOR_TAG;
     }
@@ -44,6 +45,7 @@ public class SVGAnimateColorElementBridge extends SVGAnimateElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGAnimateColorElementBridge();
     }
@@ -51,6 +53,7 @@ public class SVGAnimateColorElementBridge extends SVGAnimateElementBridge {
     /**
      * Creates the animation object for the animation element.
      */
+    @Override
     protected AbstractAnimation createAnimation(AnimationTarget target) {
         AnimatableValue from = parseAnimatableValue(SVG_FROM_ATTRIBUTE);
         AnimatableValue to = parseAnimatableValue(SVG_TO_ATTRIBUTE);
@@ -73,6 +76,7 @@ public class SVGAnimateColorElementBridge extends SVGAnimateElementBridge {
      * animate attributes of the specified type.
      * @param type one of the TYPE_ constants defined in {@link SVGTypes}.
      */
+    @Override
     protected boolean canAnimateType(int type) {
         return type == SVGTypes.TYPE_COLOR || type == SVGTypes.TYPE_PAINT;
     }
@@ -81,6 +85,7 @@ public class SVGAnimateColorElementBridge extends SVGAnimateElementBridge {
      * Returns whether the specified {@link AnimatableValue} is of a type allowed
      * by this animation.
      */
+    @Override
     protected boolean checkValueType(AnimatableValue v) {
         if (v instanceof AnimatablePaintValue) {
             return ((AnimatablePaintValue) v).getPaintType()

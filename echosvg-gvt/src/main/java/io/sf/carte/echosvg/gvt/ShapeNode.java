@@ -138,6 +138,7 @@ public class ShapeNode extends AbstractGraphicsNode {
      *
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void paint(Graphics2D g2d) {
         if (isVisible)
             super.paint(g2d);
@@ -148,6 +149,7 @@ public class ShapeNode extends AbstractGraphicsNode {
      *
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void primitivePaint(Graphics2D g2d) {
         if (shapePainter != null) {
             shapePainter.paint(g2d);
@@ -163,6 +165,7 @@ public class ShapeNode extends AbstractGraphicsNode {
      * been informed that all its cached values related to its bounds must be
      * recomputed.
      */
+    @Override
     protected void invalidateGeometryCache() {
         super.invalidateGeometryCache();
         primitiveBounds = null;
@@ -172,6 +175,7 @@ public class ShapeNode extends AbstractGraphicsNode {
         sensitiveArea = null;
     }
 
+    @Override
     public void setPointerEventType(int pointerEventType) {
         super.setPointerEventType(pointerEventType);
         sensitiveBounds = null;
@@ -183,6 +187,7 @@ public class ShapeNode extends AbstractGraphicsNode {
      *
      * @param p the specified Point2D in the user space
      */
+    @Override
     public boolean contains(Point2D p) {
         switch(pointerEventType) {
         case VISIBLE_PAINTED:
@@ -213,6 +218,7 @@ public class ShapeNode extends AbstractGraphicsNode {
      *
      * @param r the specified Rectangle2D in the user node space
      */
+    @Override
     public boolean intersects(Rectangle2D r) {
         Rectangle2D b = getBounds();
         if (b != null) {
@@ -226,6 +232,7 @@ public class ShapeNode extends AbstractGraphicsNode {
     /**
      * Returns the bounds of the area covered by this node's primitive paint.
      */
+    @Override
     public Rectangle2D getPrimitiveBounds() {
         if (!isVisible)    return null;
         if (shape == null) return null;
@@ -302,6 +309,7 @@ public class ShapeNode extends AbstractGraphicsNode {
      * This includes the stroked area but does not include the effects
      * of clipping, masking or filtering.
      */
+    @Override
     public Rectangle2D getSensitiveBounds() {
         if (sensitiveBounds != null)
             return sensitiveBounds;
@@ -423,6 +431,7 @@ public class ShapeNode extends AbstractGraphicsNode {
      * exclusive of any clipping, masking, filtering or stroking, for
      * example.
      */
+    @Override
     public Rectangle2D getGeometryBounds(){
         if (geometryBounds == null) {
             if (shape == null) {
@@ -436,6 +445,7 @@ public class ShapeNode extends AbstractGraphicsNode {
     /**
      * Returns the outline of this node.
      */
+    @Override
     public Shape getOutline() {
         return shape;
     }

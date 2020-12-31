@@ -102,6 +102,7 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -113,20 +114,20 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes
     private void initializeLiveAttributes() {
         x = createLiveAnimatedLength
             (null, SVG_X_ATTRIBUTE, SVG_FILTER_PRIMITIVE_X_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         y = createLiveAnimatedLength
             (null, SVG_Y_ATTRIBUTE, SVG_FILTER_PRIMITIVE_Y_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         width =
             createLiveAnimatedLength
                 (null, SVG_WIDTH_ATTRIBUTE,
                  SVG_FILTER_PRIMITIVE_WIDTH_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.HORIZONTAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
         height =
             createLiveAnimatedLength
                 (null, SVG_HEIGHT_ATTRIBUTE,
                  SVG_FILTER_PRIMITIVE_HEIGHT_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.VERTICAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
         result = createLiveAnimatedString(null, SVG_RESULT_ATTRIBUTE);
     }
 
@@ -134,6 +135,7 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getX()}.
      */
+    @Override
     public SVGAnimatedLength getX() {
         return x;
     }
@@ -142,6 +144,7 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getY()}.
      */
+    @Override
     public SVGAnimatedLength getY() {
         return y;
     }
@@ -150,6 +153,7 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getWidth()}.
      */
+    @Override
     public SVGAnimatedLength getWidth() {
         return width;
     }
@@ -158,6 +162,7 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getHeight()}.
      */
+    @Override
     public SVGAnimatedLength getHeight() {
         return height;
     }
@@ -166,6 +171,7 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getResult()}.
      */
+    @Override
     public SVGAnimatedString getResult() {
         return result;
     }
@@ -173,6 +179,7 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

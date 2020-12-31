@@ -40,12 +40,14 @@ public class DefaultTimingSpecifierListHandler
     /**
      * Invoked when parsing of a timing specifier list commences.
      */
+    @Override
     public void startTimingSpecifierList() {
     }
 
     /**
      * Invoked when parsing of a timing specifier list ends.
      */
+    @Override
     public void endTimingSpecifierList() {
     }
 }

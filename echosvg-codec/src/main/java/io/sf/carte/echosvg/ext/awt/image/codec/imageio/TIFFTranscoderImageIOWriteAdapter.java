@@ -51,6 +51,7 @@ public class TIFFTranscoderImageIOWriteAdapter
      * @see io.sf.carte.echosvg.transcoder.image.TIFFTranscoder.WriteAdapter#writeImage(TIFFTranscoder,
      * java.awt.image.BufferedImage, io.sf.carte.echosvg.transcoder.TranscoderOutput)
      */
+    @Override
     public void writeImage(TIFFTranscoder transcoder, BufferedImage img,
             TranscoderOutput output) throws TranscoderException {
 

@@ -62,6 +62,7 @@ public class RectValue extends AbstractValue {
     /**
      * The type of the value.
      */
+    @Override
     public short getPrimitiveType() {
         return CSSPrimitiveValue.CSS_RECT;
     }
@@ -69,6 +70,7 @@ public class RectValue extends AbstractValue {
     /**
      *  A string representation of the current value.
      */
+    @Override
     public String getCssText() {
         return "rect(" + top.getCssText() + ", "
             +  right.getCssText() + ", "
@@ -79,6 +81,7 @@ public class RectValue extends AbstractValue {
     /**
      * Implements {@link Value#getTop()}.
      */
+    @Override
     public Value getTop() throws DOMException {
         return top;
     }
@@ -86,6 +89,7 @@ public class RectValue extends AbstractValue {
     /**
      * Implements {@link Value#getRight()}.
      */
+    @Override
     public Value getRight() throws DOMException {
         return right;
     }
@@ -93,6 +97,7 @@ public class RectValue extends AbstractValue {
     /**
      * Implements {@link Value#getBottom()}.
      */
+    @Override
     public Value getBottom() throws DOMException {
         return bottom;
     }
@@ -100,6 +105,7 @@ public class RectValue extends AbstractValue {
     /**
      * Implements {@link Value#getLeft()}.
      */
+    @Override
     public Value getLeft() throws DOMException {
         return left;
     }
@@ -107,6 +113,7 @@ public class RectValue extends AbstractValue {
     /**
      * Returns a printable representation of this value.
      */
+    @Override
     public String toString() {
         return getCssText();
     }

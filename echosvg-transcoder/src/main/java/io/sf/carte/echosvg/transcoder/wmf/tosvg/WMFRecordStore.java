@@ -51,6 +51,7 @@ public class WMFRecordStore extends AbstractWMFReader {
     /**
      * Resets the internal storage and viewport coordinates.
      */
+    @Override
     public void reset(){
       numRecords = 0;
       vpX = 0;
@@ -67,6 +68,7 @@ public class WMFRecordStore extends AbstractWMFReader {
     /**
      * Reads the WMF file from the specified Stream.
      */
+    @Override
     protected boolean readRecords( DataInputStream is ) throws IOException {
 
         short functionId = 1;

@@ -49,6 +49,7 @@ public class JGridBagPanel extends JPanel implements GridBagConstants{
     private static class ZeroInsetsManager implements InsetsManager{
         private Insets insets = new Insets(0, 0, 0, 0);
 
+        @Override
         public Insets getInsets(int gridx, int gridy){
             return insets;
         }
@@ -75,6 +76,7 @@ public class JGridBagPanel extends JPanel implements GridBagConstants{
         public Insets topInsets = new Insets(0, leftInset, 0, 0);
         public Insets topLeftInsets = new Insets(0, 0, 0, 0);
 
+        @Override
         public Insets getInsets(int gridx, int gridy){
             if(gridx > 0){
                 if(gridy > 0)
@@ -129,6 +131,7 @@ public class JGridBagPanel extends JPanel implements GridBagConstants{
     /**
      * This method only takes effect if the LayoutManager is a GridBagLayout
      */
+    @Override
     public void setLayout(LayoutManager layout){
         if(layout instanceof GridBagLayout)
             super.setLayout(layout);

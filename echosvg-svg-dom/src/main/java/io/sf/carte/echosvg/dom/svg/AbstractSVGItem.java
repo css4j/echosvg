@@ -52,6 +52,7 @@ public abstract class AbstractSVGItem implements SVGItem {
      * Assigns a parent list to this item.
      * @param list The list the item belongs.
      */
+    @Override
     public void setParent(AbstractSVGList list) {
         parent = list;
     }
@@ -59,6 +60,7 @@ public abstract class AbstractSVGItem implements SVGItem {
     /**
      * Returns the parent list of this item.
      */
+    @Override
     public AbstractSVGList getParent() {
         return parent;
     }
@@ -78,6 +80,7 @@ public abstract class AbstractSVGItem implements SVGItem {
      * Returns the cached representation of the item if valid, otherwise
      * recomputes the String representation of the item.
      */
+    @Override
     public String getValueAsString() {
         if (itemStringValue == null) {
             itemStringValue = getStringValue();

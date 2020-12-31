@@ -80,6 +80,7 @@ public class SVGOMGlyphElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_GLYPH_TAG;
     }
@@ -87,6 +88,7 @@ public class SVGOMGlyphElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMGlyphElement();
     }

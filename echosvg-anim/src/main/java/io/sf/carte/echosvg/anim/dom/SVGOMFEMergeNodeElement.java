@@ -72,6 +72,7 @@ public class SVGOMFEMergeNodeElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -87,6 +88,7 @@ public class SVGOMFEMergeNodeElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_MERGE_NODE_TAG;
     }
@@ -95,6 +97,7 @@ public class SVGOMFEMergeNodeElement
      * <b>DOM</b>: Implements {@link
      * SVGFEMergeNodeElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -102,6 +105,7 @@ public class SVGOMFEMergeNodeElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEMergeNodeElement();
     }
@@ -109,6 +113,7 @@ public class SVGOMFEMergeNodeElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

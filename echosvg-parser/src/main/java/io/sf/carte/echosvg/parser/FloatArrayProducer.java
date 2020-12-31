@@ -65,6 +65,7 @@ public class FloatArrayProducer
      * @exception ParseException if an error occures while processing the
      *                           number list.
      */
+    @Override
     public void startNumberList() throws ParseException {
         as = new LinkedList();
         a = new float[11];
@@ -77,6 +78,7 @@ public class FloatArrayProducer
      * @exception ParseException if an error occures while processing
      *                           the number
      */
+    @Override
     public void numberValue(float v) throws ParseException {
         if (index == a.length) {
             as.add(a);
@@ -92,6 +94,7 @@ public class FloatArrayProducer
      * @exception ParseException if an error occures while processing the
      *                           number list.
      */
+    @Override
     public void endNumberList() throws ParseException {
         float[] all = new float[count];
         int pos = 0;
@@ -110,6 +113,7 @@ public class FloatArrayProducer
     /**
      * Implements {@link PointsHandler#startPoints()}.
      */
+    @Override
     public void startPoints() throws ParseException {
         startNumberList();
     }
@@ -117,6 +121,7 @@ public class FloatArrayProducer
     /**
      * Implements {@link PointsHandler#point(float,float)}.
      */
+    @Override
     public void point(float x, float y) throws ParseException {
         numberValue(x);
         numberValue(y);
@@ -125,6 +130,7 @@ public class FloatArrayProducer
     /**
      * Implements {@link PointsHandler#endPoints()}.
      */
+    @Override
     public void endPoints() throws ParseException {
         endNumberList();
     }

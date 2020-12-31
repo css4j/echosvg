@@ -62,6 +62,7 @@ public class SVGPaintDescriptor implements SVGDescriptor, SVGSyntax{
         return def;
     }
 
+    @Override
     public Map getAttributeMap(Map attrMap){
         if(attrMap == null)
             attrMap = new HashMap();
@@ -74,6 +75,7 @@ public class SVGPaintDescriptor implements SVGDescriptor, SVGSyntax{
         return attrMap;
     }
 
+    @Override
     public List getDefinitionSet(List defSet){
         if(defSet == null)
             defSet = new LinkedList();

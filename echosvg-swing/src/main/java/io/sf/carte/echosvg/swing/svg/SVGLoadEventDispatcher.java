@@ -86,6 +86,7 @@ public class SVGLoadEventDispatcher extends HaltingThread {
     /**
      * Runs the dispatcher.
      */
+    @Override
     public void run() {
         SVGLoadEventDispatcherEvent ev;
         ev = new SVGLoadEventDispatcherEvent(this, root);
@@ -159,6 +160,7 @@ public class SVGLoadEventDispatcher extends HaltingThread {
     }
 
     static Dispatcher startedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((SVGLoadEventDispatcherListener)listener).
@@ -168,6 +170,7 @@ public class SVGLoadEventDispatcher extends HaltingThread {
         };
 
     static Dispatcher completedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((SVGLoadEventDispatcherListener)listener).
@@ -177,6 +180,7 @@ public class SVGLoadEventDispatcher extends HaltingThread {
         };
 
     static Dispatcher cancelledDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((SVGLoadEventDispatcherListener)listener).
@@ -186,6 +190,7 @@ public class SVGLoadEventDispatcher extends HaltingThread {
         };
 
     static Dispatcher failedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((SVGLoadEventDispatcherListener)listener).

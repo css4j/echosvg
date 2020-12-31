@@ -25,6 +25,7 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -46,6 +47,7 @@ public class MarginLengthManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -53,6 +55,7 @@ public class MarginLengthManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -60,6 +63,7 @@ public class MarginLengthManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return true;
     }
@@ -67,6 +71,7 @@ public class MarginLengthManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_LENGTH_OR_INHERIT;
     }
@@ -74,6 +79,7 @@ public class MarginLengthManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return prop;
     }
@@ -81,17 +87,19 @@ public class MarginLengthManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
-        return SVGValueConstants.NUMBER_0;
+        return ValueConstants.NUMBER_0;
     }
 
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INHERIT) {
-            return SVGValueConstants.INHERIT_VALUE;
+            return ValueConstants.INHERIT_VALUE;
         }
         return super.createValue(lu, engine);
     }
@@ -101,6 +109,7 @@ public class MarginLengthManager extends LengthManager {
      * Indicates the orientation of the property associated with
      * this manager.
      */
+    @Override
     protected int getOrientation() {
         // Margins are always wrt to block width, event for top/bottom.
         return HORIZONTAL_ORIENTATION;

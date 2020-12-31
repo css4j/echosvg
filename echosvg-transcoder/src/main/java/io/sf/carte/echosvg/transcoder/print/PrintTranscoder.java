@@ -137,6 +137,7 @@ public class PrintTranscoder extends SVGAbstractTranscoder
                   VALUE_MEDIA_PRINT);
     }
 
+    @Override
     public void transcode(TranscoderInput in,
                           TranscoderOutput out){
         if(in != null){
@@ -152,6 +153,7 @@ public class PrintTranscoder extends SVGAbstractTranscoder
      * @param output the ouput where to transcode
      * @exception TranscoderException if an error occured while transcoding
      */
+    @Override
     protected void transcode(Document document,
                              String uri,
                              TranscoderOutput output)
@@ -271,6 +273,7 @@ public class PrintTranscoder extends SVGAbstractTranscoder
     /**
      * Printable implementation
      */
+    @Override
     public int print(Graphics _g, PageFormat pageFormat, int pageIndex){
         //
         // On the first page, take a snapshot of the vector of
@@ -375,6 +378,7 @@ public class PrintTranscoder extends SVGAbstractTranscoder
      * @param docWidth Width of the document.
      * @param docHeight Height of the document.
      */
+    @Override
     protected void setImageSize(float docWidth, float docHeight) {
         // Check hint to know if scaling is really needed
         Boolean scaleToPage = (Boolean)hints.get(KEY_SCALE_TO_PAGE);

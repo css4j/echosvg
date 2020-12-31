@@ -97,6 +97,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
      * Returns a list of nodes that were matched by the given selector
      * string.
      */
+    @Override
     public NodeList getSelectedContent() {
         if (selectedContent == null) {
             selectedContent = new SelectedNodes();
@@ -111,6 +112,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
      * shadow tree (in document order) have up-to-date selectedContent
      * lists.
      */
+    @Override
     boolean update() {
         if (selectedContent == null) {
             selectedContent = new SelectedNodes();
@@ -199,6 +201,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#item(int)}.
          */
+        @Override
         public Node item(int index) {
             if (index < 0 || index >= nodes.size()) {
                 return null;
@@ -209,6 +212,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#getLength()}.
          */
+        @Override
         public int getLength() {
             return nodes.size();
         }
@@ -222,6 +226,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
          * Get the base URI for this resolver.  Since this resolver isn't
          * associated with a particular node, returns null.
          */
+        @Override
         public String getBaseIdentifier() {
             return null;
         }
@@ -229,6 +234,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
         /**
          * Resolves the given namespace prefix.
          */
+        @Override
         public String getNamespaceForPrefix(String prefix) {
             return contentElement.lookupNamespaceURI(prefix);
         }
@@ -236,6 +242,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
         /**
          * Resolves the given namespace prefix.
          */
+        @Override
         public String getNamespaceForPrefix(String prefix, Node context) {
             // ignore the context node
             return contentElement.lookupNamespaceURI(prefix);
@@ -244,6 +251,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
         /**
          * Returns whether this PrefixResolver handles a null prefix.
          */
+        @Override
         public boolean handlesNullPrefixes() {
             return false;
         }

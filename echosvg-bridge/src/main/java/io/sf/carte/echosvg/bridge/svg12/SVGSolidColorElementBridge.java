@@ -43,6 +43,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
 import io.sf.carte.echosvg.util.SVG12Constants;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * Bridge class for a regular polygon element.
@@ -61,13 +62,15 @@ public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge
     /**
      * Returns the SVG namespace URI.
      */
+    @Override
     public String getNamespaceURI() {
-        return SVG12Constants.SVG_NAMESPACE_URI;
+        return SVGConstants.SVG_NAMESPACE_URI;
     }
 
     /**
      * Returns 'rect'.
      */
+    @Override
     public String getLocalName() {
         return SVG12Constants.SVG_SOLID_COLOR_TAG;
     }
@@ -81,6 +84,7 @@ public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge
      * @param paintedNode the graphics node on which the Paint will be applied
      * @param opacity the opacity of the Paint to create
      */
+    @Override
     public Paint createPaint(BridgeContext ctx,
                              Element paintElement,
                              Element paintedElement,

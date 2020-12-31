@@ -47,6 +47,7 @@ public abstract class AbstractSVGNumberList
     /**
      * Return the separator between values in the list.
      */
+    @Override
     protected String getItemSeparator() {
         return SVG_NUMBER_LIST_SEPARATOR;
     }
@@ -72,6 +73,7 @@ public abstract class AbstractSVGNumberList
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#initialize(SVGNumber)}.
      */
+    @Override
     public SVGNumber initialize(SVGNumber newItem)
         throws DOMException, SVGException {
 
@@ -81,6 +83,7 @@ public abstract class AbstractSVGNumberList
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#getItem(int)}.
      */
+    @Override
     public SVGNumber getItem(int index) throws DOMException {
 
         return (SVGNumber)getItemImpl(index);
@@ -90,6 +93,7 @@ public abstract class AbstractSVGNumberList
      * <b>DOM</b>: Implements {@link
      * SVGNumberList#insertItemBefore(SVGNumber,int)}.
      */
+    @Override
     public SVGNumber insertItemBefore(SVGNumber newItem, int index)
         throws DOMException, SVGException {
 
@@ -99,6 +103,7 @@ public abstract class AbstractSVGNumberList
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#replaceItem(SVGNumber,int)}.
      */
+    @Override
     public SVGNumber replaceItem(SVGNumber newItem, int index)
         throws DOMException, SVGException {
 
@@ -108,6 +113,7 @@ public abstract class AbstractSVGNumberList
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#removeItem(int)}.
      */
+    @Override
     public SVGNumber removeItem(int index) throws DOMException {
         return (SVGNumber)removeItemImpl(index);
     }
@@ -115,6 +121,7 @@ public abstract class AbstractSVGNumberList
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#appendItem(SVGNumber)}.
      */
+    @Override
     public SVGNumber appendItem(SVGNumber newItem)
         throws DOMException, SVGException {
 
@@ -124,6 +131,7 @@ public abstract class AbstractSVGNumberList
     /**
      * Creates a new {@link SVGNumberItem} from the given {@link SVGNumber}.
      */
+    @Override
     protected SVGItem createSVGItem(Object newItem) {
         SVGNumber l = (SVGNumber)newItem;
         return new SVGNumberItem(l.getValue());
@@ -134,6 +142,7 @@ public abstract class AbstractSVGNumberList
      * @param value attribute value
      * @param handler list handler
      */
+    @Override
     protected void doParse(String value, ListHandler handler)
         throws ParseException{
 
@@ -147,6 +156,7 @@ public abstract class AbstractSVGNumberList
     /**
      * Asserts that the given item object is an {@link SVGNumber}.
      */
+    @Override
     protected void checkItemType(Object newItem) throws SVGException {
         if (!(newItem instanceof SVGNumber)) {
             // XXX Fix error code.
@@ -182,6 +192,7 @@ public abstract class AbstractSVGNumberList
         /**
          * Implements {@link NumberListHandler#startNumberList()}.
          */
+        @Override
         public void startNumberList() throws ParseException{
             listHandler.startList();
         }
@@ -189,6 +200,7 @@ public abstract class AbstractSVGNumberList
         /**
          * Implements {@link NumberListHandler#startNumber()}.
          */
+        @Override
         public void startNumber() throws ParseException {
             currentValue = 0.0f;
         }
@@ -196,6 +208,7 @@ public abstract class AbstractSVGNumberList
         /**
          * Implements {@link NumberListHandler#numberValue(float)}.
          */
+        @Override
         public void numberValue(float v) throws ParseException {
             currentValue = v;
         }
@@ -203,6 +216,7 @@ public abstract class AbstractSVGNumberList
         /**
          * Implements {@link NumberListHandler#endNumber()}.
          */
+        @Override
         public void endNumber() throws ParseException {
             listHandler.item(new SVGNumberItem(currentValue));
         }
@@ -210,6 +224,7 @@ public abstract class AbstractSVGNumberList
         /**
          * Implements {@link NumberListHandler#endNumberList()}.
          */
+        @Override
         public void endNumberList() throws ParseException {
             listHandler.endList();
         }

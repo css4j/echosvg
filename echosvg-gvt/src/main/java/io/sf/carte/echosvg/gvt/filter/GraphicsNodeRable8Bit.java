@@ -62,6 +62,7 @@ public class GraphicsNodeRable8Bit
      * primitivePaint on the associated <code>GraphicsNode</code> or
      * false if it uses paint.
      */
+    @Override
     public boolean getUsePrimitivePaint() {
         return usePrimitivePaint;
     }
@@ -71,6 +72,7 @@ public class GraphicsNodeRable8Bit
      * primitivePaint on the associated <code>GraphicsNode</code> or false
      * if it should use paint.  
      */
+    @Override
     public void setUsePrimitivePaint(boolean usePrimitivePaint) {
         this.usePrimitivePaint = usePrimitivePaint;
     }
@@ -83,6 +85,7 @@ public class GraphicsNodeRable8Bit
     /**
      * Returns the <code>GraphicsNode</code> rendered by this image
      */
+    @Override
     public GraphicsNode getGraphicsNode(){
         return node;
     }
@@ -90,6 +93,7 @@ public class GraphicsNodeRable8Bit
     /**
      * Sets the <code>GraphicsNode</code> this image should render
      */
+    @Override
     public void setGraphicsNode(GraphicsNode node){
         if(node == null){
             throw new IllegalArgumentException();
@@ -151,6 +155,7 @@ public class GraphicsNodeRable8Bit
     /**
      * Returns the bounds of this Rable in the user coordinate system.
      */
+    @Override
     public Rectangle2D getBounds2D(){
         if (usePrimitivePaint){
             Rectangle2D primitiveBounds = node.getPrimitiveBounds();
@@ -184,6 +189,7 @@ public class GraphicsNodeRable8Bit
      * determine whether an existing rendering may be cached and
      * reused.  It is always safe to return true.
      */
+    @Override
     public boolean isDynamic(){
         return false;
     }
@@ -198,6 +204,7 @@ public class GraphicsNodeRable8Bit
      *         for some reason the paint failed (in which 
      *         case a createRendering should be used).
      */
+    @Override
     public boolean paintRable(Graphics2D g2d) {
         // This optimization only apply if we are using
         // SrcOver.  Otherwise things break...
@@ -240,6 +247,7 @@ public class GraphicsNodeRable8Bit
      * @param renderContext the RenderContext to use to produce the rendering.
      * @return a RenderedImage containing the rendered data.
      */
+    @Override
     public RenderedImage createRendering(RenderContext renderContext){
         // Get user space to device space transform
         AffineTransform usr2dev = renderContext.getTransform();

@@ -31,6 +31,7 @@ public class ConcreteImageRendererFactory implements ImageRendererFactory {
     /**
      * Creates a new renderer.
      */
+    @Override
     public Renderer createRenderer() {
         return createStaticImageRenderer();
     }
@@ -38,6 +39,7 @@ public class ConcreteImageRendererFactory implements ImageRendererFactory {
     /**
      * Creates a new static image renderer.
      */
+    @Override
     public ImageRenderer createStaticImageRenderer() {
         if (Platform.isOSX)
             return new MacRenderer();
@@ -47,6 +49,7 @@ public class ConcreteImageRendererFactory implements ImageRendererFactory {
     /**
      * Creates a new dynamic image renderer.
      */
+    @Override
     public ImageRenderer createDynamicImageRenderer() {
         if (Platform.isOSX)
             return new MacRenderer();

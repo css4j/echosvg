@@ -78,6 +78,7 @@ public class SVGStyleSheetProcessingInstruction
     /**
      * Returns the associated style-sheet.
      */
+    @Override
     public StyleSheet getCSSStyleSheet() {
         if (styleSheet == null) {
             HashMap<String, String> attrs = getPseudoAttributes();
@@ -105,6 +106,7 @@ public class SVGStyleSheetProcessingInstruction
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.ProcessingInstruction#setData(String)}.
      */
+    @Override
     public void setData(String data) throws DOMException {
         super.setData(data);
         styleSheet = null;
@@ -113,6 +115,7 @@ public class SVGStyleSheetProcessingInstruction
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGStyleSheetProcessingInstruction();
     }

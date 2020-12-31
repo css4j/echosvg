@@ -50,6 +50,7 @@ public class SVGFeComponentTransferElementBridge
     /**
      * Returns 'feComponentTransfer'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_COMPONENT_TRANSFER_TAG;
     }
@@ -72,6 +73,7 @@ public class SVGFeComponentTransferElementBridge
      *        can then access a filter node from the filterMap if they
      *        know its name.
      */
+    @Override
     public Filter createFilter(BridgeContext ctx,
                                Element filterElement,
                                Element filteredElement,
@@ -166,6 +168,7 @@ public class SVGFeComponentTransferElementBridge
         /**
          * Returns 'feFuncA'.
          */
+        @Override
         public String getLocalName() {
             return SVG_FE_FUNC_A_TAG;
         }
@@ -184,6 +187,7 @@ public class SVGFeComponentTransferElementBridge
         /**
          * Returns 'feFuncR'.
          */
+        @Override
         public String getLocalName() {
             return SVG_FE_FUNC_R_TAG;
         }
@@ -202,6 +206,7 @@ public class SVGFeComponentTransferElementBridge
         /**
          * Returns 'feFuncG'.
          */
+        @Override
         public String getLocalName() {
             return SVG_FE_FUNC_G_TAG;
         }
@@ -220,6 +225,7 @@ public class SVGFeComponentTransferElementBridge
         /**
          * Returns 'feFuncB'.
          */
+        @Override
         public String getLocalName() {
             return SVG_FE_FUNC_B_TAG;
         }

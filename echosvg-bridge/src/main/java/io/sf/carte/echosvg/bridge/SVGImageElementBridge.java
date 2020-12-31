@@ -89,6 +89,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns 'image'.
      */
+    @Override
     public String getLocalName() {
         return SVG_IMAGE_TAG;
     }
@@ -96,6 +97,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGImageElementBridge();
     }
@@ -108,6 +110,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         ImageNode imageNode = (ImageNode)super.createGraphicsNode(ctx, e);
         if (imageNode == null) {
@@ -354,11 +357,14 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
             super.mark(size); // Remember start
         }
 
+        @Override
         public boolean markSupported() {
             return false;
         }
+        @Override
         public void mark(int sz){
         }
+        @Override
         public void reset() throws IOException {
             throw new IOException("Reset unsupported");
         }
@@ -369,6 +375,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
             isTied = false;
         }
 
+        @Override
         public synchronized void close() throws IOException {
             wasClosed = true;
             if (isTied) {
@@ -417,6 +424,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Creates an <code>ImageNode</code>.
      */
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         return new ImageNode();
     }
@@ -424,6 +432,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns false as image is not a container.
      */
+    @Override
     public boolean isComposite() {
         return false;
     }
@@ -436,6 +445,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
      * any dynamic modifications of the element this bridge is
      * dedicated to, happen on its associated GVT product.
      */
+    @Override
     protected void initializeDynamicSupport(BridgeContext ctx,
                                             Element e,
                                             GraphicsNode node) {
@@ -460,6 +470,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Invoked when the animated value of an animatable attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged
             (AnimatedLiveAttributeValue alav) {
         try {
@@ -596,6 +607,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Invoked for each CSS property that has changed.
      */
+    @Override
     protected void handleCSSPropertyChanged(int property) {
         switch(property) {
         case SVGCSSEngine.IMAGE_RENDERING_INDEX:
@@ -794,6 +806,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
         return result;
     }
 
+    @Override
     public void dispose() {
         if ((imgDocument != null) && (listener != null)) {
             NodeEventTarget tgt = (NodeEventTarget)imgDocument.getRootElement();
@@ -861,6 +874,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
             this.imgElement = imgElement;
         }
 
+        @Override
         public void handleEvent(Event e) {
             DOMMouseEvent evt = (DOMMouseEvent) e;
             DOMMouseEvent newMouseEvent = (DOMMouseEvent)

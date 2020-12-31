@@ -29,6 +29,7 @@ import org.w3c.dom.svg.SVGAnimatedTransformList;
 import org.w3c.dom.svg.SVGPatternElement;
 import org.w3c.dom.svg.SVGStringList;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
@@ -85,14 +86,14 @@ public class SVGOMPatternElement
         attributeInitializer.addAttribute(null, null,
                                           SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
                                           "xMidYMid meet");
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null, "xmlns:xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+                                          XMLConstants.XLINK_NAMESPACE_URI);
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "show", "other");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "actuate", "onLoad");
     }
 
@@ -170,6 +171,7 @@ public class SVGOMPatternElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -181,18 +183,18 @@ public class SVGOMPatternElement
     private void initializeLiveAttributes() {
         x = createLiveAnimatedLength
             (null, SVG_X_ATTRIBUTE, SVG_PATTERN_X_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         y = createLiveAnimatedLength
             (null, SVG_Y_ATTRIBUTE, SVG_PATTERN_Y_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         width =
             createLiveAnimatedLength
                 (null, SVG_WIDTH_ATTRIBUTE, SVG_PATTERN_WIDTH_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.HORIZONTAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
         height =
             createLiveAnimatedLength
                 (null, SVG_HEIGHT_ATTRIBUTE, SVG_PATTERN_WIDTH_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.VERTICAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
         patternUnits =
             createLiveAnimatedEnumeration
                 (null, SVG_PATTERN_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 2);
@@ -211,6 +213,7 @@ public class SVGOMPatternElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_PATTERN_TAG;
     }
@@ -218,6 +221,7 @@ public class SVGOMPatternElement
     /**
      * To implement {@link SVGPatternElement#getPatternTransform()}.
      */
+    @Override
     public SVGAnimatedTransformList getPatternTransform() {
         throw new UnsupportedOperationException
             ("SVGPatternElement.getPatternTransform is not implemented"); // XXX
@@ -226,6 +230,7 @@ public class SVGOMPatternElement
     /**
      * <b>DOM</b>: Implements {@link SVGPatternElement#getPatternUnits()}.
      */
+    @Override
     public SVGAnimatedEnumeration getPatternUnits() {
         return patternUnits;
     }
@@ -234,6 +239,7 @@ public class SVGOMPatternElement
      * <b>DOM</b>: Implements {@link
      * SVGPatternElement#getPatternContentUnits()}.
      */
+    @Override
     public SVGAnimatedEnumeration getPatternContentUnits() {
         return patternContentUnits;
     }
@@ -241,6 +247,7 @@ public class SVGOMPatternElement
     /**
      * <b>DOM</b>: Implements {@link SVGPatternElement#getX()}.
      */
+    @Override
     public SVGAnimatedLength getX() {
         return x;
     }
@@ -248,6 +255,7 @@ public class SVGOMPatternElement
     /**
      * <b>DOM</b>: Implements {@link SVGPatternElement#getY()}.
      */
+    @Override
     public SVGAnimatedLength getY() {
         return y;
     }
@@ -255,6 +263,7 @@ public class SVGOMPatternElement
     /**
      * <b>DOM</b>: Implements {@link SVGPatternElement#getWidth()}.
      */
+    @Override
     public SVGAnimatedLength getWidth() {
         return width;
     }
@@ -263,6 +272,7 @@ public class SVGOMPatternElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGPatternElement#getHeight()}.
      */
+    @Override
     public SVGAnimatedLength getHeight() {
         return height;
     }
@@ -270,6 +280,7 @@ public class SVGOMPatternElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }
@@ -280,6 +291,7 @@ public class SVGOMPatternElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGURIReference#getHref()}.
      */
+    @Override
     public SVGAnimatedString getHref() {
         return href;
     }
@@ -290,6 +302,7 @@ public class SVGOMPatternElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFitToViewBox#getViewBox()}.
      */
+    @Override
     public SVGAnimatedRect getViewBox() {
         throw new UnsupportedOperationException
             ("SVGFitToViewBox.getViewBox is not implemented"); // XXX
@@ -299,6 +312,7 @@ public class SVGOMPatternElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFitToViewBox#getPreserveAspectRatio()}.
      */
+    @Override
     public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
         return preserveAspectRatio;
     }
@@ -309,6 +323,7 @@ public class SVGOMPatternElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
      */
+    @Override
     public SVGAnimatedBoolean getExternalResourcesRequired() {
         return externalResourcesRequired;
     }
@@ -318,6 +333,7 @@ public class SVGOMPatternElement
     /**
      * <b>DOM</b>: Returns the xml:lang attribute value.
      */
+    @Override
     public String getXMLlang() {
         return XMLSupport.getXMLLang(this);
     }
@@ -325,6 +341,7 @@ public class SVGOMPatternElement
     /**
      * <b>DOM</b>: Sets the xml:lang attribute value.
      */
+    @Override
     public void setXMLlang(String lang) {
         setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
     }
@@ -332,6 +349,7 @@ public class SVGOMPatternElement
     /**
      * <b>DOM</b>: Returns the xml:space attribute value.
      */
+    @Override
     public String getXMLspace() {
         return XMLSupport.getXMLSpace(this);
     }
@@ -339,6 +357,7 @@ public class SVGOMPatternElement
     /**
      * <b>DOM</b>: Sets the xml:space attribute value.
      */
+    @Override
     public void setXMLspace(String space) {
         setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
     }
@@ -349,6 +368,7 @@ public class SVGOMPatternElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getRequiredFeatures()}.
      */
+    @Override
     public SVGStringList getRequiredFeatures() {
         return SVGTestsSupport.getRequiredFeatures(this);
     }
@@ -357,6 +377,7 @@ public class SVGOMPatternElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getRequiredExtensions()}.
      */
+    @Override
     public SVGStringList getRequiredExtensions() {
         return SVGTestsSupport.getRequiredExtensions(this);
     }
@@ -365,6 +386,7 @@ public class SVGOMPatternElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getSystemLanguage()}.
      */
+    @Override
     public SVGStringList getSystemLanguage() {
         return SVGTestsSupport.getSystemLanguage(this);
     }
@@ -373,6 +395,7 @@ public class SVGOMPatternElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#hasExtension(String)}.
      */
+    @Override
     public boolean hasExtension(String extension) {
         return SVGTestsSupport.hasExtension(this, extension);
     }
@@ -381,6 +404,7 @@ public class SVGOMPatternElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -388,6 +412,7 @@ public class SVGOMPatternElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMPatternElement();
     }

@@ -69,18 +69,21 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
     /**
      * Get the keys of all attributes defined on the iterator's text range.
      */
+    @Override
     Set getAllAttributeKeys();
 
     /**
      * Get the value of the named attribute for the current
      *     character.
      */
+    @Override
     Object getAttribute(AttributedCharacterIterator.Attribute attribute);
 
     /**
      * Returns a map with the attributes defined on the current
      * character.
      */
+    @Override
     Map getAttributes();
 
     /**
@@ -88,6 +91,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      *     run with respect to all attributes containing the current
      *     character.
      */
+    @Override
     int getRunLimit();
 
     /**
@@ -95,6 +99,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      *      run with respect to the given attribute containing the current
      *      character.
      */
+    @Override
     int getRunLimit(AttributedCharacterIterator.Attribute attribute);
 
     /**
@@ -102,12 +107,14 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      *     run with respect to the given attributes containing the current
      *     character.
      */
+    @Override
     int getRunLimit(Set attributes);
 
     /**
      * Get the index of the first character of the run with
      *    respect to all attributes containing the current character.
      */
+    @Override
     int getRunStart();
 
     /**
@@ -116,6 +123,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      * @param attribute The attribute for whose appearance the first offset
      *      is requested.
      */
+    @Override
     int getRunStart(AttributedCharacterIterator.Attribute attribute);
 
     /**
@@ -123,6 +131,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      *      respect to the given attributes containing the current character.
      * @param attributes the Set of attributes which begins at the returned index.
      */
+    @Override
     int getRunStart(Set attributes);
 
     //From CharacterIterator
@@ -130,6 +139,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
     /**
      * Create a copy of this iterator
      */
+    @Override
     Object clone();
 
     /**
@@ -137,6 +147,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      *      by getIndex()).
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     char current();
 
     /**
@@ -144,24 +155,28 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      * @return the character at the start index of the text.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     char first();
 
     /**
      * Get the start index of the text.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     int getBeginIndex();
 
     /**
      * Get the end index of the text.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     int getEndIndex();
 
     /**
      * Get the current index.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     int getIndex();
 
     /**
@@ -169,6 +184,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      * the text is empty) and returns the character at that position.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     char last();
 
     /**
@@ -176,6 +192,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      * @return the character at the new index.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     char next();
 
     /**
@@ -183,6 +200,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      * the character at the new index.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     char previous();
 
     /**
@@ -191,6 +209,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      * @return the character at new index <em>position</em>.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     char setIndex(int position);
 
     //Inner classes:

@@ -55,6 +55,7 @@ public class GenericCDATASection
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return "#cdata-section".
      */
+    @Override
     public String getNodeName() {
         return "#cdata-section";
     }
@@ -63,6 +64,7 @@ public class GenericCDATASection
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
      * @return {@link org.w3c.dom.Node#CDATA_SECTION_NODE}
      */
+    @Override
     public short getNodeType() {
         return CDATA_SECTION_NODE;
     }
@@ -70,6 +72,7 @@ public class GenericCDATASection
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -77,6 +80,7 @@ public class GenericCDATASection
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -84,6 +88,7 @@ public class GenericCDATASection
     /**
      * Creates a text node of the current type.
      */
+    @Override
     protected Text createTextNode(String text) {
         return getOwnerDocument().createCDATASection(text);
     }
@@ -91,6 +96,7 @@ public class GenericCDATASection
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new GenericCDATASection();
     }

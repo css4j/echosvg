@@ -59,6 +59,7 @@ public class AngleParser extends NumberParser {
     /**
      * Parses the current reader representing an angle.
      */
+    @Override
     protected void doParse() throws ParseException, IOException {
         angleHandler.startAngle();
 

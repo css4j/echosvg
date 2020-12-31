@@ -51,6 +51,7 @@ public class AnimatableIntegerValue extends AnimatableValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to,
                                        float interpolation,
@@ -92,6 +93,7 @@ public class AnimatableIntegerValue extends AnimatableValue {
      * Returns whether two values of this type can have their distance
      * computed, as needed by paced animation.
      */
+    @Override
     public boolean canPace() {
         return true;
     }
@@ -100,6 +102,7 @@ public class AnimatableIntegerValue extends AnimatableValue {
      * Returns the absolute distance between this value and the specified other
      * value.
      */
+    @Override
     public float distanceTo(AnimatableValue other) {
         AnimatableIntegerValue o = (AnimatableIntegerValue) other;
         return Math.abs(value - o.value);
@@ -108,6 +111,7 @@ public class AnimatableIntegerValue extends AnimatableValue {
     /**
      * Returns a zero value of this AnimatableValue's type.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         return new AnimatableIntegerValue(target, 0);
     }
@@ -115,6 +119,7 @@ public class AnimatableIntegerValue extends AnimatableValue {
     /**
      * Returns the CSS text representation of the value.
      */
+    @Override
     public String getCssText() {
         return Integer.toString(value);
     }

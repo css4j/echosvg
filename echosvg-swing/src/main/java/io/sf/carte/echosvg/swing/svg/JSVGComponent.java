@@ -430,6 +430,7 @@ public class JSVGComponent extends JGVTComponent {
         setSVGDocument(null);
     }
 
+    @Override
     public void setDisableInteractions(boolean b) {
         super.setDisableInteractions(b);
         if (!selfCallingDisableInteractions)
@@ -555,6 +556,7 @@ public class JSVGComponent extends JGVTComponent {
     /**
      * Stops the processing of the current document.
      */
+    @Override
     public void stopProcessing() {
         nextDocumentLoader = null;
         nextGVTTreeBuilder = null;
@@ -593,6 +595,7 @@ public class JSVGComponent extends JGVTComponent {
         final ParsedURL newURI = new ParsedURL(oldURI, url);
 
         stopThenRun(new Runnable() {
+                @Override
                 public void run() {
                     String url = newURI.toString();
                     fragmentIdentifier = newURI.getRef();
@@ -674,6 +677,7 @@ public class JSVGComponent extends JGVTComponent {
 
         final SVGDocument svgdoc = doc;
         stopThenRun(new Runnable() {
+                @Override
                 public void run() {
                     installSVGDocument(svgdoc);
                 }
@@ -833,6 +837,7 @@ public class JSVGComponent extends JGVTComponent {
         reg.flushCache();
     }
 
+    @Override
     public void setGraphicsNode(GraphicsNode gn, boolean createDispatcher) {
         Dimension2D dim = bridgeContext.getDocumentSize();
         Dimension   mySz = new Dimension((int)dim.getWidth(),
@@ -894,6 +899,7 @@ public class JSVGComponent extends JGVTComponent {
     /**
      * Creates a new renderer.
      */
+    @Override
     protected ImageRenderer createImageRenderer() {
         if (isDynamicDocument) {
             return rendererFactory.createDynamicImageRenderer();
@@ -951,6 +957,7 @@ public class JSVGComponent extends JGVTComponent {
      * Computes the transform used for rendering.
      * Returns true if the component needs to be repainted.
      */
+    @Override
     protected boolean computeRenderingTransform() {
         if ((svgDocument == null) || (gvtRoot == null))
             return false;
@@ -977,6 +984,7 @@ public class JSVGComponent extends JGVTComponent {
      * Updates the value of the transform used for rendering.
      * Return true if a repaint is required, otherwise false.
      */
+    @Override
     protected boolean updateRenderingTransform() {
         if ((svgDocument == null) || (gvtRoot == null))
             return false;
@@ -1044,6 +1052,7 @@ public class JSVGComponent extends JGVTComponent {
             Runnable r = new Runnable() {
                     AffineTransform myAT = at;
                     CanvasGraphicsNode myCGN = getCanvasGraphicsNode();
+                    @Override
                     public void run() {
                         synchronized (JSVGComponent.this) {
                             if (myCGN != null) {
@@ -1066,6 +1075,7 @@ public class JSVGComponent extends JGVTComponent {
     /**
      * Renders the GVT tree.
      */
+    @Override
     protected void renderGVTTree() {
         if (!isInteractiveDocument ||
             updateManager == null ||
@@ -1127,6 +1137,7 @@ public class JSVGComponent extends JGVTComponent {
             public void deactivate() {
                 active = false;
             }
+            @Override
             public void run() {
                 if (!active) return;
 
@@ -1156,6 +1167,7 @@ public class JSVGComponent extends JGVTComponent {
     /**
      * Handles an exception.
      */
+    @Override
     protected void handleException(Exception e) {
         userAgent.displayError(e);
     }
@@ -1364,11 +1376,13 @@ public class JSVGComponent extends JGVTComponent {
         float prevTransX = 0;
         float prevTransY = 0;
 
+        @Override
         public void componentResized(ComponentEvent ce) {
             if (isDynamicDocument &&
                 (updateManager != null) && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             try {
                                 updateManager.dispatchSVGResizeEvent();
@@ -1378,6 +1392,7 @@ public class JSVGComponent extends JGVTComponent {
             }
         }
 
+        @Override
         public void componentTransformChanged(ComponentEvent event) {
             AffineTransform at = getRenderingTransform();
 
@@ -1392,6 +1407,7 @@ public class JSVGComponent extends JGVTComponent {
                 (updateManager != null) && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             try {
                                 if (dispatchZoom)
@@ -1418,6 +1434,7 @@ public class JSVGComponent extends JGVTComponent {
     /**
      * Creates an instance of Listener.
      */
+    @Override
     protected Listener createListener() {
         return new SVGListener();
     }
@@ -1443,12 +1460,14 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when the loading of a document was started.
          */
+        @Override
         public void documentLoadingStarted(SVGDocumentLoaderEvent e) {
         }
 
         /**
          * Called when the loading of a document was completed.
          */
+        @Override
         public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
             if (nextDocumentLoader != null) {
                 startDocumentLoader();
@@ -1468,6 +1487,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when the loading of a document was cancelled.
          */
+        @Override
         public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {
             if (nextDocumentLoader != null) {
                 startDocumentLoader();
@@ -1490,6 +1510,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when the loading of a document has failed.
          */
+        @Override
         public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
             if (nextDocumentLoader != null) {
                 startDocumentLoader();
@@ -1517,6 +1538,7 @@ public class JSVGComponent extends JGVTComponent {
          * Called when a build started.
          * The data of the event is initialized to the old document.
          */
+        @Override
         public void gvtBuildStarted(GVTTreeBuilderEvent e) {
             removeJGVTComponentListener(jsvgComponentListener);
             removeComponentListener(jsvgComponentListener);
@@ -1525,6 +1547,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when a build was completed.
          */
+        @Override
         public void gvtBuildCompleted(GVTTreeBuilderEvent e) {
             if (nextGVTTreeBuilder != null) {
                 startGVTTreeBuilder();
@@ -1564,6 +1587,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when a build was cancelled.
          */
+        @Override
         public void gvtBuildCancelled(GVTTreeBuilderEvent e) {
             if (nextGVTTreeBuilder != null) {
                 startGVTTreeBuilder();
@@ -1590,6 +1614,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when a build failed.
          */
+        @Override
         public void gvtBuildFailed(GVTTreeBuilderEvent e) {
             if (nextGVTTreeBuilder != null) {
                 startGVTTreeBuilder();
@@ -1627,6 +1652,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when a onload event dispatch started.
          */
+        @Override
         public void svgLoadEventDispatchStarted
             (SVGLoadEventDispatcherEvent e) {
         }
@@ -1634,6 +1660,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when a onload event dispatch was completed.
          */
+        @Override
         public void svgLoadEventDispatchCompleted
             (SVGLoadEventDispatcherEvent e) {
             nextUpdateManager = svgLoadEventDispatcher.getUpdateManager();
@@ -1670,6 +1697,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when a onload event dispatch was cancelled.
          */
+        @Override
         public void svgLoadEventDispatchCancelled
             (SVGLoadEventDispatcherEvent e) {
             nextUpdateManager = svgLoadEventDispatcher.getUpdateManager();
@@ -1697,6 +1725,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when a onload event dispatch failed.
          */
+        @Override
         public void svgLoadEventDispatchFailed
             (SVGLoadEventDispatcherEvent e) {
             nextUpdateManager = svgLoadEventDispatcher.getUpdateManager();
@@ -1737,6 +1766,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when a rendering was completed.
          */
+        @Override
         public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
             super.gvtRenderingCompleted(e);
 
@@ -1778,6 +1808,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when a rendering was cancelled.
          */
+        @Override
         public void gvtRenderingCancelled(GVTTreeRendererEvent e) {
             super.gvtRenderingCancelled(e);
 
@@ -1814,6 +1845,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when a rendering failed.
          */
+        @Override
         public void gvtRenderingFailed(GVTTreeRendererEvent e) {
             super.gvtRenderingFailed(e);
 
@@ -1853,8 +1885,10 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when the manager was started.
          */
+        @Override
         public void managerStarted(final UpdateManagerEvent e) {
             EventQueue.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         suspendInteractions = false;
 
@@ -1873,8 +1907,10 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when the manager was suspended.
          */
+        @Override
         public void managerSuspended(final UpdateManagerEvent e) {
             EventQueue.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         Object[] dll = updateManagerListeners.toArray();
 
@@ -1891,8 +1927,10 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when the manager was resumed.
          */
+        @Override
         public void managerResumed(final UpdateManagerEvent e) {
             EventQueue.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         Object[] dll = updateManagerListeners.toArray();
 
@@ -1909,8 +1947,10 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when the manager was stopped.
          */
+        @Override
         public void managerStopped(final UpdateManagerEvent e) {
             EventQueue.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         updateManager = null;
 
@@ -1945,8 +1985,10 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when an update started.
          */
+        @Override
         public void updateStarted(final UpdateManagerEvent e) {
             EventQueue.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         if (!doubleBufferedRendering) {
                             image = e.getImage();
@@ -1967,6 +2009,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when an update was completed.
          */
+        @Override
         public void updateCompleted(final UpdateManagerEvent e) {
             // IMPORTANT:
             // ==========
@@ -1981,6 +2024,7 @@ public class JSVGComponent extends JGVTComponent {
             //
             try {
                 EventQueue.invokeAndWait(new Runnable() {
+                        @Override
                         public void run() {
                             image = e.getImage();
                             if (e.getClearPaintingTransform())
@@ -2011,6 +2055,7 @@ public class JSVGComponent extends JGVTComponent {
 
 
             EventQueue.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         Object[] dll = updateManagerListeners.toArray();
 
@@ -2027,8 +2072,10 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Called when an update failed.
          */
+        @Override
         public void updateFailed(final UpdateManagerEvent e) {
             EventQueue.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         Object[] dll = updateManagerListeners.toArray();
 
@@ -2047,6 +2094,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchKeyTyped(final KeyEvent e) {
             if (!isDynamicDocument) {
                 super.dispatchKeyTyped(e);
@@ -2056,6 +2104,7 @@ public class JSVGComponent extends JGVTComponent {
             if (updateManager != null && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             eventDispatcher.keyTyped(e);
                         }
@@ -2067,6 +2116,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchKeyPressed(final KeyEvent e) {
             if (!isDynamicDocument) {
                 super.dispatchKeyPressed(e);
@@ -2076,6 +2126,7 @@ public class JSVGComponent extends JGVTComponent {
             if (updateManager != null && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             eventDispatcher.keyPressed(e);
                         }
@@ -2086,6 +2137,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchKeyReleased(final KeyEvent e) {
             if (!isDynamicDocument) {
                 super.dispatchKeyReleased(e);
@@ -2095,6 +2147,7 @@ public class JSVGComponent extends JGVTComponent {
             if (updateManager != null && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             eventDispatcher.keyReleased(e);
                         }
@@ -2105,6 +2158,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchMouseClicked(final MouseEvent e) {
             if (!isInteractiveDocument) {
                 super.dispatchMouseClicked(e);
@@ -2114,6 +2168,7 @@ public class JSVGComponent extends JGVTComponent {
             if (updateManager != null && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             eventDispatcher.mouseClicked(e);
 
@@ -2125,6 +2180,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchMousePressed(final MouseEvent e) {
             if (!isDynamicDocument) {
                 super.dispatchMousePressed(e);
@@ -2134,6 +2190,7 @@ public class JSVGComponent extends JGVTComponent {
             if (updateManager != null && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             eventDispatcher.mousePressed(e);
                         }
@@ -2144,6 +2201,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchMouseReleased(final MouseEvent e) {
             if (!isDynamicDocument) {
                 super.dispatchMouseReleased(e);
@@ -2153,6 +2211,7 @@ public class JSVGComponent extends JGVTComponent {
             if (updateManager != null && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             eventDispatcher.mouseReleased(e);
                         }
@@ -2163,6 +2222,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchMouseEntered(final MouseEvent e) {
             if (!isInteractiveDocument) {
                 super.dispatchMouseEntered(e);
@@ -2172,6 +2232,7 @@ public class JSVGComponent extends JGVTComponent {
             if (updateManager != null && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             eventDispatcher.mouseEntered(e);
                         }
@@ -2182,6 +2243,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchMouseExited(final MouseEvent e) {
             if (!isInteractiveDocument) {
                 super.dispatchMouseExited(e);
@@ -2191,6 +2253,7 @@ public class JSVGComponent extends JGVTComponent {
             if (updateManager != null && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             eventDispatcher.mouseExited(e);
                         }
@@ -2201,6 +2264,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchMouseDragged(MouseEvent e) {
             if (!isDynamicDocument) {
                 super.dispatchMouseDragged(e);
@@ -2212,6 +2276,7 @@ public class JSVGComponent extends JGVTComponent {
                 MouseDraggedRunnable(MouseEvent evt) {
                     event = evt;
                 }
+                @Override
                 public void run() {
                     eventDispatcher.mouseDragged(event);
                 }
@@ -2244,6 +2309,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchMouseMoved(MouseEvent e) {
             if (!isInteractiveDocument) {
                 super.dispatchMouseMoved(e);
@@ -2255,6 +2321,7 @@ public class JSVGComponent extends JGVTComponent {
                 MouseMovedRunnable(MouseEvent evt) {
                     event = evt;
                 }
+                @Override
                 public void run() {
                     eventDispatcher.mouseMoved(event);
                 }
@@ -2290,6 +2357,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Dispatches the event to the GVT tree.
          */
+        @Override
         protected void dispatchMouseWheelMoved(final MouseWheelEvent e) {
             if (!isInteractiveDocument) {
                 super.dispatchMouseWheelMoved(e);
@@ -2299,6 +2367,7 @@ public class JSVGComponent extends JGVTComponent {
             if (updateManager != null && updateManager.isRunning()) {
                 updateManager.getUpdateRunnableQueue().invokeLater
                     (new Runnable() {
+                        @Override
                         public void run() {
                             eventDispatcher.mouseWheelMoved(e);
                         }
@@ -2334,12 +2403,14 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns the event dispatcher to use.
          */
+        @Override
         public EventDispatcher getEventDispatcher() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getEventDispatcher();
             } else {
                 class Query implements Runnable {
                     EventDispatcher result;
+                    @Override
                     public void run() {
                         result = userAgent.getEventDispatcher();
                     }
@@ -2353,12 +2424,14 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns the default size of the viewport.
          */
+        @Override
         public Dimension2D getViewportSize() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getViewportSize();
             } else {
                 class Query implements Runnable {
                     Dimension2D result;
+                    @Override
                     public void run() {
                         result = userAgent.getViewportSize();
                     }
@@ -2372,11 +2445,13 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Displays an error resulting from the specified Exception.
          */
+        @Override
         public void displayError(final Exception ex) {
             if (EventQueue.isDispatchThread()) {
                 userAgent.displayError(ex);
             } else {
                 EventQueue.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
                             userAgent.displayError(ex);
                         }
@@ -2387,11 +2462,13 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Displays a message in the User Agent interface.
          */
+        @Override
         public void displayMessage(final String message) {
             if (EventQueue.isDispatchThread()) {
                 userAgent.displayMessage(message);
             } else {
                 EventQueue.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
                             userAgent.displayMessage(message);
                         }
@@ -2402,11 +2479,13 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Shows an alert dialog box.
          */
+        @Override
         public void showAlert(final String message) {
             if (EventQueue.isDispatchThread()) {
                 userAgent.showAlert(message);
             } else {
                 invokeAndWait(new Runnable() {
+                        @Override
                         public void run() {
                             userAgent.showAlert(message);
                         }
@@ -2417,12 +2496,14 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Shows a prompt dialog box.
          */
+        @Override
         public String showPrompt(final String message) {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.showPrompt(message);
             } else {
                 class Query implements Runnable {
                     String result;
+                    @Override
                     public void run() {
                         result = userAgent.showPrompt(message);
                     }
@@ -2436,6 +2517,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Shows a prompt dialog box.
          */
+        @Override
         public String showPrompt(final String message,
                                  final String defaultValue) {
             if (EventQueue.isDispatchThread()) {
@@ -2443,6 +2525,7 @@ public class JSVGComponent extends JGVTComponent {
             } else {
                 class Query implements Runnable {
                     String result;
+                    @Override
                     public void run() {
                         result = userAgent.showPrompt(message, defaultValue);
                     }
@@ -2456,12 +2539,14 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Shows a confirm dialog box.
          */
+        @Override
         public boolean showConfirm(final String message) {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.showConfirm(message);
             } else {
                 class Query implements Runnable {
                     boolean result;
+                    @Override
                     public void run() {
                         result = userAgent.showConfirm(message);
                     }
@@ -2475,12 +2560,14 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns the size of a px CSS unit in millimeters.
          */
+        @Override
         public float getPixelUnitToMillimeter() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getPixelUnitToMillimeter();
             } else {
                 class Query implements Runnable {
                     float result;
+                    @Override
                     public void run() {
                         result = userAgent.getPixelUnitToMillimeter();
                     }
@@ -2496,18 +2583,21 @@ public class JSVGComponent extends JGVTComponent {
          * This will be removed after next release.
          * @see #getPixelUnitToMillimeter()
          */
+        @Override
         public float getPixelToMM() { return getPixelUnitToMillimeter(); }
 
 
         /**
          * Returns the default font family.
          */
+        @Override
         public String getDefaultFontFamily() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getDefaultFontFamily();
             } else {
                 class Query implements Runnable {
                     String result;
+                    @Override
                     public void run() {
                         result = userAgent.getDefaultFontFamily();
                     }
@@ -2518,12 +2608,14 @@ public class JSVGComponent extends JGVTComponent {
             }
         }
 
+        @Override
         public float getMediumFontSize() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getMediumFontSize();
             } else {
                 class Query implements Runnable {
                     float result;
+                    @Override
                     public void run() {
                         result = userAgent.getMediumFontSize();
                     }
@@ -2534,6 +2626,7 @@ public class JSVGComponent extends JGVTComponent {
             }
         }
 
+        @Override
         public float getLighterFontWeight(float f) {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getLighterFontWeight(f);
@@ -2541,6 +2634,7 @@ public class JSVGComponent extends JGVTComponent {
                 final float ff = f;
                 class Query implements Runnable {
                     float result;
+                    @Override
                     public void run() {
                         result = userAgent.getLighterFontWeight(ff);
                     }
@@ -2551,6 +2645,7 @@ public class JSVGComponent extends JGVTComponent {
             }
         }
 
+        @Override
         public float getBolderFontWeight(float f) {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getBolderFontWeight(f);
@@ -2558,6 +2653,7 @@ public class JSVGComponent extends JGVTComponent {
                 final float ff = f;
                 class Query implements Runnable {
                     float result;
+                    @Override
                     public void run() {
                         result = userAgent.getBolderFontWeight(ff);
                     }
@@ -2571,12 +2667,14 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns the language settings.
          */
+        @Override
         public String getLanguages() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getLanguages();
             } else {
                 class Query implements Runnable {
                     String result;
+                    @Override
                     public void run() {
                         result = userAgent.getLanguages();
                     }
@@ -2591,12 +2689,14 @@ public class JSVGComponent extends JGVTComponent {
          * Returns the user stylesheet uri.
          * @return null if no user style sheet was specified.
          */
+        @Override
         public String getUserStyleSheetURI() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getUserStyleSheetURI();
             } else {
                 class Query implements Runnable {
                     String result;
+                    @Override
                     public void run() {
                         result = userAgent.getUserStyleSheetURI();
                     }
@@ -2611,11 +2711,13 @@ public class JSVGComponent extends JGVTComponent {
          * Opens a link.
          * @param elt The activated link element.
          */
+        @Override
         public void openLink(final SVGAElement elt) {
             if (EventQueue.isDispatchThread()) {
                 userAgent.openLink(elt);
             } else {
                 EventQueue.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
                             userAgent.openLink(elt);
                         }
@@ -2627,11 +2729,13 @@ public class JSVGComponent extends JGVTComponent {
          * Informs the user agent to change the cursor.
          * @param cursor the new cursor
          */
+        @Override
         public void setSVGCursor(final Cursor cursor) {
             if (EventQueue.isDispatchThread()) {
                 userAgent.setSVGCursor(cursor);
             } else {
                 EventQueue.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
                             userAgent.setSVGCursor(cursor);
                         }
@@ -2644,11 +2748,13 @@ public class JSVGComponent extends JGVTComponent {
          * @param start The Mark for the start of the selection.
          * @param end   The Mark for the end of the selection.
          */
+        @Override
         public void setTextSelection(final Mark start, final Mark end) {
             if (EventQueue.isDispatchThread()) {
                 userAgent.setTextSelection(start, end);
             } else {
                 EventQueue.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
                             userAgent.setTextSelection(start, end);
                         }
@@ -2659,11 +2765,13 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Informs the user agent that the text should be deselected.
          */
+        @Override
         public void deselectAll() {
             if (EventQueue.isDispatchThread()) {
                 userAgent.deselectAll();
             } else {
                 EventQueue.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
                             userAgent.deselectAll();
                         }
@@ -2674,12 +2782,14 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns the class name of the XML parser.
          */
+        @Override
         public String getXMLParserClassName() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getXMLParserClassName();
             } else {
                 class Query implements Runnable {
                     String result;
+                    @Override
                     public void run() {
                         result = userAgent.getXMLParserClassName();
                     }
@@ -2694,12 +2804,14 @@ public class JSVGComponent extends JGVTComponent {
          * Returns true if the XML parser must be in validation mode, false
          * otherwise.
          */
+        @Override
         public boolean isXMLParserValidating() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.isXMLParserValidating();
             } else {
                 class Query implements Runnable {
                     boolean result;
+                    @Override
                     public void run() {
                         result = userAgent.isXMLParserValidating();
                     }
@@ -2714,12 +2826,14 @@ public class JSVGComponent extends JGVTComponent {
          * Returns the <code>AffineTransform</code> currently
          * applied to the drawing by the UserAgent.
          */
+        @Override
         public AffineTransform getTransform() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getTransform();
             } else {
                 class Query implements Runnable {
                     AffineTransform result;
+                    @Override
                     public void run() {
                         result = userAgent.getTransform();
                     }
@@ -2734,12 +2848,14 @@ public class JSVGComponent extends JGVTComponent {
          * Sets the <code>AffineTransform</code> to be
          * applied to the drawing by the UserAgent.
          */
+        @Override
         public void setTransform(AffineTransform at) {
             if (EventQueue.isDispatchThread()) {
                 userAgent.setTransform(at);
             } else {
                 final AffineTransform affine = at;
                 class Query implements Runnable {
+                    @Override
                     public void run() {
                         userAgent.setTransform(affine);
                     }
@@ -2752,12 +2868,14 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns this user agent's CSS media.
          */
+        @Override
         public String getMedia() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getMedia();
             } else {
                 class Query implements Runnable {
                     String result;
+                    @Override
                     public void run() {
                         result = userAgent.getMedia();
                     }
@@ -2771,12 +2889,14 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns this user agent's alternate style-sheet title.
          */
+        @Override
         public String getAlternateStyleSheet() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getAlternateStyleSheet();
             } else {
                 class Query implements Runnable {
                     String result;
+                    @Override
                     public void run() {
                         result = userAgent.getAlternateStyleSheet();
                     }
@@ -2791,12 +2911,14 @@ public class JSVGComponent extends JGVTComponent {
          * Returns the location on the screen of the
          * client area in the UserAgent.
          */
+        @Override
         public Point getClientAreaLocationOnScreen() {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.getClientAreaLocationOnScreen();
             } else {
                 class Query implements Runnable {
                     Point result;
+                    @Override
                     public void run() {
                         result = userAgent.getClientAreaLocationOnScreen();
                     }
@@ -2811,12 +2933,14 @@ public class JSVGComponent extends JGVTComponent {
          * Tells whether the given feature is supported by this
          * user agent.
          */
+        @Override
         public boolean hasFeature(final String s) {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.hasFeature(s);
             } else {
                 class Query implements Runnable {
                     boolean result;
+                    @Override
                     public void run() {
                         result = userAgent.hasFeature(s);
                     }
@@ -2831,12 +2955,14 @@ public class JSVGComponent extends JGVTComponent {
          * Tells whether the given extension is supported by this
          * user agent.
          */
+        @Override
         public boolean supportExtension(final String s) {
             if (EventQueue.isDispatchThread()) {
                 return userAgent.supportExtension(s);
             } else {
                 class Query implements Runnable {
                     boolean result;
+                    @Override
                     public void run() {
                         result = userAgent.supportExtension(s);
                     }
@@ -2851,11 +2977,13 @@ public class JSVGComponent extends JGVTComponent {
          * Lets the bridge tell the user agent that the following
          * extension is supported by the bridge.
          */
+        @Override
         public void registerExtension(final BridgeExtension ext) {
             if (EventQueue.isDispatchThread()) {
                 userAgent.registerExtension(ext);
             } else {
                 EventQueue.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
                             userAgent.registerExtension(ext);
                         }
@@ -2870,11 +2998,13 @@ public class JSVGComponent extends JGVTComponent {
          * &lt;title&gt; elements in a UserAgent-dependant
          * way.
          */
+        @Override
         public void handleElement(final Element elt, final Object data) {
             if (EventQueue.isDispatchThread()) {
                 userAgent.handleElement(elt, data);
             } else {
                 EventQueue.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
                             userAgent.handleElement(elt, data);
                         }
@@ -2895,6 +3025,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param docPURL url for the document into which the
          *        script was found.
          */
+        @Override
         public ScriptSecurity getScriptSecurity(String scriptType,
                                                 ParsedURL scriptPURL,
                                                 ParsedURL docPURL){
@@ -2908,6 +3039,7 @@ public class JSVGComponent extends JGVTComponent {
                 final ParsedURL dPURL= docPURL;
                 class Query implements Runnable {
                     ScriptSecurity result;
+                    @Override
                     public void run() {
                         result = userAgent.getScriptSecurity(st, sPURL, dPURL);
                     }
@@ -2936,6 +3068,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param docPURL url for the document into which the
          *        script was found.
          */
+        @Override
         public void checkLoadScript(String scriptType,
                                     ParsedURL scriptPURL,
                                     ParsedURL docPURL) throws SecurityException {
@@ -2949,6 +3082,7 @@ public class JSVGComponent extends JGVTComponent {
                 final ParsedURL dPURL= docPURL;
                 class Query implements Runnable {
                     SecurityException se = null;
+                    @Override
                     public void run() {
                         try {
                             userAgent.checkLoadScript(st, sPURL, dPURL);
@@ -2978,6 +3112,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param docPURL url for the document into which the
          *        resource was found.
          */
+        @Override
         public ExternalResourceSecurity
             getExternalResourceSecurity(ParsedURL resourcePURL,
                                         ParsedURL docPURL){
@@ -2989,6 +3124,7 @@ public class JSVGComponent extends JGVTComponent {
                 final ParsedURL dPURL= docPURL;
                 class Query implements Runnable {
                     ExternalResourceSecurity result;
+                    @Override
                     public void run() {
                         result = userAgent.getExternalResourceSecurity(rPURL, dPURL);
                     }
@@ -3015,6 +3151,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param docURL url for the document into which the
          *        resource was found.
          */
+        @Override
         public void
             checkLoadExternalResource(ParsedURL resourceURL,
                                       ParsedURL docURL) throws SecurityException {
@@ -3026,6 +3163,7 @@ public class JSVGComponent extends JGVTComponent {
                 final ParsedURL dPURL= docURL;
                 class Query implements Runnable {
                     SecurityException se;
+                    @Override
                     public void run() {
                         try {
                             userAgent.checkLoadExternalResource(rPURL, dPURL);
@@ -3052,6 +3190,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param msg As best as can be determined the reason it can't be
          *            loaded (not available, corrupt, unknown format,...).
          */
+        @Override
         public SVGDocument getBrokenLinkDocument(final Element e,
                                                  final String url,
                                                  final String msg) {
@@ -3061,6 +3200,7 @@ public class JSVGComponent extends JGVTComponent {
             class Query implements Runnable {
                 SVGDocument doc;
                 RuntimeException rex = null;
+                @Override
                 public void run() {
                     try {
                         doc = userAgent.getBrokenLinkDocument(e, url, msg);
@@ -3090,10 +3230,12 @@ public class JSVGComponent extends JGVTComponent {
          *
          * @param url The url to be loaded as a string.
          */
+        @Override
         public void loadDocument(String url) {
             userAgent.loadDocument(url);
         }
 
+        @Override
         public FontFamilyResolver getFontFamilyResolver() {
             return userAgent.getFontFamilyResolver();
         }
@@ -3113,6 +3255,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns the default size of the viewport of this user agent (0, 0).
          */
+        @Override
         public Dimension2D getViewportSize() {
             return getSize();
         }
@@ -3121,6 +3264,7 @@ public class JSVGComponent extends JGVTComponent {
          * Returns the <code>EventDispatcher</code> used by the
          * <code>UserAgent</code> to dispatch events on GVT.
          */
+        @Override
         public EventDispatcher getEventDispatcher() {
             return JSVGComponent.this.eventDispatcher;
         }
@@ -3137,6 +3281,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Displays an error resulting from the specified Exception.
          */
+        @Override
         public void displayError(Exception ex) {
             if (svgUserAgent != null) {
                 svgUserAgent.displayError(ex);
@@ -3146,6 +3291,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Displays a message in the User Agent interface.
          */
+        @Override
         public void displayMessage(String message) {
             if (svgUserAgent != null) {
                 svgUserAgent.displayMessage(message);
@@ -3155,6 +3301,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Shows an alert dialog box.
          */
+        @Override
         public void showAlert(String message) {
             if (svgUserAgent != null) {
                 svgUserAgent.showAlert(message);
@@ -3166,6 +3313,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Shows a prompt dialog box.
          */
+        @Override
         public String showPrompt(String message) {
             if (svgUserAgent != null) {
                 return svgUserAgent.showPrompt(message);
@@ -3176,6 +3324,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Shows a prompt dialog box.
          */
+        @Override
         public String showPrompt(String message, String defaultValue) {
             if (svgUserAgent != null) {
                 return svgUserAgent.showPrompt(message, defaultValue);
@@ -3187,6 +3336,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Shows a confirm dialog box.
          */
+        @Override
         public boolean showConfirm(String message) {
             if (svgUserAgent != null) {
                 return svgUserAgent.showConfirm(message);
@@ -3197,6 +3347,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns the size of a px CSS unit in millimeters.
          */
+        @Override
         public float getPixelUnitToMillimeter() {
             if (svgUserAgent != null) {
                 return svgUserAgent.getPixelUnitToMillimeter();
@@ -3209,11 +3360,13 @@ public class JSVGComponent extends JGVTComponent {
          * This will be removed after next release.
          * @see #getPixelUnitToMillimeter()
          */
+        @Override
         public float getPixelToMM() { return getPixelUnitToMillimeter(); }
 
         /**
          * Returns the default font family.
          */
+        @Override
         public String getDefaultFontFamily() {
             if (svgUserAgent != null) {
                 return svgUserAgent.getDefaultFontFamily();
@@ -3224,6 +3377,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns the  medium font size.
          */
+        @Override
         public float getMediumFontSize() {
             if (svgUserAgent != null) {
                 return svgUserAgent.getMediumFontSize();
@@ -3235,6 +3389,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns a lighter font-weight.
          */
+        @Override
         public float getLighterFontWeight(float f) {
             if (svgUserAgent != null) {
                 return svgUserAgent.getLighterFontWeight(f);
@@ -3259,6 +3414,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns a bolder font-weight.
          */
+        @Override
         public float getBolderFontWeight(float f) {
             if (svgUserAgent != null) {
                 return svgUserAgent.getBolderFontWeight(f);
@@ -3283,6 +3439,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns the language settings.
          */
+        @Override
         public String getLanguages() {
             if (svgUserAgent != null) {
                 return svgUserAgent.getLanguages();
@@ -3294,6 +3451,7 @@ public class JSVGComponent extends JGVTComponent {
          * Returns the user stylesheet uri.
          * @return null if no user style sheet was specified.
          */
+        @Override
         public String getUserStyleSheetURI() {
             if (svgUserAgent != null) {
                 return svgUserAgent.getUserStyleSheetURI();
@@ -3305,6 +3463,7 @@ public class JSVGComponent extends JGVTComponent {
          * Opens a link.
          * @param elt The activated link element.
          */
+        @Override
         public void openLink(SVGAElement elt) {
             String show = XLinkSupport.getXLinkShow(elt);
             String href = elt.getHref().getAnimVal();
@@ -3386,6 +3545,7 @@ public class JSVGComponent extends JGVTComponent {
          * Informs the user agent to change the cursor.
          * @param cursor the new cursor
          */
+        @Override
         public void setSVGCursor(Cursor cursor) {
             if (cursor != JSVGComponent.this.getCursor())
                 JSVGComponent.this.setCursor(cursor);
@@ -3396,6 +3556,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param start The Mark for the start of the selection.
          * @param end   The Mark for the end of the selection.
          */
+        @Override
         public void setTextSelection(Mark start, Mark end) {
             JSVGComponent.this.select(start, end);
         }
@@ -3404,6 +3565,7 @@ public class JSVGComponent extends JGVTComponent {
          * Informs the user agent that the text selection should be
          * cleared.
          */
+        @Override
         public void deselectAll() {
             JSVGComponent.this.deselectAll();
         }
@@ -3411,6 +3573,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns the class name of the XML parser.
          */
+        @Override
         public String getXMLParserClassName() {
             if (svgUserAgent != null) {
                 return svgUserAgent.getXMLParserClassName();
@@ -3422,6 +3585,7 @@ public class JSVGComponent extends JGVTComponent {
          * Returns true if the XML parser must be in validation mode, false
          * otherwise depending on the SVGUserAgent.
          */
+        @Override
         public boolean isXMLParserValidating() {
             if (svgUserAgent != null) {
                 return svgUserAgent.isXMLParserValidating();
@@ -3433,6 +3597,7 @@ public class JSVGComponent extends JGVTComponent {
          * Returns the <code>AffineTransform</code> currently
          * applied to the drawing by the UserAgent.
          */
+        @Override
         public AffineTransform getTransform() {
             return JSVGComponent.this.renderingTransform;
         }
@@ -3441,6 +3606,7 @@ public class JSVGComponent extends JGVTComponent {
          * Sets the <code>AffineTransform</code> to be
          * applied to the drawing by the UserAgent.
          */
+        @Override
         public void setTransform(AffineTransform at) {
             JSVGComponent.this.setRenderingTransform(at);
         }
@@ -3448,6 +3614,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns this user agent's CSS media.
          */
+        @Override
         public String getMedia() {
             if (svgUserAgent != null) {
                 return svgUserAgent.getMedia();
@@ -3458,6 +3625,7 @@ public class JSVGComponent extends JGVTComponent {
         /**
          * Returns this user agent's alternate style-sheet title.
          */
+        @Override
         public String getAlternateStyleSheet() {
             if (svgUserAgent != null) {
                 return svgUserAgent.getAlternateStyleSheet();
@@ -3469,6 +3637,7 @@ public class JSVGComponent extends JGVTComponent {
          * Returns the location on the screen of the
          * client area in the UserAgent.
          */
+        @Override
         public Point getClientAreaLocationOnScreen() {
             return getLocationOnScreen();
         }
@@ -3477,6 +3646,7 @@ public class JSVGComponent extends JGVTComponent {
          * Tells whether the given feature is supported by this
          * user agent.
          */
+        @Override
         public boolean hasFeature(String s) {
             return FEATURES.contains(s);
         }
@@ -3487,6 +3657,7 @@ public class JSVGComponent extends JGVTComponent {
          * Tells whether the given extension is supported by this
          * user agent.
          */
+        @Override
         public boolean supportExtension(String s) {
             if ((svgUserAgent != null) &&
                 (svgUserAgent.supportExtension(s)))
@@ -3499,6 +3670,7 @@ public class JSVGComponent extends JGVTComponent {
          * Lets the bridge tell the user agent that the following
          * extension is supported by the bridge.
          */
+        @Override
         public void registerExtension(BridgeExtension ext) {
             Iterator i = ext.getImplementedExtensions();
             while (i.hasNext())
@@ -3513,6 +3685,7 @@ public class JSVGComponent extends JGVTComponent {
          * &lt;title&gt; elements in a UserAgent-dependant
          * way.
          */
+        @Override
         public void handleElement(Element elt, Object data) {
             if (svgUserAgent != null) {
                 svgUserAgent.handleElement(elt, data);
@@ -3532,6 +3705,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param docURL url for the document into which the
          *        script was found.
          */
+        @Override
         public ScriptSecurity getScriptSecurity(String scriptType,
                                                 ParsedURL scriptURL,
                                                 ParsedURL docURL){
@@ -3564,6 +3738,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param docURL url for the document into which the
          *        script was found.
          */
+        @Override
         public void checkLoadScript(String scriptType,
                                     ParsedURL scriptURL,
                                     ParsedURL docURL) throws SecurityException {
@@ -3592,6 +3767,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param docURL url for the document into which the
          *        script was found.
          */
+        @Override
         public ExternalResourceSecurity
             getExternalResourceSecurity(ParsedURL resourceURL,
                                         ParsedURL docURL){
@@ -3620,6 +3796,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param docURL url for the document into which the
          *        resource was found.
          */
+        @Override
         public void
             checkLoadExternalResource(ParsedURL resourceURL,
                                       ParsedURL docURL) throws SecurityException {
@@ -3648,6 +3825,7 @@ public class JSVGComponent extends JGVTComponent {
          * @param message As best as can be determined the reason it can't be
          *                loaded (not available, corrupt, unknown format,...).
          */
+        @Override
         public SVGDocument getBrokenLinkDocument(Element e,
                                                  String url,
                                                  String message) {
@@ -3698,10 +3876,12 @@ public class JSVGComponent extends JGVTComponent {
          *
          * @param url The url to be loaded as a string.
          */
+        @Override
         public void loadDocument(String url) {
             JSVGComponent.this.loadSVGDocument(url);
         }
 
+        @Override
         public FontFamilyResolver getFontFamilyResolver() {
             return DefaultFontFamilyResolver.SINGLETON;
         }

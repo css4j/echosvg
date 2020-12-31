@@ -443,6 +443,7 @@ public class JAffineTransformChooser extends JGridBagPanel{
                 okButton.addActionListener(okListener);
             }
             okButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setVisible(false);
                     }
@@ -452,6 +453,7 @@ public class JAffineTransformChooser extends JGridBagPanel{
             JButton cancelButton = new JButton(cancelString);
 
             addKeyListener(new KeyAdapter(){
+                    @Override
                     public void keyPressed(KeyEvent evt){
                         if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
                             setVisible(false);
@@ -460,6 +462,7 @@ public class JAffineTransformChooser extends JGridBagPanel{
                 });
 
             cancelButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setVisible(false);
                     }
@@ -469,6 +472,7 @@ public class JAffineTransformChooser extends JGridBagPanel{
 
             JButton resetButton = new JButton(resetString);
             resetButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         reset();
                     }
@@ -480,6 +484,7 @@ public class JAffineTransformChooser extends JGridBagPanel{
             setLocationRelativeTo(c);
         }
 
+        @Override
         public void setVisible(boolean b) {
             if (b) tracker.reset();
             super.setVisible(b);
@@ -507,6 +512,7 @@ public class JAffineTransformChooser extends JGridBagPanel{
     }
 
     static class Closer extends WindowAdapter implements Serializable{
+        @Override
         public void windowClosing(WindowEvent e) {
             Window w = e.getWindow();
             w.setVisible(false);
@@ -514,6 +520,7 @@ public class JAffineTransformChooser extends JGridBagPanel{
     }
 
     static class DisposeOnClose extends ComponentAdapter implements Serializable{
+        @Override
         public void componentHidden(ComponentEvent e) {
             Window w = (Window)e.getComponent();
             w.dispose();
@@ -531,6 +538,7 @@ class AffineTransformTracker implements ActionListener, Serializable {
         chooser = c;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         txf = chooser.getAffineTransform();
     }

@@ -67,6 +67,7 @@ public class FloodRable8Bit extends AbstractRable
      * Set the flood fill paint
      * @param paint The paint to use when flood filling the input image
      */
+    @Override
     public void setFloodPaint(Paint paint) {
         touch();
         if (paint == null) {
@@ -81,11 +82,13 @@ public class FloodRable8Bit extends AbstractRable
      * Get the flood fill paint.
      * @return the paint used to flood fill the input image
      */
+    @Override
     public Paint getFloodPaint() {
         // Paint is immutable, we can return it
         return floodPaint;
     }
 
+    @Override
     public Rectangle2D getBounds2D() {
 
         return (Rectangle2D)floodRegion.clone();
@@ -94,6 +97,7 @@ public class FloodRable8Bit extends AbstractRable
     /**
      * Returns the flood region
      */
+    @Override
     public Rectangle2D getFloodRegion(){
         return (Rectangle2D)floodRegion.clone();
     }
@@ -101,6 +105,7 @@ public class FloodRable8Bit extends AbstractRable
     /**
      * Sets the flood region
      */
+    @Override
     public void setFloodRegion(Rectangle2D floodRegion){
         if(floodRegion == null){
             throw new IllegalArgumentException();
@@ -117,6 +122,7 @@ public class FloodRable8Bit extends AbstractRable
      * @return A RenderedImage with the flood fill
      */
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         // Get user space to device space transform
         AffineTransform usr2dev = rc.getTransform();

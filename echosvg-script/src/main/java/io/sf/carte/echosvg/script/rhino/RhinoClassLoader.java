@@ -103,6 +103,7 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
     /**
      * Define and load a Java class
      */
+    @Override
     public Class defineClass(String name,
                              byte[] data) {
         return super.defineClass(name, data, 0, data.length, codeSource);
@@ -111,6 +112,7 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
     /**
      * Links the Java class.
      */
+    @Override
     public void linkClass(Class clazz) {
         super.resolveClass(clazz);
     }
@@ -129,6 +131,7 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
      * that files under the same root directory as the document
      * can be read.
      */
+    @Override
     protected PermissionCollection getPermissions(CodeSource codesource) {
         PermissionCollection perms = null;
 

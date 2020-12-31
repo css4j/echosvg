@@ -87,6 +87,7 @@ public class SVGOMFEOffsetElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -104,6 +105,7 @@ public class SVGOMFEOffsetElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_OFFSET_TAG;
     }
@@ -112,6 +114,7 @@ public class SVGOMFEOffsetElement
      * <b>DOM</b>: Implements {@link
      * SVGFEOffsetElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -120,6 +123,7 @@ public class SVGOMFEOffsetElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFEOffsetElement#getDx()}.
      */
+    @Override
     public SVGAnimatedNumber getDx() {
         return dx;
     } 
@@ -128,6 +132,7 @@ public class SVGOMFEOffsetElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFEOffsetElement#getDy()}.
      */
+    @Override
     public SVGAnimatedNumber getDy() {
         return dy;
     }
@@ -135,6 +140,7 @@ public class SVGOMFEOffsetElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEOffsetElement();
     }
@@ -142,6 +148,7 @@ public class SVGOMFEOffsetElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

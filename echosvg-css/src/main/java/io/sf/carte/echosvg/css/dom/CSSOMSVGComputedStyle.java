@@ -47,6 +47,7 @@ public class CSSOMSVGComputedStyle extends CSSOMComputedStyle {
     /**
      * Creates a CSSValue to manage the value at the given index.
      */
+    @Override
     protected CSSValue createCSSValue(int idx) {
         if (idx > SVGCSSEngine.FINAL_INDEX) {
             if (cssEngine.getValueManagers()[idx] instanceof SVGPaintManager) {
@@ -94,6 +95,7 @@ public class CSSOMSVGComputedStyle extends CSSOMComputedStyle {
         /**
          * Returns the Value associated with this object.
          */
+        @Override
         public Value getValue() {
             return cssEngine.getComputedStyle(element, pseudoElement, index);
         }
@@ -123,6 +125,7 @@ public class CSSOMSVGComputedStyle extends CSSOMComputedStyle {
         /**
          * Returns the Value associated with this object.
          */
+        @Override
         public Value getValue() {
             return cssEngine.getComputedStyle(element, pseudoElement, index);
         }

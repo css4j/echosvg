@@ -60,6 +60,7 @@ public class AnimatableAngleValue extends AnimatableNumberValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to,
                                        float interpolation,
@@ -113,6 +114,7 @@ public class AnimatableAngleValue extends AnimatableNumberValue {
      * Returns the absolute distance between this value and the specified other
      * value.
      */
+    @Override
     public float distanceTo(AnimatableValue other) {
         AnimatableAngleValue o = (AnimatableAngleValue) other;
         return Math.abs(rad(value, unit) - rad(o.value, o.unit));
@@ -121,6 +123,7 @@ public class AnimatableAngleValue extends AnimatableNumberValue {
     /**
      * Returns a zero value of this AnimatableValue's type.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         return new AnimatableAngleValue
             (target, 0, SVGAngle.SVG_ANGLETYPE_UNSPECIFIED);
@@ -129,6 +132,7 @@ public class AnimatableAngleValue extends AnimatableNumberValue {
     /**
      * Returns the CSS text representation of the value.
      */
+    @Override
     public String getCssText() {
         return super.getCssText() + UNITS[unit];
     }

@@ -76,6 +76,7 @@ public class ProfileRable extends  AbstractRable{
         return colorSpace;
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         //
         // Get source's rendered image

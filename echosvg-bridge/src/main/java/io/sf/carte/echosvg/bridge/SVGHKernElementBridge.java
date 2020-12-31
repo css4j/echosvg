@@ -34,6 +34,7 @@ public class SVGHKernElementBridge extends SVGKernElementBridge {
     /**
      * Returns 'hkern'.
      */
+    @Override
     public String getLocalName() {
         return SVG_HKERN_TAG;
     }

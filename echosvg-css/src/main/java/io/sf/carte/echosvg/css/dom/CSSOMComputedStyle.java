@@ -73,6 +73,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getCssText()}.
      */
+    @Override
     public String getCssText() {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < cssEngine.getNumberOfProperties(); i++) {
@@ -90,6 +91,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      * org.w3c.dom.css.CSSStyleDeclaration#setCssText(String)}.
      * Throws a NO_MODIFICATION_ALLOWED_ERR {@link org.w3c.dom.DOMException}.
      */
+    @Override
     public void setCssText(String cssText) throws DOMException {
         throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
     }
@@ -98,6 +100,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getPropertyValue(String)}.
      */
+    @Override
     public String getPropertyValue(String propertyName) {
         int idx = cssEngine.getPropertyIndex(propertyName);
         if (idx == -1) {
@@ -111,6 +114,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getPropertyCSSValue(String)}.
      */
+    @Override
     public CSSValue getPropertyCSSValue(String propertyName) {
         CSSValue result = (CSSValue)values.get(propertyName);
         if (result == null) {
@@ -127,6 +131,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#removeProperty(String)}.
      */
+    @Override
     public String removeProperty(String propertyName) throws DOMException {
         throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
     }
@@ -135,6 +140,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getPropertyPriority(String)}.
      */
+    @Override
     public String getPropertyPriority(String propertyName) {
         return "";
     }
@@ -143,6 +149,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#setProperty(String,String,String)}.
      */
+    @Override
     public void setProperty(String propertyName, String value, String prio)
         throws DOMException {
         throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
@@ -152,6 +159,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getLength()}.
      */
+    @Override
     public int getLength() {
         return cssEngine.getNumberOfProperties();
     }
@@ -160,6 +168,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#item(int)}.
      */
+    @Override
     public String item(int index) {
         if (index < 0 || index >= cssEngine.getNumberOfProperties()) {
             return "";
@@ -172,6 +181,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      * org.w3c.dom.css.CSSStyleDeclaration#getParentRule()}.
      * @return null.
      */
+    @Override
     public CSSRule getParentRule() {
         return null;
     }
@@ -207,6 +217,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
         /**
          * Returns the Value associated with this object.
          */
+        @Override
         public Value getValue() {
             return cssEngine.getComputedStyle(element, pseudoElement, index);
         }

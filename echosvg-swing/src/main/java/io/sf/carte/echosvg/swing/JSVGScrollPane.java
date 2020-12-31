@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.swing;
 
+import java.awt.Adjustable;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -98,8 +99,8 @@ public class JSVGScrollPane extends JPanel
         canvas.setRecenterOnResize(false);
 
         // create components
-        vertical   = new JScrollBar(JScrollBar.VERTICAL,   0, 0, 0, 0);
-        horizontal = new JScrollBar(JScrollBar.HORIZONTAL, 0, 0, 0, 0);
+        vertical   = new JScrollBar(Adjustable.VERTICAL,   0, 0, 0, 0);
+        horizontal = new JScrollBar(Adjustable.HORIZONTAL, 0, 0, 0, 0);
 
         // create a spacer next to the horizontal bar
         horizontalPanel = new JPanel(new BorderLayout());
@@ -177,6 +178,7 @@ public class JSVGScrollPane extends JPanel
 
 
     class SVGScrollDocumentLoaderListener extends SVGDocumentLoaderAdapter {
+        @Override
         public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
             NodeEventTarget root
                 = (NodeEventTarget) e.getSVGDocument().getRootElement();
@@ -184,7 +186,8 @@ public class JSVGScrollPane extends JPanel
                 (XMLConstants.XML_EVENTS_NAMESPACE_URI,
                  SVGConstants.SVG_SVGZOOM_EVENT_TYPE,
                  new EventListener() {
-                     public void handleEvent(Event evt) {
+                     @Override
+                    public void handleEvent(Event evt) {
                          if (!(evt.getTarget() instanceof SVGSVGElement))
                              return;
                          // assert(evt.getType() ==
@@ -251,6 +254,7 @@ public class JSVGScrollPane extends JPanel
      */
     protected class WheelListener implements MouseWheelListener
     {
+        @Override
         public void mouseWheelMoved(MouseWheelEvent e)
         {
             final JScrollBar sb = (vertical.isVisible()) ?
@@ -294,6 +298,7 @@ public class JSVGScrollPane extends JPanel
             isVertical = vertical;
         }// SBListener()
 
+        @Override
         public synchronized void stateChanged(ChangeEvent e)
         {
             // only respond to changes if we are NOT being dragged
@@ -344,6 +349,7 @@ public class JSVGScrollPane extends JPanel
     {
         protected boolean isReady = false;
 
+        @Override
         public void componentTransformChanged(ComponentEvent evt)
         {
             if(isReady)
@@ -351,6 +357,7 @@ public class JSVGScrollPane extends JPanel
         }// componentTransformChanged()
 
 
+        @Override
         public void componentResized(ComponentEvent evt)
         {
             if(isReady)
@@ -358,17 +365,20 @@ public class JSVGScrollPane extends JPanel
         }// componentResized()
 
 
+        @Override
         public void gvtBuildStarted  (GVTTreeBuilderEvent e) {
             isReady = false;
             // Start by assuming we won't need them.
             updateScrollbarState(false, false);
         }
+        @Override
         public void gvtBuildCompleted(GVTTreeBuilderEvent e)
         {
             isReady = true;
             viewBox = null;   // new document forget old viewBox if any.
         }// gvtRenderingCompleted()
 
+        @Override
         public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
             if (viewBox == null) {
                 resizeScrollBars();
@@ -387,6 +397,7 @@ public class JSVGScrollPane extends JPanel
             }
         }
 
+        @Override
         public void updateCompleted(UpdateManagerEvent e) {
             if (viewBox == null) {
                 resizeScrollBars();
@@ -406,19 +417,31 @@ public class JSVGScrollPane extends JPanel
         }
 
 
+        @Override
         public void gvtBuildCancelled(GVTTreeBuilderEvent e) { }
+        @Override
         public void gvtBuildFailed   (GVTTreeBuilderEvent e) { }
 
+        @Override
         public void gvtRenderingPrepare  (GVTTreeRendererEvent e) { }
+        @Override
         public void gvtRenderingStarted  (GVTTreeRendererEvent e) { }
+        @Override
         public void gvtRenderingCancelled(GVTTreeRendererEvent e) { }
+        @Override
         public void gvtRenderingFailed   (GVTTreeRendererEvent e) { }
 
+        @Override
         public void managerStarted  (UpdateManagerEvent e) { }
+        @Override
         public void managerSuspended(UpdateManagerEvent e) { }
+        @Override
         public void managerResumed  (UpdateManagerEvent e) { }
+        @Override
         public void managerStopped  (UpdateManagerEvent e) { }
+        @Override
         public void updateStarted   (UpdateManagerEvent e) { }
+        @Override
         public void updateFailed    (UpdateManagerEvent e) { }
 
     }// inner class ScrollListener

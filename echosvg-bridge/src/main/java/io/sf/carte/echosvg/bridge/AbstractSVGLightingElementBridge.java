@@ -146,6 +146,7 @@ public abstract class AbstractSVGLightingElementBridge
         /**
          * Returns 'feSpotLight'.
          */
+        @Override
         public String getLocalName() {
             return SVG_FE_SPOT_LIGHT_TAG;
         }
@@ -158,6 +159,7 @@ public abstract class AbstractSVGLightingElementBridge
          * @param lightElement the element describing a light
          * @param color the color of the light
          */
+        @Override
         public Light createLight(BridgeContext ctx,
                                  Element filterElement,
                                  Element lightElement,
@@ -214,6 +216,7 @@ public abstract class AbstractSVGLightingElementBridge
         /**
          * Returns 'feDistantLight'.
          */
+        @Override
         public String getLocalName() {
             return SVG_FE_DISTANT_LIGHT_TAG;
         }
@@ -226,6 +229,7 @@ public abstract class AbstractSVGLightingElementBridge
          * @param lightElement the element describing a light
          * @param color the color of the light
          */
+        @Override
         public Light createLight(BridgeContext ctx,
                                  Element filterElement,
                                  Element lightElement,
@@ -257,6 +261,7 @@ public abstract class AbstractSVGLightingElementBridge
         /**
          * Returns 'fePointLight'.
          */
+        @Override
         public String getLocalName() {
             return SVG_FE_POINT_LIGHT_TAG;
         }
@@ -269,6 +274,7 @@ public abstract class AbstractSVGLightingElementBridge
          * @param lightElement the element describing a light
          * @param color the color of the light
          */
+        @Override
         public Light createLight(BridgeContext ctx,
                                  Element filterElement,
                                  Element lightElement,

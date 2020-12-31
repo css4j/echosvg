@@ -57,6 +57,7 @@ public abstract class PrefixableStylableExtensionElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      */
+    @Override
     public String getNodeName() {
         return (prefix == null || prefix.equals(""))
             ? getLocalName() : prefix + ':' + getLocalName();
@@ -65,6 +66,7 @@ public abstract class PrefixableStylableExtensionElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setPrefix(String)}.
      */
+    @Override
     public void setPrefix(String prefix) throws DOMException {
         if (isReadonly()) {
             throw createDOMException

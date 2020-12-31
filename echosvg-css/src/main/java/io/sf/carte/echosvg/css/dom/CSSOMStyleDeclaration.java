@@ -75,6 +75,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getCssText()}.
      */
+    @Override
     public String getCssText() {
         return valueProvider.getText();
     }
@@ -83,6 +84,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#setCssText(String)}.
      */
+    @Override
     public void setCssText(String cssText) throws DOMException {
         if (handler == null) {
             throw new DOMException
@@ -97,6 +99,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getPropertyValue(String)}.
      */
+    @Override
     public String getPropertyValue(String propertyName) {
         Value value = valueProvider.getValue(propertyName);
         if (value == null) {
@@ -109,6 +112,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getPropertyCSSValue(String)}.
      */
+    @Override
     public CSSValue getPropertyCSSValue(String propertyName) {
         Value value = valueProvider.getValue(propertyName);
         if (value == null) {
@@ -121,6 +125,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#removeProperty(String)}.
      */
+    @Override
     public String removeProperty(String propertyName) throws DOMException {
         String result = getPropertyValue(propertyName);
         if (result.length() > 0) {
@@ -141,6 +146,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getPropertyPriority(String)}.
      */
+    @Override
     public String getPropertyPriority(String propertyName) {
         return (valueProvider.isImportant(propertyName)) ? "important" : "";
     }
@@ -149,6 +155,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#setProperty(String,String,String)}.
      */
+    @Override
     public void setProperty(String propertyName, String value, String prio)
         throws DOMException {
         if (handler == null) {
@@ -163,6 +170,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getLength()}.
      */
+    @Override
     public int getLength() {
         return valueProvider.getLength();
     }
@@ -171,6 +179,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#item(int)}.
      */
+    @Override
     public String item(int index) {
         return valueProvider.item(index);
     }
@@ -179,6 +188,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSStyleDeclaration#getParentRule()}.
      */
+    @Override
     public CSSRule getParentRule() {
         return parentRule;
     }
@@ -280,9 +290,11 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
             super(null);
             this.valueProvider = this;
             this.setModificationHandler(new AbstractModificationHandler() {
+                    @Override
                     protected Value getValue() {
                         return StyleDeclarationValue.this.getValue();
                     }
+                    @Override
                     public void textChanged(String text) throws DOMException {
                         if (values == null ||
                             values.get(this) == null ||
@@ -304,6 +316,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
         /**
          * Returns the current value associated with this object.
          */
+        @Override
         public Value getValue() {
             return CSSOMStyleDeclaration.this.valueProvider.getValue(property);
         }

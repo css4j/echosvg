@@ -35,6 +35,7 @@ public abstract class AbstractComment
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return "#comment".
      */
+    @Override
     public String getNodeName() {
         return "#comment";
     }
@@ -43,6 +44,7 @@ public abstract class AbstractComment
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
      * @return {@link org.w3c.dom.Node#COMMENT_NODE}
      */
+    @Override
     public short getNodeType() {
         return COMMENT_NODE;
     }
@@ -50,6 +52,7 @@ public abstract class AbstractComment
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getTextContent()}.
      */
+    @Override
     public String getTextContent() {
         return getNodeValue();
     }

@@ -94,6 +94,7 @@ public class DiffuseLightingRed extends AbstractRed{
              litRegion.x, litRegion.y, null);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr){
         final double[] lightColor = light.getColor(linear);
         

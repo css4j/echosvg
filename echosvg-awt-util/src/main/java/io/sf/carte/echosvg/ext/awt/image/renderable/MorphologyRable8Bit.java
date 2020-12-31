@@ -72,6 +72,7 @@ public class MorphologyRable8Bit
     /**
      * Returns the source to be offset.
      */
+    @Override
     public Filter getSource(){
         return (Filter)getSources().get(0);
     }
@@ -80,6 +81,7 @@ public class MorphologyRable8Bit
      * Sets the source to be offset.
      * @param src image to offset.
      */
+    @Override
     public void setSource(Filter src){
         init(src, null);
     }
@@ -87,6 +89,7 @@ public class MorphologyRable8Bit
     /**
      * Pass-through: returns the source's bounds
      */
+    @Override
     public Rectangle2D getBounds2D(){
         return getSource().getBounds2D();
     }
@@ -95,6 +98,7 @@ public class MorphologyRable8Bit
      * The radius along the x axis, in user space.
      * @param radiusX should be greater than zero.
      */
+    @Override
     public void setRadiusX(double radiusX){
         if(radiusX <= 0){
             throw new IllegalArgumentException();
@@ -108,6 +112,7 @@ public class MorphologyRable8Bit
      * The radius along the y axis, in user space.
      * @param radiusY should be greater than zero.
      */
+    @Override
     public void setRadiusY(double radiusY){
         if(radiusY <= 0){
             throw new IllegalArgumentException();
@@ -122,6 +127,7 @@ public class MorphologyRable8Bit
      * is to "dilate" or "erode".
      * @param doDilation do "dilation" when true and "erosion" when false
      */
+    @Override
     public void setDoDilation(boolean doDilation){
         touch();
         this.doDilation = doDilation;
@@ -130,6 +136,7 @@ public class MorphologyRable8Bit
     /**
      * Returns whether the operation is "dilation" or not("erosion")
      */
+    @Override
     public boolean getDoDilation(){
         return doDilation;
     }
@@ -137,6 +144,7 @@ public class MorphologyRable8Bit
     /**
      * Returns the radius along the x-axis, in user space.
      */
+    @Override
     public double getRadiusX(){
         return radiusX;
     }
@@ -144,10 +152,12 @@ public class MorphologyRable8Bit
     /**
      * Returns the radius along the y-axis, in user space.
      */
+    @Override
     public double getRadiusY(){
         return radiusY;
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         // Just copy over the rendering hints.
         RenderingHints rh = rc.getRenderingHints();
@@ -266,6 +276,7 @@ public class MorphologyRable8Bit
      * @return The region of input required.  This is in the user
      * coordinate system for the source indicated by srcIndex.
      */
+    @Override
     public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn){
         // NOTE: This needs to grow the region!!!
         //       Morphology actually needs a larger area of input than
@@ -284,6 +295,7 @@ public class MorphologyRable8Bit
      *  a change to inputRgn of the source selected by srcIndex.
      *  this is in the user coordinate system of this node.
      */
+    @Override
     public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn){
         // NOTE: This needs to grow the region!!!
         //       Changes in the input region affect a larger area of

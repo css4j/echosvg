@@ -181,6 +181,7 @@ public class FlowRegions {
     static class TransitionComp implements Comparator {
         public static Comparator COMP = new TransitionComp();
         TransitionComp() { }
+        @Override
         public int compare(Object o1, Object o2) {
             Transition t1 = (Transition)o1;
             Transition t2 = (Transition)o2;
@@ -194,6 +195,7 @@ public class FlowRegions {
             if (t2.up) return 1;
             return 0;
         }
+        @Override
         public boolean equals(Object comp) {
             return (this == comp);
         }

@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.AttributedCharacterIterator;
+import java.text.CharacterIterator;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -584,6 +585,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @return     a new graphics context that is a copy of
      *             this graphics context.
      */
+    @Override
     public Graphics create(){
         return new SVGGraphics2D(this);
     }
@@ -604,6 +606,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * drawn twice, then all pixels are restored to their original values.
      * @param     c1 the XOR alternation color
      */
+    @Override
     public void setXORMode(Color c1) {
         generatorCtx.errorHandler.
             handleError(new SVGGraphics2DRuntimeException(ERR_XOR));
@@ -617,6 +620,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see       java.awt.FontMetrics
      * @see       java.awt.Graphics#getFontMetrics()
      */
+    @Override
     public FontMetrics getFontMetrics(Font f){
         return fmg.getFontMetrics(f);
     }
@@ -640,6 +644,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @param       dx the horizontal distance to copy the pixels.
      * @param       dy the vertical distance to copy the pixels.
      */
+    @Override
     public void copyArea(int x, int y, int width, int height,
                          int dx, int dy){
         // No-op
@@ -669,6 +674,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see      java.awt.image.ImageObserver
      * @see      java.awt.image.ImageObserver#imageUpdate(java.awt.Image, int, int, int, int, int)
      */
+    @Override
     public boolean drawImage(Image img, int x, int y,
                              ImageObserver observer) {
         Element imageElement =
@@ -731,6 +737,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see      java.awt.image.ImageObserver
      * @see      java.awt.image.ImageObserver#imageUpdate(java.awt.Image, int, int, int, int, int)
      */
+    @Override
     public boolean drawImage(Image img, int x, int y,
                              int width, int height,
                              ImageObserver observer){
@@ -788,6 +795,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see         java.awt.Component#getGraphics
      * @see         java.awt.Graphics#create()
      */
+    @Override
     public void dispose() {
         this.domTreeManager.removeGroupManager(this.domGroupManager);
     }
@@ -806,6 +814,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see #setClip(Shape)
      * @see #setComposite(java.awt.Composite)
      */
+    @Override
     public void draw(Shape s) {
         // Only BasicStroke can be converted to an SVG attribute equivalent.
         // If the GraphicContext's Stroke is not an instance of BasicStroke,
@@ -846,6 +855,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see #setComposite(java.awt.Composite)
      * @see #setClip(Shape)
      */
+    @Override
     public boolean drawImage(Image img,
                              AffineTransform xform,
                              ImageObserver obs){
@@ -899,6 +909,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see #setComposite(java.awt.Composite)
      * @see #setClip(Shape)
      */
+    @Override
     public void drawImage(BufferedImage img,
                           BufferedImageOp op,
                           int x,
@@ -1015,6 +1026,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see #setComposite(java.awt.Composite)
      * @see #setClip(Shape)
      */
+    @Override
     public void drawRenderedImage(RenderedImage img,
                                   AffineTransform trans2) {
 
@@ -1094,6 +1106,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see #setClip(Shape)
      * @see #drawRenderedImage
      */
+    @Override
     public void drawRenderableImage(RenderableImage img,
                                     AffineTransform trans2){
 
@@ -1171,6 +1184,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see #setComposite(java.awt.Composite)
      * @see #setClip(Shape)
      */
+    @Override
     public void drawString(String s, float x, float y) {
         if (textAsShapes)  {
             GlyphVector gv = getFont().
@@ -1254,6 +1268,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see #setComposite(java.awt.Composite)
      * @see #setClip(Shape)
      */
+    @Override
     public void drawString(AttributedCharacterIterator ati, float x, float y) {
         if ((textAsShapes) || (usesUnsupportedAttributes(ati))) {
             TextLayout layout = new TextLayout(ati, getFontRenderContext());
@@ -1294,7 +1309,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
         boolean firstSpan = true;
         AffineTransform savTxf = getTransform();
         AffineTransform txtTxf = null;
-        while (ch != AttributedCharacterIterator.DONE) {
+        while (ch != CharacterIterator.DONE) {
             // first get the text Element or create a child Element if
             // we used tspans
             Element tspan = text;
@@ -1376,6 +1391,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * @see #setComposite(java.awt.Composite)
      * @see #setClip(Shape)
      */
+    @Override
     public void fill(Shape s) {
         Element svgShape = shapeConverter.toSVG(s);
         if (svgShape != null) {
@@ -1481,6 +1497,7 @@ public class SVGGraphics2D extends AbstractGraphics2D
      * Returns the device configuration associated with this
      * <code>Graphics2D</code>.
      */
+    @Override
     public GraphicsConfiguration getDeviceConfiguration(){
         // TO BE DONE.
         return null;

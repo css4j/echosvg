@@ -68,6 +68,7 @@ public class SVGSVGElementBridge
     /**
      * Returns 'svg'.
      */
+    @Override
     public String getLocalName() {
         return SVG_SVG_TAG;
     }
@@ -75,6 +76,7 @@ public class SVGSVGElementBridge
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance(){
         return new SVGSVGElementBridge();
     }
@@ -82,6 +84,7 @@ public class SVGSVGElementBridge
     /**
      * Creates a <code>CompositeGraphicsNode</code>.
      */
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         return new CanvasGraphicsNode();
     }
@@ -93,6 +96,7 @@ public class SVGSVGElementBridge
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         // 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
         if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
@@ -169,8 +173,11 @@ public class SVGSVGElementBridge
                         double w= dw;
                         double h= dh;
 
+                        @Override
                         public double getWidth()  { return w; }
+                        @Override
                         public double getHeight() { return h; }
+                        @Override
                         public void   setSize(double w, double h) {
                             this.w = w;
                             this.h = h;
@@ -242,6 +249,7 @@ public class SVGSVGElementBridge
      * @param e the element that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -265,6 +273,7 @@ public class SVGSVGElementBridge
     /**
      * Disposes this BridgeUpdateHandler and releases all resources.
      */
+    @Override
     public void dispose() {
         ctx.removeViewport(e);
         super.dispose();
@@ -273,6 +282,7 @@ public class SVGSVGElementBridge
     /**
      * Invoked when the animated value of an animatable attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged
             (AnimatedLiveAttributeValue alav) {
         try {
@@ -426,6 +436,7 @@ public class SVGSVGElementBridge
         /**
          * Returns the width of this viewport.
          */
+        @Override
         public float getWidth(){
             return width;
         }
@@ -433,11 +444,13 @@ public class SVGSVGElementBridge
         /**
          * Returns the height of this viewport.
          */
+        @Override
         public float getHeight(){
             return height;
         }
     }
 
+    @Override
     public List getIntersectionList(SVGRect svgRect, Element end) {
         List ret = new ArrayList();
         Rectangle2D rect = new Rectangle2D.Float(svgRect.getX(),
@@ -573,6 +586,7 @@ public class SVGSVGElementBridge
         return ret;
     }
 
+    @Override
     public List getEnclosureList(SVGRect svgRect, Element end) {
         List ret = new ArrayList();
         Rectangle2D rect = new Rectangle2D.Float(svgRect.getX(),
@@ -699,6 +713,7 @@ public class SVGSVGElementBridge
         return ret;
     }
 
+    @Override
     public boolean checkIntersection (Element element, SVGRect svgRect ) {
 
         GraphicsNode svgGN = ctx.getGraphicsNode(e);
@@ -754,6 +769,7 @@ public class SVGSVGElementBridge
         return false;
     }
 
+    @Override
     public boolean checkEnclosure (Element element, SVGRect svgRect ) {
         GraphicsNode gn    = ctx.getGraphicsNode(element);
         Rectangle2D gnBounds = null;
@@ -856,28 +872,33 @@ public class SVGSVGElementBridge
         return (Element)next;
     }
 
+    @Override
     public void deselectAll() {
         ctx.getUserAgent().deselectAll();
     }
 
+    @Override
     public int          suspendRedraw ( int max_wait_milliseconds ) {
         UpdateManager um = ctx.getUpdateManager();
         if (um != null)
             return um.addRedrawSuspension(max_wait_milliseconds);
         return -1;
     }
+    @Override
     public boolean      unsuspendRedraw ( int suspend_handle_id ) {
         UpdateManager um = ctx.getUpdateManager();
         if (um != null)
             return um.releaseRedrawSuspension(suspend_handle_id);
         return false; // no UM so couldn't have issued an id...
     }
+    @Override
     public void         unsuspendRedrawAll (  ) {
         UpdateManager um = ctx.getUpdateManager();
         if (um != null)
             um.releaseAllRedrawSuspension();
     }
 
+    @Override
     public void          forceRedraw (  ) {
         UpdateManager um = ctx.getUpdateManager();
         if (um != null)
@@ -887,6 +908,7 @@ public class SVGSVGElementBridge
     /**
      * Pauses animations in the document.
      */
+    @Override
     public void pauseAnimations() {
         ctx.getAnimationEngine().pause();
     }
@@ -894,6 +916,7 @@ public class SVGSVGElementBridge
     /**
      * Unpauses animations in the document.
      */
+    @Override
     public void unpauseAnimations() {
         ctx.getAnimationEngine().unpause();
     }
@@ -901,6 +924,7 @@ public class SVGSVGElementBridge
     /**
      * Returns whether animations are currently paused.
      */
+    @Override
     public boolean animationsPaused() {
         return ctx.getAnimationEngine().isPaused();
     }
@@ -908,6 +932,7 @@ public class SVGSVGElementBridge
     /**
      * Returns the current document time.
      */
+    @Override
     public float getCurrentTime() {
         return ctx.getAnimationEngine().getCurrentTime();
     }
@@ -915,6 +940,7 @@ public class SVGSVGElementBridge
     /**
      * Sets the current document time.
      */
+    @Override
     public void setCurrentTime(float t) {
         ctx.getAnimationEngine().setCurrentTime(t);
     }

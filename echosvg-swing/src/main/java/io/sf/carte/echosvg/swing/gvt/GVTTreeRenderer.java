@@ -97,6 +97,7 @@ public class GVTTreeRenderer extends HaltingThread {
     /**
      * Runs this renderer.
      */
+    @Override
     public void run() {
         GVTTreeRendererEvent ev = new GVTTreeRendererEvent(this, null);
         try {
@@ -164,6 +165,7 @@ public class GVTTreeRenderer extends HaltingThread {
     }
 
     static Dispatcher prepareDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((GVTTreeRendererListener)listener).gvtRenderingPrepare
@@ -172,6 +174,7 @@ public class GVTTreeRenderer extends HaltingThread {
         };
 
     static Dispatcher startedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((GVTTreeRendererListener)listener).gvtRenderingStarted
@@ -180,6 +183,7 @@ public class GVTTreeRenderer extends HaltingThread {
         };
 
     static Dispatcher cancelledDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((GVTTreeRendererListener)listener).gvtRenderingCancelled
@@ -188,6 +192,7 @@ public class GVTTreeRenderer extends HaltingThread {
         };
 
     static Dispatcher completedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((GVTTreeRendererListener)listener).gvtRenderingCompleted
@@ -196,6 +201,7 @@ public class GVTTreeRenderer extends HaltingThread {
         };
 
     static Dispatcher failedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((GVTTreeRendererListener)listener).gvtRenderingFailed

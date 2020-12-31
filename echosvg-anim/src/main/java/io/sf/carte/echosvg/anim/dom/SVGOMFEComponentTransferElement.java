@@ -73,6 +73,7 @@ public class SVGOMFEComponentTransferElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -88,6 +89,7 @@ public class SVGOMFEComponentTransferElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_COMPONENT_TRANSFER_TAG;
     }
@@ -95,6 +97,7 @@ public class SVGOMFEComponentTransferElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEComponentTransferElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -102,6 +105,7 @@ public class SVGOMFEComponentTransferElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEComponentTransferElement();
     }
@@ -109,6 +113,7 @@ public class SVGOMFEComponentTransferElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

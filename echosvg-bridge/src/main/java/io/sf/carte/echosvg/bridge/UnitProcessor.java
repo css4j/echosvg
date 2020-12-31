@@ -357,6 +357,7 @@ public abstract class UnitProcessor
         /**
          * Returns the element.
          */
+        @Override
         public Element getElement() {
             return e;
         }
@@ -364,6 +365,7 @@ public abstract class UnitProcessor
         /**
          * Returns the size of a px CSS unit in millimeters.
          */
+        @Override
         public float getPixelUnitToMillimeter() {
             return ctx.getUserAgent().getPixelUnitToMillimeter();
         }
@@ -373,6 +375,7 @@ public abstract class UnitProcessor
          * This will be removed after next release.
          * @see #getPixelUnitToMillimeter()
          */
+        @Override
         public float getPixelToMM() {
             return getPixelUnitToMillimeter();
 
@@ -381,6 +384,7 @@ public abstract class UnitProcessor
         /**
          * Returns the font-size value.
          */
+        @Override
         public float getFontSize() {
             return CSSUtilities.getComputedStyle
                 (e, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
@@ -389,6 +393,7 @@ public abstract class UnitProcessor
         /**
          * Returns the x-height value.
          */
+        @Override
         public float getXHeight() {
             return 0.5f;
         }
@@ -396,6 +401,7 @@ public abstract class UnitProcessor
         /**
          * Returns the viewport width used to compute units.
          */
+        @Override
         public float getViewportWidth() {
             return ctx.getViewport(e).getWidth();
         }
@@ -403,6 +409,7 @@ public abstract class UnitProcessor
         /**
          * Returns the viewport height used to compute units.
          */
+        @Override
         public float getViewportHeight() {
             return ctx.getViewport(e).getHeight();
         }

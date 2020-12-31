@@ -44,6 +44,7 @@ public class SVGGElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns 'g'.
      */
+    @Override
     public String getLocalName() {
         return SVG_G_TAG;
     }
@@ -51,6 +52,7 @@ public class SVGGElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGGElementBridge();
     }
@@ -62,6 +64,7 @@ public class SVGGElementBridge extends AbstractGraphicsNodeBridge {
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         CompositeGraphicsNode gn =
             (CompositeGraphicsNode)super.createGraphicsNode(ctx, e);
@@ -87,6 +90,7 @@ public class SVGGElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Creates a <code>CompositeGraphicsNode</code>.
      */
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         return new CompositeGraphicsNode();
     }
@@ -94,6 +98,7 @@ public class SVGGElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns true as the &lt;g&gt; element is a container.
      */
+    @Override
     public boolean isComposite() {
         return true;
     }
@@ -103,6 +108,7 @@ public class SVGGElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
      */
+    @Override
     public void handleDOMNodeInsertedEvent(MutationEvent evt) {
         if (evt.getTarget() instanceof Element) {
             handleElementAdded((CompositeGraphicsNode)node, 

@@ -114,6 +114,7 @@ public class SVGOMAnimateTransformElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_ANIMATE_TRANSFORM_TAG;
     }
@@ -122,6 +123,7 @@ public class SVGOMAnimateTransformElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -129,6 +131,7 @@ public class SVGOMAnimateTransformElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMAnimateTransformElement();
     }

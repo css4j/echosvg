@@ -54,6 +54,7 @@ public class RhinoClassShutter implements ClassShutter {
     /**
      * Returns whether the given class is visible to scripts.
      */
+    @Override
     public boolean visibleToScripts(String fullClassName) {
         // Don't let them mess with script engine's internals.
         if (fullClassName.startsWith("org.mozilla.javascript"))

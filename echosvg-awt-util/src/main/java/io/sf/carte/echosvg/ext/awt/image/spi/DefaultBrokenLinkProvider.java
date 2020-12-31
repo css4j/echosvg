@@ -58,6 +58,7 @@ public class DefaultBrokenLinkProvider
         return ls.formatMessage(code, params);
     }
 
+    @Override
     public Filter getBrokenLinkImage(Object base,
                                      String code, Object [] params) {
         synchronized (DefaultBrokenLinkProvider.class) {

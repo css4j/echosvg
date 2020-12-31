@@ -91,10 +91,12 @@ public class DeferRable implements Filter {
         notifyAll();
     }
 
+    @Override
     public long getTimeStamp() {
         return getSource().getTimeStamp();
     }
 
+    @Override
     public Vector getSources() {
         return getSource().getSources();
     }
@@ -102,6 +104,7 @@ public class DeferRable implements Filter {
     /**
      * Forward the call (blocking until source is set if need be).
      */
+    @Override
     public boolean isDynamic() {
         return getSource().isDynamic();
     }
@@ -110,6 +113,7 @@ public class DeferRable implements Filter {
      * Implement the baseclass method to call getSource() so
      * it will block until we have a real source.
      */
+    @Override
     public Rectangle2D getBounds2D() {
         synchronized(this) {
             while ((src == null) && (bounds == null))  {
@@ -127,15 +131,19 @@ public class DeferRable implements Filter {
         return bounds;
     }
 
+    @Override
     public float getMinX() {
         return (float)getBounds2D().getX();
     }
+    @Override
     public float getMinY() {
         return (float)getBounds2D().getY();
     }
+    @Override
     public float getWidth() {
         return (float)getBounds2D().getWidth();
     }
+    @Override
     public float getHeight() {
         return (float)getBounds2D().getHeight();
     }
@@ -143,6 +151,7 @@ public class DeferRable implements Filter {
     /**
      * Forward the call (blocking until source is set if need be).
      */
+    @Override
     public Object getProperty(String name) {
         synchronized (this) {
             while ((src == null) && (props == null)) {
@@ -160,6 +169,7 @@ public class DeferRable implements Filter {
     /**
      * Forward the call (blocking until source is set if need be).
      */
+    @Override
     public String [] getPropertyNames() {
         synchronized (this) {
             while ((src == null) && (props == null)) {
@@ -180,6 +190,7 @@ public class DeferRable implements Filter {
     /**
      * Forward the call (blocking until source is set if need be).
      */
+    @Override
     public RenderedImage createDefaultRendering() {
         return getSource().createDefaultRendering();
     }
@@ -187,6 +198,7 @@ public class DeferRable implements Filter {
     /**
      * Forward the call (blocking until source is set if need be).
      */
+    @Override
     public RenderedImage createScaledRendering(int w, int h,
                                                RenderingHints hints) {
         return getSource().createScaledRendering(w, h, hints);
@@ -195,6 +207,7 @@ public class DeferRable implements Filter {
     /**
      * Forward the call (blocking until source is set if need be).
      */
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         return getSource().createRendering(rc);
     }
@@ -202,6 +215,7 @@ public class DeferRable implements Filter {
     /**
      * Forward the call (blocking until source is set if need be).
      */
+    @Override
     public Shape getDependencyRegion(int srcIndex,
                                      Rectangle2D outputRgn) {
         return getSource().getDependencyRegion(srcIndex, outputRgn);
@@ -210,6 +224,7 @@ public class DeferRable implements Filter {
     /**
      * Forward the call (blocking until source is set if need be).
      */
+    @Override
     public Shape getDirtyRegion(int srcIndex,
                                 Rectangle2D inputRgn) {
         return getSource().getDirtyRegion(srcIndex, inputRgn);

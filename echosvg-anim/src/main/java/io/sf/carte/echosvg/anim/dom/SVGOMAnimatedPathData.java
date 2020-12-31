@@ -101,6 +101,7 @@ public class SVGOMAnimatedPathData
      * <b>DOM</b>: Implements {@link
      * SVGAnimatedPathData#getAnimatedNormalizedPathSegList()}.
      */
+    @Override
     public SVGPathSegList getAnimatedNormalizedPathSegList() {
         throw new UnsupportedOperationException
             ("SVGAnimatedPathData.getAnimatedNormalizedPathSegList is not implemented"); // XXX
@@ -110,6 +111,7 @@ public class SVGOMAnimatedPathData
      * <b>DOM</b>: Implements {@link
      * SVGAnimatedPathData#getAnimatedPathSegList()}.
      */
+    @Override
     public SVGPathSegList getAnimatedPathSegList() {
         if (animPathSegs == null) {
             animPathSegs = new AnimSVGPathSegList();
@@ -142,6 +144,7 @@ public class SVGOMAnimatedPathData
      * </p>
      * @return a path segment list containing the normalized version of the path.
      */
+    @Override
     public SVGPathSegList getNormalizedPathSegList() {
         if (normalizedPathSegs == null) {
             normalizedPathSegs = new NormalizedBaseSVGPathSegList();
@@ -153,6 +156,7 @@ public class SVGOMAnimatedPathData
      * <b>DOM</b>: Implements {@link
      * SVGAnimatedPathData#getPathSegList()}.
      */
+    @Override
     public SVGPathSegList getPathSegList() {
         if (pathSegs == null) {
             pathSegs = new BaseSVGPathSegList();
@@ -186,6 +190,7 @@ public class SVGOMAnimatedPathData
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         SVGPathSegList psl = getPathSegList();
         PathArrayProducer pp = new PathArrayProducer();
@@ -197,6 +202,7 @@ public class SVGOMAnimatedPathData
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -215,6 +221,7 @@ public class SVGOMAnimatedPathData
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         if (!changing) {
             if (pathSegs != null) {
@@ -233,6 +240,7 @@ public class SVGOMAnimatedPathData
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         if (!changing) {
             if (pathSegs != null) {
@@ -251,6 +259,7 @@ public class SVGOMAnimatedPathData
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         if (!changing) {
             if (pathSegs != null) {
@@ -284,6 +293,7 @@ public class SVGOMAnimatedPathData
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -292,6 +302,7 @@ public class SVGOMAnimatedPathData
         /**
          * Create a SVGException.
          */
+        @Override
         protected SVGException createSVGException(short type, String key,
                                                   Object[] args) {
             return ((SVGOMElement)element).createSVGException(type, key, args);
@@ -300,6 +311,7 @@ public class SVGOMAnimatedPathData
         /**
          * Returns the value of the DOM attribute containing the path data.
          */
+        @Override
         protected String getValueAsString() {
             Attr attr = element.getAttributeNodeNS(namespaceURI, localName);
             if (attr == null) {
@@ -311,6 +323,7 @@ public class SVGOMAnimatedPathData
         /**
          * Sets the DOM attribute value containing the path data.
          */
+        @Override
         protected void setAttributeValue(String value) {
             try {
                 changing = true;
@@ -323,6 +336,7 @@ public class SVGOMAnimatedPathData
         /**
          * Resets the value of the associated attribute.
          */
+        @Override
         protected void resetAttribute() {
             super.resetAttribute();
             missing = false;
@@ -334,6 +348,7 @@ public class SVGOMAnimatedPathData
          * the DOM attribute.  This is called in response to an append to
          * the list.
          */
+        @Override
         protected void resetAttribute(SVGItem item) {
             super.resetAttribute(item);
             missing = false;
@@ -343,6 +358,7 @@ public class SVGOMAnimatedPathData
         /**
          * Initializes the list, if needed.
          */
+        @Override
         protected void revalidate() {
             if (valid) {
                 return;
@@ -393,6 +409,7 @@ public class SVGOMAnimatedPathData
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -401,6 +418,7 @@ public class SVGOMAnimatedPathData
         /**
          * Create a SVGException.
          */
+        @Override
         protected SVGException createSVGException(short type, String key,
                                                   Object[] args) {
             return ((SVGOMElement)element).createSVGException(type, key, args);
@@ -409,6 +427,7 @@ public class SVGOMAnimatedPathData
         /**
          * Returns the value of the DOM attribute containing the path data.
          */
+        @Override
         protected String getValueAsString() throws SVGException {
             Attr attr = element.getAttributeNodeNS(namespaceURI, localName);
             if (attr == null) {
@@ -420,6 +439,7 @@ public class SVGOMAnimatedPathData
         /**
          * Sets the DOM attribute value containing the path data.
          */
+        @Override
         protected void setAttributeValue(String value) {
             try {
                 changing = true;
@@ -432,6 +452,7 @@ public class SVGOMAnimatedPathData
         /**
          * Initializes the list, if needed.
          */
+        @Override
         protected void revalidate() {
             if (valid) {
                 return;
@@ -477,6 +498,7 @@ public class SVGOMAnimatedPathData
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -485,6 +507,7 @@ public class SVGOMAnimatedPathData
         /**
          * Create a SVGException.
          */
+        @Override
         protected SVGException createSVGException(short type, String key,
                                                   Object[] args) {
             return ((SVGOMElement)element).createSVGException(type, key, args);
@@ -493,6 +516,7 @@ public class SVGOMAnimatedPathData
         /**
          * <b>DOM</b>: Implements {@link SVGPathSegList#getNumberOfItems()}.
          */
+        @Override
         public int getNumberOfItems() {
             if (hasAnimVal) {
                 return super.getNumberOfItems();
@@ -503,6 +527,7 @@ public class SVGOMAnimatedPathData
         /**
          * <b>DOM</b>: Implements {@link SVGPathSegList#getItem(int)}.
          */
+        @Override
         public SVGPathSeg getItem(int index) throws DOMException {
             if (hasAnimVal) {
                 return super.getItem(index);
@@ -513,6 +538,7 @@ public class SVGOMAnimatedPathData
         /**
          * Returns the value of the DOM attribute containing the point list.
          */
+        @Override
         protected String getValueAsString() {
             if (itemList.size() == 0) {
                 return "";
@@ -532,12 +558,14 @@ public class SVGOMAnimatedPathData
         /**
          * Sets the DOM attribute value containing the point list.
          */
+        @Override
         protected void setAttributeValue(String value) {
         }
 
         /**
          * <b>DOM</b>: Implements {@link SVGPathSegList#clear()}.
          */
+        @Override
         public void clear() throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -547,6 +575,7 @@ public class SVGOMAnimatedPathData
         /**
          * <b>DOM</b>: Implements {@link SVGPathSegList#initialize(SVGPathSeg)}.
          */
+        @Override
         public SVGPathSeg initialize(SVGPathSeg newItem)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -558,6 +587,7 @@ public class SVGOMAnimatedPathData
          * <b>DOM</b>: Implements {@link
          * SVGPathSegList#insertItemBefore(SVGPathSeg, int)}.
          */
+        @Override
         public SVGPathSeg insertItemBefore(SVGPathSeg newItem, int index)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -569,6 +599,7 @@ public class SVGOMAnimatedPathData
          * <b>DOM</b>: Implements {@link
          * SVGPathSegList#replaceItem(SVGPathSeg, int)}.
          */
+        @Override
         public SVGPathSeg replaceItem(SVGPathSeg newItem, int index)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -579,6 +610,7 @@ public class SVGOMAnimatedPathData
         /**
          * <b>DOM</b>: Implements {@link SVGPathSegList#removeItem(int)}.
          */
+        @Override
         public SVGPathSeg removeItem(int index) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -588,6 +620,7 @@ public class SVGOMAnimatedPathData
         /**
          * <b>DOM</b>: Implements {@link SVGPathSegList#appendItem(SVGPathSeg)}.
          */
+        @Override
         public SVGPathSeg appendItem(SVGPathSeg newItem) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -776,6 +809,7 @@ public class SVGOMAnimatedPathData
          * Resets the value of the associated attribute.  Does nothing, since
          * there is no attribute for an animated value.
          */
+        @Override
         protected void resetAttribute() {
         }
 
@@ -783,6 +817,7 @@ public class SVGOMAnimatedPathData
          * Resets the value of the associated attribute.  Does nothing, since
          * there is no attribute for an animated value.
          */
+        @Override
         protected void resetAttribute(SVGItem item) {
         }
 
@@ -790,6 +825,7 @@ public class SVGOMAnimatedPathData
          * Initializes the list, if needed.  Does nothing, since there is no
          * attribute to read the list from.
          */
+        @Override
         protected void revalidate() {
             valid = true;
         }

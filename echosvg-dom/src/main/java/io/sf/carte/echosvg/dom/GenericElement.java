@@ -60,6 +60,7 @@ public class GenericElement extends AbstractElement {
     /**
      * Sets the name of this node.
      */
+    @Override
     public void setNodeName(String v) {
         nodeName = v;
     }
@@ -68,6 +69,7 @@ public class GenericElement extends AbstractElement {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return {@link #nodeName}
      */
+    @Override
     public String getNodeName() {
         return nodeName;
     }
@@ -77,6 +79,7 @@ public class GenericElement extends AbstractElement {
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -84,6 +87,7 @@ public class GenericElement extends AbstractElement {
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -91,6 +95,7 @@ public class GenericElement extends AbstractElement {
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         GenericElement ge = (GenericElement)n;
@@ -101,6 +106,7 @@ public class GenericElement extends AbstractElement {
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         GenericElement ge = (GenericElement)n;
@@ -112,6 +118,7 @@ public class GenericElement extends AbstractElement {
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         GenericElement ge = (GenericElement)super.copyInto(n);
         ge.nodeName = nodeName;
@@ -122,6 +129,7 @@ public class GenericElement extends AbstractElement {
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         GenericElement ge = (GenericElement)super.deepCopyInto(n);
         ge.nodeName = nodeName;
@@ -131,6 +139,7 @@ public class GenericElement extends AbstractElement {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new GenericElement();
     }

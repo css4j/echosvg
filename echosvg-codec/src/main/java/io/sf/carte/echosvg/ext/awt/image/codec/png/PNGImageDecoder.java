@@ -61,6 +61,7 @@ public class PNGImageDecoder extends ImageDecoderImpl {
         super(input, param);
     }
 
+    @Override
     public RenderedImage decodeAsRenderedImage(int page) throws IOException {
         if (page != 0) {
             throw new IOException(PropertyUtil.getString("PNGImageDecoder19"));
@@ -1826,6 +1827,7 @@ class PNGImage extends SimpleRenderedImage {
 
     // RenderedImage stuff
 
+    @Override
     public Raster getTile(int tileX, int tileY) {
         if (tileX != 0 || tileY != 0) {
             // Error -- bad tile requested

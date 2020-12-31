@@ -40,6 +40,7 @@ class EchoSVGWrapFactory extends WrapFactory {
         setJavaPrimitiveWrap(false);
     }
 
+    @Override
     public Object wrap(Context ctx, Scriptable scope,
                        Object obj, Class staticType) {
         if (obj instanceof EventTarget) {

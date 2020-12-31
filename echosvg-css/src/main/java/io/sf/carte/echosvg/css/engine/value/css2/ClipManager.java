@@ -42,6 +42,7 @@ public class ClipManager extends RectManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return false;
     }
@@ -49,6 +50,7 @@ public class ClipManager extends RectManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -56,6 +58,7 @@ public class ClipManager extends RectManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -63,6 +66,7 @@ public class ClipManager extends RectManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_CLIP_VALUE;
     }
@@ -70,6 +74,7 @@ public class ClipManager extends RectManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_CLIP_PROPERTY;
     }
@@ -77,6 +82,7 @@ public class ClipManager extends RectManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return ValueConstants.AUTO_VALUE;
     }
@@ -84,6 +90,7 @@ public class ClipManager extends RectManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
@@ -105,6 +112,7 @@ public class ClipManager extends RectManager {
      * Implements {@link
      * ValueManager#createStringValue(short,String,CSSEngine)}.
      */
+    @Override
     public Value createStringValue(short type, String value, CSSEngine engine)
         throws DOMException {
         if (type != CSSPrimitiveValue.CSS_IDENT) {

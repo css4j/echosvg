@@ -96,6 +96,7 @@ public class XMLDocument extends PlainDocument {
     }
     
     /** {@inheritDoc} */
+    @Override
     public void insertString(int offset, String str, AttributeSet a)
             throws BadLocationException {
 
@@ -110,6 +111,7 @@ public class XMLDocument extends PlainDocument {
     }
     
     /** {@inheritDoc} */
+    @Override
     public void remove(int offs, int len) throws BadLocationException {
         super.remove(offs, len);
         

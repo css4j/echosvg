@@ -37,6 +37,7 @@ public class FlowExtTextNode extends TextNode{
         textPainter = FlowExtTextPainter.getInstance();
     }
 
+    @Override
     public void setTextPainter(TextPainter textPainter) {
         if (textPainter == null)
             this.textPainter = FlowExtTextPainter.getInstance();

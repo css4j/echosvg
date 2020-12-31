@@ -98,6 +98,7 @@ public class CleanerThread extends Thread {
         start();
     }
 
+    @Override
     public void run() {
         while(true) {
             try {

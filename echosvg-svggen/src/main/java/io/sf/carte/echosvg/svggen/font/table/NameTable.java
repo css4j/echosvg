@@ -61,6 +61,7 @@ public class NameTable implements Table {
         return "";
     }
 
+    @Override
     public int getType() {
         return name;
     }

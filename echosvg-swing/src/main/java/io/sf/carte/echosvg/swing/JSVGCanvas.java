@@ -248,6 +248,7 @@ public class JSVGCanvas extends JSVGComponent {
 
         if (eventsEnabled) {
             addMouseListener(new MouseAdapter() {
+                @Override
                 public void mousePressed(MouseEvent evt) {
                     requestFocus();
                 }
@@ -281,6 +282,7 @@ public class JSVGCanvas extends JSVGComponent {
         actionMap.put(RESET_TRANSFORM_ACTION, new ResetTransformAction());
     }
 
+    @Override
     public void setDisableInteractions(boolean b) {
         super.setDisableInteractions(b);
         ActionMap actionMap = getActionMap();
@@ -322,25 +324,25 @@ public class JSVGCanvas extends JSVGComponent {
         key = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0);
         inputMap.put(key, SCROLL_DOWN_ACTION);
 
-        key = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, KeyEvent.SHIFT_DOWN_MASK);
+        key = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.SHIFT_DOWN_MASK);
         inputMap.put(key, FAST_SCROLL_RIGHT_ACTION);
 
-        key = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, KeyEvent.SHIFT_DOWN_MASK);
+        key = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.SHIFT_DOWN_MASK);
         inputMap.put(key, FAST_SCROLL_LEFT_ACTION);
 
-        key = KeyStroke.getKeyStroke(KeyEvent.VK_UP, KeyEvent.SHIFT_DOWN_MASK);
+        key = KeyStroke.getKeyStroke(KeyEvent.VK_UP, InputEvent.SHIFT_DOWN_MASK);
         inputMap.put(key, FAST_SCROLL_UP_ACTION);
 
-        key = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, KeyEvent.SHIFT_DOWN_MASK);
+        key = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, InputEvent.SHIFT_DOWN_MASK);
         inputMap.put(key, FAST_SCROLL_DOWN_ACTION);
 
-        key = KeyStroke.getKeyStroke(KeyEvent.VK_I, KeyEvent.CTRL_DOWN_MASK);
+        key = KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_DOWN_MASK);
         inputMap.put(key, ZOOM_IN_ACTION);
 
-        key = KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK);
+        key = KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK);
         inputMap.put(key, ZOOM_OUT_ACTION);
 
-        key = KeyStroke.getKeyStroke(KeyEvent.VK_T, KeyEvent.CTRL_DOWN_MASK);
+        key = KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK);
         inputMap.put(key, RESET_TRANSFORM_ACTION);
     }
 
@@ -349,6 +351,7 @@ public class JSVGCanvas extends JSVGComponent {
      *
      * @param pcl the property change listener to add
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
         pcs.addPropertyChangeListener(pcl);
     }
@@ -358,6 +361,7 @@ public class JSVGCanvas extends JSVGComponent {
      *
      * @param pcl the property change listener to remove
      */
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         pcs.removePropertyChangeListener(pcl);
     }
@@ -369,6 +373,7 @@ public class JSVGCanvas extends JSVGComponent {
      * @param propertyName the name of the property to listen on
      * @param pcl the property change listener to add
      */
+    @Override
     public void addPropertyChangeListener(String propertyName,
                                           PropertyChangeListener pcl) {
         pcs.addPropertyChangeListener(propertyName, pcl);
@@ -381,6 +386,7 @@ public class JSVGCanvas extends JSVGComponent {
      * @param propertyName the name of the property that was listened on
      * @param pcl the property change listener to remove
      */
+    @Override
     public void removePropertyChangeListener(String propertyName,
                                              PropertyChangeListener pcl) {
         pcs.removePropertyChangeListener(propertyName, pcl);
@@ -533,6 +539,7 @@ public class JSVGCanvas extends JSVGComponent {
     /**
      * Creates a UserAgent.
      */
+    @Override
     protected UserAgent createUserAgent() {
         return new CanvasUserAgent();
     }
@@ -540,6 +547,7 @@ public class JSVGCanvas extends JSVGComponent {
     /**
      * Creates an instance of Listener.
      */
+    @Override
     protected Listener createListener() {
         return new CanvasSVGListener();
     }
@@ -552,6 +560,7 @@ public class JSVGCanvas extends JSVGComponent {
         /**
          * Called when the loading of a document was started.
          */
+        @Override
         public void documentLoadingStarted(SVGDocumentLoaderEvent e) {
             super.documentLoadingStarted(e);
             JSVGCanvas.this.setToolTipText(null);
@@ -559,6 +568,7 @@ public class JSVGCanvas extends JSVGComponent {
 
     }
 
+    @Override
     protected void installSVGDocument(SVGDocument doc) {
         if (toolTipDocs != null) {
             for (Object o : toolTipDocs.keySet()) {
@@ -642,6 +652,7 @@ public class JSVGCanvas extends JSVGComponent {
      * A swing action to reset the rendering transform of the canvas.
      */
     public class ResetTransformAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent evt) {
             fragmentIdentifier = null;
             resetRenderingTransform();
@@ -661,6 +672,7 @@ public class JSVGCanvas extends JSVGComponent {
             this.at = at;
         }
 
+        @Override
         public void actionPerformed(ActionEvent evt) {
             if (gvtRoot == null) {
                 return;
@@ -773,6 +785,7 @@ public class JSVGCanvas extends JSVGComponent {
      * <p>Binding: BUTTON1 + CTRL Key</p>
      */
     protected Interactor zoomInteractor = new AbstractZoomInteractor() {
+        @Override
         public boolean startInteraction(InputEvent ie) {
             int mods = ie.getModifiersEx();
             return
@@ -788,6 +801,7 @@ public class JSVGCanvas extends JSVGComponent {
      */
     protected Interactor imageZoomInteractor
         = new AbstractImageZoomInteractor() {
+        @Override
         public boolean startInteraction(InputEvent ie) {
             int mods = ie.getModifiersEx();
             return
@@ -802,6 +816,7 @@ public class JSVGCanvas extends JSVGComponent {
      * <p>Binding: BUTTON1 + SHIFT Key</p>
      */
     protected Interactor panInteractor = new AbstractPanInteractor() {
+        @Override
         public boolean startInteraction(InputEvent ie) {
             int mods = ie.getModifiersEx();
             return
@@ -816,6 +831,7 @@ public class JSVGCanvas extends JSVGComponent {
      * <p>Binding: BUTTON3 + CTRL Key</p>
      */
     protected Interactor rotateInteractor = new AbstractRotateInteractor() {
+        @Override
         public boolean startInteraction(InputEvent ie) {
             int mods = ie.getModifiersEx();
             return
@@ -831,6 +847,7 @@ public class JSVGCanvas extends JSVGComponent {
      */
     protected Interactor resetTransformInteractor =
         new AbstractResetTransformInteractor() {
+        @Override
         public boolean startInteraction(InputEvent ie) {
             int mods = ie.getModifiersEx();
             return
@@ -880,6 +897,7 @@ public class JSVGCanvas extends JSVGComponent {
          *     content of the &lt;desc&gt; element.</li>
          * </ul>
          */
+        @Override
         public void handleElement(Element elt, Object data){
             super.handleElement(elt, data);
 
@@ -971,6 +989,7 @@ public class JSVGCanvas extends JSVGComponent {
                 if (o != null) {
                     // Update components tooltip text now.
                     EventQueue.invokeLater(new Runnable() {
+                            @Override
                             public void run() {
                                 setToolTipText(toolTip);
                                 MouseEvent e = new MouseEvent
@@ -1099,6 +1118,7 @@ public class JSVGCanvas extends JSVGComponent {
         /**
          * Displays an error message in the User Agent interface.
          */
+        @Override
         public void displayError(String message) {
             if (svgUserAgent != null) {
                 super.displayError(message);
@@ -1115,6 +1135,7 @@ public class JSVGCanvas extends JSVGComponent {
         /**
          * Displays an error resulting from the specified Exception.
          */
+        @Override
         public void displayError(Exception ex) {
             if (svgUserAgent != null) {
                 super.displayError(ex);
@@ -1161,6 +1182,7 @@ public class JSVGCanvas extends JSVGComponent {
             lastX = 0; lastY = 0;
         }
 
+        @Override
         public void mouseMoved(MouseEvent evt) {
             lastX = evt.getX();
             lastY = evt.getY();
@@ -1197,6 +1219,7 @@ public class JSVGCanvas extends JSVGComponent {
         public ToolTipModifier() {
         }
 
+        @Override
         public void handleEvent(Event evt){
             // Don't set the tool tip if another ToolTipModifier
             // has already handled this event (as it will have been
@@ -1239,6 +1262,7 @@ public class JSVGCanvas extends JSVGComponent {
             this.theToolTip = toolTip;
         }
 
+        @Override
         public void run() {
             setToolTipText(theToolTip);
 

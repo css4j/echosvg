@@ -86,6 +86,7 @@ public class SVGOMCircleElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -97,18 +98,19 @@ public class SVGOMCircleElement
     private void initializeLiveAttributes() {
         cx = createLiveAnimatedLength
             (null, SVG_CX_ATTRIBUTE, SVG_CIRCLE_CX_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         cy = createLiveAnimatedLength
             (null, SVG_CY_ATTRIBUTE, SVG_CIRCLE_CY_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         r = createLiveAnimatedLength
-            (null, SVG_R_ATTRIBUTE, null, SVGOMAnimatedLength.OTHER_LENGTH,
+            (null, SVG_R_ATTRIBUTE, null, AbstractSVGAnimatedLength.OTHER_LENGTH,
              true);
     }
 
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_CIRCLE_TAG;
     }
@@ -116,6 +118,7 @@ public class SVGOMCircleElement
     /**
      * <b>DOM</b>: Implements {@link SVGCircleElement#getCx()}.
      */
+    @Override
     public SVGAnimatedLength getCx() {
         return cx;
     }
@@ -123,6 +126,7 @@ public class SVGOMCircleElement
     /**
      * <b>DOM</b>: Implements {@link SVGCircleElement#getCy()}.
      */
+    @Override
     public SVGAnimatedLength getCy() {
         return cy;
     }
@@ -130,6 +134,7 @@ public class SVGOMCircleElement
     /**
      * <b>DOM</b>: Implements {@link SVGCircleElement#getR()}.
      */
+    @Override
     public SVGAnimatedLength getR() {
         return r;
     }
@@ -137,6 +142,7 @@ public class SVGOMCircleElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMCircleElement();
     }
@@ -144,6 +150,7 @@ public class SVGOMCircleElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

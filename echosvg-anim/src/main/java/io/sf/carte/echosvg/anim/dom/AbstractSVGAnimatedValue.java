@@ -69,6 +69,7 @@ public abstract class AbstractSVGAnimatedValue
     /**
      * Returns the namespace URI of the attribute.
      */
+    @Override
     public String getNamespaceURI() {
         return namespaceURI;
     }
@@ -76,6 +77,7 @@ public abstract class AbstractSVGAnimatedValue
     /**
      * Returns the local name of the attribute.
      */
+    @Override
     public String getLocalName() {
         return localName;
     }
@@ -97,6 +99,7 @@ public abstract class AbstractSVGAnimatedValue
     /**
      * Adds a listener for changes to the animated value.
      */
+    @Override
     public void addAnimatedAttributeListener(AnimatedAttributeListener aal) {
         if (!listeners.contains(aal)) {
             listeners.add(aal);
@@ -106,6 +109,7 @@ public abstract class AbstractSVGAnimatedValue
     /**
      * Removes a listener for changes to the animated value.
      */
+    @Override
     public void removeAnimatedAttributeListener(AnimatedAttributeListener aal) {
         listeners.remove(aal);
     }

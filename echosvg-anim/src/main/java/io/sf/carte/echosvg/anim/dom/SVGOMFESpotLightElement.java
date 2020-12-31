@@ -122,6 +122,7 @@ public class SVGOMFESpotLightElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -150,6 +151,7 @@ public class SVGOMFESpotLightElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_SPOT_LIGHT_TAG;
     }
@@ -157,6 +159,7 @@ public class SVGOMFESpotLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getX()}.
      */
+    @Override
     public SVGAnimatedNumber getX() {
         return x;
     }
@@ -164,6 +167,7 @@ public class SVGOMFESpotLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getY()}.
      */
+    @Override
     public SVGAnimatedNumber getY() {
         return y;
     }
@@ -171,6 +175,7 @@ public class SVGOMFESpotLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getZ()}.
      */
+    @Override
     public SVGAnimatedNumber getZ() {
         return z;
     }
@@ -178,6 +183,7 @@ public class SVGOMFESpotLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getPointsAtX()}.
      */
+    @Override
     public SVGAnimatedNumber getPointsAtX() {
         return pointsAtX;
     }
@@ -185,6 +191,7 @@ public class SVGOMFESpotLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getPointsAtY()}.
      */
+    @Override
     public SVGAnimatedNumber getPointsAtY() {
         return pointsAtY;
     }
@@ -192,6 +199,7 @@ public class SVGOMFESpotLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getPointsAtZ()}.
      */
+    @Override
     public SVGAnimatedNumber getPointsAtZ() {
         return pointsAtZ;
     }
@@ -200,6 +208,7 @@ public class SVGOMFESpotLightElement
      * <b>DOM</b>: Implements {@link
      * SVGFESpotLightElement#getSpecularExponent()}.
      */
+    @Override
     public SVGAnimatedNumber getSpecularExponent() {
         return specularExponent;
     }
@@ -208,6 +217,7 @@ public class SVGOMFESpotLightElement
      * <b>DOM</b>: Implements {@link
      * SVGFESpotLightElement#getLimitingConeAngle()}.
      */
+    @Override
     public SVGAnimatedNumber getLimitingConeAngle() {
         return limitingConeAngle;
     }
@@ -215,6 +225,7 @@ public class SVGOMFESpotLightElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFESpotLightElement();
     }
@@ -222,6 +233,7 @@ public class SVGOMFESpotLightElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

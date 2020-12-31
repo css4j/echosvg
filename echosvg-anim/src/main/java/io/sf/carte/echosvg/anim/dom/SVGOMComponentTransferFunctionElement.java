@@ -128,6 +128,7 @@ public abstract class SVGOMComponentTransferFunctionElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -156,6 +157,7 @@ public abstract class SVGOMComponentTransferFunctionElement
      * <b>DOM</b>: Implements {@link
      * SVGComponentTransferFunctionElement#getType()}.
      */
+    @Override
     public SVGAnimatedEnumeration getType() {
         return type;
     }
@@ -164,6 +166,7 @@ public abstract class SVGOMComponentTransferFunctionElement
      * <b>DOM</b>: Implements {@link
      * SVGComponentTransferFunctionElement#getTableValues()}.
      */
+    @Override
     public SVGAnimatedNumberList getTableValues() {
         // XXX
         throw new UnsupportedOperationException
@@ -175,6 +178,7 @@ public abstract class SVGOMComponentTransferFunctionElement
      * <b>DOM</b>: Implements {@link
      * SVGComponentTransferFunctionElement#getSlope()}.
      */
+    @Override
     public SVGAnimatedNumber getSlope() {
         return slope;
     }
@@ -183,6 +187,7 @@ public abstract class SVGOMComponentTransferFunctionElement
      * <b>DOM</b>: Implements {@link
      * SVGComponentTransferFunctionElement#getIntercept()}.
      */
+    @Override
     public SVGAnimatedNumber getIntercept() {
         return intercept;
     }
@@ -191,6 +196,7 @@ public abstract class SVGOMComponentTransferFunctionElement
      * <b>DOM</b>: Implements {@link
      * SVGComponentTransferFunctionElement#getAmplitude()}.
      */
+    @Override
     public SVGAnimatedNumber getAmplitude() {
         return amplitude;
     }
@@ -199,6 +205,7 @@ public abstract class SVGOMComponentTransferFunctionElement
      * <b>DOM</b>: Implements {@link
      * SVGComponentTransferFunctionElement#getExponent()}.
      */
+    @Override
     public SVGAnimatedNumber getExponent() {
         return exponent;
     }
@@ -207,6 +214,7 @@ public abstract class SVGOMComponentTransferFunctionElement
      * <b>DOM</b>: Implements {@link
      * SVGComponentTransferFunctionElement#getOffset()}.
      */
+    @Override
     public SVGAnimatedNumber getOffset() {
         return offset;
     }
@@ -214,6 +222,7 @@ public abstract class SVGOMComponentTransferFunctionElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

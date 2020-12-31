@@ -99,6 +99,7 @@ public class AbstractZoomInteractor extends InteractorAdapter {
     /**
      * Tells whether the interactor has finished.
      */
+    @Override
     public boolean endInteraction() {
         return finished;
     }
@@ -108,6 +109,7 @@ public class AbstractZoomInteractor extends InteractorAdapter {
     /**
      * Invoked when a mouse button has been pressed on a component.
      */
+    @Override
     public void mousePressed(MouseEvent e) {
         if (!finished) {
             mouseExited(e);
@@ -129,6 +131,7 @@ public class AbstractZoomInteractor extends InteractorAdapter {
     /**
      * Invoked when a mouse button has been released on a component.
      */
+    @Override
     public void mouseReleased(MouseEvent e) {
         finished = true;
         JGVTComponent c = (JGVTComponent)e.getSource();
@@ -173,6 +176,7 @@ public class AbstractZoomInteractor extends InteractorAdapter {
     /**
      * Invoked when the mouse exits a component.
      */
+    @Override
     public void mouseExited(MouseEvent e) {
         finished = true;
         JGVTComponent c = (JGVTComponent)e.getSource();
@@ -189,6 +193,7 @@ public class AbstractZoomInteractor extends InteractorAdapter {
      * released (regardless of whether the mouse position is within the
      * bounds of the component).
      */
+    @Override
     public void mouseDragged(MouseEvent e) {
         JGVTComponent c = (JGVTComponent)e.getSource();
 
@@ -239,6 +244,7 @@ public class AbstractZoomInteractor extends InteractorAdapter {
         /**
          * Paints this overlay.
          */
+        @Override
         public void paint(Graphics g) {
             if (markerTop != null) {
                 Graphics2D g2d = (Graphics2D)g;

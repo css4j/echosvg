@@ -69,6 +69,7 @@ public class Any2LumRed extends AbstractRed {
                   ColorSpaceHintKey.VALUE_COLORSPACE_GREY);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         // Get my source.
         CachableRed src = (CachableRed)getSources().get(0);

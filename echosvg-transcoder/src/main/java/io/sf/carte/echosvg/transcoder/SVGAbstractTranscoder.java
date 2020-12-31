@@ -148,11 +148,13 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
      * @param domImpl the DOM Implementation (not used)
      * @param parserClassname the XML parser classname
      */
+    @Override
     protected DocumentFactory createDocumentFactory(DOMImplementation domImpl,
                                                     String parserClassname) {
         return new SAXSVGDocumentFactory(parserClassname);
     }
 
+    @Override
     public void transcode(TranscoderInput input, TranscoderOutput output)
             throws TranscoderException {
 
@@ -169,6 +171,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
      * @param output the ouput where to transcode
      * @exception TranscoderException if an error occured while transcoding
      */
+    @Override
     protected void transcode(Document document,
                              String uri,
                              TranscoderOutput output)
@@ -742,6 +745,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
      *   </tr>
      * </table>
      */
+    @Deprecated
     public static final TranscodingHints.Key KEY_PIXEL_TO_MM
         = KEY_PIXEL_UNIT_TO_MILLIMETER;
 
@@ -899,6 +903,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Return the rendering transform.
          */
+        @Override
         public AffineTransform getTransform() {
             return SVGAbstractTranscoder.this.curTxf;
         }
@@ -906,6 +911,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Return the rendering transform.
          */
+        @Override
         public void setTransform(AffineTransform at) {
             SVGAbstractTranscoder.this.curTxf = at;
         }
@@ -913,6 +919,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Returns the default size of this user agent (400x400).
          */
+        @Override
         public Dimension2D getViewportSize() {
             return new Dimension((int)SVGAbstractTranscoder.this.width,
                                  (int)SVGAbstractTranscoder.this.height);
@@ -921,6 +928,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Displays the specified error message using the <code>ErrorHandler</code>.
          */
+        @Override
         public void displayError(String message) {
             try {
                 SVGAbstractTranscoder.this.handler.error
@@ -933,6 +941,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Displays the specified error using the <code>ErrorHandler</code>.
          */
+        @Override
         public void displayError(Exception e) {
             try {
                 e.printStackTrace();
@@ -946,6 +955,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Displays the specified message using the <code>ErrorHandler</code>.
          */
+        @Override
         public void displayMessage(String message) {
             try {
                 SVGAbstractTranscoder.this.handler.warning
@@ -959,6 +969,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
          * Returns the pixel to millimeter conversion factor specified in the
          * <code>TranscodingHints</code> or 0.26458333 if not specified.
          */
+        @Override
         public float getPixelUnitToMillimeter() {
             Object obj = SVGAbstractTranscoder.this.hints.get
                 (KEY_PIXEL_UNIT_TO_MILLIMETER);
@@ -973,6 +984,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
          * Returns the user language specified in the
          * <code>TranscodingHints</code> or "en" (english) if any.
          */
+        @Override
         public String getLanguages() {
             if (SVGAbstractTranscoder.this.hints.containsKey(KEY_LANGUAGE)) {
                 return (String)SVGAbstractTranscoder.this.hints.get
@@ -985,6 +997,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Returns this user agent's CSS media.
          */
+        @Override
         public String getMedia() {
             String s = (String)hints.get(KEY_MEDIA);
             if (s != null) return s;
@@ -995,6 +1008,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Returns the default font family.
          */
+        @Override
         public String getDefaultFontFamily() {
             String s = (String)hints.get(KEY_DEFAULT_FONT_FAMILY);
             if (s != null) return s;
@@ -1005,6 +1019,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Returns this user agent's alternate style-sheet title.
          */
+        @Override
         public String getAlternateStyleSheet() {
             String s = (String)hints.get(KEY_ALTERNATE_STYLESHEET);
             if (s != null)
@@ -1017,6 +1032,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
          * Returns the user stylesheet specified in the
          * <code>TranscodingHints</code> or null if any.
          */
+        @Override
         public String getUserStyleSheetURI() {
             String s = (String)SVGAbstractTranscoder.this.hints.get
                 (KEY_USER_STYLESHEET_URI);
@@ -1029,6 +1045,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Returns the XML parser to use from the TranscodingHints.
          */
+        @Override
         public String getXMLParserClassName() {
             String s = (String)SVGAbstractTranscoder.this.hints.get
                 (KEY_XML_PARSER_CLASSNAME);
@@ -1042,6 +1059,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
          * Returns true if the XML parser must be in validation mode, false
          * otherwise.
          */
+        @Override
         public boolean isXMLParserValidating() {
             Boolean b = (Boolean)SVGAbstractTranscoder.this.hints.get
                 (KEY_XML_PARSER_VALIDATING);
@@ -1064,6 +1082,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
          * @param docPURL url for the document into which the
          *        script was found.
          */
+        @Override
         public ScriptSecurity getScriptSecurity(String scriptType,
                                                 ParsedURL scriptPURL,
                                                 ParsedURL docPURL){
@@ -1115,6 +1134,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
             }
         }
 
+        @Override
         public ExternalResourceSecurity getExternalResourceSecurity(ParsedURL resourceURL, ParsedURL docURL) {
             if (isAllowExternalResources()) {
                 return super.getExternalResourceSecurity(resourceURL, docURL);

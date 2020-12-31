@@ -59,6 +59,7 @@ public class SVGOMToBeImplementedElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return localName;
     }
@@ -66,6 +67,7 @@ public class SVGOMToBeImplementedElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMToBeImplementedElement();
     }
@@ -73,6 +75,7 @@ public class SVGOMToBeImplementedElement
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement)n;
@@ -83,6 +86,7 @@ public class SVGOMToBeImplementedElement
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement)n;
@@ -94,6 +98,7 @@ public class SVGOMToBeImplementedElement
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement)n;
@@ -105,6 +110,7 @@ public class SVGOMToBeImplementedElement
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement)n;

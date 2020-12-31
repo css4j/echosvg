@@ -56,6 +56,7 @@ public class DirectoryEntry {
         return tag;
     }
 
+    @Override
     public String toString() {
         return new StringBuffer()
             .append((char)((tag>>24)&0xff))

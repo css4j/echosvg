@@ -64,6 +64,7 @@ public class AnimatableColorValue extends AnimatableValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to,
                                        float interpolation,
@@ -111,6 +112,7 @@ public class AnimatableColorValue extends AnimatableValue {
      * Returns whether two values of this type can have their distance
      * computed, as needed by paced animation.
      */
+    @Override
     public boolean canPace() {
         return true;
     }
@@ -119,6 +121,7 @@ public class AnimatableColorValue extends AnimatableValue {
      * Returns the absolute distance between this value and the specified other
      * value.
      */
+    @Override
     public float distanceTo(AnimatableValue other) {
         AnimatableColorValue o = (AnimatableColorValue) other;
         float dr = red - o.red;
@@ -130,6 +133,7 @@ public class AnimatableColorValue extends AnimatableValue {
     /**
      * Returns a zero value of this AnimatableValue's type.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         return new AnimatableColorValue(target, 0f, 0f, 0f);
     }
@@ -137,6 +141,7 @@ public class AnimatableColorValue extends AnimatableValue {
     /**
      * Returns the CSS text representation of the value.
      */
+    @Override
     public String getCssText() {
         return "rgb(" + Math.round(red * 255) + ','
                 + Math.round(green * 255) + ','

@@ -160,6 +160,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
      * @param key the key mapped with the action to get
      * @throws MissingListenerException if the action is not found   todo does it throw ?? seems to return null
      */
+    @Override
     public Action getAction(String key) throws MissingListenerException {
         return (Action)listeners.get(key);
     }
@@ -483,6 +484,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * @param key the key mapped with the action to get
          * @throws MissingListenerException if the action is not found
          */
+        @Override
         public Action getAction(String key) throws MissingListenerException {
             return (Action)listeners.get(key);
         }
@@ -491,6 +493,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * The action associated with the 'add' button
          */
         protected class AddLanguageButtonAction extends AbstractAction {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 int    i = languageList.getSelectedIndex();
                 Object o = languageListModel.getElementAt(i);
@@ -504,6 +507,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * The action associated with the 'remove' button
          */
         protected class RemoveLanguageButtonAction extends AbstractAction {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 int i = userList.getSelectedIndex();
                 Object o = userListModel.getElementAt(i);
@@ -528,6 +532,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * The action associated with the 'up' button
          */
         protected class UpLanguageButtonAction extends AbstractAction {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 int    i = userList.getSelectedIndex();
                 Object o = userListModel.getElementAt(i);
@@ -541,6 +546,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * The action associated with the 'down' button
          */
         protected class DownLanguageButtonAction extends AbstractAction {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 int    i = userList.getSelectedIndex();
                 Object o = userListModel.getElementAt(i);
@@ -554,6 +560,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * The action associated with the 'clear' button
          */
         protected class ClearLanguageButtonAction extends AbstractAction {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 int len = userListModel.getSize();
                 for (int i = 0; i < len; i++) {
@@ -581,6 +588,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
          */
         protected class LanguageListSelectionListener
             implements ListSelectionListener {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 int i = languageList.getSelectedIndex();
                 userList.getSelectionModel().clearSelection();
@@ -594,6 +602,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
          */
         protected class UserListSelectionListener
             implements ListSelectionListener {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 int i = userList.getSelectedIndex();
                 languageList.getSelectionModel().clearSelection();
@@ -612,6 +621,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
                 this.setOpaque(true);
                 this.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
             }
+            @Override
             public Component getListCellRendererComponent(JList   list,
                                                           Object  value,
                                                           int     index,
@@ -638,6 +648,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
      * The action associated with the 'OK' button
      */
     protected class OKButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             returnCode = OK_OPTION;
             dispose();
@@ -648,6 +659,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
      * The action associated with the 'Cancel' button
      */
     protected class CancelButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             returnCode = CANCEL_OPTION;
             dispose();

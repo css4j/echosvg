@@ -364,6 +364,7 @@ public abstract class AbstractRenderingAccuracyTest extends AbstractTest {
      * Returns this <code>Test</code>'s name. The name is the
      * URL of the SVG being rendered.
      */
+    @Override
     public String getName(){
         if(this.name == null){
             return svgURL.toString();
@@ -376,6 +377,7 @@ public abstract class AbstractRenderingAccuracyTest extends AbstractTest {
      * report.
      *
      */
+    @Override
     public TestReport run() {
         DefaultTestReport report = new DefaultTestReport(this);
 

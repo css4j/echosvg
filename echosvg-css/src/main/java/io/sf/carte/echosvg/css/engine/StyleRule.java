@@ -46,6 +46,7 @@ public class StyleRule implements Rule {
     /**
      * Returns a constant identifying the rule type.
      */
+    @Override
     public short getType() {
         return TYPE;
     }
@@ -81,6 +82,7 @@ public class StyleRule implements Rule {
     /**
      * Returns a printable representation of this style rule.
      */
+    @Override
     public String toString(CSSEngine eng) {
         StringBuffer sb = new StringBuffer();
         if (selectorList != null) {

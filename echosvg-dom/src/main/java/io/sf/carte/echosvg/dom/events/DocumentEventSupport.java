@@ -197,6 +197,7 @@ public class DocumentEventSupport {
         /**
          * Creates a new Event object.
          */
+        @Override
         public Event createEvent() {
             return new DOMEvent();
         }
@@ -209,6 +210,7 @@ public class DocumentEventSupport {
         /**
          * Creates a new Event object.
          */
+        @Override
         public Event createEvent() {
             return new DOMMutationEvent();
         }
@@ -221,6 +223,7 @@ public class DocumentEventSupport {
         /**
          * Creates a new Event object.
          */
+        @Override
         public Event createEvent() {
             return new DOMMutationNameEvent();
         }
@@ -233,6 +236,7 @@ public class DocumentEventSupport {
         /**
          * Creates a new Event object.
          */
+        @Override
         public Event createEvent() {
             return new DOMMouseEvent();
         }
@@ -245,6 +249,7 @@ public class DocumentEventSupport {
         /**
          * Creates a new Event object.
          */
+        @Override
         public Event createEvent() {
             return new DOMKeyEvent();
         }
@@ -257,6 +262,7 @@ public class DocumentEventSupport {
         /**
          * Creates a new Event object.
          */
+        @Override
         public Event createEvent() {
             return new DOMKeyboardEvent();
         }
@@ -269,6 +275,7 @@ public class DocumentEventSupport {
         /**
          * Creates a new Event object.
          */
+        @Override
         public Event createEvent() {
             return new DOMUIEvent();
         }
@@ -281,6 +288,7 @@ public class DocumentEventSupport {
         /**
          * Creates a new Event object.
          */
+        @Override
         public Event createEvent() {
             return new DOMTextEvent();
         }
@@ -293,6 +301,7 @@ public class DocumentEventSupport {
         /**
          * Creates a new Event object.
          */
+        @Override
         public Event createEvent() {
             return new DOMCustomEvent();
         }

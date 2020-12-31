@@ -42,6 +42,7 @@ public class DefaultTestSuite extends AbstractTest implements TestSuite {
     /**
      * Adds a <code>Test</code> to the suite
      */
+    @Override
     public void addTest(Test test){
         if(test == null){
             throw new IllegalArgumentException();
@@ -54,6 +55,7 @@ public class DefaultTestSuite extends AbstractTest implements TestSuite {
     /**
      * Removes a <code>Test</code> from the suite.
      */
+    @Override
     public void removeTest(Test test){
         tests.remove(test);
     }
@@ -61,6 +63,7 @@ public class DefaultTestSuite extends AbstractTest implements TestSuite {
     /**
      * Runs the tests and returns a report
      */
+    @Override
     public TestReport runImpl(){
         Iterator iter = tests.iterator();
 
@@ -80,6 +83,7 @@ public class DefaultTestSuite extends AbstractTest implements TestSuite {
         return report;
     }
 
+    @Override
     public String getName(){
         if(name != null){
             return name;
@@ -93,6 +97,7 @@ public class DefaultTestSuite extends AbstractTest implements TestSuite {
         return this.getClass().getName();
     }
 
+    @Override
     public void setName(String name){
         if(name == null && !"".equals(name)){      // ?? logic ??
             throw new IllegalArgumentException();
@@ -101,6 +106,7 @@ public class DefaultTestSuite extends AbstractTest implements TestSuite {
         this.name = name;
     }
 
+    @Override
     public Test[] getChildrenTests(){
         Test[] children = new Test[tests.size()];
         tests.toArray(children);
@@ -110,6 +116,7 @@ public class DefaultTestSuite extends AbstractTest implements TestSuite {
     /**
      * Returns the number of child tests
      */
+    @Override
     public int getChildrenCount(){
         return tests.size();
     }

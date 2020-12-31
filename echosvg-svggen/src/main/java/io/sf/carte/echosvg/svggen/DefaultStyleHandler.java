@@ -70,6 +70,7 @@ public class DefaultStyleHandler implements StyleHandler, SVGConstants {
      * @param styleMap the <code>Map</code> containing pairs of style
      * property names, style values.
      */
+    @Override
     public void setStyle(Element element, Map styleMap,
                          SVGGeneratorContext generatorContext) {
         String tagName = element.getTagName();

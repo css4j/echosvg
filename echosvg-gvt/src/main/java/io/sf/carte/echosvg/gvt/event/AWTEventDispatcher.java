@@ -117,6 +117,7 @@ public class AWTEventDispatcher
      * and field selections.
      * @param root the root node
      */
+    @Override
     public void setRootNode(GraphicsNode root) {
         if (this.root != root)
             eventQueue.clear(); // new root so clear 'old' events.
@@ -127,6 +128,7 @@ public class AWTEventDispatcher
      * Returns the root node for MouseEvent dispatch containment
      * searches and field selections.
      */
+    @Override
     public GraphicsNode getRootNode() {
         return root;
     }
@@ -136,6 +138,7 @@ public class AWTEventDispatcher
      * to dispatch.
      * @param t the affine transform
      */
+    @Override
     public void setBaseTransform(AffineTransform t) {
         if ((baseTransform != t) &&
             ((baseTransform == null) || (!baseTransform.equals(t))))
@@ -149,6 +152,7 @@ public class AWTEventDispatcher
      * Returns the base transform applied to MouseEvent coordinates prior
      * to dispatch.
      */
+    @Override
     public AffineTransform getBaseTransform() {
         return new AffineTransform(baseTransform);
     }
@@ -162,6 +166,7 @@ public class AWTEventDispatcher
      * The mouse event is mutated to a GraphicsNodeMouseEvent.
      * @param evt the mouse event to propagate
      */
+    @Override
     public void mousePressed(MouseEvent evt) {
         dispatchEvent(evt);
     }
@@ -171,6 +176,7 @@ public class AWTEventDispatcher
      * The mouse event is mutated to a GraphicsNodeMouseEvent.
      * @param evt the mouse event to propagate
      */
+    @Override
     public void mouseReleased(MouseEvent evt) {
         dispatchEvent(evt);
     }
@@ -180,6 +186,7 @@ public class AWTEventDispatcher
      * The mouse event is mutated to a GraphicsNodeMouseEvent.
      * @param evt the mouse event to propagate
      */
+    @Override
     public void mouseEntered(MouseEvent evt) {
         dispatchEvent(evt);
     }
@@ -189,6 +196,7 @@ public class AWTEventDispatcher
      * The mouse event is mutated to a GraphicsNodeMouseEvent.
      * @param evt the mouse event to propagate
      */
+    @Override
     public void mouseExited(MouseEvent evt) {
         dispatchEvent(evt);
     }
@@ -198,6 +206,7 @@ public class AWTEventDispatcher
      * The mouse event is mutated to a GraphicsNodeMouseEvent.
      * @param evt the mouse event to propagate
      */
+    @Override
     public void mouseClicked(MouseEvent evt) {
         dispatchEvent(evt);
     }
@@ -207,6 +216,7 @@ public class AWTEventDispatcher
      * The mouse event is mutated to a GraphicsNodeMouseEvent.
      * @param evt the mouse event to propagate
      */
+    @Override
     public void mouseMoved(MouseEvent evt) {
         dispatchEvent(evt);
     }
@@ -216,6 +226,7 @@ public class AWTEventDispatcher
      * The mouse event is mutated to a GraphicsNodeMouseEvent.
      * @param evt the mouse event to propagate
      */
+    @Override
     public void mouseDragged(MouseEvent evt) {
         dispatchEvent(evt);
     }
@@ -225,6 +236,7 @@ public class AWTEventDispatcher
      * The mouse wheel event is mutated to a GraphicsNodeMouseWheelEvent.
      * @param evt the mouse event to propagate
      */
+    @Override
     public void mouseWheelMoved(MouseWheelEvent evt) {
         dispatchEvent(evt);
     }
@@ -234,6 +246,7 @@ public class AWTEventDispatcher
      * The mouse event is mutated to a GraphicsNodeKeyEvent.
      * @param evt the key event to propagate
      */
+    @Override
     public void keyPressed(KeyEvent evt) {
         dispatchEvent(evt);
     }
@@ -243,6 +256,7 @@ public class AWTEventDispatcher
      * The mouse event is mutated to a GraphicsNodeKeyEvent.
      * @param evt the key event to propagate
      */
+    @Override
     public void keyReleased(KeyEvent evt) {
         dispatchEvent(evt);
     }
@@ -252,6 +266,7 @@ public class AWTEventDispatcher
      * The mouse event is mutated to a GraphicsNodeKeyEvent.
      * @param evt the key event to propagate
      */
+    @Override
     public void keyTyped(KeyEvent evt) {
         dispatchEvent(evt);
     }
@@ -265,6 +280,7 @@ public class AWTEventDispatcher
      * notified of all MouseEvents dispatched.
      * @param l the listener to add
      */
+    @Override
     public void addGraphicsNodeMouseListener(GraphicsNodeMouseListener l) {
         if (glisteners == null) {
             glisteners = new EventListenerList();
@@ -277,6 +293,7 @@ public class AWTEventDispatcher
      * notified of all MouseEvents dispatched.
      * @param l the listener to remove
      */
+    @Override
     public void removeGraphicsNodeMouseListener(GraphicsNodeMouseListener l) {
         if (glisteners != null) {
             glisteners.remove(GraphicsNodeMouseListener.class, l);
@@ -288,6 +305,7 @@ public class AWTEventDispatcher
      * notified of all MouseWheelEvents dispatched.
      * @param l the listener to add
      */
+    @Override
     public void addGraphicsNodeMouseWheelListener
             (GraphicsNodeMouseWheelListener l) {
         if (glisteners == null) {
@@ -301,6 +319,7 @@ public class AWTEventDispatcher
      * notified of all MouseWheelEvents dispatched.
      * @param l the listener to remove
      */
+    @Override
     public void removeGraphicsNodeMouseWheelListener
             (GraphicsNodeMouseWheelListener l) {
         if (glisteners != null) {
@@ -313,6 +332,7 @@ public class AWTEventDispatcher
      * notified of all KeyEvents dispatched.
      * @param l the listener to add
      */
+    @Override
     public void addGraphicsNodeKeyListener(GraphicsNodeKeyListener l) {
         if (glisteners == null) {
             glisteners = new EventListenerList();
@@ -325,6 +345,7 @@ public class AWTEventDispatcher
      * notified of all KeyEvents dispatched.
      * @param l the listener to remove
      */
+    @Override
     public void removeGraphicsNodeKeyListener(GraphicsNodeKeyListener l) {
         if (glisteners != null) {
             glisteners.remove(GraphicsNodeKeyListener.class, l);
@@ -336,6 +357,7 @@ public class AWTEventDispatcher
      * dispatcher and of the specified type.
      * @param listenerType the type of the listeners to return
      */
+    @Override
     public EventListener [] getListeners(Class listenerType) {
 
         // TODO the listeners should be cached per class in a map.
@@ -380,6 +402,7 @@ public class AWTEventDispatcher
      * Dispatches the specified AWT event.
      * @param evt the event to dispatch
      */
+    @Override
     public void dispatchEvent(EventObject evt) {
         if (root == null) // No root do not store anything.
             return;
@@ -714,6 +737,7 @@ public class AWTEventDispatcher
      * Associates all InputEvents of type <code>e.getID()</code>
      * with "incrementing" of the currently selected GraphicsNode.
      */
+    @Override
     public void setNodeIncrementEvent(InputEvent e) {
         nodeIncrementEventID = e.getID();
         if (e instanceof KeyEvent) {
@@ -728,6 +752,7 @@ public class AWTEventDispatcher
      * The notion of "currently selected" GraphicsNode is used
      * for dispatching KeyEvents.
      */
+    @Override
     public void setNodeDecrementEvent(InputEvent e) {
         nodeDecrementEventID = e.getID();
         if (e instanceof KeyEvent) {

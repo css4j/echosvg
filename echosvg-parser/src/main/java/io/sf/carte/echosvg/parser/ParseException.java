@@ -95,6 +95,7 @@ public class ParseException extends RuntimeException {
      * the detail message from the embedded exception.
      * @return The error or warning message.
      */
+    @Override
     public String getMessage () {
         String message = super.getMessage();
         

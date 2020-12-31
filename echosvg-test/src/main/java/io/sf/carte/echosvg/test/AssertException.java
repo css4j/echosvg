@@ -31,6 +31,7 @@ public abstract class AssertException extends TestErrorConditionException {
     /**
      * <code>TestErrorConditionException</code> implementation.
      */
+    @Override
     public TestReport getTestReport(Test test){
         DefaultTestReport report = new DefaultTestReport(test);
         report.setErrorCode(TestReport.ERROR_ASSERTION_FAILED);

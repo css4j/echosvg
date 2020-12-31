@@ -73,6 +73,7 @@ public final class ARGBChannel implements Serializable{
     /**
      * @return description
      */
+    @Override
     public String toString(){
         return desc;
     }

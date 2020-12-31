@@ -89,7 +89,8 @@ public class Panose {
     return bXHeight;
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     StringBuffer sb = new StringBuffer();
     sb.append(String.valueOf(bFamilyType)).append(" ")
       .append(String.valueOf(bSerifStyle)).append(" ")

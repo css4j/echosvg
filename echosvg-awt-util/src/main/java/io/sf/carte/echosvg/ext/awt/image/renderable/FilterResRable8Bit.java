@@ -73,6 +73,7 @@ public class FilterResRable8Bit extends AbstractRable
     /**
      * Returns the source to be cropped.
      */
+    @Override
     public Filter getSource() {
         return (Filter)srcs.get(0);
     }
@@ -81,6 +82,7 @@ public class FilterResRable8Bit extends AbstractRable
      * Sets the source to be cropped
      * @param src image to offset.
      */
+    @Override
     public void setSource(Filter src){
         init(src, null);
     }
@@ -88,6 +90,7 @@ public class FilterResRable8Bit extends AbstractRable
     /**
      * Returns the resolution along the X axis.
      */
+    @Override
     public int getFilterResolutionX(){
         return filterResolutionX;
     }
@@ -98,6 +101,7 @@ public class FilterResRable8Bit extends AbstractRable
      * The value should be greater than zero to have an effect.
      * Negative values are illegal.
      */
+    @Override
     public void setFilterResolutionX(int filterResolutionX){
         if(filterResolutionX < 0){
             throw new IllegalArgumentException();
@@ -109,6 +113,7 @@ public class FilterResRable8Bit extends AbstractRable
     /**
      * Returns the resolution along the Y axis.
      */
+    @Override
     public int getFilterResolutionY(){
         return filterResolutionY;
     }
@@ -119,6 +124,7 @@ public class FilterResRable8Bit extends AbstractRable
      * If the Y-value is less than zero, the scale applied to
      * the rendered images is computed to preserve the image's aspect ratio
      */
+    @Override
     public void setFilterResolutionY(int filterResolutionY){
         touch();
         this.filterResolutionY = filterResolutionY;
@@ -250,6 +256,7 @@ public class FilterResRable8Bit extends AbstractRable
      *         for some reason the paint failed (in which
      *         case a createRendering should be used).
      */
+    @Override
     public boolean paintRable(Graphics2D g2d) {
         // This is a bit of a hack to implement the suggestion of SVG
         // specification that if the last operation in a filter chain
@@ -327,6 +334,7 @@ public class FilterResRable8Bit extends AbstractRable
     /**
      *
      */
+    @Override
     public RenderedImage createRendering(RenderContext renderContext) {
         // Get user space to device space transform
         AffineTransform usr2dev = renderContext.getTransform();

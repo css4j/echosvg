@@ -85,6 +85,7 @@ public class SVGOMAnimatedTransformList
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedTransformList#getBaseVal()}.
      */
+    @Override
     public SVGTransformList getBaseVal() {
         if (baseVal == null) {
             baseVal = new BaseSVGTransformList();
@@ -95,6 +96,7 @@ public class SVGOMAnimatedTransformList
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedTransformList#getAnimVal()}.
      */
+    @Override
     public SVGTransformList getAnimVal() {
         if (animVal == null) {
             animVal = new AnimSVGTransformList();
@@ -128,6 +130,7 @@ public class SVGOMAnimatedTransformList
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         SVGTransformList tl = getBaseVal();
         int n = tl.getNumberOfItems();
@@ -141,6 +144,7 @@ public class SVGOMAnimatedTransformList
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -159,6 +163,7 @@ public class SVGOMAnimatedTransformList
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -172,6 +177,7 @@ public class SVGOMAnimatedTransformList
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -185,6 +191,7 @@ public class SVGOMAnimatedTransformList
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -213,6 +220,7 @@ public class SVGOMAnimatedTransformList
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -221,6 +229,7 @@ public class SVGOMAnimatedTransformList
         /**
          * Create a SVGException.
          */
+        @Override
         protected SVGException createSVGException(short type, String key,
                                                   Object[] args) {
 
@@ -230,6 +239,7 @@ public class SVGOMAnimatedTransformList
         /**
          * Returns the value of the DOM attribute containing the transform list.
          */
+        @Override
         protected String getValueAsString() {
             Attr attr = element.getAttributeNodeNS(namespaceURI, localName);
             if (attr == null) {
@@ -241,6 +251,7 @@ public class SVGOMAnimatedTransformList
         /**
          * Sets the DOM attribute value containing the transform list.
          */
+        @Override
         protected void setAttributeValue(String value) {
             try {
                 changing = true;
@@ -253,6 +264,7 @@ public class SVGOMAnimatedTransformList
         /**
          * Resets the value of the associated attribute.
          */
+        @Override
         protected void resetAttribute() {
             super.resetAttribute();
             missing = false;
@@ -264,6 +276,7 @@ public class SVGOMAnimatedTransformList
          * the DOM attribute.  This is called in response to an append to
          * the list.
          */
+        @Override
         protected void resetAttribute(SVGItem item) {
             super.resetAttribute(item);
             missing = false;
@@ -273,6 +286,7 @@ public class SVGOMAnimatedTransformList
         /**
          * Initializes the list, if needed.
          */
+        @Override
         protected void revalidate() {
             if (valid) {
                 return;
@@ -319,6 +333,7 @@ public class SVGOMAnimatedTransformList
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -327,6 +342,7 @@ public class SVGOMAnimatedTransformList
         /**
          * Create a SVGException.
          */
+        @Override
         protected SVGException createSVGException(short type, String key,
                                                   Object[] args) {
 
@@ -336,6 +352,7 @@ public class SVGOMAnimatedTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransformList#getNumberOfItems()}.
          */
+        @Override
         public int getNumberOfItems() {
             if (hasAnimVal) {
                 return super.getNumberOfItems();
@@ -346,6 +363,7 @@ public class SVGOMAnimatedTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransformList#getItem(int)}.
          */
+        @Override
         public SVGTransform getItem(int index) throws DOMException {
             if (hasAnimVal) {
                 return super.getItem(index);
@@ -356,6 +374,7 @@ public class SVGOMAnimatedTransformList
         /**
          * Returns the value of the DOM attribute containing the transform list.
          */
+        @Override
         protected String getValueAsString() {
             if (itemList.size() == 0) {
                 return "";
@@ -375,12 +394,14 @@ public class SVGOMAnimatedTransformList
         /**
          * Sets the DOM attribute value containing the transform list.
          */
+        @Override
         protected void setAttributeValue(String value) {
         }
 
         /**
          * <b>DOM</b>: Implements {@link SVGTransformList#clear()}.
          */
+        @Override
         public void clear() throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -390,6 +411,7 @@ public class SVGOMAnimatedTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransformList#initialize(SVGTransform)}.
          */
+        @Override
         public SVGTransform initialize(SVGTransform newItem)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -401,6 +423,7 @@ public class SVGOMAnimatedTransformList
          * <b>DOM</b>: Implements {@link
          * SVGTransformList#insertItemBefore(SVGTransform, int)}.
          */
+        @Override
         public SVGTransform insertItemBefore(SVGTransform newItem, int index)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -412,6 +435,7 @@ public class SVGOMAnimatedTransformList
          * <b>DOM</b>: Implements {@link
          * SVGTransformList#replaceItem(SVGTransform, int)}.
          */
+        @Override
         public SVGTransform replaceItem(SVGTransform newItem, int index)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -422,6 +446,7 @@ public class SVGOMAnimatedTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransformList#removeItem(int)}.
          */
+        @Override
         public SVGTransform removeItem(int index) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -431,6 +456,7 @@ public class SVGOMAnimatedTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransformList#appendItem(SVGTransform)}.
          */
+        @Override
         public SVGTransform appendItem(SVGTransform newItem) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -440,6 +466,7 @@ public class SVGOMAnimatedTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransformList#consolidate()}.
          */
+        @Override
         public SVGTransform consolidate() {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -486,6 +513,7 @@ public class SVGOMAnimatedTransformList
          * Resets the value of the associated attribute.  Does nothing, since
          * there is no attribute for an animated value.
          */
+        @Override
         protected void resetAttribute() {
         }
 
@@ -493,6 +521,7 @@ public class SVGOMAnimatedTransformList
          * Resets the value of the associated attribute.  Does nothing, since
          * there is no attribute for an animated value.
          */
+        @Override
         protected void resetAttribute(SVGItem item) {
         }
 
@@ -500,6 +529,7 @@ public class SVGOMAnimatedTransformList
          * Initializes the list, if needed.  Does nothing, since there is no
          * attribute to read the list from.
          */
+        @Override
         protected void revalidate() {
             valid = true;
         }

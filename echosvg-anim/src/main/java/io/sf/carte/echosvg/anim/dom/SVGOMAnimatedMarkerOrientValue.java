@@ -95,7 +95,8 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
-   protected void updateAnimatedValue(AnimatableValue val) {
+   @Override
+protected void updateAnimatedValue(AnimatableValue val) {
         // XXX TODO
         throw new UnsupportedOperationException
             ("Animation of marker orient value is not implemented");
@@ -104,6 +105,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         // XXX TODO
         throw new UnsupportedOperationException
@@ -113,6 +115,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         if (!changing) {
             valid = false;
@@ -126,6 +129,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         if (!changing) {
             valid = false;
@@ -139,6 +143,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         if (!changing) {
             valid = false;
@@ -207,6 +212,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * Resets the value of the associated attribute.
          */
+        @Override
         protected void reset() {
             try {
                 changing = true;
@@ -230,6 +236,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * Initializes the angle, if needed.
          */
+        @Override
         protected void revalidate() {
             if (!valid) {
                 Attr attr = element.getAttributeNodeNS(namespaceURI, localName);
@@ -247,6 +254,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
          * Parse a String value as an SVGAngle.  If orient="auto", the
          * method will parse the value "0" instead.
          */
+        @Override
         protected void parse(String s) {
             if (s.equals(SVGConstants.SVG_AUTO_VALUE)) {
                 setUnitType(SVGAngle.SVG_ANGLETYPE_UNSPECIFIED);
@@ -271,6 +279,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * <b>DOM</b>: Implements {@link SVGAngle#getUnitType()}.
          */
+        @Override
         public short getUnitType() {
             if (hasAnimVal) {
                 return super.getUnitType();
@@ -281,6 +290,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * <b>DOM</b>: Implements {@link SVGAngle#getValue()}.
          */
+        @Override
         public float getValue() {
             if (hasAnimVal) {
                 return super.getValue();
@@ -291,6 +301,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * <b>DOM</b>: Implements {@link SVGAngle#getValueInSpecifiedUnits()}.
          */
+        @Override
         public float getValueInSpecifiedUnits() {
             if (hasAnimVal) {
                 return super.getValueInSpecifiedUnits();
@@ -301,6 +312,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * <b>DOM</b>: Implements {@link SVGAngle#getValueAsString()}.
          */
+        @Override
         public String getValueAsString() {
             if (hasAnimVal) {
                 return super.getValueAsString();
@@ -311,6 +323,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * <b>DOM</b>: Implements {@link SVGAngle#setValue(float)}.
          */
+        @Override
         public void setValue(float value) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.angle",
@@ -321,6 +334,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
          * <b>DOM</b>: Implements {@link
          * SVGAngle#setValueInSpecifiedUnits(float)}.
          */
+        @Override
         public void setValueInSpecifiedUnits(float value) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.angle",
@@ -330,6 +344,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * <b>DOM</b>: Implements {@link SVGAngle#setValueAsString(String)}.
          */
+        @Override
         public void setValueAsString(String value) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.angle",
@@ -340,6 +355,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
          * <b>DOM</b>: Implements {@link
          * SVGAngle#newValueSpecifiedUnits(short,float)}.
          */
+        @Override
         public void newValueSpecifiedUnits(short unit, float value) {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.angle",
@@ -350,6 +366,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
          * <b>DOM</b>: Implements {@link
          * SVGAngle#convertToSpecifiedUnits(short)}.
          */
+        @Override
         public void convertToSpecifiedUnits(short unit) {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.angle",
@@ -372,6 +389,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * <b>DOM</b>: Implements {@link SVGAnimatedAngle#getBaseVal()}.
          */
+        @Override
         public SVGAngle getBaseVal() {
             if (baseAngleVal == null) {
                 baseAngleVal = new BaseSVGAngle();
@@ -382,6 +400,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * <b>DOM</b>: Implements {@link SVGAnimatedAngle#getAnimVal()}.
          */
+        @Override
         public SVGAngle getAnimVal() {
             if (animAngleVal == null) {
                 animAngleVal = new AnimSVGAngle();
@@ -398,6 +417,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * <b>DOM</b>: Implements {@link SVGAnimatedEnumeration#getBaseVal()}.
          */
+        @Override
         public short getBaseVal() {
             if (baseAngleVal == null) {
                 baseAngleVal = new BaseSVGAngle();
@@ -410,6 +430,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
          * <b>DOM</b>: Implements {@link
          * SVGAnimatedEnumeration#setBaseVal(short)}.
          */
+        @Override
         public void setBaseVal(short baseVal) throws DOMException {
             if (baseVal == SVGMarkerElement.SVG_MARKER_ORIENT_AUTO) {
                 baseEnumerationVal = baseVal;
@@ -431,6 +452,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
         /**
          * <b>DOM</b>: Implements {@link SVGAnimatedEnumeration#getAnimVal()}.
          */
+        @Override
         public short getAnimVal() {
             if (hasAnimVal) {
                 return animEnumerationVal;

@@ -105,6 +105,7 @@ public class SVGOMViewElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -123,6 +124,7 @@ public class SVGOMViewElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_VIEW_TAG;
     }
@@ -130,6 +132,7 @@ public class SVGOMViewElement
     /**
      * <b>DOM</b>: Implements {@link SVGViewElement#getViewTarget()}.
      */
+    @Override
     public SVGStringList getViewTarget() {
         throw new UnsupportedOperationException
             ("SVGViewElement.getViewTarget is not implemented"); // XXX
@@ -141,6 +144,7 @@ public class SVGOMViewElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGZoomAndPan#getZoomAndPan()}.
      */
+    @Override
     public short getZoomAndPan() {
         return SVGZoomAndPanSupport.getZoomAndPan(this);
     }
@@ -149,6 +153,7 @@ public class SVGOMViewElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGZoomAndPan#getZoomAndPan()}.
      */
+    @Override
     public void setZoomAndPan(short val) {
         SVGZoomAndPanSupport.setZoomAndPan(this, val);
     }
@@ -159,6 +164,7 @@ public class SVGOMViewElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFitToViewBox#getViewBox()}.
      */
+    @Override
     public SVGAnimatedRect getViewBox() {
         throw new UnsupportedOperationException
             ("SVGFitToViewBox.getViewBox is not implemented"); // XXX
@@ -168,6 +174,7 @@ public class SVGOMViewElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFitToViewBox#getPreserveAspectRatio()}.
      */
+    @Override
     public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
         return preserveAspectRatio;
     }
@@ -178,6 +185,7 @@ public class SVGOMViewElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
      */
+    @Override
     public SVGAnimatedBoolean getExternalResourcesRequired() {
         return externalResourcesRequired;
     }
@@ -186,6 +194,7 @@ public class SVGOMViewElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -193,6 +202,7 @@ public class SVGOMViewElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMViewElement();
     }
@@ -200,6 +210,7 @@ public class SVGOMViewElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

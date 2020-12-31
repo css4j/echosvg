@@ -66,6 +66,7 @@ public class ComponentTransferRed extends AbstractRed {
             { };
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr){
         CachableRed src = (CachableRed)getSources().get(0);
 

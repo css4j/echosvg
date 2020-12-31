@@ -61,6 +61,7 @@ public class AttributedCharacterSpanIterator implements
     /**
      * Get the keys of all attributes defined on the iterator's text range.
      */
+    @Override
     public Set getAllAttributeKeys() {
         return aci.getAllAttributeKeys();
         // FIXME: not if there are atts outside the substring!
@@ -70,6 +71,7 @@ public class AttributedCharacterSpanIterator implements
      * Get the value of the named attribute for the current
      *     character.
      */
+    @Override
     public Object getAttribute(AttributedCharacterIterator.Attribute attribute) {
         return aci.getAttribute(attribute);
     }
@@ -78,6 +80,7 @@ public class AttributedCharacterSpanIterator implements
      * Returns a map with the attributes defined on the current
      * character.
      */
+    @Override
     public Map getAttributes() {
         return aci.getAttributes();
     }
@@ -87,6 +90,7 @@ public class AttributedCharacterSpanIterator implements
      *     run with respect to all attributes containing the current
      *     character.
      */
+    @Override
     public int getRunLimit() {
         return Math.min(aci.getRunLimit(), end);
     }
@@ -96,6 +100,7 @@ public class AttributedCharacterSpanIterator implements
      *      run with respect to the given attribute containing the current
      *      character.
      */
+    @Override
     public int getRunLimit(AttributedCharacterIterator.Attribute attribute) {
         return Math.min(aci.getRunLimit(attribute), end);
     }
@@ -105,6 +110,7 @@ public class AttributedCharacterSpanIterator implements
      *     run with respect to the given attributes containing the current
      *     character.
      */
+    @Override
     public int getRunLimit(Set attributes) {
         return Math.min(aci.getRunLimit(attributes), end);
     }
@@ -113,6 +119,7 @@ public class AttributedCharacterSpanIterator implements
      * Get the index of the first character of the run with
      *    respect to all attributes containing the current character.
      */
+    @Override
     public int getRunStart() {
         return Math.max(aci.getRunStart(), begin);
     }
@@ -123,6 +130,7 @@ public class AttributedCharacterSpanIterator implements
      * @param attribute The attribute for whose appearance the first offset
      *      is requested.
      */
+    @Override
     public int getRunStart(AttributedCharacterIterator.Attribute attribute) {
         return Math.max(aci.getRunStart(attribute), begin);
     }
@@ -133,6 +141,7 @@ public class AttributedCharacterSpanIterator implements
      * @param attributes the Set of attributes which begins at the
      * returned index.  
      */
+    @Override
     public int getRunStart(Set attributes) {
         return Math.max(aci.getRunStart(attributes), begin);
     }
@@ -142,6 +151,7 @@ public class AttributedCharacterSpanIterator implements
     /**
      * Create a copy of this iterator
      */
+    @Override
     public Object clone() {
         return new AttributedCharacterSpanIterator(
                       (AttributedCharacterIterator) aci.clone(), begin, end);
@@ -152,6 +162,7 @@ public class AttributedCharacterSpanIterator implements
      *      by getIndex()).
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char current() {
         return aci.current();
     }
@@ -161,6 +172,7 @@ public class AttributedCharacterSpanIterator implements
      * @return the character at the start index of the text.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char first() {
         return aci.setIndex(begin);
     }
@@ -169,6 +181,7 @@ public class AttributedCharacterSpanIterator implements
      * Get the start index of the text.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public int getBeginIndex() {
         return begin;
     }
@@ -177,6 +190,7 @@ public class AttributedCharacterSpanIterator implements
      * Get the end index of the text.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public int getEndIndex() {
         return end;
     }
@@ -185,6 +199,7 @@ public class AttributedCharacterSpanIterator implements
      * Get the current index.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public int getIndex() {
         return aci.getIndex();
     }
@@ -194,6 +209,7 @@ public class AttributedCharacterSpanIterator implements
      * the text is empty) and returns the character at that position.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char last() {
         return setIndex(end-1);
     }
@@ -203,6 +219,7 @@ public class AttributedCharacterSpanIterator implements
      * @return the character at the new index.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char next() {
         if (getIndex() < end-1 ) {
             return aci.next();
@@ -216,6 +233,7 @@ public class AttributedCharacterSpanIterator implements
      * the character at the new index.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char previous() {
         if (getIndex() > begin) {
             return aci.previous();
@@ -230,6 +248,7 @@ public class AttributedCharacterSpanIterator implements
      * @return the character at new index <em>position</em>.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char setIndex(int position) {
         int ndx = Math.max(position, begin);
         ndx = Math.min(ndx, end);

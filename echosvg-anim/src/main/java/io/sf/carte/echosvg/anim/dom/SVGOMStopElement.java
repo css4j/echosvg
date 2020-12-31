@@ -72,6 +72,7 @@ public class SVGOMStopElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -87,6 +88,7 @@ public class SVGOMStopElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_STOP_TAG;
     }
@@ -95,6 +97,7 @@ public class SVGOMStopElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGStopElement#getOffset()}.
      */
+    @Override
     public SVGAnimatedNumber getOffset() {
         return offset;
     }
@@ -102,6 +105,7 @@ public class SVGOMStopElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMStopElement();
     }    
@@ -109,6 +113,7 @@ public class SVGOMStopElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

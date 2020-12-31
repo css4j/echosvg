@@ -105,35 +105,42 @@ class XmlWriter implements SVGConstants {
 
         public int getColumn() { return column; }
 
+        @Override
         public void write(int c) throws IOException {
             column++;
             proxied.write(c);
         }
 
+        @Override
         public void write(char[] cbuf) throws IOException {
             column+=cbuf.length;
             proxied.write(cbuf);
         }
 
+        @Override
         public void write(char[] cbuf, int off, int len) throws IOException{
             column+=len;
             proxied.write(cbuf, off, len);
         }
 
+        @Override
         public void write(String str) throws IOException {
             column+=str.length();
             proxied.write(str);
         }
 
+        @Override
         public void write(String str, int off, int len) throws IOException {
             column+=len;
             proxied.write(str, off, len);
         }
 
+        @Override
         public void flush() throws IOException{
             proxied.flush();
         }
 
+        @Override
         public void close() throws IOException{
             column = -1;
             proxied.close();

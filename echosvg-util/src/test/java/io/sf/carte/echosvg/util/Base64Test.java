@@ -102,6 +102,7 @@ public class Base64Test extends AbstractTest {
     /**
      * Returns this Test's name
      */
+    @Override
     public String getName() {
         return action + " -- " + in + " -- " + super.getName();
     }
@@ -110,6 +111,7 @@ public class Base64Test extends AbstractTest {
      * This method will only throw exceptions if some aspect
      * of the test's internal operation fails.
      */
+    @Override
     public TestReport runImpl() throws Exception {
         DefaultTestReport report
             = new DefaultTestReport(this);
@@ -322,6 +324,7 @@ public class Base64Test extends AbstractTest {
             this.dst = dst;
         }
 
+        @Override
         public void run() {
             try {
                 byte [] data = new byte[1000];

@@ -160,6 +160,7 @@ public class SimpleAnimation extends InterpolatingAnimation {
      * Called when the element is sampled at the given unit time.  This updates
      * the {@link #value} of the animation if active.
      */
+    @Override
     protected void sampledAtUnitTime(float unitTime, int repeatIteration) {
         AnimatableValue value, accumulation, nextValue;
         float interpolation = 0;

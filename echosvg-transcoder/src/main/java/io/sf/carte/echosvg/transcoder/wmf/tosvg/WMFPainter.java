@@ -36,6 +36,7 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
@@ -87,6 +88,7 @@ public class WMFPainter extends AbstractWMFPainter {
                            BasicStroke.JOIN_ROUND );
 
     private transient ImageObserver observer = new ImageObserver() {
+        @Override
         public boolean imageUpdate(Image img, int flags, int x,
             int y, int width, int height) {
                 return false;
@@ -573,7 +575,7 @@ public class WMFPainter extends AbstractWMFPainter {
                         FontRenderContext frc = g2d.getFontRenderContext();
 
                         Point2D.Double pen = new Point2D.Double( 0, 0 );
-                        GeneralPath gp = new GeneralPath( GeneralPath.WIND_NON_ZERO );
+                        GeneralPath gp = new GeneralPath( Path2D.WIND_NON_ZERO );
                         TextLayout layout = new TextLayout( sr, g2d.getFont(), frc );
 
                         int flag = mr.elementAt( 2 );
@@ -621,7 +623,7 @@ public class WMFPainter extends AbstractWMFPainter {
                         FontRenderContext frc = g2d.getFontRenderContext();
 
                         Point2D.Double pen = new Point2D.Double( 0, 0 );
-                        GeneralPath gp = new GeneralPath( GeneralPath.WIND_NON_ZERO );
+                        GeneralPath gp = new GeneralPath( Path2D.WIND_NON_ZERO );
                         TextLayout layout = new TextLayout( sr, g2d.getFont(), frc );
 
                         firstEffectivePaint = false;
@@ -725,7 +727,7 @@ public class WMFPainter extends AbstractWMFPainter {
                             float _startX = scaleX * ( vpX + xOffset + mr.elementAt( 1 ) );
                             float _startY = scaleY * ( vpY + yOffset + mr.elementAt( 2 ) );
 
-                            GeneralPath gp = new GeneralPath( GeneralPath.WIND_NON_ZERO );
+                            GeneralPath gp = new GeneralPath( Path2D.WIND_NON_ZERO );
                             gp.moveTo( _startX, _startY );
 
                             for ( int j = 0; j < bezierCount; j++ ) {
@@ -776,7 +778,7 @@ public class WMFPainter extends AbstractWMFPainter {
                     //UPDATED : added SETROP2
                 case WMFConstants.META_SETROP2:
                     {
-                        float rop = (float)(mr.ElementAt(0));
+                        float rop = (mr.ElementAt(0));
                         Paint paint = null;
                         boolean ok = false;
                         if (rop == WMFConstants.META_BLACKNESS) {
@@ -1078,7 +1080,7 @@ public class WMFPainter extends AbstractWMFPainter {
         if (pols.size() == 1) {
             g2d.fill((Polygon2D)(pols.get(0)));
         } else {
-            GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
+            GeneralPath path = new GeneralPath(Path2D.WIND_EVEN_ODD);
             for (Object pol1 : pols) {
                 Polygon2D pol = (Polygon2D) pol1;
                 path.append(pol, false);
@@ -1210,6 +1212,7 @@ public class WMFPainter extends AbstractWMFPainter {
     /**
      * Returns the WMFRecordStore this WMFPainter renders
      */
+    @Override
     public WMFRecordStore getRecordStore(){
         return currentStore;
     }

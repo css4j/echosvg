@@ -242,6 +242,7 @@ public class ParsedURL {
      * Return a string rep of the URL (can be passed back into the
      * constructor if desired).
      */
+    @Override
     public String toString() {
         return data.toString();
     }
@@ -262,6 +263,7 @@ public class ParsedURL {
      * Relies heavily on the contained ParsedURLData's implementation
      * of equals.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (! (obj instanceof ParsedURL))
@@ -275,6 +277,7 @@ public class ParsedURL {
      * Relies on the contained ParsedURLData's implementation
      * of hashCode.
      */
+    @Override
     public int hashCode() {
         return data.hashCode();
     }

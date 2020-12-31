@@ -28,9 +28,11 @@ import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
+import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 
@@ -125,6 +127,7 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
     }
 
     
+    @Override
     public TestReport encode(URL srcURL, FileOutputStream fos) {
         DefaultTestReport report = new DefaultTestReport(this);
         try{
@@ -172,22 +175,22 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
      */
     public ImageTranscoder getTestImageTranscoder(){
         ImageTranscoder t = new InternalPNGTranscoder();
-        t.addTranscodingHint(PNGTranscoder.KEY_FORCE_TRANSPARENT_WHITE,
+        t.addTranscodingHint(ImageTranscoder.KEY_FORCE_TRANSPARENT_WHITE,
                              Boolean.FALSE);
-        t.addTranscodingHint(PNGTranscoder.KEY_BACKGROUND_COLOR,
+        t.addTranscodingHint(ImageTranscoder.KEY_BACKGROUND_COLOR,
                              new Color(0,0,0,0));
-        t.addTranscodingHint(PNGTranscoder.KEY_EXECUTE_ONLOAD,
+        t.addTranscodingHint(SVGAbstractTranscoder.KEY_EXECUTE_ONLOAD,
                              Boolean.TRUE);
 
         if (validate){
-            t.addTranscodingHint(PNGTranscoder.KEY_XML_PARSER_VALIDATING,
+            t.addTranscodingHint(XMLAbstractTranscoder.KEY_XML_PARSER_VALIDATING,
                                  Boolean.TRUE);
-            t.addTranscodingHint(PNGTranscoder.KEY_XML_PARSER_CLASSNAME,
+            t.addTranscodingHint(XMLAbstractTranscoder.KEY_XML_PARSER_CLASSNAME,
                                  VALIDATING_PARSER);
         }
 
         if (userLanguage != null){
-            t.addTranscodingHint(PNGTranscoder.KEY_LANGUAGE, 
+            t.addTranscodingHint(SVGAbstractTranscoder.KEY_LANGUAGE, 
                                  userLanguage);
         }
         return t;
@@ -206,6 +209,7 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
          * @param output the ouput where to transcode
          * @exception TranscoderException if an error occured while transcoding
          */
+        @Override
         protected void transcode(Document document,
                                  String uri,
                                  TranscoderOutput output)

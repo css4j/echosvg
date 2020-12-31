@@ -30,36 +30,43 @@ public class UpdateManagerAdapter implements UpdateManagerListener {
     /**
      * Called when the manager was started.
      */
+    @Override
     public void managerStarted(UpdateManagerEvent e) { }
 
     /**
      * Called when the manager was suspended.
      */
+    @Override
     public void managerSuspended(UpdateManagerEvent e) { }
     
     /**
      * Called when the manager was resumed.
      */
+    @Override
     public void managerResumed(UpdateManagerEvent e) { }
 
     /**
      * Called when the manager was stopped.
      */
+    @Override
     public void managerStopped(UpdateManagerEvent e) { }
 
     /**
      * Called when an update started.
      */
+    @Override
     public void updateStarted(UpdateManagerEvent e) { }
 
     /**
      * Called when an update was completed.
      */
+    @Override
     public void updateCompleted(UpdateManagerEvent e) { }
 
     /**
      * Called when an update failed.
      */
+    @Override
     public void updateFailed(UpdateManagerEvent e) { }
 
 }

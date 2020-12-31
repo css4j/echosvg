@@ -128,6 +128,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Returns the GVTFont associated with this GVTGlyphVector.
      */
+    @Override
     public GVTFont getFont() {
         return gvtFont;
     }
@@ -135,6 +136,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Returns the FontRenderContext associated with this GlyphVector.
      */
+    @Override
     public FontRenderContext getFontRenderContext() {
         return awtGlyphVector.getFontRenderContext();
     }
@@ -142,6 +144,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Returns the glyphcode of the specified glyph.
      */
+    @Override
     public int getGlyphCode(int glyphIndex) {
         return awtGlyphVector.getGlyphCode(glyphIndex);
     }
@@ -149,6 +152,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Returns an array of glyphcodes for the specified glyphs.
      */
+    @Override
     public int[] getGlyphCodes(int beginGlyphIndex, int numEntries,
                                int[] codeReturn) {
         return awtGlyphVector.getGlyphCodes(beginGlyphIndex, numEntries,
@@ -159,6 +163,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
      * Returns the justification information for the glyph at the specified
      * index into this GlyphVector.
      */
+    @Override
     public GlyphJustificationInfo getGlyphJustificationInfo(int glyphIndex) {
         return awtGlyphVector.getGlyphJustificationInfo(glyphIndex);
     }
@@ -166,6 +171,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Returns a tight bounds on the GlyphVector including stroking.
      */
+    @Override
     public Rectangle2D getBounds2D(AttributedCharacterIterator aci) {
         aci.first();
         TextPaintInfo tpi = (TextPaintInfo)aci.getAttribute(PAINT_INFO);
@@ -214,6 +220,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
      * Returns the logical bounds of this GlyphVector.
      * This is a bound useful for hit detection and highlighting.
      */
+    @Override
     public Rectangle2D getLogicalBounds() {
         if (logicalBounds == null) {
             // This fills in logicalBounds...
@@ -226,6 +233,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
      * Returns the logical bounds of the specified glyph within this
      * GlyphVector.
      */
+    @Override
     public Shape getGlyphLogicalBounds(int glyphIndex) {
         if (glyphLogicalBounds[glyphIndex] == null &&
             glyphVisible[glyphIndex]) {
@@ -406,6 +414,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
      * Returns the metrics of the glyph at the specified index into this
      * GVTGlyphVector.
      */
+    @Override
     public GVTGlyphMetrics getGlyphMetrics(int glyphIndex) {
         if (glyphMetrics[glyphIndex] != null)
             return glyphMetrics[glyphIndex];
@@ -439,6 +448,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
      * Returns a Shape whose interior corresponds to the visual representation
      * of the specified glyph within this GlyphVector.
      */
+    @Override
     public Shape getGlyphOutline(int glyphIndex) {
         if (glyphOutlines[glyphIndex] == null) {
 /*
@@ -533,6 +543,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
      * glyph's metrics (ascent, descent, advance) rather than the actual glyph
      * shape.
      */
+    @Override
     public Rectangle2D getGlyphCellBounds(int glyphIndex) {
         return getGlyphLogicalBounds(glyphIndex).getBounds2D();
     }
@@ -540,6 +551,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Returns the position of the specified glyph within this GlyphVector.
      */
+    @Override
     public Point2D getGlyphPosition(int glyphIndex) {
         return glyphPositions[glyphIndex];
     }
@@ -547,6 +559,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Returns an array of glyph positions for the specified glyphs
      */
+    @Override
     public float[] getGlyphPositions(int beginGlyphIndex,
                                      int numEntries,
                                      float[] positionReturn) {
@@ -567,6 +580,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Gets the transform of the specified glyph within this GlyphVector.
      */
+    @Override
     public AffineTransform getGlyphTransform(int glyphIndex) {
         return glyphTransforms[glyphIndex];
     }
@@ -574,6 +588,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Returns the visual bounds of the specified glyph within the GlyphVector.
      */
+    @Override
     public Shape getGlyphVisualBounds(int glyphIndex) {
         if (glyphVisualBounds[glyphIndex] == null) {
 /*
@@ -608,6 +623,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Returns the number of glyphs in this GlyphVector.
      */
+    @Override
     public int getNumGlyphs() {
         return awtGlyphVector.getNumGlyphs();
     }
@@ -616,6 +632,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
      * Returns a Shape whose interior corresponds to the visual representation
      * of this GlyphVector.
      */
+    @Override
     public Shape getOutline() {
         if (outline != null)
             return outline;
@@ -634,6 +651,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
      * Returns a Shape whose interior corresponds to the visual representation
      * of this GlyphVector, offset to x, y.
      */
+    @Override
     public Shape getOutline(float x, float y) {
         Shape outline = getOutline();
         AffineTransform tr = AffineTransform.getTranslateInstance(x,y);
@@ -646,6 +664,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
      * tightest rectangle enclosing all non-background pixels in the rendered
      * representation of this GlyphVector.
      */
+    @Override
     public Rectangle2D getGeometricBounds() {
         if (visualBounds == null) {
             Shape outline = getOutline();
@@ -657,6 +676,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Assigns default positions to each glyph in this GlyphVector.
      */
+    @Override
     public void performDefaultLayout() {
         if (defaultGlyphPositions == null) {
             awtGlyphVector.performDefaultLayout();
@@ -736,6 +756,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Sets the position of the specified glyph within this GlyphVector.
      */
+    @Override
     public void setGlyphPosition(int glyphIndex, Point2D newPos) {
         glyphPositions[glyphIndex].x = (float)newPos.getX();
         glyphPositions[glyphIndex].y = (float)newPos.getY();
@@ -755,6 +776,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Sets the transform of the specified glyph within this GlyphVector.
      */
+    @Override
     public void setGlyphTransform(int glyphIndex, AffineTransform newTX) {
         glyphTransforms[glyphIndex] = newTX;
         outline       = null;
@@ -771,6 +793,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Tells the glyph vector whether or not to draw the specified glyph.
      */
+    @Override
     public void setGlyphVisible(int glyphIndex, boolean visible) {
         if (visible == glyphVisible[glyphIndex])
             return;
@@ -789,6 +812,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Returns true if specified glyph will be rendered.
      */
+    @Override
     public boolean isGlyphVisible(int glyphIndex) {
         return glyphVisible[glyphIndex];
     }
@@ -801,6 +825,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
      * @param endGlyphIndex The index of the last glyph in the range.
      * @return The number of chars.
      */
+    @Override
     public int getCharacterCount(int startGlyphIndex, int endGlyphIndex) {
         if (startGlyphIndex < 0) {
             startGlyphIndex = 0;
@@ -831,6 +856,7 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
     /**
      * Draws this glyph vector.
      */
+    @Override
     public void draw(Graphics2D graphics2D,
                      AttributedCharacterIterator aci) {
         int numGlyphs = getNumGlyphs();

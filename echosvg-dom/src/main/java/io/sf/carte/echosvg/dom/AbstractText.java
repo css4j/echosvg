@@ -41,6 +41,7 @@ public abstract class AbstractText
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Text#splitText(int)}.
      */
+    @Override
     public Text splitText(int offset) throws DOMException {
         if (isReadonly()) {
             throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -129,6 +130,7 @@ public abstract class AbstractText
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Text#getWholeText()}.
      */
+    @Override
     public String getWholeText() {
         StringBuffer sb = new StringBuffer();
         for (Node n = this;
@@ -148,6 +150,7 @@ public abstract class AbstractText
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.Text#isElementContentWhitespace()}.
      */
+    @Override
     public boolean isElementContentWhitespace() {
         int len = nodeValue.length();
         for (int i = 0; i < len; i++) {
@@ -166,6 +169,7 @@ public abstract class AbstractText
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Text#replaceWholeText(String)}.
      */
+    @Override
     public Text replaceWholeText(String s) throws DOMException {
         for (Node n = getPreviousLogicallyAdjacentTextNode(this);
                 n != null;
@@ -214,6 +218,7 @@ public abstract class AbstractText
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getTextContent()}.
      */
+    @Override
     public String getTextContent() {
         if (isElementContentWhitespace()) {
             return "";

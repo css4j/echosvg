@@ -24,6 +24,7 @@ import org.w3c.dom.svg.SVGAnimatedPreserveAspectRatio;
 import org.w3c.dom.svg.SVGAnimatedString;
 import org.w3c.dom.svg.SVGFEImageElement;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
@@ -62,14 +63,14 @@ public class SVGOMFEImageElement
     protected static final AttributeInitializer attributeInitializer;
     static {
         attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null, "xmlns:xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+                                          XMLConstants.XLINK_NAMESPACE_URI);
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "show", "embed");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "actuate", "onLoad");
     }
 
@@ -108,6 +109,7 @@ public class SVGOMFEImageElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -128,6 +130,7 @@ public class SVGOMFEImageElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_IMAGE_TAG;
     }
@@ -136,6 +139,7 @@ public class SVGOMFEImageElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGURIReference#getHref()}.
      */
+    @Override
     public SVGAnimatedString getHref() {
         return href;
     }
@@ -143,6 +147,7 @@ public class SVGOMFEImageElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEImageElement#getPreserveAspectRatio()}.
      */
+    @Override
     public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
         return preserveAspectRatio;
     }
@@ -152,6 +157,7 @@ public class SVGOMFEImageElement
     /**
      * <b>DOM</b>: Returns the xml:lang attribute value.
      */
+    @Override
     public String getXMLlang() {
         return XMLSupport.getXMLLang(this);
     }
@@ -159,6 +165,7 @@ public class SVGOMFEImageElement
     /**
      * <b>DOM</b>: Sets the xml:lang attribute value.
      */
+    @Override
     public void setXMLlang(String lang) {
         setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
     }
@@ -166,6 +173,7 @@ public class SVGOMFEImageElement
     /**
      * <b>DOM</b>: Returns the xml:space attribute value.
      */
+    @Override
     public String getXMLspace() {
         return XMLSupport.getXMLSpace(this);
     }
@@ -173,6 +181,7 @@ public class SVGOMFEImageElement
     /**
      * <b>DOM</b>: Sets the xml:space attribute value.
      */
+    @Override
     public void setXMLspace(String space) {
         setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
     }
@@ -183,6 +192,7 @@ public class SVGOMFEImageElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
      */
+    @Override
     public SVGAnimatedBoolean getExternalResourcesRequired() {
         return externalResourcesRequired;
     }
@@ -191,6 +201,7 @@ public class SVGOMFEImageElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -198,6 +209,7 @@ public class SVGOMFEImageElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEImageElement();
     }
@@ -205,6 +217,7 @@ public class SVGOMFEImageElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

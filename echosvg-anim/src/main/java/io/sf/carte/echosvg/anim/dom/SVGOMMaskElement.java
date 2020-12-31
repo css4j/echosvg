@@ -117,6 +117,7 @@ public class SVGOMMaskElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -128,18 +129,18 @@ public class SVGOMMaskElement
     private void initializeLiveAttributes() {
         x = createLiveAnimatedLength
             (null, SVG_X_ATTRIBUTE, SVG_MASK_X_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         y = createLiveAnimatedLength
             (null, SVG_Y_ATTRIBUTE, SVG_MASK_Y_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         width =
             createLiveAnimatedLength
                 (null, SVG_WIDTH_ATTRIBUTE, SVG_MASK_WIDTH_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.HORIZONTAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
         height =
             createLiveAnimatedLength
                 (null, SVG_HEIGHT_ATTRIBUTE, SVG_MASK_WIDTH_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.VERTICAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
         maskUnits =
             createLiveAnimatedEnumeration
                 (null, SVG_MASK_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 2);
@@ -152,6 +153,7 @@ public class SVGOMMaskElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_MASK_TAG;
     }
@@ -159,6 +161,7 @@ public class SVGOMMaskElement
     /**
      * <b>DOM</b>: Implements {@link SVGMaskElement#getMaskUnits()}.
      */
+    @Override
     public SVGAnimatedEnumeration getMaskUnits() {
         return maskUnits;
     }
@@ -166,6 +169,7 @@ public class SVGOMMaskElement
     /**
      * <b>DOM</b>: Implements {@link SVGMaskElement#getMaskContentUnits()}.
      */
+    @Override
     public SVGAnimatedEnumeration getMaskContentUnits() {
         return maskContentUnits;
     }
@@ -173,6 +177,7 @@ public class SVGOMMaskElement
     /**
      * <b>DOM</b>: Implements {@link SVGMaskElement#getX()}.
      */
+    @Override
     public SVGAnimatedLength getX() {
         return x;
     }
@@ -180,6 +185,7 @@ public class SVGOMMaskElement
     /**
      * <b>DOM</b>: Implements {@link SVGMaskElement#getY()}.
      */
+    @Override
     public SVGAnimatedLength getY() {
         return y;
     }
@@ -187,6 +193,7 @@ public class SVGOMMaskElement
     /**
      * <b>DOM</b>: Implements {@link SVGMaskElement#getWidth()}.
      */
+    @Override
     public SVGAnimatedLength getWidth() {
         return width;
     }
@@ -194,6 +201,7 @@ public class SVGOMMaskElement
     /**
      * <b>DOM</b>: Implements {@link SVGMaskElement#getHeight()}.
      */
+    @Override
     public SVGAnimatedLength getHeight() {
         return height;
     }
@@ -201,6 +209,7 @@ public class SVGOMMaskElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMMaskElement();
     }
@@ -208,6 +217,7 @@ public class SVGOMMaskElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

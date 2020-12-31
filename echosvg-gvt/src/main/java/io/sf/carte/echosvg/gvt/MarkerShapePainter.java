@@ -114,7 +114,8 @@ public class MarkerShapePainter implements ShapePainter {
      *
      * @param g2d the Graphics2D to use
      */
-     public void paint(Graphics2D g2d) {
+     @Override
+    public void paint(Graphics2D g2d) {
          if (markerGroup == null) {
              buildMarkerGroup();
          }
@@ -126,6 +127,7 @@ public class MarkerShapePainter implements ShapePainter {
     /**
      * Returns the area painted by this shape painter.
      */
+    @Override
     public Shape getPaintedArea(){
          if (markerGroup == null) {
              buildMarkerGroup();
@@ -136,6 +138,7 @@ public class MarkerShapePainter implements ShapePainter {
     /**
      * Returns the bounds of the area painted by this shape painter
      */
+    @Override
     public Rectangle2D getPaintedBounds2D(){
          if (markerGroup == null) {
              buildMarkerGroup();
@@ -146,6 +149,7 @@ public class MarkerShapePainter implements ShapePainter {
     /**
      * Returns true if pt is in the area painted by this shape painter
      */
+    @Override
     public boolean inPaintedArea(Point2D pt){
          if (markerGroup == null) {
              buildMarkerGroup();
@@ -158,18 +162,21 @@ public class MarkerShapePainter implements ShapePainter {
      * Returns the area covered by this shape painter (even if not painted).
      * This is always null for Markers.
      */
+    @Override
     public Shape getSensitiveArea() { return null; }
 
     /**
      * Returns the bounds of the area covered by this shape painte
      * (even if not painted). This is always null for Markers.
      */
+    @Override
     public Rectangle2D getSensitiveBounds2D() { return null; }
 
     /**
      * Returns true if pt is in the sensitive area.
      * This is always false for Markers.
      */
+    @Override
     public boolean inSensitiveArea(Point2D pt) { return false; }
 
 
@@ -179,6 +186,7 @@ public class MarkerShapePainter implements ShapePainter {
      * @param shape new shape this painter should be associated with.
      * Should not be null.
      */
+    @Override
     public void setShape(Shape shape){
         if (shape == null) {
             throw new IllegalArgumentException();
@@ -209,6 +217,7 @@ public class MarkerShapePainter implements ShapePainter {
      *
      * @return shape associated with this painter
      */
+    @Override
     public Shape getShape(){
         return extShape;
     }

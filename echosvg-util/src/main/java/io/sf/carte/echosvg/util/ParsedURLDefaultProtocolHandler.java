@@ -72,6 +72,7 @@ public class ParsedURLDefaultProtocolHandler
      * ParsedURLData object.
      * @param urlStr the string to parse as a URL.
      */
+    @Override
     public ParsedURLData parseURL(String urlStr) {
         try {
             URL url = new URL(urlStr);
@@ -234,6 +235,7 @@ public class ParsedURLDefaultProtocolHandler
      * @param baseURL the base url for parsing.
      * @param urlStr the string to parse as a URL.  
      */
+    @Override
     public ParsedURLData parseURL(ParsedURL baseURL, String urlStr) {
         // Reference to same document (including fragment, and query).
         if (urlStr.length() == 0) 

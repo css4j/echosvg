@@ -105,6 +105,7 @@ public abstract class AbstractSVGTransform implements SVGTransform {
     /**
      * <b>DOM</b>: Implements {@link SVGTransform#getType()}.
      */
+    @Override
     public short getType() {
         return type;
     }
@@ -112,6 +113,7 @@ public abstract class AbstractSVGTransform implements SVGTransform {
     /**
      * <b>DOM</b>: Implements {@link SVGTransform#getMatrix()}.
      */
+    @Override
     public SVGMatrix getMatrix() {
         return createMatrix();
     }
@@ -119,6 +121,7 @@ public abstract class AbstractSVGTransform implements SVGTransform {
     /**
      * <b>DOM</b>: Implements {@link SVGTransform#getAngle()}.
      */
+    @Override
     public float getAngle() {
         return angle;
     }
@@ -126,6 +129,7 @@ public abstract class AbstractSVGTransform implements SVGTransform {
     /**
      * <b>DOM</b>: Implements {@link SVGTransform#setMatrix(SVGMatrix)}.
      */
+    @Override
     public void setMatrix(SVGMatrix matrix) {
         type = SVG_TRANSFORM_MATRIX;
         affineTransform =
@@ -136,6 +140,7 @@ public abstract class AbstractSVGTransform implements SVGTransform {
     /**
      * <b>DOM</b>: Implements {@link SVGTransform#setTranslate(float,float)}.
      */
+    @Override
     public void setTranslate(float tx, float ty) {
         type = SVG_TRANSFORM_TRANSLATE;
         affineTransform = AffineTransform.getTranslateInstance(tx, ty);
@@ -144,6 +149,7 @@ public abstract class AbstractSVGTransform implements SVGTransform {
     /**
      * <b>DOM</b>: Implements {@link SVGTransform#setScale(float,float)}.
      */
+    @Override
     public void setScale(float sx, float sy) {
         type = SVG_TRANSFORM_SCALE;
         affineTransform = AffineTransform.getScaleInstance(sx, sy);
@@ -152,6 +158,7 @@ public abstract class AbstractSVGTransform implements SVGTransform {
     /**
      * <b>DOM</b>: Implements {@link SVGTransform#setRotate(float,float,float)}.
      */
+    @Override
     public void setRotate(float angle, float cx, float cy) {
         type = SVG_TRANSFORM_ROTATE;
         affineTransform =
@@ -164,6 +171,7 @@ public abstract class AbstractSVGTransform implements SVGTransform {
     /**
      * <b>DOM</b>: Implements {@link SVGTransform#setSkewX(float)}.
      */
+    @Override
     public void setSkewX(float angle) {
         type = SVG_TRANSFORM_SKEWX;
         affineTransform =
@@ -175,6 +183,7 @@ public abstract class AbstractSVGTransform implements SVGTransform {
     /**
      * <b>DOM</b>: Implements {@link SVGTransform#setSkewY(float)}.
      */
+    @Override
     public void setSkewY(float angle) {
         type = SVG_TRANSFORM_SKEWY;
         affineTransform =

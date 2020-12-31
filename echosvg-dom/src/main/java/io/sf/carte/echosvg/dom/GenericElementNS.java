@@ -68,6 +68,7 @@ public class GenericElementNS extends AbstractElementNS {
     /**
      * Sets the name of this node.
      */
+    @Override
     public void setNodeName(String v) {
         nodeName = v;
     }
@@ -76,6 +77,7 @@ public class GenericElementNS extends AbstractElementNS {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return {@link #nodeName}
      */
+    @Override
     public String getNodeName() {
         return nodeName;
     }
@@ -85,6 +87,7 @@ public class GenericElementNS extends AbstractElementNS {
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -92,6 +95,7 @@ public class GenericElementNS extends AbstractElementNS {
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -99,6 +103,7 @@ public class GenericElementNS extends AbstractElementNS {
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         GenericElementNS ge = (GenericElementNS)super.export(n, d);
         ge.nodeName = nodeName;
@@ -108,6 +113,7 @@ public class GenericElementNS extends AbstractElementNS {
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         GenericElementNS ge = (GenericElementNS)super.deepExport(n, d);
         ge.nodeName = nodeName;
@@ -118,6 +124,7 @@ public class GenericElementNS extends AbstractElementNS {
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         GenericElementNS ge = (GenericElementNS)super.copyInto(n);
         ge.nodeName = nodeName;
@@ -128,6 +135,7 @@ public class GenericElementNS extends AbstractElementNS {
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         GenericElementNS ge = (GenericElementNS)super.deepCopyInto(n);
         ge.nodeName = nodeName;
@@ -137,6 +145,7 @@ public class GenericElementNS extends AbstractElementNS {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new GenericElementNS();
     }

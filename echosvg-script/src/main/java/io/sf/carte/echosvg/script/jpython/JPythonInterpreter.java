@@ -46,15 +46,18 @@ public class JPythonInterpreter implements io.sf.carte.echosvg.script.Interprete
      * Returns the content types of the scripting languages this interpreter
      * handles.
      */
+    @Override
     public String[] getMimeTypes() {
         return JPythonInterpreterFactory.JPYTHON_MIMETYPES;
     }
 
+    @Override
     public Object evaluate(Reader scriptreader)
         throws IOException {
         return evaluate(scriptreader, "");
     }
 
+    @Override
     public Object evaluate(Reader scriptreader, String description)
         throws IOException {
 
@@ -69,6 +72,7 @@ public class JPythonInterpreter implements io.sf.carte.echosvg.script.Interprete
         return evaluate(str);
     }
 
+    @Override
     public Object evaluate(String script) {
         try {
             interpreter.exec(script);
@@ -80,26 +84,32 @@ public class JPythonInterpreter implements io.sf.carte.echosvg.script.Interprete
         return null;
     }
 
+    @Override
     public void dispose() {
     }
 
+    @Override
     public void bindObject(String name, Object object) {
         interpreter.set(name, object);
     }
 
+    @Override
     public void setOut(Writer out) {
         interpreter.setOut(out);
     }
 
     // io.sf.carte.echosvg.i18n.Localizable implementation
 
+    @Override
     public Locale getLocale() {
         return null;
     }
 
+    @Override
     public void setLocale(Locale locale) {
     }
 
+    @Override
     public String formatMessage(String key, Object[] args) {
         return null;
     }

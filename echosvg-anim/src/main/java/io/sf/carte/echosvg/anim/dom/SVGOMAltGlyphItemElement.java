@@ -51,6 +51,7 @@ public class SVGOMAltGlyphItemElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_ALT_GLYPH_ITEM_TAG;
     }
@@ -58,6 +59,7 @@ public class SVGOMAltGlyphItemElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMAltGlyphItemElement();
     }

@@ -44,6 +44,7 @@ public class NoLoadExternalResourceSecurity implements ExternalResourceSecurity 
      *
      * @throws SecurityException if the externalResource should not be loaded.
      */
+    @Override
     public void checkLoadExternalResource(){
         if (se != null) {
             se.fillInStackTrace();

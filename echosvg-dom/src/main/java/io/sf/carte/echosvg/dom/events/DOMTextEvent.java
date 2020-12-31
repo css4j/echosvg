@@ -38,6 +38,7 @@ public class DOMTextEvent extends DOMUIEvent implements TextEvent {
     /**
      * Returns the text data.
      */
+    @Override
     public String getData() {
         return data;
     }
@@ -45,6 +46,7 @@ public class DOMTextEvent extends DOMUIEvent implements TextEvent {
     /**
      * <b>DOM</b>: Initializes this TextEvent.
      */
+    @Override
     public void initTextEvent(String typeArg, 
                               boolean canBubbleArg, 
                               boolean cancelableArg, 
@@ -57,6 +59,7 @@ public class DOMTextEvent extends DOMUIEvent implements TextEvent {
     /**
      * <b>DOM</b>: Initializes this TextEvent.
      */
+    @Override
     public void initTextEventNS(String namespaceURIArg,
                                 String typeArg, 
                                 boolean canBubbleArg, 

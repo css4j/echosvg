@@ -70,6 +70,7 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
      * @param output the ouput where to transcode
      * @exception TranscoderException if an error occured while transcoding
      */
+    @Override
     public void transcode(TranscoderInput input, TranscoderOutput output)
             throws TranscoderException {
 

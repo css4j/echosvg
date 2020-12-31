@@ -157,6 +157,7 @@ public class TileRed extends AbstractRed implements TileGenerator {
         }
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         int xOff = ((int)Math.floor(wr.getMinX()/xStep))*xStep;
         int yOff = ((int)Math.floor(wr.getMinY()/yStep))*yStep;
@@ -182,6 +183,7 @@ public class TileRed extends AbstractRed implements TileGenerator {
     }
 
 
+    @Override
     public Raster getTile(int x, int y) {
         
         if (raster!=null) {
@@ -196,6 +198,7 @@ public class TileRed extends AbstractRed implements TileGenerator {
         return genTile(x,y);
     }
 
+    @Override
     public Raster genTile(int x, int y) {
       // System.out.println("Cache Miss     [" + x + "," + y + "]");
         int tx = tileGridXOff+x*tileWidth;

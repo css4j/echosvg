@@ -62,6 +62,7 @@ public class SimpleImageHandler implements GenericImageHandler, SVGSyntax, Error
      * This <code>GenericImageHandler</code> implementation does not
      * need to interact with the DOMTreeManager.
      */
+    @Override
     public void setDOMTreeManager(DOMTreeManager domTreeManager){
     }
 
@@ -70,6 +71,7 @@ public class SimpleImageHandler implements GenericImageHandler, SVGSyntax, Error
      * Note that no assumptions should be made by the caller about the
      * corresponding SVG tag.
      */
+    @Override
     public Element createElement(SVGGeneratorContext generatorContext) {
         // Create a DOM Element in SVG namespace to refer to an image
         Element imageElement =
@@ -82,6 +84,7 @@ public class SimpleImageHandler implements GenericImageHandler, SVGSyntax, Error
     /**
      * The handler sets the xlink:href tag and returns a transform
      */
+    @Override
     public AffineTransform handleImage(Image image,
                                        Element imageElement,
                                        int x, int y,
@@ -107,6 +110,7 @@ public class SimpleImageHandler implements GenericImageHandler, SVGSyntax, Error
     /**
      * The handler sets the xlink:href tag and returns a transform
      */
+    @Override
     public AffineTransform handleImage(RenderedImage image,
                                        Element imageElement,
                                        int x, int y,
@@ -133,6 +137,7 @@ public class SimpleImageHandler implements GenericImageHandler, SVGSyntax, Error
     /**
      * The handler sets the xlink:href tag and returns a transform
      */
+    @Override
     public AffineTransform handleImage(RenderableImage image,
                                        Element imageElement,
                                        double x, double y,

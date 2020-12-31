@@ -121,6 +121,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -143,6 +144,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_CONVOLVE_MATRIX_TAG;
     }
@@ -157,6 +159,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getEdgeMode()}.
      */
+    @Override
     public SVGAnimatedEnumeration getEdgeMode() {
         return edgeMode;
     }
@@ -164,6 +167,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getKernelMatrix()}.
      */
+    @Override
     public SVGAnimatedNumberList getKernelMatrix() {
         throw new UnsupportedOperationException
             ("SVGFEConvolveMatrixElement.getKernelMatrix is not implemented"); // XXX
@@ -172,6 +176,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getOrderX()}.
      */
+    @Override
     public SVGAnimatedInteger getOrderX() {
         throw new UnsupportedOperationException
             ("SVGFEConvolveMatrixElement.getOrderX is not implemented"); // XXX
@@ -180,6 +185,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getOrderY()}.
      */
+    @Override
     public SVGAnimatedInteger getOrderY() {
         throw new UnsupportedOperationException
             ("SVGFEConvolveMatrixElement.getOrderY is not implemented"); // XXX
@@ -188,6 +194,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getTargetX()}.
      */
+    @Override
     public SVGAnimatedInteger getTargetX() {
         // Default value relative to orderX...
         throw new UnsupportedOperationException
@@ -197,6 +204,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getTargetY()}.
      */
+    @Override
     public SVGAnimatedInteger getTargetY() {
         // Default value relative to orderY...
         throw new UnsupportedOperationException
@@ -206,6 +214,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getDivisor()}.
      */
+    @Override
     public SVGAnimatedNumber getDivisor() {
         // Default value relative to kernel matrix...
         throw new UnsupportedOperationException
@@ -216,6 +225,7 @@ public class SVGOMFEConvolveMatrixElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFEConvolveMatrixElement#getBias()}.
      */
+    @Override
     public SVGAnimatedNumber getBias() {
         return bias;
     }
@@ -224,6 +234,7 @@ public class SVGOMFEConvolveMatrixElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFEConvolveMatrixElement#getKernelUnitLengthX()}.
      */
+    @Override
     public SVGAnimatedNumber getKernelUnitLengthX() {
         throw new UnsupportedOperationException
             ("SVGFEConvolveMatrixElement.getKernelUnitLengthX is not implemented"); // XXX
@@ -233,6 +244,7 @@ public class SVGOMFEConvolveMatrixElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFEConvolveMatrixElement#getKernelUnitLengthY()}.
      */
+    @Override
     public SVGAnimatedNumber getKernelUnitLengthY() {
         throw new UnsupportedOperationException
             ("SVGFEConvolveMatrixElement.getKernelUnitLengthY is not implemented"); // XXX
@@ -242,6 +254,7 @@ public class SVGOMFEConvolveMatrixElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFEConvolveMatrixElement#getPreserveAlpha()}.
      */
+    @Override
     public SVGAnimatedBoolean getPreserveAlpha() {
         return preserveAlpha;
     }
@@ -249,6 +262,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEConvolveMatrixElement();
     }
@@ -256,6 +270,7 @@ public class SVGOMFEConvolveMatrixElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

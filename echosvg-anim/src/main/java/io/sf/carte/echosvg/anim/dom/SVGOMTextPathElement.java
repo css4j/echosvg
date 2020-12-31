@@ -24,6 +24,7 @@ import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGAnimatedString;
 import org.w3c.dom.svg.SVGTextPathElement;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
@@ -64,14 +65,14 @@ public class SVGOMTextPathElement
     protected static final AttributeInitializer attributeInitializer;
     static {
         attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null, "xmlns:xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+                                          XMLConstants.XLINK_NAMESPACE_URI);
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "show", "other");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "actuate", "onLoad");
     }
 
@@ -132,6 +133,7 @@ public class SVGOMTextPathElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -151,7 +153,7 @@ public class SVGOMTextPathElement
             createLiveAnimatedLength
                 (null, SVG_START_OFFSET_ATTRIBUTE,
                  SVG_TEXT_PATH_START_OFFSET_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.OTHER_LENGTH, false);
+                 AbstractSVGAnimatedLength.OTHER_LENGTH, false);
         href =
             createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
     }
@@ -159,6 +161,7 @@ public class SVGOMTextPathElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_TEXT_PATH_TAG;
     }
@@ -166,6 +169,7 @@ public class SVGOMTextPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGTextPathElement#getStartOffset()}.
      */
+    @Override
     public SVGAnimatedLength getStartOffset() {
         return startOffset;
     }
@@ -173,6 +177,7 @@ public class SVGOMTextPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGTextPathElement#getMethod()}.
      */
+    @Override
     public SVGAnimatedEnumeration getMethod() {
         return method;
     }
@@ -180,6 +185,7 @@ public class SVGOMTextPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGTextPathElement#getSpacing()}.
      */
+    @Override
     public SVGAnimatedEnumeration getSpacing() {
         return spacing;
     }
@@ -190,6 +196,7 @@ public class SVGOMTextPathElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGURIReference#getHref()}.
      */
+    @Override
     public SVGAnimatedString getHref() {
         return href;
     }
@@ -198,6 +205,7 @@ public class SVGOMTextPathElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -205,6 +213,7 @@ public class SVGOMTextPathElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMTextPathElement();
     }
@@ -212,6 +221,7 @@ public class SVGOMTextPathElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

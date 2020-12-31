@@ -81,6 +81,7 @@ public class SVGOMClipPathElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -99,6 +100,7 @@ public class SVGOMClipPathElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_CLIP_PATH_TAG;
     }
@@ -106,6 +108,7 @@ public class SVGOMClipPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGClipPathElement#getClipPathUnits()}.
      */
+    @Override
     public SVGAnimatedEnumeration getClipPathUnits() {
         return clipPathUnits;
     }
@@ -113,6 +116,7 @@ public class SVGOMClipPathElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMClipPathElement();
     }
@@ -120,6 +124,7 @@ public class SVGOMClipPathElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

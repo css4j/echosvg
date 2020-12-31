@@ -164,6 +164,7 @@ public class RectListManager implements Collection {
     /**
      * Standard <code>Object</code> clone method.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return copy();
     }
@@ -180,14 +181,17 @@ public class RectListManager implements Collection {
     /**
      * Returns the number of elements currently stored in this collection.
      */
+    @Override
     public int size() { return size; }
 
 
     /**
      * Returns true if this collection contains no elements.
      */
+    @Override
     public boolean isEmpty() { return (size==0); }
 
+    @Override
     public void clear() {
         Arrays.fill( rects, null );
         size=0;
@@ -197,6 +201,7 @@ public class RectListManager implements Collection {
     /**
      * Returns an iterator over the elements in this collection
      */
+    @Override
     public Iterator iterator() {
         return new RLMIterator();
     }
@@ -209,6 +214,7 @@ public class RectListManager implements Collection {
         return new RLMIterator();
     }
 
+    @Override
     public Object [] toArray() {
         Object [] ret = new Rectangle[size];
         System.arraycopy(rects, 0, ret, 0, size);
@@ -224,6 +230,7 @@ public class RectListManager implements Collection {
      * @param a array to fill (must not be null!)
      * @return the content of rects, either in a[] or a fresh array.
      */
+    @Override
     public Object [] toArray(Object[] a) {
         Class t = a.getClass().getComponentType();
         if ((t != Object.class) &&
@@ -241,6 +248,7 @@ public class RectListManager implements Collection {
         return a;
     }
 
+    @Override
     public boolean add(Object o) {
         add((Rectangle)o);
         return true;
@@ -313,6 +321,7 @@ public class RectListManager implements Collection {
         bounds=null;
     }
 
+    @Override
     public boolean addAll(Collection c) {
         if (c instanceof RectListManager) {
             add((RectListManager)c);
@@ -323,6 +332,7 @@ public class RectListManager implements Collection {
         return (c.size() != 0);
     }
 
+    @Override
     public boolean contains(Object o) {
         Rectangle rect = (Rectangle)o;
         int l=0, r=size-1, idx=0;
@@ -362,6 +372,7 @@ public class RectListManager implements Collection {
      * Returns true if this collection contains all of the elements in
      * the specified collection.
      */
+    @Override
     public boolean containsAll(Collection c) {
         if (c instanceof RectListManager)
             return containsAll((RectListManager)c);
@@ -393,6 +404,7 @@ public class RectListManager implements Collection {
      * collection, if it is present.
      * @param o Object to remove an matching instance of.
      */
+    @Override
     public boolean remove(Object o) {
         return remove((Rectangle)o);
     }
@@ -446,6 +458,7 @@ public class RectListManager implements Collection {
         return false;
     }
 
+    @Override
     public boolean removeAll(Collection c) {
         if (c instanceof RectListManager)
             return removeAll((RectListManager)c);
@@ -497,6 +510,7 @@ public class RectListManager implements Collection {
         return ret;
     }
 
+    @Override
     public boolean retainAll(Collection c) {
         if (c instanceof RectListManager)
             return retainAll((RectListManager)c);
@@ -924,6 +938,7 @@ public class RectListManager implements Collection {
 
         RectXComparator() { }
 
+        @Override
         public final int compare(Object o1, Object o2) {
             return ((Rectangle)o1).x-((Rectangle)o2).x;
         }
@@ -936,8 +951,11 @@ public class RectListManager implements Collection {
         boolean forward  = true;
         RLMIterator() { }
 
+        @Override
         public boolean hasNext() { return idx < size; }
+        @Override
         public int nextIndex() { return idx; }
+        @Override
         public Object next() {
             if (idx >= size)
                 throw new NoSuchElementException("No Next Element");
@@ -946,8 +964,11 @@ public class RectListManager implements Collection {
             return rects[idx++];
         }
 
+        @Override
         public boolean hasPrevious() { return idx > 0; }
+        @Override
         public int previousIndex() { return idx-1; }
+        @Override
         public Object previous() {
             if (idx <= 0)
                 throw new NoSuchElementException("No Previous Element");
@@ -956,6 +977,7 @@ public class RectListManager implements Collection {
             return rects[--idx];
         }
 
+        @Override
         public void remove() {
             if (!removeOk)
                 throw new IllegalStateException
@@ -970,6 +992,7 @@ public class RectListManager implements Collection {
         }
 
 
+        @Override
         public void set(Object o) {
             Rectangle r = (Rectangle)o;
 
@@ -994,6 +1017,7 @@ public class RectListManager implements Collection {
             removeOk = false;
         }
 
+        @Override
         public void add(Object o) {
             Rectangle r = (Rectangle)o;
             if (idx<size) {

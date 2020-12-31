@@ -53,6 +53,7 @@ public class GenericText extends AbstractText {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return {@link #getNodeName()}.
      */
+    @Override
     public String getNodeName() {
         return "#text";
     }
@@ -61,6 +62,7 @@ public class GenericText extends AbstractText {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
      * @return {@link org.w3c.dom.Node#TEXT_NODE}
      */
+    @Override
     public short getNodeType() {
         return TEXT_NODE;
     }
@@ -68,6 +70,7 @@ public class GenericText extends AbstractText {
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -75,6 +78,7 @@ public class GenericText extends AbstractText {
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -82,6 +86,7 @@ public class GenericText extends AbstractText {
     /**
      * Creates a text node of the current type.
      */
+    @Override
     protected Text createTextNode(String text) {
         return getOwnerDocument().createTextNode(text);
     }
@@ -89,6 +94,7 @@ public class GenericText extends AbstractText {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new GenericText();
     }

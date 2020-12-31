@@ -95,6 +95,7 @@ public class SVGOMAnimatedNumberList
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedNumberList#getBaseVal()}.
      */
+    @Override
     public SVGNumberList getBaseVal() {
         if (baseVal == null) {
             baseVal = new BaseSVGNumberList();
@@ -105,6 +106,7 @@ public class SVGOMAnimatedNumberList
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedNumberList#getAnimVal()}.
      */
+    @Override
     public SVGNumberList getAnimVal() {
         if (animVal == null) {
             animVal = new AnimSVGNumberList();
@@ -138,6 +140,7 @@ public class SVGOMAnimatedNumberList
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         SVGNumberList nl = getBaseVal();
         int n = nl.getNumberOfItems();
@@ -151,6 +154,7 @@ public class SVGOMAnimatedNumberList
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -169,6 +173,7 @@ public class SVGOMAnimatedNumberList
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -182,6 +187,7 @@ public class SVGOMAnimatedNumberList
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -195,6 +201,7 @@ public class SVGOMAnimatedNumberList
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -223,6 +230,7 @@ public class SVGOMAnimatedNumberList
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -231,6 +239,7 @@ public class SVGOMAnimatedNumberList
         /**
          * Create a SVGException.
          */
+        @Override
         protected SVGException createSVGException(short type, String key,
                                                   Object[] args) {
 
@@ -241,6 +250,7 @@ public class SVGOMAnimatedNumberList
          * Returns the element owning the attribute with which this length
          * list is associated.
          */
+        @Override
         protected Element getElement() {
             return element;
         }
@@ -248,6 +258,7 @@ public class SVGOMAnimatedNumberList
         /**
          * Returns the value of the DOM attribute containing the number list.
          */
+        @Override
         protected String getValueAsString() {
             Attr attr = element.getAttributeNodeNS(namespaceURI, localName);
             if (attr == null) {
@@ -259,6 +270,7 @@ public class SVGOMAnimatedNumberList
         /**
          * Sets the DOM attribute value containing the number list.
          */
+        @Override
         protected void setAttributeValue(String value) {
             try {
                 changing = true;
@@ -271,6 +283,7 @@ public class SVGOMAnimatedNumberList
         /**
          * Resets the value of the associated attribute.
          */
+        @Override
         protected void resetAttribute() {
             super.resetAttribute();
             missing = false;
@@ -282,6 +295,7 @@ public class SVGOMAnimatedNumberList
          * the DOM attribute.  This is called in response to an append to
          * the list.
          */
+        @Override
         protected void resetAttribute(SVGItem item) {
             super.resetAttribute(item);
             missing = false;
@@ -291,6 +305,7 @@ public class SVGOMAnimatedNumberList
         /**
          * Initializes the list, if needed.
          */
+        @Override
         protected void revalidate() {
             if (valid) {
                 return;
@@ -342,6 +357,7 @@ public class SVGOMAnimatedNumberList
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -350,6 +366,7 @@ public class SVGOMAnimatedNumberList
         /**
          * Create a SVGException.
          */
+        @Override
         protected SVGException createSVGException(short type, String key,
                                                   Object[] args) {
 
@@ -359,6 +376,7 @@ public class SVGOMAnimatedNumberList
         /**
          * Returns the element owning this SVGNumberList.
          */
+        @Override
         protected Element getElement() {
             return element;
         }
@@ -366,6 +384,7 @@ public class SVGOMAnimatedNumberList
         /**
          * <b>DOM</b>: Implements {@link SVGNumberList#getNumberOfItems()}.
          */
+        @Override
         public int getNumberOfItems() {
             if (hasAnimVal) {
                 return super.getNumberOfItems();
@@ -376,6 +395,7 @@ public class SVGOMAnimatedNumberList
         /**
          * <b>DOM</b>: Implements {@link SVGNumberList#getItem(int)}.
          */
+        @Override
         public SVGNumber getItem(int index) throws DOMException {
             if (hasAnimVal) {
                 return super.getItem(index);
@@ -386,6 +406,7 @@ public class SVGOMAnimatedNumberList
         /**
          * Returns the value of the DOM attribute containing the point list.
          */
+        @Override
         protected String getValueAsString() {
             if (itemList.size() == 0) {
                 return "";
@@ -405,12 +426,14 @@ public class SVGOMAnimatedNumberList
         /**
          * Sets the DOM attribute value containing the point list.
          */
+        @Override
         protected void setAttributeValue(String value) {
         }
 
         /**
          * <b>DOM</b>: Implements {@link SVGNumberList#clear()}.
          */
+        @Override
         public void clear() throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -420,6 +443,7 @@ public class SVGOMAnimatedNumberList
         /**
          * <b>DOM</b>: Implements {@link SVGNumberList#initialize(SVGNumber)}.
          */
+        @Override
         public SVGNumber initialize(SVGNumber newItem)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -431,6 +455,7 @@ public class SVGOMAnimatedNumberList
          * <b>DOM</b>: Implements {@link
          * SVGNumberList#insertItemBefore(SVGNumber, int)}.
          */
+        @Override
         public SVGNumber insertItemBefore(SVGNumber newItem, int index)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -442,6 +467,7 @@ public class SVGOMAnimatedNumberList
          * <b>DOM</b>: Implements {@link
          * SVGNumberList#replaceItem(SVGNumber, int)}.
          */
+        @Override
         public SVGNumber replaceItem(SVGNumber newItem, int index)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -452,6 +478,7 @@ public class SVGOMAnimatedNumberList
         /**
          * <b>DOM</b>: Implements {@link SVGNumberList#removeItem(int)}.
          */
+        @Override
         public SVGNumber removeItem(int index) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -461,6 +488,7 @@ public class SVGOMAnimatedNumberList
         /**
          * <b>DOM</b>: Implements {@link SVGNumberList#appendItem(SVGNumber)}.
          */
+        @Override
         public SVGNumber appendItem(SVGNumber newItem) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -491,6 +519,7 @@ public class SVGOMAnimatedNumberList
          * Resets the value of the associated attribute.  Does nothing, since
          * there is no attribute for an animated value.
          */
+        @Override
         protected void resetAttribute() {
         }
 
@@ -498,6 +527,7 @@ public class SVGOMAnimatedNumberList
          * Resets the value of the associated attribute.  Does nothing, since
          * there is no attribute for an animated value.
          */
+        @Override
         protected void resetAttribute(SVGItem item) {
         }
 
@@ -505,6 +535,7 @@ public class SVGOMAnimatedNumberList
          * Initializes the list, if needed.  Does nothing, since there is no
          * attribute to read the list from.
          */
+        @Override
         protected void revalidate() {
             valid = true;
         }

@@ -45,6 +45,7 @@ public class AnimatablePointListValue extends AnimatableNumberListValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to,
                                        float interpolation,
@@ -61,6 +62,7 @@ public class AnimatablePointListValue extends AnimatableNumberListValue {
      * Returns whether two values of this type can have their distance
      * computed, as needed by paced animation.
      */
+    @Override
     public boolean canPace() {
         return false;
     }
@@ -69,6 +71,7 @@ public class AnimatablePointListValue extends AnimatableNumberListValue {
      * Returns the absolute distance between this value and the specified other
      * value.
      */
+    @Override
     public float distanceTo(AnimatableValue other) {
         return 0f;
     }
@@ -76,6 +79,7 @@ public class AnimatablePointListValue extends AnimatableNumberListValue {
     /**
      * Returns a zero value of this AnimatableValue's type.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         float[] ns = new float[numbers.length];
         return new AnimatablePointListValue(target, ns);

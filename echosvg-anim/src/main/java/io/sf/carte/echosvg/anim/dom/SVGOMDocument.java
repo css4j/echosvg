@@ -157,6 +157,7 @@ public class SVGOMDocument
     /**
      * Implements {@link Localizable#setLocale(Locale)}.
      */
+    @Override
     public void setLocale(Locale l) {
         super.setLocale(l);
         localizableSupport.setLocale(l);
@@ -165,6 +166,7 @@ public class SVGOMDocument
     /**
      * Implements {@link Localizable#formatMessage(String,Object[])}.
      */
+    @Override
     public String formatMessage(String key, Object[] args)
         throws MissingResourceException {
         try {
@@ -177,6 +179,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link SVGDocument#getTitle()}.
      */
+    @Override
     public String getTitle() {
         StringBuffer sb = new StringBuffer();
         boolean preserve = false;
@@ -209,6 +212,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link SVGDocument#getReferrer()}.
      */
+    @Override
     public String getReferrer() {
         return referrer;
     }
@@ -223,6 +227,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link SVGDocument#getDomain()}.
      */
+    @Override
     public String getDomain() {
         return (url == null) ? null : url.getHost();
     }
@@ -230,6 +235,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link SVGDocument#getRootElement()}.
      */
+    @Override
     public SVGSVGElement getRootElement() {
         return (SVGSVGElement)getDocumentElement();
     }
@@ -237,6 +243,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link SVGDocument#getURL()}
      */
+    @Override
     public String getURL() {
         return documentURI;
     }
@@ -279,6 +286,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#setDocumentURI(String)}.
      */
+    @Override
     public void setDocumentURI(String uri) {
         documentURI = uri;
         url = uri == null ? null : new ParsedURL(uri);
@@ -287,6 +295,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link Document#createElement(String)}.
      */
+    @Override
     public Element createElement(String tagName) throws DOMException {
         return new GenericElement(tagName.intern(), this);
     }
@@ -294,6 +303,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link Document#createDocumentFragment()}.
      */
+    @Override
     public DocumentFragment createDocumentFragment() {
         return new GenericDocumentFragment(this);
     }
@@ -301,6 +311,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link Document#createTextNode(String)}.
      */
+    @Override
     public Text createTextNode(String data) {
         return new GenericText(data, this);
     }
@@ -308,6 +319,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link Document#createComment(String)}.
      */
+    @Override
     public Comment createComment(String data) {
         return new GenericComment(data, this);
     }
@@ -315,6 +327,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link Document#createCDATASection(String)}
      */
+    @Override
     public CDATASection createCDATASection(String data) throws DOMException {
         return new GenericCDATASection(data, this);
     }
@@ -325,6 +338,7 @@ public class SVGOMDocument
      * @return a SVGStyleSheetProcessingInstruction if target is
      *         "xml-stylesheet" or a GenericProcessingInstruction otherwise.
      */
+    @Override
     public ProcessingInstruction createProcessingInstruction(String target,
                                                              String data)
         throws DOMException {
@@ -338,6 +352,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link Document#createAttribute(String)}.
      */
+    @Override
     public Attr createAttribute(String name) throws DOMException {
         return new GenericAttr(name.intern(), this);
     }
@@ -345,6 +360,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link Document#createEntityReference(String)}.
      */
+    @Override
     public EntityReference createEntityReference(String name)
         throws DOMException {
         return new GenericEntityReference(name, this);
@@ -353,6 +369,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link Document#createAttributeNS(String,String)}.
      */
+    @Override
     public Attr createAttributeNS(String namespaceURI, String qualifiedName)
         throws DOMException {
         if (namespaceURI == null) {
@@ -367,6 +384,7 @@ public class SVGOMDocument
     /**
      * <b>DOM</b>: Implements {@link Document#createElementNS(String,String)}.
      */
+    @Override
     public Element createElementNS(String namespaceURI, String qualifiedName)
         throws DOMException {
         SVGDOMImplementation impl = (SVGDOMImplementation)implementation;
@@ -391,6 +409,7 @@ public class SVGOMDocument
      * Returns true if the given Attr node represents an 'id'
      * for this document.
      */
+    @Override
     public boolean isId(Attr node) {
         if (node.getNamespaceURI() == null) {
             return SVG_ID_ATTRIBUTE.equals(node.getNodeName());
@@ -420,6 +439,7 @@ public class SVGOMDocument
      * Adds an event listener for mutations on the
      * CSSNavigableDocument tree.
      */
+    @Override
     public void addCSSNavigableDocumentListener
             (CSSNavigableDocumentListener l) {
         if (cssNavigableDocumentListeners.containsKey(l)) {
@@ -461,6 +481,7 @@ public class SVGOMDocument
      * Removes an event listener for mutations on the
      * CSSNavigableDocument tree.
      */
+    @Override
     public void removeCSSNavigableDocumentListener
             (CSSNavigableDocumentListener l) {
         EventListener[] listeners
@@ -566,6 +587,7 @@ public class SVGOMDocument
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             evt = EventSupport.getUltimateOriginalEvent(evt);
             listener.nodeInserted((Node) evt.getTarget());
@@ -592,6 +614,7 @@ public class SVGOMDocument
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             evt = EventSupport.getUltimateOriginalEvent(evt);
             listener.nodeToBeRemoved((Node) evt.getTarget());
@@ -619,6 +642,7 @@ public class SVGOMDocument
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             evt = EventSupport.getUltimateOriginalEvent(evt);
             listener.subtreeModified((Node) evt.getTarget());
@@ -647,6 +671,7 @@ public class SVGOMDocument
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             evt = EventSupport.getUltimateOriginalEvent(evt);
             listener.characterDataModified((Node) evt.getTarget());
@@ -673,6 +698,7 @@ public class SVGOMDocument
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             evt = EventSupport.getUltimateOriginalEvent(evt);
             MutationEvent mevt = (MutationEvent) evt;
@@ -695,6 +721,7 @@ public class SVGOMDocument
          * @param e the owner element of the changed animatable attribute
          * @param alav the AnimatedLiveAttributeValue that changed
          */
+        @Override
         public void animatedAttributeChanged(Element e,
                                              AnimatedLiveAttributeValue alav) {
             for (Object animatedAttributeListener : animatedAttributeListeners) {
@@ -710,6 +737,7 @@ public class SVGOMDocument
          * @param e the element being animated
          * @param type the type of animation whose value changed
          */
+        @Override
         public void otherAnimationChanged(Element e, String type) {
             for (Object animatedAttributeListener : animatedAttributeListeners) {
                 AnimatedAttributeListener aal =
@@ -725,6 +753,7 @@ public class SVGOMDocument
      * <b>DOM</b>: Implements
      * {@link DocumentCSS#getOverrideStyle(Element,String)}.
      */
+    @Override
     public CSSStyleDeclaration getOverrideStyle(Element elt,
                                                 String pseudoElt) {
         if (elt instanceof SVGStylableElement && pseudoElt == null) {
@@ -738,6 +767,7 @@ public class SVGOMDocument
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -745,6 +775,7 @@ public class SVGOMDocument
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -752,6 +783,7 @@ public class SVGOMDocument
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMDocument();
     }
@@ -760,6 +792,7 @@ public class SVGOMDocument
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         SVGOMDocument sd = (SVGOMDocument)n;
@@ -774,6 +807,7 @@ public class SVGOMDocument
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         SVGOMDocument sd = (SVGOMDocument)n;

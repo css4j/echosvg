@@ -43,6 +43,7 @@ public abstract class AbstractParsedURLProtocolHandler
      * The protocol must _always_ be the part of the URL before the
      * first ':'.
      */
+    @Override
     public String getProtocolHandled() {
         return protocol;
     }

@@ -23,6 +23,7 @@ import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGElementInstance;
 import org.w3c.dom.svg.SVGUseElement;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.SVGOMUseShadowRoot;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
@@ -64,14 +65,14 @@ public class SVGOMUseElement
     protected static final AttributeInitializer attributeInitializer;
     static {
         attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null, "xmlns:xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+                                          XMLConstants.XLINK_NAMESPACE_URI);
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "show", "embed");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "actuate", "onLoad");
     }
 
@@ -119,6 +120,7 @@ public class SVGOMUseElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -130,23 +132,24 @@ public class SVGOMUseElement
     private void initializeLiveAttributes() {
         x = createLiveAnimatedLength
             (null, SVG_X_ATTRIBUTE, SVG_USE_X_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         y = createLiveAnimatedLength
             (null, SVG_Y_ATTRIBUTE, SVG_USE_Y_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         width =
             createLiveAnimatedLength
                 (null, SVG_WIDTH_ATTRIBUTE, null,
-                 SVGOMAnimatedLength.HORIZONTAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
         height =
             createLiveAnimatedLength
                 (null, SVG_HEIGHT_ATTRIBUTE, null,
-                 SVGOMAnimatedLength.VERTICAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
     }
 
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_USE_TAG;
     }
@@ -154,6 +157,7 @@ public class SVGOMUseElement
     /**
      * <b>DOM</b>: Implements {@link SVGUseElement#getX()}.
      */
+    @Override
     public SVGAnimatedLength getX() {
         return x;
     }
@@ -161,6 +165,7 @@ public class SVGOMUseElement
     /**
      * <b>DOM</b>: Implements {@link SVGUseElement#getY()}.
      */
+    @Override
     public SVGAnimatedLength getY() {
         return y;
     }
@@ -168,6 +173,7 @@ public class SVGOMUseElement
     /**
      * <b>DOM</b>: Implements {@link SVGUseElement#getWidth()}.
      */
+    @Override
     public SVGAnimatedLength getWidth() {
         return width;
     }
@@ -175,6 +181,7 @@ public class SVGOMUseElement
     /**
      * <b>DOM</b>: Implements {@link SVGUseElement#getHeight()}.
      */
+    @Override
     public SVGAnimatedLength getHeight() {
         return height;
     }
@@ -182,6 +189,7 @@ public class SVGOMUseElement
     /**
      * <b>DOM</b>: Implements {@link SVGUseElement#getInstanceRoot()}.
      */
+    @Override
     public SVGElementInstance getInstanceRoot() {
         throw new UnsupportedOperationException
             ("SVGUseElement.getInstanceRoot is not implemented"); // XXX
@@ -190,6 +198,7 @@ public class SVGOMUseElement
     /**
      * <b>DOM</b>: Implements {@link SVGUseElement#getAnimatedInstanceRoot()}.
      */
+    @Override
     public SVGElementInstance getAnimatedInstanceRoot() {
         throw new UnsupportedOperationException
             ("SVGUseElement.getAnimatedInstanceRoot is not implemented"); // XXX
@@ -200,6 +209,7 @@ public class SVGOMUseElement
     /**
      * Returns the CSS first child node of this node.
      */
+    @Override
     public Node getCSSFirstChild() {
         if (shadowTree != null) {
             return shadowTree.getFirstChild();
@@ -210,6 +220,7 @@ public class SVGOMUseElement
     /**
      * Returns the CSS last child of this stylable element.
      */
+    @Override
     public Node getCSSLastChild() {
         // use element shadow trees only ever have a single element
         return getCSSFirstChild();
@@ -221,6 +232,7 @@ public class SVGOMUseElement
      * selectors cannot work in the conceptual cloned sub-tree of the
      * content referenced by the 'use' element.
      */
+    @Override
     public boolean isHiddenFromSelectors() {
         return true;
     }
@@ -236,6 +248,7 @@ public class SVGOMUseElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -243,6 +256,7 @@ public class SVGOMUseElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMUseElement();
     }
@@ -250,6 +264,7 @@ public class SVGOMUseElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

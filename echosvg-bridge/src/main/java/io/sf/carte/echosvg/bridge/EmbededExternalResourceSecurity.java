@@ -49,6 +49,7 @@ public class EmbededExternalResourceSecurity implements ExternalResourceSecurity
      *
      * @throws SecurityException if the externalResource should not be loaded.
      */
+    @Override
     public void checkLoadExternalResource(){
         if (se != null) {
             throw se;

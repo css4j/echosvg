@@ -163,6 +163,7 @@ public abstract class AbstractAnimation {
     /**
      * Returns a string representation of this animation.
      */
+    @Override
     public String toString() {
         return timedElement.toString();
     }

@@ -39,9 +39,11 @@ public class AssertTrueException extends AssertException {
      * Requests that the exception populates the TestReport with the
      * relevant information.
      */
+    @Override
     public void addDescription(TestReport report){
     }
 
+    @Override
     public String getAssertionType(){
         return ASSERTION_TYPE;
     }

@@ -75,6 +75,7 @@ public class SVGComposite
         this.rule = rule;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o instanceof SVGComposite) {
             SVGComposite svgc = (SVGComposite)o;
@@ -114,6 +115,7 @@ public class SVGComposite
         return true;
    }
 
+    @Override
     public CompositeContext createContext(ColorModel srcCM,
                                           ColorModel dstCM,
                                           RenderingHints hints) {
@@ -223,6 +225,7 @@ public class SVGComposite
             this.dstCM = dstCM;
         }
 
+        @Override
         public void dispose() {
             srcCM = null;
             dstCM = null;
@@ -231,6 +234,7 @@ public class SVGComposite
         protected abstract void precompose(Raster src, Raster dstIn,
                                            WritableRaster dstOut);
 
+        @Override
         public void compose(Raster src, Raster dstIn, WritableRaster dstOut) {
             ColorModel srcPreCM = srcCM;
             if (!srcCM.isAlphaPremultiplied())
@@ -271,6 +275,7 @@ public class SVGComposite
              final int [] dstInPixels,  final int dstInAdjust,  int dstInSp,
              final int [] dstOutPixels, final int dstOutAdjust, int dstOutSp);
 
+        @Override
         protected void precompose(Raster src, Raster dstIn,
                                            WritableRaster dstOut) {
 
@@ -335,6 +340,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -381,6 +387,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -428,6 +435,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -473,6 +481,7 @@ public class SVGComposite
         }
 
         // When we get here src data has been premultiplied.
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -523,6 +532,7 @@ public class SVGComposite
                      "sources with unpremultiplied alpha");
         }
 
+        @Override
         public void compose(Raster src, Raster dstIn, WritableRaster dstOut) {
             ColorModel dstPreCM = dstCM;
             if (!dstCM.isAlphaPremultiplied())
@@ -540,6 +550,7 @@ public class SVGComposite
             }
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -583,6 +594,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -621,6 +633,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -656,6 +669,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -694,6 +708,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -729,6 +744,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -770,6 +786,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -813,6 +830,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -857,6 +875,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -907,6 +926,7 @@ public class SVGComposite
             this.k4 = k4;
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -967,6 +987,7 @@ public class SVGComposite
             this.k4 = k4*255.0f+0.5f;
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -1043,6 +1064,7 @@ public class SVGComposite
             }
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -1085,6 +1107,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -1136,6 +1159,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -1189,6 +1213,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -1243,6 +1268,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -1290,6 +1316,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -1348,6 +1375,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,
@@ -1415,6 +1443,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose(Raster src, Raster dstIn,
                                WritableRaster dstOut) {
             int [] srcPix = null;
@@ -1473,6 +1502,7 @@ public class SVGComposite
             super(srcCM, dstCM);
         }
 
+        @Override
         public void precompose_INT_PACK
             (final int width,           final int height,
              final int [] srcPixels,    final int srcAdjust,    int srcSp,

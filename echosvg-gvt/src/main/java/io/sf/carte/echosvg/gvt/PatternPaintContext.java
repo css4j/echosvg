@@ -143,14 +143,17 @@ public class PatternPaintContext implements PaintContext {
         }
     }
 
+    @Override
     public void dispose(){
         raster = null;
     }
 
+    @Override
     public ColorModel getColorModel(){
         return rasterCM;
     }
 
+    @Override
     public Raster getRaster(int x, int y, int width, int height){
 
         // System.out.println("GetRaster: [" + x + ", " + y + ", " 

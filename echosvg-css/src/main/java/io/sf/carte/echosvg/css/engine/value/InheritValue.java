@@ -41,6 +41,7 @@ public class InheritValue extends AbstractValue {
     /**
      *  A string representation of the current value.
      */
+    @Override
     public String getCssText() {
         return "inherit";
     }
@@ -48,6 +49,7 @@ public class InheritValue extends AbstractValue {
     /**
      * A code defining the type of the value.
      */
+    @Override
     public short getCssValueType() {
         return CSSValue.CSS_INHERIT;
     }
@@ -55,6 +57,7 @@ public class InheritValue extends AbstractValue {
     /**
      * Returns a printable representation of this object.
      */
+    @Override
     public String toString() {
         return getCssText();
     }

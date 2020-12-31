@@ -46,6 +46,7 @@ public class CIELabColor extends AbstractCIEColor {
     }
 
     /** {@inheritDoc} */
+    @Override
     public String getFunctionName() {
         return CIE_LAB_COLOR_FUNCTION;
     }

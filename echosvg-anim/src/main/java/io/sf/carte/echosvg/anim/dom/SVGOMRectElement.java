@@ -109,6 +109,7 @@ public class SVGOMRectElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -120,21 +121,22 @@ public class SVGOMRectElement
     private void initializeLiveAttributes() {
         x = createLiveAnimatedLength
             (null, SVG_X_ATTRIBUTE, SVG_RECT_X_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         y = createLiveAnimatedLength
             (null, SVG_Y_ATTRIBUTE, SVG_RECT_Y_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         width =
             createLiveAnimatedLength
                 (null, SVG_WIDTH_ATTRIBUTE, null,
-                 SVGOMAnimatedLength.HORIZONTAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
         height =
             createLiveAnimatedLength
                 (null, SVG_HEIGHT_ATTRIBUTE, null,
-                 SVGOMAnimatedLength.VERTICAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
         rx = new AbstractSVGAnimatedLength
             (this, null, SVG_RX_ATTRIBUTE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, true) {
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true) {
+                @Override
                 protected String getDefaultValue() {
                     Attr attr = getAttributeNodeNS(null, SVG_RY_ATTRIBUTE);
                     if (attr == null) {
@@ -142,6 +144,7 @@ public class SVGOMRectElement
                     }
                     return attr.getValue();
                 }
+                @Override
                 protected void attrChanged() {
                     super.attrChanged();
                     AbstractSVGAnimatedLength ry =
@@ -153,7 +156,8 @@ public class SVGOMRectElement
             };
         ry = new AbstractSVGAnimatedLength
             (this, null, SVG_RY_ATTRIBUTE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, true) {
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, true) {
+                @Override
                 protected String getDefaultValue() {
                     Attr attr = getAttributeNodeNS(null, SVG_RX_ATTRIBUTE);
                     if (attr == null) {
@@ -161,6 +165,7 @@ public class SVGOMRectElement
                     }
                     return attr.getValue();
                 }
+                @Override
                 protected void attrChanged() {
                     super.attrChanged();
                     AbstractSVGAnimatedLength rx =
@@ -182,6 +187,7 @@ public class SVGOMRectElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_RECT_TAG;
     }
@@ -189,6 +195,7 @@ public class SVGOMRectElement
     /**
      * <b>DOM</b>: Implements {@link SVGRectElement#getX()}.
      */
+    @Override
     public SVGAnimatedLength getX() {
         return x;
     }
@@ -196,6 +203,7 @@ public class SVGOMRectElement
     /**
      * <b>DOM</b>: Implements {@link SVGRectElement#getY()}.
      */
+    @Override
     public SVGAnimatedLength getY() {
         return y;
     }
@@ -203,6 +211,7 @@ public class SVGOMRectElement
     /**
      * <b>DOM</b>: Implements {@link SVGRectElement#getWidth()}.
      */
+    @Override
     public SVGAnimatedLength getWidth() {
         return width;
     }
@@ -210,6 +219,7 @@ public class SVGOMRectElement
     /**
      * <b>DOM</b>: Implements {@link SVGRectElement#getHeight()}.
      */
+    @Override
     public SVGAnimatedLength getHeight() {
         return height;
     }
@@ -217,6 +227,7 @@ public class SVGOMRectElement
     /**
      * <b>DOM</b>: Implements {@link SVGRectElement#getRx()}.
      */
+    @Override
     public SVGAnimatedLength getRx() {
         return rx;
     }
@@ -224,6 +235,7 @@ public class SVGOMRectElement
     /**
      * <b>DOM</b>: Implements {@link SVGRectElement#getRy()}.
      */
+    @Override
     public SVGAnimatedLength getRy() {
         return ry;
     }
@@ -231,6 +243,7 @@ public class SVGOMRectElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMRectElement();
     }
@@ -238,6 +251,7 @@ public class SVGOMRectElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }
@@ -247,6 +261,7 @@ public class SVGOMRectElement
     /**
      * Updates an attribute value in this target.
      */
+    @Override
     public void updateAttributeValue(String ns, String ln,
                                      AnimatableValue val) {
         if (ns == null) {

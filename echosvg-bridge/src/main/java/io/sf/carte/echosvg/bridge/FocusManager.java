@@ -165,6 +165,7 @@ public class FocusManager {
      */
     protected class MouseClickTracker implements EventListener {
 
+        @Override
         public void handleEvent(Event evt) {
             MouseEvent mevt = (MouseEvent)evt;
             fireDOMActivateEvent(evt.getTarget(), mevt.getDetail());
@@ -176,6 +177,7 @@ public class FocusManager {
      */
     protected class DOMFocusInTracker implements EventListener {
 
+        @Override
         public void handleEvent(Event evt) {
             EventTarget newTarget = evt.getTarget();
             if (lastFocusEventTarget != null && 
@@ -194,6 +196,7 @@ public class FocusManager {
         public DOMFocusOutTracker() {
         }
 
+        @Override
         public void handleEvent(Event evt) {
             lastFocusEventTarget = null;
         }
@@ -205,6 +208,7 @@ public class FocusManager {
      */
     protected class MouseOverTracker implements EventListener {
 
+        @Override
         public void handleEvent(Event evt) {
             MouseEvent me = (MouseEvent) evt;
             EventTarget target = evt.getTarget();
@@ -219,6 +223,7 @@ public class FocusManager {
      */
     protected class MouseOutTracker implements EventListener {
 
+        @Override
         public void handleEvent(Event evt) {
             MouseEvent me = (MouseEvent) evt;
             EventTarget target = evt.getTarget();

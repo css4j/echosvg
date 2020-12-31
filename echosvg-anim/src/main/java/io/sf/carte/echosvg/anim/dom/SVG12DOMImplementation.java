@@ -46,6 +46,7 @@ import io.sf.carte.echosvg.dom.svg12.XBLOMShadowTreeEvent;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVG12Constants;
+import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.XBLConstants;
 
 /**
@@ -69,6 +70,7 @@ public class SVG12DOMImplementation
         registerFeature("SVGEvents",      new String[] {"1.0", "1.1", "1.2"});
     }
 
+    @Override
     public CSSEngine createCSSEngine(AbstractStylableDocument doc,
                                      CSSContext               ctx,
                                      Parser              p,
@@ -92,6 +94,7 @@ public class SVG12DOMImplementation
      * <b>DOM</b>: Implements {@link
      * DOMImplementation#createDocument(String,String,DocumentType)}.
      */
+    @Override
     public Document createDocument(String namespaceURI,
                                    String qualifiedName,
                                    DocumentType doctype)
@@ -109,6 +112,7 @@ public class SVG12DOMImplementation
      * Implements the behavior of Document.createElementNS() for this
      * DOM implementation.
      */
+    @Override
     public Element createElementNS(AbstractDocument document,
                                    String           namespaceURI,
                                    String           qualifiedName) {
@@ -117,7 +121,7 @@ public class SVG12DOMImplementation
 
         String name = DOMUtilities.getLocalName(qualifiedName);
         String prefix = DOMUtilities.getPrefix(qualifiedName);
-        if (SVG12Constants.SVG_NAMESPACE_URI.equals(namespaceURI)) {
+        if (SVGConstants.SVG_NAMESPACE_URI.equals(namespaceURI)) {
             ElementFactory ef = factories.get(name);
             if (ef != null) {
                 return ef.create(prefix, document);
@@ -144,16 +148,19 @@ public class SVG12DOMImplementation
      * Creates an DocumentEventSupport object suitable for use with
      * this implementation.
      */
+    @Override
     public DocumentEventSupport createDocumentEventSupport() {
         DocumentEventSupport result =  super.createDocumentEventSupport();
         result.registerEventFactory("WheelEvent",
                                     new DocumentEventSupport.EventFactory() {
+                                        @Override
                                         public Event createEvent() {
                                             return new SVGOMWheelEvent();
                                         }
                                     });
         result.registerEventFactory("ShadowTreeEvent",
                                     new DocumentEventSupport.EventFactory() {
+                                        @Override
                                         public Event createEvent() {
                                             return new XBLOMShadowTreeEvent();
                                         }
@@ -164,6 +171,7 @@ public class SVG12DOMImplementation
     /**
      * Creates an EventSupport object for the given node.
      */
+    @Override
     public EventSupport createEventSupport(AbstractNode n) {
         return new XBLEventSupport(n);
     }
@@ -227,6 +235,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFlowDivElement(prefix, (AbstractDocument)doc);
         }
@@ -242,6 +251,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFlowLineElement(prefix, (AbstractDocument)doc);
         }
@@ -257,6 +267,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFlowParaElement(prefix, (AbstractDocument)doc);
         }
@@ -272,6 +283,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFlowRegionBreakElement(prefix, (AbstractDocument)doc);
         }
@@ -287,6 +299,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFlowRegionElement(prefix, (AbstractDocument)doc);
         }
@@ -302,6 +315,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFlowRegionExcludeElement(prefix, (AbstractDocument)doc);
         }
@@ -317,6 +331,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFlowRootElement(prefix, (AbstractDocument)doc);
         }
@@ -332,6 +347,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFlowSpanElement(prefix, (AbstractDocument)doc);
         }
@@ -347,6 +363,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMHandlerElement(prefix, (AbstractDocument)doc);
         }
@@ -361,6 +378,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMMultiImageElement
                 (prefix, (AbstractDocument)doc);
@@ -377,6 +395,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMSolidColorElement(prefix, (AbstractDocument)doc);
         }
@@ -391,6 +410,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMSubImageElement(prefix, (AbstractDocument)doc);
         }
@@ -405,6 +425,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMSubImageRefElement(prefix, (AbstractDocument)doc);
         }
@@ -446,6 +467,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new XBLOMXBLElement(prefix, (AbstractDocument)doc);
         }
@@ -460,6 +482,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new XBLOMDefinitionElement(prefix, (AbstractDocument)doc);
         }
@@ -474,6 +497,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new XBLOMTemplateElement(prefix, (AbstractDocument) doc);
         }
@@ -488,6 +512,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new XBLOMContentElement(prefix, (AbstractDocument)doc);
         }
@@ -502,6 +527,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new XBLOMHandlerGroupElement(prefix, (AbstractDocument)doc);
         }
@@ -516,6 +542,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new XBLOMImportElement(prefix, (AbstractDocument)doc);
         }
@@ -530,6 +557,7 @@ public class SVG12DOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new XBLOMShadowTreeElement(prefix, (AbstractDocument)doc);
         }

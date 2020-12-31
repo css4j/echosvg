@@ -111,6 +111,7 @@ public abstract class SVG12BridgeEventSupport extends BridgeEventSupport {
          * Invoked when a key has been pressed.
          * @param evt the graphics node key event
          */
+        @Override
         public void keyPressed(GraphicsNodeKeyEvent evt) {
             // XXX isDown is not preventing key repeats
             if (!isDown) {
@@ -128,6 +129,7 @@ public abstract class SVG12BridgeEventSupport extends BridgeEventSupport {
          * Invoked when a key has been released.
          * @param evt the graphics node key event
          */
+        @Override
         public void keyReleased(GraphicsNodeKeyEvent evt) {
             dispatchKeyboardEvent("keyup", evt);
             isDown = false;
@@ -137,6 +139,7 @@ public abstract class SVG12BridgeEventSupport extends BridgeEventSupport {
          * Invoked when a key has been typed.
          * @param evt the graphics node key event
          */
+        @Override
         public void keyTyped(GraphicsNodeKeyEvent evt) {
             dispatchTextEvent(evt);
         }
@@ -618,6 +621,7 @@ public abstract class SVG12BridgeEventSupport extends BridgeEventSupport {
 
         // MouseWheel ------------------------------------------------------
 
+        @Override
         public void mouseWheelMoved(GraphicsNodeMouseWheelEvent evt) {
             Document doc = context.getPrimaryBridgeContext().getDocument();
             Element targetElement = doc.getDocumentElement();
@@ -640,6 +644,7 @@ public abstract class SVG12BridgeEventSupport extends BridgeEventSupport {
 
         // Mouse -----------------------------------------------------------
 
+        @Override
         public void mouseEntered(GraphicsNodeMouseEvent evt) {
             Point clientXY = evt.getClientPoint();
             GraphicsNode node = evt.getGraphicsNode();
@@ -659,6 +664,7 @@ public abstract class SVG12BridgeEventSupport extends BridgeEventSupport {
                                n);
         }
 
+        @Override
         public void mouseExited(GraphicsNodeMouseEvent evt) {
             Point clientXY = evt.getClientPoint();
             // Get the 'new' node for the DOM event.
@@ -682,6 +688,7 @@ public abstract class SVG12BridgeEventSupport extends BridgeEventSupport {
             }
         }
 
+        @Override
         public void mouseMoved(GraphicsNodeMouseEvent evt) {
             Point clientXY = evt.getClientPoint();
             GraphicsNode node = evt.getGraphicsNode();
@@ -738,6 +745,7 @@ public abstract class SVG12BridgeEventSupport extends BridgeEventSupport {
          * @param evt the GVT GraphicsNodeMouseEvent
          * @param cancelable true means the event is cancelable
          */
+        @Override
         protected void dispatchMouseEvent(String eventType,
                                           Element targetElement,
                                           Element relatedElement,

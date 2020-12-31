@@ -40,6 +40,7 @@ public class SVGBridgeExtension implements BridgeExtension {
      * reason you need to come before/after another existing extension
      * make sure your priority is lower/higher than theirs.
      */
+    @Override
     public float getPriority() { return 0f; }
 
     /**
@@ -48,6 +49,7 @@ public class SVGBridgeExtension implements BridgeExtension {
      * @return An iterator containing strings one for each implemented
      *         extension.
      */
+    @Override
     public Iterator getImplementedExtensions() {
         return Collections.EMPTY_LIST.iterator();
     }
@@ -56,6 +58,7 @@ public class SVGBridgeExtension implements BridgeExtension {
      * This should return the individual or company name responsible
      * for the this implementation of the extension.
      */
+    @Override
     public String getAuthor() {
         return "The EchoSVG Team.";
     }
@@ -63,6 +66,7 @@ public class SVGBridgeExtension implements BridgeExtension {
     /**
      * This should contain a contact address (usually an e-mail address).
      */
+    @Override
     public String getContactAddress() {
         return "batik-dev@xmlgraphics.apache.org";
     }
@@ -71,6 +75,7 @@ public class SVGBridgeExtension implements BridgeExtension {
      * This should return a URL where information can be obtained on
      * this extension.
      */
+    @Override
     public String getURL() {
         return "http://xml.apache.org/batik";
     }
@@ -80,6 +85,7 @@ public class SVGBridgeExtension implements BridgeExtension {
      * Perhaps that should be a resource for internationalization?
      * (although I suppose it could be done internally)
      */
+    @Override
     public String getDescription() {
         return "The required SVG 1.0 tags";
     }
@@ -92,6 +98,7 @@ public class SVGBridgeExtension implements BridgeExtension {
      *
      * @param ctx The BridgeContext instance to be updated
      */
+    @Override
     public void registerTags(BridgeContext ctx) {
         // bridges to handle elements in the SVG namespace
 
@@ -166,6 +173,7 @@ public class SVGBridgeExtension implements BridgeExtension {
      *
      * @param e The element to check.
      */
+    @Override
     public boolean isDynamicElement(Element e) {
         String ns = e.getNamespaceURI();
         if (!SVGConstants.SVG_NAMESPACE_URI.equals(ns)) {

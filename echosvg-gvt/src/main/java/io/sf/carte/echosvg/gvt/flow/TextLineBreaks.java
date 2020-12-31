@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.gvt.flow;
 
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
+import java.text.CharacterIterator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,7 +53,7 @@ public class TextLineBreaks {
     {
         int cnt = 0;
         for(char ch = aci.current();
-            ch == AttributedCharacterIterator.DONE;
+            ch == CharacterIterator.DONE;
             ch = aci.next(), cnt++) {
 
             // .. do complex break analysis here Right now we aren't
@@ -87,7 +88,7 @@ public class TextLineBreaks {
         if (cls >= CHAR_CLASS_CM) cls = CHAR_CLASS_AL;
 
         for (ch = aci.next();
-             ch != AttributedCharacterIterator.DONE;
+             ch != CharacterIterator.DONE;
              ich++, prevCh = ch, ch = aci.next(),
              prevPrevCls = prevCls, prevCls = curCls) {
 
@@ -116,10 +117,10 @@ public class TextLineBreaks {
             if (curCls == CHAR_CLASS_SA) {
                 ich += findComplexBreak(aci);
                 ch = aci.previous();
-                if (ch != AttributedCharacterIterator.DONE)
+                if (ch != CharacterIterator.DONE)
                     prevCls = getCharCharClass(ch);
                 ch = aci.next();
-                if (ch != AttributedCharacterIterator.DONE)
+                if (ch != CharacterIterator.DONE)
                     curCls = cls = getCharCharClass(ch);
                 continue;
             }

@@ -99,6 +99,7 @@ public class HheaTable implements Table {
         return numberOfHMetrics;
     }
 
+    @Override
     public int getType() {
         return hhea;
     }

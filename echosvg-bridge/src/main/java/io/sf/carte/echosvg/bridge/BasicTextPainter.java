@@ -57,6 +57,7 @@ public abstract class BasicTextPainter implements TextPainter {
      * The standard order of method calls for selection is:
      * selectAt(); [selectTo(),...], selectTo(); getSelection().
      */
+    @Override
     public Mark selectAt(double x, double y, TextNode node) {
         return hitTest(x, y, node);
     }
@@ -67,6 +68,7 @@ public abstract class BasicTextPainter implements TextPainter {
      * The standard order of method calls for selection is:
      * selectAt(); [selectTo(),...], selectTo(); getSelection().
      */
+    @Override
     public Mark selectTo(double x, double y, Mark beginMark) {
         if (beginMark == null) {
             return null;
@@ -81,6 +83,7 @@ public abstract class BasicTextPainter implements TextPainter {
      * glyphs just including the geometry info.
      * @param node the TextNode to measure
      */
+    @Override
     public Rectangle2D getGeometryBounds(TextNode node) {
         return getOutline(node).getBounds2D();
     }
@@ -115,6 +118,7 @@ public abstract class BasicTextPainter implements TextPainter {
             return hit;
         }
 
+        @Override
         public TextNode getTextNode() {
             return node;
         }
@@ -124,6 +128,7 @@ public abstract class BasicTextPainter implements TextPainter {
      *
      * @return The character index.
      */
+        @Override
         public int getCharIndex() { 
             return hit.getCharIndex(); 
         }

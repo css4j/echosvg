@@ -34,6 +34,7 @@ public class SVGFileFilter extends FileFilter {
     /**
      * Returns true if <code>f</code> is an SVG file
      */
+    @Override
     public boolean accept(File f) {
         boolean accept = false;
         String fileName = null;
@@ -52,6 +53,7 @@ public class SVGFileFilter extends FileFilter {
     /**
      * Returns the file description
      */
+    @Override
     public String getDescription() {
         return ".svg, .svgz";
     }

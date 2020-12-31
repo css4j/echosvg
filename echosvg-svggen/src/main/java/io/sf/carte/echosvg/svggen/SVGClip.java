@@ -66,6 +66,7 @@ public class SVGClip extends AbstractSVGConverter {
      *         with the related definitions
      * @see io.sf.carte.echosvg.svggen.SVGDescriptor
      */
+    @Override
     public SVGDescriptor toSVG(GraphicContext gc) {
         Shape clip = gc.getClip();
 
@@ -162,6 +163,7 @@ class ClipKey {
     /**
      * @return this object's hashcode
      */
+    @Override
     public int hashCode() {
         return hashCodeValue;
     }
@@ -170,6 +172,7 @@ class ClipKey {
      * @param clipKey object to compare
      * @return true if equal, false otherwise
      */
+    @Override
     public boolean equals(Object clipKey) {
         return clipKey instanceof ClipKey
             && hashCodeValue == ((ClipKey) clipKey).hashCodeValue;

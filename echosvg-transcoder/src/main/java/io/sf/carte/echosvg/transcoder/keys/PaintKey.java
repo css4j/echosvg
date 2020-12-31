@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  */
 public class PaintKey extends TranscodingHints.Key {
 
+    @Override
     public boolean isCompatibleValue(Object v) {
         return (v instanceof Paint);
     }

@@ -75,6 +75,7 @@ public class AnimatableLengthValue extends AnimatableValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to,
                                        float interpolation,
@@ -177,6 +178,7 @@ public class AnimatableLengthValue extends AnimatableValue {
      * Returns whether two values of this type can have their distance
      * computed, as needed by paced animation.
      */
+    @Override
     public boolean canPace() {
         return true;
     }
@@ -185,6 +187,7 @@ public class AnimatableLengthValue extends AnimatableValue {
      * Returns the absolute distance between this value and the specified other
      * value.
      */
+    @Override
     public float distanceTo(AnimatableValue other) {
         AnimatableLengthValue o = (AnimatableLengthValue) other;
         float v1 = target.svgToUserSpace(lengthValue, lengthType,
@@ -197,6 +200,7 @@ public class AnimatableLengthValue extends AnimatableValue {
     /**
      * Returns a zero value of this AnimatableValue's type.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         return new AnimatableLengthValue
             (target, SVGLength.SVG_LENGTHTYPE_NUMBER, 0f,
@@ -208,6 +212,7 @@ public class AnimatableLengthValue extends AnimatableValue {
      * io.sf.carte.echosvg.css.engine.value.FloatValue.getCssText, but we don't
      * want a dependency on the CSS package.
      */
+    @Override
     public String getCssText() {
         return formatNumber(lengthValue) + UNITS[lengthType - 1];
     }

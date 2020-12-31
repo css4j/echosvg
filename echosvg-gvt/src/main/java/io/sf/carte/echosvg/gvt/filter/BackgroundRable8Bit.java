@@ -237,6 +237,7 @@ public class BackgroundRable8Bit
     /**
      * Returns the bounds of this Rable in the user coordinate system.
      */
+    @Override
     public Rectangle2D getBounds2D() {
         // System.out.println("GetBounds2D called");
         Rectangle2D r2d = getBoundsRecursive(node, null);
@@ -353,6 +354,7 @@ public class BackgroundRable8Bit
      * determine whether an existing rendering may be cached and
      * reused.  It is always safe to return true.
      */
+    @Override
     public boolean isDynamic(){
         return false;
     }
@@ -372,6 +374,7 @@ public class BackgroundRable8Bit
      * @param renderContext the RenderContext to use to produce the rendering.
      * @return a RenderedImage containing the rendered data.
      */
+    @Override
     public RenderedImage createRendering(RenderContext renderContext){
 
         Rectangle2D r2d = getBounds2D();

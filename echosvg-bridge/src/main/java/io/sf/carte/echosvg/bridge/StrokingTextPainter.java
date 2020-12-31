@@ -27,6 +27,7 @@ import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextAttribute;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
@@ -151,6 +152,7 @@ public class StrokingTextPainter extends BasicTextPainter {
      * @param node the text node to paint
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void paint(TextNode node, Graphics2D g2d) {
         AttributedCharacterIterator aci;
         aci = node.getAttributedCharacterIterator();
@@ -577,7 +579,7 @@ public class StrokingTextPainter extends BasicTextPainter {
             }
 
             asOff += aciLength;
-            if (aci.setIndex(end) == AttributedCharacterIterator.DONE) {
+            if (aci.setIndex(end) == CharacterIterator.DONE) {
                 moreChunks = false;
             }
             start = end;
@@ -1001,6 +1003,7 @@ public class StrokingTextPainter extends BasicTextPainter {
      * Get a Shape in userspace coords which defines the textnode glyph outlines.
      * @param node the TextNode to measure
      */
+    @Override
     public Shape getOutline(TextNode node) {
 
         GeneralPath outline = null;
@@ -1024,7 +1027,7 @@ public class StrokingTextPainter extends BasicTextPainter {
             if (outline == null) {
                 outline = textRunOutline;
             } else {
-                outline.setWindingRule(GeneralPath.WIND_NON_ZERO);
+                outline.setWindingRule(Path2D.WIND_NON_ZERO);
                 outline.append(textRunOutline, false);
             }
         }
@@ -1043,7 +1046,7 @@ public class StrokingTextPainter extends BasicTextPainter {
             if (outline == null) {
                 outline = new GeneralPath(underline);
             } else {
-                outline.setWindingRule(GeneralPath.WIND_NON_ZERO);
+                outline.setWindingRule(Path2D.WIND_NON_ZERO);
                 outline.append(underline, false);
             }
         }
@@ -1051,7 +1054,7 @@ public class StrokingTextPainter extends BasicTextPainter {
             if (outline == null) {
                 outline = new GeneralPath(strikeThrough);
             } else {
-                outline.setWindingRule(GeneralPath.WIND_NON_ZERO);
+                outline.setWindingRule(Path2D.WIND_NON_ZERO);
                 outline.append(strikeThrough, false);
             }
         }
@@ -1059,7 +1062,7 @@ public class StrokingTextPainter extends BasicTextPainter {
             if (outline == null) {
                 outline = new GeneralPath(overline);
             } else {
-                outline.setWindingRule(GeneralPath.WIND_NON_ZERO);
+                outline.setWindingRule(Path2D.WIND_NON_ZERO);
                 outline.append(overline, false);
             }
         }
@@ -1072,7 +1075,8 @@ public class StrokingTextPainter extends BasicTextPainter {
      * Get a Rectangle2D in userspace coords which encloses the textnode
      * glyphs including stroke etc.
      */
-     public Rectangle2D getBounds2D(TextNode node) {
+     @Override
+    public Rectangle2D getBounds2D(TextNode node) {
         AttributedCharacterIterator aci;
         aci = node.getAttributedCharacterIterator();
         if (aci == null)
@@ -1387,6 +1391,7 @@ public class StrokingTextPainter extends BasicTextPainter {
     }
 
 
+    @Override
     public Mark getMark(TextNode node, int index, boolean leadingEdge) {
         AttributedCharacterIterator aci;
         aci = node.getAttributedCharacterIterator();
@@ -1401,6 +1406,7 @@ public class StrokingTextPainter extends BasicTextPainter {
         return new BasicTextPainter.BasicMark(node, textHit);
     }
 
+    @Override
     protected Mark hitTest(double x, double y, TextNode node) {
         AttributedCharacterIterator aci;
         aci = node.getAttributedCharacterIterator();
@@ -1428,6 +1434,7 @@ public class StrokingTextPainter extends BasicTextPainter {
     /**
      * Selects the first glyph in the text node.
      */
+    @Override
     public Mark selectFirst(TextNode node) {
         AttributedCharacterIterator aci;
         aci = node.getAttributedCharacterIterator();
@@ -1441,6 +1448,7 @@ public class StrokingTextPainter extends BasicTextPainter {
     /**
      * Selects the last glyph in the text node.
      */
+    @Override
     public Mark selectLast(TextNode node) {
         AttributedCharacterIterator aci;
         aci = node.getAttributedCharacterIterator();
@@ -1458,6 +1466,7 @@ public class StrokingTextPainter extends BasicTextPainter {
      * <em>Note: The Mark instances passed must have been instantiated by
      * an instance of this enclosing TextPainter implementation.</em>
      */
+    @Override
     public int[] getSelected(Mark startMark,
                              Mark finishMark) {
 
@@ -1543,6 +1552,7 @@ public class StrokingTextPainter extends BasicTextPainter {
      * <em>Note: The Mark instances passed must have been instantiated by
      * an instance of this enclosing TextPainter implementation.</em>
      */
+    @Override
     public Shape getHighlightShape(Mark beginMark, Mark endMark) {
 
         if (beginMark == null || endMark == null) {

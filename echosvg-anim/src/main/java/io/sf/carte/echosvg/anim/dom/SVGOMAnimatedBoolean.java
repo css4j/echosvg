@@ -78,6 +78,7 @@ public class SVGOMAnimatedBoolean
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedBoolean#getBaseVal()}.
      */
+    @Override
     public boolean getBaseVal() {
         if (!valid) {
             update();
@@ -101,6 +102,7 @@ public class SVGOMAnimatedBoolean
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedBoolean#setBaseVal(boolean)}.
      */
+    @Override
     public void setBaseVal(boolean baseVal) throws DOMException {
         try {
             this.baseVal = baseVal;
@@ -116,6 +118,7 @@ public class SVGOMAnimatedBoolean
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedBoolean#getAnimVal()}.
      */
+    @Override
     public boolean getAnimVal() {
         if (hasAnimVal) {
             return animVal;
@@ -138,6 +141,7 @@ public class SVGOMAnimatedBoolean
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -151,6 +155,7 @@ public class SVGOMAnimatedBoolean
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         return new AnimatableBooleanValue(target, getBaseVal());
     }
@@ -158,6 +163,7 @@ public class SVGOMAnimatedBoolean
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         if (!changing) {
             valid = false;
@@ -171,6 +177,7 @@ public class SVGOMAnimatedBoolean
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         if (!changing) {
             valid = false;
@@ -184,6 +191,7 @@ public class SVGOMAnimatedBoolean
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         if (!changing) {
             valid = false;

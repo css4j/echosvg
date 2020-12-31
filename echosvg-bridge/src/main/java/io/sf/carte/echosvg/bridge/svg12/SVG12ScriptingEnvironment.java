@@ -75,6 +75,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
     /**
      * Adds DOM listeners to the document.
      */
+    @Override
     protected void addDocumentListeners() {
         domNodeInsertedListener = new DOMNodeInsertedListener();
         domNodeRemovedListener = new DOMNodeRemovedListener();
@@ -98,6 +99,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
     /**
      * Removes DOM listeners from the document.
      */
+    @Override
     protected void removeDocumentListeners() {
         AbstractDocument doc = (AbstractDocument) document;
         XBLEventSupport es = (XBLEventSupport) doc.initializeEventSupport();
@@ -120,6 +122,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
      */
     protected class DOMNodeInsertedListener
             extends ScriptingEnvironment.DOMNodeInsertedListener {
+        @Override
         public void handleEvent(Event evt) {
             super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
         }
@@ -130,6 +133,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
      */
     protected class DOMNodeRemovedListener
             extends ScriptingEnvironment.DOMNodeRemovedListener {
+        @Override
         public void handleEvent(Event evt) {
             super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
         }
@@ -137,6 +141,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
 
     protected class DOMAttrModifiedListener
             extends ScriptingEnvironment.DOMAttrModifiedListener {
+        @Override
         public void handleEvent (Event evt) {
             super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
         }
@@ -145,6 +150,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
     /**
      * Adds the scripting listeners to the given element.
      */
+    @Override
     protected void addScriptingListenersOn(Element elt) {
         String eltNS = elt.getNamespaceURI();
         String eltLN = elt.getLocalName();
@@ -181,6 +187,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
     /**
      * Removes the scripting listeners from the given element.
      */
+    @Override
     protected void removeScriptingListenersOn(Element elt) {
         String eltNS = elt.getNamespaceURI();
         String eltLN = elt.getLocalName();
@@ -247,6 +254,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
         /**
          * Runs the script.
          */
+        @Override
         public void handleEvent(Event evt) {
             Element elt = (Element)evt.getCurrentTarget();
             // Evaluate the script
@@ -290,6 +298,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
     /**
      * Creates a new Window object.
      */
+    @Override
     public io.sf.carte.echosvg.bridge.Window createWindow(Interpreter interp,
                                                        String lang) {
         return new Global(interp, lang);
@@ -313,6 +322,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
          * Implements
          * {@link io.sf.carte.echosvg.dom.svg12.SVGGlobal#startMouseCapture(EventTarget,boolean,boolean)}.
          */
+        @Override
         public void startMouseCapture(EventTarget target, boolean sendAll,
                                       boolean autoRelease) {
             // XXX not sure if it's right to do this on the
@@ -324,6 +334,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
         /**
          * Stops mouse capture.
          */
+        @Override
         public void stopMouseCapture() {
             // XXX not sure if it's right to do this on the
             //     primary bridge context

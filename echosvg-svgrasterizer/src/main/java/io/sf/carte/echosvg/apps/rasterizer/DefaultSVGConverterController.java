@@ -43,6 +43,7 @@ public class DefaultSVGConverterController implements SVGConverterController {
      * @param sources list of SVG sources it will convert.
      * @param dest list of destination file it will use
      */
+    @Override
     public boolean proceedWithComputedTask(Transcoder transcoder,
                                            Map hints,
                                            List sources,
@@ -56,6 +57,7 @@ public class DefaultSVGConverterController implements SVGConverterController {
      * The controller should return true if the source should be
      * transcoded and false otherwise.
      */
+    @Override
     public boolean proceedWithSourceTranscoding(SVGConverterSource source, File dest) {
         return true;
     }
@@ -69,6 +71,7 @@ public class DefaultSVGConverterController implements SVGConverterController {
      *
      * @param errorCode see the {@link SVGConverter} error code descriptions.
      */
+    @Override
     public boolean proceedOnSourceTranscodingFailure(SVGConverterSource source,
                                                      File dest,
                                                      String errorCode){
@@ -79,6 +82,7 @@ public class DefaultSVGConverterController implements SVGConverterController {
      * Invoked when the rasterizer successfully transcoded
      * the input source.
      */
+    @Override
     public void onSourceTranscodingSuccess(SVGConverterSource source,
                                            File dest){
     }

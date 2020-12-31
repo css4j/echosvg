@@ -54,6 +54,7 @@ public class GenericEntity extends AbstractEntity {
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -61,6 +62,7 @@ public class GenericEntity extends AbstractEntity {
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -68,6 +70,7 @@ public class GenericEntity extends AbstractEntity {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new GenericEntity();
     }

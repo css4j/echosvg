@@ -48,6 +48,7 @@ public class EchoSVGStarElementBridge
     /**
      * Returns the SVG namespace URI.
      */
+    @Override
     public String getNamespaceURI() {
         return BATIK_EXT_NAMESPACE_URI;
     }
@@ -55,6 +56,7 @@ public class EchoSVGStarElementBridge
     /**
      * Returns 'rect'.
      */
+    @Override
     public String getLocalName() {
         return BATIK_EXT_STAR_TAG;
     }
@@ -62,6 +64,7 @@ public class EchoSVGStarElementBridge
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new EchoSVGStarElementBridge();
     }
@@ -73,6 +76,7 @@ public class EchoSVGStarElementBridge
      * @param e the element that describes a rect element
      * @param shapeNode the shape node to initialize
      */
+    @Override
     protected void buildShape(BridgeContext ctx,
                               Element e,
                               ShapeNode shapeNode) {

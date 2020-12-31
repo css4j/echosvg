@@ -118,6 +118,7 @@ public class MaxpTable implements Table {
         return numGlyphs;
     }
 
+    @Override
     public int getType() {
         return maxp;
     }

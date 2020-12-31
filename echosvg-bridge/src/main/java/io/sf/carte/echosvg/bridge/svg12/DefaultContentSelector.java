@@ -53,6 +53,7 @@ public class DefaultContentSelector extends AbstractContentSelector {
      * Returns a list of nodes that were matched by the given selector
      * string.
      */
+    @Override
     public NodeList getSelectedContent() {
         if (selectedContent == null) {
             selectedContent = new SelectedNodes();
@@ -67,6 +68,7 @@ public class DefaultContentSelector extends AbstractContentSelector {
      * shadow tree (in document order) have up-to-date selectedContent
      * lists.
      */
+    @Override
     boolean update() {
         if (selectedContent == null) {
             selectedContent = new SelectedNodes();
@@ -117,6 +119,7 @@ public class DefaultContentSelector extends AbstractContentSelector {
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#item(int)}.
          */
+        @Override
         public Node item(int index) {
             if (index < 0 || index >= nodes.size()) {
                 return null;
@@ -127,6 +130,7 @@ public class DefaultContentSelector extends AbstractContentSelector {
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#getLength()}.
          */
+        @Override
         public int getLength() {
             return nodes.size();
         }

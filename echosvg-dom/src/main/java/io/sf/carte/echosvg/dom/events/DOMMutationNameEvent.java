@@ -45,6 +45,7 @@ public class DOMMutationNameEvent
     /**
      * Initializes this MutationNameEvent.
      */
+    @Override
     public void initMutationNameEvent(String typeArg,
                                       boolean canBubbleArg,
                                       boolean cancelableArg,
@@ -66,6 +67,7 @@ public class DOMMutationNameEvent
     /**
      * Initializes this MutationNameEvent.
      */
+    @Override
     public void initMutationNameEventNS(String namespaceURI,
                                         String typeArg,
                                         boolean canBubbleArg,
@@ -89,6 +91,7 @@ public class DOMMutationNameEvent
     /**
      * Gets the node's previous namespace URI.
      */
+    @Override
     public String getPrevNamespaceURI() {
         return prevNamespaceURI;
     }
@@ -96,6 +99,7 @@ public class DOMMutationNameEvent
     /**
      * Gets the node's previous node name.
      */
+    @Override
     public String getPrevNodeName() {
         return prevNodeName;
     }

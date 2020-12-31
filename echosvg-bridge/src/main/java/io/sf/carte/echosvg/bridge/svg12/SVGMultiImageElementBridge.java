@@ -49,6 +49,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.ImageNode;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVG12Constants;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * Bridge class for the &lt;multiImage&gt; element.
@@ -79,13 +80,15 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
     /**
      * Returns the EchoSVG Extension namespace URI.
      */
+    @Override
     public String getNamespaceURI() {
-        return SVG12Constants.SVG_NAMESPACE_URI;
+        return SVGConstants.SVG_NAMESPACE_URI;
     }
 
     /**
      * Returns 'multiImage'.
      */
+    @Override
     public String getLocalName() {
         return SVG12Constants.SVG_MULTI_IMAGE_TAG;
     }
@@ -93,6 +96,7 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGMultiImageElementBridge();
     }
@@ -105,6 +109,7 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
       * @param  e   the element that describes the graphics node to build
       * @return a graphics node that represents the specified element
       */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         // 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
         if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
@@ -211,10 +216,12 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
     /**
      * Returns false as shapes are not a container.
      */
+    @Override
     public boolean isComposite() {
         return false;
     }
 
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -232,6 +239,7 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
      * any dynamic modifications of the element this bridge is
      * dedicated to, happen on its associated GVT product.
      */
+    @Override
     protected void initializeDynamicSupport(BridgeContext ctx,
                                             Element e,
                                             GraphicsNode node) {
@@ -245,6 +253,7 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
     /**
      * Disposes this BridgeUpdateHandler and releases all resources.
      */
+    @Override
     public void dispose() {
         ctx.removeViewport(e);
         super.dispose();
@@ -420,6 +429,7 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
         /**
          * Returns the width of this viewport.
          */
+        @Override
         public float getWidth(){
             return width;
         }
@@ -427,6 +437,7 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
         /**
          * Returns the height of this viewport.
          */
+        @Override
         public float getHeight(){
             return height;
         }

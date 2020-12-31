@@ -34,6 +34,7 @@ public class SVGSetElementBridge extends SVGAnimationElementBridge {
     /**
      * Returns 'set'.
      */
+    @Override
     public String getLocalName() {
         return SVG_SET_TAG;
     }
@@ -41,6 +42,7 @@ public class SVGSetElementBridge extends SVGAnimationElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGSetElementBridge();
     }
@@ -48,6 +50,7 @@ public class SVGSetElementBridge extends SVGAnimationElementBridge {
     /**
      * Creates the animation object for the animation element.
      */
+    @Override
     protected AbstractAnimation createAnimation(AnimationTarget target) {
         AnimatableValue to = parseAnimatableValue(SVG_TO_ATTRIBUTE);
         return new SetAnimation(timedElement, this, to);
@@ -58,6 +61,7 @@ public class SVGSetElementBridge extends SVGAnimationElementBridge {
      * animate attributes of the specified type.
      * @param type one of the TYPE_ constants defined in {@link io.sf.carte.echosvg.util.SVGTypes}.
      */
+    @Override
     protected boolean canAnimateType(int type) {
         return true;
     }
@@ -65,6 +69,7 @@ public class SVGSetElementBridge extends SVGAnimationElementBridge {
     /**
      * Returns whether this is a constant animation (i.e., a 'set' animation).
      */
+    @Override
     protected boolean isConstantAnimation() {
         return true;
     }

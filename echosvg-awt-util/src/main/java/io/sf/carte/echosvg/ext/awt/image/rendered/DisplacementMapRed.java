@@ -171,11 +171,13 @@ public class DisplacementMapRed extends AbstractRed {
         yOffsets = new TileOffsets[getNumYTiles()];
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         copyToRaster(wr);
         return wr;
     }
 
+    @Override
     public Raster getTile(int tileX, int tileY) {
         WritableRaster dest = makeTile(tileX, tileY);
         Rectangle srcR   = dest.getBounds();

@@ -47,6 +47,7 @@ public class SVGPointItem extends AbstractSVGItem implements SVGPoint {
     /**
      * Return a String representation of this SVGPoint.
      */
+    @Override
     protected String getStringValue() {
         return Float.toString( x )
                 + ','
@@ -56,6 +57,7 @@ public class SVGPointItem extends AbstractSVGItem implements SVGPoint {
     /**
      * <b>DOM</b>: Implements {@link SVGPoint#getX()}.
      */
+    @Override
     public float getX() {
         return x;
     }
@@ -63,6 +65,7 @@ public class SVGPointItem extends AbstractSVGItem implements SVGPoint {
     /**
      * <b>DOM</b>: Implements {@link SVGPoint#getY()}.
      */
+    @Override
     public float getY() {
         return y;
     }
@@ -70,6 +73,7 @@ public class SVGPointItem extends AbstractSVGItem implements SVGPoint {
     /**
      * <b>DOM</b>: Implements {@link SVGPoint#setX(float)}.
      */
+    @Override
     public void setX(float x) {
         this.x = x;
         resetAttribute();
@@ -78,6 +82,7 @@ public class SVGPointItem extends AbstractSVGItem implements SVGPoint {
     /**
      * <b>DOM</b>: Implements {@link SVGPoint#setY(float)}.
      */
+    @Override
     public void setY(float y) {
         this.y = y;
         resetAttribute();
@@ -86,6 +91,7 @@ public class SVGPointItem extends AbstractSVGItem implements SVGPoint {
     /**
      * <b>DOM</b>: Implements {@link SVGPoint#matrixTransform(SVGMatrix)}.
      */
+    @Override
     public SVGPoint matrixTransform(SVGMatrix matrix) {
         return SVGOMPoint.matrixTransform(this, matrix);
     }

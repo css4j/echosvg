@@ -53,6 +53,7 @@ public class TileGrid implements TileStore {
         rasters = new TileLRUMember[ySz][];
     }
 
+    @Override
     public void setTile(int x, int y, Raster ras) {
         x-= minTileX;
         y-= minTileY;
@@ -94,6 +95,7 @@ public class TileGrid implements TileStore {
 
     // Returns Raster if the tile is _currently_ in the cache.
     // If it is not currently in the cache it returns null.
+    @Override
     public Raster getTileNoCompute(int x, int y) {
         x-=minTileX;
         y-=minTileY;
@@ -112,6 +114,7 @@ public class TileGrid implements TileStore {
         return ret;
     }
 
+    @Override
     public Raster getTile(int x, int y) {
         x-=minTileX;
         y-=minTileY;

@@ -61,6 +61,7 @@ public class AnimatablePathDataValue extends AnimatableValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to, float interpolation,
                                        AnimatableValue accumulation,
@@ -143,6 +144,7 @@ public class AnimatablePathDataValue extends AnimatableValue {
      * Returns whether two values of this type can have their distance
      * computed, as needed by paced animation.
      */
+    @Override
     public boolean canPace() {
         return false;
     }
@@ -151,6 +153,7 @@ public class AnimatablePathDataValue extends AnimatableValue {
      * Returns the absolute distance between this value and the specified other
      * value.
      */
+    @Override
     public float distanceTo(AnimatableValue other) {
         return 0f;
     }
@@ -158,6 +161,7 @@ public class AnimatablePathDataValue extends AnimatableValue {
     /**
      * Returns a zero value of this AnimatableValue's type.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         short[] cmds = new short[commands.length];
         System.arraycopy(commands, 0, cmds, 0, commands.length);
@@ -183,6 +187,7 @@ public class AnimatablePathDataValue extends AnimatableValue {
     /**
      * Returns a string representation of this object.
      */
+    @Override
     public String toStringRep() {
         StringBuffer sb = new StringBuffer();
         int k = 0;

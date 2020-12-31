@@ -71,6 +71,7 @@ public final class ColorSpaceHintKey extends RenderingHints.Key {
      */
     ColorSpaceHintKey(int number) { super(number); }
 
+    @Override
     public boolean isCompatibleValue(Object val) {
         if (val == VALUE_COLORSPACE_ARGB)          return true;
         if (val == VALUE_COLORSPACE_RGB)           return true;

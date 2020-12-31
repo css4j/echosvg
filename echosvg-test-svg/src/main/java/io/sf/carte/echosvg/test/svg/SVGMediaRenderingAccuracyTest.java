@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 
@@ -34,9 +35,10 @@ public class SVGMediaRenderingAccuracyTest
      * Returns the <code>ImageTranscoder</code> the Test should
      * use
      */
+    @Override
     public ImageTranscoder getTestImageTranscoder(){
         ImageTranscoder t = super.getTestImageTranscoder();
-        t.addTranscodingHint(PNGTranscoder.KEY_MEDIA, parameter);
+        t.addTranscodingHint(SVGAbstractTranscoder.KEY_MEDIA, parameter);
         return t;
     }
 

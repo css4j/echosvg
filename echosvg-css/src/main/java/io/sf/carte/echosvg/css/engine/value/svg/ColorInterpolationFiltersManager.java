@@ -33,6 +33,7 @@ public class ColorInterpolationFiltersManager extends ColorInterpolationManager 
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_COLOR_INTERPOLATION_FILTERS_PROPERTY;
     }
@@ -41,6 +42,7 @@ public class ColorInterpolationFiltersManager extends ColorInterpolationManager 
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return SVGValueConstants.LINEARRGB_VALUE;
     }

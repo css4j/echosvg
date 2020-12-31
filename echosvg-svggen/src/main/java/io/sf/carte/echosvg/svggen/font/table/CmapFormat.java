@@ -68,6 +68,7 @@ public abstract class CmapFormat {
     public abstract int getFirst();
     public abstract int getLast();
 
+    @Override
     public String toString() {
         return new StringBuffer()
         .append("format: ")

@@ -36,6 +36,7 @@ public class RelaxedScriptSecurity  implements ScriptSecurity {
      *
      * @throws SecurityException if the script should not be loaded.
      */
+    @Override
     public void checkLoadScript(){
         /* do nothing */
     }

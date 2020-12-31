@@ -71,6 +71,7 @@ public class PointsParser extends NumberParser {
     /**
      * Parses the current stream.
      */
+    @Override
     protected void doParse() throws ParseException, IOException {
         pointsHandler.startPoints();
 

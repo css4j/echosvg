@@ -53,6 +53,7 @@ public class ListBuilder implements ListHandler {
     /**
      * Begins the construction of the list.
      */
+    @Override
     public void startList(){
         list = new ArrayList();
     }
@@ -60,6 +61,7 @@ public class ListBuilder implements ListHandler {
     /**
      * Adds an item to the list.
      */
+    @Override
     public void item(SVGItem item) {
         item.setParent(this.abstractSVGList);
         list.add(item);
@@ -68,6 +70,7 @@ public class ListBuilder implements ListHandler {
     /**
      * Ends the construction of the list.
      */
+    @Override
     public void endList() {
     }
 }

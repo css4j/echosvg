@@ -29,6 +29,7 @@ import org.w3c.dom.svg.SVGFitToViewBox;
 import org.w3c.dom.svg.SVGMatrix;
 import org.w3c.dom.svg.SVGRect;
 
+import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGMatrix;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
@@ -54,7 +55,7 @@ public class SVGLocatableSupport {
     public static SVGElement getNearestViewportElement(Element e) {
         Element elt = e;
         while (elt != null) {
-            elt = SVGCSSEngine.getParentCSSStylableElement(elt);
+            elt = CSSEngine.getParentCSSStylableElement(elt);
             if (elt instanceof SVGFitToViewBox) {
                 break;
             }
@@ -84,33 +85,41 @@ public class SVGLocatableSupport {
         if (svgctx.getBBox() == null) return null;
 
         return new SVGRect() {
+                @Override
                 public float getX() {
                     return (float)svgelt.getSVGContext().getBBox().getX();
                 }
+                @Override
                 public void setX(float x) throws DOMException {
                     throw svgelt.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,
                          "readonly.rect", null);
                 }
+                @Override
                 public float getY() {
                     return (float)svgelt.getSVGContext().getBBox().getY();
                 }
+                @Override
                 public void setY(float y) throws DOMException {
                     throw svgelt.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,
                          "readonly.rect", null);
                 }
+                @Override
                 public float getWidth() {
                     return (float)svgelt.getSVGContext().getBBox().getWidth();
                 }
+                @Override
                 public void setWidth(float width) throws DOMException {
                     throw svgelt.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,
                          "readonly.rect", null);
                 }
+                @Override
                 public float getHeight() {
                     return (float)svgelt.getSVGContext().getBBox().getHeight();
                 }
+                @Override
                 public void setHeight(float height) throws DOMException {
                     throw svgelt.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -125,6 +134,7 @@ public class SVGLocatableSupport {
     public static SVGMatrix getCTM(Element elt) {
         final SVGOMElement svgelt = (SVGOMElement)elt;
         return new AbstractSVGMatrix() {
+                @Override
                 protected AffineTransform getAffineTransform() {
                     return svgelt.getSVGContext().getCTM();
             }
@@ -137,6 +147,7 @@ public class SVGLocatableSupport {
     public static SVGMatrix getScreenCTM(Element elt) {
         final SVGOMElement svgelt  = (SVGOMElement)elt;
         return new AbstractSVGMatrix() {
+                @Override
                 protected AffineTransform getAffineTransform() {
                     SVGContext context = svgelt.getSVGContext();
                     AffineTransform ret = context.getGlobalTransform();
@@ -158,6 +169,7 @@ public class SVGLocatableSupport {
         final SVGOMElement currentElt = (SVGOMElement)elt;
         final SVGOMElement targetElt = (SVGOMElement)element;
         return new AbstractSVGMatrix() {
+                @Override
                 protected AffineTransform getAffineTransform() {
                     AffineTransform cat = 
                         currentElt.getSVGContext().getGlobalTransform();

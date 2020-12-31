@@ -41,6 +41,7 @@ public class URIValue extends StringValue {
     /**
      * A string representation of the current value.
      */
+    @Override
     public String getCssText() {
         return "url(" + cssText + ')';
     }

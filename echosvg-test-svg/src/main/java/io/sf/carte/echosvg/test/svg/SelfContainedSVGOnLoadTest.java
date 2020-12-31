@@ -200,6 +200,7 @@ public class SelfContainedSVGOnLoadTest extends AbstractTest {
      * </ul>
      *
      */
+    @Override
     public TestReport runImpl() throws Exception{
         DefaultTestReport report 
             = new DefaultTestReport(this);

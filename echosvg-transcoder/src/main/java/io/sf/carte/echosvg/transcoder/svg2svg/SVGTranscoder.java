@@ -50,12 +50,15 @@ public class SVGTranscoder extends AbstractTranscoder {
      * The default error handler.
      */
     public static final ErrorHandler DEFAULT_ERROR_HANDLER = new ErrorHandler() {
+        @Override
         public void error(TranscoderException ex) throws TranscoderException {
             throw ex;
         }
+        @Override
         public void fatalError(TranscoderException ex) throws TranscoderException {
             throw ex;
         }
+        @Override
         public void warning(TranscoderException ex) throws TranscoderException {
             // Do nothing
         }
@@ -163,6 +166,7 @@ public class SVGTranscoder extends AbstractTranscoder {
      * @param output the ouput where to transcode
      * @exception TranscoderException if an error occured while transcoding
      */
+    @Override
     public void transcode(TranscoderInput input, TranscoderOutput output)
         throws TranscoderException {
         Reader r = input.getReader();
@@ -239,6 +243,7 @@ public class SVGTranscoder extends AbstractTranscoder {
      * To represent a newline key.
      */
     protected static class NewlineKey extends TranscodingHints.Key {
+        @Override
         public boolean isCompatibleValue(Object v) {
             return v instanceof NewlineValue;
         }
@@ -261,6 +266,7 @@ public class SVGTranscoder extends AbstractTranscoder {
      * To represent a doctype key.
      */
     protected static class DoctypeKey extends TranscodingHints.Key {
+        @Override
         public boolean isCompatibleValue(Object v) {
             return v instanceof DoctypeValue;
         }

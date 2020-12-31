@@ -25,6 +25,7 @@ import org.w3c.dom.svg.SVGAnimatedString;
 import org.w3c.dom.svg.SVGAnimatedTransformList;
 import org.w3c.dom.svg.SVGGradientElement;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
@@ -67,14 +68,14 @@ public abstract class SVGOMGradientElement
     protected static final AttributeInitializer attributeInitializer;
     static {
         attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null, "xmlns:xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+                                          XMLConstants.XLINK_NAMESPACE_URI);
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "show", "other");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "actuate", "onLoad");
     }
 
@@ -136,6 +137,7 @@ public abstract class SVGOMGradientElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -163,6 +165,7 @@ public abstract class SVGOMGradientElement
      * To implement {@link
      * org.w3c.dom.svg.SVGGradientElement#getGradientTransform()}.
      */
+    @Override
     public SVGAnimatedTransformList getGradientTransform() {
         throw new UnsupportedOperationException
             ("SVGGradientElement.getGradientTransform is not implemented"); // XXX
@@ -172,6 +175,7 @@ public abstract class SVGOMGradientElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGGradientElement#getGradientUnits()}.
      */
+    @Override
     public SVGAnimatedEnumeration getGradientUnits() {
         return gradientUnits;
     }
@@ -180,6 +184,7 @@ public abstract class SVGOMGradientElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGGradientElement#getSpreadMethod()}.
      */
+    @Override
     public SVGAnimatedEnumeration getSpreadMethod() {
         return spreadMethod;
     }
@@ -188,6 +193,7 @@ public abstract class SVGOMGradientElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGURIReference#getHref()}.
      */
+    @Override
     public SVGAnimatedString getHref() {
         return href;
     }
@@ -198,6 +204,7 @@ public abstract class SVGOMGradientElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
      */
+    @Override
     public SVGAnimatedBoolean getExternalResourcesRequired() {
         return externalResourcesRequired;
     }
@@ -206,6 +213,7 @@ public abstract class SVGOMGradientElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -213,6 +221,7 @@ public abstract class SVGOMGradientElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMAElement();
     }
@@ -220,6 +229,7 @@ public abstract class SVGOMGradientElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

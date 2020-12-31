@@ -48,6 +48,7 @@ public class SVGBasicStroke extends AbstractSVGConverter{
      *         with the related definitions
      * @see io.sf.carte.echosvg.svggen.SVGDescriptor
      */
+    @Override
     public SVGDescriptor toSVG(GraphicContext gc){
         if(gc.getStroke() instanceof BasicStroke)
             return toSVG((BasicStroke)gc.getStroke());

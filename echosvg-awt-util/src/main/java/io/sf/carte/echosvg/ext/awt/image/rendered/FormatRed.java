@@ -95,14 +95,17 @@ public class FormatRed extends AbstractRed {
         return (CachableRed)getSources().get(0);
     }
 
+    @Override
     public Object getProperty(String name) {
         return getSource().getProperty(name);
     }
 
+    @Override
     public String [] getPropertyNames() {
         return getSource().getPropertyNames();
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         ColorModel  cm    = getColorModel();
         CachableRed cr    = getSource();

@@ -71,6 +71,7 @@ public class SVGDocumentLoader extends HaltingThread {
     /**
      * Runs this loader.
      */
+    @Override
     public void run() {
         SVGDocumentLoaderEvent evt;
         evt = new SVGDocumentLoaderEvent(this, null);
@@ -132,6 +133,7 @@ public class SVGDocumentLoader extends HaltingThread {
     }
 
     static Dispatcher startedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((SVGDocumentLoaderListener)listener).documentLoadingStarted
@@ -140,6 +142,7 @@ public class SVGDocumentLoader extends HaltingThread {
         };
             
             static Dispatcher completedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((SVGDocumentLoaderListener)listener).documentLoadingCompleted
@@ -148,6 +151,7 @@ public class SVGDocumentLoader extends HaltingThread {
         };
 
     static Dispatcher cancelledDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((SVGDocumentLoaderListener)listener).documentLoadingCancelled
@@ -156,6 +160,7 @@ public class SVGDocumentLoader extends HaltingThread {
         };
 
     static Dispatcher failedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((SVGDocumentLoaderListener)listener).documentLoadingFailed

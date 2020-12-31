@@ -30,6 +30,7 @@ public class DefaultErrorHandler implements ErrorHandler {
      * This method handles the <code>SVGGraphics2DIOException</code>. The default
      * implementation re-throws the exception.
      */
+    @Override
     public void handleError(SVGGraphics2DIOException ex)
         throws SVGGraphics2DIOException {
         throw ex;
@@ -39,6 +40,7 @@ public class DefaultErrorHandler implements ErrorHandler {
      * This method handles the <code>SVGGraphics2DRuntimeException</code>.
      * The default implementation print the exception message.
      */
+    @Override
     public void handleError(SVGGraphics2DRuntimeException ex)
         throws SVGGraphics2DRuntimeException {
         System.err.println(ex.getMessage());

@@ -90,6 +90,7 @@ public class TableTransfer implements TransferFunction {
      * This method will return the lut data in order
      * to construct a LookUpTable object
      */
+    @Override
     public byte [] getLookupTable(){
         buildLutData();
         return lutData;

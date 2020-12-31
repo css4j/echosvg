@@ -54,6 +54,7 @@ public class MarkerManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -61,6 +62,7 @@ public class MarkerManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -68,6 +70,7 @@ public class MarkerManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -75,6 +78,7 @@ public class MarkerManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_URI_OR_IDENT;
     }
@@ -82,6 +86,7 @@ public class MarkerManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return property;
     }
@@ -89,6 +94,7 @@ public class MarkerManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return ValueConstants.NONE_VALUE;
     }
@@ -96,6 +102,7 @@ public class MarkerManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
@@ -120,6 +127,7 @@ public class MarkerManager extends AbstractValueManager {
      * Implements {@link
      * ValueManager#createStringValue(short,String,CSSEngine)}.
      */
+    @Override
     public Value createStringValue(short type, String value, CSSEngine engine)
         throws DOMException {
         switch (type) {

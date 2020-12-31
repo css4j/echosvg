@@ -44,6 +44,7 @@ public class SVGOMMatrix extends AbstractSVGMatrix {
     /**
      * Returns the associated AffineTransform.
      */
+    @Override
     protected AffineTransform getAffineTransform() {
         return affineTransform;
     }

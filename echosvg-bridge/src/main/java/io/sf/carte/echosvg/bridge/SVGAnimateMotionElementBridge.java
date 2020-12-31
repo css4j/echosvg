@@ -55,6 +55,7 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
     /**
      * Returns 'animateMotion'.
      */
+    @Override
     public String getLocalName() {
         return SVG_ANIMATE_MOTION_TAG;
     }
@@ -62,6 +63,7 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGAnimateMotionElementBridge();
     }
@@ -69,6 +71,7 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
     /**
      * Creates the animation object for the animation element.
      */
+    @Override
     protected AbstractAnimation createAnimation(AnimationTarget target) {
         animationType = AnimationEngine.ANIM_TYPE_OTHER;
         attributeLocalName = "motion";
@@ -92,20 +95,26 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
                 class Handler implements AngleHandler {
                     float theAngle;
                     short theUnit = SVGAngle.SVG_ANGLETYPE_UNSPECIFIED;
+                    @Override
                     public void startAngle() throws ParseException {
                     }
+                    @Override
                     public void angleValue(float v) throws ParseException {
                         theAngle = v;
                     }
+                    @Override
                     public void deg() throws ParseException {
                         theUnit = SVGAngle.SVG_ANGLETYPE_DEG;
                     }
+                    @Override
                     public void grad() throws ParseException {
                         theUnit = SVGAngle.SVG_ANGLETYPE_GRAD;
                     }
+                    @Override
                     public void rad() throws ParseException {
                         theUnit = SVGAngle.SVG_ANGLETYPE_RAD;
                     }
+                    @Override
                     public void endAngle() throws ParseException {
                     }
                 }
@@ -239,13 +248,15 @@ outer:  while (i < len) {
     /**
      * Returns the calcMode that the animation defaults to if none is specified.
      */
+    @Override
     protected int getDefaultCalcMode() {
-        return MotionAnimation.CALC_MODE_PACED;
+        return AbstractAnimation.CALC_MODE_PACED;
     }
 
     /**
      * Returns the parsed 'values' attribute from the animation element.
      */
+    @Override
     protected AnimatableValue[] parseValues() {
         String valuesString = element.getAttributeNS(null,
                                                      SVG_VALUES_ATTRIBUTE);
@@ -297,6 +308,7 @@ outer:  while (i < len) {
      * Returns the underlying value of the animated attribute.  Used for
      * composition of additive animations.
      */
+    @Override
     public AnimatableValue getUnderlyingValue() {
         return new AnimatableMotionPointValue(animationTarget, 0f, 0f, 0f);
     }
@@ -305,6 +317,7 @@ outer:  while (i < len) {
      * Parses the animation element's target attributes and adds it to the
      * document's AnimationEngine.
      */
+    @Override
     protected void initializeAnimation() {
         // Determine the target element.
         String uri = XLinkSupport.getXLinkHref(element);

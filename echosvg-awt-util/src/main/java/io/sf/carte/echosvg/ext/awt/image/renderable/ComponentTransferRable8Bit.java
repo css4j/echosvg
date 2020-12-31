@@ -75,6 +75,7 @@ public class ComponentTransferRable8Bit
     /**
      * Sets the source of the blur operation
      */
+    @Override
     public void setSource(Filter src){
         init(src, null);
     }
@@ -82,6 +83,7 @@ public class ComponentTransferRable8Bit
     /**
      * Returns the source of the blur operation
      */
+    @Override
     public Filter getSource(){
         return (Filter)getSources().get(0);
     }
@@ -89,6 +91,7 @@ public class ComponentTransferRable8Bit
     /**
      * Returns the transfer function for the alpha channel
      */
+    @Override
     public ComponentTransferFunction getAlphaFunction(){
         return functions[ALPHA];
     }
@@ -96,6 +99,7 @@ public class ComponentTransferRable8Bit
     /**
      * Sets the transfer function for the alpha channel
      */
+    @Override
     public void setAlphaFunction(ComponentTransferFunction alphaFunction){
         touch();
         functions[ALPHA] = alphaFunction;
@@ -105,6 +109,7 @@ public class ComponentTransferRable8Bit
     /**
      * Returns the transfer function for the red channel
      */
+    @Override
     public ComponentTransferFunction getRedFunction(){
         return functions[RED];
     }
@@ -112,6 +117,7 @@ public class ComponentTransferRable8Bit
     /**
      * Sets the transfer function for the red channel
      */
+    @Override
     public void setRedFunction(ComponentTransferFunction redFunction){
         touch();
         functions[RED] = redFunction;
@@ -121,6 +127,7 @@ public class ComponentTransferRable8Bit
     /**
      * Returns the transfer function for the green channel
      */
+    @Override
     public ComponentTransferFunction getGreenFunction(){
         return functions[GREEN];
     }
@@ -128,6 +135,7 @@ public class ComponentTransferRable8Bit
     /**
      * Sets the transfer function for the green channel
      */
+    @Override
     public void setGreenFunction(ComponentTransferFunction greenFunction){
         touch();
         functions[GREEN] = greenFunction;
@@ -137,6 +145,7 @@ public class ComponentTransferRable8Bit
     /**
      * Returns the transfer function for the blue channel
      */
+    @Override
     public ComponentTransferFunction getBlueFunction(){
         return functions[BLUE];
     }
@@ -144,12 +153,14 @@ public class ComponentTransferRable8Bit
     /**
      * Sets the transfer function for the blue channel
      */
+    @Override
     public void setBlueFunction(ComponentTransferFunction blueFunction){
         touch();
         functions[BLUE] = blueFunction;
         txfFunc[BLUE] = null;
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc){
         //
         // Get source's rendered image

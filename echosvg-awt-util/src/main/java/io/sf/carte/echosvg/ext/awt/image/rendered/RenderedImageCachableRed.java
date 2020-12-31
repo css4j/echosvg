@@ -58,10 +58,12 @@ public class RenderedImageCachableRed implements CachableRed {
         this.src = src;
     }
 
+    @Override
     public Vector getSources() {
         return srcs; // should always be empty...
     }
 
+    @Override
     public Rectangle getBounds() { 
         return new Rectangle(getMinX(),    // could we cache the rectangle??
                              getMinY(),
@@ -69,86 +71,108 @@ public class RenderedImageCachableRed implements CachableRed {
                              getHeight());
     }
 
+    @Override
     public int getMinX() {
         return src.getMinX();
     }
+    @Override
     public int getMinY() {
         return src.getMinY();
     }
 
+    @Override
     public int getWidth() {
         return src.getWidth();
     }
+    @Override
     public int getHeight() {
         return src.getHeight();
     }
 
+    @Override
     public ColorModel getColorModel() {
         return src.getColorModel();
     }
 
+    @Override
     public SampleModel getSampleModel() {
         return src.getSampleModel();
     }
 
+    @Override
     public int getMinTileX() {
         return src.getMinTileX();
     }
+    @Override
     public int getMinTileY() {
         return src.getMinTileY();
     }
 
+    @Override
     public int getNumXTiles() {
         return src.getNumXTiles();
     }
+    @Override
     public int getNumYTiles() {
         return src.getNumYTiles();
     }
 
+    @Override
     public int getTileGridXOffset() {
         return src.getTileGridXOffset();
     }
 
+    @Override
     public int getTileGridYOffset() {
         return src.getTileGridYOffset();
     }
 
+    @Override
     public int getTileWidth() {
         return src.getTileWidth();
     }
+    @Override
     public int getTileHeight() {
         return src.getTileHeight();
     }
 
+    @Override
     public Object getProperty(String name) {
         return src.getProperty(name);
     }
 
+    @Override
     public String[] getPropertyNames() {
         return src.getPropertyNames();
     }
 
+    @Override
     public Raster getTile(int tileX, int tileY) {
         return src.getTile(tileX, tileY);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster raster) {
         return src.copyData(raster);
     }
 
+    @Override
     public Raster getData() {
         return src.getData();
     }
 
+    @Override
     public Raster getData(Rectangle rect) {
         return src.getData(rect);
     }
 
+    @Override
     public Shape getDependencyRegion(int srcIndex, Rectangle outputRgn) {
         throw new IndexOutOfBoundsException
             ("Nonexistant source requested.");
     }
 
+    @Override
     public Shape getDirtyRegion(int srcIndex, Rectangle inputRgn) {
         throw new IndexOutOfBoundsException
             ("Nonexistant source requested.");

@@ -54,6 +54,7 @@ public class GlyfCompositeDescript extends GlyfDescript {
         }
     }
 
+    @Override
     public void resolve() {
         if (resolved) return;
         if (beingResolved) {
@@ -82,6 +83,7 @@ public class GlyfCompositeDescript extends GlyfDescript {
         beingResolved = false;
     }
 
+    @Override
     public int getEndPtOfContours(int i) {
         GlyfCompositeComp c = getCompositeCompEndPt(i);
         if (c != null) {
@@ -91,6 +93,7 @@ public class GlyfCompositeDescript extends GlyfDescript {
         return 0;
     }
 
+    @Override
     public byte getFlags(int i) {
         GlyfCompositeComp c = getCompositeComp(i);
         if (c != null) {
@@ -100,6 +103,7 @@ public class GlyfCompositeDescript extends GlyfDescript {
         return 0;
     }
 
+    @Override
     public short getXCoordinate(int i) {
         GlyfCompositeComp c = getCompositeComp(i);
         if (c != null) {
@@ -114,6 +118,7 @@ public class GlyfCompositeDescript extends GlyfDescript {
         return 0;
     }
 
+    @Override
     public short getYCoordinate(int i) {
         GlyfCompositeComp c = getCompositeComp(i);
         if (c != null) {
@@ -128,10 +133,12 @@ public class GlyfCompositeDescript extends GlyfDescript {
         return 0;
     }
 
+    @Override
     public boolean isComposite() {
         return true;
     }
 
+    @Override
     public int getPointCount() {
         if (!resolved)
             System.err.println("getPointCount called on unresolved GlyfCompositeDescript");
@@ -142,6 +149,7 @@ public class GlyfCompositeDescript extends GlyfDescript {
         return c.getFirstIndex() + parentTable.getDescription(c.getGlyphIndex()).getPointCount();
     }
 
+    @Override
     public int getContourCount() {
         if (!resolved)
             System.err.println("getContourCount called on unresolved GlyfCompositeDescript");

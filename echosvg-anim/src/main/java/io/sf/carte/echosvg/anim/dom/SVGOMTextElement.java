@@ -91,6 +91,7 @@ public class SVGOMTextElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -107,6 +108,7 @@ public class SVGOMTextElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_TEXT_TAG;
     }
@@ -117,6 +119,7 @@ public class SVGOMTextElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getNearestViewportElement()}.
      */
+    @Override
     public SVGElement getNearestViewportElement() {
         return SVGLocatableSupport.getNearestViewportElement(this);
     }
@@ -125,6 +128,7 @@ public class SVGOMTextElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getFarthestViewportElement()}.
      */
+    @Override
     public SVGElement getFarthestViewportElement() {
         return SVGLocatableSupport.getFarthestViewportElement(this);
     }
@@ -132,6 +136,7 @@ public class SVGOMTextElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGLocatable#getBBox()}.
      */
+    @Override
     public SVGRect getBBox() {
         return SVGLocatableSupport.getBBox(this);
     }
@@ -139,6 +144,7 @@ public class SVGOMTextElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGLocatable#getCTM()}.
      */
+    @Override
     public SVGMatrix getCTM() {
         return SVGLocatableSupport.getCTM(this);
     }
@@ -147,6 +153,7 @@ public class SVGOMTextElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getScreenCTM()}.
      */
+    @Override
     public SVGMatrix getScreenCTM() {
         return SVGLocatableSupport.getScreenCTM(this);
     }
@@ -155,6 +162,7 @@ public class SVGOMTextElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getTransformToElement(SVGElement)}.
      */
+    @Override
     public SVGMatrix getTransformToElement(SVGElement element)
         throws SVGException {
         return SVGLocatableSupport.getTransformToElement(this, element);
@@ -166,6 +174,7 @@ public class SVGOMTextElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTransformable#getTransform()}.
      */
+    @Override
     public SVGAnimatedTransformList getTransform() {
         return transform;
     }
@@ -173,6 +182,7 @@ public class SVGOMTextElement
     /**
      * Returns the default value of the 'x' attribute.
      */
+    @Override
     protected String getDefaultXValue() {
         return X_DEFAULT_VALUE;
     }
@@ -180,6 +190,7 @@ public class SVGOMTextElement
     /**
      * Returns the default value of the 'y' attribute.
      */
+    @Override
     protected String getDefaultYValue() {
         return Y_DEFAULT_VALUE;
     }
@@ -187,6 +198,7 @@ public class SVGOMTextElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMTextElement();
     }
@@ -194,6 +206,7 @@ public class SVGOMTextElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }
@@ -204,6 +217,7 @@ public class SVGOMTextElement
      * Returns the {@link AffineTransform} representing the current motion
      * animation for this element.
      */
+    @Override
     public AffineTransform getMotionTransform() {
         return motionTransform;
     }
@@ -213,6 +227,7 @@ public class SVGOMTextElement
     /**
      * Updates a 'other' animation value in this target.
      */
+    @Override
     public void updateOtherValue(String type, AnimatableValue val) {
         if (type.equals("motion")) {
             if (motionTransform == null) {

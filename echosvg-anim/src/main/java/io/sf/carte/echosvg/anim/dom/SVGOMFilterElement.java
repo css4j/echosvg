@@ -26,6 +26,7 @@ import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGAnimatedString;
 import org.w3c.dom.svg.SVGFilterElement;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
@@ -72,14 +73,14 @@ public class SVGOMFilterElement
     protected static final AttributeInitializer attributeInitializer;
     static {
         attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null, "xmlns:xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+                                          XMLConstants.XLINK_NAMESPACE_URI);
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "show", "other");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "actuate", "onLoad");
     }
 
@@ -151,6 +152,7 @@ public class SVGOMFilterElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -168,18 +170,18 @@ public class SVGOMFilterElement
                 (null, SVG_PRIMITIVE_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 1);
         x = createLiveAnimatedLength
             (null, SVG_X_ATTRIBUTE, SVG_FILTER_X_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         y = createLiveAnimatedLength
             (null, SVG_Y_ATTRIBUTE, SVG_FILTER_Y_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         width =
             createLiveAnimatedLength
                 (null, SVG_WIDTH_ATTRIBUTE, SVG_FILTER_WIDTH_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.HORIZONTAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
         height =
             createLiveAnimatedLength
                 (null, SVG_HEIGHT_ATTRIBUTE, SVG_FILTER_HEIGHT_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.VERTICAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
         href =
             createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
         externalResourcesRequired =
@@ -190,6 +192,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FILTER_TAG;
     }
@@ -197,6 +200,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link SVGFilterElement#getFilterUnits()}.
      */
+    @Override
     public SVGAnimatedEnumeration getFilterUnits() {
         return filterUnits;
     }
@@ -204,6 +208,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link SVGFilterElement#getPrimitiveUnits()}.
      */
+    @Override
     public SVGAnimatedEnumeration getPrimitiveUnits() {
         return primitiveUnits;
     }
@@ -211,6 +216,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link SVGFilterElement#getX()}.
      */
+    @Override
     public SVGAnimatedLength getX() {
         return x;
     }
@@ -218,6 +224,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link SVGFilterElement#getY()}.
      */
+    @Override
     public SVGAnimatedLength getY() {
         return y;
     }
@@ -225,6 +232,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link SVGFilterElement#getWidth()}.
      */
+    @Override
     public SVGAnimatedLength getWidth() {
         return width;
     }
@@ -232,6 +240,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link SVGFilterElement#getHeight()}.
      */
+    @Override
     public SVGAnimatedLength getHeight() {
         return height;
     }
@@ -239,6 +248,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link SVGFilterElement#getFilterResX()}.
      */
+    @Override
     public SVGAnimatedInteger getFilterResX() {
         throw new UnsupportedOperationException
             ("SVGFilterElement.getFilterResX is not implemented"); // XXX
@@ -247,6 +257,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link SVGFilterElement#getFilterResY()}.
      */
+    @Override
     public SVGAnimatedInteger getFilterResY() {
         throw new UnsupportedOperationException
             ("SVGFilterElement.getFilterResY is not implemented"); // XXX
@@ -255,6 +266,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link SVGFilterElement#setFilterRes(int,int)}.
      */
+    @Override
     public void setFilterRes(int filterResX, int filterResY) {
         throw new UnsupportedOperationException
             ("SVGFilterElement.setFilterRes is not implemented"); // XXX
@@ -265,6 +277,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
      */
+    @Override
     public SVGAnimatedString getHref() {
         return href;
     }
@@ -275,6 +288,7 @@ public class SVGOMFilterElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
      */
+    @Override
     public SVGAnimatedBoolean getExternalResourcesRequired() {
         return externalResourcesRequired;
     }
@@ -282,6 +296,7 @@ public class SVGOMFilterElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }
@@ -291,6 +306,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Returns the xml:lang attribute value.
      */
+    @Override
     public String getXMLlang() {
         return XMLSupport.getXMLLang(this);
     }
@@ -298,6 +314,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Sets the xml:lang attribute value.
      */
+    @Override
     public void setXMLlang(String lang) {
         setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
     }
@@ -305,6 +322,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Returns the xml:space attribute value.
      */
+    @Override
     public String getXMLspace() {
         return XMLSupport.getXMLSpace(this);
     }
@@ -312,6 +330,7 @@ public class SVGOMFilterElement
     /**
      * <b>DOM</b>: Sets the xml:space attribute value.
      */
+    @Override
     public void setXMLspace(String space) {
         setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
     }
@@ -320,6 +339,7 @@ public class SVGOMFilterElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -327,6 +347,7 @@ public class SVGOMFilterElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFilterElement();
     }

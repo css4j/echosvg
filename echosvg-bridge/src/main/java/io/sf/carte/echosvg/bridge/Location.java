@@ -44,6 +44,7 @@ public class Location implements io.sf.carte.echosvg.w3c.dom.Location
      * @param url A string containing the URL where the user agent should
      *    navigate to.
      */
+    @Override
     public void assign(String url) {
         bridgeContext.getUserAgent().loadDocument(url);
     }
@@ -51,6 +52,7 @@ public class Location implements io.sf.carte.echosvg.w3c.dom.Location
     /**
      * The user agent reloads the current document.
      */
+    @Override
     public void reload() {
         String url = bridgeContext.getDocument()
                     .getDocumentURI();
@@ -60,6 +62,7 @@ public class Location implements io.sf.carte.echosvg.w3c.dom.Location
     /**
      * Returns the URL of this location as a String.
      */
+    @Override
     public String toString() {
         return bridgeContext.getDocument()
                     .getDocumentURI();

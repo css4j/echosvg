@@ -170,6 +170,7 @@ public class SAXDocumentFactory
             this.target = target;
             this.data = data;
         }
+        @Override
         public Node createNode(Document doc) {
             return doc.createProcessingInstruction(target, data);
         }
@@ -180,6 +181,7 @@ public class SAXDocumentFactory
         public CommentInfo(String comment) {
             this.comment = comment;
         }
+        @Override
         public Node createNode(Document doc) {
             return doc.createComment(comment);
         }
@@ -190,6 +192,7 @@ public class SAXDocumentFactory
         public CDataInfo(String cdata) {
             this.cdata = cdata;
         }
+        @Override
         public Node createNode(Document doc) {
             return doc.createCDATASection(cdata);
         }
@@ -200,6 +203,7 @@ public class SAXDocumentFactory
         public TextInfo(String text) {
             this.text = text;
         }
+        @Override
         public Node createNode(Document doc) {
             return doc.createTextNode(text);
         }
@@ -244,6 +248,7 @@ public class SAXDocumentFactory
      * @param uri The document URI.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public Document createDocument(String ns, String root, String uri)
         throws IOException {
         return createDocument(ns, root, uri, new InputSource(uri));
@@ -267,6 +272,7 @@ public class SAXDocumentFactory
      * @param is The document input stream.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public Document createDocument(String ns, String root, String uri,
                                    InputStream is) throws IOException {
         InputSource inp = new InputSource(is);
@@ -295,6 +301,7 @@ public class SAXDocumentFactory
      * @param r The document reader.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public Document createDocument(String ns, String root, String uri,
                                    Reader r) throws IOException {
         InputSource inp = new InputSource(r);
@@ -310,6 +317,7 @@ public class SAXDocumentFactory
      * @param r an XMLReaderInstance
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public Document createDocument(String ns, String root, String uri,
                                    XMLReader r) throws IOException {
         r.setContentHandler(this);
@@ -473,6 +481,7 @@ public class SAXDocumentFactory
      * document.
      * @return null if no document or descriptor was previously generated.
      */
+    @Override
     public DocumentDescriptor getDocumentDescriptor() {
         return documentDescriptor;
     }
@@ -481,6 +490,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ContentHandler#setDocumentLocator(Locator)}.
      */
+    @Override
     public void setDocumentLocator(Locator l) {
         locator = l;
     }
@@ -492,6 +502,7 @@ public class SAXDocumentFactory
      * @param isValidating indicates that the XML parser will validate the XML
      * document
      */
+    @Override
     public void setValidating(boolean isValidating) {
         this.isValidating = isValidating;
     }
@@ -500,6 +511,7 @@ public class SAXDocumentFactory
      * Returns true if the XML parser validates the XML stream, false
      * otherwise.
      */
+    @Override
     public boolean isValidating() {
         return isValidating;
     }
@@ -519,6 +531,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ErrorHandler#fatalError(SAXParseException)}.
      */
+    @Override
     public void fatalError(SAXParseException ex) throws SAXException {
         throw ex;
     }
@@ -527,6 +540,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ErrorHandler#error(SAXParseException)}.
      */
+    @Override
     public void error(SAXParseException ex) throws SAXException {
         throw ex;
     }
@@ -535,6 +549,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ErrorHandler#warning(SAXParseException)}.
      */
+    @Override
     public void warning(SAXParseException ex) throws SAXException {
     }
 
@@ -542,11 +557,12 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ContentHandler#startDocument()}.
      */
+    @Override
     public void startDocument() throws SAXException {
         preInfo    = new LinkedList();
         namespaces = new HashTableStack();
-        namespaces.put("xml", XMLSupport.XML_NAMESPACE_URI);
-        namespaces.put("xmlns", XMLSupport.XMLNS_NAMESPACE_URI);
+        namespaces.put("xml", XMLConstants.XML_NAMESPACE_URI);
+        namespaces.put("xmlns", XMLConstants.XMLNS_NAMESPACE_URI);
         namespaces.put("", null);
 
         inDTD        = false;
@@ -572,6 +588,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ContentHandler#startElement(String,String,String,Attributes)}.
      */
+    @Override
     public void startElement(String     uri,
                              String     localName,
                              String     rawName,
@@ -664,7 +681,7 @@ public class SAXDocumentFactory
         for (int i = 0; i < len; i++) {
             String aname = attributes.getQName(i);
             if (aname.equals("xmlns")) {
-                e.setAttributeNS(XMLSupport.XMLNS_NAMESPACE_URI,
+                e.setAttributeNS(XMLConstants.XMLNS_NAMESPACE_URI,
                                  aname,
                                  attributes.getValue(i));
             } else {
@@ -681,6 +698,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ContentHandler#endElement(String,String,String)}.
      */
+    @Override
     public void endElement(String uri, String localName, String rawName)
         throws SAXException {
         appendStringData(); // add string data if any.
@@ -711,6 +729,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ContentHandler#characters(char[],int,int)}.
      */
+    @Override
     public void characters(char[] ch, int start, int length)
         throws SAXException {
         stringBuffer.append(ch, start, length);
@@ -722,6 +741,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ContentHandler#ignorableWhitespace(char[],int,int)}.
      */
+    @Override
     public void ignorableWhitespace(char[] ch,
                                     int start,
                                     int length)
@@ -734,6 +754,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ContentHandler#processingInstruction(String,String)}.
      */
+    @Override
     public void processingInstruction(String target, String data)
         throws SAXException {
         if (inDTD)
@@ -754,6 +775,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ext.LexicalHandler#startDTD(String,String,String)}.
      */
+    @Override
     public void startDTD(String name, String publicId, String systemId)
         throws SAXException {
         appendStringData(); // Add collected string data before entering DTD
@@ -764,6 +786,7 @@ public class SAXDocumentFactory
     /**
      * <b>SAX</b>: Implements {@link org.xml.sax.ext.LexicalHandler#endDTD()}.
      */
+    @Override
     public void endDTD() throws SAXException {
         inDTD = false;
     }
@@ -772,6 +795,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements
      * {@link org.xml.sax.ext.LexicalHandler#startEntity(String)}.
      */
+    @Override
     public void startEntity(String name) throws SAXException {
     }
 
@@ -779,6 +803,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements
      * {@link org.xml.sax.ext.LexicalHandler#endEntity(String)}.
      */
+    @Override
     public void endEntity(String name) throws SAXException {
     }
 
@@ -786,6 +811,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ext.LexicalHandler#startCDATA()}.
      */
+    @Override
     public void startCDATA() throws SAXException {
         appendStringData(); // Add any collected String Data before CData
         inCDATA       = true;
@@ -796,6 +822,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ext.LexicalHandler#endCDATA()}.
      */
+    @Override
     public void endCDATA() throws SAXException {
         appendStringData(); // Add the CDATA section
         inCDATA = false;
@@ -805,6 +832,7 @@ public class SAXDocumentFactory
      * <b>SAX</b>: Implements
      * {@link org.xml.sax.ext.LexicalHandler#comment(char[],int,int)}.
      */
+    @Override
     public void comment(char[] ch, int start, int length) throws SAXException {
         if (inDTD) return;
         appendStringData();

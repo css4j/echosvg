@@ -82,6 +82,7 @@ public class Interval {
     /**
      * Returns a string representation of this Interval.
      */
+    @Override
     public String toString() {
         return TimedElement.toString(begin) + ".." + TimedElement.toString(end);
     }

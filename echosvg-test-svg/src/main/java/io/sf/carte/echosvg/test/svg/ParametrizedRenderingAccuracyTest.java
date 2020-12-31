@@ -47,6 +47,7 @@ public class ParametrizedRenderingAccuracyTest
         return PARAMETER_SEPARATOR;
     }
 
+    @Override
     public void setId(String id){
         this.id = id;
 
@@ -79,6 +80,7 @@ public class ParametrizedRenderingAccuracyTest
      * The refImgURL is built as:
      * getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile
      */
+    @Override
     protected String buildRefImgURL(String svgDir, String svgFile){
         return getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile + parameter + PNG_EXTENSION;
     }
@@ -88,6 +90,7 @@ public class ParametrizedRenderingAccuracyTest
      * of the variation URL, which is built as:
      * getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + parameter + PNG_EXTENSION
      */
+    @Override
     public String[] buildVariationURLs(String svgDir, String svgFile) {
         String[] platforms = getVariationPlatforms();
         String[] urls = new String[platforms.length + 1];
@@ -106,6 +109,7 @@ public class ParametrizedRenderingAccuracyTest
      * of the saveVariation URL, which is built as:
      * getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + parameter + PNG_EXTENSION
      */
+    @Override
     public String  buildSaveVariationFile(String svgDir, String svgFile){
         return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + parameter + PNG_EXTENSION;
     }
@@ -115,6 +119,7 @@ public class ParametrizedRenderingAccuracyTest
      * of the candidateReference URL, which is built as:
      * getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + parameter + PNG_EXTENSION
      */
+    @Override
     public String  buildCandidateReferenceFile(String svgDir, String svgFile){
         return getCandidateReferencePrefix() + svgDir + getCandidateReferenceSuffix() + svgFile + parameter + PNG_EXTENSION;
     }

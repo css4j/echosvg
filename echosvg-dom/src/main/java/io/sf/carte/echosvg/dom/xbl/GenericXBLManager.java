@@ -40,6 +40,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Starts XBL processing on the document.
      */
+    @Override
     public void startProcessing() {
         isProcessing = true;
     }
@@ -47,6 +48,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Stops XBL processing on the document.
      */
+    @Override
     public void stopProcessing() {
         isProcessing = false;
     }
@@ -54,6 +56,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Returns whether XBL processing is currently enabled.
      */
+    @Override
     public boolean isProcessing() {
         return isProcessing;
     }
@@ -61,6 +64,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Get the parent of a node in the fully flattened tree.
      */
+    @Override
     public Node getXblParentNode(Node n) {
         return n.getParentNode();
     }
@@ -68,6 +72,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Get the list of child nodes of a node in the fully flattened tree.
      */
+    @Override
     public NodeList getXblChildNodes(Node n) {
         return n.getChildNodes();
     }
@@ -76,6 +81,7 @@ public class GenericXBLManager implements XBLManager {
      * Get the list of child nodes of a node in the fully flattened tree
      * that are within the same shadow scope.
      */
+    @Override
     public NodeList getXblScopedChildNodes(Node n) {
         return n.getChildNodes();
     }
@@ -83,6 +89,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Get the first child node of a node in the fully flattened tree.
      */
+    @Override
     public Node getXblFirstChild(Node n) {
         return n.getFirstChild();
     }
@@ -90,6 +97,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Get the last child node of a node in the fully flattened tree.
      */
+    @Override
     public Node getXblLastChild(Node n) {
         return n.getLastChild();
     }
@@ -98,6 +106,7 @@ public class GenericXBLManager implements XBLManager {
      * Get the node which directly precedes a node in the xblParentNode's
      * xblChildNodes list.
      */
+    @Override
     public Node getXblPreviousSibling(Node n) {
         return n.getPreviousSibling();
     }
@@ -106,6 +115,7 @@ public class GenericXBLManager implements XBLManager {
      * Get the node which directly follows a node in thexblParentNode's
      * xblChildNodes list.
      */
+    @Override
     public Node getXblNextSibling(Node n) {
         return n.getNextSibling();
     }
@@ -113,6 +123,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Get the first element child of a node in the fully flattened tree.
      */
+    @Override
     public Element getXblFirstElementChild(Node n) {
         Node m = n.getFirstChild();
         while (m != null && m.getNodeType() != Node.ELEMENT_NODE) {
@@ -124,6 +135,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Get the last element child of a node in the fully flattened tree.
      */
+    @Override
     public Element getXblLastElementChild(Node n) {
         Node m = n.getLastChild();
         while (m != null && m.getNodeType() != Node.ELEMENT_NODE) {
@@ -136,6 +148,7 @@ public class GenericXBLManager implements XBLManager {
      * Get the first element that precedes the a node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Element getXblPreviousElementSibling(Node n) {
         Node m = n;
         do {
@@ -148,6 +161,7 @@ public class GenericXBLManager implements XBLManager {
      * Get the first element that follows a node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Element getXblNextElementSibling(Node n) {
         Node m = n;
         do {
@@ -159,6 +173,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Get the bound element whose shadow tree a node resides in.
      */
+    @Override
     public Element getXblBoundElement(Node n) {
         return null;
     }
@@ -166,6 +181,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Get the shadow tree of a node.
      */
+    @Override
     public Element getXblShadowTree(Node n) {
         return null;
     }
@@ -173,6 +189,7 @@ public class GenericXBLManager implements XBLManager {
     /**
      * Get the xbl:definition elements currently binding an element.
      */
+    @Override
     public NodeList getXblDefinitions(Node n) {
         return AbstractNode.EMPTY_NODE_LIST;
     }

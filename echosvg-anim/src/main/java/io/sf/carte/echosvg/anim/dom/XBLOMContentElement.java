@@ -48,6 +48,7 @@ public class XBLOMContentElement extends XBLOMElement {
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return XBL_CONTENT_TAG;
     }
@@ -55,6 +56,7 @@ public class XBLOMContentElement extends XBLOMElement {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new XBLOMContentElement();
     }

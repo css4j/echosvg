@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.dom;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
 
@@ -80,9 +81,9 @@ public abstract class AbstractAttrNS extends AbstractAttr {
         if (prefix != null) {
             if (nsURI == null ||
                 ("xml".equals(prefix) &&
-                 !XMLSupport.XML_NAMESPACE_URI.equals(nsURI)) ||
+                 !XMLConstants.XML_NAMESPACE_URI.equals(nsURI)) ||
                 ("xmlns".equals(prefix) &&
-                 !XMLSupport.XMLNS_NAMESPACE_URI.equals(nsURI))) {
+                 !XMLConstants.XMLNS_NAMESPACE_URI.equals(nsURI))) {
                 throw createDOMException
                     (DOMException.NAMESPACE_ERR,
                      "namespace.uri",
@@ -91,7 +92,7 @@ public abstract class AbstractAttrNS extends AbstractAttr {
                                     nsURI });
             }
         } else if ("xmlns".equals(qname) &&
-                   !XMLSupport.XMLNS_NAMESPACE_URI.equals(nsURI)) {
+                   !XMLConstants.XMLNS_NAMESPACE_URI.equals(nsURI)) {
             throw createDOMException(DOMException.NAMESPACE_ERR,
                                      "namespace.uri",
                                      new Object[] {(int) getNodeType(),
@@ -104,6 +105,7 @@ public abstract class AbstractAttrNS extends AbstractAttr {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
      * @return {@link #namespaceURI}.
      */
+    @Override
     public String getNamespaceURI() {
         return namespaceURI;
     }
@@ -111,6 +113,7 @@ public abstract class AbstractAttrNS extends AbstractAttr {
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         AbstractAttrNS aa = (AbstractAttrNS)n;
@@ -121,6 +124,7 @@ public abstract class AbstractAttrNS extends AbstractAttr {
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         AbstractAttrNS aa = (AbstractAttrNS)n;
@@ -132,6 +136,7 @@ public abstract class AbstractAttrNS extends AbstractAttr {
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         AbstractAttrNS aa = (AbstractAttrNS)n;
@@ -143,6 +148,7 @@ public abstract class AbstractAttrNS extends AbstractAttr {
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         AbstractAttrNS aa = (AbstractAttrNS)n;

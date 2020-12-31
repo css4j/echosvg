@@ -47,6 +47,7 @@ public abstract class LengthManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
@@ -114,6 +115,7 @@ public abstract class LengthManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#createFloatValue(short,float)}.
      */
+    @Override
     public Value createFloatValue(short type, float floatValue)
         throws DOMException {
         switch (type) {
@@ -136,6 +138,7 @@ public abstract class LengthManager extends AbstractValueManager {
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,

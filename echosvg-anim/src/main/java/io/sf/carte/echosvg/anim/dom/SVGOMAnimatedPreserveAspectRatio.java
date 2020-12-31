@@ -65,6 +65,7 @@ public class SVGOMAnimatedPreserveAspectRatio
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedPreserveAspectRatio#getBaseVal()}.
      */
+    @Override
     public SVGPreserveAspectRatio getBaseVal() {
         if (baseVal == null) {
             baseVal = new BaseSVGPARValue();
@@ -75,6 +76,7 @@ public class SVGOMAnimatedPreserveAspectRatio
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedPreserveAspectRatio#getAnimVal()}.
      */
+    @Override
     public SVGPreserveAspectRatio getAnimVal() {
         if (animVal == null) {
             animVal = new AnimSVGPARValue();
@@ -103,6 +105,7 @@ public class SVGOMAnimatedPreserveAspectRatio
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         SVGPreserveAspectRatio par = getBaseVal();
         return new AnimatablePreserveAspectRatioValue(target, par.getAlign(),
@@ -112,6 +115,7 @@ public class SVGOMAnimatedPreserveAspectRatio
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -131,6 +135,7 @@ public class SVGOMAnimatedPreserveAspectRatio
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -144,6 +149,7 @@ public class SVGOMAnimatedPreserveAspectRatio
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -157,6 +163,7 @@ public class SVGOMAnimatedPreserveAspectRatio
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -188,6 +195,7 @@ public class SVGOMAnimatedPreserveAspectRatio
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -196,6 +204,7 @@ public class SVGOMAnimatedPreserveAspectRatio
         /**
          * Sets the associated DOM attribute.
          */
+        @Override
         protected void setAttributeValue(String value) throws DOMException {
             try {
                 changing = true;
@@ -227,6 +236,7 @@ public class SVGOMAnimatedPreserveAspectRatio
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -236,12 +246,14 @@ public class SVGOMAnimatedPreserveAspectRatio
          * Sets the associated DOM attribute.  Does nothing, since animated
          * values aren't reflected in the DOM.
          */
+        @Override
         protected void setAttributeValue(String value) throws DOMException {
         }
 
         /**
          * <b>DOM</b>: Implements {@link SVGPreserveAspectRatio#getAlign()}.
          */
+        @Override
         public short getAlign() {
             if (hasAnimVal) {
                 return super.getAlign();
@@ -252,6 +264,7 @@ public class SVGOMAnimatedPreserveAspectRatio
         /**
          * <b>DOM</b>: Implements {@link SVGPreserveAspectRatio#getMeetOrSlice()}.
          */
+        @Override
         public short getMeetOrSlice() {
             if (hasAnimVal) {
                 return super.getMeetOrSlice();
@@ -262,6 +275,7 @@ public class SVGOMAnimatedPreserveAspectRatio
         /**
          * <b>DOM</b>: Implements {@link SVGPreserveAspectRatio#setAlign(short)}.
          */
+        @Override
         public void setAlign(short align) {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -271,6 +285,7 @@ public class SVGOMAnimatedPreserveAspectRatio
         /**
          * <b>DOM</b>: Implements {@link SVGPreserveAspectRatio#setMeetOrSlice(short)}.
          */
+        @Override
         public void setMeetOrSlice(short meetOrSlice) {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,

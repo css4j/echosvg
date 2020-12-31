@@ -55,6 +55,7 @@ public class StringDecoder implements CharDecoder {
      * Reads the next character.
      * @return a character or END_OF_STREAM.
      */
+    @Override
     public int readChar() throws IOException {
         if (next == length) {
             return END_OF_STREAM;
@@ -65,6 +66,7 @@ public class StringDecoder implements CharDecoder {
     /**
      * Disposes the associated resources.
      */
+    @Override
     public void dispose() throws IOException {
         string = null;
     }

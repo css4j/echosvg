@@ -80,6 +80,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#getRoot()}.
      */
+    @Override
     public Node getRoot() {
         return root;
     }
@@ -87,6 +88,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#getWhatToShow()}.
      */
+    @Override
     public int getWhatToShow() {
         return whatToShow;
     }
@@ -94,6 +96,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#getFilter()}.
      */
+    @Override
     public NodeFilter getFilter() {
         return filter;
     }
@@ -101,6 +104,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#getExpandEntityReferences()}.
      */
+    @Override
     public boolean getExpandEntityReferences() {
         return expandEntityReferences;
     }
@@ -108,6 +112,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#getCurrentNode()}.
      */
+    @Override
     public Node getCurrentNode() {
         return currentNode;
     }
@@ -115,6 +120,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#setCurrentNode(Node)}.
      */
+    @Override
     public void setCurrentNode(Node n) {
         if (n == null) {
             throw ((AbstractNode)root).createDOMException
@@ -127,6 +133,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#parentNode()}.
      */
+    @Override
     public Node parentNode() {
         Node result = parentNode(currentNode);
         if (result != null) {
@@ -138,6 +145,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#firstChild()}.
      */
+    @Override
     public Node firstChild() {
         Node result = firstChild(currentNode);
         if (result != null) {
@@ -149,6 +157,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#lastChild()}.
      */
+    @Override
     public Node lastChild() {
         Node result = lastChild(currentNode);
         if (result != null) {
@@ -160,6 +169,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#previousSibling()}.
      */
+    @Override
     public Node previousSibling() {
         Node result = previousSibling(currentNode, root);
         if (result != null) {
@@ -171,6 +181,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#nextSibling()}.
      */
+    @Override
     public Node nextSibling() {
         Node result = nextSibling(currentNode, root);
         if (result != null) {
@@ -182,6 +193,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#previousNode()}.
      */
+    @Override
     public Node previousNode() {
         Node result = previousSibling(currentNode, root);
         if (result == null) {
@@ -203,6 +215,7 @@ public class DOMTreeWalker implements TreeWalker {
     /**
      * <b>DOM</b>: Implements {@link TreeWalker#nextNode()}.
      */
+    @Override
     public Node nextNode() {
         Node result;
         if ((result = firstChild(currentNode)) != null) {

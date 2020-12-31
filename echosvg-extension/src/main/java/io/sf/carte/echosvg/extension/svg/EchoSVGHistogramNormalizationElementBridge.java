@@ -51,6 +51,7 @@ public class EchoSVGHistogramNormalizationElementBridge
     /**
      * Returns the SVG namespace URI.
      */
+    @Override
     public String getNamespaceURI() {
         return BATIK_EXT_NAMESPACE_URI;
     }
@@ -58,6 +59,7 @@ public class EchoSVGHistogramNormalizationElementBridge
     /**
      * Returns 'histogramNormalization'.
      */
+    @Override
     public String getLocalName() {
         return BATIK_EXT_HISTOGRAM_NORMALIZATION_TAG;
     }
@@ -65,6 +67,7 @@ public class EchoSVGHistogramNormalizationElementBridge
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new EchoSVGHistogramNormalizationElementBridge();
     }
@@ -87,6 +90,7 @@ public class EchoSVGHistogramNormalizationElementBridge
      *        can then access a filter node from the filterMap if they
      *        know its name.
      */
+    @Override
     public Filter createFilter(BridgeContext ctx,
                                Element filterElement,
                                Element filteredElement,

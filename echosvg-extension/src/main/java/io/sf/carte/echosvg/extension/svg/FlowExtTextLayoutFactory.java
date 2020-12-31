@@ -44,6 +44,7 @@ public class FlowExtTextLayoutFactory implements TextLayoutFactory {
      * @param offset The offset position for the text layout.
      * @param frc The font render context to use when creating the text layout.
      */
+    @Override
     public TextSpanLayout createTextLayout(AttributedCharacterIterator aci,
                                            int [] charMap,
                                            Point2D offset,

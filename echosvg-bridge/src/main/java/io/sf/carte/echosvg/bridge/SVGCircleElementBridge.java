@@ -46,6 +46,7 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
     /**
      * Returns 'circle'.
      */
+    @Override
     public String getLocalName() {
         return SVG_CIRCLE_TAG;
     }
@@ -53,6 +54,7 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGCircleElementBridge();
     }
@@ -64,6 +66,7 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
      * @param e the element that describes a rect element
      * @param shapeNode the shape node to initialize
      */
+    @Override
     protected void buildShape(BridgeContext ctx,
                               Element e,
                               ShapeNode shapeNode) {
@@ -99,6 +102,7 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
     /**
      * Invoked when the animated value of an animatable attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged
             (AnimatedLiveAttributeValue alav) {
         if (alav.getNamespaceURI() == null) {
@@ -114,6 +118,7 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
         super.handleAnimatedAttributeChanged(alav);
     }
 
+    @Override
     protected ShapePainter createShapePainter(BridgeContext ctx,
                                               Element e,
                                               ShapeNode shapeNode) {

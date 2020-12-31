@@ -25,6 +25,7 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -166,6 +167,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
         closedPath = null;
     }
 
+    @Override
     public Object clone() {
         Polyline2D pol = new Polyline2D();
         for (int i = 0; i < npoints; i++) {
@@ -187,7 +189,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
     private void updatePath(float x, float y) {
         closedPath = null;
         if (path == null) {
-            path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
+            path = new GeneralPath(Path2D.WIND_EVEN_ODD);
             path.moveTo(x, y);
             bounds = new Rectangle2D.Float(x, y, 0, 0);
         } else {
@@ -246,6 +248,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
      * @return a <code>Rectangle</code> that defines the bounds of this
      * <code>Polyline2D</code>.
      */
+    @Override
     public Rectangle getBounds() {
         if (bounds == null) return null;
         else return bounds.getBounds();
@@ -276,6 +279,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
      * This method is required to implement the Shape interface,
      * but in the case of Line2D objects it always returns false since a line contains no area.
      */
+    @Override
     public boolean contains(double x, double y) {
         return false;
     }
@@ -295,6 +299,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
      * @return a {@link Rectangle2D} that precisely
      *                bounds the <code>Shape</code>.
      */
+    @Override
     public Rectangle2D getBounds2D() {
         return bounds;
     }
@@ -305,6 +310,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
      * This method is required to implement the Shape interface,
      * but in the case of Line2D objects it always returns false since a line contains no area.
      */
+    @Override
     public boolean contains(Point2D p) {
         return false;
     }
@@ -324,6 +330,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
      *                         coordinates intersect each other;
      *                        <code>false</code> otherwise.
      */
+    @Override
     public boolean intersects(double x, double y, double w, double h) {
         if (npoints <= 0 || !bounds.intersects(x, y, w, h)) {
             return false;
@@ -341,6 +348,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
      *                         intersect each other; <code>false</code>
      *                         otherwise.
      */
+    @Override
     public boolean intersects(Rectangle2D r) {
         return intersects(r.getX(), r.getY(), r.getWidth(), r.getHeight());
     }
@@ -351,6 +359,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
      * This method is required to implement the Shape interface,
      * but in the case of Line2D objects it always returns false since a line contains no area.
      */
+    @Override
     public boolean contains(double x, double y, double w, double h) {
         return false;
     }
@@ -361,6 +370,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
      * This method is required to implement the Shape interface,
      * but in the case of Line2D objects it always returns false since a line contains no area.
      */
+    @Override
     public boolean contains(Rectangle2D r) {
         return false;
     }
@@ -377,6 +387,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
      * @return a {@link PathIterator} object that provides access to the
      *                geometry of this <code>Polygon</code>.
      */
+    @Override
     public PathIterator getPathIterator(AffineTransform at) {
         if (path == null) return null;
         else return path.getPathIterator(at);
@@ -421,6 +432,7 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
      * @return a <code>PathIterator</code> object that provides access to the
      *                 <code>Shape</code> object's geometry.
      */
+    @Override
     public PathIterator getPathIterator(AffineTransform at, double flatness) {
         return path.getPathIterator(at);
     }

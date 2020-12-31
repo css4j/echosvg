@@ -90,14 +90,17 @@ public class SVGConverterURLSource implements SVGConverterSource {
         }
     }
 
+    @Override
     public String toString(){
         return purl.toString();
     }
 
+    @Override
     public String getURI(){
         return toString();
     }
 
+    @Override
     public boolean equals(Object o){
         if (o == null || !(o instanceof SVGConverterURLSource)){
             return false;
@@ -106,23 +109,28 @@ public class SVGConverterURLSource implements SVGConverterSource {
         return purl.equals(((SVGConverterURLSource)o).purl);
     }
     
+    @Override
     public int hashCode() {
         return purl.hashCode();
     }
 
 
+    @Override
     public InputStream openStream() throws IOException {
         return purl.openStream();
     }
 
+    @Override
     public boolean isSameAs(String srcStr){
         return toString().equals(srcStr);
     }
 
+    @Override
     public boolean isReadable(){
         return true;
     }
 
+    @Override
     public String getName(){
         return name;
     }

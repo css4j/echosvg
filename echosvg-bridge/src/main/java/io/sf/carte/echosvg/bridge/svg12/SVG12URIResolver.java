@@ -48,6 +48,7 @@ public class SVG12URIResolver extends URIResolver {
     /**
      * Returns the base URI of the referer element.
      */
+    @Override
     protected String getRefererBaseURI(Element ref) {
         AbstractNode aref = (AbstractNode) ref;
         if (aref.getXblBoundElement() != null) {
@@ -63,6 +64,7 @@ public class SVG12URIResolver extends URIResolver {
      * @param frag the URI fragment
      * @param ref  the context element from which to resolve the URI fragment
      */
+    @Override
     protected Node getNodeByFragment(String frag, Element ref) {
         NodeXBL refx = (NodeXBL) ref;
         NodeXBL boundElt = (NodeXBL) refx.getXblBoundElement();

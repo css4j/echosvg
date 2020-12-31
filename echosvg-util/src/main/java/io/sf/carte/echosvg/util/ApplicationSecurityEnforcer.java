@@ -121,6 +121,7 @@ public class ApplicationSecurityEnforcer {
      *             argument constructor instead as this version will
      *             be removed after the 1.5beta4 release.
      */
+    @Deprecated
     public ApplicationSecurityEnforcer(Class appMainClass,
                                        String securityPolicy,
                                        String appJarFile){

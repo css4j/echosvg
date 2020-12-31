@@ -54,6 +54,7 @@ public class SingleTileRenderedImage extends SimpleRenderedImage {
     /**
      * Returns the image's Raster as tile (0, 0).
      */
+    @Override
     public Raster getTile(int tileX, int tileY) {
         if (tileX != 0 || tileY != 0) {
             throw new IllegalArgumentException(PropertyUtil.getString("SingleTileRenderedImage0"));

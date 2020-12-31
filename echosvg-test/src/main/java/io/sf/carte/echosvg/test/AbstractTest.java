@@ -113,6 +113,7 @@ public abstract class AbstractTest implements Test {
     /**
      * Returns this <code>Test</code>'s name. 
      */
+    @Override
     public String getName(){
         if(name == null){
             if (id != null && !"".equals(id)){
@@ -135,6 +136,7 @@ public abstract class AbstractTest implements Test {
     /**
      * Return this <code>Test</code>'s id.
      */
+    @Override
     public String getId(){
         return id;
     }
@@ -142,6 +144,7 @@ public abstract class AbstractTest implements Test {
     /**
      * Return this <code>Test</code>'s qualified id.
      */
+    @Override
     public String getQualifiedId(){
         if(parent == null){
             return getId();
@@ -152,6 +155,7 @@ public abstract class AbstractTest implements Test {
     /**
      * Set this <code>Test</code>'s id. Null is not allowed.
      */
+    @Override
     public void setId(String id){
         if(id == null){
             throw new IllegalArgumentException();
@@ -160,10 +164,12 @@ public abstract class AbstractTest implements Test {
         this.id = id;
     }
 
+    @Override
     public TestSuite getParent(){
         return parent;
     }
 
+    @Override
     public void setParent(TestSuite parent){
         this.parent = parent;
     }
@@ -177,6 +183,7 @@ public abstract class AbstractTest implements Test {
      * simply returns the <code>TestReport</code> generated
      * by the <code>runImpl</code> method.
      */
+    @Override
     public TestReport run(){
         try{
             return runImpl();

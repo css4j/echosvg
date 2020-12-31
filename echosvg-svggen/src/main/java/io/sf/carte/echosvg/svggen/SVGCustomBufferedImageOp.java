@@ -51,6 +51,7 @@ public class SVGCustomBufferedImageOp extends AbstractSVGFilterConverter {
      * @return an SVGFilterDescriptor mapping the SVG
      *         BufferedImageOp equivalent to the input BufferedImageOp.
      */
+    @Override
     public SVGFilterDescriptor toSVG(BufferedImageOp filter,
                                      Rectangle filterRect) {
         SVGFilterDescriptor filterDesc =

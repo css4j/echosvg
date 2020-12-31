@@ -364,6 +364,7 @@ public class PostTable implements Table {
     /** Get the table type, as a table directory value.
      * @return The table type
      */
+    @Override
     public int getType() {
         return post;
     }

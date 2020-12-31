@@ -92,6 +92,7 @@ public abstract class AbstractDOMImplementation
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.DOMImplementation#hasFeature(String,String)}.
      */
+    @Override
     public boolean hasFeature(String feature, String version) {
         if (feature == null || feature.length() == 0) {
             return false;
@@ -126,6 +127,7 @@ public abstract class AbstractDOMImplementation
      * No compound document support, so just return this DOMImlpementation
      * where appropriate.
      */
+    @Override
     public Object getFeature(String feature, String version) {
         if (hasFeature(feature, version)) {
             return this;
@@ -152,6 +154,7 @@ public abstract class AbstractDOMImplementation
     /**
      * Implements {@link Localizable#setLocale(Locale)}.
      */
+    @Override
     public void setLocale(Locale l) {
         localizableSupport.setLocale(l);
     }
@@ -159,6 +162,7 @@ public abstract class AbstractDOMImplementation
     /**
      * Implements {@link Localizable#getLocale()}.
      */
+    @Override
     public Locale getLocale() {
         return localizableSupport.getLocale();
     }
@@ -169,6 +173,7 @@ public abstract class AbstractDOMImplementation
     /**
      * Implements {@link Localizable#formatMessage(String,Object[])}.
      */
+    @Override
     public String formatMessage(String key, Object[] args)
         throws MissingResourceException {
         return localizableSupport.formatMessage(key, args);

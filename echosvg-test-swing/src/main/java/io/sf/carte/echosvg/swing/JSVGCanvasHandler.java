@@ -172,6 +172,7 @@ public class JSVGCanvasHandler {
     public void setupCanvas() {
         try {
             EventQueue.invokeAndWait(new Runnable() {
+                    @Override
                     public void run() {
                         frame = new JFrame(delegate.getName());
                         canvas = createCanvas();
@@ -179,6 +180,7 @@ public class JSVGCanvasHandler {
                         frame.getContentPane().add(canvas);
                         frame.pack();
                         wl = new WindowAdapter() {
+                                @Override
                                 public void windowClosing(WindowEvent e) {
                                     synchronized (loadMonitor) {
                                         abort = true;
@@ -209,6 +211,7 @@ public class JSVGCanvasHandler {
 
     public void scriptDone() {
         Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     UpdateManager um = getUpdateManager();
                     if (um != null)
@@ -290,6 +293,7 @@ public class JSVGCanvasHandler {
         rq = um.getUpdateRunnableQueue();
         rq.invokeLater(new Runnable() {
                 UpdateManager um = getUpdateManager();
+                @Override
                 public void run() {
                     ScriptingEnvironment scriptEnv;
                     scriptEnv = um.getScriptingEnvironment();
@@ -314,27 +318,35 @@ public class JSVGCanvasHandler {
     }
 
     class UpdateRenderListener implements UpdateManagerListener {
+        @Override
         public void updateCompleted(UpdateManagerEvent e) {
             synchronized(renderMonitor){
                 failed = false;
                 renderMonitor.notifyAll();
             }
         }
+        @Override
         public void updateFailed(UpdateManagerEvent e) {
             synchronized(renderMonitor){
                 renderMonitor.notifyAll();
             }
         }
+        @Override
         public void managerStarted(UpdateManagerEvent e) {
           bindHost();
         }
+        @Override
         public void managerSuspended(UpdateManagerEvent e) { }
+        @Override
         public void managerResumed(UpdateManagerEvent e) { }
+        @Override
         public void managerStopped(UpdateManagerEvent e) { }
+        @Override
         public void updateStarted(UpdateManagerEvent e) { }
     }
 
     class InitialRenderListener extends GVTTreeRendererAdapter {
+        @Override
         public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
             synchronized(renderMonitor){
                 failed = false;
@@ -343,12 +355,14 @@ public class JSVGCanvasHandler {
         }
 
 
+        @Override
         public void gvtRenderingCancelled(GVTTreeRendererEvent e) {
             synchronized(renderMonitor){
                 renderMonitor.notifyAll();
             }
         }
 
+        @Override
         public void gvtRenderingFailed(GVTTreeRendererEvent e) {
             synchronized(renderMonitor){
                 renderMonitor.notifyAll();
@@ -357,6 +371,7 @@ public class JSVGCanvasHandler {
     }
 
     class LoadListener extends SVGDocumentLoaderAdapter {
+        @Override
         public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
             synchronized(loadMonitor){
                 failed = false;
@@ -364,12 +379,14 @@ public class JSVGCanvasHandler {
             }
         }
 
+        @Override
         public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
             synchronized(loadMonitor){
                 loadMonitor.notifyAll();
             }
         }
 
+        @Override
         public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {
             synchronized(loadMonitor){
                 loadMonitor.notifyAll();
@@ -378,6 +395,7 @@ public class JSVGCanvasHandler {
     }
 
     class SVGLoadEventListener extends SVGLoadEventDispatcherAdapter {
+        @Override
         public void svgLoadEventDispatchStarted(SVGLoadEventDispatcherEvent e){
             SVGLoadEventDispatcher dispatcher;
             dispatcher = (SVGLoadEventDispatcher)e.getSource();

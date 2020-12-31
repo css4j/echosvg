@@ -76,6 +76,7 @@ public class GVTACIImpl
     /**
      * Sets this iterator's contents to an unattributed copy of String s.
      */
+    @Override
     public void setString(String s) {
         simpleString = s;
         iter = new StringCharacterIterator(simpleString);
@@ -85,6 +86,7 @@ public class GVTACIImpl
     /**
      * Assigns this iterator's contents to be equivalent to AttributedString s.
      */
+    @Override
     public void setString(AttributedString s) {
         iter = s.getIterator();
         buildAttributeTables((AttributedCharacterIterator) iter);
@@ -103,6 +105,7 @@ public class GVTACIImpl
      * Note that if either beginIndex or endIndex are outside the bounds
      *     of the current character array they are clipped accordingly.
      */
+    @Override
     public void setAttributeArray
         (GVTAttributedCharacterIterator.TextAttribute attr,
          Object[] attValues, int beginIndex, int endIndex) {
@@ -133,6 +136,7 @@ public class GVTACIImpl
     /**
      * Get the keys of all attributes defined on the iterator's text range.
      */
+    @Override
     public Set getAllAttributeKeys() {
         return allAttributes;
     }
@@ -141,6 +145,7 @@ public class GVTACIImpl
      * Get the value of the named attribute for the current
      *     character.
      */
+    @Override
     public Object getAttribute(AttributedCharacterIterator.Attribute attribute)
     {
         return getAttributes().get(attribute);
@@ -150,6 +155,7 @@ public class GVTACIImpl
      * Returns a map with the attributes defined on the current
      * character.
      */
+    @Override
     public Map getAttributes() {
         return (Map) mapList.get(currentIndex);
     }
@@ -159,6 +165,7 @@ public class GVTACIImpl
      *     run with respect to all attributes containing the current
      *     character.
      */
+    @Override
     public int getRunLimit() {
         int  ndx = currentIndex;
         do {
@@ -172,6 +179,7 @@ public class GVTACIImpl
      *      run with respect to the given attribute containing the current
      *      character.
      */
+    @Override
     public int getRunLimit(AttributedCharacterIterator.Attribute attribute) {
         int ndx = currentIndex;
         Object  value = getAttributes().get(attribute);
@@ -195,6 +203,7 @@ public class GVTACIImpl
      *     run with respect to the given attributes containing the current
      *     character.
      */
+    @Override
     public int getRunLimit(Set attributes) {
         int ndx = currentIndex;
         do {
@@ -207,6 +216,7 @@ public class GVTACIImpl
      * Get the index of the first character of the run with
      *    respect to all attributes containing the current character.
      */
+    @Override
     public int getRunStart() {
         int ndx = currentIndex;
         while (charInRun[ndx] == MID_RUN) --ndx;
@@ -219,6 +229,7 @@ public class GVTACIImpl
      * @param attribute The attribute for whose appearance the first offset
      *      is requested.
      */
+    @Override
     public int getRunStart(AttributedCharacterIterator.Attribute attribute) {
         int ndx = currentIndex - 1;
         Object value = getAttributes().get(attribute);
@@ -244,6 +255,7 @@ public class GVTACIImpl
      * @param attributes the Set of attributes which begins at the returned
      *      index.
      */
+    @Override
     public int getRunStart(Set attributes) {
         int ndx = currentIndex;
         try {
@@ -258,6 +270,7 @@ public class GVTACIImpl
     /**
      * Create a copy of this iterator
      */
+    @Override
     public Object clone() {
         GVTAttributedCharacterIterator cloneACI =
                 new GVTACIImpl(this);
@@ -269,6 +282,7 @@ public class GVTACIImpl
      *      by getIndex()).
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char current() {
         return iter.current();
     }
@@ -278,6 +292,7 @@ public class GVTACIImpl
      * @return the character at the start index of the text.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char first() {
         return iter.first();
     }
@@ -286,6 +301,7 @@ public class GVTACIImpl
      * Get the start index of the text.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public int getBeginIndex() {
         return iter.getBeginIndex();
     }
@@ -294,6 +310,7 @@ public class GVTACIImpl
      * Get the end index of the text.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public int getEndIndex() {
         return iter.getEndIndex();
     }
@@ -302,6 +319,7 @@ public class GVTACIImpl
      * Get the current index.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public int getIndex() {
         return iter.getIndex();
     }
@@ -311,6 +329,7 @@ public class GVTACIImpl
      * the text is empty) and returns the character at that position.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char last() {
         return iter.last();
     }
@@ -320,6 +339,7 @@ public class GVTACIImpl
      * @return the character at the new index.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char next() {
         return iter.next();
     }
@@ -329,6 +349,7 @@ public class GVTACIImpl
      * the character at the new index.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char previous() {
         return iter.previous();
     }
@@ -339,6 +360,7 @@ public class GVTACIImpl
      * @return the character at new index <em>position</em>.
      * <br><b>Specified by:</b> java.text.CharacterIterator.
      */
+    @Override
     public char setIndex(int position) {
         return iter.setIndex(position);
     }
@@ -394,6 +416,7 @@ public class GVTACIImpl
          * in which location attributes have been converted to
          * TextAttribute.TRANSFORM attributes.
          */
+        @Override
         public AttributedCharacterIterator
                      mutateAttributes(AttributedCharacterIterator aci) {
             //TODO:Implement this !!!

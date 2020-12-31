@@ -215,6 +215,7 @@ public class GlyphLayout implements TextSpanLayout {
     }
 
 
+    @Override
     public GVTGlyphVector getGlyphVector() {
         return this.gv;
     }
@@ -225,6 +226,7 @@ public class GlyphLayout implements TextSpanLayout {
      * of glyph layout, before the application of explicit
      * glyph positioning attributes.
      */
+    @Override
     public Point2D getOffset() {
         return offset;
     }
@@ -240,6 +242,7 @@ public class GlyphLayout implements TextSpanLayout {
      * @param yScale Scale factor to apply in Y direction.
      * @param adjSpacing True if only spaces should be adjusted.
      */
+    @Override
     public void setScale(float xScale, float yScale, boolean adjSpacing) {
         // Fix the off axis scale factor.
         if (vertical) xScale = 1;
@@ -267,6 +270,7 @@ public class GlyphLayout implements TextSpanLayout {
      * positioning attributes are present in ACI
      * (e.g. if the aci has multiple X or Y values).
      */
+    @Override
     public void setOffset(Point2D offset) {
         if ((offset.getX() != this.offset.getX()) ||
             (offset.getY() != this.offset.getY())) {
@@ -299,10 +303,12 @@ public class GlyphLayout implements TextSpanLayout {
         }
     }
 
+    @Override
     public GVTGlyphMetrics getGlyphMetrics(int glyphIndex) {
         return gv.getGlyphMetrics(glyphIndex);
     }
 
+    @Override
     public GVTLineMetrics getLineMetrics() {
         return metrics;
     }
@@ -310,6 +316,7 @@ public class GlyphLayout implements TextSpanLayout {
     /**
      * Returns true if the advance direction of this text is vertical.
      */
+    @Override
     public boolean isVertical() {
         return vertical;
     }
@@ -317,6 +324,7 @@ public class GlyphLayout implements TextSpanLayout {
     /**
      * Returns true if this layout in on a text path.
      */
+    @Override
     public boolean isOnATextPath() {
         return (textPath != null);
     }
@@ -325,6 +333,7 @@ public class GlyphLayout implements TextSpanLayout {
     /**
      * Returns the number of glyphs in this layout.
      */
+    @Override
     public int getGlyphCount() {
         return gv.getNumGlyphs();
     }
@@ -339,6 +348,7 @@ public class GlyphLayout implements TextSpanLayout {
      *
      * @return The number of chars.
      */
+    @Override
     public int getCharacterCount(int startGlyphIndex, int endGlyphIndex) {
         return gv.getCharacterCount(startGlyphIndex, endGlyphIndex);
     }
@@ -346,6 +356,7 @@ public class GlyphLayout implements TextSpanLayout {
     /**
      * Returns true if the text direction in this layout is from left to right.
      */
+    @Override
     public boolean isLeftToRight() {
         aci.first();
         int bidiLevel =
@@ -373,6 +384,7 @@ public class GlyphLayout implements TextSpanLayout {
      * specified Graphics2D and rendering context.
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void draw(Graphics2D g2d) {
         syncLayout();
         gv.draw(g2d, aci);
@@ -382,6 +394,7 @@ public class GlyphLayout implements TextSpanLayout {
      * Returns the current text position at the completion
      * of glyph layout.
      */
+    @Override
     public Point2D getAdvance2D() {
         adjustTextSpacing();
         return advance;
@@ -391,12 +404,14 @@ public class GlyphLayout implements TextSpanLayout {
     /**
      * Returns the outline of the completed glyph layout.
      */
+    @Override
     public Shape getOutline() {
         syncLayout();
 
         return gv.getOutline();
     }
 
+    @Override
     public float [] getGlyphAdvances() {
         if (glyphAdvances != null)
             return glyphAdvances;
@@ -426,6 +441,7 @@ public class GlyphLayout implements TextSpanLayout {
      *     values together:
      * e.g. <code>DECORATION_UNDERLINE | DECORATION_STRIKETHROUGH</code>
      */
+    @Override
     public Shape getDecorationOutline(int decorationType) {
         syncLayout();
 
@@ -445,6 +461,7 @@ public class GlyphLayout implements TextSpanLayout {
     /**
      * Returns the rectangular bounds of the completed glyph layout.
      */
+    @Override
     public Rectangle2D getBounds2D() {
         syncLayout();
         return gv.getBounds2D(aci);
@@ -454,6 +471,7 @@ public class GlyphLayout implements TextSpanLayout {
      * Returns the rectangular bounds of the completed glyph layout,
      * inclusive of "decoration" (underline, overline, etc.)
      */
+    @Override
     public Rectangle2D getGeometricBounds() {
         syncLayout();
         Rectangle2D gvB, decB;
@@ -466,6 +484,7 @@ public class GlyphLayout implements TextSpanLayout {
      * Returns the position to used when drawing a text run after this one.
      * It takes into account the text path layout if there is one.
      */
+    @Override
     public Point2D getTextPathAdvance() {
         syncLayout();
         if (textPath != null) {
@@ -484,6 +503,7 @@ public class GlyphLayout implements TextSpanLayout {
      * @return The index of the matching glyph in this layout's glyph vector,
      *         or -1 if a matching glyph could not be found.
      */
+    @Override
     public int getGlyphIndex(int charIndex) {
         int numGlyphs = getGlyphCount();
         int j=0;
@@ -527,6 +547,7 @@ public class GlyphLayout implements TextSpanLayout {
      * Return the angle value according to the orientation
      * of the character.
      */
+    @Override
     public double getComputedOrientationAngle(int index){
 
         if ( isGlyphOrientationAuto() ){
@@ -554,6 +575,7 @@ public class GlyphLayout implements TextSpanLayout {
      * contiguous selection.
      * @return The highlight shape or null if the spacified char range
      * does not overlap with the chars in this layout.  */
+    @Override
     public Shape getHighlightShape(int beginCharIndex, int endCharIndex) {
         syncLayout();
 
@@ -925,6 +947,7 @@ public class GlyphLayout implements TextSpanLayout {
      *     successful hits and whether the hit is on the character
      *     leading edge.
      */
+    @Override
     public TextHit hitTestChar(float x, float y) {
         syncLayout();
 
@@ -2016,6 +2039,7 @@ public class GlyphLayout implements TextSpanLayout {
      * @param index index of the character in the ACI.
      * @return true if the layout represents that character.
      */
+    @Override
     public boolean hasCharacterIndex(int index){
 
         for (int aCharMap : charMap) {
@@ -2029,6 +2053,7 @@ public class GlyphLayout implements TextSpanLayout {
      * Return true if this text run represents
      * an alt glyph.
      */
+    @Override
     public boolean isAltGlyph(){
         return this.isAltGlyph;
     }

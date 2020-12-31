@@ -41,6 +41,7 @@ public class MediaRule extends StyleSheet implements Rule {
     /**
      * Returns a constant identifying the rule type.
      */
+    @Override
     public short getType() {
         return TYPE;
     }
@@ -62,6 +63,7 @@ public class MediaRule extends StyleSheet implements Rule {
     /**
      * Returns a printable representation of this media rule.
      */
+    @Override
     public String toString(CSSEngine eng) {
         StringBuffer sb = new StringBuffer();
         sb.append("@media");

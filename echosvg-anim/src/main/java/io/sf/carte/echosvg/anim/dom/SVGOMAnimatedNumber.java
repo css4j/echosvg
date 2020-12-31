@@ -100,6 +100,7 @@ public class SVGOMAnimatedNumber
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedNumber#getBaseVal()}.
      */
+    @Override
     public float getBaseVal() {
         if (!valid) {
             update();
@@ -129,6 +130,7 @@ public class SVGOMAnimatedNumber
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedNumber#setBaseVal(float)}.
      */
+    @Override
     public void setBaseVal(float baseVal) throws DOMException {
         try {
             this.baseVal = baseVal;
@@ -144,6 +146,7 @@ public class SVGOMAnimatedNumber
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedNumber#getAnimVal()}.
      */
+    @Override
     public float getAnimVal() {
         if (hasAnimVal) {
             return animVal;
@@ -157,6 +160,7 @@ public class SVGOMAnimatedNumber
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         return new AnimatableNumberValue(target, getBaseVal());
     }
@@ -164,6 +168,7 @@ public class SVGOMAnimatedNumber
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -177,6 +182,7 @@ public class SVGOMAnimatedNumber
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         if (!changing) {
             valid = false;
@@ -190,6 +196,7 @@ public class SVGOMAnimatedNumber
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         if (!changing) {
             valid = false;
@@ -203,6 +210,7 @@ public class SVGOMAnimatedNumber
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         if (!changing) {
             valid = false;

@@ -50,6 +50,7 @@ public class AWTPolygonProducer extends AWTPolylineProducer {
     /**
      * Implements {@link PointsHandler#endPoints()}.
      */
+    @Override
     public void endPoints() throws ParseException {
         path.closePath();
     }

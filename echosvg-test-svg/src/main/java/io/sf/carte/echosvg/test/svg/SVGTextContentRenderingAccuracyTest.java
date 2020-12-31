@@ -50,6 +50,7 @@ public class SVGTextContentRenderingAccuracyTest
         this.parameter = parameter;
     }
 
+    @Override
     protected Document manipulateSVGDocument(Document doc) {
 
         Element root = doc.getDocumentElement();

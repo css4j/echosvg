@@ -45,6 +45,7 @@ public class NoLoadScriptSecurity implements ScriptSecurity {
      *
      * @throws SecurityException if the script should not be loaded.
      */
+    @Override
     public void checkLoadScript(){
         throw se;
     }

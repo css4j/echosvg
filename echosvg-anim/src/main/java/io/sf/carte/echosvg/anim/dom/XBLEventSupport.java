@@ -81,6 +81,7 @@ public class XBLEventSupport extends EventSupport {
      * Registers an event listener for the given namespaced event type
      * in the specified group.
      */
+    @Override
     public void addEventListenerNS(String namespaceURI,
                                    String type,
                                    EventListener listener,
@@ -101,6 +102,7 @@ public class XBLEventSupport extends EventSupport {
     /**
      * Deregisters an event listener.
      */
+    @Override
     public void removeEventListenerNS(String namespaceURI,
                                       String type,
                                       EventListener listener,
@@ -172,6 +174,7 @@ public class XBLEventSupport extends EventSupport {
      * Used by {@link
      * io.sf.carte.echosvg.dom.AbstractDocument#renameNode(Node,String,String)}.
      */
+    @Override
     public void moveEventListeners(EventSupport other) {
         super.moveEventListeners(other);
         XBLEventSupport es = (XBLEventSupport) other;
@@ -207,6 +210,7 @@ public class XBLEventSupport extends EventSupport {
      *   <code>null</code> or an empty string will also trigger this
      *   exception.  
      */
+    @Override
     public boolean dispatchEvent(NodeEventTarget target, Event evt) 
             throws EventException {
 //         System.err.println("\t[] dispatching " + e.getType() + " on " + ((Node) target).getNodeName());

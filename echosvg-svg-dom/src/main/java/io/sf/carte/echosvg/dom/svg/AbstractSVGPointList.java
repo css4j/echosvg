@@ -46,6 +46,7 @@ public abstract class AbstractSVGPointList
     /**
      * Return the separator between points in the list.
      */
+    @Override
     protected String getItemSeparator() {
         return SVG_POINT_LIST_SEPARATOR;
     }
@@ -61,6 +62,7 @@ public abstract class AbstractSVGPointList
     /**
      * <b>DOM</b>: Implements {@link SVGPointList#initialize(SVGPoint)}.
      */
+    @Override
     public SVGPoint initialize(SVGPoint newItem)
             throws DOMException, SVGException {
         return (SVGPoint) initializeImpl(newItem);
@@ -69,6 +71,7 @@ public abstract class AbstractSVGPointList
     /**
      * <b>DOM</b>: Implements {@link SVGPointList#getItem(int)}.
      */
+    @Override
     public SVGPoint getItem(int index) throws DOMException {
         return (SVGPoint) getItemImpl(index);
     }
@@ -77,6 +80,7 @@ public abstract class AbstractSVGPointList
      * <b>DOM</b>: Implements {@link
      * SVGPointList#insertItemBefore(SVGPoint,int)}.
      */
+    @Override
     public SVGPoint insertItemBefore(SVGPoint newItem, int index)
             throws DOMException, SVGException {
         return (SVGPoint) insertItemBeforeImpl(newItem,index);
@@ -86,6 +90,7 @@ public abstract class AbstractSVGPointList
      * <b>DOM</b>: Implements {@link
      * SVGPointList#replaceItem(SVGPoint,int)}.
      */
+    @Override
     public SVGPoint replaceItem(SVGPoint newItem, int index)
             throws DOMException, SVGException {
         return (SVGPoint) replaceItemImpl(newItem,index);
@@ -94,6 +99,7 @@ public abstract class AbstractSVGPointList
     /**
      * <b>DOM</b>: Implements {@link SVGPointList#removeItem(int)}.
      */
+    @Override
     public SVGPoint removeItem(int index) throws DOMException {
         return (SVGPoint) removeItemImpl(index);
     }
@@ -101,6 +107,7 @@ public abstract class AbstractSVGPointList
     /**
      * <b>DOM</b>: Implements {@link SVGPointList#appendItem(SVGPoint)}.
      */
+    @Override
     public SVGPoint appendItem(SVGPoint newItem)
             throws DOMException, SVGException {
         return (SVGPoint) appendItemImpl(newItem);
@@ -109,6 +116,7 @@ public abstract class AbstractSVGPointList
     /**
      * Creates a new {@link SVGItem} object from the given {@link SVGPoint}.
      */
+    @Override
     protected SVGItem createSVGItem(Object newItem) {
         SVGPoint point = (SVGPoint) newItem;
         return new SVGPointItem(point.getX(), point.getY());
@@ -120,6 +128,7 @@ public abstract class AbstractSVGPointList
      * @param value 'points' attribute value
      * @param handler point list handler
      */
+    @Override
     protected void doParse(String value, ListHandler handler)
             throws ParseException {
         PointsParser pointsParser = new PointsParser();
@@ -131,6 +140,7 @@ public abstract class AbstractSVGPointList
     /**
      * Asserts that the given item is an {@link SVGPoint}.
      */
+    @Override
     protected void checkItemType(Object newItem) throws SVGException {
         if (!(newItem instanceof SVGPoint)) {
             createSVGException(SVGException.SVG_WRONG_TYPE_ERR,
@@ -160,6 +170,7 @@ public abstract class AbstractSVGPointList
         /**
          * Implements {@link PointsHandler#startPoints()}.
          */
+        @Override
         public void startPoints() throws ParseException {
             listHandler.startList();
         }
@@ -167,6 +178,7 @@ public abstract class AbstractSVGPointList
         /**
          * Implements {@link PointsHandler#point(float,float)}.
          */
+        @Override
         public void point(float x, float y) throws ParseException {
             listHandler.item(new SVGPointItem(x, y));
         }
@@ -174,6 +186,7 @@ public abstract class AbstractSVGPointList
         /**
          * Implements {@link PointsHandler#endPoints()}.
          */
+        @Override
         public void endPoints() throws ParseException {
             listHandler.endList();
         }

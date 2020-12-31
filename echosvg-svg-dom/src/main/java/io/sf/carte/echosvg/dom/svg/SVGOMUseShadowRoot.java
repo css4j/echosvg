@@ -68,6 +68,7 @@ public class SVGOMUseShadowRoot
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return false;
     }
@@ -75,11 +76,13 @@ public class SVGOMUseShadowRoot
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
     }
 
     // IdContainer ///////////////////////////////////////////////////////////
 
+    @Override
     public Element getElementById(String id) {
         return ownerDocument.getChildElementById(this, id);
     }
@@ -89,6 +92,7 @@ public class SVGOMUseShadowRoot
     /**
      * Returns the CSS parent node of this node.
      */
+    @Override
     public Node getCSSParentNode() {
         return cssParentElement;
     }
@@ -96,6 +100,7 @@ public class SVGOMUseShadowRoot
     /**
      * Returns the CSS previous sibling node of this node.
      */
+    @Override
     public Node getCSSPreviousSibling() {
         return null;
     }
@@ -103,6 +108,7 @@ public class SVGOMUseShadowRoot
     /**
      * Returns the CSS next sibling node of this node.
      */
+    @Override
     public Node getCSSNextSibling() {
         return null;
     }
@@ -110,6 +116,7 @@ public class SVGOMUseShadowRoot
     /**
      * Returns the CSS first child node of this node.
      */
+    @Override
     public Node getCSSFirstChild() {
         return getFirstChild();
     }
@@ -117,6 +124,7 @@ public class SVGOMUseShadowRoot
     /**
      * Returns the CSS last child of this node.
      */
+    @Override
     public Node getCSSLastChild() {
         return getLastChild();
     }
@@ -125,6 +133,7 @@ public class SVGOMUseShadowRoot
      * Returns whether this node is the root of a (conceptual) hidden tree
      * that selectors will not work across.
      */
+    @Override
     public boolean isHiddenFromSelectors() {
         return false;
     }
@@ -133,6 +142,7 @@ public class SVGOMUseShadowRoot
      * Implements {@link
      * io.sf.carte.echosvg.dom.events.NodeEventTarget#getParentNodeEventTarget()}.
      */
+    @Override
     public NodeEventTarget getParentNodeEventTarget() {
         return (NodeEventTarget) getCSSParentNode();
     }
@@ -140,6 +150,7 @@ public class SVGOMUseShadowRoot
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMUseShadowRoot();
     }

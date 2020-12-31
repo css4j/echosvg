@@ -98,6 +98,7 @@ public class SVGOMPathElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -113,6 +114,7 @@ public class SVGOMPathElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_PATH_TAG;
     }
@@ -120,6 +122,7 @@ public class SVGOMPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGPathElement#getPathLength()}.
      */
+    @Override
     public SVGAnimatedNumber getPathLength() {
         throw new UnsupportedOperationException
             ("SVGPathElement.getPathLength is not implemented"); // XXX
@@ -128,6 +131,7 @@ public class SVGOMPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGPathElement#getTotalLength()}.
      */
+    @Override
     public float getTotalLength() {
         return SVGPathSupport.getTotalLength(this);
     }
@@ -135,6 +139,7 @@ public class SVGOMPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGPathElement#getPointAtLength(float)}.
      */
+    @Override
     public SVGPoint getPointAtLength(float distance) {
         return SVGPathSupport.getPointAtLength(this, distance);
     }
@@ -142,6 +147,7 @@ public class SVGOMPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGPathElement#getPathSegAtLength(float)}.
      */
+    @Override
     public int getPathSegAtLength(float distance) {
         return SVGPathSupport.getPathSegAtLength(this, distance);
     }
@@ -157,6 +163,7 @@ public class SVGOMPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGPathElement#getPathSegList()}.
      */
+    @Override
     public SVGPathSegList getPathSegList() {
         return d.getPathSegList();
     }
@@ -164,6 +171,7 @@ public class SVGOMPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGPathElement#getNormalizedPathSegList()}.
      */
+    @Override
     public SVGPathSegList getNormalizedPathSegList() {
         return d.getNormalizedPathSegList();
     }
@@ -171,6 +179,7 @@ public class SVGOMPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGPathElement#getAnimatedPathSegList()}.
      */
+    @Override
     public SVGPathSegList getAnimatedPathSegList() {
         return d.getAnimatedPathSegList();
     }
@@ -179,6 +188,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#getAnimatedNormalizedPathSegList()}.
      */
+    @Override
     public SVGPathSegList getAnimatedNormalizedPathSegList() {
         return d.getAnimatedNormalizedPathSegList();
     }
@@ -188,11 +198,14 @@ public class SVGOMPathElement
     /**
      * <b>DOM</b>: Implements {@link SVGPathElement#createSVGPathSegClosePath()}.
      */
+    @Override
     public SVGPathSegClosePath createSVGPathSegClosePath() {
         return new SVGPathSegClosePath(){
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_CLOSEPATH;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_CLOSEPATH_LETTER;
                 }
@@ -203,26 +216,33 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegMovetoAbs(float,float)}.
      */
+    @Override
     public SVGPathSegMovetoAbs createSVGPathSegMovetoAbs(final float x_value, final float y_value) {
         return new SVGPathSegMovetoAbs(){
                 protected float x = x_value;
                 protected float y = y_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_MOVETO_ABS;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_MOVETO_ABS_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
@@ -233,26 +253,33 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegMovetoRel(float,float)}.
      */
+    @Override
     public SVGPathSegMovetoRel createSVGPathSegMovetoRel(final float x_value, final float y_value) {
         return new SVGPathSegMovetoRel(){
                 protected float x = x_value;
                 protected float y = y_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_MOVETO_REL;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_MOVETO_REL_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
@@ -263,26 +290,33 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegLinetoAbs(float,float)}.
      */
+    @Override
     public SVGPathSegLinetoAbs createSVGPathSegLinetoAbs(final float x_value, final float y_value) {
         return new SVGPathSegLinetoAbs(){
                 protected float x = x_value;
                 protected float y = y_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_LINETO_ABS;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_LINETO_ABS_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
@@ -293,26 +327,33 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegLinetoRel(float,float)}.
      */
+    @Override
     public SVGPathSegLinetoRel createSVGPathSegLinetoRel(final float x_value, final float y_value) {
         return new SVGPathSegLinetoRel(){
                 protected float x = x_value;
                 protected float y = y_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_LINETO_REL;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_LINETO_REL_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
@@ -323,19 +364,24 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegLinetoHorizontalAbs(float)}.
      */
+    @Override
     public SVGPathSegLinetoHorizontalAbs createSVGPathSegLinetoHorizontalAbs(final float x_value) {
         return new SVGPathSegLinetoHorizontalAbs(){
                 protected float x = x_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_LINETO_HORIZONTAL_ABS_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
@@ -346,19 +392,24 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegLinetoHorizontalRel(float)}.
      */
+    @Override
     public SVGPathSegLinetoHorizontalRel createSVGPathSegLinetoHorizontalRel(final float x_value) {
         return new SVGPathSegLinetoHorizontalRel(){
                 protected float x = x_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_LINETO_HORIZONTAL_REL_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
@@ -369,19 +420,24 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegLinetoVerticalAbs(float)}.
      */
+    @Override
     public SVGPathSegLinetoVerticalAbs createSVGPathSegLinetoVerticalAbs(final float y_value) {
         return new SVGPathSegLinetoVerticalAbs(){
                 protected float y = y_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_LINETO_VERTICAL_ABS_LETTER;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
@@ -392,19 +448,24 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegLinetoVerticalRel(float)}.
      */
+    @Override
     public SVGPathSegLinetoVerticalRel createSVGPathSegLinetoVerticalRel(final float y_value) {
         return new SVGPathSegLinetoVerticalRel(){
                 protected float y = y_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_LINETO_VERTICAL_REL_LETTER;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
@@ -415,6 +476,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegCurvetoCubicAbs(float,float,float,float,float,float)}.
      */
+    @Override
     public SVGPathSegCurvetoCubicAbs createSVGPathSegCurvetoCubicAbs
         (final float x_value, final float y_value, 
          final float x1_value, final float y1_value, 
@@ -427,45 +489,59 @@ public class SVGOMPathElement
                 protected float x2 = x2_value;
                 protected float y2 = y2_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_CURVETO_CUBIC_ABS_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
+                @Override
                 public float getX1(){
                     return x1;
                 }
+                @Override
                 public void setX1(float x1){
                     this.x1 = x1;
                 }
+                @Override
                 public float getY1(){
                     return y1;
                 }
+                @Override
                 public void setY1(float y1){
                     this.y1 = y1;
                 }
+                @Override
                 public float getX2(){
                     return x2;
                 }
+                @Override
                 public void setX2(float x2){
                     this.x2 = x2;
                 }
+                @Override
                 public float getY2(){
                     return y2;
                 }
+                @Override
                 public void setY2(float y2){
                     this.y2 = y2;
                 }
@@ -476,6 +552,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegCurvetoCubicRel(float,float,float,float,float,float)}.
      */
+    @Override
     public SVGPathSegCurvetoCubicRel createSVGPathSegCurvetoCubicRel
         (final float x_value, final float y_value, 
          final float x1_value, final float y1_value, 
@@ -488,45 +565,59 @@ public class SVGOMPathElement
                 protected float x2 = x2_value;
                 protected float y2 = y2_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_CURVETO_CUBIC_REL;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_CURVETO_CUBIC_REL_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
+                @Override
                 public float getX1(){
                     return x1;
                 }
+                @Override
                 public void setX1(float x1){
                     this.x1 = x1;
                 }
+                @Override
                 public float getY1(){
                     return y1;
                 }
+                @Override
                 public void setY1(float y1){
                     this.y1 = y1;
                 }
+                @Override
                 public float getX2(){
                     return x2;
                 }
+                @Override
                 public void setX2(float x2){
                     this.x2 = x2;
                 }
+                @Override
                 public float getY2(){
                     return y2;
                 }
+                @Override
                 public void setY2(float y2){
                     this.y2 = y2;
                 }
@@ -537,6 +628,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegCurvetoQuadraticAbs(float,float,float,float)}.
      */
+    @Override
     public SVGPathSegCurvetoQuadraticAbs createSVGPathSegCurvetoQuadraticAbs
         (final float x_value, final float y_value, 
          final float x1_value, final float y1_value) {
@@ -546,33 +638,43 @@ public class SVGOMPathElement
                 protected float x1 = x1_value;
                 protected float y1 = y1_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_CURVETO_QUADRATIC_ABS_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
+                @Override
                 public float getX1(){
                     return x1;
                 }
+                @Override
                 public void setX1(float x1){
                     this.x1 = x1;
                 }
+                @Override
                 public float getY1(){
                     return y1;
                 }
+                @Override
                 public void setY1(float y1){
                     this.y1 = y1;
                 }
@@ -583,6 +685,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegCurvetoQuadraticRel(float,float,float,float)}.
      */
+    @Override
     public SVGPathSegCurvetoQuadraticRel createSVGPathSegCurvetoQuadraticRel
         (final float x_value, final float y_value, 
          final float x1_value, final float y1_value) {
@@ -592,33 +695,43 @@ public class SVGOMPathElement
                 protected float x1 = x1_value;
                 protected float y1 = y1_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_CURVETO_QUADRATIC_REL_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
+                @Override
                 public float getX1(){
                     return x1;
                 }
+                @Override
                 public void setX1(float x1){
                     this.x1 = x1;
                 }
+                @Override
                 public float getY1(){
                     return y1;
                 }
+                @Override
                 public void setY1(float y1){
                     this.y1 = y1;
                 }
@@ -629,6 +742,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegCurvetoCubicSmoothAbs(float,float,float,float)}.
      */
+    @Override
     public SVGPathSegCurvetoCubicSmoothAbs
             createSVGPathSegCurvetoCubicSmoothAbs
         (final float x_value, final float y_value, 
@@ -639,33 +753,43 @@ public class SVGOMPathElement
                 protected float x2 = x2_value;
                 protected float y2 = y2_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_CURVETO_CUBIC_SMOOTH_ABS_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
+                @Override
                 public float getX2(){
                     return x2;
                 }
+                @Override
                 public void setX2(float x2){
                     this.x2 = x2;
                 }
+                @Override
                 public float getY2(){
                     return y2;
                 }
+                @Override
                 public void setY2(float y2){
                     this.y2 = y2;
                 }
@@ -676,6 +800,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegCurvetoCubicSmoothRel(float,float,float,float)}.
      */
+    @Override
     public SVGPathSegCurvetoCubicSmoothRel
             createSVGPathSegCurvetoCubicSmoothRel
         (final float x_value, final float y_value, 
@@ -686,33 +811,43 @@ public class SVGOMPathElement
                 protected float x2 = x2_value;
                 protected float y2 = y2_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_CURVETO_CUBIC_SMOOTH_REL_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
+                @Override
                 public float getX2(){
                     return x2;
                 }
+                @Override
                 public void setX2(float x2){
                     this.x2 = x2;
                 }
+                @Override
                 public float getY2(){
                     return y2;
                 }
+                @Override
                 public void setY2(float y2){
                     this.y2 = y2;
                 }
@@ -723,6 +858,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegCurvetoQuadraticSmoothAbs(float,float)}.
      */
+    @Override
     public SVGPathSegCurvetoQuadraticSmoothAbs
             createSVGPathSegCurvetoQuadraticSmoothAbs
         (final float x_value, final float y_value) {
@@ -730,21 +866,27 @@ public class SVGOMPathElement
                 protected float x = x_value;
                 protected float y = y_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
@@ -756,6 +898,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegCurvetoQuadraticSmoothRel(float,float)}.
      */
+    @Override
     public SVGPathSegCurvetoQuadraticSmoothRel
             createSVGPathSegCurvetoQuadraticSmoothRel
         (final float x_value, final float y_value) {
@@ -763,21 +906,27 @@ public class SVGOMPathElement
                 protected float x = x_value;
                 protected float y = y_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
@@ -788,6 +937,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegArcAbs(float,float,float,float,float,boolean,boolean)}.
      */
+    @Override
     public SVGPathSegArcAbs createSVGPathSegArcAbs
         (final float x_value, final float y_value, 
          final float r1_value, final float r2_value, 
@@ -803,51 +953,67 @@ public class SVGOMPathElement
                 protected boolean largeArcFlag = largeArcFlag_value;
                 protected boolean sweepFlag = sweepFlag_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_ARC_ABS;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_ARC_ABS_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
+                @Override
                 public float getR1(){
                     return r1;
                 }
+                @Override
                 public void setR1(float r1){
                     this.r1 = r1;
                 }
+                @Override
                 public float getR2(){
                     return r2;
                 }
+                @Override
                 public void setR2(float r2){
                     this.r2 = r2;
                 }
+                @Override
                 public float getAngle(){
                     return angle;
                 }
+                @Override
                 public void setAngle(float angle){
                     this.angle = angle;
                 }
+                @Override
                 public boolean getLargeArcFlag(){
                     return largeArcFlag;
                 }
+                @Override
                 public void setLargeArcFlag(boolean largeArcFlag){
                     this.largeArcFlag = largeArcFlag;
                 }
+                @Override
                 public boolean getSweepFlag(){
                     return sweepFlag;
                 }
+                @Override
                 public void setSweepFlag(boolean sweepFlag){
                     this.sweepFlag = sweepFlag;
                 }
@@ -860,6 +1026,7 @@ public class SVGOMPathElement
      * <b>DOM</b>: Implements {@link
      * SVGPathElement#createSVGPathSegArcRel(float,float,float,float,float,boolean,boolean)}.
      */
+    @Override
     public SVGPathSegArcRel createSVGPathSegArcRel
         (final float x_value, final float y_value, 
          final float r1_value, final float r2_value, 
@@ -875,51 +1042,67 @@ public class SVGOMPathElement
                 protected boolean largeArcFlag = largeArcFlag_value;
                 protected boolean sweepFlag = sweepFlag_value;
 
+                @Override
                 public short getPathSegType(){
                     return SVGPathSeg.PATHSEG_ARC_REL;
                 }
+                @Override
                 public String getPathSegTypeAsLetter(){
                     return PATHSEG_ARC_REL_LETTER;
                 }
+                @Override
                 public float getX(){
                     return x;
                 }
+                @Override
                 public void setX(float x){
                     this.x = x;
                 }
+                @Override
                 public float getY(){
                     return y;
                 }
+                @Override
                 public void setY(float y){
                     this.y = y;
                 }
+                @Override
                 public float getR1(){
                     return r1;
                 }
+                @Override
                 public void setR1(float r1){
                     this.r1 = r1;
                 }
+                @Override
                 public float getR2(){
                     return r2;
                 }
+                @Override
                 public void setR2(float r2){
                     this.r2 = r2;
                 }
+                @Override
                 public float getAngle(){
                     return angle;
                 }
+                @Override
                 public void setAngle(float angle){
                     this.angle = angle;
                 }
+                @Override
                 public boolean getLargeArcFlag(){
                     return largeArcFlag;
                 }
+                @Override
                 public void setLargeArcFlag(boolean largeArcFlag){
                     this.largeArcFlag = largeArcFlag;
                 }
+                @Override
                 public boolean getSweepFlag(){
                     return sweepFlag;
                 }
+                @Override
                 public void setSweepFlag(boolean sweepFlag){
                     this.sweepFlag = sweepFlag;
                 }
@@ -931,6 +1114,7 @@ public class SVGOMPathElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMPathElement();
     }
@@ -938,6 +1122,7 @@ public class SVGOMPathElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

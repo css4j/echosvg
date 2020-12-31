@@ -52,6 +52,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
      * @param value 'd' attribute value
      * @param handler : list handler
      */
+    @Override
     protected void doParse(String value, ListHandler handler) throws ParseException {
         PathParser pathParser = new PathParser();
 
@@ -72,6 +73,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#startPath()}.
          */
+        @Override
         public void startPath() throws ParseException {
             listHandler.startList();
             lastAbs = new SVGPathSegGenericItem(SVGPathSeg.PATHSEG_MOVETO_ABS,
@@ -81,6 +83,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#endPath()}.
          */
+        @Override
         public void endPath() throws ParseException {
             listHandler.endList();
         }
@@ -88,6 +91,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#movetoRel(float,float)}.
          */
+        @Override
         public void movetoRel(float x, float y) throws ParseException {
             movetoAbs(lastAbs.getX() + x, lastAbs.getY() + y);
         }
@@ -95,6 +99,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#movetoAbs(float,float)}.
          */
+        @Override
         public void movetoAbs(float x, float y) throws ParseException {
             listHandler.item(new SVGPathSegMovetoLinetoItem(SVGPathSeg.PATHSEG_MOVETO_ABS, PATHSEG_MOVETO_ABS_LETTER,
                     x, y));
@@ -106,6 +111,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#closePath()}.
          */
+        @Override
         public void closePath() throws ParseException {
             listHandler.item(new SVGPathSegItem
                     (SVGPathSeg.PATHSEG_CLOSEPATH,PATHSEG_CLOSEPATH_LETTER));
@@ -114,6 +120,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoRel(float,float)}.
          */
+        @Override
         public void linetoRel(float x, float y) throws ParseException {
             linetoAbs(lastAbs.getX() + x, lastAbs.getY() + y);
         }
@@ -121,6 +128,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoAbs(float,float)}.
          */
+        @Override
         public void linetoAbs(float x, float y) throws ParseException {
             listHandler.item(new SVGPathSegMovetoLinetoItem(SVGPathSeg.PATHSEG_LINETO_ABS, PATHSEG_LINETO_ABS_LETTER,
                     x, y));
@@ -132,6 +140,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoHorizontalRel(float)}.
          */
+        @Override
         public void linetoHorizontalRel(float x) throws ParseException {
             linetoAbs(lastAbs.getX() + x, lastAbs.getY());
         }
@@ -139,6 +148,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoHorizontalAbs(float)}.
          */
+        @Override
         public void linetoHorizontalAbs(float x) throws ParseException {
             linetoAbs(x, lastAbs.getY());
         }
@@ -146,6 +156,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoVerticalRel(float)}.
          */
+        @Override
         public void linetoVerticalRel(float y) throws ParseException {
             linetoAbs(lastAbs.getX(), lastAbs.getY() + y);
         }
@@ -153,6 +164,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoVerticalAbs(float)}.
          */
+        @Override
         public void linetoVerticalAbs(float y) throws ParseException {
             linetoAbs(lastAbs.getX(), y);
         }
@@ -161,6 +173,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoCubicRel(float,float,float,float,float,float)}.
          */
+        @Override
         public void curvetoCubicRel(float x1, float y1,
                 float x2, float y2,
                 float x, float y) throws ParseException {
@@ -173,6 +186,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoCubicAbs(float,float,float,float,float,float)}.
          */
+        @Override
         public void curvetoCubicAbs(float x1, float y1,
                 float x2, float y2,
                 float x, float y) throws ParseException {
@@ -186,6 +200,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoCubicSmoothRel(float,float,float,float)}.
          */
+        @Override
         public void curvetoCubicSmoothRel(float x2, float y2,
                 float x, float y) throws ParseException {
             curvetoCubicSmoothAbs(lastAbs.getX() + x2, lastAbs.getY() + y2,
@@ -197,6 +212,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoCubicSmoothAbs(float,float,float,float)}.
          */
+        @Override
         public void curvetoCubicSmoothAbs(float x2, float y2,
                 float x, float y) throws ParseException {
             if (lastAbs.getPathSegType()==SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS) {
@@ -212,6 +228,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoQuadraticRel(float,float,float,float)}.
          */
+        @Override
         public void curvetoQuadraticRel(float x1, float y1,
                 float x, float y) throws ParseException {
             curvetoQuadraticAbs(lastAbs.getX() + x1, lastAbs.getY() + y1,
@@ -222,6 +239,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoQuadraticAbs(float,float,float,float)}.
          */
+        @Override
         public void curvetoQuadraticAbs(float x1, float y1,
                 float x, float y) throws ParseException {
                         curvetoCubicAbs(lastAbs.getX() + 2 * (x1 - lastAbs.getX()) / 3,
@@ -237,6 +255,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#curvetoQuadraticSmoothRel(float,float)}.
          */
+        @Override
         public void curvetoQuadraticSmoothRel(float x, float y)
         throws ParseException {
             curvetoQuadraticSmoothAbs(lastAbs.getX() + x, lastAbs.getY() + y);
@@ -245,6 +264,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#curvetoQuadraticSmoothAbs(float,float)}.
          */
+        @Override
         public void curvetoQuadraticSmoothAbs(float x, float y)
         throws ParseException {
             if (lastAbs.getPathSegType()==SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS) {
@@ -261,6 +281,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#arcRel(float,float,float,boolean,boolean,float,float)}.
          */
+        @Override
         public void arcRel(float rx, float ry,
                 float xAxisRotation,
                 boolean largeArcFlag, boolean sweepFlag,
@@ -272,6 +293,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#arcAbs(float,float,float,boolean,boolean,float,float)}.
          */
+        @Override
         public void arcAbs(float rx, float ry,
                 float xAxisRotation,
                 boolean largeArcFlag, boolean sweepFlag,

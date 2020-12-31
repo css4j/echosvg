@@ -73,10 +73,12 @@ public class ConvolveMatrixRable8Bit
         super(source);
     }
 
+    @Override
     public Filter getSource() {
         return (Filter)getSources().get(0);
     }
 
+    @Override
     public void setSource(Filter src) {
         init(src);
     }
@@ -85,6 +87,7 @@ public class ConvolveMatrixRable8Bit
     /**
      * Returns the Convolution Kernel in use
      */
+    @Override
     public Kernel getKernel() {
         return kernel;
     }
@@ -93,6 +96,7 @@ public class ConvolveMatrixRable8Bit
      * Sets the Convolution Kernel to use.
      * @param k Kernel to use for convolution.
      */
+    @Override
     public void setKernel(Kernel k) {
         touch();
         this.kernel = k;
@@ -105,10 +109,12 @@ public class ConvolveMatrixRable8Bit
             }
     }
 
+    @Override
     public Point getTarget() {
         return (Point)target.clone();
     }
 
+    @Override
     public void setTarget(Point pt) {
         touch();
         this.target = (Point)pt.clone();
@@ -117,6 +123,7 @@ public class ConvolveMatrixRable8Bit
     /**
      * Returns the shift value to apply to the result of convolution
      */
+    @Override
     public double getBias() {
         return bias;
     }
@@ -124,6 +131,7 @@ public class ConvolveMatrixRable8Bit
     /**
      * Returns the shift value to apply to the result of convolution
      */
+    @Override
     public void setBias(double bias) {
         touch();
         this.bias = (float)bias;
@@ -132,6 +140,7 @@ public class ConvolveMatrixRable8Bit
     /**
      * Returns the current edge handling mode.
      */
+    @Override
     public PadMode getEdgeMode() {
         return edgeMode;
     }
@@ -139,6 +148,7 @@ public class ConvolveMatrixRable8Bit
     /**
      * Sets the current edge handling mode.
      */
+    @Override
     public void setEdgeMode(PadMode edgeMode) {
         touch();
         this.edgeMode = edgeMode;
@@ -147,6 +157,7 @@ public class ConvolveMatrixRable8Bit
     /**
      * Returns the [x,y] distance in user space between kernel values
      */
+    @Override
     public double [] getKernelUnitLength() {
         if (kernelUnitLength == null)
             return null;
@@ -161,6 +172,7 @@ public class ConvolveMatrixRable8Bit
      * Sets the [x,y] distance in user space between kernel values
      * If set to zero then device space will be used.
      */
+    @Override
     public void setKernelUnitLength(double [] kernelUnitLength) {
         touch();
         if (kernelUnitLength == null) {
@@ -178,6 +190,7 @@ public class ConvolveMatrixRable8Bit
     /**
      * Returns false if the convolution should affect the Alpha channel
      */
+    @Override
     public boolean getPreserveAlpha() {
         return preserveAlpha;
     }
@@ -187,6 +200,7 @@ public class ConvolveMatrixRable8Bit
      * A value of False indicates that the convolution should apply to
      * the Alpha Channel
      */
+    @Override
     public void setPreserveAlpha(boolean preserveAlpha) {
         touch();
         this.preserveAlpha = preserveAlpha;
@@ -258,6 +272,7 @@ public class ConvolveMatrixRable8Bit
         }
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         // Just copy over the rendering hints.
         RenderingHints rh = rc.getRenderingHints();

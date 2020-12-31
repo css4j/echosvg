@@ -71,6 +71,7 @@ public class SVGOMVKernElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_VKERN_TAG;
     }
@@ -78,6 +79,7 @@ public class SVGOMVKernElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMVKernElement();
     }

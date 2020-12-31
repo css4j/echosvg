@@ -48,6 +48,7 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
      * derived from the test identifier. The identifier should
      * characterize the SVG file to be tested.
      */
+    @Override
     public void setId(String id){
         super.setId(id);
         setFile(id);
@@ -74,6 +75,7 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
      * we use the test id, which is the relevant identifier for the test
      * user.
      */
+    @Override
     public String getName(){
         return getId();
     }

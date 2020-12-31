@@ -73,6 +73,7 @@ public abstract class AbstractSVGPathSegList
     /**
      * Return the separator between segments in the list.
      */
+    @Override
     protected String getItemSeparator(){
         return SVG_PATHSEG_LIST_SEPARATOR;
     }
@@ -89,6 +90,7 @@ public abstract class AbstractSVGPathSegList
 
     /**
      */
+    @Override
     public SVGPathSeg initialize ( SVGPathSeg newItem )
         throws DOMException, SVGException {
 
@@ -97,6 +99,7 @@ public abstract class AbstractSVGPathSegList
 
     /**
      */
+    @Override
     public SVGPathSeg getItem ( int index )
         throws DOMException {
 
@@ -105,6 +108,7 @@ public abstract class AbstractSVGPathSegList
 
     /**
      */
+    @Override
     public SVGPathSeg insertItemBefore ( SVGPathSeg newItem, int index )
         throws DOMException, SVGException {
 
@@ -113,6 +117,7 @@ public abstract class AbstractSVGPathSegList
 
     /**
      */
+    @Override
     public SVGPathSeg replaceItem ( SVGPathSeg newItem, int index )
         throws DOMException, SVGException {
 
@@ -121,6 +126,7 @@ public abstract class AbstractSVGPathSegList
 
     /**
      */
+    @Override
     public SVGPathSeg removeItem ( int index )
         throws DOMException {
 
@@ -129,6 +135,7 @@ public abstract class AbstractSVGPathSegList
 
     /**
      */
+    @Override
     public SVGPathSeg appendItem ( SVGPathSeg newItem )
         throws DOMException, SVGException {
 
@@ -137,6 +144,7 @@ public abstract class AbstractSVGPathSegList
 
     /**
      */
+    @Override
     protected SVGItem createSVGItem(Object newItem){
 
         SVGPathSeg pathSeg = (SVGPathSeg)newItem;
@@ -150,6 +158,7 @@ public abstract class AbstractSVGPathSegList
      * @param value 'd' attribute value
      * @param handler : list handler
      */
+    @Override
     protected void doParse(String value, ListHandler handler)
         throws ParseException{
 
@@ -165,6 +174,7 @@ public abstract class AbstractSVGPathSegList
     /**
      * Check if the item is an SVGPathSeg.
      */
+    @Override
     protected void checkItemType(Object newItem){
         if ( !( newItem instanceof SVGPathSeg ) ){
             createSVGException(SVGException.SVG_WRONG_TYPE_ERR,
@@ -265,15 +275,18 @@ public abstract class AbstractSVGPathSegList
             }
         }
 
+        @Override
         public void setX(float x){
             super.setX(x);
             resetAttribute();
         }
+        @Override
         public void setY(float y){
             super.setY(y);
             resetAttribute();
         }
 
+        @Override
         protected String getStringValue(){
             return letter
                     + ' '
@@ -324,33 +337,40 @@ public abstract class AbstractSVGPathSegList
             }
         }
 
+        @Override
         public void setX(float x){
             super.setX(x);
             resetAttribute();
         }
+        @Override
         public void setY(float y){
             super.setY(y);
             resetAttribute();
         }
 
+        @Override
         public void setX1(float x1){
             super.setX1(x1);
             resetAttribute();
         }
+        @Override
         public void setY1(float y1){
             super.setY1(y1);
             resetAttribute();
         }
 
+        @Override
         public void setX2(float x2){
             super.setX2(x2);
             resetAttribute();
         }
+        @Override
         public void setY2(float y2){
             super.setY2(y2);
             resetAttribute();
         }
 
+        @Override
         protected String getStringValue(){
             return letter
                     + ' '
@@ -403,24 +423,29 @@ public abstract class AbstractSVGPathSegList
             }
         }
 
+        @Override
         public void setX(float x){
             super.setX(x);
             resetAttribute();
         }
+        @Override
         public void setY(float y){
             super.setY(y);
             resetAttribute();
         }
 
+        @Override
         public void setX1(float x1){
             super.setX1(x1);
             resetAttribute();
         }
+        @Override
         public void setY1(float y1){
             super.setY1(y1);
             resetAttribute();
         }
 
+        @Override
         protected String getStringValue(){
 
             return letter
@@ -480,47 +505,57 @@ public abstract class AbstractSVGPathSegList
             }
         }
 
+        @Override
         public void setX(float x){
             super.setX(x);
             resetAttribute();
         }
+        @Override
         public void setY(float y){
             super.setY(y);
             resetAttribute();
         }
 
+        @Override
         public void setR1(float r1){
             super.setR1(r1);
             resetAttribute();
         }
+        @Override
         public void setR2(float r2){
             super.setR2(r2);
             resetAttribute();
         }
 
+        @Override
         public void setAngle(float angle){
             super.setAngle(angle);
             resetAttribute();
         }
 
+        @Override
         public boolean getSweepFlag(){
             return isSweepFlag();
         }
 
+        @Override
         public void setSweepFlag(boolean sweepFlag){
             super.setSweepFlag(sweepFlag);
             resetAttribute();
         }
 
+        @Override
         public boolean getLargeArcFlag(){
             return isLargeArcFlag();
         }
 
+        @Override
         public void setLargeArcFlag(boolean largeArcFlag){
             super.setLargeArcFlag(largeArcFlag);
             resetAttribute();
         }
 
+        @Override
         protected String getStringValue(){
             return letter
                     + ' '
@@ -565,11 +600,13 @@ public abstract class AbstractSVGPathSegList
             }
         }
 
+        @Override
         public void setX(float x){
             super.setX(x);
             resetAttribute();
         }
 
+        @Override
         protected String getStringValue(){
             return letter
                     + ' '
@@ -603,11 +640,13 @@ public abstract class AbstractSVGPathSegList
             }
         }
 
+        @Override
         public void setY(float y){
             super.setY(y);
             resetAttribute();
         }
 
+        @Override
         protected String getStringValue(){
             return letter
                     + ' '
@@ -649,24 +688,29 @@ public abstract class AbstractSVGPathSegList
             }
         }
 
+        @Override
         public void setX(float x){
             super.setX(x);
             resetAttribute();
         }
+        @Override
         public void setY(float y){
             super.setY(y);
             resetAttribute();
         }
 
+        @Override
         public void setX2(float x2){
             super.setX2(x2);
             resetAttribute();
         }
+        @Override
         public void setY2(float y2){
             super.setY2(y2);
             resetAttribute();
         }
 
+        @Override
         protected String getStringValue(){
             return letter
                     + ' '
@@ -708,15 +752,18 @@ public abstract class AbstractSVGPathSegList
             }
         }
 
+        @Override
         public void setX(float x){
             super.setX(x);
             resetAttribute();
         }
+        @Override
         public void setY(float y){
             super.setY(y);
             resetAttribute();
         }
 
+        @Override
         protected String getStringValue(){
             return letter
                     + ' '
@@ -736,6 +783,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#startPath()}.
          */
+        @Override
         public void startPath() throws ParseException {
             listHandler.startList();
         }
@@ -743,6 +791,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#endPath()}.
          */
+        @Override
         public void endPath() throws ParseException {
             listHandler.endList();
         }
@@ -750,6 +799,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#movetoRel(float,float)}.
          */
+        @Override
         public void movetoRel(float x, float y) throws ParseException {
             listHandler.item(new SVGPathSegMovetoLinetoItem(SVGPathSeg.PATHSEG_MOVETO_REL, PATHSEG_MOVETO_REL_LETTER,
                     x, y));
@@ -758,6 +808,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#movetoAbs(float,float)}.
          */
+        @Override
         public void movetoAbs(float x, float y) throws ParseException {
             listHandler.item(new SVGPathSegMovetoLinetoItem(SVGPathSeg.PATHSEG_MOVETO_ABS, PATHSEG_MOVETO_ABS_LETTER,
                     x, y));
@@ -766,6 +817,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#closePath()}.
          */
+        @Override
         public void closePath() throws ParseException {
             listHandler.item(new SVGPathSegItem
                 (SVGPathSeg.PATHSEG_CLOSEPATH,PATHSEG_CLOSEPATH_LETTER));
@@ -775,6 +827,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoRel(float,float)}.
          */
+        @Override
         public void linetoRel(float x, float y) throws ParseException {
             listHandler.item(new SVGPathSegMovetoLinetoItem(SVGPathSeg.PATHSEG_LINETO_REL, PATHSEG_LINETO_REL_LETTER,
                     x, y));
@@ -783,6 +836,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoAbs(float,float)}.
          */
+        @Override
         public void linetoAbs(float x, float y) throws ParseException {
             listHandler.item(new SVGPathSegMovetoLinetoItem(SVGPathSeg.PATHSEG_LINETO_ABS, PATHSEG_LINETO_ABS_LETTER,
                     x, y));
@@ -791,6 +845,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoHorizontalRel(float)}.
          */
+        @Override
         public void linetoHorizontalRel(float x) throws ParseException {
             listHandler.item(new SVGPathSegLinetoHorizontalItem(SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_REL, PATHSEG_LINETO_HORIZONTAL_REL_LETTER,
                     x));
@@ -799,6 +854,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoHorizontalAbs(float)}.
          */
+        @Override
         public void linetoHorizontalAbs(float x) throws ParseException {
             listHandler.item(new SVGPathSegLinetoHorizontalItem(SVGPathSeg.PATHSEG_LINETO_HORIZONTAL_ABS, PATHSEG_LINETO_HORIZONTAL_ABS_LETTER,
                     x));
@@ -807,6 +863,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoVerticalRel(float)}.
          */
+        @Override
         public void linetoVerticalRel(float y) throws ParseException {
             listHandler.item(new SVGPathSegLinetoVerticalItem(SVGPathSeg.PATHSEG_LINETO_VERTICAL_REL, PATHSEG_LINETO_VERTICAL_REL_LETTER,
                     y));
@@ -815,6 +872,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#linetoVerticalAbs(float)}.
          */
+        @Override
         public void linetoVerticalAbs(float y) throws ParseException {
             listHandler.item(new SVGPathSegLinetoVerticalItem(SVGPathSeg.PATHSEG_LINETO_VERTICAL_ABS, PATHSEG_LINETO_VERTICAL_ABS_LETTER,
                     y));
@@ -824,6 +882,7 @@ public abstract class AbstractSVGPathSegList
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoCubicRel(float,float,float,float,float,float)}.
          */
+        @Override
         public void curvetoCubicRel(float x1, float y1,
                                     float x2, float y2,
                                     float x, float y) throws ParseException {
@@ -835,6 +894,7 @@ public abstract class AbstractSVGPathSegList
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoCubicAbs(float,float,float,float,float,float)}.
          */
+        @Override
         public void curvetoCubicAbs(float x1, float y1,
                                     float x2, float y2,
                                     float x, float y) throws ParseException {
@@ -846,6 +906,7 @@ public abstract class AbstractSVGPathSegList
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoCubicSmoothRel(float,float,float,float)}.
          */
+        @Override
         public void curvetoCubicSmoothRel(float x2, float y2,
                                           float x, float y) throws ParseException {
             listHandler.item(new SVGPathSegCurvetoCubicSmoothItem(SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_REL,
@@ -857,6 +918,7 @@ public abstract class AbstractSVGPathSegList
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoCubicSmoothAbs(float,float,float,float)}.
          */
+        @Override
         public void curvetoCubicSmoothAbs(float x2, float y2,
                                           float x, float y) throws ParseException {
             listHandler.item(new SVGPathSegCurvetoCubicSmoothItem(SVGPathSeg.PATHSEG_CURVETO_CUBIC_SMOOTH_ABS,
@@ -868,6 +930,7 @@ public abstract class AbstractSVGPathSegList
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoQuadraticRel(float,float,float,float)}.
          */
+        @Override
         public void curvetoQuadraticRel(float x1, float y1,
                                         float x, float y) throws ParseException {
             listHandler.item(new SVGPathSegCurvetoQuadraticItem(SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_REL,
@@ -879,6 +942,7 @@ public abstract class AbstractSVGPathSegList
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#curvetoQuadraticAbs(float,float,float,float)}.
          */
+        @Override
         public void curvetoQuadraticAbs(float x1, float y1,
                                         float x, float y) throws ParseException {
             listHandler.item(new SVGPathSegCurvetoQuadraticItem(SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS,
@@ -889,6 +953,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#curvetoQuadraticSmoothRel(float,float)}.
          */
+        @Override
         public void curvetoQuadraticSmoothRel(float x, float y)
             throws ParseException {
             listHandler.item(new SVGPathSegCurvetoQuadraticSmoothItem(SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL,
@@ -899,6 +964,7 @@ public abstract class AbstractSVGPathSegList
         /**
          * Implements {@link io.sf.carte.echosvg.parser.PathHandler#curvetoQuadraticSmoothAbs(float,float)}.
          */
+        @Override
         public void curvetoQuadraticSmoothAbs(float x, float y)
             throws ParseException {
             listHandler.item(new SVGPathSegCurvetoQuadraticSmoothItem(SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_SMOOTH_ABS,
@@ -910,6 +976,7 @@ public abstract class AbstractSVGPathSegList
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#arcRel(float,float,float,boolean,boolean,float,float)}.
          */
+        @Override
         public void arcRel(float rx, float ry,
                            float xAxisRotation,
                            boolean largeArcFlag, boolean sweepFlag,
@@ -922,6 +989,7 @@ public abstract class AbstractSVGPathSegList
          * Implements {@link
          * io.sf.carte.echosvg.parser.PathHandler#arcAbs(float,float,float,boolean,boolean,float,float)}.
          */
+        @Override
         public void arcAbs(float rx, float ry,
                            float xAxisRotation,
                            boolean largeArcFlag, boolean sweepFlag,

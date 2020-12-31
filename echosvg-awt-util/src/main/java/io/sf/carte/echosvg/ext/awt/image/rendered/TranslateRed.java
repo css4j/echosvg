@@ -69,14 +69,17 @@ public class TranslateRed extends AbstractRed {
         return (CachableRed)getSources().get(0);
     }
 
+    @Override
     public Object getProperty(String name) {
         return getSource().getProperty(name);
     }
 
+    @Override
     public String [] getPropertyNames() {
         return getSource().getPropertyNames();
     }
 
+    @Override
     public Raster getTile(int tileX, int tileY) {
         Raster r = getSource().getTile(tileX, tileY);
 
@@ -84,12 +87,14 @@ public class TranslateRed extends AbstractRed {
                                        r.getMinY()+deltaY);
     }
 
+    @Override
     public Raster getData() {
         Raster r = getSource().getData();
         return r.createTranslatedChild(r.getMinX()+deltaX,
                                        r.getMinY()+deltaY);
     }
 
+    @Override
     public Raster getData(Rectangle rect) {
         Rectangle r = (Rectangle)rect.clone();
         r.translate(-deltaX, -deltaY);
@@ -98,6 +103,7 @@ public class TranslateRed extends AbstractRed {
                                          ret.getMinY()+deltaY);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         WritableRaster wr2 = wr.createWritableTranslatedChild
             (wr.getMinX()-deltaX, wr.getMinY()-deltaY);

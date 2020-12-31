@@ -164,6 +164,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
      * The action associated with the 'OK' button
      */
     protected class OKButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             if (panel.fileCheckBox.isSelected()) {
                 String path = panel.fileTextField.getText();
@@ -197,6 +198,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
      * The action associated with the 'Cancel' button
      */
     protected class CancelButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             returnCode = CANCEL_OPTION;
             dispose();
@@ -214,6 +216,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
      * @param key the key mapped with the action to get
      * @throws MissingListenerException if the action is not found
      */
+    @Override
     public Action getAction(String key) throws MissingListenerException {
         return (Action)listeners.get(key);
     }
@@ -324,6 +327,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
          * To listen to the file checkbox
          */
         protected class FileCheckBoxChangeListener implements ChangeListener {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 boolean selected = fileCheckBox.isSelected();
                 fileLabel.setEnabled(selected);
@@ -336,6 +340,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
          * The action associated with the 'browse' button
          */
         protected class FileBrowseButtonAction extends AbstractAction {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser(new File("."));
                 fileChooser.setFileHidingEnabled(false);

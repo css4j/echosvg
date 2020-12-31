@@ -41,11 +41,13 @@ public abstract class GraphicsNodeChangeAdapter
      * any changes occure in the graphics node it's self.
      * @param gnce the graphics node change event
      */
+    @Override
     public void changeStarted(GraphicsNodeChangeEvent gnce) { }
 
     /**
      * Invoked when a change on a graphics node has completed
      * @param gnce the graphics node change event
      */
+    @Override
     public void changeCompleted(GraphicsNodeChangeEvent gnce) { }
 }

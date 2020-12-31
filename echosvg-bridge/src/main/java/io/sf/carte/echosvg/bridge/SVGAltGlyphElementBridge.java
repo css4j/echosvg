@@ -53,6 +53,7 @@ public class SVGAltGlyphElementBridge extends AbstractSVGBridge
     /**
      * Returns 'altGlyph'.
      */
+    @Override
     public String getLocalName() {
         return SVG_ALT_GLYPH_TAG;
     }

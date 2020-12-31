@@ -218,6 +218,7 @@ public class SVGFont extends AbstractSVGConverter {
      *         with the related definitions
      * @see io.sf.carte.echosvg.svggen.SVGDescriptor
      */
+    @Override
     public SVGDescriptor toSVG(GraphicContext gc) {
         return toSVG(gc.getFont(), gc.getFontRenderContext());
     }

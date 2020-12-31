@@ -87,6 +87,7 @@ public class SVGOMFEPointLightElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -104,6 +105,7 @@ public class SVGOMFEPointLightElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_POINT_LIGHT_TAG;
     }
@@ -111,6 +113,7 @@ public class SVGOMFEPointLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEPointLightElement#getX()}.
      */
+    @Override
     public SVGAnimatedNumber getX() {
         return x;
     }
@@ -118,6 +121,7 @@ public class SVGOMFEPointLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEPointLightElement#getY()}.
      */
+    @Override
     public SVGAnimatedNumber getY() {
         return y;
     }
@@ -125,6 +129,7 @@ public class SVGOMFEPointLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEPointLightElement#getZ()}.
      */
+    @Override
     public SVGAnimatedNumber getZ() {
         return z;
     }
@@ -132,6 +137,7 @@ public class SVGOMFEPointLightElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEPointLightElement();
     }
@@ -139,6 +145,7 @@ public class SVGOMFEPointLightElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

@@ -212,6 +212,7 @@ public class ClassFileUtilities {
         public Jar from;
         public Jar to;
         public int count;
+        @Override
         public int compareTo(Object o) {
             return ((Triple) o).count - count;
         }

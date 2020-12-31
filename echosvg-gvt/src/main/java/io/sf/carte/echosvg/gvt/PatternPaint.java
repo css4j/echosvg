@@ -151,6 +151,7 @@ public class PatternPaint implements Paint {
     /**
      * Creates and returns a context used to generate the pattern.
      */
+    @Override
     public PaintContext createContext(ColorModel      cm,
                                       Rectangle       deviceBounds,
                                       Rectangle2D     userBounds,
@@ -194,6 +195,7 @@ public class PatternPaint implements Paint {
     /**
      * Returns the transparency mode for this pattern paint.
      */
+    @Override
     public int getTransparency(){
         return TRANSLUCENT;
     }
@@ -208,11 +210,14 @@ public class PatternPaint implements Paint {
             this.yShift = yShift;
         }
 
+        @Override
         public void dispose(){ }
 
+        @Override
         public ColorModel getColorModel(){
             return ppc.getColorModel();
         }
+        @Override
         public Raster getRaster(int x, int y, int width, int height){
             return ppc.getRaster(x+xShift, y+yShift, width, height);
         }

@@ -137,7 +137,7 @@ public class ImageIOJPEGImageWriter extends ImageIOImageWriter {
                     "No compression method other than JPEG is supported for JPEG output!");
         }
         if (params.getJPEGForceBaseline()) {
-            param.setProgressiveMode(JPEGImageWriteParam.MODE_DISABLED);
+            param.setProgressiveMode(ImageWriteParam.MODE_DISABLED);
         }
         return param;
     }

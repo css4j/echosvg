@@ -59,6 +59,7 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
     /**
      * @see ImageWriter#writeImage(java.awt.image.RenderedImage, java.io.OutputStream)
      */
+    @Override
     public void writeImage(RenderedImage image, OutputStream out) throws IOException {
         writeImage(image, out, null);
     }
@@ -66,6 +67,7 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
     /**
      * @see ImageWriter#writeImage(java.awt.image.RenderedImage, java.io.OutputStream, ImageWriterParams)
      */
+    @Override
     public void writeImage(RenderedImage image, OutputStream out, 
             ImageWriterParams params) 
                 throws IOException {
@@ -193,6 +195,7 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
     /**
      * @see ImageWriter#getMIMEType()
      */
+    @Override
     public String getMIMEType() {
         return this.targetMIME;
     }
@@ -200,6 +203,7 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
     /**
      * @see javax.imageio.event.IIOWriteWarningListener#warningOccurred(javax.imageio.ImageWriter, int, java.lang.String)
      */
+    @Override
     public void warningOccurred(javax.imageio.ImageWriter source, 
             int imageIndex, String warning) {
         System.err.println("Problem while writing image using ImageI/O: " 

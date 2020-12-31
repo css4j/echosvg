@@ -79,6 +79,7 @@ public class XMLException extends RuntimeException {
      * the detail message from the embedded exception.
      * @return The error or warning message.
      */
+    @Override
     public String getMessage () {
         String message = super.getMessage();
         
@@ -101,6 +102,7 @@ public class XMLException extends RuntimeException {
      * Prints this <code>Exception</code> and its backtrace to the 
      * standard error stream.
      */
+    @Override
     public void printStackTrace() { 
         if (exception == null) {
             super.printStackTrace();
@@ -118,6 +120,7 @@ public class XMLException extends RuntimeException {
      *
      * @param s <code>PrintStream</code> to use for output
      */
+    @Override
     public void printStackTrace(java.io.PrintStream s) { 
         if (exception == null) {
             super.printStackTrace(s);
@@ -135,6 +138,7 @@ public class XMLException extends RuntimeException {
      *
      * @param s <code>PrintWriter</code> to use for output
      */
+    @Override
     public void printStackTrace(java.io.PrintWriter s) { 
         if (exception == null) {
             super.printStackTrace(s);

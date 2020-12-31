@@ -125,6 +125,7 @@ public abstract class BridgeEventSupport implements SVGConstants {
             this.listener = listener;
         }
 
+        @Override
         public void handleEvent(Event evt) {
             dispatcher.removeGraphicsNodeMouseListener(listener);
             dispatcher.removeGraphicsNodeKeyListener(listener);
@@ -157,6 +158,7 @@ public abstract class BridgeEventSupport implements SVGConstants {
          * Invoked when a key has been pressed.
          * @param evt the graphics node key event
          */
+        @Override
         public void keyPressed(GraphicsNodeKeyEvent evt) {
             // XXX isDown is not preventing key repeats
             if (!isDown) {
@@ -174,6 +176,7 @@ public abstract class BridgeEventSupport implements SVGConstants {
          * Invoked when a key has been released.
          * @param evt the graphics node key event
          */
+        @Override
         public void keyReleased(GraphicsNodeKeyEvent evt) {
             dispatchKeyEvent("keyup", evt);
             isDown = false;
@@ -183,6 +186,7 @@ public abstract class BridgeEventSupport implements SVGConstants {
          * Invoked when a key has been typed.
          * @param evt the graphics node key event
          */
+        @Override
         public void keyTyped(GraphicsNodeKeyEvent evt) {
             dispatchKeyEvent("keypress", evt);
         }
@@ -240,18 +244,22 @@ public abstract class BridgeEventSupport implements SVGConstants {
 
         // Mouse -----------------------------------------------------------
 
+        @Override
         public void mouseClicked(GraphicsNodeMouseEvent evt) {
             dispatchMouseEvent("click", evt, true);
         }
 
+        @Override
         public void mousePressed(GraphicsNodeMouseEvent evt) {
             dispatchMouseEvent("mousedown", evt, true);
         }
 
+        @Override
         public void mouseReleased(GraphicsNodeMouseEvent evt) {
             dispatchMouseEvent("mouseup", evt, true);
         }
 
+        @Override
         public void mouseEntered(GraphicsNodeMouseEvent evt) {
             Point clientXY = evt.getClientPoint();
             GraphicsNode node = evt.getGraphicsNode();
@@ -265,6 +273,7 @@ public abstract class BridgeEventSupport implements SVGConstants {
                                true);
         }
 
+        @Override
         public void mouseExited(GraphicsNodeMouseEvent evt) {
             Point clientXY = evt.getClientPoint();
             // Get the 'new' node for the DOM event.
@@ -281,10 +290,12 @@ public abstract class BridgeEventSupport implements SVGConstants {
             }
         }
 
+        @Override
         public void mouseDragged(GraphicsNodeMouseEvent evt) {
             dispatchMouseEvent("mousemove", evt, false);
         }
 
+        @Override
         public void mouseMoved(GraphicsNodeMouseEvent evt) {
             Point clientXY = evt.getClientPoint();
             GraphicsNode node = evt.getGraphicsNode();

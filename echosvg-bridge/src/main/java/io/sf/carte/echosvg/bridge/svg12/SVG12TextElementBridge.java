@@ -47,6 +47,7 @@ public class SVG12TextElementBridge
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVG12TextElementBridge();
     }
@@ -54,6 +55,7 @@ public class SVG12TextElementBridge
     /**
      * Adds the DOM listeners for this text bridge.
      */
+    @Override
     protected void addTextEventListeners(BridgeContext ctx, NodeEventTarget e) {
         if (childNodeRemovedEventListener == null) {
             childNodeRemovedEventListener =
@@ -91,6 +93,7 @@ public class SVG12TextElementBridge
     /**
      * Removes the DOM listeners for this text bridge.
      */
+    @Override
     protected void removeTextEventListeners(BridgeContext ctx,
                                             NodeEventTarget e) {
         AbstractNode n = (AbstractNode) e;
@@ -110,6 +113,7 @@ public class SVG12TextElementBridge
      */
     protected class DOMChildNodeRemovedEventListener
             extends SVGTextElementBridge.DOMChildNodeRemovedEventListener {
+        @Override
         public void handleEvent(Event evt) {
             super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
         }
@@ -120,6 +124,7 @@ public class SVG12TextElementBridge
      */
     protected class DOMSubtreeModifiedEventListener
             extends SVGTextElementBridge.DOMSubtreeModifiedEventListener {
+        @Override
         public void handleEvent(Event evt) {
             super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
         }
@@ -131,6 +136,7 @@ public class SVG12TextElementBridge
      * Returns the first child node of the given node that should be
      * processed by the text bridge.
      */
+    @Override
     protected Node getFirstChild(Node n) {
         return ((NodeXBL) n).getXblFirstChild();
     }
@@ -139,6 +145,7 @@ public class SVG12TextElementBridge
      * Returns the next sibling node of the given node that should be
      * processed by the text bridge.
      */
+    @Override
     protected Node getNextSibling(Node n) {
         return ((NodeXBL) n).getXblNextSibling();
     }
@@ -147,6 +154,7 @@ public class SVG12TextElementBridge
      * Returns the parent node of the given node that should be
      * processed by the text bridge.
      */
+    @Override
     protected Node getParentNode(Node n) {
         return ((NodeXBL) n).getXblParentNode();
     }
@@ -157,6 +165,7 @@ public class SVG12TextElementBridge
      * Invoked when an MutationEvent of type 'DOMCharacterDataModified' 
      * is fired.
      */
+    @Override
     public void handleDOMCharacterDataModified(MutationEvent evt) {
         Node childNode = (Node)evt.getTarget();
         //if the parent is displayed, then discard the layout.
@@ -175,6 +184,7 @@ public class SVG12TextElementBridge
     /**
      * Invoked when a bindable element's binding has changed.
      */
+    @Override
     public void handleBindingEvent(Element bindableElement,
                                    Element shadowTree) {
     }
@@ -183,6 +193,7 @@ public class SVG12TextElementBridge
      * Invoked when the xblChildNodes property has changed because a
      * descendant xbl:content element has updated its selected nodes.
      */
+    @Override
     public void handleContentSelectionChangedEvent
             (ContentSelectionChangedEvent csce) {
         computeLaidoutText(ctx, e, node);

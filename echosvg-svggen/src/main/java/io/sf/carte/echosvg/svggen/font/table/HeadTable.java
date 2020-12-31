@@ -106,6 +106,7 @@ public class HeadTable implements Table {
         return modified;
     }
 
+    @Override
     public int getType() {
         return head;
     }
@@ -134,6 +135,7 @@ public class HeadTable implements Table {
         return yMin;
     }
 
+    @Override
     public String toString() {
         return new StringBuffer()
             .append("head\n\tversionNumber: ").append(versionNumber)

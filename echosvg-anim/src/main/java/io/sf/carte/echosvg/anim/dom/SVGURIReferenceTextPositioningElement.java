@@ -73,6 +73,7 @@ public abstract class SVGURIReferenceTextPositioningElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -89,6 +90,7 @@ public abstract class SVGURIReferenceTextPositioningElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
      */
+    @Override
     public SVGAnimatedString getHref() {
         return href;
     }
@@ -96,6 +98,7 @@ public abstract class SVGURIReferenceTextPositioningElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

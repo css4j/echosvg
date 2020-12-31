@@ -75,6 +75,7 @@ public interface GraphicsNodeBridge extends Bridge {
      *
      * FIX ME: Move to Bridge
      */
+    @Override
     Bridge getInstance();
 
 }

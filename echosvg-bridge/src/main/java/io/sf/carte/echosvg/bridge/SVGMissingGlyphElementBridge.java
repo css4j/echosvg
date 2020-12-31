@@ -29,6 +29,7 @@ public class SVGMissingGlyphElementBridge extends SVGGlyphElementBridge {
     /**
      * Returns 'missing-glyph'.
      */
+    @Override
     public String getLocalName() {
         return SVG_MISSING_GLYPH_TAG;
     }

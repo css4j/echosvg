@@ -482,6 +482,7 @@ public class IndexImage{
          * @return the min/max-boundarys of the rgb-channels and
          *         pixel-count of this Cube.
          */
+        @Override
         public String toString() {
             return "Cube: [" +
                     min[ RED ] + '-' + max[ RED ] + "] [" +

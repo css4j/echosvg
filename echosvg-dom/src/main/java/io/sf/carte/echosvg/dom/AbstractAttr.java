@@ -86,6 +86,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * Sets the node name.
      */
+    @Override
     public void setNodeName(String v) {
         nodeName = v;
         isIdAttr = ownerDocument.isId(this);
@@ -95,6 +96,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return {@link #nodeName}.
      */
+    @Override
     public String getNodeName() {
         return nodeName;
     }
@@ -103,6 +105,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
      * @return {@link org.w3c.dom.Node#ATTRIBUTE_NODE}
      */
+    @Override
     public short getNodeType() {
         return ATTRIBUTE_NODE;
     }
@@ -111,6 +114,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeValue()}.
      * @return The content of the attribute.
      */
+    @Override
     public String getNodeValue() throws DOMException {
         Node first = getFirstChild();
         if (first == null) {
@@ -131,6 +135,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setNodeValue(String)}.
      */
+    @Override
     public void setNodeValue(String nodeValue) throws DOMException {
         if (isReadonly()) {
             throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -166,6 +171,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getName()}.
      * @return {@link #getNodeName()}.
      */
+    @Override
     public String getName() {
         return getNodeName();
     }
@@ -174,6 +180,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getSpecified()}.
      * @return !{@link #unspecified}.
      */
+    @Override
     public boolean getSpecified() {
         return !unspecified;
     }
@@ -181,6 +188,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * Sets the specified attribute.
      */
+    @Override
     public void setSpecified(boolean v) {
         unspecified = !v;
     }
@@ -189,6 +197,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getValue()}.
      * @return {@link #getNodeValue()}.
      */
+    @Override
     public String getValue() {
         return getNodeValue();
     }
@@ -196,6 +205,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#setValue(String)}.
      */
+    @Override
     public void setValue(String value) throws DOMException {
         setNodeValue(value);
     }
@@ -210,6 +220,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getOwnerElement()}.
      */
+    @Override
     public Element getOwnerElement() {
         return ownerElement;
     }
@@ -217,6 +228,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getSchemaTypeInfo()}.
      */
+    @Override
     public TypeInfo getSchemaTypeInfo() {
         if (typeInfo == null) {
             typeInfo = new AttrTypeInfo();
@@ -227,6 +239,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#isId()}.
      */
+    @Override
     public boolean isId() {
         return isIdAttr;
     }
@@ -241,6 +254,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * Called when a child node has been added.
      */
+    @Override
     protected void nodeAdded(Node n) {
         setSpecified(true);
     }
@@ -248,6 +262,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * Called when a child node is going to be removed.
      */
+    @Override
     protected void nodeToBeRemoved(Node n) {
         setSpecified(true);
     }
@@ -255,6 +270,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         AbstractAttr aa = (AbstractAttr)n;
@@ -267,6 +283,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         AbstractAttr aa = (AbstractAttr)n;
@@ -280,6 +297,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         AbstractAttr aa = (AbstractAttr)n;
@@ -293,6 +311,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         AbstractAttr aa = (AbstractAttr)n;
@@ -305,6 +324,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * Checks the validity of a node to be inserted.
      */
+    @Override
     protected void checkChildType(Node n, boolean replace) {
         switch (n.getNodeType()) {
         case TEXT_NODE:
@@ -325,6 +345,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
     /**
      * Fires a DOMSubtreeModified event.
      */
+    @Override
     protected void fireDOMSubtreeModifiedEvent() {
         AbstractDocument doc = getCurrentDocument();
         if (doc.getEventsEnabled()) {
@@ -344,6 +365,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
         /**
          * Type namespace.
          */
+        @Override
         public String getTypeNamespace() {
             return null;
         }
@@ -351,6 +373,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
         /**
          * Type name.
          */
+        @Override
         public String getTypeName() {
             return null;
         }
@@ -358,6 +381,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
         /**
          * Returns whether this type derives from the given type.
          */
+        @Override
         public boolean isDerivedFrom(String ns, String name, int method) {
             return false;
         }

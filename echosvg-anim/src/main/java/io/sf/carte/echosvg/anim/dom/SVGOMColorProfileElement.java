@@ -23,6 +23,7 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGColorProfileElement;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
@@ -46,14 +47,14 @@ public class SVGOMColorProfileElement
         attributeInitializer.addAttribute(null, null,
                                           SVG_RENDERING_INTENT_ATTRIBUTE,
                                           SVG_AUTO_VALUE);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null, "xmlns:xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+                                          XMLConstants.XLINK_NAMESPACE_URI);
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "show", "other");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "actuate", "onLoad");
     }
 
@@ -93,6 +94,7 @@ public class SVGOMColorProfileElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_COLOR_PROFILE_TAG;
     }
@@ -100,6 +102,7 @@ public class SVGOMColorProfileElement
     /**
      * <b>DOM</b>: Implements {@link SVGColorProfileElement#getLocal()}.
      */
+    @Override
     public String getLocal() {
         return getAttributeNS(null, SVG_LOCAL_ATTRIBUTE);
     }
@@ -107,6 +110,7 @@ public class SVGOMColorProfileElement
     /**
      * <b>DOM</b>: Implements {@link SVGColorProfileElement#setLocal(String)}.
      */
+    @Override
     public void setLocal(String local) throws DOMException {
         setAttributeNS(null, SVG_LOCAL_ATTRIBUTE, local);
     }
@@ -114,6 +118,7 @@ public class SVGOMColorProfileElement
     /**
      * <b>DOM</b>: Implements {@link SVGColorProfileElement#getName()}.
      */
+    @Override
     public String getName() {
         return getAttributeNS(null, SVG_NAME_ATTRIBUTE);
     }
@@ -121,6 +126,7 @@ public class SVGOMColorProfileElement
     /**
      * <b>DOM</b>: Implements {@link SVGColorProfileElement#setName(String)}.
      */
+    @Override
     public void setName(String name) throws DOMException {
         setAttributeNS(null, SVG_NAME_ATTRIBUTE, name);
     }
@@ -129,6 +135,7 @@ public class SVGOMColorProfileElement
      * <b>DOM</b>: Implements {@link
      * SVGColorProfileElement#getRenderingIntent()}.
      */
+    @Override
     public short getRenderingIntent() {
         Attr attr = getAttributeNodeNS(null, SVG_RENDERING_INTENT_ATTRIBUTE);
         if (attr == null) {
@@ -166,6 +173,7 @@ public class SVGOMColorProfileElement
      * <b>DOM</b>: Implements {@link
      * SVGColorProfileElement#setRenderingIntent(short)}.
      */
+    @Override
     public void setRenderingIntent(short renderingIntent) throws DOMException {
         switch (renderingIntent) {
         case RENDERING_INTENT_AUTO:
@@ -198,6 +206,7 @@ public class SVGOMColorProfileElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -205,6 +214,7 @@ public class SVGOMColorProfileElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMColorProfileElement();
     }

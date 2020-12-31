@@ -49,6 +49,7 @@ public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         ShapeNode shapeNode = (ShapeNode)super.createGraphicsNode(ctx, e);
         if (shapeNode == null) {
@@ -73,6 +74,7 @@ public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Creates a <code>ShapeNode</code>.
      */
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         return new ShapeNode();
     }
@@ -85,6 +87,7 @@ public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
      * @param e the element that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -133,6 +136,7 @@ public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns false as shapes are not a container.
      */
+    @Override
     public boolean isComposite() {
         return false;
     }
@@ -142,6 +146,7 @@ public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Invoked when the geometry of an graphical element has changed.
      */
+    @Override
     protected void handleGeometryChanged() {
         super.handleGeometryChanged();
         ShapeNode shapeNode = (ShapeNode)node;
@@ -159,6 +164,7 @@ public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
      *
      * @param evt the CSSEngine event that describes the update
      */
+    @Override
     public void handleCSSEngineEvent(CSSEngineEvent evt) {
         hasNewShapePainter = false;
         super.handleCSSEngineEvent(evt);
@@ -167,6 +173,7 @@ public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Invoked for each CSS property that has changed.
      */
+    @Override
     protected void handleCSSPropertyChanged(int property) {
         switch(property) {
         case SVGCSSEngine.FILL_INDEX:

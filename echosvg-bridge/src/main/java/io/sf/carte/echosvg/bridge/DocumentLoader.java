@@ -191,6 +191,7 @@ public class DocumentLoader {
             this.desc = desc;
         }
 
+        @Override
         public void cleared() {
             synchronized (cacheMap) {
                 cacheMap.remove(uri);

@@ -65,6 +65,7 @@ public class StringValue extends AbstractValue {
     /**
      * The type of the value.
      */
+    @Override
     public short getPrimitiveType() {
         return unitType;
     }
@@ -73,6 +74,7 @@ public class StringValue extends AbstractValue {
      * Indicates whether some other object is "equal to" this one.
      * @param obj the reference object with which to compare.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == null || !(obj instanceof StringValue)) {
             return false;
@@ -87,6 +89,7 @@ public class StringValue extends AbstractValue {
     /**
      * A string representation of the current value.
      */
+    @Override
     public String getCssText() {
         return getCssText(unitType, value);
     }
@@ -97,6 +100,7 @@ public class StringValue extends AbstractValue {
      *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a string
      *    value.
      */
+    @Override
     public String getStringValue() throws DOMException {
         return value;
     }
@@ -104,6 +108,7 @@ public class StringValue extends AbstractValue {
     /**
      * Returns a printable representation of this value.
      */
+    @Override
     public String toString() {
         return getCssText();
     }

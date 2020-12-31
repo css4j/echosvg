@@ -447,6 +447,7 @@ public class PathLength {
             moveDone = false;
         }
 
+        @Override
         public int currentSegment(double[] coords) {
             int type = it.currentSegment(coords);
             if (!moveDone) {
@@ -457,6 +458,7 @@ public class PathLength {
             return type;
         }
 
+        @Override
         public int currentSegment(float[] coords) {
             int type = it.currentSegment(coords);
             if (!moveDone) {
@@ -467,14 +469,17 @@ public class PathLength {
             return type;
         }
 
+        @Override
         public int getWindingRule() {
             return it.getWindingRule();
         }
 
+        @Override
         public boolean isDone() {
             return done || it.isDone();
         }
 
+        @Override
         public void next() {
             if (!done) {
                 if (!moveDone) {

@@ -49,6 +49,7 @@ public class FilterAlphaRed extends AbstractRed {
                   ColorSpaceHintKey.VALUE_COLORSPACE_ALPHA);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         // new Exception("FilterAlphaRed: ").printStackTrace();
         // Get my source.

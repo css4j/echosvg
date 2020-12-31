@@ -39,72 +39,84 @@ public class DefaultLengthHandler implements LengthHandler {
     /**
      * Implements {@link LengthHandler#startLength()}.
      */
+    @Override
     public void startLength() throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#lengthValue(float)}.
      */
+    @Override
     public void lengthValue(float v) throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#em()}.
      */
+    @Override
     public void em() throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#ex()}.
      */
+    @Override
     public void ex() throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#in()}.
      */
+    @Override
     public void in() throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#cm()}.
      */
+    @Override
     public void cm() throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#mm()}.
      */
+    @Override
     public void mm() throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#pc()}.
      */
+    @Override
     public void pc() throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#pt()}.
      */
+    @Override
     public void pt() throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#px()}.
      */
+    @Override
     public void px() throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#percentage()}.
      */
+    @Override
     public void percentage() throws ParseException {
     }
 
     /**
      * Implements {@link LengthHandler#endLength()}.
      */
+    @Override
     public void endLength() throws ParseException {
     }
 }

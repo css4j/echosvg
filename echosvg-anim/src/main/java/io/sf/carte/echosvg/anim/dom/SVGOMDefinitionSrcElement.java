@@ -52,6 +52,7 @@ public class SVGOMDefinitionSrcElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_DEFINITION_SRC_TAG;
     }
@@ -59,6 +60,7 @@ public class SVGOMDefinitionSrcElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMDefinitionSrcElement();
     }

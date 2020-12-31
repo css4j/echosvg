@@ -132,6 +132,7 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
      * This template method should set the xlink:href attribute on the input
      * Element parameter
      */
+    @Override
     protected void handleHREF(Image image, Element imageElement,
                               SVGGeneratorContext generatorContext)
         throws SVGGraphics2DIOException {
@@ -153,6 +154,7 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
      * This template method should set the xlink:href attribute on the input
      * Element parameter
      */
+    @Override
     protected void handleHREF(RenderedImage image, Element imageElement,
                               SVGGeneratorContext generatorContext)
         throws SVGGraphics2DIOException {
@@ -173,6 +175,7 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
      * This template method should set the xlink:href attribute on the input
      * Element parameter
      */
+    @Override
     protected void handleHREF(RenderableImage image, Element imageElement,
                               SVGGeneratorContext generatorContext)
         throws SVGGraphics2DIOException {

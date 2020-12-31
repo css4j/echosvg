@@ -85,6 +85,7 @@ public class SVGOMAnimatedPoints
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedPoints#getPoints()}.
      */
+    @Override
     public SVGPointList getPoints() {
         if (baseVal == null) {
             baseVal = new BaseSVGPointList();
@@ -95,6 +96,7 @@ public class SVGOMAnimatedPoints
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedPoints#getAnimatedPoints()}.
      */
+    @Override
     public SVGPointList getAnimatedPoints() {
         if (animVal == null) {
             animVal = new AnimSVGPointList();
@@ -128,6 +130,7 @@ public class SVGOMAnimatedPoints
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         SVGPointList pl = getPoints();
         int n = pl.getNumberOfItems();
@@ -143,6 +146,7 @@ public class SVGOMAnimatedPoints
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -161,6 +165,7 @@ public class SVGOMAnimatedPoints
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -174,6 +179,7 @@ public class SVGOMAnimatedPoints
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -187,6 +193,7 @@ public class SVGOMAnimatedPoints
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -215,6 +222,7 @@ public class SVGOMAnimatedPoints
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -223,6 +231,7 @@ public class SVGOMAnimatedPoints
         /**
          * Create a SVGException.
          */
+        @Override
         protected SVGException createSVGException(short type, String key,
                                                   Object[] args) {
 
@@ -232,6 +241,7 @@ public class SVGOMAnimatedPoints
         /**
          * Returns the value of the DOM attribute containing the point list.
          */
+        @Override
         protected String getValueAsString() {
             Attr attr = element.getAttributeNodeNS(namespaceURI, localName);
             if (attr == null) {
@@ -243,6 +253,7 @@ public class SVGOMAnimatedPoints
         /**
          * Sets the DOM attribute value containing the point list.
          */
+        @Override
         protected void setAttributeValue(String value) {
             try {
                 changing = true;
@@ -255,6 +266,7 @@ public class SVGOMAnimatedPoints
         /**
          * Resets the value of the associated attribute.
          */
+        @Override
         protected void resetAttribute() {
             super.resetAttribute();
             missing = false;
@@ -266,6 +278,7 @@ public class SVGOMAnimatedPoints
          * the DOM attribute.  This is called in response to an append to
          * the list.
          */
+        @Override
         protected void resetAttribute(SVGItem item) {
             super.resetAttribute(item);
             missing = false;
@@ -275,6 +288,7 @@ public class SVGOMAnimatedPoints
         /**
          * Initializes the list, if needed.
          */
+        @Override
         protected void revalidate() {
             if (valid) {
                 return;
@@ -320,6 +334,7 @@ public class SVGOMAnimatedPoints
         /**
          * Create a DOMException.
          */
+        @Override
         protected DOMException createDOMException(short type, String key,
                                                   Object[] args) {
             return element.createDOMException(type, key, args);
@@ -328,6 +343,7 @@ public class SVGOMAnimatedPoints
         /**
          * Create a SVGException.
          */
+        @Override
         protected SVGException createSVGException(short type, String key,
                                                   Object[] args) {
 
@@ -337,6 +353,7 @@ public class SVGOMAnimatedPoints
         /**
          * <b>DOM</b>: Implements {@link SVGPointList#getNumberOfItems()}.
          */
+        @Override
         public int getNumberOfItems() {
             if (hasAnimVal) {
                 return super.getNumberOfItems();
@@ -347,6 +364,7 @@ public class SVGOMAnimatedPoints
         /**
          * <b>DOM</b>: Implements {@link SVGPointList#getItem(int)}.
          */
+        @Override
         public SVGPoint getItem(int index) throws DOMException {
             if (hasAnimVal) {
                 return super.getItem(index);
@@ -357,6 +375,7 @@ public class SVGOMAnimatedPoints
         /**
          * Returns the value of the DOM attribute containing the point list.
          */
+        @Override
         protected String getValueAsString() {
             if (itemList.size() == 0) {
                 return "";
@@ -376,12 +395,14 @@ public class SVGOMAnimatedPoints
         /**
          * Sets the DOM attribute value containing the point list.
          */
+        @Override
         protected void setAttributeValue(String value) {
         }
 
         /**
          * <b>DOM</b>: Implements {@link SVGPointList#clear()}.
          */
+        @Override
         public void clear() throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -391,6 +412,7 @@ public class SVGOMAnimatedPoints
         /**
          * <b>DOM</b>: Implements {@link SVGPointList#initialize(SVGPoint)}.
          */
+        @Override
         public SVGPoint initialize(SVGPoint newItem)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -402,6 +424,7 @@ public class SVGOMAnimatedPoints
          * <b>DOM</b>: Implements {@link
          * SVGPointList#insertItemBefore(SVGPoint, int)}.
          */
+        @Override
         public SVGPoint insertItemBefore(SVGPoint newItem, int index)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -413,6 +436,7 @@ public class SVGOMAnimatedPoints
          * <b>DOM</b>: Implements {@link
          * SVGPointList#replaceItem(SVGPoint, int)}.
          */
+        @Override
         public SVGPoint replaceItem(SVGPoint newItem, int index)
                 throws DOMException, SVGException {
             throw element.createDOMException
@@ -423,6 +447,7 @@ public class SVGOMAnimatedPoints
         /**
          * <b>DOM</b>: Implements {@link SVGPointList#removeItem(int)}.
          */
+        @Override
         public SVGPoint removeItem(int index) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -432,6 +457,7 @@ public class SVGOMAnimatedPoints
         /**
          * <b>DOM</b>: Implements {@link SVGPointList#appendItem(SVGPoint)}.
          */
+        @Override
         public SVGPoint appendItem(SVGPoint newItem) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -463,6 +489,7 @@ public class SVGOMAnimatedPoints
          * Resets the value of the associated attribute.  Does nothing, since
          * there is no attribute for an animated value.
          */
+        @Override
         protected void resetAttribute() {
         }
 
@@ -470,6 +497,7 @@ public class SVGOMAnimatedPoints
          * Resets the value of the associated attribute.  Does nothing, since
          * there is no attribute for an animated value.
          */
+        @Override
         protected void resetAttribute(SVGItem item) {
         }
 
@@ -477,6 +505,7 @@ public class SVGOMAnimatedPoints
          * Initializes the list, if needed.  Does nothing, since there is no
          * attribute to read the list from.
          */
+        @Override
         protected void revalidate() {
             valid = true;
         }

@@ -76,10 +76,12 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
         this.testSuite = testSuite;
     }
 
+    @Override
     public Test getTest(){
         return testSuite;
     }
 
+    @Override
     public String getErrorCode(){
         if(hasPassed()){
             return null;
@@ -89,14 +91,17 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
         }
     }
 
+    @Override
     public TestSuiteReport getParentReport(){
         return parent;
     }
 
+    @Override
     public void setParentReport(TestSuiteReport parent){
         this.parent = parent;
     }
 
+    @Override
     public boolean hasPassed(){
         Iterator iter = reports.iterator();
 
@@ -110,6 +115,7 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
         return passed;
     }
 
+    @Override
     public void addDescriptionEntry(String key,
                                     Object value){
         addDescriptionEntry(new Entry(key, value));
@@ -129,6 +135,7 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
         }
     }
 
+    @Override
     public Entry[] getDescription(){
         Iterator iter = reports.iterator();
         List descs = new ArrayList();
@@ -180,6 +187,7 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
     }
 
 
+    @Override
     public TestReport[] getChildrenReports(){
         int nReports = reports.size();
         TestReport[] r = new TestReport[nReports];

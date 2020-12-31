@@ -41,6 +41,7 @@ public class SVGFontElementBridge extends AbstractSVGBridge {
     /**
      * Returns 'font'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FONT_TAG;
     }

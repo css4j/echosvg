@@ -45,6 +45,7 @@ public abstract class AbstractParentNode extends AbstractNode {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getChildNodes()}.
      * @return {@link #childNodes}
      */
+    @Override
     public NodeList getChildNodes() {
         return (childNodes == null)
             ? childNodes = new ChildNodes()
@@ -55,6 +56,7 @@ public abstract class AbstractParentNode extends AbstractNode {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getFirstChild()}.
      * @return {@link #childNodes}.firstChild
      */
+    @Override
     public Node getFirstChild() {
         return (childNodes == null) ? null : childNodes.firstChild;
     }
@@ -63,6 +65,7 @@ public abstract class AbstractParentNode extends AbstractNode {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLastChild()}.
      * @return {@link #childNodes}.lastChild
      */
+    @Override
     public Node getLastChild() {
         return (childNodes == null) ? null : childNodes.lastChild;
     }
@@ -71,6 +74,7 @@ public abstract class AbstractParentNode extends AbstractNode {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Node#insertBefore(Node, Node)}.
      */
+    @Override
     public Node insertBefore(Node newChild, Node refChild)
         throws DOMException {
         if ((refChild != null) && ((childNodes == null) ||
@@ -113,6 +117,7 @@ public abstract class AbstractParentNode extends AbstractNode {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Node#replaceChild(Node, Node)}.
      */
+    @Override
     public Node replaceChild(Node newChild, Node oldChild)
         throws DOMException {
         if ((childNodes == null) || (oldChild.getParentNode() != this) )
@@ -166,6 +171,7 @@ public abstract class AbstractParentNode extends AbstractNode {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#removeChild(Node)}.
      */
+    @Override
     public Node removeChild(Node oldChild) throws DOMException {
         if (childNodes == null || oldChild.getParentNode() != this) {
             throw createDOMException
@@ -199,6 +205,7 @@ public abstract class AbstractParentNode extends AbstractNode {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#appendChild(Node)}.
      */
+    @Override
     public Node appendChild(Node newChild) throws DOMException {
         checkAndRemove(newChild, false);
 
@@ -231,6 +238,7 @@ public abstract class AbstractParentNode extends AbstractNode {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#hasChildNodes()}.
      * @return true if this node has children, false otherwise.
      */
+    @Override
     public boolean hasChildNodes() {
         return childNodes != null && childNodes.getLength() != 0;
     }
@@ -238,6 +246,7 @@ public abstract class AbstractParentNode extends AbstractNode {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#normalize()}.
      */
+    @Override
     public void normalize() {
         Node p = getFirstChild();
         if (p != null) {
@@ -303,6 +312,7 @@ public abstract class AbstractParentNode extends AbstractNode {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getTextContent()}.
      */
+    @Override
     public String getTextContent() {
         StringBuffer sb = new StringBuffer();
         for (Node n = getFirstChild(); n != null; n = n.getNextSibling()) {
@@ -320,6 +330,7 @@ public abstract class AbstractParentNode extends AbstractNode {
     /**
      * Recursively fires a DOMNodeInsertedIntoDocument event.
      */
+    @Override
     public void fireDOMNodeInsertedIntoDocumentEvent() {
         AbstractDocument doc = getCurrentDocument();
         if (doc.getEventsEnabled()) {
@@ -333,6 +344,7 @@ public abstract class AbstractParentNode extends AbstractNode {
     /**
      * Recursively fires a DOMNodeRemovedFromDocument event.
      */
+    @Override
     public void fireDOMNodeRemovedFromDocumentEvent() {
         AbstractDocument doc = getCurrentDocument();
         if (doc.getEventsEnabled()) {
@@ -358,6 +370,7 @@ public abstract class AbstractParentNode extends AbstractNode {
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         for (Node p = getFirstChild(); p != null; p = p.getNextSibling()) {
@@ -371,6 +384,7 @@ public abstract class AbstractParentNode extends AbstractNode {
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         for (Node p = getFirstChild(); p != null; p = p.getNextSibling()) {
@@ -517,6 +531,7 @@ public abstract class AbstractParentNode extends AbstractNode {
         /**
          * <b>DOM</b>: Implements {@link NodeList#item(int)}.
          */
+        @Override
         public Node item(int index) {
             if (size == -1) {
                 initialize();
@@ -531,6 +546,7 @@ public abstract class AbstractParentNode extends AbstractNode {
          * <b>DOM</b>: Implements {@link NodeList#getLength()}.
          * @return {@link #size}.
          */
+        @Override
         public int getLength() {
             if (size == -1) {
                 initialize();
@@ -622,6 +638,7 @@ public abstract class AbstractParentNode extends AbstractNode {
         /**
          * <b>DOM</b>: Implements {@link NodeList#item(int)}.
          */
+        @Override
         public Node item(int index) {
             if (size == -1) {
                 initialize();
@@ -636,6 +653,7 @@ public abstract class AbstractParentNode extends AbstractNode {
          * <b>DOM</b>: Implements {@link NodeList#getLength()}.
          * @return {@link #size}.
          */
+        @Override
         public int getLength() {
             if (size == -1) {
                 initialize();
@@ -741,6 +759,7 @@ public abstract class AbstractParentNode extends AbstractNode {
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#item(int)}.
          */
+        @Override
         public Node item(int index) {
             if (index < 0 || index >= children) {
                 return null;
@@ -764,6 +783,7 @@ public abstract class AbstractParentNode extends AbstractNode {
          * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#getLength()}.
          * @return {@link #children}.
          */
+        @Override
         public int getLength() {
             return children;
         }

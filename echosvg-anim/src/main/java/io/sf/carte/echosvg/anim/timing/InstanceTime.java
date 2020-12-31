@@ -99,6 +99,7 @@ public class InstanceTime implements Comparable {
     /**
      * Returns a string representation of this InstanceTime.
      */
+    @Override
     public String toString() {
         return Float.toString(time);
     }
@@ -108,6 +109,7 @@ public class InstanceTime implements Comparable {
     /**
      * Compares this InstanceTime with another.
      */
+    @Override
     public int compareTo(Object o) {
         InstanceTime it = (InstanceTime)o;
         if (time == it.time) return 0;

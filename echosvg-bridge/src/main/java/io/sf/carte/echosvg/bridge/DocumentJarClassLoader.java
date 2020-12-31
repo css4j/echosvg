@@ -74,6 +74,7 @@ public class DocumentJarClassLoader extends URLClassLoader {
      * @param codesource the codesource
      * @return the permissions granted to the codesource
      */
+    @Override
     protected PermissionCollection getPermissions(CodeSource codesource)
     {
         // First, get the permissions which may be granted 

@@ -157,6 +157,7 @@ public class LocalizableSupport implements Localizable {
     /**
      * Implements {@link io.sf.carte.echosvg.i18n.Localizable#setLocale(Locale)}.
      */
+    @Override
     public void setLocale(Locale l) {
         if (locale != l) {
             locale = l;
@@ -168,6 +169,7 @@ public class LocalizableSupport implements Localizable {
     /**
      * Implements {@link io.sf.carte.echosvg.i18n.Localizable#getLocale()}.
      */
+    @Override
     public Locale getLocale() {
         return locale;
     }
@@ -210,6 +212,7 @@ public class LocalizableSupport implements Localizable {
      * Implements {@link
      * io.sf.carte.echosvg.i18n.Localizable#formatMessage(String,Object[])}.
      */
+    @Override
     public String formatMessage(String key, Object[] args) {
         return MessageFormat.format(getString(key), args);
     }

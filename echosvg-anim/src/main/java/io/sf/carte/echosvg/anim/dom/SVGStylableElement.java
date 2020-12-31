@@ -106,6 +106,7 @@ public abstract class SVGStylableElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -134,6 +135,7 @@ public abstract class SVGStylableElement
     /**
      * Returns the computed style of this element/pseudo-element.
      */
+    @Override
     public StyleMap getComputedStyleMap(String pseudoElement) {
         return computedStyleMap;
     }
@@ -141,6 +143,7 @@ public abstract class SVGStylableElement
     /**
      * Sets the computed style of this element/pseudo-element.
      */
+    @Override
     public void setComputedStyleMap(String pseudoElement, StyleMap sm) {
         computedStyleMap = sm;
     }
@@ -148,6 +151,7 @@ public abstract class SVGStylableElement
     /**
      * Returns the ID of this element.
      */
+    @Override
     public String getXMLId() {
         return getAttributeNS(null, "id");
     }
@@ -155,6 +159,7 @@ public abstract class SVGStylableElement
     /**
      * Returns the class of this element.
      */
+    @Override
     public String getCSSClass() {
         return getAttributeNS(null, "class");
     }
@@ -164,6 +169,7 @@ public abstract class SVGStylableElement
      * @throws IllegalArgumentException when the result of getBaseURI()
      *         cannot be used as an URL.
      */
+    @Override
     public ParsedURL getCSSBase() {
         if (getXblBoundElement() != null) {
             return null;
@@ -176,6 +182,7 @@ public abstract class SVGStylableElement
      * Tells whether this element is an instance of the given pseudo
      * class.
      */
+    @Override
     public boolean isPseudoInstanceOf(String pseudoClass) {
         if (pseudoClass.equals("first-child")) {
             Node n = getPreviousSibling();
@@ -192,6 +199,7 @@ public abstract class SVGStylableElement
      * {@link io.sf.carte.echosvg.css.engine.StyleDeclaration} for the override
      * style of this element.
      */
+    @Override
     public StyleDeclarationProvider getOverrideStyleDeclarationProvider() {
         return (StyleDeclarationProvider) getOverrideStyle();
     }
@@ -201,6 +209,7 @@ public abstract class SVGStylableElement
     /**
      * Updates a property value in this target.
      */
+    @Override
     public void updatePropertyValue(String pn, AnimatableValue val) {
         CSSStyleDeclaration over = getOverrideStyle();
         if (val == null) {
@@ -214,6 +223,7 @@ public abstract class SVGStylableElement
      * Returns whether color interpolations should be done in linear RGB
      * color space rather than sRGB.
      */
+    @Override
     public boolean useLinearRGBColorInterpolation() {
         CSSEngine eng = ((SVGOMDocument) getOwnerDocument()).getCSSEngine();
         Value v = eng.getComputedStyle(this, null,
@@ -224,6 +234,7 @@ public abstract class SVGStylableElement
     /**
      * Adds a listener for changes to the given attribute value.
      */
+    @Override
     public void addTargetListener(String ns, String an, boolean isCSS,
                                   AnimationTargetListener l) {
         if (isCSS) {
@@ -240,6 +251,7 @@ public abstract class SVGStylableElement
     /**
      * Removes a listener for changes to the given attribute value.
      */
+    @Override
     public void removeTargetListener(String ns, String an, boolean isCSS,
                                      AnimationTargetListener l) {
         if (isCSS) {
@@ -323,6 +335,7 @@ public abstract class SVGStylableElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }
@@ -362,9 +375,11 @@ public abstract class SVGStylableElement
             super(null);
             valueProvider = this;
             setModificationHandler(new AbstractModificationHandler() {
+                    @Override
                     protected Value getValue() {
                         return PresentationAttributeValue.this.getValue();
                     }
+                    @Override
                     public void textChanged(String text) throws DOMException {
                         value = cssEngine.parsePropertyValue
                             (SVGStylableElement.this, property, text);
@@ -389,6 +404,7 @@ public abstract class SVGStylableElement
         /**
          * Returns the current value associated with this object.
          */
+        @Override
         public Value getValue() {
             if (value == null) {
                 throw new DOMException(DOMException.INVALID_STATE_ERR, "");
@@ -401,6 +417,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been added.
          */
+        @Override
         public void attrAdded(Attr node, String newv) {
             if (!mutate) {
                 value = cssEngine.parsePropertyValue
@@ -411,6 +428,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been modified.
          */
+        @Override
         public void attrModified(Attr node, String oldv, String newv) {
             if (!mutate) {
                 value = cssEngine.parsePropertyValue
@@ -421,6 +439,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been removed.
          */
+        @Override
         public void attrRemoved(Attr node, String oldv) {
             if (!mutate) {
                 value = null;
@@ -463,9 +482,11 @@ public abstract class SVGStylableElement
             super(null);
             valueProvider = this;
             setModificationHandler(new AbstractModificationHandler() {
+                    @Override
                     protected Value getValue() {
                         return PresentationAttributeColorValue.this.getValue();
                     }
+                    @Override
                     public void textChanged(String text) throws DOMException {
                         value = cssEngine.parsePropertyValue
                             (SVGStylableElement.this, property, text);
@@ -490,6 +511,7 @@ public abstract class SVGStylableElement
         /**
          * Returns the current value associated with this object.
          */
+        @Override
         public Value getValue() {
             if (value == null) {
                 throw new DOMException(DOMException.INVALID_STATE_ERR, "");
@@ -502,6 +524,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been added.
          */
+        @Override
         public void attrAdded(Attr node, String newv) {
             if (!mutate) {
                 value = cssEngine.parsePropertyValue
@@ -512,6 +535,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been modified.
          */
+        @Override
         public void attrModified(Attr node, String oldv, String newv) {
             if (!mutate) {
                 value = cssEngine.parsePropertyValue
@@ -522,6 +546,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been removed.
          */
+        @Override
         public void attrRemoved(Attr node, String oldv) {
             if (!mutate) {
                 value = null;
@@ -564,9 +589,11 @@ public abstract class SVGStylableElement
             super(null);
             valueProvider = this;
             setModificationHandler(new AbstractModificationHandler() {
+                    @Override
                     protected Value getValue() {
                         return PresentationAttributePaintValue.this.getValue();
                     }
+                    @Override
                     public void textChanged(String text) throws DOMException {
                         value = cssEngine.parsePropertyValue
                             (SVGStylableElement.this, property, text);
@@ -592,6 +619,7 @@ public abstract class SVGStylableElement
         /**
          * Returns the current value associated with this object.
          */
+        @Override
         public Value getValue() {
             if (value == null) {
                 throw new DOMException(DOMException.INVALID_STATE_ERR, "");
@@ -604,6 +632,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been added.
          */
+        @Override
         public void attrAdded(Attr node, String newv) {
             if (!mutate) {
                 value = cssEngine.parsePropertyValue
@@ -614,6 +643,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been modified.
          */
+        @Override
         public void attrModified(Attr node, String oldv, String newv) {
             if (!mutate) {
                 value = cssEngine.parsePropertyValue
@@ -624,6 +654,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been removed.
          */
+        @Override
         public void attrRemoved(Attr node, String oldv) {
             if (!mutate) {
                 value = null;
@@ -660,6 +691,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been added.
          */
+        @Override
         public void attrAdded(Attr node, String newv) {
             if (!mutate) {
                 declaration = cssEngine.parseStyleDeclaration
@@ -670,6 +702,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been modified.
          */
+        @Override
         public void attrModified(Attr node, String oldv, String newv) {
             if (!mutate) {
                 declaration = cssEngine.parseStyleDeclaration
@@ -680,6 +713,7 @@ public abstract class SVGStylableElement
         /**
          * Called when an Attr node has been removed.
          */
+        @Override
         public void attrRemoved(Attr node, String oldv) {
             if (!mutate) {
                 declaration =
@@ -692,6 +726,7 @@ public abstract class SVGStylableElement
         /**
          * Called when the value text has changed.
          */
+        @Override
         public void textChanged(String text) throws DOMException {
             declaration = cssEngine.parseStyleDeclaration
                 (SVGStylableElement.this, text);
@@ -703,6 +738,7 @@ public abstract class SVGStylableElement
         /**
          * Called when a property was removed.
          */
+        @Override
         public void propertyRemoved(String name) throws DOMException {
             int idx = cssEngine.getPropertyIndex(name);
             for (int i = 0; i < declaration.size(); i++) {
@@ -720,6 +756,7 @@ public abstract class SVGStylableElement
         /**
          * Called when a property was changed.
          */
+        @Override
         public void propertyChanged(String name, String value, String prio)
             throws DOMException {
             boolean important = prio != null && prio.length() > 0;
@@ -737,6 +774,7 @@ public abstract class SVGStylableElement
          * Sets a main property value in response to a shorthand property
          * being set.
          */
+        @Override
         public void setMainProperty(String name, Value v, boolean important) {
             int idx = cssEngine.getPropertyIndex(name);
             if (idx == -1)
@@ -774,6 +812,7 @@ public abstract class SVGStylableElement
         /**
          * Called when the value text has changed.
          */
+        @Override
         public void textChanged(String text) throws DOMException {
             ((SVGOMDocument) ownerDocument).overrideStyleTextChanged
                 (SVGStylableElement.this, text);
@@ -782,6 +821,7 @@ public abstract class SVGStylableElement
         /**
          * Called when a property was removed.
          */
+        @Override
         public void propertyRemoved(String name) throws DOMException {
             ((SVGOMDocument) ownerDocument).overrideStylePropertyRemoved
                 (SVGStylableElement.this, name);
@@ -790,6 +830,7 @@ public abstract class SVGStylableElement
         /**
          * Called when a property was changed.
          */
+        @Override
         public void propertyChanged(String name, String value, String prio)
                 throws DOMException {
             ((SVGOMDocument) ownerDocument).overrideStylePropertyChanged

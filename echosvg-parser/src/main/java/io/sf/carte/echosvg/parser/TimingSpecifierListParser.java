@@ -60,6 +60,7 @@ public class TimingSpecifierListParser extends TimingSpecifierParser {
     /**
      * Parses a timing specifier list.
      */
+    @Override
     protected void doParse() throws ParseException, IOException {
         current = reader.read();
 

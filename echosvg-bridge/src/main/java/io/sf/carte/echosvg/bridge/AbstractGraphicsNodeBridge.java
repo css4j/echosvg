@@ -34,6 +34,7 @@ import org.w3c.dom.svg.SVGTransformable;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedTransformList;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
+import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.dom.events.AbstractEvent;
@@ -100,6 +101,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         // 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
         if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
@@ -133,6 +135,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
      * @param e the element that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -154,6 +157,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
      * Returns true if the graphics node has to be displayed, false
      * otherwise.
      */
+    @Override
     public boolean getDisplay(Element e) {
         return CSSUtilities.convertDisplay(e);
     }
@@ -236,6 +240,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
     /**
      * Invoked when an MutationEvent of type 'DOMAttrModified' is fired.
      */
+    @Override
     public void handleDOMAttrModifiedEvent(MutationEvent evt) {
     }
 
@@ -275,6 +280,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
     /**
      * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
      */
+    @Override
     public void handleDOMNodeInsertedEvent(MutationEvent evt) {
         if (evt.getTarget() instanceof Element) {
             // Handle "generic" bridges.
@@ -289,6 +295,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
     /**
      * Invoked when an MutationEvent of type 'DOMNodeRemoved' is fired.
      */
+    @Override
     public void handleDOMNodeRemovedEvent(MutationEvent evt) {
         Node parent = e.getParentNode();
         if (parent instanceof SVGOMElement) {
@@ -307,12 +314,14 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
      * Invoked when an MutationEvent of type 'DOMCharacterDataModified'
      * is fired.
      */
+    @Override
     public void handleDOMCharacterDataModified(MutationEvent evt) {
     }
 
     /**
      * Disposes this BridgeUpdateHandler and releases all resources.
      */
+    @Override
     public void dispose() {
         SVGOMElement elt = (SVGOMElement)e;
         elt.setSVGContext(null);
@@ -352,6 +361,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
     /**
      * Invoked when an CSSEngineEvent is fired.
      */
+    @Override
     public void handleCSSEngineEvent(CSSEngineEvent evt) {
         try {
             SVGCSSEngine eng = (SVGCSSEngine) evt.getSource();
@@ -403,6 +413,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
     /**
      * Invoked when the animated value of an animatable attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged
             (AnimatedLiveAttributeValue alav) {
         if (alav.getNamespaceURI() == null
@@ -415,6 +426,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
     /**
      * Invoked when an 'other' animation value has changed.
      */
+    @Override
     public void handleOtherAnimationChanged(String type) {
         if (type.equals("motion")) {
             setTransform(node, e, ctx);
@@ -464,6 +476,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
     /**
      * Returns the size of a px CSS unit in millimeters.
      */
+    @Override
     public float getPixelUnitToMillimeter() {
         return ctx.getUserAgent().getPixelUnitToMillimeter();
     }
@@ -473,6 +486,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
      * This will be removed after next release.
      * @see #getPixelUnitToMillimeter()
      */
+    @Override
     public float getPixelToMM() {
         return getPixelUnitToMillimeter();
     }
@@ -486,6 +500,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
      * geometry of all contained graphics elements, exclusive of
      * stroke-width and filter effects).
      */
+    @Override
     public Rectangle2D getBBox() {
         if (node == null) {
             return null;
@@ -508,6 +523,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
      * (i.e., after application of the transform attribute, if any) to
      * the viewport coordinate system for the nearestViewportElement.
      */
+    @Override
     public AffineTransform getCTM() {
         GraphicsNode gn = node;
         AffineTransform ctm = new AffineTransform();
@@ -530,7 +546,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
             if (at != null)
                 ctm.preConcatenate(at);
 
-            elt = SVGCSSEngine.getParentCSSStylableElement(elt);
+            elt = CSSEngine.getParentCSSStylableElement(elt);
             gn = gn.getParent();
         }
         return ctm;
@@ -539,6 +555,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
     /**
      * Returns the display transform.
      */
+    @Override
     public AffineTransform getScreenTransform() {
         return ctx.getUserAgent().getTransform();
     }
@@ -546,6 +563,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
     /**
      * Sets the display transform.
      */
+    @Override
     public void setScreenTransform(AffineTransform at) {
         ctx.getUserAgent().setTransform(at);
     }
@@ -554,6 +572,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
      * Returns the global transformation matrix from the current
      * element to the root.
      */
+    @Override
     public AffineTransform getGlobalTransform() {
         return node.getGlobalTransform();
     }
@@ -562,6 +581,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
      * Returns the width of the viewport which directly contains the
      * given element.
      */
+    @Override
     public float getViewportWidth() {
         return ctx.getBlockWidth(e);
     }
@@ -570,6 +590,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
      * Returns the height of the viewport which directly contains the
      * given element.
      */
+    @Override
     public float getViewportHeight() {
         return ctx.getBlockHeight(e);
     }
@@ -577,6 +598,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
     /**
      * Returns the font-size on the associated element.
      */
+    @Override
     public float getFontSize() {
         return CSSUtilities.getComputedStyle
             (e, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();

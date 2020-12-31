@@ -79,6 +79,7 @@ public class StyleSheetProcessingInstruction
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -86,6 +87,7 @@ public class StyleSheetProcessingInstruction
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -93,6 +95,7 @@ public class StyleSheetProcessingInstruction
     /**
      * Sets the node name.
      */
+    @Override
     public void setNodeName(String v) {
     }
 
@@ -101,6 +104,7 @@ public class StyleSheetProcessingInstruction
      * org.w3c.dom.ProcessingInstruction#getTarget()}.
      * @return "xml-stylesheet".
      */
+    @Override
     public String getTarget() {
         return "xml-stylesheet";
     }
@@ -108,6 +112,7 @@ public class StyleSheetProcessingInstruction
     /**
      *  The style sheet. 
      */
+    @Override
     public StyleSheet getSheet() {
         if (sheet == null) {
             sheet = factory.createStyleSheet(this, getPseudoAttributes());
@@ -132,6 +137,7 @@ public class StyleSheetProcessingInstruction
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.ProcessingInstruction#setData(String)}.
      */
+    @Override
     public void setData(String data) throws DOMException {
         super.setData(data);
         sheet = null;
@@ -141,6 +147,7 @@ public class StyleSheetProcessingInstruction
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new StyleSheetProcessingInstruction();
     }

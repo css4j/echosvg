@@ -84,6 +84,7 @@ public class XSLXMLReportConsumer
      * When a new report has been generated, this consumer
      * applies the same stylesheet to the input XML document
      */
+    @Override
     public void onNewReport(File xmlReport, 
                             File reportDirectory)
         throws Exception{

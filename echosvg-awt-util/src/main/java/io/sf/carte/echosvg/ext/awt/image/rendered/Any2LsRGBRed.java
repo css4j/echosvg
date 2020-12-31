@@ -97,6 +97,7 @@ public class Any2LsRGBRed extends AbstractRed {
         // System.out.println("");
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         // Get my source.
         CachableRed src   = (CachableRed)getSources().get(0);

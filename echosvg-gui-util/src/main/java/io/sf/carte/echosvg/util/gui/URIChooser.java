@@ -256,16 +256,19 @@ public class URIChooser extends JDialog implements ActionMap {
      * To listen to the document changes
      */
     protected class DocumentAdapter implements DocumentListener {
+        @Override
         public void changedUpdate(DocumentEvent e) {
             updateOKButtonAction();
             updateClearButtonAction();
         }
 
+        @Override
         public void insertUpdate(DocumentEvent e) {
             updateOKButtonAction();
             updateClearButtonAction();
         }
 
+        @Override
         public void removeUpdate(DocumentEvent e) {
             updateOKButtonAction();
             updateClearButtonAction();
@@ -276,6 +279,7 @@ public class URIChooser extends JDialog implements ActionMap {
      * The action associated with the 'browse' button
      */
     protected class BrowseButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             JFileChooser fileChooser = new JFileChooser(currentPath);
             fileChooser.setFileHidingEnabled(false);
@@ -300,6 +304,7 @@ public class URIChooser extends JDialog implements ActionMap {
      * The action associated with the 'OK' button of the URI chooser
      */
     protected class OKButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             returnCode = OK_OPTION;
             chosenPath = textField.getText();
@@ -311,6 +316,7 @@ public class URIChooser extends JDialog implements ActionMap {
      * The action associated with the 'Cancel' button of the URI chooser
      */
     protected class CancelButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             returnCode = CANCEL_OPTION;
             dispose();
@@ -322,6 +328,7 @@ public class URIChooser extends JDialog implements ActionMap {
      * The action associated with the 'Clear' button of the URI chooser
      */
     protected class ClearButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             textField.setText("");
         }
@@ -340,6 +347,7 @@ public class URIChooser extends JDialog implements ActionMap {
      * @param key the key mapped with the action to get
      * @throws MissingListenerException if the action is not found
      */
+    @Override
     public Action getAction(String key) throws MissingListenerException {
         return (Action)listeners.get(key);
     }

@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
  * @author <a href="mailto:luano@asd.ie">Luan O'Carroll</a>
  * @version $Id$
  */
+@Deprecated
 public class RecordStore {
 
     public RecordStore(){

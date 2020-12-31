@@ -65,6 +65,7 @@ public class CompositeRable8Bit
        * The sources to be composited togeather.
        * @param srcs The list of images to be composited by the composite rule.
        */
+    @Override
     public void setSources(List srcs) {
         init(srcs, null);
     }
@@ -73,6 +74,7 @@ public class CompositeRable8Bit
        * Set the composite rule to use for combining the sources.
        * @param cr Composite rule to use.
        */
+    @Override
     public void setCompositeRule(CompositeRule cr) {
         touch();
         this.rule =  cr;
@@ -82,6 +84,7 @@ public class CompositeRable8Bit
        * Get the composite rule in use for combining the sources.
        * @return Composite rule currently in use.
        */
+    @Override
     public CompositeRule getCompositeRule() {
         return this.rule;
     }
@@ -96,6 +99,7 @@ public class CompositeRable8Bit
      *         for some reason the paint failed (in which
      *         case a createRendering should be used).
      */
+    @Override
     public boolean paintRable(Graphics2D g2d) {
         // This optimization only apply if we are using
         // SrcOver.  Otherwise things break...
@@ -121,6 +125,7 @@ public class CompositeRable8Bit
         return true;
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         if (srcs.size() == 0)
             return null;

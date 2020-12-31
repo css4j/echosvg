@@ -50,48 +50,60 @@ public class ConcreteTextSelector implements Selector {
     public ConcreteTextSelector() {
     }
 
+    @Override
     public void mouseClicked(GraphicsNodeMouseEvent evt) {
         checkSelectGesture(evt);
     }
 
+    @Override
     public void mouseDragged(GraphicsNodeMouseEvent evt) {
         checkSelectGesture(evt);
     }
 
+    @Override
     public void mouseEntered(GraphicsNodeMouseEvent evt) {
         checkSelectGesture(evt);
     }
 
+    @Override
     public void mouseExited(GraphicsNodeMouseEvent evt) {
         checkSelectGesture(evt);
     }
 
+    @Override
     public void mouseMoved(GraphicsNodeMouseEvent evt) {
     }
 
+    @Override
     public void mousePressed(GraphicsNodeMouseEvent evt) {
         checkSelectGesture(evt);
     }
 
+    @Override
     public void mouseReleased(GraphicsNodeMouseEvent evt) {
         checkSelectGesture(evt);
     }
 
+    @Override
     public void keyPressed(GraphicsNodeKeyEvent evt) {
         report(evt, "keyPressed");
     }
 
+    @Override
     public void keyReleased(GraphicsNodeKeyEvent evt) {
         report(evt, "keyReleased");
     }
 
+    @Override
     public void keyTyped(GraphicsNodeKeyEvent evt) {
         report(evt, "keyTyped");
     }
 
+    @Override
     public void changeStarted (GraphicsNodeChangeEvent gnce) {
     }
 
+    @Override
     public void changeCompleted (GraphicsNodeChangeEvent gnce) {
         if (selectionNode == null) {
             return;
@@ -252,6 +264,7 @@ public class ConcreteTextSelector implements Selector {
     /*
      * Get the contents of the current selection.
      */
+    @Override
     public Object getSelection() {
         Object value = null;
         if (selectionNode instanceof Selectable) {
@@ -263,6 +276,7 @@ public class ConcreteTextSelector implements Selector {
     /**
      * Reports whether the current selection contains any objects.
      */
+    @Override
     public boolean isEmpty() {
         return (getSelection() == null);
     }
@@ -302,6 +316,7 @@ public class ConcreteTextSelector implements Selector {
      * Add a SelectionListener to this Selector's notification list.
      * @param l the SelectionListener to add.
      */
+    @Override
     public void addSelectionListener(SelectionListener l) {
         if (listeners == null) {
             listeners = new ArrayList();
@@ -313,6 +328,7 @@ public class ConcreteTextSelector implements Selector {
      * Remove a SelectionListener from this Selector's notification list.
      * @param l the SelectionListener to be removed.
      */
+    @Override
     public void removeSelectionListener(SelectionListener l) {
         if (listeners != null) {
             listeners.remove(l);

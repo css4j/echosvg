@@ -89,6 +89,7 @@ public abstract class AbstractImageIORegistryEntry
      *                    any default color correction the file may
      *                    specify applied.
      */
+    @Override
     public Filter handleStream(InputStream inIS,
                                ParsedURL   origURL,
                                boolean     needRawData) {

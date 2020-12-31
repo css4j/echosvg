@@ -36,10 +36,13 @@ package io.sf.carte.echosvg.gvt.event;
 public abstract class GraphicsNodeKeyAdapter
         implements GraphicsNodeKeyListener {
 
+    @Override
     public void keyPressed(GraphicsNodeKeyEvent evt) {}
 
+    @Override
     public void keyReleased(GraphicsNodeKeyEvent evt) {}
 
+    @Override
     public void keyTyped(GraphicsNodeKeyEvent evt) {}
 
 }

@@ -32,6 +32,7 @@ import java.lang.ref.Reference;
 final class BufferedImageHintKey extends RenderingHints.Key {
     BufferedImageHintKey(int number) { super(number); }
 
+    @Override
     public boolean isCompatibleValue(Object val) {
         if (val == null)
             return true;

@@ -80,6 +80,7 @@ public abstract class AbstractElement
      *
      * @return {@link org.w3c.dom.Node#ELEMENT_NODE}
      */
+    @Override
     public short getNodeType() {
         return ELEMENT_NODE;
     }
@@ -87,6 +88,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#hasAttributes()}.
      */
+    @Override
     public boolean hasAttributes() {
         return attributes != null && attributes.getLength() != 0;
     }
@@ -94,6 +96,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getAttributes()}.
      */
+    @Override
     public NamedNodeMap getAttributes() {
         return (attributes == null)
             ? attributes = createAttributes()
@@ -105,6 +108,7 @@ public abstract class AbstractElement
      *
      * @return {@link #getNodeName()}.
      */
+    @Override
     public String getTagName() {
         return getNodeName();
     }
@@ -112,6 +116,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Element#hasAttribute(String)}.
      */
+    @Override
     public boolean hasAttribute( String name ) {
         return attributes != null && attributes.getNamedItem( name ) != null;
     }
@@ -119,6 +124,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Element#getAttribute(String)}.
      */
+    @Override
     public String getAttribute(String name) {
         if ( attributes == null ) {
           return "";
@@ -131,6 +137,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#setAttribute(String,String)}.
      */
+    @Override
     public void setAttribute(String name, String value) throws DOMException {
         if (attributes == null) {
             attributes = createAttributes();
@@ -149,6 +156,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#removeAttribute(String)}.
      */
+    @Override
     public void removeAttribute(String name) throws DOMException {
         if (!hasAttribute(name)) {
                   return;
@@ -160,6 +168,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#getAttributeNode(String)}.
      */
+    @Override
     public Attr getAttributeNode(String name) {
         if (attributes == null) {
             return null;
@@ -171,6 +180,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#setAttributeNode(Attr)}.
      */
+    @Override
     public Attr setAttributeNode(Attr newAttr) throws DOMException {
         if (newAttr == null) {
             return null;
@@ -185,6 +195,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#removeAttributeNode(Attr)}.
      */
+    @Override
     public Attr removeAttributeNode(Attr oldAttr) throws DOMException {
         if (oldAttr == null) {
             return null;
@@ -204,6 +215,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#normalize()}.
      */
+    @Override
     public void normalize() {
         super.normalize();
         if (attributes != null) {
@@ -218,6 +230,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#hasAttributeNS(String,String)}.
      */
+    @Override
     public boolean hasAttributeNS( String namespaceURI, String localName ) {
         if ( namespaceURI != null && namespaceURI.length() == 0 ) {
             namespaceURI = null;
@@ -230,6 +243,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#getAttributeNS(String,String)}.
      */
+    @Override
     public String getAttributeNS( String namespaceURI, String localName ) {
         if ( attributes == null ) {
             return "";
@@ -245,6 +259,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#setAttributeNS(String,String,String)}.
      */
+    @Override
     public void setAttributeNS(String namespaceURI,
                                String qualifiedName,
                                String value) throws DOMException {
@@ -270,6 +285,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#removeAttributeNS(String,String)}.
      */
+    @Override
     public void removeAttributeNS(String namespaceURI,
                                   String localName) throws DOMException {
         if (namespaceURI != null && namespaceURI.length() == 0) {
@@ -285,6 +301,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#getAttributeNodeNS(String,String)}.
      */
+    @Override
     public Attr getAttributeNodeNS(String namespaceURI,
                                    String localName) {
         if (namespaceURI != null && namespaceURI.length() == 0) {
@@ -300,6 +317,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Element#setAttributeNodeNS(Attr)}.
      */
+    @Override
     public Attr setAttributeNodeNS(Attr newAttr) throws DOMException {
         if (newAttr == null) {
             return null;
@@ -313,6 +331,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Element#getSchemaTypeInfo()}.
      */
+    @Override
     public TypeInfo getSchemaTypeInfo() {
         if (typeInfo == null) {
             typeInfo = new ElementTypeInfo();
@@ -324,6 +343,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.Element#setIdAttribute(String,boolean)}.
      */
+    @Override
     public void setIdAttribute(String name, boolean isId) throws DOMException {
         AbstractAttr a = (AbstractAttr) getAttributeNode(name);
         if (a == null) {
@@ -344,6 +364,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.Element#setIdAttributeNS(String,String,boolean)}.
      */
+    @Override
     public void setIdAttributeNS( String ns, String ln, boolean isId )
             throws DOMException {
         if ( ns != null && ns.length() == 0 ) {
@@ -368,6 +389,7 @@ public abstract class AbstractElement
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.Element#setIdAttributeNode(Attr,boolean)}.
      */
+    @Override
     public void setIdAttributeNode( Attr attr, boolean isId )
             throws DOMException {
         AbstractAttr a = (AbstractAttr)attr;
@@ -425,6 +447,7 @@ public abstract class AbstractElement
     /**
      * Called when a child node has been added.
      */
+    @Override
     protected void nodeAdded(Node node) {
         invalidateElementsByTagName(node);
     }
@@ -432,6 +455,7 @@ public abstract class AbstractElement
     /**
      * Called when a child node is going to be removed.
      */
+    @Override
     protected void nodeToBeRemoved(Node node) {
         invalidateElementsByTagName(node);
     }
@@ -502,6 +526,7 @@ public abstract class AbstractElement
      * @param n The clone node.
      * @param d The destination document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         AbstractElement ae = (AbstractElement)n;
@@ -527,6 +552,7 @@ public abstract class AbstractElement
      * @param n The clone node.
      * @param d The destination document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         AbstractElement ae = (AbstractElement)n;
@@ -551,6 +577,7 @@ public abstract class AbstractElement
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         AbstractElement ae = (AbstractElement)n;
@@ -572,6 +599,7 @@ public abstract class AbstractElement
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         AbstractElement ae = (AbstractElement)n;
@@ -593,6 +621,7 @@ public abstract class AbstractElement
      * Checks the validity of a node to be inserted.
      * @param n The node to be inserted.
      */
+    @Override
     protected void checkChildType(Node n, boolean replace) {
         switch (n.getNodeType()) {
         case ELEMENT_NODE:                // fall-through is intended
@@ -685,6 +714,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link ElementTraversal#getFirstElementChild()}.
      */
+    @Override
     public Element getFirstElementChild() {
         Node n = getFirstChild();
         while (n != null) {
@@ -699,6 +729,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link ElementTraversal#getLastElementChild()}.
      */
+    @Override
     public Element getLastElementChild() {
         Node n = getLastChild();
         while (n != null) {
@@ -713,6 +744,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link ElementTraversal#getNextElementSibling()}.
      */
+    @Override
     public Element getNextElementSibling() {
         Node n = getNextSibling();
         while (n != null) {
@@ -727,6 +759,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link ElementTraversal#getPreviousElementSibling()}.
      */
+    @Override
     public Element getPreviousElementSibling() {
         Node n = getPreviousSibling();
         while (n != null) {
@@ -741,6 +774,7 @@ public abstract class AbstractElement
     /**
      * <b>DOM</b>: Implements {@link ElementTraversal#getChildElementCount()}.
      */
+    @Override
     public int getChildElementCount() {
         getChildNodes();
         return childNodes.elementChildren;
@@ -779,6 +813,7 @@ public abstract class AbstractElement
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NamedNodeMap#getNamedItem(String)}.
          */
+        @Override
         public Node getNamedItem( String name ) {
             if ( name == null ) {
                 return null;
@@ -789,6 +824,7 @@ public abstract class AbstractElement
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NamedNodeMap#setNamedItem(Node)}.
          */
+        @Override
         public Node setNamedItem( Node arg ) throws DOMException {
             if ( arg == null ) {
                 return null;
@@ -801,6 +837,7 @@ public abstract class AbstractElement
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NamedNodeMap#removeNamedItem(String)}.
          */
+        @Override
         public Node removeNamedItem( String name ) throws DOMException {
             return removeNamedItemNS( null, name );
         }
@@ -808,6 +845,7 @@ public abstract class AbstractElement
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NamedNodeMap#item(int)}.
          */
+        @Override
         public Node item( int index ) {
             if ( index < 0 || index >= count ) {
                 return null;
@@ -831,6 +869,7 @@ public abstract class AbstractElement
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NamedNodeMap#getLength()}.
          */
+        @Override
         public int getLength() {
             return count;
         }
@@ -839,6 +878,7 @@ public abstract class AbstractElement
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.NamedNodeMap#getNamedItemNS(String,String)}.
          */
+        @Override
         public Node getNamedItemNS( String namespaceURI, String localName ) {
             if ( namespaceURI != null && namespaceURI.length() == 0 ) {
                 namespaceURI = null;
@@ -849,6 +889,7 @@ public abstract class AbstractElement
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NamedNodeMap#setNamedItemNS(Node)}.
          */
+        @Override
         public Node setNamedItemNS( Node arg ) throws DOMException {
             if ( arg == null ) {
                 return null;
@@ -863,6 +904,7 @@ public abstract class AbstractElement
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NamedNodeMap#removeNamedItemNS(String,String)}.
          */
+        @Override
         public Node removeNamedItemNS( String namespaceURI, String localName )
                 throws DOMException {
             if ( isReadonly() ) {
@@ -1112,6 +1154,7 @@ public abstract class AbstractElement
         /**
          * Type namespace.
          */
+        @Override
         public String getTypeNamespace() {
             return null;
         }
@@ -1119,6 +1162,7 @@ public abstract class AbstractElement
         /**
          * Type name.
          */
+        @Override
         public String getTypeName() {
             return null;
         }
@@ -1126,6 +1170,7 @@ public abstract class AbstractElement
         /**
          * Returns whether this type derives from the given type.
          */
+        @Override
         public boolean isDerivedFrom(String ns, String name, int method) {
             return false;
         }

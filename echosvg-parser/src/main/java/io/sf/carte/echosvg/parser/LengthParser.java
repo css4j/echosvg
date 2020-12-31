@@ -63,6 +63,7 @@ public class LengthParser extends AbstractParser {
         return lengthHandler;
     }
 
+    @Override
     protected void doParse() throws ParseException, IOException {
         lengthHandler.startLength();
 

@@ -67,6 +67,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @return     a new graphics context that is a copy of
      *             this graphics context.
      */
+    @Override
     public Graphics create(){
         return new DefaultGraphics2D(this);
     }
@@ -95,6 +96,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @see      java.awt.image.ImageObserver
      * @see      java.awt.image.ImageObserver#imageUpdate(java.awt.Image, int, int, int, int, int)
      */
+    @Override
     public boolean drawImage(Image img, int x, int y, ImageObserver observer){
         System.err.println("drawImage");
         return true;
@@ -133,6 +135,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @see      java.awt.image.ImageObserver
      * @see      java.awt.image.ImageObserver#imageUpdate(java.awt.Image, int, int, int, int, int)
      */
+    @Override
     public boolean drawImage(Image img, int x, int y,
                              int width, int height,
                              ImageObserver observer) {
@@ -167,6 +170,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @see         java.awt.Component#getGraphics
      * @see         java.awt.Graphics#create()
      */
+    @Override
     public void dispose(){
         System.out.println("dispose");
     }
@@ -185,6 +189,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @see #setClip(Shape)
      * @see #setComposite(java.awt.Composite)
      */
+    @Override
     public void draw(Shape s){
         System.out.println("draw(Shape)");
     }
@@ -207,6 +212,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @see #setComposite(java.awt.Composite)
      * @see #setClip(Shape)
      */
+    @Override
     public void drawRenderedImage(RenderedImage img,
                                   AffineTransform xform) {
         System.out.println("drawRenderedImage");
@@ -241,7 +247,8 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @see #setClip(Shape)
      * @see #drawRenderedImage
      */
-     public void drawRenderableImage(RenderableImage img,
+     @Override
+    public void drawRenderableImage(RenderableImage img,
                                      AffineTransform xform){
          System.out.println("drawRenderableImage");
      }
@@ -270,6 +277,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @see #setComposite(java.awt.Composite)
      * @see #setClip(Shape)
      */
+    @Override
     public void drawString(String s, float x, float y){
         System.out.println("drawString(String)");
     }
@@ -297,7 +305,8 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @see #setComposite(java.awt.Composite)
      * @see #setClip(Shape)
      */
-     public void drawString(AttributedCharacterIterator iterator,
+     @Override
+    public void drawString(AttributedCharacterIterator iterator,
                             float x, float y) {
          System.err.println("drawString(AttributedCharacterIterator)");
      }
@@ -316,6 +325,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @see #setComposite(java.awt.Composite)
      * @see #setClip(Shape)
      */
+    @Override
     public void fill(Shape s){
         System.err.println("fill");
     }
@@ -324,6 +334,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * Returns the device configuration associated with this
      * <code>Graphics2D</code>.
      */
+    @Override
     public GraphicsConfiguration getDeviceConfiguration(){
         System.out.println("getDeviceConfiguration");
         return null;
@@ -349,6 +360,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @see       java.awt.FontMetrics
      * @see       java.awt.Graphics#getFontMetrics()
      */
+    @Override
     public FontMetrics getFontMetrics(Font f){
         return fmg.getFontMetrics(f);
     }
@@ -368,6 +380,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * drawn twice, then all pixels are restored to their original values.
      * @param     c1 the XOR alternation color
      */
+    @Override
     public void setXORMode(Color c1){
         System.out.println("setXORMode");
     }
@@ -392,6 +405,7 @@ public class DefaultGraphics2D extends AbstractGraphics2D {
      * @param       dx the horizontal distance to copy the pixels.
      * @param       dy the vertical distance to copy the pixels.
      */
+    @Override
     public void copyArea(int x, int y, int width, int height,
                          int dx, int dy){
         System.out.println("copyArea");

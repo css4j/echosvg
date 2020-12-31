@@ -98,6 +98,7 @@ public class AffineRed extends AbstractRed {
              (int)pt.getX(), (int)pt.getY(), null);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
 
         // System.out.println("Affine CopyData:" + wr);
@@ -110,6 +111,7 @@ public class AffineRed extends AbstractRed {
         return wr;
     }
 
+    @Override
     public Raster getTile(int x, int y) {
         if (me2src == null)
             return null;

@@ -63,18 +63,22 @@ public class GenericDocumentType
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return The name of the DTD.
      */
+    @Override
     public String getNodeName() {
         return qualifiedName;
     }
 
+    @Override
     public short getNodeType() {
         return DOCUMENT_TYPE_NODE;
     }
 
+    @Override
     public boolean isReadonly() {
         return true;
     }
 
+    @Override
     public void setReadonly(boolean ro) {
     }
 
@@ -82,6 +86,7 @@ public class GenericDocumentType
      * <b>DOM</b>: Implements {@link org.w3c.dom.DocumentType#getName()}.
      * @return The name of document element as specified in the DTD.
      */
+    @Override
     public String getName() {
         return qualifiedName;
     }
@@ -90,6 +95,7 @@ public class GenericDocumentType
      * <b>DOM</b>: Implements {@link org.w3c.dom.DocumentType#getEntities()}.
      * @return null.
      */
+    @Override
     public NamedNodeMap getEntities() {
         return null;
     }
@@ -98,6 +104,7 @@ public class GenericDocumentType
      * <b>DOM</b>: Implements {@link org.w3c.dom.DocumentType#getNotations()}.
      * @return null.
      */
+    @Override
     public NamedNodeMap getNotations() {
         return null;
     }
@@ -106,6 +113,7 @@ public class GenericDocumentType
      * <b>DOM</b>: Implements {@link org.w3c.dom.DocumentType#getPublicId()}.
      * @return The public id.
      */
+    @Override
     public String getPublicId() {
         return publicId;
     }
@@ -114,6 +122,7 @@ public class GenericDocumentType
      * <b>DOM</b>: Implements {@link org.w3c.dom.DocumentType#getSystemId()}.
      * @return The public id.
      */
+    @Override
     public String getSystemId() {
         return systemId;
     }
@@ -122,10 +131,12 @@ public class GenericDocumentType
      * <b>DOM</b>: Implements {@link org.w3c.dom.DocumentType#getInternalSubset()}.
      * @return The public id.
      */
+    @Override
     public String getInternalSubset() {
         return null;
     }
 
+    @Override
     protected Node newNode() { 
         return new GenericDocumentType(qualifiedName, publicId, systemId);
     }

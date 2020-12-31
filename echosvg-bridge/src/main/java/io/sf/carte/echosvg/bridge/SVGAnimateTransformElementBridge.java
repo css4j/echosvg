@@ -41,6 +41,7 @@ public class SVGAnimateTransformElementBridge extends SVGAnimateElementBridge {
     /**
      * Returns 'animateTransform'.
      */
+    @Override
     public String getLocalName() {
         return SVG_ANIMATE_TRANSFORM_TAG;
     }
@@ -48,6 +49,7 @@ public class SVGAnimateTransformElementBridge extends SVGAnimateElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGAnimateTransformElementBridge();
     }
@@ -55,6 +57,7 @@ public class SVGAnimateTransformElementBridge extends SVGAnimateElementBridge {
     /**
      * Creates the animation object for the animation element.
      */
+    @Override
     protected AbstractAnimation createAnimation(AnimationTarget target) {
         short type = parseType();
         AnimatableValue from = null, to = null, by = null;
@@ -280,6 +283,7 @@ outer:  while (i < len) {
      * animate attributes of the specified type.
      * @param type one of the TYPE_ constants defined in {@link SVGTypes}.
      */
+    @Override
     protected boolean canAnimateType(int type) {
         return type == SVGTypes.TYPE_TRANSFORM_LIST;
     }

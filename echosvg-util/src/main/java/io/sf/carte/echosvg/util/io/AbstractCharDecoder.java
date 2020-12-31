@@ -65,6 +65,7 @@ public abstract class AbstractCharDecoder implements CharDecoder {
     /**
      * Disposes the associated resources.
      */
+    @Override
     public void dispose() throws IOException {
         inputStream.close();
         inputStream = null;

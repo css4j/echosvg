@@ -169,6 +169,7 @@ public class BridgeException extends RuntimeException {
     /**
      * Returns the error message according to the error code and parameters.
      */
+    @Override
     public String getMessage() {
         if (message != null) {
             return message;

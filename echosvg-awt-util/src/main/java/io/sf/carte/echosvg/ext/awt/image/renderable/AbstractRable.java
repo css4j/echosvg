@@ -118,6 +118,7 @@ public abstract class AbstractRable implements Filter {
        * invalid.
        * @return Current modification timestamp value.
        */
+    @Override
     public long getTimeStamp() { return stamp; }
 
     /**
@@ -176,6 +177,7 @@ public abstract class AbstractRable implements Filter {
             this.props.putAll(props);
     }
 
+    @Override
     public Rectangle2D getBounds2D() {
         Rectangle2D bounds = null;
         if (this.srcs.size() != 0) {
@@ -192,14 +194,17 @@ public abstract class AbstractRable implements Filter {
         return bounds;
     }
 
+    @Override
     public Vector getSources() {
         return srcs;
     }
 
+    @Override
     public RenderedImage createDefaultRendering() {
         return createScaledRendering(100, 100, null);
     }
 
+    @Override
     public RenderedImage createScaledRendering(int w, int h,
                                            RenderingHints hints) {
         float sX = w/getWidth();
@@ -218,19 +223,24 @@ public abstract class AbstractRable implements Filter {
                           PadMode.ZERO_PAD, null);
     }
 
+    @Override
     public float getMinX() {
         return (float)getBounds2D().getX();
     }
+    @Override
     public float getMinY() {
         return (float)getBounds2D().getY();
     }
+    @Override
     public float getWidth() {
         return (float)getBounds2D().getWidth();
     }
+    @Override
     public float getHeight() {
         return (float)getBounds2D().getHeight();
     }
 
+    @Override
     public Object getProperty(String name) {
         Object ret = props.get(name);
         if (ret != null) return ret;
@@ -242,6 +252,7 @@ public abstract class AbstractRable implements Filter {
         return null;
     }
 
+    @Override
     public String [] getPropertyNames() {
         Set keys = props.keySet();
         Iterator iter = keys.iterator();
@@ -266,8 +277,10 @@ public abstract class AbstractRable implements Filter {
         return ret;
     }
 
+    @Override
     public boolean isDynamic() { return false; }
 
+    @Override
     public Shape getDependencyRegion(int srcIndex,
                                      Rectangle2D outputRgn) {
         if ((srcIndex < 0) || (srcIndex > srcs.size()))
@@ -287,6 +300,7 @@ public abstract class AbstractRable implements Filter {
         return srect;
     }
 
+    @Override
     public Shape getDirtyRegion(int srcIndex,
                                 Rectangle2D inputRgn) {
         if ((srcIndex < 0) || (srcIndex > srcs.size()))

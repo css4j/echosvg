@@ -55,6 +55,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Displays an error message.
      */
+    @Override
     public void displayError(String message) {
         System.err.println(message);
     }
@@ -62,6 +63,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Displays an error resulting from the specified Exception.
      */
+    @Override
     public void displayError(Exception ex) {
         ex.printStackTrace();
     }
@@ -70,6 +72,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
      * Displays a message in the User Agent interface.
      * The given message is typically displayed in a status bar.
      */
+    @Override
     public void displayMessage(String message) {
         System.out.println(message);
     }
@@ -77,6 +80,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Shows an alert dialog box.
      */
+    @Override
     public void showAlert(String message) {
         System.err.println(message);
     }
@@ -84,6 +88,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Shows a prompt dialog box.
      */
+    @Override
     public String showPrompt(String message) {
         return "";
     }
@@ -91,6 +96,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Shows a prompt dialog box.
      */
+    @Override
     public String showPrompt(String message, String defaultValue) {
         return defaultValue;
     }
@@ -98,6 +104,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Shows a confirm dialog box.
      */
+    @Override
     public boolean showConfirm(String message) {
         return false;
     }
@@ -105,6 +112,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Returns the size of a px CSS unit in millimeters.
      */
+    @Override
     public float getPixelUnitToMillimeter() {
         return 0.26458333333333333333333333333333f; // 96dpi
     }
@@ -114,6 +122,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
      * This will be removed after next release.
      * @see #getPixelUnitToMillimeter()
      */
+    @Override
     public float getPixelToMM() {
         return getPixelUnitToMillimeter();
 
@@ -122,6 +131,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Returns the default font family.
      */
+    @Override
     public String getDefaultFontFamily() {
         return "Serif";
     }
@@ -129,6 +139,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Returns the  medium font size.
      */
+    @Override
     public float getMediumFontSize() {
         // 9pt (72pt == 1in)
         return 9f * 25.4f / (72f * getPixelUnitToMillimeter());
@@ -137,6 +148,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Returns a lighter font-weight.
      */
+    @Override
     public float getLighterFontWeight(float f) {
         // Round f to nearest 100...
         int weight = ((int)((f+50)/100))*100;
@@ -158,6 +170,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Returns a bolder font-weight.
      */
+    @Override
     public float getBolderFontWeight(float f) {
         // Round f to nearest 100...
         int weight = ((int)((f+50)/100))*100;
@@ -180,6 +193,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Returns the language settings.
      */
+    @Override
     public String getLanguages() {
         return "en";
     }
@@ -188,6 +202,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
      * Returns the user stylesheet uri.
      * @return null if no user style sheet was specified.
      */
+    @Override
     public String getUserStyleSheetURI() {
         return null;
     }
@@ -195,6 +210,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Returns the class name of the XML parser.
      */
+    @Override
     public String getXMLParserClassName() {
         return XMLResourceDescriptor.getXMLParserClassName();
     }
@@ -203,6 +219,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
      * Returns true if the XML parser must be in validation mode, false
      * otherwise.
      */
+    @Override
     public boolean isXMLParserValidating() {
         return false;
     }
@@ -210,6 +227,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Returns this user agent's CSS media.
      */
+    @Override
     public String getMedia() {
         return "screen";
     }
@@ -217,6 +235,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
     /**
      * Returns this user agent's alternate style-sheet title.
      */
+    @Override
     public String getAlternateStyleSheet() {
         return null;
     }
@@ -226,6 +245,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
      * @param uri The document URI.
      * @param newc Whether the link should be activated in a new component.
      */
+    @Override
     public void openLink(String uri, boolean newc) {
     }
 
@@ -233,10 +253,12 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
      * Tells whether the given extension is supported by this
      * user agent.
      */
+    @Override
     public boolean supportExtension(String s) {
         return false;
     }
 
+    @Override
     public void handleElement(Element elt, Object data){
     }
 
@@ -253,6 +275,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
      * @param docURL url for the document into which the
      *        script was found.
      */
+    @Override
     public ScriptSecurity getScriptSecurity(String scriptType,
                                             ParsedURL scriptURL,
                                             ParsedURL docURL){
@@ -288,6 +311,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
      * @param docURL url for the document into which the
      *        script was found.
      */
+    @Override
     public void checkLoadScript(String scriptType,
                                 ParsedURL scriptURL,
                                 ParsedURL docURL) throws SecurityException {
@@ -311,6 +335,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
      * @param docURL url for the document into which the
      *        resource was found.
      */
+    @Override
     public ExternalResourceSecurity
         getExternalResourceSecurity(ParsedURL resourceURL,
                                     ParsedURL docURL){
@@ -340,6 +365,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
      * @param docURL url for the document into which the
      *        resource was found.
      */
+    @Override
     public void
         checkLoadExternalResource(ParsedURL resourceURL,
                                   ParsedURL docURL) throws SecurityException {

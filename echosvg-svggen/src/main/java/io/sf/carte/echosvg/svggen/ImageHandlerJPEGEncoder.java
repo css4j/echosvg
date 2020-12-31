@@ -58,6 +58,7 @@ public class ImageHandlerJPEGEncoder extends AbstractImageHandlerEncoder {
      * @return the suffix used by this encoder. E.g., ".jpg" for
      *  ImageHandlerJPEGEncoder
      */
+    @Override
     public final String getSuffix() {
         return ".jpg";
     }
@@ -66,6 +67,7 @@ public class ImageHandlerJPEGEncoder extends AbstractImageHandlerEncoder {
      * @return the prefix used by this encoder. E.g., "jpegImage" for
      * ImageHandlerJPEGEncoder
      */
+    @Override
     public final String getPrefix() {
         return "jpegImage";
     }
@@ -74,6 +76,7 @@ public class ImageHandlerJPEGEncoder extends AbstractImageHandlerEncoder {
      * Derived classes should implement this method and encode the input
      * BufferedImage as needed
      */
+    @Override
     public void encodeImage(BufferedImage buf, File imageFile)
         throws SVGGraphics2DIOException {
         try{
@@ -97,6 +100,7 @@ public class ImageHandlerJPEGEncoder extends AbstractImageHandlerEncoder {
      * This method creates a BufferedImage of the right size and type
      * for the derived class.
      */
+    @Override
     public BufferedImage buildBufferedImage(Dimension size) {
         return new BufferedImage(size.width, size.height,
                                  BufferedImage.TYPE_INT_RGB);

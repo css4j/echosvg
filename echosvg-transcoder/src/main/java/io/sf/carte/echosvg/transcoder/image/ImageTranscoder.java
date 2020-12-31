@@ -84,6 +84,7 @@ public abstract class ImageTranscoder extends SVGAbstractTranscoder {
      * @param output the ouput where to transcode
      * @exception TranscoderException if an error occured while transcoding
      */
+    @Override
     protected void transcode(Document document,
                              String uri,
                              TranscoderOutput output)

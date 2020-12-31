@@ -41,10 +41,12 @@ public class KernSubtableFormat2 extends KernSubtable {
         array = raf.readUnsignedShort();
     }
 
+    @Override
     public int getKerningPairCount() {
         return 0;
     }
 
+    @Override
     public KerningPair getKerningPair(int i) {
         return null;
     }

@@ -103,19 +103,23 @@ public abstract class AbstractSVGPreserveAspectRatio
     public AbstractSVGPreserveAspectRatio() {
     }
 
+    @Override
     public short getAlign() {
         return this.align;
     }
 
+    @Override
     public short getMeetOrSlice() {
         return this.meetOrSlice;
     }
 
+    @Override
     public void setAlign(short align)  {
         this.align = align;
         setAttributeValue(getValueAsString());
     }
 
+    @Override
     public void setMeetOrSlice(short meetOrSlice) {
         this.meetOrSlice = meetOrSlice;
         setAttributeValue(getValueAsString());
@@ -192,6 +196,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void none() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_NONE;
         }
@@ -201,6 +206,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMaxYMax() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMAX;
         }
@@ -210,6 +216,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMaxYMid() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMID;
         }
@@ -219,6 +226,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMaxYMin() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMIN;
         }
@@ -228,6 +236,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMidYMax() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMAX;
         }
@@ -237,6 +246,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMidYMid() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMID;
         }
@@ -246,6 +256,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMidYMin() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMIN;
         }
@@ -255,6 +266,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMinYMax() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMAX;
         }
@@ -264,6 +276,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMinYMid() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMID;
         }
@@ -273,6 +286,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMinYMin() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMIN;
         }
@@ -282,6 +296,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void meet() throws ParseException {
             meetOrSlice = SVGPreserveAspectRatio.SVG_MEETORSLICE_MEET;
         }
@@ -291,6 +306,7 @@ public abstract class AbstractSVGPreserveAspectRatio
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void slice() throws ParseException {
             meetOrSlice = SVGPreserveAspectRatio.SVG_MEETORSLICE_SLICE;
         }

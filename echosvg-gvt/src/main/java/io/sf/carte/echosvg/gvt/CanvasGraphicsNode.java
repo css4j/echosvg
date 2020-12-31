@@ -151,6 +151,7 @@ public class CanvasGraphicsNode extends CompositeGraphicsNode {
      *
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void primitivePaint(Graphics2D g2d) {
         if (backgroundPaint != null) {
             g2d.setPaint(backgroundPaint);

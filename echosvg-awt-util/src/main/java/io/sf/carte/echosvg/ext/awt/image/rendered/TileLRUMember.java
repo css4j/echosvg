@@ -70,8 +70,11 @@ public class TileLRUMember implements LRUCache.LRUObj {
             return hRaster;
         }
 
+        @Override
         public LRUCache.LRUNode lruGet()         { return myNode; }
+        @Override
         public void lruSet(LRUCache.LRUNode nde) { myNode = nde; }
+        @Override
         public void lruRemove()                  {
             myNode  = null;
             hRaster = null;

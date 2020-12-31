@@ -65,6 +65,7 @@ public class ParametrizedTest extends AbstractTest {
         return expectedB;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         if (!A.equals(expectedA) || !B.equals(expectedB)) {
             TestReport r = reportError("Unexpected A or B value");

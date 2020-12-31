@@ -49,6 +49,7 @@ public class SVGRadialGradientElementBridge
     /**
      * Returns 'radialGradient'.
      */
+    @Override
     public String getLocalName() {
         return SVG_RADIAL_GRADIENT_TAG;
     }
@@ -66,6 +67,7 @@ public class SVGRadialGradientElementBridge
      * @param offsets the offsets
      * @param ctx the bridge context to use
      */
+    @Override
     protected
         Paint buildGradient(Element paintElement,
                             Element paintedElement,
@@ -175,7 +177,7 @@ public class SVGRadialGradientElementBridge
                                            offsets,
                                            colors,
                                            spreadMethod,
-                                           RadialGradientPaint.SRGB,
+                                           MultipleGradientPaint.SRGB,
                                            transform);
         }
     }

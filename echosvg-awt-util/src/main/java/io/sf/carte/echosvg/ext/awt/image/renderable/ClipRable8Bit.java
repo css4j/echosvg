@@ -70,6 +70,7 @@ public class ClipRable8Bit
      * The source to be masked by the mask node.
      * @param src The Image to be masked.
      */
+    @Override
     public void setSource(Filter src) {
         init(src, null);
     }
@@ -78,6 +79,7 @@ public class ClipRable8Bit
      * This returns the current image being masked by the mask node.
      * @return The image to mask
      */
+    @Override
     public Filter getSource() {
         return (Filter)getSources().get(0);
     }
@@ -86,6 +88,7 @@ public class ClipRable8Bit
      * Set the default behaviour of anti-aliased clipping.
      * for this clip object.
      */
+    @Override
     public void setUseAntialiasedClip(boolean useAA) {
         touch();
         this.useAA = useAA;
@@ -95,6 +98,7 @@ public class ClipRable8Bit
      * Resturns true if the default behaviour should be to use
      * anti-aliased clipping.
      */
+    @Override
     public boolean getUseAntialiasedClip() {
         return useAA;
     }
@@ -105,6 +109,7 @@ public class ClipRable8Bit
      * The path will be filled with opaque white.
      * @param clipPath The clip path to use
      */
+    @Override
     public void setClipPath(Shape clipPath) {
         touch();
         this.clipPath = clipPath;
@@ -115,6 +120,7 @@ public class ClipRable8Bit
        * define the clip path.
        * @return The shape that defines the clip path.
        */
+    @Override
     public Shape getClipPath() {
         return clipPath;
     }
@@ -122,10 +128,12 @@ public class ClipRable8Bit
     /**
      * Pass-through: returns the source's bounds
      */
+    @Override
     public Rectangle2D getBounds2D(){
         return getSource().getBounds2D();
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
 
         AffineTransform usr2dev = rc.getTransform();

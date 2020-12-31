@@ -72,6 +72,7 @@ public class FontStretchManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -79,6 +80,7 @@ public class FontStretchManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -86,6 +88,7 @@ public class FontStretchManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -93,6 +96,7 @@ public class FontStretchManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_IDENT;
     }
@@ -101,6 +105,7 @@ public class FontStretchManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_FONT_STRETCH_PROPERTY;
     }
@@ -109,6 +114,7 @@ public class FontStretchManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return ValueConstants.NORMAL_VALUE;
     }
@@ -117,6 +123,7 @@ public class FontStretchManager extends IdentifierManager {
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,
@@ -196,6 +203,7 @@ public class FontStretchManager extends IdentifierManager {
     /**
      * Implements {@link IdentifierManager#getIdentifiers()}.
      */
+    @Override
     public StringMap getIdentifiers() {
         return values;
     }

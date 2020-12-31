@@ -49,6 +49,7 @@ public class SVGColorProfileElementBridge extends AbstractSVGBridge
     /**
      * Returns 'colorProfile'.
      */
+    @Override
     public String getLocalName() {
         return SVG_COLOR_PROFILE_TAG;
     }

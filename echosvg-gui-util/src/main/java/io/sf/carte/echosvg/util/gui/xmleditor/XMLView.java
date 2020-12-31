@@ -51,11 +51,13 @@ public class XMLView extends PlainView {
     }
     
     /** {@inheritDoc} */
+    @Override
     public int getTabSize() {
         return tabSize;
     }
     
     /** {@inheritDoc} */
+    @Override
     protected int drawUnselectedText(Graphics g, int x, int y, int p0, int p1)
             throws BadLocationException {
 

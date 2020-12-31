@@ -250,6 +250,7 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
     /**
      * <b>DOM</b>: Get whether the Control key was pressed at the time of the event.
      */
+    @Override
     public boolean getCtrlKey() {
         return modifierKeys.contains(KEY_CONTROL);
     }
@@ -257,6 +258,7 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
     /**
      * <b>DOM</b>: Get whether the Shift key was pressed at the time of the event.
      */
+    @Override
     public boolean getShiftKey() {
         return modifierKeys.contains(KEY_SHIFT);
     }
@@ -264,6 +266,7 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
     /**
      * <b>DOM</b>: Get whether the Alt key was pressed at the time of the event.
      */
+    @Override
     public boolean getAltKey() {
         return modifierKeys.contains(KEY_ALT);
     }
@@ -272,6 +275,7 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
      * <b>DOM</b>: Get whether the Meta key was pressed at the time of the
      * event.
      */
+    @Override
     public boolean getMetaKey() {
         return modifierKeys.contains(KEY_META);
     }
@@ -279,6 +283,7 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
     /**
      * <b>DOM</b>: Get the key identifier.
      */
+    @Override
     public String getKeyIdentifier() {
         return keyIdentifier;
     }
@@ -286,6 +291,7 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
     /**
      * <b>DOM</b>: Get the key location.
      */
+    @Override
     public int getKeyLocation() {
         return keyLocation;
     }
@@ -294,6 +300,7 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
      * <b>DOM</b>: Returns whether the given modifier key was pressed at the
      * time of the event.
      */
+    @Override
     public boolean getModifierState(String keyIdentifierArg) {
         return modifierKeys.contains(keyIdentifierArg);
     }
@@ -313,6 +320,7 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
      * @param modifiersList Specifies which modifiers were in effect for this
      *   <code>Event</code>.
      */
+    @Override
     public void initKeyboardEvent(String typeArg, 
                                   boolean canBubbleArg, 
                                   boolean cancelableArg, 
@@ -346,6 +354,7 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
      * @param modifiersList Specifies which modifiers were in effect for this
      *   <code>Event</code>.
      */
+    @Override
     public void initKeyboardEventNS(String namespaceURIArg,
                                     String typeArg,
                                     boolean canBubbleArg, 

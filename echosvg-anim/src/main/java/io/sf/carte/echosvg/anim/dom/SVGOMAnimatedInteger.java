@@ -78,6 +78,7 @@ public class SVGOMAnimatedInteger
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedInteger#getBaseVal()}.
      */
+    @Override
     public int getBaseVal() {
         if (!valid) {
             update();
@@ -101,6 +102,7 @@ public class SVGOMAnimatedInteger
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedInteger#setBaseVal(int)}.
      */
+    @Override
     public void setBaseVal(int baseVal) throws DOMException {
         try {
             this.baseVal = baseVal;
@@ -116,6 +118,7 @@ public class SVGOMAnimatedInteger
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedInteger#getAnimVal()}.
      */
+    @Override
     public int getAnimVal() {
         if (hasAnimVal) {
             return animVal;
@@ -129,6 +132,7 @@ public class SVGOMAnimatedInteger
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         return new AnimatableIntegerValue(target, getBaseVal());
     }
@@ -136,6 +140,7 @@ public class SVGOMAnimatedInteger
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -149,6 +154,7 @@ public class SVGOMAnimatedInteger
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         if (!changing) {
             valid = false;
@@ -162,6 +168,7 @@ public class SVGOMAnimatedInteger
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         if (!changing) {
             valid = false;
@@ -175,6 +182,7 @@ public class SVGOMAnimatedInteger
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         if (!changing) {
             valid = false;

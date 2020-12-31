@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -49,6 +50,7 @@ public class EnableBackgroundManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return false;
     }
@@ -56,6 +58,7 @@ public class EnableBackgroundManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return false;
     }
@@ -63,6 +66,7 @@ public class EnableBackgroundManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -70,6 +74,7 @@ public class EnableBackgroundManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_ENABLE_BACKGROUND_VALUE;
     }
@@ -77,6 +82,7 @@ public class EnableBackgroundManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_ENABLE_BACKGROUND_PROPERTY;
     }
@@ -84,6 +90,7 @@ public class EnableBackgroundManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return SVGValueConstants.ACCUMULATE_VALUE;
     }
@@ -91,11 +98,12 @@ public class EnableBackgroundManager extends LengthManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
         case INHERIT:
-            return SVGValueConstants.INHERIT_VALUE;
+            return ValueConstants.INHERIT_VALUE;
 
         default:
             throw createInvalidLexicalUnitDOMException
@@ -131,6 +139,7 @@ public class EnableBackgroundManager extends LengthManager {
      * Implements {@link
      * ValueManager#createStringValue(short,String,CSSEngine)}.
      */
+    @Override
     public Value createStringValue(short type, String value,
                                    CSSEngine engine) {
         if (type != CSSPrimitiveValue.CSS_IDENT) {
@@ -145,6 +154,7 @@ public class EnableBackgroundManager extends LengthManager {
     /**
      * Implements {@link ValueManager#createFloatValue(short,float)}.
      */
+    @Override
     public Value createFloatValue(short unitType, float floatValue)
         throws DOMException {
         throw createDOMException();
@@ -154,6 +164,7 @@ public class EnableBackgroundManager extends LengthManager {
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,
@@ -199,6 +210,7 @@ public class EnableBackgroundManager extends LengthManager {
      * Indicates the orientation of the property associated with
      * this manager.
      */
+    @Override
     protected int getOrientation() {
         return orientation;
     }

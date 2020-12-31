@@ -66,6 +66,7 @@ public class LocaTable implements Table {
         return offsets[i] * factor;
     }
 
+    @Override
     public int getType() {
         return loca;
     }

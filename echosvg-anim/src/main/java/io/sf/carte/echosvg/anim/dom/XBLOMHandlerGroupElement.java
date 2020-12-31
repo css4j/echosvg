@@ -48,6 +48,7 @@ public class XBLOMHandlerGroupElement extends XBLOMElement {
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return XBL_HANDLER_GROUP_TAG;
     }
@@ -55,6 +56,7 @@ public class XBLOMHandlerGroupElement extends XBLOMElement {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new XBLOMHandlerGroupElement();
     }

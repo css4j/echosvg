@@ -30,26 +30,31 @@ public abstract class GVTTreeRendererAdapter implements GVTTreeRendererListener 
     /**
      * Called when a rendering is in its preparing phase.
      */
+    @Override
     public void gvtRenderingPrepare(GVTTreeRendererEvent e) {}
 
     /**
      * Called when a rendering started.
      */
+    @Override
     public void gvtRenderingStarted(GVTTreeRendererEvent e) {}
 
     /**
      * Called when a rendering was completed.
      */
+    @Override
     public void gvtRenderingCompleted(GVTTreeRendererEvent e) {}
 
     /**
      * Called when a rendering was cancelled.
      */
+    @Override
     public void gvtRenderingCancelled(GVTTreeRendererEvent e) {}
 
     /**
      * Called when a rendering failed.
      */
+    @Override
     public void gvtRenderingFailed(GVTTreeRendererEvent e) {}
 
 }

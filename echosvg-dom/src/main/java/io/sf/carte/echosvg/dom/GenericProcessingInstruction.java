@@ -60,6 +60,7 @@ public class GenericProcessingInstruction
     /**
      * Sets the node name.
      */
+    @Override
     public void setNodeName(String v) {
         setTarget(v);
     }
@@ -67,6 +68,7 @@ public class GenericProcessingInstruction
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -74,6 +76,7 @@ public class GenericProcessingInstruction
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -83,6 +86,7 @@ public class GenericProcessingInstruction
      * org.w3c.dom.ProcessingInstruction#getTarget()}.
      * @return {@link #target}.
      */
+    @Override
     public String getTarget() {
         return target;
     }
@@ -97,6 +101,7 @@ public class GenericProcessingInstruction
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         GenericProcessingInstruction p;
         p = (GenericProcessingInstruction)super.export(n, d);
@@ -107,6 +112,7 @@ public class GenericProcessingInstruction
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         GenericProcessingInstruction p;
         p = (GenericProcessingInstruction)super.deepExport(n, d);
@@ -118,6 +124,7 @@ public class GenericProcessingInstruction
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         GenericProcessingInstruction p;
         p = (GenericProcessingInstruction)super.copyInto(n);
@@ -129,6 +136,7 @@ public class GenericProcessingInstruction
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         GenericProcessingInstruction p;
         p = (GenericProcessingInstruction)super.deepCopyInto(n);
@@ -139,6 +147,7 @@ public class GenericProcessingInstruction
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new GenericProcessingInstruction();
     }

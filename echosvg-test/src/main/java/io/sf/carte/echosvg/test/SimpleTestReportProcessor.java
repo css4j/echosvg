@@ -61,6 +61,7 @@ public class SimpleTestReportProcessor implements TestReportProcessor {
      * Recursively prints out the entries of the input 
      * report and its children reports, if any.
      */
+    @Override
     public void processReport(TestReport report)
         throws TestException{
         try{

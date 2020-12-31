@@ -61,6 +61,7 @@ class EventTargetWrapper extends NativeJavaObject {
             function = f;
             interpreter = i;
         }
+        @Override
         public void handleEvent(Event evt) {
             Object event;
             if (evt instanceof ScriptEventWrapper) {
@@ -83,6 +84,7 @@ class EventTargetWrapper extends NativeJavaObject {
             scriptable = s;
             this.interpreter = interpreter;
         }
+        @Override
         public void handleEvent(Event evt) {
             if (evt instanceof ScriptEventWrapper) {
                 array[0] = ((ScriptEventWrapper) evt).getEventObject();
@@ -90,6 +92,7 @@ class EventTargetWrapper extends NativeJavaObject {
                 array[0] = evt;
             }
             ContextAction handleEventAction = new ContextAction() {
+                @Override
                 public Object run(Context cx) {
                     ScriptableObject.callMethod
                         (scriptable, HANDLE_EVENT, array);
@@ -107,71 +110,88 @@ class EventTargetWrapper extends NativeJavaObject {
             this.delegate = delegate;
         }
 
+        @Override
         public Scriptable construct(Context cx,
                                     Scriptable scope, Object[] args) {
             return this.delegate.construct(cx, scope, args);
         }
 
+        @Override
         public String getClassName() {
             return this.delegate.getClassName();
         }
 
+        @Override
         public Object get(String name, Scriptable start) {
             return this.delegate.get(name, start);
         }
 
+        @Override
         public Object get(int index, Scriptable start) {
             return this.delegate.get(index, start);
         }
 
+        @Override
         public boolean has(String name, Scriptable start) {
             return this.delegate.has(name, start);
         }
 
+        @Override
         public boolean has(int index, Scriptable start) {
             return this.delegate.has(index, start);
         }
 
+        @Override
         public void put(String name, Scriptable start, Object value) {
             this.delegate.put(name, start, value);
         }
 
+        @Override
         public void put(int index, Scriptable start, Object value) {
             this.delegate.put(index, start, value);
         }
 
+        @Override
         public void delete(String name) {
             this.delegate.delete(name);
         }
 
+        @Override
         public void delete(int index) {
             this.delegate.delete(index);
         }
 
+        @Override
         public Scriptable getPrototype() {
             return this.delegate.getPrototype();
         }
 
+        @Override
         public void setPrototype(Scriptable prototype) {
             this.delegate.setPrototype(prototype);
         }
 
+        @Override
         public Scriptable getParentScope() {
             return this.delegate.getParentScope();
         }
 
+        @Override
         public void setParentScope(Scriptable parent) {
             this.delegate.setParentScope(parent);
         }
 
+        @Override
         public Object[] getIds() {
             return this.delegate.getIds();
         }
 
+        @Override
         public Object getDefaultValue(Class hint) {
             return this.delegate.getDefaultValue(hint);
         }
 
+        @Override
         public boolean hasInstance(Scriptable instance) {
             return this.delegate.hasInstance(instance);
         }
@@ -196,6 +216,7 @@ class EventTargetWrapper extends NativeJavaObject {
             this.interpreter = interpreter;
         }
 
+        @Override
         public Object call(Context ctx, Scriptable scope,
                            Scriptable thisObj, Object[] args) {
             NativeJavaObject njo = (NativeJavaObject)thisObj;
@@ -252,6 +273,7 @@ class EventTargetWrapper extends NativeJavaObject {
             this.listenerMap = listenerMap;
         }
 
+        @Override
         public Object call(Context ctx, Scriptable scope,
                            Scriptable thisObj, Object[] args) {
             NativeJavaObject njo = (NativeJavaObject)thisObj;
@@ -303,6 +325,7 @@ class EventTargetWrapper extends NativeJavaObject {
             this.interpreter = interpreter;
         }
 
+        @Override
         public Object call(Context ctx, Scriptable scope,
                            Scriptable thisObj, Object[] args) {
             NativeJavaObject njo = (NativeJavaObject)thisObj;
@@ -356,6 +379,7 @@ class EventTargetWrapper extends NativeJavaObject {
             this.listenerMap = listenerMap;
         }
 
+        @Override
         public Object call(Context ctx, Scriptable scope,
                            Scriptable thisObj, Object[] args) {
             NativeJavaObject njo = (NativeJavaObject)thisObj;
@@ -425,6 +449,7 @@ class EventTargetWrapper extends NativeJavaObject {
     /**
      * Overriden Rhino method.
      */
+    @Override
     public Object get(String name, Scriptable start) {
         Object method = super.get(name, start);
         if (name.equals(ADD_NAME)) {

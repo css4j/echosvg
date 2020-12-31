@@ -190,6 +190,7 @@ public abstract class ExtensibleDOMImplementation
     /**
      * <b>DOM</b>: Implements DOMImplementation#createDocumentType(String,String,String).
      */
+    @Override
     public DocumentType createDocumentType(String qualifiedName,
                                            String publicId,
                                            String systemId) {

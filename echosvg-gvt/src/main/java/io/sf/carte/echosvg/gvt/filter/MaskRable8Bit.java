@@ -65,6 +65,7 @@ public class MaskRable8Bit
      * The source to be masked by the mask node.
      * @param src The Image to be masked.
      */
+    @Override
     public void setSource(Filter src) {
         init(src, null);
     }
@@ -73,6 +74,7 @@ public class MaskRable8Bit
      * This returns the current image being masked by the mask node.
      * @return The image to mask
      */
+    @Override
     public Filter getSource() {
         return (Filter)getSources().get(0);
     }
@@ -80,6 +82,7 @@ public class MaskRable8Bit
     /**
      * The region to which this mask applies
      */
+    @Override
     public Rectangle2D getFilterRegion(){
         return (Rectangle2D)filterRegion.clone();
     }
@@ -87,6 +90,7 @@ public class MaskRable8Bit
     /**
      * Returns the filter region to which this mask applies
      */
+    @Override
     public void setFilterRegion(Rectangle2D filterRegion){
         if(filterRegion == null){
             throw new IllegalArgumentException();
@@ -104,6 +108,7 @@ public class MaskRable8Bit
      * conversion is performed.
      * @param mask The graphics node that defines the mask image.
      */
+    @Override
     public void setMaskNode(GraphicsNode mask) {
         touch();
         this.mask = mask;
@@ -114,6 +119,7 @@ public class MaskRable8Bit
        * define the masking image.
        * @return The graphics node that defines the mask image.
        */
+    @Override
     public GraphicsNode getMaskNode() {
         return mask;
     }
@@ -121,10 +127,12 @@ public class MaskRable8Bit
     /**
      * Pass-through: returns the source's bounds
      */
+    @Override
     public Rectangle2D getBounds2D(){
         return (Rectangle2D)filterRegion.clone();
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         //
         // Get the mask content

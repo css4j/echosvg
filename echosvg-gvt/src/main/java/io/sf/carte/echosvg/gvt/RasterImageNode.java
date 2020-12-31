@@ -98,6 +98,7 @@ public class RasterImageNode extends AbstractGraphicsNode {
      *
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void primitivePaint(Graphics2D g2d) {
         if (image == null) return;
 
@@ -111,6 +112,7 @@ public class RasterImageNode extends AbstractGraphicsNode {
     /**
      * Returns the bounds of the area covered by this node's primitive paint.
      */
+    @Override
     public Rectangle2D getPrimitiveBounds() {
         if (image == null)
             return null;
@@ -122,6 +124,7 @@ public class RasterImageNode extends AbstractGraphicsNode {
      * of its rendering attribute into account. That is, exclusive of any clipping,
      * masking, filtering or stroking, for example.
      */
+    @Override
     public Rectangle2D getGeometryBounds() {
         if (image == null)
             return null;
@@ -133,6 +136,7 @@ public class RasterImageNode extends AbstractGraphicsNode {
      * This includes the stroked area but does not include the effects
      * of clipping, masking or filtering.
      */
+    @Override
     public Rectangle2D getSensitiveBounds() {
         if (image == null)
             return null;
@@ -142,6 +146,7 @@ public class RasterImageNode extends AbstractGraphicsNode {
     /**
      * Returns the outline of this node.
      */
+    @Override
     public Shape getOutline() {
         if (image == null)
             return null;

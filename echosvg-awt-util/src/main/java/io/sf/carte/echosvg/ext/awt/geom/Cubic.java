@@ -53,6 +53,7 @@ public class Cubic extends AbstractSegment {
         this.p4 = p4;
     }
 
+    @Override
     public Object clone() {
         return new Cubic(new Point2D.Double(p1.x, p1.y),
                          new Point2D.Double(p2.x, p2.y),
@@ -92,27 +93,32 @@ public class Cubic extends AbstractSegment {
             else if (tv > minMax[1]) minMax[1] = tv;
         }
     }
+    @Override
     public double minX() {
         double [] minMax = {0, 0};
         getMinMax(p1.x, p2.x, p3.x, p4.x, minMax);
         return minMax[0];
     }
+    @Override
     public double maxX() {
         double [] minMax = {0, 0};
         getMinMax(p1.x, p2.x, p3.x, p4.x, minMax);
         return minMax[1];
     }
+    @Override
     public double minY() {
         double [] minMax = {0, 0};
         getMinMax(p1.y, p2.y, p3.y, p4.y, minMax);
         return minMax[0];
     }
+    @Override
     public double maxY() {
         double [] minMax = {0, 0};
         getMinMax(p1.y, p2.y, p3.y, p4.y, minMax);
         return minMax[1];
     }
 
+    @Override
     public Rectangle2D getBounds2D() {
         double [] minMaxX = {0, 0};
         getMinMax(p1.x, p2.x, p3.x, p4.x, minMaxX);
@@ -124,6 +130,7 @@ public class Cubic extends AbstractSegment {
              minMaxX[1]-minMaxX[0], minMaxY[1]-minMaxY[0]);
     }
 
+    @Override
     protected int findRoots(double y, double [] roots) {
         double [] eqn = { p1.y-y, 3*(p2.y-p1.y), 3*(p1.y-2*p2.y+p3.y),
                           3*p2.y-p1.y+p4.y-3*p3.y };
@@ -131,6 +138,7 @@ public class Cubic extends AbstractSegment {
         // return solveCubic(eqn[3], eqn[2], eqn[1], eqn[0], roots);
     }
 
+    @Override
     public Point2D.Double evalDt(double t) {
         double x = 3*(  (p2.x-p1.x)*(1-t)*(1-t) +
                       2*(p3.x-p2.x)*(1-t)*t +
@@ -142,6 +150,7 @@ public class Cubic extends AbstractSegment {
     }
 
 
+    @Override
     public Point2D.Double eval(double t) {
         double x = ((1-t)*(1-t)*(1-t)*p1.x +
                     3*(t* (1-t)*(1-t)*p2.x +
@@ -160,6 +169,7 @@ public class Cubic extends AbstractSegment {
      * @param s0 if non-null contains portion of curve from  0-&gt;.5
      * @param s1 if non-null contains portion of curve from .5-&gt;1
      */
+    @Override
     public void subdivide(Segment s0, Segment s1) {
         Cubic c0=null, c1=null;
         if (s0 instanceof Cubic) c0 = (Cubic)s0;
@@ -172,6 +182,7 @@ public class Cubic extends AbstractSegment {
      * @param s0 if non-null contains portion of curve from 0-&gt;t.
      * @param s1 if non-null contains portion of curve from t-&gt;1.
      */
+    @Override
     public void subdivide(double t, Segment s0, Segment s1) {
         Cubic c0=null, c1=null;
         if (s0 instanceof Cubic) c0 = (Cubic)s0;
@@ -255,6 +266,7 @@ public class Cubic extends AbstractSegment {
         }
     }
 
+    @Override
     public Segment getSegment(double t0, double t1) {
         double dt = t1-t0;
         Point2D.Double np1 = eval(t0);
@@ -325,10 +337,12 @@ public class Cubic extends AbstractSegment {
         return len;
     }
 
+    @Override
     public double getLength() {
         return getLength(0.000001);
     }
 
+    @Override
     public double getLength(double maxErr) {
         double dx, dy;
         dx = p2.x-p1.x;
@@ -346,6 +360,7 @@ public class Cubic extends AbstractSegment {
         return subLength(leftLegLen, rightLegLen, eps);
     }
 
+    @Override
     public String toString() {
         return "M" + p1.x + ',' + p1.y +
                 'C' + p2.x + ',' + p2.y + ' ' +

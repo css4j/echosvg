@@ -52,6 +52,7 @@ public class SVGFeConvolveMatrixElementBridge
     /**
      * Returns 'feConvolveMatrix'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_CONVOLVE_MATRIX_TAG;
     }
@@ -74,6 +75,7 @@ public class SVGFeConvolveMatrixElementBridge
      *        can then access a filter node from the filterMap if they
      *        know its name.
      */
+    @Override
     public Filter createFilter(BridgeContext ctx,
                                Element filterElement,
                                Element filteredElement,

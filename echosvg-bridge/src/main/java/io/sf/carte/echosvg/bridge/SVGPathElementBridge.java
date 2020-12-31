@@ -59,6 +59,7 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge
     /**
      * Returns 'path'.
      */
+    @Override
     public String getLocalName() {
         return SVG_PATH_TAG;
     }
@@ -66,6 +67,7 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGPathElementBridge();
     }
@@ -77,6 +79,7 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge
      * @param e the element that describes a rect element
      * @param shapeNode the shape node to initialize
      */
+    @Override
     protected void buildShape(BridgeContext ctx,
                               Element e,
                               ShapeNode shapeNode) {
@@ -102,6 +105,7 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge
     /**
      * Invoked when the animated value of an animatable attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged
             (AnimatedLiveAttributeValue alav) {
         if (alav.getNamespaceURI() == null &&
@@ -113,6 +117,7 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge
         }
     }
 
+    @Override
     protected void handleCSSPropertyChanged(int property) {
         switch(property) {
         case SVGCSSEngine.FILL_RULE_INDEX:
@@ -151,6 +156,7 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge
     /**
      * Returns the total length of the path.
      */
+    @Override
     public float getTotalLength() {
         PathLength pl = getPathLengthObj();
         return pl.lengthOfPath();
@@ -159,6 +165,7 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge
     /**
      * Returns the point at the given distance along the path.
      */
+    @Override
     public Point2D getPointAtLength(float distance) {
         PathLength pl = getPathLengthObj();
         return pl.pointAtLength(distance);
@@ -168,6 +175,7 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge
      * Returns the index of the path segment at the given distance along the
      * path.
      */
+    @Override
     public int getPathSegAtLength(float distance) {
         PathLength pl = getPathLengthObj();
         return pl.segmentAtLength(distance);

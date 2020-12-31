@@ -54,6 +54,7 @@ public class SVG12OMDocument extends SVGOMDocument {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVG12OMDocument();
     }
@@ -64,6 +65,7 @@ public class SVG12OMDocument extends SVGOMDocument {
      * Adds an event listener for mutations on the
      * CSSNavigableDocument tree.
      */
+    @Override
     public void addCSSNavigableDocumentListener
             (CSSNavigableDocumentListener l) {
         if (cssNavigableDocumentListeners.containsKey(l)) {
@@ -116,6 +118,7 @@ public class SVG12OMDocument extends SVGOMDocument {
      * Removes an event listener for mutations on the
      * CSSNavigableDocument tree.
      */
+    @Override
     public void removeCSSNavigableDocumentListener
             (CSSNavigableDocumentListener l) {
         EventListener[] listeners

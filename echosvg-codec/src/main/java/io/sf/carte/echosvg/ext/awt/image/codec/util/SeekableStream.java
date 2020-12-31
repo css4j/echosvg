@@ -131,6 +131,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *             stream is reached.
      * @exception  IOException  if an I/O error occurs.
      */
+    @Override
     public abstract int read() throws IOException;
 
     /**
@@ -183,6 +184,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *             the stream has been reached.
      * @exception  IOException  if an I/O error occurs.
      */
+    @Override
     public abstract int read(byte[] b, int off, int len) throws IOException;
 
     // Implemented in InputStream:
@@ -199,6 +201,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      * Marks the current file position for later return using
      * the <code>reset()</code> method.
      */
+    @Override
     public synchronized void mark(int readLimit) {
         try {
             markPos = getFilePointer();
@@ -212,6 +215,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      * the immediately previous call to the <code>mark()</code>
      * method.
      */
+    @Override
     public synchronized void reset() throws IOException {
         if (markPos != -1) {
             seek(markPos);
@@ -225,6 +229,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      * not support seeking backwards but do support marking must override
      * this method.
      */
+    @Override
     public boolean markSupported() {
         return canSeekBackwards();
     }
@@ -278,6 +283,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *               all the bytes.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final void readFully(byte[] b) throws IOException {
         readFully(b, 0, b.length);
     }
@@ -296,6 +302,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *               all the bytes.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final void readFully(byte[] b, int off, int len)
         throws IOException {
         int n = 0;
@@ -325,6 +332,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      * @return     the actual number of bytes skipped.
      * @exception  IOException  if an I/O error occurs.
      */
+    @Override
     public int skipBytes(int n) throws IOException {
         if (n <= 0) {
             return 0;
@@ -344,6 +352,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      * @exception  EOFException  if this stream has reached the end.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final boolean readBoolean() throws IOException {
         int ch = this.read();
         if (ch < 0)
@@ -369,6 +378,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      * @exception  EOFException  if this stream has reached the end.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final byte readByte() throws IOException {
         int ch = this.read();
         if (ch < 0)
@@ -389,6 +399,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      * @exception  EOFException  if this stream has reached the end.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final int readUnsignedByte() throws IOException {
         int ch = this.read();
         if (ch < 0)
@@ -417,6 +428,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *               two bytes.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final short readShort() throws IOException {
         int ch1 = this.read();
         int ch2 = this.read();
@@ -474,6 +486,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *             two bytes.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final int readUnsignedShort() throws IOException {
         int ch1 = this.read();
         int ch2 = this.read();
@@ -530,6 +543,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *               two bytes.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final char readChar() throws IOException {
         int ch1 = this.read();
         int ch2 = this.read();
@@ -586,6 +600,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *               four bytes.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final int readInt() throws IOException {
         int ch1 = this.read();
         int ch2 = this.read();
@@ -718,6 +733,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *               eight bytes.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final long readLong() throws IOException {
         return ((long)(readInt()) << 32) + (readInt() & 0xFFFFFFFFL);
     }
@@ -774,6 +790,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *             four bytes.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final float readFloat() throws IOException {
         return Float.intBitsToFloat(readInt());
     }
@@ -817,6 +834,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *             eight bytes.
      * @exception  IOException   if an I/O error occurs.
      */
+    @Override
     public final double readDouble() throws IOException {
         return Double.longBitsToDouble(readLong());
     }
@@ -866,6 +884,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      *             of stream is encountered before even one byte is read.
      * @exception  IOException  if an I/O error occurs.
      */
+    @Override
     public final String readLine() throws IOException {
         StringBuffer input = new StringBuffer();
         int c = -1;
@@ -918,6 +937,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      * @exception  UTFDataFormatException  if the bytes do not represent
      *               valid UTF-8 encoding of a Unicode string.
      */
+    @Override
     public final String readUTF() throws IOException {
         return DataInputStream.readUTF(this);
     }
@@ -926,6 +946,7 @@ public abstract class SeekableStream extends InputStream implements DataInput {
      * Releases any system resources associated with this stream
      * by calling the <code>close()</code> method.
      */
+    @Override
     protected void finalize() throws Throwable {
         super.finalize();
         close();

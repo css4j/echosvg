@@ -61,6 +61,7 @@ public class LengthListParser extends LengthParser {
     /**
      * Parses the given reader.
      */
+    @Override
     protected void doParse() throws ParseException, IOException {
         ((LengthListHandler)lengthHandler).startLengthList();
 

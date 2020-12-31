@@ -97,6 +97,7 @@ public class StreamNormalizingReader extends NormalizingReader {
      * character is available, an I/O error occurs, or the end of the
      * stream is reached.
      */
+    @Override
     public int read() throws IOException {
         int result = nextChar;
         if (result != -1) {
@@ -131,6 +132,7 @@ public class StreamNormalizingReader extends NormalizingReader {
     /**
      * Returns the current line in the stream.
      */
+    @Override
     public int getLine() {
         return line;
     }
@@ -138,6 +140,7 @@ public class StreamNormalizingReader extends NormalizingReader {
     /**
      * Returns the current column in the stream.
      */
+    @Override
     public int getColumn() {
         return column;
     }
@@ -145,6 +148,7 @@ public class StreamNormalizingReader extends NormalizingReader {
     /**
      * Close the stream.
      */
+    @Override
     public void close() throws IOException {
         charDecoder.dispose();
         charDecoder = null;
@@ -192,6 +196,7 @@ public class StreamNormalizingReader extends NormalizingReader {
      */
     protected static class ASCIIDecoderFactory
         implements CharDecoderFactory {
+        @Override
         public CharDecoder createCharDecoder(InputStream is)
             throws IOException {
             return new ASCIIDecoder(is);
@@ -203,6 +208,7 @@ public class StreamNormalizingReader extends NormalizingReader {
      */
     protected static class ISO_8859_1DecoderFactory
         implements CharDecoderFactory {
+        @Override
         public CharDecoder createCharDecoder(InputStream is)
             throws IOException {
             return new ISO_8859_1Decoder(is);
@@ -214,6 +220,7 @@ public class StreamNormalizingReader extends NormalizingReader {
      */
     protected static class UTF8DecoderFactory
         implements CharDecoderFactory {
+        @Override
         public CharDecoder createCharDecoder(InputStream is)
             throws IOException {
             return new UTF8Decoder(is);
@@ -225,6 +232,7 @@ public class StreamNormalizingReader extends NormalizingReader {
      */
     protected static class UTF16DecoderFactory
         implements CharDecoderFactory {
+        @Override
         public CharDecoder createCharDecoder(InputStream is)
             throws IOException {
             return new UTF16Decoder(is);

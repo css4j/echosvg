@@ -72,6 +72,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns 'use'.
      */
+    @Override
     public String getLocalName() {
         return SVG_USE_TAG;
     }
@@ -79,6 +80,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance(){
         return new SVGUseElementBridge();
     }
@@ -90,6 +92,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         // 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
         if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent()))
@@ -297,6 +300,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
         return gn;
     }
 
+    @Override
     public void dispose() {
         if (l != null) {
             // Remove event listeners
@@ -330,6 +334,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
      * Returns an {@link AffineTransform} that is the transformation to
      * be applied to the node.
      */
+    @Override
     protected AffineTransform computeTransform(SVGTransformable e,
                                                BridgeContext ctx) {
         AffineTransform at = super.computeTransform(e, ctx);
@@ -357,6 +362,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
      * Creates the GraphicsNode depending on the GraphicsNodeBridge
      * implementation.
      */
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         return null; // nothing to do, createGraphicsNode is fully overridden
     }
@@ -364,6 +370,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns false as the &lt;use&gt; element is a not container.
      */
+    @Override
     public boolean isComposite() {
         return false;
     }
@@ -376,6 +383,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
      * @param e the element that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -404,6 +412,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
             this.ctx = ctx;
         }
 
+        @Override
         public void handleEvent(Event evt) {
             //
             // Only modify the cursor if the current target's (i.e., the <use>) cursor 
@@ -427,6 +436,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
     protected class ReferencedElementMutationListener implements EventListener {
         protected NodeEventTarget target;
 
+        @Override
         public void handleEvent(Event evt) {
             // We got a mutation in the referenced content. We need to 
             // build the content again, just in case.
@@ -442,6 +452,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Invoked when the animated value of an animatable attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged
             (AnimatedLiveAttributeValue alav) {
         try {

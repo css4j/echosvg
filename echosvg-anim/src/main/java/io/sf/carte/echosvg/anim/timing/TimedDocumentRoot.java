@@ -89,6 +89,7 @@ public abstract class TimedDocumentRoot extends TimeContainer {
      * Returns the implicit duration of the element.  The document root
      * has an {@link #INDEFINITE} implicit duration.
      */
+    @Override
     protected float getImplicitDur() {
         return INDEFINITE;
     }
@@ -99,6 +100,7 @@ public abstract class TimedDocumentRoot extends TimeContainer {
      * only time container is the root SVG element, which acts
      * like a 'par'.
      */
+    @Override
     public float getDefaultBegin(TimedElement child) {
         return 0.0f;
     }

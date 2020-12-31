@@ -57,6 +57,7 @@ public class XMLTextEditor extends JEditorPane {
         // add undoable edit
         undoManager = new UndoManager();
         UndoableEditListener undoableEditHandler = new UndoableEditListener() {
+            @Override
             public void undoableEditHappened(UndoableEditEvent e) {
                 undoManager.addEdit(e.getEdit());
             }
@@ -66,6 +67,7 @@ public class XMLTextEditor extends JEditorPane {
     
     
     /** {@inheritDoc} */
+    @Override
     public void setText(String t) {
         super.setText(t);
         

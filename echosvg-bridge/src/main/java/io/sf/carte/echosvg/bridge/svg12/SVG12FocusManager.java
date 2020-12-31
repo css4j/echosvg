@@ -53,6 +53,7 @@ public class SVG12FocusManager extends FocusManager {
     /**
      * Adds the event listeners to the document.
      */
+    @Override
     protected void addEventListeners(Document doc) {
         AbstractNode n = (AbstractNode) doc;
         XBLEventSupport es = (XBLEventSupport) n.initializeEventSupport();
@@ -91,6 +92,7 @@ public class SVG12FocusManager extends FocusManager {
     /**
      * Removes the event listeners from the document.
      */
+    @Override
     protected void removeEventListeners(Document doc) {
         AbstractNode n = (AbstractNode) doc;
         XBLEventSupport es = (XBLEventSupport) n.getEventSupport();
@@ -121,6 +123,7 @@ public class SVG12FocusManager extends FocusManager {
      * The class that is responsible for tracking 'mouseclick' changes.
      */
     protected class MouseClickTracker extends FocusManager.MouseClickTracker {
+        @Override
         public void handleEvent(Event evt) {
             super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
         }
@@ -130,6 +133,7 @@ public class SVG12FocusManager extends FocusManager {
      * The class that is responsible for tracking 'DOMFocusIn' changes.
      */
     protected class DOMFocusInTracker extends FocusManager.DOMFocusInTracker {
+        @Override
         public void handleEvent(Event evt) {
             super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
         }
@@ -139,6 +143,7 @@ public class SVG12FocusManager extends FocusManager {
      * The class that is responsible for tracking 'mouseover' changes.
      */
     protected class MouseOverTracker extends FocusManager.MouseOverTracker {
+        @Override
         public void handleEvent(Event evt) {
             super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
         }
@@ -148,6 +153,7 @@ public class SVG12FocusManager extends FocusManager {
      * The class that is responsible for tracking 'mouseout' changes.
      */
     protected class MouseOutTracker extends FocusManager.MouseOutTracker {
+        @Override
         public void handleEvent(Event evt) {
             super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
         }
@@ -159,6 +165,7 @@ public class SVG12FocusManager extends FocusManager {
      * @param target the newly focussed event target
      * @param relatedTarget the previously focussed event target
      */
+    @Override
     protected void fireDOMFocusInEvent(EventTarget target,
                                        EventTarget relatedTarget) {
         DocumentEvent docEvt = 
@@ -182,6 +189,7 @@ public class SVG12FocusManager extends FocusManager {
      * @param target the previously focussed event target
      * @param relatedTarget the newly focussed event target
      */
+    @Override
     protected void fireDOMFocusOutEvent(EventTarget target,
                                         EventTarget relatedTarget) {
         DocumentEvent docEvt = 

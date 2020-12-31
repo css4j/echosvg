@@ -23,6 +23,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAnimatedString;
 import org.w3c.dom.svg.SVGGlyphRefElement;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
@@ -66,14 +67,14 @@ public class SVGOMGlyphRefElement
     protected static final AttributeInitializer attributeInitializer;
     static {
         attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null, "xmlns:xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+                                          XMLConstants.XLINK_NAMESPACE_URI);
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "show", "other");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "actuate", "onLoad");
     }
 
@@ -102,6 +103,7 @@ public class SVGOMGlyphRefElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -118,6 +120,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_GLYPH_REF_TAG;
     }
@@ -125,6 +128,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
      */
+    @Override
     public SVGAnimatedString getHref() {
         return href;
     }
@@ -132,6 +136,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#getGlyphRef()}.
      */
+    @Override
     public String getGlyphRef() {
         return getAttributeNS(null, SVG_GLYPH_REF_ATTRIBUTE);
     }
@@ -139,6 +144,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#setGlyphRef(String)}.
      */
+    @Override
     public void setGlyphRef(String glyphRef) throws DOMException {
         setAttributeNS(null, SVG_GLYPH_REF_ATTRIBUTE, glyphRef);
     }
@@ -146,6 +152,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#getFormat()}.
      */
+    @Override
     public String getFormat() {
         return getAttributeNS(null, SVG_FORMAT_ATTRIBUTE);
     }
@@ -153,6 +160,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#setFormat(String)}.
      */
+    @Override
     public void setFormat(String format) throws DOMException {
         setAttributeNS(null, SVG_FORMAT_ATTRIBUTE, format);
     }
@@ -160,6 +168,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#getX()}.
      */
+    @Override
     public float getX() {
         return Float.parseFloat(getAttributeNS(null, SVG_X_ATTRIBUTE));
     }
@@ -167,6 +176,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#setX(float)}.
      */
+    @Override
     public void setX(float x) throws DOMException {
         setAttributeNS(null, SVG_X_ATTRIBUTE, String.valueOf(x));
     }
@@ -174,6 +184,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#getY()}.
      */
+    @Override
     public float getY() {
         return Float.parseFloat(getAttributeNS(null, SVG_Y_ATTRIBUTE));
     }
@@ -181,6 +192,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#setY(float)}.
      */
+    @Override
     public void setY(float y) throws DOMException {
         setAttributeNS(null, SVG_Y_ATTRIBUTE, String.valueOf(y));
     }
@@ -188,6 +200,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#getDx()}.
      */
+    @Override
     public float getDx() {
         return Float.parseFloat(getAttributeNS(null, SVG_DX_ATTRIBUTE));
     }
@@ -195,6 +208,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#setDx(float)}.
      */
+    @Override
     public void setDx(float dx) throws DOMException {
         setAttributeNS(null, SVG_DX_ATTRIBUTE, String.valueOf(dx));
     }
@@ -202,6 +216,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#getDy()}.
      */
+    @Override
     public float getDy() {
         return Float.parseFloat(getAttributeNS(null, SVG_DY_ATTRIBUTE));
     }
@@ -209,6 +224,7 @@ public class SVGOMGlyphRefElement
     /**
      * <b>DOM</b>: Implements {@link SVGGlyphRefElement#setDy(float)}.
      */
+    @Override
     public void setDy(float dy) throws DOMException {
         setAttributeNS(null, SVG_DY_ATTRIBUTE, String.valueOf(dy));
     }
@@ -217,6 +233,7 @@ public class SVGOMGlyphRefElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -224,6 +241,7 @@ public class SVGOMGlyphRefElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMGlyphRefElement();
     }

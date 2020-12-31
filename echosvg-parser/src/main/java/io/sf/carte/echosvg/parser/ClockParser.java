@@ -63,6 +63,7 @@ public class ClockParser extends TimingParser {
     /**
      * Parses a clock value.
      */
+    @Override
     protected void doParse() throws ParseException, IOException {
         current = reader.read();
         float clockValue = parseOffset ? parseOffset() : parseClockValue();

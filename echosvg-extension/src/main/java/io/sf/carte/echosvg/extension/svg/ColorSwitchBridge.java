@@ -49,6 +49,7 @@ public class ColorSwitchBridge
     /**
      * Returns the SVG namespace URI.
      */
+    @Override
     public String getNamespaceURI() {
         return BATIK_EXT_NAMESPACE_URI;
     }
@@ -56,6 +57,7 @@ public class ColorSwitchBridge
     /**
      * Returns 'colorSwitch'.
      */
+    @Override
     public String getLocalName() {
         return BATIK_EXT_COLOR_SWITCH_TAG;
     }
@@ -69,6 +71,7 @@ public class ColorSwitchBridge
      * @param paintedNode the graphics node on which the Paint will be applied
      * @param opacity the opacity of the Paint to create
      */
+    @Override
     public Paint createPaint(BridgeContext ctx,
                              Element paintElement,
                              Element paintedElement,

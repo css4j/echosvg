@@ -52,6 +52,7 @@ public class SVGOMLength extends AbstractSVGLength {
 
     /**
      */
+    @Override
     protected SVGOMElement getAssociatedElement(){
         return (SVGOMElement)element;
     }

@@ -57,6 +57,7 @@ public class ImageHandlerBase64Encoder extends DefaultImageHandler {
      * The handler should set the xlink:href tag and the width and
      * height attributes.
      */
+    @Override
     public void handleHREF(Image image, Element imageElement,
                               SVGGeneratorContext generatorContext)
         throws SVGGraphics2DIOException {
@@ -90,6 +91,7 @@ public class ImageHandlerBase64Encoder extends DefaultImageHandler {
      * The handler should set the xlink:href tag and the width and
      * height attributes.
      */
+    @Override
     public void handleHREF(RenderableImage image, Element imageElement,
                               SVGGeneratorContext generatorContext)
         throws SVGGraphics2DIOException {
@@ -118,6 +120,7 @@ public class ImageHandlerBase64Encoder extends DefaultImageHandler {
      * resulting encoded data is used to set the url on the
      * input imageElement, using the data: protocol.
      */
+    @Override
     public void handleHREF(RenderedImage image, Element imageElement,
                               SVGGeneratorContext generatorContext)
         throws SVGGraphics2DIOException {

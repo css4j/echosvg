@@ -45,6 +45,7 @@ public class Linear implements Segment {
         this.p2 = p2;
     }
 
+    @Override
     public Object clone() {
         return new Linear(new Point2D.Double(p1.x, p1.y),
                           new Point2D.Double(p2.x, p2.y));
@@ -55,22 +56,27 @@ public class Linear implements Segment {
                           new Point2D.Double(p1.x, p1.y));
     }
 
+    @Override
     public double minX() {
         if (p1.x < p2.x) return p1.x;
         return p2.x;
     }
+    @Override
     public double maxX() {
         if (p1.x > p2.x) return p1.x;
         return p2.x;
     }
+    @Override
     public double minY() {
         if (p1.y < p2.y) return p1.y;
         return p2.y;
     }
+    @Override
     public double maxY() {
         if (p1.y > p2.y) return p2.y;
         return p1.y;
     }
+    @Override
     public Rectangle2D getBounds2D() {
         double x, y, w, h;
         if (p1.x < p2.x) {
@@ -87,17 +93,20 @@ public class Linear implements Segment {
         return new Rectangle2D.Double(x, y, w, h);
     }
 
+    @Override
     public Point2D.Double evalDt(double t) {
         double x = (p2.x-p1.x);
         double y = (p2.y-p1.y);
         return new Point2D.Double(x, y);
     }
+    @Override
     public Point2D.Double eval(double t)   {
         double x = p1.x + t*(p2.x-p1.x);
         double y = p1.y + t*(p2.y-p1.y);
         return new Point2D.Double(x, y);
     }
 
+    @Override
     public Segment.SplitResults split(double y) {
         if ((y == p1.y) || (y == p2.y)) return null;
         if ((y <= p1.y) && (y <= p2.y)) return null;
@@ -116,14 +125,17 @@ public class Linear implements Segment {
         return new Segment.SplitResults(t1, t0);
     }
 
+    @Override
     public Segment getSegment(double t0, double t1) {
         Point2D.Double np1 = eval(t0);
         Point2D.Double np2 = eval(t1);
         return new Linear(np1, np2);
     }
+    @Override
     public Segment splitBefore(double t) {
         return new Linear(p1, eval(t));
     }
+    @Override
     public Segment splitAfter(double t) {
         return new Linear(eval(t), p2);
     }
@@ -134,6 +146,7 @@ public class Linear implements Segment {
      * @param s0 if non-null contains portion of curve from  0-&gt;.5
      * @param s1 if non-null contains portion of curve from .5-&gt;1
      */
+    @Override
     public void subdivide(Segment s0, Segment s1) {
         Linear l0=null, l1=null;
         if (s0 instanceof Linear) l0 = (Linear)s0;
@@ -146,6 +159,7 @@ public class Linear implements Segment {
      * @param s0 if non-null contains portion of curve from 0-&gt;t.
      * @param s1 if non-null contains portion of curve from t-&gt;1.
      */
+    @Override
     public void subdivide(double t, Segment s0, Segment s1) {
         Linear l0=null, l1=null;
         if (s0 instanceof Linear) l0 = (Linear)s0;
@@ -206,15 +220,18 @@ public class Linear implements Segment {
         }
     }
 
+    @Override
     public double getLength() {
         double dx = p2.x-p1.x;
         double dy = p2.y-p1.y;
         return Math.sqrt(dx*dx+dy*dy);
     }
+    @Override
     public double getLength(double maxErr) {
         return getLength();
     }
 
+    @Override
     public String toString() {
         return "M" + p1.x + ',' + p1.y +
                 'L' + p2.x + ',' + p2.y;

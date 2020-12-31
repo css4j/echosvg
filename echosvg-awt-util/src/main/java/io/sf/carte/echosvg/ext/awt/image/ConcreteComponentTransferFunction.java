@@ -133,6 +133,7 @@ public final class ConcreteComponentTransferFunction implements ComponentTransfe
     /**
      * Returns the type of this transfer function
      */
+    @Override
     public int getType(){
         return type;
     }
@@ -140,6 +141,7 @@ public final class ConcreteComponentTransferFunction implements ComponentTransfe
     /**
      * Returns the slope value for this transfer function
      */
+    @Override
     public float getSlope(){
         return slope;
     }
@@ -147,6 +149,7 @@ public final class ConcreteComponentTransferFunction implements ComponentTransfe
     /**
      * Returns the table values for this transfer function
      */
+    @Override
     public float[] getTableValues(){
         return tableValues;
     }
@@ -154,6 +157,7 @@ public final class ConcreteComponentTransferFunction implements ComponentTransfe
     /**
      * Returns the intercept value for this transfer function
      */
+    @Override
     public float getIntercept(){
         return intercept;
     }
@@ -161,6 +165,7 @@ public final class ConcreteComponentTransferFunction implements ComponentTransfe
     /**
      * Returns the amplitude value for this transfer function
      */
+    @Override
     public float getAmplitude(){
         return amplitude;
     }
@@ -168,6 +173,7 @@ public final class ConcreteComponentTransferFunction implements ComponentTransfe
     /**
      * Returns the exponent value for this transfer function
      */
+    @Override
     public float getExponent(){
         return exponent;
     }
@@ -175,6 +181,7 @@ public final class ConcreteComponentTransferFunction implements ComponentTransfe
     /**
      * Returns the offset value for this transfer function
      */
+    @Override
     public float getOffset(){
         return offset;
     }

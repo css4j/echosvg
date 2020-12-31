@@ -56,6 +56,7 @@ public class CachedImageHandlerJPEGEncoder extends DefaultCachedImageHandler {
     /**
      * Uses JPEG encoding.
      */
+    @Override
     public void encodeImage(BufferedImage buf, OutputStream os)
             throws IOException {
         ImageWriter writer = ImageWriterRegistry.getInstance()
@@ -65,10 +66,12 @@ public class CachedImageHandlerJPEGEncoder extends DefaultCachedImageHandler {
         writer.writeImage(buf, os, params);
     }
 
+    @Override
     public int getBufferedImageType(){
         return BufferedImage.TYPE_INT_RGB;
     }
 
+    @Override
     public String getRefPrefix(){
         return refPrefix;
     }

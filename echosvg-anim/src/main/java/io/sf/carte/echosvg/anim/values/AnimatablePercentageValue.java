@@ -45,6 +45,7 @@ public class AnimatablePercentageValue extends AnimatableNumberValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to,
                                        float interpolation,
@@ -60,6 +61,7 @@ public class AnimatablePercentageValue extends AnimatableNumberValue {
     /**
      * Returns a zero value of this AnimatableValue's type.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         return new AnimatablePercentageValue(target, 0);
     }
@@ -67,6 +69,7 @@ public class AnimatablePercentageValue extends AnimatableNumberValue {
     /**
      * Returns the CSS text representation of the value.
      */
+    @Override
     public String getCssText() {
         return super.getCssText() + "%";
     }

@@ -127,5 +127,6 @@ public interface GVTFont {
      */
     float getHKern(int glyphCode1, int glyphCode2);
 
+    @Override
     String toString();
 }

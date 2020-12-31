@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.SVGTypes;
 
@@ -58,6 +59,7 @@ public class OpacityManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return inherited;
     }
@@ -65,6 +67,7 @@ public class OpacityManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -72,6 +75,7 @@ public class OpacityManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return true;
     }
@@ -79,6 +83,7 @@ public class OpacityManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_NUMBER_OR_INHERIT;
     }
@@ -86,6 +91,7 @@ public class OpacityManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return property;
     }
@@ -93,6 +99,7 @@ public class OpacityManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return SVGValueConstants.NUMBER_1;
     }
@@ -100,11 +107,12 @@ public class OpacityManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
         case INHERIT:
-            return SVGValueConstants.INHERIT_VALUE;
+            return ValueConstants.INHERIT_VALUE;
 
         case INTEGER:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
@@ -120,6 +128,7 @@ public class OpacityManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#createFloatValue(short,float)}.
      */
+    @Override
     public Value createFloatValue(short type, float floatValue)
         throws DOMException {
         if (type == CSSPrimitiveValue.CSS_NUMBER) {

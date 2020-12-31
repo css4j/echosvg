@@ -62,6 +62,7 @@ public class UTF8Decoder extends AbstractCharDecoder {
      * Reads the next character.
      * @return a character or END_OF_STREAM.
      */
+    @Override
     public int readChar() throws IOException {
         if (nextChar != -1) {
             int result = nextChar;

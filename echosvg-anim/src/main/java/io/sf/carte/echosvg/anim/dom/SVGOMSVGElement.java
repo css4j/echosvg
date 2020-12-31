@@ -51,6 +51,7 @@ import org.w3c.dom.svg.SVGViewSpec;
 import org.w3c.dom.views.AbstractView;
 import org.w3c.dom.views.DocumentView;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGMatrix;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
@@ -115,14 +116,14 @@ public class SVGOMSVGElement
     protected static final AttributeInitializer attributeInitializer;
     static {
         attributeInitializer = new AttributeInitializer(7);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null,
                                           "xmlns",
                                           SVG_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           "xmlns",
                                           "xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
+                                          XMLConstants.XLINK_NAMESPACE_URI);
         attributeInitializer.addAttribute(null,
                                           null,
                                           SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
@@ -199,6 +200,7 @@ public class SVGOMSVGElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -210,18 +212,18 @@ public class SVGOMSVGElement
     private void initializeLiveAttributes() {
         x = createLiveAnimatedLength
             (null, SVG_X_ATTRIBUTE, SVG_SVG_X_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         y = createLiveAnimatedLength
             (null, SVG_Y_ATTRIBUTE, SVG_SVG_Y_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         width =
             createLiveAnimatedLength
                 (null, SVG_WIDTH_ATTRIBUTE, SVG_SVG_WIDTH_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.HORIZONTAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
         height =
             createLiveAnimatedLength
                 (null, SVG_HEIGHT_ATTRIBUTE, SVG_SVG_HEIGHT_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.VERTICAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
         externalResourcesRequired =
             createLiveAnimatedBoolean
                 (null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
@@ -232,6 +234,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_SVG_TAG;
     }
@@ -239,6 +242,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getX()}.
      */
+    @Override
     public SVGAnimatedLength getX() {
         return x;
     }
@@ -246,6 +250,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getY()}.
      */
+    @Override
     public SVGAnimatedLength getY() {
         return y;
     }
@@ -253,6 +258,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getWidth()}.
      */
+    @Override
     public SVGAnimatedLength getWidth() {
         return width;
     }
@@ -260,6 +266,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getHeight()}.
      */
+    @Override
     public SVGAnimatedLength getHeight() {
         return height;
     }
@@ -267,6 +274,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getContentScriptType()}.
      */
+    @Override
     public String getContentScriptType() {
         return getAttributeNS(null, SVG_CONTENT_SCRIPT_TYPE_ATTRIBUTE);
     }
@@ -274,6 +282,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#setContentScriptType(String)}.
      */
+    @Override
     public void setContentScriptType(String type) {
         setAttributeNS(null, SVG_CONTENT_SCRIPT_TYPE_ATTRIBUTE, type);
     }
@@ -281,6 +290,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getContentStyleType()}.
      */
+    @Override
     public String getContentStyleType() {
         return getAttributeNS(null, SVG_CONTENT_STYLE_TYPE_ATTRIBUTE);
     }
@@ -288,6 +298,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#setContentStyleType(String)}.
      */
+    @Override
     public void setContentStyleType(String type) {
         setAttributeNS(null, SVG_CONTENT_STYLE_TYPE_ATTRIBUTE, type);
     }
@@ -295,6 +306,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getViewport()}.
      */
+    @Override
     public SVGRect getViewport() {
         SVGContext ctx = getSVGContext();
         return new SVGOMRect(0, 0, ctx.getViewportWidth(),
@@ -304,6 +316,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getPixelUnitToMillimeterX()}.
      */
+    @Override
     public float getPixelUnitToMillimeterX() {
         return getSVGContext().getPixelUnitToMillimeter();
     }
@@ -311,6 +324,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getPixelUnitToMillimeterY()}.
      */
+    @Override
     public float getPixelUnitToMillimeterY() {
         return getSVGContext().getPixelUnitToMillimeter();
     }
@@ -319,6 +333,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * SVGSVGElement#getScreenPixelToMillimeterX()}.
      */
+    @Override
     public float getScreenPixelToMillimeterX() {
         return getSVGContext().getPixelUnitToMillimeter();
     }
@@ -327,6 +342,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * SVGSVGElement#getScreenPixelToMillimeterY()}.
      */
+    @Override
     public float getScreenPixelToMillimeterY() {
         return getSVGContext().getPixelUnitToMillimeter();
     }
@@ -334,6 +350,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getUseCurrentView()}.
      */
+    @Override
     public boolean getUseCurrentView() {
         throw new UnsupportedOperationException
             ("SVGSVGElement.getUseCurrentView is not implemented"); // XXX
@@ -342,6 +359,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#setUseCurrentView(boolean)}.
      */
+    @Override
     public void setUseCurrentView(boolean useCurrentView) throws DOMException {
         throw new UnsupportedOperationException
             ("SVGSVGElement.setUseCurrentView is not implemented"); // XXX
@@ -350,6 +368,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getCurrentView()}.
      */
+    @Override
     public SVGViewSpec getCurrentView() {
         throw new UnsupportedOperationException
             ("SVGSVGElement.getCurrentView is not implemented"); // XXX
@@ -358,6 +377,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getCurrentView()}.
      */
+    @Override
     public float getCurrentScale() {
         AffineTransform scrnTrans = getSVGContext().getScreenTransform();
         if (scrnTrans != null) {
@@ -369,6 +389,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#setCurrentScale(float)}.
      */
+    @Override
     public void setCurrentScale(float currentScale) throws DOMException {
         SVGContext context = getSVGContext();
         AffineTransform scrnTrans = context.getScreenTransform();
@@ -389,20 +410,24 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getCurrentTranslate()}.
      */
+    @Override
     public SVGPoint getCurrentTranslate() {
         return new SVGPoint() {
             protected AffineTransform getScreenTransform() {
                 SVGContext context = getSVGContext();
                 return context.getScreenTransform();
             }
+            @Override
             public float getX() {
                 AffineTransform scrnTrans = getScreenTransform();
                 return (float)scrnTrans.getTranslateX();
             }
+            @Override
             public float getY() {
                 AffineTransform scrnTrans = getScreenTransform();
                 return (float)scrnTrans.getTranslateY();
             }
+            @Override
             public void setX(float newX) {
                 SVGContext context = getSVGContext();
                 AffineTransform scrnTrans = context.getScreenTransform();
@@ -412,6 +437,7 @@ public class SVGOMSVGElement
                      newX, scrnTrans.getTranslateY());
                 context.setScreenTransform(scrnTrans);
             }
+            @Override
             public void setY(float newY) {
                 SVGContext context = getSVGContext();
                 AffineTransform scrnTrans = context.getScreenTransform();
@@ -421,6 +447,7 @@ public class SVGOMSVGElement
                      scrnTrans.getTranslateX(), newY);
                 context.setScreenTransform(scrnTrans);
             }
+            @Override
             public SVGPoint matrixTransform(SVGMatrix mat) {
                 AffineTransform scrnTrans = getScreenTransform();
                 float x = (float)scrnTrans.getTranslateX();
@@ -435,6 +462,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#suspendRedraw(int)}.
      */
+    @Override
     public int suspendRedraw(int max_wait_milliseconds) {
         if (max_wait_milliseconds > 60000) {
             max_wait_milliseconds = 60000;
@@ -448,6 +476,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#unsuspendRedraw(int)}.
      */
+    @Override
     public void unsuspendRedraw(int suspend_handle_id) throws DOMException {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
         if (!ctx.unsuspendRedraw(suspend_handle_id)) {
@@ -460,6 +489,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#unsuspendRedrawAll()}.
      */
+    @Override
     public void unsuspendRedrawAll() {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
         ctx.unsuspendRedrawAll();
@@ -468,6 +498,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#forceRedraw()}.
      */
+    @Override
     public void forceRedraw() {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
         ctx.forceRedraw();
@@ -476,6 +507,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#pauseAnimations()}.
      */
+    @Override
     public void pauseAnimations() {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
         ctx.pauseAnimations();
@@ -484,6 +516,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#unpauseAnimations()}.
      */
+    @Override
     public void unpauseAnimations() {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
         ctx.unpauseAnimations();
@@ -492,6 +525,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#animationsPaused()}.
      */
+    @Override
     public boolean animationsPaused() {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
         return ctx.animationsPaused();
@@ -500,6 +534,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getCurrentTime()}.
      */
+    @Override
     public float getCurrentTime() {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
         return ctx.getCurrentTime();
@@ -508,6 +543,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#setCurrentTime(float)}.
      */
+    @Override
     public void setCurrentTime(float seconds) {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
         ctx.setCurrentTime(seconds);
@@ -517,6 +553,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * SVGSVGElement#getIntersectionList(SVGRect,SVGElement)}.
      */
+    @Override
     public NodeList getIntersectionList(SVGRect rect,
                                         SVGElement referenceElement) {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
@@ -528,6 +565,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * SVGSVGElement#getEnclosureList(SVGRect,SVGElement)}.
      */
+    @Override
     public NodeList getEnclosureList(SVGRect rect,
                                      SVGElement referenceElement) {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
@@ -539,6 +577,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * SVGSVGElement#checkIntersection(SVGElement,SVGRect)}.
      */
+    @Override
     public boolean checkIntersection(SVGElement element, SVGRect rect) {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
         return ctx.checkIntersection(element, rect);
@@ -548,6 +587,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * SVGSVGElement#checkEnclosure(SVGElement,SVGRect)}.
      */
+    @Override
     public boolean checkEnclosure(SVGElement element, SVGRect rect) {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
         return ctx.checkEnclosure(element, rect);
@@ -556,6 +596,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#deselectAll()}.
      */
+    @Override
     public void deselectAll() {
         ((SVGSVGContext)getSVGContext()).deselectAll();
     }
@@ -563,12 +604,15 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#createSVGNumber()}.
      */
+    @Override
     public SVGNumber createSVGNumber() {
         return new SVGNumber() {
             protected float value;
+            @Override
             public float getValue() {
                 return value;
             }
+            @Override
             public void setValue(float f) {
                 value = f;
             }
@@ -578,6 +622,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#createSVGLength()}.
      */
+    @Override
     public SVGLength createSVGLength() {
         return new SVGOMLength(this);
     }
@@ -585,6 +630,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#createSVGAngle()}.
      */
+    @Override
     public SVGAngle createSVGAngle() {
         return new SVGOMAngle();
     }
@@ -592,6 +638,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#createSVGPoint()}.
      */
+    @Override
     public SVGPoint createSVGPoint() {
         return new SVGOMPoint(0, 0);
     }
@@ -599,9 +646,11 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#createSVGMatrix()}.
      */
+    @Override
     public SVGMatrix createSVGMatrix() {
         return new AbstractSVGMatrix() {
             protected AffineTransform at = new AffineTransform();
+            @Override
             protected AffineTransform getAffineTransform() {
                 return at;
             }
@@ -611,6 +660,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#createSVGRect()}.
      */
+    @Override
     public SVGRect createSVGRect() {
         return new SVGOMRect(0, 0, 0, 0);
     }
@@ -618,6 +668,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#createSVGTransform()}.
      */
+    @Override
     public SVGTransform createSVGTransform() {
         SVGOMTransform ret = new SVGOMTransform();
         ret.setType(SVGTransform.SVG_TRANSFORM_MATRIX);
@@ -628,6 +679,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * SVGSVGElement#createSVGTransformFromMatrix(SVGMatrix)}.
      */
+    @Override
     public SVGTransform createSVGTransformFromMatrix(SVGMatrix matrix) {
         SVGOMTransform tr = new SVGOMTransform();
         tr.setMatrix(matrix);
@@ -637,6 +689,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Implements {@link SVGSVGElement#getElementById(String)}.
      */
+    @Override
     public Element getElementById(String elementId) {
         return ownerDocument.getChildElementById(this, elementId);
     }
@@ -647,6 +700,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getNearestViewportElement()}.
      */
+    @Override
     public SVGElement getNearestViewportElement() {
         return SVGLocatableSupport.getNearestViewportElement(this);
     }
@@ -655,6 +709,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getFarthestViewportElement()}.
      */
+    @Override
     public SVGElement getFarthestViewportElement() {
         return SVGLocatableSupport.getFarthestViewportElement(this);
     }
@@ -663,6 +718,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getBBox()}.
      */
+    @Override
     public SVGRect getBBox() {
         return SVGLocatableSupport.getBBox(this);
     }
@@ -671,6 +727,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getCTM()}.
      */
+    @Override
     public SVGMatrix getCTM() {
         return SVGLocatableSupport.getCTM(this);
     }
@@ -679,6 +736,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getScreenCTM()}.
      */
+    @Override
     public SVGMatrix getScreenCTM() {
         return SVGLocatableSupport.getScreenCTM(this);
     }
@@ -687,6 +745,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getTransformToElement(SVGElement)}.
      */
+    @Override
     public SVGMatrix getTransformToElement(SVGElement element)
         throws SVGException {
         return SVGLocatableSupport.getTransformToElement(this, element);
@@ -698,6 +757,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.views.AbstractView#getDocument()}.
      */
+    @Override
     public DocumentView getDocument() {
         return (DocumentView)getOwnerDocument();
     }
@@ -706,6 +766,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.ViewCSS#getComputedStyle(Element,String)}.
      */
+    @Override
     public CSSStyleDeclaration getComputedStyle(Element elt,
                                                 String pseudoElt) {
         AbstractView av = ((DocumentView)getOwnerDocument()).getDefaultView();
@@ -718,6 +779,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.events.DocumentEvent#createEvent(String)}.
      */
+    @Override
     public Event createEvent(String eventType) throws DOMException {
         return ((DocumentEvent)getOwnerDocument()).createEvent(eventType);
     }
@@ -738,6 +800,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.stylesheets.DocumentStyle#getStyleSheets()}.
      */
+    @Override
     public StyleSheetList getStyleSheets() {
         return ((DocumentStyle)getOwnerDocument()).getStyleSheets();
     }
@@ -746,6 +809,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.DocumentCSS#getOverrideStyle(Element,String)}.
      */
+    @Override
     public CSSStyleDeclaration getOverrideStyle(Element elt,
                                                 String pseudoElt) {
         return ((DocumentCSS)getOwnerDocument()).getOverrideStyle(elt,
@@ -757,6 +821,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Returns the xml:lang attribute value.
      */
+    @Override
     public String getXMLlang() {
         return XMLSupport.getXMLLang(this);
     }
@@ -764,6 +829,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Sets the xml:lang attribute value.
      */
+    @Override
     public void setXMLlang(String lang) {
         setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
     }
@@ -771,6 +837,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Returns the xml:space attribute value.
      */
+    @Override
     public String getXMLspace() {
         return XMLSupport.getXMLSpace(this);
     }
@@ -778,6 +845,7 @@ public class SVGOMSVGElement
     /**
      * <b>DOM</b>: Sets the xml:space attribute value.
      */
+    @Override
     public void setXMLspace(String space) {
         setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
     }
@@ -788,6 +856,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGZoomAndPan#getZoomAndPan()}.
      */
+    @Override
     public short getZoomAndPan() {
         return SVGZoomAndPanSupport.getZoomAndPan(this);
     }
@@ -796,6 +865,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGZoomAndPan#getZoomAndPan()}.
      */
+    @Override
     public void setZoomAndPan(short val) {
         SVGZoomAndPanSupport.setZoomAndPan(this, val);
     }
@@ -806,6 +876,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFitToViewBox#getViewBox()}.
      */
+    @Override
     public SVGAnimatedRect getViewBox() {
         return viewBox;
     }
@@ -814,6 +885,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFitToViewBox#getPreserveAspectRatio()}.
      */
+    @Override
     public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
         return preserveAspectRatio;
     }
@@ -824,6 +896,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
      */
+    @Override
     public SVGAnimatedBoolean getExternalResourcesRequired() {
         return externalResourcesRequired;
     }
@@ -834,6 +907,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getRequiredFeatures()}.
      */
+    @Override
     public SVGStringList getRequiredFeatures() {
         return SVGTestsSupport.getRequiredFeatures(this);
     }
@@ -842,6 +916,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getRequiredExtensions()}.
      */
+    @Override
     public SVGStringList getRequiredExtensions() {
         return SVGTestsSupport.getRequiredExtensions(this);
     }
@@ -850,6 +925,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getSystemLanguage()}.
      */
+    @Override
     public SVGStringList getSystemLanguage() {
         return SVGTestsSupport.getSystemLanguage(this);
     }
@@ -858,6 +934,7 @@ public class SVGOMSVGElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#hasExtension(String)}.
      */
+    @Override
     public boolean hasExtension(String extension) {
         return SVGTestsSupport.hasExtension(this, extension);
     }
@@ -866,6 +943,7 @@ public class SVGOMSVGElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -873,6 +951,7 @@ public class SVGOMSVGElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMSVGElement();
     }
@@ -880,6 +959,7 @@ public class SVGOMSVGElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

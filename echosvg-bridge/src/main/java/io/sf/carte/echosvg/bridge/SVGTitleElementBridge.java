@@ -35,6 +35,7 @@ public class SVGTitleElementBridge extends SVGDescriptiveElementBridge {
     /**
      * Returns 'title'.
      */
+    @Override
     public String getLocalName() {
         return SVG_TITLE_TAG;
     }
@@ -42,5 +43,6 @@ public class SVGTitleElementBridge extends SVGDescriptiveElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() { return new SVGTitleElementBridge(); }
 }

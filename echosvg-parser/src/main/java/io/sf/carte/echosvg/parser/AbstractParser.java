@@ -76,6 +76,7 @@ public abstract class AbstractParser implements Parser {
     /**
      * Implements {@link io.sf.carte.echosvg.i18n.Localizable#setLocale(Locale)}.
      */
+    @Override
     public void setLocale(Locale l) {
         localizableSupport.setLocale(l);
     }
@@ -83,6 +84,7 @@ public abstract class AbstractParser implements Parser {
     /**
      * Implements {@link io.sf.carte.echosvg.i18n.Localizable#getLocale()}.
      */
+    @Override
     public Locale getLocale() {
         return localizableSupport.getLocale();
     }
@@ -91,6 +93,7 @@ public abstract class AbstractParser implements Parser {
      * Implements {@link
      * io.sf.carte.echosvg.i18n.Localizable#formatMessage(String,Object[])}.
      */
+    @Override
     public String formatMessage(String key, Object[] args)
         throws MissingResourceException {
         return localizableSupport.formatMessage(key, args);
@@ -108,6 +111,7 @@ public abstract class AbstractParser implements Parser {
      * handler immediately.</p>
      * @param handler The error handler.
      */
+    @Override
     public void setErrorHandler(ErrorHandler handler) {
         errorHandler = handler;
     }
@@ -115,6 +119,7 @@ public abstract class AbstractParser implements Parser {
     /**
      * Parses the given reader
      */
+    @Override
     public void parse(Reader r) throws ParseException {
         try {
             reader = new StreamNormalizingReader(r);
@@ -144,6 +149,7 @@ public abstract class AbstractParser implements Parser {
     /**
      * Parses the given string.
      */
+    @Override
     public void parse(String s) throws ParseException {
         try {
             reader = new StringNormalizingReader(s);

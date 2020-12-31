@@ -600,6 +600,7 @@ public abstract class AnimationEngine {
          * Invoked to indicate that base value of the specified attribute
          * or property has changed.
          */
+        @Override
         public void baseValueChanged(AnimationTarget t, String ns, String ln,
                                      boolean isCSS) {
             short type = isCSS ? ANIM_TYPE_CSS : ANIM_TYPE_XML;

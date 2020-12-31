@@ -53,6 +53,7 @@ public class XBLOMShadowTreeElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return XBL_SHADOW_TREE_TAG;
     }
@@ -60,6 +61,7 @@ public class XBLOMShadowTreeElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new XBLOMShadowTreeElement();
     }
@@ -69,6 +71,7 @@ public class XBLOMShadowTreeElement
     /**
      * Returns the Element that has an ID attribute with the given value.
      */
+    @Override
     public Element getElementById(String elementId) {
         return getElementById(elementId, this);
     }
@@ -95,6 +98,7 @@ public class XBLOMShadowTreeElement
      * Returns the parent of the imported element, from the CSS
      * point of view.
      */
+    @Override
     public Node getCSSParentNode() {
         return ownerDocument.getXBLManager().getXblBoundElement(this);
     }

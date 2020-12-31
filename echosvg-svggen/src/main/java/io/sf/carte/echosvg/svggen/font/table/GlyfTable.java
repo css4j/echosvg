@@ -100,6 +100,7 @@ public class GlyfTable implements Table {
         return descript[i];
     }
 
+    @Override
     public int getType() {
         return glyf;
     }

@@ -1148,6 +1148,7 @@ public abstract class TimedElement implements SMILConstants {
         ClockParser p = new ClockParser(parseOffset);
         class Handler implements ClockHandler {
             protected float v = 0;
+            @Override
             public void clockValue(float newClockValue) {
                 v = newClockValue;
             }

@@ -27,6 +27,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
+import java.text.CharacterIterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -73,8 +74,10 @@ import io.sf.carte.echosvg.gvt.flow.TextLineBreaks;
 import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
 import io.sf.carte.echosvg.gvt.text.TextPath;
+import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
 import io.sf.carte.echosvg.util.SVG12Constants;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * Bridge class for the &lt;flowRoot&gt; element.
@@ -131,6 +134,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 
     protected TextNode textNode;
 
+    @Override
     protected TextNode getTextNode() { return textNode; }
 
     /**
@@ -146,13 +150,15 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
     /**
      * Returns the SVG namespace URI.
      */
+    @Override
     public String getNamespaceURI() {
-        return SVG12Constants.SVG_NAMESPACE_URI;
+        return SVGConstants.SVG_NAMESPACE_URI;
     }
 
     /**
      * Returns 'flowRoot'.
      */
+    @Override
     public String getLocalName() {
         return SVG12Constants.SVG_FLOW_ROOT_TAG;
     }
@@ -160,6 +166,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGFlowRootElementBridge();
     }
@@ -167,6 +174,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
     /**
      * Returns false as text is not a container.
      */
+    @Override
     public boolean isComposite() {
         return false;
     }
@@ -178,6 +186,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         // 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
         if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
@@ -236,6 +245,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
     /**
      * Creates the graphics node for this element.
      */
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         return new FlowTextNode();
     }
@@ -248,10 +258,12 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
      * @param ctx the bridge context to use
      * @param e the text element
      */
+    @Override
     protected Point2D getLocation(BridgeContext ctx, Element e) {
         return new Point2D.Float(0,0);
     }
 
+    @Override
     protected boolean isTextElement(Element e) {
         if (!SVG_NAMESPACE_URI.equals(e.getNamespaceURI()))
             return false;
@@ -263,11 +275,12 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
                 nodeName.equals(SVG12Constants.SVG_FLOW_SPAN_TAG));
     }
 
+    @Override
     protected boolean isTextChild(Element e) {
         if (!SVG_NAMESPACE_URI.equals(e.getNamespaceURI()))
             return false;
         String nodeName = e.getLocalName();
-        return (nodeName.equals(SVG12Constants.SVG_A_TAG) ||
+        return (nodeName.equals(SVGConstants.SVG_A_TAG) ||
                 nodeName.equals(SVG12Constants.SVG_FLOW_LINE_TAG) ||
                 nodeName.equals(SVG12Constants.SVG_FLOW_PARA_TAG) ||
                 nodeName.equals(SVG12Constants.SVG_FLOW_REGION_BREAK_TAG) ||
@@ -282,6 +295,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
      * @param e the element that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -332,6 +346,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
         flowRegionNodes = null;
     }
 
+    @Override
     protected void computeLaidoutText(BridgeContext ctx,
                                        Element e,
                                        GraphicsNode node) {
@@ -350,6 +365,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
      * @see io.sf.carte.echosvg.dom.svg.SVGContext
      * @see io.sf.carte.echosvg.bridge.BridgeUpdateHandler
      */
+    @Override
     protected void addContextToChild(BridgeContext ctx, Element e) {
         if (SVG_NAMESPACE_URI.equals(e.getNamespaceURI())) {
             String ln = e.getLocalName();
@@ -382,6 +398,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
      * @see io.sf.carte.echosvg.dom.svg.SVGContext
      * @see io.sf.carte.echosvg.bridge.BridgeUpdateHandler
      */
+    @Override
     protected void removeContextFromChild(BridgeContext ctx, Element e) {
         if (SVG_NAMESPACE_URI.equals(e.getNamespaceURI())) {
             String ln = e.getLocalName();
@@ -410,6 +427,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
      * @param ctx the bridge context to use
      * @param element the text element
      */
+    @Override
     protected AttributedString buildAttributedString(BridgeContext ctx,
                                                      Element element) {
         if (element == null) return null;
@@ -433,7 +451,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
             TextLineBreaks.WORD_LIMIT;
 
         for (char ch = aci.current();
-             ch!=AttributedCharacterIterator.DONE;
+             ch!=CharacterIterator.DONE;
              ch = aci.next()) {
 
                 chars.append( ch ).append( ' ' ).append( ' ' );
@@ -574,7 +592,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
              n != null; n = getNextSibling(n)) {
 
             if (n.getNodeType()     != Node.ELEMENT_NODE) continue;
-            if (!SVG12Constants.SVG_NAMESPACE_URI.equals(n.getNamespaceURI()))
+            if (!SVGConstants.SVG_NAMESPACE_URI.equals(n.getNamespaceURI()))
                 continue;
 
             Element e = (Element)n;
@@ -708,7 +726,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
                         initialAttributes = null;
                     }
                 } else if (ln.equals(SVG12Constants.SVG_FLOW_SPAN_TAG) ||
-                           ln.equals(SVG12Constants.SVG_ALT_GLYPH_TAG)) {
+                           ln.equals(SVGConstants.SVG_ALT_GLYPH_TAG)) {
                     int before = asb.length();
                     fillAttributedStringBuffer(ctx, nodeElement, false,
                                                subBidiLevel, initialAttributes,
@@ -822,6 +840,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
         tpi.endChar   = elementEndChar;
     }
 
+    @Override
     protected Map getAttributeMap(BridgeContext ctx,
                                   Element element,
                                   TextPath textPath,
@@ -875,7 +894,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
         marginLeftIndex   = eng.getPropertyIndex(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY);
         indentIndex       = eng.getPropertyIndex(SVG12CSSConstants.CSS_INDENT_PROPERTY);
         textAlignIndex    = eng.getPropertyIndex(SVG12CSSConstants.CSS_TEXT_ALIGN_PROPERTY);
-        lineHeightIndex   = eng.getPropertyIndex(SVG12CSSConstants.CSS_LINE_HEIGHT_PROPERTY);
+        lineHeightIndex   = eng.getPropertyIndex(CSSConstants.CSS_LINE_HEIGHT_PROPERTY);
     }
 
     public BlockInfo makeBlockInfo(BridgeContext ctx, Element element) {
@@ -971,6 +990,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
         /**
          * Handles the svg:shapechange event.
          */
+        @Override
         public void handleEvent(Event evt) {
             // the flowRegion geometry may have changed, so relayout text
             laidoutText = null;

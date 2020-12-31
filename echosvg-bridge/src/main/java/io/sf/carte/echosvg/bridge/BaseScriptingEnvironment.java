@@ -658,6 +658,7 @@ public class BaseScriptingEnvironment {
                      line});
 
         EventListener l = new EventListener() {
+                @Override
                 public void handleEvent(Event evt) {
                     try {
                         Object event;
@@ -778,6 +779,7 @@ public class BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#setInterval(String,long)}.
          */
+        @Override
         public Object setInterval(final String script, long interval) {
             return null;
         }
@@ -786,6 +788,7 @@ public class BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#setInterval(Runnable,long)}.
          */
+        @Override
         public Object setInterval(final Runnable r, long interval) {
             return null;
         }
@@ -794,6 +797,7 @@ public class BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#clearInterval(Object)}.
          */
+        @Override
         public void clearInterval(Object interval) {
         }
 
@@ -801,6 +805,7 @@ public class BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#setTimeout(String,long)}.
          */
+        @Override
         public Object setTimeout(final String script, long timeout) {
             return null;
         }
@@ -809,6 +814,7 @@ public class BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#setTimeout(Runnable,long)}.
          */
+        @Override
         public Object setTimeout(final Runnable r, long timeout) {
             return null;
         }
@@ -817,6 +823,7 @@ public class BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#clearTimeout(Object)}.
          */
+        @Override
         public void clearTimeout(Object timeout) {
         }
 
@@ -826,6 +833,7 @@ public class BaseScriptingEnvironment {
          * The implementation in this class always returns 'null'
          * @return The document/document fragment or null on error.
          */
+        @Override
         public Node parseXML(String text, Document doc) {
             return null;
         }
@@ -833,6 +841,7 @@ public class BaseScriptingEnvironment {
         /**
          * Serializes the given node.
          */
+        @Override
         public String printNode(Node n) {
             return null;
         }
@@ -842,6 +851,7 @@ public class BaseScriptingEnvironment {
          * @param uri The URI where the data is located.
          * @param h A handler called when the data is available.
          */
+        @Override
         public void getURL(String uri, io.sf.carte.echosvg.bridge.Window.URLResponseHandler h) {
             getURL(uri, h, "UTF8");
         }
@@ -852,22 +862,26 @@ public class BaseScriptingEnvironment {
          * @param h A handler called when the data is available.
          * @param enc The character encoding of the data.
          */
+        @Override
         public void getURL(String uri,
                            io.sf.carte.echosvg.bridge.Window.URLResponseHandler h,
                            String enc) {
         }
 
+        @Override
         public void postURL(String uri, String content,
                             io.sf.carte.echosvg.bridge.Window.URLResponseHandler h) {
             postURL(uri, content, h, "text/plain", null);
         }
 
+        @Override
         public void postURL(String uri, String content,
                             io.sf.carte.echosvg.bridge.Window.URLResponseHandler h,
                      String mimeType) {
             postURL(uri, content, h, mimeType, null);
         }
 
+        @Override
         public void postURL(String uri,
                             String content,
                             io.sf.carte.echosvg.bridge.Window.URLResponseHandler h,
@@ -880,12 +894,14 @@ public class BaseScriptingEnvironment {
         /**
          * Displays an alert dialog box.
          */
+        @Override
         public void alert(String message) {
         }
 
         /**
          * Displays a confirm dialog box.
          */
+        @Override
         public boolean confirm(String message) {
             return false;
         }
@@ -893,6 +909,7 @@ public class BaseScriptingEnvironment {
         /**
          * Displays an input dialog box.
          */
+        @Override
         public String prompt(String message) {
             return null;
         }
@@ -900,6 +917,7 @@ public class BaseScriptingEnvironment {
         /**
          * Displays an input dialog box, given the default value.
          */
+        @Override
         public String prompt(String message, String defVal) {
             return null;
         }
@@ -907,6 +925,7 @@ public class BaseScriptingEnvironment {
         /**
          * Returns the current BridgeContext.
          */
+        @Override
         public BridgeContext getBridgeContext() {
             return bridgeContext;
         }
@@ -914,6 +933,7 @@ public class BaseScriptingEnvironment {
         /**
          * Returns the associated interpreter.
          */
+        @Override
         public Interpreter getInterpreter() {
             return interpreter;
         }
@@ -921,6 +941,7 @@ public class BaseScriptingEnvironment {
         /**
          * Returns the Location.
          */
+        @Override
         public Location getLocation() {
             return null;
         }
@@ -928,6 +949,7 @@ public class BaseScriptingEnvironment {
         /**
          * Returns the parent Window object.
          */
+        @Override
         public io.sf.carte.echosvg.w3c.dom.Window getParent() {
             return null;
         }

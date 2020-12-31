@@ -50,6 +50,7 @@ public class SVGFeCompositeElementBridge
     /**
      * Returns 'feComposite'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_COMPOSITE_TAG;
     }
@@ -72,6 +73,7 @@ public class SVGFeCompositeElementBridge
      *        can then access a filter node from the filterMap if they
      *        know its name.
      */
+    @Override
     public Filter createFilter(BridgeContext ctx,
                                Element filterElement,
                                Element filteredElement,

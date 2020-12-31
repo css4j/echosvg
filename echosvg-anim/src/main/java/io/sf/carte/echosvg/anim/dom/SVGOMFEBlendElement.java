@@ -101,6 +101,7 @@ public class SVGOMFEBlendElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -120,6 +121,7 @@ public class SVGOMFEBlendElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_BLEND_TAG;
     }
@@ -127,6 +129,7 @@ public class SVGOMFEBlendElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEBlendElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -134,6 +137,7 @@ public class SVGOMFEBlendElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEBlendElement#getIn2()}.
      */
+    @Override
     public SVGAnimatedString getIn2() {
         return in2;
     }
@@ -141,6 +145,7 @@ public class SVGOMFEBlendElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEBlendElement#getMode()}.
      */
+    @Override
     public SVGAnimatedEnumeration getMode() {
         return mode;
     }
@@ -148,6 +153,7 @@ public class SVGOMFEBlendElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEBlendElement();
     }
@@ -155,6 +161,7 @@ public class SVGOMFEBlendElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

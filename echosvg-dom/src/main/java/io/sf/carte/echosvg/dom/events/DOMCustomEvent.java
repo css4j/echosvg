@@ -36,6 +36,7 @@ public class DOMCustomEvent extends DOMEvent implements CustomEvent {
     /**
      * Returns the custom detail of this event.
      */
+    @Override
     public Object getDetail() {
         return detail;
     }
@@ -43,6 +44,7 @@ public class DOMCustomEvent extends DOMEvent implements CustomEvent {
     /**
      * Initializes this custom event.
      */
+    @Override
     public void initCustomEventNS(String namespaceURIArg,
                                   String typeArg,
                                   boolean canBubbleArg,

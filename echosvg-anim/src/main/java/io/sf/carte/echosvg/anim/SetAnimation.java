@@ -48,6 +48,7 @@ public class SetAnimation extends AbstractAnimation {
     /**
      * Called when the element is sampled at the given time.
      */
+    @Override
     protected void sampledAt(float simpleTime, float simpleDur,
                              int repeatIteration) {
         if (value == null) {
@@ -59,6 +60,7 @@ public class SetAnimation extends AbstractAnimation {
     /**
      * Called when the element is sampled for its "last" value.
      */
+    @Override
     protected void sampledLastValue(int repeatIteration) {
         if (value == null) {
             value = to;

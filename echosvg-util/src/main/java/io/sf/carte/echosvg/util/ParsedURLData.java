@@ -200,6 +200,7 @@ public class ParsedURLData {
     /**
      * Implement Object.hashCode.
      */
+    @Override
     public int hashCode() {
         int hc = port;
         if (protocol != null)
@@ -231,6 +232,7 @@ public class ParsedURLData {
     /**
      * Implement Object.equals for ParsedURLData.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (! (obj instanceof ParsedURLData))
@@ -607,6 +609,7 @@ loop2:          while (i < len) {
     /**
      * Return a string representation of the data.
      */
+    @Override
     public String toString() {
         String ret = getPortStr();
         if (path != null)

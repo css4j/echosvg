@@ -60,6 +60,7 @@ public class SVGFontDescriptor implements SVGDescriptor, SVGSyntax {
         this.def = def;
     }
 
+    @Override
     public Map getAttributeMap(Map attrMap){
         if(attrMap == null)
             attrMap = new HashMap();
@@ -76,6 +77,7 @@ public class SVGFontDescriptor implements SVGDescriptor, SVGSyntax {
         return def;
     }
 
+    @Override
     public List getDefinitionSet(List defSet){
         if (defSet == null)
             defSet = new LinkedList();

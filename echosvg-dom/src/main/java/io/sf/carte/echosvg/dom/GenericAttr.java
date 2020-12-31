@@ -56,6 +56,7 @@ public class GenericAttr extends AbstractAttr {
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -63,6 +64,7 @@ public class GenericAttr extends AbstractAttr {
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -70,6 +72,7 @@ public class GenericAttr extends AbstractAttr {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new GenericAttr();
     }

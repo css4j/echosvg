@@ -63,6 +63,7 @@ public abstract class DefaultCachedImageHandler
     /**
      * The image cache can be used by subclasses for efficient image storage
      */
+    @Override
     public ImageCacher getImageCacher() {
         return imageCacher;
     }
@@ -88,6 +89,7 @@ public abstract class DefaultCachedImageHandler
      * This <code>GenericImageHandler</code> implementation does not
      * need to interact with the DOMTreeManager.
      */
+    @Override
     public void setDOMTreeManager(DOMTreeManager domTreeManager){
         imageCacher.setDOMTreeManager(domTreeManager);
     }
@@ -131,6 +133,7 @@ public abstract class DefaultCachedImageHandler
      * used, but the {@link CachedImageHandlerBase64Encoder}, for
      * example, overrides this method to use a different tag.
      */
+    @Override
     public Element createElement(SVGGeneratorContext generatorContext) {
         // Create a DOM Element in SVG namespace to refer to an image
         Element imageElement =
@@ -143,6 +146,7 @@ public abstract class DefaultCachedImageHandler
     /**
      * The handler sets the xlink:href tag and returns a transform
      */
+    @Override
     public AffineTransform handleImage(Image image,
                                        Element imageElement,
                                        int x, int y,
@@ -185,6 +189,7 @@ public abstract class DefaultCachedImageHandler
     /**
      * The handler sets the xlink:href tag and returns a transform
      */
+    @Override
     public AffineTransform handleImage(RenderedImage image,
                                        Element imageElement,
                                        int x, int y,
@@ -227,6 +232,7 @@ public abstract class DefaultCachedImageHandler
     /**
      * The handler sets the xlink:href tag and returns a transform
      */
+    @Override
     public AffineTransform handleImage(RenderableImage image,
                                        Element imageElement,
                                        double x, double y,

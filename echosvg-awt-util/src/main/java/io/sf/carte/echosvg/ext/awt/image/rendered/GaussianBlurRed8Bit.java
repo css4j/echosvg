@@ -208,6 +208,7 @@ public class GaussianBlurRed8Bit extends AbstractRed {
         return new Kernel(1, len, computeQualityKernelData(len, stdDevY));
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         // Get my source.
         CachableRed src = (CachableRed)getSources().get(0);

@@ -31,6 +31,7 @@ import java.awt.image.ColorModel;
  * @version $Id$
  */
 class NullOp implements BufferedImageOp {
+    @Override
     public BufferedImage filter(BufferedImage src, BufferedImage dest){
         java.awt.Graphics2D g = dest.createGraphics();
         g.drawImage(src, 0, 0, null);
@@ -38,6 +39,7 @@ class NullOp implements BufferedImageOp {
         return dest;
     }
 
+    @Override
     public Rectangle2D getBounds2D(BufferedImage src){
         return new Rectangle(0, 0, src.getWidth(), src.getHeight());
     }
@@ -46,6 +48,7 @@ class NullOp implements BufferedImageOp {
     /**
      * Creates a destination image compatible with the source.
      */
+    @Override
     public BufferedImage createCompatibleDestImage (BufferedImage src,
                                                     ColorModel destCM){
         BufferedImage dest = null;
@@ -63,6 +66,7 @@ class NullOp implements BufferedImageOp {
      * point in the source image.  If DestPt is non-null, it
      * will be used to hold the return value.
      */
+    @Override
     public Point2D getPoint2D (Point2D srcPt, Point2D destPt){
         // This operation does not affect pixel location
         if(destPt==null)
@@ -75,6 +79,7 @@ class NullOp implements BufferedImageOp {
      * Returns the rendering hints for this BufferedImageOp.  Returns
      * null if no hints have been set.
      */
+    @Override
     public RenderingHints getRenderingHints(){
         return null;
     }

@@ -99,6 +99,7 @@ public class SVGOMFEColorMatrixElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -117,6 +118,7 @@ public class SVGOMFEColorMatrixElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_COLOR_MATRIX_TAG;
     }
@@ -124,6 +126,7 @@ public class SVGOMFEColorMatrixElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEColorMatrixElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -131,6 +134,7 @@ public class SVGOMFEColorMatrixElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEColorMatrixElement#getType()}.
      */
+    @Override
     public SVGAnimatedEnumeration getType() {
         return type;
     }
@@ -138,6 +142,7 @@ public class SVGOMFEColorMatrixElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEColorMatrixElement#getValues()}.
      */
+    @Override
     public SVGAnimatedNumberList getValues() {
         throw new UnsupportedOperationException
             ("SVGFEColorMatrixElement.getValues is not implemented"); // XXX
@@ -147,6 +152,7 @@ public class SVGOMFEColorMatrixElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEColorMatrixElement();
     }
@@ -154,6 +160,7 @@ public class SVGOMFEColorMatrixElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

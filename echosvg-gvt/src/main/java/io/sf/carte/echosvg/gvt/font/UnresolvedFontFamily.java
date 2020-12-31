@@ -53,6 +53,7 @@ public class UnresolvedFontFamily implements GVTFontFamily {
     /**
      * Returns the font-face information for this font family.
      */
+    @Override
     public GVTFontFace getFontFace() {
         return fontFace;
     }
@@ -62,6 +63,7 @@ public class UnresolvedFontFamily implements GVTFontFamily {
      *
      * @return the family name.
      */
+    @Override
     public String getFamilyName() {
         return fontFace.getFamilyName();
     }
@@ -74,6 +76,7 @@ public class UnresolvedFontFamily implements GVTFontFamily {
      * @param aci The character iterator that will be rendered using the derived
      * font.
      */
+    @Override
     public GVTFont deriveFont(float size, AttributedCharacterIterator aci) {
        return null;
     }
@@ -84,8 +87,10 @@ public class UnresolvedFontFamily implements GVTFontFamily {
      * @param size  The required size of the derived font.
      * @param attrs The Attribute Map to get Values from.
      */
+    @Override
     public GVTFont deriveFont(float size, Map attrs) { return null; }
 
+    @Override
     public boolean isComplex() {
         return false;
     }

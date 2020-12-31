@@ -36,6 +36,7 @@ public abstract class AbstractSVGBridge implements Bridge, SVGConstants {
     /**
      * Returns the SVG namespace URI.
      */
+    @Override
     public String getNamespaceURI() {
         return SVG_NAMESPACE_URI;
     }
@@ -43,6 +44,7 @@ public abstract class AbstractSVGBridge implements Bridge, SVGConstants {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         // <!> FIXME: temporary fix for progressive implementation
         //System.out.println("use static bridge for: "+getLocalName());

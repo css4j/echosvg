@@ -60,6 +60,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns 'content'.
      */
+    @Override
     public String getLocalName() {
         return XBLConstants.XBL_CONTENT_TAG;
     }
@@ -67,6 +68,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns the XBL namespace.
      */
+    @Override
     public String getNamespaceURI() {
         return XBLConstants.XBL_NAMESPACE_URI;
     }
@@ -74,6 +76,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new XBLContentElementBridge();
     }
@@ -85,6 +88,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         CompositeGraphicsNode gn = buildCompositeGraphicsNode(ctx, e, null);
         return gn;
@@ -147,6 +151,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
     /**
      * Creates a <code>CompositeGraphicsNode</code>.
      */
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         // Not needed, since createGraphicsNode is overridden
         return null;
@@ -160,6 +165,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
      * @param e the element that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -170,6 +176,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
      * Returns true if the graphics node has to be displayed, false
      * otherwise.
      */
+    @Override
     public boolean getDisplay(Element e) {
         return true;
     }
@@ -178,6 +185,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
      * Returns false as the &lt;xbl:content&gt; element's selected nodes
      * are built all in this class.
      */
+    @Override
     public boolean isComposite() {
         return false;
     }
@@ -186,6 +194,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
      * Dispose this bridge by removing the ContentSelectionChangedListener
      * object.
      */
+    @Override
     public void dispose() {
         super.dispose();
 
@@ -206,6 +215,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
          * nodes list.
          * @param csce the ContentSelectionChangedEvent object
          */
+        @Override
         public void contentSelectionChanged(ContentSelectionChangedEvent csce) {
             buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
         }

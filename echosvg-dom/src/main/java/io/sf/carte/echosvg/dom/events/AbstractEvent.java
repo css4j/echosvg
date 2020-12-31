@@ -116,6 +116,7 @@ public abstract class AbstractEvent
      * DOM: The <code>type</code> property represents the event name
      * as a string property. The string must be an XML name.  
      */
+    @Override
     public String getType() {
         return type;
     }
@@ -125,6 +126,7 @@ public abstract class AbstractEvent
      * <code>EventTarget</code> whose <code>EventListeners</code> are
      * currently being processed.
      */
+    @Override
     public EventTarget getCurrentTarget() {
         return currentTarget;
     }
@@ -134,6 +136,7 @@ public abstract class AbstractEvent
      * <code>EventTarget</code> to which the event was originally
      * dispatched.  
      */
+    @Override
     public EventTarget getTarget() {
         return target;
     }
@@ -142,6 +145,7 @@ public abstract class AbstractEvent
      * DOM: The <code>eventPhase</code> property indicates which phase
      * of event flow is currently being evaluated.  
      */
+    @Override
     public short getEventPhase() {
         return eventPhase;
     }
@@ -151,6 +155,7 @@ public abstract class AbstractEvent
      * an event is a bubbling event.  If the event can bubble the
      * value is true, else the value is false. 
      */
+    @Override
     public boolean getBubbles() {
         return isBubbling;
     }
@@ -161,6 +166,7 @@ public abstract class AbstractEvent
      * default action can be prevented the value is true, else the
      * value is false. 
      */
+    @Override
     public boolean getCancelable() {
         return cancelable;
     }
@@ -173,6 +179,7 @@ public abstract class AbstractEvent
      * returned. Examples of epoch time are the time of the system start or 
      * 0:0:0 UTC 1st January 1970. 
      */
+    @Override
     public long getTimeStamp() {
         return timeStamp;
     }
@@ -187,6 +194,7 @@ public abstract class AbstractEvent
     /**
      * Gets the event from which this event was cloned.
      */
+    @Override
     public Event getOriginalEvent() {
         return originalEvent;
     }
@@ -200,6 +208,7 @@ public abstract class AbstractEvent
      * <code>EventTarget</code> before event flow stops.  This method
      * may be used during any stage of event flow.  
      */
+    @Override
     public void stopPropagation() {
         this.stopPropagation = true;
     }
@@ -217,6 +226,7 @@ public abstract class AbstractEvent
      * event's propagation.  This method may be used during any stage
      * of event flow.  
      */
+    @Override
     public void preventDefault() {
         this.preventDefault = true;
     }
@@ -269,6 +279,7 @@ public abstract class AbstractEvent
      * @param cancelableArg  Specifies whether or not the event's default  
      *   action can be prevented.
      */
+    @Override
     public void initEvent(String eventTypeArg, 
                           boolean canBubbleArg, 
                           boolean cancelableArg) {
@@ -329,6 +340,7 @@ public abstract class AbstractEvent
     /**
      * Returns a new Event with the same field values as this object.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         AbstractEvent newEvent = (AbstractEvent) super.clone();
         newEvent.timeStamp = System.currentTimeMillis();

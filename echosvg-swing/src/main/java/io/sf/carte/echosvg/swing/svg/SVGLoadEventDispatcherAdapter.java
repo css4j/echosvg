@@ -31,24 +31,28 @@ public class SVGLoadEventDispatcherAdapter
     /**
      * Called when a onload event dispatch started.
      */
+    @Override
     public void svgLoadEventDispatchStarted(SVGLoadEventDispatcherEvent e) {
     }
 
     /**
      * Called when a onload event dispatch was completed.
      */
+    @Override
     public void svgLoadEventDispatchCompleted(SVGLoadEventDispatcherEvent e) {
     }
 
     /**
      * Called when a onload event dispatch was cancelled.
      */
+    @Override
     public void svgLoadEventDispatchCancelled(SVGLoadEventDispatcherEvent e) {
     }
 
     /**
      * Called when a onload event dispatch failed.
      */
+    @Override
     public void svgLoadEventDispatchFailed(SVGLoadEventDispatcherEvent e) {
     }
 }

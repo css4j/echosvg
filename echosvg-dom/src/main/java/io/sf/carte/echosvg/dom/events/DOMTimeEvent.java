@@ -43,6 +43,7 @@ public class DOMTimeEvent extends AbstractEvent implements TimeEvent {
     /**
      * Returns the view from which the event was generated.
      */
+    @Override
     public AbstractView getView() {
         return view;
     }
@@ -50,6 +51,7 @@ public class DOMTimeEvent extends AbstractEvent implements TimeEvent {
     /**
      * Returns the repeat iteration if this is a repeat event.
      */
+    @Override
     public int getDetail() {
         return detail;
     }
@@ -57,6 +59,7 @@ public class DOMTimeEvent extends AbstractEvent implements TimeEvent {
     /**
      * Initializes the values of the TimeEvent object.
      */
+    @Override
     public void initTimeEvent(String typeArg,
                               AbstractView viewArg,
                               int detailArg) {

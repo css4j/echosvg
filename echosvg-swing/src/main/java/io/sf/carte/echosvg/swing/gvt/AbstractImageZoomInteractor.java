@@ -59,6 +59,7 @@ public class AbstractImageZoomInteractor extends InteractorAdapter {
     /**
      * Tells whether the interactor has finished.
      */
+    @Override
     public boolean endInteraction() {
         return finished;
     }
@@ -68,6 +69,7 @@ public class AbstractImageZoomInteractor extends InteractorAdapter {
     /**
      * Invoked when a mouse button has been pressed on a component.
      */
+    @Override
     public void mousePressed(MouseEvent e) {
         if (!finished) {
             JGVTComponent c = (JGVTComponent)e.getSource();
@@ -84,6 +86,7 @@ public class AbstractImageZoomInteractor extends InteractorAdapter {
     /**
      * Invoked when a mouse button has been released on a component.
      */
+    @Override
     public void mouseReleased(MouseEvent e) {
         finished = true;
 
@@ -106,6 +109,7 @@ public class AbstractImageZoomInteractor extends InteractorAdapter {
      * released (regardless of whether the mouse position is within the
      * bounds of the component).
      */
+    @Override
     public void mouseDragged(MouseEvent e) {
         AffineTransform at;
         JGVTComponent c = (JGVTComponent)e.getSource();

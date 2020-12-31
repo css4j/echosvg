@@ -37,6 +37,7 @@ public class ImageNode extends CompositeGraphicsNode {
      */
     public ImageNode() {}
 
+    @Override
     public void setVisible(boolean isVisible) {
         fireGraphicsNodeChangeStarted();
         this.isVisible = isVisible;
@@ -44,6 +45,7 @@ public class ImageNode extends CompositeGraphicsNode {
         fireGraphicsNodeChangeCompleted();
     }
 
+    @Override
     public Rectangle2D getPrimitiveBounds() {
         if (!isVisible)    return null;
         return super.getPrimitiveBounds();
@@ -66,6 +68,7 @@ public class ImageNode extends CompositeGraphicsNode {
      *
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void paint(Graphics2D g2d) {
         if (isVisible) {
             super.paint(g2d);
@@ -78,6 +81,7 @@ public class ImageNode extends CompositeGraphicsNode {
      *
      * @param p the specified Point2D in the user space
      */
+    @Override
     public boolean contains(Point2D p) {
         switch(pointerEventType) {
         case VISIBLE_PAINTED:
@@ -103,6 +107,7 @@ public class ImageNode extends CompositeGraphicsNode {
      *
      * @param p the specified Point2D in the user space
      */
+    @Override
     public GraphicsNode nodeHitAt(Point2D p) {
         if (hitCheckChildren) return super.nodeHitAt(p);
 

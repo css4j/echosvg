@@ -121,6 +121,7 @@ public class SVGOMAnimateMotionElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_ANIMATE_MOTION_TAG;
     }
@@ -129,6 +130,7 @@ public class SVGOMAnimateMotionElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -136,6 +138,7 @@ public class SVGOMAnimateMotionElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMAnimateMotionElement();
     }

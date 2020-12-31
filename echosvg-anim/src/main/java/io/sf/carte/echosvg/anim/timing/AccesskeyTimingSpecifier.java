@@ -75,6 +75,7 @@ public class AccesskeyTimingSpecifier
     /**
      * Returns a string representation of this timing specifier.
      */
+    @Override
     public String toString() {
         if (isSVG12AccessKey) {
             return "accessKey(" + keyName + ")"
@@ -88,6 +89,7 @@ public class AccesskeyTimingSpecifier
      * Initializes this timing specifier by adding the initial instance time
      * to the owner's instance time list or setting up any event listeners.
      */
+    @Override
     public void initialize() {
         if (isSVG12AccessKey) {
             NodeEventTarget eventTarget =
@@ -104,6 +106,7 @@ public class AccesskeyTimingSpecifier
     /**
      * Deinitializes this timing specifier by removing any event listeners.
      */
+    @Override
     public void deinitialize() {
         if (isSVG12AccessKey) {
             NodeEventTarget eventTarget =
@@ -122,6 +125,7 @@ public class AccesskeyTimingSpecifier
     /**
      * Handles key events fired by the eventbase element.
      */
+    @Override
     public void handleEvent(Event e) {
         boolean matched;
         if (e.getType().charAt(3) == 'p') {
@@ -141,6 +145,7 @@ public class AccesskeyTimingSpecifier
     /**
      * Invoked to resolve an event-like timing specifier into an instance time.
      */
+    @Override
     public void resolve(Event e) {
         float time = owner.getRoot().convertEpochTime(e.getTimeStamp());
         InstanceTime instance = new InstanceTime(this, time + offset, true);

@@ -1852,12 +1852,14 @@ public class PNGRed extends AbstractRed {
         }
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         GraphicsUtil.copyData(theTile, wr);
         return wr;
     }
 
     // RenderedImage stuff
+    @Override
     public Raster getTile(int tileX, int tileY) {
         if (tileX != 0 || tileY != 0) {
             // Error -- bad tile requested

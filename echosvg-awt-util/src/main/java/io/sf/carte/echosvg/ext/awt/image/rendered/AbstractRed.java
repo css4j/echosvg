@@ -364,6 +364,7 @@ public abstract class AbstractRed implements CachableRed {
     }
 
 
+    @Override
     public Rectangle getBounds() {
         return new Rectangle(getMinX(),
                              getMinY(),
@@ -371,65 +372,81 @@ public abstract class AbstractRed implements CachableRed {
                              getHeight());
     }
 
+    @Override
     public Vector getSources() {
         return srcs;
     }
 
+    @Override
     public ColorModel getColorModel() {
         return cm;
     }
 
+    @Override
     public SampleModel getSampleModel() {
         return sm;
     }
 
+    @Override
     public int getMinX() {
         return bounds.x;
     }
+    @Override
     public int getMinY() {
         return bounds.y;
     }
 
+    @Override
     public int getWidth() {
         return bounds.width;
     }
 
+    @Override
     public int getHeight() {
         return bounds.height;
     }
 
+    @Override
     public int getTileWidth() {
         return tileWidth;
     }
 
+    @Override
     public int getTileHeight() {
         return tileHeight;
     }
 
+    @Override
     public int getTileGridXOffset() {
         return tileGridXOff;
     }
 
+    @Override
     public int getTileGridYOffset() {
         return tileGridYOff;
     }
 
+    @Override
     public int getMinTileX() {
         return minTileX;
     }
 
+    @Override
     public int getMinTileY() {
         return minTileY;
     }
 
+    @Override
     public int getNumXTiles() {
         return numXTiles;
     }
 
+    @Override
     public int getNumYTiles() {
         return numYTiles;
     }
 
+    @Override
     public Object getProperty(String name) {
         Object ret = props.get(name);
         if (ret != null) return ret;
@@ -441,6 +458,7 @@ public abstract class AbstractRed implements CachableRed {
         return null;
     }
 
+    @Override
     public String [] getPropertyNames() {
         Set keys = props.keySet();
         String[] ret  = new String[keys.size()];
@@ -467,6 +485,7 @@ public abstract class AbstractRed implements CachableRed {
         return ret;
     }
 
+    @Override
     public Shape getDependencyRegion(int srcIndex, Rectangle outputRgn) {
         if ((srcIndex < 0) || (srcIndex > srcs.size()))
             throw new IndexOutOfBoundsException
@@ -481,6 +500,7 @@ public abstract class AbstractRed implements CachableRed {
         return outputRgn.intersection(bounds);
     }
 
+    @Override
     public Shape getDirtyRegion(int srcIndex, Rectangle inputRgn) {
         if (srcIndex != 0)
             throw new IndexOutOfBoundsException
@@ -503,15 +523,18 @@ public abstract class AbstractRed implements CachableRed {
     //     return wr;
     // }
 
+    @Override
     public Raster getTile(int tileX, int tileY) {
         WritableRaster wr = makeTile(tileX, tileY);
         return copyData(wr);
     }
 
+    @Override
     public Raster getData() {
         return getData(bounds);
     }
 
+    @Override
     public Raster getData(Rectangle rect) {
         SampleModel smRet = sm.createCompatibleSampleModel
             (rect.width, rect.height);

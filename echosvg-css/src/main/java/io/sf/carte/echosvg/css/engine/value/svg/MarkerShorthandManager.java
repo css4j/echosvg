@@ -41,6 +41,7 @@ public class MarkerShorthandManager
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_MARKER_PROPERTY;
     }
@@ -48,6 +49,7 @@ public class MarkerShorthandManager
     /**
      * Implements {@link ShorthandManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -55,6 +57,7 @@ public class MarkerShorthandManager
     /**
      * Implements {@link ShorthandManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -62,6 +65,7 @@ public class MarkerShorthandManager
     /**
      * Implements {@link ShorthandManager#setValues(CSSEngine,ShorthandManager.PropertyHandler,LexicalUnit,boolean)}.
      */
+    @Override
     public void setValues(CSSEngine eng,
                           ShorthandManager.PropertyHandler ph,
                           LexicalUnit lu,

@@ -189,6 +189,7 @@ public class SelfContainedSVGOnLoadTestValidator extends DefaultTestSuite {
             this.expectedEntryCodes = expectedEntryCodes;
         }
 
+        @Override
         public TestReport runImpl() throws Exception {
             SelfContainedSVGOnLoadTest t
                 = new SelfContainedSVGOnLoadTest(svgURL);

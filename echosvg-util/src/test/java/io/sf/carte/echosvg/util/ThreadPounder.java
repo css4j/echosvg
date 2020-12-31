@@ -74,6 +74,7 @@ public class ThreadPounder {
             this.toRun = toRun;
         }
 
+        @Override
         public void run() {
             try {
                 synchronized (ThreadPounder.this) {
@@ -95,6 +96,7 @@ public class ThreadPounder {
         for (int i=0; i<20; i++) {
             final int x = i;
             l.add(new Runnable() {
+                    @Override
                     public void run() {
                         System.out.println("Thread " + x);
                     }

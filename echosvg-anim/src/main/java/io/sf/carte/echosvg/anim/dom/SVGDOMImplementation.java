@@ -96,11 +96,13 @@ public class SVGDOMImplementation
         registerFeature("SVGEvents",      new String[] {"1.0", "1.1"});
     }
 
+    @Override
     protected void initLocalizable() {
         localizableSupport = new LocalizableSupport
             (RESOURCES, getClass().getClassLoader());
     }
 
+    @Override
     public CSSEngine createCSSEngine(AbstractStylableDocument doc,
                                      CSSContext               ctx,
                                      Parser                   p,
@@ -124,6 +126,7 @@ public class SVGDOMImplementation
     /**
      * Creates a ViewCSS.
      */
+    @Override
     public ViewCSS createViewCSS(AbstractStylableDocument doc) {
         return new CSSOMSVGViewCSS(doc.getCSSEngine());
     }
@@ -132,6 +135,7 @@ public class SVGDOMImplementation
      * <b>DOM</b>: Implements {@link
      * DOMImplementation#createDocument(String,String,DocumentType)}.
      */
+    @Override
     public Document createDocument(String namespaceURI,
                                    String qualifiedName,
                                    DocumentType doctype)
@@ -150,6 +154,7 @@ public class SVGDOMImplementation
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.DOMImplementationCSS#createCSSStyleSheet(String,String)}.
      */
+    @Override
     public CSSStyleSheet createCSSStyleSheet(String title, String media) {
         throw new UnsupportedOperationException
             ("DOMImplementationCSS.createCSSStyleSheet is not implemented"); // XXX
@@ -161,6 +166,7 @@ public class SVGDOMImplementation
      * Creates a style declaration.
      * @return a CSSOMStyleDeclaration instance.
      */
+    @Override
     public CSSStyleDeclaration createCSSStyleDeclaration() {
         throw new UnsupportedOperationException
             ("CSSStyleDeclarationFactory.createCSSStyleDeclaration is not implemented"); // XXX
@@ -172,6 +178,7 @@ public class SVGDOMImplementation
      * Creates a stylesheet from the data of an xml-stylesheet
      * processing instruction or return null.
      */
+    @Override
     public StyleSheet createStyleSheet(Node n, HashMap<String, String> attrs) {
         throw new UnsupportedOperationException
             ("StyleSheetFactory.createStyleSheet is not implemented"); // XXX
@@ -189,6 +196,7 @@ public class SVGDOMImplementation
      * Implements the behavior of Document.createElementNS() for this
      * DOM implementation.
      */
+    @Override
     public Element createElementNS(AbstractDocument document,
                                    String           namespaceURI,
                                    String           qualifiedName) {
@@ -210,16 +218,19 @@ public class SVGDOMImplementation
      * Creates an DocumentEventSupport object suitable for use with
      * this implementation.
      */
+    @Override
     public DocumentEventSupport createDocumentEventSupport() {
         DocumentEventSupport result =  new DocumentEventSupport();
         result.registerEventFactory("SVGEvents",
                                     new DocumentEventSupport.EventFactory() {
+                                            @Override
                                             public Event createEvent() {
                                                 return new SVGOMEvent();
                                             }
                                         });
         result.registerEventFactory("TimeEvent",
                                     new DocumentEventSupport.EventFactory() {
+                                            @Override
                                             public Event createEvent() {
                                                 return new DOMTimeEvent();
                                             }
@@ -487,6 +498,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMAElement(prefix, (AbstractDocument)doc);
         }
@@ -500,6 +512,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMAltGlyphElement(prefix, (AbstractDocument)doc);
         }
@@ -514,6 +527,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMAltGlyphDefElement(prefix, (AbstractDocument)doc);
         }
@@ -528,6 +542,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMAltGlyphItemElement(prefix, (AbstractDocument)doc);
         }
@@ -541,6 +556,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMAnimateElement(prefix, (AbstractDocument)doc);
         }
@@ -555,6 +571,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMAnimateColorElement(prefix, (AbstractDocument)doc);
         }
@@ -569,6 +586,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMAnimateMotionElement(prefix,
                                                  (AbstractDocument)doc);
@@ -584,6 +602,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMAnimateTransformElement(prefix,
                                                     (AbstractDocument)doc);
@@ -598,6 +617,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMCircleElement(prefix, (AbstractDocument)doc);
         }
@@ -611,6 +631,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMClipPathElement(prefix, (AbstractDocument)doc);
         }
@@ -625,6 +646,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMColorProfileElement(prefix, (AbstractDocument)doc);
         }
@@ -638,6 +660,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMCursorElement(prefix, (AbstractDocument)doc);
         }
@@ -652,6 +675,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMDefinitionSrcElement(prefix,
                                                  (AbstractDocument)doc);
@@ -666,6 +690,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMDefsElement(prefix, (AbstractDocument)doc);
         }
@@ -679,6 +704,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMDescElement(prefix, (AbstractDocument)doc);
         }
@@ -692,6 +718,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMEllipseElement(prefix, (AbstractDocument)doc);
         }
@@ -705,6 +732,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEBlendElement(prefix, (AbstractDocument)doc);
         }
@@ -719,6 +747,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEColorMatrixElement(prefix,
                                                  (AbstractDocument)doc);
@@ -734,6 +763,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEComponentTransferElement(prefix,
                                                        (AbstractDocument)doc);
@@ -749,6 +779,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFECompositeElement(prefix, (AbstractDocument)doc);
         }
@@ -763,6 +794,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEConvolveMatrixElement(prefix,
                                                     (AbstractDocument)doc);
@@ -778,6 +810,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEDiffuseLightingElement(prefix,
                                                      (AbstractDocument)doc);
@@ -793,6 +826,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEDisplacementMapElement(prefix,
                                                      (AbstractDocument)doc);
@@ -808,6 +842,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEDistantLightElement(prefix,
                                                   (AbstractDocument)doc);
@@ -822,6 +857,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEFloodElement(prefix, (AbstractDocument)doc);
         }
@@ -835,6 +871,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEFuncAElement(prefix, (AbstractDocument)doc);
         }
@@ -848,6 +885,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEFuncRElement(prefix, (AbstractDocument)doc);
         }
@@ -861,6 +899,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEFuncGElement(prefix, (AbstractDocument)doc);
         }
@@ -876,6 +915,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEFuncBElement(prefix, (AbstractDocument)doc);
         }
@@ -890,6 +930,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEGaussianBlurElement(prefix,
                                                   (AbstractDocument)doc);
@@ -904,6 +945,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEImageElement(prefix, (AbstractDocument)doc);
         }
@@ -918,6 +960,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEMergeElement(prefix, (AbstractDocument)doc);
         }
@@ -932,6 +975,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEMergeNodeElement(prefix, (AbstractDocument)doc);
         }
@@ -946,6 +990,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEMorphologyElement(prefix,
                                                 (AbstractDocument)doc);
@@ -960,6 +1005,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEOffsetElement(prefix, (AbstractDocument)doc);
         }
@@ -974,6 +1020,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFEPointLightElement(prefix, (AbstractDocument)doc);
         }
@@ -988,6 +1035,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFESpecularLightingElement(prefix,
                                                       (AbstractDocument)doc);
@@ -1003,6 +1051,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFESpotLightElement(prefix, (AbstractDocument)doc);
         }
@@ -1016,6 +1065,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFETileElement(prefix, (AbstractDocument)doc);
         }
@@ -1030,6 +1080,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFETurbulenceElement(prefix, (AbstractDocument)doc);
         }
@@ -1043,6 +1094,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFilterElement(prefix, (AbstractDocument)doc);
         }
@@ -1056,6 +1108,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFontElement(prefix, (AbstractDocument)doc);
         }
@@ -1069,6 +1122,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFontFaceElement(prefix, (AbstractDocument)doc);
         }
@@ -1083,6 +1137,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFontFaceFormatElement(prefix,
                                                   (AbstractDocument)doc);
@@ -1098,6 +1153,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFontFaceNameElement(prefix, (AbstractDocument)doc);
         }
@@ -1112,6 +1168,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFontFaceSrcElement(prefix, (AbstractDocument)doc);
         }
@@ -1126,6 +1183,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMFontFaceUriElement(prefix, (AbstractDocument)doc);
         }
@@ -1140,6 +1198,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMForeignObjectElement(prefix,
                                                  (AbstractDocument)doc);
@@ -1154,6 +1213,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMGElement(prefix, (AbstractDocument)doc);
         }
@@ -1167,6 +1227,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMGlyphElement(prefix, (AbstractDocument)doc);
         }
@@ -1180,6 +1241,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMGlyphRefElement(prefix, (AbstractDocument)doc);
         }
@@ -1193,6 +1255,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMHKernElement(prefix, (AbstractDocument)doc);
         }
@@ -1206,6 +1269,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMImageElement(prefix, (AbstractDocument)doc);
         }
@@ -1219,6 +1283,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMLineElement(prefix, (AbstractDocument)doc);
         }
@@ -1233,6 +1298,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMLinearGradientElement(prefix,
                                                   (AbstractDocument)doc);
@@ -1247,6 +1313,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMMarkerElement(prefix, (AbstractDocument)doc);
         }
@@ -1260,6 +1327,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMMaskElement(prefix, (AbstractDocument)doc);
         }
@@ -1273,6 +1341,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMMetadataElement(prefix, (AbstractDocument)doc);
         }
@@ -1287,6 +1356,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMMissingGlyphElement(prefix, (AbstractDocument)doc);
         }
@@ -1300,6 +1370,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMMPathElement(prefix, (AbstractDocument)doc);
         }
@@ -1313,6 +1384,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMPathElement(prefix, (AbstractDocument)doc);
         }
@@ -1326,6 +1398,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMPatternElement(prefix, (AbstractDocument)doc);
         }
@@ -1339,6 +1412,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMPolygonElement(prefix, (AbstractDocument)doc);
         }
@@ -1352,6 +1426,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMPolylineElement(prefix, (AbstractDocument)doc);
         }
@@ -1366,6 +1441,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMRadialGradientElement(prefix,
                                                   (AbstractDocument)doc);
@@ -1380,6 +1456,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMRectElement(prefix, (AbstractDocument)doc);
         }
@@ -1393,6 +1470,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMScriptElement(prefix, (AbstractDocument)doc);
         }
@@ -1406,6 +1484,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMSetElement(prefix, (AbstractDocument)doc);
         }
@@ -1419,6 +1498,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMStopElement(prefix, (AbstractDocument)doc);
         }
@@ -1432,6 +1512,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMStyleElement(prefix, (AbstractDocument)doc);
         }
@@ -1445,6 +1526,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMSVGElement(prefix, (AbstractDocument)doc);
         }
@@ -1458,6 +1540,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMSwitchElement(prefix, (AbstractDocument)doc);
         }
@@ -1471,6 +1554,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMSymbolElement(prefix, (AbstractDocument)doc);
         }
@@ -1484,6 +1568,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMTextElement(prefix, (AbstractDocument)doc);
         }
@@ -1497,6 +1582,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMTextPathElement(prefix, (AbstractDocument)doc);
         }
@@ -1510,6 +1596,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMTitleElement(prefix, (AbstractDocument)doc);
         }
@@ -1523,6 +1610,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMTRefElement(prefix, (AbstractDocument)doc);
         }
@@ -1536,6 +1624,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMTSpanElement(prefix, (AbstractDocument)doc);
         }
@@ -1549,6 +1638,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMUseElement(prefix, (AbstractDocument)doc);
         }
@@ -1562,6 +1652,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMViewElement(prefix, (AbstractDocument)doc);
         }
@@ -1575,6 +1666,7 @@ public class SVGDOMImplementation
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new SVGOMVKernElement(prefix, (AbstractDocument)doc);
         }

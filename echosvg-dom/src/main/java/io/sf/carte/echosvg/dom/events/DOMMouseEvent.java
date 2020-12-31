@@ -51,6 +51,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * at which the event occurred relative to the origin of the
      * screen coordinate system.
      */
+    @Override
     public int getScreenX() {
         return screenX;
     }
@@ -60,6 +61,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * which the event occurred relative to the origin of the screen
      * coordinate system.
      */
+    @Override
     public int getScreenY() {
         return screenY;
     }
@@ -69,6 +71,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * at which the event occurred relative to the DOM
      * implementation's client area.
      */
+    @Override
     public int getClientX() {
         return clientX;
     }
@@ -78,6 +81,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * which the event occurred relative to the DOM implementation's
      * client area.
      */
+    @Override
     public int getClientY() {
         return clientY;
     }
@@ -86,6 +90,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * DOM: <code>ctrlKey</code> indicates whether the 'ctrl' key was
      * depressed during the firing of the event.
      */
+    @Override
     public boolean getCtrlKey() {
         return modifierKeys.contains(DOMKeyboardEvent.KEY_CONTROL);
     }
@@ -94,6 +99,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * DOM: <code>shiftKey</code> indicates whether the 'shift' key
      * was depressed during the firing of the event.
      */
+    @Override
     public boolean getShiftKey() {
         return modifierKeys.contains(DOMKeyboardEvent.KEY_SHIFT);
     }
@@ -103,6 +109,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * depressed during the firing of the event.  On some platforms
      * this key may map to an alternative key name.
      */
+    @Override
     public boolean getAltKey() {
         return modifierKeys.contains(DOMKeyboardEvent.KEY_ALT);
     }
@@ -112,6 +119,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * depressed during the firing of the event.  On some platforms
      * this key may map to an alternative key name.
      */
+    @Override
     public boolean getMetaKey() {
         return modifierKeys.contains(DOMKeyboardEvent.KEY_META);
     }
@@ -126,6 +134,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * which the button actions are reversed the values are instead
      * read from right to left.
      */
+    @Override
     public short getButton() {
         return button;
     }
@@ -138,6 +147,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * and with the mouseout event to indicate the  <code>EventTarget</code>
      * which the pointing device entered.
      */
+    @Override
     public EventTarget getRelatedTarget() {
         return relatedTarget;
     }
@@ -200,6 +210,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
      * @param relatedTargetArg Specifies the <code>Event</code>'s related
      *   <code>EventTarget</code>.
      */
+    @Override
     public void initMouseEvent(String typeArg,
                                boolean canBubbleArg,
                                boolean cancelableArg,

@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -41,6 +42,7 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -48,6 +50,7 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -55,6 +58,7 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return true;
     }
@@ -62,6 +66,7 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_NUMBER_OR_INHERIT;
     }
@@ -69,6 +74,7 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_STROKE_MITERLIMIT_PROPERTY;
     }
@@ -76,6 +82,7 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return SVGValueConstants.NUMBER_4;
     }
@@ -83,11 +90,12 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
         case INHERIT:
-            return SVGValueConstants.INHERIT_VALUE;
+            return ValueConstants.INHERIT_VALUE;
 
         case INTEGER:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
@@ -106,6 +114,7 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#createFloatValue(short,float)}.
      */
+    @Override
     public Value createFloatValue(short unitType, float floatValue)
         throws DOMException {
         if (unitType == CSSPrimitiveValue.CSS_NUMBER) {

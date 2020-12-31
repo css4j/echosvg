@@ -376,6 +376,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
     /**
      * Creates a new Window object.
      */
+    @Override
     protected io.sf.carte.echosvg.bridge.Window createWindow(Interpreter interp,
                                                           String lang) {
         return new Window(interp, lang);
@@ -701,6 +702,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
             interpreter = interp;
             script = s;
         }
+        @Override
         public void run() {
             try {
                 interpreter.evaluate(script);
@@ -728,6 +730,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
             script = s;
         }
 
+        @Override
         public void run() {
             synchronized (this) {
                 if (error)
@@ -770,6 +773,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
             runnable = r;
         }
 
+        @Override
         public void run() {
             synchronized (this) {
                 if (error)
@@ -809,6 +813,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                 eir = new EvaluateIntervalRunnable(script, interpreter);
             }
 
+            @Override
             public void run() {
                 synchronized (eir) {
                     if (eir.count > 1)
@@ -842,6 +847,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                 eihr = new EvaluateRunnableRunnable(r);
             }
 
+            @Override
             public void run() {
                 synchronized (eihr) {
                     if (eihr.count > 1)
@@ -871,6 +877,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                 this.script = script;
             }
 
+            @Override
             public void run() {
                 updateRunnableQueue.invokeLater
                     (new EvaluateRunnable(script, interpreter));
@@ -890,8 +897,10 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                 this.r = r;
             }
 
+            @Override
             public void run() {
                 updateRunnableQueue.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
                             try {
                                 r.run();
@@ -932,6 +941,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#setInterval(String,long)}.
          */
+        @Override
         public Object setInterval(final String script, long interval) {
             IntervalScriptTimerTask tt = new IntervalScriptTimerTask(script);
             timer.schedule(tt, interval, interval);
@@ -942,6 +952,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#setInterval(Runnable,long)}.
          */
+        @Override
         public Object setInterval(final Runnable r, long interval) {
             IntervalRunnableTimerTask tt = new IntervalRunnableTimerTask(r);
             timer.schedule(tt, interval, interval);
@@ -952,6 +963,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#clearInterval(Object)}.
          */
+        @Override
         public void clearInterval(Object interval) {
             if (interval == null) return;
             ((TimerTask)interval).cancel();
@@ -961,6 +973,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#setTimeout(String,long)}.
          */
+        @Override
         public Object setTimeout(final String script, long timeout) {
             TimeoutScriptTimerTask tt = new TimeoutScriptTimerTask(script);
             timer.schedule(tt, timeout);
@@ -971,6 +984,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#setTimeout(Runnable,long)}.
          */
+        @Override
         public Object setTimeout(final Runnable r, long timeout) {
             TimeoutRunnableTimerTask tt = new TimeoutRunnableTimerTask(r);
             timer.schedule(tt, timeout);
@@ -981,6 +995,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#clearTimeout(Object)}.
          */
+        @Override
         public void clearTimeout(Object timeout) {
             if (timeout == null) return;
             ((TimerTask)timeout).cancel();
@@ -990,6 +1005,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#parseXML(String,Document)}.
          */
+        @Override
         public Node parseXML(String text, Document doc) {
             // Try and parse it as an SVGDocument
             SAXSVGDocumentFactory df = new SAXSVGDocumentFactory
@@ -1020,7 +1036,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                         XMLConstants.XMLNS_NAMESPACE_URI);
                 prefixes.put(XMLConstants.XMLNS_PREFIX + ':'
                         + XMLConstants.XLINK_PREFIX,
-                        XLinkSupport.XLINK_NAMESPACE_URI);
+                        XMLConstants.XLINK_NAMESPACE_URI);
                 res = DOMUtilities.parseXML(text, doc, uri, prefixes,
                         SVGConstants.SVG_SVG_TAG, df);
                 if (res != null) {
@@ -1042,6 +1058,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         /**
          * Serializes the given node.
          */
+        @Override
         public String printNode(Node n) {
             try {
                 Writer writer = new StringWriter();
@@ -1057,6 +1074,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#getURL(String,io.sf.carte.echosvg.bridge.Window.URLResponseHandler)}.
          */
+        @Override
         public void getURL(String uri, io.sf.carte.echosvg.bridge.Window.URLResponseHandler h) {
             getURL(uri, h, null);
         }
@@ -1068,10 +1086,12 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
          * Implements {@link
          * io.sf.carte.echosvg.bridge.Window#getURL(String,io.sf.carte.echosvg.bridge.Window.URLResponseHandler,String)}.
          */
+        @Override
         public void getURL(final String uri,
                            final io.sf.carte.echosvg.bridge.Window.URLResponseHandler h,
                            final String enc) {
             Thread t = new Thread() {
+                    @Override
                     public void run() {
                         try {
                             ParsedURL burl;
@@ -1106,6 +1126,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                             r.close();
 
                             updateRunnableQueue.invokeLater(new Runnable() {
+                                    @Override
                                     public void run() {
                                         try {
                                             h.getURLDone(true,
@@ -1123,6 +1144,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                                 userAgent.displayError(e);
                             }
                             updateRunnableQueue.invokeLater(new Runnable() {
+                                    @Override
                                     public void run() {
                                         try {
                                             h.getURLDone(false, null, null);
@@ -1142,23 +1164,27 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         }
 
 
+        @Override
         public void postURL(String uri, String content,
                             io.sf.carte.echosvg.bridge.Window.URLResponseHandler h) {
             postURL(uri, content, h, "text/plain", null);
         }
 
+        @Override
         public void postURL(String uri, String content,
                             io.sf.carte.echosvg.bridge.Window.URLResponseHandler h,
                      String mimeType) {
             postURL(uri, content, h, mimeType, null);
         }
 
+        @Override
         public void postURL(final String uri,
                             final String content,
                             final io.sf.carte.echosvg.bridge.Window.URLResponseHandler h,
                             final String mimeType,
                             final String fEnc) {
             Thread t = new Thread() {
+                    @Override
                     public void run() {
                         try {
                             String base =
@@ -1233,6 +1259,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                             r.close();
 
                             updateRunnableQueue.invokeLater(new Runnable() {
+                                    @Override
                                     public void run() {
                                         try {
                                             h.getURLDone(true,
@@ -1250,6 +1277,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                                 userAgent.displayError(e);
                             }
                             updateRunnableQueue.invokeLater(new Runnable() {
+                                    @Override
                                     public void run() {
                                         try {
                                             h.getURLDone(false, null, null);
@@ -1271,6 +1299,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         /**
          * Displays an alert dialog box.
          */
+        @Override
         public void alert(String message) {
             if (userAgent != null) {
                 userAgent.showAlert(message);
@@ -1280,6 +1309,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         /**
          * Displays a confirm dialog box.
          */
+        @Override
         public boolean confirm(String message) {
             if (userAgent != null) {
                 return userAgent.showConfirm(message);
@@ -1290,6 +1320,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         /**
          * Displays an input dialog box.
          */
+        @Override
         public String prompt(String message) {
             if (userAgent != null) {
                 return userAgent.showPrompt(message);
@@ -1300,6 +1331,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         /**
          * Displays an input dialog box, given the default value.
          */
+        @Override
         public String prompt(String message, String defVal) {
             if (userAgent != null) {
                 return userAgent.showPrompt(message, defVal);
@@ -1310,6 +1342,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         /**
          * Returns the current BridgeContext.
          */
+        @Override
         public BridgeContext getBridgeContext() {
             return bridgeContext;
         }
@@ -1317,6 +1350,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         /**
          * Returns the associated interpreter.
          */
+        @Override
         public Interpreter getInterpreter() {
             return interpreter;
         }
@@ -1324,6 +1358,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         /**
          * Returns a Window object representing the parent of this Window.
          */
+        @Override
         public io.sf.carte.echosvg.w3c.dom.Window getParent() {
             return null;
         }
@@ -1331,6 +1366,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         /**
          * Returns a Location object representing this Window.
          */
+        @Override
         public io.sf.carte.echosvg.w3c.dom.Location getLocation() {
             if (location == null) {
                 location = new Location(bridgeContext);
@@ -1345,6 +1381,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
     protected class DOMNodeInsertedListener implements EventListener {
         protected LinkedList toExecute = new LinkedList();
 
+        @Override
         public void handleEvent(Event evt) {
             Node n = (Node) evt.getTarget();
             addScriptingListeners(n);
@@ -1373,12 +1410,14 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
      * The listener class for 'DOMNodeRemoved' event.
      */
     protected class DOMNodeRemovedListener implements EventListener {
+        @Override
         public void handleEvent(Event evt) {
             removeScriptingListeners((Node)evt.getTarget());
         }
     }
 
     protected class DOMAttrModifiedListener implements EventListener {
+        @Override
         public void handleEvent (Event evt) {
             MutationEvent me = (MutationEvent)evt;
             if (me.getAttrChange() != MutationEvent.MODIFICATION)
@@ -1407,6 +1446,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         /**
          * Runs the script.
          */
+        @Override
         public void handleEvent(Event evt) {
             Element elt = (Element)evt.getCurrentTarget();
             // Evaluate the script

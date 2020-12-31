@@ -145,7 +145,7 @@ final class RadialGradientPaintContext extends MultipleGradientPaintContext {
         radius = r;
 
         this.isSimpleFocus = (focusX == centerX) && (focusY == centerY);
-        this.isNonCyclic = (cycleMethod == RadialGradientPaint.NO_CYCLE);
+        this.isNonCyclic = (cycleMethod == MultipleGradientPaint.NO_CYCLE);
 
         //for use in the quadractic equation
         radiusSq = radius * radius;
@@ -230,6 +230,7 @@ final class RadialGradientPaintContext extends MultipleGradientPaintContext {
      * @param h The height of the area in device space for which colors
      *          are generated.
      */
+    @Override
     protected void fillRaster(int[] pixels, int off, int adjust,
                               int x, int y, int w, int h) {
         switch(fillMethod) {

@@ -46,6 +46,7 @@ public class DOMMutationEvent extends AbstractEvent implements MutationEvent {
      * was changed within it, the <code>relatedNode</code> is the
      * changed node.
      */
+    @Override
     public Node getRelatedNode() {
         return relatedNode;
     }
@@ -55,6 +56,7 @@ public class DOMMutationEvent extends AbstractEvent implements MutationEvent {
      * <code>Attr</code> node in DOMAttrModified events, and of the
      * <code>CharacterData</code> node in DOMCharDataModified events.
      */
+    @Override
     public String getPrevValue() {
         return prevValue;
     }
@@ -64,6 +66,7 @@ public class DOMMutationEvent extends AbstractEvent implements MutationEvent {
      * <code>Attr</code> node in DOMAttrModified events, and of the
      * <code>CharacterData</code> node in DOMCharDataModified events.
      */
+    @Override
     public String getNewValue() {
         return newValue;
     }
@@ -72,6 +75,7 @@ public class DOMMutationEvent extends AbstractEvent implements MutationEvent {
      * DOM: <code>attrName</code> indicates the name of the changed
      * <code>Attr</code> node in a DOMAttrModified event.
      */
+    @Override
     public String getAttrName() {
         return attrName;
     }
@@ -79,6 +83,7 @@ public class DOMMutationEvent extends AbstractEvent implements MutationEvent {
     /**
      * Implements {@link org.w3c.dom.events.MutationEvent#getAttrChange()}.
      */
+    @Override
     public short getAttrChange() {
         return attrChange;
     }
@@ -105,6 +110,7 @@ public class DOMMutationEvent extends AbstractEvent implements MutationEvent {
      * @param attrNameArg Specifies the <code>Event</code>'s
      *   <code>attrName</code> property
      */
+    @Override
     public void initMutationEvent(String typeArg,
                                   boolean canBubbleArg,
                                   boolean cancelableArg,

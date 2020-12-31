@@ -63,6 +63,7 @@ public class RepeatTimingSpecifier extends EventbaseTimingSpecifier {
     /**
      * Returns a string representation of this timing specifier.
      */
+    @Override
     public String toString() {
         return (eventbaseID == null ? "" : eventbaseID + ".") + "repeat"
             + (repeatIterationSpecified ? "(" + repeatIteration + ")" : "")
@@ -74,6 +75,7 @@ public class RepeatTimingSpecifier extends EventbaseTimingSpecifier {
     /**
      * Handles an event fired on the eventbase element.
      */
+    @Override
     public void handleEvent(Event e) {
         TimeEvent evt = (TimeEvent) e;
         if (!repeatIterationSpecified || evt.getDetail() == repeatIteration) {

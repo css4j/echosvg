@@ -43,6 +43,7 @@ public class EchoSVGSecurityController extends SecurityController {
     /**
      * Default constructor
      */
+    @Override
     public GeneratedClassLoader createClassLoader
         (final ClassLoader parentLoader, Object securityDomain) {
 
@@ -61,6 +62,7 @@ public class EchoSVGSecurityController extends SecurityController {
      * <i>securityDomain</i> is null, return domain representing permissions
      * allowed by the current stack.
      */
+    @Override
     public Object getDynamicSecurityDomain(Object securityDomain) {
 
         ClassLoader loader = (RhinoClassLoader)securityDomain;
@@ -86,6 +88,7 @@ public class EchoSVGSecurityController extends SecurityController {
      * should return a domain incorporate restrictions imposed by
      * <code>securityDomain</code>.
      */
+    @Override
     public Object callWithDomain(Object securityDomain, final Context cx,
                                  final Callable callable,
                                  final Scriptable scope,
@@ -100,6 +103,7 @@ public class EchoSVGSecurityController extends SecurityController {
         }
 
         PrivilegedExceptionAction execAction = new PrivilegedExceptionAction() {
+            @Override
             public Object run() {
                 return callable.call(cx, scope, thisObj, args);
             }

@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.svggen;
 
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
 
 import org.w3c.dom.Element;
@@ -72,7 +73,7 @@ public class SVGPath extends SVGGraphicObjectConverter {
         svgPath.setAttributeNS(null, SVG_D_ATTRIBUTE, dAttr);
 
         // Set winding rule if different than SVG's default
-        if (path.getPathIterator(null).getWindingRule() == GeneralPath.WIND_EVEN_ODD)
+        if (path.getPathIterator(null).getWindingRule() == Path2D.WIND_EVEN_ODD)
             svgPath.setAttributeNS(null, SVG_FILL_RULE_ATTRIBUTE, SVG_EVEN_ODD_VALUE);
 
         return svgPath;

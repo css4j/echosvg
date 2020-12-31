@@ -64,6 +64,7 @@ public class FlowTextPainter extends StrokingTextPainter {
         return singleton;
     }
 
+    @Override
     public List getTextRuns(TextNode node, AttributedCharacterIterator aci) {
         List textRuns = node.getTextRuns();
         if (textRuns != null) {

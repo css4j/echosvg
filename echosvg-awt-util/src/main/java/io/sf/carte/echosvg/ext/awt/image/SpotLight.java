@@ -138,6 +138,7 @@ public class SpotLight extends AbstractLight {
     /**
      * @return true if the light is constant over the whole surface
      */
+    @Override
     public boolean isConstant(){
         return false;
     }
@@ -197,6 +198,7 @@ public class SpotLight extends AbstractLight {
      * @param L array of length 3 where the result is stored,
      *          x,y,z are scaled by light intensity.
      */
+    @Override
     public final void getLight(final double x, final double y,
                                final double z,
                                final double[] L){

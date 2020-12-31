@@ -95,6 +95,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.CSSValue#getCssText()}.
      */
+    @Override
     public String getCssText() {
         return valueProvider.getValue().getCssText();
     }
@@ -103,6 +104,7 @@ public class CSSOMSVGColor
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSValue#setCssText(String)}.
      */
+    @Override
     public void setCssText(String cssText) throws DOMException {
         if (handler == null) {
             throw new DOMException
@@ -117,6 +119,7 @@ public class CSSOMSVGColor
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSValue#getCssValueType()}.
      */
+    @Override
     public short getCssValueType() {
         return CSS_CUSTOM;
     }
@@ -125,6 +128,7 @@ public class CSSOMSVGColor
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGColor#getColorType()}.
      */
+    @Override
     public short getColorType() {
         Value value = valueProvider.getValue();
         int cssValueType = value.getCssValueType();
@@ -155,6 +159,7 @@ public class CSSOMSVGColor
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGColor#getRGBColor()}.
      */
+    @Override
     public RGBColor getRGBColor() {
         return this;
     }
@@ -171,6 +176,7 @@ public class CSSOMSVGColor
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGColor#setRGBColor(String)}.
      */
+    @Override
     public void setRGBColor(String color) {
         if (handler == null) {
             throw new DOMException
@@ -184,6 +190,7 @@ public class CSSOMSVGColor
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGColor#getICCColor()}.
      */
+    @Override
     public SVGICCColor getICCColor() {
         return this;
     }
@@ -200,6 +207,7 @@ public class CSSOMSVGColor
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGColor#setRGBColorICCColor(String,String)}.
      */
+    @Override
     public void setRGBColorICCColor(String rgb, String icc) {
         if (handler == null) {
             throw new DOMException
@@ -214,6 +222,7 @@ public class CSSOMSVGColor
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGColor#setColor(short,String,String)}.
      */
+    @Override
     public void setColor(short type, String rgb, String icc) {
         if (handler == null) {
             throw new DOMException
@@ -229,6 +238,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.RGBColor#getRed()}.
      */
+    @Override
     public CSSPrimitiveValue getRed() {
         valueProvider.getValue().getRed();
         if (redComponent == null) {
@@ -240,6 +250,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.RGBColor#getGreen()}.
      */
+    @Override
     public CSSPrimitiveValue getGreen() {
         valueProvider.getValue().getGreen();
         if (greenComponent == null) {
@@ -252,6 +263,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.RGBColor#getBlue()}.
      */
+    @Override
     public CSSPrimitiveValue getBlue() {
         valueProvider.getValue().getBlue();
         if (blueComponent == null) {
@@ -265,6 +277,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGICCColor#getColorProfile()}.
      */
+    @Override
     public String getColorProfile() {
         if (getColorType() != SVG_COLORTYPE_RGBCOLOR_ICCCOLOR) {
             throw new DOMException(DOMException.SYNTAX_ERR, "");
@@ -276,6 +289,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link SVGICCColor#setColorProfile(String)}.
      */
+    @Override
     public void setColorProfile(String colorProfile) throws DOMException {
         if (handler == null) {
             throw new DOMException
@@ -288,6 +302,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link SVGICCColor#getColors()}.
      */
+    @Override
     public SVGNumberList getColors() {
         return this;
     }
@@ -297,6 +312,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#getNumberOfItems()}.
      */
+    @Override
     public int getNumberOfItems() {
         if (getColorType() != SVG_COLORTYPE_RGBCOLOR_ICCCOLOR) {
             throw new DOMException(DOMException.SYNTAX_ERR, "");
@@ -308,6 +324,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#clear()}.
      */
+    @Override
     public void clear() throws DOMException {
         if (handler == null) {
             throw new DOMException
@@ -321,6 +338,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#initialize(SVGNumber)}.
      */
+    @Override
     public SVGNumber initialize(SVGNumber newItem) throws DOMException {
         if (handler == null) {
             throw new DOMException
@@ -338,6 +356,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#getItem(int)}.
      */
+    @Override
     public SVGNumber getItem(int index) throws DOMException {
         if (getColorType() != SVG_COLORTYPE_RGBCOLOR_ICCCOLOR) {
             throw new DOMException(DOMException.INDEX_SIZE_ERR, "");
@@ -363,6 +382,7 @@ public class CSSOMSVGColor
      * <b>DOM</b>: Implements {@link
      * SVGNumberList#insertItemBefore(SVGNumber,int)}.
      */
+    @Override
     public SVGNumber insertItemBefore(SVGNumber newItem, int index)
         throws DOMException {
         if (handler == null) {
@@ -391,6 +411,7 @@ public class CSSOMSVGColor
      * <b>DOM</b>: Implements {@link
      * SVGNumberList#replaceItem(SVGNumber,int)}.
      */
+    @Override
     public SVGNumber replaceItem(SVGNumber newItem, int index)
         throws DOMException {
         if (handler == null) {
@@ -418,6 +439,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#removeItem(int)}.
      */
+    @Override
     public SVGNumber removeItem(int index) throws DOMException {
         if (handler == null) {
             throw new DOMException
@@ -444,6 +466,7 @@ public class CSSOMSVGColor
     /**
      * <b>DOM</b>: Implements {@link SVGNumberList#appendItem(SVGNumber)}.
      */
+    @Override
     public SVGNumber appendItem (SVGNumber newItem) throws DOMException {
         if (handler == null) {
             throw new DOMException
@@ -484,6 +507,7 @@ public class CSSOMSVGColor
         /**
          * Implements {@link SVGNumber#getValue()}.
          */
+        @Override
         public float getValue() {
             if (iccColors == null) {
                 return value;
@@ -499,6 +523,7 @@ public class CSSOMSVGColor
         /**
          * Implements {@link SVGNumber#setValue(float)}.
          */
+        @Override
         public void setValue(float f) {
             value = f;
             if (iccColors == null) {
@@ -638,6 +663,7 @@ public class CSSOMSVGColor
         /**
          * Called when the red value text has changed.
          */
+        @Override
         public void redTextChanged(String text) throws DOMException {
             StringBuffer sb = new StringBuffer(40);
             Value value = getValue();
@@ -669,6 +695,7 @@ public class CSSOMSVGColor
         /**
          * Called when the red float value has changed.
          */
+        @Override
         public void redFloatValueChanged(short unit, float fValue)
             throws DOMException {
             StringBuffer sb = new StringBuffer(40);
@@ -702,6 +729,7 @@ public class CSSOMSVGColor
         /**
          * Called when the green value text has changed.
          */
+        @Override
         public void greenTextChanged(String text) throws DOMException {
             StringBuffer sb = new StringBuffer(40);
             Value value = getValue();
@@ -734,6 +762,7 @@ public class CSSOMSVGColor
         /**
          * Called when the green float value has changed.
          */
+        @Override
         public void greenFloatValueChanged(short unit, float fValue)
             throws DOMException {
             StringBuffer sb = new StringBuffer(40);
@@ -767,6 +796,7 @@ public class CSSOMSVGColor
         /**
          * Called when the blue value text has changed.
          */
+        @Override
         public void blueTextChanged(String text) throws DOMException {
             StringBuffer sb = new StringBuffer(40);
             Value value = getValue();
@@ -799,6 +829,7 @@ public class CSSOMSVGColor
         /**
          * Called when the blue float value has changed.
          */
+        @Override
         public void blueFloatValueChanged(short unit, float fValue)
             throws DOMException {
             StringBuffer sb = new StringBuffer(40);
@@ -832,6 +863,7 @@ public class CSSOMSVGColor
         /**
          * Called when the RGBColor text has changed.
          */
+        @Override
         public void rgbColorChanged(String text) throws DOMException {
             switch (getColorType()) {
             case SVG_COLORTYPE_RGBCOLOR:
@@ -851,6 +883,7 @@ public class CSSOMSVGColor
         /**
          * Called when the RGBColor and the ICCColor text has changed.
          */
+        @Override
         public void rgbColorICCColorChanged(String rgb, String icc)
             throws DOMException {
             switch (getColorType()) {
@@ -867,6 +900,7 @@ public class CSSOMSVGColor
         /**
          * Called when the SVGColor has changed.
          */
+        @Override
         public void colorChanged(short type, String rgb, String icc)
             throws DOMException {
             switch (type) {
@@ -890,6 +924,7 @@ public class CSSOMSVGColor
         /**
          * Called when the ICC color profile has changed.
          */
+        @Override
         public void colorProfileChanged(String cp) throws DOMException {
             Value value = getValue();
             switch (getColorType()) {
@@ -916,6 +951,7 @@ public class CSSOMSVGColor
         /**
          * Called when the ICC colors has changed.
          */
+        @Override
         public void colorsCleared() throws DOMException {
             Value value = getValue();
             switch (getColorType()) {
@@ -938,6 +974,7 @@ public class CSSOMSVGColor
         /**
          * Called when the ICC colors has been initialized.
          */
+        @Override
         public void colorsInitialized(float f) throws DOMException {
             Value value = getValue();
             switch (getColorType()) {
@@ -962,6 +999,7 @@ public class CSSOMSVGColor
         /**
          * Called when the ICC color has been inserted.
          */
+        @Override
         public void colorInsertedBefore(float f, int idx) throws DOMException {
             Value value = getValue();
             switch (getColorType()) {
@@ -994,6 +1032,7 @@ public class CSSOMSVGColor
         /**
          * Called when the ICC color has been replaced.
          */
+        @Override
         public void colorReplaced(float f, int idx) throws DOMException {
             Value value = getValue();
             switch (getColorType()) {
@@ -1026,6 +1065,7 @@ public class CSSOMSVGColor
         /**
          * Called when the ICC color has been removed.
          */
+        @Override
         public void colorRemoved(int idx) throws DOMException {
             Value value = getValue();
             switch (getColorType()) {
@@ -1056,6 +1096,7 @@ public class CSSOMSVGColor
         /**
          * Called when the ICC color has been append.
          */
+        @Override
         public void colorAppend(float f) throws DOMException {
             Value value = getValue();
             switch (getColorType()) {
@@ -1096,6 +1137,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#getCssText()}.
          */
+        @Override
         public String getCssText() {
             return getValue().getCssText();
         }
@@ -1104,6 +1146,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#getCssValueType()}.
          */
+        @Override
         public short getCssValueType() {
             return getValue().getCssValueType();
         }
@@ -1112,6 +1155,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getPrimitiveType()}.
          */
+        @Override
         public short getPrimitiveType() {
             return getValue().getPrimitiveType();
         }
@@ -1120,6 +1164,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getFloatValue(short)}.
          */
+        @Override
         public float getFloatValue(short unitType) throws DOMException {
             return CSSOMValue.convertFloatValue(unitType, getValue());
         }
@@ -1128,6 +1173,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getStringValue()}.
          */
+        @Override
         public String getStringValue() throws DOMException {
             return valueProvider.getValue().getStringValue();
         }
@@ -1136,6 +1182,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getCounterValue()}.
          */
+        @Override
         public Counter getCounterValue() throws DOMException {
             throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
         }
@@ -1144,6 +1191,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getRectValue()}.
          */
+        @Override
         public Rect getRectValue() throws DOMException {
             throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
         }
@@ -1152,6 +1200,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getRGBColorValue()}.
          */
+        @Override
         public RGBColor getRGBColorValue() throws DOMException {
             throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
         }
@@ -1184,6 +1233,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setStringValue(short,String)}.
          */
+        @Override
         public void setStringValue(short stringType, String stringValue)
             throws DOMException {
             throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
@@ -1198,6 +1248,7 @@ public class CSSOMSVGColor
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             return valueProvider.getValue().getRed();
         }
@@ -1206,6 +1257,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1220,6 +1272,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {
@@ -1242,6 +1295,7 @@ public class CSSOMSVGColor
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             return valueProvider.getValue().getGreen();
         }
@@ -1250,6 +1304,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1264,6 +1319,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {
@@ -1285,6 +1341,7 @@ public class CSSOMSVGColor
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             return valueProvider.getValue().getBlue();
         }
@@ -1293,6 +1350,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1307,6 +1365,7 @@ public class CSSOMSVGColor
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {

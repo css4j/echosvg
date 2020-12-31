@@ -39,30 +39,35 @@ public class DefaultNumberListHandler implements NumberListHandler {
     /**
      * Implements {@link NumberListHandler#startNumberList()}.
      */
+    @Override
     public void startNumberList() throws ParseException {
     }
 
     /**
      * Implements {@link NumberListHandler#endNumberList()}.
      */
+    @Override
     public void endNumberList() throws ParseException {
     }
 
     /**
      * Implements {@link NumberListHandler#startNumber()}.
      */
+    @Override
     public void startNumber() throws ParseException {
     }
 
     /**
      * Implements {@link NumberListHandler#numberValue(float)}.
      */
+    @Override
     public void numberValue(float v) throws ParseException {
     }
 
     /**
      * Implements {@link NumberListHandler#endNumber()}.
      */
+    @Override
     public void endNumber() throws ParseException {
     }
 

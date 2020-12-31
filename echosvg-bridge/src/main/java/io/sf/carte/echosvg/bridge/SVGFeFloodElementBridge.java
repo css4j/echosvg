@@ -45,6 +45,7 @@ public class SVGFeFloodElementBridge
     /**
      * Returns 'feFlood'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_FLOOD_TAG;
     }
@@ -67,6 +68,7 @@ public class SVGFeFloodElementBridge
      *        can then access a filter node from the filterMap if they
      *        know its name.
      */
+    @Override
     public Filter createFilter(BridgeContext ctx,
                                Element filterElement,
                                Element filteredElement,

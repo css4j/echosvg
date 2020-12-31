@@ -103,6 +103,7 @@ public class ColorMatrixRed extends AbstractRed{
     }
 
 
+    @Override
     public WritableRaster copyData(WritableRaster wr){
         //System.out.println("Getting data for : " + wr.getWidth() + "/" + wr.getHeight() + "/" + wr.getMinX() + "/" + wr.getMinY());
 

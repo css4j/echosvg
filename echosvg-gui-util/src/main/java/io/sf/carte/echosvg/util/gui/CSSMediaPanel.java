@@ -280,6 +280,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
      * @param key the key mapped with the action to get
      * @throws MissingListenerException if the action is not found
      */
+    @Override
     public Action getAction(String key) throws MissingListenerException {
         return (Action)listeners.get(key);
     }
@@ -288,6 +289,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
      * The action associated with the 'Add' button
      */
     protected class AddButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             AddMediumDialog dialog = new AddMediumDialog(CSSMediaPanel.this);
             dialog.pack();
@@ -323,6 +325,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
      * The action associated with the 'Remove' button
      */
     protected class RemoveButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             int index = mediaList.getSelectedIndex();
             mediaList.clearSelection();
@@ -336,6 +339,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
      * The action associated with the 'Clear' button
      */
     protected class ClearButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             mediaList.clearSelection();
             listModel.removeAllElements();
@@ -348,6 +352,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
     protected class MediaListSelectionListener
         implements ListSelectionListener {
 
+        @Override
         public void valueChanged(ListSelectionEvent e) {
             updateButtons();
         }
@@ -358,14 +363,17 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
      */
     protected class MediaListDataListener implements ListDataListener {
 
+        @Override
         public void contentsChanged(ListDataEvent e) {
             updateButtons();
         }
 
+        @Override
         public void intervalAdded(ListDataEvent e) {
             updateButtons();
         }
 
+        @Override
         public void intervalRemoved(ListDataEvent e) {
             updateButtons();
         }
@@ -472,6 +480,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
          * @param key the key mapped with the action to get
          * @throws MissingListenerException if the action is not found
          */
+        @Override
         public Action getAction(String key) throws MissingListenerException {
             return (Action)listeners.get(key);
         }
@@ -480,6 +489,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
          * The action associated with the 'OK' button
          */
         protected class OKButtonAction extends AbstractAction {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 returnCode = OK_OPTION;
                 dispose();
@@ -490,6 +500,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
          * The action associated with the 'Cancel' button
          */
         protected class CancelButtonAction extends AbstractAction {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 returnCode = CANCEL_OPTION;
                 dispose();
@@ -594,6 +605,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
          * @param key the key mapped with the action to get
          * @throws MissingListenerException if the action is not found
          */
+        @Override
         public Action getAction(String key) throws MissingListenerException {
             return (Action)listeners.get(key);
         }
@@ -602,6 +614,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
          * The action associated with the 'OK' button
          */
         protected class OKButtonAction extends AbstractAction {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 returnCode = OK_OPTION;
                 dispose();
@@ -612,6 +625,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
          * The action associated with the 'Cancel' button
          */
         protected class CancelButtonAction extends AbstractAction {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 returnCode = CANCEL_OPTION;
                 dispose();

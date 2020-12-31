@@ -142,6 +142,7 @@ public abstract class AbstractContentSelector {
         /**
          * Creates a new XPathSubsetContentSelector object.
          */
+        @Override
         public AbstractContentSelector createSelector(ContentManager cm,
                                                       XBLOMContentElement content,
                                                       Element bound,
@@ -159,6 +160,7 @@ public abstract class AbstractContentSelector {
         /**
          * Creates a new XPathPatternContentSelector object.
          */
+        @Override
         public AbstractContentSelector createSelector(ContentManager cm,
                                                       XBLOMContentElement content,
                                                       Element bound,

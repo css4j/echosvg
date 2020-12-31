@@ -50,6 +50,7 @@ public abstract class AbstractSVGTransformList
     /**
      * Return the separator between transform in the list.
      */
+    @Override
     protected String getItemSeparator() {
         return SVG_TRANSFORMATION_LIST_SEPARATOR;
     }
@@ -65,6 +66,7 @@ public abstract class AbstractSVGTransformList
     /**
      * <b>DOM</b>: Implements {@link SVGTransformList#initialize(SVGTransform)}.
      */
+    @Override
     public SVGTransform initialize(SVGTransform newItem)
             throws DOMException, SVGException {
         return (SVGTransform) initializeImpl(newItem);
@@ -73,6 +75,7 @@ public abstract class AbstractSVGTransformList
     /**
      * <b>DOM</b>: Implements {@link SVGTransformList#getItem(int)}.
      */
+    @Override
     public SVGTransform getItem(int index) throws DOMException {
         return (SVGTransform) getItemImpl(index);
     }
@@ -81,6 +84,7 @@ public abstract class AbstractSVGTransformList
      * <b>DOM</b>: Implements {@link
      * SVGTransformList#insertItemBefore(SVGTransform,int)}.
      */
+    @Override
     public SVGTransform insertItemBefore(SVGTransform newItem, int index)
             throws DOMException, SVGException {
         return (SVGTransform) insertItemBeforeImpl(newItem, index);
@@ -90,6 +94,7 @@ public abstract class AbstractSVGTransformList
      * <b>DOM</b>: Implements {@link
      * SVGTransformList#replaceItem(SVGTransform,int)}.
      */
+    @Override
     public SVGTransform replaceItem(SVGTransform newItem, int index)
             throws DOMException, SVGException {
         return (SVGTransform) replaceItemImpl(newItem, index);
@@ -98,6 +103,7 @@ public abstract class AbstractSVGTransformList
     /**
      * <b>DOM</b>: Implements {@link SVGTransformList#removeItem(int)}.
      */
+    @Override
     public SVGTransform removeItem(int index) throws DOMException {
         return (SVGTransform) removeItemImpl(index);
     }
@@ -105,6 +111,7 @@ public abstract class AbstractSVGTransformList
     /**
      * <b>DOM</b>: Implements {@link SVGTransformList#appendItem(SVGTransform)}.
      */
+    @Override
     public SVGTransform appendItem(SVGTransform newItem)
             throws DOMException, SVGException {
         return (SVGTransform) appendItemImpl(newItem);
@@ -114,6 +121,7 @@ public abstract class AbstractSVGTransformList
      * <b>DOM</b>: Implements {@link
      * SVGTransformList#createSVGTransformFromMatrix(SVGMatrix)}.
      */
+    @Override
     public SVGTransform createSVGTransformFromMatrix(SVGMatrix matrix) {
         SVGOMTransform transform = new SVGOMTransform();
         transform.setMatrix(matrix);
@@ -123,6 +131,7 @@ public abstract class AbstractSVGTransformList
     /**
      * <b>DOM</b>: Implements {@link SVGTransformList#consolidate()}.
      */
+    @Override
     public SVGTransform consolidate() {
         revalidate();
 
@@ -160,6 +169,7 @@ public abstract class AbstractSVGTransformList
     /**
      * Creates a new {@link SVGItem} object from the given {@link SVGTransform}.
      */
+    @Override
     protected SVGItem createSVGItem(Object newItem) {
         return new SVGTransformItem((SVGTransform) newItem);
     }
@@ -170,6 +180,7 @@ public abstract class AbstractSVGTransformList
      * @param value the transform list attribute value
      * @param handler transform list handler
      */
+    @Override
     protected void doParse(String value, ListHandler handler)
             throws ParseException {
 
@@ -182,6 +193,7 @@ public abstract class AbstractSVGTransformList
     /**
      * Asserts that the given item is an {@link SVGTransformList}.
      */
+    @Override
     protected void checkItemType(Object newItem) {
         if (!(newItem instanceof SVGTransform)) {
             createSVGException(SVGException.SVG_WRONG_TYPE_ERR,
@@ -247,6 +259,7 @@ public abstract class AbstractSVGTransformList
          * Assigns a parent list to this item.
          * @param list The list the item belongs.
          */
+        @Override
         public void setParent(AbstractSVGList list) {
             parent = list;
         }
@@ -254,6 +267,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Returns the parent list of this item.
          */
+        @Override
         public AbstractSVGList getParent() {
             return parent;
         }
@@ -262,6 +276,7 @@ public abstract class AbstractSVGTransformList
          * Returns the cached representation of the item if valid, otherwise
          * recomputes the String representation of the item.
          */
+        @Override
         public String getValueAsString() {
             if (itemStringValue == null) {
                 itemStringValue = getStringValue();
@@ -349,6 +364,7 @@ public abstract class AbstractSVGTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransform#setMatrix(SVGMatrix)}.
          */
+        @Override
         public void setMatrix(SVGMatrix matrix) {
             super.setMatrix(matrix);
             resetAttribute();
@@ -357,6 +373,7 @@ public abstract class AbstractSVGTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransform#setTranslate(float,float)}.
          */
+        @Override
         public void setTranslate(float tx, float ty) {
             super.setTranslate(tx, ty);
             resetAttribute();
@@ -365,6 +382,7 @@ public abstract class AbstractSVGTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransform#setScale(float,float)}.
          */
+        @Override
         public void setScale(float sx, float sy) {
             super.setScale(sx, sy);
             resetAttribute();
@@ -374,6 +392,7 @@ public abstract class AbstractSVGTransformList
          * <b>DOM</b>: Implements {@link
          * SVGTransform#setRotate(float,float,float)}.
          */
+        @Override
         public void setRotate(float angle, float cx, float cy) {
             super.setRotate(angle, cx, cy);
             resetAttribute();
@@ -382,6 +401,7 @@ public abstract class AbstractSVGTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransform#setSkewX(float)}.
          */
+        @Override
         public void setSkewX(float angle) {
             super.setSkewX(angle);
             resetAttribute();
@@ -390,6 +410,7 @@ public abstract class AbstractSVGTransformList
         /**
          * <b>DOM</b>: Implements {@link SVGTransform#setSkewY(float)}.
          */
+        @Override
         public void setSkewY(float angle) {
             super.setSkewY(angle);
             resetAttribute();
@@ -398,36 +419,44 @@ public abstract class AbstractSVGTransformList
         /**
          * Creates the {@link SVGMatrix} used to store the transform.
          */
+        @Override
         protected SVGMatrix createMatrix() {
             return new AbstractSVGMatrix() {
+                @Override
                 protected AffineTransform getAffineTransform() {
                     return SVGTransformItem.this.affineTransform;
                 }
+                @Override
                 public void setA(float a) throws DOMException {
                     SVGTransformItem.this.type = SVGTransform.SVG_TRANSFORM_MATRIX;
                     super.setA(a);
                     SVGTransformItem.this.resetAttribute();
                 }
+                @Override
                 public void setB(float b) throws DOMException {
                     SVGTransformItem.this.type = SVGTransform.SVG_TRANSFORM_MATRIX;
                     super.setB(b);
                     SVGTransformItem.this.resetAttribute();
                 }
+                @Override
                 public void setC(float c) throws DOMException {
                     SVGTransformItem.this.type = SVGTransform.SVG_TRANSFORM_MATRIX;
                     super.setC(c);
                     SVGTransformItem.this.resetAttribute();
                 }
+                @Override
                 public void setD(float d) throws DOMException {
                     SVGTransformItem.this.type = SVGTransform.SVG_TRANSFORM_MATRIX;
                     super.setD(d);
                     SVGTransformItem.this.resetAttribute();
                 }
+                @Override
                 public void setE(float e) throws DOMException {
                     SVGTransformItem.this.type = SVGTransform.SVG_TRANSFORM_MATRIX;
                     super.setE(e);
                     SVGTransformItem.this.resetAttribute();
                 }
+                @Override
                 public void setF(float f) throws DOMException {
                     SVGTransformItem.this.type = SVGTransform.SVG_TRANSFORM_MATRIX;
                     super.setF(f);
@@ -520,6 +549,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Implements {@link TransformListHandler#startTransformList()}.
          */
+        @Override
         public void startTransformList() throws ParseException {
             listHandler.startList();
         }
@@ -528,6 +558,7 @@ public abstract class AbstractSVGTransformList
          * Implements {@link
          * TransformListHandler#matrix(float,float,float,float,float,float)}.
          */
+        @Override
         public void matrix(float a, float b, float c, float d, float e, float f)
                 throws ParseException {
             SVGTransformItem item  = new SVGTransformItem();
@@ -538,6 +569,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Implements {@link TransformListHandler#rotate(float)}.
          */
+        @Override
         public void rotate(float theta) throws ParseException {
             SVGTransformItem item = new SVGTransformItem();
             item.rotate(theta);
@@ -547,6 +579,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Implements {@link TransformListHandler#rotate(float,float,float)}.
          */
+        @Override
         public void rotate(float theta, float cx, float cy)
                 throws ParseException {
             SVGTransformItem item = new SVGTransformItem();
@@ -557,6 +590,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Implements {@link TransformListHandler#translate(float)}.
          */
+        @Override
         public void translate(float tx) throws ParseException {
             SVGTransformItem item = new SVGTransformItem();
             item.translate(tx);
@@ -566,6 +600,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Implements {@link TransformListHandler#translate(float,float)}.
          */
+        @Override
         public void translate(float tx, float ty) throws ParseException {
             SVGTransformItem item = new SVGTransformItem();
             item.setTranslate(tx, ty);
@@ -575,6 +610,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Implements {@link TransformListHandler#scale(float)}.
          */
+        @Override
         public void scale(float sx) throws ParseException {
             SVGTransformItem item  = new SVGTransformItem();
             item.scale(sx);
@@ -584,6 +620,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Implements {@link TransformListHandler#scale(float,float)}.
          */
+        @Override
         public void scale(float sx, float sy) throws ParseException {
             SVGTransformItem item = new SVGTransformItem();
             item.setScale(sx, sy);
@@ -593,6 +630,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Implements {@link TransformListHandler#skewX(float)}.
          */
+        @Override
         public void skewX(float skx) throws ParseException {
             SVGTransformItem item = new SVGTransformItem();
             item.setSkewX(skx);
@@ -602,6 +640,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Implements {@link TransformListHandler#skewY(float)}.
          */
+        @Override
         public void skewY(float sky) throws ParseException {
             SVGTransformItem item  = new SVGTransformItem();
             item.setSkewY(sky);
@@ -611,6 +650,7 @@ public abstract class AbstractSVGTransformList
         /**
          * Implements {@link TransformListHandler#endTransformList()}.
          */
+        @Override
         public void endTransformList() throws ParseException {
             listHandler.endList();
         }

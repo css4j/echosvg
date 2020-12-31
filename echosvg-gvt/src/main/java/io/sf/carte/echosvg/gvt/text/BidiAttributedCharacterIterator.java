@@ -329,6 +329,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
     /**
      * Get the keys of all attributes defined on the iterator's text range.
      */
+    @Override
     public Set getAllAttributeKeys() {
         return reorderedACI.getAllAttributeKeys();
     }
@@ -337,6 +338,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      * Get the value of the named attribute for the current
      *     character.
      */
+    @Override
     public Object getAttribute(AttributedCharacterIterator.Attribute attribute) {
         return reorderedACI.getAttribute(attribute);
     }
@@ -345,6 +347,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      * Returns a map with the attributes defined on the current
      * character.
      */
+    @Override
     public Map getAttributes() {
         return reorderedACI.getAttributes();
     }
@@ -354,6 +357,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      *     run with respect to all attributes containing the current
      *     character.
      */
+    @Override
     public int getRunLimit() {
         return reorderedACI.getRunLimit();
     }
@@ -363,6 +367,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      *      run with respect to the given attribute containing the current
      *      character.
      */
+    @Override
     public int getRunLimit(AttributedCharacterIterator.Attribute attribute) {
         return reorderedACI.getRunLimit(attribute);
     }
@@ -372,6 +377,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      *     run with respect to the given attributes containing the current
      *     character.
      */
+    @Override
     public int getRunLimit(Set attributes) {
         return reorderedACI.getRunLimit(attributes);
     }
@@ -380,6 +386,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      * Get the index of the first character of the run with
      *    respect to all attributes containing the current character.
      */
+    @Override
     public int getRunStart() {
         return reorderedACI.getRunStart();
     }
@@ -390,6 +397,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      * @param attribute The attribute for whose appearance the first offset
      *      is requested.
      */
+    @Override
     public int getRunStart(AttributedCharacterIterator.Attribute attribute) {
         return reorderedACI.getRunStart(attribute);
     }
@@ -399,6 +407,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      *      respect to the given attributes containing the current character.
      * @param attributes the Set of attributes which begins at the returned index.
      */
+    @Override
     public int getRunStart(Set attributes) {
         return reorderedACI.getRunStart(attributes);
     }
@@ -406,6 +415,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
     /**
      * Creates a copy of this iterator.
      */
+    @Override
     public Object clone() {
         return new BidiAttributedCharacterIterator
             ((AttributedCharacterIterator)reorderedACI.clone(),
@@ -415,6 +425,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
     /**
      * Gets the character at the current position (as returned by getIndex()).
      */
+    @Override
     public char current() {
         return reorderedACI.current();
     }
@@ -423,6 +434,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      * Sets the position to getBeginIndex() and returns the character at
      * that position.
      */
+    @Override
     public char first() {
         return reorderedACI.first();
     }
@@ -430,6 +442,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
     /**
      * Returns the start index of the text.
      */
+    @Override
     public int getBeginIndex() {
         return reorderedACI.getBeginIndex();
     }
@@ -437,6 +450,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
     /**
      * Returns the end index of the text.
      */
+    @Override
     public int getEndIndex() {
         return reorderedACI.getEndIndex();
     }
@@ -444,6 +458,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
     /**
      * Returns the current index.
      */
+    @Override
     public int getIndex() {
         return reorderedACI.getIndex();
     }
@@ -452,6 +467,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      * Sets the position to getEndIndex()-1 (getEndIndex() if the text is empty)
      * and returns the character at that position.
      */
+    @Override
     public char last() {
         return reorderedACI.last();
     }
@@ -460,6 +476,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      * Increments the iterator's index by one and returns the character at
      * the new index.
      */
+    @Override
     public char next() {
         return reorderedACI.next();
     }
@@ -467,6 +484,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
     /**
      * Decrements the iterator's index by one and returns the character at the new index.
      */
+    @Override
     public char previous() {
         return reorderedACI.previous();
     }
@@ -474,6 +492,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
     /**
      * Sets the position to the specified position in the text and returns that character.
      */
+    @Override
     public char setIndex(int position) {
        return reorderedACI.setIndex(position);
     }

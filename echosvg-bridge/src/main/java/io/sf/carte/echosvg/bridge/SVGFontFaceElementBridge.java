@@ -46,6 +46,7 @@ public class SVGFontFaceElementBridge extends AbstractSVGBridge
     /**
      * Returns 'font-face'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FONT_FACE_TAG;
     }

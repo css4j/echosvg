@@ -22,6 +22,7 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAltGlyphElement;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
@@ -42,14 +43,14 @@ public class SVGOMAltGlyphElement
     protected static final AttributeInitializer attributeInitializer;
     static {
         attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null, "xmlns:xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+                                          XMLConstants.XLINK_NAMESPACE_URI);
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "show", "other");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "actuate", "onLoad");
     }
 
@@ -85,6 +86,7 @@ public class SVGOMAltGlyphElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_ALT_GLYPH_TAG;
     }
@@ -92,6 +94,7 @@ public class SVGOMAltGlyphElement
     /**
      * <b>DOM</b>: Implements {@link SVGAltGlyphElement#getGlyphRef()}.
      */
+    @Override
     public String getGlyphRef() {
         return getAttributeNS(null, SVG_GLYPH_REF_ATTRIBUTE);
     }
@@ -99,6 +102,7 @@ public class SVGOMAltGlyphElement
     /**
      * <b>DOM</b>: Implements {@link SVGAltGlyphElement#setGlyphRef(String)}.
      */
+    @Override
     public void setGlyphRef(String glyphRef) throws DOMException {
         setAttributeNS(null, SVG_GLYPH_REF_ATTRIBUTE, glyphRef);
     }
@@ -106,6 +110,7 @@ public class SVGOMAltGlyphElement
     /**
      * <b>DOM</b>: Implements {@link SVGAltGlyphElement#getFormat()}.
      */
+    @Override
     public String getFormat() {
         return getAttributeNS(null, SVG_FORMAT_ATTRIBUTE);
     }
@@ -113,6 +118,7 @@ public class SVGOMAltGlyphElement
     /**
      * <b>DOM</b>: Implements {@link SVGAltGlyphElement#setFormat(String)}.
      */
+    @Override
     public void setFormat(String format) throws DOMException {
         setAttributeNS(null, SVG_FORMAT_ATTRIBUTE, format);
     }
@@ -121,6 +127,7 @@ public class SVGOMAltGlyphElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -128,6 +135,7 @@ public class SVGOMAltGlyphElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMAltGlyphElement();
     }

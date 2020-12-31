@@ -56,6 +56,7 @@ public class PNGTranscoder extends ImageTranscoder {
      * @param width the image width in pixels
      * @param height the image height in pixels
      */
+    @Override
     public BufferedImage createImage(int width, int height) {
         return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     }
@@ -85,6 +86,7 @@ public class PNGTranscoder extends ImageTranscoder {
      * @param output the output where to store the image
      * @throws TranscoderException if an error occured while storing the image
      */
+    @Override
     public void writeImage(BufferedImage img, TranscoderOutput output)
             throws TranscoderException {
 
@@ -100,10 +102,10 @@ public class PNGTranscoder extends ImageTranscoder {
         //
         boolean forceTransparentWhite = false;
 
-        if (hints.containsKey(PNGTranscoder.KEY_FORCE_TRANSPARENT_WHITE)) {
+        if (hints.containsKey(ImageTranscoder.KEY_FORCE_TRANSPARENT_WHITE)) {
             forceTransparentWhite =
                     (Boolean) hints.get
-                            (PNGTranscoder.KEY_FORCE_TRANSPARENT_WHITE);
+                            (ImageTranscoder.KEY_FORCE_TRANSPARENT_WHITE);
         }
 
         if (forceTransparentWhite) {

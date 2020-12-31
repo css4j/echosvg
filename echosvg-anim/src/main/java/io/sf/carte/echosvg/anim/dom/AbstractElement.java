@@ -71,6 +71,7 @@ public abstract class AbstractElement
     /**
      * Returns the CSS parent node of this node.
      */
+    @Override
     public Node getCSSParentNode() {
         return getXblParentNode();
     }
@@ -78,6 +79,7 @@ public abstract class AbstractElement
     /**
      * Returns the CSS previous sibling node of this node.
      */
+    @Override
     public Node getCSSPreviousSibling() {
         return getXblPreviousSibling();
     }
@@ -85,6 +87,7 @@ public abstract class AbstractElement
     /**
      * Returns the CSS next sibling node of this node.
      */
+    @Override
     public Node getCSSNextSibling() {
         return getXblNextSibling();
     }
@@ -92,6 +95,7 @@ public abstract class AbstractElement
     /**
      * Returns the CSS first child node of this node.
      */
+    @Override
     public Node getCSSFirstChild() {
         return getXblFirstChild();
     }
@@ -99,6 +103,7 @@ public abstract class AbstractElement
     /**
      * Returns the CSS last child of this node.
      */
+    @Override
     public Node getCSSLastChild() {
         return getXblLastChild();
     }
@@ -107,12 +112,14 @@ public abstract class AbstractElement
      * Returns whether this node is the root of a (conceptual) hidden tree
      * that selectors will not work across.
      */
+    @Override
     public boolean isHiddenFromSelectors() {
         return false;
     }
 
     // Attributes /////////////////////////////////////////////////////////
 
+    @Override
     public void fireDOMAttrModifiedEvent(String name, Attr node, String oldv,
                                          String newv, short change) {
         super.fireDOMAttrModifiedEvent(name, node, oldv, newv, change);
@@ -201,6 +208,7 @@ public abstract class AbstractElement
     /**
      * Creates the attribute list.
      */
+    @Override
     protected NamedNodeMap createAttributes() {
         return new ExtendedNamedNodeHashMap();
     }
@@ -223,6 +231,7 @@ public abstract class AbstractElement
     /**
      * Called when an attribute has been added.
      */
+    @Override
     protected void attrAdded(Attr node, String newv) {
         LiveAttributeValue lav = getLiveAttributeValue(node);
         if (lav != null) {
@@ -233,6 +242,7 @@ public abstract class AbstractElement
     /**
      * Called when an attribute has been modified.
      */
+    @Override
     protected void attrModified(Attr node, String oldv, String newv) {
         LiveAttributeValue lav = getLiveAttributeValue(node);
         if (lav != null) {
@@ -243,6 +253,7 @@ public abstract class AbstractElement
     /**
      * Called when an attribute has been removed.
      */
+    @Override
     protected void attrRemoved(Attr node, String oldv) {
         LiveAttributeValue lav = getLiveAttributeValue(node);
         if (lav != null) {
@@ -266,6 +277,7 @@ public abstract class AbstractElement
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         ((AbstractElement)n).initializeAttributes();
@@ -277,6 +289,7 @@ public abstract class AbstractElement
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.export(n, d);
         ((AbstractElement)n).initializeAttributes();
@@ -314,6 +327,7 @@ public abstract class AbstractElement
         /**
          * <b>DOM</b>: Implements {@link NamedNodeMap#removeNamedItemNS(String,String)}.
          */
+        @Override
         public Node removeNamedItemNS( String namespaceURI, String localName )
                 throws DOMException {
             if ( isReadonly() ) {

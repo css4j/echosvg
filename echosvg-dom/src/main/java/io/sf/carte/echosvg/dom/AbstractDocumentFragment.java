@@ -37,6 +37,7 @@ public abstract class AbstractDocumentFragment
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return "#document-fragment".
      */
+    @Override
     public String getNodeName() {
         return "#document-fragment";
     }
@@ -45,6 +46,7 @@ public abstract class AbstractDocumentFragment
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
      * @return {@link org.w3c.dom.Node#DOCUMENT_FRAGMENT_NODE}
      */
+    @Override
     public short getNodeType() {
         return DOCUMENT_FRAGMENT_NODE;
     }
@@ -52,6 +54,7 @@ public abstract class AbstractDocumentFragment
     /**
      * Checks the validity of a node to be inserted.
      */
+    @Override
     protected void checkChildType(Node n, boolean replace) {
         switch (n.getNodeType()) {
         case ELEMENT_NODE:

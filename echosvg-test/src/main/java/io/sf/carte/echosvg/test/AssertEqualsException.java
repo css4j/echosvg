@@ -47,11 +47,13 @@ public class AssertEqualsException extends AssertException {
      * Requests that the exception populates the TestReport with the
      * relevant information.
      */
+    @Override
     public void addDescription(TestReport report){
         report.addDescriptionEntry(ENTRY_KEY_REF_OBJECT, ref);
         report.addDescriptionEntry(ENTRY_KEY_CMP_OBJECT, cmp);
     }
 
+    @Override
     public String getAssertionType(){
         return ASSERTION_TYPE;
     }

@@ -112,6 +112,7 @@ public class AWTGVTFont implements GVTFont {
      * @param c The character to check.
      * @return Whether or not the character can be displayed.
      */
+    @Override
     public boolean canDisplay(char c) {
         return awtFont.canDisplay(c);
     }
@@ -127,6 +128,7 @@ public class AWTGVTFont implements GVTFont {
      * @return The index of the first char this font cannot display. Will be
      * -1 if it can display all characters in the specified range.
      */
+    @Override
     public int canDisplayUpTo(char[] text, int start, int limit) {
         return awtFont.canDisplayUpTo(text, start, limit);
     }
@@ -135,6 +137,7 @@ public class AWTGVTFont implements GVTFont {
      *  Indicates whether or not this font can display the the characters in
      *  the specified CharacterIterator starting at start and ending at limit.
      */
+    @Override
     public int canDisplayUpTo(CharacterIterator iter, int start, int limit) {
         return awtFont.canDisplayUpTo(iter, start, limit);
     }
@@ -142,6 +145,7 @@ public class AWTGVTFont implements GVTFont {
     /**
      *  Indicates whether or not this font can display a specified String.
      */
+    @Override
     public int canDisplayUpTo(String str) {
         return awtFont.canDisplayUpTo(str);
     }
@@ -150,6 +154,7 @@ public class AWTGVTFont implements GVTFont {
      *  Returns a new GlyphVector object created with the specified array of
      *  characters and the specified FontRenderContext.
      */
+    @Override
     public GVTGlyphVector createGlyphVector(FontRenderContext frc,
                                             char[] chars) {
 
@@ -163,6 +168,7 @@ public class AWTGVTFont implements GVTFont {
      * Returns a new GlyphVector object created with the specified
      * CharacterIterator and the specified FontRenderContext.
      */
+    @Override
     public GVTGlyphVector createGlyphVector(FontRenderContext frc,
                                             CharacterIterator ci) {
 
@@ -182,6 +188,7 @@ public class AWTGVTFont implements GVTFont {
      *  Returns a new GlyphVector object created with the specified integer
      *  array and the specified FontRenderContext.
      */
+    @Override
     public GVTGlyphVector createGlyphVector(FontRenderContext frc,
                                             int[] glyphCodes,
                                             CharacterIterator ci) {
@@ -194,6 +201,7 @@ public class AWTGVTFont implements GVTFont {
      * Returns a new GlyphVector object created with the specified String and
      * the specified FontRenderContext.
      */
+    @Override
     public GVTGlyphVector createGlyphVector(FontRenderContext frc, String str)
     {
 
@@ -207,10 +215,12 @@ public class AWTGVTFont implements GVTFont {
      * Creates a new Font object by replicating the current Font object and
      * applying a new size to it.
      */
+    @Override
     public GVTFont deriveFont(float size) {
         return new AWTGVTFont(awtFont, size/this.size);
     }
 
+    @Override
     public String getFamilyName() {
         return awtFont.getFamily();
     }
@@ -218,6 +228,7 @@ public class AWTGVTFont implements GVTFont {
     /**
      *  Returns a LineMetrics object created with the specified arguments.
      */
+    @Override
     public GVTLineMetrics getLineMetrics(char[] chars,
                                          int beginIndex,
                                          int limit,
@@ -229,6 +240,7 @@ public class AWTGVTFont implements GVTFont {
     /**
      * Returns a GVTLineMetrics object created with the specified arguments.
      */
+    @Override
     public GVTLineMetrics getLineMetrics(CharacterIterator ci,
                                          int beginIndex,
                                          int limit,
@@ -241,6 +253,7 @@ public class AWTGVTFont implements GVTFont {
      *  Returns a GVTLineMetrics object created with the specified String and
      *  FontRenderContext.
      */
+    @Override
     public GVTLineMetrics getLineMetrics(String str, FontRenderContext frc) {
         return new GVTLineMetrics(awtFont.getLineMetrics(str, frc), (float)scale);
     }
@@ -248,6 +261,7 @@ public class AWTGVTFont implements GVTFont {
     /**
      * Returns a GVTLineMetrics object created with the specified arguments.
      */
+    @Override
     public GVTLineMetrics getLineMetrics(String str,
                                          int beginIndex,
                                          int limit,
@@ -259,6 +273,7 @@ public class AWTGVTFont implements GVTFont {
     /**
      * Returns the size of this font.
      */
+    @Override
     public float getSize() {
         return (float)size;
     }
@@ -266,6 +281,7 @@ public class AWTGVTFont implements GVTFont {
     /**
      * Returns the horizontal kerning value for this glyph pair.
      */
+    @Override
     public float getHKern(int glyphCode1, int glyphCode2) {
         return 0.0f;
     }
@@ -273,6 +289,7 @@ public class AWTGVTFont implements GVTFont {
     /**
      * Returns the vertical kerning value for this glyph pair.
      */
+    @Override
     public float getVKern(int glyphCode1, int glyphCode2) {
         return 0.0f;
     }

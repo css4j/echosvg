@@ -36,6 +36,7 @@ public abstract class AbstractSVGNumber implements SVGNumber {
     /**
      * <b>DOM</b>: Implements {@link SVGNumber#getValue()}.
      */
+    @Override
     public float getValue() {
         return value;
     }
@@ -43,6 +44,7 @@ public abstract class AbstractSVGNumber implements SVGNumber {
     /**
      * <b>DOM</b>: Implements {@link SVGNumber#setValue(float)}.
      */
+    @Override
     public void setValue(float f) {
         value = f;
     }

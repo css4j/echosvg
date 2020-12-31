@@ -119,6 +119,7 @@ public class SAXSVGDocumentFactory
         super(SVGDOMImplementation.getDOMImplementation(), parser, dd);
     }
 
+    @Override
     public SVGDocument createSVGDocument(String uri) throws IOException {
         return (SVGDocument)createDocument(uri);
     }
@@ -129,6 +130,7 @@ public class SAXSVGDocumentFactory
      * @param inp The document input stream.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public SVGDocument createSVGDocument(String uri, InputStream inp)
         throws IOException {
         return (SVGDocument)createDocument(uri, inp);
@@ -140,6 +142,7 @@ public class SAXSVGDocumentFactory
      * @param r The document reader.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public SVGDocument createSVGDocument(String uri, Reader r)
         throws IOException {
         return (SVGDocument)createDocument(uri, r);
@@ -151,6 +154,7 @@ public class SAXSVGDocumentFactory
      * @param uri The document URI.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public Document createDocument(String uri) throws IOException {
         ParsedURL purl = new ParsedURL(uri);
 
@@ -214,6 +218,7 @@ public class SAXSVGDocumentFactory
      * @param inp The document input stream.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public Document createDocument(String uri, InputStream inp)
         throws IOException {
         Document doc;
@@ -243,6 +248,7 @@ public class SAXSVGDocumentFactory
      * @param r The document reader.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public Document createDocument(String uri, Reader r)
         throws IOException {
         Document doc;
@@ -273,6 +279,7 @@ public class SAXSVGDocumentFactory
      * @param uri The document URI.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public Document createDocument(String ns, String root, String uri)
         throws IOException {
         if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) ||
@@ -290,6 +297,7 @@ public class SAXSVGDocumentFactory
      * @param is The document input stream.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public Document createDocument(String ns, String root, String uri,
                                    InputStream is) throws IOException {
         if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) ||
@@ -307,6 +315,7 @@ public class SAXSVGDocumentFactory
      * @param r The document reader.
      * @exception IOException if an error occured while reading the document.
      */
+    @Override
     public Document createDocument(String ns, String root, String uri,
                                    Reader r) throws IOException {
         if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) ||
@@ -316,6 +325,7 @@ public class SAXSVGDocumentFactory
         return createDocument(uri, r);
     }
 
+    @Override
     public DOMImplementation getDOMImplementation(String ver) {
         if (ver == null || ver.length() == 0
                 || ver.equals("1.0") || ver.equals("1.1")) {
@@ -330,6 +340,7 @@ public class SAXSVGDocumentFactory
      * <b>SAX</b>: Implements {@link
      * org.xml.sax.ContentHandler#startDocument()}.
      */
+    @Override
     public void startDocument() throws SAXException {
         super.startDocument();
         // Do not assume namespace declarations when no DTD has been specified.
@@ -341,6 +352,7 @@ public class SAXSVGDocumentFactory
      * <b>SAX2</b>: Implements {@link
      * org.xml.sax.EntityResolver#resolveEntity(String,String)}.
      */
+    @Override
     public InputSource resolveEntity(String publicId, String systemId)
         throws SAXException {
         try {

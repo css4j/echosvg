@@ -103,6 +103,7 @@ public class WMFHeaderProperties extends AbstractWMFReader {
     /**
      * Resets the internal storage and viewport coordinates.
      */
+    @Override
     public void reset() {
         left = 0;
         right = 0;
@@ -135,6 +136,7 @@ public class WMFHeaderProperties extends AbstractWMFReader {
         return stream;
     }
 
+    @Override
     protected boolean readRecords(DataInputStream is) throws IOException {
         // effective reading of the rest of the file
         short functionId = 1;

@@ -54,6 +54,7 @@ public class SVGOMAnimatedString extends AbstractSVGAnimatedValue
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedString#getBaseVal()}.
      */
+    @Override
     public String getBaseVal() {
         return element.getAttributeNS(namespaceURI, localName);
     }
@@ -61,6 +62,7 @@ public class SVGOMAnimatedString extends AbstractSVGAnimatedValue
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedString#setBaseVal(String)}.
      */
+    @Override
     public void setBaseVal(String baseVal) throws DOMException {
         element.setAttributeNS(namespaceURI, localName, baseVal);
     }
@@ -68,6 +70,7 @@ public class SVGOMAnimatedString extends AbstractSVGAnimatedValue
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedString#getAnimVal()}.
      */
+    @Override
     public String getAnimVal() {
         if (hasAnimVal) {
             return animVal;
@@ -78,6 +81,7 @@ public class SVGOMAnimatedString extends AbstractSVGAnimatedValue
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         return new AnimatableStringValue(target, getBaseVal());
     }
@@ -85,6 +89,7 @@ public class SVGOMAnimatedString extends AbstractSVGAnimatedValue
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -98,6 +103,7 @@ public class SVGOMAnimatedString extends AbstractSVGAnimatedValue
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         fireBaseAttributeListeners();
         if (!hasAnimVal) {
@@ -108,6 +114,7 @@ public class SVGOMAnimatedString extends AbstractSVGAnimatedValue
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         fireBaseAttributeListeners();
         if (!hasAnimVal) {
@@ -118,6 +125,7 @@ public class SVGOMAnimatedString extends AbstractSVGAnimatedValue
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         fireBaseAttributeListeners();
         if (!hasAnimVal) {

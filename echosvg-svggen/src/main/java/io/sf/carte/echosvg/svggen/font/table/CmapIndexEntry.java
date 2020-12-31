@@ -49,6 +49,7 @@ public class CmapIndexEntry {
         return platformId;
     }
 
+    @Override
     public String toString() {
         String platform;
         String encoding = "";

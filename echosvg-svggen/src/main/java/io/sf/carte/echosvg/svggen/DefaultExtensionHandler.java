@@ -38,6 +38,7 @@ public class DefaultExtensionHandler implements ExtensionHandler {
      * @param generatorContext allows the handler to build DOM objects as needed.
      * @return an SVGPaintDescriptor
      */
+    @Override
     public SVGPaintDescriptor handlePaint(Paint paint,
                                           SVGGeneratorContext generatorContext) {
         return null;
@@ -50,6 +51,7 @@ public class DefaultExtensionHandler implements ExtensionHandler {
      * or null if the composite cannot be handled
      *
      */
+    @Override
     public SVGCompositeDescriptor handleComposite(Composite composite,
                                                   SVGGeneratorContext generatorContext) {
         return null;
@@ -64,6 +66,7 @@ public class DefaultExtensionHandler implements ExtensionHandler {
      * @return an SVGFilterDescriptor which contains a valid SVG filter,
      * or null if the composite cannot be handled
      */
+    @Override
     public SVGFilterDescriptor handleFilter(BufferedImageOp filter,
                                             Rectangle filterRect,
                                             SVGGeneratorContext generatorContext) {

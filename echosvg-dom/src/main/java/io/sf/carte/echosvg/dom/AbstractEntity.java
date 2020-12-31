@@ -51,6 +51,7 @@ public abstract class AbstractEntity
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
      * @return {@link org.w3c.dom.Node#ENTITY_NODE}
      */
+    @Override
     public short getNodeType() {
         return ENTITY_NODE;
     }
@@ -58,6 +59,7 @@ public abstract class AbstractEntity
     /**
      * Sets the name of this node.
      */
+    @Override
     public void setNodeName(String v) {
         nodeName = v;
     }
@@ -66,6 +68,7 @@ public abstract class AbstractEntity
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return {@link #nodeName}.
      */
+    @Override
     public String getNodeName() {
         return nodeName;
     }
@@ -74,6 +77,7 @@ public abstract class AbstractEntity
      * <b>DOM</b>: Implements {@link org.w3c.dom.Entity#getPublicId()}.
      * @return {@link #publicId}.
      */
+    @Override
     public String getPublicId() {
         return publicId;
     }
@@ -89,6 +93,7 @@ public abstract class AbstractEntity
      * <b>DOM</b>: Implements {@link org.w3c.dom.Entity#getSystemId()}.
      * @return {@link #systemId}.
      */
+    @Override
     public String getSystemId() {
         return systemId;
     }
@@ -104,6 +109,7 @@ public abstract class AbstractEntity
      * <b>DOM</b>: Implements {@link org.w3c.dom.Entity#getNotationName()}.
      * @return {@link #getNodeName()}.
      */
+    @Override
     public String getNotationName() {
         return getNodeName();
     }
@@ -118,6 +124,7 @@ public abstract class AbstractEntity
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Entity#getInputEncoding()}.
      */
+    @Override
     public String getInputEncoding() {
         return null;
     }
@@ -125,6 +132,7 @@ public abstract class AbstractEntity
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Entity#getXmlEncoding()}.
      */
+    @Override
     public String getXmlEncoding() {
         return null;
     }
@@ -132,6 +140,7 @@ public abstract class AbstractEntity
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Entity#getXmlVersion()}.
      */
+    @Override
     public String getXmlVersion() {
         return null;
     }
@@ -139,6 +148,7 @@ public abstract class AbstractEntity
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         AbstractEntity ae = (AbstractEntity)n;
@@ -151,6 +161,7 @@ public abstract class AbstractEntity
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         AbstractEntity ae = (AbstractEntity)n;
@@ -164,6 +175,7 @@ public abstract class AbstractEntity
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         AbstractEntity ae = (AbstractEntity)n;
@@ -177,6 +189,7 @@ public abstract class AbstractEntity
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         AbstractEntity ae = (AbstractEntity)n;
@@ -189,6 +202,7 @@ public abstract class AbstractEntity
     /**
      * Checks the validity of a node to be inserted.
      */
+    @Override
     protected void checkChildType(Node n, boolean replace) {
         switch (n.getNodeType()) {
         case ELEMENT_NODE:

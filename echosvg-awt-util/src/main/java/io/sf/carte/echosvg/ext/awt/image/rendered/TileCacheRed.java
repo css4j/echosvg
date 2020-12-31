@@ -56,6 +56,7 @@ public class TileCacheRed extends AbstractTiledRed {
              null);
     }
 
+    @Override
     public void genRect(WritableRaster wr) {
         // Get my source.
         CachableRed src = (CachableRed)getSources().get(0);

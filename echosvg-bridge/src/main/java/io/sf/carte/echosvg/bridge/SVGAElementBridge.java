@@ -55,6 +55,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
     /**
      * Returns 'a'.
      */
+    @Override
     public String getLocalName() {
         return SVG_A_TAG;
     }
@@ -62,6 +63,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGAElementBridge();
     }
@@ -74,6 +76,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
      * @param e the element that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -113,6 +116,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
         }
     }
 
+    @Override
     public void dispose() {
         NodeEventTarget target = (NodeEventTarget)e;
         if (al != null) {
@@ -139,6 +143,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
     /**
      * Returns true as the &lt;a&gt; element is a container.
      */
+    @Override
     public boolean isComposite() {
         return true;
     }
@@ -170,6 +175,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
             holder    = ch;
         }
 
+        @Override
         public void handleEvent(Event evt) {
             if (!(evt instanceof AbstractEvent)) return;
             final AbstractEvent ae = (AbstractEvent)evt;
@@ -204,6 +210,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
             holder    = ch;
         }
         
+        @Override
         public void run() {
             userAgent.setSVGCursor(holder.getCursor());
             String href = elt.getHref().getAnimVal();
@@ -244,6 +251,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
             holder    = ch;
         }
 
+        @Override
         public void handleEvent(Event evt) {
             if (!(evt instanceof AbstractEvent)) return;
             final AbstractEvent ae = (AbstractEvent)evt;
@@ -281,6 +289,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
             holder    = ch;
         }
         
+        @Override
         public void run() {
             // Only modify the cursor if the target's cursor property is 
             // 'auto'. Note that we do not need to check the value of 
@@ -328,6 +337,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
             holder    = ch;
         }
 
+        @Override
         public void handleEvent(Event evt) {
             if (!(evt instanceof AbstractEvent)) return;
             final AbstractEvent ae = (AbstractEvent)evt;
@@ -360,6 +370,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
             holder    = ch;
         }
         
+        @Override
         public void run() {
             // No need to set the cursor on out events: this is taken care of
             // by the BridgeContext(?)

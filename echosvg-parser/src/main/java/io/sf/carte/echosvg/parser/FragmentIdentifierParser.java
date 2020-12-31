@@ -80,6 +80,7 @@ public class FragmentIdentifierParser extends NumberParser {
     /**
      * Parses the current reader.
      */
+    @Override
     protected void doParse() throws ParseException, IOException {
         bufferSize = 0;
 
@@ -794,6 +795,7 @@ public class FragmentIdentifierParser extends NumberParser {
     /**
      * Skips the whitespaces in the current reader.
      */
+    @Override
     protected void skipSpaces() throws IOException {
         if (current == ',') {
             current = reader.read();
@@ -803,6 +805,7 @@ public class FragmentIdentifierParser extends NumberParser {
     /**
      * Skips the whitespaces and an optional comma.
      */
+    @Override
     protected void skipCommaSpaces() throws IOException {
         if (current == ',') {
             current = reader.read();

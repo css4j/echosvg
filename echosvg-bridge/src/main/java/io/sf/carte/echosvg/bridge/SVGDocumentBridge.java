@@ -69,6 +69,7 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
      * dedicated to.  Returns <code>null</code>, as a Document node has no
      * namespace URI.
      */
+    @Override
     public String getNamespaceURI() {
         return null;
     }
@@ -77,6 +78,7 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
      * Returns the local name of the element this <code>Bridge</code> is dedicated
      * to.  Returns <code>null</code>, as a Document node has no local name.
      */
+    @Override
     public String getLocalName() {
         return null;
     }
@@ -84,6 +86,7 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGDocumentBridge();
     }
@@ -99,6 +102,7 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
      * @param doc the document node that describes the graphics node to build
      * @return a graphics node that represents the specified document node
      */
+    @Override
     public RootGraphicsNode createGraphicsNode(BridgeContext ctx,
                                                Document doc) {
         RootGraphicsNode gn = new RootGraphicsNode();
@@ -120,6 +124,7 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
      * @param doc the document node that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Document doc,
                                   RootGraphicsNode node) {
@@ -133,12 +138,14 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
     /**
      * Invoked when an MutationEvent of type 'DOMAttrModified' is fired.
      */
+    @Override
     public void handleDOMAttrModifiedEvent(MutationEvent evt) {
     }
 
     /**
      * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
      */
+    @Override
     public void handleDOMNodeInsertedEvent(MutationEvent evt) {
         if (evt.getTarget() instanceof Element) {
             Element childElt = (Element) evt.getTarget();
@@ -157,6 +164,7 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
     /**
      * Invoked when an MutationEvent of type 'DOMNodeRemoved' is fired.
      */
+    @Override
     public void handleDOMNodeRemovedEvent(MutationEvent evt) {
     }
 
@@ -164,30 +172,35 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
      * Invoked when an MutationEvent of type 'DOMCharacterDataModified' 
      * is fired.
      */
+    @Override
     public void handleDOMCharacterDataModified(MutationEvent evt) {
     }
 
     /**
      * Invoked when an CSSEngineEvent is fired.
      */
+    @Override
     public void handleCSSEngineEvent(CSSEngineEvent evt) {
     }
 
     /**
      * Invoked when the animated value of an animated attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav) {
     }
 
     /**
      * Invoked when an 'other' animation value has changed.
      */
+    @Override
     public void handleOtherAnimationChanged(String type) {
     }
 
     /**
      * Disposes this BridgeUpdateHandler and releases all resources.
      */
+    @Override
     public void dispose() {
         ((SVGOMDocument) document).setSVGContext(null);
         ctx.unbind(document);
@@ -198,6 +211,7 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
     /**
      * Returns the size of a px CSS unit in millimeters.
      */
+    @Override
     public float getPixelUnitToMillimeter() {
         return ctx.getUserAgent().getPixelUnitToMillimeter();
     }
@@ -207,20 +221,29 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
      * This will be removed after next release.
      * @see #getPixelUnitToMillimeter()
      */
+    @Override
     public float getPixelToMM() {
         return getPixelUnitToMillimeter();
     }
 
+    @Override
     public Rectangle2D getBBox() { return null; }
+    @Override
     public AffineTransform getScreenTransform() {
         return ctx.getUserAgent().getTransform();
     }
+    @Override
     public void setScreenTransform(AffineTransform at) {
         ctx.getUserAgent().setTransform(at);
     }
+    @Override
     public AffineTransform getCTM() { return null; }
+    @Override
     public AffineTransform getGlobalTransform() { return null; }
+    @Override
     public float getViewportWidth() { return 0f; }
+    @Override
     public float getViewportHeight() { return 0f; }
+    @Override
     public float getFontSize() { return 0; }
 }

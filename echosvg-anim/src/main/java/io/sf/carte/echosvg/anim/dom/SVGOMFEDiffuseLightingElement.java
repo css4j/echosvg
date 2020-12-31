@@ -90,6 +90,7 @@ public class SVGOMFEDiffuseLightingElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -109,6 +110,7 @@ public class SVGOMFEDiffuseLightingElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_DIFFUSE_LIGHTING_TAG;
     }
@@ -116,6 +118,7 @@ public class SVGOMFEDiffuseLightingElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEDiffuseLightingElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -124,6 +127,7 @@ public class SVGOMFEDiffuseLightingElement
      * <b>DOM</b>: Implements {@link
      * SVGFEDiffuseLightingElement#getSurfaceScale()}.
      */
+    @Override
     public SVGAnimatedNumber getSurfaceScale() {
         return surfaceScale;
     }
@@ -132,6 +136,7 @@ public class SVGOMFEDiffuseLightingElement
      * <b>DOM</b>: Implements {@link
      * SVGFEDiffuseLightingElement#getDiffuseConstant()}.
      */
+    @Override
     public SVGAnimatedNumber getDiffuseConstant() {
         return diffuseConstant;
     }
@@ -140,6 +145,7 @@ public class SVGOMFEDiffuseLightingElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFEDiffuseLightingElement#getKernelUnitLengthX()}.
      */
+    @Override
     public SVGAnimatedNumber getKernelUnitLengthX() {
         throw new UnsupportedOperationException
             ("SVGFEDiffuseLightingElement.getKernelUnitLengthX is not implemented"); // XXX
@@ -149,6 +155,7 @@ public class SVGOMFEDiffuseLightingElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFEDiffuseLightingElement#getKernelUnitLengthY()}.
      */
+    @Override
     public SVGAnimatedNumber getKernelUnitLengthY() {
         throw new UnsupportedOperationException
             ("SVGFEDiffuseLightingElement.getKernelUnitLengthY is not implemented"); // XXX
@@ -157,6 +164,7 @@ public class SVGOMFEDiffuseLightingElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEDiffuseLightingElement();
     }
@@ -164,6 +172,7 @@ public class SVGOMFEDiffuseLightingElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

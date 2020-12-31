@@ -32,6 +32,7 @@ public class PrepTable extends Program implements Table {
         readInstructions(raf, de.getLength());
     }
 
+    @Override
     public int getType() {
         return prep;
     }

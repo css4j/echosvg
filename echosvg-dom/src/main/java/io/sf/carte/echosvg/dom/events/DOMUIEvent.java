@@ -42,6 +42,7 @@ public class DOMUIEvent extends AbstractEvent implements UIEvent {
      * DOM: The <code>view</code> attribute identifies the
      * <code>AbstractView</code> from which the event was generated.
      */
+    @Override
     public AbstractView getView() {
         return view;
     }
@@ -50,6 +51,7 @@ public class DOMUIEvent extends AbstractEvent implements UIEvent {
      * DOM: Specifies some detail information about the
      * <code>Event</code>, depending on the type of event.
      */
+    @Override
     public int getDetail() {
         return detail;
     }
@@ -71,6 +73,7 @@ public class DOMUIEvent extends AbstractEvent implements UIEvent {
      *   <code>AbstractView</code>.
      * @param detailArg Specifies the <code>Event</code>'s detail.
      */
+    @Override
     public void initUIEvent(String typeArg,
                             boolean canBubbleArg,
                             boolean cancelableArg,

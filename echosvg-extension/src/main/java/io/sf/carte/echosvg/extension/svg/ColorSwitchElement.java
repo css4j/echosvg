@@ -51,6 +51,7 @@ public class ColorSwitchElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return BATIK_EXT_COLOR_SWITCH_TAG;
     }
@@ -58,6 +59,7 @@ public class ColorSwitchElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
      */
+    @Override
     public String getNamespaceURI() {
         return BATIK_EXT_NAMESPACE_URI;
     }
@@ -65,6 +67,7 @@ public class ColorSwitchElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new ColorSwitchElement();
     }

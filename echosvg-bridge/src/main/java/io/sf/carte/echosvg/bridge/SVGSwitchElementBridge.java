@@ -47,6 +47,7 @@ public class SVGSwitchElementBridge extends SVGGElementBridge {
     /**
      * Returns 'switch'.
      */
+    @Override
     public String getLocalName() {
         return SVG_SWITCH_TAG;
     }
@@ -54,6 +55,7 @@ public class SVGSwitchElementBridge extends SVGGElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGSwitchElementBridge();
     }
@@ -65,6 +67,7 @@ public class SVGSwitchElementBridge extends SVGGElementBridge {
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         GraphicsNode refNode = null;
         GVTBuilder builder = ctx.getGVTBuilder();
@@ -99,6 +102,7 @@ public class SVGSwitchElementBridge extends SVGGElementBridge {
     /**
      * Returns true as the &lt;switch&gt; element is not a container.
      */
+    @Override
     public boolean isComposite() {
         return false;
     }
@@ -108,6 +112,7 @@ public class SVGSwitchElementBridge extends SVGGElementBridge {
     /**
      * Disposes this BridgeUpdateHandler and releases all resources.
      */
+    @Override
     public void dispose() {
         selectedChild = null;
         super.dispose();
@@ -117,6 +122,7 @@ public class SVGSwitchElementBridge extends SVGGElementBridge {
      * Responds to the insertion of a child element by re-evaluating the
      * test attributes.
      */
+    @Override
     protected void handleElementAdded(CompositeGraphicsNode gn, 
                                       Node parent, 
                                       Element childElt) {

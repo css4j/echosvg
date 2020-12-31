@@ -79,6 +79,7 @@ public class DisplayManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return false;
     }
@@ -86,6 +87,7 @@ public class DisplayManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -93,6 +95,7 @@ public class DisplayManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -100,6 +103,7 @@ public class DisplayManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_IDENT;
     }
@@ -108,6 +112,7 @@ public class DisplayManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_DISPLAY_PROPERTY;
     }
@@ -116,6 +121,7 @@ public class DisplayManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return ValueConstants.INLINE_VALUE;
     }
@@ -123,6 +129,7 @@ public class DisplayManager extends IdentifierManager {
     /**
      * Implements {@link IdentifierManager#getIdentifiers()}.
      */
+    @Override
     public StringMap getIdentifiers() {
         return values;
     }

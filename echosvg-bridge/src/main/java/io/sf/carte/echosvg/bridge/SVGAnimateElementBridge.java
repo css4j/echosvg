@@ -39,6 +39,7 @@ public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
     /**
      * Returns 'animate'.
      */
+    @Override
     public String getLocalName() {
         return SVG_ANIMATE_TAG;
     }
@@ -46,6 +47,7 @@ public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGAnimateElementBridge();
     }
@@ -53,6 +55,7 @@ public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
     /**
      * Creates the animation object for the animation element.
      */
+    @Override
     protected AbstractAnimation createAnimation(AnimationTarget target) {
         AnimatableValue from = parseAnimatableValue(SVG_FROM_ATTRIBUTE);
         AnimatableValue to = parseAnimatableValue(SVG_TO_ATTRIBUTE);
@@ -81,7 +84,7 @@ public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
             || animationType == AnimationEngine.ANIM_TYPE_XML
                 && !targetElement.isAttributeAdditive(attributeNamespaceURI,
                                                       attributeLocalName)) {
-            return SimpleAnimation.CALC_MODE_DISCRETE;
+            return AbstractAnimation.CALC_MODE_DISCRETE;
         }
 
         String calcModeString = element.getAttributeNS(null,
@@ -89,13 +92,13 @@ public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
         if (calcModeString.length() == 0) {
             return getDefaultCalcMode();
         } else if (calcModeString.equals(SMILConstants.SMIL_LINEAR_VALUE)) {
-            return SimpleAnimation.CALC_MODE_LINEAR;
+            return AbstractAnimation.CALC_MODE_LINEAR;
         } else if (calcModeString.equals(SMILConstants.SMIL_DISCRETE_VALUE)) {
-            return SimpleAnimation.CALC_MODE_DISCRETE;
+            return AbstractAnimation.CALC_MODE_DISCRETE;
         } else if (calcModeString.equals(SMILConstants.SMIL_PACED_VALUE)) {
-            return SimpleAnimation.CALC_MODE_PACED;
+            return AbstractAnimation.CALC_MODE_PACED;
         } else if (calcModeString.equals(SMILConstants.SMIL_SPLINE_VALUE)) {
-            return SimpleAnimation.CALC_MODE_SPLINE;
+            return AbstractAnimation.CALC_MODE_SPLINE;
         }
         throw new BridgeException
             (ctx, element, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
@@ -313,7 +316,7 @@ outer:  while (i < len) {
      * Returns the calcMode that the animation defaults to if none is specified.
      */
     protected int getDefaultCalcMode() {
-        return SimpleAnimation.CALC_MODE_LINEAR;
+        return AbstractAnimation.CALC_MODE_LINEAR;
     }
 
     /**
@@ -321,6 +324,7 @@ outer:  while (i < len) {
      * animate attributes of the specified type.
      * @param type one of the TYPE_ constants defined in {@link io.sf.carte.echosvg.util.SVGTypes}.
      */
+    @Override
     protected boolean canAnimateType(int type) {
         return true;
     }

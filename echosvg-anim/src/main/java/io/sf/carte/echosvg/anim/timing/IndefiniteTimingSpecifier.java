@@ -36,6 +36,7 @@ public class IndefiniteTimingSpecifier extends TimingSpecifier {
     /**
      * Returns a string representation of this timing specifier.
      */
+    @Override
     public String toString() {
         return "indefinite";
     }
@@ -44,6 +45,7 @@ public class IndefiniteTimingSpecifier extends TimingSpecifier {
      * Initializes this timing specifier by adding the initial instance time
      * to the owner's instance time list or setting up any event listeners.
      */
+    @Override
     public void initialize() {
         if (!isBegin) {
             // Only end instance lists get an 'indefinite' instance time from
@@ -58,6 +60,7 @@ public class IndefiniteTimingSpecifier extends TimingSpecifier {
      * Returns whether this timing specifier is event-like (i.e., if it is
      * an eventbase, accesskey or a repeat timing specifier).
      */
+    @Override
     public boolean isEventCondition() {
         return false;
     }

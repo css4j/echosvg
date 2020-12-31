@@ -88,6 +88,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
      * @exception ParseException if an error occures while processing the
      *                           number list.
      */
+    @Override
     public void startLengthList() throws ParseException {
         us = new LinkedList();
         u = new short[11];
@@ -108,6 +109,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#lengthValue(float)}.
      */
+    @Override
     public void lengthValue(float val) throws ParseException {
         if (index == v.length) {
             vs.add(v);
@@ -122,6 +124,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#startLength()}.
      */
+    @Override
     public void startLength() throws ParseException {
         currentUnit = SVGLength.SVG_LENGTHTYPE_NUMBER;
     }
@@ -129,6 +132,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#endLength()}.
      */
+    @Override
     public void endLength() throws ParseException {
         u[index++] = currentUnit;
         count++;
@@ -137,6 +141,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#em()}.
      */
+    @Override
     public void em() throws ParseException {
         currentUnit = SVGLength.SVG_LENGTHTYPE_EMS;
     }
@@ -144,6 +149,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#ex()}.
      */
+    @Override
     public void ex() throws ParseException {
         currentUnit = SVGLength.SVG_LENGTHTYPE_EXS;
     }
@@ -151,6 +157,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#in()}.
      */
+    @Override
     public void in() throws ParseException {
         currentUnit = SVGLength.SVG_LENGTHTYPE_IN;
     }
@@ -158,6 +165,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#cm()}.
      */
+    @Override
     public void cm() throws ParseException {
         currentUnit = SVGLength.SVG_LENGTHTYPE_CM;
     }
@@ -165,6 +173,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#mm()}.
      */
+    @Override
     public void mm() throws ParseException {
         currentUnit = SVGLength.SVG_LENGTHTYPE_MM;
     }
@@ -172,6 +181,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#pc()}.
      */
+    @Override
     public void pc() throws ParseException {
         currentUnit = SVGLength.SVG_LENGTHTYPE_PC;
     }
@@ -179,6 +189,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#pt()}.
      */
+    @Override
     public void pt() throws ParseException {
         currentUnit = SVGLength.SVG_LENGTHTYPE_PT;
     }
@@ -186,6 +197,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#px()}.
      */
+    @Override
     public void px() throws ParseException {
         currentUnit = SVGLength.SVG_LENGTHTYPE_PX;
     }
@@ -193,6 +205,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * Implements {@link LengthHandler#percentage()}.
      */
+    @Override
     public void percentage() throws ParseException {
         currentUnit = SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
     }
@@ -202,6 +215,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
      * @exception ParseException if an error occures while processing the
      *                           number list.
      */
+    @Override
     public void endLengthList() throws ParseException {
         float[] allValues = new float[count];
         int pos = 0;

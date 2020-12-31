@@ -62,6 +62,7 @@ public class GenericDecoder implements CharDecoder {
      * Reads the next character.
      * @return a character or END_OF_STREAM.
      */
+    @Override
     public int readChar() throws IOException {
         return reader.read();
     }
@@ -69,6 +70,7 @@ public class GenericDecoder implements CharDecoder {
     /**
      * Disposes the associated resources.
      */
+    @Override
     public void dispose() throws IOException {
         reader.close();
         reader = null;

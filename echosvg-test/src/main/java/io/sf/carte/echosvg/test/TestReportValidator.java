@@ -132,6 +132,7 @@ public class TestReportValidator extends AbstractTest {
         this.expectedStatus = expectedStatus;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         TestReport tr = test.run();
 

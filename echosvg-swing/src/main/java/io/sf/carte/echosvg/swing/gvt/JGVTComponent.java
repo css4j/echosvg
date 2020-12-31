@@ -232,6 +232,7 @@ public class JGVTComponent extends JComponent {
         addGVTTreeRendererListener(listener);
 
         addComponentListener(new ComponentAdapter() {
+                @Override
                 public void componentResized(ComponentEvent e) {
                     if (updateRenderingTransform())
                         scheduleGVTRendering();
@@ -542,6 +543,7 @@ public class JGVTComponent extends JComponent {
         } else {
             try {
                 EventQueue.invokeAndWait(new Runnable() {
+                        @Override
                         public void run() {
                             Rectangle visRect = getRenderRect();
                             if (doubleBufferedRendering)
@@ -560,6 +562,7 @@ public class JGVTComponent extends JComponent {
     /**
      * Paints this component.
      */
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -836,6 +839,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Called when a rendering is in its preparing phase.
          */
+        @Override
         public void gvtRenderingPrepare(GVTTreeRendererEvent e) {
             suspendInteractions = true;
             if (!progressivePaint && !doubleBufferedRendering) {
@@ -846,15 +850,18 @@ public class JGVTComponent extends JComponent {
         /**
          * Called when a rendering started.
          */
+        @Override
         public void gvtRenderingStarted(GVTTreeRendererEvent e) {
             if (progressivePaint && !doubleBufferedRendering) {
                 image = e.getImage();
                 progressivePaintThread = new HaltingThread() {
+                    @Override
                     public void run() {
                         final Thread thisThread = this;
                         try {
                             while (!hasBeenHalted()) {
                                 EventQueue.invokeLater(new Runnable() {
+                                    @Override
                                     public void run() {
                                         if (progressivePaintThread ==
                                             thisThread) {
@@ -886,6 +893,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Called when a rendering was completed.
          */
+        @Override
         public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
             haltProgressivePaintThread();
 
@@ -910,6 +918,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Called when a rendering was cancelled.
          */
+        @Override
         public void gvtRenderingCancelled(GVTTreeRendererEvent e) {
             renderingStopped();
         }
@@ -917,6 +926,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Called when a rendering failed.
          */
+        @Override
         public void gvtRenderingFailed(GVTTreeRendererEvent e) {
             renderingStopped();
         }
@@ -951,6 +961,7 @@ public class JGVTComponent extends JComponent {
          * Invoked when a key has been typed.
          * This event occurs when a key press is followed by a key release.
          */
+        @Override
         public void keyTyped(KeyEvent e) {
             selectInteractor(e);
             if (interactor != null) {
@@ -971,6 +982,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Invoked when a key has been pressed.
          */
+        @Override
         public void keyPressed(KeyEvent e) {
             selectInteractor(e);
             if (interactor != null) {
@@ -991,6 +1003,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Invoked when a key has been released.
          */
+        @Override
         public void keyReleased(KeyEvent e) {
             selectInteractor(e);
             if (interactor != null) {
@@ -1013,6 +1026,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Invoked when the mouse has been clicked on a component.
          */
+        @Override
         public void mouseClicked(MouseEvent e) {
             // Supress mouse click if we generated a
             // fake click with the same time stamp.
@@ -1040,6 +1054,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Invoked when a mouse button has been pressed on a component.
          */
+        @Override
         public void mousePressed(MouseEvent e) {
             startX = e.getX();
             startY = e.getY();
@@ -1066,6 +1081,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Invoked when a mouse button has been released on a component.
          */
+        @Override
         public void mouseReleased(java.awt.event.MouseEvent e) {
             if ((checkClick) && hadDrag) {
                 int dx = startX-e.getX();
@@ -1111,6 +1127,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Invoked when the mouse enters a component.
          */
+        @Override
         public void mouseEntered(MouseEvent e) {
             // requestFocus();  // This would grab focus every time mouse enters!
             selectInteractor(e);
@@ -1132,6 +1149,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Invoked when the mouse exits a component.
          */
+        @Override
         public void mouseExited(MouseEvent e) {
             selectInteractor(e);
             if (interactor != null) {
@@ -1158,6 +1176,7 @@ public class JGVTComponent extends JComponent {
          * released (regardless of whether the mouse position is within the
          * bounds of the component).
          */
+        @Override
         public void mouseDragged(MouseEvent e) {
             hadDrag = true;
             int dx = startX-e.getX();
@@ -1185,6 +1204,7 @@ public class JGVTComponent extends JComponent {
          * Invoked when the mouse button has been moved on a component
          * (with no buttons no down).
          */
+        @Override
         public void mouseMoved(MouseEvent e) {
             selectInteractor(e);
             if (interactor != null) {
@@ -1212,6 +1232,7 @@ public class JGVTComponent extends JComponent {
         /**
          * Invoked when the mouse wheel has been scrolled.
          */
+        @Override
         public void mouseWheelMoved(MouseWheelEvent e) {
             /*selectInteractor(e);
             if (interactor != null) {
@@ -1260,6 +1281,7 @@ public class JGVTComponent extends JComponent {
     protected class UnixTextSelectionListener
         extends SelectionAdapter {
 
+        @Override
         public void selectionDone(SelectionEvent evt) {
             if (!useUnixTextSelection) return;
 
@@ -1292,6 +1314,7 @@ public class JGVTComponent extends JComponent {
             // linux when called from the AWT Thread. The Thread
             // creation prevents that.
             new Thread() {
+                @Override
                 public void run() {
                     Clipboard cb;
                     cb = Toolkit.getDefaultToolkit().getSystemClipboard();

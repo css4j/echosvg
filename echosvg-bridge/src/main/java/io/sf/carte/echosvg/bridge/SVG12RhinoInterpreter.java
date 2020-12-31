@@ -52,6 +52,7 @@ public class SVG12RhinoInterpreter extends RhinoInterpreter {
     /**
      * Defines the class for the global object.
      */
+    @Override
     protected void defineGlobalWrapperClass(Scriptable global) {
         try {
             ScriptableObject.defineClass(global, GlobalWrapper.class);
@@ -63,6 +64,7 @@ public class SVG12RhinoInterpreter extends RhinoInterpreter {
     /**
      * Creates the global object.
      */
+    @Override
     protected ScriptableObject createGlobalObject(Context ctx) {
         return new GlobalWrapper(ctx);
     }

@@ -171,6 +171,7 @@ public class RhinoInterpreter implements Interpreter {
             rhinoClassLoader = null;
         }
         ContextAction initAction = new ContextAction() {
+            @Override
             public Object run(Context cx) {
                 Scriptable scriptable = cx.initStandardObjects(null, false);
                 defineGlobalWrapperClass(scriptable);
@@ -210,6 +211,7 @@ public class RhinoInterpreter implements Interpreter {
      * Returns the content types of the scripting languages this interpreter
      * handles.
      */
+    @Override
     public String[] getMimeTypes() {
         return RhinoInterpreterFactory.RHINO_MIMETYPES;
     }
@@ -271,6 +273,7 @@ public class RhinoInterpreter implements Interpreter {
      * @return if no exception is thrown during the call, should return the
      * value of the last expression evaluated in the script.
      */
+    @Override
     public Object evaluate(Reader scriptreader) throws IOException {
         return evaluate(scriptreader, SOURCE_NAME_SVG);
     }
@@ -283,10 +286,12 @@ public class RhinoInterpreter implements Interpreter {
      * @return if no exception is thrown during the call, should return the
      * value of the last expression evaluated in the script.
      */
+    @Override
     public Object evaluate(final Reader scriptReader, final String description)
         throws IOException {
 
         ContextAction evaluateAction = new ContextAction() {
+            @Override
             public Object run(Context cx) {
                 try {
                     return cx.evaluateReader(globalObject,
@@ -329,9 +334,11 @@ public class RhinoInterpreter implements Interpreter {
      * @return if no exception is thrown during the call, should return the
      * value of the last expression evaluated in the script.
      */
+    @Override
     public Object evaluate(final String scriptStr) {
 
         ContextAction evalAction = new ContextAction() {
+            @Override
             public Object run(final Context cx) {
                 Script script = null;
                 Entry entry = null;
@@ -355,6 +362,7 @@ public class RhinoInterpreter implements Interpreter {
                     // compile it and store it for future use.
 
                     PrivilegedAction compile = new PrivilegedAction() {
+                        @Override
                         public Object run() {
                             try {
                                 return cx.compileReader
@@ -411,6 +419,7 @@ public class RhinoInterpreter implements Interpreter {
      * For <code>RhinoInterpreter</code> this method flushes the
      * Rhino caches to avoid memory leaks.
      */
+    @Override
     public void dispose() {
         if (rhinoClassLoader != null) {
             ClassCache cache = ClassCache.get(globalObject);
@@ -424,8 +433,10 @@ public class RhinoInterpreter implements Interpreter {
      * @param name the name of the script object to create
      * @param object the Java object
      */
+    @Override
     public void bindObject(final String name, final Object object) {
         contextFactory.call(new ContextAction() {
+            @Override
             public Object run(Context cx) {
                 Object o = object;
                 if (name.equals(BIND_NAME_WINDOW) && object instanceof Window) {
@@ -446,6 +457,7 @@ public class RhinoInterpreter implements Interpreter {
      */
     void callHandler(final Function handler, final Object arg) {
         contextFactory.call(new ContextAction() {
+            @Override
             public Object run(Context cx) {
                 Object a = Context.toObject(arg, globalObject);
                 Object[] args = { a };
@@ -462,6 +474,7 @@ public class RhinoInterpreter implements Interpreter {
                     final String methodName,
                     final ArgumentsBuilder ab) {
         contextFactory.call(new ContextAction() {
+            @Override
             public Object run(Context cx) {
                 ScriptableObject.callMethod
                     (obj, methodName, ab.buildArguments());
@@ -475,6 +488,7 @@ public class RhinoInterpreter implements Interpreter {
      */
     void callHandler(final Function handler, final Object[] args) {
         contextFactory.call(new ContextAction() {
+            @Override
             public Object run(Context cx) {
                 handler.call(cx, globalObject, globalObject, args);
                 return null;
@@ -487,6 +501,7 @@ public class RhinoInterpreter implements Interpreter {
      */
     void callHandler(final Function handler, final ArgumentsBuilder ab) {
         contextFactory.call(new ContextAction() {
+            @Override
             public Object run(Context cx) {
                 Object[] args = ab.buildArguments();
                 handler.call(cx, handler.getParentScope(), globalObject, args);
@@ -521,6 +536,7 @@ public class RhinoInterpreter implements Interpreter {
      * this method does nothing.
      * @param out the new out <code>Writer</code>.
      */
+    @Override
     public void setOut(Writer out) {
         // no implementation of a default output function in Rhino
     }
@@ -531,6 +547,7 @@ public class RhinoInterpreter implements Interpreter {
      * Returns the current locale or null if the locale currently used is
      * the default one.
      */
+    @Override
     public Locale getLocale() {
         // <!> TODO : in Rhino the locale is for a thread not a scope..
         return null;
@@ -542,6 +559,7 @@ public class RhinoInterpreter implements Interpreter {
      * becomes the global one.
      * @param locale The locale to set.
      */
+    @Override
     public void setLocale(Locale locale) {
         // <!> TODO : in Rhino the local is for a thread not a scope..
     }
@@ -556,6 +574,7 @@ public class RhinoInterpreter implements Interpreter {
      * @param args The objects that compose the message.
      * @exception MissingResourceException if the key is not in the bundle.
      */
+    @Override
     public String formatMessage(String key, Object[] args) {
         return null;
     }
@@ -592,6 +611,7 @@ public class RhinoInterpreter implements Interpreter {
         /**
          * Creates a Context object for use with the interpreter.
          */
+        @Override
         protected Context makeContext() {
             Context cx = super.makeContext();
             cx.setWrapFactory(wrapFactory);

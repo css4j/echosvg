@@ -62,7 +62,7 @@ public class XMLContext extends StyleContext {
 
         Font defaultFont = new Font("Monospaced", Font.PLAIN, 12);
         
-        syntaxName = XMLContext.DEFAULT_STYLE;
+        syntaxName = StyleContext.DEFAULT_STYLE;
         font = defaultFont;
         fontForeground = Color.black;
         syntaxFontMap.put(syntaxName, font);

@@ -35,6 +35,7 @@ public interface ImageRenderer extends Renderer{
     /**
      * release resources associated with this object.
      */
+    @Override
     void dispose();
 
     /**
@@ -49,12 +50,14 @@ public interface ImageRenderer extends Renderer{
      * @param usr2dev the new user space to device space transform. If null,
      *        the identity transform will be set.
      */
+    @Override
     void setTransform(AffineTransform usr2dev);
 
     /**
      * Returns the transform from the current user space (as defined
      * by the top node of the GVT tree) to the device space.
      */
+    @Override
     AffineTransform getTransform();
 
     /**

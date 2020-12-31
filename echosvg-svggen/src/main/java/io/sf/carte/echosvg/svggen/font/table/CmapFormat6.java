@@ -39,9 +39,12 @@ public class CmapFormat6 extends CmapFormat {
         format = 6;
     }
 
+    @Override
     public int getFirst() { return 0; }
+    @Override
     public int getLast()  { return 0; }
     
+    @Override
     public int mapCharCode(int charCode) {
         return 0;
     }

@@ -610,6 +610,7 @@ public class CursorManager implements SVGConstants, ErrorConstants {
                 "\n\t:[" + this.purl + "]\n\t:[" + x + "]:[" + y + "]";
         }
 
+        @Override
         public boolean equals(Object obj) {
             if (obj == null
                 ||
@@ -628,10 +629,12 @@ public class CursorManager implements SVGConstants, ErrorConstants {
             return isEqual;
         }
 
+        @Override
         public String toString() {
             return this.desc;
         }
 
+        @Override
         public int hashCode() {
             return desc.hashCode();
         }

@@ -151,6 +151,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
     /**
      * Returns 'text'.
      */
+    @Override
     public String getLocalName() {
         return SVG_TEXT_TAG;
     }
@@ -158,6 +159,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGTextElementBridge();
     }
@@ -172,6 +174,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         TextNode node = (TextNode)super.createGraphicsNode(ctx, e);
         if (node == null)
@@ -209,6 +212,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
      * Creates the GraphicsNode depending on the GraphicsNodeBridge
      * implementation.
      */
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         return new TextNode();
     }
@@ -279,6 +283,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
      * @param e the element that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -308,6 +313,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
     /**
      * Returns false as text is not a container.
      */
+    @Override
     public boolean isComposite() {
         return false;
     }
@@ -353,6 +359,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
         /**
          * Handles 'DOMNodeRemoved' event type.
          */
+        @Override
         public void handleEvent(Event evt) {
             handleDOMChildNodeRemovedEvent((MutationEvent)evt);
         }
@@ -371,6 +378,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
         /**
          * Handles 'DOMSubtreeModified' event type.
          */
+        @Override
         public void handleEvent(Event evt) {
             handleDOMSubtreeModifiedEvent((MutationEvent)evt);
         }
@@ -383,6 +391,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
      * element and its children is going to be reflected
      * into the GVT tree.
      */
+    @Override
     protected void initializeDynamicSupport(BridgeContext ctx,
                                             Element e,
                                             GraphicsNode node) {
@@ -443,6 +452,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
      * Disposes this text element bridge by removing the text event listeners
      * that were added in {@link #initializeDynamicSupport}.
      */
+    @Override
     public void dispose() {
         removeTextEventListeners(ctx, (NodeEventTarget) e);
         super.dispose();
@@ -519,6 +529,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
     /**
      * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
      */
+    @Override
     public void handleDOMNodeInsertedEvent(MutationEvent evt) {
         Node childNode = (Node)evt.getTarget();
 
@@ -590,6 +601,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
      * Invoked when an MutationEvent of type 'DOMCharacterDataModified'
      * is fired.
      */
+    @Override
     public void handleDOMCharacterDataModified(MutationEvent evt){
         Node childNode = (Node)evt.getTarget();
         //if the parent is displayed, then discard the layout.
@@ -676,6 +688,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
     /**
      * Invoked when the animated value of an animatable attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged
             (AnimatedLiveAttributeValue alav) {
         if (alav.getNamespaceURI() == null) {
@@ -703,6 +716,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
      *
      * @param evt the CSSEngine event that describes the update
      */
+    @Override
     public void handleCSSEngineEvent(CSSEngineEvent evt) {
         hasNewACI = false;
         int [] properties = evt.getProperties();
@@ -745,6 +759,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
     /**
      * Invoked for each CSS property that has changed.
      */
+    @Override
     protected void handleCSSPropertyChanged(int property) {
         switch(property) {                  // fall-through is intended
         case SVGCSSEngine.FILL_INDEX:
@@ -1253,6 +1268,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
             return result;
         }
 
+        @Override
         public String toString() {
             switch (count) {
             case 0:
@@ -2004,6 +2020,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Returns the namespace URI of the element this <code>Bridge</code> is
          * dedicated to.
          */
+        @Override
         public String getNamespaceURI() {
             return null;
         }
@@ -2012,6 +2029,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Returns the local name of the element this <code>Bridge</code> is dedicated
          * to.
          */
+        @Override
         public String getLocalName() {
             return null;
         }
@@ -2019,6 +2037,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
         /**
          * Returns a new instance of this bridge.
          */
+        @Override
         public Bridge getInstance() {
             return null;
         }
@@ -2028,6 +2047,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
         /**
          * Returns the size of a px CSS unit in millimeters.
          */
+        @Override
         public float getPixelUnitToMillimeter() {
             return ctx.getUserAgent().getPixelUnitToMillimeter();
         }
@@ -2037,6 +2057,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * This will be removed after next release.
          * @see #getPixelUnitToMillimeter()
          */
+        @Override
         public float getPixelToMM() {
             return getPixelUnitToMillimeter();
 
@@ -2047,6 +2068,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * geometry of all contained graphics elements, exclusive of
          * stroke-width and filter effects).
          */
+        @Override
         public Rectangle2D getBBox() {
             //text children does not support getBBox
             //return textBridge.getBBox();
@@ -2058,6 +2080,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * (i.e., after application of the transform attribute, if any) to
          * the viewport coordinate system for the nearestViewportElement.
          */
+        @Override
         public AffineTransform getCTM() {
             // text children does not support transform attribute
             //return textBridge.getCTM();
@@ -2068,6 +2091,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Returns the global transformation matrix from the current
          * element to the root.
          */
+        @Override
         public AffineTransform getGlobalTransform() {
             //return node.getGlobalTransform();
             return null;
@@ -2077,6 +2101,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Returns the transformation matrix from the userspace of
          * the root element to the screen.
          */
+        @Override
         public AffineTransform getScreenTransform() {
             //return node.getScreenTransform();
             return null;
@@ -2086,6 +2111,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Sets the transformation matrix to be used from the
          * userspace of the root element to the screen.
          */
+        @Override
         public void setScreenTransform(AffineTransform at) {
             //return node.setScreenTransform(at);
             return;
@@ -2095,6 +2121,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Returns the width of the viewport which directly contains the
          * given element.
          */
+        @Override
         public float getViewportWidth() {
             return ctx.getBlockWidth(e);
         }
@@ -2103,6 +2130,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Returns the height of the viewport which directly contains the
          * given element.
          */
+        @Override
         public float getViewportHeight() {
             return ctx.getBlockHeight(e);
         }
@@ -2110,6 +2138,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
         /**
          * Returns the font-size on the associated element.
          */
+        @Override
         public float getFontSize() {
             return CSSUtilities.getComputedStyle
                 (e, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
@@ -2143,6 +2172,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
         /**
          * Invoked when an MutationEvent of type 'DOMAttrModified' is fired.
          */
+        @Override
         public void handleDOMAttrModifiedEvent(MutationEvent evt) {
             //nothing to do
         }
@@ -2150,6 +2180,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
         /**
          * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
          */
+        @Override
         public void handleDOMNodeInsertedEvent(MutationEvent evt) {
             textBridge.handleDOMNodeInsertedEvent(evt);
         }
@@ -2157,6 +2188,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
         /**
          * Invoked when an MutationEvent of type 'DOMNodeRemoved' is fired.
          */
+        @Override
         public void handleDOMNodeRemovedEvent(MutationEvent evt) {
         }
 
@@ -2164,6 +2196,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Invoked when an MutationEvent of type 'DOMCharacterDataModified'
          * is fired.
          */
+        @Override
         public void handleDOMCharacterDataModified(MutationEvent evt) {
             textBridge.handleDOMCharacterDataModified(evt);
         }
@@ -2171,6 +2204,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
         /**
          * Invoked when an CSSEngineEvent is fired.
          */
+        @Override
         public void handleCSSEngineEvent(CSSEngineEvent evt) {
             textBridge.handleCSSEngineEvent(evt);
         }
@@ -2179,6 +2213,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Invoked when the animated value of an animatable attribute has
          * changed.
          */
+        @Override
         public void handleAnimatedAttributeChanged
                 (AnimatedLiveAttributeValue alav) {
         }
@@ -2186,12 +2221,14 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
         /**
          * Invoked when an 'other' animation value has changed.
          */
+        @Override
         public void handleOtherAnimationChanged(String type) {
         }
 
         /**
          * Disposes this BridgeUpdateHandler and releases all resources.
          */
+        @Override
         public void dispose(){
             ((SVGOMElement)e).setSVGContext(null);
             elemTPI.remove(e);
@@ -2215,38 +2252,47 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
 
         //Implementation of TextContent
 
+        @Override
         public int getNumberOfChars(){
             return textBridge.getNumberOfChars(e);
         }
 
+        @Override
         public Rectangle2D getExtentOfChar(int charnum ){
             return textBridge.getExtentOfChar(e,charnum);
         }
 
+        @Override
         public Point2D getStartPositionOfChar(int charnum){
             return textBridge.getStartPositionOfChar(e,charnum);
         }
 
+        @Override
         public Point2D getEndPositionOfChar(int charnum){
             return textBridge.getEndPositionOfChar(e,charnum);
         }
 
+        @Override
         public void selectSubString(int charnum, int nchars){
             textBridge.selectSubString(e,charnum,nchars);
         }
 
+        @Override
         public float getRotationOfChar(int charnum){
             return textBridge.getRotationOfChar(e,charnum);
         }
 
+        @Override
         public float getComputedTextLength(){
             return textBridge.getComputedTextLength(e);
         }
 
+        @Override
         public float getSubStringLength(int charnum, int nchars){
             return textBridge.getSubStringLength(e,charnum,nchars);
         }
 
+        @Override
         public int getCharNumAtPosition(float x , float y){
             return textBridge.getCharNumAtPosition(e,x,y);
         }
@@ -2268,6 +2314,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Invoked when the animated value of an animatable attribute has
          * changed on a 'tref' element.
          */
+        @Override
         public void handleAnimatedAttributeChanged
                 (AnimatedLiveAttributeValue alav) {
             if (alav.getNamespaceURI() == null) {
@@ -2318,6 +2365,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
          * Invoked when the animated value of an animatable attribute has
          * changed on a 'tspan' element.
          */
+        @Override
         public void handleAnimatedAttributeChanged
                 (AnimatedLiveAttributeValue alav) {
             if (alav.getNamespaceURI() == null) {
@@ -2340,38 +2388,47 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge
     }
 
     //Implementation of TextContent
+    @Override
     public int getNumberOfChars(){
         return getNumberOfChars(e);
     }
 
+    @Override
     public Rectangle2D getExtentOfChar(int charnum ){
         return getExtentOfChar(e,charnum);
     }
 
+    @Override
     public Point2D getStartPositionOfChar(int charnum){
         return getStartPositionOfChar(e,charnum);
     }
 
+    @Override
     public Point2D getEndPositionOfChar(int charnum){
         return getEndPositionOfChar(e,charnum);
     }
 
+    @Override
     public void selectSubString(int charnum, int nchars){
         selectSubString(e,charnum,nchars);
     }
 
+    @Override
     public float getRotationOfChar(int charnum){
         return getRotationOfChar(e,charnum);
     }
 
+    @Override
     public float getComputedTextLength(){
         return getComputedTextLength(e);
     }
 
+    @Override
     public float getSubStringLength(int charnum, int nchars){
         return getSubStringLength(e,charnum,nchars);
     }
 
+    @Override
     public int getCharNumAtPosition(float x , float y){
         return getCharNumAtPosition(e,x,y);
     }

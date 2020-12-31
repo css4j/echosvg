@@ -66,6 +66,7 @@ public class SVGConverterException extends Exception {
         return isFatal;
     }
 
+    @Override
     public String getMessage(){
         return Messages.formatMessage(errorCode, errorInfo);
     }

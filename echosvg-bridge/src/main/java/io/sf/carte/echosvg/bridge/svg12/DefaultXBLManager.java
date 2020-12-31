@@ -55,6 +55,7 @@ import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractAttrNS;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.AbstractNode;
+import io.sf.carte.echosvg.dom.events.EventSupport;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.xbl.NodeXBL;
 import io.sf.carte.echosvg.dom.xbl.ShadowTreeEvent;
@@ -160,6 +161,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Starts XBL processing on the document.
      */
+    @Override
     public void startProcessing() {
         if (isProcessing) {
             return;
@@ -224,6 +226,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Stops XBL processing on the document.
      */
+    @Override
     public void stopProcessing() {
         if (!isProcessing) {
             return;
@@ -281,6 +284,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Returns whether XBL processing is currently enabled.
      */
+    @Override
     public boolean isProcessing() {
         return isProcessing;
     }
@@ -792,6 +796,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Get the parent of a node in the fully flattened tree.
      */
+    @Override
     public Node getXblParentNode(Node n) {
         Node contentElement = getXblContentElement(n);
         Node parent = contentElement == null
@@ -809,6 +814,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Get the list of child nodes of a node in the fully flattened tree.
      */
+    @Override
     public NodeList getXblChildNodes(Node n) {
         XBLRecord rec = getRecord(n);
         if (rec.childNodes == null) {
@@ -821,6 +827,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * Get the list of child nodes of a node in the fully flattened tree
      * that are within the same shadow scope.
      */
+    @Override
     public NodeList getXblScopedChildNodes(Node n) {
         XBLRecord rec = getRecord(n);
         if (rec.scopedChildNodes == null) {
@@ -832,6 +839,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Get the first child node of a node in the fully flattened tree.
      */
+    @Override
     public Node getXblFirstChild(Node n) {
         NodeList nl = getXblChildNodes(n);
         return nl.item(0);
@@ -840,6 +848,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Get the last child node of a node in the fully flattened tree.
      */
+    @Override
     public Node getXblLastChild(Node n) {
         NodeList nl = getXblChildNodes(n);
         return nl.item(nl.getLength() - 1);
@@ -849,6 +858,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * Get the node which directly precedes a node in the xblParentNode's
      * xblChildNodes list.
      */
+    @Override
     public Node getXblPreviousSibling(Node n) {
         Node p = getXblParentNode(n);
         if (p == null || getRecord(p).childNodes == null) {
@@ -865,6 +875,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * Get the node which directly follows a node in the xblParentNode's
      * xblChildNodes list.
      */
+    @Override
     public Node getXblNextSibling(Node n) {
         Node p = getXblParentNode(n);
         if (p == null || getRecord(p).childNodes == null) {
@@ -880,6 +891,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Get the first element child of a node in the fully flattened tree.
      */
+    @Override
     public Element getXblFirstElementChild(Node n) {
         n = getXblFirstChild(n);
         while (n != null && n.getNodeType() != Node.ELEMENT_NODE) {
@@ -891,6 +903,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Get the last element child of a node in the fully flattened tree.
      */
+    @Override
     public Element getXblLastElementChild(Node n) {
         n = getXblLastChild(n);
         while (n != null && n.getNodeType() != Node.ELEMENT_NODE) {
@@ -903,6 +916,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * Get the first element that precedes the a node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Element getXblPreviousElementSibling(Node n) {
         do {
             n = getXblPreviousSibling(n);
@@ -914,6 +928,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * Get the first element that follows a node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Element getXblNextElementSibling(Node n) {
         do {
             n = getXblNextSibling(n);
@@ -924,6 +939,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Get the bound element whose shadow tree a node resides in.
      */
+    @Override
     public Element getXblBoundElement(Node n) {
         while (n != null && !(n instanceof XBLShadowTreeElement)) {
             XBLOMContentElement content = getXblContentElement(n);
@@ -941,6 +957,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Get the shadow tree of a node.
      */
+    @Override
     public Element getXblShadowTree(Node n) {
         if (n instanceof BindableElement) {
             BindableElement elt = (BindableElement) n;
@@ -952,10 +969,12 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Get the xbl:definition elements currently binding an element.
      */
+    @Override
     public NodeList getXblDefinitions(Node n) {
         final String namespaceURI = n.getNamespaceURI();
         final String localName = n.getLocalName();
         return new NodeList() {
+            @Override
             public Node item(int i) {
                 TreeSet defs = (TreeSet) definitionLists.get(namespaceURI, localName);
                 if (defs != null && defs.size() != 0 && i == 0) {
@@ -964,6 +983,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
                 }
                 return null;
             }
+            @Override
             public int getLength() {
                 Set defs = (TreeSet) definitionLists.get(namespaceURI, localName);
                 return defs != null && defs.size() != 0 ? 1 : 0;
@@ -1231,6 +1251,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Returns whether two definition records are the same.
          */
+        @Override
         public boolean equals(Object other) {
             return compareTo(other) == 0;
         }
@@ -1238,6 +1259,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Compares two definition records.
          */
+        @Override
         public int compareTo(Object other) {
             DefinitionRecord rec = (DefinitionRecord) other;
             AbstractNode n1, n2;
@@ -1361,6 +1383,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             EventTarget target = evt.getTarget();
             if (target instanceof XBLOMDefinitionElement) {
@@ -1386,6 +1409,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             toBeRemoved.add(evt.getTarget());
         }
@@ -1418,6 +1442,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             Object[] defs = importRemovedListener.toBeRemoved.toArray();
             importRemovedListener.toBeRemoved.clear();
@@ -1438,6 +1463,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             EventTarget target = evt.getTarget();
             if (target instanceof XBLOMDefinitionElement) {
@@ -1461,7 +1487,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
                     addImport((Element) target);
                 }
             } else {
-                evt = XBLEventSupport.getUltimateOriginalEvent(evt);
+                evt = EventSupport.getUltimateOriginalEvent(evt);
                 target = evt.getTarget();
                 Node parent = getXblParentNode((Node) target);
                 if (parent != null) {
@@ -1509,6 +1535,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             EventTarget target = evt.getTarget();
             if (target instanceof XBLOMDefinitionElement) {
@@ -1538,6 +1565,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             Object[] defs = docRemovedListener.defsToBeRemoved.toArray();
             docRemovedListener.defsToBeRemoved.clear();
@@ -1586,6 +1614,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             Node n = (Node) evt.getTarget();
             while (n != null && !(n instanceof XBLOMDefinitionElement)) {
@@ -1623,6 +1652,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             EventTarget target = evt.getTarget();
             if (!(target instanceof XBLOMDefinitionElement)) {
@@ -1676,6 +1706,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             MutationEvent mevt = (MutationEvent) evt;
             Node parent = mevt.getRelatedNode();
@@ -1738,6 +1769,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             MutationEvent mevt = (MutationEvent) evt;
             Node parent = mevt.getRelatedNode();
@@ -1785,6 +1817,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             EventTarget target = evt.getTarget();
             if (target != evt.getCurrentTarget()) {
@@ -1808,6 +1841,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             EventTarget target = evt.getTarget();
             if (target != evt.getCurrentTarget()) {
@@ -2011,6 +2045,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#item(int)}.
          */
+        @Override
         public Node item(int index) {
             if (size == -1) {
                 update();
@@ -2024,6 +2059,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#getLength()}.
          */
+        @Override
         public int getLength() {
             if (size == -1) {
                 update();
@@ -2047,6 +2083,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * Update the NodeList.
          */
+        @Override
         protected void update() {
             size = 0;
             Node shadowTree = getXblShadowTree(record.node);

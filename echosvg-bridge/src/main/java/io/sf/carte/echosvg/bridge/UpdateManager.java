@@ -274,6 +274,7 @@ public class UpdateManager  {
      */
     public void manageUpdates(final ImageRenderer r) {
         updateRunnableQueue.preemptLater(new Runnable() {
+                @Override
                 public void run() {
                     synchronized (UpdateManager.this) {
                         running = true;
@@ -382,6 +383,7 @@ public class UpdateManager  {
      */
     public void interrupt() {
         Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     synchronized (UpdateManager.this) {
                         if (started) {
@@ -416,6 +418,7 @@ public class UpdateManager  {
 
         // Invoke first to cancel the pending tasks
         updateRunnableQueue.preemptLater(new Runnable() {
+                @Override
                 public void run() {
                     synchronized (UpdateManager.this) {
                         AbstractEvent evt = (AbstractEvent)
@@ -627,10 +630,12 @@ public class UpdateManager  {
         RepaintTimerTask(UpdateManager um) {
             this.um = um;
         }
+        @Override
         public void run() {
             RunnableQueue rq = um.getUpdateRunnableQueue();
             if (rq == null) return;
             rq.invokeLater(new Runnable() {
+                    @Override
                     public void run() { }
                 });
         }
@@ -762,6 +767,7 @@ public class UpdateManager  {
      * started
      */
     static Dispatcher startedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((UpdateManagerListener)listener).managerStarted
@@ -774,6 +780,7 @@ public class UpdateManager  {
      * stopped.
      */
     static Dispatcher stoppedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((UpdateManagerListener)listener).managerStopped
@@ -786,6 +793,7 @@ public class UpdateManager  {
      * suspended.
      */
     static Dispatcher suspendedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((UpdateManagerListener)listener).managerSuspended
@@ -798,6 +806,7 @@ public class UpdateManager  {
      * resumed.
      */
     static Dispatcher resumedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((UpdateManagerListener)listener).managerResumed
@@ -810,6 +819,7 @@ public class UpdateManager  {
      * started
      */
     static Dispatcher updateStartedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((UpdateManagerListener)listener).updateStarted
@@ -822,6 +832,7 @@ public class UpdateManager  {
      * completed
      */
     static Dispatcher updateCompletedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((UpdateManagerListener)listener).updateCompleted
@@ -834,6 +845,7 @@ public class UpdateManager  {
      * failed
      */
     static Dispatcher updateFailedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((UpdateManagerListener)listener).updateFailed
@@ -851,6 +863,7 @@ public class UpdateManager  {
     protected class UpdateManagerRunHander
         extends RunnableQueue.RunHandlerAdapter {
 
+        @Override
         public void runnableStart(RunnableQueue rq, Runnable r) {
             if (running && !(r instanceof NoRepaintRunnable)) {
                 // Mark the document as updated when the
@@ -865,6 +878,7 @@ public class UpdateManager  {
          * Called when the given Runnable has just been invoked and
          * has returned.
          */
+        @Override
         public void runnableInvoked(RunnableQueue rq, Runnable r) {
             if (running && !(r instanceof NoRepaintRunnable)) {
                 repaint();
@@ -874,6 +888,7 @@ public class UpdateManager  {
         /**
          * Called when the execution of the queue has been suspended.
          */
+        @Override
         public void executionSuspended(RunnableQueue rq) {
             synchronized (UpdateManager.this) {
                 // System.err.println("Suspended: " + suspendCalled);
@@ -889,6 +904,7 @@ public class UpdateManager  {
         /**
          * Called when the execution of the queue has been resumed.
          */
+        @Override
         public void executionResumed(RunnableQueue rq) {
             synchronized (UpdateManager.this) {
                 // System.err.println("Resumed: " + suspendCalled +

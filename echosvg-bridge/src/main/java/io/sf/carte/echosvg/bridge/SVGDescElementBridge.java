@@ -34,6 +34,7 @@ public class SVGDescElementBridge extends SVGDescriptiveElementBridge {
     /**
      * Returns 'desc'.
      */
+    @Override
     public String getLocalName() {
         return SVG_DESC_TAG;
     }
@@ -41,5 +42,6 @@ public class SVGDescElementBridge extends SVGDescriptiveElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() { return new SVGDescElementBridge(); }
 }

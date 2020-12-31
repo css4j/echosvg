@@ -36,18 +36,25 @@ package io.sf.carte.echosvg.gvt.event;
 public abstract class GraphicsNodeMouseAdapter
         implements GraphicsNodeMouseListener {
 
+    @Override
     public void mouseClicked(GraphicsNodeMouseEvent evt) {}
 
+    @Override
     public void mousePressed(GraphicsNodeMouseEvent evt) {}
 
+    @Override
     public void mouseReleased(GraphicsNodeMouseEvent evt) {}
 
+    @Override
     public void mouseEntered(GraphicsNodeMouseEvent evt) {}
 
+    @Override
     public void mouseExited(GraphicsNodeMouseEvent evt) {}
 
+    @Override
     public void mouseDragged(GraphicsNodeMouseEvent evt) {}
 
+    @Override
     public void mouseMoved(GraphicsNodeMouseEvent evt) {}
 
 }

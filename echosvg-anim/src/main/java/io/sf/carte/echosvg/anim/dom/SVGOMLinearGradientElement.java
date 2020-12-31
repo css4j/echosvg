@@ -93,6 +93,7 @@ public class SVGOMLinearGradientElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -104,21 +105,22 @@ public class SVGOMLinearGradientElement
     private void initializeLiveAttributes() {
         x1 = createLiveAnimatedLength
             (null, SVG_X1_ATTRIBUTE, SVG_LINEAR_GRADIENT_X1_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         y1 = createLiveAnimatedLength
             (null, SVG_Y1_ATTRIBUTE, SVG_LINEAR_GRADIENT_Y1_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         x2 = createLiveAnimatedLength
             (null, SVG_X2_ATTRIBUTE, SVG_LINEAR_GRADIENT_X2_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         y2 = createLiveAnimatedLength
             (null, SVG_Y2_ATTRIBUTE, SVG_LINEAR_GRADIENT_Y2_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
     }
 
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_LINEAR_GRADIENT_TAG;
     }
@@ -126,6 +128,7 @@ public class SVGOMLinearGradientElement
     /**
      * <b>DOM</b>: Implements {@link SVGLinearGradientElement#getX1()}.
      */
+    @Override
     public SVGAnimatedLength getX1() {
         return x1;
     }
@@ -133,6 +136,7 @@ public class SVGOMLinearGradientElement
     /**
      * <b>DOM</b>: Implements {@link SVGLinearGradientElement#getY1()}.
      */
+    @Override
     public SVGAnimatedLength getY1() {
         return y1;
     }
@@ -140,6 +144,7 @@ public class SVGOMLinearGradientElement
     /**
      * <b>DOM</b>: Implements {@link SVGLinearGradientElement#getX2()}.
      */
+    @Override
     public SVGAnimatedLength getX2() {
         return x2;
     }
@@ -147,6 +152,7 @@ public class SVGOMLinearGradientElement
     /**
      * <b>DOM</b>: Implements {@link SVGLinearGradientElement#getY2()}.
      */
+    @Override
     public SVGAnimatedLength getY2() {
         return y2;
     }
@@ -154,6 +160,7 @@ public class SVGOMLinearGradientElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMLinearGradientElement();
     }
@@ -161,6 +168,7 @@ public class SVGOMLinearGradientElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

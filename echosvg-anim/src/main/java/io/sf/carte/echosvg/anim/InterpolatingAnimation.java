@@ -133,6 +133,7 @@ public abstract class InterpolatingAnimation extends AbstractAnimation {
      * Returns whether this animation will replace values on animations
      * lower in the sandwich.
      */
+    @Override
     protected boolean willReplace() {
         return !additive;
     }
@@ -140,6 +141,7 @@ public abstract class InterpolatingAnimation extends AbstractAnimation {
     /**
      * Called when the element is sampled for its "last" value.
      */
+    @Override
     protected void sampledLastValue(int repeatIteration) {
         sampledAtUnitTime(1f, repeatIteration);
     }
@@ -147,6 +149,7 @@ public abstract class InterpolatingAnimation extends AbstractAnimation {
     /**
      * Called when the element is sampled at the given time.
      */
+    @Override
     protected void sampledAt(float simpleTime, float simpleDur,
                              int repeatIteration) {
         float unitTime;

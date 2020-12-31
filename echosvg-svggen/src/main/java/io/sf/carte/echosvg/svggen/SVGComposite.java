@@ -66,6 +66,7 @@ public class SVGComposite implements SVGConverter {
      * @return Set of filter Elements defining the composites this
      *         Converter has processed since it was created.
      */
+    @Override
     public List getDefinitionSet() {
         List compositeDefs = new LinkedList(svgAlphaComposite.getDefinitionSet());
         compositeDefs.addAll(svgCustomComposite.getDefinitionSet());
@@ -90,6 +91,7 @@ public class SVGComposite implements SVGConverter {
      *         with the related definitions
      * @see io.sf.carte.echosvg.svggen.SVGDescriptor
      */
+    @Override
     public SVGDescriptor toSVG(GraphicContext gc) {
         return toSVG(gc.getComposite());
     }

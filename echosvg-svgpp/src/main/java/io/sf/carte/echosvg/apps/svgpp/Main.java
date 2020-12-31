@@ -172,6 +172,7 @@ public class Main {
             values.put("remove", SVGTranscoder.VALUE_DOCTYPE_REMOVE);
             values.put("change", SVGTranscoder.VALUE_DOCTYPE_CHANGE);
         }
+        @Override
         public void handleOption() {
             index++;
             if (index >= arguments.length) {
@@ -184,6 +185,7 @@ public class Main {
             transcoder.addTranscodingHint(SVGTranscoder.KEY_DOCTYPE, val);
         }
 
+        @Override
         public String getDescription() {
             return localizableSupport.formatMessage("doctype.description", null);
         }
@@ -199,6 +201,7 @@ public class Main {
             values.put("cr-lf", SVGTranscoder.VALUE_NEWLINE_CR_LF);
             values.put("lf",    SVGTranscoder.VALUE_NEWLINE_LF);
         }
+        @Override
         public void handleOption() {
             index++;
             if (index >= arguments.length) {
@@ -211,6 +214,7 @@ public class Main {
             transcoder.addTranscodingHint(SVGTranscoder.KEY_NEWLINE, val);
         }
 
+        @Override
         public String getDescription() {
             return localizableSupport.formatMessage("newline.description", null);
         }
@@ -220,11 +224,13 @@ public class Main {
      * To handle the '-no-format' option.
      */
     protected class NoFormatHandler implements OptionHandler {
+        @Override
         public void handleOption() {
             index++;
             transcoder.addTranscodingHint(SVGTranscoder.KEY_FORMAT, Boolean.FALSE);
         }
 
+        @Override
         public String getDescription() {
             return localizableSupport.formatMessage("no-format.description", null);
         }
@@ -234,6 +240,7 @@ public class Main {
      * To handle the '-public-id' option.
      */
     protected class PublicIdHandler implements OptionHandler {
+        @Override
         public void handleOption() {
             index++;
             if (index >= arguments.length) {
@@ -243,6 +250,7 @@ public class Main {
             transcoder.addTranscodingHint(SVGTranscoder.KEY_PUBLIC_ID, s);
         }
 
+        @Override
         public String getDescription() {
             return localizableSupport.formatMessage("public-id.description", null);
         }
@@ -252,6 +260,7 @@ public class Main {
      * To handle the '-system-id' option.
      */
     protected class SystemIdHandler implements OptionHandler {
+        @Override
         public void handleOption() {
             index++;
             if (index >= arguments.length) {
@@ -261,6 +270,7 @@ public class Main {
             transcoder.addTranscodingHint(SVGTranscoder.KEY_SYSTEM_ID, s);
         }
 
+        @Override
         public String getDescription() {
             return localizableSupport.formatMessage("system-id.description", null);
         }
@@ -270,6 +280,7 @@ public class Main {
      * To handle the '-xml-decl' option.
      */
     protected class XMLDeclHandler implements OptionHandler {
+        @Override
         public void handleOption() {
             index++;
             if (index >= arguments.length) {
@@ -279,6 +290,7 @@ public class Main {
             transcoder.addTranscodingHint(SVGTranscoder.KEY_XML_DECLARATION, s);
         }
 
+        @Override
         public String getDescription() {
             return localizableSupport.formatMessage("xml-decl.description", null);
         }
@@ -288,6 +300,7 @@ public class Main {
      * To handle the '-tab-width' option.
      */
     protected class TabWidthHandler implements OptionHandler {
+        @Override
         public void handleOption() {
             index++;
             if (index >= arguments.length) {
@@ -297,6 +310,7 @@ public class Main {
                                           Integer.valueOf(arguments[index++]));
         }
 
+        @Override
         public String getDescription() {
             return localizableSupport.formatMessage("tab-width.description", null);
         }
@@ -306,6 +320,7 @@ public class Main {
      * To handle the '-doc-width' option.
      */
     protected class DocWidthHandler implements OptionHandler {
+        @Override
         public void handleOption() {
             index++;
             if (index >= arguments.length) {
@@ -315,6 +330,7 @@ public class Main {
                                           Integer.valueOf(arguments[index++]));
         }
 
+        @Override
         public String getDescription() {
             return localizableSupport.formatMessage("doc-width.description", null);
         }

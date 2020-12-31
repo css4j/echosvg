@@ -30,7 +30,9 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
+import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
@@ -47,6 +49,7 @@ public class LineHeightManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -54,6 +57,7 @@ public class LineHeightManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -61,6 +65,7 @@ public class LineHeightManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return true;
     }
@@ -68,6 +73,7 @@ public class LineHeightManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_LINE_HEIGHT_VALUE;
     }
@@ -75,13 +81,15 @@ public class LineHeightManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
-        return SVG12CSSConstants.CSS_LINE_HEIGHT_PROPERTY;
+        return CSSConstants.CSS_LINE_HEIGHT_PROPERTY;
     }
 
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return SVG12ValueConstants.NORMAL_VALUE;
     }
@@ -89,12 +97,13 @@ public class LineHeightManager extends LengthManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
 
         switch (lu.getLexicalUnitType()) {
         case INHERIT:
-            return SVG12ValueConstants.INHERIT_VALUE;
+            return ValueConstants.INHERIT_VALUE;
         case IDENT: {
             String s = lu.getStringValue().toLowerCase();
             if (SVG12CSSConstants.CSS_NORMAL_VALUE.equals(s))
@@ -111,6 +120,7 @@ public class LineHeightManager extends LengthManager {
      * Indicates the orientation of the property associated with
      * this manager.
      */
+    @Override
     protected int getOrientation() {
         // Not really used.
         return VERTICAL_ORIENTATION;
@@ -121,6 +131,7 @@ public class LineHeightManager extends LengthManager {
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,

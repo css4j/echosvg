@@ -184,6 +184,7 @@ public class XPathSubsetContentSelector extends AbstractContentSelector {
      * Returns a list of nodes that were matched by the given selector
      * string.
      */
+    @Override
     public NodeList getSelectedContent() {
         if (selectedContent == null) {
             selectedContent = new SelectedNodes();
@@ -198,6 +199,7 @@ public class XPathSubsetContentSelector extends AbstractContentSelector {
      * shadow tree (in document order) have up-to-date selectedContent
      * lists.
      */
+    @Override
     boolean update() {
         if (selectedContent == null) {
             selectedContent = new SelectedNodes();
@@ -275,6 +277,7 @@ public class XPathSubsetContentSelector extends AbstractContentSelector {
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#item(int)}.
          */
+        @Override
         public Node item(int index) {
             if (index < 0 || index >= nodes.size()) {
                 return null;
@@ -285,6 +288,7 @@ public class XPathSubsetContentSelector extends AbstractContentSelector {
         /**
          * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#getLength()}.
          */
+        @Override
         public int getLength() {
             return nodes.size();
         }
@@ -316,6 +320,7 @@ public class XPathSubsetContentSelector extends AbstractContentSelector {
         /**
          * Returns the end gap of the current lexical unit.
          */
+        @Override
         protected int endGap() {
             return (current == -1) ? 0 : 1;
         }
@@ -363,6 +368,7 @@ public class XPathSubsetContentSelector extends AbstractContentSelector {
         /**
          * Returns the next token.
          */
+        @Override
         protected void nextToken() throws ParseException {
             try {
                 switch (current) {

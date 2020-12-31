@@ -74,6 +74,7 @@ public abstract class StylableExtensionElement
     /**
      * Returns the computed style of this element/pseudo-element.
      */
+    @Override
     public StyleMap getComputedStyleMap(String pseudoElement) {
         return computedStyleMap;
     }
@@ -81,6 +82,7 @@ public abstract class StylableExtensionElement
     /**
      * Sets the computed style of this element/pseudo-element.
      */
+    @Override
     public void setComputedStyleMap(String pseudoElement, StyleMap sm) {
         computedStyleMap = sm;
     }
@@ -88,6 +90,7 @@ public abstract class StylableExtensionElement
     /**
      * Returns the ID of this element.
      */
+    @Override
     public String getXMLId() {
         return getAttributeNS(null, "id");
     }
@@ -95,6 +98,7 @@ public abstract class StylableExtensionElement
     /**
      * Returns the class of this element.
      */
+    @Override
     public String getCSSClass() {
         return getAttributeNS(null, "class");
     }
@@ -102,6 +106,7 @@ public abstract class StylableExtensionElement
     /**
      * Returns the CSS base URL of this element.
      */
+    @Override
     public ParsedURL getCSSBase() {
         if (cssBase == null) {
             String bu = getBaseURI();
@@ -117,6 +122,7 @@ public abstract class StylableExtensionElement
      * Tells whether this element is an instance of the given pseudo
      * class.
      */
+    @Override
     public boolean isPseudoInstanceOf(String pseudoClass) {
         if (pseudoClass.equals("first-child")) {
             Node n = getPreviousSibling();
@@ -133,6 +139,7 @@ public abstract class StylableExtensionElement
      * {@link io.sf.carte.echosvg.css.engine.StyleDeclaration} for the override
      * style of this element.
      */
+    @Override
     public StyleDeclarationProvider getOverrideStyleDeclarationProvider() {
         return null;
     }
@@ -142,6 +149,7 @@ public abstract class StylableExtensionElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGStylable#getStyle()}.
      */
+    @Override
     public CSSStyleDeclaration getStyle() {
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -150,6 +158,7 @@ public abstract class StylableExtensionElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGStylable#getPresentationAttribute(String)}.
      */
+    @Override
     public CSSValue getPresentationAttribute(String name) {
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -158,6 +167,7 @@ public abstract class StylableExtensionElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGStylable#getClassName()}.
      */
+    @Override
     public SVGAnimatedString getClassName() {
         throw new UnsupportedOperationException("Not implemented");
     }

@@ -50,23 +50,28 @@ public class RedRable
         return src;
     }
 
+    @Override
     public Object getProperty(String name) {
         return src.getProperty(name);
     }
 
+    @Override
     public String [] getPropertyNames() {
         return src.getPropertyNames();
     }
 
+    @Override
     public Rectangle2D getBounds2D() {
         return getSource().getBounds();
     }
 
+    @Override
     public RenderedImage createDefaultRendering() {
         return getSource();
     }
 
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         // System.out.println("RedRable Create Rendering: " + this);
 

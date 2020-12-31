@@ -67,6 +67,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Returns the number of glyphs in this GlyphVector.
      */
+    @Override
     public int getNumGlyphs() {
         return nGlyph;
     }
@@ -83,6 +84,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Returns the Font associated with this GlyphVector.
      */
+    @Override
     public GVTFont getFont() {
         throw new IllegalArgumentException("Can't be correctly Implemented");
     }
@@ -90,6 +92,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Returns the FontRenderContext associated with this GlyphVector.
      */
+    @Override
     public FontRenderContext getFontRenderContext() {
         return gvs[0].getFontRenderContext();
     }
@@ -97,6 +100,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Returns the glyphcode of the specified glyph.
      */
+    @Override
     public int getGlyphCode(int glyphIndex) {
         int idx = getGVIdx(glyphIndex);
         return gvs[idx].getGlyphCode(glyphIndex-off[idx]);
@@ -106,6 +110,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
      * Returns the justification information for the glyph at the specified
      * index into this GlyphVector.
      */
+    @Override
     public GlyphJustificationInfo getGlyphJustificationInfo(int glyphIndex) {
         int idx = getGVIdx(glyphIndex);
         return gvs[idx].getGlyphJustificationInfo(glyphIndex-off[idx]);
@@ -115,6 +120,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
      *  Returns the logical bounds of the specified glyph within this
      *  GlyphVector.
      */
+    @Override
     public Shape getGlyphLogicalBounds(int glyphIndex) {
         int idx = getGVIdx(glyphIndex);
         return gvs[idx].getGlyphLogicalBounds(glyphIndex-off[idx]);
@@ -124,6 +130,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
      * Returns the metrics of the glyph at the specified index into this
      * GlyphVector.
      */
+    @Override
     public GVTGlyphMetrics getGlyphMetrics(int glyphIndex) {
         int idx = getGVIdx(glyphIndex);
         return gvs[idx].getGlyphMetrics(glyphIndex-off[idx]);
@@ -133,6 +140,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
      * Returns a Shape whose interior corresponds to the visual representation
      * of the specified glyph within this GlyphVector.
      */
+    @Override
     public Shape getGlyphOutline(int glyphIndex) {
         int idx = getGVIdx(glyphIndex);
         return gvs[idx].getGlyphOutline(glyphIndex-off[idx]);
@@ -143,6 +151,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
      * glyph's metrics (ascent, descent, advance) rather than the actual glyph
      * shape.
      */
+    @Override
     public Rectangle2D getGlyphCellBounds(int glyphIndex) {
         return getGlyphLogicalBounds(glyphIndex).getBounds2D();
     }
@@ -150,6 +159,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Returns the position of the specified glyph within this GlyphVector.
      */
+    @Override
     public Point2D getGlyphPosition(int glyphIndex) {
         int idx = getGVIdx(glyphIndex);
         return gvs[idx].getGlyphPosition(glyphIndex-off[idx]);
@@ -158,6 +168,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Gets the transform of the specified glyph within this GlyphVector.
      */
+    @Override
     public AffineTransform getGlyphTransform(int glyphIndex) {
         int idx = getGVIdx(glyphIndex);
         return gvs[idx].getGlyphTransform(glyphIndex-off[idx]);
@@ -166,6 +177,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Returns the visual bounds of the specified glyph within the GlyphVector.
      */
+    @Override
     public Shape getGlyphVisualBounds(int glyphIndex) {
         int idx = getGVIdx(glyphIndex);
         return gvs[idx].getGlyphVisualBounds(glyphIndex-off[idx]);
@@ -174,6 +186,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Sets the position of the specified glyph within this GlyphVector.
      */
+    @Override
     public void setGlyphPosition(int glyphIndex, Point2D newPos) {
         int idx = getGVIdx(glyphIndex);
         // System.out.println("setting: " + idx + " - " + (glyphIndex-off[idx]) +
@@ -184,6 +197,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Sets the transform of the specified glyph within this GlyphVector.
      */
+    @Override
     public void setGlyphTransform(int glyphIndex, AffineTransform newTX) {
         int idx = getGVIdx(glyphIndex);
         gvs[idx].setGlyphTransform(glyphIndex-off[idx], newTX);
@@ -192,6 +206,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Tells the glyph vector whether or not to draw the specified glyph.
      */
+    @Override
     public void setGlyphVisible(int glyphIndex, boolean visible) {
         int idx = getGVIdx(glyphIndex);
         gvs[idx].setGlyphVisible(glyphIndex-off[idx], visible);
@@ -200,6 +215,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Returns true if specified glyph will be drawn.
      */
+    @Override
     public boolean isGlyphVisible(int glyphIndex) {
         int idx = getGVIdx(glyphIndex);
         return gvs[idx].isGlyphVisible(glyphIndex-off[idx]);
@@ -208,6 +224,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Returns an array of glyphcodes for the specified glyphs.
      */
+    @Override
     public int[] getGlyphCodes(int beginGlyphIndex, int numEntries,
                         int[] codeReturn) {
         int [] ret = codeReturn;
@@ -245,6 +262,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Returns an array of glyph positions for the specified glyphs
      */
+    @Override
     public float[] getGlyphPositions(int beginGlyphIndex,
                               int numEntries,
                               float[] positionReturn) {
@@ -284,6 +302,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      *  Returns the logical bounds of this GlyphVector.
      */
+    @Override
     public Rectangle2D getLogicalBounds() {
         Rectangle2D ret = null;
         for (GVTGlyphVector gv : gvs) {
@@ -299,6 +318,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
      * Returns a Shape whose interior corresponds to the visual representation
      * of this GlyphVector.
      */
+    @Override
     public Shape getOutline() {
         GeneralPath ret = null;
         for (GVTGlyphVector gv : gvs) {
@@ -313,6 +333,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
      * Returns a Shape whose interior corresponds to the visual representation
      * of this GlyphVector, offset to x, y.
      */
+    @Override
     public Shape getOutline(float x, float y) {
         Shape outline = getOutline();
         AffineTransform tr = AffineTransform.getTranslateInstance(x,y);
@@ -324,6 +345,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
      * Returns the  bounds of this GlyphVector. This includes
      * stroking effects.
      */
+    @Override
     public Rectangle2D getBounds2D(AttributedCharacterIterator aci) {
         Rectangle2D ret = null;
         int begin = aci.getBeginIndex();
@@ -344,6 +366,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
      * bounds is the bounds of the geometry of the glyph vector,
      * disregarding stroking.
      */
+    @Override
     public Rectangle2D getGeometricBounds() {
         Rectangle2D ret = null;
         for (GVTGlyphVector gv : gvs) {
@@ -355,6 +378,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
         return ret;
     }
 
+    @Override
     public void performDefaultLayout() {
         for (GVTGlyphVector gv : gvs) {
             gv.performDefaultLayout();
@@ -370,6 +394,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
      * @param endGlyphIndex The index of the last glyph in the range.
      * @return The number of chars.
      */
+    @Override
     public int getCharacterCount(int startGlyphIndex, int endGlyphIndex) {
         int idx1 = getGVIdx(startGlyphIndex);
         int idx2 = getGVIdx(endGlyphIndex);
@@ -398,6 +423,7 @@ public class MultiGlyphVector implements GVTGlyphVector {
     /**
      * Draws the glyph vector.
      */
+    @Override
     public void draw(Graphics2D g2d,
               AttributedCharacterIterator aci) {
         int begin = aci.getBeginIndex();

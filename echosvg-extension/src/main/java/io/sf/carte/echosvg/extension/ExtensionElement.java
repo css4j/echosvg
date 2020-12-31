@@ -49,6 +49,7 @@ public abstract class ExtensionElement
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return false;
     }
@@ -56,6 +57,7 @@ public abstract class ExtensionElement
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
     }
 }

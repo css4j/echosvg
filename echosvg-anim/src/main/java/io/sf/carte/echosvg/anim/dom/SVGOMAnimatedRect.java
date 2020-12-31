@@ -77,6 +77,7 @@ public class SVGOMAnimatedRect
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedRect#getBaseVal()}.
      */
+    @Override
     public SVGRect getBaseVal() {
         if (baseVal == null) {
             baseVal = new BaseSVGRect();
@@ -87,6 +88,7 @@ public class SVGOMAnimatedRect
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedRect#getAnimVal()}.
      */
+    @Override
     public SVGRect getAnimVal() {
         if (animVal == null) {
             animVal = new AnimSVGRect();
@@ -97,6 +99,7 @@ public class SVGOMAnimatedRect
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -115,6 +118,7 @@ public class SVGOMAnimatedRect
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         SVGRect r = getBaseVal();
         return new AnimatableRectValue
@@ -124,6 +128,7 @@ public class SVGOMAnimatedRect
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -137,6 +142,7 @@ public class SVGOMAnimatedRect
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -150,6 +156,7 @@ public class SVGOMAnimatedRect
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         if (!changing && baseVal != null) {
             baseVal.invalidate();
@@ -206,6 +213,7 @@ public class SVGOMAnimatedRect
             NumberListParser p = new NumberListParser();
             p.setNumberListHandler(new DefaultNumberListHandler() {
                 protected int count;
+                @Override
                 public void endNumberList() {
                     if (count != 4) {
                         throw new LiveAttributeException
@@ -214,6 +222,7 @@ public class SVGOMAnimatedRect
                              s);
                     }
                 }
+                @Override
                 public void numberValue(float v) throws ParseException {
                     if (count < 4) {
                         numbers[count] = v;
@@ -239,6 +248,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#getX()}.
          */
+        @Override
         public float getX() {
             revalidate();
             return x;
@@ -247,6 +257,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#setX(float)}.
          */
+        @Override
         public void setX(float x) throws DOMException {
             this.x = x;
             reset();
@@ -255,6 +266,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#getY()}.
          */
+        @Override
         public float getY() {
             revalidate();
             return y;
@@ -263,6 +275,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#setY(float)}.
          */
+        @Override
         public void setY(float y) throws DOMException {
             this.y = y;
             reset();
@@ -271,6 +284,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#getWidth()}.
          */
+        @Override
         public float getWidth() {
             revalidate();
             return w;
@@ -279,6 +293,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#setWidth(float)}.
          */
+        @Override
         public void setWidth(float width) throws DOMException {
             this.w = width;
             reset();
@@ -287,6 +302,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#getHeight()}.
          */
+        @Override
         public float getHeight() {
             revalidate();
             return h;
@@ -295,6 +311,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#setHeight(float)}.
          */
+        @Override
         public void setHeight(float height) throws DOMException {
             this.h = height;
             reset();
@@ -309,6 +326,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#getX()}.
          */
+        @Override
         public float getX() {
             if (hasAnimVal) {
                 return super.getX();
@@ -319,6 +337,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#getY()}.
          */
+        @Override
         public float getY() {
             if (hasAnimVal) {
                 return super.getY();
@@ -329,6 +348,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#getWidth()}.
          */
+        @Override
         public float getWidth() {
             if (hasAnimVal) {
                 return super.getWidth();
@@ -339,6 +359,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#getHeight()}.
          */
+        @Override
         public float getHeight() {
             if (hasAnimVal) {
                 return super.getHeight();
@@ -349,6 +370,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#setX(float)}.
          */
+        @Override
         public void setX(float value) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length",
@@ -358,6 +380,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#setY(float)}.
          */
+        @Override
         public void setY(float value) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length",
@@ -367,6 +390,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#setWidth(float)}.
          */
+        @Override
         public void setWidth(float value) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length",
@@ -376,6 +400,7 @@ public class SVGOMAnimatedRect
         /**
          * <b>DOM</b>: Implements {@link SVGRect#setHeight(float)}.
          */
+        @Override
         public void setHeight(float value) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length",

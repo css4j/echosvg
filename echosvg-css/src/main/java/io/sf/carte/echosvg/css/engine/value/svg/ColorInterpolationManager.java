@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -39,7 +40,7 @@ public class ColorInterpolationManager extends IdentifierManager {
     protected static final StringMap values = new StringMap();
     static {
         values.put(CSSConstants.CSS_AUTO_VALUE,
-                   SVGValueConstants.AUTO_VALUE);
+                   ValueConstants.AUTO_VALUE);
         values.put(CSSConstants.CSS_LINEARRGB_VALUE,
                    SVGValueConstants.LINEARRGB_VALUE);
         values.put(CSSConstants.CSS_SRGB_VALUE,
@@ -50,6 +51,7 @@ public class ColorInterpolationManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -57,6 +59,7 @@ public class ColorInterpolationManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -64,6 +67,7 @@ public class ColorInterpolationManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -71,6 +75,7 @@ public class ColorInterpolationManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_IDENT;
     }
@@ -79,6 +84,7 @@ public class ColorInterpolationManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_COLOR_INTERPOLATION_PROPERTY;
     }
@@ -87,6 +93,7 @@ public class ColorInterpolationManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return SVGValueConstants.SRGB_VALUE;
     }
@@ -94,6 +101,7 @@ public class ColorInterpolationManager extends IdentifierManager {
     /**
      * Implements {@link IdentifierManager#getIdentifiers()}.
      */
+    @Override
     public StringMap getIdentifiers() {
         return values;
     }

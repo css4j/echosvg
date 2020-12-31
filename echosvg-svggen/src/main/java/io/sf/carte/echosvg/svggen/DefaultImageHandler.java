@@ -48,6 +48,7 @@ public class DefaultImageHandler
      * The handler should set the xlink:href tag and the width and
      * height attributes.
      */
+    @Override
     public void handleImage(Image image, Element imageElement,
                             SVGGeneratorContext generatorContext) {
         //
@@ -76,6 +77,7 @@ public class DefaultImageHandler
      * The handler should set the xlink:href tag and the width and
      * height attributes.
      */
+    @Override
     public void handleImage(RenderedImage image, Element imageElement,
                             SVGGeneratorContext generatorContext) {
         //
@@ -104,6 +106,7 @@ public class DefaultImageHandler
      * The handler should set the xlink:href tag and the width and
      * height attributes.
      */
+    @Override
     public void handleImage(RenderableImage image, Element imageElement,
                             SVGGeneratorContext generatorContext) {
         //

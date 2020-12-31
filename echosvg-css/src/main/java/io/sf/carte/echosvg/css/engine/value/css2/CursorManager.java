@@ -86,6 +86,7 @@ public class CursorManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -93,6 +94,7 @@ public class CursorManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -100,6 +102,7 @@ public class CursorManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -107,6 +110,7 @@ public class CursorManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_CURSOR_VALUE;
     }
@@ -114,6 +118,7 @@ public class CursorManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_CURSOR_PROPERTY;
     }
@@ -121,6 +126,7 @@ public class CursorManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return ValueConstants.AUTO_VALUE;
     }
@@ -128,6 +134,7 @@ public class CursorManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         ListValue result = new ListValue();
@@ -183,6 +190,7 @@ public class CursorManager extends AbstractValueManager {
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,

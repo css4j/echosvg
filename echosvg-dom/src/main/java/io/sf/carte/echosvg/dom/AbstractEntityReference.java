@@ -69,6 +69,7 @@ public abstract class AbstractEntityReference
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
      * @return {@link org.w3c.dom.Node#ENTITY_REFERENCE_NODE}
      */
+    @Override
     public short getNodeType() {
         return ENTITY_REFERENCE_NODE;
     }
@@ -76,6 +77,7 @@ public abstract class AbstractEntityReference
     /**
      * Sets the name of this node.
      */
+    @Override
     public void setNodeName(String v) {
         nodeName = v;
     }
@@ -84,6 +86,7 @@ public abstract class AbstractEntityReference
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return {@link #nodeName}.
      */
+    @Override
     public String getNodeName() {
         return nodeName;
     }
@@ -91,6 +94,7 @@ public abstract class AbstractEntityReference
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         AbstractEntityReference ae = (AbstractEntityReference)n;
@@ -101,6 +105,7 @@ public abstract class AbstractEntityReference
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         AbstractEntityReference ae = (AbstractEntityReference)n;
@@ -112,6 +117,7 @@ public abstract class AbstractEntityReference
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         AbstractEntityReference ae = (AbstractEntityReference)n;
@@ -123,6 +129,7 @@ public abstract class AbstractEntityReference
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         AbstractEntityReference ae = (AbstractEntityReference)n;
@@ -133,6 +140,7 @@ public abstract class AbstractEntityReference
     /**
      * Checks the validity of a node to be inserted.
      */
+    @Override
     protected void checkChildType(Node n, boolean replace) {
         switch (n.getNodeType()) {
         case ELEMENT_NODE:

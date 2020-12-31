@@ -69,6 +69,7 @@ public class JDKRegistryEntry extends AbstractRegistryEntry
      * is unable to restore the state of the InputStream
      * (i.e. mark/reset fails basically).
      */
+    @Override
     public boolean isCompatibleURL(ParsedURL purl) {
         try {
             new URL(purl.toString());
@@ -87,6 +88,7 @@ public class JDKRegistryEntry extends AbstractRegistryEntry
      *                    any default color correction the file may
      *                    specify applied.
      */
+    @Override
     public Filter handleURL(ParsedURL purl, boolean needRawData) {
 
         final URL url;
@@ -108,6 +110,7 @@ public class JDKRegistryEntry extends AbstractRegistryEntry
         }
 
         Thread t = new Thread() {
+                @Override
                 public void run() {
                     Filter filt = null;
                     try {
@@ -189,6 +192,7 @@ public class JDKRegistryEntry extends AbstractRegistryEntry
             imageDone       = false;
         }
 
+        @Override
         public boolean imageUpdate(Image img, int infoflags,
                                    int x, int y, int width, int height) {
             synchronized (this) {

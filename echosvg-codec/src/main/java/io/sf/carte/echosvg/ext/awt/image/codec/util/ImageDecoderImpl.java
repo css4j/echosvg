@@ -77,6 +77,7 @@ public abstract class ImageDecoderImpl implements ImageDecoder {
      * interface.  For example, a <code>JPEGImageDecoder</code> will
      * return an instance of <code>JPEGDecodeParam</code>.
      */
+    @Override
     public ImageDecodeParam getParam() {
         return param;
     }
@@ -91,6 +92,7 @@ public abstract class ImageDecoderImpl implements ImageDecoder {
      * will expect <code>param</code> to be an instance of
      * <code>JPEGDecodeParam</code>.
      */
+    @Override
     public void setParam(ImageDecodeParam param) {
         this.param = param;
     }
@@ -99,6 +101,7 @@ public abstract class ImageDecoderImpl implements ImageDecoder {
      * Returns the <code>SeekableStream</code> associated with
      * this <code>ImageDecoder</code>.
      */
+    @Override
     public SeekableStream getInputStream() {
         return input;
     }
@@ -108,6 +111,7 @@ public abstract class ImageDecoderImpl implements ImageDecoder {
      * By default, the return value is 1.  Subclasses that deal with
      * multi-page formats should override this method.
      */
+    @Override
     public int getNumPages() throws IOException {
         return 1;
     }
@@ -118,6 +122,7 @@ public abstract class ImageDecoderImpl implements ImageDecoder {
      * with this <code>ImageDecoder</code>.  Only
      * the first page of a multi-page image is decoded.
      */
+    @Override
     public Raster decodeAsRaster() throws IOException {
         return decodeAsRaster(0);
     }
@@ -132,6 +137,7 @@ public abstract class ImageDecoderImpl implements ImageDecoder {
      *
      * @param page The page to be decoded.
      */
+    @Override
     public Raster decodeAsRaster(int page) throws IOException {
         RenderedImage im = decodeAsRenderedImage(page);
         return im.getData();
@@ -143,6 +149,7 @@ public abstract class ImageDecoderImpl implements ImageDecoder {
      * with this <code>ImageDecoder</code>.  Only
      * the first page of a multi-page image is decoded.
      */
+    @Override
     public RenderedImage decodeAsRenderedImage() throws IOException {
         return decodeAsRenderedImage(0);
     }
@@ -157,6 +164,7 @@ public abstract class ImageDecoderImpl implements ImageDecoder {
      *
      * @param page The page to be decoded.
      */
+    @Override
     public abstract RenderedImage decodeAsRenderedImage(int page)
         throws IOException;
 }

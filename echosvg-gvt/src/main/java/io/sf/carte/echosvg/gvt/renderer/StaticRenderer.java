@@ -123,6 +123,7 @@ public class StaticRenderer implements ImageRenderer {
     /**
      * Disposes all resources of this renderer.
      */
+    @Override
     public void dispose() {
         rootGN     = null;
         rootFilter = null;
@@ -146,6 +147,7 @@ public class StaticRenderer implements ImageRenderer {
      * Any previous tree association is forgotten.
      * Not certain if this should be just GraphicsNode, or CanvasGraphicsNode.
      */
+    @Override
     public void setTree(GraphicsNode rootGN){
         this.rootGN = rootGN;
         rootFilter  = null;
@@ -163,6 +165,7 @@ public class StaticRenderer implements ImageRenderer {
     /**
      * @return the GVT tree associated with this renderer
      */
+    @Override
     public GraphicsNode getTree(){
         return rootGN;
     }
@@ -170,6 +173,7 @@ public class StaticRenderer implements ImageRenderer {
     /**
      * @param rh Set of rendering hints to use for future renderings
      */
+    @Override
     public void setRenderingHints(RenderingHints rh) {
         renderingHints = new RenderingHints(null);
         renderingHints.add(rh);
@@ -188,6 +192,7 @@ public class StaticRenderer implements ImageRenderer {
      * @return the RenderingHints which the Renderer is using for its
      *         rendering
      */
+    @Override
     public RenderingHints getRenderingHints() {
         return renderingHints;
     }
@@ -199,6 +204,7 @@ public class StaticRenderer implements ImageRenderer {
      * @param usr2dev the new user space to device space transform. If null,
      *        the identity transform will be set.
      */
+    @Override
     public void setTransform(AffineTransform usr2dev){
         if (this.usr2dev.equals(usr2dev))
             return;
@@ -215,6 +221,7 @@ public class StaticRenderer implements ImageRenderer {
      * Returns the transform from the current user space (as defined
      * by the top node of the GVT tree) to the device space.
      */
+    @Override
     public AffineTransform getTransform(){
         return usr2dev;
     }
@@ -224,6 +231,7 @@ public class StaticRenderer implements ImageRenderer {
      * rendering requests.  If it is then getOffscreen will only
      * return completed renderings (or null if nothing is available).
      */
+    @Override
     public boolean isDoubleBuffered(){
         return isDoubleBuffered;
     }
@@ -235,6 +243,7 @@ public class StaticRenderer implements ImageRenderer {
      *
      * @param isDoubleBuffered the new value for double buffering
      */
+    @Override
     public void setDoubleBuffered(boolean isDoubleBuffered){
         if (this.isDoubleBuffered == isDoubleBuffered)
             return;
@@ -262,6 +271,7 @@ public class StaticRenderer implements ImageRenderer {
      * isDoubleBuffered is true).
      *
      */
+    @Override
     public void updateOffScreen(int width, int height) {
         offScreenWidth  = width;
         offScreenHeight = height;
@@ -278,6 +288,7 @@ public class StaticRenderer implements ImageRenderer {
      * if isDoubleBuffered is false this will return the most recently
      * completed result of repaint.
      */
+    @Override
     public BufferedImage getOffScreen() {
         if (rootGN == null)
             return null;
@@ -296,6 +307,7 @@ public class StaticRenderer implements ImageRenderer {
      * since getOffscreen will only refect the new rendering after
      * repaint completes.
      */
+    @Override
     public void clearOffScreen() {
 
         // No need to clear in double buffer case people will
@@ -336,6 +348,7 @@ public class StaticRenderer implements ImageRenderer {
      * @param area region to be repainted, in the current user space
      * coordinate system.
      */
+    @Override
     public void repaint(Shape area) {
         if (area == null) return;
         RectListManager rlm = new RectListManager();
@@ -356,6 +369,7 @@ public class StaticRenderer implements ImageRenderer {
      * @param areas a List of regions to be repainted, in the current
      * user space coordinate system.
      */
+    @Override
     public void repaint(RectListManager areas) {
 
         if (areas == null)
@@ -412,6 +426,7 @@ public class StaticRenderer implements ImageRenderer {
     /**
      * Flush any cached image data.
      */
+    @Override
     public void flush() {
         if (lastCache == null) return;
         Object o = lastCache.get();
@@ -424,6 +439,7 @@ public class StaticRenderer implements ImageRenderer {
     /**
      * Flush a list of rectangles of cached image data.
      */
+    @Override
     public void flush(Collection areas) {
         AffineTransform at = getTransform();
         for (Object area : areas) {
@@ -436,6 +452,7 @@ public class StaticRenderer implements ImageRenderer {
     /**
      * Flush a rectangle of cached image data.
      */
+    @Override
     public void flush(Rectangle r) {
         if (lastCache == null) return;
         Object o = lastCache.get();

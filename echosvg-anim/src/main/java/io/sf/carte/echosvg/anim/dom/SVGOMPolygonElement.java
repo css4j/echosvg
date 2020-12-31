@@ -51,6 +51,7 @@ public class SVGOMPolygonElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_POLYGON_TAG;
     }
@@ -58,6 +59,7 @@ public class SVGOMPolygonElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMPolygonElement();
     }

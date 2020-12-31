@@ -43,6 +43,7 @@ public class OffsetTimingSpecifier extends TimingSpecifier {
     /**
      * Returns a string representation of this timing specifier.
      */
+    @Override
     public String toString() {
         return (offset >= 0 ? "+" : "") + offset;
     }
@@ -51,6 +52,7 @@ public class OffsetTimingSpecifier extends TimingSpecifier {
      * Initializes this timing specifier by adding the initial instance time
      * to the owner's instance time list or setting up any event listeners.
      */
+    @Override
     public void initialize() {
         InstanceTime instance = new InstanceTime(this, offset, false);
         owner.addInstanceTime(instance, isBegin);
@@ -60,6 +62,7 @@ public class OffsetTimingSpecifier extends TimingSpecifier {
      * Returns whether this timing specifier is event-like (i.e., if it is
      * an eventbase, accesskey or a repeat timing specifier).
      */
+    @Override
     public boolean isEventCondition() {
         return false;
     }

@@ -61,11 +61,13 @@ public class DynamicRenderer extends StaticRenderer {
 
     RectListManager damagedAreas;
 
+    @Override
     protected CachableRed setupCache(CachableRed img) {
         // Don't do any caching of content for dynamic case
         return img;
     }
 
+    @Override
     public void flush(Rectangle r) {
         // Since we don't cache we don't need to flush
         return;
@@ -74,11 +76,13 @@ public class DynamicRenderer extends StaticRenderer {
     /**
      * Flush a list of rectangles of cached image data.
      */
+    @Override
     public void flush(Collection areas) {
         // Since we don't cache we don't need to flush
         return;
     }
 
+    @Override
     protected void updateWorkingBuffers() {
         if (rootFilter == null) {
             rootFilter = rootGN.getGraphicsNodeRable(true);
@@ -141,6 +145,7 @@ public class DynamicRenderer extends StaticRenderer {
      * user space coordinate system.
      */
     // long lastFrame = -1;
+    @Override
     public void repaint(RectListManager devRLM) {
         if (devRLM == null)
             return;

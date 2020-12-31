@@ -36,6 +36,7 @@ public abstract class IdentifierManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
@@ -60,6 +61,7 @@ public abstract class IdentifierManager extends AbstractValueManager {
      * Implements {@link
      * ValueManager#createStringValue(short,String,CSSEngine)}.
      */
+    @Override
     public Value createStringValue(short type, String value, CSSEngine engine)
         throws DOMException {
         if (type != CSSPrimitiveValue.CSS_IDENT) {

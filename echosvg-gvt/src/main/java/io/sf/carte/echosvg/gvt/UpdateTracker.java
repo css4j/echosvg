@@ -226,6 +226,7 @@ public class UpdateTracker extends GraphicsNodeChangeAdapter {
      * Receives notification of a change to a GraphicsNode.
      * @param gnce The event object describing the GraphicsNode change.
      */
+    @Override
     public void changeStarted(GraphicsNodeChangeEvent gnce) {
         // System.out.println("A node has changed for: " + this);
         GraphicsNode gn = gnce.getGraphicsNode();

@@ -62,6 +62,7 @@ public class TestException extends Exception {
         return sourceError;
     }
 
+    @Override
     public String getMessage(){
         return Messages.formatMessage(errorCode,
                                       errorParams);

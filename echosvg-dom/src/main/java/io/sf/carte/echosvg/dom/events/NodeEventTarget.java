@@ -74,6 +74,7 @@ public interface NodeEventTarget extends EventTarget {
      *   .
      * @version DOM Level 3
      */
+    @Override
     boolean dispatchEvent(Event evt) throws EventException, DOMException;
 
     /**

@@ -82,6 +82,7 @@ public class LineInfo {
     public boolean        isPartialLine()       { return partial; }
     public Point2D.Float  getVerticalAlignOffset()    { return verticalAlignOffset; }
 
+    @Override
     public String         toString() {
         return "[LineInfo loc: " + loc
                 + " [" + startIdx + ',' + endIdx + "] "

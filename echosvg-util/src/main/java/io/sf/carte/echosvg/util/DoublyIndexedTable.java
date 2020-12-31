@@ -334,10 +334,12 @@ public class DoublyIndexedTable {
             finished = nextEntry == null;
         }
 
+        @Override
         public boolean hasNext() {
             return !finished;
         }
 
+        @Override
         public Object next() {
             if (finished) {
                 throw new NoSuchElementException();
@@ -365,6 +367,7 @@ public class DoublyIndexedTable {
             finished = nextEntry == null;
         }
 
+        @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }

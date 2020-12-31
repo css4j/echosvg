@@ -35,6 +35,7 @@ public class GlyphOrientationHorizontalManager
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_GLYPH_ORIENTATION_HORIZONTAL_PROPERTY;
     }
@@ -43,6 +44,7 @@ public class GlyphOrientationHorizontalManager
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return SVGValueConstants.ZERO_DEGREE;
     }

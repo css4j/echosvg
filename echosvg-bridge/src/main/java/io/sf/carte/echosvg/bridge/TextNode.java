@@ -227,6 +227,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      * been informed that all its cached values related to its bounds must be
      * recomputed.
      */
+    @Override
     protected void invalidateGeometryCache() {
         super.invalidateGeometryCache();
         primitiveBounds = null;
@@ -237,6 +238,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
     /**
      * Returns the bounds of the area covered by this node's primitive paint.
      */
+    @Override
     public Rectangle2D getPrimitiveBounds(){
         if (primitiveBounds == null) {
             if (aci != null) {
@@ -252,6 +254,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      * exclusive of any clipping, masking, filtering or stroking, for
      * example.
      */
+    @Override
     public Rectangle2D getGeometryBounds(){
         if (geometryBounds == null){
             if (aci != null) {
@@ -266,6 +269,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      * This includes the stroked area but does not include the effects
      * of clipping, masking or filtering.
      */
+    @Override
     public Rectangle2D getSensitiveBounds() {
         return getGeometryBounds();
     }
@@ -273,6 +277,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
     /**
      * Returns the outline of this node.
      */
+    @Override
     public Shape getOutline() {
         if (outline == null) {
             if (aci != null) {
@@ -308,6 +313,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      * @param x the x coordinate of the start of the selection
      * @param y the y coordinate of the start of the selection
      */
+    @Override
     public boolean selectAt(double x, double y) {
         beginMark = textPainter.selectAt(x, y, this);
         return true; // assume this always changes selection, for now.
@@ -318,6 +324,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      * @param x the x coordinate of the end of the selection
      * @param y the y coordinate of the end of the selection
      */
+    @Override
     public boolean selectTo(double x, double y) {
         Mark tmpMark = textPainter.selectTo(x, y, beginMark);
         if (tmpMark == null)
@@ -334,6 +341,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      * @param x the x coordinate of the point the selection was made
      * @param y the y coordinate of the point the selection was made
      */
+    @Override
     public boolean selectAll(double x, double y) {
         beginMark = textPainter.selectFirst(this);
         endMark   = textPainter.selectLast(this);
@@ -345,6 +353,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      *
      * @return an object containing the selected content.
      */
+    @Override
     public Object getSelection() {
         Object o = null;
         if (aci == null) return o;
@@ -371,6 +380,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      *
      * @return a Shape which encloses the current text selection.
      */
+    @Override
     public Shape getHighlightShape() {
         Shape highlightShape =
             textPainter.getHighlightShape(beginMark, endMark);
@@ -388,6 +398,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      *
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void primitivePaint(Graphics2D g2d) {
         //
         // DO NOT REMOVE: THE FOLLOWING IS A WORK AROUND
@@ -412,6 +423,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      *
      * @param p the specified Point2D in the user space
      */
+    @Override
     public boolean contains(Point2D p) {
         // <!> FIXME: should put this code in TextPaint somewhere,
         // as pointer-events support - same problem with pointer-events

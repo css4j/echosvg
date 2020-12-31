@@ -76,6 +76,7 @@ public class AWTTransformProducer implements TransformListHandler {
     /**
      * Implements {@link TransformListHandler#startTransformList()}.
      */
+    @Override
     public void startTransformList() throws ParseException {
         affineTransform = new AffineTransform();
     }
@@ -84,6 +85,7 @@ public class AWTTransformProducer implements TransformListHandler {
      * Implements {@link
      * TransformListHandler#matrix(float,float,float,float,float,float)}.
      */
+    @Override
     public void matrix(float a, float b, float c, float d, float e, float f)
         throws ParseException {
         affineTransform.concatenate(new AffineTransform(a, b, c, d, e, f));
@@ -92,6 +94,7 @@ public class AWTTransformProducer implements TransformListHandler {
     /**
      * Implements {@link TransformListHandler#rotate(float)}.
      */
+    @Override
     public void rotate(float theta) throws ParseException {
         affineTransform.concatenate
             (AffineTransform.getRotateInstance( Math.toRadians( theta ) ));
@@ -100,6 +103,7 @@ public class AWTTransformProducer implements TransformListHandler {
     /**
      * Implements {@link TransformListHandler#rotate(float,float,float)}.
      */
+    @Override
     public void rotate(float theta, float cx, float cy) throws ParseException {
         AffineTransform at
             = AffineTransform.getRotateInstance( Math.toRadians( theta ), cx, cy);
@@ -109,6 +113,7 @@ public class AWTTransformProducer implements TransformListHandler {
     /**
      * Implements {@link TransformListHandler#translate(float)}.
      */
+    @Override
     public void translate(float tx) throws ParseException {
         AffineTransform at = AffineTransform.getTranslateInstance(tx, 0);
         affineTransform.concatenate(at);
@@ -117,6 +122,7 @@ public class AWTTransformProducer implements TransformListHandler {
     /**
      * Implements {@link TransformListHandler#translate(float,float)}.
      */
+    @Override
     public void translate(float tx, float ty) throws ParseException {
         AffineTransform at = AffineTransform.getTranslateInstance(tx, ty);
         affineTransform.concatenate(at);
@@ -125,6 +131,7 @@ public class AWTTransformProducer implements TransformListHandler {
     /**
      * Implements {@link TransformListHandler#scale(float)}.
      */
+    @Override
     public void scale(float sx) throws ParseException {
         affineTransform.concatenate(AffineTransform.getScaleInstance(sx, sx));
     }
@@ -132,6 +139,7 @@ public class AWTTransformProducer implements TransformListHandler {
     /**
      * Implements {@link TransformListHandler#scale(float,float)}.
      */
+    @Override
     public void scale(float sx, float sy) throws ParseException {
         affineTransform.concatenate(AffineTransform.getScaleInstance(sx, sy));
     }
@@ -139,6 +147,7 @@ public class AWTTransformProducer implements TransformListHandler {
     /**
      * Implements {@link TransformListHandler#skewX(float)}.
      */
+    @Override
     public void skewX(float skx) throws ParseException {
         affineTransform.concatenate
             (AffineTransform.getShearInstance(Math.tan( Math.toRadians( skx ) ), 0));
@@ -147,6 +156,7 @@ public class AWTTransformProducer implements TransformListHandler {
     /**
      * Implements {@link TransformListHandler#skewY(float)}.
      */
+    @Override
     public void skewY(float sky) throws ParseException {
         affineTransform.concatenate
             (AffineTransform.getShearInstance(0, Math.tan( Math.toRadians( sky ) )));
@@ -155,6 +165,7 @@ public class AWTTransformProducer implements TransformListHandler {
     /**
      * Implements {@link TransformListHandler#endTransformList()}.
      */
+    @Override
     public void endTransformList() throws ParseException {
     }
 }

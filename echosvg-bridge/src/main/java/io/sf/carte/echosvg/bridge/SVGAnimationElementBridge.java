@@ -121,6 +121,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * composition of additive animations.  This should be overridden in
      * descendant classes that are for 'other' animations.
      */
+    @Override
     public AnimatableValue getUnderlyingValue() {
         if (animationType == AnimationEngine.ANIM_TYPE_XML) {
             return animationTarget.getUnderlyingValue(attributeNamespaceURI,
@@ -140,6 +141,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * @param ctx the bridge context to use
      * @param e the element being handled
      */
+    @Override
     public void handleElement(BridgeContext ctx, Element e) {
         if (ctx.isDynamic() && BridgeContext.getSVGContext(e) == null) {
             SVGAnimationElementBridge b =
@@ -313,18 +315,21 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
     /**
      * Invoked when an MutationEvent of type 'DOMAttrModified' is fired.
      */
+    @Override
     public void handleDOMAttrModifiedEvent(MutationEvent evt) {
     }
 
     /**
      * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
      */
+    @Override
     public void handleDOMNodeInsertedEvent(MutationEvent evt) {
     }
 
     /**
      * Invoked when an MutationEvent of type 'DOMNodeRemoved' is fired.
      */
+    @Override
     public void handleDOMNodeRemovedEvent(MutationEvent evt) {
         element.setSVGContext(null);
         dispose();
@@ -334,18 +339,21 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * Invoked when an MutationEvent of type 'DOMCharacterDataModified' 
      * is fired.
      */
+    @Override
     public void handleDOMCharacterDataModified(MutationEvent evt) {
     }
 
     /**
      * Invoked when an CSSEngineEvent is fired.
      */
+    @Override
     public void handleCSSEngineEvent(CSSEngineEvent evt) {
     }
 
     /**
      * Invoked when the animated value of an animatable attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged
             (AnimatedLiveAttributeValue alav) {
     }
@@ -353,12 +361,14 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
     /**
      * Invoked when an 'other' animation value has changed.
      */
+    @Override
     public void handleOtherAnimationChanged(String type) {
     }
 
     /**
      * Disposes this BridgeUpdateHandler and releases all resources.
      */
+    @Override
     public void dispose() {
         if (element.getSVGContext() == null) {
             // Only remove the animation if this is not part of a rebuild.
@@ -374,6 +384,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
     /**
      * Returns the size of a px CSS unit in millimeters.
      */
+    @Override
     public float getPixelUnitToMillimeter() {
         return ctx.getUserAgent().getPixelUnitToMillimeter();
     }
@@ -383,26 +394,35 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * This will be removed after next release.
      * @see #getPixelUnitToMillimeter()
      */
+    @Override
     public float getPixelToMM() {
         return getPixelUnitToMillimeter();
             
     }
 
+    @Override
     public Rectangle2D getBBox() { return null; }
+    @Override
     public AffineTransform getScreenTransform() { 
         return ctx.getUserAgent().getTransform();
     }
+    @Override
     public void setScreenTransform(AffineTransform at) { 
         ctx.getUserAgent().setTransform(at);
     }
+    @Override
     public AffineTransform getCTM() { return null; }
+    @Override
     public AffineTransform getGlobalTransform() { return null; }
+    @Override
     public float getViewportWidth() {
         return ctx.getBlockWidth(element);
     }
+    @Override
     public float getViewportHeight() {
         return ctx.getBlockHeight(element);
     }
+    @Override
     public float getFontSize() { return 0; }
     public float svgToUserSpace(float v, int type, int pcInterp) {
         return 0;
@@ -426,6 +446,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGAnimationElement#getTargetElement()}.
      */
+    @Override
     public SVGElement getTargetElement() {
         return targetElement;
     }
@@ -434,6 +455,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGAnimationElement#getStartTime()}.
      */
+    @Override
     public float getStartTime() {
         return timedElement.getCurrentBeginTime();
     }
@@ -442,6 +464,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGAnimationElement#getCurrentTime()}.
      */
+    @Override
     public float getCurrentTime() {
         return timedElement.getLastSampleTime();
     }
@@ -452,6 +475,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * difference that an indefinite simple duration is returned as
      * {@link TimedElement#INDEFINITE}, rather than throwing an exception.
      */
+    @Override
     public float getSimpleDuration() {
         return timedElement.getSimpleDur();
     }
@@ -461,6 +485,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * element were hyperlinked to, or <code>NaN</code> if there is no
      * such begin time.
      */
+    @Override
     public float getHyperlinkBeginTime() {
         return timedElement.getHyperlinkBeginTime();
     }
@@ -471,6 +496,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.smil.ElementTimeControl#beginElement()}.
      */
+    @Override
     public boolean beginElement() throws DOMException {
         timedElement.beginElement();
         return timedElement.canBegin();
@@ -480,6 +506,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.smil.ElementTimeControl#beginElementAt(float)}.
      */
+    @Override
     public boolean beginElementAt(float offset) throws DOMException {
         timedElement.beginElement(offset);
         // XXX Not right, but who knows if it is possible to begin
@@ -491,6 +518,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.smil.ElementTimeControl#endElement()}.
      */
+    @Override
     public boolean endElement() throws DOMException {
         timedElement.endElement();
         return timedElement.canEnd();
@@ -500,6 +528,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.smil.ElementTimeControl#endElementAt(float)}.
      */
+    @Override
     public boolean endElementAt(float offset) throws DOMException {
         timedElement.endElement(offset);
         // XXX Not right, but who knows if it is possible to begin
@@ -522,6 +551,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
         /**
          * Returns the DOM element this timed element is for.
          */
+        @Override
         public Element getElement() {
             return element;
         }
@@ -532,6 +562,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
          *                  or "repeatEvent").
          * @param time the timestamp of the event object
          */
+        @Override
         protected void fireTimeEvent(String eventType, Calendar time,
                                      int detail) {
             AnimationSupport.fireTimeEvent(element, eventType, time, detail);
@@ -543,6 +574,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
          * @param begin the time the element became active, in document
          *              simple time
          */
+        @Override
         protected void toActive(float begin) {
             eng.toActive(animation, begin);
         }
@@ -555,6 +587,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
          *                    interval
          * @param isFrozen whether the element is frozen or not
          */
+        @Override
         protected void toInactive(boolean stillActive, boolean isFrozen) {
             eng.toInactive(animation, isFrozen);
         }
@@ -562,6 +595,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
         /**
          * Invoked to indicate that this timed element has had its fill removed.
          */
+        @Override
         protected void removeFill() {
             eng.removeFill(animation);
         }
@@ -574,6 +608,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
          * @param repeatIteration the repeat iteration during which the element
          *                        was sampled
          */
+        @Override
         protected void sampledAt(float simpleTime, float simpleDur,
                                  int repeatIteration) {
             eng.sampledAt(animation, simpleTime, simpleDur, repeatIteration);
@@ -585,6 +620,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
          * simple duration.  This is the "last" value that will be used
          * for filling, which cannot be sampled normally.
          */
+        @Override
         protected void sampledLastValue(int repeatIteration) {
             eng.sampledLastValue(animation, repeatIteration);
         }
@@ -592,6 +628,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
         /**
          * Returns the timed element with the given ID.
          */
+        @Override
         protected TimedElement getTimedElementById(String id) {
             return AnimationSupport.getTimedElementById(id, element);
         }
@@ -599,6 +636,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
         /**
          * Returns the event target with the given ID.
          */
+        @Override
         protected EventTarget getEventTargetById(String id) {
             return AnimationSupport.getEventTargetById(id, element);
         }
@@ -607,6 +645,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
          * Returns the event target that should be listened to for
          * access key events.
          */
+        @Override
         protected EventTarget getRootEventTarget() {
             return (EventTarget) element.getOwnerDocument();
         }
@@ -615,6 +654,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
          * Returns the target of this animation as an {@link EventTarget}.  Used
          * for eventbase timing specifiers where the element ID is omitted.
          */
+        @Override
         protected EventTarget getAnimationEventTarget() {
             return targetElement;
         }
@@ -623,6 +663,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
          * Returns whether this timed element comes before the given timed
          * element in document order.
          */
+        @Override
         public boolean isBefore(TimedElement other) {
             Element e = other.getElement();
             int pos = element.compareDocumentPosition(e);
@@ -632,6 +673,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
         /**
          * Returns a string representation of this animation.
          */
+        @Override
         public String toString() {
             if (element != null) {
                 String id = element.getAttributeNS(null, "id");
@@ -646,6 +688,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
          * Returns whether this timed element is for a constant animation (i.e.,
          * a 'set' animation.
          */
+        @Override
         protected boolean isConstantAnimation() {
             return SVGAnimationElementBridge.this.isConstantAnimation();
         }

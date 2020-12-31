@@ -33,6 +33,7 @@ public class ConcreteGraphicsNodeRableFactory implements GraphicsNodeRableFactor
      * Returns a <code>GraphicsNodeRable</code> initialized with the
      * input <code>GraphicsNode</code>.
      */
+    @Override
     public GraphicsNodeRable createGraphicsNodeRable(GraphicsNode node){
         return (GraphicsNodeRable)node.getGraphicsNodeRable(true);
     }

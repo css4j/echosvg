@@ -57,6 +57,7 @@ public final class ColorMatrixRable8Bit
     /**
      * Sets the source of the blur operation
      */
+    @Override
     public void setSource(Filter src){
         init(src, null);
     }
@@ -64,6 +65,7 @@ public final class ColorMatrixRable8Bit
     /**
      * Returns the source of the blur operation
      */
+    @Override
     public Filter getSource(){
         return (Filter)getSources().get(0);
     }
@@ -73,6 +75,7 @@ public final class ColorMatrixRable8Bit
      * @return one of TYPE_MATRIX, TYPE_SATURATE, TYPE_HUE_ROTATE,
      *         TYPE_LUMINANCE_TO_ALPHA
      */
+    @Override
     public int getType(){
         return type;
     }
@@ -81,6 +84,7 @@ public final class ColorMatrixRable8Bit
      * Returns the rows of the color matrix. This uses
      * the same convention as BandCombineOp.
      */
+    @Override
     public float[][] getMatrix(){
         return matrix;
     }
@@ -201,6 +205,7 @@ public final class ColorMatrixRable8Bit
         return filter;
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         //
         // Get source's rendered image

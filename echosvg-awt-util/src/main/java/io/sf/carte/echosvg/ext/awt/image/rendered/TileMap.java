@@ -42,6 +42,7 @@ public class TileMap implements TileStore {
 
         class RasterSoftRef extends CleanerThread.SoftReferenceCleared {
             RasterSoftRef(Object o) { super(o); }
+            @Override
             public void cleared() {
                 if (DEBUG) System.err.println("Cleaned: " + this);
                 TileMap tm = (TileMap)parent.get();
@@ -56,6 +57,7 @@ public class TileMap implements TileStore {
             this.pt     = pt;
         }
 
+        @Override
         public void setRaster(Raster ras) {
             hRaster = ras;
             wRaster = new RasterSoftRef(ras);
@@ -71,6 +73,7 @@ public class TileMap implements TileStore {
         this.source   = source;
     }
 
+    @Override
     public void setTile(int x, int y, Raster ras) {
         Point pt = new Point(x, y);
 
@@ -98,6 +101,7 @@ public class TileMap implements TileStore {
 
     // Returns Raster if the tile is _currently_ in the cache.
     // If it is not currently in the cache it returns null.
+    @Override
     public Raster getTileNoCompute(int x, int y) {
         Point pt = new Point(x, y);
         Object o = rasters.get(pt);
@@ -111,6 +115,7 @@ public class TileMap implements TileStore {
         return ret;
     }
 
+    @Override
     public Raster getTile(int x, int y) {
         if (DEBUG) System.out.println("Fetching: (" + (x) + ", " +
                                       (y) + ')' );

@@ -129,6 +129,7 @@ public class SVGOMFECompositeElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -152,6 +153,7 @@ public class SVGOMFECompositeElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_COMPOSITE_TAG;
     }
@@ -159,6 +161,7 @@ public class SVGOMFECompositeElement
     /**
      * <b>DOM</b>: Implements {@link SVGFECompositeElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -166,6 +169,7 @@ public class SVGOMFECompositeElement
     /**
      * <b>DOM</b>: Implements {@link SVGFECompositeElement#getIn2()}.
      */
+    @Override
     public SVGAnimatedString getIn2() {
         return in2;
     }
@@ -173,6 +177,7 @@ public class SVGOMFECompositeElement
     /**
      * <b>DOM</b>: Implements {@link SVGFECompositeElement#getOperator()}.
      */
+    @Override
     public SVGAnimatedEnumeration getOperator() {
         return operator;
     }
@@ -180,6 +185,7 @@ public class SVGOMFECompositeElement
     /**
      * <b>DOM</b>: Implements {@link SVGFECompositeElement#getK1()}.
      */
+    @Override
     public SVGAnimatedNumber getK1() {
         return k1;
     }
@@ -187,6 +193,7 @@ public class SVGOMFECompositeElement
     /**
      * <b>DOM</b>: Implements {@link SVGFECompositeElement#getK2()}.
      */
+    @Override
     public SVGAnimatedNumber getK2() {
         return k2;
     }
@@ -194,6 +201,7 @@ public class SVGOMFECompositeElement
     /**
      * <b>DOM</b>: Implements {@link SVGFECompositeElement#getK3()}.
      */
+    @Override
     public SVGAnimatedNumber getK3() {
         return k3;
     }
@@ -201,6 +209,7 @@ public class SVGOMFECompositeElement
     /**
      * <b>DOM</b>: Implements {@link SVGFECompositeElement#getK4()}.
      */
+    @Override
     public SVGAnimatedNumber getK4() {
         return k4;
     }
@@ -208,6 +217,7 @@ public class SVGOMFECompositeElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFECompositeElement();
     }
@@ -215,6 +225,7 @@ public class SVGOMFECompositeElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

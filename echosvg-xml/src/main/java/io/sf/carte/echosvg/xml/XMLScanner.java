@@ -252,6 +252,7 @@ public class XMLScanner implements Localizable {
     /**
      * Implements {@link io.sf.carte.echosvg.i18n.Localizable#setLocale(Locale)}.
      */
+    @Override
     public  void setLocale(Locale l) {
         localizableSupport.setLocale(l);
     }
@@ -259,6 +260,7 @@ public class XMLScanner implements Localizable {
     /**
      * Implements {@link io.sf.carte.echosvg.i18n.Localizable#getLocale()}.
      */
+    @Override
     public Locale getLocale() {
         return localizableSupport.getLocale();
     }
@@ -267,6 +269,7 @@ public class XMLScanner implements Localizable {
      * Implements {@link
      * io.sf.carte.echosvg.i18n.Localizable#formatMessage(String,Object[])}.
      */
+    @Override
     public String formatMessage(String key, Object[] args)
         throws MissingResourceException {
         return localizableSupport.formatMessage(key, args);

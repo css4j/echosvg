@@ -33,6 +33,7 @@ public class LengthPairListParser extends LengthListParser {
     /**
      * Parses the given reader.
      */
+    @Override
     protected void doParse() throws ParseException, IOException {
         ((LengthListHandler) lengthHandler).startLengthList();
 

@@ -57,6 +57,7 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge
     /**
      * Returns 'pattern'.
      */
+    @Override
     public String getLocalName() {
         return SVG_PATTERN_TAG;
     }
@@ -70,6 +71,7 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge
      * @param paintedNode the graphics node on which the Paint will be applied
      * @param opacity the opacity of the Paint to create
      */
+    @Override
     public Paint createPaint(BridgeContext ctx,
                              Element patternElement,
                              Element paintedElement,
@@ -325,24 +327,29 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge
         public PatternGraphicsNode(GraphicsNode gn) {
             this.pcn = gn;
         }
+        @Override
         public void primitivePaint(Graphics2D g2d) {
             pcn.paint(g2d);
         }
+        @Override
         public Rectangle2D getPrimitiveBounds() {
             if (pBounds != null) return pBounds;
             pBounds = pcn.getTransformedBounds(IDENTITY);
             return pBounds;
         }
+        @Override
         public Rectangle2D getGeometryBounds() {
             if (gBounds != null) return gBounds;
             gBounds = pcn.getTransformedGeometryBounds(IDENTITY);
             return gBounds;
         }
+        @Override
         public Rectangle2D getSensitiveBounds() {
             if (sBounds != null) return sBounds;
             sBounds = pcn.getTransformedSensitiveBounds(IDENTITY);
             return sBounds;
         }
+        @Override
         public Shape getOutline() {
             if (oShape != null) return oShape;
             oShape = pcn.getOutline();
@@ -351,6 +358,7 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge
                 oShape = tr.createTransformedShape(oShape);
             return oShape;
         }
+        @Override
         protected void invalidateGeometryCache() {
             pBounds = null;
             gBounds = null;

@@ -101,6 +101,7 @@ public class SVGOMRadialGradientElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -112,16 +113,17 @@ public class SVGOMRadialGradientElement
     private void initializeLiveAttributes() {
         cx = createLiveAnimatedLength
             (null, SVG_CX_ATTRIBUTE, SVG_RADIAL_GRADIENT_CX_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         cy = createLiveAnimatedLength
             (null, SVG_CY_ATTRIBUTE, SVG_RADIAL_GRADIENT_CY_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         r = createLiveAnimatedLength
             (null, SVG_R_ATTRIBUTE, SVG_RADIAL_GRADIENT_R_DEFAULT_VALUE,
-             SVGOMAnimatedLength.OTHER_LENGTH, false);
+             AbstractSVGAnimatedLength.OTHER_LENGTH, false);
         fx = new AbstractSVGAnimatedLength
             (this, null, SVG_FX_ATTRIBUTE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false) {
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false) {
+                @Override
                 protected String getDefaultValue() {
                     Attr attr = getAttributeNodeNS(null, SVG_CX_ATTRIBUTE);
                     if (attr == null) {
@@ -132,7 +134,8 @@ public class SVGOMRadialGradientElement
             };
         fy = new AbstractSVGAnimatedLength
             (this, null, SVG_FY_ATTRIBUTE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false) {
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false) {
+                @Override
                 protected String getDefaultValue() {
                     Attr attr = getAttributeNodeNS(null, SVG_CY_ATTRIBUTE);
                     if (attr == null) {
@@ -153,6 +156,7 @@ public class SVGOMRadialGradientElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_RADIAL_GRADIENT_TAG;
     }
@@ -161,6 +165,7 @@ public class SVGOMRadialGradientElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGRadialGradientElement#getCx()}.
      */
+    @Override
     public SVGAnimatedLength getCx() {
         return cx;
     }
@@ -169,6 +174,7 @@ public class SVGOMRadialGradientElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGRadialGradientElement#getCy()}.
      */
+    @Override
     public SVGAnimatedLength getCy() {
         return cy;
     }
@@ -177,6 +183,7 @@ public class SVGOMRadialGradientElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGRadialGradientElement#getR()}.
      */
+    @Override
     public SVGAnimatedLength getR() {
         return r;
     }
@@ -185,6 +192,7 @@ public class SVGOMRadialGradientElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGRadialGradientElement#getFx()}.
      */
+    @Override
     public SVGAnimatedLength getFx() {
         return fx;
     }
@@ -193,6 +201,7 @@ public class SVGOMRadialGradientElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGRadialGradientElement#getFy()}.
      */
+    @Override
     public SVGAnimatedLength getFy() {
         return fy;
     }
@@ -200,6 +209,7 @@ public class SVGOMRadialGradientElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMRadialGradientElement();
     }
@@ -207,6 +217,7 @@ public class SVGOMRadialGradientElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

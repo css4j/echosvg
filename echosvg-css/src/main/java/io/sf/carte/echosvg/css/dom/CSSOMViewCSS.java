@@ -52,6 +52,7 @@ public class CSSOMViewCSS implements ViewCSS {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.views.AbstractView#getDocument()}.
      */
+    @Override
     public DocumentView getDocument() {
         return (DocumentView)cssEngine.getDocument();
     }
@@ -60,6 +61,7 @@ public class CSSOMViewCSS implements ViewCSS {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.ViewCSS#getComputedStyle(Element,String)}.
      */
+    @Override
     public CSSStyleDeclaration getComputedStyle(Element elt,
                                                 String pseudoElt) {
         if (elt instanceof CSSStylableElement) {

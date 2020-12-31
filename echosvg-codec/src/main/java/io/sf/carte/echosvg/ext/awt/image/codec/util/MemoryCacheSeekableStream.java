@@ -128,6 +128,7 @@ public final class MemoryCacheSeekableStream extends SeekableStream {
      * <code>MemoryCacheSeekableStream</code> instances support seeking
      * backwards.
      */
+    @Override
     public boolean canSeekBackwards() {
         return true;
     }
@@ -138,6 +139,7 @@ public final class MemoryCacheSeekableStream extends SeekableStream {
      * @return     the offset from the beginning of the file, in bytes,
      *             at which the next read occurs.
      */
+    @Override
     public long getFilePointer() {
         return pointer;
     }
@@ -152,6 +154,7 @@ public final class MemoryCacheSeekableStream extends SeekableStream {
      * @exception  IOException  if <code>pos</code> is less than
      *                          <code>0</code> or if an I/O error occurs.
      */
+    @Override
     public void seek(long pos) throws IOException {
         if (pos < 0) {
             throw new IOException(PropertyUtil.getString("MemoryCacheSeekableStream0"));
@@ -170,6 +173,7 @@ public final class MemoryCacheSeekableStream extends SeekableStream {
      * @return     the next byte of data, or <code>-1</code> if the end of the
      *             stream is reached.
      */
+    @Override
     public int read() throws IOException {
         long next = pointer + 1;
         long pos = readUntil(next);
@@ -229,6 +233,7 @@ public final class MemoryCacheSeekableStream extends SeekableStream {
      *             <code>-1</code> if there is no more data because the end of
      *             the stream has been reached.
      */
+    @Override
     public int read(byte[] b, int off, int len) throws IOException {
         if (b == null) {
             throw new NullPointerException();

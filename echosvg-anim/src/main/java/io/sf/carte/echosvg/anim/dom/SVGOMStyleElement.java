@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.css.engine.CSSStyleSheetNode;
 import io.sf.carte.echosvg.css.engine.StyleSheet;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
+import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
 
@@ -69,7 +70,7 @@ public class SVGOMStyleElement
 
     static {
         attributeInitializer = new AttributeInitializer(1);
-        attributeInitializer.addAttribute(XMLSupport.XML_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XML_NAMESPACE_URI,
                                           "xml", "space", "preserve");
     }
 
@@ -107,6 +108,7 @@ public class SVGOMStyleElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_STYLE_TAG;
     }
@@ -114,9 +116,10 @@ public class SVGOMStyleElement
     /**
      * Returns the associated style-sheet.
      */
+    @Override
     public StyleSheet getCSSStyleSheet() {
         if (styleSheet == null) {
-            if (getType().equals(SVGConstants.CSS_MIME_TYPE)) {
+            if (getType().equals(CSSConstants.CSS_MIME_TYPE)) {
                 SVGOMDocument doc = (SVGOMDocument)getOwnerDocument();
                 CSSEngine e = doc.getCSSEngine();
                 String text = "";
@@ -152,6 +155,7 @@ public class SVGOMStyleElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.stylesheets.LinkStyle#getSheet()}.
      */
+    @Override
     public org.w3c.dom.stylesheets.StyleSheet getSheet() {
         throw new UnsupportedOperationException
             ("LinkStyle.getSheet() is not implemented"); // XXX
@@ -160,6 +164,7 @@ public class SVGOMStyleElement
     /**
      * <b>DOM</b>: Implements {@link SVGStyleElement#getXMLspace()}.
      */
+    @Override
     public String getXMLspace() {
         return XMLSupport.getXMLSpace(this);
     }
@@ -167,6 +172,7 @@ public class SVGOMStyleElement
     /**
      * <b>DOM</b>: Implements {@link SVGStyleElement#setXMLspace(String)}.
      */
+    @Override
     public void setXMLspace(String space) throws DOMException {
         setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
     }
@@ -174,16 +180,18 @@ public class SVGOMStyleElement
     /**
      * <b>DOM</b>: Implements {@link SVGStyleElement#getType()}.
      */
+    @Override
     public String getType() {
         if (hasAttributeNS(null, SVG_TYPE_ATTRIBUTE))
             return getAttributeNS(null, SVG_TYPE_ATTRIBUTE);
         else
-            return SVGConstants.CSS_MIME_TYPE;
+            return CSSConstants.CSS_MIME_TYPE;
     }
 
     /**
      * <b>DOM</b>: Implements {@link SVGStyleElement#setType(String)}.
      */
+    @Override
     public void setType(String type) throws DOMException {
         setAttributeNS(null, SVG_TYPE_ATTRIBUTE, type);
     }
@@ -191,6 +199,7 @@ public class SVGOMStyleElement
     /**
      * <b>DOM</b>: Implements {@link SVGStyleElement#getMedia()}.
      */
+    @Override
     public String getMedia() {
         return getAttribute(SVG_MEDIA_ATTRIBUTE);
     }
@@ -198,6 +207,7 @@ public class SVGOMStyleElement
     /**
      * <b>DOM</b>: Implements {@link SVGStyleElement#setMedia(String)}.
      */
+    @Override
     public void setMedia(String media) throws DOMException {
         setAttribute(SVG_MEDIA_ATTRIBUTE, media);
     }
@@ -205,6 +215,7 @@ public class SVGOMStyleElement
     /**
      * <b>DOM</b>: Implements {@link SVGStyleElement#getTitle()}.
      */
+    @Override
     public String getTitle() {
         return getAttribute(SVG_TITLE_ATTRIBUTE);
     }
@@ -212,6 +223,7 @@ public class SVGOMStyleElement
     /**
      * <b>DOM</b>: Implements {@link SVGStyleElement#setTitle(String)}.
      */
+    @Override
     public void setTitle(String title) throws DOMException {
         setAttribute(SVG_TITLE_ATTRIBUTE, title);
     }
@@ -220,6 +232,7 @@ public class SVGOMStyleElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -227,6 +240,7 @@ public class SVGOMStyleElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMStyleElement();
     }
@@ -243,6 +257,7 @@ public class SVGOMStyleElement
      */
     protected class DOMCharacterDataModifiedListener
         implements EventListener {
+        @Override
         public void handleEvent(Event evt) {
             styleSheet = null;
         }

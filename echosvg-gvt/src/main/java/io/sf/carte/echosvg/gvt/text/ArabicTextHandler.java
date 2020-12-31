@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.gvt.text;
 
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
+import java.text.CharacterIterator;
 import java.util.Map;
 
 
@@ -85,7 +86,7 @@ public final class ArabicTextHandler {
             char c        = aci.next();
             int  i        = 1;
             for (char nextChar = aci.next();
-                 nextChar != AttributedCharacterIterator.DONE;
+                 nextChar != CharacterIterator.DONE;
                  prevChar = c, c = nextChar, nextChar = aci.next(), i++) {
                 if (arabicCharTransparent(c)) {
                     if (hasSubstitute(prevChar, nextChar)) {
@@ -156,7 +157,7 @@ public final class ArabicTextHandler {
         int runStart = -1;
         int idx = aci.getBeginIndex();
         for (int c = aci.first();
-             c != AttributedCharacterIterator.DONE;
+             c != CharacterIterator.DONE;
              c = aci.next(), idx++) {
             if ((c >= arabicStart) && (c <= arabicEnd)) {
                 if (runStart == -1)
@@ -174,7 +175,7 @@ public final class ArabicTextHandler {
 
         Integer currentForm = ARABIC_NONE;
         // for each run of arabic chars, assign the appropriate form
-        while (aci.setIndex(end) != AttributedCharacterIterator.DONE) {
+        while (aci.setIndex(end) != CharacterIterator.DONE) {
             int start = aci.getRunStart(ARABIC_FORM);
             end       = aci.getRunLimit(ARABIC_FORM);
             char currentChar = aci.setIndex(start);
@@ -266,7 +267,7 @@ public final class ArabicTextHandler {
      */
     public static boolean containsArabic(AttributedCharacterIterator aci) {
         for (char c = aci.first();
-             c != AttributedCharacterIterator.DONE;
+             c != CharacterIterator.DONE;
              c = aci.next()) {
             if (arabicChar(c)) {
                 return true;

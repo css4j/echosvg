@@ -71,6 +71,7 @@ public class BindableElement extends SVGGraphicsElement {
     /**
      * <b>DOM</b>: Implements {@link Node#getNamespaceURI()}.
      */
+    @Override
     public String getNamespaceURI() {
         return namespaceURI;
     }
@@ -78,6 +79,7 @@ public class BindableElement extends SVGGraphicsElement {
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return localName;
     }
@@ -86,6 +88,7 @@ public class BindableElement extends SVGGraphicsElement {
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return null;
     }
@@ -93,6 +96,7 @@ public class BindableElement extends SVGGraphicsElement {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new BindableElement(null, null, namespaceURI, localName);
     }
@@ -116,6 +120,7 @@ public class BindableElement extends SVGGraphicsElement {
     /**
      * Returns the shadow tree.
      */
+    @Override
     public Node getCSSFirstChild() {
         if (xblShadowTree != null) {
             return xblShadowTree.getFirstChild();
@@ -126,6 +131,7 @@ public class BindableElement extends SVGGraphicsElement {
     /**
      * Returns the shadow tree.
      */
+    @Override
     public Node getCSSLastChild() {
         return getCSSFirstChild();
     }

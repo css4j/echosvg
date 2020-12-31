@@ -78,6 +78,7 @@ public abstract class SVGDecoratedShapeElementBridge
      * @param e the element that describes the shape painter to use
      * @param shapeNode the shape node that is interested in its shape painter
      */
+    @Override
     protected ShapePainter createShapePainter(BridgeContext ctx,
                                               Element e,
                                               ShapeNode shapeNode) {
@@ -104,6 +105,7 @@ public abstract class SVGDecoratedShapeElementBridge
         return painter;
     }
 
+    @Override
     protected void handleCSSPropertyChanged(int property) {
         switch(property) {
         case SVGCSSEngine.MARKER_START_INDEX:

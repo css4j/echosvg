@@ -101,6 +101,7 @@ public abstract class SVGOMTextContentElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -119,14 +120,16 @@ public abstract class SVGOMTextContentElement
                  (short) 1);
         textLength = new AbstractSVGAnimatedLength
             (this, null, SVG_TEXT_LENGTH_ATTRIBUTE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, true) {
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true) {
                 boolean usedDefault;
 
+                @Override
                 protected String getDefaultValue() {
                     usedDefault = true;
                     return String.valueOf( getComputedTextLength() );
                 }
 
+                @Override
                 public SVGLength getBaseVal() {
                     if (baseVal == null) {
                         baseVal = new SVGTextLength(direction);
@@ -138,6 +141,7 @@ public abstract class SVGOMTextContentElement
                     public SVGTextLength(short direction) {
                         super(direction);
                     }
+                    @Override
                     protected void revalidate() {
                         usedDefault = false;
 
@@ -323,6 +327,7 @@ public abstract class SVGOMTextContentElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

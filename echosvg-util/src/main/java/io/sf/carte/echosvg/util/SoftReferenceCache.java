@@ -201,6 +201,7 @@ public class SoftReferenceCache {
             this.key = key;
         }
 
+        @Override
         public void cleared() {
             SoftReferenceCache cache = SoftReferenceCache.this;
             if (cache == null) return; // Can't really happen.

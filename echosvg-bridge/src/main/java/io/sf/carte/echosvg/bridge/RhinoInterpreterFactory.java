@@ -52,6 +52,7 @@ public class RhinoInterpreterFactory implements InterpreterFactory {
     /**
      * Returns the mime-types to register this interpereter with.
      */
+    @Override
     public String[] getMimeTypes() {
         return RHINO_MIMETYPES;
     }
@@ -62,6 +63,7 @@ public class RhinoInterpreterFactory implements InterpreterFactory {
      * @param documentURL the url for the document which will be scripted
      * @param svg12 whether the document is an SVG 1.2 document
      */
+    @Override
     public Interpreter createInterpreter(URL documentURL, boolean svg12) {
         return createInterpreter(documentURL, svg12, null);
     }
@@ -74,6 +76,7 @@ public class RhinoInterpreterFactory implements InterpreterFactory {
      * @param imports The set of classes/packages to import (if
      *                the interpreter supports that), may be null.
      */
+    @Override
     public Interpreter createInterpreter(URL documentURL, boolean svg12,
                                          ImportInfo imports) {
         if (svg12) {

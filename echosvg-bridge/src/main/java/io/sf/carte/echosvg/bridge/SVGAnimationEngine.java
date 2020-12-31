@@ -285,6 +285,7 @@ public class SVGAnimationEngine extends AnimationEngine {
     /**
      * Disposes this animation engine.
      */
+    @Override
     public void dispose() {
         synchronized (this) {
             pause();
@@ -369,6 +370,7 @@ public class SVGAnimationEngine extends AnimationEngine {
     /**
      * Pauses the animations.
      */
+    @Override
     public void pause() {
         super.pause();
         UpdateManager um = ctx.getUpdateManager();
@@ -380,6 +382,7 @@ public class SVGAnimationEngine extends AnimationEngine {
     /**
      * Pauses the animations.
      */
+    @Override
     public void unpause() {
         super.unpause();
         UpdateManager um = ctx.getUpdateManager();
@@ -391,6 +394,7 @@ public class SVGAnimationEngine extends AnimationEngine {
     /**
      * Returns the current document time.
      */
+    @Override
     public float getCurrentTime() {
         boolean p = pauseTime != 0;
         unpause();
@@ -404,6 +408,7 @@ public class SVGAnimationEngine extends AnimationEngine {
     /**
      * Sets the current document time.
      */
+    @Override
     public float setCurrentTime(float t) {
         if (started) {
             float ret = super.setCurrentTime(t);
@@ -420,6 +425,7 @@ public class SVGAnimationEngine extends AnimationEngine {
     /**
      * Creates a new returns a new TimedDocumentRoot object for the document.
      */
+    @Override
     protected TimedDocumentRoot createDocumentRoot() {
         return new AnimationRoot();
     }
@@ -516,6 +522,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Returns the namespace URI of the event that corresponds to the given
          * animation event name.
          */
+        @Override
         protected String getEventNamespaceURI(String eventName) {
             if (!isSVG12) {
                 return null;
@@ -533,6 +540,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Returns the type of the event that corresponds to the given
          * animation event name.
          */
+        @Override
         protected String getEventType(String eventName) {
             if (eventName.equals("focusin")) {
                 return "DOMFocusIn";
@@ -557,6 +565,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Returns the name of the repeat event.
          * @return "repeatEvent" for SVG
          */
+        @Override
         protected String getRepeatEventName() {
             return SMILConstants.SMIL_REPEAT_EVENT_NAME;
         }
@@ -567,6 +576,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          *                  or "repeatEvent"/"repeat").
          * @param time the timestamp of the event object
          */
+        @Override
         protected void fireTimeEvent(String eventType, Calendar time,
                                      int detail) {
             AnimationSupport.fireTimeEvent
@@ -578,6 +588,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * specified time.
          * @param begin the time the element became active, in document simple time
          */
+        @Override
         protected void toActive(float begin) {
         }
 
@@ -589,12 +600,14 @@ public class SVGAnimationEngine extends AnimationEngine {
          *                    interval
          * @param isFrozen whether the element is frozen or not
          */
+        @Override
         protected void toInactive(boolean stillActive, boolean isFrozen) {
         }
 
         /**
          * Invoked to indicate that this timed element has had its fill removed.
          */
+        @Override
         protected void removeFill() {
         }
 
@@ -606,6 +619,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * @param repeatIteration the repeat iteration during which the element
          *                        was sampled
          */
+        @Override
         protected void sampledAt(float simpleTime, float simpleDur,
                                  int repeatIteration) {
         }
@@ -616,12 +630,14 @@ public class SVGAnimationEngine extends AnimationEngine {
          * simple duration.  This is the "last" value that will be used
          * for filling, which cannot be sampled normally.
          */
+        @Override
         protected void sampledLastValue(int repeatIteration) {
         }
 
         /**
          * Returns the timed element with the given ID.
          */
+        @Override
         protected TimedElement getTimedElementById(String id) {
             return AnimationSupport.getTimedElementById(id, document);
         }
@@ -629,6 +645,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Returns the event target with the given ID.
          */
+        @Override
         protected EventTarget getEventTargetById(String id) {
             return AnimationSupport.getEventTargetById(id, document);
         }
@@ -637,6 +654,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Returns the target of this animation as an {@link EventTarget}.  Used
          * for eventbase timing specifiers where the element ID is omitted.
          */
+        @Override
         protected EventTarget getAnimationEventTarget() {
             return null;
         }
@@ -645,6 +663,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Returns the event target that should be listened to for
          * access key events.
          */
+        @Override
         protected EventTarget getRootEventTarget() {
             return (EventTarget) document;
         }
@@ -653,6 +672,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Returns the DOM element that corresponds to this timed element, if
          * such a DOM element exists.
          */
+        @Override
         public Element getElement() {
             return null;
         }
@@ -661,6 +681,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Returns whether this timed element comes before the given timed
          * element in document order.
          */
+        @Override
         public boolean isBefore(TimedElement other) {
             return false;
         }
@@ -669,6 +690,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Invoked by timed elements in this document to indicate that the
          * current interval will be re-evaluated at the next sample.
          */
+        @Override
         protected void currentIntervalWillUpdate() {
             if (animationTickRunnable != null) {
                 animationTickRunnable.resume();
@@ -687,6 +709,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             super(q, eng);
             waitTime = Long.MAX_VALUE;
             new Thread() {
+                @Override
                 public void run() {
                     java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
                     System.out.println("Enter times.");
@@ -707,6 +730,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             }.start();
         }
 
+        @Override
         public void resume() {
             waitTime = 0;
             Object lock = q.getIteratorLock();
@@ -715,12 +739,14 @@ public class SVGAnimationEngine extends AnimationEngine {
             }
         }
 
+        @Override
         public long getWaitTime() {
             long wt = waitTime;
             waitTime = Long.MAX_VALUE;
             return wt;
         }
 
+        @Override
         public void run() {
             SVGAnimationEngine eng = getAnimationEngine();
             synchronized (eng) {
@@ -849,6 +875,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          *         be done, or {@link Long#MAX_VALUE} if the {@link Runnable}
          *         should not be run again at this time
          */
+        @Override
         public long getWaitTime() {
             return waitTime;
         }
@@ -856,6 +883,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Performs one tick of the animation.
          */
+        @Override
         public void run() {
             SVGAnimationEngine eng = getAnimationEngine();
             synchronized (eng) {
@@ -964,6 +992,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Ticks the animation over as fast as possible.
          */
+        @Override
         public void run() {
             if (true) {
                 for (;;) {
@@ -1005,6 +1034,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Ticks the animation over.
              */
+            @Override
             public void run() {
                 tick(t, false);
             }
@@ -1036,12 +1066,14 @@ public class SVGAnimationEngine extends AnimationEngine {
      */
     protected abstract class CSSValueFactory implements Factory {
 
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             // XXX Always parsing as a CSS value.
             return createValue(target, ln, createCSSValue(target, ln, s));
         }
 
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             CSSStylableElement elt = (CSSStylableElement) target.getElement();
@@ -1096,6 +1128,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             return new AnimatableBooleanValue(target, "true".equals(s));
@@ -1104,6 +1137,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a CSS {@link Value}.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return new AnimatableBooleanValue(target,
@@ -1119,6 +1153,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             return new AnimatableIntegerValue(target, Integer.parseInt(s));
@@ -1127,6 +1162,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a CSS {@link Value}.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return new AnimatableIntegerValue(target,
@@ -1142,6 +1178,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             return new AnimatableNumberValue(target, Float.parseFloat(s));
@@ -1150,6 +1187,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a CSS {@link Value}.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return new AnimatableNumberValue(target, v.getFloatValue());
@@ -1165,6 +1203,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             float v;
@@ -1182,6 +1221,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a CSS {@link Value}.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             switch (v.getPrimitiveType()) {
@@ -1228,6 +1268,7 @@ public class SVGAnimationEngine extends AnimationEngine {
              * Implements {@link
              * PreserveAspectRatioHandler#startPreserveAspectRatio()}.
              */
+            @Override
             public void startPreserveAspectRatio() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_UNKNOWN;
                 meetOrSlice = SVGPreserveAspectRatio.SVG_MEETORSLICE_UNKNOWN;
@@ -1236,6 +1277,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#none()}.
              */
+            @Override
             public void none() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_NONE;
             }
@@ -1243,6 +1285,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#xMaxYMax()}.
              */
+            @Override
             public void xMaxYMax() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMAX;
             }
@@ -1250,6 +1293,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#xMaxYMid()}.
              */
+            @Override
             public void xMaxYMid() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMID;
             }
@@ -1257,6 +1301,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#xMaxYMin()}.
              */
+            @Override
             public void xMaxYMin() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMIN;
             }
@@ -1264,6 +1309,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#xMidYMax()}.
              */
+            @Override
             public void xMidYMax() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMAX;
             }
@@ -1271,6 +1317,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#xMidYMid()}.
              */
+            @Override
             public void xMidYMid() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMID;
             }
@@ -1278,6 +1325,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#xMidYMin()}.
              */
+            @Override
             public void xMidYMin() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMIN;
             }
@@ -1285,6 +1333,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#xMinYMax()}.
              */
+            @Override
             public void xMinYMax() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMAX;
             }
@@ -1292,6 +1341,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#xMinYMid()}.
              */
+            @Override
             public void xMinYMid() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMID;
             }
@@ -1299,6 +1349,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#xMinYMin()}.
              */
+            @Override
             public void xMinYMin() throws ParseException {
                 align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMIN;
             }
@@ -1306,6 +1357,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#meet()}.
              */
+            @Override
             public void meet() throws ParseException {
                 meetOrSlice = SVGPreserveAspectRatio.SVG_MEETORSLICE_MEET;
             }
@@ -1313,6 +1365,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             /**
              * Implements {@link PreserveAspectRatioHandler#slice()}.
              */
+            @Override
             public void slice() throws ParseException {
                 meetOrSlice = SVGPreserveAspectRatio.SVG_MEETORSLICE_SLICE;
             }
@@ -1328,6 +1381,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             try {
@@ -1344,6 +1398,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Creates a new AnimatableValue from a CSS {@link Value}.  Returns null
          * since preserveAspectRatio values aren't used in CSS values.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return null;
@@ -1374,39 +1429,51 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Handler for the length parser.
          */
         protected LengthHandler handler = new DefaultLengthHandler() {
+            @Override
             public void startLength() throws ParseException {
                 type = SVGLength.SVG_LENGTHTYPE_NUMBER;
             }
+            @Override
             public void lengthValue(float v) throws ParseException {
                 value = v;
             }
+            @Override
             public void em() throws ParseException {
                 type = SVGLength.SVG_LENGTHTYPE_EMS;
             }
+            @Override
             public void ex() throws ParseException {
                 type = SVGLength.SVG_LENGTHTYPE_EXS;
             }
+            @Override
             public void in() throws ParseException {
                 type = SVGLength.SVG_LENGTHTYPE_IN;
             }
+            @Override
             public void cm() throws ParseException {
                 type = SVGLength.SVG_LENGTHTYPE_CM;
             }
+            @Override
             public void mm() throws ParseException {
                 type = SVGLength.SVG_LENGTHTYPE_MM;
             }
+            @Override
             public void pc() throws ParseException {
                 type = SVGLength.SVG_LENGTHTYPE_PC;
             }
+            @Override
             public void pt() throws ParseException {
                 type = SVGLength.SVG_LENGTHTYPE_PT;
             }
+            @Override
             public void px() throws ParseException {
                 type = SVGLength.SVG_LENGTHTYPE_PX;
             }
+            @Override
             public void percentage() throws ParseException {
                 type = SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
             }
+            @Override
             public void endLength() throws ParseException {
             }
         };
@@ -1421,6 +1488,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             short pcInterp = target.getPercentageInterpretation(ns, ln, isCSS);
@@ -1437,6 +1505,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a CSS {@link Value}.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return new AnimatableIntegerValue(target,
@@ -1469,6 +1538,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             try {
@@ -1489,6 +1559,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Creates a new AnimatableValue from a CSS {@link Value}.  Returns null
          * since point lists aren't used in CSS values.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return null;
@@ -1520,6 +1591,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             try {
@@ -1536,6 +1608,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Creates a new AnimatableValue from a CSS {@link Value}.  Returns null
          * since number lists aren't used in CSS values.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return null;
@@ -1567,6 +1640,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             try {
@@ -1587,6 +1661,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Creates a new AnimatableValue from a CSS {@link Value}.  Returns null
          * since rects aren't used in CSS values.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return null;
@@ -1618,6 +1693,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             try {
@@ -1634,6 +1710,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Creates a new AnimatableValue from a CSS {@link Value}.  Returns null
          * since point lists aren't used in CSS values.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return null;
@@ -1665,6 +1742,7 @@ public class SVGAnimationEngine extends AnimationEngine {
         /**
          * Creates a new AnimatableValue from a string.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             try {
@@ -1682,6 +1760,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Creates a new AnimatableValue from a CSS {@link Value}.  Returns null
          * since point lists aren't used in CSS values.
          */
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return null;
@@ -1693,11 +1772,13 @@ public class SVGAnimationEngine extends AnimationEngine {
      */
     protected static class UncomputedAnimatableStringValueFactory implements Factory {
 
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String ns,
                                            String ln, boolean isCSS, String s) {
             return new AnimatableStringValue(target, s);
         }
 
+        @Override
         public AnimatableValue createValue(AnimationTarget target, String pn,
                                            Value v) {
             return new AnimatableStringValue(target, v.getCssText());
@@ -1709,6 +1790,7 @@ public class SVGAnimationEngine extends AnimationEngine {
      */
     protected class AnimatableLengthOrIdentFactory extends CSSValueFactory {
 
+        @Override
         protected AnimatableValue createAnimatableValue(AnimationTarget target,
                                                         String pn, Value v) {
             if (v instanceof StringValue) {
@@ -1737,6 +1819,7 @@ public class SVGAnimationEngine extends AnimationEngine {
             this.numericIdents = numericIdents;
         }
 
+        @Override
         protected AnimatableValue createAnimatableValue(AnimationTarget target,
                                                         String pn, Value v) {
             if (v instanceof StringValue) {
@@ -1754,6 +1837,7 @@ public class SVGAnimationEngine extends AnimationEngine {
      */
     protected class AnimatableAngleValueFactory extends CSSValueFactory {
 
+        @Override
         protected AnimatableValue createAnimatableValue(AnimationTarget target,
                                                         String pn, Value v) {
             FloatValue fv = (FloatValue) v;
@@ -1782,6 +1866,7 @@ public class SVGAnimationEngine extends AnimationEngine {
      */
     protected class AnimatableAngleOrIdentFactory extends CSSValueFactory {
 
+        @Override
         protected AnimatableValue createAnimatableValue(AnimationTarget target,
                                                         String pn, Value v) {
             if (v instanceof StringValue) {
@@ -1815,6 +1900,7 @@ public class SVGAnimationEngine extends AnimationEngine {
      */
     protected class AnimatableColorValueFactory extends CSSValueFactory {
 
+        @Override
         protected AnimatableValue createAnimatableValue(AnimationTarget target,
                                                         String pn, Value v) {
             Paint p = PaintServer.convertPaint
@@ -1847,6 +1933,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 
         }
 
+        @Override
         protected AnimatableValue createAnimatableValue(AnimationTarget target,
                                                         String pn, Value v) {
             if (v.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
@@ -1895,6 +1982,7 @@ public class SVGAnimationEngine extends AnimationEngine {
      */
     protected class AnimatableStringValueFactory extends CSSValueFactory {
 
+        @Override
         protected AnimatableValue createAnimatableValue(AnimationTarget target,
                                                         String pn, Value v) {
             return new AnimatableStringValue(target, v.getCssText());

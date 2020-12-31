@@ -105,6 +105,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to,
                                        float interpolation,
@@ -432,6 +433,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
      * Returns whether two values of this type can have their distance
      * computed, as needed by paced animation.
      */
+    @Override
     public boolean canPace() {
         return true;
     }
@@ -440,6 +442,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
      * Returns the absolute distance between this value and the specified other
      * value.
      */
+    @Override
     public float distanceTo(AnimatableValue other) {
         AnimatableTransformListValue o = (AnimatableTransformListValue) other;
         if (transforms.isEmpty() || o.transforms.isEmpty()) {
@@ -549,6 +552,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
      * Returns a zero value of this AnimatableValue's type.  This returns an
      * empty transform list.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         return new AnimatableTransformListValue(target, new Vector(5));
     }
@@ -556,6 +560,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
     /**
      * Returns the CSS text representation of the value.
      */
+    @Override
     public String toStringRep() {
         StringBuffer sb = new StringBuffer();
         Iterator i = transforms.iterator();

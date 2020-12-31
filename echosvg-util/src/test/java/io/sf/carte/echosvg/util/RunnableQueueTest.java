@@ -46,6 +46,7 @@ public class RunnableQueueTest extends AbstractTest {
         /**
          * Returns this Test's name
          */
+        @Override
         public String getName() {
             return "RunnableQueue Stress Test";
         }
@@ -54,6 +55,7 @@ public class RunnableQueueTest extends AbstractTest {
      * This method will only throw exceptions if some aspect
      * of the test's internal operation fails.
      */
+    @Override
     public TestReport runImpl() throws Exception {
         rq = RunnableQueue.createRunnableQueue();
 
@@ -84,6 +86,7 @@ public class RunnableQueueTest extends AbstractTest {
     }
 
     public class SwitchFlicker implements Runnable {
+        @Override
         public void run() {
             boolean suspendp, waitp;
             int time;
@@ -138,6 +141,7 @@ public class RunnableQueueTest extends AbstractTest {
             this.rqRable      = rqRable;
         }
 
+        @Override
         public void run() {
             try {
                 while (count-- != 0) {
@@ -192,6 +196,7 @@ public class RunnableQueueTest extends AbstractTest {
             this.dur = dur;
         }
 
+        @Override
         public void run() {
             try {
                 System.out.println("      B Rable #" + idx);

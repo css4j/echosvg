@@ -64,6 +64,7 @@ public class GaussianBlurRable8Bit
      * The deviation along the x axis, in user space.
      * @param stdDeviationX should be greater than zero.
      */
+    @Override
     public void setStdDeviationX(double stdDeviationX){
         if(stdDeviationX < 0){
             throw new IllegalArgumentException();
@@ -77,6 +78,7 @@ public class GaussianBlurRable8Bit
      * The deviation along the y axis, in user space.
      * @param stdDeviationY should be greater than zero
      */
+    @Override
     public void setStdDeviationY(double stdDeviationY){
         if(stdDeviationY < 0){
             throw new IllegalArgumentException();
@@ -88,6 +90,7 @@ public class GaussianBlurRable8Bit
     /**
      * Returns the deviation along the x-axis, in user space.
      */
+    @Override
     public double getStdDeviationX(){
         return stdDeviationX;
     }
@@ -95,6 +98,7 @@ public class GaussianBlurRable8Bit
     /**
      * Returns the deviation along the y-axis, in user space.
      */
+    @Override
     public double getStdDeviationY(){
         return stdDeviationY;
     }
@@ -102,6 +106,7 @@ public class GaussianBlurRable8Bit
     /**
      * Sets the source of the blur operation
      */
+    @Override
     public void setSource(Filter src){
         init(src, null);
     }
@@ -114,6 +119,7 @@ public class GaussianBlurRable8Bit
     /**
      * Grow the source's bounds
      */
+    @Override
     public Rectangle2D getBounds2D(){
         Rectangle2D src = getSource().getBounds2D();
         float dX = (float)(stdDeviationX*DSQRT2PI);
@@ -130,6 +136,7 @@ public class GaussianBlurRable8Bit
     /**
      * Returns the source of the blur operation
      */
+    @Override
     public Filter getSource(){
         return (Filter)getSources().get(0);
     }
@@ -145,6 +152,7 @@ public class GaussianBlurRable8Bit
         return eps_eq(f1, f2);
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         // Just copy over the rendering hints.
         RenderingHints rh = rc.getRenderingHints();
@@ -291,6 +299,7 @@ public class GaussianBlurRable8Bit
      * @return The region of input required.  This is in the user
      * coordinate system for the source indicated by srcIndex.
      */
+    @Override
     public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn){
         if(srcIndex != 0)
             outputRgn = null;
@@ -327,6 +336,7 @@ public class GaussianBlurRable8Bit
      *  a change to inputRgn of the source selected by srcIndex.
      *  this is in the user coordinate system of this node.
      */
+    @Override
     public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn){
         Rectangle2D dirtyRegion = null;
         if(srcIndex == 0){

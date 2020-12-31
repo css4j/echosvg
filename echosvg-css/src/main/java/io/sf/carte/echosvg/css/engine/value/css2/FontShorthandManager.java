@@ -64,6 +64,7 @@ public class FontShorthandManager
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_FONT_PROPERTY;
     }
@@ -71,6 +72,7 @@ public class FontShorthandManager
     /**
      * Implements {@link ShorthandManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -78,6 +80,7 @@ public class FontShorthandManager
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -144,6 +147,7 @@ public class FontShorthandManager
     /**
      * Implements {@link ShorthandManager#setValues(CSSEngine,ShorthandManager.PropertyHandler,LexicalUnit,boolean)}.
      */
+    @Override
     public void setValues(CSSEngine eng,
                           ShorthandManager.PropertyHandler ph,
                           LexicalUnit lu,

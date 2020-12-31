@@ -65,6 +65,7 @@ public class SVGStrokeDescriptor implements SVGDescriptor, SVGSyntax{
     String getDashArray(){ return dashArray; }
     String getDashOffset(){ return dashOffset; }
 
+    @Override
     public Map getAttributeMap(Map attrMap){
         if(attrMap == null)
             attrMap = new HashMap();
@@ -79,6 +80,7 @@ public class SVGStrokeDescriptor implements SVGDescriptor, SVGSyntax{
         return attrMap;
     }
 
+    @Override
     public List getDefinitionSet(List defSet){
         if(defSet == null)
             defSet = new LinkedList();

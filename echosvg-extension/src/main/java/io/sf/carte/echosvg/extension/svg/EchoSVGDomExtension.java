@@ -42,12 +42,14 @@ public class EchoSVGDomExtension
      * reason you need to come before/after another existing extension
      * make sure your priority is lower/higher than theirs.
      */
+    @Override
     public float getPriority() { return 1.0f; }
 
     /**
      * This should return the individual or company name responsible
      * for the this implementation of the extension.
      */
+    @Override
     public String getAuthor() {
         return "Thomas DeWeese";
     }
@@ -55,6 +57,7 @@ public class EchoSVGDomExtension
     /**
      * This should contain a contact address (usually an e-mail address).
      */
+    @Override
     public String getContactAddress() {
         return "deweese@apache.org";
     }
@@ -63,6 +66,7 @@ public class EchoSVGDomExtension
      * This should return a URL where information can be obtained on
      * this extension.
      */
+    @Override
     public String getURL() {
         return "http://xml.apache.org/batik";
     }
@@ -72,6 +76,7 @@ public class EchoSVGDomExtension
      * Perhaps that should be a resource for internationalization?
      * (although I suppose it could be done internally)
      */
+    @Override
     public String getDescription() {
         return "Example extension to standard SVG shape tags";
     }
@@ -85,6 +90,7 @@ public class EchoSVGDomExtension
      * @param di The ExtensibleDOMImplementation to register the
      *           extension elements with.
      */
+    @Override
     public void registerTags(ExtensibleDOMImplementation di) {
         di.registerCustomElementFactory
             (BATIK_EXT_NAMESPACE_URI,
@@ -151,6 +157,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new EchoSVGRegularPolygonElement
                 (prefix, (AbstractDocument)doc);
@@ -167,6 +174,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new EchoSVGStarElement(prefix, (AbstractDocument)doc);
         }
@@ -181,6 +189,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new EchoSVGHistogramNormalizationElement
                 (prefix, (AbstractDocument)doc);
@@ -197,6 +206,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new ColorSwitchElement(prefix, (AbstractDocument)doc);
         }
@@ -212,6 +222,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new FlowTextElement(prefix, (AbstractDocument)doc);
         }
@@ -227,6 +238,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new FlowDivElement(prefix, (AbstractDocument)doc);
         }
@@ -242,6 +254,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new FlowParaElement(prefix, (AbstractDocument)doc);
         }
@@ -257,6 +270,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new FlowRegionBreakElement(prefix, (AbstractDocument)doc);
         }
@@ -272,6 +286,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new FlowRegionElement(prefix, (AbstractDocument)doc);
         }
@@ -287,6 +302,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new FlowLineElement(prefix, (AbstractDocument)doc);
         }
@@ -302,6 +318,7 @@ public class EchoSVGDomExtension
         /**
          * Creates an instance of the associated element type.
          */
+        @Override
         public Element create(String prefix, Document doc) {
             return new FlowSpanElement(prefix, (AbstractDocument)doc);
         }

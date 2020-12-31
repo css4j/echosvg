@@ -158,6 +158,7 @@ public class TransformAnimation extends SimpleAnimation {
      * Called when the element is sampled at the given unit time.  This updates
      * the {@link #value} of the animation if active.
      */
+    @Override
     protected void sampledAtUnitTime(float unitTime, int repeatIteration) {
         // Note that skews are handled by SimpleAnimation and not here, since
         // they need just the one component of interpolation.

@@ -45,6 +45,7 @@ public class FontFaceRule implements Rule {
     /**
      * Returns a constant identifying the rule type.
      */
+    @Override
     public short getType() { return TYPE; }
 
     /**
@@ -64,6 +65,7 @@ public class FontFaceRule implements Rule {
     /**
      * Returns a printable representation of this rule.
      */
+    @Override
     public String toString(CSSEngine eng) {
         StringBuffer sb = new StringBuffer();
         sb.append("@font-face { ");

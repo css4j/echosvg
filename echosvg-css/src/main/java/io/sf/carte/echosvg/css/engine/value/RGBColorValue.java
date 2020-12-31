@@ -56,6 +56,7 @@ public class RGBColorValue extends AbstractValue {
     /**
      * The type of the value.
      */
+    @Override
     public short getPrimitiveType() {
         return CSSPrimitiveValue.CSS_RGBCOLOR;
     }
@@ -63,6 +64,7 @@ public class RGBColorValue extends AbstractValue {
     /**
      * A string representation of the current value.
      */
+    @Override
     public String getCssText() {
         return "rgb(" +
             red.getCssText() + ", " +
@@ -73,6 +75,7 @@ public class RGBColorValue extends AbstractValue {
     /**
      * Implements {@link Value#getRed()}.
      */
+    @Override
     public Value getRed() throws DOMException {
         return red;
     }
@@ -80,6 +83,7 @@ public class RGBColorValue extends AbstractValue {
     /**
      * Implements {@link Value#getGreen()}.
      */
+    @Override
     public Value getGreen() throws DOMException {
         return green;
     }
@@ -87,6 +91,7 @@ public class RGBColorValue extends AbstractValue {
     /**
      * Implements {@link Value#getBlue()}.
      */
+    @Override
     public Value getBlue() throws DOMException {
         return blue;
     }
@@ -94,6 +99,7 @@ public class RGBColorValue extends AbstractValue {
     /**
      * Returns a printable representation of the color.
      */
+    @Override
     public String toString() {
         return getCssText();
     }

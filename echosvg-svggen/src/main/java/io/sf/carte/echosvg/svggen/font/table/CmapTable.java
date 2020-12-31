@@ -65,10 +65,12 @@ public class CmapTable implements Table {
         return null;
     }
 
+    @Override
     public int getType() {
         return cmap;
     }
 
+    @Override
     public String toString() {
         StringBuffer sb = new StringBuffer( numTables * 8 ).append("cmap\n");
 

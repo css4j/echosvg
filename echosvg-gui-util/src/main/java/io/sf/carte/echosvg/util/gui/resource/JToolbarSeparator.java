@@ -38,6 +38,7 @@ public class JToolbarSeparator extends JComponent {
         setMaximumSize(new Dimension(15, Integer.MAX_VALUE));
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 

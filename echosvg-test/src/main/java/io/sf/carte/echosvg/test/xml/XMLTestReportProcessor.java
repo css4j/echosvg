@@ -161,6 +161,7 @@ public class XMLTestReportProcessor
      * Recursively processes the input <code>TestReport</code> and
      * any of its children.
      */
+    @Override
     public void processReport(TestReport report)
         throws TestException {
 

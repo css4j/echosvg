@@ -94,6 +94,7 @@ public abstract class TimeContainer extends TimedElement {
      *         will never become active again, or <code>0f</code> if the
      *         element is currently active.
      */
+    @Override
     protected float sampleAt(float parentSimpleTime, boolean hyperlinking) {
         super.sampleAt(parentSimpleTime, hyperlinking);
         // Maybe check the return value of the previous statement.
@@ -119,6 +120,7 @@ public abstract class TimeContainer extends TimedElement {
     /**
      * Resets this element.
      */
+    @Override
     protected void reset(boolean clearCurrentBegin) {
         super.reset(clearCurrentBegin);
         for (Object aChildren : children) {
@@ -131,6 +133,7 @@ public abstract class TimeContainer extends TimedElement {
      * Returns whether this timed element is for a constant animation (i.e., a
      * 'set' animation.
      */
+    @Override
     protected boolean isConstantAnimation() {
         return false;
     }

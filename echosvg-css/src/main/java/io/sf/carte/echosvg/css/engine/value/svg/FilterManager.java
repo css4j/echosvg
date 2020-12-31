@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.URIValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -42,6 +43,7 @@ public class FilterManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return false;
     }
@@ -49,6 +51,7 @@ public class FilterManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_FILTER_PROPERTY;
     }
@@ -56,6 +59,7 @@ public class FilterManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -63,6 +67,7 @@ public class FilterManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -70,6 +75,7 @@ public class FilterManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_URI_OR_IDENT;
     }
@@ -77,18 +83,20 @@ public class FilterManager extends AbstractValueManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
-        return SVGValueConstants.NONE_VALUE;
+        return ValueConstants.NONE_VALUE;
     }
 
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
         case INHERIT:
-            return SVGValueConstants.INHERIT_VALUE;
+            return ValueConstants.INHERIT_VALUE;
 
         case URI:
             return new URIValue(lu.getStringValue(),
@@ -98,7 +106,7 @@ public class FilterManager extends AbstractValueManager {
         case IDENT:
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_NONE_VALUE)) {
-                return SVGValueConstants.NONE_VALUE;
+                return ValueConstants.NONE_VALUE;
             }
             throw createInvalidIdentifierDOMException(lu.getStringValue());
         }
@@ -109,11 +117,12 @@ public class FilterManager extends AbstractValueManager {
      * Implements {@link
      * ValueManager#createStringValue(short,String,CSSEngine)}.
      */
+    @Override
     public Value createStringValue(short type, String value, CSSEngine engine)
         throws DOMException {
         if (type == CSSPrimitiveValue.CSS_IDENT) {
             if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-                return SVGValueConstants.NONE_VALUE;
+                return ValueConstants.NONE_VALUE;
             }
             throw createInvalidIdentifierDOMException(value);
         }

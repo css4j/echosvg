@@ -70,6 +70,7 @@ public class DisplacementMapRable8Bit
         setYChannelSelector(yChannelSelector);
     }
 
+    @Override
     public Rectangle2D getBounds2D(){
         return ((Filter)(getSources().get(0))).getBounds2D();
     }
@@ -78,6 +79,7 @@ public class DisplacementMapRable8Bit
      * The displacement scale factor
      * @param scale can be any number.
      */
+    @Override
     public void setScale(double scale){
         touch();
         this.scale = scale;
@@ -86,6 +88,7 @@ public class DisplacementMapRable8Bit
     /**
      * Returns the displacement scale factor
      */
+    @Override
     public double getScale(){
         return scale;
     }
@@ -93,6 +96,7 @@ public class DisplacementMapRable8Bit
     /**
      * Sets this filter sources.
      */
+    @Override
     public void setSources(List sources){
         if(sources.size() != 2){
             throw new IllegalArgumentException();
@@ -106,6 +110,7 @@ public class DisplacementMapRable8Bit
      * @param xChannelSelector value is among R,
      * G, B and A.
      */
+    @Override
     public void setXChannelSelector(ARGBChannel xChannelSelector){
         if(xChannelSelector == null){
             throw new IllegalArgumentException();
@@ -117,6 +122,7 @@ public class DisplacementMapRable8Bit
     /**
      * Returns the xChannelSelector
      */
+    @Override
     public ARGBChannel getXChannelSelector(){
         return xChannelSelector;
     }
@@ -127,6 +133,7 @@ public class DisplacementMapRable8Bit
      * @param yChannelSelector value is among R,
      * G, B and A.
      */
+    @Override
     public void setYChannelSelector(ARGBChannel yChannelSelector){
         if(yChannelSelector == null){
             throw new IllegalArgumentException();
@@ -138,10 +145,12 @@ public class DisplacementMapRable8Bit
     /**
      * Returns the yChannelSelector
      */
+    @Override
     public ARGBChannel getYChannelSelector(){
         return yChannelSelector;
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         // The source image to be displaced.
         Filter displaced = (Filter)getSources().get(0);
@@ -250,6 +259,7 @@ public class DisplacementMapRable8Bit
      * @return The region of input required.  This is in the user
      * coordinate system for the source indicated by srcIndex.
      */
+    @Override
     public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn){
         // NOTE: This needs to grow the region!!!
         //       Morphology actually needs a larger area of input than
@@ -268,6 +278,7 @@ public class DisplacementMapRable8Bit
      *  a change to inputRgn of the source selected by srcIndex.
      *  this is in the user coordinate system of this node.
      */
+    @Override
     public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn){
         // NOTE: This needs to grow the region!!!
         //       Changes in the input region affect a larger area of

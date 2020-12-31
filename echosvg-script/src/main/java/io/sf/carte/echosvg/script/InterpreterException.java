@@ -84,6 +84,7 @@ public class InterpreterException extends RuntimeException {
      * been specified, returns that one. Otherwise, return the error message
      * of enclosed exception or null if any.
      */
+    @Override
     public String getMessage() {
         String msg = super.getMessage();
         if (msg != null) {

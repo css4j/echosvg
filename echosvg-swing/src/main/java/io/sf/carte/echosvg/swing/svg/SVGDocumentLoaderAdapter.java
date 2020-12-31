@@ -31,20 +31,24 @@ public abstract class SVGDocumentLoaderAdapter
     /**
      * Called when the loading of a document was started.
      */
+    @Override
     public void documentLoadingStarted(SVGDocumentLoaderEvent e) {}
 
     /**
      * Called when the loading of a document was completed.
      */
+    @Override
     public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {}
 
     /**
      * Called when the loading of a document was cancelled.
      */
+    @Override
     public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {}
 
     /**
      * Called when the loading of a document has failed.
      */
+    @Override
     public void documentLoadingFailed(SVGDocumentLoaderEvent e) {}
 }

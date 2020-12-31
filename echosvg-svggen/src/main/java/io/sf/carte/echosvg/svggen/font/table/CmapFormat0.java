@@ -45,9 +45,12 @@ public class CmapFormat0 extends CmapFormat {
         }
     }
 
+    @Override
     public int getFirst() { return first; }
+    @Override
     public int getLast()  { return last; }
 
+    @Override
     public int mapCharCode(int charCode) {
         if (0 <= charCode && charCode < 256) {
             return glyphIdArray[charCode];

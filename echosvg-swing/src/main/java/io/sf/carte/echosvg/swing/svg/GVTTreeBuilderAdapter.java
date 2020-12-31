@@ -31,21 +31,25 @@ public abstract class GVTTreeBuilderAdapter implements GVTTreeBuilderListener {
      * Called when a build started.
      * The data of the event is initialized to the old document.
      */
+    @Override
     public void gvtBuildStarted(GVTTreeBuilderEvent e) {}
 
     /**
      * Called when a build was completed.
      */
+    @Override
     public void gvtBuildCompleted(GVTTreeBuilderEvent e) {}
 
     /**
      * Called when a build was cancelled.
      */
+    @Override
     public void gvtBuildCancelled(GVTTreeBuilderEvent e) {}
 
     /**
      * Called when a build failed.
      */
+    @Override
     public void gvtBuildFailed(GVTTreeBuilderEvent e) {}
 
 }

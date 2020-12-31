@@ -113,6 +113,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.CSSValue#getCssText()}.
      */
+    @Override
     public String getCssText() {
         return valueProvider.getValue().getCssText();
     }
@@ -121,6 +122,7 @@ public class CSSOMValue
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSValue#setCssText(String)}.
      */
+    @Override
     public void setCssText(String cssText) throws DOMException {
         if (handler == null) {
             throw new DOMException
@@ -134,6 +136,7 @@ public class CSSOMValue
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSValue#getCssValueType()}.
      */
+    @Override
     public short getCssValueType() {
         return valueProvider.getValue().getCssValueType();
     }
@@ -142,6 +145,7 @@ public class CSSOMValue
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSPrimitiveValue#getPrimitiveType()}.
      */
+    @Override
     public short getPrimitiveType() {
         return valueProvider.getValue().getPrimitiveType();
     }
@@ -150,6 +154,7 @@ public class CSSOMValue
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
      */
+    @Override
     public void setFloatValue(short unitType, float floatValue)
         throws DOMException {
         if (handler == null) {
@@ -164,6 +169,7 @@ public class CSSOMValue
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSPrimitiveValue#getFloatValue(short)}.
      */
+    @Override
     public float getFloatValue(short unitType) throws DOMException {
         return convertFloatValue(unitType, valueProvider.getValue());
     }
@@ -419,6 +425,7 @@ public class CSSOMValue
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSPrimitiveValue#setStringValue(short,String)}.
      */
+    @Override
     public void setStringValue(short stringType, String stringValue)
         throws DOMException {
         if (handler == null) {
@@ -433,6 +440,7 @@ public class CSSOMValue
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSPrimitiveValue#getStringValue()}.
      */
+    @Override
     public String getStringValue() throws DOMException {
         return valueProvider.getValue().getStringValue();
     }
@@ -441,6 +449,7 @@ public class CSSOMValue
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSPrimitiveValue#getCounterValue()}.
      */
+    @Override
     public Counter getCounterValue() throws DOMException {
         return this;
     }
@@ -449,6 +458,7 @@ public class CSSOMValue
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSPrimitiveValue#getRectValue()}.
      */
+    @Override
     public Rect getRectValue() throws DOMException {
         return this;
     }
@@ -457,6 +467,7 @@ public class CSSOMValue
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.CSSPrimitiveValue#getRGBColorValue()}.
      */
+    @Override
     public RGBColor getRGBColorValue() throws DOMException {
         return this;
     }
@@ -466,6 +477,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.CSSValueList#getLength()}.
      */
+    @Override
     public int getLength() {
         return valueProvider.getValue().getLength();
     }
@@ -473,6 +485,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.CSSValueList#item(int)}.
      */
+    @Override
     public CSSValue item(int index) {
         int len = valueProvider.getValue().getLength();
         if (index < 0 || index >= len) {
@@ -497,6 +510,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.Counter#getIdentifier()}.
      */
+    @Override
     public String getIdentifier() {
         return valueProvider.getValue().getIdentifier();
     }
@@ -504,6 +518,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.Counter#getListStyle()}.
      */
+    @Override
     public String getListStyle() {
         return valueProvider.getValue().getListStyle();
     }
@@ -511,6 +526,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.Counter#getSeparator()}.
      */
+    @Override
     public String getSeparator() {
         return valueProvider.getValue().getSeparator();
     }
@@ -520,6 +536,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.Rect#getTop()}.
      */
+    @Override
     public CSSPrimitiveValue getTop() {
         valueProvider.getValue().getTop();
         if (topComponent == null) {
@@ -531,6 +548,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.Rect#getRight()}.
      */
+    @Override
     public CSSPrimitiveValue getRight() {
         valueProvider.getValue().getRight();
         if (rightComponent == null) {
@@ -542,6 +560,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.Rect#getBottom()}.
      */
+    @Override
     public CSSPrimitiveValue getBottom() {
         valueProvider.getValue().getBottom();
         if (bottomComponent == null) {
@@ -553,6 +572,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.Rect#getLeft()}.
      */
+    @Override
     public CSSPrimitiveValue getLeft() {
         valueProvider.getValue().getLeft();
         if (leftComponent == null) {
@@ -566,6 +586,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.RGBColor#getRed()}.
      */
+    @Override
     public CSSPrimitiveValue getRed() {
         valueProvider.getValue().getRed();
         if (redComponent == null) {
@@ -577,6 +598,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.RGBColor#getGreen()}.
      */
+    @Override
     public CSSPrimitiveValue getGreen() {
         valueProvider.getValue().getGreen();
         if (greenComponent == null) {
@@ -589,6 +611,7 @@ public class CSSOMValue
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.css.RGBColor#getBlue()}.
      */
+    @Override
     public CSSPrimitiveValue getBlue() {
         valueProvider.getValue().getBlue();
         if (blueComponent == null) {
@@ -738,6 +761,7 @@ public class CSSOMValue
         /**
          * Called when the float value has changed.
          */
+        @Override
         public void floatValueChanged(short unit, float value)
             throws DOMException {
             textChanged(FloatValue.getCssText(unit, value));
@@ -746,6 +770,7 @@ public class CSSOMValue
         /**
          * Called when the string value has changed.
          */
+        @Override
         public void stringValueChanged(short type, String value)
             throws DOMException {
             textChanged(StringValue.getCssText(type, value));
@@ -754,6 +779,7 @@ public class CSSOMValue
         /**
          * Called when the left value text has changed.
          */
+        @Override
         public void leftTextChanged(String text) throws DOMException {
             final Value val = getValue();
             text = "rect(" +
@@ -767,6 +793,7 @@ public class CSSOMValue
         /**
          * Called when the left float value has changed.
          */
+        @Override
         public void leftFloatValueChanged(short unit, float value)
             throws DOMException {
             final Value val = getValue();
@@ -781,6 +808,7 @@ public class CSSOMValue
         /**
          * Called when the top value text has changed.
          */
+        @Override
         public void topTextChanged(String text) throws DOMException {
             final Value val = getValue();
             text = "rect(" +
@@ -794,6 +822,7 @@ public class CSSOMValue
         /**
          * Called when the top float value has changed.
          */
+        @Override
         public void topFloatValueChanged(short unit, float value)
             throws DOMException {
             final Value val = getValue();
@@ -808,6 +837,7 @@ public class CSSOMValue
         /**
          * Called when the right value text has changed.
          */
+        @Override
         public void rightTextChanged(String text) throws DOMException {
             final Value val = getValue();
             text = "rect(" +
@@ -821,6 +851,7 @@ public class CSSOMValue
         /**
          * Called when the right float value has changed.
          */
+        @Override
         public void rightFloatValueChanged(short unit, float value)
             throws DOMException {
             final Value val = getValue();
@@ -835,6 +866,7 @@ public class CSSOMValue
         /**
          * Called when the bottom value text has changed.
          */
+        @Override
         public void bottomTextChanged(String text) throws DOMException {
             final Value val = getValue();
             text = "rect(" +
@@ -848,6 +880,7 @@ public class CSSOMValue
         /**
          * Called when the bottom float value has changed.
          */
+        @Override
         public void bottomFloatValueChanged(short unit, float value)
             throws DOMException {
             final Value val = getValue();
@@ -862,6 +895,7 @@ public class CSSOMValue
         /**
          * Called when the red value text has changed.
          */
+        @Override
         public void redTextChanged(String text) throws DOMException {
             final Value val = getValue();
             text = "rgb(" +
@@ -874,6 +908,7 @@ public class CSSOMValue
         /**
          * Called when the red float value has changed.
          */
+        @Override
         public void redFloatValueChanged(short unit, float value)
             throws DOMException {
             final Value val = getValue();
@@ -887,6 +922,7 @@ public class CSSOMValue
         /**
          * Called when the green value text has changed.
          */
+        @Override
         public void greenTextChanged(String text) throws DOMException {
             final Value val = getValue();
             text = "rgb(" +
@@ -899,6 +935,7 @@ public class CSSOMValue
         /**
          * Called when the green float value has changed.
          */
+        @Override
         public void greenFloatValueChanged(short unit, float value)
             throws DOMException {
             final Value val = getValue();
@@ -912,6 +949,7 @@ public class CSSOMValue
         /**
          * Called when the blue value text has changed.
          */
+        @Override
         public void blueTextChanged(String text) throws DOMException {
             final Value val = getValue();
             text = "rgb(" +
@@ -924,6 +962,7 @@ public class CSSOMValue
         /**
          * Called when the blue float value has changed.
          */
+        @Override
         public void blueFloatValueChanged(short unit, float value)
             throws DOMException {
             final Value val = getValue();
@@ -937,6 +976,7 @@ public class CSSOMValue
         /**
          * Called when the list value text has changed.
          */
+        @Override
         public void listTextChanged(int idx, String text) throws DOMException {
             ListValue lv = (ListValue)getValue();
             int len = lv.getLength();
@@ -957,6 +997,7 @@ public class CSSOMValue
         /**
          * Called when the list float value has changed.
          */
+        @Override
         public void listFloatValueChanged(int idx, short unit, float value)
             throws DOMException {
             ListValue lv = (ListValue)getValue();
@@ -977,6 +1018,7 @@ public class CSSOMValue
         /**
          * Called when the list string value has changed.
          */
+        @Override
         public void listStringValueChanged(int idx, short unit, String value)
             throws DOMException {
             ListValue lv = (ListValue)getValue();
@@ -1009,6 +1051,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#getCssText()}.
          */
+        @Override
         public String getCssText() {
             return getValue().getCssText();
         }
@@ -1017,6 +1060,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#getCssValueType()}.
          */
+        @Override
         public short getCssValueType() {
             return getValue().getCssValueType();
         }
@@ -1025,6 +1069,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getPrimitiveType()}.
          */
+        @Override
         public short getPrimitiveType() {
             return getValue().getPrimitiveType();
         }
@@ -1033,6 +1078,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getFloatValue(short)}.
          */
+        @Override
         public float getFloatValue(short unitType) throws DOMException {
             return convertFloatValue(unitType, getValue());
         }
@@ -1041,6 +1087,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getStringValue()}.
          */
+        @Override
         public String getStringValue() throws DOMException {
             return valueProvider.getValue().getStringValue();
         }
@@ -1049,6 +1096,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getCounterValue()}.
          */
+        @Override
         public Counter getCounterValue() throws DOMException {
             throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
         }
@@ -1057,6 +1105,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getRectValue()}.
          */
+        @Override
         public Rect getRectValue() throws DOMException {
             throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
         }
@@ -1065,6 +1114,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#getRGBColorValue()}.
          */
+        @Override
         public RGBColor getRGBColorValue() throws DOMException {
             throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
         }
@@ -1097,6 +1147,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setStringValue(short,String)}.
          */
+        @Override
         public void setStringValue(short stringType, String stringValue)
             throws DOMException {
             throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
@@ -1111,6 +1162,7 @@ public class CSSOMValue
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             return valueProvider.getValue().getLeft();
         }
@@ -1119,6 +1171,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1133,6 +1186,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {
@@ -1154,6 +1208,7 @@ public class CSSOMValue
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             return valueProvider.getValue().getTop();
         }
@@ -1162,6 +1217,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1176,6 +1232,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {
@@ -1197,6 +1254,7 @@ public class CSSOMValue
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             return valueProvider.getValue().getRight();
         }
@@ -1205,6 +1263,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1219,6 +1278,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {
@@ -1241,6 +1301,7 @@ public class CSSOMValue
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             return valueProvider.getValue().getBottom();
         }
@@ -1249,6 +1310,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1263,6 +1325,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {
@@ -1285,6 +1348,7 @@ public class CSSOMValue
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             return valueProvider.getValue().getRed();
         }
@@ -1293,6 +1357,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1307,6 +1372,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {
@@ -1329,6 +1395,7 @@ public class CSSOMValue
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             return valueProvider.getValue().getGreen();
         }
@@ -1337,6 +1404,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1351,6 +1419,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {
@@ -1372,6 +1441,7 @@ public class CSSOMValue
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             return valueProvider.getValue().getBlue();
         }
@@ -1380,6 +1450,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1394,6 +1465,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {
@@ -1427,6 +1499,7 @@ public class CSSOMValue
         /**
          * The returns the actual value of this component.
          */
+        @Override
         protected Value getValue() {
             if (index >= valueProvider.getValue().getLength()) {
                 throw new DOMException
@@ -1439,6 +1512,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSValue#setCssText(String)}.
          */
+        @Override
         public void setCssText(String cssText) throws DOMException {
             if (handler == null) {
                 throw new DOMException
@@ -1453,6 +1527,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
          */
+        @Override
         public void setFloatValue(short unitType, float floatValue)
             throws DOMException {
             if (handler == null) {
@@ -1468,6 +1543,7 @@ public class CSSOMValue
          * <b>DOM</b>: Implements {@link
          * org.w3c.dom.css.CSSPrimitiveValue#setStringValue(short,String)}.
          */
+        @Override
         public void setStringValue(short stringType, String stringValue)
             throws DOMException {
             if (handler == null) {

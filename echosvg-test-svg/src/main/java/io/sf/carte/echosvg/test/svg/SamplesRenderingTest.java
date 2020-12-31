@@ -56,42 +56,52 @@ public class SamplesRenderingTest extends PreconfiguredRenderingTest {
         setValidating( Boolean.TRUE );
     }
 
+    @Override
     protected String getSVGURLPrefix(){
         return SVG_URL_PREFIX;
     }
 
+    @Override
     protected String getRefImagePrefix(){
         return REF_IMAGE_PREFIX;
     }
 
+    @Override
     protected String getRefImageSuffix(){
         return REF_IMAGE_SUFFIX;
     }
 
+    @Override
     protected String getVariationPrefix(){
         return VARIATION_PREFIX;
     }
 
+    @Override
     protected String getVariationSuffix(){
         return VARIATION_SUFFIX;
     }
 
+    @Override
     protected String[] getVariationPlatforms() {
         return DEFAULT_VARIATION_PLATFORMS;
     }
 
+    @Override
     protected String getSaveVariationPrefix(){
         return SAVE_VARIATION_PREFIX;
     }
 
+    @Override
     protected String getSaveVariationSuffix(){
         return SAVE_VARIATION_SUFFIX;
     }
 
+    @Override
     protected String getCandidateReferencePrefix(){
         return SAVE_CANDIDATE_REFERENCE_PREFIX;
     }
 
+    @Override
     protected String getCandidateReferenceSuffix(){
         return SAVE_CANDIDATE_REFERENCE_SUFFIX;
     }

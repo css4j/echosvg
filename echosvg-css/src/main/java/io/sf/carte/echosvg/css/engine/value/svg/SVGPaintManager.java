@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.URIValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -60,6 +61,7 @@ public class SVGPaintManager extends SVGColorManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -67,6 +69,7 @@ public class SVGPaintManager extends SVGColorManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -74,6 +77,7 @@ public class SVGPaintManager extends SVGColorManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return true;
     }
@@ -81,6 +85,7 @@ public class SVGPaintManager extends SVGColorManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_PAINT;
     }
@@ -88,13 +93,14 @@ public class SVGPaintManager extends SVGColorManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
         case IDENT:
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_NONE_VALUE)) {
-                return SVGValueConstants.NONE_VALUE;
+                return ValueConstants.NONE_VALUE;
             }
             // Fall through
         default:
@@ -114,7 +120,7 @@ public class SVGPaintManager extends SVGColorManager {
         if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_NONE_VALUE)) {
-                result.append(SVGValueConstants.NONE_VALUE);
+                result.append(ValueConstants.NONE_VALUE);
                 return result;
             }
         }
@@ -134,13 +140,14 @@ public class SVGPaintManager extends SVGColorManager {
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,
                               int idx,
                               StyleMap sm,
                               Value value) {
-        if (value == SVGValueConstants.NONE_VALUE) {
+        if (value == ValueConstants.NONE_VALUE) {
             return value;
         }
         if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
@@ -148,7 +155,7 @@ public class SVGPaintManager extends SVGColorManager {
             Value v = lv.item(0);
             if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_URI) {
                 v = lv.item(1);
-                if (v == SVGValueConstants.NONE_VALUE) {
+                if (v == ValueConstants.NONE_VALUE) {
                     return value;
                 }
                 Value t = super.computeValue(elt, pseudo, engine, idx, sm, v);

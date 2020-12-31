@@ -183,6 +183,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
      * @param w the width of the effective viewport
      * @param h The height of the effective viewport
      */
+    @Deprecated
     public static AffineTransform getPreserveAspectRatioTransform(Element e,
                                                                   float w,
                                                                   float h) {
@@ -469,6 +470,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 
         public boolean hasTransform;
 
+        @Override
         public void endTransformList() throws ParseException {
             super.endTransformList();
             hasTransform = true;
@@ -493,6 +495,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing the
          *                           fragment identifier
          */
+        @Override
         public void startFragmentIdentifier() throws ParseException { }
 
         /**
@@ -501,6 +504,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing the
          *                           fragment identifier
          */
+        @Override
         public void idReference(String s) throws ParseException {
             id = s;
             hasId = true;
@@ -515,6 +519,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing the
          *                           fragment identifier
          */
+        @Override
         public void viewBox(float x, float y, float width, float height)
             throws ParseException {
 
@@ -531,6 +536,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing the
          *                           fragment identifier
          */
+        @Override
         public void startViewTarget() throws ParseException { }
 
         /**
@@ -540,6 +546,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing the
          *                           fragment identifier
          */
+        @Override
         public void viewTarget(String name) throws ParseException {
             viewTargetParams = name;
             hasViewTargetParams = true;
@@ -550,6 +557,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing the
          *                           fragment identifier
          */
+        @Override
         public void endViewTarget() throws ParseException { }
 
         /**
@@ -558,6 +566,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing the
          *                           fragment identifier
          */
+        @Override
         public void zoomAndPan(boolean magnify) {
             isMagnify = magnify;
             hasZoomAndPanParams = true;
@@ -568,6 +577,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing the
          *                           fragment identifier
          */
+        @Override
         public void endFragmentIdentifier() throws ParseException { }
 
         //////////////////////////////////////////////////////////////////////
@@ -584,6 +594,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void startPreserveAspectRatio() throws ParseException { }
 
         /**
@@ -591,6 +602,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void none() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_NONE;
         }
@@ -600,6 +612,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMaxYMax() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMAX;
         }
@@ -609,6 +622,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMaxYMid() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMID;
         }
@@ -618,6 +632,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMaxYMin() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMAXYMIN;
         }
@@ -627,6 +642,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMidYMax() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMAX;
         }
@@ -636,6 +652,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMidYMid() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMID;
         }
@@ -645,6 +662,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMidYMin() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMIN;
         }
@@ -654,6 +672,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMinYMax() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMAX;
         }
@@ -663,6 +682,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMinYMid() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMID;
         }
@@ -672,6 +692,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void xMinYMin() throws ParseException {
             align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMIN;
         }
@@ -681,6 +702,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void meet() throws ParseException {
             meet = true;
         }
@@ -690,6 +712,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void slice() throws ParseException {
             meet = false;
         }
@@ -699,6 +722,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
          * @exception ParseException if an error occured while processing
          * the transform
          */
+        @Override
         public void endPreserveAspectRatio() throws ParseException {
             hasPreserveAspectRatio = true;
         }

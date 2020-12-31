@@ -329,12 +329,14 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#startLength()}.
          */
+        @Override
         public void startLength() throws ParseException {
         }
 
         /**
          * Implements {@link LengthHandler#lengthValue(float)}.
          */
+        @Override
         public void lengthValue(float v) throws ParseException {
             this.value = v;
         }
@@ -342,6 +344,7 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#em()}.
          */
+        @Override
         public void em() throws ParseException {
             this.unit = SVGLength.SVG_LENGTHTYPE_EMS;
         }
@@ -349,6 +352,7 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#ex()}.
          */
+        @Override
         public void ex() throws ParseException {
             this.unit = SVGLength.SVG_LENGTHTYPE_EXS;
         }
@@ -356,6 +360,7 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#in()}.
          */
+        @Override
         public void in() throws ParseException {
             this.unit = SVGLength.SVG_LENGTHTYPE_IN;
         }
@@ -363,6 +368,7 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#cm()}.
          */
+        @Override
         public void cm() throws ParseException {
             this.unit = SVGLength.SVG_LENGTHTYPE_CM;
         }
@@ -370,6 +376,7 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#mm()}.
          */
+        @Override
         public void mm() throws ParseException {
             this.unit = SVGLength.SVG_LENGTHTYPE_MM;
         }
@@ -377,6 +384,7 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#pc()}.
          */
+        @Override
         public void pc() throws ParseException {
             this.unit = SVGLength.SVG_LENGTHTYPE_PC;
         }
@@ -384,6 +392,7 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#pt()}.
          */
+        @Override
         public void pt() throws ParseException {
             this.unit = SVGLength.SVG_LENGTHTYPE_PT;
         }
@@ -391,6 +400,7 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#px()}.
          */
+        @Override
         public void px() throws ParseException {
             this.unit = SVGLength.SVG_LENGTHTYPE_PX;
         }
@@ -398,6 +408,7 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#percentage()}.
          */
+        @Override
         public void percentage() throws ParseException {
             this.unit = SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
         }
@@ -405,6 +416,7 @@ public abstract class UnitProcessor {
         /**
          * Implements {@link LengthHandler#endLength()}.
          */
+        @Override
         public void endLength() throws ParseException {
         }
     }

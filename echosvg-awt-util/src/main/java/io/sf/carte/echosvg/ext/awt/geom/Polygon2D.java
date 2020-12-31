@@ -25,6 +25,7 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -183,6 +184,7 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
         closedPath = null;
     }
 
+    @Override
     public Object clone() {
         Polygon2D pol = new Polygon2D();
         for (int i = 0; i < npoints; i++) {
@@ -204,7 +206,7 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
     private void updatePath(float x, float y) {
         closedPath = null;
         if (path == null) {
-            path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
+            path = new GeneralPath(Path2D.WIND_EVEN_ODD);
             path.moveTo(x, y);
             bounds = new Rectangle2D.Float(x, y, 0, 0);
         } else {
@@ -301,10 +303,12 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
      * @return a {@link Rectangle2D} that precisely
      *                bounds the <code>Shape</code>.
      */
+    @Override
     public Rectangle2D getBounds2D() {
         return bounds;
     }
 
+    @Override
     public Rectangle getBounds() {
         if (bounds == null) return null;
         else return bounds.getBounds();
@@ -319,6 +323,7 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
      * @return <code>true</code> if the <code>Polygon</code> contains the
      * specified coordinates; <code>false</code> otherwise.
      */
+    @Override
     public boolean contains(double x, double y) {
         if (npoints <= 2 || !bounds.contains(x, y)) {
             return false;
@@ -346,6 +351,7 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
      *          otherwise.
      * @see #contains(double, double)
      */
+    @Override
     public boolean contains(Point2D p) {
         return contains(p.getX(), p.getY());
     }
@@ -365,6 +371,7 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
      *                         coordinates intersect each other;
      *                        <code>false</code> otherwise.
      */
+    @Override
     public boolean intersects(double x, double y, double w, double h) {
         if (npoints <= 0 || !bounds.intersects(x, y, w, h)) {
             return false;
@@ -382,6 +389,7 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
      *                         intersect each other; <code>false</code>
      *                         otherwise.
      */
+    @Override
     public boolean intersects(Rectangle2D r) {
         return intersects(r.getX(), r.getY(), r.getWidth(), r.getHeight());
     }
@@ -399,6 +407,7 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
      *                         contains the specified set of rectangular
      *                         coordinates; <code>false</code> otherwise.
      */
+    @Override
     public boolean contains(double x, double y, double w, double h) {
         if (npoints <= 0 || !bounds.intersects(x, y, w, h)) {
             return false;
@@ -417,6 +426,7 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
      *                        <code>false</code> otherwise.
      * @see #contains(double, double, double, double)
      */
+    @Override
     public boolean contains(Rectangle2D r) {
         return contains(r.getX(), r.getY(), r.getWidth(), r.getHeight());
     }
@@ -433,6 +443,7 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
      * @return a {@link PathIterator} object that provides access to the
      *                geometry of this <code>Polygon</code>.
      */
+    @Override
     public PathIterator getPathIterator(AffineTransform at) {
         updateComputingPath();
         if (closedPath == null) return null;
@@ -457,6 +468,7 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
      * @return a <code>PathIterator</code> object that provides access to the
      *                 <code>Shape</code> object's geometry.
      */
+    @Override
     public PathIterator getPathIterator(AffineTransform at, double flatness) {
         return getPathIterator(at);
     }

@@ -52,6 +52,7 @@ public class BindableElementBridge
     /**
      * Returns "*" to indicate a default bridge.
      */
+    @Override
     public String getNamespaceURI() {
         return "*";
     }
@@ -59,6 +60,7 @@ public class BindableElementBridge
     /**
      * Returns "*" to indicate a default bridge.
      */
+    @Override
     public String getLocalName() {
         return "*";
     }
@@ -66,6 +68,7 @@ public class BindableElementBridge
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new BindableElementBridge();
     }
@@ -77,6 +80,7 @@ public class BindableElementBridge
      * @param e the element that describes the graphics node to build
      * @return a graphics node that represents the specified element
      */
+    @Override
     public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
         // 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
         if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
@@ -145,6 +149,7 @@ public class BindableElementBridge
         return gn;
     }
 
+    @Override
     public void dispose() {
         BindableElement be = (BindableElement) e;
         if (be != null && be.getCSSFirstChild() != null) {
@@ -158,6 +163,7 @@ public class BindableElementBridge
      * Creates the GraphicsNode depending on the GraphicsNodeBridge
      * implementation.
      */
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         return null; // nothing to do, createGraphicsNode is fully overriden
     }
@@ -165,6 +171,7 @@ public class BindableElementBridge
     /**
      * Returns false as the custom element is a not container.
      */
+    @Override
     public boolean isComposite() {
         return false;
     }
@@ -177,6 +184,7 @@ public class BindableElementBridge
      * @param e the element that describes the graphics node to build
      * @param node the graphics node to build
      */
+    @Override
     public void buildGraphicsNode(BridgeContext ctx,
                                   Element e,
                                   GraphicsNode node) {
@@ -189,6 +197,7 @@ public class BindableElementBridge
     /**
      * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
      */
+    @Override
     public void handleDOMNodeInsertedEvent(MutationEvent evt) {
         // Only rebuild the graphics tree if this custom element is not bound.
         BindableElement be = (BindableElement) e;
@@ -204,6 +213,7 @@ public class BindableElementBridge
     /**
      * Invoked when a bindable element's binding has changed.
      */
+    @Override
     public void handleBindingEvent(Element bindableElement,
                                    Element shadowTree) {
         CompositeGraphicsNode gn = node.getParent();
@@ -217,6 +227,7 @@ public class BindableElementBridge
      * Invoked when the xblChildNodes property has changed because a
      * descendant xbl:content element has updated its selected nodes.
      */
+    @Override
     public void handleContentSelectionChangedEvent
             (ContentSelectionChangedEvent csce) {
     }

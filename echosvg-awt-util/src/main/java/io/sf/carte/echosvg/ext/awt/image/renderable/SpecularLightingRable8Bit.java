@@ -93,6 +93,7 @@ public class SpecularLightingRable8Bit
     /**
      * Returns the source to be filtered
      */
+    @Override
     public Filter getSource(){
         return (Filter)getSources().get(0);
     }
@@ -100,6 +101,7 @@ public class SpecularLightingRable8Bit
     /**
      * Sets the source to be filtered
      */
+    @Override
     public void setSource(Filter src){
         init(src, null);
     }
@@ -107,6 +109,7 @@ public class SpecularLightingRable8Bit
     /**
      * Returns this filter's bounds
      */
+    @Override
     public Rectangle2D getBounds2D(){
         return (Rectangle2D)(litRegion.clone());
     }
@@ -114,6 +117,7 @@ public class SpecularLightingRable8Bit
     /**
      * Returns this filter's litRegion
      */
+    @Override
     public Rectangle2D getLitRegion(){
         return getBounds2D();
     }
@@ -121,6 +125,7 @@ public class SpecularLightingRable8Bit
     /**
      * Set this filter's litRegion
      */
+    @Override
     public void setLitRegion(Rectangle2D litRegion){
         touch();
         this.litRegion = litRegion;
@@ -129,6 +134,7 @@ public class SpecularLightingRable8Bit
     /**
      * @return Light object used for the specular lighting
      */
+    @Override
     public Light getLight(){
         return light;
     }
@@ -136,6 +142,7 @@ public class SpecularLightingRable8Bit
     /**
      * @param light New Light object
      */
+    @Override
     public void setLight(Light light){
         touch();
         this.light = light;
@@ -144,6 +151,7 @@ public class SpecularLightingRable8Bit
     /**
      * @return surfaceScale
      */
+    @Override
     public double getSurfaceScale(){
         return surfaceScale;
     }
@@ -151,6 +159,7 @@ public class SpecularLightingRable8Bit
     /**
      * Sets the surface scale
      */
+    @Override
     public void setSurfaceScale(double surfaceScale){
         touch();
         this.surfaceScale = surfaceScale;
@@ -159,6 +168,7 @@ public class SpecularLightingRable8Bit
     /**
      * @return specular constant, or ks.
      */
+    @Override
     public double getKs(){
         return ks;
     }
@@ -166,6 +176,7 @@ public class SpecularLightingRable8Bit
     /**
      * Sets the specular constant, or ks
      */
+    @Override
     public void setKs(double ks){
         touch();
         this.ks = ks;
@@ -174,6 +185,7 @@ public class SpecularLightingRable8Bit
     /**
      * @return specular exponent
      */
+    @Override
     public double getSpecularExponent(){
         return specularExponent;
     }
@@ -181,6 +193,7 @@ public class SpecularLightingRable8Bit
     /**
      * Sets the specular exponent
      */
+    @Override
     public void setSpecularExponent(double specularExponent){
         touch();
         this.specularExponent = specularExponent;
@@ -190,6 +203,7 @@ public class SpecularLightingRable8Bit
      * Returns the min [dx,dy] distance in user space for evalutation of
      * the sobel gradient.
      */
+    @Override
     public double [] getKernelUnitLength() {
         if (kernelUnitLength == null)
             return null;
@@ -204,6 +218,7 @@ public class SpecularLightingRable8Bit
      * Sets the min [dx,dy] distance in user space for evaluation of the
      * sobel gradient. If set to zero or null then device space will be used.
      */
+    @Override
     public void setKernelUnitLength(double [] kernelUnitLength) {
         touch();
         if (kernelUnitLength == null) {
@@ -218,6 +233,7 @@ public class SpecularLightingRable8Bit
         this.kernelUnitLength[1] = (float)kernelUnitLength[1];
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc){
         Shape aoi = rc.getAreaOfInterest();
         if (aoi == null)

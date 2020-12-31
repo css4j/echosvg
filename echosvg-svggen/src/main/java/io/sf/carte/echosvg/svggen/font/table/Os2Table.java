@@ -226,6 +226,7 @@ public class Os2Table implements Table {
         return ulCodePageRange2;
     }
 
+    @Override
     public int getType() {
         return OS_2;
     }

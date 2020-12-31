@@ -47,6 +47,7 @@ public abstract class AbstractLight implements Light {
      *                corrected sRGB color space.
      * @return the light's color 
      */
+    @Override
     public double[] getColor(boolean linear){
         double [] ret = new double[3];
         if (linear) {
@@ -68,6 +69,7 @@ public abstract class AbstractLight implements Light {
     /**
      * Sets the new light color, <code>newColor</code> should be in sRGB.
      */
+    @Override
     public void setColor(Color newColor){
         color = new double[3];
         color[0] = newColor.getRed()  /255.;
@@ -78,6 +80,7 @@ public abstract class AbstractLight implements Light {
     /**
      * @return true if the light is constant over the whole surface
      */
+    @Override
     public boolean isConstant(){
         return true;
     }
@@ -95,6 +98,7 @@ public abstract class AbstractLight implements Light {
      * @param height number of samples to compute on the y axis
      * @param z array containing the z elevation for all the points
      */
+    @Override
     public double[][][] getLightMap(double x, double y, 
                                     final double dx, final double dy,
                                     final int width, final int height,
@@ -126,6 +130,7 @@ public abstract class AbstractLight implements Light {
      * @return an array width columns where each element
      *         is an array of three components representing the x, y and z
      *         components of the light vector.  */
+    @Override
     public double[][] getLightRow(double x, double y, 
                                   final double dx, final int width,
                                   final double[][] z,

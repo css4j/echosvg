@@ -30,6 +30,7 @@ public class AvoidTilingHintKey extends RenderingHints.Key {
 
     AvoidTilingHintKey(int number) { super(number); }
 
+    @Override
     public boolean isCompatibleValue(Object v) {
         if (v == null) return false;
         return ((v == RenderingHintsKeyExt.VALUE_AVOID_TILE_PAINTING_ON)  ||

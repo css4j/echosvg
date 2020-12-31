@@ -109,6 +109,7 @@ public class XMLTestSuiteRunner implements XTRunConstants, XTSConstants{
      * Test filter which accepts all tests
      */
     public static class AcceptAllTestsFilter implements TestFilter{
+        @Override
         public Test filter(Test t){
             return t;
         }
@@ -164,6 +165,7 @@ public class XMLTestSuiteRunner implements XTRunConstants, XTSConstants{
          * <code>TestSuite</code>s are accepted if they have children and
          * rejected if they have none.
          */
+        @Override
         public Test filter(Test t){
             String id = t.getQualifiedId();
             boolean isRequested = isRequestedId(id);

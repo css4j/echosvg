@@ -221,12 +221,14 @@ public class TextSelectionManager {
      * To implement a GraphicsNodeMouseListener.
      */
     protected class MouseListener implements GraphicsNodeMouseListener {
+        @Override
         public void mouseClicked(GraphicsNodeMouseEvent evt) {
             if (evt.getSource() instanceof Selectable) {
                 textSelector.mouseClicked(evt);
             }
         }
 
+        @Override
         public void mousePressed(GraphicsNodeMouseEvent evt) {
             if (evt.getSource() instanceof Selectable) {
                 textSelector.mousePressed(evt);
@@ -235,10 +237,12 @@ public class TextSelectionManager {
             }
         }
 
+        @Override
         public void mouseReleased(GraphicsNodeMouseEvent evt) {
             textSelector.mouseReleased(evt);
         }
 
+        @Override
         public void mouseEntered(GraphicsNodeMouseEvent evt) {
             if (evt.getSource() instanceof Selectable) {
                 textSelector.mouseEntered(evt);
@@ -249,6 +253,7 @@ public class TextSelectionManager {
             }
         }
 
+        @Override
         public void mouseExited(GraphicsNodeMouseEvent evt) {
             if (evt.getSource() instanceof Selectable) {
                 textSelector.mouseExited(evt);
@@ -258,12 +263,14 @@ public class TextSelectionManager {
             }
         }
 
+        @Override
         public void mouseDragged(GraphicsNodeMouseEvent evt) {
             if (evt.getSource() instanceof Selectable) {
                 textSelector.mouseDragged(evt);
             }
         }
 
+        @Override
         public void mouseMoved(GraphicsNodeMouseEvent evt) { }
     }
 
@@ -271,13 +278,16 @@ public class TextSelectionManager {
      * To implements a selection listener.
      */
     protected class TextSelectionListener implements SelectionListener {
+        @Override
         public void selectionDone(SelectionEvent e) {
             selectionChanged(e);
             selection = e.getSelection();
         }
+        @Override
         public void selectionCleared(SelectionEvent e) {
             selectionStarted(e);
         }
+        @Override
         public void selectionStarted(SelectionEvent e) {
             if (selectionHighlight != null) {
                 Rectangle r = getHighlightBounds();
@@ -286,6 +296,7 @@ public class TextSelectionManager {
             }
             selection = null;
         }
+        @Override
         public void selectionChanged(SelectionEvent e) {
             Rectangle r = null;
             AffineTransform at = component.getRenderingTransform();
@@ -335,6 +346,7 @@ public class TextSelectionManager {
         /**
          * Paints this overlay.
          */
+        @Override
         public void paint(Graphics g) {
             if (selectionHighlight != null) {
                 AffineTransform at = component.getRenderingTransform();

@@ -134,12 +134,14 @@ public class CompositeRed extends AbstractRed {
         init(srcs, myBounds, cm, sm, tgX, tgY, null);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         // copyToRaster(wr);
         genRect(wr);
         return wr;
     }
 
+    @Override
     public Raster getTile(int x, int y) {
         int tx = tileGridXOff+x*tileWidth;
         int ty = tileGridYOff+y*tileHeight;

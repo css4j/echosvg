@@ -34,6 +34,7 @@ public class SVGVKernElementBridge extends SVGKernElementBridge {
     /**
      * Returns 'vkern'.
      */
+    @Override
     public String getLocalName() {
         return SVG_VKERN_TAG;
     }

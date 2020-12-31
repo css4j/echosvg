@@ -34,6 +34,7 @@ import org.w3c.dom.svg.SVGTransformable;
 import io.sf.carte.echosvg.anim.dom.SVGLocatableSupport;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedBoolean;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedTransformList;
+import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.TraitInformation;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
@@ -61,7 +62,7 @@ public abstract class GraphicsExtensionElement
     protected static DoublyIndexedTable xmlTraitInformation;
     static {
         DoublyIndexedTable t =
-            new DoublyIndexedTable(StylableExtensionElement.xmlTraitInformation);
+            new DoublyIndexedTable(SVGOMElement.xmlTraitInformation);
         t.put(null, SVG_TRANSFORM_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
         t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,
@@ -109,6 +110,7 @@ public abstract class GraphicsExtensionElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getNearestViewportElement()}.
      */
+    @Override
     public SVGElement getNearestViewportElement() {
         return SVGLocatableSupport.getNearestViewportElement(this);
     }
@@ -117,6 +119,7 @@ public abstract class GraphicsExtensionElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getFarthestViewportElement()}.
      */
+    @Override
     public SVGElement getFarthestViewportElement() {
         return SVGLocatableSupport.getFarthestViewportElement(this);
     }
@@ -125,6 +128,7 @@ public abstract class GraphicsExtensionElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getBBox()}.
      */
+    @Override
     public SVGRect getBBox() {
         return SVGLocatableSupport.getBBox(this);
     }
@@ -133,6 +137,7 @@ public abstract class GraphicsExtensionElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getCTM()}.
      */
+    @Override
     public SVGMatrix getCTM() {
         return SVGLocatableSupport.getCTM(this);
     }
@@ -141,6 +146,7 @@ public abstract class GraphicsExtensionElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getScreenCTM()}.
      */
+    @Override
     public SVGMatrix getScreenCTM() {
         return SVGLocatableSupport.getScreenCTM(this);
     }
@@ -149,6 +155,7 @@ public abstract class GraphicsExtensionElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGLocatable#getTransformToElement(SVGElement)}.
      */
+    @Override
     public SVGMatrix getTransformToElement(SVGElement element)
         throws SVGException {
         return SVGLocatableSupport.getTransformToElement(this, element);
@@ -160,6 +167,7 @@ public abstract class GraphicsExtensionElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTransformable#getTransform()}.
      */
+    @Override
     public SVGAnimatedTransformList getTransform() {
         return transform;
     }

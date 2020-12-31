@@ -40,10 +40,12 @@ public class SingleSubstFormat1 extends SingleSubst {
         coverage = Coverage.read(raf);
     }
 
+    @Override
     public int getFormat() {
         return 1;
     }
 
+    @Override
     public int substitute(int glyphId) {
         int i = coverage.findGlyph(glyphId);
         if (i > -1) {

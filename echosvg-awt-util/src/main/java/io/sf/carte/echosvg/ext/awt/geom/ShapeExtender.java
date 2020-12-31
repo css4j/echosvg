@@ -38,45 +38,56 @@ public class ShapeExtender implements ExtendedShape {
         this.shape = shape;
     }
 
+    @Override
     public boolean contains(double x, double y) {
         return shape.contains(x, y);
     }
+    @Override
     public boolean contains(double x, double y, double w, double h) {
         return shape.contains(x, y, w, h);
     }
 
+    @Override
     public boolean contains(Point2D p) {
         return shape.contains(p);
     }
 
+    @Override
     public boolean contains(Rectangle2D r) {
         return shape.contains(r);
     }
 
+    @Override
     public Rectangle getBounds() {
         return shape.getBounds();
     }
 
+    @Override
     public Rectangle2D getBounds2D() {
         return shape.getBounds2D();
     }
 
+    @Override
     public PathIterator getPathIterator(AffineTransform at) {
         return shape.getPathIterator(at);
     }
 
+    @Override
     public PathIterator getPathIterator(AffineTransform at, double flatness) {
         return shape.getPathIterator(at, flatness);
     }
 
+    @Override
     public ExtendedPathIterator getExtendedPathIterator() {
         return new EPIWrap(shape.getPathIterator(null));
     }
 
+    @Override
     public boolean intersects(double x, double y, double w, double h) {
         return shape.intersects(x, y, w, h);
     }
 
+    @Override
     public boolean intersects(Rectangle2D r) {
         return shape.intersects(r);
     }
@@ -88,24 +99,30 @@ public class ShapeExtender implements ExtendedShape {
             this.pi = pi;
         }
 
+        @Override
         public int currentSegment() {
             float[] coords = new float[6];
             return pi.currentSegment(coords);
         }
 
+        @Override
         public int currentSegment(double[] coords) { 
             return pi.currentSegment(coords); }
 
+        @Override
         public int currentSegment(float[] coords) {
             return pi.currentSegment(coords); }
 
+        @Override
         public int getWindingRule() {
             return pi.getWindingRule();
         }
 
+        @Override
         public boolean isDone() {
             return pi.isDone(); }
 
+        @Override
         public void next() {
             pi.next();
         }

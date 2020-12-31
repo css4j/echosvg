@@ -50,6 +50,7 @@ public class   SVGOMFlowSpanElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG12Constants.SVG_FLOW_SPAN_TAG;
     }
@@ -57,6 +58,7 @@ public class   SVGOMFlowSpanElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFlowSpanElement();
     }

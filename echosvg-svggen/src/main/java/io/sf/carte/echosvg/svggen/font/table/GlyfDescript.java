@@ -57,18 +57,22 @@ public abstract class GlyfDescript extends Program implements GlyphDescription {
         return numberOfContours;
     }
 
+    @Override
     public short getXMaximum() {
         return xMax;
     }
 
+    @Override
     public short getXMinimum() {
         return xMin;
     }
 
+    @Override
     public short getYMaximum() {
         return yMax;
     }
 
+    @Override
     public short getYMinimum() {
         return yMin;
     }

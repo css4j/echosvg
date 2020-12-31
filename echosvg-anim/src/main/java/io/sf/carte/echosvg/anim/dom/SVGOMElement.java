@@ -143,6 +143,7 @@ public abstract class SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link SVGElement#getId()}.
      */
+    @Override
     public String getId() {
         if (((SVGOMDocument) ownerDocument).isSVG12) {
             Attr a = getAttributeNodeNS(XML_NAMESPACE_URI, SVG_ID_ATTRIBUTE);
@@ -156,6 +157,7 @@ public abstract class SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link SVGElement#setId(String)}.
      */
+    @Override
     public void setId(String id) {
         if (((SVGOMDocument) ownerDocument).isSVG12) {
             setAttributeNS(XML_NAMESPACE_URI, XML_ID_QNAME, id);
@@ -171,6 +173,7 @@ public abstract class SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link SVGElement#getXMLbase()}.
      */
+    @Override
     public String getXMLbase() {
         return getAttributeNS(XML_NAMESPACE_URI, XML_BASE_ATTRIBUTE);
     }
@@ -178,6 +181,7 @@ public abstract class SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link SVGElement#setXMLbase(String)}.
      */
+    @Override
     public void setXMLbase(String xmlbase) throws DOMException {
         setAttributeNS(XML_NAMESPACE_URI, XML_BASE_QNAME, xmlbase);
     }
@@ -185,6 +189,7 @@ public abstract class SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link SVGElement#getOwnerSVGElement()}.
      */
+    @Override
     public SVGSVGElement getOwnerSVGElement() {
         for (Element e = CSSEngine.getParentCSSStylableElement(this);
              e != null;
@@ -199,6 +204,7 @@ public abstract class SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link SVGElement#getViewportElement()}.
      */
+    @Override
     public SVGElement getViewportElement() {
         for (Element e = CSSEngine.getParentCSSStylableElement(this);
              e != null;
@@ -213,6 +219,7 @@ public abstract class SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link Node#getNodeName()}.
      */
+    @Override
     public String getNodeName() {
         if (prefix == null || prefix.equals("")) {
             return getLocalName();
@@ -224,6 +231,7 @@ public abstract class SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link Node#getNamespaceURI()}.
      */
+    @Override
     public String getNamespaceURI() {
         return SVGDOMImplementation.SVG_NAMESPACE_URI;
     }
@@ -231,6 +239,7 @@ public abstract class SVGOMElement
     /**
      * <b>DOM</b>: Implements {@link Node#setPrefix(String)}.
      */
+    @Override
     public void setPrefix(String prefix) throws DOMException {
         if (isReadonly()) {
             throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -255,6 +264,7 @@ public abstract class SVGOMElement
      * resolving any dependency on parent bases if needed.
      * Follows shadow trees when moving to parent nodes.
      */
+    @Override
     protected String getCascadedXMLBase(Node node) {
         String base = null;
         Node n = node.getParentNode();
@@ -333,6 +343,7 @@ public abstract class SVGOMElement
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -340,6 +351,7 @@ public abstract class SVGOMElement
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -561,6 +573,7 @@ public abstract class SVGOMElement
     /**
      * Returns whether the given CSS property is available on this element.
      */
+    @Override
     public boolean hasProperty(String pn) {
         AbstractStylableDocument doc = (AbstractStylableDocument) ownerDocument;
         CSSEngine eng = doc.getCSSEngine();
@@ -571,6 +584,7 @@ public abstract class SVGOMElement
     /**
      * Returns whether the given trait is available on this element.
      */
+    @Override
     public boolean hasTrait(String ns, String ln) {
         // XXX no traits yet
         return false;
@@ -579,6 +593,7 @@ public abstract class SVGOMElement
     /**
      * Returns whether the given CSS property is animatable.
      */
+    @Override
     public boolean isPropertyAnimatable(String pn) {
         AbstractStylableDocument doc = (AbstractStylableDocument) ownerDocument;
         CSSEngine eng = doc.getCSSEngine();
@@ -598,6 +613,7 @@ public abstract class SVGOMElement
     /**
      * Returns whether the given XML attribute is animatable.
      */
+    @Override
     public final boolean isAttributeAnimatable(String ns, String ln) {
         DoublyIndexedTable t = getTraitInformationTable();
         TraitInformation ti = (TraitInformation) t.get(ns, ln);
@@ -610,6 +626,7 @@ public abstract class SVGOMElement
     /**
      * Returns whether the given CSS property is additive.
      */
+    @Override
     public boolean isPropertyAdditive(String pn) {
         AbstractStylableDocument doc = (AbstractStylableDocument) ownerDocument;
         CSSEngine eng = doc.getCSSEngine();
@@ -629,6 +646,7 @@ public abstract class SVGOMElement
     /**
      * Returns whether the given XML attribute is additive.
      */
+    @Override
     public boolean isAttributeAdditive(String ns, String ln) {
         return true;
     }
@@ -636,6 +654,7 @@ public abstract class SVGOMElement
     /**
      * Returns whether the given trait is animatable.
      */
+    @Override
     public boolean isTraitAnimatable(String ns, String tn) {
         // XXX no traits yet
         return false;
@@ -644,6 +663,7 @@ public abstract class SVGOMElement
     /**
      * Returns whether the given trait is additive.
      */
+    @Override
     public boolean isTraitAdditive(String ns, String tn) {
         // XXX no traits yet
         return false;
@@ -652,6 +672,7 @@ public abstract class SVGOMElement
     /**
      * Returns the type of the given property.
      */
+    @Override
     public int getPropertyType(String pn) {
         AbstractStylableDocument doc =
             (AbstractStylableDocument) ownerDocument;
@@ -667,6 +688,7 @@ public abstract class SVGOMElement
     /**
      * Returns the type of the given attribute.
      */
+    @Override
     public final int getAttributeType(String ns, String ln) {
         DoublyIndexedTable t = getTraitInformationTable();
         TraitInformation ti = (TraitInformation) t.get(ns, ln);
@@ -681,6 +703,7 @@ public abstract class SVGOMElement
     /**
      * Returns the element.
      */
+    @Override
     public Element getElement() {
         return this;
     }
@@ -690,12 +713,14 @@ public abstract class SVGOMElement
      * elements.  Overridden in {@link SVGStylableElement} to actually update
      * properties.
      */
+    @Override
     public void updatePropertyValue(String pn, AnimatableValue val) {
     }
 
     /**
      * Updates an attribute value in this target.
      */
+    @Override
     public void updateAttributeValue(String ns, String ln,
                                      AnimatableValue val) {
         LiveAttributeValue a = getLiveAttributeValue(ns, ln);
@@ -706,12 +731,14 @@ public abstract class SVGOMElement
     /**
      * Updates a 'other' animation value in this target.
      */
+    @Override
     public void updateOtherValue(String type, AnimatableValue val) {
     }
 
     /**
      * Returns the underlying value of an animatable XML attribute.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(String ns, String ln) {
         LiveAttributeValue a = getLiveAttributeValue(ns, ln);
         if (!(a instanceof AnimatedLiveAttributeValue)) {
@@ -745,6 +772,7 @@ public abstract class SVGOMElement
      * Gets how percentage values are interpreted by the given attribute
      * or property.
      */
+    @Override
     public short getPercentageInterpretation(String ns, String an,
                                              boolean isCSS) {
         if (isCSS || ns == null) {
@@ -777,6 +805,7 @@ public abstract class SVGOMElement
      * color space rather than sRGB.  Overriden in {@link SVGStylableElement}
      * to actually look up the 'color-interpolation' property.
      */
+    @Override
     public boolean useLinearRGBColorInterpolation() {
         return false;
     }
@@ -790,6 +819,7 @@ public abstract class SVGOMElement
      *             {@link SVGContext}.PERCENTAGE_* constants)
      * @return the SVG value in user units
      */
+    @Override
     public float svgToUserSpace(float v, short type, short pcInterp) {
         if (unitContext == null) {
             unitContext = new UnitContext();
@@ -807,6 +837,7 @@ public abstract class SVGOMElement
     /**
      * Adds a listener for changes to the given attribute value.
      */
+    @Override
     public void addTargetListener(String ns, String an, boolean isCSS,
                                   AnimationTargetListener l) {
         if (!isCSS) {
@@ -825,6 +856,7 @@ public abstract class SVGOMElement
     /**
      * Removes a listener for changes to the given attribute value.
      */
+    @Override
     public void removeTargetListener(String ns, String an, boolean isCSS,
                                      AnimationTargetListener l) {
         if (!isCSS) {
@@ -852,6 +884,7 @@ public abstract class SVGOMElement
     /**
      * Exports this node to the given document.
      */
+    @Override
     protected Node export(Node n, AbstractDocument d) {
         super.export(n, d);
         SVGOMElement e = (SVGOMElement)n;
@@ -863,6 +896,7 @@ public abstract class SVGOMElement
     /**
      * Deeply exports this node to the given document.
      */
+    @Override
     protected Node deepExport(Node n, AbstractDocument d) {
         super.deepExport(n, d);
         SVGOMElement e = (SVGOMElement)n;
@@ -875,6 +909,7 @@ public abstract class SVGOMElement
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         SVGOMElement e = (SVGOMElement)n;
@@ -887,6 +922,7 @@ public abstract class SVGOMElement
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         SVGOMElement e = (SVGOMElement)n;
@@ -903,6 +939,7 @@ public abstract class SVGOMElement
         /**
          * Returns the element.
          */
+        @Override
         public Element getElement() {
             return SVGOMElement.this;
         }
@@ -910,6 +947,7 @@ public abstract class SVGOMElement
         /**
          * Returns the size of a px CSS unit in millimeters.
          */
+        @Override
         public float getPixelUnitToMillimeter() {
             return getSVGContext().getPixelUnitToMillimeter();
         }
@@ -919,6 +957,7 @@ public abstract class SVGOMElement
          * This will be removed after next release.
          * @see #getPixelUnitToMillimeter()
          */
+        @Override
         public float getPixelToMM() {
             return getPixelUnitToMillimeter();
         }
@@ -926,6 +965,7 @@ public abstract class SVGOMElement
         /**
          * Returns the font-size value.
          */
+        @Override
         public float getFontSize() {
             return getSVGContext().getFontSize();
         }
@@ -933,6 +973,7 @@ public abstract class SVGOMElement
         /**
          * Returns the x-height value.
          */
+        @Override
         public float getXHeight() {
             return 0.5f;
         }
@@ -940,6 +981,7 @@ public abstract class SVGOMElement
         /**
          * Returns the viewport width used to compute units.
          */
+        @Override
         public float getViewportWidth() {
             return getSVGContext().getViewportWidth();
         }
@@ -947,6 +989,7 @@ public abstract class SVGOMElement
         /**
          * Returns the viewport height used to compute units.
          */
+        @Override
         public float getViewportHeight() {
             return getSVGContext().getViewportHeight();
         }

@@ -34,6 +34,7 @@ public class DefaultErrorHandler implements ErrorHandler {
      * @exception TranscoderException if the method want to forward
      * the exception
      */
+    @Override
     public void error(TranscoderException ex) throws TranscoderException {
         System.err.println("ERROR: "+ex.getMessage());
     }
@@ -45,6 +46,7 @@ public class DefaultErrorHandler implements ErrorHandler {
      * @exception TranscoderException if the method want to forward
      * the exception
      */
+    @Override
     public void fatalError(TranscoderException ex) throws TranscoderException {
         throw ex;
     }
@@ -55,6 +57,7 @@ public class DefaultErrorHandler implements ErrorHandler {
      * @exception TranscoderException if the method want to forward
      * the exception
      */
+    @Override
     public void warning(TranscoderException ex) throws TranscoderException {
         System.err.println("WARNING: "+ex.getMessage());
     }

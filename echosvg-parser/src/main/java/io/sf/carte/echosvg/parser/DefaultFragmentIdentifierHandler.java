@@ -43,6 +43,7 @@ public class DefaultFragmentIdentifierHandler
     /**
      * Implements {@link FragmentIdentifierHandler#startFragmentIdentifier()}.
      */
+    @Override
     public void startFragmentIdentifier() throws ParseException {
     }
 
@@ -52,6 +53,7 @@ public class DefaultFragmentIdentifierHandler
      * @exception ParseException if an error occured while processing the
      *                           fragment identifier
      */
+    @Override
     public void idReference(String s) throws ParseException {
     }
 
@@ -64,6 +66,7 @@ public class DefaultFragmentIdentifierHandler
      * @exception ParseException if an error occured while processing the
      *                           fragment identifier
      */
+    @Override
     public void viewBox(float x, float y, float width, float height)
         throws ParseException {
     }
@@ -73,6 +76,7 @@ public class DefaultFragmentIdentifierHandler
      * @exception ParseException if an error occured while processing the
      *                           fragment identifier
      */
+    @Override
     public void startViewTarget() throws ParseException {
     }
 
@@ -82,6 +86,7 @@ public class DefaultFragmentIdentifierHandler
      * @exception ParseException if an error occured while processing the
      *                           fragment identifier
      */
+    @Override
     public void viewTarget(String name) throws ParseException {
     }
 
@@ -90,12 +95,14 @@ public class DefaultFragmentIdentifierHandler
      * @exception ParseException if an error occured while processing the
      *                           fragment identifier
      */
+    @Override
     public void endViewTarget() throws ParseException {
     }
 
     /**
      * Implements {@link TransformListHandler#startTransformList()}.
      */
+    @Override
     public void startTransformList() throws ParseException {
     }
 
@@ -103,6 +110,7 @@ public class DefaultFragmentIdentifierHandler
      * Implements {@link
      * TransformListHandler#matrix(float,float,float,float,float,float)}.
      */
+    @Override
     public void matrix(float a, float b, float c, float d, float e, float f)
         throws ParseException {
     }
@@ -110,54 +118,63 @@ public class DefaultFragmentIdentifierHandler
     /**
      * Implements {@link TransformListHandler#rotate(float)}.
      */
+    @Override
     public void rotate(float theta) throws ParseException {
     }
 
     /**
      * Implements {@link TransformListHandler#rotate(float,float,float)}.
      */
+    @Override
     public void rotate(float theta, float cx, float cy) throws ParseException {
     }
 
     /**
      * Implements {@link TransformListHandler#translate(float)}.
      */
+    @Override
     public void translate(float tx) throws ParseException {
     }
 
     /**
      * Implements {@link TransformListHandler#translate(float,float)}.
      */
+    @Override
     public void translate(float tx, float ty) throws ParseException {
     }
 
     /**
      * Implements {@link TransformListHandler#scale(float)}.
      */
+    @Override
     public void scale(float sx) throws ParseException {
     }
 
     /**
      * Implements {@link TransformListHandler#scale(float,float)}.
      */
+    @Override
     public void scale(float sx, float sy) throws ParseException {
     }
 
     /**
      * Implements {@link TransformListHandler#skewX(float)}.
      */
+    @Override
     public void skewX(float skx) throws ParseException {
     }
 
     /**
      * Implements {@link TransformListHandler#skewY(float)}.
      */
+    @Override
     public void skewY(float sky) throws ParseException {
     }
 
     /**
      * Implements {@link TransformListHandler#endTransformList()}.
      */
+    @Override
     public void endTransformList() throws ParseException {
     }
 
@@ -167,12 +184,14 @@ public class DefaultFragmentIdentifierHandler
      * @exception ParseException if an error occured while processing the
      *                           fragment identifier
      */
+    @Override
     public void zoomAndPan(boolean magnify) {
     }
 
     /**
      * Implements {@link FragmentIdentifierHandler#endFragmentIdentifier()}.
      */
+    @Override
     public void endFragmentIdentifier() throws ParseException {
     }
 }

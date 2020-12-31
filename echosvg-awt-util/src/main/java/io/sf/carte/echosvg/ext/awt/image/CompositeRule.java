@@ -247,6 +247,7 @@ public final class CompositeRule implements java.io.Serializable {
      * static equivalent. See the serialiazation specification for
      * further details on this method's logic.
      */
+    @Override
     public String toString() {
         switch(rule){
         case RULE_OVER:

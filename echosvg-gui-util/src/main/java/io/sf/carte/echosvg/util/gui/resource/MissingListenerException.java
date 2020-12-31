@@ -67,6 +67,7 @@ public class MissingListenerException extends RuntimeException {
     /**
      * Returns a printable representation of this object
      */
+    @Override
     public String toString() {
         return super.toString()+" ("+getKey()+", bundle: "+getClassName()+")";
     }

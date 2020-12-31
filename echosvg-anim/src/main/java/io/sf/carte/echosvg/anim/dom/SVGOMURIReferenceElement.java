@@ -71,6 +71,7 @@ public abstract class SVGOMURIReferenceElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -87,6 +88,7 @@ public abstract class SVGOMURIReferenceElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
      */
+    @Override
     public SVGAnimatedString getHref() {
         return href;
     }
@@ -94,6 +96,7 @@ public abstract class SVGOMURIReferenceElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

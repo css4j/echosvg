@@ -102,6 +102,7 @@ public abstract class SVGGraphicsElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -121,6 +122,7 @@ public abstract class SVGGraphicsElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }
@@ -266,6 +268,7 @@ public abstract class SVGGraphicsElement
      * Returns the {@link AffineTransform} representing the current motion
      * animation for this element.
      */
+    @Override
     public AffineTransform getMotionTransform() {
         return motionTransform;
     }
@@ -275,6 +278,7 @@ public abstract class SVGGraphicsElement
     /**
      * Updates a 'other' animation value in this target.
      */
+    @Override
     public void updateOtherValue(String type, AnimatableValue val) {
         if (type.equals("motion")) {
             if (motionTransform == null) {

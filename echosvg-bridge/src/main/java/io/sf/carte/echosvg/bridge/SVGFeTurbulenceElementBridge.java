@@ -46,6 +46,7 @@ public class SVGFeTurbulenceElementBridge
     /**
      * Returns 'feTurbulence'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_TURBULENCE_TAG;
     }
@@ -68,6 +69,7 @@ public class SVGFeTurbulenceElementBridge
      *        can then access a filter node from the filterMap if they
      *        know its name.
      */
+    @Override
     public Filter createFilter(BridgeContext ctx,
                                Element filterElement,
                                Element filteredElement,

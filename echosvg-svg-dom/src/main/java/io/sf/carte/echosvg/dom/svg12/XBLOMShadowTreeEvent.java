@@ -39,6 +39,7 @@ public class XBLOMShadowTreeEvent extends AbstractEvent
     /**
      * Returns the shadow tree that is the object of this event.
      */
+    @Override
     public XBLShadowTreeElement getXblShadowTree() {
         return xblShadowTree;
     }
@@ -46,6 +47,7 @@ public class XBLOMShadowTreeEvent extends AbstractEvent
     /**
      * Initializes this event object.
      */
+    @Override
     public void initShadowTreeEvent(String typeArg,
                                     boolean canBubbleArg,
                                     boolean cancelableArg,
@@ -57,6 +59,7 @@ public class XBLOMShadowTreeEvent extends AbstractEvent
     /**
      * Initializes this event object with a namespaced event type.
      */
+    @Override
     public void initShadowTreeEventNS(String namespaceURIArg,
                                       String typeArg,
                                       boolean canBubbleArg,

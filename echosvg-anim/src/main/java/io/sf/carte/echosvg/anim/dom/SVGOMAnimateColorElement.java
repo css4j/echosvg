@@ -101,6 +101,7 @@ public class SVGOMAnimateColorElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_ANIMATE_COLOR_TAG;
     }
@@ -108,6 +109,7 @@ public class SVGOMAnimateColorElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMAnimateColorElement();
     }

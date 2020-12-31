@@ -40,6 +40,7 @@ public class SVGReferenceRenderingAccuracyTest
      * For example: <br>
      * samples/anne.svg#svgView(viewBox(0,0,100,100))-viewBox1
      */
+    @Override
     public void setId(String id){
         this.id = id;
 
@@ -84,6 +85,7 @@ public class SVGReferenceRenderingAccuracyTest
      * + Otherwise, the string is supposed to be a URL. If it
      *   is an invalid URL, an IllegalArgumentException is thrown.  
      */
+    @Override
     protected URL resolveURL(String url){
         // We must strip the # off if there is one otherwise File thinks
         // we want to reference a file that has a '#' in it's name...
@@ -135,6 +137,7 @@ public class SVGReferenceRenderingAccuracyTest
      * The refImgURL is built as:
      * getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile
      */
+    @Override
     protected String buildRefImgURL(String svgDir, String svgFile){
         return getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile + alias + PNG_EXTENSION;
     }
@@ -144,6 +147,7 @@ public class SVGReferenceRenderingAccuracyTest
      * of the variation URL, which is built as:
      * getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + parameter + PNG_EXTENSION
      */
+    @Override
     public String[] buildVariationURLs(String svgDir, String svgFile) {
         String[] platforms = getVariationPlatforms();
         String[] urls = new String[platforms.length + 1];
@@ -162,6 +166,7 @@ public class SVGReferenceRenderingAccuracyTest
      * of the saveVariation URL, which is built as:
      * getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + parameter + PNG_EXTENSION
      */
+    @Override
     public String  buildSaveVariationFile(String svgDir, String svgFile){
         return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + alias + PNG_EXTENSION;
     }
@@ -171,6 +176,7 @@ public class SVGReferenceRenderingAccuracyTest
      * of the candidateReference URL, which is built as:
      * getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + parameter + PNG_EXTENSION
      */
+    @Override
     public String  buildCandidateReferenceFile(String svgDir, String svgFile){
         return getCandidateReferencePrefix() + svgDir + getCandidateReferenceSuffix() + svgFile + alias + PNG_EXTENSION;
     }

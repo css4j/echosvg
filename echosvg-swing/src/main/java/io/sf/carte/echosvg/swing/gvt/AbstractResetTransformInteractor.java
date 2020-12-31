@@ -39,6 +39,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
     /**
      * Tells whether the interaction has finished.
      */
+    @Override
     public boolean endInteraction() {
         return finished;
     }
@@ -49,6 +50,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
      * Invoked when a key has been typed.
      * This event occurs when a key press is followed by a key release.
      */
+    @Override
     public void keyTyped(KeyEvent e) {
         resetTransform(e);
     }
@@ -56,6 +58,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
     /**
      * Invoked when a key has been pressed.
      */
+    @Override
     public void keyPressed(KeyEvent e) {
         resetTransform(e);
     }
@@ -63,6 +66,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
     /**
      * Invoked when a key has been released.
      */
+    @Override
     public void keyReleased(KeyEvent e) {
         resetTransform(e);
     }
@@ -72,6 +76,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
     /**
      * Invoked when the mouse has been clicked on a component.
      */
+    @Override
     public void mouseClicked(MouseEvent e) {
         resetTransform(e);
     }
@@ -79,6 +84,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
     /**
      * Invoked when a mouse button has been pressed on a component.
      */
+    @Override
     public void mousePressed(MouseEvent e) {
         resetTransform(e);
     }
@@ -86,6 +92,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
     /**
      * Invoked when a mouse button has been released on a component.
      */
+    @Override
     public void mouseReleased(MouseEvent e) {
         resetTransform(e);
     }
@@ -93,6 +100,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
     /**
      * Invoked when the mouse enters a component.
      */
+    @Override
     public void mouseEntered(MouseEvent e) {
         resetTransform(e);
     }
@@ -100,6 +108,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
     /**
      * Invoked when the mouse exits a component.
      */
+    @Override
     public void mouseExited(MouseEvent e) {
         resetTransform(e);
     }
@@ -113,6 +122,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
      * released (regardless of whether the mouse position is within the
      * bounds of the component).
      */
+    @Override
     public void mouseDragged(MouseEvent e) {
         resetTransform(e);
     }
@@ -121,6 +131,7 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
      * Invoked when the mouse button has been moved on a component
      * (with no buttons no down).
      */
+    @Override
     public void mouseMoved(MouseEvent e) {
         resetTransform(e);
     }

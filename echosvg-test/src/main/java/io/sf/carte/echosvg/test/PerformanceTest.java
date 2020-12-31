@@ -75,6 +75,7 @@ public abstract class PerformanceTest extends AbstractTest {
      * Force implementations to only implement <code>runOp</code>
      * and other performance specific methods.
      */
+    @Override
     public final TestReport run() {
         return super.run();
     }
@@ -83,6 +84,7 @@ public abstract class PerformanceTest extends AbstractTest {
      * Force implementations to only implement <code>runOp</code>
      * and other performance specific methods.
      */
+    @Override
     public final boolean runImplBasic() throws Exception {
         // Should never be called for a PerformanceTest
         return false;
@@ -98,6 +100,7 @@ public abstract class PerformanceTest extends AbstractTest {
      * @see #runRef
      * @see #runOp
      */
+    @Override
     public final TestReport runImpl() throws Exception {
         int iter = 50;
 

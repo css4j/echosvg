@@ -52,6 +52,7 @@ public class CachedImageHandlerBase64Encoder extends DefaultCachedImageHandler {
     * Note that no assumptions should be made by the caller about the
     * corresponding SVG tag.
     */
+    @Override
     public Element createElement(SVGGeneratorContext generatorContext) {
         // Create a DOM Element in SVG namespace to refer to an image
         // For this cached version we return <use>
@@ -63,6 +64,7 @@ public class CachedImageHandlerBase64Encoder extends DefaultCachedImageHandler {
     }
 
 
+    @Override
     public String getRefPrefix(){
         return "";
     }
@@ -72,6 +74,7 @@ public class CachedImageHandlerBase64Encoder extends DefaultCachedImageHandler {
      * scale &amp;   position properly. Sets x and y attributes on the element
      * accordingly.
      */
+    @Override
     protected AffineTransform handleTransform(Element imageElement,
                                               double x, double y,
                                               double srcWidth,
@@ -103,6 +106,7 @@ public class CachedImageHandlerBase64Encoder extends DefaultCachedImageHandler {
     /**
      * Uses PNG encoding.
      */
+    @Override
     public void encodeImage(BufferedImage buf, OutputStream os)
             throws IOException {
         Base64EncoderStream b64Encoder = new Base64EncoderStream(os);
@@ -112,6 +116,7 @@ public class CachedImageHandlerBase64Encoder extends DefaultCachedImageHandler {
         b64Encoder.close();
     }
 
+    @Override
     public int getBufferedImageType(){
         return BufferedImage.TYPE_INT_ARGB;
     }

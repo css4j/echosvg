@@ -25,6 +25,7 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -40,6 +41,7 @@ public class KerningManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -47,6 +49,7 @@ public class KerningManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_KERNING_PROPERTY;
     }
@@ -54,6 +57,7 @@ public class KerningManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -61,6 +65,7 @@ public class KerningManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return true;
     }
@@ -68,6 +73,7 @@ public class KerningManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_KERNING_VALUE;
     }
@@ -75,23 +81,25 @@ public class KerningManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
-        return SVGValueConstants.AUTO_VALUE;
+        return ValueConstants.AUTO_VALUE;
     }
 
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
         case INHERIT:
-            return SVGValueConstants.INHERIT_VALUE;
+            return ValueConstants.INHERIT_VALUE;
 
         case IDENT:
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_AUTO_VALUE)) {
-                return SVGValueConstants.AUTO_VALUE;
+                return ValueConstants.AUTO_VALUE;
             }
             throw createInvalidIdentifierDOMException(lu.getStringValue());
         }
@@ -102,13 +110,14 @@ public class KerningManager extends LengthManager {
      * Implements {@link
      * ValueManager#createStringValue(short,String,CSSEngine)}.
      */
+    @Override
     public Value createStringValue(short type, String value, CSSEngine engine)
         throws DOMException {
         if (type != CSSPrimitiveValue.CSS_IDENT) {
             throw createInvalidStringTypeDOMException(type);
         }
         if (value.equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
-            return SVGValueConstants.AUTO_VALUE;
+            return ValueConstants.AUTO_VALUE;
         }
         throw createInvalidIdentifierDOMException(value);
     }
@@ -117,6 +126,7 @@ public class KerningManager extends LengthManager {
      * Indicates the orientation of the property associated with
      * this manager.
      */
+    @Override
     protected int getOrientation() {
         return HORIZONTAL_ORIENTATION;
     }

@@ -34,6 +34,7 @@ public class DoubleDocument extends PlainDocument {
      * Strip all non digit characters.  The first character must be '-' or '+'.
      * Only one '.' is allowed.
      */
+    @Override
     public void insertString(int offs, String str, AttributeSet a)
             throws BadLocationException {
 

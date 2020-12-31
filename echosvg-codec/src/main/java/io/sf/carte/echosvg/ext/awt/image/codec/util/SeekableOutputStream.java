@@ -50,14 +50,17 @@ public class SeekableOutputStream extends OutputStream {
         this.file = file;
     }
 
+    @Override
     public void write(int b) throws IOException {
         file.write(b);
     }
 
+    @Override
     public void write(byte[] b) throws IOException {
         file.write(b);
     }
 
+    @Override
     public void write(byte[] b, int off, int len) throws IOException {
         file.write(b, off, len);
     }
@@ -66,10 +69,12 @@ public class SeekableOutputStream extends OutputStream {
      * Invokes <code>getFD().sync()</code> on the underlying
      * <code>RandomAccessFile</code>.
      */
+    @Override
     public void flush() throws IOException {
         file.getFD().sync();
     }
 
+    @Override
     public void close() throws IOException {
         file.close();
     }

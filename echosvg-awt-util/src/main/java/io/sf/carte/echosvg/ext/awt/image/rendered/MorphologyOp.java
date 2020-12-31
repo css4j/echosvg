@@ -103,15 +103,18 @@ public class MorphologyOp implements BufferedImageOp, RasterOp {
         }
     }
 
+    @Override
     public Rectangle2D getBounds2D(Raster src){
         checkCompatible(src.getSampleModel());
         return new Rectangle(src.getMinX(), src.getMinY(), src.getWidth(), src.getHeight());
     }
 
+    @Override
     public Rectangle2D getBounds2D(BufferedImage src){
         return new Rectangle(0, 0, src.getWidth(), src.getHeight());
     }
 
+    @Override
     public Point2D getPoint2D(Point2D srcPt, Point2D destPt){
         // This operation does not affect pixel location
         if(destPt==null)
@@ -204,16 +207,19 @@ public class MorphologyOp implements BufferedImageOp, RasterOp {
         }
     }
 
+    @Override
     public RenderingHints getRenderingHints(){
         return null;
     }
 
+    @Override
     public WritableRaster createCompatibleDestRaster(Raster src){
         checkCompatible(src.getSampleModel());
         // Src Raster is OK: create a similar Raster for destination.
         return src.createCompatibleWritableRaster();
     }
 
+    @Override
     public BufferedImage createCompatibleDestImage(BufferedImage src,
                                                    ColorModel destCM){
         BufferedImage dest = null;
@@ -830,6 +836,7 @@ public class MorphologyOp implements BufferedImageOp, RasterOp {
      *        be created. src and dest can refer to the same Raster, in
      *        which situation the src will be modified.
      */
+    @Override
     public WritableRaster filter(Raster src, WritableRaster dest){
 
         //
@@ -1532,6 +1539,7 @@ public class MorphologyOp implements BufferedImageOp, RasterOp {
        * Where as I think it should become a bright opaque red. Which
        * is the result you would get if you were using unpremult data.
        */
+    @Override
     public BufferedImage filter(BufferedImage src, BufferedImage dest){
         if (src == null)
             throw new NullPointerException("Source image should not be null");

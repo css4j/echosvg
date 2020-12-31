@@ -58,6 +58,7 @@ public class SVGClipDescriptor implements SVGDescriptor, SVGSyntax{
      * @return a map containing the SVG attributes needed by the
      *         descriptor.
      */
+    @Override
     public Map getAttributeMap(Map attrMap) {
         if (attrMap == null)
             attrMap = new HashMap();
@@ -77,6 +78,7 @@ public class SVGClipDescriptor implements SVGDescriptor, SVGSyntax{
      * @return a set containing Elements that represent the definition
      *         of the descriptor's attribute values
      */
+    @Override
     public List getDefinitionSet(List defSet) {
         if (defSet == null)
             defSet = new LinkedList();

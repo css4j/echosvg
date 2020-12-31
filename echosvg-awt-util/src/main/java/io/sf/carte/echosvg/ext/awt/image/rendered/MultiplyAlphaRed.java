@@ -173,6 +173,7 @@ public class MultiplyAlphaRed extends AbstractRed {
         return wr;
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         // Get my source.
         CachableRed srcRed   = (CachableRed)getSources().get(0);

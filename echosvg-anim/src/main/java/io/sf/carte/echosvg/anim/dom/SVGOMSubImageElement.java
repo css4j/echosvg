@@ -64,6 +64,7 @@ public class SVGOMSubImageElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG12Constants.SVG_SUB_IMAGE_TAG;
     }
@@ -71,6 +72,7 @@ public class SVGOMSubImageElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMSubImageElement();
     }

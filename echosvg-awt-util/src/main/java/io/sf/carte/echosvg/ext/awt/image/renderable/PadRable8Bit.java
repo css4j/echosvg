@@ -58,6 +58,7 @@ public class PadRable8Bit extends AbstractRable
     /**
      * Returns the source to be affine.
      */
+    @Override
     public Filter getSource() {
         return (Filter)srcs.get(0);
     }
@@ -66,10 +67,12 @@ public class PadRable8Bit extends AbstractRable
      * Sets the source to be affine.
      * @param src image to affine.
      */
+    @Override
     public void setSource(Filter src) {
         super.init(src, null);
     }
 
+    @Override
     public Rectangle2D getBounds2D() {
         return (Rectangle2D)padRect.clone();
     }
@@ -78,6 +81,7 @@ public class PadRable8Bit extends AbstractRable
      * Set the current rectangle for padding.
      * @param rect the new rectangle to use for pad.
      */
+    @Override
     public void setPadRect(Rectangle2D rect) {
         touch();
         this.padRect = rect;
@@ -87,6 +91,7 @@ public class PadRable8Bit extends AbstractRable
      * Get the current rectangle for padding
      * @return Rectangle currently in use for pad.
      */
+    @Override
     public Rectangle2D getPadRect() {
         return (Rectangle2D)padRect.clone();
     }
@@ -95,6 +100,7 @@ public class PadRable8Bit extends AbstractRable
      * Set the current extension mode for pad
      * @param padMode the new pad mode
      */
+    @Override
     public void setPadMode(PadMode padMode) {
         touch();
         this.padMode = padMode;
@@ -104,6 +110,7 @@ public class PadRable8Bit extends AbstractRable
      * Get the current extension mode for pad
      * @return Mode currently in use for pad
      */
+    @Override
     public PadMode getPadMode() {
         return padMode;
     }
@@ -118,6 +125,7 @@ public class PadRable8Bit extends AbstractRable
      *         for some reason the paint failed (in which
      *         case a createRendering should be used).
      */
+    @Override
     public boolean paintRable(Graphics2D g2d) {
         // This optimization only apply if we are using
         // SrcOver.  Otherwise things break...
@@ -137,6 +145,7 @@ public class PadRable8Bit extends AbstractRable
         return true;
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         RenderingHints rh = rc.getRenderingHints();
         if (rh == null) rh = new RenderingHints(null);
@@ -193,6 +202,7 @@ public class PadRable8Bit extends AbstractRable
         return cr;
     }
 
+    @Override
     public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn) {
         if (srcIndex != 0)
             throw new IndexOutOfBoundsException("Affine only has one input");
@@ -212,6 +222,7 @@ public class PadRable8Bit extends AbstractRable
         return srect;
     }
 
+    @Override
     public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn) {
         if (srcIndex != 0)
             throw new IndexOutOfBoundsException("Affine only has one input");

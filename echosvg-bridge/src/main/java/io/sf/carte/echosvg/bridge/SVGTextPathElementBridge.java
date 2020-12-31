@@ -47,10 +47,12 @@ public class SVGTextPathElementBridge extends AnimatableGenericSVGBridge
     /**
      * Returns 'textPath'.
      */
+    @Override
     public String getLocalName() {
         return SVG_TEXT_PATH_TAG;
     }
 
+    @Override
     public void handleElement(BridgeContext ctx, Element e) {
         // We don't want to take over from the text content element.
     }

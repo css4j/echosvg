@@ -24,6 +24,7 @@ import java.awt.Composite;
 import java.awt.Cursor;
 import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
 import org.w3c.dom.Element;
@@ -741,8 +742,8 @@ public abstract class CSSUtilities
     public static int convertClipRule(Element e) {
         Value v = getComputedStyle(e, SVGCSSEngine.CLIP_RULE_INDEX);
         return (v.getStringValue().charAt(0) == 'n')
-            ? GeneralPath.WIND_NON_ZERO
-            : GeneralPath.WIND_EVEN_ODD;
+            ? Path2D.WIND_NON_ZERO
+            : Path2D.WIND_EVEN_ODD;
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -794,8 +795,8 @@ public abstract class CSSUtilities
     public static int convertFillRule(Element e) {
         Value v = getComputedStyle(e, SVGCSSEngine.FILL_RULE_INDEX);
         return (v.getStringValue().charAt(0) == 'n')
-            ? GeneralPath.WIND_NON_ZERO
-            : GeneralPath.WIND_EVEN_ODD;
+            ? Path2D.WIND_NON_ZERO
+            : Path2D.WIND_EVEN_ODD;
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -913,7 +914,7 @@ public abstract class CSSUtilities
      */
     protected static int rule(CSSValue v) {
         return (((CSSPrimitiveValue)v).getStringValue().charAt(0) == 'n')
-            ? GeneralPath.WIND_NON_ZERO
-            : GeneralPath.WIND_EVEN_ODD;
+            ? Path2D.WIND_NON_ZERO
+            : Path2D.WIND_EVEN_ODD;
     }
 }

@@ -70,6 +70,7 @@ public class GenericAttrNS extends AbstractAttrNS {
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -77,6 +78,7 @@ public class GenericAttrNS extends AbstractAttrNS {
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -84,6 +86,7 @@ public class GenericAttrNS extends AbstractAttrNS {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new GenericAttrNS();
     }

@@ -105,11 +105,13 @@ public class SpecularLightingRed extends AbstractTiledRed{
              litRegion.x, litRegion.y, null);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         copyToRaster(wr);
         return wr;
     }
 
+    @Override
     public void genRect(WritableRaster wr) {
         // Copy variable on stack for faster access in tight loop
         final double scaleX = this.scaleX;

@@ -77,6 +77,7 @@ public abstract class SVGOMAnimationElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -94,6 +95,7 @@ public abstract class SVGOMAnimationElement
     /**
      * <b>DOM</b>: Implements {@link SVGAnimationElement#getTargetElement()}.
      */
+    @Override
     public SVGElement getTargetElement() {
         return ((SVGAnimationContext) getSVGContext()).getTargetElement();
     }
@@ -101,6 +103,7 @@ public abstract class SVGOMAnimationElement
     /**
      * <b>DOM</b>: Implements {@link SVGAnimationElement#getStartTime()}.
      */
+    @Override
     public float getStartTime() {
         return ((SVGAnimationContext) getSVGContext()).getStartTime();
     }
@@ -108,6 +111,7 @@ public abstract class SVGOMAnimationElement
     /**
      * <b>DOM</b>: Implements {@link SVGAnimationElement#getCurrentTime()}.
      */
+    @Override
     public float getCurrentTime() {
         return ((SVGAnimationContext) getSVGContext()).getCurrentTime();
     }
@@ -115,6 +119,7 @@ public abstract class SVGOMAnimationElement
     /**
      * <b>DOM</b>: Implements {@link SVGAnimationElement#getSimpleDuration()}.
      */
+    @Override
     public float getSimpleDuration() throws DOMException {
         float dur = ((SVGAnimationContext) getSVGContext()).getSimpleDuration();
         if (dur == TimedElement.INDEFINITE) {
@@ -140,6 +145,7 @@ public abstract class SVGOMAnimationElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.smil.ElementTimeControl#beginElement()}.
      */
+    @Override
     public boolean beginElement() throws DOMException {
         return ((SVGAnimationContext) getSVGContext()).beginElement();
     }
@@ -148,6 +154,7 @@ public abstract class SVGOMAnimationElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.smil.ElementTimeControl#beginElementAt(float)}.
      */
+    @Override
     public boolean beginElementAt(float offset) throws DOMException {
         return ((SVGAnimationContext) getSVGContext()).beginElementAt(offset);
     }
@@ -156,6 +163,7 @@ public abstract class SVGOMAnimationElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.smil.ElementTimeControl#endElement()}.
      */
+    @Override
     public boolean endElement() throws DOMException {
         return ((SVGAnimationContext) getSVGContext()).endElement();
     }
@@ -164,6 +172,7 @@ public abstract class SVGOMAnimationElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.smil.ElementTimeControl#endElementAt(float)}.
      */
+    @Override
     public boolean endElementAt(float offset) throws DOMException {
         return ((SVGAnimationContext) getSVGContext()).endElementAt(offset);
     }
@@ -174,6 +183,7 @@ public abstract class SVGOMAnimationElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
      */
+    @Override
     public SVGAnimatedBoolean getExternalResourcesRequired() {
         return externalResourcesRequired;
     }
@@ -184,6 +194,7 @@ public abstract class SVGOMAnimationElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getRequiredFeatures()}.
      */
+    @Override
     public SVGStringList getRequiredFeatures() {
         return SVGTestsSupport.getRequiredFeatures(this);
     }
@@ -192,6 +203,7 @@ public abstract class SVGOMAnimationElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getRequiredExtensions()}.
      */
+    @Override
     public SVGStringList getRequiredExtensions() {
         return SVGTestsSupport.getRequiredExtensions(this);
     }
@@ -200,6 +212,7 @@ public abstract class SVGOMAnimationElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getSystemLanguage()}.
      */
+    @Override
     public SVGStringList getSystemLanguage() {
         return SVGTestsSupport.getSystemLanguage(this);
     }
@@ -208,6 +221,7 @@ public abstract class SVGOMAnimationElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#hasExtension(String)}.
      */
+    @Override
     public boolean hasExtension(String extension) {
         return SVGTestsSupport.hasExtension(this, extension);
     }
@@ -215,6 +229,7 @@ public abstract class SVGOMAnimationElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

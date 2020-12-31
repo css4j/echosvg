@@ -77,6 +77,7 @@ public class FillShapePainter implements ShapePainter {
      *
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void paint(Graphics2D g2d) {
         if (paint != null) {
             g2d.setPaint(paint);
@@ -87,6 +88,7 @@ public class FillShapePainter implements ShapePainter {
     /**
      * Returns the area painted by this shape painter.
      */
+    @Override
     public Shape getPaintedArea(){
         if (paint == null)
             return null;
@@ -96,6 +98,7 @@ public class FillShapePainter implements ShapePainter {
     /**
      * Returns the bounds of the area painted by this shape painter
      */
+    @Override
     public Rectangle2D getPaintedBounds2D(){
         if ((paint == null) || (shape == null))
             return  null;
@@ -106,6 +109,7 @@ public class FillShapePainter implements ShapePainter {
     /**
      * Returns true if pt is in the area painted by this shape painter
      */
+    @Override
     public boolean inPaintedArea(Point2D pt){
         if ((paint == null) || (shape == null))
             return  false;
@@ -117,6 +121,7 @@ public class FillShapePainter implements ShapePainter {
      * Returns the area covered by this shape painter (even if not painted).
      * 
      */
+    @Override
     public Shape getSensitiveArea(){
         return shape;
     }
@@ -125,6 +130,7 @@ public class FillShapePainter implements ShapePainter {
      * Returns the bounds of the area covered by this shape painte
      * (even if not painted).
      */
+    @Override
     public Rectangle2D getSensitiveBounds2D() {
         if (shape == null)
             return  null;
@@ -134,6 +140,7 @@ public class FillShapePainter implements ShapePainter {
     /**
      * Returns true if pt is in the area painted by this shape painter
      */
+    @Override
     public boolean inSensitiveArea(Point2D pt){
         if (shape == null)
             return  false;
@@ -146,6 +153,7 @@ public class FillShapePainter implements ShapePainter {
      * @param shape new shape this painter should be associated with.
      * Should not be null.  
      */
+    @Override
     public void setShape(Shape shape){
         if (shape == null) {
             throw new IllegalArgumentException();
@@ -158,6 +166,7 @@ public class FillShapePainter implements ShapePainter {
      *
      * @return shape associated with this Painter.
      */
+    @Override
     public Shape getShape(){
         return shape;
     }

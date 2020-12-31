@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -44,6 +45,7 @@ public class StrokeDasharrayManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -51,6 +53,7 @@ public class StrokeDasharrayManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -58,6 +61,7 @@ public class StrokeDasharrayManager extends LengthManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -65,6 +69,7 @@ public class StrokeDasharrayManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_LENGTH_LIST_OR_IDENT;
     }
@@ -72,6 +77,7 @@ public class StrokeDasharrayManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_STROKE_DASHARRAY_PROPERTY;
     }
@@ -79,23 +85,25 @@ public class StrokeDasharrayManager extends LengthManager {
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
-        return SVGValueConstants.NONE_VALUE;
+        return ValueConstants.NONE_VALUE;
     }
 
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
         case INHERIT:
-            return SVGValueConstants.INHERIT_VALUE;
+            return ValueConstants.INHERIT_VALUE;
 
         case IDENT:
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_NONE_VALUE)) {
-                return SVGValueConstants.NONE_VALUE;
+                return ValueConstants.NONE_VALUE;
             }
             throw createInvalidIdentifierDOMException(lu.getStringValue());
 
@@ -119,13 +127,14 @@ public class StrokeDasharrayManager extends LengthManager {
      * Implements {@link
      * ValueManager#createStringValue(short,String,CSSEngine)}.
      */
+    @Override
     public Value createStringValue(short type, String value, CSSEngine engine)
         throws DOMException {
         if (type != CSSPrimitiveValue.CSS_IDENT) {
             throw createInvalidStringTypeDOMException(type);
         }
         if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-            return SVGValueConstants.NONE_VALUE;
+            return ValueConstants.NONE_VALUE;
         }
         throw createInvalidIdentifierDOMException(value);
     }
@@ -134,6 +143,7 @@ public class StrokeDasharrayManager extends LengthManager {
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,
@@ -158,6 +168,7 @@ public class StrokeDasharrayManager extends LengthManager {
      * Indicates the orientation of the property associated with
      * this manager.
      */
+    @Override
     protected int getOrientation() {
         return BOTH_ORIENTATION;
     }

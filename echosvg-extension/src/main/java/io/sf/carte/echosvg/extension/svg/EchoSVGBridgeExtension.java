@@ -43,6 +43,7 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
      * reason you need to come before/after another existing extension
      * make sure your priority is lower/higher than theirs.
      */
+    @Override
     public float getPriority() { return 1.0f; }
 
     /**
@@ -51,6 +52,7 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
      * @return An iterator containing strings one for each implemented
      *         extension.
      */
+    @Override
     public Iterator getImplementedExtensions() {
         String [] extensions = {
             "http://xml.apache.org/batik/ext/poly/1.0" ,
@@ -71,6 +73,7 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
      * This should return the individual or company name responsible
      * for the this implementation of the extension.
      */
+    @Override
     public String getAuthor() {
         return "Thomas DeWeese";
     }
@@ -78,6 +81,7 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
     /**
      * This should contain a contact address (usually an e-mail address).
      */
+    @Override
     public String getContactAddress() {
         return "deweese@apache.org";
     }
@@ -86,6 +90,7 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
      * This should return a URL where information can be obtained on
      * this extension.
      */
+    @Override
     public String getURL() {
         return "http://xml.apache.org/batik";
     }
@@ -95,6 +100,7 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
      * Perhaps that should be a resource for internationalization?
      * (although I suppose it could be done internally)
      */
+    @Override
     public String getDescription() {
         return "Example extension to standard SVG shape tags";
     }
@@ -107,6 +113,7 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
      *
      * @param ctx The BridgeContext instance to be updated
      */
+    @Override
     public void registerTags(BridgeContext ctx) {
         ctx.putBridge(new EchoSVGRegularPolygonElementBridge());
         ctx.putBridge(new EchoSVGStarElementBridge());
@@ -122,6 +129,7 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
      *
      * @param e The element to check.
      */
+    @Override
     public boolean isDynamicElement(Element e) {
         return false;
     }

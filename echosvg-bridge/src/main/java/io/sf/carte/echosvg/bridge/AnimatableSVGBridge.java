@@ -58,6 +58,7 @@ public abstract class AnimatableSVGBridge
     /**
      * Adds a listener for changes to the given attribute value.
      */
+    @Override
     public void addTargetListener(String pn, AnimationTargetListener l) {
         if (targetListeners == null) {
             targetListeners = new HashMap();
@@ -73,6 +74,7 @@ public abstract class AnimatableSVGBridge
     /**
      * Removes a listener for changes to the given attribute value.
      */
+    @Override
     public void removeTargetListener(String pn, AnimationTargetListener l) {
         LinkedList ll = (LinkedList) targetListeners.get(pn);
         ll.remove(l);

@@ -52,6 +52,7 @@ public class FlowSpanElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return BATIK_EXT_FLOW_SPAN_TAG;
     }
@@ -59,6 +60,7 @@ public class FlowSpanElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
      */
+    @Override
     public String getNamespaceURI() {
         return BATIK_12_NAMESPACE_URI;
     }
@@ -66,6 +68,7 @@ public class FlowSpanElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new FlowSpanElement();
     }

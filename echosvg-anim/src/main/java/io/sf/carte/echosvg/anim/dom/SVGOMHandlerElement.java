@@ -50,6 +50,7 @@ public class SVGOMHandlerElement extends SVGOMElement {
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG12Constants.SVG_HANDLER_TAG;
     }
@@ -57,6 +58,7 @@ public class SVGOMHandlerElement extends SVGOMElement {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMHandlerElement();
     }

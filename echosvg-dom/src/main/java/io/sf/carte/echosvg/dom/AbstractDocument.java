@@ -76,6 +76,7 @@ import io.sf.carte.echosvg.util.CleanerThread;
 import io.sf.carte.echosvg.util.DOMConstants;
 import io.sf.carte.echosvg.util.SoftDoublyIndexedTable;
 import io.sf.carte.echosvg.w3c.dom.events.MutationNameEvent;
+import io.sf.carte.echosvg.xml.XMLUtilities;
 
 /**
  * This class implements the {@link org.w3c.dom.Document} interface.
@@ -222,6 +223,7 @@ public abstract class AbstractDocument
     /**
      * Implements {@link io.sf.carte.echosvg.i18n.Localizable#setLocale(Locale)}.
      */
+    @Override
     public void setLocale(Locale l) {
         localizableSupport.setLocale(l);
     }
@@ -229,6 +231,7 @@ public abstract class AbstractDocument
     /**
      * Implements {@link io.sf.carte.echosvg.i18n.Localizable#getLocale()}.
      */
+    @Override
     public Locale getLocale() {
         return localizableSupport.getLocale();
     }
@@ -237,6 +240,7 @@ public abstract class AbstractDocument
      * Implements {@link
      * io.sf.carte.echosvg.i18n.Localizable#formatMessage(String,Object[])}.
      */
+    @Override
     public String formatMessage(String key, Object[] args)
         throws MissingResourceException {
         return localizableSupport.formatMessage(key, args);
@@ -260,6 +264,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return "#document".
      */
+    @Override
     public String getNodeName() {
         return "#document";
     }
@@ -268,6 +273,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
      * @return {@link org.w3c.dom.Node#DOCUMENT_NODE}
      */
+    @Override
     public short getNodeType() {
         return DOCUMENT_NODE;
     }
@@ -275,6 +281,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#getDoctype()}.
      */
+    @Override
     public DocumentType getDoctype() {
         for (Node n = getFirstChild(); n != null; n = n.getNextSibling()) {
             if (n.getNodeType() == DOCUMENT_TYPE_NODE) {
@@ -298,6 +305,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#getImplementation()}.
      * @return {@link #implementation}
      */
+    @Override
     public DOMImplementation getImplementation() {
         return implementation;
     }
@@ -306,6 +314,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#getDocumentElement()}.
      */
+    @Override
     public Element getDocumentElement() {
         for (Node n = getFirstChild(); n != null; n = n.getNextSibling()) {
             if (n.getNodeType() == ELEMENT_NODE) {
@@ -319,6 +328,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#importNode(Node,boolean)}.
      */
+    @Override
     public Node importNode(Node importedNode, boolean deep)
         throws DOMException {
         return importNode(importedNode, deep, false);
@@ -431,6 +441,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#cloneNode(boolean)}.
      */
+    @Override
     public Node cloneNode(boolean deep) {
         Document n = (Document)newNode();
         copyInto(n);
@@ -454,6 +465,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#getElementById(String)}.
      */
+    @Override
     public Element getElementById(String id) {
         return getChildElementById(getDocumentElement(), id);
     }
@@ -523,6 +535,7 @@ public abstract class AbstractDocument
         public void setList(List list) {
             this.list = list;
         }
+        @Override
         public void cleared() {
             if (elementsById == null) return;
             synchronized (elementsById) {
@@ -691,6 +704,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.events.DocumentEvent#createEvent(String)}.
      */
+    @Override
     public Event createEvent(String eventType) throws DOMException {
         if (documentEventSupport == null) {
             documentEventSupport =
@@ -731,6 +745,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements {@link
      * DocumentTraversal#createNodeIterator(Node,int,NodeFilter,boolean)}.
      */
+    @Override
     public NodeIterator createNodeIterator(Node root,
                                            int whatToShow,
                                            NodeFilter filter,
@@ -748,6 +763,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements {@link
      * DocumentTraversal#createTreeWalker(Node,int,NodeFilter,boolean)}.
      */
+    @Override
     public TreeWalker createTreeWalker(Node root,
                                        int whatToShow,
                                        NodeFilter filter,
@@ -768,6 +784,7 @@ public abstract class AbstractDocument
     /**
      * Notifies this document that a node will be removed.
      */
+    @Override
     public void nodeToBeRemoved(Node node) {
         if (traversalSupport != null) {
             traversalSupport.nodeToBeRemoved(node);
@@ -777,6 +794,7 @@ public abstract class AbstractDocument
     /**
      * Returns the current document.
      */
+    @Override
     protected AbstractDocument getCurrentDocument() {
         return this;
     }
@@ -807,6 +825,7 @@ public abstract class AbstractDocument
      * Copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node copyInto(Node n) {
         super.copyInto(n);
         AbstractDocument ad = (AbstractDocument)n;
@@ -827,6 +846,7 @@ public abstract class AbstractDocument
      * Deeply copy the fields of the current node into the given node.
      * @param n a node of the type of this.
      */
+    @Override
     protected Node deepCopyInto(Node n) {
         super.deepCopyInto(n);
         AbstractDocument ad = (AbstractDocument)n;
@@ -839,6 +859,7 @@ public abstract class AbstractDocument
     /**
      * Checks the validity of a node to be inserted.
      */
+    @Override
     protected void checkChildType(Node n, boolean replace) {
         short t = n.getNodeType();
         switch (t) {
@@ -869,6 +890,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#getInputEncoding()}.
      */
+    @Override
     public String getInputEncoding() {
         return inputEncoding;
     }
@@ -876,6 +898,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#getXmlEncoding()}.
      */
+    @Override
     public String getXmlEncoding() {
         return xmlEncoding;
     }
@@ -883,6 +906,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#getXmlStandalone()}.
      */
+    @Override
     public boolean getXmlStandalone() {
         return xmlStandalone;
     }
@@ -890,6 +914,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#setXmlStandalone(boolean)}.
      */
+    @Override
     public void setXmlStandalone(boolean b) throws DOMException {
         xmlStandalone = b;
     }
@@ -897,6 +922,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#getXmlVersion()}.
      */
+    @Override
     public String getXmlVersion() {
         return xmlVersion;
     }
@@ -904,6 +930,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#setXmlVersion(String)}.
      */
+    @Override
     public void setXmlVersion(String v) throws DOMException {
         if (v == null
                 || !v.equals(XMLConstants.XML_VERSION_10)
@@ -918,6 +945,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#getStrictErrorChecking()}.
      */
+    @Override
     public boolean getStrictErrorChecking() {
         return strictErrorChecking;
     }
@@ -925,6 +953,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#setStrictErrorChecking(boolean)}.
      */
+    @Override
     public void setStrictErrorChecking(boolean b) {
         strictErrorChecking = b;
     }
@@ -932,6 +961,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#getDocumentURI()}.
      */
+    @Override
     public String getDocumentURI() {
         return documentURI;
     }
@@ -939,6 +969,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#setDocumentURI(String)}.
      */
+    @Override
     public void setDocumentURI(String uri) {
         documentURI = uri;
     }
@@ -946,6 +977,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#getDomConfig()}.
      */
+    @Override
     public DOMConfiguration getDomConfig() {
         if (domConfig == null) {
             domConfig = new DocumentConfiguration();
@@ -956,6 +988,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#adoptNode(Node)}.
      */
+    @Override
     public Node adoptNode(Node n) throws DOMException {
         if (!(n instanceof AbstractNode)) {
             return null;
@@ -1033,6 +1066,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#renameNode(Node,String,String)}.
      */
+    @Override
     public Node renameNode(Node n, String ns, String qn) {
         AbstractNode an = (AbstractNode) n;
         if (an == getDocumentElement()) {
@@ -1247,6 +1281,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#normalizeDocument()}.
      * XXX Does not handle the 'entities' parameter yet.
      */
+    @Override
     public void normalizeDocument() {
         if (domConfig == null) {
             domConfig = new DocumentConfiguration();
@@ -1664,14 +1699,14 @@ public abstract class AbstractDocument
         int len = s.length();
         if (xmlVersion.equals(XMLConstants.XML_VERSION_11)) {
             for (int i = 0; i < len; i++) {
-                if (!DOMUtilities.isXML11Character(s.charAt(i))) {
+                if (!XMLUtilities.isXML11Character(s.charAt(i))) {
                     return false;
                 }
             }
         } else {
             // assume XML 1.0
             for (int i = 0; i < len; i++) {
-                if (!DOMUtilities.isXMLCharacter(s.charAt(i))) {
+                if (!XMLUtilities.isXMLCharacter(s.charAt(i))) {
                     return false;
                 }
             }
@@ -1717,6 +1752,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setTextContent(String)}.
      */
+    @Override
     public void setTextContent(String s) throws DOMException {
     }
 
@@ -1792,26 +1828,32 @@ public abstract class AbstractDocument
             this.relatedException = relatedException;
         }
 
+        @Override
         public String getType() {
             return type;
         }
 
+        @Override
         public short getSeverity() {
             return severity;
         }
 
+        @Override
         public String getMessage() {
             return message;
         }
 
+        @Override
         public Object getRelatedData() {
             return relatedNode;
         }
 
+        @Override
         public Object getRelatedException() {
             return relatedException;
         }
 
+        @Override
         public DOMLocator getLocation() {
             if (domLocator == null) {
                 domLocator = new ErrorLocation(relatedNode);
@@ -1839,6 +1881,7 @@ public abstract class AbstractDocument
             /**
              * Get the line number of the error node.
              */
+            @Override
             public int getLineNumber() {
                 return -1;
             }
@@ -1846,6 +1889,7 @@ public abstract class AbstractDocument
             /**
              * Get the column number of the error node.
              */
+            @Override
             public int getColumnNumber() {
                 return -1;
             }
@@ -1853,6 +1897,7 @@ public abstract class AbstractDocument
             /**
              * Get the byte offset of the error node.
              */
+            @Override
             public int getByteOffset() {
                 return -1;
             }
@@ -1860,6 +1905,7 @@ public abstract class AbstractDocument
             /**
              * Get the UTF-16 offset of the error node.
              */
+            @Override
             public int getUtf16Offset() {
                 return -1;
             }
@@ -1867,6 +1913,7 @@ public abstract class AbstractDocument
             /**
              * Get the node.
              */
+            @Override
             public Node getRelatedNode() {
                 return node;
             }
@@ -1874,6 +1921,7 @@ public abstract class AbstractDocument
             /**
              * Get the document URI.
              */
+            @Override
             public String getUri() {
                 AbstractDocument doc
                     = (AbstractDocument) node.getOwnerDocument();
@@ -1973,6 +2021,7 @@ public abstract class AbstractDocument
         /**
          * Sets the given parameter.
          */
+        @Override
         public void setParameter(String name, Object value) {
             if (DOMConstants.DOM_ERROR_HANDLER_PARAM.equals(name)) {
                 if (value != null && !(value instanceof DOMErrorHandler)) {
@@ -2028,6 +2077,7 @@ public abstract class AbstractDocument
         /**
          * Gets the value of the given parameter.
          */
+        @Override
         public Object getParameter(String name) {
             if (DOMConstants.DOM_ERROR_HANDLER_PARAM.equals(name)) {
                 return errorHandler;
@@ -2054,6 +2104,7 @@ public abstract class AbstractDocument
         /**
          * Returns whether the given parameter can be set to the given value.
          */
+        @Override
         public boolean canSetParameter(String name, Object value) {
             if (name.equals(DOMConstants.DOM_ERROR_HANDLER_PARAM)) {
                 return value == null || value instanceof DOMErrorHandler;
@@ -2071,6 +2122,7 @@ public abstract class AbstractDocument
         /**
          * Returns a DOMStringList of parameter names.
          */
+        @Override
         public DOMStringList getParameterNames() {
             if (paramNameList == null) {
                 paramNameList = new ParameterNameList();
@@ -2086,6 +2138,7 @@ public abstract class AbstractDocument
             /**
              * Returns the parameter name at the given index.
              */
+            @Override
             public String item(int index) {
                 if (index < 0) {
                     return null;
@@ -2102,6 +2155,7 @@ public abstract class AbstractDocument
             /**
              * Returns the number of parameter names in the list.
              */
+            @Override
             public int getLength() {
                 return booleanParamNames.length + 1;
             }
@@ -2109,6 +2163,7 @@ public abstract class AbstractDocument
             /**
              * Returns whether the given parameter name is in the list.
              */
+            @Override
             public boolean contains(String s) {
                 if (DOMConstants.DOM_ERROR_HANDLER_PARAM.equals(s)) {
                     return true;
@@ -2127,6 +2182,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.xpath.XPathEvaluator#createExpression(String,XPathNSResolver)}.
      */
+    @Override
     public XPathExpression createExpression(String expression,
                                             XPathNSResolver resolver)
             throws DOMException, XPathException {
@@ -2137,6 +2193,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.xpath.XPathEvaluator#createNSResolver(Node)}.
      */
+    @Override
     public XPathNSResolver createNSResolver(Node n) {
         return new XPathNodeNSResolver(n);
     }
@@ -2145,6 +2202,7 @@ public abstract class AbstractDocument
      * <b>DOM</b>: Implements
      * {@link org.w3c.dom.xpath.XPathEvaluator#evaluate(String,Node,XPathNSResolver,short,Object)}.
      */
+    @Override
     public Object evaluate(String expression,
                            Node contextNode,
                            XPathNSResolver resolver,
@@ -2215,6 +2273,7 @@ public abstract class AbstractDocument
          * <b>DOM</b>: Implements
          * {@link org.w3c.dom.xpath.XPathExpression#evaluate(Node,short,Object)}.
          */
+        @Override
         public Object evaluate(Node contextNode, short type, Object res)
                 throws XPathException, DOMException {
             if (contextNode.getNodeType() != DOCUMENT_NODE
@@ -2424,6 +2483,7 @@ public abstract class AbstractDocument
             /**
              * Gets the result type.
              */
+            @Override
             public short getResultType() {
                 return resultType;
             }
@@ -2431,6 +2491,7 @@ public abstract class AbstractDocument
             /**
              * Gets the boolean value.
              */
+            @Override
             public boolean getBooleanValue() {
                 if (resultType != BOOLEAN_TYPE) {
                     throw createXPathException
@@ -2444,6 +2505,7 @@ public abstract class AbstractDocument
             /**
              * Gets the number value.
              */
+            @Override
             public double getNumberValue() {
                 if (resultType != NUMBER_TYPE) {
                     throw createXPathException
@@ -2457,6 +2519,7 @@ public abstract class AbstractDocument
             /**
              * Gets the string value.
              */
+            @Override
             public String getStringValue() {
                 if (resultType != STRING_TYPE) {
                     throw createXPathException
@@ -2470,6 +2533,7 @@ public abstract class AbstractDocument
             /**
              * Gets the single node value.
              */
+            @Override
             public Node getSingleNodeValue() {
                 if (resultType != ANY_UNORDERED_NODE_TYPE
                         && resultType != FIRST_ORDERED_NODE_TYPE) {
@@ -2485,6 +2549,7 @@ public abstract class AbstractDocument
              * Returns whether the iterator has been invalidated by
              * document modifications.
              */
+            @Override
             public boolean getInvalidIteratorState() {
                 return false;
             }
@@ -2492,6 +2557,7 @@ public abstract class AbstractDocument
             /**
              * Returns the length of the snapshot.
              */
+            @Override
             public int getSnapshotLength() {
                 if (resultType != UNORDERED_NODE_SNAPSHOT_TYPE
                         && resultType != ORDERED_NODE_SNAPSHOT_TYPE) {
@@ -2507,6 +2573,7 @@ public abstract class AbstractDocument
              * <b>DOM</b>: Implement
              * {@link org.w3c.dom.xpath.XPathResult#iterateNext()}.
              */
+            @Override
             public Node iterateNext() {
                 if (resultType != UNORDERED_NODE_ITERATOR_TYPE
                         && resultType != ORDERED_NODE_ITERATOR_TYPE) {
@@ -2521,6 +2588,7 @@ public abstract class AbstractDocument
             /**
              * Returns the <code>i</code>th item in the snapshot.
              */
+            @Override
             public Node snapshotItem(int i) {
                 if (resultType != UNORDERED_NODE_SNAPSHOT_TYPE
                         && resultType != ORDERED_NODE_SNAPSHOT_TYPE) {
@@ -2542,6 +2610,7 @@ public abstract class AbstractDocument
              * Get the base URI for this resolver.  Since this resolver isn't
              * associated with a particular node, returns null.
              */
+            @Override
             public String getBaseIdentifier() {
                 return null;
             }
@@ -2549,6 +2618,7 @@ public abstract class AbstractDocument
             /**
              * Resolves the given namespace prefix.
              */
+            @Override
             public String getNamespaceForPrefix(String prefix) {
                 if (resolver == null) {
                     return null;
@@ -2559,6 +2629,7 @@ public abstract class AbstractDocument
             /**
              * Resolves the given namespace prefix.
              */
+            @Override
             public String getNamespaceForPrefix(String prefix, Node context) {
                 // ignore the context node
                 if (resolver == null) {
@@ -2570,6 +2641,7 @@ public abstract class AbstractDocument
             /**
              * Returns whether this PrefixResolver handles a null prefix.
              */
+            @Override
             public boolean handlesNullPrefixes() {
                 return false;
             }
@@ -2597,6 +2669,7 @@ public abstract class AbstractDocument
          * <b>DOM</b>: Implements
          * {@link org.w3c.dom.xpath.XPathNSResolver#lookupNamespaceURI(String)}.
          */
+        @Override
         public String lookupNamespaceURI(String prefix) {
             return contextNode.lookupNamespaceURI(prefix);
         }
@@ -2607,6 +2680,7 @@ public abstract class AbstractDocument
     /**
      * Get the parent of this node in the fully flattened tree.
      */
+    @Override
     public Node getXblParentNode() {
         return xblManager.getXblParentNode(this);
     }
@@ -2614,6 +2688,7 @@ public abstract class AbstractDocument
     /**
      * Get the list of child nodes of this node in the fully flattened tree.
      */
+    @Override
     public NodeList getXblChildNodes() {
         return xblManager.getXblChildNodes(this);
     }
@@ -2622,6 +2697,7 @@ public abstract class AbstractDocument
      * Get the list of child nodes of this node in the fully flattened tree
      * that are within the same shadow scope.
      */
+    @Override
     public NodeList getXblScopedChildNodes() {
         return xblManager.getXblScopedChildNodes(this);
     }
@@ -2629,6 +2705,7 @@ public abstract class AbstractDocument
     /**
      * Get the first child node of this node in the fully flattened tree.
      */
+    @Override
     public Node getXblFirstChild() {
         return xblManager.getXblFirstChild(this);
     }
@@ -2636,6 +2713,7 @@ public abstract class AbstractDocument
     /**
      * Get the last child node of this node in the fully flattened tree.
      */
+    @Override
     public Node getXblLastChild() {
         return xblManager.getXblLastChild(this);
     }
@@ -2644,6 +2722,7 @@ public abstract class AbstractDocument
      * Get the node which directly precedes the current node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Node getXblPreviousSibling() {
         return xblManager.getXblPreviousSibling(this);
     }
@@ -2652,6 +2731,7 @@ public abstract class AbstractDocument
      * Get the node which directly follows the current node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Node getXblNextSibling() {
         return xblManager.getXblNextSibling(this);
     }
@@ -2659,6 +2739,7 @@ public abstract class AbstractDocument
     /**
      * Get the first element child of this node in the fully flattened tree.
      */
+    @Override
     public Element getXblFirstElementChild() {
         return xblManager.getXblFirstElementChild(this);
     }
@@ -2666,6 +2747,7 @@ public abstract class AbstractDocument
     /**
      * Get the last element child of this node in the fully flattened tree.
      */
+    @Override
     public Element getXblLastElementChild() {
         return xblManager.getXblLastElementChild(this);
     }
@@ -2674,6 +2756,7 @@ public abstract class AbstractDocument
      * Get the first element that precedes the current node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Element getXblPreviousElementSibling() {
         return xblManager.getXblPreviousElementSibling(this);
     }
@@ -2682,6 +2765,7 @@ public abstract class AbstractDocument
      * Get the first element that follows the current node in the
      * xblParentNode's xblChildNodes list.
      */
+    @Override
     public Element getXblNextElementSibling() {
         return xblManager.getXblNextElementSibling(this);
     }
@@ -2689,6 +2773,7 @@ public abstract class AbstractDocument
     /**
      * Get the bound element whose shadow tree this current node resides in.
      */
+    @Override
     public Element getXblBoundElement() {
         return xblManager.getXblBoundElement(this);
     }
@@ -2696,6 +2781,7 @@ public abstract class AbstractDocument
     /**
      * Get the shadow tree of this node.
      */
+    @Override
     public Element getXblShadowTree() {
         return xblManager.getXblShadowTree(this);
     }
@@ -2703,6 +2789,7 @@ public abstract class AbstractDocument
     /**
      * Get the xbl:definition elements currently binding this element.
      */
+    @Override
     public NodeList getXblDefinitions() {
         return xblManager.getXblDefinitions(this);
     }

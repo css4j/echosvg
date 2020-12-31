@@ -44,6 +44,7 @@ public class SVG12BridgeExtension extends SVGBridgeExtension {
      * reason you need to come before/after another existing extension
      * make sure your priority is lower/higher than theirs.
      */
+    @Override
     public float getPriority() { return 0f; }
 
     /**
@@ -52,6 +53,7 @@ public class SVG12BridgeExtension extends SVGBridgeExtension {
      * @return An iterator containing strings one for each implemented
      *         extension.
      */
+    @Override
     public Iterator getImplementedExtensions() {
         return Collections.EMPTY_LIST.iterator();
     }
@@ -60,6 +62,7 @@ public class SVG12BridgeExtension extends SVGBridgeExtension {
      * This should return the individual or company name responsible
      * for the this implementation of the extension.
      */
+    @Override
     public String getAuthor() {
         return "The EchoSVG Team.";
     }
@@ -67,6 +70,7 @@ public class SVG12BridgeExtension extends SVGBridgeExtension {
     /**
      * This should contain a contact address (usually an e-mail address).
      */
+    @Override
     public String getContactAddress() {
         return "batik-dev@xmlgraphics.apache.org";
     }
@@ -75,6 +79,7 @@ public class SVG12BridgeExtension extends SVGBridgeExtension {
      * This should return a URL where information can be obtained on
      * this extension.
      */
+    @Override
     public String getURL() {
         return "http://xml.apache.org/batik";
     }
@@ -84,6 +89,7 @@ public class SVG12BridgeExtension extends SVGBridgeExtension {
      * Perhaps that should be a resource for internationalization?
      * (although I suppose it could be done internally)
      */
+    @Override
     public String getDescription() {
         return "The required SVG 1.2 tags";
     }
@@ -96,6 +102,7 @@ public class SVG12BridgeExtension extends SVGBridgeExtension {
      *
      * @param ctx The BridgeContext instance to be updated
      */
+    @Override
     public void registerTags(BridgeContext ctx) {
         // bridges to handle elements in the SVG namespace
         super.registerTags(ctx);
@@ -127,6 +134,7 @@ public class SVG12BridgeExtension extends SVGBridgeExtension {
      *
      * @param e The element to check.
      */
+    @Override
     public boolean isDynamicElement(Element e) {
         String ns = e.getNamespaceURI();
         if (XBLConstants.XBL_NAMESPACE_URI.equals(ns)) {

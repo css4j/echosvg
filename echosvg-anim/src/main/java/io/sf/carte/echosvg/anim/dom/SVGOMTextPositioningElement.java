@@ -101,6 +101,7 @@ public abstract class SVGOMTextPositioningElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -112,16 +113,16 @@ public abstract class SVGOMTextPositioningElement
     private void initializeLiveAttributes() {
         x = createLiveAnimatedLengthList
             (null, SVG_X_ATTRIBUTE, getDefaultXValue(), true,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH);
         y = createLiveAnimatedLengthList
             (null, SVG_Y_ATTRIBUTE, getDefaultYValue(), true,
-             SVGOMAnimatedLength.VERTICAL_LENGTH);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH);
         dx = createLiveAnimatedLengthList
             (null, SVG_DX_ATTRIBUTE, "", true,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH);
         dy = createLiveAnimatedLengthList
             (null, SVG_DY_ATTRIBUTE, "", true,
-             SVGOMAnimatedLength.VERTICAL_LENGTH);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH);
         rotate =
             createLiveAnimatedNumberList(null, SVG_ROTATE_ATTRIBUTE, "", true);
     }
@@ -129,6 +130,7 @@ public abstract class SVGOMTextPositioningElement
     /**
      * <b>DOM</b>: Implements {@link SVGTextPositioningElement#getX()}.
      */
+    @Override
     public SVGAnimatedLengthList getX() {
         return x;
     }
@@ -136,6 +138,7 @@ public abstract class SVGOMTextPositioningElement
     /**
      * <b>DOM</b>: Implements {@link SVGTextPositioningElement#getY()}.
      */
+    @Override
     public SVGAnimatedLengthList getY() {
         return y;
     }
@@ -143,6 +146,7 @@ public abstract class SVGOMTextPositioningElement
     /**
      * <b>DOM</b>: Implements {@link SVGTextPositioningElement#getDx()}.
      */
+    @Override
     public SVGAnimatedLengthList getDx() {
         return dx;
     }
@@ -150,6 +154,7 @@ public abstract class SVGOMTextPositioningElement
     /**
      * <b>DOM</b>: Implements {@link SVGTextPositioningElement#getDy()}.
      */
+    @Override
     public SVGAnimatedLengthList getDy() {
         return dy;
     }
@@ -157,6 +162,7 @@ public abstract class SVGOMTextPositioningElement
     /**
      * <b>DOM</b>: Implements {@link SVGTextPositioningElement#getRotate()}.
      */
+    @Override
     public SVGAnimatedNumberList getRotate() {
         return rotate;
     }
@@ -178,6 +184,7 @@ public abstract class SVGOMTextPositioningElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

@@ -72,6 +72,7 @@ public class SVGFontFamily implements GVTFontFamily {
      *
      * @return The font family name.
      */
+    @Override
     public String getFamilyName() {
         return fontFace.getFamilyName();
     }
@@ -81,6 +82,7 @@ public class SVGFontFamily implements GVTFontFamily {
      *
      * @return The font face.
      */
+    @Override
     public GVTFontFace getFontFace() {
         return fontFace;
     }
@@ -94,6 +96,7 @@ public class SVGFontFamily implements GVTFontFamily {
      *
      * @return The derived font.
      */
+    @Override
     public GVTFont deriveFont(float size, AttributedCharacterIterator aci) {
         return deriveFont(size, aci.getAttributes());
     }
@@ -103,6 +106,7 @@ public class SVGFontFamily implements GVTFontFamily {
      * @param size  The required size of the derived font.
      * @param attrs The Attribute Map to get Values from.
      */
+    @Override
     public GVTFont deriveFont(float size, Map attrs) {
         SVGFontElementBridge fontBridge;
         fontBridge = (SVGFontElementBridge)ctx.getBridge(fontElement);
@@ -119,6 +123,7 @@ public class SVGFontFamily implements GVTFontFamily {
      * be applied.  Otherwise if it only uses the 'd' attribute
      * it does not need CSS treatment.
      */
+    @Override
     public boolean isComplex() {
         if (complex != null) return complex;
         boolean ret = isComplex(fontElement, ctx);

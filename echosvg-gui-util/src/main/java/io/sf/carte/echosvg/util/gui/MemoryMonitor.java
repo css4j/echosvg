@@ -133,6 +133,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
         pack();
 
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowActivated(WindowEvent e) {
                 RepaintThread t = panel.getRepaintThread();
                 if (!t.isAlive()) {
@@ -141,12 +142,15 @@ public class MemoryMonitor extends JFrame implements ActionMap {
                     t.safeResume();
                 }
             }
+            @Override
             public void windowClosing(WindowEvent ev) {
                 panel.getRepaintThread().safeSuspend();
             }
+            @Override
             public void windowDeiconified(WindowEvent e) {
                 panel.getRepaintThread().safeResume();
             }
+            @Override
             public void windowIconified(WindowEvent e) {
                 panel.getRepaintThread().safeSuspend();
             }
@@ -161,6 +165,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
      * @param key the key mapped with the action to get
      * @throws MissingListenerException if the action is not found
      */
+    @Override
     public Action getAction(String key) throws MissingListenerException {
         return (Action)listeners.get(key);
     }
@@ -169,6 +174,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
      * The action associated with the 'Collect' button of the memory monitor.
      */
     protected static class CollectButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             System.gc();
         }
@@ -178,6 +184,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
      * The action associated with the 'Close' button of the memory monitor.
      */
     protected class CloseButtonAction extends AbstractAction {
+        @Override
         public void actionPerformed(ActionEvent e) {
             panel.getRepaintThread().safeSuspend();
             dispose();
@@ -369,6 +376,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
          * @param total The total amount of memory.
          * @param free  The free memory.
          */
+        @Override
         public void memoryStateChanged(long total, long free) {
             totalMemory = total;
             freeMemory  = free;
@@ -426,6 +434,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
         /**
          * To paint the component.
          */
+        @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D)g;
@@ -566,6 +575,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
          * @param total The total amount of memory.
          * @param free  The free memory.
          */
+        @Override
         public void memoryStateChanged(long total, long free) {
             totalMemory = total;
             freeMemory  = free;
@@ -594,6 +604,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
         /**
          * To paint the component.
          */
+        @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D)g;
@@ -696,6 +707,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
         /**
          * The thread main method.
          */
+        @Override
         public void run() {
             for (;;) {
                 try {
@@ -720,6 +732,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 
         protected class UpdateRunnable implements Runnable {
             public boolean inEventQueue = false;
+            @Override
             public void run() {
                 long free  = runtime.freeMemory();
                 long total = runtime.totalMemory();

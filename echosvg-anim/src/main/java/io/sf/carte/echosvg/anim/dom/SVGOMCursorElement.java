@@ -24,6 +24,7 @@ import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGCursorElement;
 import org.w3c.dom.svg.SVGStringList;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
@@ -47,14 +48,14 @@ public class SVGOMCursorElement
     protected static final AttributeInitializer attributeInitializer;
     static {
         attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLSupport.XMLNS_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
                                           null, "xmlns:xlink",
-                                          XLinkSupport.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+                                          XMLConstants.XLINK_NAMESPACE_URI);
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "show", "other");
-        attributeInitializer.addAttribute(XLinkSupport.XLINK_NAMESPACE_URI,
+        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
                                           "xlink", "actuate", "onLoad");
     }
 
@@ -108,6 +109,7 @@ public class SVGOMCursorElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -119,10 +121,10 @@ public class SVGOMCursorElement
     private void initializeLiveAttributes() {
         x = createLiveAnimatedLength
             (null, SVG_X_ATTRIBUTE, SVG_CURSOR_X_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         y = createLiveAnimatedLength
             (null, SVG_Y_ATTRIBUTE, SVG_CURSOR_Y_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         externalResourcesRequired =
             createLiveAnimatedBoolean
                 (null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
@@ -131,6 +133,7 @@ public class SVGOMCursorElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_CURSOR_TAG;
     }
@@ -138,6 +141,7 @@ public class SVGOMCursorElement
     /**
      * <b>DOM</b>: Implements {@link SVGCursorElement#getX()}.
      */
+    @Override
     public SVGAnimatedLength getX() {
         return x;
     }
@@ -145,6 +149,7 @@ public class SVGOMCursorElement
     /**
      * <b>DOM</b>: Implements {@link SVGCursorElement#getY()}.
      */
+    @Override
     public SVGAnimatedLength getY() {
         return y;
     }
@@ -155,6 +160,7 @@ public class SVGOMCursorElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
      */
+    @Override
     public SVGAnimatedBoolean getExternalResourcesRequired() {
         return externalResourcesRequired;
     }
@@ -165,6 +171,7 @@ public class SVGOMCursorElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getRequiredFeatures()}.
      */
+    @Override
     public SVGStringList getRequiredFeatures() {
         return SVGTestsSupport.getRequiredFeatures(this);
     }
@@ -173,6 +180,7 @@ public class SVGOMCursorElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getRequiredExtensions()}.
      */
+    @Override
     public SVGStringList getRequiredExtensions() {
         return SVGTestsSupport.getRequiredExtensions(this);
     }
@@ -181,6 +189,7 @@ public class SVGOMCursorElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#getSystemLanguage()}.
      */
+    @Override
     public SVGStringList getSystemLanguage() {
         return SVGTestsSupport.getSystemLanguage(this);
     }
@@ -189,6 +198,7 @@ public class SVGOMCursorElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGTests#hasExtension(String)}.
      */
+    @Override
     public boolean hasExtension(String extension) {
         return SVGTestsSupport.hasExtension(this, extension);
     }
@@ -197,6 +207,7 @@ public class SVGOMCursorElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -204,6 +215,7 @@ public class SVGOMCursorElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMCursorElement();
     }
@@ -211,6 +223,7 @@ public class SVGOMCursorElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

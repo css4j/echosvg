@@ -114,6 +114,7 @@ public class SVGOMFEDisplacementMapElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -139,6 +140,7 @@ public class SVGOMFEDisplacementMapElement
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_DISPLACEMENT_MAP_TAG;
     }
@@ -147,6 +149,7 @@ public class SVGOMFEDisplacementMapElement
      * <b>DOM</b>: Implements {@link
      * SVGFEDisplacementMapElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -155,6 +158,7 @@ public class SVGOMFEDisplacementMapElement
      * <b>DOM</b>: Implements {@link
      * SVGFEDisplacementMapElement#getIn2()}.
      */
+    @Override
     public SVGAnimatedString getIn2() {
         return in2;
     }
@@ -163,6 +167,7 @@ public class SVGOMFEDisplacementMapElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFEDisplacementMapElement#getScale()}.
      */
+    @Override
     public SVGAnimatedNumber getScale() {
         return scale;
     }
@@ -171,6 +176,7 @@ public class SVGOMFEDisplacementMapElement
      * <b>DOM</b>: Implements {@link
      * SVGFEDisplacementMapElement#getXChannelSelector()}.
      */
+    @Override
     public SVGAnimatedEnumeration getXChannelSelector() {
         return xChannelSelector;
     }
@@ -179,6 +185,7 @@ public class SVGOMFEDisplacementMapElement
      * <b>DOM</b>: Implements {@link
      * SVGFEDisplacementMapElement#getYChannelSelector()}.
      */
+    @Override
     public SVGAnimatedEnumeration getYChannelSelector() {
         return yChannelSelector;
     }
@@ -186,6 +193,7 @@ public class SVGOMFEDisplacementMapElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEDisplacementMapElement();
     }
@@ -193,6 +201,7 @@ public class SVGOMFEDisplacementMapElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

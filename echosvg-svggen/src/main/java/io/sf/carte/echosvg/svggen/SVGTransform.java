@@ -56,6 +56,7 @@ public class SVGTransform extends AbstractSVGConverter{
      *         with the related definitions
      * @see io.sf.carte.echosvg.svggen.SVGDescriptor
      */
+    @Override
     public SVGDescriptor toSVG(GraphicContext gc){
         return new SVGTransformDescriptor(toSVGTransform(gc));
     }
@@ -89,6 +90,7 @@ public class SVGTransform extends AbstractSVGConverter{
             /**
              * Adapted push implementation
              */
+            @Override
             public Object push(Object o) {
                 Object element;
                 if(((TransformStackElement)o).isIdentity()) {
@@ -107,6 +109,7 @@ public class SVGTransform extends AbstractSVGConverter{
             /**
              * Adapted pop implementation
              */
+            @Override
             public Object pop() {
                 Object element = null;
                 if(!super.empty()) {

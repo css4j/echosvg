@@ -53,20 +53,23 @@ public class SVGPathSegItem extends AbstractSVGItem implements SVGPathSeg, SVGPa
         type = pathSeg.getPathSegType();
         switch(type){
         case SVGPathSeg.PATHSEG_CLOSEPATH:
-            letter = AbstractSVGPathSegList.PATHSEG_CLOSEPATH_LETTER;
+            letter = SVGPathSegConstants.PATHSEG_CLOSEPATH_LETTER;
             break;
         default:
         }
     }
+    @Override
     protected String getStringValue(){
         return letter;
     }
 
+    @Override
     public short getPathSegType() {
         return type;
     }
 
 
+    @Override
     public String getPathSegTypeAsLetter(){
         return letter;
     }

@@ -68,6 +68,7 @@ public class Base64EncoderStream extends OutputStream {
         this.closeOutOnClose = closeOutOnClose;
     }
 
+    @Override
     public void close () throws IOException {
         if (out != null) {
             encodeAtom();
@@ -84,20 +85,24 @@ public class Base64EncoderStream extends OutputStream {
      * Instead we flush out.  You can only be sure all output is
      * writen by closing this stream.
      */
+    @Override
     public void flush() throws IOException {
         out.flush();
     }
 
+    @Override
     public void write(int b) throws IOException {
         atom[atomLen++] = (byte)b;
         if (atomLen == 3)
             encodeAtom();
     }
 
+    @Override
     public void write(byte []data) throws IOException {
         encodeFromArray(data, 0, data.length);
     }
 
+    @Override
     public void write(byte [] data, int off, int len) throws IOException {
         encodeFromArray(data, off, len);
     }

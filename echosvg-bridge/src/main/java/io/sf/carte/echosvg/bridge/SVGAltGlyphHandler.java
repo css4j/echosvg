@@ -62,6 +62,7 @@ public class SVGAltGlyphHandler implements AltGlyphHandler, SVGConstants {
      * @return The GVTGlyphVector containing the alternate glyphs, or null if
      * the alternate glyphs could not be found.
      */
+    @Override
     public GVTGlyphVector createGlyphVector
         (FontRenderContext frc, float fontSize,
          AttributedCharacterIterator aci) {

@@ -35,6 +35,8 @@ import java.util.zip.Checksum;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
+
 
 /**
  * This class implements caching functionality for raster images.
@@ -219,6 +221,7 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
          *
          * @param domTreeManager the DOMTreeManager for the tree this cacher works on
          */
+        @Override
         public void setDOMTreeManager(DOMTreeManager domTreeManager) {
             // A new DOMTreeManager implies a new cache, because we cache
             // images in the SVG tree itself
@@ -228,6 +231,7 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
             }
         }
 
+        @Override
         Object getCacheableData(ByteArrayOutputStream os) {
             // In order to have only one instance of the image data
             // in memory, we cache the entire xlink:href attribute value,
@@ -235,10 +239,12 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
             return DATA_PROTOCOL_PNG_PREFIX + os.toString();
         }
 
+        @Override
         boolean imagesMatch(Object o1, Object o2) {
             return o1.equals(o2);
         }
 
+        @Override
         ImageCacheEntry createEntry(int checksum, Object data,
                                     int width, int height,
                                     SVGGeneratorContext ctx) {
@@ -273,7 +279,7 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
                                               Integer.toString(width));
             imageElement.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE,
                                               Integer.toString(height));
-            imageElement.setAttributeNS(DefaultImageHandler.XLINK_NAMESPACE_URI,
+            imageElement.setAttributeNS(XMLConstants.XLINK_NAMESPACE_URI,
                                               XLINK_HREF_QNAME,
                                               href);
             // imageDefs.appendChild(imageElement);
@@ -320,10 +326,12 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
             this.suffix   = suffix;
         }
 
+        @Override
         Object getCacheableData(ByteArrayOutputStream os) {
             return os;
         }
 
+        @Override
         boolean imagesMatch(Object o1, Object o2)
                 throws SVGGraphics2DIOException {
             boolean match = false;
@@ -355,6 +363,7 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
             return match;
         }
 
+        @Override
         ImageCacheEntry createEntry(int checksum, Object data,
                                     int width, int height,
                                     SVGGeneratorContext ctx)

@@ -150,6 +150,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * Returns a canonical WeakReference to this GraphicsNode.
      * This is suitable for use as a key value in a hash map
      */
+    @Override
     public WeakReference getWeakReference() {
         if (weakRef == null)
             weakRef =  new WeakReference(this);
@@ -166,6 +167,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * @return VISIBLE_PAINTED | VISIBLE_FILL | VISIBLE_STROKE | VISIBLE |
      * PAINTED | FILL | STROKE | ALL | NONE
      */
+    @Override
     public int getPointerEventType() {
         return pointerEventType;
     }
@@ -176,6 +178,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * @param pointerEventType VISIBLE_PAINTED | VISIBLE_FILL | VISIBLE_STROKE |
      * VISIBLE | PAINTED | FILL | STROKE | ALL | NONE
      */
+    @Override
     public void setPointerEventType(int pointerEventType) {
         this.pointerEventType = pointerEventType;
     }
@@ -185,6 +188,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param newTransform the new transform of this node
      */
+    @Override
     public void setTransform(AffineTransform newTransform) {
         fireGraphicsNodeChangeStarted();
         this.transform = newTransform;
@@ -208,6 +212,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     /**
      * Returns the transform of this node or null if any.
      */
+    @Override
     public AffineTransform getTransform() {
         return transform;
     }
@@ -215,6 +220,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     /**
      * Returns the inverse transform for this node.
      */
+    @Override
     public AffineTransform getInverseTransform(){
         return inverseTransform;
     }
@@ -223,6 +229,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * Returns the concatenated transform of this node. That is, this
      * node's transform preconcatenated with it's parent's transforms.
      */
+    @Override
     public AffineTransform getGlobalTransform(){
         AffineTransform ctm = new AffineTransform();
         GraphicsNode node = this;
@@ -240,6 +247,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param newComposite the composite of this node
      */
+    @Override
     public void setComposite(Composite newComposite) {
         fireGraphicsNodeChangeStarted();
         invalidateGeometryCache();
@@ -250,6 +258,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     /**
      * Returns the composite of this node or null if any.
      */
+    @Override
     public Composite getComposite() {
         return composite;
     }
@@ -259,6 +268,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param isVisible If true this node is visible
      */
+    @Override
     public void setVisible(boolean isVisible) {
         fireGraphicsNodeChangeStarted();
         this.isVisible = isVisible;
@@ -269,10 +279,12 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     /**
      * Returns true if this node is visible, false otherwise.
      */
+    @Override
     public boolean isVisible() {
         return isVisible;
     }
 
+    @Override
     public void setClip(ClipRable newClipper) {
         if ((newClipper == null) && (this.clip == null))
             return; // No change still no clip.
@@ -286,6 +298,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     /**
      * Returns the clipping filter of this node or null if any.
      */
+    @Override
     public ClipRable getClip() {
         return clip;
     }
@@ -298,6 +311,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * @param value the value indicating preferences for the specified
      * hint category.
      */
+    @Override
     public void setRenderingHint(RenderingHints.Key key, Object value) {
         fireGraphicsNodeChangeStarted();
         if (this.hints == null) {
@@ -314,6 +328,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param hints the rendering hints to be set
      */
+    @Override
     public void setRenderingHints(Map hints) {
         fireGraphicsNodeChangeStarted();
         if (this.hints == null) {
@@ -329,6 +344,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param newHints the new rendering hints of this node
      */
+    @Override
     public void setRenderingHints(RenderingHints newHints) {
         fireGraphicsNodeChangeStarted();
         hints = newHints;
@@ -338,6 +354,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     /**
      * Returns the rendering hints of this node or null if any.
      */
+    @Override
     public RenderingHints getRenderingHints() {
         return hints;
     }
@@ -347,6 +364,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param newMask the new mask of this node
      */
+    @Override
     public void setMask(Mask newMask) {
         if ((newMask == null) && (mask == null))
             return; // No change still no mask.
@@ -360,6 +378,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     /**
      * Returns the mask of this node or null if any.
      */
+    @Override
     public Mask getMask() {
         return mask;
     }
@@ -369,6 +388,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param newFilter the new filter of this node
      */
+    @Override
     public void setFilter(Filter newFilter) {
         if ((newFilter == null) && (filter == null))
             return; // No change still no filter.
@@ -382,6 +402,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     /**
      * Returns the filter of this node or null if any.
      */
+    @Override
     public Filter getFilter() {
         return filter;
     }
@@ -391,6 +412,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * GraphicsNodeRable is the Renderable (Filter) before any of the
      * filter operations have been applied.
      */
+    @Override
     public Filter getGraphicsNodeRable(boolean createIfNeeded) {
         GraphicsNodeRable ret = null;
         if (graphicsNodeRable != null) {
@@ -409,6 +431,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * GraphicsNodeRable is the Renderable (Filter) after all of the
      * filter operations have been applied.
      */
+    @Override
     public Filter getEnableBackgroundGraphicsNodeRable
         (boolean createIfNeeded) {
         GraphicsNodeRable ret = null;
@@ -433,6 +456,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void paint(Graphics2D g2d){
         if ((composite != null) &&
             (composite instanceof AlphaComposite)) {
@@ -703,6 +727,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     /**
      * Returns the parent of this node or null if any.
      */
+    @Override
     public CompositeGraphicsNode getParent() {
         return parent;
     }
@@ -711,6 +736,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * Returns the root of the GVT tree or null if the node is not part of a GVT
      * tree.
      */
+    @Override
     public RootGraphicsNode getRoot() {
         return root;
     }
@@ -757,6 +783,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * Returns the bounds of this node in user space. This includes primitive
      * paint, filtering, clipping and masking.
      */
+    @Override
     public Rectangle2D getBounds(){
         // Get the primitive bounds
         // Rectangle2D bounds = null;
@@ -804,6 +831,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * @param txf the affine transform with which this node's transform should
      *        be concatenated. Should not be null.
      */
+    @Override
     public Rectangle2D getTransformedBounds(AffineTransform txf){
         AffineTransform t = txf;
         if (transform != null) {
@@ -850,6 +878,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param txf the affine transform with which this node's transform should
      *        be concatenated. Should not be null.  */
+    @Override
     public Rectangle2D getTransformedPrimitiveBounds(AffineTransform txf) {
         Rectangle2D tpBounds = getPrimitiveBounds();
         if (tpBounds == null) {
@@ -874,6 +903,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * @param txf the affine transform with which this node's transform should
      *        be concatenated. Should not be null.
      */
+    @Override
     public Rectangle2D getTransformedGeometryBounds(AffineTransform txf) {
         Rectangle2D tpBounds = getGeometryBounds();
         if (tpBounds == null) {
@@ -898,6 +928,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * @param txf the affine transform with which this node's
      * transform should be concatenated. Should not be null.
      */
+    @Override
     public Rectangle2D getTransformedSensitiveBounds(AffineTransform txf) {
         Rectangle2D sBounds = getSensitiveBounds();
         if (sBounds == null) {
@@ -918,6 +949,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param p the specified Point2D in the user space
      */
+    @Override
     public boolean contains(Point2D p) {
         Rectangle2D b = getSensitiveBounds();
         if (b == null || !b.contains(p)) {
@@ -946,6 +978,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param r the specified Rectangle2D in the user node space
      */
+    @Override
     public boolean intersects(Rectangle2D r) {
         Rectangle2D b = getBounds();
         if (b == null) return false;
@@ -959,6 +992,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      *
      * @param p the specified Point2D in the user space
      */
+    @Override
     public GraphicsNode nodeHitAt(Point2D p) {
         return (contains(p) ? this : null);
     }

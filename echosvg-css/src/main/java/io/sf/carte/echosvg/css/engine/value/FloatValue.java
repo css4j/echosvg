@@ -72,6 +72,7 @@ public class FloatValue extends AbstractValue {
     /**
      * The type of the value.
      */
+    @Override
     public short getPrimitiveType() {
         return unitType;
     }
@@ -79,6 +80,7 @@ public class FloatValue extends AbstractValue {
     /**
      * Returns the float value.
      */
+    @Override
     public float getFloatValue() {
         return floatValue;
     }
@@ -86,6 +88,7 @@ public class FloatValue extends AbstractValue {
     /**
      *  A string representation of the current value.
      */
+    @Override
     public String getCssText() {
         return getCssText(unitType, floatValue);
     }
@@ -93,6 +96,7 @@ public class FloatValue extends AbstractValue {
     /**
      * Returns a printable representation of this value.
      */
+    @Override
     public String toString() {
         return getCssText();
     }

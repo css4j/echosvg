@@ -44,6 +44,7 @@ public class CSSOMSVGViewCSS extends CSSOMViewCSS {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.css.ViewCSS#getComputedStyle(Element,String)}.
      */
+    @Override
     public CSSStyleDeclaration getComputedStyle(Element elt,
                                                 String pseudoElt) {
         if (elt instanceof CSSStylableElement) {

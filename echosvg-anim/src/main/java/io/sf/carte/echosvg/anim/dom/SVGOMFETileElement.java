@@ -72,6 +72,7 @@ public class SVGOMFETileElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -87,6 +88,7 @@ public class SVGOMFETileElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_TILE_TAG;
     }
@@ -94,6 +96,7 @@ public class SVGOMFETileElement
     /**
      * <b>DOM</b>: Implements {@link SVGFETileElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -101,6 +104,7 @@ public class SVGOMFETileElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFETileElement();
     }
@@ -108,6 +112,7 @@ public class SVGOMFETileElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

@@ -310,7 +310,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 
         //if interpolation should occur in Linear RGB space, convert the
         //colors using the lookup table
-        if (colorSpace == LinearGradientPaint.LINEAR_RGB) {
+        if (colorSpace == MultipleGradientPaint.LINEAR_RGB) {
             int[] workTbl = SRGBtoLinearRGB; // local is cheaper
 
             for (int i = 0; i < loColors.length; i++) {
@@ -495,7 +495,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 
         //if interpolation occurred in Linear RGB space, convert the
         //gradients back to SRGB using the lookup table
-        if (colorSpace == LinearGradientPaint.LINEAR_RGB) {
+        if (colorSpace == MultipleGradientPaint.LINEAR_RGB) {
             if (dataModel.getColorSpace() ==
                 ColorSpace.getInstance(ColorSpace.CS_sRGB)) {
                 for (int i = 0; i < gradient.length; i++) {
@@ -592,7 +592,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 
         //if interpolation occurred in Linear RGB space, convert the
         //gradients back to SRGB using the lookup table
-        if (colorSpace == LinearGradientPaint.LINEAR_RGB) {
+        if (colorSpace == MultipleGradientPaint.LINEAR_RGB) {
             if (dataModel.getColorSpace() ==
                 ColorSpace.getInstance(ColorSpace.CS_sRGB)) {
                 for (int j = 0; j < gradients.length; j++) {
@@ -1356,6 +1356,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 
 
     /** Superclass getRaster... */
+    @Override
     public final Raster getRaster(int x, int y, int w, int h) {
         if (w == 0 || h == 0) {
             return null;
@@ -1458,6 +1459,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
     /**
      * Release the resources allocated for the operation.
      */
+    @Override
     public final void dispose() {
         if (saved != null) {
             putCachedRaster(model, saved);
@@ -1468,6 +1470,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
     /**
      * Return the ColorModel of the output.
      */
+    @Override
     public final ColorModel getColorModel() {
         return model;
     }

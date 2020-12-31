@@ -58,6 +58,7 @@ public class SVGFontFace extends FontFace {
     /**
      * Returns the font associated with this rule or element.
      */
+    @Override
     public GVTFontFamily getFontFamily(BridgeContext ctx) {
         if (fontFamily != null)
             return fontFamily;
@@ -80,6 +81,7 @@ public class SVGFontFace extends FontFace {
      * Default implementation uses the root element of the document 
      * associated with BridgeContext.  This is useful for CSS case.
      */
+    @Override
     protected Element getBaseElement(BridgeContext ctx) {
         if (fontFaceElement != null) 
             return fontFaceElement;

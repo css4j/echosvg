@@ -44,6 +44,7 @@ public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter{
     /**
      * Displays an error message.
      */
+    @Override
     public void displayError(String message) {
         JOptionPane pane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
         JDialog dialog = pane.createDialog(parentComponent, "ERROR");
@@ -54,6 +55,7 @@ public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter{
     /**
      * Displays an error resulting from the specified Exception.
      */
+    @Override
     public void displayError(Exception ex) {
         JErrorPane pane = new JErrorPane(ex, JOptionPane.ERROR_MESSAGE);
         JDialog dialog = pane.createDialog(parentComponent, "ERROR");
@@ -65,6 +67,7 @@ public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter{
      * Displays a message in the User Agent interface.
      * The given message is typically displayed in a status bar.
      */
+    @Override
     public void displayMessage(String message) {
         // Can't do anything don't have a status bar...
     }
@@ -72,6 +75,7 @@ public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter{
     /**
      * Shows an alert dialog box.
      */
+    @Override
     public void showAlert(String message) {
         String str = "Script alert:\n" + message;
         JOptionPane.showMessageDialog(parentComponent, str);
@@ -80,6 +84,7 @@ public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter{
     /**
      * Shows a prompt dialog box.
      */
+    @Override
     public String showPrompt(String message) {
         String str = "Script prompt:\n" + message;
         return JOptionPane.showInputDialog(parentComponent, str);
@@ -88,6 +93,7 @@ public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter{
     /**
      * Shows a prompt dialog box.
      */
+    @Override
     public String showPrompt(String message, String defaultValue) {
         String str = "Script prompt:\n" + message;
         return (String)JOptionPane.showInputDialog
@@ -99,6 +105,7 @@ public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter{
     /**
      * Shows a confirm dialog box.
      */
+    @Override
     public boolean showConfirm(String message) {
         String str = "Script confirm:\n" + message;
         return JOptionPane.showConfirmDialog

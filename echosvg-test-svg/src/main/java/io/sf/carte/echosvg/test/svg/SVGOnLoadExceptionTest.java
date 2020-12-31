@@ -281,6 +281,7 @@ public class SVGOnLoadExceptionTest extends AbstractTest {
     public SVGOnLoadExceptionTest(){
     }
 
+    @Override
     public void setId(String id){
         super.setId(id);
 
@@ -331,6 +332,7 @@ public class SVGOnLoadExceptionTest extends AbstractTest {
      * </ul>
      *
      */
+    @Override
     public TestReport runImpl() throws Exception{
         ApplicationSecurityEnforcer ase
             = new ApplicationSecurityEnforcer(this.getClass(),
@@ -379,6 +381,7 @@ public class SVGOnLoadExceptionTest extends AbstractTest {
                 try {
                     return (TestReport)AccessController.doPrivileged
                         (new PrivilegedExceptionAction() {
+                                @Override
                                 public Object run() throws Exception {
                                     return testImpl();
                                 }
@@ -518,6 +521,7 @@ public class SVGOnLoadExceptionTest extends AbstractTest {
     class TestUserAgent extends UserAgentAdapter {
         Exception e;
 
+        @Override
         public ExternalResourceSecurity
             getExternalResourceSecurity(ParsedURL resourceURL,
                                         ParsedURL docURL) {
@@ -534,6 +538,7 @@ public class SVGOnLoadExceptionTest extends AbstractTest {
             }
         }
 
+        @Override
         public ScriptSecurity
             getScriptSecurity(String scriptType,
                               ParsedURL scriptURL,
@@ -561,6 +566,7 @@ public class SVGOnLoadExceptionTest extends AbstractTest {
             return result;
         }
 
+        @Override
         public void displayError(Exception e) {
             this.e = e;
         }

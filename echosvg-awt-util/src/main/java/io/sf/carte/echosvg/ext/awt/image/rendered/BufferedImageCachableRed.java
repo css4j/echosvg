@@ -60,6 +60,7 @@ public class BufferedImageCachableRed extends AbstractRed {
         this.bi = bi;
     }
 
+    @Override
     public Rectangle getBounds() {
         return new Rectangle(getMinX(),
                              getMinY(),
@@ -74,23 +75,28 @@ public class BufferedImageCachableRed extends AbstractRed {
         return bi;
     }
 
+    @Override
     public Object getProperty(String name) {
         return bi.getProperty(name);
     }
 
+    @Override
     public String [] getPropertyNames() {
         return bi.getPropertyNames();
     }
 
+    @Override
     public Raster getTile(int tileX, int tileY) {
         return bi.getTile(tileX,tileY);
     }
 
+    @Override
     public Raster getData() {
         Raster r = bi.getData();
         return r.createTranslatedChild(getMinX(), getMinY());
     }
 
+    @Override
     public Raster getData(Rectangle rect) {
         Rectangle r = (Rectangle)rect.clone();
 
@@ -104,6 +110,7 @@ public class BufferedImageCachableRed extends AbstractRed {
                                          ret.getMinY()+getMinY());
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         WritableRaster wr2 = wr.createWritableTranslatedChild
             (wr.getMinX()-getMinX(),

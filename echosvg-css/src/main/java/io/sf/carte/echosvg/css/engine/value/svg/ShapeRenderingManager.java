@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -39,9 +40,9 @@ public class ShapeRenderingManager extends IdentifierManager {
     protected static final StringMap values = new StringMap();
     static {
         values.put(CSSConstants.CSS_AUTO_VALUE,
-                   SVGValueConstants.AUTO_VALUE);
+                   ValueConstants.AUTO_VALUE);
         values.put(CSSConstants.CSS_CRISPEDGES_VALUE,
-                   SVGValueConstants.CRISPEDGES_VALUE);
+                   ValueConstants.CRISPEDGES_VALUE);
         values.put(CSSConstants.CSS_GEOMETRICPRECISION_VALUE,
                    SVGValueConstants.GEOMETRICPRECISION_VALUE);
         values.put(CSSConstants.CSS_OPTIMIZESPEED_VALUE,
@@ -52,6 +53,7 @@ public class ShapeRenderingManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -59,6 +61,7 @@ public class ShapeRenderingManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -66,6 +69,7 @@ public class ShapeRenderingManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -73,6 +77,7 @@ public class ShapeRenderingManager extends IdentifierManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_IDENT;
     }
@@ -81,6 +86,7 @@ public class ShapeRenderingManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_SHAPE_RENDERING_PROPERTY;
     }
@@ -89,13 +95,15 @@ public class ShapeRenderingManager extends IdentifierManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
-        return SVGValueConstants.AUTO_VALUE;
+        return ValueConstants.AUTO_VALUE;
     }
 
     /**
      * Implements {@link IdentifierManager#getIdentifiers()}.
      */
+    @Override
     public StringMap getIdentifiers() {
         return values;
     }

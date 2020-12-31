@@ -155,6 +155,7 @@ public abstract class AbstractTiledRed
      * @param tileGridYOff The y location of tile 0,0.
      * @param props  Any properties you want to associate with the image.
      */
+    @Override
     protected void init(CachableRed src, Rectangle   bounds,
                         ColorModel  cm,   SampleModel sm,
                         int tileGridXOff, int tileGridYOff,
@@ -273,6 +274,7 @@ public abstract class AbstractTiledRed
      * @param tileGridYOff The y location of tile 0,0.
      * @param props  Any properties you want to associate with the image.
      */
+    @Override
     protected void init(List srcs, Rectangle bounds,
                         ColorModel cm, SampleModel sm,
                         int tileGridXOff, int tileGridYOff,
@@ -293,12 +295,14 @@ public abstract class AbstractTiledRed
         return TileCache.getTileMap(this);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         copyToRasterByBlocks(wr);
         return wr;
     }
 
 
+    @Override
     public Raster getData(Rectangle rect) {
         int xt0 = getXTile(rect.x);
         int xt1 = getXTile(rect.x+rect.width-1);
@@ -315,10 +319,12 @@ public abstract class AbstractTiledRed
     }
 
 
+    @Override
     public Raster getTile(int x, int y) {
         return tiles.getTile(x, y);
     }
 
+    @Override
     public Raster genTile(int x, int y) {
         WritableRaster wr = makeTile(x, y);
         genRect(wr);
@@ -487,6 +493,7 @@ public abstract class AbstractTiledRed
      * data in wr outside the bounds will not be touched.
      * @param wr Raster to fill with image data.
      */
+    @Override
     public void copyToRaster(WritableRaster wr) {
         Rectangle wrR = wr.getBounds();
 

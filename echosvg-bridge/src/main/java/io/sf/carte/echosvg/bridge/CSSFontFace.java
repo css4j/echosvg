@@ -170,6 +170,7 @@ public class CSSFontFace extends FontFace implements SVGConstants {
     /**
      * Returns the font associated with this rule or element.
      */
+    @Override
     public GVTFontFamily getFontFamily(BridgeContext ctx) {
         if (fontFamily != null)
             return fontFamily ;

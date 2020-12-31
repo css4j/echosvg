@@ -64,6 +64,7 @@ public class TileRable8Bit
     /**
      * Returns the tile region
      */
+    @Override
     public Rectangle2D getTileRegion(){
         return tileRegion;
     }
@@ -71,6 +72,7 @@ public class TileRable8Bit
     /**
      * Sets the tile region
      */
+    @Override
     public void setTileRegion(Rectangle2D tileRegion){
         if(tileRegion == null){
             throw new IllegalArgumentException();
@@ -82,6 +84,7 @@ public class TileRable8Bit
     /**
      * Returns the tiled region
      */
+    @Override
     public Rectangle2D getTiledRegion(){
         return tiledRegion;
     }
@@ -89,6 +92,7 @@ public class TileRable8Bit
     /**
      * Sets the tiled region
      */
+    @Override
     public void setTiledRegion(Rectangle2D tiledRegion){
         if(tiledRegion == null){
             throw new IllegalArgumentException();
@@ -100,6 +104,7 @@ public class TileRable8Bit
     /**
      * Returns the overflow strategy
      */
+    @Override
     public boolean isOverflow(){
         return overflow;
     }
@@ -107,6 +112,7 @@ public class TileRable8Bit
     /**
      * Sets the overflow strategy
      */
+    @Override
     public void setOverflow(boolean overflow){
         touch();
         this.overflow = overflow;
@@ -129,6 +135,7 @@ public class TileRable8Bit
     /**
      * Sets the filter source
      */
+    @Override
     public void setSource(Filter src){
         init(src);
     }
@@ -136,6 +143,7 @@ public class TileRable8Bit
     /**
      * Return's the tile source
      */
+    @Override
     public Filter getSource(){
         return (Filter)srcs.get(0);
     }
@@ -143,10 +151,12 @@ public class TileRable8Bit
     /**
      * Returns this filter's bounds
      */
+    @Override
     public Rectangle2D getBounds2D(){
         return (Rectangle2D)tiledRegion.clone();
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc){
         // Just copy over the rendering hints.
         RenderingHints rh = rc.getRenderingHints();

@@ -163,6 +163,7 @@ public class SVGOMMarkerElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -175,21 +176,21 @@ public class SVGOMMarkerElement
         refX =
             createLiveAnimatedLength
                 (null, SVG_REF_X_ATTRIBUTE, SVG_MARKER_REF_X_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         refY =
             createLiveAnimatedLength
                 (null, SVG_REF_Y_ATTRIBUTE, SVG_MARKER_REF_Y_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         markerWidth =
             createLiveAnimatedLength
                 (null, SVG_MARKER_WIDTH_ATTRIBUTE,
                  SVG_MARKER_MARKER_WIDTH_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.HORIZONTAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
         markerHeight =
             createLiveAnimatedLength
                 (null, SVG_MARKER_HEIGHT_ATTRIBUTE,
                  SVG_MARKER_MARKER_WIDTH_DEFAULT_VALUE,
-                 SVGOMAnimatedLength.VERTICAL_LENGTH, true);
+                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
         orient =
             createLiveAnimatedMarkerOrientValue(null, SVG_ORIENT_ATTRIBUTE);
         markerUnits =
@@ -206,6 +207,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_MARKER_TAG;
     }
@@ -213,6 +215,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Implements {@link SVGMarkerElement#getRefX()}.
      */
+    @Override
     public SVGAnimatedLength getRefX() {
         return refX;
     }
@@ -220,6 +223,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Implements {@link SVGMarkerElement#getRefY()}.
      */
+    @Override
     public SVGAnimatedLength getRefY() {
         return refY;
     }
@@ -227,6 +231,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Implements {@link SVGMarkerElement#getMarkerUnits()}.
      */
+    @Override
     public SVGAnimatedEnumeration getMarkerUnits() {
         return markerUnits;
     }
@@ -234,6 +239,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Implements {@link SVGMarkerElement#getMarkerWidth()}.
      */
+    @Override
     public SVGAnimatedLength getMarkerWidth() {
         return markerWidth;
     }
@@ -241,6 +247,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Implements {@link SVGMarkerElement#getMarkerHeight()}.
      */
+    @Override
     public SVGAnimatedLength getMarkerHeight() {
         return markerHeight;
     }
@@ -248,6 +255,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Implements {@link SVGMarkerElement#getOrientType()}.
      */
+    @Override
     public SVGAnimatedEnumeration getOrientType() {
         return orient.getAnimatedEnumeration();
     }
@@ -255,6 +263,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Implements {@link SVGMarkerElement#getOrientAngle()}.
      */
+    @Override
     public SVGAnimatedAngle getOrientAngle() {
         return orient.getAnimatedAngle();
     }
@@ -262,6 +271,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Implements {@link SVGMarkerElement#setOrientToAuto()}.
      */
+    @Override
     public void setOrientToAuto() {
         setAttributeNS(null, SVG_ORIENT_ATTRIBUTE, SVG_AUTO_VALUE);
     }
@@ -270,6 +280,7 @@ public class SVGOMMarkerElement
      * <b>DOM</b>: Implements {@link
      * SVGMarkerElement#setOrientToAngle(SVGAngle)}.
      */
+    @Override
     public void setOrientToAngle(SVGAngle angle) {
         setAttributeNS(null, SVG_ORIENT_ATTRIBUTE, angle.getValueAsString());
     }
@@ -280,6 +291,7 @@ public class SVGOMMarkerElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFitToViewBox#getViewBox()}.
      */
+    @Override
     public SVGAnimatedRect getViewBox() {
         return viewBox;
     }
@@ -288,6 +300,7 @@ public class SVGOMMarkerElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGFitToViewBox#getPreserveAspectRatio()}.
      */
+    @Override
     public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
         return preserveAspectRatio;
     }
@@ -298,6 +311,7 @@ public class SVGOMMarkerElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
      */
+    @Override
     public SVGAnimatedBoolean getExternalResourcesRequired() {
         return externalResourcesRequired;
     }
@@ -307,6 +321,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Returns the xml:lang attribute value.
      */
+    @Override
     public String getXMLlang() {
         return XMLSupport.getXMLLang(this);
     }
@@ -314,6 +329,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Sets the xml:lang attribute value.
      */
+    @Override
     public void setXMLlang(String lang) {
         setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
     }
@@ -321,6 +337,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Returns the xml:space attribute value.
      */
+    @Override
     public String getXMLspace() {
         return XMLSupport.getXMLSpace(this);
     }
@@ -328,6 +345,7 @@ public class SVGOMMarkerElement
     /**
      * <b>DOM</b>: Sets the xml:space attribute value.
      */
+    @Override
     public void setXMLspace(String space) {
         setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
     }
@@ -336,6 +354,7 @@ public class SVGOMMarkerElement
      * Returns the AttributeInitializer for this element type.
      * @return null if this element has no attribute with a default value.
      */
+    @Override
     protected AttributeInitializer getAttributeInitializer() {
         return attributeInitializer;
     }
@@ -343,6 +362,7 @@ public class SVGOMMarkerElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMMarkerElement();
     }
@@ -350,6 +370,7 @@ public class SVGOMMarkerElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

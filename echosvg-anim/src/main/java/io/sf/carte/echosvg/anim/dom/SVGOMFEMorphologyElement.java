@@ -92,6 +92,7 @@ public class SVGOMFEMorphologyElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -110,6 +111,7 @@ public class SVGOMFEMorphologyElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_MORPHOLOGY_TAG;
     }
@@ -117,6 +119,7 @@ public class SVGOMFEMorphologyElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEMorphologyElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -124,6 +127,7 @@ public class SVGOMFEMorphologyElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEMorphologyElement#getOperator()}.
      */
+    @Override
     public SVGAnimatedEnumeration getOperator() {
         return operator;
     }
@@ -131,6 +135,7 @@ public class SVGOMFEMorphologyElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEMorphologyElement#getRadiusX()}.
      */
+    @Override
     public SVGAnimatedNumber getRadiusX() {
         throw new UnsupportedOperationException
             ("SVGFEMorphologyElement.getRadiusX is not implemented"); // XXX
@@ -139,6 +144,7 @@ public class SVGOMFEMorphologyElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEMorphologyElement#getRadiusY()}.
      */
+    @Override
     public SVGAnimatedNumber getRadiusY() {
         throw new UnsupportedOperationException
             ("SVGFEMorphologyElement.getRadiusY is not implemented"); // XXX
@@ -147,6 +153,7 @@ public class SVGOMFEMorphologyElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEMorphologyElement();
     }
@@ -154,6 +161,7 @@ public class SVGOMFEMorphologyElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

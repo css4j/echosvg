@@ -70,6 +70,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns the default size of this user agent (400x400).
      */
+    @Override
     public Dimension2D getViewportSize() {
         return new Dimension(1, 1);
     }
@@ -77,6 +78,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Display the specified message.
      */
+    @Override
     public void displayMessage(String message) {
     }
 
@@ -90,6 +92,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Display the specified error (forwards call to displayError(String))
      */
+    @Override
     public void displayError(Exception e) {
         displayError(e.getMessage());
     }
@@ -97,12 +100,14 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Shows an alert dialog box.
      */
+    @Override
     public void showAlert(String message) {
     }
 
     /**
      * Shows a prompt dialog box.
      */
+    @Override
     public String showPrompt(String message) {
         return null;
     }
@@ -110,6 +115,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Shows a prompt dialog box.
      */
+    @Override
     public String showPrompt(String message, String defaultValue) {
         return null;
     }
@@ -117,6 +123,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Shows a confirm dialog box.
      */
+    @Override
     public boolean showConfirm(String message) {
         return false;
     }
@@ -124,6 +131,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns the size of a px CSS unit in millimeters.
      */
+    @Override
     public float getPixelUnitToMillimeter() {
         return 0.26458333333333333333333333333333f; // 96dpi
     }
@@ -133,6 +141,7 @@ public class UserAgentAdapter implements UserAgent {
      * This will be removed after next release.
      * @see #getPixelUnitToMillimeter()
      */
+    @Override
     public float getPixelToMM() {
         return getPixelUnitToMillimeter();
             
@@ -141,6 +150,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns the default font family.
      */
+    @Override
     public String getDefaultFontFamily() {
         return "Arial, Helvetica, sans-serif";
     }
@@ -148,6 +158,7 @@ public class UserAgentAdapter implements UserAgent {
     /** 
      * Returns the  medium font size. 
      */
+    @Override
     public float getMediumFontSize() {
         // 9pt (72pt = 1in)
         return 9f * 25.4f / (72f * getPixelUnitToMillimeter());
@@ -156,6 +167,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns a lighter font-weight.
      */
+    @Override
     public float getLighterFontWeight(float f) { 
         return getStandardLighterFontWeight(f);
     }
@@ -163,6 +175,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns a bolder font-weight.
      */
+    @Override
     public float getBolderFontWeight(float f) {
         return getStandardBolderFontWeight(f);
     }
@@ -171,6 +184,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns the user language "en" (english).
      */
+    @Override
     public String getLanguages() {
         return "en";
     }
@@ -178,6 +192,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns this user agent's CSS media.
      */
+    @Override
     public String getMedia() {
         return "all";
     }
@@ -185,6 +200,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns this user agent's alternate style-sheet title.
      */
+    @Override
     public String getAlternateStyleSheet() {
         return null;
     }
@@ -192,6 +208,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns the user stylesheet 
      */
+    @Override
     public String getUserStyleSheetURI() {
         return null;
     }
@@ -199,6 +216,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns the XML parser to use
      */
+    @Override
     public String getXMLParserClassName() {
         return XMLResourceDescriptor.getXMLParserClassName();
     }
@@ -206,6 +224,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns <code>false</code>. The XML parser is not in validation mode.
      */
+    @Override
     public boolean isXMLParserValidating() {
         return false;
     }
@@ -213,6 +232,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Unsupported operation.
      */
+    @Override
     public EventDispatcher getEventDispatcher() {
         return null;
     }
@@ -220,21 +240,25 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Unsupported operation.
      */
+    @Override
     public void openLink(SVGAElement elt) { }
 
     /**
      * Unsupported operation.
      */
+    @Override
     public void setSVGCursor(Cursor cursor) { }
 
     /**
      * This user agent doesn't display text selections.
      */
+    @Override
     public void setTextSelection(Mark start, Mark end) { }
 
     /**
      * This user agent doesn't display text selections so nothing to clear.
      */
+    @Override
     public void deselectAll() { }
 
     /**
@@ -245,6 +269,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Unsupported operation.
      */
+    @Override
     public AffineTransform getTransform() {
         return null;
     }
@@ -252,6 +277,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Unsupported operation.
      */
+    @Override
     public void setTransform(AffineTransform at) {
         // Do nothing.
     }
@@ -259,6 +285,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Unsupported operation.
      */
+    @Override
     public Point getClientAreaLocationOnScreen() {
         return new Point();
     }
@@ -267,6 +294,7 @@ public class UserAgentAdapter implements UserAgent {
      * Tells whether the given feature is supported by this
      * user agent.
      */
+    @Override
     public boolean hasFeature(String s) {
         return FEATURES.contains(s);
     }
@@ -275,6 +303,7 @@ public class UserAgentAdapter implements UserAgent {
      * Tells whether the given extension is supported by this
      * user agent.
      */
+    @Override
     public boolean supportExtension(String s) {
         return extensions.contains(s);
     }
@@ -283,6 +312,7 @@ public class UserAgentAdapter implements UserAgent {
      * Lets the bridge tell the user agent that the following
      * ex   tension is supported by the bridge.  
      */
+    @Override
     public void registerExtension(BridgeExtension ext) {
         Iterator i = ext.getImplementedExtensions();
         while (i.hasNext())
@@ -297,6 +327,7 @@ public class UserAgentAdapter implements UserAgent {
      * &lt;title&gt; elements in a UserAgent-dependant
      * way.
      */
+    @Override
     public void handleElement(Element elt, Object data){
     }
 
@@ -313,6 +344,7 @@ public class UserAgentAdapter implements UserAgent {
      * @param docURL url for the document into which the 
      *        script was found.
      */
+    @Override
     public ScriptSecurity getScriptSecurity(String    scriptType,
                                             ParsedURL scriptURL,
                                             ParsedURL docURL){
@@ -337,6 +369,7 @@ public class UserAgentAdapter implements UserAgent {
      * @param docURL url for the document into which the 
      *        script was found.
      */
+    @Override
     public void checkLoadScript(String scriptType,
                                 ParsedURL scriptURL,
                                 ParsedURL docURL) throws SecurityException {
@@ -359,6 +392,7 @@ public class UserAgentAdapter implements UserAgent {
      * @param docURL url for the document into which the 
      *        resource was found.
      */
+    @Override
     public ExternalResourceSecurity 
         getExternalResourceSecurity(ParsedURL resourceURL,
                                     ParsedURL docURL) {
@@ -381,6 +415,7 @@ public class UserAgentAdapter implements UserAgent {
      * @param docURL url for the document into which the 
      *        resource was found.
      */
+    @Override
     public void 
         checkLoadExternalResource(ParsedURL resourceURL,
                                   ParsedURL docURL) throws SecurityException {
@@ -442,6 +477,7 @@ public class UserAgentAdapter implements UserAgent {
      * @param message As best as can be determined the reason it can't be
      *                loaded (not available, corrupt, unknown format,...).
      */
+    @Override
     public SVGDocument getBrokenLinkDocument(Element e, 
                                              String url, 
                                              String message) {
@@ -454,6 +490,7 @@ public class UserAgentAdapter implements UserAgent {
      *
      * @param url The url to be loaded as a string.
      */
+    @Override
     public void loadDocument(String url) {
         // Do nothing.
     }
@@ -461,6 +498,7 @@ public class UserAgentAdapter implements UserAgent {
     /**
      * Returns the Font Family Resolver
      */
+    @Override
     public FontFamilyResolver getFontFamilyResolver() {
         return DefaultFontFamilyResolver.SINGLETON;
     }

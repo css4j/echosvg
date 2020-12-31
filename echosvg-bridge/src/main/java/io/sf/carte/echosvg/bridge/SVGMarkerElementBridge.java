@@ -50,6 +50,7 @@ public class SVGMarkerElementBridge extends AnimatableGenericSVGBridge
     /**
      * Returns 'marker'.
      */
+    @Override
     public String getLocalName() {
         return SVG_MARKER_TAG;
     }
@@ -61,6 +62,7 @@ public class SVGMarkerElementBridge extends AnimatableGenericSVGBridge
      * @param markerElement the element that represents the marker
      * @param paintedElement the element that references the marker element
      */
+    @Override
     public Marker createMarker(BridgeContext ctx,
                                Element markerElement,
                                Element paintedElement) {

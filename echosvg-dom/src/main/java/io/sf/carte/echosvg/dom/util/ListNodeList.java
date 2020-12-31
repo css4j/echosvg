@@ -41,6 +41,7 @@ public class ListNodeList implements NodeList {
     /**
      * <b>DOM</b>: Implements {@link NodeList#item(int)}.
      */
+    @Override
     public Node item(int index) {
         if ((index < 0) || (index > list.size()))
             return null;
@@ -50,6 +51,7 @@ public class ListNodeList implements NodeList {
     /**
      * <b>DOM</b>: Implements {@link NodeList#getLength()}.
      */
+    @Override
     public int getLength() {
         return list.size();
     }

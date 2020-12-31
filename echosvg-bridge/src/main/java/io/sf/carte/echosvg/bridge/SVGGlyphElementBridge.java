@@ -57,6 +57,7 @@ public class SVGGlyphElementBridge extends AbstractSVGBridge
     /**
      * Returns 'glyph'.
      */
+    @Override
     public String getLocalName() {
         return SVG_GLYPH_TAG;
     }

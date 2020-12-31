@@ -70,6 +70,7 @@ public abstract class AbstractSVGFilterConverter
      *         If no definition is needed, an empty set should be
      *         returned.
      */
+    @Override
     public List getDefinitionSet(){
         return defSet;
     }

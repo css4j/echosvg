@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 
 import io.sf.carte.echosvg.css.engine.value.AbstractColorManager;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -313,37 +314,37 @@ public class ColorManager extends AbstractColorManager {
     //
     static {
         computedValues.put(CSSConstants.CSS_BLACK_VALUE,
-                           SVGValueConstants.BLACK_RGB_VALUE);
+                           ValueConstants.BLACK_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_SILVER_VALUE,
-                           SVGValueConstants.SILVER_RGB_VALUE);
+                           ValueConstants.SILVER_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_GRAY_VALUE,
-                           SVGValueConstants.GRAY_RGB_VALUE);
+                           ValueConstants.GRAY_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_WHITE_VALUE,
-                           SVGValueConstants.WHITE_RGB_VALUE);
+                           ValueConstants.WHITE_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_MAROON_VALUE,
-                           SVGValueConstants.MAROON_RGB_VALUE);
+                           ValueConstants.MAROON_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_RED_VALUE,
-                           SVGValueConstants.RED_RGB_VALUE);
+                           ValueConstants.RED_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_PURPLE_VALUE,
-                           SVGValueConstants.PURPLE_RGB_VALUE);
+                           ValueConstants.PURPLE_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_FUCHSIA_VALUE,
-                           SVGValueConstants.FUCHSIA_RGB_VALUE);
+                           ValueConstants.FUCHSIA_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_GREEN_VALUE,
-                           SVGValueConstants.GREEN_RGB_VALUE);
+                           ValueConstants.GREEN_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_LIME_VALUE,
-                           SVGValueConstants.LIME_RGB_VALUE);
+                           ValueConstants.LIME_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_OLIVE_VALUE,
-                           SVGValueConstants.OLIVE_RGB_VALUE);
+                           ValueConstants.OLIVE_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_YELLOW_VALUE,
-                           SVGValueConstants.YELLOW_RGB_VALUE);
+                           ValueConstants.YELLOW_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_NAVY_VALUE,
-                           SVGValueConstants.NAVY_RGB_VALUE);
+                           ValueConstants.NAVY_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_BLUE_VALUE,
-                           SVGValueConstants.BLUE_RGB_VALUE);
+                           ValueConstants.BLUE_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_TEAL_VALUE,
-                           SVGValueConstants.TEAL_RGB_VALUE);
+                           ValueConstants.TEAL_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_AQUA_VALUE,
-                           SVGValueConstants.AQUA_RGB_VALUE);
+                           ValueConstants.AQUA_RGB_VALUE);
 
         computedValues.put(CSSConstants.CSS_ALICEBLUE_VALUE,
                            SVGValueConstants.ALICEBLUE_RGB_VALUE);
@@ -562,7 +563,7 @@ public class ColorManager extends AbstractColorManager {
         computedValues.put(CSSConstants.CSS_POWDERBLUE_VALUE,
                            SVGValueConstants.POWDERBLUE_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_PURPLE_VALUE,
-                           SVGValueConstants.PURPLE_RGB_VALUE);
+                           ValueConstants.PURPLE_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_ROSYBROWN_VALUE,
                            SVGValueConstants.ROSYBROWN_RGB_VALUE);
         computedValues.put(CSSConstants.CSS_ROYALBLUE_VALUE,
@@ -616,6 +617,7 @@ public class ColorManager extends AbstractColorManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
      */
+    @Override
     public boolean isInheritedProperty() {
         return true;
     }
@@ -623,6 +625,7 @@ public class ColorManager extends AbstractColorManager {
     /**
      * Implements {@link ValueManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -630,6 +633,7 @@ public class ColorManager extends AbstractColorManager {
     /**
      * Implements {@link ValueManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return true;
     }
@@ -637,6 +641,7 @@ public class ColorManager extends AbstractColorManager {
     /**
      * Implements {@link ValueManager#getPropertyType()}.
      */
+    @Override
     public int getPropertyType() {
         return SVGTypes.TYPE_COLOR;
     }
@@ -645,6 +650,7 @@ public class ColorManager extends AbstractColorManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_COLOR_PROPERTY;
     }
@@ -653,6 +659,7 @@ public class ColorManager extends AbstractColorManager {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
         return DEFAULT_VALUE;
     }

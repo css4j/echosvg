@@ -128,6 +128,7 @@ public abstract class AnimatableValue {
      * Returns a string representation of this object prefixed with its
      * class name.
      */
+    @Override
     public String toString() {
         return getClass().getName() + "[" + toStringRep() + "]";
     }

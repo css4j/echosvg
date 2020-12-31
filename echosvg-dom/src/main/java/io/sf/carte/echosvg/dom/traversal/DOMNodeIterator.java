@@ -113,6 +113,7 @@ public class DOMNodeIterator implements NodeIterator {
     /**
      * <b>DOM</b>: Implements {@link NodeIterator#getRoot()}.
      */
+    @Override
     public Node getRoot() {
         return root;
     }
@@ -120,6 +121,7 @@ public class DOMNodeIterator implements NodeIterator {
     /**
      * <b>DOM</b>: Implements {@link NodeIterator#getWhatToShow()}.
      */
+    @Override
     public int getWhatToShow() {
         return whatToShow;
     }
@@ -127,6 +129,7 @@ public class DOMNodeIterator implements NodeIterator {
     /**
      * <b>DOM</b>: Implements {@link NodeIterator#getFilter()}.
      */
+    @Override
     public NodeFilter getFilter() {
         return filter;
     }
@@ -134,6 +137,7 @@ public class DOMNodeIterator implements NodeIterator {
     /**
      * <b>DOM</b>: Implements {@link NodeIterator#getExpandEntityReferences()}.
      */
+    @Override
     public boolean getExpandEntityReferences() {
         return expandEntityReferences;
     }
@@ -141,6 +145,7 @@ public class DOMNodeIterator implements NodeIterator {
     /**
      * <b>DOM</b>: Implements {@link NodeIterator#nextNode()}.
      */
+    @Override
     public Node nextNode() {
         switch (state) {
         case INVALID:
@@ -171,6 +176,7 @@ public class DOMNodeIterator implements NodeIterator {
     /**
      * <b>DOM</b>: Implements {@link NodeIterator#previousNode()}.
      */
+    @Override
     public Node previousNode() {
         switch (state) {
         case INVALID:
@@ -201,6 +207,7 @@ public class DOMNodeIterator implements NodeIterator {
     /**
      * <b>DOM</b>: Implements {@link NodeIterator#detach()}.
      */
+    @Override
     public void detach() {
         state = INVALID;
         document.detachNodeIterator(this);

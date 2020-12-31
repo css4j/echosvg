@@ -116,6 +116,7 @@ public class SVGOMFETurbulenceElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -140,6 +141,7 @@ public class SVGOMFETurbulenceElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_TURBULENCE_TAG;
     }
@@ -148,6 +150,7 @@ public class SVGOMFETurbulenceElement
      * <b>DOM</b>: Implements {@link
      * SVGFETurbulenceElement#getBaseFrequencyX()}.
      */
+    @Override
     public SVGAnimatedNumber getBaseFrequencyX() {
         throw new UnsupportedOperationException
             ("SVGFETurbulenceElement.getBaseFrequencyX is not implemented"); // XXX
@@ -157,6 +160,7 @@ public class SVGOMFETurbulenceElement
      * <b>DOM</b>: Implements {@link
      * SVGFETurbulenceElement#getBaseFrequencyY()}.
      */
+    @Override
     public SVGAnimatedNumber getBaseFrequencyY() {
         throw new UnsupportedOperationException
             ("SVGFETurbulenceElement.getBaseFrequencyY is not implemented"); // XXX
@@ -165,6 +169,7 @@ public class SVGOMFETurbulenceElement
     /**
      * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getNumOctaves()}.
      */
+    @Override
     public SVGAnimatedInteger getNumOctaves() {
         return numOctaves;
     }
@@ -172,6 +177,7 @@ public class SVGOMFETurbulenceElement
     /**
      * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getSeed()}.
      */
+    @Override
     public SVGAnimatedNumber getSeed() {
         return seed;
     }
@@ -179,6 +185,7 @@ public class SVGOMFETurbulenceElement
     /**
      * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getStitchTiles()}.
      */
+    @Override
     public SVGAnimatedEnumeration getStitchTiles() {
         return stitchTiles;
     }
@@ -186,6 +193,7 @@ public class SVGOMFETurbulenceElement
     /**
      * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getType()}.
      */
+    @Override
     public SVGAnimatedEnumeration getType() {
         return type;
     }
@@ -193,6 +201,7 @@ public class SVGOMFETurbulenceElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFETurbulenceElement();
     }
@@ -200,6 +209,7 @@ public class SVGOMFETurbulenceElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

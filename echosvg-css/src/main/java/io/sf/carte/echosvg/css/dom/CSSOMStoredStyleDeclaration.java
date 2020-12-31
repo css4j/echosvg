@@ -53,6 +53,7 @@ public abstract class CSSOMStoredStyleDeclaration
     /**
      * Returns the object storing the properties of this style declaration.
      */
+    @Override
     public StyleDeclaration getStyleDeclaration() {
         return declaration;
     }
@@ -60,6 +61,7 @@ public abstract class CSSOMStoredStyleDeclaration
     /**
      * Sets the object storing the properties of this style declaration.
      */
+    @Override
     public void setStyleDeclaration(StyleDeclaration sd) {
         declaration = sd;
     }
@@ -69,6 +71,7 @@ public abstract class CSSOMStoredStyleDeclaration
     /**
      * Returns the current value associated with this object.
      */
+    @Override
     public Value getValue(String name) {
         int idx = cssEngine.getPropertyIndex(name);
         for (int i = 0; i < declaration.size(); i++) {
@@ -82,6 +85,7 @@ public abstract class CSSOMStoredStyleDeclaration
     /**
      * Tells whether the given property is important.
      */
+    @Override
     public boolean isImportant(String name) {
         int idx = cssEngine.getPropertyIndex(name);
         for (int i = 0; i < declaration.size(); i++) {
@@ -95,6 +99,7 @@ public abstract class CSSOMStoredStyleDeclaration
     /**
      * Returns the text of the declaration.
      */
+    @Override
     public String getText() {
         return declaration.toString(cssEngine);
     }
@@ -102,6 +107,7 @@ public abstract class CSSOMStoredStyleDeclaration
     /**
      * Returns the length of the declaration.
      */
+    @Override
     public int getLength() {
         return declaration.size();
     }
@@ -109,6 +115,7 @@ public abstract class CSSOMStoredStyleDeclaration
     /**
      * Returns the value at the given.
      */
+    @Override
     public String item(int idx) {
         return cssEngine.getPropertyName(declaration.getIndex(idx));
     }

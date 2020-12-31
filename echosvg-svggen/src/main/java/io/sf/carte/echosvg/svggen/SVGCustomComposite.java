@@ -50,6 +50,7 @@ public class SVGCustomComposite extends AbstractSVGConverter {
      *         with the related definitions
      * @see io.sf.carte.echosvg.svggen.SVGDescriptor
      */
+    @Override
     public SVGDescriptor toSVG(GraphicContext gc) {
         return toSVG(gc.getComposite());
     }

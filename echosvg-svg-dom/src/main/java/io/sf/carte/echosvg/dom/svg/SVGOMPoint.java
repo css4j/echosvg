@@ -58,6 +58,7 @@ public class SVGOMPoint implements SVGPoint {
     /**
      * <b>DOM</b>: Implements {@link SVGPoint#getX()}.
      */
+    @Override
     public float getX() {
         return x;
     }
@@ -65,6 +66,7 @@ public class SVGOMPoint implements SVGPoint {
     /**
      * <b>DOM</b>: Implements {@link SVGPoint#setX(float)}.
      */
+    @Override
     public void setX(float x) throws DOMException {
         this.x = x;
     }
@@ -72,6 +74,7 @@ public class SVGOMPoint implements SVGPoint {
     /**
      * <b>DOM</b>: Implements {@link SVGPoint#getY()}.
      */
+    @Override
     public float getY() {
         return y;
     }
@@ -79,6 +82,7 @@ public class SVGOMPoint implements SVGPoint {
     /**
      * <b>DOM</b>: Implements {@link SVGPoint#setY(float)}.
      */
+    @Override
     public void setY(float y) throws DOMException {
         this.y = y;
     }
@@ -86,6 +90,7 @@ public class SVGOMPoint implements SVGPoint {
     /**
      * <b>DOM</b>: Implements {@link SVGPoint#matrixTransform(SVGMatrix)}.
      */
+    @Override
     public SVGPoint matrixTransform(SVGMatrix matrix) {
         return matrixTransform(this, matrix);
     }

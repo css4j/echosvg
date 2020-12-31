@@ -67,18 +67,22 @@ public abstract class AbstractRegistryEntry
     }
 
 
+    @Override
     public String getFormatName() {
         return name;
     }
 
+    @Override
     public List   getStandardExtensions() {
         return exts;
     }
 
+    @Override
     public List   getMimeTypes() {
         return mimeTypes;
     }
 
+    @Override
     public float  getPriority() {
         return priority;
     }

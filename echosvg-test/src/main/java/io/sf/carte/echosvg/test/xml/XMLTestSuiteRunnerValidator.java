@@ -187,6 +187,7 @@ public class XMLTestSuiteRunnerValidator extends DefaultTestSuite {
         /**
          * <code>AbstractTest</code>'s template method implementation.
          */
+        @Override
         public TestReport runImpl() throws Exception{
             //
             // Load the template dummy testRun file.

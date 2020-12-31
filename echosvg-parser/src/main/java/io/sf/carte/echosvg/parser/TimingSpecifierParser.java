@@ -65,6 +65,7 @@ public class TimingSpecifierParser extends TimingParser {
     /**
      * Parses a timing specifier.
      */
+    @Override
     protected void doParse() throws ParseException, IOException {
         current = reader.read();
         Object[] spec = parseTimingSpecifier();

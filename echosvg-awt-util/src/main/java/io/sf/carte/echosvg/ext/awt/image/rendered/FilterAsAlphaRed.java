@@ -66,6 +66,7 @@ public class FilterAsAlphaRed extends AbstractRed {
                   ColorSpaceHintKey.VALUE_COLORSPACE_ALPHA);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         // Get my source.
         CachableRed srcRed = (CachableRed)getSources().get(0);

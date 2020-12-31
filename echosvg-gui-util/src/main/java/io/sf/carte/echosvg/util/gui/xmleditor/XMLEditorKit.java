@@ -24,6 +24,7 @@ import javax.swing.JEditorPane;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.Document;
 import javax.swing.text.Element;
+import javax.swing.text.StyleContext;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
 
@@ -69,10 +70,11 @@ public class XMLEditorKit extends DefaultEditorKit {
     /** Overriden to set the JEditorPane font to match with the XMLContext
      * {@inheritDoc}
      */
+    @Override
     public void install(JEditorPane c) {
         super.install(c);
         
-        Object obj = context.getSyntaxFont(XMLContext.DEFAULT_STYLE);
+        Object obj = context.getSyntaxFont(StyleContext.DEFAULT_STYLE);
         if (obj != null) {
             c.setFont((Font)obj);
         }
@@ -84,11 +86,13 @@ public class XMLEditorKit extends DefaultEditorKit {
      * kit represents support for.  This kit supports
      * the type <code>text/xml</code>.
      */
+    @Override
     public String getContentType() {
         return XML_MIME_TYPE;
     }
     
     /** {@inheritDoc} */
+    @Override
     public Object clone() {
         XMLEditorKit kit = new XMLEditorKit();
         kit.context = context;
@@ -96,12 +100,14 @@ public class XMLEditorKit extends DefaultEditorKit {
     }
     
     /** {@inheritDoc} */
+    @Override
     public Document createDefaultDocument() {
         XMLDocument doc = new XMLDocument(context);
         return doc;
     }
     
     /** {@inheritDoc} */
+    @Override
     public ViewFactory getViewFactory() {
         return factory;
     }
@@ -111,6 +117,7 @@ public class XMLEditorKit extends DefaultEditorKit {
      */
     protected class XMLViewFactory implements ViewFactory {
         // Creates the XML View.
+        @Override
         public View create(Element elem) {
             return new XMLView(context, elem);
         }

@@ -77,9 +77,12 @@ public class CmapFormat4 extends CmapFormat {
         }
     }
 
+    @Override
     public int getFirst() { return first; }
+    @Override
     public int getLast()  { return last; }
 
+    @Override
     public int mapCharCode(int charCode) {
         try {
             /*
@@ -121,6 +124,7 @@ public class CmapFormat4 extends CmapFormat {
         return 0;
     }
 
+    @Override
     public String toString() {
         return new StringBuffer( 80 )
         .append(super.toString())

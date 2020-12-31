@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  */
 public class FloatKey extends TranscodingHints.Key {
 
+    @Override
     public boolean isCompatibleValue(Object v) {
         return (v instanceof Float);
     }

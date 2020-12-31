@@ -113,6 +113,7 @@ public class GraphicsNodeRed8Bit extends AbstractRed {
         init((CachableRed)null, bounds, cm, sm, tgX, tgY, null);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         genRect(wr);
         return wr;

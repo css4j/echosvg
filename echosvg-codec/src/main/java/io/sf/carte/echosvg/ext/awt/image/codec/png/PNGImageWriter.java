@@ -36,6 +36,7 @@ public class PNGImageWriter implements ImageWriter {
     /**
      * @see ImageWriter#writeImage(java.awt.image.RenderedImage, java.io.OutputStream)
      */
+    @Override
     public void writeImage(RenderedImage image, OutputStream out)
             throws IOException {
         writeImage(image, out, null);
@@ -44,6 +45,7 @@ public class PNGImageWriter implements ImageWriter {
     /**
      * @see ImageWriter#writeImage(java.awt.image.RenderedImage, java.io.OutputStream, io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams)
      */
+    @Override
     public void writeImage(RenderedImage image, OutputStream out,
             ImageWriterParams params) throws IOException {
         PNGImageEncoder encoder = new PNGImageEncoder(out, null);
@@ -53,6 +55,7 @@ public class PNGImageWriter implements ImageWriter {
     /**
      * @see ImageWriter#getMIMEType()
      */
+    @Override
     public String getMIMEType() {
         return "image/png";
     }

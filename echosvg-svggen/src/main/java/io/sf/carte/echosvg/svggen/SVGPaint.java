@@ -78,6 +78,7 @@ public class SVGPaint implements SVGConverter {
      * @return Set of Elements defining the Paints this
      *         converter has processed since it was created
      */
+    @Override
     public List getDefinitionSet(){
         List paintDefs = new LinkedList(svgLinearGradient.getDefinitionSet());
         paintDefs.addAll(svgTexturePaint.getDefinitionSet());
@@ -112,6 +113,7 @@ public class SVGPaint implements SVGConverter {
      *         with the related definitions
      * @see io.sf.carte.echosvg.svggen.SVGDescriptor
      */
+    @Override
     public SVGDescriptor toSVG(GraphicContext gc){
         return toSVG(gc.getPaint());
     }

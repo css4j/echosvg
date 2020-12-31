@@ -144,6 +144,7 @@ public class GraphicContext implements Cloneable{
     /**
      * @return a deep copy of this context
      */
+    @Override
     public Object clone(){
         GraphicContext copyGc = new GraphicContext(defaultTransform);
 

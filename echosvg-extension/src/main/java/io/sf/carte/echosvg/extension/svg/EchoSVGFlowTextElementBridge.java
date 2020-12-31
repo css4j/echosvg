@@ -89,6 +89,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
     /**
      * Returns the SVG namespace URI.
      */
+    @Override
     public String getNamespaceURI() {
         return BATIK_12_NAMESPACE_URI;
     }
@@ -96,6 +97,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
     /**
      * Returns 'flowText'.
      */
+    @Override
     public String getLocalName() {
         return BATIK_EXT_FLOW_TEXT_TAG;
     }
@@ -103,6 +105,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new EchoSVGFlowTextElementBridge();
     }
@@ -110,10 +113,12 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
     /**
      * Returns false as text is not a container.
      */
+    @Override
     public boolean isComposite() {
         return false;
     }
 
+    @Override
     protected GraphicsNode instantiateGraphicsNode() {
         return new FlowExtTextNode();
     }
@@ -126,10 +131,12 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
      * @param ctx the bridge context to use
      * @param e the text element
      */
+    @Override
     protected Point2D getLocation(BridgeContext ctx, Element e) {
         return new Point2D.Float(0,0);
     }
 
+    @Override
     protected void addContextToChild(BridgeContext ctx,Element e) {
         if (getNamespaceURI().equals(e.getNamespaceURI())) {
             String ln = e.getLocalName();
@@ -160,6 +167,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
      * @param ctx the bridge context to use
      * @param element the text element
      */
+    @Override
     protected AttributedString buildAttributedString(BridgeContext ctx,
                                                      Element element) {
         List rgns = getRegions(ctx, element);
@@ -173,6 +181,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
     /**
      * Adds glyph position attributes to an AttributedString.
      */
+    @Override
     protected void addGlyphPositionAttributes(AttributedString as,
                                               Element element,
                                               BridgeContext ctx) {
@@ -205,6 +214,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         }
     }
 
+    @Override
     protected void addChildGlyphPositionAttributes(AttributedString as,
                                                    Element element,
                                                    BridgeContext ctx) {
@@ -235,6 +245,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
     /**
      * Adds painting attributes to an AttributedString.
      */
+    @Override
     protected void addPaintAttributes(AttributedString as,
                                       Element element,
                                       TextNode node,
@@ -265,6 +276,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         }
     }
 
+    @Override
     protected void addChildPaintAttributes(AttributedString as,
                                            Element element,
                                            TextNode node,
@@ -683,6 +695,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         tpi.endChar   = elementEndChar;
     }
 
+    @Override
     protected Map getAttributeMap(BridgeContext ctx,
                                   Element element,
                                   TextPath textPath,

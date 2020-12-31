@@ -49,6 +49,7 @@ public class SVGOMSolidColorElement extends SVGStylableElement {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG12Constants.SVG_SOLID_COLOR_TAG;
     }
@@ -56,6 +57,7 @@ public class SVGOMSolidColorElement extends SVGStylableElement {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMSolidColorElement();
     }

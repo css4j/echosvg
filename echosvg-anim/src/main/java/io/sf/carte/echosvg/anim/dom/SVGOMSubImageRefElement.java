@@ -64,6 +64,7 @@ public class SVGOMSubImageRefElement extends SVGStylableElement {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG12Constants.SVG_SUB_IMAGE_REF_TAG;
     }
@@ -71,6 +72,7 @@ public class SVGOMSubImageRefElement extends SVGStylableElement {
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMSubImageRefElement();
     }

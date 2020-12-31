@@ -59,6 +59,7 @@ public class ICCColor extends AbstractValue {
      * Implements {@link
      * io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
      */
+    @Override
     public short getCssValueType() {
         return CSSValue.CSS_CUSTOM;
     }
@@ -87,6 +88,7 @@ public class ICCColor extends AbstractValue {
     /**
      *  A string representation of the current value.
      */
+    @Override
     public String getCssText() {
         StringBuffer sb = new StringBuffer( count * 8 );
         sb.append(ICC_COLOR_FUNCTION).append('(');
@@ -112,6 +114,7 @@ public class ICCColor extends AbstractValue {
     }
 
     /** {@inheritDoc} */
+    @Override
     public String toString() {
         return getCssText();
     }

@@ -51,6 +51,7 @@ public class SVGOMFEFuncRElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_FUNC_R_TAG;
     }
@@ -58,6 +59,7 @@ public class SVGOMFEFuncRElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEFuncRElement();
     }

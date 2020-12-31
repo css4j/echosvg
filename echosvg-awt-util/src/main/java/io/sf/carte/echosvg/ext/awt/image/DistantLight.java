@@ -73,6 +73,7 @@ public class DistantLight extends AbstractLight {
     /**
      * @return true if the light is constant over the whole surface
      */
+    @Override
     public boolean isConstant(){
         return true;
     }
@@ -84,6 +85,7 @@ public class DistantLight extends AbstractLight {
      * @param y y-axis coordinate where the light should be computed
      * @param L array of length 3 where the result is stored
      */
+    @Override
     public void getLight(final double x, final double y, final double z,
                          final double[] L){
         L[0] = Lx;
@@ -107,6 +109,7 @@ public class DistantLight extends AbstractLight {
      * @return an array width columns where each element
      *         is an array of three components representing the x, y and z
      *         components of the light vector.  */
+    @Override
     public double[][] getLightRow(double x, double y,
                                   final double dx, final int width,
                                   final double[][] z,

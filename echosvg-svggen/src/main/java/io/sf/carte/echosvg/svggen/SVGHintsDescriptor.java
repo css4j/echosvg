@@ -59,6 +59,7 @@ public class SVGHintsDescriptor implements SVGDescriptor, SVGSyntax {
         this.imageRendering = imageRendering;
     }
 
+    @Override
     public Map getAttributeMap(Map attrMap) {
         if (attrMap == null)
             attrMap = new HashMap();
@@ -72,6 +73,7 @@ public class SVGHintsDescriptor implements SVGDescriptor, SVGSyntax {
         return attrMap;
     }
 
+    @Override
     public List getDefinitionSet(List defSet) {
         if (defSet == null)
             defSet = new LinkedList();

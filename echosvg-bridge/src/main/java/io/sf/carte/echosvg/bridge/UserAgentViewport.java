@@ -39,6 +39,7 @@ public class UserAgentViewport implements Viewport {
     /**
      * Returns the width of this viewport.
      */
+    @Override
     public float getWidth() {
         return (float) userAgent.getViewportSize().getWidth();
     }
@@ -46,6 +47,7 @@ public class UserAgentViewport implements Viewport {
     /**
      * Returns the height of this viewport.
      */
+    @Override
     public float getHeight() {
         return (float) userAgent.getViewportSize().getHeight();
     }

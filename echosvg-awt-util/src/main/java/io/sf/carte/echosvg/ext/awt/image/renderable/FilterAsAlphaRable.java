@@ -54,10 +54,12 @@ public class FilterAsAlphaRable
     /**
      * Pass-through: returns the source's bounds
      */
+    @Override
     public Rectangle2D getBounds2D(){
         return getSource().getBounds2D();
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         // Source gets my usr2dev transform
         AffineTransform at = rc.getTransform();

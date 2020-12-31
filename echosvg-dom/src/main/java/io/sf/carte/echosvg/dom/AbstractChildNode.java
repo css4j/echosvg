@@ -47,6 +47,7 @@ public abstract class AbstractChildNode extends AbstractNode {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getParentNode()}.
      * @return {@link #parentNode}
      */
+    @Override
     public Node getParentNode() {
         return parentNode;
     }
@@ -54,6 +55,7 @@ public abstract class AbstractChildNode extends AbstractNode {
     /**
      * Sets the parent node.
      */
+    @Override
     public void setParentNode(Node v) {
         parentNode = v;
     }
@@ -61,6 +63,7 @@ public abstract class AbstractChildNode extends AbstractNode {
     /**
      * Sets the node immediately preceding this node.
      */
+    @Override
     public void setPreviousSibling(Node v) {
         previousSibling = v;
     }
@@ -69,6 +72,7 @@ public abstract class AbstractChildNode extends AbstractNode {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getPreviousSibling()}.
      * @return {@link #previousSibling}.
      */
+    @Override
     public Node getPreviousSibling() {
         return previousSibling;
     }
@@ -76,6 +80,7 @@ public abstract class AbstractChildNode extends AbstractNode {
     /**
      * Sets the node immediately following this node.
      */
+    @Override
     public void setNextSibling(Node v) {
         nextSibling = v;
     }
@@ -84,6 +89,7 @@ public abstract class AbstractChildNode extends AbstractNode {
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNextSibling()}.
      * @return {@link #nextSibling}.
      */
+    @Override
     public Node getNextSibling() {
         return nextSibling;
     }

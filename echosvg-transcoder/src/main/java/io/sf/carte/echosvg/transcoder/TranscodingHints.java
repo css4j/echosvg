@@ -60,6 +60,7 @@ public class TranscodingHints extends HashMap {
      * @exception ClassCastException key is not of type
      * <code>TranscodingHints.Key</code>
      */
+    @Override
     public boolean containsKey(Object key) {
         return super.containsKey(key);
     }
@@ -71,6 +72,7 @@ public class TranscodingHints extends HashMap {
      * @exception ClassCastException key is not of type
      * <code>TranscodingHints.Key</code>
      */
+    @Override
     public Object get(Object key) {
         return super.get(key);
     }
@@ -86,6 +88,7 @@ public class TranscodingHints extends HashMap {
      * @exception ClassCastException key is not of type
      * <code>TranscodingHints.Key</code>
      */
+    @Override
     public Object put(Object key, Object value) {
         if (!((Key) key).isCompatibleValue(value)) {
             throw new IllegalArgumentException(value+
@@ -103,6 +106,7 @@ public class TranscodingHints extends HashMap {
      * @exception ClassCastException key is not of type
      * <code>TranscodingHints.Key</code>
      */
+    @Override
     public Object remove(Object key) {
         return super.remove(key);
     }
@@ -124,6 +128,7 @@ public class TranscodingHints extends HashMap {
      * @exception ClassCastException key is not of type
      * <code>TranscodingHints.Key</code>
      */
+    @Override
     public void putAll(Map m) {
         if (m instanceof TranscodingHints) {
             putAll(((TranscodingHints) m));

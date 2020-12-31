@@ -114,6 +114,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
         /**
          * Suppresses the 'bKGD' chunk from being output.
          */
+        @Override
         public void unsetBackground() {
             backgroundSet = false;
         }
@@ -121,6 +122,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
         /**
          * Returns true if a 'bKGD' chunk will be output.
          */
+        @Override
         public boolean isBackgroundSet() {
             return backgroundSet;
         }
@@ -130,6 +132,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
          * depth must be one of 1, 2, 4, or 8, or else an
          * <code>IllegalArgumentException</code> will be thrown.
          */
+        @Override
         public void setBitDepth(int bitDepth) {
             if (bitDepth != 1 && bitDepth != 2 && bitDepth != 4 &&
                 bitDepth != 8) {
@@ -284,6 +287,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
         /**
          * Suppresses the 'bKGD' chunk from being output.
          */
+        @Override
         public void unsetBackground() {
             backgroundSet = false;
         }
@@ -291,6 +295,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
         /**
          * Returns true if a 'bKGD' chunk will be output.
          */
+        @Override
         public boolean isBackgroundSet() {
             return backgroundSet;
         }
@@ -305,6 +310,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
          * When encoding a source image of a smaller bit depth, pixel
          * values will be shifted and left-filled with zeroes.
          */
+        @Override
         public void setBitDepth(int bitDepth) {
             if (bitDepth != 1 && bitDepth != 2 && bitDepth != 4 &&
                 bitDepth != 8 && bitDepth != 16) {
@@ -448,6 +454,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
         /**
          * Suppresses the 'bKGD' chunk from being output.
          */
+        @Override
         public void unsetBackground() {
             backgroundSet = false;
         }
@@ -455,6 +462,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
         /**
          * Returns true if a 'bKGD' chunk will be output.
          */
+        @Override
         public boolean isBackgroundSet() {
             return backgroundSet;
         }
@@ -463,6 +471,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
          * Sets the desired bit depth for an RGB image.  The bit
          * depth must be 8 or 16.
          */
+        @Override
         public void setBitDepth(int bitDepth) {
             if (bitDepth != 8 && bitDepth != 16) {
                 throw new RuntimeException();

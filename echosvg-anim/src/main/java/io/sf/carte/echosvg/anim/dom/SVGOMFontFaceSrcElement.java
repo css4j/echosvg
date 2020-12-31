@@ -51,6 +51,7 @@ public class SVGOMFontFaceSrcElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FONT_FACE_SRC_TAG;
     }
@@ -58,6 +59,7 @@ public class SVGOMFontFaceSrcElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFontFaceSrcElement();
     }

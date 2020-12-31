@@ -71,6 +71,7 @@ public class PadRed extends AbstractRed {
 
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         // Get my source.
         CachableRed src = (CachableRed)getSources().get(0);
@@ -160,6 +161,7 @@ public class PadRed extends AbstractRed {
                 zeros = null;
         }
 
+        @Override
         public void zeroRect(Rectangle r) {
             final int rbase = base+(r.x-x0) + (r.y-y0)*scanStride;
 

@@ -59,6 +59,7 @@ public class GsubTable implements Table, LookupSubtableFactory {
      * 5 - Context - Replace one or more glyphs in context 
      * 6 - Chaining - Context Replace one or more glyphs in chained context
      */
+    @Override
     public LookupSubtable read(int type, RandomAccessFile raf, int offset)
     throws IOException {
         LookupSubtable s = null;
@@ -88,6 +89,7 @@ public class GsubTable implements Table, LookupSubtableFactory {
     /** Get the table type, as a table directory value.
      * @return The table type
      */
+    @Override
     public int getType() {
         return GSUB;
     }
@@ -104,6 +106,7 @@ public class GsubTable implements Table, LookupSubtableFactory {
         return lookupList;
     }
 
+    @Override
     public String toString() {
         return "GSUB";
     }

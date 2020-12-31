@@ -74,6 +74,7 @@ public class TurbulenceRable8Bit
     /**
      * Get the turbulence region
      */
+    @Override
     public Rectangle2D getTurbulenceRegion() {
         return (Rectangle2D)region.clone();
     }
@@ -81,6 +82,7 @@ public class TurbulenceRable8Bit
     /**
      * Get the turbulence region
      */
+    @Override
     public Rectangle2D getBounds2D() {
         return (Rectangle2D)region.clone();
     }
@@ -89,6 +91,7 @@ public class TurbulenceRable8Bit
      * Get the current seed value for the pseudo random number generator.
      * @return The current seed value for the pseudo random number generator.
      */
+    @Override
     public int getSeed() {
         return seed;
     }
@@ -97,6 +100,7 @@ public class TurbulenceRable8Bit
      * Get the current number of octaves for the noise function .
      * @return The current number of octaves for the noise function .
      */
+    @Override
     public int getNumOctaves() {
         return numOctaves;
     }
@@ -105,6 +109,7 @@ public class TurbulenceRable8Bit
      * Get the current base fequency in x direction.
      * @return The current base fequency in x direction.
      */
+    @Override
     public double getBaseFrequencyX() {
         return baseFreqX;
     }
@@ -113,6 +118,7 @@ public class TurbulenceRable8Bit
      * Get the current base fequency in y direction.
      * @return The current base fequency in y direction.
      */
+    @Override
     public double getBaseFrequencyY() {
         return baseFreqY;
     }
@@ -121,6 +127,7 @@ public class TurbulenceRable8Bit
      * Returns true if the turbulence function is currently stitching tiles.
      * @return true if the turbulence function is currently stitching tiles.
      */
+    @Override
     public boolean isStitched() {
         return stitched;
     }
@@ -131,6 +138,7 @@ public class TurbulenceRable8Bit
      * @return true if the turbulence function is using fractal noise,
      * instead of turbulence noise.
      */
+    @Override
     public boolean isFractalNoise() {
         return fractalNoise;
     }
@@ -139,6 +147,7 @@ public class TurbulenceRable8Bit
      * Sets the turbulence region
      * @param turbulenceRegion region to fill with turbulence function.
      */
+    @Override
     public void setTurbulenceRegion(Rectangle2D turbulenceRegion) {
         touch();
         this.region = turbulenceRegion;
@@ -148,6 +157,7 @@ public class TurbulenceRable8Bit
      * Set the seed value for the pseudo random number generator.
      * @param seed The new seed value for the pseudo random number generator.
      */
+    @Override
     public void setSeed(int seed) {
         touch();
         this.seed = seed;
@@ -157,6 +167,7 @@ public class TurbulenceRable8Bit
      * Set the number of octaves for the noise function .
      * @param numOctaves The new number of octaves for the noise function .
      */
+    @Override
     public void setNumOctaves(int numOctaves) {
         touch();
         this.numOctaves = numOctaves;
@@ -166,6 +177,7 @@ public class TurbulenceRable8Bit
      * Set the base fequency in x direction.
      * @param baseFreqX The new base fequency in x direction.
      */
+    @Override
     public void setBaseFrequencyX(double baseFreqX) {
         touch();
         this.baseFreqX = baseFreqX;
@@ -175,6 +187,7 @@ public class TurbulenceRable8Bit
      * Set the base fequency in y direction.
      * @param baseFreqY The new base fequency in y direction.
      */
+    @Override
     public void setBaseFrequencyY(double baseFreqY) {
         touch();
         this.baseFreqY = baseFreqY;
@@ -184,6 +197,7 @@ public class TurbulenceRable8Bit
      * Set stitching state for tiles.
      * @param stitched true if the turbulence operator should stitch tiles.
      */
+    @Override
     public void setStitched(boolean stitched) {
         touch();
         this.stitched = stitched;
@@ -193,11 +207,13 @@ public class TurbulenceRable8Bit
      * Turns on/off fractal noise.
      * @param fractalNoise true if fractal noise should be used.
      */
+    @Override
     public void setFractalNoise(boolean fractalNoise) {
         touch();
         this.fractalNoise = fractalNoise;
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc){
 
         Rectangle2D aoiRect;

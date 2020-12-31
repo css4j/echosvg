@@ -76,6 +76,7 @@ public class GVTTreeBuilder extends HaltingThread {
     /**
      * Runs this builder.
      */
+    @Override
     public void run() {
         GVTTreeBuilderEvent ev;
         ev = new GVTTreeBuilderEvent(this, null);
@@ -150,6 +151,7 @@ public class GVTTreeBuilder extends HaltingThread {
     }
 
     static Dispatcher startedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((GVTTreeBuilderListener)listener).gvtBuildStarted
@@ -158,6 +160,7 @@ public class GVTTreeBuilder extends HaltingThread {
         };
 
     static Dispatcher completedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((GVTTreeBuilderListener)listener).gvtBuildCompleted
@@ -166,6 +169,7 @@ public class GVTTreeBuilder extends HaltingThread {
         };
 
     static Dispatcher cancelledDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((GVTTreeBuilderListener)listener).gvtBuildCancelled
@@ -174,6 +178,7 @@ public class GVTTreeBuilder extends HaltingThread {
         };
 
     static Dispatcher failedDispatcher = new Dispatcher() {
+            @Override
             public void dispatch(Object listener,
                                  Object event) {
                 ((GVTTreeBuilderListener)listener).gvtBuildFailed

@@ -33,9 +33,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.Transcoder;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
+import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.JPEGTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
@@ -830,7 +832,7 @@ public class SVGConverter {
 
         // Set AOI. ----------------------------------------------------------
         if (area != null) {
-            map.put(ImageTranscoder.KEY_AOI, area);
+            map.put(SVGAbstractTranscoder.KEY_AOI, area);
         }
 
         // Set image quality. ------------------------------------------------
@@ -850,33 +852,33 @@ public class SVGConverter {
 
         // Set image height and width. ----------------------------------------
         if (height > 0) {
-            map.put(ImageTranscoder.KEY_HEIGHT, this.height);
+            map.put(SVGAbstractTranscoder.KEY_HEIGHT, this.height);
         }
         if (width > 0){
-            map.put(ImageTranscoder.KEY_WIDTH, this.width);
+            map.put(SVGAbstractTranscoder.KEY_WIDTH, this.width);
         }
 
         // Set maximum height and width ---------------------------------------
         if (maxHeight > 0) {
-            map.put(ImageTranscoder.KEY_MAX_HEIGHT, this.maxHeight);
+            map.put(SVGAbstractTranscoder.KEY_MAX_HEIGHT, this.maxHeight);
         }
         if (maxWidth > 0){
-            map.put(ImageTranscoder.KEY_MAX_WIDTH, this.maxWidth);
+            map.put(SVGAbstractTranscoder.KEY_MAX_WIDTH, this.maxWidth);
         }
 
         // Set CSS Media
         if (mediaType != null){
-            map.put(ImageTranscoder.KEY_MEDIA, mediaType);
+            map.put(SVGAbstractTranscoder.KEY_MEDIA, mediaType);
         }
 
         // Set default font-family
         if (defaultFontFamily != null) {
-            map.put(ImageTranscoder.KEY_DEFAULT_FONT_FAMILY, defaultFontFamily);
+            map.put(SVGAbstractTranscoder.KEY_DEFAULT_FONT_FAMILY, defaultFontFamily);
         }
 
         // Set alternateStylesheet
         if (alternateStylesheet != null){
-            map.put(ImageTranscoder.KEY_ALTERNATE_STYLESHEET, alternateStylesheet);
+            map.put(SVGAbstractTranscoder.KEY_ALTERNATE_STYLESHEET, alternateStylesheet);
         }
 
         // Set user stylesheet
@@ -888,47 +890,47 @@ public class SVGConverter {
             } catch (Exception e) {
                 userStylesheetURL = userStylesheet;
             }
-            map.put(ImageTranscoder.KEY_USER_STYLESHEET_URI, userStylesheetURL);
+            map.put(SVGAbstractTranscoder.KEY_USER_STYLESHEET_URI, userStylesheetURL);
         }
 
         // Set the user language
         if (language != null){
-            map.put(ImageTranscoder.KEY_LANGUAGE, language);
+            map.put(SVGAbstractTranscoder.KEY_LANGUAGE, language);
         }
 
         // Sets the millimeters per pixel
         if (pixelUnitToMillimeter > 0){
-            map.put(ImageTranscoder.KEY_PIXEL_UNIT_TO_MILLIMETER,
+            map.put(SVGAbstractTranscoder.KEY_PIXEL_UNIT_TO_MILLIMETER,
                     pixelUnitToMillimeter);
         }
 
         // Set validation
         if (validate){
-            map.put(ImageTranscoder.KEY_XML_PARSER_VALIDATING, Boolean.TRUE);
+            map.put(XMLAbstractTranscoder.KEY_XML_PARSER_VALIDATING, Boolean.TRUE);
         }
 
         // Set onload
         if (executeOnload) {
-            map.put(ImageTranscoder.KEY_EXECUTE_ONLOAD, Boolean.TRUE);
+            map.put(SVGAbstractTranscoder.KEY_EXECUTE_ONLOAD, Boolean.TRUE);
         }
 
         // Set snapshot time
         if (!Float.isNaN(snapshotTime)) {
-            map.put(ImageTranscoder.KEY_SNAPSHOT_TIME, snapshotTime);
+            map.put(SVGAbstractTranscoder.KEY_SNAPSHOT_TIME, snapshotTime);
         }
 
         // Set allowed scripts
         if (allowedScriptTypes != null) {
-            map.put(ImageTranscoder.KEY_ALLOWED_SCRIPT_TYPES, allowedScriptTypes);
+            map.put(SVGAbstractTranscoder.KEY_ALLOWED_SCRIPT_TYPES, allowedScriptTypes);
         }
 
         // Set constrain script origin
         if (!constrainScriptOrigin) {
-            map.put(ImageTranscoder.KEY_CONSTRAIN_SCRIPT_ORIGIN, Boolean.FALSE);
+            map.put(SVGAbstractTranscoder.KEY_CONSTRAIN_SCRIPT_ORIGIN, Boolean.FALSE);
         }
 
         if (!allowExternalResources) {
-            map.put(ImageTranscoder.KEY_ALLOW_EXTERNAL_RESOURCES, Boolean.FALSE);
+            map.put(SVGAbstractTranscoder.KEY_ALLOW_EXTERNAL_RESOURCES, Boolean.FALSE);
         }
 
         return map;
@@ -1146,6 +1148,7 @@ public class SVGConverter {
     public static class SVGFileFilter implements FileFilter {
         public static final String SVG_EXTENSION = ".svg";
 
+        @Override
         public boolean accept(File file){
             if (file != null && file.getName().toLowerCase().endsWith(SVG_EXTENSION)){
                 return true;

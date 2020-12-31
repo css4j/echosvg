@@ -24,6 +24,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 
@@ -40,6 +41,7 @@ public class GlyphOrientationVerticalManager
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return CSSConstants.CSS_GLYPH_ORIENTATION_VERTICAL_PROPERTY;
     }
@@ -47,19 +49,21 @@ public class GlyphOrientationVerticalManager
     /**
      * Implements {@link ValueManager#getDefaultValue()}.
      */
+    @Override
     public Value getDefaultValue() {
-        return SVGValueConstants.AUTO_VALUE;
+        return ValueConstants.AUTO_VALUE;
     }
 
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_AUTO_VALUE)) {
-                return SVGValueConstants.AUTO_VALUE;
+                return ValueConstants.AUTO_VALUE;
             }
             throw createInvalidIdentifierDOMException(lu.getStringValue());
         }
@@ -70,13 +74,14 @@ public class GlyphOrientationVerticalManager
      * Implements {@link
      * ValueManager#createStringValue(short,String,CSSEngine)}.
      */
+    @Override
     public Value createStringValue(short type, String value, CSSEngine engine)
         throws DOMException {
         if (type != CSSPrimitiveValue.CSS_IDENT) {
             throw createInvalidStringTypeDOMException(type);
         }
         if (value.equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
-            return SVGValueConstants.AUTO_VALUE;
+            return ValueConstants.AUTO_VALUE;
         }
         throw createInvalidIdentifierDOMException(value);
     }

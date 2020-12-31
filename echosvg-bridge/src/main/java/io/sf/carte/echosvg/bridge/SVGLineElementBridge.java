@@ -45,6 +45,7 @@ public class SVGLineElementBridge extends SVGDecoratedShapeElementBridge {
     /**
      * Returns 'line'.
      */
+    @Override
     public String getLocalName() {
         return SVG_LINE_TAG;
     }
@@ -52,6 +53,7 @@ public class SVGLineElementBridge extends SVGDecoratedShapeElementBridge {
     /**
      * Returns a new instance of this bridge.
      */
+    @Override
     public Bridge getInstance() {
         return new SVGLineElementBridge();
     }
@@ -65,6 +67,7 @@ public class SVGLineElementBridge extends SVGDecoratedShapeElementBridge {
      * @param e the element that describes the shape painter to use
      * @param shapeNode the shape node that is interested in its shape painter
      */
+    @Override
     protected ShapePainter createFillStrokePainter(BridgeContext ctx,
                                                    Element e,
                                                    ShapeNode shapeNode) {
@@ -88,6 +91,7 @@ public class SVGLineElementBridge extends SVGDecoratedShapeElementBridge {
      * @param e the element that describes a rect element
      * @param shapeNode the shape node to initialize
      */
+    @Override
     protected void buildShape(BridgeContext ctx,
                               Element e,
                               ShapeNode shapeNode) {
@@ -126,6 +130,7 @@ public class SVGLineElementBridge extends SVGDecoratedShapeElementBridge {
     /**
      * Invoked when the animated value of an animatable attribute has changed.
      */
+    @Override
     public void handleAnimatedAttributeChanged
             (AnimatedLiveAttributeValue alav) {
         if (alav.getNamespaceURI() == null) {

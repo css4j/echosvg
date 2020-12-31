@@ -43,6 +43,7 @@ public class SVGConverterFileSource implements SVGConverterSource {
         this.ref = ref;
     }
 
+    @Override
     public String getName(){
         String name = file.getName();
         if (ref != null && !"".equals(ref)){
@@ -55,10 +56,12 @@ public class SVGConverterFileSource implements SVGConverterSource {
         return file;
     }
 
+    @Override
     public String toString(){
         return getName();
     }
 
+    @Override
     public String getURI(){
         try{
             String uri = file.toURI().toURL().toString();
@@ -71,6 +74,7 @@ public class SVGConverterFileSource implements SVGConverterSource {
         }
     }
 
+    @Override
     public boolean equals(Object o){
         if (o == null || !(o instanceof SVGConverterFileSource)){
             return false;
@@ -79,14 +83,17 @@ public class SVGConverterFileSource implements SVGConverterSource {
         return file.equals(((SVGConverterFileSource)o).file);
     }
 
+    @Override
     public int hashCode() {
         return file.hashCode();
     }
 
+    @Override
     public InputStream openStream() throws FileNotFoundException{
         return new FileInputStream(file);
     }
 
+    @Override
     public boolean isSameAs(String srcStr){
         if (file.toString().equals(srcStr)){
             return true;
@@ -95,6 +102,7 @@ public class SVGConverterFileSource implements SVGConverterSource {
         return false;
     }
 
+    @Override
     public boolean isReadable(){
         return file.canRead();
     }

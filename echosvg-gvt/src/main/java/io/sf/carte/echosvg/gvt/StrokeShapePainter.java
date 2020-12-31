@@ -106,6 +106,7 @@ public class StrokeShapePainter implements ShapePainter {
      *
      * @param g2d the Graphics2D to use 
      */
+    @Override
     public void paint(Graphics2D g2d) {
         if (stroke != null && paint != null) {
             g2d.setPaint(paint);
@@ -117,6 +118,7 @@ public class StrokeShapePainter implements ShapePainter {
     /**
      * Returns the area painted by this shape painter.
      */
+    @Override
     public Shape getPaintedArea(){
         if ((paint == null) || (stroke == null))
             return null;
@@ -130,6 +132,7 @@ public class StrokeShapePainter implements ShapePainter {
     /**
      * Returns the bounds of the area painted by this shape painter
      */
+    @Override
     public Rectangle2D getPaintedBounds2D() {
         Shape painted = getPaintedArea();
         if (painted == null)
@@ -141,6 +144,7 @@ public class StrokeShapePainter implements ShapePainter {
     /**
      * Returns the bounds of the area covered by this shape painter
      */
+    @Override
     public boolean inPaintedArea(Point2D pt){
         Shape painted = getPaintedArea();
         if (painted == null)
@@ -151,6 +155,7 @@ public class StrokeShapePainter implements ShapePainter {
     /**
      * Returns the area covered by this shape painter (even if not painted).
      */
+    @Override
     public Shape getSensitiveArea(){
         if (stroke == null)
             return null;
@@ -165,6 +170,7 @@ public class StrokeShapePainter implements ShapePainter {
      * Returns the bounds of the area covered by this shape painter
      * (even if not painted).
      */
+    @Override
     public Rectangle2D getSensitiveBounds2D() {
         Shape sensitive = getSensitiveArea();
         if (sensitive == null)
@@ -177,6 +183,7 @@ public class StrokeShapePainter implements ShapePainter {
      * Returns the bounds of the area covered by this shape painter
      * (even if not painted).
      */
+    @Override
     public boolean inSensitiveArea(Point2D pt){
         Shape sensitive = getSensitiveArea();
         if (sensitive == null)
@@ -190,6 +197,7 @@ public class StrokeShapePainter implements ShapePainter {
      * @param shape new shape this painter should be associated with.
      * Should not be null.
      */
+    @Override
     public void setShape(Shape shape){
         if (shape == null) {
             throw new IllegalArgumentException();
@@ -203,6 +211,7 @@ public class StrokeShapePainter implements ShapePainter {
      *
      * @return shape associated with this painter.
      */
+    @Override
     public Shape getShape(){
         return shape;
     }

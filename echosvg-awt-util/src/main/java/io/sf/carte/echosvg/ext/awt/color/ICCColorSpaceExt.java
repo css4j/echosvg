@@ -32,6 +32,7 @@ import java.awt.color.ICC_Profile;
  * @version $Id$
  * @deprecated use the version from XML Graphics Commons instead
  */
+@Deprecated
 public class ICCColorSpaceExt extends ICC_ColorSpace {
     public static final int PERCEPTUAL = 0;
     public static final int RELATIVE_COLORIMETRIC = 1;

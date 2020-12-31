@@ -108,6 +108,7 @@ public class FilterChainRable8Bit extends AbstractRable
     /**
      * Returns the resolution along the X axis.
      */
+    @Override
     public int getFilterResolutionX(){
         return filterResolutionX;
     }
@@ -120,6 +121,7 @@ public class FilterChainRable8Bit extends AbstractRable
      * then the filter returns null. If filterResolutionX is positive,
      * then the filter resolution is applied.
      */
+    @Override
     public void setFilterResolutionX(int filterResolutionX){
         touch();
         this.filterResolutionX = filterResolutionX;
@@ -130,6 +132,7 @@ public class FilterChainRable8Bit extends AbstractRable
     /**
      * Returns the resolution along the Y axis.
      */
+    @Override
     public int getFilterResolutionY(){
         return filterResolutionY;
     }
@@ -140,6 +143,7 @@ public class FilterChainRable8Bit extends AbstractRable
      * If filterResolutionY is zero or less, the value of
      * filterResolutionX is used.
      */
+    @Override
     public void setFilterResolutionY(int filterResolutionY){
         touch();
         this.filterResolutionY = filterResolutionY;
@@ -180,6 +184,7 @@ public class FilterChainRable8Bit extends AbstractRable
      * Sets the filter output area, in user space. 
      * A null value is illegal.
      */
+    @Override
     public void setFilterRegion(Rectangle2D filterRegion){
         if(filterRegion == null){
             throw new IllegalArgumentException();
@@ -191,6 +196,7 @@ public class FilterChainRable8Bit extends AbstractRable
     /**
      * Returns the filter output area, in user space
      */
+    @Override
     public Rectangle2D getFilterRegion(){
         return filterRegion;
     }
@@ -201,6 +207,7 @@ public class FilterChainRable8Bit extends AbstractRable
      * depending on the filterRegion and filterResolution 
      * parameters.
      */
+    @Override
     public Filter getSource() {
         return crop;
     }
@@ -209,6 +216,7 @@ public class FilterChainRable8Bit extends AbstractRable
      * Sets the source to be src.
      * @param chainSource image to the chain.
      */
+    @Override
     public void setSource(Filter chainSource) {
         if(chainSource == null){
             throw new IllegalArgumentException("Null Source for Filter Chain");
@@ -227,6 +235,7 @@ public class FilterChainRable8Bit extends AbstractRable
     /**
      * Returns this filter's bounds
      */
+    @Override
     public Rectangle2D getBounds2D(){
         return (Rectangle2D)filterRegion.clone();
     }
@@ -241,6 +250,7 @@ public class FilterChainRable8Bit extends AbstractRable
      *         for some reason the paint failed (in which 
      *         case a createRendering should be used).
      */
+    @Override
     public boolean paintRable(Graphics2D g2d) {
         // This optimization only apply if we are using
         // SrcOver.  Otherwise things break...
@@ -253,6 +263,7 @@ public class FilterChainRable8Bit extends AbstractRable
         return true;
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext context){
         return crop.createRendering(context);
     }

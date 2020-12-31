@@ -115,6 +115,7 @@ public class SVG12BridgeContext extends BridgeContext {
     /**
      * Returns a new URIResolver object.
      */
+    @Override
     public URIResolver createURIResolver(SVGDocument doc, DocumentLoader dl) {
         return new SVG12URIResolver(doc, dl);
     }
@@ -122,6 +123,7 @@ public class SVG12BridgeContext extends BridgeContext {
     /**
      * Adds the GVT listener for AWT event support.
      */
+    @Override
     public void addGVTListener(Document doc) {
         SVG12BridgeEventSupport.addGVTListener(this, doc);
     }
@@ -129,6 +131,7 @@ public class SVG12BridgeContext extends BridgeContext {
     /**
      * Disposes this BridgeContext.
      */
+    @Override
     public void dispose() {
         clearChildContexts();
 
@@ -219,6 +222,7 @@ public class SVG12BridgeContext extends BridgeContext {
      * method adds implementation event listeners, so that mutations in
      * shadow trees can be caught.
      */
+    @Override
     public void addDOMListeners() {
         SVGOMDocument doc = (SVGOMDocument)document;
         XBLEventSupport evtSupport
@@ -274,6 +278,7 @@ public class SVG12BridgeContext extends BridgeContext {
      * capture phase and the 'custom' behavior (handling of 'auto'
      * on anchors, for example), is handled during the bubbling phase.
      */
+    @Override
     public void addUIEventListeners(Document doc) {
         EventTarget evtTarget = (EventTarget)doc.getDocumentElement();
         AbstractNode n = (AbstractNode) evtTarget;
@@ -305,6 +310,7 @@ public class SVG12BridgeContext extends BridgeContext {
              domMouseOutListener, true);
     }
 
+    @Override
     public void removeUIEventListeners(Document doc) {
         EventTarget evtTarget = (EventTarget)doc.getDocumentElement();
         AbstractNode n = (AbstractNode) evtTarget;
@@ -339,6 +345,7 @@ public class SVG12BridgeContext extends BridgeContext {
     /**
      * Removes event listeners from the DOM and CSS engine.
      */
+    @Override
     protected void removeDOMListeners() {
         SVGOMDocument doc = (SVGOMDocument)document;
 
@@ -386,6 +393,7 @@ public class SVG12BridgeContext extends BridgeContext {
         }
     }
 
+    @Override
     public BridgeContext createSubBridgeContext(SVGOMDocument newDoc) {
         CSSEngine eng = newDoc.getCSSEngine();
         if (eng != null) {
@@ -484,6 +492,7 @@ public class SVG12BridgeContext extends BridgeContext {
         /**
          * Handles the event.
          */
+        @Override
         public void handleEvent(Event evt) {
             listener.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
         }
@@ -491,6 +500,7 @@ public class SVG12BridgeContext extends BridgeContext {
         /**
          * String representation of this listener wrapper.
          */
+        @Override
         public String toString() {
             return super.toString() + " [wrapping " + listener.toString() + "]";
         }
@@ -504,6 +514,7 @@ public class SVG12BridgeContext extends BridgeContext {
         /**
          * Invoked when the specified bindable element's binding has changed.
          */
+        @Override
         public void bindingChanged(Element bindableElement,
                                    Element shadowTree) {
             BridgeUpdateHandler h = getBridgeUpdateHandler(bindableElement);
@@ -529,6 +540,7 @@ public class SVG12BridgeContext extends BridgeContext {
          * nodes list.
          * @param csce the ContentSelectionChangedEvent object
          */
+        @Override
         public void contentSelectionChanged(ContentSelectionChangedEvent csce) {
             Element e = (Element) csce.getContentElement().getParentNode();
             if (e instanceof XBLOMShadowTreeElement) {

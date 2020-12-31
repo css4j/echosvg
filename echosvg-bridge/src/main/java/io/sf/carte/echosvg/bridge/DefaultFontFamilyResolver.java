@@ -133,6 +133,7 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
      */
     protected static final Map resolvedFontFamilies = new HashMap();
 
+    @Override
     public AWTFontFamily resolve(String familyName, FontFace fontFace) {
         String fontName = (String)fonts.get(fontFace.getFamilyName().toLowerCase());
         if (fontName == null) {
@@ -143,12 +144,14 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
         }
     }
 
+    @Override
     public GVTFontFamily loadFont(InputStream in, FontFace ff) throws Exception {
         Font font = Font.createFont(Font.TRUETYPE_FONT, in);
         return new AWTFontFamily(ff, font);
     }
 
     /** {@inheritDoc} */
+    @Override
     public GVTFontFamily resolve(String familyName) {
 
         familyName = familyName.toLowerCase();
@@ -179,6 +182,7 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
     }
 
     /** {@inheritDoc} */
+    @Override
     public GVTFontFamily getFamilyThatCanDisplay(char c) {
         for (int i = 0; i < awtFontFamilies.size(); i++) {
             AWTFontFamily fontFamily = (AWTFontFamily)awtFontFamilies.get(i);
@@ -193,6 +197,7 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
     }
 
     /** {@inheritDoc} */
+    @Override
     public GVTFontFamily getDefault() {
         return DEFAULT_FONT_FAMILY;
     }

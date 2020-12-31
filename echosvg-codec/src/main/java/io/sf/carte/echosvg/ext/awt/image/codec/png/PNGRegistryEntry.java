@@ -59,6 +59,7 @@ public class PNGRegistryEntry
      * @param needRawData If true the image returned should not have
      *                    any default color correction the file may
      *                    specify applied.  */
+    @Override
     public Filter handleStream(InputStream inIS,
                                ParsedURL   origURL,
                                boolean needRawData) {
@@ -77,6 +78,7 @@ public class PNGRegistryEntry
         }
 
         Thread t = new Thread() {
+                @Override
                 public void run() {
                     Filter filt;
                     try {

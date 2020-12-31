@@ -43,6 +43,7 @@ public class MarginShorthandManager
     /**
      * Implements {@link ValueManager#getPropertyName()}.
      */
+    @Override
     public String getPropertyName() {
         return SVG12CSSConstants.CSS_MARGIN_PROPERTY;
     }
@@ -50,6 +51,7 @@ public class MarginShorthandManager
     /**
      * Implements {@link ShorthandManager#isAnimatableProperty()}.
      */
+    @Override
     public boolean isAnimatableProperty() {
         return true;
     }
@@ -57,6 +59,7 @@ public class MarginShorthandManager
     /**
      * Implements {@link ShorthandManager#isAdditiveProperty()}.
      */
+    @Override
     public boolean isAdditiveProperty() {
         return false;
     }
@@ -64,6 +67,7 @@ public class MarginShorthandManager
     /**
      * Implements {@link ShorthandManager#setValues(CSSEngine,ShorthandManager.PropertyHandler,LexicalUnit,boolean)}.
      */
+    @Override
     public void setValues(CSSEngine eng,
                           ShorthandManager.PropertyHandler ph,
                           LexicalUnit lu,

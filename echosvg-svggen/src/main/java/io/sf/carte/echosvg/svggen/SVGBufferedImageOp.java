@@ -77,6 +77,7 @@ public class SVGBufferedImageOp extends AbstractSVGFilterConverter {
      * @return Set of filter Elements defining the BufferedImageOp this
      *         Converter has processed since it was created.
      */
+    @Override
     public List getDefinitionSet(){
         List filterSet = new LinkedList(svgLookupOp.getDefinitionSet());
         filterSet.addAll(svgRescaleOp.getDefinitionSet());
@@ -109,6 +110,7 @@ public class SVGBufferedImageOp extends AbstractSVGFilterConverter {
      * @return an SVGFilterDescriptor representing the SVG filter
      *         equivalent of the input BufferedImageOp
      */
+    @Override
     public SVGFilterDescriptor toSVG(BufferedImageOp op,
                                      Rectangle filterRect){
         SVGFilterDescriptor filterDesc =

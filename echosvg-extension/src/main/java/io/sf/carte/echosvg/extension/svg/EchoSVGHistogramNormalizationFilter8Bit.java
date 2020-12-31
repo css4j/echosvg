@@ -42,6 +42,7 @@ public class EchoSVGHistogramNormalizationFilter8Bit
     /**
      * Sets the source of the operation
      */
+    @Override
     public void setSource(Filter src){
         init(src, null);
     }
@@ -49,6 +50,7 @@ public class EchoSVGHistogramNormalizationFilter8Bit
     /**
      * Returns the source of the operation
      */
+    @Override
     public Filter getSource(){
         return (Filter)getSources().get(0);
     }
@@ -56,6 +58,7 @@ public class EchoSVGHistogramNormalizationFilter8Bit
     /**
      * Returns the trim percent for this normalization.
      */
+    @Override
     public float getTrim() {
         return trim;
     }
@@ -63,6 +66,7 @@ public class EchoSVGHistogramNormalizationFilter8Bit
     /**
      * Sets the trim percent for this normalization.
      */
+    @Override
     public void setTrim(float trim) {
         this.trim = trim;
         touch();
@@ -121,6 +125,7 @@ public class EchoSVGHistogramNormalizationFilter8Bit
     }
 
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         //
         // Get source's rendered image

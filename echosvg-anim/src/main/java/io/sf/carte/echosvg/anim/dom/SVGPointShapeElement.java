@@ -72,6 +72,7 @@ public abstract class SVGPointShapeElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -96,6 +97,7 @@ public abstract class SVGPointShapeElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGAnimatedPoints#getPoints()}.
      */
+    @Override
     public SVGPointList getPoints() {
         return points.getPoints();
     }
@@ -104,6 +106,7 @@ public abstract class SVGPointShapeElement
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGAnimatedPoints#getAnimatedPoints()}.
      */
+    @Override
     public SVGPointList getAnimatedPoints() {
         return points.getAnimatedPoints();
     }
@@ -111,6 +114,7 @@ public abstract class SVGPointShapeElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

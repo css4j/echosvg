@@ -51,6 +51,7 @@ public class SVGOMTRefElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_TREF_TAG;
     }
@@ -58,6 +59,7 @@ public class SVGOMTRefElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMTRefElement();
     }

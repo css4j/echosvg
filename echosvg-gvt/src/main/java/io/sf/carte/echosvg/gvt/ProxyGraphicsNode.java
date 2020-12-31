@@ -64,6 +64,7 @@ public class ProxyGraphicsNode extends AbstractGraphicsNode {
      *
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void primitivePaint(Graphics2D g2d) {
         if (source != null) {
             source.paint(g2d);
@@ -73,6 +74,7 @@ public class ProxyGraphicsNode extends AbstractGraphicsNode {
     /**
      * Returns the bounds of the area covered by this node's primitive paint.
      */
+    @Override
     public Rectangle2D getPrimitiveBounds() {
         if (source == null) 
             return null;
@@ -87,6 +89,7 @@ public class ProxyGraphicsNode extends AbstractGraphicsNode {
      *
      * @param txf the affine transform with which this node's transform should
      *        be concatenated. Should not be null.  */
+    @Override
     public Rectangle2D getTransformedPrimitiveBounds(AffineTransform txf) {
         if (source == null) 
             return null;
@@ -105,6 +108,7 @@ public class ProxyGraphicsNode extends AbstractGraphicsNode {
      * exclusive of any clipping, masking, filtering or stroking, for
      * example.
      */
+    @Override
     public Rectangle2D getGeometryBounds() {
         if (source == null) 
             return null;
@@ -122,6 +126,7 @@ public class ProxyGraphicsNode extends AbstractGraphicsNode {
      * @param txf the affine transform with which this node's
      * transform should be concatenated. Should not be null.
      */
+    @Override
     public Rectangle2D getTransformedGeometryBounds(AffineTransform txf) {
         if (source == null) 
             return null;
@@ -140,6 +145,7 @@ public class ProxyGraphicsNode extends AbstractGraphicsNode {
      * This includes the stroked area but does not include the effects
      * of clipping, masking or filtering.
      */
+    @Override
     public Rectangle2D getSensitiveBounds() {
         if (source == null) 
             return null;
@@ -150,6 +156,7 @@ public class ProxyGraphicsNode extends AbstractGraphicsNode {
     /**
      * Returns the outline of this node.
      */
+    @Override
     public Shape getOutline() {
         if (source == null) 
             return null;

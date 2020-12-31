@@ -69,6 +69,7 @@ public class GenericDocument
     /**
      * Tests whether this node is readonly.
      */
+    @Override
     public boolean isReadonly() {
         return readonly;
     }
@@ -76,6 +77,7 @@ public class GenericDocument
     /**
      * Sets this node readonly attribute.
      */
+    @Override
     public void setReadonly(boolean v) {
         readonly = v;
     }
@@ -84,6 +86,7 @@ public class GenericDocument
      * Returns true if the given Attr node represents an 'id'
      * for this document.
      */
+    @Override
     public boolean isId(Attr node) {
         if (node.getNamespaceURI() != null) return false;
         return ATTR_ID.equals(node.getNodeName());
@@ -93,6 +96,7 @@ public class GenericDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#createElement(String)}.
      */
+    @Override
     public Element createElement(String tagName) throws DOMException {
         return new GenericElement(tagName.intern(), this);
     }
@@ -101,6 +105,7 @@ public class GenericDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#createDocumentFragment()}.
      */
+    @Override
     public DocumentFragment createDocumentFragment() {
         return new GenericDocumentFragment(this);
     }
@@ -109,6 +114,7 @@ public class GenericDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#createTextNode(String)}.
      */
+    @Override
     public Text createTextNode(String data) {
         return new GenericText(data, this);
     }
@@ -117,6 +123,7 @@ public class GenericDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#createComment(String)}.
      */
+    @Override
     public Comment createComment(String data) {
         return new GenericComment(data, this);
     }
@@ -125,6 +132,7 @@ public class GenericDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#createCDATASection(String)}.
      */
+    @Override
     public CDATASection createCDATASection(String data) throws DOMException {
         return new GenericCDATASection(data, this);
     }
@@ -135,6 +143,7 @@ public class GenericDocument
      * @return a {@link StyleSheetProcessingInstruction} if target is
      *         "xml-stylesheet" or a GenericProcessingInstruction otherwise.
      */
+    @Override
     public ProcessingInstruction createProcessingInstruction(String target,
                                                              String data)
         throws DOMException {
@@ -145,6 +154,7 @@ public class GenericDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#createAttribute(String)}.
      */
+    @Override
     public Attr createAttribute(String name) throws DOMException {
         return new GenericAttr(name.intern(), this);
     }
@@ -153,6 +163,7 @@ public class GenericDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#createEntityReference(String)}.
      */
+    @Override
     public EntityReference createEntityReference(String name)
         throws DOMException {
         return new GenericEntityReference(name, this);
@@ -162,6 +173,7 @@ public class GenericDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#createElementNS(String,String)}.
      */
+    @Override
     public Element createElementNS(String namespaceURI, String qualifiedName)
         throws DOMException {
         if (namespaceURI != null && namespaceURI.length() == 0) {
@@ -180,6 +192,7 @@ public class GenericDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.Document#createAttributeNS(String,String)}.
      */
+    @Override
     public Attr createAttributeNS(String namespaceURI, String qualifiedName)
         throws DOMException {
         if (namespaceURI != null && namespaceURI.length() == 0) {
@@ -197,6 +210,7 @@ public class GenericDocument
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new GenericDocument();
     }

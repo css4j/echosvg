@@ -112,6 +112,7 @@ public abstract class AbstractSVGLength
     /**
      * <b>DOM</b>: Implements {@link SVGLength#getUnitType()}.
      */
+    @Override
     public short getUnitType() {
         revalidate();
         return unitType;
@@ -120,6 +121,7 @@ public abstract class AbstractSVGLength
     /**
      * <b>DOM</b>: Implements {@link SVGLength#getValue()}.
      */
+    @Override
     public float getValue() {
         revalidate();
         try {
@@ -135,6 +137,7 @@ public abstract class AbstractSVGLength
     /**
      * <b>DOM</b>: Implements {@link SVGLength#setValue(float)}.
      */
+    @Override
     public void setValue(float value) throws DOMException {
         this.value = UnitProcessor.userSpaceToSVG(value, unitType,
                                                   direction, context);
@@ -144,6 +147,7 @@ public abstract class AbstractSVGLength
     /**
      * <b>DOM</b>: Implements {@link SVGLength#getValueInSpecifiedUnits()}.
      */
+    @Override
     public float getValueInSpecifiedUnits() {
         revalidate();
         return value;
@@ -153,6 +157,7 @@ public abstract class AbstractSVGLength
      * <b>DOM</b>: Implements {@link
      * SVGLength#setValueInSpecifiedUnits(float)}.
      */
+    @Override
     public void setValueInSpecifiedUnits(float value) throws DOMException {
         revalidate();
         this.value = value;
@@ -162,6 +167,7 @@ public abstract class AbstractSVGLength
     /**
      * <b>DOM</b>: Implements {@link SVGLength#getValueAsString()}.
      */
+    @Override
     public String getValueAsString() {
         revalidate();
         if (unitType == SVGLength.SVG_LENGTHTYPE_UNKNOWN) {
@@ -173,6 +179,7 @@ public abstract class AbstractSVGLength
     /**
      * <b>DOM</b>: Implements {@link SVGLength#setValueAsString(String)}.
      */
+    @Override
     public void setValueAsString(String value) throws DOMException {
         parse(value);
         reset();
@@ -182,6 +189,7 @@ public abstract class AbstractSVGLength
      * <b>DOM</b>: Implements {@link
      * SVGLength#newValueSpecifiedUnits(short,float)}.
      */
+    @Override
     public void newValueSpecifiedUnits(short unit, float value) {
         unitType = unit;
         this.value = value;
@@ -192,6 +200,7 @@ public abstract class AbstractSVGLength
      * <b>DOM</b>: Implements {@link
      * SVGLength#convertToSpecifiedUnits(short)}.
      */
+    @Override
     public void convertToSpecifiedUnits(short unit) {
         float v = getValue();
         unitType = unit;
@@ -246,6 +255,7 @@ public abstract class AbstractSVGLength
         /**
          * Returns the element.
          */
+        @Override
         public Element getElement() {
             return getAssociatedElement();
         }
@@ -253,6 +263,7 @@ public abstract class AbstractSVGLength
         /**
          * Returns the size of a px CSS unit in millimeters.
          */
+        @Override
         public float getPixelUnitToMillimeter() {
             return getAssociatedElement().getSVGContext()
                 .getPixelUnitToMillimeter();
@@ -263,6 +274,7 @@ public abstract class AbstractSVGLength
          * This will be removed after next release.
          * @see #getPixelUnitToMillimeter()
          */
+        @Override
         public float getPixelToMM() {
             return getPixelUnitToMillimeter();
         }
@@ -270,6 +282,7 @@ public abstract class AbstractSVGLength
         /**
          * Returns the font-size value.
          */
+        @Override
         public float getFontSize() {
             return getAssociatedElement().getSVGContext().getFontSize();
         }
@@ -277,6 +290,7 @@ public abstract class AbstractSVGLength
         /**
          * Returns the x-height value.
          */
+        @Override
         public float getXHeight() {
             return 0.5f;
         }
@@ -284,6 +298,7 @@ public abstract class AbstractSVGLength
         /**
          * Returns the viewport width used to compute units.
          */
+        @Override
         public float getViewportWidth() {
             return getAssociatedElement().getSVGContext().getViewportWidth();
         }
@@ -291,6 +306,7 @@ public abstract class AbstractSVGLength
         /**
          * Returns the viewport height used to compute units.
          */
+        @Override
         public float getViewportHeight() {
             return getAssociatedElement().getSVGContext().getViewportHeight();
         }

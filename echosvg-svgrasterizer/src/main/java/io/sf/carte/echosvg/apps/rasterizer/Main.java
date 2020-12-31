@@ -88,6 +88,7 @@ public class Main implements SVGConverterController {
      */
     public abstract static class AbstractOptionHandler implements OptionHandler {
 
+        @Override
         public void handleOption(String[] optionValues, SVGConverter c){
             int nOptions = optionValues != null? optionValues.length: 0;
             if (nOptions != getOptionValuesLength()){
@@ -107,10 +108,12 @@ public class Main implements SVGConverterController {
      * as a parameter.
      */
     public abstract static class NoValueOptionHandler extends AbstractOptionHandler {
+        @Override
         public void safeHandleOption(String[] optionValues, SVGConverter c){
             handleOption(c);
         }
 
+        @Override
         public int getOptionValuesLength(){
             return 0;
         }
@@ -124,10 +127,12 @@ public class Main implements SVGConverterController {
      * takes a <code>String</code> and an <code>SVGConverter</code> as parameters.
      */
     public abstract static class SingleValueOptionHandler extends AbstractOptionHandler {
+        @Override
         public void safeHandleOption(String[] optionValues, SVGConverter c){
             handleOption(optionValues[0], c);
         }
 
+        @Override
         public int getOptionValuesLength(){
             return 1;
         }
@@ -142,6 +147,7 @@ public class Main implements SVGConverterController {
      * parameters.
      */
     public abstract static class FloatOptionHandler extends SingleValueOptionHandler {
+        @Override
         public void handleOption(String optionValue, SVGConverter c){
             try{
                 handleOption(Float.parseFloat(optionValue), c);
@@ -160,10 +166,12 @@ public class Main implements SVGConverterController {
      * parameters.
      */
     public abstract static class TimeOptionHandler extends FloatOptionHandler {
+        @Override
         public void handleOption(String optionValue, final SVGConverter c) {
             try {
                 ClockParser p = new ClockParser(false);
                 p.setClockHandler(new ClockHandler() {
+                    @Override
                     public void clockValue(float v) {
                         handleOption(v, c);
                     }
@@ -174,6 +182,7 @@ public class Main implements SVGConverterController {
             }
         }
 
+        @Override
         public abstract void handleOption(float optionValue, SVGConverter c);
     }
 
@@ -183,6 +192,7 @@ public class Main implements SVGConverterController {
      * takes a <code>Rectangle</code> and an <code>SVGConverter</code> as parameters.
      */
     public abstract static class RectangleOptionHandler extends SingleValueOptionHandler {
+        @Override
         public void handleOption(String optionValue, SVGConverter c){
             Rectangle2D r = parseRect(optionValue);
             if (r==null){
@@ -238,6 +248,7 @@ public class Main implements SVGConverterController {
      * takes a <code>Color</code> and an <code>SVGConverter</code> as parameters.
      */
     public abstract static class ColorOptionHandler extends SingleValueOptionHandler {
+        @Override
         public void handleOption(String optionValue, SVGConverter c){
             Color color = parseARGB(optionValue);
             if (color==null){
@@ -542,18 +553,21 @@ public class Main implements SVGConverterController {
 
         optionMap.put(CL_OPTION_OUTPUT,
                       new SingleValueOptionHandler(){
-                              public void handleOption(String optionValue,
+                              @Override
+                            public void handleOption(String optionValue,
                                                        SVGConverter c){
                                   c.setDst(new File(optionValue));
                               }
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_OUTPUT_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_MIME_TYPE,
                       new SingleValueOptionHandler(){
-                              public void handleOption(String optionValue,
+                              @Override
+                            public void handleOption(String optionValue,
                                                        SVGConverter c){
                                   DestinationType dstType =
                                       (DestinationType)mimeTypeMap.get(optionValue);
@@ -565,14 +579,16 @@ public class Main implements SVGConverterController {
                                   c.setDestinationType(dstType);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_MIME_TYPE_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_WIDTH,
                       new FloatOptionHandler(){
-                              public void handleOption(float optionValue,
+                              @Override
+                            public void handleOption(float optionValue,
                                                        SVGConverter c){
                                   if (optionValue <= 0){
                                       throw new IllegalArgumentException();
@@ -581,14 +597,16 @@ public class Main implements SVGConverterController {
                                   c.setWidth(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_WIDTH_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_HEIGHT,
                       new FloatOptionHandler(){
-                              public void handleOption(float optionValue,
+                              @Override
+                            public void handleOption(float optionValue,
                                                        SVGConverter c){
                                   if (optionValue <= 0){
                                       throw new IllegalArgumentException();
@@ -597,14 +615,16 @@ public class Main implements SVGConverterController {
                                   c.setHeight(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_HEIGHT_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_MAX_WIDTH,
                       new FloatOptionHandler(){
-                              public void handleOption(float optionValue,
+                              @Override
+                            public void handleOption(float optionValue,
                                                        SVGConverter c){
                                   if (optionValue <= 0){
                                       throw new IllegalArgumentException();
@@ -613,14 +633,16 @@ public class Main implements SVGConverterController {
                                   c.setMaxWidth(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_MAX_WIDTH_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_MAX_HEIGHT,
                       new FloatOptionHandler(){
-                              public void handleOption(float optionValue,
+                              @Override
+                            public void handleOption(float optionValue,
                                                        SVGConverter c){
                                   if (optionValue <= 0){
                                       throw new IllegalArgumentException();
@@ -629,98 +651,114 @@ public class Main implements SVGConverterController {
                                   c.setMaxHeight(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_MAX_HEIGHT_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_AOI,
                       new RectangleOptionHandler(){
-                              public void handleOption(Rectangle2D optionValue,
+                              @Override
+                            public void handleOption(Rectangle2D optionValue,
                                                        SVGConverter c){
                                   c.setArea(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_AOI_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_BACKGROUND_COLOR,
                       new ColorOptionHandler(){
-                              public void handleOption(Color optionValue,
+                              @Override
+                            public void handleOption(Color optionValue,
                                                        SVGConverter c){
                                   c.setBackgroundColor(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_BACKGROUND_COLOR_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_MEDIA_TYPE,
                       new SingleValueOptionHandler(){
-                              public void handleOption(String optionValue,
+                              @Override
+                            public void handleOption(String optionValue,
                                                        SVGConverter c){
                                   c.setMediaType(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_MEDIA_TYPE_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_DEFAULT_FONT_FAMILY,
                       new SingleValueOptionHandler() {
-                          public void handleOption(String optionValue,
+                          @Override
+                        public void handleOption(String optionValue,
                                                    SVGConverter c){
                               c.setDefaultFontFamily(optionValue);
                           }
 
-                          public String getOptionDescription(){
+                          @Override
+                        public String getOptionDescription(){
                               return CL_OPTION_DEFAULT_FONT_FAMILY_DESCRIPTION;
                           }
                       });
 
         optionMap.put(CL_OPTION_ALTERNATE_STYLESHEET,
                       new SingleValueOptionHandler(){
-                              public void handleOption(String optionValue,
+                              @Override
+                            public void handleOption(String optionValue,
                                                        SVGConverter c){
                                   c.setAlternateStylesheet(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_ALTERNATE_STYLESHEET_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_USER_STYLESHEET,
                       new SingleValueOptionHandler(){
-                              public void handleOption(String optionValue,
+                              @Override
+                            public void handleOption(String optionValue,
                                                        SVGConverter c){
                                   c.setUserStylesheet(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_USER_STYLESHEET_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_LANGUAGE,
                       new SingleValueOptionHandler(){
-                              public void handleOption(String optionValue,
+                              @Override
+                            public void handleOption(String optionValue,
                                                        SVGConverter c){
                                   c.setLanguage(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_LANGUAGE_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_DPI,
                       new FloatOptionHandler(){
-                              public void handleOption(float optionValue,
+                              @Override
+                            public void handleOption(float optionValue,
                                                        SVGConverter c){
                                   if (optionValue <= 0){
                                       throw new IllegalArgumentException();
@@ -730,14 +768,16 @@ public class Main implements SVGConverterController {
                                       ((2.54f/optionValue)*10);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_DPI_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_QUALITY,
                       new FloatOptionHandler(){
-                              public void handleOption(float optionValue,
+                              @Override
+                            public void handleOption(float optionValue,
                                                        SVGConverter c){
                                   if (optionValue <= 0 || optionValue >= 1){
                                       throw new IllegalArgumentException();
@@ -746,14 +786,16 @@ public class Main implements SVGConverterController {
                                   c.setQuality(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_QUALITY_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_INDEXED,
                       new FloatOptionHandler(){
-                              public void handleOption(float optionValue,
+                              @Override
+                            public void handleOption(float optionValue,
                                                        SVGConverter c){
                                   if ((optionValue != 1) &&
                                       (optionValue != 2) &&
@@ -764,84 +806,99 @@ public class Main implements SVGConverterController {
                                   c.setIndexed((int)optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_INDEXED_DESCRIPTION;
                               }
                           });
         optionMap.put(CL_OPTION_VALIDATE,
                       new NoValueOptionHandler(){
-                              public void handleOption(SVGConverter c){
+                              @Override
+                            public void handleOption(SVGConverter c){
                                   c.setValidate(true);
                              }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_VALIDATE_DESCRIPTION;
                               }
                           });
         optionMap.put(CL_OPTION_ONLOAD,
                       new NoValueOptionHandler(){
-                              public void handleOption(SVGConverter c){
+                              @Override
+                            public void handleOption(SVGConverter c){
                                   c.setExecuteOnload(true);
                              }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_ONLOAD_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_SNAPSHOT_TIME,
                       new TimeOptionHandler(){
-                              public void handleOption(float optionValue,
+                              @Override
+                            public void handleOption(float optionValue,
                                                        SVGConverter c){
                                   c.setExecuteOnload(true);
                                   c.setSnapshotTime(optionValue);
                               }
 
-                              public String getOptionDescription(){
+                              @Override
+                            public String getOptionDescription(){
                                   return CL_OPTION_SNAPSHOT_TIME_DESCRIPTION;
                               }
                           });
 
         optionMap.put(CL_OPTION_ALLOWED_SCRIPTS,
                       new SingleValueOptionHandler() {
-                          public void handleOption(String optionValue,
+                          @Override
+                        public void handleOption(String optionValue,
                                                    SVGConverter c){
                               c.setAllowedScriptTypes(optionValue);
                           }
 
-                          public String getOptionDescription(){
+                          @Override
+                        public String getOptionDescription(){
                               return CL_OPTION_ALLOWED_SCRIPTS_DESCRIPTION;
                           }
                       });
 
         optionMap.put(CL_OPTION_CONSTRAIN_SCRIPT_ORIGIN,
                       new NoValueOptionHandler(){
-                          public void handleOption(SVGConverter c){
+                          @Override
+                        public void handleOption(SVGConverter c){
                               c.setConstrainScriptOrigin(false);
                           }
 
-                          public String getOptionDescription(){
+                          @Override
+                        public String getOptionDescription(){
                               return CL_OPTION_CONSTRAIN_SCRIPT_ORIGIN_DESCRIPTION;
                           }
                       });
 
         optionMap.put(CL_OPTION_SECURITY_OFF,
                       new NoValueOptionHandler() {
-                          public void handleOption(SVGConverter c){
+                          @Override
+                        public void handleOption(SVGConverter c){
                               c.setSecurityOff(true);
                           }
 
-                          public String getOptionDescription(){
+                          @Override
+                        public String getOptionDescription(){
                               return CL_OPTION_SECURITY_OFF_DESCRIPTION;
                           }
                       });
 
         optionMap.put(CL_OPTION_BLOCK_EXTERNAL_RESOURCES,
                 new NoValueOptionHandler(){
+                    @Override
                     public void handleOption(SVGConverter c){
                         c.allowExternalResources = false;
                     }
 
+                    @Override
                     public String getOptionDescription(){
                         return CL_OPTION_BLOCK_EXTERNAL_RESOURCES_DESCRIPTION;
                     }
@@ -1023,6 +1080,7 @@ public class Main implements SVGConverterController {
     public static final String MESSAGE_CONVERSION_SUCCESS
         = "Main.message.conversion.success";
 
+    @Override
     public boolean proceedWithComputedTask(Transcoder transcoder,
                                            Map hints,
                                            List sources,
@@ -1032,6 +1090,7 @@ public class Main implements SVGConverterController {
         return true;
     }
 
+    @Override
     public boolean proceedWithSourceTranscoding(SVGConverterSource source,
                                                 File dest){
         System.out.print(Messages.formatMessage(MESSAGE_ABOUT_TO_TRANSCODE_SOURCE,
@@ -1040,6 +1099,7 @@ public class Main implements SVGConverterController {
         return true;
     }
 
+    @Override
     public boolean proceedOnSourceTranscodingFailure(SVGConverterSource source,
                                                      File dest,
                                                      String errorCode){
@@ -1049,6 +1109,7 @@ public class Main implements SVGConverterController {
         return true;
     }
 
+    @Override
     public void onSourceTranscodingSuccess(SVGConverterSource source,
                                            File dest){
         System.out.println(Messages.formatMessage(MESSAGE_CONVERSION_SUCCESS,

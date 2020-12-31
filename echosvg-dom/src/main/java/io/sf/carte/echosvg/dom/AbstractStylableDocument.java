@@ -82,6 +82,7 @@ public abstract class AbstractStylableDocument extends AbstractDocument
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.stylesheets.DocumentStyle#getStyleSheets()}.
      */
+    @Override
     public StyleSheetList getStyleSheets() {
         throw new RuntimeException(" !!! Not implemented");
     }
@@ -92,6 +93,7 @@ public abstract class AbstractStylableDocument extends AbstractDocument
      * <b>DOM</b>: Implements {@link DocumentView#getDefaultView()}.
      * @return a ViewCSS object.
      */
+    @Override
     public AbstractView getDefaultView() {
         if (defaultView == null) {
             ExtensibleDOMImplementation impl;
@@ -118,6 +120,7 @@ public abstract class AbstractStylableDocument extends AbstractDocument
      * <b>DOM</b>: Implements
      * {@link DocumentCSS#getOverrideStyle(Element,String)}.
      */
+    @Override
     public CSSStyleDeclaration getOverrideStyle(Element elt,
                                                 String pseudoElt) {
         throw new RuntimeException(" !!! Not implemented");

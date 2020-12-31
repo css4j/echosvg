@@ -93,6 +93,7 @@ public class SVGOMEllipseElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -104,21 +105,22 @@ public class SVGOMEllipseElement
     private void initializeLiveAttributes() {
         cx = createLiveAnimatedLength
             (null, SVG_CX_ATTRIBUTE, SVG_ELLIPSE_CX_DEFAULT_VALUE,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, false);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
         cy = createLiveAnimatedLength
             (null, SVG_CY_ATTRIBUTE, SVG_ELLIPSE_CY_DEFAULT_VALUE,
-             SVGOMAnimatedLength.VERTICAL_LENGTH, false);
+             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
         rx = createLiveAnimatedLength
             (null, SVG_RX_ATTRIBUTE, null,
-             SVGOMAnimatedLength.HORIZONTAL_LENGTH, true);
+             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
         ry = createLiveAnimatedLength
-            (null, SVG_RY_ATTRIBUTE, null, SVGOMAnimatedLength.VERTICAL_LENGTH,
+            (null, SVG_RY_ATTRIBUTE, null, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
              true);
     }
 
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_ELLIPSE_TAG;
     }
@@ -126,6 +128,7 @@ public class SVGOMEllipseElement
     /**
      * <b>DOM</b>: Implements {@link SVGEllipseElement#getCx()}.
      */
+    @Override
     public SVGAnimatedLength getCx() {
         return cx;
     }
@@ -133,6 +136,7 @@ public class SVGOMEllipseElement
     /**
      * <b>DOM</b>: Implements {@link SVGEllipseElement#getCy()}.
      */
+    @Override
     public SVGAnimatedLength getCy() {
         return cy;
     }
@@ -140,6 +144,7 @@ public class SVGOMEllipseElement
     /**
      * <b>DOM</b>: Implements {@link SVGEllipseElement#getRx()}.
      */
+    @Override
     public SVGAnimatedLength getRx() {
         return rx;
     }
@@ -147,6 +152,7 @@ public class SVGOMEllipseElement
     /**
      * <b>DOM</b>: Implements {@link SVGEllipseElement#getRy()}.
      */
+    @Override
     public SVGAnimatedLength getRy() {
         return ry;
    }
@@ -154,6 +160,7 @@ public class SVGOMEllipseElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMEllipseElement();
     }
@@ -161,6 +168,7 @@ public class SVGOMEllipseElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

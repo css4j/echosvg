@@ -41,6 +41,7 @@ public class ISO_8859_1Decoder extends AbstractCharDecoder {
      * Reads the next character.
      * @return a character or END_OF_STREAM.
      */
+    @Override
     public int readChar() throws IOException {
         if (position == count) {
             fillBuffer();

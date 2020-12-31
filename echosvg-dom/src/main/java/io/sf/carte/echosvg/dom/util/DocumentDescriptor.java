@@ -210,6 +210,7 @@ public class DocumentDescriptor {
             this.next           = next;
         }
 
+        @Override
         public void cleared() {
             removeEntry(this);
         }

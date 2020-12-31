@@ -54,30 +54,37 @@ public class GlyfSimpleDescript extends GlyfDescript {
         readCoords(count, bais);
     }
 
+    @Override
     public int getEndPtOfContours(int i) {
         return endPtsOfContours[i];
     }
 
+    @Override
     public byte getFlags(int i) {
         return flags[i];
     }
 
+    @Override
     public short getXCoordinate(int i) {
         return xCoordinates[i];
     }
 
+    @Override
     public short getYCoordinate(int i) {
         return yCoordinates[i];
     }
 
+    @Override
     public boolean isComposite() {
         return false;
     }
 
+    @Override
     public int getPointCount() {
         return count;
     }
 
+    @Override
     public int getContourCount() {
         return getNumberOfContours();
     }

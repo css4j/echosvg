@@ -95,6 +95,7 @@ public class SVGOMFESpecularLightingElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -116,6 +117,7 @@ public class SVGOMFESpecularLightingElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_SPECULAR_LIGHTING_TAG;
     }
@@ -123,6 +125,7 @@ public class SVGOMFESpecularLightingElement
     /**
      * <b>DOM</b>: Implements {@link SVGFESpecularLightingElement#getIn1()}.
      */
+    @Override
     public SVGAnimatedString getIn1() {
         return in;
     }
@@ -131,6 +134,7 @@ public class SVGOMFESpecularLightingElement
      * <b>DOM</b>: Implements {@link
      * SVGFESpecularLightingElement#getSurfaceScale()}.
      */
+    @Override
     public SVGAnimatedNumber getSurfaceScale() {
         return surfaceScale;
     }
@@ -139,6 +143,7 @@ public class SVGOMFESpecularLightingElement
      * <b>DOM</b>: Implements {@link
      * SVGFESpecularLightingElement#getSpecularConstant()}.
      */
+    @Override
     public SVGAnimatedNumber getSpecularConstant() {
         return specularConstant;
     }
@@ -147,6 +152,7 @@ public class SVGOMFESpecularLightingElement
      * <b>DOM</b>: Implements {@link
      * SVGFESpecularLightingElement#getSpecularExponent()}.
      */
+    @Override
     public SVGAnimatedNumber getSpecularExponent() {
         return specularExponent;
     }
@@ -154,6 +160,7 @@ public class SVGOMFESpecularLightingElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFESpecularLightingElement();
     }
@@ -161,6 +168,7 @@ public class SVGOMFESpecularLightingElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

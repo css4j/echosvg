@@ -40,18 +40,21 @@ public class DefaultPointsHandler implements PointsHandler {
     /**
      * Implements {@link PointsHandler#startPoints()}.
      */
+    @Override
     public void startPoints() throws ParseException {
     }
 
     /**
      * Implements {@link PointsHandler#point(float,float)}.
      */
+    @Override
     public void point(float x, float y) throws ParseException {
     }
 
     /**
      * Implements {@link PointsHandler#endPoints()}.
      */
+    @Override
     public void endPoints() throws ParseException {
     }
 }

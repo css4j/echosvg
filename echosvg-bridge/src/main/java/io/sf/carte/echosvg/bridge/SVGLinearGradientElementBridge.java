@@ -48,6 +48,7 @@ public class SVGLinearGradientElementBridge
     /**
      * Returns 'linearGradient'.
      */
+    @Override
     public String getLocalName() {
         return SVG_LINEAR_GRADIENT_TAG;
     }
@@ -65,6 +66,7 @@ public class SVGLinearGradientElementBridge
      * @param offsets the offsets
      * @param ctx the bridge context to use
      */
+    @Override
     protected
         Paint buildGradient(Element paintElement,
                             Element paintedElement,

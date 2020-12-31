@@ -54,6 +54,7 @@ public abstract class TransformStackElement implements Cloneable{
     /**
      * @return an object which is a deep copy of this one
      */
+    @Override
     public Object clone() {
         TransformStackElement newElement = null;
 
@@ -77,6 +78,7 @@ public abstract class TransformStackElement implements Cloneable{
                                                                double ty){
         return new TransformStackElement(TransformType.TRANSLATE,
                                          new double[]{ tx, ty }) {
+                @Override
                 boolean isIdentity(double[] parameters) {
                     return parameters[0] == 0 && parameters[1] == 0;
                 }
@@ -86,6 +88,7 @@ public abstract class TransformStackElement implements Cloneable{
     public static TransformStackElement createRotateElement(double theta){
         return new TransformStackElement(TransformType.ROTATE,
                                          new double[]{ theta }) {
+                @Override
                 boolean isIdentity(double[] parameters) {
                     return Math.cos(parameters[0]) == 1;
                 }
@@ -96,6 +99,7 @@ public abstract class TransformStackElement implements Cloneable{
                                                            double scaleY){
         return new TransformStackElement(TransformType.SCALE,
                                          new double[]{ scaleX, scaleY }) {
+                @Override
                 boolean isIdentity(double[] parameters) {
                     return parameters[0] == 1 && parameters[1] == 1;
                 }
@@ -106,6 +110,7 @@ public abstract class TransformStackElement implements Cloneable{
                                                            double shearY){
         return new TransformStackElement(TransformType.SHEAR,
                                          new double[]{ shearX, shearY }) {
+                @Override
                 boolean isIdentity(double[] parameters) {
                     return parameters[0] == 0 && parameters[1] == 0;
                 }
@@ -117,6 +122,7 @@ public abstract class TransformStackElement implements Cloneable{
         double[] matrix = new double[6];
         txf.getMatrix(matrix);
         return new TransformStackElement(TransformType.GENERAL, matrix) {
+                @Override
                 boolean isIdentity(double[] m) {
                     return (m[0] == 1 && m[2] == 0 && m[4] == 0 &&
                             m[1] == 0 && m[3] == 1 && m[5] == 0);

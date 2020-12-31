@@ -92,6 +92,7 @@ public class Main extends JComponent {
         setPreferredSize(size);
         setDoubleBuffered(false);
         addMouseListener(new MouseAdapter() {
+                @Override
                 public void mouseClicked(MouseEvent me) {
                     if (done)
                         System.exit(0);
@@ -123,6 +124,7 @@ public class Main extends JComponent {
             setDaemon( true );
         }
 
+        @Override
         public void run() {
             renderer.setDoubleBuffered(true);
             for (File file : files) {
@@ -218,6 +220,7 @@ public class Main extends JComponent {
             src = bi;
         }
 
+        @Override
         public void run() {
             int xblocks = (display.getWidth()+blockw-1)/blockw;
             int yblocks = (display.getHeight()+blockh-1)/blockh;
@@ -292,6 +295,7 @@ public class Main extends JComponent {
 
     }
 
+    @Override
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
         if (display == null) return;

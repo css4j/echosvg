@@ -32,6 +32,7 @@ public class FpgmTable extends Program implements Table {
         readInstructions(raf, de.getLength());
     }
 
+    @Override
     public int getType() {
         return fpgm;
     }

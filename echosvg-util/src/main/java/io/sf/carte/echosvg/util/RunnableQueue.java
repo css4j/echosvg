@@ -42,6 +42,7 @@ public class RunnableQueue implements Runnable {
 
         public String getValue() { return value; }
 
+        @Override
         public String toString() {
             return "[RunnableQueueState: " + value + ']'; }
     }
@@ -145,6 +146,7 @@ public class RunnableQueue implements Runnable {
     /**
      * Runs this queue.
      */
+    @Override
     public void run() {
         synchronized (this) {
             runnableQueueThread = (HaltingThread)Thread.currentThread();
@@ -473,6 +475,7 @@ public class RunnableQueue implements Runnable {
         return new Iterator() {
                 Link head = (Link)list.getHead();
                 Link link;
+                @Override
                 public boolean hasNext() {
                     if (head == null) {
                         return false;
@@ -482,6 +485,7 @@ public class RunnableQueue implements Runnable {
                     }
                     return link != head;
                 }
+                @Override
                 public Object next() {
                     if (head == null || head == link) {
                         throw new NoSuchElementException();
@@ -494,6 +498,7 @@ public class RunnableQueue implements Runnable {
                     link = (Link)link.getNext();
                     return result;
                 }
+                @Override
                 public void remove() {
                     throw new UnsupportedOperationException();
                 }
@@ -623,22 +628,26 @@ public class RunnableQueue implements Runnable {
         /**
          * Called just prior to invoking the runnable
          */
+        @Override
         public void runnableStart(RunnableQueue rq, Runnable r) { }
 
         /**
          * Called when the given Runnable has just been invoked and
          * has returned.
          */
+        @Override
         public void runnableInvoked(RunnableQueue rq, Runnable r) { }
 
         /**
          * Called when the execution of the queue has been suspended.
          */
+        @Override
         public void executionSuspended(RunnableQueue rq) { }
 
         /**
          * Called when the execution of the queue has been resumed.
          */
+        @Override
         public void executionResumed(RunnableQueue rq) { }
     }
 
@@ -702,6 +711,7 @@ public class RunnableQueue implements Runnable {
         /**
          * unlocks this link.
          */
+        @Override
         public synchronized void unlock() {
             while (!locked) {
                 try {

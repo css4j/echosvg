@@ -65,40 +65,48 @@ public class SVGTextContentSupport {
         final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
         
         return new SVGRect() {
+                @Override
                 public float getX() {
                     return (float)SVGTextContentSupport.getExtent
                         (svgelt, context, charnum).getX();
                 }
+                @Override
                 public void setX(float x) throws DOMException {
                     throw svgelt.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,
                          "readonly.rect", null);
                 }
 
+                @Override
                 public float getY() {
                     return (float)SVGTextContentSupport.getExtent
                         (svgelt, context, charnum).getY();
                 }
+                @Override
                 public void setY(float y) throws DOMException {
                     throw svgelt.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,
                          "readonly.rect", null);
                 }
 
+                @Override
                 public float getWidth() {
                     return (float)SVGTextContentSupport.getExtent
                         (svgelt, context, charnum).getWidth();
                 }
+                @Override
                 public void setWidth(float width) throws DOMException {
                     throw svgelt.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,
                          "readonly.rect", null);
                 }
 
+                @Override
                 public float getHeight() {
                     return (float)SVGTextContentSupport.getExtent
                         (svgelt, context, charnum).getHeight();
                 }
+                @Override
                 public void setHeight(float height) throws DOMException {
                     throw svgelt.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,
@@ -134,10 +142,12 @@ public class SVGTextContentSupport {
         final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
 
         return new SVGTextPoint(svgelt){
+                @Override
                 public float getX(){
                     return (float)SVGTextContentSupport.getStartPos
                         (this.svgelt, context, charnum).getX();
                 }
+                @Override
                 public float getY(){
                     return (float)SVGTextContentSupport.getStartPos
                         (this.svgelt, context, charnum).getY();
@@ -172,10 +182,12 @@ public class SVGTextContentSupport {
         final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
 
         return new SVGTextPoint(svgelt){
+                @Override
                 public float getX(){
                     return (float)SVGTextContentSupport.getEndPos
                         (this.svgelt, context, charnum).getX();
                 }
+                @Override
                 public float getY(){
                     return (float)SVGTextContentSupport.getEndPos
                         (this.svgelt, context, charnum).getY();
@@ -281,11 +293,13 @@ public class SVGTextContentSupport {
         SVGTextPoint(SVGOMElement elem) {
             svgelt = elem;
         }
+        @Override
         public void setX(float x) throws DOMException {
             throw svgelt.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,
                  "readonly.point", null);
         }
+        @Override
         public void setY(float y) throws DOMException {
             throw svgelt.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR,

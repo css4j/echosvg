@@ -209,6 +209,7 @@ public abstract class MultipleGradientPaint implements Paint {
      * @return an integer value representing this LinearGradientPaint object's
      * transparency mode.
      */
+    @Override
     public int getTransparency() {
         return transparency;
     }

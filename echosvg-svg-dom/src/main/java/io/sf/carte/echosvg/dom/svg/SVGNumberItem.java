@@ -40,6 +40,7 @@ public class SVGNumberItem extends AbstractSVGNumber implements SVGItem {
     /**
      * Returns a String representation of the number.
      */
+    @Override
     public String getValueAsString() {
         return Float.toString(value);
     }
@@ -47,6 +48,7 @@ public class SVGNumberItem extends AbstractSVGNumber implements SVGItem {
     /**
      * Associates this item to the given {@link SVGNumberList}.
      */
+    @Override
     public void setParent(AbstractSVGList list) {
         parentList = list;
     }
@@ -54,6 +56,7 @@ public class SVGNumberItem extends AbstractSVGNumber implements SVGItem {
     /**
      * Returns the list the item belongs to.
      */
+    @Override
     public AbstractSVGList getParent() {
         return parentList;
     }

@@ -58,6 +58,7 @@ public class GenericDOMImplementation extends AbstractDOMImplementation {
      * <b>DOM</b>: Implements {@link
      * DOMImplementation#createDocument(String,String,DocumentType)}.
      */
+    @Override
     public Document createDocument(String namespaceURI,
                                    String qualifiedName,
                                    DocumentType doctype) throws DOMException {
@@ -71,6 +72,7 @@ public class GenericDOMImplementation extends AbstractDOMImplementation {
      * <b>DOM</b>: Implements {@link
      * DOMImplementation#createDocumentType(String,String,String)}.
      */
+    @Override
     public DocumentType createDocumentType(String qualifiedName,
                                            String publicId,
                                            String systemId) {

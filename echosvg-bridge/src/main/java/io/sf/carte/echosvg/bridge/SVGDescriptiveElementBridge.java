@@ -55,6 +55,7 @@ public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge
      * @param ctx the bridge context to use
      * @param e the element to be handled
      */
+    @Override
     public void handleElement(BridgeContext ctx, Element e){
         UserAgent ua = ctx.getUserAgent();
         ua.handleElement(e, Boolean.TRUE);
@@ -72,6 +73,7 @@ public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge
 
     // BridgeUpdateHandler implementation ////////////////////////////////////
 
+    @Override
     public void dispose() {
         UserAgent ua = theCtx.getUserAgent();
         ((SVGOMElement)theElt).setSVGContext(null);
@@ -79,23 +81,30 @@ public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge
         theElt = null;
         parent = null;
     }
+    @Override
     public void handleDOMNodeInsertedEvent(MutationEvent evt) {
         UserAgent ua = theCtx.getUserAgent();
         ua.handleElement(theElt, Boolean.TRUE);
     }
+    @Override
     public void handleDOMCharacterDataModified(MutationEvent evt) {
         UserAgent ua = theCtx.getUserAgent();
         ua.handleElement(theElt, Boolean.TRUE);
     }
 
+    @Override
     public void handleDOMNodeRemovedEvent (MutationEvent evt) {
         dispose();
     }
 
+    @Override
     public void handleDOMAttrModifiedEvent(MutationEvent evt) { }
+    @Override
     public void handleCSSEngineEvent(CSSEngineEvent evt) { }
+    @Override
     public void handleAnimatedAttributeChanged
         (AnimatedLiveAttributeValue alav) { }
+    @Override
     public void handleOtherAnimationChanged(String type) { }
 
 
@@ -104,6 +113,7 @@ public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge
     /**
      * Returns the size of a px CSS unit in millimeters.
      */
+    @Override
     public float getPixelUnitToMillimeter() {
         return theCtx.getUserAgent().getPixelUnitToMillimeter();
     }
@@ -113,25 +123,34 @@ public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge
      * This will be removed after next release.
      * @see #getPixelUnitToMillimeter()
      */
+    @Override
     public float getPixelToMM() {
         return getPixelUnitToMillimeter();
 
     }
 
+    @Override
     public Rectangle2D getBBox() { return null; }
+    @Override
     public AffineTransform getScreenTransform() {
         return theCtx.getUserAgent().getTransform();
     }
+    @Override
     public void setScreenTransform(AffineTransform at) {
         theCtx.getUserAgent().setTransform(at);
     }
+    @Override
     public AffineTransform getCTM() { return null; }
+    @Override
     public AffineTransform getGlobalTransform() { return null; }
+    @Override
     public float getViewportWidth() {
         return theCtx.getBlockWidth(theElt);
     }
+    @Override
     public float getViewportHeight() {
         return theCtx.getBlockHeight(theElt);
     }
+    @Override
     public float getFontSize() { return 0; }
 }

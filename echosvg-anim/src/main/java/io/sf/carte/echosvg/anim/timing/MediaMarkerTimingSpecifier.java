@@ -61,6 +61,7 @@ public class MediaMarkerTimingSpecifier extends TimingSpecifier {
     /**
      * Returns a string representation of this timing specifier.
      */
+    @Override
     public String toString() {
         return syncbaseID + ".marker(" + markerName + ")";
     }
@@ -69,6 +70,7 @@ public class MediaMarkerTimingSpecifier extends TimingSpecifier {
      * Returns whether this timing specifier is event-like (i.e., if it is
      * an eventbase, accesskey or a repeat timing specifier).
      */
+    @Override
     public boolean isEventCondition() {
         return false;
     }

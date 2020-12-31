@@ -81,6 +81,7 @@ public class AnimatableAngleOrIdentValue extends AnimatableAngleValue {
      * Returns whether two values of this type can have their distance
      * computed, as needed by paced animation.
      */
+    @Override
     public boolean canPace() {
         return false;
     }
@@ -89,6 +90,7 @@ public class AnimatableAngleOrIdentValue extends AnimatableAngleValue {
      * Returns the absolute distance between this value and the specified other
      * value.
      */
+    @Override
     public float distanceTo(AnimatableValue other) {
         return 0f;
     }
@@ -96,6 +98,7 @@ public class AnimatableAngleOrIdentValue extends AnimatableAngleValue {
     /**
      * Returns a zero value of this AnimatableValue's type.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         return new AnimatableAngleOrIdentValue
             (target, 0, SVGAngle.SVG_ANGLETYPE_UNSPECIFIED);
@@ -104,6 +107,7 @@ public class AnimatableAngleOrIdentValue extends AnimatableAngleValue {
     /**
      * Returns the CSS text representation of the value.
      */
+    @Override
     public String getCssText() {
         if (isIdent) {
             return ident;
@@ -114,6 +118,7 @@ public class AnimatableAngleOrIdentValue extends AnimatableAngleValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to, float interpolation,
                                        AnimatableValue accumulation,

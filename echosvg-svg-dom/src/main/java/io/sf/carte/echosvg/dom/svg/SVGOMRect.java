@@ -69,6 +69,7 @@ public class SVGOMRect implements SVGRect {
     /**
      * <b>DOM</b>: Implements {@link SVGRect#getX()}.
      */
+    @Override
     public float getX() {
         return x;
     }
@@ -76,6 +77,7 @@ public class SVGOMRect implements SVGRect {
     /**
      * <b>DOM</b>: Implements {@link SVGRect#setX(float)}.
      */
+    @Override
     public void setX(float x) throws DOMException {
         this.x = x;
     }
@@ -83,6 +85,7 @@ public class SVGOMRect implements SVGRect {
     /**
      * <b>DOM</b>: Implements {@link SVGRect#getY()}.
      */
+    @Override
     public float getY() {
         return y;
     }
@@ -90,6 +93,7 @@ public class SVGOMRect implements SVGRect {
     /**
      * <b>DOM</b>: Implements {@link SVGRect#setY(float)}.
      */
+    @Override
     public void setY(float y) throws DOMException {
         this.y = y;
     }
@@ -97,6 +101,7 @@ public class SVGOMRect implements SVGRect {
     /**
      * <b>DOM</b>: Implements {@link SVGRect#getWidth()}.
      */
+    @Override
     public float getWidth() {
         return w;
     }
@@ -104,6 +109,7 @@ public class SVGOMRect implements SVGRect {
     /**
      * <b>DOM</b>: Implements {@link SVGRect#setWidth(float)}.
      */
+    @Override
     public void setWidth(float width) throws DOMException {
         this.w = width;
     }
@@ -111,6 +117,7 @@ public class SVGOMRect implements SVGRect {
     /**
      * <b>DOM</b>: Implements {@link SVGRect#getHeight()}.
      */
+    @Override
     public float getHeight() {
         return h;
     }
@@ -118,6 +125,7 @@ public class SVGOMRect implements SVGRect {
     /**
      * <b>DOM</b>: Implements {@link SVGRect#setHeight(float)}.
      */
+    @Override
     public void setHeight(float height) throws DOMException {
         this.h = height;
     }

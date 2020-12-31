@@ -96,6 +96,7 @@ public class HmtxTable implements Table {
         }
     }
 
+    @Override
     public int getType() {
         return hmtx;
     }

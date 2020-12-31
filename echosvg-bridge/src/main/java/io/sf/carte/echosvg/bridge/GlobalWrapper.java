@@ -45,10 +45,12 @@ public class GlobalWrapper extends WindowWrapper {
                                       ScriptableObject.DONTENUM);
     }
 
+    @Override
     public String getClassName() {
         return "SVGGlobal";
     }
     
+    @Override
     public String toString() {
         return "[object SVGGlobal]";
     }

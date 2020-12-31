@@ -54,6 +54,7 @@ public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
     /**
      * Creates the CSS value associated with the given property.
      */
+    @Override
     protected CSSValue createCSSValue(String name) {
         int idx = cssEngine.getPropertyIndex(name);
         if (idx > SVGCSSEngine.FINAL_INDEX) {
@@ -97,9 +98,11 @@ public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
             super(null);
             valueProvider = this;
             setModificationHandler(new AbstractModificationHandler() {
+                    @Override
                     protected Value getValue() {
                         return StyleDeclarationColorValue.this.getValue();
                     }
+                    @Override
                     public void textChanged(String text) throws DOMException {
                         if (handler == null) {
                             throw new DOMException
@@ -119,6 +122,7 @@ public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
         /**
          * Returns the current value associated with this object.
          */
+        @Override
         public Value getValue() {
             return CSSOMSVGStyleDeclaration.this.
                 valueProvider.getValue(property);
@@ -145,9 +149,11 @@ public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
             super(null);
             valueProvider = this;
             setModificationHandler(new AbstractModificationHandler() {
+                    @Override
                     protected Value getValue() {
                         return StyleDeclarationPaintValue.this.getValue();
                     }
+                    @Override
                     public void textChanged(String text) throws DOMException {
                         if (handler == null) {
                             throw new DOMException
@@ -167,6 +173,7 @@ public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
         /**
          * Returns the current value associated with this object.
          */
+        @Override
         public Value getValue() {
             return CSSOMSVGStyleDeclaration.this.
                 valueProvider.getValue(property);

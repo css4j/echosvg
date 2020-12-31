@@ -40,6 +40,7 @@ public abstract class AbstractValueManager
     /**
      * Implements {@link ValueManager#createFloatValue(short,float)}.
      */
+    @Override
     public Value createFloatValue(short unitType, float floatValue)
         throws DOMException {
         throw createDOMException();
@@ -49,6 +50,7 @@ public abstract class AbstractValueManager
      * Implements {@link
      * ValueManager#createStringValue(short,String,CSSEngine)}.
      */
+    @Override
     public Value createStringValue(short type, String value, CSSEngine engine)
         throws DOMException {
         throw createDOMException();
@@ -58,6 +60,7 @@ public abstract class AbstractValueManager
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,

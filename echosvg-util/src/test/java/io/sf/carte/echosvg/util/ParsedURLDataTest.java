@@ -69,6 +69,7 @@ public class ParsedURLDataTest extends AbstractTest {
     /**
      * Returns this Test's name
      */
+    @Override
     public String getName() {
         return ref + " -- " + super.getName();
     }
@@ -77,6 +78,7 @@ public class ParsedURLDataTest extends AbstractTest {
      * This method will only throw exceptions if some aspect
      * of the test's internal operation fails.
      */
+    @Override
     public TestReport runImpl() throws Exception {
         DefaultTestReport report
             = new DefaultTestReport(this);

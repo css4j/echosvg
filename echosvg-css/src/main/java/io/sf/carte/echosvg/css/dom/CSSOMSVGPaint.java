@@ -46,6 +46,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
     /**
      * Sets the modification handler of this value.
      */
+    @Override
     public void setModificationHandler(ModificationHandler h) {
         if (!(h instanceof PaintModificationHandler)) {
             throw new IllegalArgumentException();
@@ -57,6 +58,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGColor#getColorType()}.
      */
+    @Override
     public short getColorType() {
         throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
     }
@@ -65,6 +67,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGPaint#getPaintType()}.
      */
+    @Override
     public short getPaintType() {
         Value value = valueProvider.getValue();
         switch (value.getCssValueType()) {
@@ -124,6 +127,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGPaint#getUri()}.
      */
+    @Override
     public String getUri() {
         switch (getPaintType()) {
         case SVG_PAINTTYPE_URI:
@@ -141,6 +145,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGPaint#setUri(String)}.
      */
+    @Override
     public void setUri(String uri) {
         if (handler == null) {
             throw new DOMException
@@ -154,6 +159,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
      * <b>DOM</b>: Implements {@link
      * org.w3c.dom.svg.SVGPaint#setPaint(short,String,String,String)}.
      */
+    @Override
     public void setPaint(short paintType, String uri,
                          String rgbColor, String iccColor) {
         if (handler == null) {
@@ -195,6 +201,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the red value text has changed.
          */
+        @Override
         public void redTextChanged(String text) throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR:
@@ -239,6 +246,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the red float value has changed.
          */
+        @Override
         public void redFloatValueChanged(short unit, float value)
             throws DOMException {
             String text;
@@ -285,6 +293,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the green value text has changed.
          */
+        @Override
         public void greenTextChanged(String text) throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR:
@@ -329,6 +338,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the green float value has changed.
          */
+        @Override
         public void greenFloatValueChanged(short unit, float value)
             throws DOMException {
             String text;
@@ -375,6 +385,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the blue value text has changed.
          */
+        @Override
         public void blueTextChanged(String text) throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR:
@@ -419,6 +430,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the blue float value has changed.
          */
+        @Override
         public void blueFloatValueChanged(short unit, float value)
             throws DOMException {
             String text;
@@ -465,6 +477,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the RGBColor text has changed.
          */
+        @Override
         public void rgbColorChanged(String text) throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR:
@@ -493,6 +506,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the RGBColor and the ICCColor text has changed.
          */
+        @Override
         public void rgbColorICCColorChanged(String rgb, String icc)
             throws DOMException {
             switch (getPaintType()) {
@@ -514,6 +528,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the SVGColor has changed.
          */
+        @Override
         public void colorChanged(short type, String rgb, String icc)
             throws DOMException {
             switch (type) {
@@ -537,6 +552,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the ICC color profile has changed.
          */
+        @Override
         public void colorProfileChanged(String cp) throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
@@ -577,6 +593,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the ICC colors has changed.
          */
+        @Override
         public void colorsCleared() throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
@@ -609,6 +626,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the ICC colors has been initialized.
          */
+        @Override
         public void colorsInitialized(float f) throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
@@ -645,6 +663,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the ICC color has been inserted.
          */
+        @Override
         public void colorInsertedBefore(float f, int idx) throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
@@ -697,6 +716,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the ICC color has been replaced.
          */
+        @Override
         public void colorReplaced(float f, int idx) throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
@@ -749,6 +769,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the ICC color has been removed.
          */
+        @Override
         public void colorRemoved(int idx) throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
@@ -797,6 +818,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the ICC color has been append.
          */
+        @Override
         public void colorAppend(float f) throws DOMException {
             switch (getPaintType()) {
             case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
@@ -841,6 +863,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the URI has been modified.
          */
+        @Override
         public void uriChanged(String uri) {
             textChanged("url(" + uri + ") none");
         }
@@ -848,6 +871,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
         /**
          * Called when the paint value has beem modified.
          */
+        @Override
         public void paintChanged(short type, String uri,
                                  String rgb, String icc) {
             switch (type) {

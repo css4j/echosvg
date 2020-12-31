@@ -80,6 +80,7 @@ public class SVGOMFEDistantLightElement
     /**
      * Initializes all live attributes for this element.
      */
+    @Override
     protected void initializeAllLiveAttributes() {
         super.initializeAllLiveAttributes();
         initializeLiveAttributes();
@@ -96,6 +97,7 @@ public class SVGOMFEDistantLightElement
     /**
      * <b>DOM</b>: Implements {@link Node#getLocalName()}.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_DISTANT_LIGHT_TAG;
     }
@@ -103,6 +105,7 @@ public class SVGOMFEDistantLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEDistantLightElement#getAzimuth()}.
      */
+    @Override
     public SVGAnimatedNumber getAzimuth() {
         return azimuth;
     }
@@ -110,6 +113,7 @@ public class SVGOMFEDistantLightElement
     /**
      * <b>DOM</b>: Implements {@link SVGFEDistantLightElement#getElevation()}.
      */
+    @Override
     public SVGAnimatedNumber getElevation() {
         return elevation;
     }
@@ -117,6 +121,7 @@ public class SVGOMFEDistantLightElement
     /**
      * Returns a new uninitialized instance of this object's class.
      */
+    @Override
     protected Node newNode() {
         return new SVGOMFEDistantLightElement();
     }
@@ -124,6 +129,7 @@ public class SVGOMFEDistantLightElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
+    @Override
     protected DoublyIndexedTable getTraitInformationTable() {
         return xmlTraitInformation;
     }

@@ -54,6 +54,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#getA()}.
      */
+    @Override
     public float getA() {
         return (float)getAffineTransform().getScaleX();
     }
@@ -61,6 +62,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#setA(float)}.
      */
+    @Override
     public void setA(float a) throws DOMException {
         AffineTransform at = getAffineTransform();
         at.setTransform(a,
@@ -74,6 +76,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#getB()}.
      */
+    @Override
     public float getB() {
         return (float)getAffineTransform().getShearY();
     }
@@ -81,6 +84,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#setB(float)}.
      */
+    @Override
     public void setB(float b) throws DOMException {
         AffineTransform at = getAffineTransform();
         at.setTransform(at.getScaleX(),
@@ -94,6 +98,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#getC()}.
      */
+    @Override
     public float getC() {
         return (float)getAffineTransform().getShearX();
     }
@@ -101,6 +106,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#setC(float)}.
      */
+    @Override
     public void setC(float c) throws DOMException {
         AffineTransform at = getAffineTransform();
         at.setTransform(at.getScaleX(),
@@ -114,6 +120,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#getD()}.
      */
+    @Override
     public float getD() {
         return (float)getAffineTransform().getScaleY();
     }
@@ -121,6 +128,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#setD(float)}.
      */
+    @Override
     public void setD(float d) throws DOMException {
         AffineTransform at = getAffineTransform();
         at.setTransform(at.getScaleX(),
@@ -134,6 +142,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#getE()}.
      */
+    @Override
     public float getE() {
         return (float)getAffineTransform().getTranslateX();
     }
@@ -141,6 +150,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#setE(float)}.
      */
+    @Override
     public void setE(float e) throws DOMException {
         AffineTransform at = getAffineTransform();
         at.setTransform(at.getScaleX(),
@@ -154,6 +164,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#getF()}.
      */
+    @Override
     public float getF() {
         return (float)getAffineTransform().getTranslateY();
     }
@@ -161,6 +172,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#setF(float)}.
      */
+    @Override
     public void setF(float f) throws DOMException {
         AffineTransform at = getAffineTransform();
         at.setTransform(at.getScaleX(),
@@ -174,6 +186,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#multiply(SVGMatrix)}.
      */
+    @Override
     public SVGMatrix multiply(SVGMatrix secondMatrix) {
         AffineTransform at = new AffineTransform(secondMatrix.getA(),
                                                  secondMatrix.getB(),
@@ -189,6 +202,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#inverse()}.
      */
+    @Override
     public SVGMatrix inverse() throws SVGException {
         try {
             return new SVGOMMatrix(getAffineTransform().createInverse());
@@ -201,6 +215,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#translate(float,float)}.
      */
+    @Override
     public SVGMatrix translate(float x, float y) {
         AffineTransform tr = (AffineTransform)getAffineTransform().clone();
         tr.translate(x, y);
@@ -210,6 +225,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#scale(float)}.
      */
+    @Override
     public SVGMatrix scale(float scaleFactor) {
         AffineTransform tr = (AffineTransform)getAffineTransform().clone();
         tr.scale(scaleFactor, scaleFactor);
@@ -219,6 +235,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#scaleNonUniform(float,float)}.
      */
+    @Override
     public SVGMatrix scaleNonUniform (float scaleFactorX, float scaleFactorY) {
         AffineTransform tr = (AffineTransform)getAffineTransform().clone();
         tr.scale(scaleFactorX, scaleFactorY);
@@ -228,6 +245,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#rotate(float)}.
      */
+    @Override
     public SVGMatrix rotate(float angle) {
         AffineTransform tr = (AffineTransform)getAffineTransform().clone();
         tr.rotate( Math.toRadians( angle ) );
@@ -237,6 +255,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#rotateFromVector(float,float)}.
      */
+    @Override
     public SVGMatrix rotateFromVector(float x, float y) throws SVGException {
         if (x == 0 || y == 0) {
             throw new SVGOMException(SVGException.SVG_INVALID_VALUE_ERR, "");
@@ -249,6 +268,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#flipX()}.
      */
+    @Override
     public SVGMatrix flipX() {
         AffineTransform tr = (AffineTransform)getAffineTransform().clone();
         tr.concatenate(FLIP_X_TRANSFORM);
@@ -258,6 +278,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#flipY()}.
      */
+    @Override
     public SVGMatrix flipY() {
         AffineTransform tr = (AffineTransform)getAffineTransform().clone();
         tr.concatenate(FLIP_Y_TRANSFORM);
@@ -267,6 +288,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#skewX(float)}.
      */
+    @Override
     public SVGMatrix skewX(float angleDeg) {
         AffineTransform tr = (AffineTransform)getAffineTransform().clone();
         tr.concatenate
@@ -277,6 +299,7 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
     /**
      * Implements {@link SVGMatrix#skewY(float)}.
      */
+    @Override
     public SVGMatrix skewY(float angleDeg ) {
         AffineTransform tr = (AffineTransform)getAffineTransform().clone();
         tr.concatenate

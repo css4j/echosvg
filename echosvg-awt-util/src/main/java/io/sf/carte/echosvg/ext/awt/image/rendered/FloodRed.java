@@ -92,6 +92,7 @@ public class FloodRed extends AbstractRed {
         g.dispose();
     }
 
+    @Override
     public Raster getTile(int x, int y) {
         // We have a Single raster that we translate where needed
         // position.  So just offest appropriately.
@@ -100,6 +101,7 @@ public class FloodRed extends AbstractRed {
         return raster.createTranslatedChild(tx, ty);
     }
 
+    @Override
     public WritableRaster copyData(WritableRaster wr) {
         int tx0 = getXTile(wr.getMinX());
         int ty0 = getYTile(wr.getMinY());

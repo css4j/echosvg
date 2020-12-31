@@ -86,6 +86,7 @@ public class EventbaseTimingSpecifier
     /**
      * Returns a string representation of this timing specifier.
      */
+    @Override
     public String toString() {
         return (eventbaseID == null ? "" : eventbaseID + ".") + eventName
             + (offset != 0 ? super.toString() : "");
@@ -95,6 +96,7 @@ public class EventbaseTimingSpecifier
      * Initializes this timing specifier by adding the initial instance time
      * to the owner's instance time list or setting up any event listeners.
      */
+    @Override
     public void initialize() {
         ((NodeEventTarget) eventTarget).addEventListenerNS
             (eventNamespaceURI, eventType, this, false, null);
@@ -103,6 +105,7 @@ public class EventbaseTimingSpecifier
     /**
      * Deinitializes this timing specifier by removing any event listeners.
      */
+    @Override
     public void deinitialize() {
         ((NodeEventTarget) eventTarget).removeEventListenerNS
             (eventNamespaceURI, eventType, this, false);
@@ -113,6 +116,7 @@ public class EventbaseTimingSpecifier
     /**
      * Handles an event fired on the eventbase element.
      */
+    @Override
     public void handleEvent(Event e) {
         owner.eventOccurred(this, e);
     }
@@ -120,6 +124,7 @@ public class EventbaseTimingSpecifier
     /**
      * Invoked to resolve an event-like timing specifier into an instance time.
      */
+    @Override
     public void resolve(Event e) {
         float time = owner.getRoot().convertEpochTime(e.getTimeStamp());
         InstanceTime instance = new InstanceTime(this, time + offset, true);

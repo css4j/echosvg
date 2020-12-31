@@ -111,6 +111,7 @@ public abstract class AbstractSVGAnimatedLength
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedLength#getBaseVal()}.
      */
+    @Override
     public SVGLength getBaseVal() {
         if (baseVal == null) {
             baseVal = new BaseSVGLength(direction);
@@ -121,6 +122,7 @@ public abstract class AbstractSVGAnimatedLength
     /**
      * <b>DOM</b>: Implements {@link SVGAnimatedLength#getAnimVal()}.
      */
+    @Override
     public SVGLength getAnimVal() {
         if (animVal == null) {
             animVal = new AnimSVGLength(direction);
@@ -173,6 +175,7 @@ public abstract class AbstractSVGAnimatedLength
     /**
      * Updates the animated value with the given {@link AnimatableValue}.
      */
+    @Override
     protected void updateAnimatedValue(AnimatableValue val) {
         if (val == null) {
             hasAnimVal = false;
@@ -191,6 +194,7 @@ public abstract class AbstractSVGAnimatedLength
     /**
      * Returns the base value of the attribute as an {@link AnimatableValue}.
      */
+    @Override
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         SVGLength base = getBaseVal();
         return new AnimatableLengthValue
@@ -202,6 +206,7 @@ public abstract class AbstractSVGAnimatedLength
     /**
      * Called when an Attr node has been added.
      */
+    @Override
     public void attrAdded(Attr node, String newv) {
         attrChanged();
     }
@@ -209,6 +214,7 @@ public abstract class AbstractSVGAnimatedLength
     /**
      * Called when an Attr node has been modified.
      */
+    @Override
     public void attrModified(Attr node, String oldv, String newv) {
         attrChanged();
     }
@@ -216,6 +222,7 @@ public abstract class AbstractSVGAnimatedLength
     /**
      * Called when an Attr node has been removed.
      */
+    @Override
     public void attrRemoved(Attr node, String oldv) {
         attrChanged();
     }
@@ -266,6 +273,7 @@ public abstract class AbstractSVGAnimatedLength
         /**
          * Resets the value of the associated attribute.
          */
+        @Override
         protected void reset() {
             try {
                 changing = true;
@@ -280,6 +288,7 @@ public abstract class AbstractSVGAnimatedLength
         /**
          * Initializes the length, if needed.
          */
+        @Override
         protected void revalidate() {
             if (valid) {
                 return;
@@ -306,6 +315,7 @@ public abstract class AbstractSVGAnimatedLength
         /**
          * Returns the element this length is associated with.
          */
+        @Override
         protected SVGOMElement getAssociatedElement() {
             return (SVGOMElement)element;
         }
@@ -327,6 +337,7 @@ public abstract class AbstractSVGAnimatedLength
         /**
          * <b>DOM</b>: Implements {@link SVGLength#getUnitType()}.
          */
+        @Override
         public short getUnitType() {
             if (hasAnimVal) {
                 return super.getUnitType();
@@ -337,6 +348,7 @@ public abstract class AbstractSVGAnimatedLength
         /**
          * <b>DOM</b>: Implements {@link SVGLength#getValue()}.
          */
+        @Override
         public float getValue() {
             if (hasAnimVal) {
                 return super.getValue();
@@ -347,6 +359,7 @@ public abstract class AbstractSVGAnimatedLength
         /**
          * <b>DOM</b>: Implements {@link SVGLength#getValueInSpecifiedUnits()}.
          */
+        @Override
         public float getValueInSpecifiedUnits() {
             if (hasAnimVal) {
                 return super.getValueInSpecifiedUnits();
@@ -357,6 +370,7 @@ public abstract class AbstractSVGAnimatedLength
         /**
          * <b>DOM</b>: Implements {@link SVGLength#getValueAsString()}.
          */
+        @Override
         public String getValueAsString() {
             if (hasAnimVal) {
                 return super.getValueAsString();
@@ -367,6 +381,7 @@ public abstract class AbstractSVGAnimatedLength
         /**
          * <b>DOM</b>: Implements {@link SVGLength#setValue(float)}.
          */
+        @Override
         public void setValue(float value) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length",
@@ -377,6 +392,7 @@ public abstract class AbstractSVGAnimatedLength
          * <b>DOM</b>: Implements {@link
          * SVGLength#setValueInSpecifiedUnits(float)}.
          */
+        @Override
         public void setValueInSpecifiedUnits(float value) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length",
@@ -386,6 +402,7 @@ public abstract class AbstractSVGAnimatedLength
         /**
          * <b>DOM</b>: Implements {@link SVGLength#setValueAsString(String)}.
          */
+        @Override
         public void setValueAsString(String value) throws DOMException {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length",
@@ -396,6 +413,7 @@ public abstract class AbstractSVGAnimatedLength
          * <b>DOM</b>: Implements {@link
          * SVGLength#newValueSpecifiedUnits(short,float)}.
          */
+        @Override
         public void newValueSpecifiedUnits(short unit, float value) {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length",
@@ -406,6 +424,7 @@ public abstract class AbstractSVGAnimatedLength
          * <b>DOM</b>: Implements {@link
          * SVGLength#convertToSpecifiedUnits(short)}.
          */
+        @Override
         public void convertToSpecifiedUnits(short unit) {
             throw element.createDOMException
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length",
@@ -415,6 +434,7 @@ public abstract class AbstractSVGAnimatedLength
         /**
          * Returns the element this length is associated with.
          */
+        @Override
         protected SVGOMElement getAssociatedElement() {
             return (SVGOMElement) element;
         }

@@ -46,6 +46,7 @@ public abstract class RectManager extends LengthManager {
     /**
      * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
      */
+    @Override
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
@@ -78,8 +79,8 @@ public abstract class RectManager extends LengthManager {
             lu = lu.getNextLexicalUnit();
             Value left = createRectComponent(lu);
             return new RectValue(top, right, bottom, left);
-		default:
-			break;
+        default:
+            break;
         }
         throw createMalformedRectDOMException();
     }
@@ -107,8 +108,8 @@ public abstract class RectManager extends LengthManager {
         case PERCENTAGE:
             return new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE,
                     lu.getFloatValue());
-		default:
-			break;
+        default:
+            break;
         }
         throw createMalformedRectDOMException();
     }
@@ -117,6 +118,7 @@ public abstract class RectManager extends LengthManager {
      * Implements {@link
      * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
      */
+    @Override
     public Value computeValue(CSSStylableElement elt,
                               String pseudo,
                               CSSEngine engine,
@@ -155,6 +157,7 @@ public abstract class RectManager extends LengthManager {
      * Indicates the orientation of the property associated with
      * this manager.
      */
+    @Override
     protected int getOrientation() {
         return orientation;
     }

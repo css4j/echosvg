@@ -79,6 +79,7 @@ public class MultiResGraphicsNode
      *
      * @param g2d the Graphics2D to use
      */
+    @Override
     public void primitivePaint(Graphics2D g2d) {
         // get the current affine transform
         AffineTransform at = g2d.getTransform();
@@ -194,14 +195,17 @@ public class MultiResGraphicsNode
     /**
      * Returns the bounds of the area covered by this node's primitive paint.
      */
+    @Override
     public Rectangle2D getPrimitiveBounds() {
         return bounds;
     }
 
+    @Override
     public Rectangle2D getGeometryBounds(){
         return bounds;
     }
 
+    @Override
     public Rectangle2D getSensitiveBounds(){
         return bounds;
     }
@@ -209,6 +213,7 @@ public class MultiResGraphicsNode
     /**
      * Returns the outline of this node.
      */
+    @Override
     public Shape getOutline() {
         return bounds;
     }

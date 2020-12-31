@@ -86,6 +86,7 @@ public class DiffuseLightingRable8Bit
     /**
      * Returns the source to be filtered
      */
+    @Override
     public Filter getSource(){
         return (Filter)getSources().get(0);
     }
@@ -93,6 +94,7 @@ public class DiffuseLightingRable8Bit
     /**
      * Sets the source to be filtered
      */
+    @Override
     public void setSource(Filter src){
         init(src, null);
     }
@@ -100,6 +102,7 @@ public class DiffuseLightingRable8Bit
     /**
      * Returns this filter's bounds
      */
+    @Override
     public Rectangle2D getBounds2D(){
         return (Rectangle2D)(litRegion.clone());
     }
@@ -107,6 +110,7 @@ public class DiffuseLightingRable8Bit
     /**
      * Returns this filter's litRegion
      */
+    @Override
     public Rectangle2D getLitRegion(){
         return getBounds2D();
     }
@@ -114,6 +118,7 @@ public class DiffuseLightingRable8Bit
     /**
      * Set this filter's litRegion
      */
+    @Override
     public void setLitRegion(Rectangle2D litRegion){
         touch();
         this.litRegion = litRegion;
@@ -122,6 +127,7 @@ public class DiffuseLightingRable8Bit
     /**
      * @return Light object used for the diffuse lighting
      */
+    @Override
     public Light getLight(){
         return light;
     }
@@ -129,6 +135,7 @@ public class DiffuseLightingRable8Bit
     /**
      * @param light New Light object
      */
+    @Override
     public void setLight(Light light){
         touch();
         this.light = light;
@@ -137,6 +144,7 @@ public class DiffuseLightingRable8Bit
     /**
      * @return surfaceScale
      */
+    @Override
     public double getSurfaceScale(){
         return surfaceScale;
     }
@@ -144,6 +152,7 @@ public class DiffuseLightingRable8Bit
     /**
      * Sets the surface scale
      */
+    @Override
     public void setSurfaceScale(double surfaceScale){
         touch();
         this.surfaceScale = surfaceScale;
@@ -152,6 +161,7 @@ public class DiffuseLightingRable8Bit
     /**
      * @return diffuse constant, or kd.
      */
+    @Override
     public double getKd(){
         return kd;
     }
@@ -159,6 +169,7 @@ public class DiffuseLightingRable8Bit
     /**
      * Sets the diffuse constant, or kd
      */
+    @Override
     public void setKd(double kd){
         touch();
         this.kd = kd;
@@ -168,6 +179,7 @@ public class DiffuseLightingRable8Bit
      * Returns the min [dx,dy] distance in user space for evalutation of
      * the sobel gradient.
      */
+    @Override
     public double [] getKernelUnitLength() {
         if (kernelUnitLength == null)
             return null;
@@ -182,6 +194,7 @@ public class DiffuseLightingRable8Bit
      * Sets the min [dx,dy] distance in user space for evaluation of the
      * sobel gradient. If set to zero or null then device space will be used.
      */
+    @Override
     public void setKernelUnitLength(double [] kernelUnitLength) {
         touch();
         if (kernelUnitLength == null) {
@@ -196,6 +209,7 @@ public class DiffuseLightingRable8Bit
         this.kernelUnitLength[1] = (float)kernelUnitLength[1];
     }
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         Shape aoi = rc.getAreaOfInterest();
         if (aoi == null)

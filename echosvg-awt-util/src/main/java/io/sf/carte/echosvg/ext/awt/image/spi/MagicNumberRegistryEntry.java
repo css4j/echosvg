@@ -276,6 +276,7 @@ public abstract class MagicNumberRegistryEntry
     /**
      * Returns the maximum read ahead needed for all magic numbers.
      */
+    @Override
     public int getReadlimit() {
         int maxbuf = 0;
         for (MagicNumber magicNumber : magicNumbers) {
@@ -291,6 +292,7 @@ public abstract class MagicNumberRegistryEntry
      * Check if the stream contains an image that can be
      * handled by this format handler
      */
+    @Override
     public boolean isCompatibleStream(InputStream is)
         throws StreamCorruptedException {
         for (MagicNumber magicNumber : magicNumbers) {

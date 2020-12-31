@@ -322,6 +322,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Calls dispose on this BridgeContext, if it is a child context.
      */
+    @Override
     protected void finalize() {
         if (primaryContext != null) {
             dispose();
@@ -399,6 +400,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Returns the CSS engine associated with given element.
      */
+    @Override
     public CSSEngine getCSSEngineForElement(Element e) {
         SVGOMDocument doc = (SVGOMDocument)e.getOwnerDocument();
         return doc.getCSSEngine();
@@ -622,6 +624,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Returns true if the document is dynamic, false otherwise.
      */
+    @Override
     public boolean isDynamic() {
         return (dynamicStatus == DYNAMIC);
     }
@@ -629,6 +632,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Returns true if the document is interactive, false otherwise.
      */
+    @Override
     public boolean isInteractive() {
         return (dynamicStatus != STATIC);
     }
@@ -1339,6 +1343,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
             this.set     = set;
         }
 
+        @Override
         public void cleared() {
             synchronized (set) {
                 // System.err.println("SRClear: " + refStr);
@@ -1514,6 +1519,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         /**
          * Handles 'DOMAttrModified' event type.
          */
+        @Override
         public void handleEvent(Event evt) {
             Node node = (Node)evt.getTarget();
             BridgeUpdateHandler h = getBridgeUpdateHandler(node);
@@ -1541,6 +1547,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         /**
          * Handles 'mouseout' MouseEvent event type.
          */
+        @Override
         public void handleEvent(Event evt) {
             MouseEvent me = (MouseEvent)evt;
             Element newTarget = (Element)me.getRelatedTarget();
@@ -1574,6 +1581,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         /**
          * Handles 'mouseover' MouseEvent event type.
          */
+        @Override
         public void handleEvent(Event evt) {
             Element target = (Element)evt.getTarget();
             Cursor cursor = CSSUtilities.convertCursor(target, BridgeContext.this);
@@ -1598,6 +1606,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         /**
          * Handles 'DOMNodeInserted' event type.
          */
+        @Override
         public void handleEvent(Event evt) {
             MutationEvent me = (MutationEvent)evt;
             BridgeUpdateHandler h =
@@ -1628,6 +1637,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         /**
          * Handles 'DOMNodeRemoved' event type.
          */
+        @Override
         public void handleEvent(Event evt) {
             Node node = (Node)evt.getTarget();
             BridgeUpdateHandler h = getBridgeUpdateHandler(node);
@@ -1656,6 +1666,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         /**
          * Handles 'DOMCharacterDataModified' event type.
          */
+        @Override
         public void handleEvent(Event evt) {
             Node node = (Node)evt.getTarget();
             while (node != null && !(node instanceof SVGOMElement)) {
@@ -1688,6 +1699,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
          * Handles CSSEngineEvent that describes the CSS properties
          * that have changed on a particular element.
          */
+        @Override
         public void propertiesChanged(CSSEngineEvent evt) {
             Element elem = evt.getElement();
             SVGContext ctx = getSVGContext(elem);
@@ -1761,6 +1773,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
          * @param e the owner element of the changed animated attribute
          * @param alav the AnimatedLiveAttributeValue that changed
          */
+        @Override
         public void animatedAttributeChanged(Element e,
                                              AnimatedLiveAttributeValue alav) {
             BridgeUpdateHandler h = getBridgeUpdateHandler(e);
@@ -1779,6 +1792,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
          * @param e the element being animated
          * @param type the type of animation whose value changed
          */
+        @Override
         public void otherAnimationChanged(Element e, String type) {
             BridgeUpdateHandler h = getBridgeUpdateHandler(e);
             if (h != null) {
@@ -1796,6 +1810,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Returns the Value corresponding to the given system color.
      */
+    @Override
     public Value getSystemColor(String ident) {
         return SystemColorSupport.getSystemColor(ident);
     }
@@ -1803,6 +1818,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Returns the value corresponding to the default font.
      */
+    @Override
     public Value getDefaultFontFamily() {
         // No cache needed since the default font family is asked only
         // one time on the root element (only if it does not have its
@@ -1811,12 +1827,13 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         SVGStylableElement root = (SVGStylableElement)doc.getRootElement();
         String str = userAgent.getDefaultFontFamily();
         return doc.getCSSEngine().parsePropertyValue
-            (root,SVGConstants.CSS_FONT_FAMILY_PROPERTY, str);
+            (root,CSSConstants.CSS_FONT_FAMILY_PROPERTY, str);
     }
 
     /**
      * Returns a lighter font-weight.
      */
+    @Override
     public float getLighterFontWeight(float f) {
         return userAgent.getLighterFontWeight(f);
     }
@@ -1824,6 +1841,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Returns a bolder font-weight.
      */
+    @Override
     public float getBolderFontWeight(float f) {
         return userAgent.getBolderFontWeight(f);
     }
@@ -1831,6 +1849,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Returns the size of a px CSS unit in millimeters.
      */
+    @Override
     public float getPixelUnitToMillimeter() {
         return userAgent.getPixelUnitToMillimeter();
     }
@@ -1840,6 +1859,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      * This will be removed after next release.
      * @see #getPixelUnitToMillimeter()
      */
+    @Override
     public float getPixelToMillimeter() {
         return getPixelUnitToMillimeter();
 
@@ -1848,6 +1868,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Returns the medium font size.
      */
+    @Override
     public float getMediumFontSize() {
         return userAgent.getMediumFontSize();
     }
@@ -1856,6 +1877,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      * Returns the width of the block which directly contains the
      * given element.
      */
+    @Override
     public float getBlockWidth(Element elt) {
         return getViewport(elt).getWidth();
     }
@@ -1864,6 +1886,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      * Returns the height of the block which directly contains the
      * given element.
      */
+    @Override
     public float getBlockHeight(Element elt) {
         return getViewport(elt).getHeight();
     }
@@ -1884,6 +1907,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      * @param docURL url for the document into which the
      *        resource was found.
      */
+    @Override
     public void
         checkLoadExternalResource(ParsedURL resourceURL,
                                   ParsedURL docURL) throws SecurityException {
@@ -2122,11 +2146,13 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         /**
          * Displays an error resulting from the specified Exception.
          */
+        @Override
         public void displayError(Exception ex) { ua.displayError(ex); }
 
         /**
          * Displays a message in the User Agent interface.
          */
+        @Override
         public void displayMessage(String message) { ua.displayMessage(message); }
     }
 

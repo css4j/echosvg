@@ -51,6 +51,7 @@ public class SVGFeDisplacementMapElementBridge
     /**
      * Returns 'feDisplacementMap'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FE_DISPLACEMENT_MAP_TAG;
     }
@@ -73,6 +74,7 @@ public class SVGFeDisplacementMapElementBridge
      *        can then access a filter node from the filterMap if they
      *        know its name.
      */
+    @Override
     public Filter createFilter(BridgeContext ctx,
                                Element filterElement,
                                Element filteredElement,

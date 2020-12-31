@@ -46,6 +46,7 @@ public class PNGTranscoderImageIOWriteAdapter implements
      * io.sf.carte.echosvg.transcoder.image.PNGTranscoder, java.awt.image.BufferedImage,
      * io.sf.carte.echosvg.transcoder.TranscoderOutput)
      */
+    @Override
     public void writeImage(PNGTranscoder transcoder, BufferedImage img,
             TranscoderOutput output) throws TranscoderException {
 

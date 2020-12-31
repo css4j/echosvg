@@ -61,24 +61,29 @@ public class SVGPathSupport {
         if (pathCtx == null) return null;
 
         return new SVGPoint() {
+                @Override
                 public float getX() {
                     Point2D pt = pathCtx.getPointAtLength(distance);
                     return (float)pt.getX();
                 }
+                @Override
                 public float getY() {
                     Point2D pt = pathCtx.getPointAtLength(distance);
                     return (float)pt.getY();
                 }
+                @Override
                 public void setX(float x) throws DOMException {
                     throw path.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,
                          "readonly.point", null);
                 }
+                @Override
                 public void setY(float y) throws DOMException {
                     throw path.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,
                          "readonly.point", null);
                 }
+                @Override
                 public SVGPoint matrixTransform ( SVGMatrix matrix ) {
                     throw path.createDOMException
                         (DOMException.NO_MODIFICATION_ALLOWED_ERR,

@@ -69,6 +69,7 @@ public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
     /**
      * Returns a string representation of this timing specifier.
      */
+    @Override
     public String toString() {
         return syncbaseID + "." + (syncBegin ? "begin" : "end")
             + (offset != 0 ? super.toString() : "");
@@ -78,6 +79,7 @@ public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
      * Initializes this timing specifier by adding the initial instance time
      * to the owner's instance time list or setting up any event listeners.
      */
+    @Override
     public void initialize() {
     }
 
@@ -85,6 +87,7 @@ public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
      * Returns whether this timing specifier is event-like (i.e., if it is
      * an eventbase, accesskey or a repeat timing specifier).
      */
+    @Override
     public boolean isEventCondition() {
         return false;
     }
@@ -92,6 +95,7 @@ public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
     /**
      * Called by the timebase element when it creates a new Interval.
      */
+    @Override
     float newInterval(Interval interval) {
         // Trace.enter(this, "newInterval", new Object[] { interval } ); try {
         if (owner.hasPropagated) {
@@ -110,6 +114,7 @@ public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
     /**
      * Called by the timebase element when it deletes an Interval.
      */
+    @Override
     float removeInterval(Interval interval) {
         // Trace.enter(this, "removeInterval", new Object[] { interval } ); try {
         if (owner.hasPropagated) {
@@ -125,6 +130,7 @@ public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
      * Called by an {@link InstanceTime} created by this TimingSpecifier
      * to indicate that its value has changed.
      */
+    @Override
     float handleTimebaseUpdate(InstanceTime instanceTime, float newTime) {
         // Trace.enter(this, "handleTimebaseUpdate", new Object[] { instanceTime, Float.valueOf(newTime) } ); try {
         if (owner.hasPropagated) {

@@ -42,11 +42,13 @@ public class ParsedURLDataProtocolHandler
         super(DATA_PROTOCOL);
     }
 
+    @Override
     public ParsedURLData parseURL(ParsedURL baseURL, String urlStr) {
         // No relative form...
         return parseURL(urlStr);
     }
 
+    @Override
     public ParsedURLData parseURL(String urlStr) {
         DataParsedURLData ret = new DataParsedURLData();
 
@@ -129,10 +131,12 @@ public class ParsedURLDataProtocolHandler
 
         String charset;
 
+        @Override
         public boolean complete() {
             return path != null;
         }
 
+        @Override
         public String getPortStr() {
             String portStr = "data:";
             if (host != null) {
@@ -142,6 +146,7 @@ public class ParsedURLDataProtocolHandler
             return portStr;
         }
                 
+        @Override
         public String toString() {
             String ret = getPortStr();
             if (path != null) {
@@ -157,6 +162,7 @@ public class ParsedURLDataProtocolHandler
          * Returns the content type if available.  This is only available
          * for some protocols.
          */
+        @Override
         public String getContentType(String userAgent) {
             return contentType;
         }
@@ -165,10 +171,12 @@ public class ParsedURLDataProtocolHandler
          * Returns the content encoding if available.  This is only available
          * for some protocols.
          */
+        @Override
         public String getContentEncoding(String userAgent) {
             return contentEncoding;
         }
 
+        @Override
         protected InputStream openStreamInternal
             (String userAgent, Iterator mimeTypes, Iterator encodingTypes)
             throws IOException {

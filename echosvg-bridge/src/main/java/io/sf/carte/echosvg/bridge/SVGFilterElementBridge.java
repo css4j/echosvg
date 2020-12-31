@@ -61,6 +61,7 @@ public class SVGFilterElementBridge extends AnimatableGenericSVGBridge
     /**
      * Returns 'filter'.
      */
+    @Override
     public String getLocalName() {
         return SVG_FILTER_TAG;
     }
@@ -73,6 +74,7 @@ public class SVGFilterElementBridge extends AnimatableGenericSVGBridge
      * @param filteredElement the element that references the filter element
      * @param filteredNode the graphics node to filter
      */
+    @Override
     public Filter createFilter(BridgeContext ctx,
                                Element filterElement,
                                Element filteredElement,

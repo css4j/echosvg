@@ -51,6 +51,7 @@ public class JPEGTranscoder extends ImageTranscoder {
      * @param width the image width in pixels
      * @param height the image height in pixels
      */
+    @Override
     public BufferedImage createImage(int width, int height) {
         return new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     }
@@ -61,6 +62,7 @@ public class JPEGTranscoder extends ImageTranscoder {
      * @param output the output where to store the image
      * @throws TranscoderException if an error occured while storing the image
      */
+    @Override
     public void writeImage(BufferedImage img, TranscoderOutput output)
             throws TranscoderException {
         OutputStream ostream = output.getOutputStream();
@@ -131,6 +133,7 @@ public class JPEGTranscoder extends ImageTranscoder {
      * A transcoding Key represented the JPEG image quality.
      */
     private static class QualityKey extends TranscodingHints.Key {
+        @Override
         public boolean isCompatibleValue(Object v) {
             if (v instanceof Float) {
                 float q = (Float) v;
@@ -156,6 +159,7 @@ public class JPEGTranscoder extends ImageTranscoder {
             this.os = os;
         }
 
+        @Override
         public void close() throws IOException {
             if (os == null) return;
             try {
@@ -165,6 +169,7 @@ public class JPEGTranscoder extends ImageTranscoder {
             }
         }
 
+        @Override
         public void flush() throws IOException {
             if (os == null) return;
             try {
@@ -174,6 +179,7 @@ public class JPEGTranscoder extends ImageTranscoder {
             }
         }
 
+        @Override
         public void write(byte[] b) throws IOException {
             if (os == null) return;
             try {
@@ -183,6 +189,7 @@ public class JPEGTranscoder extends ImageTranscoder {
             }
         }
 
+        @Override
         public void write(byte[] b, int off, int len) throws IOException {
             if (os == null) return;
             try {
@@ -192,6 +199,7 @@ public class JPEGTranscoder extends ImageTranscoder {
             }
         }
 
+        @Override
         public void write(int b)  throws IOException {
             if (os == null) return;
             try {

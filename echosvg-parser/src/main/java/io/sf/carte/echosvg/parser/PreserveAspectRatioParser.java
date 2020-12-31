@@ -68,6 +68,7 @@ public class PreserveAspectRatioParser extends AbstractParser {
     /**
      * Parses the current stream.
      */
+    @Override
     protected void doParse() throws ParseException, IOException {
         current = reader.read();
         skipSpaces();

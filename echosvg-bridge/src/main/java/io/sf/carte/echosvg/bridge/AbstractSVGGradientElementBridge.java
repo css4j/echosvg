@@ -57,6 +57,7 @@ public abstract class AbstractSVGGradientElementBridge
      * @param paintedNode the graphics node on which the Paint will be applied
      * @param opacity the opacity of the Paint to create
      */
+    @Override
     public Paint createPaint(BridgeContext ctx,
                              Element paintElement,
                              Element paintedElement,
@@ -294,6 +295,7 @@ public abstract class AbstractSVGGradientElementBridge
         /**
          * Returns 'stop'.
          */
+        @Override
         public String getLocalName() {
             return SVG_STOP_TAG;
         }

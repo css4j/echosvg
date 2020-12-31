@@ -56,6 +56,7 @@ public class CachedImageHandlerPNGEncoder extends DefaultCachedImageHandler {
     /**
      * Uses PNG encoding.
      */
+    @Override
     public void encodeImage(BufferedImage buf, OutputStream os)
             throws IOException {
         ImageWriter writer = ImageWriterRegistry.getInstance()
@@ -63,10 +64,12 @@ public class CachedImageHandlerPNGEncoder extends DefaultCachedImageHandler {
         writer.writeImage(buf, os);
     }
 
+    @Override
     public int getBufferedImageType(){
         return BufferedImage.TYPE_INT_ARGB;
     }
 
+    @Override
     public String getRefPrefix(){
         return refPrefix;
     }

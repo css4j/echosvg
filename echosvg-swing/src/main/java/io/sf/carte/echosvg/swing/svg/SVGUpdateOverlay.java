@@ -69,6 +69,7 @@ public class SVGUpdateOverlay implements Overlay {
         counts[0] += num;
     }
 
+    @Override
     public void paint(Graphics g) {
         Iterator i = rects.iterator();
         int count = 0;

@@ -48,6 +48,7 @@ public class AffineRable8Bit
         setAffine(affine);
     }
 
+    @Override
     public Rectangle2D getBounds2D() {
         Filter src = getSource();
         Rectangle2D r = src.getBounds2D();
@@ -56,6 +57,7 @@ public class AffineRable8Bit
       /**
        * Returns the source to be affine.
        */
+    @Override
     public Filter getSource() {
         return (Filter)srcs.get(0);
     }
@@ -64,6 +66,7 @@ public class AffineRable8Bit
      * Sets the source to be affine.
      * @param src image to affine.
      */
+    @Override
     public void setSource(Filter src) {
         init(src);
     }
@@ -72,6 +75,7 @@ public class AffineRable8Bit
        * Set the affine transform.
        * @param affine the new Affine transform to apply.
        */
+    @Override
     public void setAffine(AffineTransform affine) {
         touch();
         this.affine = affine;
@@ -86,6 +90,7 @@ public class AffineRable8Bit
        * Get the Affine.
        * @return the Affine transform currently in effect.
        */
+    @Override
     public AffineTransform getAffine() {
         return (AffineTransform)affine.clone();
     }
@@ -99,6 +104,7 @@ public class AffineRable8Bit
      *         for some reason the paint failed (in which 
      *         case a createRendering should be used).
      */
+    @Override
     public boolean paintRable(Graphics2D g2d) {
         AffineTransform at = g2d.getTransform();
 
@@ -111,6 +117,7 @@ public class AffineRable8Bit
     }
 
 
+    @Override
     public RenderedImage createRendering(RenderContext rc) {
         // Degenerate Affine no output image..
         if (invAffine == null) return null;
@@ -132,6 +139,7 @@ public class AffineRable8Bit
         return getSource().createRendering(new RenderContext(at, aoi, rh));
     }
 
+    @Override
     public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn) {
         if (srcIndex != 0)
             throw new IndexOutOfBoundsException("Affine only has one input");
@@ -140,6 +148,7 @@ public class AffineRable8Bit
         return invAffine.createTransformedShape(outputRgn);
     }
 
+    @Override
     public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn) {
         if (srcIndex != 0)
             throw new IndexOutOfBoundsException("Affine only has one input");

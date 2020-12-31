@@ -57,6 +57,7 @@ public class ImageHandlerPNGEncoder extends AbstractImageHandlerEncoder {
      * @return the suffix used by this encoder. E.g., ".png" for
      * ImageHandlerPNGEncoder.
      */
+    @Override
     public final String getSuffix(){
         return ".png";
     }
@@ -65,6 +66,7 @@ public class ImageHandlerPNGEncoder extends AbstractImageHandlerEncoder {
      * @return the prefix used by this encoder. E.g., "pngImage" for
      * ImageHandlerPNGEncoder.
      */
+    @Override
     public final String getPrefix(){
         return "pngImage";
     }
@@ -73,6 +75,7 @@ public class ImageHandlerPNGEncoder extends AbstractImageHandlerEncoder {
      * Derived classes should implement this method and encode the input
      * BufferedImage as needed
      */
+    @Override
     public void encodeImage(BufferedImage buf, File imageFile)
         throws SVGGraphics2DIOException {
         try {
@@ -94,6 +97,7 @@ public class ImageHandlerPNGEncoder extends AbstractImageHandlerEncoder {
      * This method creates a BufferedImage with an alpha channel, as this is
      * supported by PNG.
      */
+    @Override
     public BufferedImage buildBufferedImage(Dimension size){
         return new BufferedImage(size.width, size.height,
                                  BufferedImage.TYPE_INT_ARGB);

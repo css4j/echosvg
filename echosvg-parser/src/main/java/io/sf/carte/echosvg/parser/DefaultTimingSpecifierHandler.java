@@ -40,18 +40,21 @@ public class DefaultTimingSpecifierHandler implements TimingSpecifierHandler {
     /**
      * Invoked when an offset value timing specifier is parsed.
      */
+    @Override
     public void offset(float offset) {
     }
 
     /**
      * Invoked when a syncbase value timing specifier is parsed.
      */
+    @Override
     public void syncbase(float offset, String syncbaseID, String timeSymbol) {
     }
 
     /**
      * Invoked when an eventbase value timing specifier is parsed.
      */
+    @Override
     public void eventbase(float offset, String eventbaseID, String eventType) {
     }
 
@@ -59,6 +62,7 @@ public class DefaultTimingSpecifierHandler implements TimingSpecifierHandler {
      * Invoked when a repeat value timing specifier with no iteration
      * is parsed.
      */
+    @Override
     public void repeat(float offset, String syncbaseID) {
     }
 
@@ -66,36 +70,42 @@ public class DefaultTimingSpecifierHandler implements TimingSpecifierHandler {
      * Invoked when a repeat value timing specifier with an iteration
      * is parsed.
      */
+    @Override
     public void repeat(float offset, String syncbaseID, int repeatIteration) {
     }
 
     /**
      * Invoked when an accesskey value timing specifier is parsed.
      */
+    @Override
     public void accesskey(float offset, char key) {
     }
 
     /**
      * Invoked when an SVG 1.2 accessKey value timing specifier is parsed.
      */
+    @Override
     public void accessKeySVG12(float offset, String keyName) {
     }
 
     /**
      * Invoked when a media marker value timing specifier is parsed.
      */
+    @Override
     public void mediaMarker(String syncbaseID, String markerName) {
     }
 
     /**
      * Invoked when a wallclock value timing specifier is parsed.
      */
+    @Override
     public void wallclock(Calendar time) {
     }
 
     /**
      * Invoked when an indefinite value timing specifier is parsed.
      */
+    @Override
     public void indefinite() {
     }
 }

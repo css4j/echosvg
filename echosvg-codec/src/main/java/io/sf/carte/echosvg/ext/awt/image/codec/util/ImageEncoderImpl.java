@@ -59,6 +59,7 @@ public abstract class ImageEncoderImpl implements ImageEncoder {
      * the ImageEncodeParam interface.  For example, a JPEGImageEncoder
      * will return an instance of JPEGEncodeParam.
      */
+    @Override
     public ImageEncodeParam getParam() {
         return param;
     }
@@ -71,11 +72,13 @@ public abstract class ImageEncoderImpl implements ImageEncoder {
      * subclass or subinterface.  For example, a JPEGImageEncoder
      * will expect param to be an instance of JPEGEncodeParam.
      */
+    @Override
     public void setParam(ImageEncodeParam param) {
         this.param = param;
     }
 
     /** Returns the OutputStream associated with this ImageEncoder. */
+    @Override
     public OutputStream getOutputStream() {
         return output;
     }
@@ -84,6 +87,7 @@ public abstract class ImageEncoderImpl implements ImageEncoder {
      * Encodes a Raster with a given ColorModel and writes the output
      * to the OutputStream associated with this ImageEncoder.
      */
+    @Override
     public void encode(Raster ras, ColorModel cm) throws IOException {
         RenderedImage im = new SingleTileRenderedImage(ras, cm);
         encode(im);
@@ -93,5 +97,6 @@ public abstract class ImageEncoderImpl implements ImageEncoder {
      * Encodes a RenderedImage and writes the output to the
      * OutputStream associated with this ImageEncoder.
      */
+    @Override
     public abstract void encode(RenderedImage im) throws IOException;
 }

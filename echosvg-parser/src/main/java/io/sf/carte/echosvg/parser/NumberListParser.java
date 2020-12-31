@@ -64,6 +64,7 @@ public class NumberListParser extends NumberParser {
     /**
      * Parses the given reader.
      */
+    @Override
     protected void doParse() throws ParseException, IOException {
         numberListHandler.startNumberList();
 

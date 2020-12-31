@@ -68,6 +68,7 @@ public class AnimatableLengthListValue extends AnimatableValue {
     /**
      * Performs interpolation to the given value.
      */
+    @Override
     public AnimatableValue interpolate(AnimatableValue result,
                                        AnimatableValue to,
                                        float interpolation,
@@ -183,6 +184,7 @@ public class AnimatableLengthListValue extends AnimatableValue {
      * Returns whether two values of this type can have their distance
      * computed, as needed by paced animation.
      */
+    @Override
     public boolean canPace() {
         return false;
     }
@@ -191,6 +193,7 @@ public class AnimatableLengthListValue extends AnimatableValue {
      * Returns the absolute distance between this value and the specified other
      * value.
      */
+    @Override
     public float distanceTo(AnimatableValue other) {
         return 0f;
     }
@@ -198,6 +201,7 @@ public class AnimatableLengthListValue extends AnimatableValue {
     /**
      * Returns a zero value of this AnimatableValue's type.
      */
+    @Override
     public AnimatableValue getZeroValue() {
         float[] vs = new float[lengthValues.length];
         return new AnimatableLengthListValue
@@ -208,6 +212,7 @@ public class AnimatableLengthListValue extends AnimatableValue {
      * Returns the CSS text representation of the value.
      * Length lists can never be used for CSS properties.
      */
+    @Override
     public String getCssText() {
         StringBuffer sb = new StringBuffer();
         if (lengthValues.length > 0) {

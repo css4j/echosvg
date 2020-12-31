@@ -108,6 +108,7 @@ public class ProfileRed extends AbstractRed {
      * model with alpha. The BandedSampleModel did not cause any bug
      * as of JDK 1.3.
      */
+    @Override
     public WritableRaster copyData(WritableRaster argbWR){
         try{
             RenderedImage img = getSource();

@@ -42,6 +42,7 @@ public class RootGraphicsNode extends CompositeGraphicsNode {
      * Returns the root of the GVT tree or null if the node is not
      * part of a GVT tree.  
      */
+    @Override
     public RootGraphicsNode getRoot() {
         return this;
     }

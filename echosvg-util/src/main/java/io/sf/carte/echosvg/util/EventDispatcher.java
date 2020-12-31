@@ -42,6 +42,7 @@ public class EventDispatcher {
                                  final boolean useEventQueue) {
         if (useEventQueue && !EventQueue.isDispatchThread()) {
             Runnable r = new Runnable() {
+                    @Override
                     public void run() {
                         fireEvent(dispatcher, listeners, evt, useEventQueue);
                     }
