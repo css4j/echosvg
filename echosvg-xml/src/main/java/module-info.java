@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.xml {
-	exports io.sf.carte.echosvg.xml;
+    exports io.sf.carte.echosvg.xml;
 
-	requires transitive io.sf.carte.echosvg.util;
+    requires transitive io.sf.carte.echosvg.util;
 }

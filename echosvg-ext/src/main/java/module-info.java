@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.external {
-	exports io.sf.carte.echosvg.w3c.dom;
-	exports io.sf.carte.echosvg.w3c.dom.events;
+    exports io.sf.carte.echosvg.w3c.dom;
+    exports io.sf.carte.echosvg.w3c.dom.events;
 
-	requires java.xml;
+    requires java.xml;
 }

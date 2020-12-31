@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.awt {
-	exports io.sf.carte.echosvg.ext.awt.image.renderable;
-	exports io.sf.carte.echosvg.ext.awt;
-	exports io.sf.carte.echosvg.ext.swing;
-	exports io.sf.carte.echosvg.ext.awt.image.spi;
-	exports io.sf.carte.echosvg.ext.awt.image.rendered;
-	exports io.sf.carte.echosvg.ext.awt.image;
-	exports io.sf.carte.echosvg.ext.awt.geom;
-	exports io.sf.carte.echosvg.ext.awt.color;
-	exports io.sf.carte.echosvg.ext.awt.font;
-	exports io.sf.carte.echosvg.ext.awt.g2d;
+    exports io.sf.carte.echosvg.ext.awt.image.renderable;
+    exports io.sf.carte.echosvg.ext.awt;
+    exports io.sf.carte.echosvg.ext.swing;
+    exports io.sf.carte.echosvg.ext.awt.image.spi;
+    exports io.sf.carte.echosvg.ext.awt.image.rendered;
+    exports io.sf.carte.echosvg.ext.awt.image;
+    exports io.sf.carte.echosvg.ext.awt.geom;
+    exports io.sf.carte.echosvg.ext.awt.color;
+    exports io.sf.carte.echosvg.ext.awt.font;
+    exports io.sf.carte.echosvg.ext.awt.g2d;
 
-	requires io.sf.carte.echosvg.util;
-	requires java.desktop;
-	requires xmlgraphics.commons;
+    requires io.sf.carte.echosvg.util;
+    requires java.desktop;
+    requires xmlgraphics.commons;
 }

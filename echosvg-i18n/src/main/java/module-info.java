@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.i18n {
-	exports io.sf.carte.echosvg.i18n;
+    exports io.sf.carte.echosvg.i18n;
 }

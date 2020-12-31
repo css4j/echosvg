@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.css {
-	exports io.sf.carte.echosvg.css.engine;
-	exports io.sf.carte.echosvg.css.engine.value.css2;
-	exports io.sf.carte.echosvg.css.engine.value.svg;
-	exports io.sf.carte.echosvg.css.dom;
-	exports io.sf.carte.echosvg.css.engine.value;
-	exports io.sf.carte.echosvg.css.engine.value.svg12;
+    exports io.sf.carte.echosvg.css.engine;
+    exports io.sf.carte.echosvg.css.engine.value.css2;
+    exports io.sf.carte.echosvg.css.engine.value.svg;
+    exports io.sf.carte.echosvg.css.dom;
+    exports io.sf.carte.echosvg.css.engine.value;
+    exports io.sf.carte.echosvg.css.engine.value.svg12;
 
-	requires transitive io.sf.carte.echosvg.util;
-	requires io.sf.carte.css4j;
-	requires io.sf.carte.util;
-	requires java.desktop;
-	requires java.xml;
-	requires jdk.xml.dom;
-	requires xml.apis.ext;
-	requires xmlgraphics.commons;
+    requires transitive io.sf.carte.echosvg.util;
+    requires io.sf.carte.css4j;
+    requires io.sf.carte.util;
+    requires java.desktop;
+    requires java.xml;
+    requires jdk.xml.dom;
+    requires xml.apis.ext;
+    requires xmlgraphics.commons;
 }

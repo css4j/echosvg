@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.codec {
-	exports io.sf.carte.echosvg.ext.awt.image.codec.png;
-	exports io.sf.carte.echosvg.ext.awt.image.codec.util;
-	exports io.sf.carte.echosvg.ext.awt.image.codec.imageio;
+    exports io.sf.carte.echosvg.ext.awt.image.codec.png;
+    exports io.sf.carte.echosvg.ext.awt.image.codec.util;
+    exports io.sf.carte.echosvg.ext.awt.image.codec.imageio;
 
-	requires io.sf.carte.echosvg.awt;
-	requires io.sf.carte.echosvg.bridge;
-	requires io.sf.carte.echosvg.i18n;
-	requires io.sf.carte.echosvg.transcoder;
-	requires io.sf.carte.echosvg.util;
-	requires java.desktop;
-	requires java.xml;
+    requires io.sf.carte.echosvg.awt;
+    requires io.sf.carte.echosvg.bridge;
+    requires io.sf.carte.echosvg.i18n;
+    requires io.sf.carte.echosvg.transcoder;
+    requires io.sf.carte.echosvg.util;
+    requires java.desktop;
+    requires java.xml;
 }

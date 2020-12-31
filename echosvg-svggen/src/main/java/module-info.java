@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.svggen {
-	exports io.sf.carte.echosvg.svggen;
-	exports io.sf.carte.echosvg.svggen.font;
-	exports io.sf.carte.echosvg.svggen.font.table;
+    exports io.sf.carte.echosvg.svggen;
+    exports io.sf.carte.echosvg.svggen.font;
+    exports io.sf.carte.echosvg.svggen.font.table;
 
-	requires io.sf.carte.echosvg.awt;
-	requires io.sf.carte.echosvg.util;
-	requires java.desktop;
-	requires java.xml;
+    requires io.sf.carte.echosvg.awt;
+    requires io.sf.carte.echosvg.util;
+    requires java.desktop;
+    requires java.xml;
 }

@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.bridge {
-	exports io.sf.carte.echosvg.bridge;
-	exports io.sf.carte.echosvg.bridge.svg12;
+    exports io.sf.carte.echosvg.bridge;
+    exports io.sf.carte.echosvg.bridge.svg12;
 
-	requires io.sf.carte.echosvg.awt;
-	requires io.sf.carte.echosvg.ext;
-	requires io.sf.carte.echosvg.gvt;
-	requires io.sf.carte.echosvg.script;
-	requires io.sf.carte.echosvg.dom.svg;
-	requires io.sf.carte.css4j;
-	requires io.sf.carte.echosvg.anim;
-	requires io.sf.carte.echosvg.parser;
-	requires java.desktop;
-	requires java.xml;
-	requires jdk.xml.dom;
-	requires rhino;
-	requires xalan;
-	requires xml.apis.ext;
-	requires xmlgraphics.commons;
+    requires io.sf.carte.echosvg.awt;
+    requires io.sf.carte.echosvg.ext;
+    requires io.sf.carte.echosvg.gvt;
+    requires io.sf.carte.echosvg.script;
+    requires io.sf.carte.echosvg.dom.svg;
+    requires io.sf.carte.css4j;
+    requires io.sf.carte.echosvg.anim;
+    requires io.sf.carte.echosvg.parser;
+    requires java.desktop;
+    requires java.xml;
+    requires jdk.xml.dom;
+    requires rhino;
+    requires xalan;
+    requires xml.apis.ext;
+    requires xmlgraphics.commons;
 }

@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.swing {
-	exports io.sf.carte.echosvg.swing.svg;
-	exports io.sf.carte.echosvg.swing.gvt;
-	exports io.sf.carte.echosvg.swing;
+    exports io.sf.carte.echosvg.swing.svg;
+    exports io.sf.carte.echosvg.swing.gvt;
+    exports io.sf.carte.echosvg.swing;
 
-	requires io.sf.carte.echosvg.anim;
-	requires io.sf.carte.echosvg.awt;
-	requires io.sf.carte.echosvg.bridge;
-	requires io.sf.carte.echosvg.constants;
-	requires io.sf.carte.echosvg.css;
-	requires io.sf.carte.echosvg.dom;
-	requires io.sf.carte.echosvg.util.gui;
-	requires io.sf.carte.echosvg.gvt;
-	requires io.sf.carte.echosvg.i18n;
-	requires io.sf.carte.echosvg.script;
-	requires io.sf.carte.echosvg.dom.svg;
-	requires io.sf.carte.echosvg.util;
-	requires io.sf.carte.echosvg.xml;
-	requires java.datatransfer;
-	requires java.desktop;
-	requires java.xml;
-	requires jdk.xml.dom;
-	requires xml.apis.ext;
+    requires io.sf.carte.echosvg.anim;
+    requires io.sf.carte.echosvg.awt;
+    requires io.sf.carte.echosvg.bridge;
+    requires io.sf.carte.echosvg.constants;
+    requires io.sf.carte.echosvg.css;
+    requires io.sf.carte.echosvg.dom;
+    requires io.sf.carte.echosvg.util.gui;
+    requires io.sf.carte.echosvg.gvt;
+    requires io.sf.carte.echosvg.i18n;
+    requires io.sf.carte.echosvg.script;
+    requires io.sf.carte.echosvg.dom.svg;
+    requires io.sf.carte.echosvg.util;
+    requires io.sf.carte.echosvg.xml;
+    requires java.datatransfer;
+    requires java.desktop;
+    requires java.xml;
+    requires jdk.xml.dom;
+    requires xml.apis.ext;
 }

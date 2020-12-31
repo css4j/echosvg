@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.dom {
-	exports io.sf.carte.echosvg.dom.util;
-	exports io.sf.carte.echosvg.dom.traversal;
-	exports io.sf.carte.echosvg.dom;
-	exports io.sf.carte.echosvg.dom.xbl;
-	exports io.sf.carte.echosvg.dom.events;
+    exports io.sf.carte.echosvg.dom.util;
+    exports io.sf.carte.echosvg.dom.traversal;
+    exports io.sf.carte.echosvg.dom;
+    exports io.sf.carte.echosvg.dom.xbl;
+    exports io.sf.carte.echosvg.dom.events;
 
-	requires io.sf.carte.echosvg.constants;
-	requires transitive io.sf.carte.echosvg.css;
-	requires io.sf.carte.echosvg.ext;
-	requires transitive io.sf.carte.echosvg.xml;
-	requires io.sf.carte.css4j;
-	requires transitive java.xml;
-	requires transitive jdk.xml.dom;
-	requires transitive xml.apis.ext;
-	requires xalan;
+    requires io.sf.carte.echosvg.constants;
+    requires transitive io.sf.carte.echosvg.css;
+    requires io.sf.carte.echosvg.ext;
+    requires transitive io.sf.carte.echosvg.xml;
+    requires io.sf.carte.css4j;
+    requires transitive java.xml;
+    requires transitive jdk.xml.dom;
+    requires transitive xml.apis.ext;
+    requires xalan;
 }

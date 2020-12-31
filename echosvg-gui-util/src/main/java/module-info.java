@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.util.gui {
-	exports io.sf.carte.echosvg.util.gui.resource;
-	exports io.sf.carte.echosvg.util.gui.xmleditor;
-	exports io.sf.carte.echosvg.util.gui;
+    exports io.sf.carte.echosvg.util.gui.resource;
+    exports io.sf.carte.echosvg.util.gui.xmleditor;
+    exports io.sf.carte.echosvg.util.gui;
 
-	requires io.sf.carte.echosvg.util;
-	requires io.sf.carte.echosvg.xml;
-	requires java.desktop;
+    requires io.sf.carte.echosvg.util;
+    requires io.sf.carte.echosvg.xml;
+    requires java.desktop;
 }

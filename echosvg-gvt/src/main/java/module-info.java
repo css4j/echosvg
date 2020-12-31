@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.gvt {
-	exports io.sf.carte.echosvg.gvt.font;
-	exports io.sf.carte.echosvg.gvt.flow;
-	exports io.sf.carte.echosvg.gvt.event;
-	exports io.sf.carte.echosvg.gvt;
-	exports io.sf.carte.echosvg.gvt.renderer;
-	exports io.sf.carte.echosvg.gvt.text;
-	exports io.sf.carte.echosvg.gvt.filter;
+    exports io.sf.carte.echosvg.gvt.font;
+    exports io.sf.carte.echosvg.gvt.flow;
+    exports io.sf.carte.echosvg.gvt.event;
+    exports io.sf.carte.echosvg.gvt;
+    exports io.sf.carte.echosvg.gvt.renderer;
+    exports io.sf.carte.echosvg.gvt.text;
+    exports io.sf.carte.echosvg.gvt.filter;
 
-	requires io.sf.carte.echosvg.awt;
-	requires io.sf.carte.echosvg.util;
-	requires java.desktop;
+    requires io.sf.carte.echosvg.awt;
+    requires io.sf.carte.echosvg.util;
+    requires java.desktop;
 }

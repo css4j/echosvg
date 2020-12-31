@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.anim {
-	exports io.sf.carte.echosvg.anim.values;
-	exports io.sf.carte.echosvg.anim.dom;
-	exports io.sf.carte.echosvg.anim;
-	exports io.sf.carte.echosvg.anim.timing;
+    exports io.sf.carte.echosvg.anim.values;
+    exports io.sf.carte.echosvg.anim.dom;
+    exports io.sf.carte.echosvg.anim;
+    exports io.sf.carte.echosvg.anim.timing;
 
-	requires io.sf.carte.echosvg.awt;
-	requires io.sf.carte.echosvg.css;
-	requires io.sf.carte.echosvg.ext;
-	requires io.sf.carte.echosvg.parser;
-	requires transitive io.sf.carte.echosvg.dom.svg;
-	requires io.sf.carte.css4j;
-	requires io.sf.carte.echosvg.dom;
-	requires java.desktop;
-	requires java.xml;
-	requires jdk.xml.dom;
-	requires xml.apis.ext;
+    requires io.sf.carte.echosvg.awt;
+    requires io.sf.carte.echosvg.css;
+    requires io.sf.carte.echosvg.ext;
+    requires io.sf.carte.echosvg.parser;
+    requires transitive io.sf.carte.echosvg.dom.svg;
+    requires io.sf.carte.css4j;
+    requires io.sf.carte.echosvg.dom;
+    requires java.desktop;
+    requires java.xml;
+    requires jdk.xml.dom;
+    requires xml.apis.ext;
 }

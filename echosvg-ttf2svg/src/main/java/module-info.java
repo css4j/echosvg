@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.ttf2svg {
-	exports io.sf.carte.echosvg.apps.ttf2svg;
+    exports io.sf.carte.echosvg.apps.ttf2svg;
 
-	requires io.sf.carte.echosvg.svggen;
+    requires io.sf.carte.echosvg.svggen;
 }

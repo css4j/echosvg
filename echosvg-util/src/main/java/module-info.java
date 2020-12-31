@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.util {
-	exports io.sf.carte.echosvg.util.io;
-	exports io.sf.carte.echosvg.util.resources;
-	exports io.sf.carte.echosvg;
-	exports io.sf.carte.echosvg.util;
+    exports io.sf.carte.echosvg.util.io;
+    exports io.sf.carte.echosvg.util.resources;
+    exports io.sf.carte.echosvg;
+    exports io.sf.carte.echosvg.util;
 
-	requires transitive io.sf.carte.echosvg.constants;
-	requires transitive io.sf.carte.echosvg.i18n;
-	requires java.desktop;
+    requires transitive io.sf.carte.echosvg.constants;
+    requires transitive io.sf.carte.echosvg.i18n;
+    requires java.desktop;
 }
