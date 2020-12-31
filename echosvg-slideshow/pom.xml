@@ -69,6 +69,9 @@
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
             </manifest>
+			<manifestEntries>
+				<Automatic-Module-Name>io.sf.carte.echosvg.slideshow</Automatic-Module-Name>
+			</manifestEntries>
           </archive>
         </configuration>
       </plugin>

@@ -72,6 +72,7 @@
         <configuration>
           <excludes>
             <exclude>**/jacl/*</exclude>
+            <exclude>module-info.java</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -94,6 +95,17 @@
           </execution>
         </executions>
       </plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<configuration>
+			<archive>
+				<manifestEntries>
+					<Automatic-Module-Name>io.sf.carte.echosvg.script</Automatic-Module-Name>
+				</manifestEntries>
+			</archive>
+			</configuration>
+		</plugin>
     </plugins>
   </build>
 

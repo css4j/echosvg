@@ -81,6 +81,13 @@
          <groupId>org.apache.maven.plugins</groupId>
          <artifactId>maven-jar-plugin</artifactId>
          <version>${jar.version}</version>
+		<configuration>
+		<archive>
+			<manifestEntries>
+				<Automatic-Module-Name>io.sf.carte.echosvg.util</Automatic-Module-Name>
+			</manifestEntries>
+		</archive>
+		</configuration>
          <executions>
            <execution>
              <goals>
