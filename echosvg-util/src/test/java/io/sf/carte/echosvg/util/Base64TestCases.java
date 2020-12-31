@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.util;
 
 import java.net.URL;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
@@ -115,11 +116,13 @@ public class Base64TestCases {
         performTest("B64.18", "ROUND", "tenByte", null);
     }
 
+    @Ignore
     @Test
     public void testB64_19() throws Exception {
         performTest("B64.19", "ENCODE", "small", "small.64");
     }
 
+    @Ignore
     @Test
     public void testB64_20() throws Exception {
         performTest("B64.20", "DECODE", "small.64", "small");
