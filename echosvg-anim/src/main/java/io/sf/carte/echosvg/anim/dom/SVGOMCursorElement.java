@@ -27,8 +27,6 @@ import org.w3c.dom.svg.SVGStringList;
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
 
@@ -41,6 +39,8 @@ import io.sf.carte.echosvg.util.SVGTypes;
 public class SVGOMCursorElement
     extends    SVGOMURIReferenceElement
     implements SVGCursorElement {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * The attribute initializer.

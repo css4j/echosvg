@@ -31,6 +31,7 @@ import org.w3c.dom.svg.SVGDocument;
  */
 public class SVGDocumentLoaderEvent extends EventObject {
     
+    private static final long serialVersionUID = 1L;
     /**
      * The associated SVG document.
      */

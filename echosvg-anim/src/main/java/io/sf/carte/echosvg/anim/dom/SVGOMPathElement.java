@@ -60,6 +60,7 @@ public class SVGOMPathElement
     implements SVGPathElement,
                SVGPathSegConstants {
 
+    private static final long serialVersionUID = 1L;
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

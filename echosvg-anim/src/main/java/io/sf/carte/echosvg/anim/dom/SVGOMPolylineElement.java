@@ -33,6 +33,8 @@ public class SVGOMPolylineElement
     extends    SVGPointShapeElement
     implements SVGPolylineElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMPolylineElement object.
      */

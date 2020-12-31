@@ -36,6 +36,8 @@ public class SVGOMCircleElement
     extends    SVGGraphicsElement
     implements SVGCircleElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

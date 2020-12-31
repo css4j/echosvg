@@ -55,6 +55,8 @@ public abstract class ExtensibleDOMImplementation
     implements DOMImplementationCSS,
                StyleSheetFactory {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The custom elements factories.
      */

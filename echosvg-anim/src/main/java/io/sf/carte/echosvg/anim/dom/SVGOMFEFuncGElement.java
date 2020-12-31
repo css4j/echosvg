@@ -33,6 +33,8 @@ public class SVGOMFEFuncGElement
     extends    SVGOMComponentTransferFunctionElement
     implements SVGFEFuncGElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new Element object.
      */

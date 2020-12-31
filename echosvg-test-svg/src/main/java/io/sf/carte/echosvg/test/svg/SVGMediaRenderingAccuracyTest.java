@@ -20,7 +20,6 @@ package io.sf.carte.echosvg.test.svg;
 
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
-import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 
 /**
  * Checks for regressions in rendering of a document with a given

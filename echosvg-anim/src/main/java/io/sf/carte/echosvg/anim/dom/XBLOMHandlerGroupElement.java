@@ -30,6 +30,8 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  */
 public class XBLOMHandlerGroupElement extends XBLOMElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new XBLOMHandlerGroupElement.
      */

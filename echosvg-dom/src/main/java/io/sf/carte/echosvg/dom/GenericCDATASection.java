@@ -32,6 +32,7 @@ public class GenericCDATASection
         extends AbstractText
         implements CDATASection {
 
+    private static final long serialVersionUID = 1L;
     /**
      * Is this element immutable?
      */

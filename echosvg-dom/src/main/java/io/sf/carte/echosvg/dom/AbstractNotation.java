@@ -32,6 +32,8 @@ public abstract class AbstractNotation
     extends    AbstractNode
     implements Notation {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The node name.
      */

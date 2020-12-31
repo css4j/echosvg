@@ -33,6 +33,8 @@ public class SVGOMTitleElement
     extends    SVGDescriptiveElement
     implements SVGTitleElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMTitleElement object.
      */

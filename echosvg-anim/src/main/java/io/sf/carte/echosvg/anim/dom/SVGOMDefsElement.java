@@ -33,6 +33,8 @@ public class SVGOMDefsElement
     extends    SVGGraphicsElement
     implements SVGDefsElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMDefsElement object.
      */

@@ -39,6 +39,8 @@ import java.io.Serializable;
  */
 public class Polyline2D implements Shape, Cloneable, Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private static final float ASSUME_ZERO = 0.001f;
 
     /**

@@ -44,6 +44,8 @@ import io.sf.carte.echosvg.w3c.dom.Location;
  */
 public class WindowWrapper extends ImporterTopLevel {
 
+    private static final long serialVersionUID = 1L;
+
     private static final Object[] EMPTY_ARGUMENTS = new Object[0];
 
     /**

@@ -26,8 +26,6 @@ import org.w3c.dom.svg.SVGTextPathElement;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
 
@@ -40,6 +38,8 @@ import io.sf.carte.echosvg.util.SVGTypes;
 public class SVGOMTextPathElement
     extends    SVGOMTextContentElement
     implements SVGTextPathElement {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Table mapping XML attribute names to TraitInformation objects.

@@ -28,6 +28,8 @@ import org.w3c.dom.svg.SVGException;
  */
 public class SVGOMException extends SVGException {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Constructs a new <code>SVGOMException</code> with the specified parameters.
      *

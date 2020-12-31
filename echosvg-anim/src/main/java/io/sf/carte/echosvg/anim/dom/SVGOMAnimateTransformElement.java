@@ -33,6 +33,7 @@ public class SVGOMAnimateTransformElement
     extends    SVGOMAnimationElement
     implements SVGAnimateTransformElement {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The attribute initializer.
      */

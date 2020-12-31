@@ -33,6 +33,8 @@ public class SVGOMTSpanElement
     extends    SVGOMTextPositioningElement
     implements SVGTSpanElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMTSpanElement object.
      */

@@ -54,6 +54,8 @@ public class SVGOMMissingGlyphElement
 //         xmlTraitInformation = t;
 //     }
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMMissingGlyphElement object.
      */

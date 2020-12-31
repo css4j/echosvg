@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.transcoder;
  */
 public class TranscoderException extends Exception {
 
+    private static final long serialVersionUID = 1L;
     /** The enclosed exception. */
     protected Exception ex;
 

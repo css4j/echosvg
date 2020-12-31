@@ -43,6 +43,8 @@ public abstract class AbstractElement
     extends    AbstractParentChildNode
     implements Element, ElementTraversal {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The attributes of this element.
      */
@@ -788,6 +790,8 @@ public abstract class AbstractElement
      */
     public class NamedNodeHashMap implements NamedNodeMap, Serializable {
 
+        private static final long serialVersionUID = 1L;
+
         /**
          * The initial capacity
          */
@@ -1094,6 +1098,8 @@ public abstract class AbstractElement
      * Implements a linked list of <code>Node</code>-objects.
      */
     protected static class Entry implements Serializable {
+
+        private static final long serialVersionUID = 1L;
 
         /**
          * The hash code, must not change after creation.

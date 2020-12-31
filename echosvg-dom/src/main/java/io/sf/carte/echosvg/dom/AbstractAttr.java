@@ -35,6 +35,8 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  */
 public abstract class AbstractAttr extends AbstractParentNode implements Attr {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The name of this node.
      */

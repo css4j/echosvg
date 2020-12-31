@@ -28,6 +28,8 @@ import io.sf.carte.echosvg.anim.timing.TimedElement;
  */
 public class AnimationException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The timed element on which the error occurred.
      */

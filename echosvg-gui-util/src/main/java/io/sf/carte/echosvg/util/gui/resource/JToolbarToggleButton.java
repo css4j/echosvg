@@ -32,6 +32,8 @@ import javax.swing.UIManager;
  */
 public class JToolbarToggleButton extends JToggleButton {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new toolbar button.
      */

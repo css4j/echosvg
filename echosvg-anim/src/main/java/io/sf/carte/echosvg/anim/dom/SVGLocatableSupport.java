@@ -30,7 +30,6 @@ import org.w3c.dom.svg.SVGMatrix;
 import org.w3c.dom.svg.SVGRect;
 
 import io.sf.carte.echosvg.css.engine.CSSEngine;
-import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGMatrix;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
 

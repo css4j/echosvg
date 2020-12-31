@@ -28,6 +28,8 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class GraphicsNodeKeyEvent extends GraphicsNodeInputEvent {
 
+    private static final long serialVersionUID = 1L;
+
     static final int KEY_FIRST = 400;
 
     /**

@@ -43,6 +43,7 @@ public abstract class AbstractElement
         extends io.sf.carte.echosvg.dom.AbstractElement
         implements NodeEventTarget, CSSNavigableNode, SVGConstants {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The live attribute values.
      */
@@ -302,6 +303,8 @@ public abstract class AbstractElement
      * An implementation of the {@link NamedNodeMap}.
      */
     protected class ExtendedNamedNodeHashMap extends NamedNodeHashMap {
+
+        private static final long serialVersionUID = 1L;
 
         /**
          * Creates a new ExtendedNamedNodeHashMap object.

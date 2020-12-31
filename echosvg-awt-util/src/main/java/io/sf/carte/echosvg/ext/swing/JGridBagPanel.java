@@ -33,6 +33,8 @@ import javax.swing.JPanel;
  * @version $Id$
  */
 public class JGridBagPanel extends JPanel implements GridBagConstants{
+    private static final long serialVersionUID = 1L;
+
     /**
      * Provides insets desired for a given grid cell
      */

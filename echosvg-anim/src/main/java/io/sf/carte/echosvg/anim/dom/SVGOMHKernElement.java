@@ -53,6 +53,8 @@ public class SVGOMHKernElement
 //         xmlTraitInformation = t;
 //     }
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMHKernElement object.
      */

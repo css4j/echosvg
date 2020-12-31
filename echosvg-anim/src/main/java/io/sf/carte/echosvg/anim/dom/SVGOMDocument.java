@@ -86,6 +86,8 @@ public class SVGOMDocument
                CSSNavigableDocument,
                IdContainer {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The error messages bundle class name.
      */

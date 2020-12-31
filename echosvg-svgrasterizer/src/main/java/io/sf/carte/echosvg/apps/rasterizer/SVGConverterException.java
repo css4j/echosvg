@@ -25,6 +25,8 @@ package io.sf.carte.echosvg.apps.rasterizer;
  * @version $Id$
  */
 public class SVGConverterException extends Exception {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Error code
      */

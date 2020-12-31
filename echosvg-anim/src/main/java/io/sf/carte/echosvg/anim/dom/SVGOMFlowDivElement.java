@@ -34,6 +34,8 @@ public class SVGOMFlowDivElement
     extends    SVGOMTextContentElement
     implements SVGTextContentElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new EchoSVGRegularPolygonElement object.
      */

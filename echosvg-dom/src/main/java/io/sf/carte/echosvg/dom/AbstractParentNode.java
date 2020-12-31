@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
  */
 public abstract class AbstractParentNode extends AbstractNode {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The children.
      */
@@ -730,6 +731,8 @@ public abstract class AbstractParentNode extends AbstractNode {
      * To manage the children of this node.
      */
     protected class ChildNodes implements NodeList, Serializable {
+        private static final long serialVersionUID = 1L;
+
         /**
          * The first child.
          */

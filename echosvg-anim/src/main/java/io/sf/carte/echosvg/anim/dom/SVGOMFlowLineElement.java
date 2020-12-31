@@ -32,6 +32,8 @@ import io.sf.carte.echosvg.util.SVG12Constants;
 public class SVGOMFlowLineElement  
     extends  SVGOMTextPositioningElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new EchoSVGRegularPolygonElement object.
      */

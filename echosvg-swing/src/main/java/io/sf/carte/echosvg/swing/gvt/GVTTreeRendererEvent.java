@@ -30,6 +30,7 @@ import java.util.EventObject;
  */
 public class GVTTreeRendererEvent extends EventObject {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The buffered image.
      */

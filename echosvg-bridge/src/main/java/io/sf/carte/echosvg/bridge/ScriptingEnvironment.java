@@ -56,7 +56,6 @@ import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.script.Interpreter;
 import io.sf.carte.echosvg.script.InterpreterException;
 import io.sf.carte.echosvg.script.ScriptEventWrapper;

@@ -25,8 +25,6 @@ import org.w3c.dom.svg.SVGGlyphRefElement;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
 
 /**
  * This class implements {@link SVGGlyphRefElement}.
@@ -61,6 +59,7 @@ public class SVGOMGlyphRefElement
 //         xmlTraitInformation = t;
 //     }
 
+    private static final long serialVersionUID = 1L;
     /**
      * The attribute initializer.
      */

@@ -27,6 +27,7 @@ import java.io.Serializable;
  * @version $Id$
  */
 public final class ARGBChannel implements Serializable{
+    private static final long serialVersionUID = 1L;
     /**
      * Types.
      * 

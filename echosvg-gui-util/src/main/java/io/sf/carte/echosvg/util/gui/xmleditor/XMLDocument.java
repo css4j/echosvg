@@ -31,6 +31,7 @@ import javax.swing.text.PlainDocument;
  */
 public class XMLDocument extends PlainDocument {
 
+    private static final long serialVersionUID = 1L;
     protected XMLScanner lexer;
     protected XMLContext context;
     

@@ -75,6 +75,8 @@ import io.sf.carte.echosvg.util.SVGConstants;
  */
 public class JSVGScrollPane extends JPanel
 {
+    private static final long serialVersionUID = 1L;
+
     protected JSVGCanvas canvas;
 
     protected JPanel horizontalPanel;

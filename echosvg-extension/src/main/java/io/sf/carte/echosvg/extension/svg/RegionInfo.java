@@ -31,6 +31,7 @@ import java.awt.geom.Rectangle2D;
 public class RegionInfo
        extends Rectangle2D.Float
 {
+    private static final long serialVersionUID = 1L;
     private float verticalAlignment = 0.0f;
 
     public RegionInfo(float x, float y, float w, float h,

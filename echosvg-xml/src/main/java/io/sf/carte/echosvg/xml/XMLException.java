@@ -32,6 +32,7 @@ package io.sf.carte.echosvg.xml;
  */
 public class XMLException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
     /**
      * @serial The embedded exception if tunnelling, or null.
      */    

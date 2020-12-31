@@ -28,6 +28,7 @@ import org.w3c.dom.Element;
  */
 public class LiveAttributeException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
     // Constants for the error code.
     public static final short ERR_ATTRIBUTE_MISSING   = 0;
     public static final short ERR_ATTRIBUTE_MALFORMED = 1;

@@ -37,6 +37,8 @@ public class SVGOMRadialGradientElement
     extends    SVGOMGradientElement
     implements SVGRadialGradientElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

@@ -33,6 +33,8 @@ public class SVGOMFontFaceSrcElement
     extends    SVGOMElement
     implements SVGFontFaceSrcElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMFontFaceSrcElement object.
      */

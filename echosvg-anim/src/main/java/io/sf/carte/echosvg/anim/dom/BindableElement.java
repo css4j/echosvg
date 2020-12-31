@@ -31,6 +31,8 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  */
 public class BindableElement extends SVGGraphicsElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The namespace URI of the custom element.
      */

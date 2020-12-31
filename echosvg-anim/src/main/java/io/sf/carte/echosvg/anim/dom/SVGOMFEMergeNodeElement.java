@@ -36,6 +36,7 @@ public class SVGOMFEMergeNodeElement
     extends    SVGOMElement
     implements SVGFEMergeNodeElement {
 
+    private static final long serialVersionUID = 1L;
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

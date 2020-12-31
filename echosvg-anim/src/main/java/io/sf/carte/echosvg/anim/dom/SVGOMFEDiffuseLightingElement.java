@@ -37,6 +37,8 @@ public class SVGOMFEDiffuseLightingElement
     extends    SVGOMFilterPrimitiveStandardAttributes
     implements SVGFEDiffuseLightingElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

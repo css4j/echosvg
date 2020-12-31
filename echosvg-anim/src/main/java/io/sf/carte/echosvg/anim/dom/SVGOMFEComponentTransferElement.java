@@ -36,6 +36,7 @@ public class SVGOMFEComponentTransferElement
     extends    SVGOMFilterPrimitiveStandardAttributes
     implements SVGFEComponentTransferElement {
 
+    private static final long serialVersionUID = 1L;
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

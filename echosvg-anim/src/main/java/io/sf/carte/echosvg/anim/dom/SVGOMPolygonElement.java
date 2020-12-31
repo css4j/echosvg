@@ -33,6 +33,8 @@ public class SVGOMPolygonElement
     extends    SVGPointShapeElement
     implements SVGPolygonElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMPolygonElement object.
      */

@@ -36,6 +36,8 @@ public class SVGOMEllipseElement
     extends    SVGGraphicsElement
     implements SVGEllipseElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

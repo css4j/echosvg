@@ -30,6 +30,7 @@ import org.w3c.dom.Text;
  */
 
 public class GenericText extends AbstractText {
+    private static final long serialVersionUID = 1L;
     /**
      * Is this element immutable?
      */

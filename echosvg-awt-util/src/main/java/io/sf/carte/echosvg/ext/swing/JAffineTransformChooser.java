@@ -54,6 +54,8 @@ import javax.swing.text.Document;
  * @version $Id$
  */
 public class JAffineTransformChooser extends JGridBagPanel{
+    private static final long serialVersionUID = 1L;
+
     public static final String LABEL_ANGLE
         = "JAffineTransformChooser.label.angle";
 
@@ -396,6 +398,7 @@ public class JAffineTransformChooser extends JGridBagPanel{
      * Note: This needs to be fixed to deal with localization!
      */
     public static class Dialog extends JDialog {
+        private static final long serialVersionUID = 1L;
         private JAffineTransformChooser chooserPane;
         private AffineTransformTracker tracker;
 
@@ -512,6 +515,8 @@ public class JAffineTransformChooser extends JGridBagPanel{
     }
 
     static class Closer extends WindowAdapter implements Serializable{
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void windowClosing(WindowEvent e) {
             Window w = e.getWindow();
@@ -520,6 +525,8 @@ public class JAffineTransformChooser extends JGridBagPanel{
     }
 
     static class DisposeOnClose extends ComponentAdapter implements Serializable{
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void componentHidden(ComponentEvent e) {
             Window w = (Window)e.getComponent();
@@ -531,6 +538,7 @@ public class JAffineTransformChooser extends JGridBagPanel{
 
 
 class AffineTransformTracker implements ActionListener, Serializable {
+    private static final long serialVersionUID = 1L;
     JAffineTransformChooser chooser;
     AffineTransform txf;
 

@@ -32,6 +32,8 @@ public abstract class AbstractEntity
     extends    AbstractParentNode
     implements Entity {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The node name.
      */

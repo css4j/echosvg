@@ -37,6 +37,8 @@ public abstract class SVGOMComponentTransferFunctionElement
     extends    SVGOMElement
     implements SVGComponentTransferFunctionElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

@@ -47,6 +47,8 @@ public abstract class SVGGraphicsElement
         extends SVGStylableElement
         implements SVGMotionAnimatableElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

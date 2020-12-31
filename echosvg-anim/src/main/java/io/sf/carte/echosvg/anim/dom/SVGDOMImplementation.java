@@ -64,6 +64,8 @@ public class SVGDOMImplementation
     extends    ExtensibleDOMImplementation
     implements CSSStyleDeclarationFactory {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The SVG namespace uri.
      */

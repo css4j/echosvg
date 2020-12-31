@@ -42,6 +42,7 @@ public class SVGStyleSheetProcessingInstruction
     extends StyleSheetProcessingInstruction
     implements CSSStyleSheetNode {
     
+    private static final long serialVersionUID = 1L;
     /**
      * The style-sheet.
      */

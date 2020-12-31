@@ -31,6 +31,8 @@ import java.util.List;
  */
 public class UpdateManagerEvent extends EventObject {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The buffered image.
      */

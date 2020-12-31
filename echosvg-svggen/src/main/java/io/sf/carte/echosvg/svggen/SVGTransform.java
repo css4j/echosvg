@@ -87,6 +87,8 @@ public class SVGTransform extends AbstractSVGConverter{
         // Append transforms in the presentation stack
         //
         Stack presentation = new Stack() {
+            private static final long serialVersionUID = 1L;
+
             /**
              * Adapted push implementation
              */

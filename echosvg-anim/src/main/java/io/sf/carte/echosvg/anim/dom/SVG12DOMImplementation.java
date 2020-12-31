@@ -59,6 +59,8 @@ import io.sf.carte.echosvg.util.XBLConstants;
 public class SVG12DOMImplementation
     extends    SVGDOMImplementation {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGDOMImplementation object.
      */

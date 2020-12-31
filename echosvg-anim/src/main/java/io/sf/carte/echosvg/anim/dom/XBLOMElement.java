@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.util.XBLConstants;
 public abstract class XBLOMElement extends SVGOMElement
                                    implements XBLConstants {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The element prefix.
      */

@@ -34,6 +34,8 @@ public class FlowSpanElement
     implements EchoSVGExtConstants
  {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new EchoSVG Flow Span element.
      */

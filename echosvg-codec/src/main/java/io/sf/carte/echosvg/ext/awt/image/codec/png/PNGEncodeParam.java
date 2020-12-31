@@ -40,6 +40,8 @@ import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
  */
 public abstract class PNGEncodeParam implements ImageEncodeParam {
 
+    private static final long serialVersionUID = 1L;
+
     /** Constant for use with the sRGB chunk. */
     public static final int INTENT_PERCEPTUAL = 0;
 
@@ -103,6 +105,8 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
     }
 
     public static class Palette extends PNGEncodeParam {
+
+        private static final long serialVersionUID = 1L;
 
         /** Constructs an instance of <code>PNGEncodeParam.Palette</code>. */
         public Palette() {}
@@ -277,6 +281,8 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 
     public static class Gray extends PNGEncodeParam {
 
+        private static final long serialVersionUID = 1L;
+
         /** Constructs an instance of <code>PNGEncodeParam.Gray</code>. */
         public Gray() {}
 
@@ -443,6 +449,8 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
     }
 
     public static class RGB extends PNGEncodeParam {
+
+        private static final long serialVersionUID = 1L;
 
         /** Constructs an instance of <code>PNGEncodeParam.RGB</code>. */
         public RGB() {}

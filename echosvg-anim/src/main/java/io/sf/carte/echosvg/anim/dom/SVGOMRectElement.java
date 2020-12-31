@@ -38,6 +38,8 @@ public class SVGOMRectElement
     extends    SVGGraphicsElement
     implements SVGRectElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

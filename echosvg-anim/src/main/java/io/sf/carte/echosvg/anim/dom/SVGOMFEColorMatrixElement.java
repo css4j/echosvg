@@ -38,6 +38,8 @@ public class SVGOMFEColorMatrixElement
     extends    SVGOMFilterPrimitiveStandardAttributes
     implements SVGFEColorMatrixElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

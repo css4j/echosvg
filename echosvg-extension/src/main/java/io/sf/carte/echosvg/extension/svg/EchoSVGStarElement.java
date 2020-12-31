@@ -33,6 +33,8 @@ public class EchoSVGStarElement
     extends    GraphicsExtensionElement 
     implements EchoSVGExtConstants {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new EchoSVGStarElement object.
      */

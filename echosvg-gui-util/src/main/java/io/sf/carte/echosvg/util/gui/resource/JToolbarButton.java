@@ -31,6 +31,8 @@ import javax.swing.JButton;
  * @version $Id$
  */
 public class JToolbarButton extends JButton {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new toolbar button.
      */

@@ -51,6 +51,8 @@ import io.sf.carte.echosvg.script.ScriptEventWrapper;
  */
 class EventTargetWrapper extends NativeJavaObject {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The Java function object calling the Rhino function.
      */

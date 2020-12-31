@@ -31,6 +31,8 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
 public abstract class ExtensionElement 
     extends SVGOMElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new Element object.
      */

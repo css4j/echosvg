@@ -33,6 +33,8 @@ public class SVGOMDescElement
     extends    SVGDescriptiveElement
     implements SVGDescElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMDescElement object.
      */

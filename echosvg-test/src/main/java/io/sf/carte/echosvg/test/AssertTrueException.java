@@ -25,6 +25,8 @@ package io.sf.carte.echosvg.test;
  * @version $Id$
  */
 public class AssertTrueException extends AssertException {
+    private static final long serialVersionUID = 1L;
+
     public static final String ASSERTION_TYPE = "assertTrue";
 
     /**

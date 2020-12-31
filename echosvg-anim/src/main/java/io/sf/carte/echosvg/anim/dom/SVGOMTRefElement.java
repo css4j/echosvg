@@ -33,6 +33,8 @@ public class SVGOMTRefElement
     extends    SVGURIReferenceTextPositioningElement
     implements SVGTRefElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMTRefElement object.
      */

@@ -43,6 +43,7 @@ import javax.swing.undo.UndoManager;
  */
 public class XMLTextEditor extends JEditorPane {
 
+    private static final long serialVersionUID = 1L;
     protected UndoManager undoManager;
     
     /** Creates a new instance of XMLEditorPane */

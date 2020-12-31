@@ -58,6 +58,8 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  */
 public class URIChooser extends JDialog implements ActionMap {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The return value if 'OK' is chosen.
      */
@@ -279,6 +281,8 @@ public class URIChooser extends JDialog implements ActionMap {
      * The action associated with the 'browse' button
      */
     protected class BrowseButtonAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             JFileChooser fileChooser = new JFileChooser(currentPath);
@@ -304,6 +308,8 @@ public class URIChooser extends JDialog implements ActionMap {
      * The action associated with the 'OK' button of the URI chooser
      */
     protected class OKButtonAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             returnCode = OK_OPTION;
@@ -316,6 +322,8 @@ public class URIChooser extends JDialog implements ActionMap {
      * The action associated with the 'Cancel' button of the URI chooser
      */
     protected class CancelButtonAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             returnCode = CANCEL_OPTION;
@@ -328,6 +336,8 @@ public class URIChooser extends JDialog implements ActionMap {
      * The action associated with the 'Clear' button of the URI chooser
      */
     protected class ClearButtonAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             textField.setText("");

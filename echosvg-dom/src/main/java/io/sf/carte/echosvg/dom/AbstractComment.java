@@ -31,6 +31,8 @@ public abstract class AbstractComment
     extends    AbstractCharacterData
     implements Comment {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
      * @return "#comment".

@@ -27,6 +27,7 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public class GenericNotation extends AbstractNotation {
+    private static final long serialVersionUID = 1L;
     /**
      * Is this node immutable?
      */

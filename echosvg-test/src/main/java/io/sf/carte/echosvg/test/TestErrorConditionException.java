@@ -29,6 +29,7 @@ import java.io.StringWriter;
  * @version $Id$
  */
 public class TestErrorConditionException extends Exception {
+    private static final long serialVersionUID = 1L;
     /**
      * Error code. May be null.
      */

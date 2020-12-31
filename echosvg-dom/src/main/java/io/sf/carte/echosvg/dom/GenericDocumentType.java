@@ -33,6 +33,8 @@ public class GenericDocumentType
         extends AbstractChildNode 
         implements DocumentType {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The qualified name of the document element.
      */

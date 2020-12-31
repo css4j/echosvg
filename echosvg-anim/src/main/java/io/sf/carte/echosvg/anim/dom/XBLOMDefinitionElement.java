@@ -32,6 +32,8 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  */
 public class XBLOMDefinitionElement extends XBLOMElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new XBLOMDefinitionElement.
      */

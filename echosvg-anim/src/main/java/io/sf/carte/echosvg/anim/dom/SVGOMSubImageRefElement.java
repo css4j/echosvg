@@ -46,6 +46,8 @@ import io.sf.carte.echosvg.util.SVG12Constants;
 public class SVGOMSubImageRefElement extends SVGStylableElement {
 
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SubImageRefElement object.
      */

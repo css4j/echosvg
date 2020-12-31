@@ -85,6 +85,8 @@ import io.sf.carte.echosvg.util.gui.JErrorPane;
  */
 public class JSVGCanvas extends JSVGComponent {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The key for the Action to scroll right.
      */
@@ -652,6 +654,8 @@ public class JSVGCanvas extends JSVGComponent {
      * A swing action to reset the rendering transform of the canvas.
      */
     public class ResetTransformAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent evt) {
             fragmentIdentifier = null;
@@ -667,6 +671,7 @@ public class JSVGCanvas extends JSVGComponent {
      * the display.
      */
     public class AffineAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
         AffineTransform at;
         public AffineAction(AffineTransform at) {
             this.at = at;
@@ -696,6 +701,7 @@ public class JSVGCanvas extends JSVGComponent {
      * This can be used to zoom in (scale &gt; 1) and out (scale &lt;1).
      */
     public class ZoomAction extends AffineAction {
+        private static final long serialVersionUID = 1L;
         public ZoomAction(double scale) {
             super(AffineTransform.getScaleInstance(scale, scale));
         }
@@ -708,6 +714,8 @@ public class JSVGCanvas extends JSVGComponent {
      * A swing action to zoom in the canvas.
      */
     public class ZoomInAction extends ZoomAction {
+        private static final long serialVersionUID = 1L;
+
         ZoomInAction() { super(2); }
     }
 
@@ -715,6 +723,8 @@ public class JSVGCanvas extends JSVGComponent {
      * A swing action to zoom out the canvas.
      */
     public class ZoomOutAction extends ZoomAction {
+        private static final long serialVersionUID = 1L;
+
         ZoomOutAction() { super(.5); }
     }
 
@@ -722,6 +732,8 @@ public class JSVGCanvas extends JSVGComponent {
      * A swing action to Rotate the canvas.
      */
     public class RotateAction extends AffineAction {
+        private static final long serialVersionUID = 1L;
+
         public RotateAction(double theta) {
             super(AffineTransform.getRotateInstance(theta));
         }
@@ -731,6 +743,8 @@ public class JSVGCanvas extends JSVGComponent {
      * A swing action to Pan/scroll the canvas.
      */
     public class ScrollAction extends AffineAction {
+        private static final long serialVersionUID = 1L;
+
         public ScrollAction(double tx, double ty) {
             super(AffineTransform.getTranslateInstance(tx, ty));
         }
@@ -741,6 +755,8 @@ public class JSVGCanvas extends JSVGComponent {
      * by a fixed amount
      */
     public class ScrollRightAction extends ScrollAction {
+        private static final long serialVersionUID = 1L;
+
         public ScrollRightAction(int inc) {
             super(-inc, 0);
         }
@@ -751,6 +767,8 @@ public class JSVGCanvas extends JSVGComponent {
      * by a fixed amount
      */
     public class ScrollLeftAction extends ScrollAction {
+        private static final long serialVersionUID = 1L;
+
         public ScrollLeftAction(int inc) {
             super(inc, 0);
         }
@@ -761,6 +779,8 @@ public class JSVGCanvas extends JSVGComponent {
      * by a fixed amount
      */
     public class ScrollUpAction extends ScrollAction {
+        private static final long serialVersionUID = 1L;
+
         public ScrollUpAction(int inc) {
             super(0, inc);
         }
@@ -771,6 +791,8 @@ public class JSVGCanvas extends JSVGComponent {
      * by a fixed amount
      */
     public class ScrollDownAction extends ScrollAction {
+        private static final long serialVersionUID = 1L;
+
         public ScrollDownAction(int inc) {
             super(0, -inc);
         }

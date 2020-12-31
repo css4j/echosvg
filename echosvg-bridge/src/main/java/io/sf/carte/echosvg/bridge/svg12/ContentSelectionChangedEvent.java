@@ -31,6 +31,8 @@ import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
  */
 public class ContentSelectionChangedEvent extends EventObject {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new ContentSelectionChangedEvent object.
      * @param c the xbl:content element whose selection is changing

@@ -33,6 +33,8 @@ public class SVGOMSwitchElement
     extends    SVGGraphicsElement
     implements SVGSwitchElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMSwitchElement object.
      */

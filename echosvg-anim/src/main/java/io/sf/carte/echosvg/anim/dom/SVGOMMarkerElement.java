@@ -43,6 +43,8 @@ public class SVGOMMarkerElement
     extends    SVGStylableElement
     implements SVGMarkerElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

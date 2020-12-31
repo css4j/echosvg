@@ -33,6 +33,7 @@ import javax.swing.text.StyleContext;
  */
 public class XMLContext extends StyleContext {
 
+    private static final long serialVersionUID = 1L;
     //public static String DEFAULT_SYNTAX          = "DEFAULT_SYNTAX";
     public static final String XML_DECLARATION_STYLE  = "xml_declaration";
     public static final String DOCTYPE_STYLE          = "doctype";

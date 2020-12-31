@@ -30,6 +30,8 @@ import java.util.Map;
  */
 public class TranscodingHints extends HashMap {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Constructs a new empty <code>TranscodingHints</code>.
      */

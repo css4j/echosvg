@@ -33,6 +33,8 @@ public class SVGOMDefinitionSrcElement
     extends    SVGOMElement
     implements SVGDefinitionSrcElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMDefinitionSrcElement object.
      */

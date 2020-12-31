@@ -31,6 +31,8 @@ import io.sf.carte.echosvg.util.SVG12Constants;
  */
 public class SVGOMSolidColorElement extends SVGStylableElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new EchoSVGRegularPolygonElement object.
      */

@@ -108,6 +108,8 @@ public class SVGOMFontFaceElement
 //         xmlTraitInformation = t;
 //     }
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMFontFaceElement object.
      */

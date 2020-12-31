@@ -72,6 +72,8 @@ import io.sf.carte.echosvg.util.Platform;
  */
 public class JGVTComponent extends JComponent {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The listener.
      */

@@ -936,6 +936,8 @@ public class RectListManager implements Collection {
      */
     private static class RectXComparator implements Comparator, Serializable {
 
+        private static final long serialVersionUID = 1L;
+
         RectXComparator() { }
 
         @Override

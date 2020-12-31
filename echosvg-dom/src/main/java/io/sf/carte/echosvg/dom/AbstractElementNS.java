@@ -23,7 +23,6 @@ import org.w3c.dom.Node;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
 
 /**
  * This class implements the {@link org.w3c.dom.Element} interface.
@@ -33,6 +32,7 @@ import io.sf.carte.echosvg.dom.util.XMLSupport;
  */
 public abstract class AbstractElementNS extends AbstractElement {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The namespace URI
      */

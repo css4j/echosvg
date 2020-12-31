@@ -43,6 +43,8 @@ public abstract class AbstractDOMImplementation
                    Localizable,
                    Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The error messages bundle class name.
      */

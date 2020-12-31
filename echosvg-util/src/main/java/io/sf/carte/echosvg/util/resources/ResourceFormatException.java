@@ -26,6 +26,8 @@ package io.sf.carte.echosvg.util.resources;
  */
 public class ResourceFormatException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The class name of the resource bundle requested
      * @serial

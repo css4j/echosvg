@@ -28,6 +28,8 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public abstract class AbstractChildNode extends AbstractNode {
+    private static final long serialVersionUID = 1L;
+
     /**
      * The parent node of this node.
      */

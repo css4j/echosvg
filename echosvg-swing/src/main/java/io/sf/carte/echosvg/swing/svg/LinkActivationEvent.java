@@ -31,6 +31,7 @@ import org.w3c.dom.svg.SVGAElement;
  */
 public class LinkActivationEvent extends EventObject {
     
+    private static final long serialVersionUID = 1L;
     /**
      * The URI the link references.
      */

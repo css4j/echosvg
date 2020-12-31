@@ -24,8 +24,6 @@ import org.w3c.dom.svg.SVGAltGlyphElement;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
 
 /**
  * This class implements {@link SVGAltGlyphElement}.
@@ -37,6 +35,7 @@ public class SVGOMAltGlyphElement
     extends    SVGURIReferenceTextPositioningElement
     implements SVGAltGlyphElement {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The attribute initializer.
      */

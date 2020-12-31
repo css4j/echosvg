@@ -77,6 +77,8 @@ import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
  */
 public class PNGDecodeParam implements ImageDecodeParam {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Constructs a default instance of <code>PNGDecodeParam</code>.
      */

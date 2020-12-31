@@ -25,8 +25,6 @@ import org.w3c.dom.svg.SVGImageElement;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
 
@@ -39,6 +37,8 @@ import io.sf.carte.echosvg.util.SVGTypes;
 public class SVGOMImageElement
     extends    SVGURIReferenceGraphicsElement
     implements SVGImageElement {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Table mapping XML attribute names to TraitInformation objects.

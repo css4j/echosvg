@@ -27,6 +27,8 @@ package io.sf.carte.echosvg.bridge;
  */
 public class InterruptedBridgeException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Constructs a new InterruptedBridgeException.
      */

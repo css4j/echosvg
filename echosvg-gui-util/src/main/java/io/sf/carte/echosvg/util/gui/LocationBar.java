@@ -40,6 +40,8 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * @version $Id$
  */
 public class LocationBar extends JPanel {
+    private static final long serialVersionUID = 1L;
+
     /**
      * The gui resources file name
      */

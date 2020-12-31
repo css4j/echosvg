@@ -30,6 +30,8 @@ import javax.swing.text.PlainDocument;
  */
 public class DoubleDocument extends PlainDocument {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Strip all non digit characters.  The first character must be '-' or '+'.
      * Only one '.' is allowed.

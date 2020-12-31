@@ -39,6 +39,8 @@ public class StyleSheetProcessingInstruction
     extends AbstractProcessingInstruction
     implements LinkStyle {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Is this node immutable?
      */

@@ -33,7 +33,6 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * This class implements {@link SVGStyleElement}.
@@ -62,6 +61,8 @@ public class SVGOMStyleElement
 //                 new TraitInformation(false, SVGTypes.TYPE_CDATA));
 //         xmlTraitInformation = t;
 //     }
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * The attribute initializer.

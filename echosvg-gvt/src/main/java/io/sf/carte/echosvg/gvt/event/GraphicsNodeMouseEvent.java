@@ -33,6 +33,8 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class GraphicsNodeMouseEvent extends GraphicsNodeInputEvent {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The first number in the range of ids used for mouse events.
      */

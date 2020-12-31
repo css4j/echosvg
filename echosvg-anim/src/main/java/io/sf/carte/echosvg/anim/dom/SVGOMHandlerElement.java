@@ -31,6 +31,8 @@ import io.sf.carte.echosvg.util.SVG12Constants;
  */
 public class SVGOMHandlerElement extends SVGOMElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMHandlerElement object.
      */

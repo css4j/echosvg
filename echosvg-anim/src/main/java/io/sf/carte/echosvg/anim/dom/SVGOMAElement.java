@@ -24,8 +24,6 @@ import org.w3c.dom.svg.SVGAnimatedString;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
 
@@ -39,6 +37,7 @@ public class SVGOMAElement
     extends    SVGURIReferenceGraphicsElement
     implements SVGAElement {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The attribute initializer.
      */

@@ -31,6 +31,8 @@ import javax.swing.JComponent;
  * @version $Id$
  */
 public class JToolbarSeparator extends JComponent {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new JToolbarSeparator object.
      */

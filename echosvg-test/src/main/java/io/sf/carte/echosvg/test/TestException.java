@@ -27,6 +27,8 @@ package io.sf.carte.echosvg.test;
  * @version $Id$
  */
 public class TestException extends Exception {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Error code
      */

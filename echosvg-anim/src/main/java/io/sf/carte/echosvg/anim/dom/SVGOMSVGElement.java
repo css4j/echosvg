@@ -63,7 +63,6 @@ import io.sf.carte.echosvg.dom.svg.SVGSVGContext;
 import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
 import io.sf.carte.echosvg.dom.svg.SVGZoomAndPanSupport;
 import io.sf.carte.echosvg.dom.util.ListNodeList;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
@@ -77,6 +76,8 @@ import io.sf.carte.echosvg.util.SVGTypes;
 public class SVGOMSVGElement
     extends    SVGStylableElement
     implements SVGSVGElement {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Table mapping XML attribute names to TraitInformation objects.

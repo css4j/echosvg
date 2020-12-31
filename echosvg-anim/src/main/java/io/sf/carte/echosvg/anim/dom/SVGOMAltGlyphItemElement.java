@@ -33,6 +33,8 @@ public class SVGOMAltGlyphItemElement
     extends    SVGOMElement
     implements SVGAltGlyphItemElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMAltGlyphItemElement object.
      */

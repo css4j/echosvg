@@ -42,7 +42,6 @@ import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
 import io.sf.carte.echosvg.dom.events.EventSupport;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.dom.xbl.NodeXBL;
 import io.sf.carte.echosvg.dom.xbl.XBLManagerData;
 import io.sf.carte.echosvg.util.ParsedURL;
@@ -58,6 +57,8 @@ public abstract class AbstractNode
                NodeXBL,
                XBLManagerData,
                Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * An empty instance of NodeList.

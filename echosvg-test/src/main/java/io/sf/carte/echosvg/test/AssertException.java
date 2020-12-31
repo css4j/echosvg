@@ -25,6 +25,7 @@ package io.sf.carte.echosvg.test;
  * @version $Id$
  */
 public abstract class AssertException extends TestErrorConditionException {
+    private static final long serialVersionUID = 1L;
     public static final String ENTRY_KEY_ASSERTION_TYPE 
         = "AssertException.entry.key.assertion.type";
 

@@ -46,6 +46,7 @@ public class SVGOMTextElement
     implements SVGTextElement,
                SVGMotionAnimatableElement {
 
+    private static final long serialVersionUID = 1L;
     // Default values for attributes on a text element
     protected static final String X_DEFAULT_VALUE = "0";
     protected static final String Y_DEFAULT_VALUE = "0";

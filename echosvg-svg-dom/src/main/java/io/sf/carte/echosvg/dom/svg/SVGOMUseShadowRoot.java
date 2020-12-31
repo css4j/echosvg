@@ -37,6 +37,8 @@ public class SVGOMUseShadowRoot
         extends AbstractDocumentFragment
         implements CSSNavigableNode, IdContainer {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The parent CSS element.
      */

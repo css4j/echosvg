@@ -32,6 +32,8 @@ package io.sf.carte.echosvg.parser;
  */
 public class ParseException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * @serial The embedded exception if tunnelling, or null.
      */    

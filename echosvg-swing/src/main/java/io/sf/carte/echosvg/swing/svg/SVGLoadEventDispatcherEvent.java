@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class SVGLoadEventDispatcherEvent extends EventObject {
     
+    private static final long serialVersionUID = 1L;
     /**
      * The GVT root.
      */

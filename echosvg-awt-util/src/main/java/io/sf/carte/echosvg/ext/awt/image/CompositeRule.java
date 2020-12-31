@@ -27,6 +27,8 @@ package io.sf.carte.echosvg.ext.awt.image;
  */
 public final class CompositeRule implements java.io.Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /** Porter-Duff src over rule, also used for feBlend <code>normal</code>. */
     public static final int RULE_OVER = 1;
 

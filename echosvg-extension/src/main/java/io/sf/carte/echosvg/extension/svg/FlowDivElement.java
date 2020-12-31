@@ -33,6 +33,8 @@ public class FlowDivElement
     extends    PrefixableStylableExtensionElement 
     implements EchoSVGExtConstants {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new EchoSVGRegularPolygonElement object.
      */

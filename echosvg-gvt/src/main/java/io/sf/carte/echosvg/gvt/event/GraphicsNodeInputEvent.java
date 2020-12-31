@@ -30,6 +30,8 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public abstract class GraphicsNodeInputEvent extends GraphicsNodeEvent {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The shift key modifier constant.
      */

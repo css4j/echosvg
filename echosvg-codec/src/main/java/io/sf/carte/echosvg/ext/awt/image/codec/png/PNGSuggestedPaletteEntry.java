@@ -30,6 +30,8 @@ import java.io.Serializable;
  */
 public class PNGSuggestedPaletteEntry implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /** The name of the entry. */
     public String name;
 

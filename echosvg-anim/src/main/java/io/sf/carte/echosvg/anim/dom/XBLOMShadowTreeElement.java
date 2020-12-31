@@ -35,6 +35,8 @@ public class XBLOMShadowTreeElement
         extends XBLOMElement
         implements XBLShadowTreeElement, IdContainer {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new XBLOMShadowTreeElement.
      */

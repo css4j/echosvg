@@ -30,6 +30,8 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class GraphicsNodeEvent extends EventObject {
 
+    private static final long serialVersionUID = 1L;
+
     /** Indicates whether or not this event is consumed. */
     private boolean consumed = false;
 

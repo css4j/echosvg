@@ -44,6 +44,8 @@ public abstract class StylableExtensionElement
     implements CSSStylableElement,
                SVGStylable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The base URL.
      */

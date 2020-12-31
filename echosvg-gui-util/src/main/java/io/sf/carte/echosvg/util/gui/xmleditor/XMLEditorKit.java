@@ -37,6 +37,8 @@ import javax.swing.text.ViewFactory;
  */
 public class XMLEditorKit extends DefaultEditorKit {
 
+    private static final long serialVersionUID = 1L;
+
     public static final String XML_MIME_TYPE = "text/xml";
     
     protected XMLContext context;

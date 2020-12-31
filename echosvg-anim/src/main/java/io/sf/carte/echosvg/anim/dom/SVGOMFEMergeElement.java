@@ -33,6 +33,8 @@ public class SVGOMFEMergeElement
     extends    SVGOMFilterPrimitiveStandardAttributes
     implements SVGFEMergeElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMFEMergeElement object.
      */

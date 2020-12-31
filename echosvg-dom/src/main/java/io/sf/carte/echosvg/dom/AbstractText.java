@@ -38,6 +38,8 @@ public abstract class AbstractText
     extends    AbstractCharacterData
     implements Text {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Text#splitText(int)}.
      */

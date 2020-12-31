@@ -26,7 +26,9 @@ package io.sf.carte.echosvg.ext.awt.image;
  * @version $Id$
  */
 public final class PadMode implements java.io.Serializable {
-      /** Pad edges with zeros */
+      private static final long serialVersionUID = 1L;
+
+    /** Pad edges with zeros */
     public static final int MODE_ZERO_PAD = 1;
 
       /** Pad edges by replicating edge pixels */

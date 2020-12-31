@@ -69,6 +69,8 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * @version $Id$
  */
 public class MemoryMonitor extends JFrame implements ActionMap {
+    private static final long serialVersionUID = 1L;
+
     /**
      * The resource file name
      */
@@ -174,6 +176,8 @@ public class MemoryMonitor extends JFrame implements ActionMap {
      * The action associated with the 'Collect' button of the memory monitor.
      */
     protected static class CollectButtonAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             System.gc();
@@ -184,6 +188,8 @@ public class MemoryMonitor extends JFrame implements ActionMap {
      * The action associated with the 'Close' button of the memory monitor.
      */
     protected class CloseButtonAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             panel.getRepaintThread().safeSuspend();
@@ -195,6 +201,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
      * A panel composed of a Usage instance and a History instance.
      */
     public static class Panel extends JPanel {
+        private static final long serialVersionUID = 1L;
         /**
          * The repaint thread.
          */
@@ -258,6 +265,8 @@ public class MemoryMonitor extends JFrame implements ActionMap {
      * Displays the current memory usage.
      */
     public static class Usage extends JPanel implements MemoryChangeListener {
+        private static final long serialVersionUID = 1L;
+
         /**
          * The preferred width.
          */
@@ -496,6 +505,8 @@ public class MemoryMonitor extends JFrame implements ActionMap {
      * Displays the memory usage history in a chart.
      */
     public static class History extends JPanel implements MemoryChangeListener {
+        private static final long serialVersionUID = 1L;
+
         /**
          * The preferred width.
          */

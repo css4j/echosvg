@@ -37,6 +37,8 @@ public class SVGOMMaskElement
     extends    SVGGraphicsElement
     implements SVGMaskElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

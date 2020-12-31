@@ -30,6 +30,8 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  */
 public class XBLOMImportElement extends XBLOMElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new XBLOMImportElement.
      */

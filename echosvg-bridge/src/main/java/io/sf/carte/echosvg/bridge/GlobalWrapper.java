@@ -35,6 +35,8 @@ import io.sf.carte.echosvg.dom.svg12.SVGGlobal;
  */
 public class GlobalWrapper extends WindowWrapper {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new GlobalWrapper.
      */

@@ -25,6 +25,8 @@ package io.sf.carte.echosvg.test;
  * @version $Id$
  */
 public class AssertEqualsException extends AssertException {
+    private static final long serialVersionUID = 1L;
+
     public static final String ENTRY_KEY_REF_OBJECT
         = "AssertEqualsException.entry.key.ref.object";
 

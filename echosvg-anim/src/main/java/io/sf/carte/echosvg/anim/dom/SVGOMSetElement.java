@@ -67,6 +67,8 @@ public class SVGOMSetElement
 //         xmlTraitInformation = t;
 //     }
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMSetElement object.
      */

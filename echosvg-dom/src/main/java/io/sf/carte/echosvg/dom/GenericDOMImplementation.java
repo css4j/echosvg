@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.xml.XMLUtilities;
  */
 public class GenericDOMImplementation extends AbstractDOMImplementation {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The default instance of this class.
      */

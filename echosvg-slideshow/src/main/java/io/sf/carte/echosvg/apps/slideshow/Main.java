@@ -61,6 +61,7 @@ import io.sf.carte.echosvg.gvt.renderer.StaticRenderer;
  */
 public class Main extends JComponent {
 
+    private static final long serialVersionUID = 1L;
     StaticRenderer renderer;
     UserAgent      userAgent;
     DocumentLoader loader;

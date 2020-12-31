@@ -27,6 +27,7 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public class GenericDocumentFragment extends AbstractDocumentFragment {
+    private static final long serialVersionUID = 1L;
     /**
      * Is this element immutable?
      */

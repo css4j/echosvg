@@ -32,6 +32,8 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class BridgeException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     /** The element on which the error occured. */
     protected Element e;
 

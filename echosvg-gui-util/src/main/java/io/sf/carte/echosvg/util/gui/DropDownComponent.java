@@ -57,6 +57,8 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  */
 public class DropDownComponent extends JPanel {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The main button for this component.
      */
@@ -305,6 +307,8 @@ public class DropDownComponent extends JPanel {
     public static class DefaultScrollablePopupMenuItem extends JButton
             implements ScrollablePopupMenuItem {
 
+        private static final long serialVersionUID = 1L;
+
         /**
          * The selected item background color.
          */
@@ -450,6 +454,8 @@ public class DropDownComponent extends JPanel {
      * The Scrollable Popup Menu Component.
      */
     public static class ScrollablePopupMenu extends JPopupMenu {
+
+        private static final long serialVersionUID = 1L;
 
         /**
          * The resource file name.
@@ -784,6 +790,7 @@ public class DropDownComponent extends JPanel {
      */
     public static class ScrollablePopupMenuEvent extends EventObject {
 
+        private static final long serialVersionUID = 1L;
         // The codes for the event type
         public static final int ITEMS_ADDED = 1;
         public static final int ITEMS_REMOVED = 2;

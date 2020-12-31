@@ -33,6 +33,7 @@ public class SVGOMAnimateMotionElement
     extends    SVGOMAnimationElement
     implements SVGAnimateMotionElement {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The attribute initializer.
      */

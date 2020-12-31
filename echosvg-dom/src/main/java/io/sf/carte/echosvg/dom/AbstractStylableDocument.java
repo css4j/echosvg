@@ -40,6 +40,8 @@ public abstract class AbstractStylableDocument extends AbstractDocument
     implements DocumentCSS,
                DocumentView {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The default view.
      */

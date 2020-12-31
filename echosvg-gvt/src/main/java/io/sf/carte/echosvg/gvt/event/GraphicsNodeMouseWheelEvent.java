@@ -29,6 +29,8 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class GraphicsNodeMouseWheelEvent extends GraphicsNodeInputEvent {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The id for the "mouseWheelMoved" event.
      */

@@ -36,6 +36,8 @@ import io.sf.carte.echosvg.css.engine.CSSNavigableDocumentListener;
  */
 public class SVG12OMDocument extends SVGOMDocument {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new uninitialized document.
      */

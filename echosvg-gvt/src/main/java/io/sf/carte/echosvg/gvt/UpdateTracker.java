@@ -284,6 +284,8 @@ public class UpdateTracker extends GraphicsNodeChangeAdapter {
     }
 
     static class ChngSrcRect extends Rectangle2D.Float {
+        private static final long serialVersionUID = 1L;
+
         ChngSrcRect(Rectangle2D r2d) {
             super((float)r2d.getX(), (float)r2d.getY(),
                   (float)r2d.getWidth(), (float)r2d.getHeight());

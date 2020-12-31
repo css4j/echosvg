@@ -30,6 +30,7 @@ import org.w3c.dom.Node;
  */
 public class GenericAttrNS extends AbstractAttrNS {
 
+    private static final long serialVersionUID = 1L;
     /**
      * Is this attribute immutable?
      */

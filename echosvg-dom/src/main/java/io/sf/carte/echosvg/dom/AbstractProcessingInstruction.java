@@ -33,6 +33,7 @@ public abstract class AbstractProcessingInstruction
     extends    AbstractChildNode
     implements ProcessingInstruction {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The data.
      */

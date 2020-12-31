@@ -30,6 +30,8 @@ import io.sf.carte.echosvg.dom.util.XMLSupport;
  */
 public abstract class SVGDescriptiveElement extends SVGStylableElement {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGDescriptiveElement object.
      */

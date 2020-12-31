@@ -58,6 +58,8 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  */
 public class JErrorPane extends JPanel implements ActionMap {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The resource file name
      */
@@ -224,6 +226,8 @@ public class JErrorPane extends JPanel implements ActionMap {
      */
     protected class OKButtonAction extends AbstractAction {
 
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent evt) {
             ((JDialog)getTopLevelAncestor()).dispose();
@@ -234,6 +238,8 @@ public class JErrorPane extends JPanel implements ActionMap {
      * The action associated with the 'Show Detail' button.
      */
     protected class ShowDetailButtonAction extends AbstractAction {
+
+        private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent evt) {

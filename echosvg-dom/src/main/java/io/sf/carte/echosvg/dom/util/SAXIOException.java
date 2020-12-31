@@ -32,6 +32,7 @@ import org.xml.sax.SAXException;
  */
 public class SAXIOException extends IOException {
 
+    private static final long serialVersionUID = 1L;
     protected SAXException saxe;
 
     public SAXIOException( SAXException saxe) {

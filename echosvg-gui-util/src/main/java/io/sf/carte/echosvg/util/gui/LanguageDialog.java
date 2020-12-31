@@ -66,6 +66,8 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  */
 public class LanguageDialog extends JDialog implements ActionMap {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The return value if 'OK' is chosen.
      */
@@ -181,6 +183,8 @@ public class LanguageDialog extends JDialog implements ActionMap {
      * The language selection panel.
      */
     public static class Panel extends JPanel implements ActionMap {
+        private static final long serialVersionUID = 1L;
+
         /**
          * The user languages list
          */
@@ -493,6 +497,8 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * The action associated with the 'add' button
          */
         protected class AddLanguageButtonAction extends AbstractAction {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 int    i = languageList.getSelectedIndex();
@@ -507,6 +513,8 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * The action associated with the 'remove' button
          */
         protected class RemoveLanguageButtonAction extends AbstractAction {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 int i = userList.getSelectedIndex();
@@ -532,6 +540,8 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * The action associated with the 'up' button
          */
         protected class UpLanguageButtonAction extends AbstractAction {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 int    i = userList.getSelectedIndex();
@@ -546,6 +556,8 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * The action associated with the 'down' button
          */
         protected class DownLanguageButtonAction extends AbstractAction {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 int    i = userList.getSelectedIndex();
@@ -560,6 +572,8 @@ public class LanguageDialog extends JDialog implements ActionMap {
          * The action associated with the 'clear' button
          */
         protected class ClearLanguageButtonAction extends AbstractAction {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 int len = userListModel.getSize();
@@ -617,6 +631,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
         protected class IconAndTextCellRenderer
             extends    JLabel
             implements ListCellRenderer {
+            private static final long serialVersionUID = 1L;
             public IconAndTextCellRenderer() {
                 this.setOpaque(true);
                 this.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
@@ -648,6 +663,8 @@ public class LanguageDialog extends JDialog implements ActionMap {
      * The action associated with the 'OK' button
      */
     protected class OKButtonAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             returnCode = OK_OPTION;
@@ -659,6 +676,8 @@ public class LanguageDialog extends JDialog implements ActionMap {
      * The action associated with the 'Cancel' button
      */
     protected class CancelButtonAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             returnCode = CANCEL_OPTION;

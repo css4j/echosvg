@@ -43,6 +43,8 @@ import io.sf.carte.echosvg.constants.XMLConstants;
 public class GenericDocument
     extends AbstractDocument {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Local name for 'id' attributes.
      */

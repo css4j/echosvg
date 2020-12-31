@@ -25,8 +25,6 @@ import org.w3c.dom.svg.SVGColorProfileElement;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
 
 /**
  * This class implements {@link org.w3c.dom.svg.SVGColorProfileElement}.
@@ -38,6 +36,7 @@ public class SVGOMColorProfileElement
     extends    SVGOMURIReferenceElement
     implements SVGColorProfileElement {
 
+    private static final long serialVersionUID = 1L;
     /**
      * The attribute initializer.
      */

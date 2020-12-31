@@ -32,6 +32,8 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
 public class SVGOMGElement
     extends    SVGGraphicsElement
     implements SVGGElement {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMGElement object.
      */

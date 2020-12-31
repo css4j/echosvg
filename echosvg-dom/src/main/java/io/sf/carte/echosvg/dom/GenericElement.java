@@ -28,6 +28,8 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public class GenericElement extends AbstractElement {
+    private static final long serialVersionUID = 1L;
+
     /**
      * The node name.
      */

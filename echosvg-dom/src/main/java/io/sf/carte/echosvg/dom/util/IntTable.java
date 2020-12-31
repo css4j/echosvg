@@ -30,6 +30,8 @@ import java.io.Serializable;
  */
 public class IntTable implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The initial capacity
      */
@@ -258,6 +260,8 @@ public class IntTable implements Serializable {
      * To manage collisions.
      */
     protected static class Entry implements Serializable {
+
+        private static final long serialVersionUID = 1L;
 
         /**
          * The hash code.

@@ -36,6 +36,7 @@ public class SVGOMFontElement
     extends    SVGStylableElement
     implements SVGFontElement {
 
+    private static final long serialVersionUID = 1L;
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

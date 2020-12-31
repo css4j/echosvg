@@ -223,6 +223,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      */
     class TextAttribute extends AttributedCharacterIterator.Attribute {
 
+        private static final long serialVersionUID = 1L;
         /** Construct a TextAttribute key with name s */
         public TextAttribute(String s) {
             super(s);

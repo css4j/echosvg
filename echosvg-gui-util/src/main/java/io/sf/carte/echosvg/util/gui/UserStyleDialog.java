@@ -60,6 +60,8 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  */
 public class UserStyleDialog extends JDialog implements ActionMap {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The return value if 'OK' is chosen.
      */
@@ -164,6 +166,8 @@ public class UserStyleDialog extends JDialog implements ActionMap {
      * The action associated with the 'OK' button
      */
     protected class OKButtonAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             if (panel.fileCheckBox.isSelected()) {
@@ -198,6 +202,8 @@ public class UserStyleDialog extends JDialog implements ActionMap {
      * The action associated with the 'Cancel' button
      */
     protected class CancelButtonAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             returnCode = CANCEL_OPTION;
@@ -225,6 +231,8 @@ public class UserStyleDialog extends JDialog implements ActionMap {
      * This class represents the main panel of the dialog.
      */
     public static class Panel extends JPanel {
+        private static final long serialVersionUID = 1L;
+
         /**
          * The file check box
          */
@@ -340,6 +348,8 @@ public class UserStyleDialog extends JDialog implements ActionMap {
          * The action associated with the 'browse' button
          */
         protected class FileBrowseButtonAction extends AbstractAction {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser(new File("."));

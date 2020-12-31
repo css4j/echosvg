@@ -29,6 +29,8 @@ import java.awt.GridBagConstraints;
  */
 public class ExtendedGridBagConstraints extends GridBagConstraints {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Modifies gridx, gridy, gridwidth, gridheight.
      *

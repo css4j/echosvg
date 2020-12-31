@@ -41,6 +41,7 @@ public abstract class SVGOMAnimationElement
     extends SVGOMElement
     implements SVGAnimationElement {
 
+    private static final long serialVersionUID = 1L;
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */

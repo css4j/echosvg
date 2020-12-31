@@ -32,6 +32,8 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
 public class SVGOMMetadataElement
     extends    SVGOMElement
     implements SVGMetadataElement {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new SVGOMMetadataElement object.
      */

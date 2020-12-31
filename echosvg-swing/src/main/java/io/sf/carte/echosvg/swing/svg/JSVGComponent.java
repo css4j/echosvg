@@ -202,6 +202,8 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  */
 public class JSVGComponent extends JGVTComponent {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Means that the component must auto detect whether
      * the current document is static or dynamic.

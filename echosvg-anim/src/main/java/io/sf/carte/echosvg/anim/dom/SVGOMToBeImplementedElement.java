@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
 public class SVGOMToBeImplementedElement
     extends SVGGraphicsElement {
     
+    private static final long serialVersionUID = 1L;
     /**
      * This element's local name
      */
