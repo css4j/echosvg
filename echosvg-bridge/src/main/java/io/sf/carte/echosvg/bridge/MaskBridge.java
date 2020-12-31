@@ -18,9 +18,10 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.filter.Mask;
-import org.w3c.dom.Element;
 
 /**
  * Factory class for vending <code>Mask</code> objects.

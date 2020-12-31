@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.w3c.dom.Document;
+
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 import io.sf.carte.echosvg.anim.dom.AnimationTargetListener;
 import io.sf.carte.echosvg.anim.timing.TimedDocumentRoot;
@@ -30,8 +32,6 @@ import io.sf.carte.echosvg.anim.timing.TimedElement;
 import io.sf.carte.echosvg.anim.timing.TimegraphListener;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
-
-import org.w3c.dom.Document;
 
 /**
  * An abstract base class for managing animation in a document.

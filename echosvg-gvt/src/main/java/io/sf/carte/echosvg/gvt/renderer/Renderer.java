@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.gvt.renderer;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 
-import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.ext.awt.geom.RectListManager;
+import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
  * Interface for GVT Renderers.

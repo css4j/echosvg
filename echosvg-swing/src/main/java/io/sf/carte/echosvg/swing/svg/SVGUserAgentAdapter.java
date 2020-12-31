@@ -18,14 +18,14 @@
  */
 package io.sf.carte.echosvg.swing.svg;
 
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
+import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.bridge.ExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.RelaxedExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.RelaxedScriptSecurity;
 import io.sf.carte.echosvg.bridge.ScriptSecurity;
 import io.sf.carte.echosvg.util.ParsedURL;
-import org.w3c.dom.Element;
+import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /*
 import io.sf.carte.echosvg.bridge.DefaultExternalResourceSecurity;

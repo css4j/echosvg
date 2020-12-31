@@ -21,9 +21,9 @@ package io.sf.carte.echosvg.anim.dom;
 
 import java.awt.geom.Point2D;
 
-import org.w3c.dom.svg.SVGPoint;
-import org.w3c.dom.svg.SVGMatrix;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.svg.SVGMatrix;
+import org.w3c.dom.svg.SVGPoint;
 
 import io.sf.carte.echosvg.dom.svg.SVGPathContext;
 

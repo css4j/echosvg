@@ -18,9 +18,10 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.util.ParsedURL;
-import org.w3c.dom.Element;
 
 /**
  * This interface allows the user of a CSSEngine to provide contextual

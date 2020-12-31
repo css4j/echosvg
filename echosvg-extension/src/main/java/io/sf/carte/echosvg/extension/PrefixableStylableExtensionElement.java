@@ -18,9 +18,10 @@
  */
 package io.sf.carte.echosvg.extension;
 
+import org.w3c.dom.DOMException;
+
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
-import org.w3c.dom.DOMException;
 
 /**
  * This class implements a simple method for handling the node 'prefix'.

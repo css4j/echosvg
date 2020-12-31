@@ -24,8 +24,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
  * Utility class that converts an AlphaComposite object into

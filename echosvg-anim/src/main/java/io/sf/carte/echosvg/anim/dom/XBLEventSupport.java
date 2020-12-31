@@ -21,16 +21,6 @@ package io.sf.carte.echosvg.anim.dom;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import io.sf.carte.echosvg.dom.AbstractNode;
-import io.sf.carte.echosvg.dom.events.AbstractEvent;
-import io.sf.carte.echosvg.dom.events.EventListenerList;
-import io.sf.carte.echosvg.dom.events.EventSupport;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-
-import io.sf.carte.echosvg.dom.xbl.NodeXBL;
-import io.sf.carte.echosvg.dom.xbl.ShadowTreeEvent;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -38,6 +28,15 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventException;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.MutationEvent;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.AbstractNode;
+import io.sf.carte.echosvg.dom.events.AbstractEvent;
+import io.sf.carte.echosvg.dom.events.EventListenerList;
+import io.sf.carte.echosvg.dom.events.EventSupport;
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
+import io.sf.carte.echosvg.dom.xbl.NodeXBL;
+import io.sf.carte.echosvg.dom.xbl.ShadowTreeEvent;
 
 /**
  * An EventSupport class that handles XBL-specific event processing.

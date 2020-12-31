@@ -26,10 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.constants.XMLConstants;
-import io.sf.carte.echosvg.xml.XMLUtilities;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
@@ -39,6 +35,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.xml.XMLUtilities;
 
 /**
  * A collection of utility functions for the DOM.

@@ -19,14 +19,14 @@
 
 package io.sf.carte.echosvg.transcoder.wmf.tosvg;
 
-import java.awt.Paint;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.TexturePaint;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.awt.geom.*;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
 

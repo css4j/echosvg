@@ -26,6 +26,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.XMLFilter;
+
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.svggen.SVGGraphics2D;
 import io.sf.carte.echosvg.transcoder.keys.BooleanKey;
@@ -33,12 +38,6 @@ import io.sf.carte.echosvg.transcoder.keys.FloatKey;
 import io.sf.carte.echosvg.transcoder.keys.IntegerKey;
 import io.sf.carte.echosvg.util.Platform;
 import io.sf.carte.echosvg.util.SVGConstants;
-
-import org.xml.sax.XMLFilter;
-
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /** This class allows to simplify the creation of a transcoder which transcodes to
  *  SVG content.

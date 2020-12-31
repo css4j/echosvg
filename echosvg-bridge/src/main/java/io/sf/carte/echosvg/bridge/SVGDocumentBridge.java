@@ -21,16 +21,16 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.MutationEvent;
+
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.RootGraphicsNode;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.events.MutationEvent;
 
 /**
  * Bridge class for an SVGDocument node.

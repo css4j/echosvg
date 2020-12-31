@@ -20,8 +20,14 @@ package io.sf.carte.echosvg.bridge;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-
 import java.util.Calendar;
+
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.events.MutationEvent;
+import org.w3c.dom.svg.SVGElement;
 
 import io.sf.carte.echosvg.anim.AbstractAnimation;
 import io.sf.carte.echosvg.anim.AnimationEngine;
@@ -36,13 +42,6 @@ import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
 import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.svg.SVGAnimationContext;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.events.MutationEvent;
-import org.w3c.dom.svg.SVGElement;
 
 /**
  * An abstract base class for the SVG animation element bridges.

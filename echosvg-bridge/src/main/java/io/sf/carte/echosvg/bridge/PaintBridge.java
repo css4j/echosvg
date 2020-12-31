@@ -20,8 +20,9 @@ package io.sf.carte.echosvg.bridge;
 
 import java.awt.Paint;
 
-import io.sf.carte.echosvg.gvt.GraphicsNode;
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
  * Bridge class for vending <code>Paint</code> objects.

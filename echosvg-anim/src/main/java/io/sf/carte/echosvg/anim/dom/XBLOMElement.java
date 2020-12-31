@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.util.XBLConstants;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Node;
 
 /**
  * Base class for all XBL elements to inherit from.

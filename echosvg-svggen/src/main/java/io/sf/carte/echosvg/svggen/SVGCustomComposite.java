@@ -20,8 +20,9 @@ package io.sf.carte.echosvg.svggen;
 
 import java.awt.Composite;
 
-import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
  * Utility class that converts an custom Composite object into

@@ -20,8 +20,8 @@ package io.sf.carte.echosvg.bridge;
 
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -29,22 +29,23 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.events.DocumentEvent;
+import org.w3c.dom.events.EventTarget;
+
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.bridge.svg12.DefaultXBLManager;
 import io.sf.carte.echosvg.bridge.svg12.SVG12BridgeContext;
 import io.sf.carte.echosvg.bridge.svg12.SVG12ScriptingEnvironment;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.events.AbstractEvent;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.RootGraphicsNode;
 import io.sf.carte.echosvg.gvt.UpdateTracker;
 import io.sf.carte.echosvg.gvt.renderer.ImageRenderer;
 import io.sf.carte.echosvg.util.EventDispatcher;
-import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.util.EventDispatcher.Dispatcher;
 import io.sf.carte.echosvg.util.RunnableQueue;
-import org.w3c.dom.Document;
-import org.w3c.dom.events.DocumentEvent;
-import org.w3c.dom.events.EventTarget;
 
 /**
  * This class provides features to manage the update of an SVG document.

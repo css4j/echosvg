@@ -18,13 +18,14 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
+import org.w3c.dom.DOMException;
+
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueFactory;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
-import org.w3c.dom.DOMException;
 
 /**
  * This class represents an object which provide support for the

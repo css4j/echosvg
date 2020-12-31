@@ -21,9 +21,15 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.util.StringTokenizer;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
@@ -33,12 +39,6 @@ import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
 import io.sf.carte.echosvg.parser.AWTPathProducer;
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.parser.PathParser;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * Bridge class for the &lt;glyph&gt; element.

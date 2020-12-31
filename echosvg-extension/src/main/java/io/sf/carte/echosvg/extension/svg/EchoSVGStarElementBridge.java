@@ -20,6 +20,8 @@ package io.sf.carte.echosvg.extension.svg;
 
 import java.awt.geom.GeneralPath;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.bridge.Bridge;
 import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.BridgeException;
@@ -27,7 +29,6 @@ import io.sf.carte.echosvg.bridge.SVGDecoratedShapeElementBridge;
 import io.sf.carte.echosvg.bridge.SVGUtilities;
 import io.sf.carte.echosvg.bridge.UnitProcessor;
 import io.sf.carte.echosvg.gvt.ShapeNode;
-import org.w3c.dom.Element;
 
 /**
  * Bridge class for a star element.

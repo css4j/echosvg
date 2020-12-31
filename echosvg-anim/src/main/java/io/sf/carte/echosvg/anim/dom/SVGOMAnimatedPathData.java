@@ -21,6 +21,13 @@ package io.sf.carte.echosvg.anim.dom;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.svg.SVGAnimatedPathData;
+import org.w3c.dom.svg.SVGException;
+import org.w3c.dom.svg.SVGPathSeg;
+import org.w3c.dom.svg.SVGPathSegList;
+
 import io.sf.carte.echosvg.anim.values.AnimatablePathDataValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGNormPathSegList;
@@ -29,25 +36,9 @@ import io.sf.carte.echosvg.dom.svg.ListBuilder;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.dom.svg.SVGAnimatedPathDataSupport;
 import io.sf.carte.echosvg.dom.svg.SVGItem;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGPathSegList.SVGPathSegArcItem;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGPathSegList.SVGPathSegCurvetoCubicItem;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGPathSegList.SVGPathSegCurvetoCubicSmoothItem;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGPathSegList.SVGPathSegCurvetoQuadraticItem;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGPathSegList.SVGPathSegCurvetoQuadraticSmoothItem;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGPathSegList.SVGPathSegLinetoHorizontalItem;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGPathSegList.SVGPathSegLinetoVerticalItem;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGPathSegList.SVGPathSegMovetoLinetoItem;
 import io.sf.carte.echosvg.dom.svg.SVGPathSegItem;
-
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.parser.PathArrayProducer;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.svg.SVGAnimatedPathData;
-import org.w3c.dom.svg.SVGException;
-import org.w3c.dom.svg.SVGPathSeg;
-import org.w3c.dom.svg.SVGPathSegList;
 
 /**
  * This class is the implementation of the {@link SVGAnimatedPathData}

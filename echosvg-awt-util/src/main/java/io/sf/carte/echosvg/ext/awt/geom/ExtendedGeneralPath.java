@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.ext.awt.geom;
 
-import java.awt.Shape;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.GeneralPath;

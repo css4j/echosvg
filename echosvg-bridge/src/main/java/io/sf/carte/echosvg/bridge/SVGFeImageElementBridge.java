@@ -22,6 +22,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.ext.awt.image.PadMode;
 import io.sf.carte.echosvg.ext.awt.image.renderable.AffineRable8Bit;
@@ -30,8 +33,6 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.ParsedURL;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * Bridge class for the &lt;feImage&gt; element.

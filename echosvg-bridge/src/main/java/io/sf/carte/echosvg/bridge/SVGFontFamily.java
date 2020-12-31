@@ -22,15 +22,15 @@ import java.lang.ref.SoftReference;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import io.sf.carte.echosvg.gvt.font.GVTFont;
 import io.sf.carte.echosvg.gvt.font.GVTFontFace;
 import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
 import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 import io.sf.carte.echosvg.util.SVGConstants;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * A font family class for SVG fonts.

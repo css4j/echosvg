@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
@@ -32,6 +30,8 @@ import org.w3c.dom.EntityReference;
 import org.w3c.dom.Node;
 import org.w3c.dom.ProcessingInstruction;
 import org.w3c.dom.Text;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
 
 /**
  * This class implements the {@link org.w3c.dom.Document},

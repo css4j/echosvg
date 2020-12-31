@@ -19,6 +19,7 @@
 package io.sf.carte.echosvg.dom.events;
 
 import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.w3c.dom.events.MutationNameEvent;
 
 /**

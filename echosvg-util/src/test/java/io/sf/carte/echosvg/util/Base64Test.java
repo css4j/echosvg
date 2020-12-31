@@ -18,19 +18,18 @@
  */
 package io.sf.carte.echosvg.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.URL;
+
 import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
-
-import java.io.PipedOutputStream;
-import java.io.PipedInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.PrintWriter;
-
-import java.net.URL;
 
 /**
  * This test validates that the Base65 encoder/decoders work properly.

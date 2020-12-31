@@ -35,6 +35,19 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.jar.Manifest;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.events.DocumentEvent;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.svg.EventListenerInitializer;
+import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGSVGElement;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractElement;
 import io.sf.carte.echosvg.dom.events.AbstractEvent;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
@@ -44,20 +57,7 @@ import io.sf.carte.echosvg.script.InterpreterException;
 import io.sf.carte.echosvg.script.ScriptEventWrapper;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import io.sf.carte.echosvg.w3c.dom.Location;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.events.DocumentEvent;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGSVGElement;
-import org.w3c.dom.svg.EventListenerInitializer;
 
 /**
  * This class is the base class for SVG scripting.

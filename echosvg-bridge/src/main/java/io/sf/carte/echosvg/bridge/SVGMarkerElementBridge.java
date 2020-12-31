@@ -22,6 +22,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.ext.awt.image.renderable.ClipRable8Bit;
@@ -29,8 +32,6 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.Marker;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the &lt;marker&gt; element.

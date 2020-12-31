@@ -32,18 +32,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
-import io.sf.carte.echosvg.script.Interpreter;
-import io.sf.carte.echosvg.script.InterpreterException;
-import io.sf.carte.echosvg.script.ImportInfo;
-import io.sf.carte.echosvg.script.rhino.EchoSVGSecurityController;
-import io.sf.carte.echosvg.script.rhino.RhinoClassLoader;
-import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
-
+import org.mozilla.javascript.ClassCache;
+import org.mozilla.javascript.ClassShutter;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextAction;
 import org.mozilla.javascript.ContextFactory;
-import org.mozilla.javascript.ClassCache;
-import org.mozilla.javascript.ClassShutter;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.JavaScriptException;
 import org.mozilla.javascript.Script;
@@ -53,6 +46,13 @@ import org.mozilla.javascript.SecurityController;
 import org.mozilla.javascript.WrapFactory;
 import org.mozilla.javascript.WrappedException;
 import org.w3c.dom.events.EventTarget;
+
+import io.sf.carte.echosvg.script.ImportInfo;
+import io.sf.carte.echosvg.script.Interpreter;
+import io.sf.carte.echosvg.script.InterpreterException;
+import io.sf.carte.echosvg.script.rhino.EchoSVGSecurityController;
+import io.sf.carte.echosvg.script.rhino.RhinoClassLoader;
+import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
 
 /**
  * A simple implementation of <code>Interpreter</code> interface to use

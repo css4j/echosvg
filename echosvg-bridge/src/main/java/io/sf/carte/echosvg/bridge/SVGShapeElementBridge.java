@@ -20,12 +20,13 @@ package io.sf.carte.echosvg.bridge;
 
 import java.awt.RenderingHints;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.gvt.ShapePainter;
-import org.w3c.dom.Element;
 
 /**
  * The base bridge class for shapes. Subclasses bridge <code>ShapeNode</code>.

@@ -18,17 +18,16 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.anim.values.AnimatablePreserveAspectRatioValue;
-import io.sf.carte.echosvg.anim.values.AnimatableValue;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGPreserveAspectRatio;
-import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
-
-import io.sf.carte.echosvg.util.SVGConstants;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGAnimatedPreserveAspectRatio;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
+
+import io.sf.carte.echosvg.anim.values.AnimatablePreserveAspectRatioValue;
+import io.sf.carte.echosvg.anim.values.AnimatableValue;
+import io.sf.carte.echosvg.dom.svg.AbstractSVGPreserveAspectRatio;
+import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * This class implements the {@link SVGAnimatedPreserveAspectRatio} interface.

@@ -18,19 +18,19 @@
  */
 package io.sf.carte.echosvg.bridge.svg12;
 
-import io.sf.carte.echosvg.anim.dom.XBLEventSupport;
-import io.sf.carte.echosvg.bridge.FocusManager;
-import io.sf.carte.echosvg.dom.AbstractNode;
-import io.sf.carte.echosvg.dom.events.DOMUIEvent;
-import io.sf.carte.echosvg.dom.events.EventSupport;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.DocumentEvent;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventTarget;
+
+import io.sf.carte.echosvg.anim.dom.XBLEventSupport;
+import io.sf.carte.echosvg.bridge.FocusManager;
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.AbstractNode;
+import io.sf.carte.echosvg.dom.events.DOMUIEvent;
+import io.sf.carte.echosvg.dom.events.EventSupport;
 
 /**
  * Focus manager for SVG 1.2 documents.  Ensures bubble limits of DOM

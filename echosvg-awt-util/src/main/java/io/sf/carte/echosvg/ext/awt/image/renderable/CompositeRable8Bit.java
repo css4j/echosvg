@@ -28,8 +28,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderContext;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.sf.carte.echosvg.ext.awt.image.CompositeRule;
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;

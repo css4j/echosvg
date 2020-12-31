@@ -31,8 +31,8 @@ import java.awt.image.renderable.RenderContext;
 import java.awt.image.renderable.RenderableImage;
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
-import java.util.ListIterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import io.sf.carte.echosvg.ext.awt.image.CompositeRule;
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;

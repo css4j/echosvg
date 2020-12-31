@@ -18,14 +18,14 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.css.engine.CSSNavigableDocumentListener;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.svg.SVGDocument;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.engine.CSSNavigableDocumentListener;
 
 /**
  * This class implements {@link SVGDocument} and provides support for

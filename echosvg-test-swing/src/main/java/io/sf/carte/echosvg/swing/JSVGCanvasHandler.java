@@ -27,26 +27,23 @@ import java.lang.ref.WeakReference;
 
 import javax.swing.JFrame;
 
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.Test;
-import io.sf.carte.echosvg.test.TestReport;
-
-
 import io.sf.carte.echosvg.bridge.ScriptingEnvironment;
 import io.sf.carte.echosvg.bridge.UpdateManager;
 import io.sf.carte.echosvg.bridge.UpdateManagerEvent;
 import io.sf.carte.echosvg.bridge.UpdateManagerListener;
 import io.sf.carte.echosvg.script.Interpreter;
 import io.sf.carte.echosvg.script.InterpreterException;
-import io.sf.carte.echosvg.util.RunnableQueue;
-
 import io.sf.carte.echosvg.swing.gvt.GVTTreeRendererAdapter;
 import io.sf.carte.echosvg.swing.gvt.GVTTreeRendererEvent;
 import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderAdapter;
 import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderEvent;
+import io.sf.carte.echosvg.swing.svg.SVGLoadEventDispatcher;
 import io.sf.carte.echosvg.swing.svg.SVGLoadEventDispatcherAdapter;
 import io.sf.carte.echosvg.swing.svg.SVGLoadEventDispatcherEvent;
-import io.sf.carte.echosvg.swing.svg.SVGLoadEventDispatcher;
+import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.Test;
+import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.util.RunnableQueue;
 
 /**
  * One line Class Desc

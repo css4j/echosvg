@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-import io.sf.carte.echosvg.util.ParsedURL;
-
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * This interface must be implemented by the DOM elements which needs

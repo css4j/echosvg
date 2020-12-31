@@ -25,10 +25,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.lang.ref.SoftReference;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.gvt.AbstractGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.SVGConstants;
-import org.w3c.dom.Element;
 
 /**
  * RasterRable This is used to wrap a Rendered Image back into the

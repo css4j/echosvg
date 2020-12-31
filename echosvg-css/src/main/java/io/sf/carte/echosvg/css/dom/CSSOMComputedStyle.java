@@ -21,13 +21,14 @@ package io.sf.carte.echosvg.css.dom;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.sf.carte.echosvg.css.engine.CSSEngine;
-import io.sf.carte.echosvg.css.engine.CSSStylableElement;
-import io.sf.carte.echosvg.css.engine.value.Value;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSRule;
 import org.w3c.dom.css.CSSStyleDeclaration;
 import org.w3c.dom.css.CSSValue;
+
+import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.value.Value;
 
 /**
  * This class represents the computed style of an element.

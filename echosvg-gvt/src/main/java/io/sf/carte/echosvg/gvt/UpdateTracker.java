@@ -19,8 +19,8 @@
 
 package io.sf.carte.echosvg.gvt;
 
-import java.awt.Shape;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.lang.ref.WeakReference;
@@ -30,9 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.gvt.event.GraphicsNodeChangeAdapter;
 import io.sf.carte.echosvg.gvt.event.GraphicsNodeChangeEvent;
-import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 
 /**
  * This class tracks the changes on a GVT tree

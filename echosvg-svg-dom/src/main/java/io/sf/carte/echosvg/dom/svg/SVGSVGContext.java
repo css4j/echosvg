@@ -20,8 +20,8 @@ package io.sf.carte.echosvg.dom.svg;
 
 import java.util.List;
 
-import org.w3c.dom.svg.SVGRect;
 import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGRect;
 
 /**
  * Context class for svg:svg elements.

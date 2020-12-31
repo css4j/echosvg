@@ -29,12 +29,14 @@ import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
 
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.SVGOMFlowRegionElement;
@@ -45,23 +47,24 @@ import io.sf.carte.echosvg.bridge.CSSUtilities;
 import io.sf.carte.echosvg.bridge.CursorManager;
 import io.sf.carte.echosvg.bridge.FlowTextNode;
 import io.sf.carte.echosvg.bridge.GVTBuilder;
+import io.sf.carte.echosvg.bridge.SVGAElementBridge;
 import io.sf.carte.echosvg.bridge.SVGTextElementBridge;
 import io.sf.carte.echosvg.bridge.SVGUtilities;
 import io.sf.carte.echosvg.bridge.TextNode;
 import io.sf.carte.echosvg.bridge.TextUtilities;
 import io.sf.carte.echosvg.bridge.UserAgent;
-import io.sf.carte.echosvg.bridge.SVGAElementBridge;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.ComputedValue;
-import io.sf.carte.echosvg.css.engine.value.svg12.SVG12ValueConstants;
-import io.sf.carte.echosvg.css.engine.value.svg12.LineHeightValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
+import io.sf.carte.echosvg.css.engine.value.svg12.LineHeightValue;
+import io.sf.carte.echosvg.css.engine.value.svg12.SVG12ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
+import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.flow.BlockInfo;
@@ -70,12 +73,8 @@ import io.sf.carte.echosvg.gvt.flow.TextLineBreaks;
 import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
 import io.sf.carte.echosvg.gvt.text.TextPath;
-import io.sf.carte.echosvg.util.SVG12Constants;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
+import io.sf.carte.echosvg.util.SVG12Constants;
 
 /**
  * Bridge class for the &lt;flowRoot&gt; element.

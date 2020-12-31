@@ -18,13 +18,13 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.svg.SVGPreserveAspectRatio;
+
 import io.sf.carte.echosvg.parser.DefaultPreserveAspectRatioHandler;
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.parser.PreserveAspectRatioParser;
 import io.sf.carte.echosvg.util.SVGConstants;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
 /**
  * Abstract implementation for SVGPreservAspectRatio

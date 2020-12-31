@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.util;
 
 import java.awt.EventQueue;
-import java.util.List;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * Generic class to dispatch events in a highly reliable way.

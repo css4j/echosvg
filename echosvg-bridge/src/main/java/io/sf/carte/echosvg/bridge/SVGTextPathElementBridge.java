@@ -22,12 +22,13 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.gvt.text.TextPath;
 import io.sf.carte.echosvg.parser.AWTPathProducer;
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.parser.PathParser;
-import org.w3c.dom.Element;
 
 /**
  * Bridge class for the &lt;textPath&gt; element.

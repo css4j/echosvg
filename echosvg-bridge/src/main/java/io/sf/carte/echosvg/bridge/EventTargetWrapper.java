@@ -22,8 +22,6 @@ import java.lang.ref.SoftReference;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import io.sf.carte.echosvg.dom.AbstractNode;
-import io.sf.carte.echosvg.script.ScriptEventWrapper;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextAction;
 import org.mozilla.javascript.Function;
@@ -35,6 +33,9 @@ import org.mozilla.javascript.Undefined;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
+
+import io.sf.carte.echosvg.dom.AbstractNode;
+import io.sf.carte.echosvg.script.ScriptEventWrapper;
 
 /**
  * A class that wraps an <code>EventTarget</code> instance to expose

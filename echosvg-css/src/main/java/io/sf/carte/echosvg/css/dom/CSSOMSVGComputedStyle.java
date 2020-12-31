@@ -18,13 +18,14 @@
  */
 package io.sf.carte.echosvg.css.dom;
 
+import org.w3c.dom.css.CSSValue;
+
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
-import org.w3c.dom.css.CSSValue;
 
 /**
  * This class represents the computed style of an SVG element.

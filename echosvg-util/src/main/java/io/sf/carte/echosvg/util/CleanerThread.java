@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.util;
 
+import java.lang.ref.PhantomReference;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
-import java.lang.ref.PhantomReference;
 
 /**
  * One line Class Desc

@@ -21,12 +21,13 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.Color;
 import java.util.StringTokenizer;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.ext.awt.image.DistantLight;
 import io.sf.carte.echosvg.ext.awt.image.Light;
 import io.sf.carte.echosvg.ext.awt.image.PointLight;
 import io.sf.carte.echosvg.ext.awt.image.SpotLight;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the &lt;feDiffuseLighting&gt; element.

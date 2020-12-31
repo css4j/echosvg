@@ -21,16 +21,16 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.color.ICC_Profile;
 import java.io.IOException;
 
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.ext.awt.color.NamedProfileCache;
-import io.sf.carte.echosvg.util.ParsedURL;
-
 import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
 import org.apache.xmlgraphics.java2d.color.RenderingIntent;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import io.sf.carte.echosvg.dom.util.XLinkSupport;
+import io.sf.carte.echosvg.ext.awt.color.NamedProfileCache;
+import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * This class bridges an SVG <code>color-profile</code> element with an

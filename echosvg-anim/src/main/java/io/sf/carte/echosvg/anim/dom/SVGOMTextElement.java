@@ -20,13 +20,6 @@ package io.sf.carte.echosvg.anim.dom;
 
 import java.awt.geom.AffineTransform;
 
-import io.sf.carte.echosvg.anim.values.AnimatableMotionPointValue;
-import io.sf.carte.echosvg.anim.values.AnimatableValue;
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.svg.SVGMotionAnimatableElement;
-import io.sf.carte.echosvg.util.DoublyIndexedTable;
-import io.sf.carte.echosvg.util.SVGTypes;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAnimatedTransformList;
 import org.w3c.dom.svg.SVGElement;
@@ -34,6 +27,13 @@ import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGMatrix;
 import org.w3c.dom.svg.SVGRect;
 import org.w3c.dom.svg.SVGTextElement;
+
+import io.sf.carte.echosvg.anim.values.AnimatableMotionPointValue;
+import io.sf.carte.echosvg.anim.values.AnimatableValue;
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.svg.SVGMotionAnimatableElement;
+import io.sf.carte.echosvg.util.DoublyIndexedTable;
+import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
  * This class implements {@link SVGTextElement}.

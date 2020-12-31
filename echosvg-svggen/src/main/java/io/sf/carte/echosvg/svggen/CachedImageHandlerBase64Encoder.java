@@ -23,10 +23,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
 import io.sf.carte.echosvg.util.Base64EncoderStream;
-import org.w3c.dom.Element;
 
 
 /**

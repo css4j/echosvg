@@ -18,10 +18,11 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.util.SVG12Constants;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGTextContentElement;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.util.SVG12Constants;
 
 /**
  * This class implements the flowDiv element from SVG 1.2

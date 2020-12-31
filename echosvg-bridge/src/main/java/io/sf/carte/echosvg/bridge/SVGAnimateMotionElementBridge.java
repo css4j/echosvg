@@ -21,6 +21,10 @@ package io.sf.carte.echosvg.bridge;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.svg.SVGAngle;
+
 import io.sf.carte.echosvg.anim.AbstractAnimation;
 import io.sf.carte.echosvg.anim.AnimationEngine;
 import io.sf.carte.echosvg.anim.MotionAnimation;
@@ -29,20 +33,16 @@ import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.SVGOMPathElement;
 import io.sf.carte.echosvg.anim.values.AnimatableMotionPointValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
-import io.sf.carte.echosvg.ext.awt.geom.ExtendedGeneralPath;
 import io.sf.carte.echosvg.dom.svg.SVGAnimatedPathDataSupport;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
+import io.sf.carte.echosvg.ext.awt.geom.ExtendedGeneralPath;
 import io.sf.carte.echosvg.parser.AWTPathProducer;
 import io.sf.carte.echosvg.parser.AngleHandler;
 import io.sf.carte.echosvg.parser.AngleParser;
 import io.sf.carte.echosvg.parser.LengthArrayProducer;
 import io.sf.carte.echosvg.parser.LengthPairListParser;
-import io.sf.carte.echosvg.parser.PathParser;
 import io.sf.carte.echosvg.parser.ParseException;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.svg.SVGAngle;
+import io.sf.carte.echosvg.parser.PathParser;
 
 /**
  * Bridge class for the 'animateMotion' animation element.

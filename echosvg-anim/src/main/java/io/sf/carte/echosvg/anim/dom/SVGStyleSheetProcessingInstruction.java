@@ -18,18 +18,18 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import java.util.HashMap;
+
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStyleSheetNode;
 import io.sf.carte.echosvg.css.engine.StyleSheet;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.StyleSheetFactory;
 import io.sf.carte.echosvg.dom.StyleSheetProcessingInstruction;
-
 import io.sf.carte.echosvg.util.ParsedURL;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Node;
-
-import java.util.HashMap;
 
 /**
  * This class provides an implementation of the 'xml-stylesheet' processing

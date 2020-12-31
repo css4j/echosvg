@@ -18,9 +18,10 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGFEFuncGElement;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
 
 /**
  * This class implements {@link SVGFEFuncGElement}.

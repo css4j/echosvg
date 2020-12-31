@@ -21,6 +21,8 @@ package io.sf.carte.echosvg.extension.svg;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.bridge.AbstractSVGFilterPrimitiveElementBridge;
 import io.sf.carte.echosvg.bridge.Bridge;
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -30,7 +32,6 @@ import io.sf.carte.echosvg.ext.awt.image.PadMode;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import org.w3c.dom.Element;
 
 /**
  * Bridge class for a histogram normalization element.

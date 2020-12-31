@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.test;
 
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class provides an implementation for the <code>addTest</code>

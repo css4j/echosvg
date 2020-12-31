@@ -21,9 +21,10 @@ package io.sf.carte.echosvg.svggen;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 import io.sf.carte.echosvg.ext.awt.g2d.TransformStackElement;
-import org.w3c.dom.Element;
 
 /**
  * This class is used by the Graphics2D SVG Generator to manage

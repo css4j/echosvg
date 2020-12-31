@@ -23,12 +23,12 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.w3c.dom.svg.SVGDocument;
+
 import io.sf.carte.echosvg.bridge.DocumentLoader;
 import io.sf.carte.echosvg.util.EventDispatcher;
 import io.sf.carte.echosvg.util.EventDispatcher.Dispatcher;
 import io.sf.carte.echosvg.util.HaltingThread;
-
-import org.w3c.dom.svg.SVGDocument;
 
 /**
  * This class represents an object which loads asynchroneaously a SVG document.

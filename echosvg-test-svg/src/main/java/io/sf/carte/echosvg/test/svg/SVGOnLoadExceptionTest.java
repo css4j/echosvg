@@ -35,6 +35,9 @@ import java.security.ProtectionDomain;
 import java.security.cert.Certificate;
 import java.util.Enumeration;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.bridge.BaseScriptingEnvironment;
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -56,9 +59,6 @@ import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * This test takes an SVG file as an input. It processes the input SVG

@@ -25,18 +25,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
-import io.sf.carte.echosvg.gvt.font.GVTFontFace;
-import io.sf.carte.echosvg.gvt.font.UnresolvedFontFamily;
-import io.sf.carte.echosvg.util.SVGConstants;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.FontFaceRule;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import io.sf.carte.echosvg.gvt.font.GVTFontFace;
+import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
+import io.sf.carte.echosvg.gvt.font.UnresolvedFontFamily;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * Utility class for SVG fonts.

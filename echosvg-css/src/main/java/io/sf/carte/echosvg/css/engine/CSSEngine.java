@@ -51,7 +51,6 @@ import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.doc.style.css.nsac.ParserControl;
 import io.sf.carte.doc.style.css.nsac.Selector;
 import io.sf.carte.doc.style.css.nsac.SelectorList;
-import io.sf.carte.doc.style.css.om.DOMSelectorMatcher;
 import io.sf.carte.doc.style.css.om.Specificity;
 import io.sf.carte.doc.style.css.parser.AttributeConditionVisitor;
 import io.sf.carte.doc.style.css.parser.CSSParser;

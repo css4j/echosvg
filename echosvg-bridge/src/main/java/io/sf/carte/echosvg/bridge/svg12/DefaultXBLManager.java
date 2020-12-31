@@ -22,35 +22,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.swing.event.EventListenerList;
-
-import io.sf.carte.echosvg.anim.dom.BindableElement;
-import io.sf.carte.echosvg.anim.dom.XBLEventSupport;
-import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
-import io.sf.carte.echosvg.anim.dom.XBLOMDefinitionElement;
-import io.sf.carte.echosvg.anim.dom.XBLOMImportElement;
-import io.sf.carte.echosvg.anim.dom.XBLOMShadowTreeElement;
-import io.sf.carte.echosvg.anim.dom.XBLOMTemplateElement;
-import io.sf.carte.echosvg.bridge.BridgeContext;
-import io.sf.carte.echosvg.bridge.BridgeException;
-import io.sf.carte.echosvg.bridge.ErrorConstants;
-import io.sf.carte.echosvg.dom.AbstractAttrNS;
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.AbstractNode;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-import io.sf.carte.echosvg.dom.xbl.NodeXBL;
-import io.sf.carte.echosvg.dom.xbl.ShadowTreeEvent;
-import io.sf.carte.echosvg.dom.xbl.XBLManager;
-import io.sf.carte.echosvg.dom.xbl.XBLManagerData;
-import io.sf.carte.echosvg.dom.xbl.XBLShadowTreeElement;
-import io.sf.carte.echosvg.util.DoublyIndexedTable;
-import io.sf.carte.echosvg.util.XBLConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -63,6 +40,29 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MutationEvent;
+
+import io.sf.carte.echosvg.anim.dom.BindableElement;
+import io.sf.carte.echosvg.anim.dom.XBLEventSupport;
+import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
+import io.sf.carte.echosvg.anim.dom.XBLOMDefinitionElement;
+import io.sf.carte.echosvg.anim.dom.XBLOMImportElement;
+import io.sf.carte.echosvg.anim.dom.XBLOMShadowTreeElement;
+import io.sf.carte.echosvg.anim.dom.XBLOMTemplateElement;
+import io.sf.carte.echosvg.bridge.BridgeContext;
+import io.sf.carte.echosvg.bridge.BridgeException;
+import io.sf.carte.echosvg.bridge.ErrorConstants;
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.AbstractAttrNS;
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.AbstractNode;
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
+import io.sf.carte.echosvg.dom.xbl.NodeXBL;
+import io.sf.carte.echosvg.dom.xbl.ShadowTreeEvent;
+import io.sf.carte.echosvg.dom.xbl.XBLManager;
+import io.sf.carte.echosvg.dom.xbl.XBLManagerData;
+import io.sf.carte.echosvg.dom.xbl.XBLShadowTreeElement;
+import io.sf.carte.echosvg.util.DoublyIndexedTable;
+import io.sf.carte.echosvg.util.XBLConstants;
 
 /**
  * A full featured sXBL manager.

@@ -19,13 +19,13 @@
 
 package io.sf.carte.echosvg.ext.awt.geom;
 
+import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Shape;
-import java.awt.Polygon;
-import java.awt.Point;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.PathIterator;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;

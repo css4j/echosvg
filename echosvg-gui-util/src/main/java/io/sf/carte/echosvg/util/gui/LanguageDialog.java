@@ -18,7 +18,13 @@
  */
 package io.sf.carte.echosvg.util.gui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.HashMap;

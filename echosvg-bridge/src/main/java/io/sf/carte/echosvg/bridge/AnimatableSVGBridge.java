@@ -21,11 +21,11 @@ package io.sf.carte.echosvg.bridge;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 import io.sf.carte.echosvg.anim.dom.AnimationTargetListener;
 import io.sf.carte.echosvg.anim.dom.SVGAnimationTargetContext;
-
-import org.w3c.dom.Element;
 
 /**
  * Abstract bridge class for those elements that can be animated.

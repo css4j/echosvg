@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.anim.values;
 
-import io.sf.carte.echosvg.anim.dom.AnimationTarget;
-
 import org.w3c.dom.svg.SVGLength;
+
+import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 
 /**
  * An SVG length-or-identifier value in the animation system.

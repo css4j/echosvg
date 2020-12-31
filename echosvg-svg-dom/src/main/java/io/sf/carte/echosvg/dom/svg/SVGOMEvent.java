@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
-import io.sf.carte.echosvg.dom.events.AbstractEvent;
 import org.w3c.dom.svg.SVGEvent;
+
+import io.sf.carte.echosvg.dom.events.AbstractEvent;
 
 /**
  * This class provides an implementation of the SVGEvent interface.

@@ -26,8 +26,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.sf.carte.echosvg.ext.awt.image.renderable.ClipRable8Bit;
-import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
 import io.sf.carte.echosvg.bridge.Bridge;
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -40,16 +43,12 @@ import io.sf.carte.echosvg.bridge.UnitProcessor;
 import io.sf.carte.echosvg.bridge.Viewport;
 import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
+import io.sf.carte.echosvg.ext.awt.image.renderable.ClipRable8Bit;
+import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.ImageNode;
-
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVG12Constants;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the &lt;multiImage&gt; element.

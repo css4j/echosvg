@@ -18,14 +18,14 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.dom.util.XMLSupport;
-import io.sf.carte.echosvg.constants.XMLConstants;
-import io.sf.carte.echosvg.xml.XMLUtilities;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.util.XMLSupport;
+import io.sf.carte.echosvg.xml.XMLUtilities;
 
 /**
  * This class implements the {@link org.w3c.dom.Text} interface.

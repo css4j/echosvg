@@ -19,6 +19,7 @@
 package io.sf.carte.echosvg.util.gui.xmleditor;
 
 import java.awt.Font;
+
 import javax.swing.JEditorPane;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.Document;

@@ -18,19 +18,19 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import org.w3c.dom.Document;
+
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
-import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.OpacityManager;
+import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.LineHeightManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.MarginLengthManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.MarginShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.TextAlignManager;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
-
-import org.w3c.dom.Document;
 
 /**
  * This class provides a CSS engine initialized for SVG.

@@ -30,6 +30,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.bridge.Bridge;
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -43,18 +46,15 @@ import io.sf.carte.echosvg.bridge.TextNode;
 import io.sf.carte.echosvg.bridge.TextUtilities;
 import io.sf.carte.echosvg.bridge.UnitProcessor;
 import io.sf.carte.echosvg.bridge.UserAgent;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
-import io.sf.carte.echosvg.gvt.text.TextPath;
 import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
+import io.sf.carte.echosvg.gvt.text.TextPath;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the &lt;flowText&gt; element.

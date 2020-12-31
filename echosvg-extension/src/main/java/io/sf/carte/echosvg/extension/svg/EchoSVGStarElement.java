@@ -18,9 +18,10 @@
  */
 package io.sf.carte.echosvg.extension.svg;
 
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.extension.GraphicsExtensionElement;
-import org.w3c.dom.Node;
 
 /**
  * This class implements a star shape extension to sVG

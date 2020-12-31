@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.test.svg;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * Checks for regressions in rendering of a document with a given

@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.svg.SVGAngle;
+
 import io.sf.carte.echosvg.parser.AngleParser;
 import io.sf.carte.echosvg.parser.DefaultAngleHandler;
 import io.sf.carte.echosvg.parser.ParseException;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.svg.SVGAngle;
 
 /**
  * Implementation of an {@link SVGAngle} not associated with any attribute.

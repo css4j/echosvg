@@ -21,12 +21,13 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.font.FontRenderContext;
 import java.text.AttributedCharacterIterator;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.gvt.font.AltGlyphHandler;
 import io.sf.carte.echosvg.gvt.font.GVTGlyphVector;
 import io.sf.carte.echosvg.gvt.font.Glyph;
 import io.sf.carte.echosvg.gvt.font.SVGGVTGlyphVector;
 import io.sf.carte.echosvg.util.SVGConstants;
-import org.w3c.dom.Element;
 
 /**
  * SVG font altGlyph handler. This class handles the creation of an alternate

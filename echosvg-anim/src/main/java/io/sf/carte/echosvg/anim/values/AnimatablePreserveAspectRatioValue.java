@@ -18,10 +18,10 @@
  */
 package io.sf.carte.echosvg.anim.values;
 
+import org.w3c.dom.svg.SVGPreserveAspectRatio;
+
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 import io.sf.carte.echosvg.util.SVGConstants;
-
-import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
 /**
  * An SVG preserveAspectRatio value in the animation system.

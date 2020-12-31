@@ -25,6 +25,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.ext.awt.image.PadMode;
@@ -35,8 +38,6 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.FloodRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.ParsedURL;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the &lt;filter&gt; element.

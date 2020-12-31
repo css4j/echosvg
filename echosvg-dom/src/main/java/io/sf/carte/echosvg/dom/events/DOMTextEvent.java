@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.dom.events;
 
-import io.sf.carte.echosvg.w3c.dom.events.TextEvent;
 import org.w3c.dom.views.AbstractView;
+
+import io.sf.carte.echosvg.w3c.dom.events.TextEvent;
 
 /**
  * Class to implement DOM 3 Text events.

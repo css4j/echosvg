@@ -23,16 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
-import io.sf.carte.echosvg.dom.events.EventSupport;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-import io.sf.carte.echosvg.dom.util.DOMUtilities;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
-import io.sf.carte.echosvg.dom.xbl.NodeXBL;
-import io.sf.carte.echosvg.dom.xbl.XBLManagerData;
-import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -46,6 +36,16 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventException;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.MutationEvent;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
+import io.sf.carte.echosvg.dom.events.EventSupport;
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
+import io.sf.carte.echosvg.dom.util.DOMUtilities;
+import io.sf.carte.echosvg.dom.util.XMLSupport;
+import io.sf.carte.echosvg.dom.xbl.NodeXBL;
+import io.sf.carte.echosvg.dom.xbl.XBLManagerData;
+import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * This class implements the {@link org.w3c.dom.Node} interface.

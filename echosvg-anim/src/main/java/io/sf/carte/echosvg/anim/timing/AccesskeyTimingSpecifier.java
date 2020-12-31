@@ -18,13 +18,13 @@
  */
 package io.sf.carte.echosvg.anim.timing;
 
-import io.sf.carte.echosvg.dom.events.DOMKeyEvent;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.events.DOMKeyEvent;
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.w3c.dom.events.KeyboardEvent;
 
 /**

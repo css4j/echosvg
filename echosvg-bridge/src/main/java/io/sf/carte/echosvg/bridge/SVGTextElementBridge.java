@@ -40,6 +40,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSValue;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.MutationEvent;
+import org.w3c.dom.svg.SVGLengthList;
+import org.w3c.dom.svg.SVGNumberList;
+import org.w3c.dom.svg.SVGTextContentElement;
+import org.w3c.dom.svg.SVGTextPositioningElement;
+
 import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedEnumeration;
@@ -47,6 +59,7 @@ import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedLengthList;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedNumberList;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.SVGOMTextPositioningElement;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
@@ -68,19 +81,6 @@ import io.sf.carte.echosvg.gvt.font.UnresolvedFontFamily;
 import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
 import io.sf.carte.echosvg.gvt.text.TextPath;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.MutationEvent;
-import org.w3c.dom.svg.SVGLengthList;
-import org.w3c.dom.svg.SVGNumberList;
-import org.w3c.dom.svg.SVGTextContentElement;
-import org.w3c.dom.svg.SVGTextPositioningElement;
 
 /**
  * Bridge class for the &lt;text&gt; element.

@@ -20,10 +20,10 @@ package io.sf.carte.echosvg.i18n;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 /**
  * This class provides a default implementation of the Localizable interface.

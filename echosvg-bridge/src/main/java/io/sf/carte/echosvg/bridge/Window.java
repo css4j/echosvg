@@ -19,10 +19,10 @@
 
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.script.Interpreter;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import io.sf.carte.echosvg.script.Interpreter;
 
 /**
  * This interface represents the 'window' object defined in the global

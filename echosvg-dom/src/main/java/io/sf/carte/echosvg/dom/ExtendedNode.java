@@ -18,9 +18,10 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 
 /**
  * This interface provides an access to the non DOM methods implemented by

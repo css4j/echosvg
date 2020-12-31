@@ -19,10 +19,11 @@
 
 package io.sf.carte.echosvg.dom.util;
 
-import io.sf.carte.echosvg.constants.XMLConstants;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
 
 /**
  * This class provides support for XML features.

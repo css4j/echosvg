@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.svg.SVGAnimatedString;
+
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.svg.SVGAnimatedString;
 
 /**
  * This class provides support for Xlink to a graphics element.

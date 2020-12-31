@@ -18,22 +18,21 @@
  */
 package io.sf.carte.echosvg.test.xml;
 
-import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
-
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-import io.sf.carte.echosvg.test.DefaultTestSuite;
-import io.sf.carte.echosvg.test.TestSuite;
-import io.sf.carte.echosvg.test.Test;
-import io.sf.carte.echosvg.test.TestException;
-
-import org.w3c.dom.Element;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import io.sf.carte.echosvg.test.DefaultTestSuite;
+import io.sf.carte.echosvg.test.Test;
+import io.sf.carte.echosvg.test.TestException;
+import io.sf.carte.echosvg.test.TestSuite;
 
 /**
  * This class loads an XML document describing a test suite

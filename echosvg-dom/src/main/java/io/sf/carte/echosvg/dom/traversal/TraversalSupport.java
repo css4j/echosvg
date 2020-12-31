@@ -22,12 +22,13 @@ package io.sf.carte.echosvg.dom.traversal;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
 import org.w3c.dom.traversal.TreeWalker;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
 
 /**
  * This class provides support for traversal.

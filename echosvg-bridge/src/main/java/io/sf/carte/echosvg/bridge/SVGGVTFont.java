@@ -23,9 +23,11 @@ import java.awt.font.FontRenderContext;
 import java.text.AttributedCharacterIterator;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
-import java.util.StringTokenizer;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
@@ -41,8 +43,6 @@ import io.sf.carte.echosvg.gvt.font.SVGGVTGlyphVector;
 import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
 import io.sf.carte.echosvg.util.SVGConstants;
-
-import org.w3c.dom.Element;
 
 /**
  * Represents an SVG font.

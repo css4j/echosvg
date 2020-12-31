@@ -18,14 +18,14 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.util.DoublyIndexedTable;
-import io.sf.carte.echosvg.util.SVGTypes;
-
 import org.w3c.dom.svg.SVGAnimatedEnumeration;
 import org.w3c.dom.svg.SVGAnimatedNumber;
 import org.w3c.dom.svg.SVGAnimatedNumberList;
 import org.w3c.dom.svg.SVGComponentTransferFunctionElement;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.util.DoublyIndexedTable;
+import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
  * This class represents the component transfer function elements.

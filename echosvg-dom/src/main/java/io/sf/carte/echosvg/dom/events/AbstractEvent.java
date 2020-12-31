@@ -18,13 +18,13 @@
  */
 package io.sf.carte.echosvg.dom.events;
 
-import io.sf.carte.echosvg.dom.xbl.OriginalEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventTarget;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.sf.carte.echosvg.dom.xbl.OriginalEvent;
 
 /**
  * The abstract <code>Event</code> root class.

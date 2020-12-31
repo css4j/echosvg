@@ -21,9 +21,10 @@ package io.sf.carte.echosvg.svggen.font;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.svggen.font.table.CmapFormat;
 import io.sf.carte.echosvg.svggen.font.table.Feature;
 import io.sf.carte.echosvg.svggen.font.table.FeatureTags;
@@ -38,7 +39,6 @@ import io.sf.carte.echosvg.svggen.font.table.ScriptTags;
 import io.sf.carte.echosvg.svggen.font.table.SingleSubst;
 import io.sf.carte.echosvg.svggen.font.table.Table;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
 
 /**
  * Converts a TrueType font to an SVG embedded font.

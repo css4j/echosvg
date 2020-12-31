@@ -18,10 +18,6 @@
  */
 package io.sf.carte.echosvg.css.dom;
 
-import io.sf.carte.echosvg.css.engine.value.FloatValue;
-import io.sf.carte.echosvg.css.engine.value.ListValue;
-import io.sf.carte.echosvg.css.engine.value.StringValue;
-import io.sf.carte.echosvg.css.engine.value.Value;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSValue;
@@ -29,6 +25,11 @@ import org.w3c.dom.css.CSSValueList;
 import org.w3c.dom.css.Counter;
 import org.w3c.dom.css.RGBColor;
 import org.w3c.dom.css.Rect;
+
+import io.sf.carte.echosvg.css.engine.value.FloatValue;
+import io.sf.carte.echosvg.css.engine.value.ListValue;
+import io.sf.carte.echosvg.css.engine.value.StringValue;
+import io.sf.carte.echosvg.css.engine.value.Value;
 
 /**
  * This class implements the {@link org.w3c.dom.css.CSSValue},

@@ -29,10 +29,11 @@ import java.awt.geom.AffineTransform;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
  * Utility class that converts a Font object into a set of SVG

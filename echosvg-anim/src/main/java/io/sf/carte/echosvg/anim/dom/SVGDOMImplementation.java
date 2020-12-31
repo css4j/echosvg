@@ -21,6 +21,18 @@ package io.sf.carte.echosvg.anim.dom;
 import java.net.URL;
 import java.util.HashMap;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.dom.css.CSSStyleSheet;
+import org.w3c.dom.css.ViewCSS;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.stylesheets.StyleSheet;
+
 import io.sf.carte.doc.style.css.nsac.InputSource;
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.echosvg.css.dom.CSSOMSVGViewCSS;
@@ -37,22 +49,9 @@ import io.sf.carte.echosvg.dom.events.DocumentEventSupport;
 import io.sf.carte.echosvg.dom.svg.SVGOMEvent;
 import io.sf.carte.echosvg.dom.util.CSSStyleDeclarationFactory;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
-
 import io.sf.carte.echosvg.i18n.LocalizableSupport;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.css.CSSStyleSheet;
-import org.w3c.dom.css.ViewCSS;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.stylesheets.StyleSheet;
 
 /**
  * This class implements the {@link DOMImplementation} interface.

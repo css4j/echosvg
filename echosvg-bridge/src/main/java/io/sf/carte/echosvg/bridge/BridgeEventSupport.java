@@ -26,6 +26,14 @@ import java.lang.ref.SoftReference;
 import java.text.AttributedCharacterIterator;
 import java.util.List;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.DocumentEvent;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.events.DOMKeyEvent;
 import io.sf.carte.echosvg.dom.events.DOMMouseEvent;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
@@ -38,14 +46,6 @@ import io.sf.carte.echosvg.gvt.event.GraphicsNodeMouseEvent;
 import io.sf.carte.echosvg.gvt.event.GraphicsNodeMouseListener;
 import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.events.DocumentEvent;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 
 /**
  * This class is responsible of tracking GraphicsNodeMouseEvent and

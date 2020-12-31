@@ -20,8 +20,9 @@ package io.sf.carte.echosvg.bridge;
 
 import java.util.List;
 
-import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
 
 /**
  * This class represents a &lt;font-face&gt; element or @font-face rule

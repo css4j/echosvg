@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import org.w3c.dom.Document;
+
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
@@ -76,8 +78,6 @@ import io.sf.carte.echosvg.css.engine.value.svg.TextRenderingManager;
 import io.sf.carte.echosvg.css.engine.value.svg.WritingModeManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
-
-import org.w3c.dom.Document;
 
 /**
  * This class provides a CSS engine initialized for SVG.

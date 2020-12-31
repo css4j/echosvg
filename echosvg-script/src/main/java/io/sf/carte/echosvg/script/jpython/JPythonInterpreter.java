@@ -23,8 +23,9 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Locale;
 
-import io.sf.carte.echosvg.script.InterpreterException;
 import org.python.util.PythonInterpreter;
+
+import io.sf.carte.echosvg.script.InterpreterException;
 
 /**
  * A simple implementation of <code>Interpreter</code> interface to use

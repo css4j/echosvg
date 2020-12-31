@@ -18,10 +18,11 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.EntityReference;
 import org.w3c.dom.Node;
+
+import io.sf.carte.echosvg.dom.util.DOMUtilities;
 
 /**
  * This class implements the {@link org.w3c.dom.EntityReference} interface.

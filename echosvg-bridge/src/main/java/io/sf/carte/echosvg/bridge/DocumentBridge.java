@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.gvt.RootGraphicsNode;
-
 import org.w3c.dom.Document;
+
+import io.sf.carte.echosvg.gvt.RootGraphicsNode;
 
 /**
  * Interface for bridge classes that operate on Document nodes.

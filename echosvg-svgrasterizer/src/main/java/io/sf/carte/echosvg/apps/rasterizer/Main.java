@@ -21,16 +21,16 @@ package io.sf.carte.echosvg.apps.rasterizer;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
-import io.sf.carte.echosvg.transcoder.Transcoder;
 import io.sf.carte.echosvg.parser.ClockHandler;
 import io.sf.carte.echosvg.parser.ClockParser;
 import io.sf.carte.echosvg.parser.ParseException;
+import io.sf.carte.echosvg.transcoder.Transcoder;
 import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
 
 /**

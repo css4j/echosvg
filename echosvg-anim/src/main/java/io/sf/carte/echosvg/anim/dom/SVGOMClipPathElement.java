@@ -18,13 +18,13 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.util.DoublyIndexedTable;
-import io.sf.carte.echosvg.util.SVGTypes;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAnimatedEnumeration;
 import org.w3c.dom.svg.SVGClipPathElement;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.util.DoublyIndexedTable;
+import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
  * This class implements {@link SVGClipPathElement}.

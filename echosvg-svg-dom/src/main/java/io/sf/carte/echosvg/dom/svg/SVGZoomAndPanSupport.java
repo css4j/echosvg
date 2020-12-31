@@ -18,11 +18,12 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
-import io.sf.carte.echosvg.dom.AbstractNode;
-import io.sf.carte.echosvg.util.SVGConstants;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGZoomAndPan;
+
+import io.sf.carte.echosvg.dom.AbstractNode;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * This class provides support for SVGZoomAndPan features.

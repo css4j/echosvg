@@ -21,11 +21,12 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.ext.awt.image.Light;
 import io.sf.carte.echosvg.ext.awt.image.renderable.DiffuseLightingRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import org.w3c.dom.Element;
 
 /**
  * Bridge class for the &lt;feDiffuseLighting&gt; element.

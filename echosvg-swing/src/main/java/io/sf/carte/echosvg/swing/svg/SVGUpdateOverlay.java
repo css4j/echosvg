@@ -18,13 +18,12 @@
  */
 package io.sf.carte.echosvg.swing.svg;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.LinkedList;
-
-import java.awt.Rectangle;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import io.sf.carte.echosvg.swing.gvt.Overlay;
 

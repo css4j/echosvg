@@ -20,6 +20,7 @@
 package io.sf.carte.echosvg.transcoder.wmf.tosvg;
 
 import java.io.UnsupportedEncodingException;
+
 import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
 
 /** This class holds various utilies for importing WMF files that can be used either for

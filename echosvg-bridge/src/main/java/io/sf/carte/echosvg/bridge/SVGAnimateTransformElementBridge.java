@@ -20,15 +20,15 @@ package io.sf.carte.echosvg.bridge;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.svg.SVGTransform;
+
 import io.sf.carte.echosvg.anim.AbstractAnimation;
 import io.sf.carte.echosvg.anim.TransformAnimation;
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
-import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.anim.values.AnimatableTransformListValue;
+import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.svg.SVGOMTransform;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.svg.SVGTransform;
 
 /**
  * Bridge class for the 'animateTransform' animation element.

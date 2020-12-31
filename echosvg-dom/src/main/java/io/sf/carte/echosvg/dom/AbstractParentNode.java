@@ -20,13 +20,13 @@ package io.sf.carte.echosvg.dom;
 
 import java.io.Serializable;
 
-import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.MutationEvent;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
 
 /**
  * This class implements the Node interface with support for children.

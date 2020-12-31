@@ -43,7 +43,16 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.ToolTipManager;
 
+// import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.svg.SVGDocument;
+
 import io.sf.carte.echosvg.bridge.UserAgent;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.swing.gvt.AbstractImageZoomInteractor;
@@ -57,19 +66,10 @@ import io.sf.carte.echosvg.swing.svg.JSVGComponent;
 import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderEvent;
 import io.sf.carte.echosvg.swing.svg.SVGUserAgent;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
 // import io.sf.carte.echosvg.util.gui.DOMViewer;
 // import io.sf.carte.echosvg.util.gui.DOMViewerController;
 // import io.sf.carte.echosvg.util.gui.ElementOverlayManager;
 import io.sf.carte.echosvg.util.gui.JErrorPane;
-
-// import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.svg.SVGDocument;
 
 /**
  * This class represents a general-purpose swing SVG component. The

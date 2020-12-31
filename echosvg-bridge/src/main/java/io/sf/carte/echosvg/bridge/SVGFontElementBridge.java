@@ -18,10 +18,11 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.gvt.text.ArabicTextHandler;
-import io.sf.carte.echosvg.gvt.font.GVTFontFace;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import io.sf.carte.echosvg.gvt.font.GVTFontFace;
+import io.sf.carte.echosvg.gvt.text.ArabicTextHandler;
 
 /**
  * Bridge class for the &lt;font&gt; element.

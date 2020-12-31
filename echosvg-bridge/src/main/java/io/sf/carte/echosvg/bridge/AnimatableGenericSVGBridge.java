@@ -21,13 +21,13 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.events.MutationEvent;
+
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.events.MutationEvent;
 
 /**
  * Abstract bridge class for animatable elements that do not produce

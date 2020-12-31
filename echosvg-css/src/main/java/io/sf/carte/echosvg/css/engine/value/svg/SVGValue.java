@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
-import io.sf.carte.echosvg.css.engine.value.Value;
 import org.w3c.dom.DOMException;
+
+import io.sf.carte.echosvg.css.engine.value.Value;
 
 /**
  * This interface represents the values for properties like 'fill',

@@ -24,6 +24,8 @@ import java.awt.image.Kernel;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.ext.awt.image.PadMode;
 import io.sf.carte.echosvg.ext.awt.image.renderable.ConvolveMatrixRable;
 import io.sf.carte.echosvg.ext.awt.image.renderable.ConvolveMatrixRable8Bit;
@@ -31,7 +33,6 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import org.w3c.dom.Element;
 
 /**
  * Bridge class for the &lt;feConvolveMatrix&gt; element.

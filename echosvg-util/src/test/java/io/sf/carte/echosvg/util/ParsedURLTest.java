@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.util;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
-
-import java.io.StringWriter;
-import java.io.PrintWriter;
 
 /**
  * This test validates that the ParsedURL class properly parses and

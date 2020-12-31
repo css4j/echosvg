@@ -48,8 +48,8 @@ import org.xml.sax.ext.LexicalHandler;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import io.sf.carte.echosvg.util.HaltingThread;
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.util.HaltingThread;
 
 /**
  * This class contains methods for creating Document instances

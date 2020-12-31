@@ -26,6 +26,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.svg.SVGSVGElement;
+
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
@@ -35,8 +39,8 @@ import io.sf.carte.echosvg.bridge.BridgeException;
 import io.sf.carte.echosvg.bridge.DefaultScriptSecurity;
 import io.sf.carte.echosvg.bridge.ExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.GVTBuilder;
-import io.sf.carte.echosvg.bridge.NoLoadScriptSecurity;
 import io.sf.carte.echosvg.bridge.NoLoadExternalResourceSecurity;
+import io.sf.carte.echosvg.bridge.NoLoadScriptSecurity;
 import io.sf.carte.echosvg.bridge.RelaxedScriptSecurity;
 import io.sf.carte.echosvg.bridge.SVGUtilities;
 import io.sf.carte.echosvg.bridge.ScriptSecurity;
@@ -56,9 +60,6 @@ import io.sf.carte.echosvg.transcoder.keys.Rectangle2DKey;
 import io.sf.carte.echosvg.transcoder.keys.StringKey;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.svg.SVGSVGElement;
 
 /**
  * This class may be the base class of all transcoders which take an

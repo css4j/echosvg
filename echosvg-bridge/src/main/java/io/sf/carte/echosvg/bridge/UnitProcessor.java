@@ -18,9 +18,10 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.parser.ParseException;
-import org.w3c.dom.Element;
 
 /**
  * This class provides methods to convert SVG length and coordinate to

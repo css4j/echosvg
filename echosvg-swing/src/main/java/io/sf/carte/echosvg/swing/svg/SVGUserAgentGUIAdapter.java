@@ -20,8 +20,10 @@
 package io.sf.carte.echosvg.swing.svg;
 
 import java.awt.Component;
+
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+
 import io.sf.carte.echosvg.util.gui.JErrorPane;
 
 /**

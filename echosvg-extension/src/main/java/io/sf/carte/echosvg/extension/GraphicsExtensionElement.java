@@ -18,16 +18,6 @@
  */
 package io.sf.carte.echosvg.extension;
 
-import io.sf.carte.echosvg.anim.dom.SVGLocatableSupport;
-import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedBoolean;
-import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedTransformList;
-import io.sf.carte.echosvg.anim.dom.TraitInformation;
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
-import io.sf.carte.echosvg.util.DoublyIndexedTable;
-import io.sf.carte.echosvg.util.SVGTypes;
-
 import org.w3c.dom.svg.SVGAnimatedBoolean;
 import org.w3c.dom.svg.SVGAnimatedTransformList;
 import org.w3c.dom.svg.SVGElement;
@@ -40,6 +30,16 @@ import org.w3c.dom.svg.SVGRect;
 import org.w3c.dom.svg.SVGStringList;
 import org.w3c.dom.svg.SVGTests;
 import org.w3c.dom.svg.SVGTransformable;
+
+import io.sf.carte.echosvg.anim.dom.SVGLocatableSupport;
+import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedBoolean;
+import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedTransformList;
+import io.sf.carte.echosvg.anim.dom.TraitInformation;
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
+import io.sf.carte.echosvg.dom.util.XMLSupport;
+import io.sf.carte.echosvg.util.DoublyIndexedTable;
+import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
  * An abstract base class for graphical extension elements.  This class

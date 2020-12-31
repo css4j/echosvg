@@ -18,10 +18,10 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.SVG12Constants;
-
-import org.w3c.dom.Node;
 
 /**
  * This class implements a regular polygon extension to SVG

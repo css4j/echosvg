@@ -22,13 +22,14 @@ import java.awt.geom.Rectangle2D;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.ext.awt.image.PadMode;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.renderable.MorphologyRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import org.w3c.dom.Element;
 
 /**
  * Bridge class for the &lt;feMorphology&gt; element.

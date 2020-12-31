@@ -23,18 +23,6 @@ import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
-import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
-import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedLength;
-import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
-import io.sf.carte.echosvg.anim.dom.SVGOMUseElement;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
-import io.sf.carte.echosvg.dom.svg.SVGOMUseShadowRoot;
-import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
-import io.sf.carte.echosvg.gvt.GraphicsNode;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -43,6 +31,18 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.svg.SVGTransformable;
 import org.w3c.dom.svg.SVGUseElement;
+
+import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
+import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
+import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedLength;
+import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
+import io.sf.carte.echosvg.anim.dom.SVGOMUseElement;
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
+import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
+import io.sf.carte.echosvg.dom.svg.SVGOMUseShadowRoot;
+import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
+import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
  * Bridge class for the &lt;use&gt; element.

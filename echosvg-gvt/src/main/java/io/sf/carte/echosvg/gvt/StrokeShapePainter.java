@@ -22,8 +22,8 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * A shape painter that can be used to draw the outline of a shape.

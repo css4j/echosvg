@@ -22,9 +22,9 @@ import java.awt.Shape;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
-import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A class representing a list of path segments.

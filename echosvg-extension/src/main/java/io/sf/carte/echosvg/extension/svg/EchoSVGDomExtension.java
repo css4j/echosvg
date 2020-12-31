@@ -18,13 +18,13 @@
  */
 package io.sf.carte.echosvg.extension.svg;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.DomExtension;
 import io.sf.carte.echosvg.dom.ExtensibleDOMImplementation;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * This is a Service interface for classes that want to extend the

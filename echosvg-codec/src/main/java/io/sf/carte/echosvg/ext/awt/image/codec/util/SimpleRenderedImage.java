@@ -25,12 +25,11 @@ import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
-
-import java.util.Vector;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * A simple class implemented the <code>RenderedImage</code>

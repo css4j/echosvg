@@ -18,11 +18,6 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
-import io.sf.carte.echosvg.util.DoublyIndexedTable;
-import io.sf.carte.echosvg.util.SVGTypes;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAngle;
 import org.w3c.dom.svg.SVGAnimatedAngle;
@@ -32,6 +27,11 @@ import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGAnimatedPreserveAspectRatio;
 import org.w3c.dom.svg.SVGAnimatedRect;
 import org.w3c.dom.svg.SVGMarkerElement;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.util.XMLSupport;
+import io.sf.carte.echosvg.util.DoublyIndexedTable;
+import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
  * This class implements {@link org.w3c.dom.svg.SVGMarkerElement}.

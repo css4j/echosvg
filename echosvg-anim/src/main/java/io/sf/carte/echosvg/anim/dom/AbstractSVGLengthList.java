@@ -18,17 +18,18 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGException;
+import org.w3c.dom.svg.SVGLength;
+import org.w3c.dom.svg.SVGLengthList;
+
 import io.sf.carte.echosvg.dom.svg.AbstractSVGList;
 import io.sf.carte.echosvg.dom.svg.ListHandler;
 import io.sf.carte.echosvg.dom.svg.SVGItem;
 import io.sf.carte.echosvg.parser.LengthListHandler;
 import io.sf.carte.echosvg.parser.LengthListParser;
 import io.sf.carte.echosvg.parser.ParseException;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGException;
-import org.w3c.dom.svg.SVGLength;
-import org.w3c.dom.svg.SVGLengthList;
 
 /**
  * This class is the implementation of

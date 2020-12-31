@@ -18,11 +18,6 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.svg.SVGPathSegConstants;
-import io.sf.carte.echosvg.util.DoublyIndexedTable;
-import io.sf.carte.echosvg.util.SVGTypes;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAnimatedNumber;
 import org.w3c.dom.svg.SVGPathElement;
@@ -48,6 +43,11 @@ import org.w3c.dom.svg.SVGPathSegList;
 import org.w3c.dom.svg.SVGPathSegMovetoAbs;
 import org.w3c.dom.svg.SVGPathSegMovetoRel;
 import org.w3c.dom.svg.SVGPoint;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.svg.SVGPathSegConstants;
+import io.sf.carte.echosvg.util.DoublyIndexedTable;
+import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
  * This class implements {@link SVGPathElement}.

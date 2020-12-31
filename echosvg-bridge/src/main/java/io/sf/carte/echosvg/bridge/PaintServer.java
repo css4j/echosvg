@@ -26,6 +26,18 @@ import java.awt.Stroke;
 import java.awt.color.ICC_Profile;
 import java.io.IOException;
 
+import org.apache.xmlgraphics.java2d.color.CIELabColorSpace;
+import org.apache.xmlgraphics.java2d.color.ColorSpaces;
+import org.apache.xmlgraphics.java2d.color.ColorWithAlternatives;
+import org.apache.xmlgraphics.java2d.color.DeviceCMYKColorSpace;
+import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
+import org.apache.xmlgraphics.java2d.color.NamedColorSpace;
+import org.apache.xmlgraphics.java2d.color.profile.NamedColorProfile;
+import org.apache.xmlgraphics.java2d.color.profile.NamedColorProfileParser;
+import org.w3c.dom.Element;
+import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSValue;
+
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.svg.ICCColor;
@@ -42,19 +54,6 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
 import io.sf.carte.echosvg.gvt.StrokeShapePainter;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGConstants;
-
-import org.apache.xmlgraphics.java2d.color.CIELabColorSpace;
-import org.apache.xmlgraphics.java2d.color.ColorSpaces;
-import org.apache.xmlgraphics.java2d.color.ColorWithAlternatives;
-import org.apache.xmlgraphics.java2d.color.DeviceCMYKColorSpace;
-import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
-import org.apache.xmlgraphics.java2d.color.NamedColorSpace;
-import org.apache.xmlgraphics.java2d.color.profile.NamedColorProfile;
-import org.apache.xmlgraphics.java2d.color.profile.NamedColorProfileParser;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
 /**
  * A collection of utility methods to deliver <code>java.awt.Paint</code>,

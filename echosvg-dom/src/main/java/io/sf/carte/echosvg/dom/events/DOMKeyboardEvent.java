@@ -20,8 +20,9 @@ package io.sf.carte.echosvg.dom.events;
 
 import java.util.HashSet;
 
-import io.sf.carte.echosvg.w3c.dom.events.KeyboardEvent;
 import org.w3c.dom.views.AbstractView;
+
+import io.sf.carte.echosvg.w3c.dom.events.KeyboardEvent;
 
 /**
  * DOM 3 Keyboard event class.

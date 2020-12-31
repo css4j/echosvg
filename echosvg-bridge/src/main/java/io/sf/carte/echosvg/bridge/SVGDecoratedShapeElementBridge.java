@@ -20,11 +20,12 @@ package io.sf.carte.echosvg.bridge;
 
 import java.awt.Shape;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.gvt.CompositeShapePainter;
 import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.gvt.ShapePainter;
-import org.w3c.dom.Element;
 
 /**
  * The base bridge class for decorated shapes. Decorated shapes can be

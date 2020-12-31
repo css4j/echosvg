@@ -20,6 +20,18 @@ package io.sf.carte.echosvg.anim.dom;
 
 import java.util.LinkedList;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.svg.SVGAnimatedInteger;
+import org.w3c.dom.svg.SVGAnimatedNumber;
+import org.w3c.dom.svg.SVGElement;
+import org.w3c.dom.svg.SVGException;
+import org.w3c.dom.svg.SVGFitToViewBox;
+import org.w3c.dom.svg.SVGLength;
+import org.w3c.dom.svg.SVGSVGElement;
+
 import io.sf.carte.echosvg.anim.values.AnimatableNumberOptionalNumberValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -38,18 +50,6 @@ import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.svg.SVGAnimatedInteger;
-import org.w3c.dom.svg.SVGAnimatedNumber;
-import org.w3c.dom.svg.SVGElement;
-import org.w3c.dom.svg.SVGException;
-import org.w3c.dom.svg.SVGFitToViewBox;
-import org.w3c.dom.svg.SVGLength;
-import org.w3c.dom.svg.SVGSVGElement;
 
 /**
  * This class implements the {@link SVGElement} interface.

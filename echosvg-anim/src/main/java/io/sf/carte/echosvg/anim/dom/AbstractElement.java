@@ -18,6 +18,12 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.MutationEvent;
+
 import io.sf.carte.echosvg.css.engine.CSSNavigableNode;
 import io.sf.carte.echosvg.dom.AbstractAttr;
 import io.sf.carte.echosvg.dom.AbstractDocument;
@@ -25,12 +31,6 @@ import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeValue;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGConstants;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.MutationEvent;
 
 /**
  * This class provides a superclass to implement an SVG element, or

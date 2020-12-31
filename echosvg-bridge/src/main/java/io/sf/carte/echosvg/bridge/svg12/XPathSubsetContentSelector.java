@@ -21,14 +21,14 @@ package io.sf.carte.echosvg.bridge.svg12;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
 import io.sf.carte.echosvg.parser.AbstractScanner;
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.xml.XMLUtilities;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * A class to handle the XPath subset syntax for XBL content elements.

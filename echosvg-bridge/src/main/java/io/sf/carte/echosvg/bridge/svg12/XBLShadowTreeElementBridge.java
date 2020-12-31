@@ -18,6 +18,10 @@
  */
 package io.sf.carte.echosvg.bridge.svg12;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.MutationEvent;
+
 import io.sf.carte.echosvg.bridge.AbstractGraphicsNodeBridge;
 import io.sf.carte.echosvg.bridge.Bridge;
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -26,10 +30,6 @@ import io.sf.carte.echosvg.bridge.SVGUtilities;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.XBLConstants;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.MutationEvent;
 
 /**
  * Bridge class for the &lt;xbl:shadowTree&gt; element.

@@ -19,13 +19,12 @@
 
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
+import org.w3c.dom.css.CSSPrimitiveValue;
+
 import io.sf.carte.echosvg.css.engine.value.StringValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
-
 import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
-
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 /**
  * This interface provides constants for SVG 1.2 values.

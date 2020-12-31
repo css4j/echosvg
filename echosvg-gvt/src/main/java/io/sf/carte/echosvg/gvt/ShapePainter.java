@@ -20,8 +20,8 @@ package io.sf.carte.echosvg.gvt;
 
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Renders the shape of a <code>ShapeNode</code>.

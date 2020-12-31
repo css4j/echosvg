@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
 import org.w3c.dom.Node;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
 
 /**
  * This class implements the xbl:xbl element.

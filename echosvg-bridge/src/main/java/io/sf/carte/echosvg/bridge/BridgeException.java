@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
-import io.sf.carte.echosvg.gvt.GraphicsNode;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
+
+import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
+import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
  * Thrown when the bridge has detected an error.

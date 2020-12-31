@@ -43,9 +43,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.BufferedInputStream;
 import java.text.AttributedCharacterIterator;
-import java.util.Stack;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 import io.sf.carte.echosvg.ext.awt.geom.Polygon2D;
 import io.sf.carte.echosvg.ext.awt.geom.Polyline2D;

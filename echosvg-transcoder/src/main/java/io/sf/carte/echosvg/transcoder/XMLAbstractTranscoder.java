@@ -21,15 +21,16 @@ package io.sf.carte.echosvg.transcoder;
 
 import java.io.IOException;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.transcoder.keys.BooleanKey;
 import io.sf.carte.echosvg.transcoder.keys.DOMImplementationKey;
 import io.sf.carte.echosvg.transcoder.keys.StringKey;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
 
 /**
  * This class may be the base class of all transcoders which take an

@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
-import io.sf.carte.echosvg.parser.PathHandler;
-
 import org.w3c.dom.svg.SVGPathSeg;
 import org.w3c.dom.svg.SVGPathSegArcAbs;
 import org.w3c.dom.svg.SVGPathSegArcRel;
@@ -40,6 +38,8 @@ import org.w3c.dom.svg.SVGPathSegLinetoVerticalRel;
 import org.w3c.dom.svg.SVGPathSegList;
 import org.w3c.dom.svg.SVGPathSegMovetoAbs;
 import org.w3c.dom.svg.SVGPathSegMovetoRel;
+
+import io.sf.carte.echosvg.parser.PathHandler;
 
 /**
  * This class provide support for the SVGAnimatedPathData 

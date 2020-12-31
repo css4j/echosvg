@@ -21,6 +21,10 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGPoint;
+import org.w3c.dom.svg.SVGPointList;
+
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedPoints;
 import io.sf.carte.echosvg.anim.dom.SVGOMPolylineElement;
@@ -28,10 +32,6 @@ import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.parser.AWTPolylineProducer;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGPoint;
-import org.w3c.dom.svg.SVGPointList;
 
 /**
  * Bridge class for the &lt;polyline&gt; element.

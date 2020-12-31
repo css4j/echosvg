@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.dom.util;
 
 import java.util.List;
 
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * A simple class that implements the DOM NodeList interface by

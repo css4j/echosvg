@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.anim.timing;
 
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
+
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 
 /**
  * A class to handle eventbase SMIL timing specifiers.

@@ -18,6 +18,11 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.svg.SVGAnimatedRect;
+import org.w3c.dom.svg.SVGRect;
+
 import io.sf.carte.echosvg.anim.values.AnimatableRectValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
@@ -25,11 +30,6 @@ import io.sf.carte.echosvg.dom.svg.SVGOMRect;
 import io.sf.carte.echosvg.parser.DefaultNumberListHandler;
 import io.sf.carte.echosvg.parser.NumberListParser;
 import io.sf.carte.echosvg.parser.ParseException;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.svg.SVGAnimatedRect;
-import org.w3c.dom.svg.SVGRect;
 
 /**
  * Implementation of {@link SVGAnimatedRect}.

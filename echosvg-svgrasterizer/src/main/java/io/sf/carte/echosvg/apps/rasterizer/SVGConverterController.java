@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.apps.rasterizer;
 
 import java.io.File;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.Transcoder;
 

@@ -35,6 +35,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.events.MouseEvent;
+import org.w3c.dom.events.MutationEvent;
+import org.w3c.dom.svg.SVGDocument;
+
 import io.sf.carte.echosvg.anim.dom.AnimatedAttributeListener;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
@@ -43,6 +53,7 @@ import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.SVGStylableElement;
 import io.sf.carte.echosvg.bridge.svg12.SVG12BridgeContext;
 import io.sf.carte.echosvg.bridge.svg12.SVG12BridgeExtension;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
@@ -64,17 +75,6 @@ import io.sf.carte.echosvg.util.CleanerThread;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.Service;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.events.MouseEvent;
-import org.w3c.dom.events.MutationEvent;
-import org.w3c.dom.svg.SVGDocument;
 
 /**
  * This class represents a context used by the various bridges and the

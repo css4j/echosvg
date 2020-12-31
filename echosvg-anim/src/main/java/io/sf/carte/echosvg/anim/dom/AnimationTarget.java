@@ -18,10 +18,10 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.anim.values.AnimatableValue;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGLength;
+
+import io.sf.carte.echosvg.anim.values.AnimatableValue;
 
 /**
  * An interface for targets of animation to provide context information.

@@ -20,8 +20,8 @@ package io.sf.carte.echosvg.util.gui.xmleditor;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.text.StyleContext;
 

@@ -20,11 +20,6 @@ package io.sf.carte.echosvg.css.dom;
 
 import java.util.ArrayList;
 
-import io.sf.carte.echosvg.css.engine.value.FloatValue;
-import io.sf.carte.echosvg.css.engine.value.Value;
-import io.sf.carte.echosvg.css.engine.value.svg.ICCColor;
-import io.sf.carte.echosvg.util.CSSConstants;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSValue;
@@ -35,6 +30,11 @@ import org.w3c.dom.svg.SVGColor;
 import org.w3c.dom.svg.SVGICCColor;
 import org.w3c.dom.svg.SVGNumber;
 import org.w3c.dom.svg.SVGNumberList;
+
+import io.sf.carte.echosvg.css.engine.value.FloatValue;
+import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.svg.ICCColor;
+import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
  * This class implements the {@link SVGColor} interface.

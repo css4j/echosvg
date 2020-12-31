@@ -18,9 +18,6 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
-import io.sf.carte.echosvg.parser.DefaultPathHandler;
-import io.sf.carte.echosvg.parser.ParseException;
-import io.sf.carte.echosvg.parser.PathParser;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGPathSeg;
@@ -43,6 +40,10 @@ import org.w3c.dom.svg.SVGPathSegLinetoVerticalRel;
 import org.w3c.dom.svg.SVGPathSegList;
 import org.w3c.dom.svg.SVGPathSegMovetoAbs;
 import org.w3c.dom.svg.SVGPathSegMovetoRel;
+
+import io.sf.carte.echosvg.parser.DefaultPathHandler;
+import io.sf.carte.echosvg.parser.ParseException;
+import io.sf.carte.echosvg.parser.PathParser;
 
 /**
  * This class is the implementation of

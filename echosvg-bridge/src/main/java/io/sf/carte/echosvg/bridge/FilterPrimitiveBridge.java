@@ -21,9 +21,10 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import org.w3c.dom.Element;
 
 /**
  * Factory class for vending <code>Filter</code> objects that represents

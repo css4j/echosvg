@@ -21,13 +21,14 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.filter.Mask;
 import io.sf.carte.echosvg.gvt.filter.MaskRable8Bit;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the &lt;mask&gt; element.

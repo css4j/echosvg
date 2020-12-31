@@ -32,6 +32,38 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.WeakHashMap;
 
+import org.apache.xml.utils.PrefixResolver;
+import org.apache.xpath.XPath;
+import org.apache.xpath.XPathContext;
+import org.apache.xpath.objects.XObject;
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMConfiguration;
+import org.w3c.dom.DOMError;
+import org.w3c.dom.DOMErrorHandler;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.DOMLocator;
+import org.w3c.dom.DOMStringList;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.UserDataHandler;
+import org.w3c.dom.events.DocumentEvent;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.traversal.DocumentTraversal;
+import org.w3c.dom.traversal.NodeFilter;
+import org.w3c.dom.traversal.NodeIterator;
+import org.w3c.dom.traversal.TreeWalker;
+import org.w3c.dom.xpath.XPathEvaluator;
+import org.w3c.dom.xpath.XPathException;
+import org.w3c.dom.xpath.XPathExpression;
+import org.w3c.dom.xpath.XPathNSResolver;
+import org.w3c.dom.xpath.XPathResult;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.events.DocumentEventSupport;
 import io.sf.carte.echosvg.dom.events.EventSupport;
 import io.sf.carte.echosvg.dom.traversal.TraversalSupport;
@@ -43,41 +75,7 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
 import io.sf.carte.echosvg.util.CleanerThread;
 import io.sf.carte.echosvg.util.DOMConstants;
 import io.sf.carte.echosvg.util.SoftDoublyIndexedTable;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.apache.xml.utils.PrefixResolver;
-
-import org.apache.xpath.XPath;
-import org.apache.xpath.XPathContext;
-import org.apache.xpath.objects.XObject;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.DOMConfiguration;
-import org.w3c.dom.DOMError;
-import org.w3c.dom.DOMErrorHandler;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.DOMLocator;
-import org.w3c.dom.DOMStringList;
-import org.w3c.dom.Element;
-import org.w3c.dom.events.DocumentEvent;
-import org.w3c.dom.events.Event;
 import io.sf.carte.echosvg.w3c.dom.events.MutationNameEvent;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.traversal.DocumentTraversal;
-import org.w3c.dom.traversal.NodeFilter;
-import org.w3c.dom.traversal.NodeIterator;
-import org.w3c.dom.traversal.TreeWalker;
-import org.w3c.dom.UserDataHandler;
-import org.w3c.dom.xpath.XPathEvaluator;
-import org.w3c.dom.xpath.XPathException;
-import org.w3c.dom.xpath.XPathExpression;
-import org.w3c.dom.xpath.XPathNSResolver;
-import org.w3c.dom.xpath.XPathResult;
 
 /**
  * This class implements the {@link org.w3c.dom.Document} interface.

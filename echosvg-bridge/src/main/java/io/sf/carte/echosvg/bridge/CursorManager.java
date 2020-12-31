@@ -35,6 +35,13 @@ import java.awt.image.WritableRaster;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSValue;
+import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGPreserveAspectRatio;
+
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.AbstractNode;
@@ -50,12 +57,6 @@ import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.Platform;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.SoftReferenceCache;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
-import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
 
 /**

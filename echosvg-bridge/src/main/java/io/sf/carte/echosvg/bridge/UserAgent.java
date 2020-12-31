@@ -23,12 +23,12 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 
-import io.sf.carte.echosvg.gvt.event.EventDispatcher;
-import io.sf.carte.echosvg.util.ParsedURL;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGAElement;
 import org.w3c.dom.svg.SVGDocument;
+
+import io.sf.carte.echosvg.gvt.event.EventDispatcher;
+import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * An interface that provides access to the User Agent informations

@@ -21,14 +21,14 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMEllipseElement;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.gvt.ShapePainter;
-
-import org.w3c.dom.Element;
 
 /**
  * Bridge class for the &lt;ellipse&gt; element.

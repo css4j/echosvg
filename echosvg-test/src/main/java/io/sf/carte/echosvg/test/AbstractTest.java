@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.test;
 
-import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * Base class containing convenience methods for writing tests. <br>

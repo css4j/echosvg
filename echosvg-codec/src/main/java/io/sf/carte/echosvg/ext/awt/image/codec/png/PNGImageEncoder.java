@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
-import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncoderImpl;
-
 import java.awt.Rectangle;
 import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
@@ -38,6 +36,8 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
+
+import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncoderImpl;
 
 class CRC {
 

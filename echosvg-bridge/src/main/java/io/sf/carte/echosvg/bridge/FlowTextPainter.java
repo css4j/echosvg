@@ -23,12 +23,12 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.Arrays;
 
 import io.sf.carte.echosvg.gvt.flow.BlockInfo;
 import io.sf.carte.echosvg.gvt.flow.FlowRegions;

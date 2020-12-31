@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.anim;
 
+import org.w3c.dom.svg.SVGTransform;
+
 import io.sf.carte.echosvg.anim.dom.AnimatableElement;
 import io.sf.carte.echosvg.anim.timing.TimedElement;
-import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.anim.values.AnimatableTransformListValue;
-
-import org.w3c.dom.svg.SVGTransform;
+import io.sf.carte.echosvg.anim.values.AnimatableValue;
 
 /**
  * An animation class for 'animateTransform' animations.

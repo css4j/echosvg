@@ -21,10 +21,6 @@ package io.sf.carte.echosvg.anim.dom;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 
-import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGMatrix;
-import io.sf.carte.echosvg.dom.svg.SVGContext;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGElement;
@@ -32,6 +28,10 @@ import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGFitToViewBox;
 import org.w3c.dom.svg.SVGMatrix;
 import org.w3c.dom.svg.SVGRect;
+
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.dom.svg.AbstractSVGMatrix;
+import io.sf.carte.echosvg.dom.svg.SVGContext;
 
 /**
  * This class provides support for the SVGLocatable interface.

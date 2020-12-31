@@ -33,9 +33,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.NoninvertibleTransformException;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Handles the attributes in a graphic context:<br>

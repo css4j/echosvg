@@ -18,13 +18,14 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
-import io.sf.carte.echosvg.parser.ParseException;
-import io.sf.carte.echosvg.parser.PointsHandler;
-import io.sf.carte.echosvg.parser.PointsParser;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGPoint;
 import org.w3c.dom.svg.SVGPointList;
+
+import io.sf.carte.echosvg.parser.ParseException;
+import io.sf.carte.echosvg.parser.PointsHandler;
+import io.sf.carte.echosvg.parser.PointsParser;
 
 /**
  * Abstract implementation of {@link SVGPointList}.

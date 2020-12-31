@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import io.sf.carte.echosvg.parser.ParseException;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGException;
+
+import io.sf.carte.echosvg.parser.ParseException;
 
 
 /**

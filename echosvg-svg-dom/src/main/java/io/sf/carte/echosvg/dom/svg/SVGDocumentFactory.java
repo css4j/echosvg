@@ -22,8 +22,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
-import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import org.w3c.dom.svg.SVGDocument;
+
+import io.sf.carte.echosvg.dom.util.DocumentFactory;
 
 /**
  * This interface represents an object which can build a SVGDocument.

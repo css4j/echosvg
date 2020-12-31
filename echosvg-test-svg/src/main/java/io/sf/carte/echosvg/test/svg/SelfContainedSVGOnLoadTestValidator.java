@@ -20,10 +20,9 @@ package io.sf.carte.echosvg.test.svg;
 
 import java.util.Vector;
 
-import io.sf.carte.echosvg.test.TestReport;
-
 import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.DefaultTestSuite;
+import io.sf.carte.echosvg.test.TestReport;
 
 /**
  * This test validates the operation of SelfContainedSVGOnLoadTest.

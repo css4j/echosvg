@@ -23,8 +23,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -34,6 +32,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
 
 /**
  * This class contains utility methods to manipulate Java classes.

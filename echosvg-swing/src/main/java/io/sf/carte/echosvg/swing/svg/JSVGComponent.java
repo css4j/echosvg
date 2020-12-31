@@ -44,6 +44,13 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGAElement;
+import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGSVGElement;
+
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -81,13 +88,6 @@ import io.sf.carte.echosvg.util.RunnableQueue;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.SVGFeatureStrings;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
-
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGAElement;
-import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGSVGElement;
 
 /**
  * This class represents a swing component that can display SVG documents. This

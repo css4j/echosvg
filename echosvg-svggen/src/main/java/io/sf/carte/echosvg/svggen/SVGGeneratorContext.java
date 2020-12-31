@@ -25,10 +25,8 @@ import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
-
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-
 import java.util.Locale;
 
 import org.w3c.dom.Document;

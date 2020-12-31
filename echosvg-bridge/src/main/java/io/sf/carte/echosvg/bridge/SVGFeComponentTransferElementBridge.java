@@ -22,6 +22,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.ext.awt.image.ComponentTransferFunction;
 import io.sf.carte.echosvg.ext.awt.image.ConcreteComponentTransferFunction;
 import io.sf.carte.echosvg.ext.awt.image.PadMode;
@@ -29,8 +32,6 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.ComponentTransferRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the &lt;feComponentTransfer&gt; element.

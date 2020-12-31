@@ -19,14 +19,14 @@
 
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.dom.util.DOMUtilities;
+import java.util.HashMap;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.stylesheets.LinkStyle;
 import org.w3c.dom.stylesheets.StyleSheet;
 
-import java.util.HashMap;
+import io.sf.carte.echosvg.dom.util.DOMUtilities;
 
 /**
  * This class provides an implementation of the 'xml-stylesheet' processing

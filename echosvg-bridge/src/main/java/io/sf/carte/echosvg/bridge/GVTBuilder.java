@@ -18,15 +18,15 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.RootGraphicsNode;
 import io.sf.carte.echosvg.util.HaltingThread;
 import io.sf.carte.echosvg.util.SVGConstants;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * This class is responsible for creating a GVT tree using an SVG DOM tree.

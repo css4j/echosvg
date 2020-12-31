@@ -28,13 +28,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
+
 import io.sf.carte.echosvg.ext.awt.image.URLImageCache;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.renderable.ProfileRable;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.Service;
-
-import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
 
 /**
  * This class handles the registered Image tag handlers.  These are

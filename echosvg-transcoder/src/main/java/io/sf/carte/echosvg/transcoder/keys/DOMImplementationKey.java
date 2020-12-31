@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.transcoder.keys;
 
-import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import org.w3c.dom.DOMImplementation;
+
+import io.sf.carte.echosvg.transcoder.TranscodingHints;
 
 /**
  * A transcoding Key represented as a DOMImplementation.

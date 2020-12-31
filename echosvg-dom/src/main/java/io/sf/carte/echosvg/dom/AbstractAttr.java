@@ -18,13 +18,14 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.TypeInfo;
 import org.w3c.dom.events.MutationEvent;
+
+import io.sf.carte.echosvg.dom.util.DOMUtilities;
 
 /**
  * This class implements the {@link org.w3c.dom.Attr} interface.

@@ -18,17 +18,18 @@
  */
 package io.sf.carte.echosvg.svggen;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.Collections;
 
-import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
  * This class is used by the SVGGraphics2D SVG Generator to manage

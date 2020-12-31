@@ -22,12 +22,13 @@ import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
-import io.sf.carte.echosvg.css.engine.value.Value;
-import io.sf.carte.echosvg.util.CSSConstants;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.css.CSSPrimitiveValue;
+
+import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
  * A collection of utility method for text.

@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.gvt.Marker;
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.gvt.Marker;
 
 /**
  * Factory class for vending <code>Marker</code> objects.

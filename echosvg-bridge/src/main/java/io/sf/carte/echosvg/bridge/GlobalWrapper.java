@@ -18,15 +18,14 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.dom.svg12.SVGGlobal;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
-
 import org.w3c.dom.events.EventTarget;
+
+import io.sf.carte.echosvg.dom.svg12.SVGGlobal;
 
 /**
  * Wrapper class for the SVGGlobal object.

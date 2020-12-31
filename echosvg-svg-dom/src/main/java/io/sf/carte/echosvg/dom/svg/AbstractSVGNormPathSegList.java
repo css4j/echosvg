@@ -23,11 +23,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.PathIterator;
 
+import org.w3c.dom.svg.SVGPathSeg;
+
 import io.sf.carte.echosvg.ext.awt.geom.ExtendedGeneralPath;
 import io.sf.carte.echosvg.parser.DefaultPathHandler;
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.parser.PathParser;
-import org.w3c.dom.svg.SVGPathSeg;
 
 /**
  * This class is the implementation of the normalized

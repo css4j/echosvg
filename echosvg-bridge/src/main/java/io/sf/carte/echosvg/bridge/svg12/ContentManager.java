@@ -18,21 +18,13 @@
  */
 package io.sf.carte.echosvg.bridge.svg12;
 
-import javax.swing.event.EventListenerList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 
-import io.sf.carte.echosvg.anim.dom.XBLEventSupport;
-import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
-import io.sf.carte.echosvg.anim.dom.XBLOMShadowTreeElement;
-import io.sf.carte.echosvg.dom.AbstractNode;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-import io.sf.carte.echosvg.dom.xbl.XBLManager;
-import io.sf.carte.echosvg.util.XBLConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
+import javax.swing.event.EventListenerList;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -42,6 +34,15 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MutationEvent;
+
+import io.sf.carte.echosvg.anim.dom.XBLEventSupport;
+import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
+import io.sf.carte.echosvg.anim.dom.XBLOMShadowTreeElement;
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.AbstractNode;
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
+import io.sf.carte.echosvg.dom.xbl.XBLManager;
+import io.sf.carte.echosvg.util.XBLConstants;
 
 /**
  * A class to manage all XBL content elements in a shadow tree.

@@ -21,22 +21,6 @@ package io.sf.carte.echosvg.anim.dom;
 import java.awt.geom.AffineTransform;
 import java.util.List;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.svg.AbstractSVGMatrix;
-import io.sf.carte.echosvg.dom.svg.SVGContext;
-import io.sf.carte.echosvg.dom.svg.SVGOMAngle;
-import io.sf.carte.echosvg.dom.svg.SVGOMPoint;
-import io.sf.carte.echosvg.dom.svg.SVGOMRect;
-import io.sf.carte.echosvg.dom.svg.SVGOMTransform;
-import io.sf.carte.echosvg.dom.svg.SVGSVGContext;
-import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
-import io.sf.carte.echosvg.dom.svg.SVGZoomAndPanSupport;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
-import io.sf.carte.echosvg.dom.util.ListNodeList;
-import io.sf.carte.echosvg.util.DoublyIndexedTable;
-import io.sf.carte.echosvg.util.SVGTypes;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -66,6 +50,22 @@ import org.w3c.dom.svg.SVGTransform;
 import org.w3c.dom.svg.SVGViewSpec;
 import org.w3c.dom.views.AbstractView;
 import org.w3c.dom.views.DocumentView;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.svg.AbstractSVGMatrix;
+import io.sf.carte.echosvg.dom.svg.SVGContext;
+import io.sf.carte.echosvg.dom.svg.SVGOMAngle;
+import io.sf.carte.echosvg.dom.svg.SVGOMPoint;
+import io.sf.carte.echosvg.dom.svg.SVGOMRect;
+import io.sf.carte.echosvg.dom.svg.SVGOMTransform;
+import io.sf.carte.echosvg.dom.svg.SVGSVGContext;
+import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
+import io.sf.carte.echosvg.dom.svg.SVGZoomAndPanSupport;
+import io.sf.carte.echosvg.dom.util.ListNodeList;
+import io.sf.carte.echosvg.dom.util.XLinkSupport;
+import io.sf.carte.echosvg.dom.util.XMLSupport;
+import io.sf.carte.echosvg.util.DoublyIndexedTable;
+import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
  * This class implements {@link org.w3c.dom.svg.SVGSVGElement}.

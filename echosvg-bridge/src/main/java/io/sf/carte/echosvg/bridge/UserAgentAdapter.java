@@ -27,14 +27,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGAElement;
+import org.w3c.dom.svg.SVGDocument;
+
 import io.sf.carte.echosvg.gvt.event.EventDispatcher;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGFeatureStrings;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGAElement;
-import org.w3c.dom.svg.SVGDocument;
 
 /**
  * An abstract user agent adaptor implementation.  It exists to simply

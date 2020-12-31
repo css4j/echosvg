@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.IdContainer;
 import io.sf.carte.echosvg.dom.xbl.XBLShadowTreeElement;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
 
 /**
  * This class implements the xbl:shadowTree element.

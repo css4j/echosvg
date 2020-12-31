@@ -24,14 +24,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.ext.awt.image.CompositeRule;
 import io.sf.carte.echosvg.ext.awt.image.PadMode;
 import io.sf.carte.echosvg.ext.awt.image.renderable.CompositeRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the &lt;feMerge&gt; element.

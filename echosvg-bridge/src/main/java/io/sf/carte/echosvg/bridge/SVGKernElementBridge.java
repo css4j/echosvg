@@ -18,13 +18,14 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import java.util.StringTokenizer;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.gvt.font.Kern;
 import io.sf.carte.echosvg.gvt.font.UnicodeRange;
-import org.w3c.dom.Element;
 
 /**
  * A base Bridge class for the kerning elements.

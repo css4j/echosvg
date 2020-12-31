@@ -19,13 +19,13 @@
 
 package io.sf.carte.echosvg.swing.gvt;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
-import java.awt.BasicStroke;
 import java.awt.geom.AffineTransform;
 
 import io.sf.carte.echosvg.bridge.ConcreteTextSelector;

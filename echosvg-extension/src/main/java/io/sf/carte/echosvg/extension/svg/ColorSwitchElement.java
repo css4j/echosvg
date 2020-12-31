@@ -18,9 +18,10 @@
  */
 package io.sf.carte.echosvg.extension.svg;
 
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.extension.PrefixableStylableExtensionElement;
-import org.w3c.dom.Node;
 
 /**
  * This class implements a "color switch" extension to SVG.

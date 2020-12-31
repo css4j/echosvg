@@ -18,9 +18,10 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
-import io.sf.carte.echosvg.css.engine.value.AbstractValue;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSValue;
+
+import io.sf.carte.echosvg.css.engine.value.AbstractValue;
 
 /**
  * This class represents an ICC color value.

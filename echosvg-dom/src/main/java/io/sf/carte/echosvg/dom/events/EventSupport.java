@@ -22,13 +22,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.AbstractNode;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventException;
 import org.w3c.dom.events.EventListener;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.AbstractNode;
 
 /**
  * The class allows registration and removal of EventListeners on

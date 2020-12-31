@@ -26,18 +26,19 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.ext.awt.image.ConcreteComponentTransferFunction;
 import io.sf.carte.echosvg.ext.awt.image.renderable.ComponentTransferRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.gvt.AbstractGraphicsNode;
-import io.sf.carte.echosvg.gvt.RootGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.PatternPaint;
+import io.sf.carte.echosvg.gvt.RootGraphicsNode;
 import io.sf.carte.echosvg.util.ParsedURL;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the &lt;pattern&gt; element.

@@ -18,16 +18,16 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.svg.SVGAngle;
+import org.w3c.dom.svg.SVGAnimatedAngle;
+import org.w3c.dom.svg.SVGAnimatedEnumeration;
+import org.w3c.dom.svg.SVGMarkerElement;
+
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.svg.SVGOMAngle;
 import io.sf.carte.echosvg.util.SVGConstants;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.svg.SVGAnimatedAngle;
-import org.w3c.dom.svg.SVGAnimatedEnumeration;
-import org.w3c.dom.svg.SVGAngle;
-import org.w3c.dom.svg.SVGMarkerElement;
 
 /**
  * A class that handles an {@link SVGAnimatedAngle} and an

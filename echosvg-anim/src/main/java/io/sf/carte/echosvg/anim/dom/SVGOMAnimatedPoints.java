@@ -21,6 +21,13 @@ package io.sf.carte.echosvg.anim.dom;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.svg.SVGAnimatedPoints;
+import org.w3c.dom.svg.SVGException;
+import org.w3c.dom.svg.SVGPoint;
+import org.w3c.dom.svg.SVGPointList;
+
 import io.sf.carte.echosvg.anim.values.AnimatablePointListValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGPointList;
@@ -28,15 +35,7 @@ import io.sf.carte.echosvg.dom.svg.ListBuilder;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.dom.svg.SVGItem;
 import io.sf.carte.echosvg.dom.svg.SVGPointItem;
-
 import io.sf.carte.echosvg.parser.ParseException;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.svg.SVGAnimatedPoints;
-import org.w3c.dom.svg.SVGException;
-import org.w3c.dom.svg.SVGPoint;
-import org.w3c.dom.svg.SVGPointList;
 
 /**
  * This class is the implementation of the SVGAnimatedPoints interface.

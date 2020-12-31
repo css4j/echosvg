@@ -26,6 +26,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGElement;
+import org.w3c.dom.svg.SVGLangSpace;
+import org.w3c.dom.svg.SVGNumberList;
+
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
@@ -37,12 +44,6 @@ import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVG12Constants;
 import io.sf.carte.echosvg.util.SVGConstants;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGElement;
-import org.w3c.dom.svg.SVGLangSpace;
-import org.w3c.dom.svg.SVGNumberList;
 
 /**
  * A collection of utility methods for SVG.

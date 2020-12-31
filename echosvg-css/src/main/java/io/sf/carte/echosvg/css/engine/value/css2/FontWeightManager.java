@@ -18,6 +18,9 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.css.CSSPrimitiveValue;
+
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -30,9 +33,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 /**
  * This class provides a manager for the 'font-weight' property values.

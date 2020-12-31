@@ -18,10 +18,11 @@
  */
 package io.sf.carte.echosvg.css.dom;
 
-import io.sf.carte.echosvg.css.engine.CSSEngine;
-import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.css.CSSStyleDeclaration;
+
+import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 
 /**
  * This class represents an object which provides the computed styles

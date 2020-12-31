@@ -29,6 +29,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.svg.SVGAnimatedPreserveAspectRatio;
+import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGRect;
+
 import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedRect;
@@ -43,12 +49,6 @@ import io.sf.carte.echosvg.gvt.CanvasGraphicsNode;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.ShapeNode;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.svg.SVGAnimatedPreserveAspectRatio;
-import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGRect;
 
 /**
  * Bridge class for the &lt;svg&gt; element.

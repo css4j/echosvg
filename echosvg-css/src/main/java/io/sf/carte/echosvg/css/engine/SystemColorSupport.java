@@ -23,11 +23,12 @@ import java.awt.SystemColor;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.w3c.dom.css.CSSPrimitiveValue;
+
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.RGBColorValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.util.CSSConstants;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 /**
  * This class provides support for AWT system colors.

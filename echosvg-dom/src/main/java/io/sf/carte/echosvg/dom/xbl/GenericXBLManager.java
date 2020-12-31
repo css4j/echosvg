@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.dom.xbl;
 
-import io.sf.carte.echosvg.dom.AbstractNode;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import io.sf.carte.echosvg.dom.AbstractNode;
 
 /**
  * An XBL manager that performs no XBL processing.

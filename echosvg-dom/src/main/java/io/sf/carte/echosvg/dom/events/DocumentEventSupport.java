@@ -19,10 +19,10 @@
 package io.sf.carte.echosvg.dom.events;
 
 
+import java.util.HashMap;
+
 import org.w3c.dom.DOMException;
 import org.w3c.dom.events.Event;
-
-import java.util.HashMap;
 
 /**
  * This class implements the behavior of DocumentEvent.

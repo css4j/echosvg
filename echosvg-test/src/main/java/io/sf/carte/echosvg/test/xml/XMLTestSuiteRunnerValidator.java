@@ -19,21 +19,19 @@
 package io.sf.carte.echosvg.test.xml;
 
 import java.io.File;
-
 import java.net.URL;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
+import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.DefaultTestSuite;
-import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.test.TestSuiteReport;
 

@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.ext.awt.image.rendered;
 
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is responsible for breaking up a block of tiles into

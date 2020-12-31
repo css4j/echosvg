@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.anim.values.AnimatableIntegerValue;
-import io.sf.carte.echosvg.anim.values.AnimatableValue;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGAnimatedInteger;
+
+import io.sf.carte.echosvg.anim.values.AnimatableIntegerValue;
+import io.sf.carte.echosvg.anim.values.AnimatableValue;
 
 /**
  * This class implements the {@link SVGAnimatedInteger} interface.

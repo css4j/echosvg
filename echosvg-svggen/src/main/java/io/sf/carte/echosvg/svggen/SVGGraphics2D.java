@@ -50,13 +50,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import io.sf.carte.echosvg.ext.awt.g2d.AbstractGraphics2D;
-import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import io.sf.carte.echosvg.ext.awt.g2d.AbstractGraphics2D;
+import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
  * This implementation of the java.awt.Graphics2D abstract class

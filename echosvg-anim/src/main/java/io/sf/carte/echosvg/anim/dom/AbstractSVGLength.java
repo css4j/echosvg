@@ -18,12 +18,13 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.parser.LengthParser;
-import io.sf.carte.echosvg.parser.ParseException;
-import io.sf.carte.echosvg.parser.UnitProcessor;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGLength;
+
+import io.sf.carte.echosvg.parser.LengthParser;
+import io.sf.carte.echosvg.parser.ParseException;
+import io.sf.carte.echosvg.parser.UnitProcessor;
 
 /**
  * Default implementation for SVGLength.

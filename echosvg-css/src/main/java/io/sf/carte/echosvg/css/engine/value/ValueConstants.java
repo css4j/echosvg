@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
-import io.sf.carte.echosvg.util.CSSConstants;
 import org.w3c.dom.css.CSSPrimitiveValue;
+
+import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
  * This interface defines constants for CSS values.

@@ -29,14 +29,14 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.svggen.SVGGraphics2D;
 import io.sf.carte.echosvg.transcoder.ToSVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /** This class implements the <code>Transcoder</code> interface and
  *  can convert a WMF input document into an SVG document.

@@ -21,11 +21,12 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 
-import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
-import io.sf.carte.echosvg.gvt.GraphicsNode;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.MutationEvent;
+
+import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
+import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
  * Bridge class for the &lt;g&gt; element.

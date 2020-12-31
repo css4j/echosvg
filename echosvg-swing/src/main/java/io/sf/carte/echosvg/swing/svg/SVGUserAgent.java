@@ -18,10 +18,11 @@
  */
 package io.sf.carte.echosvg.swing.svg;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.bridge.ExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.ScriptSecurity;
 import io.sf.carte.echosvg.util.ParsedURL;
-import org.w3c.dom.Element;
 
 /**
  * This interface must be implemented to provide client services to

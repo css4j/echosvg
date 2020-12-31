@@ -19,15 +19,15 @@
 
 package io.sf.carte.echosvg.transcoder.wmf.tosvg;
 
-import java.io.BufferedInputStream;
-import java.awt.Font;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.font.TextAttribute;
-import java.text.AttributedString;
-import java.text.AttributedCharacterIterator;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
+import java.io.BufferedInputStream;
+import java.text.AttributedCharacterIterator;
+import java.text.AttributedString;
 
 /**
  *  This class provides generic methods that must be used by a particular WMFPainter.

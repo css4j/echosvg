@@ -21,10 +21,10 @@ package io.sf.carte.echosvg.bridge;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.CodeSource;
-import java.security.cert.Certificate;
 import java.security.Permission;
 import java.security.PermissionCollection;
 import java.security.Policy;
+import java.security.cert.Certificate;
 import java.util.Enumeration;
 
 /**

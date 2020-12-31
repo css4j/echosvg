@@ -21,10 +21,10 @@ package io.sf.carte.echosvg.test.xml;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.stream.StreamSource;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 /*import org.apache.xalan.xslt.XSLTProcessorFactory;
 import org.apache.xalan.xslt.XSLTInputSource;

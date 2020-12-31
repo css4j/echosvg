@@ -18,18 +18,18 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGDocument;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.dom.svg.SVGDocumentFactory;
 import io.sf.carte.echosvg.dom.util.DocumentDescriptor;
 import io.sf.carte.echosvg.util.CleanerThread;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGDocument;
 
 /**
  * This class is responsible on loading an SVG document and

@@ -18,6 +18,14 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.stylesheets.LinkStyle;
+import org.w3c.dom.svg.SVGStyleElement;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStyleSheetNode;
 import io.sf.carte.echosvg.css.engine.StyleSheet;
@@ -25,14 +33,6 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.stylesheets.LinkStyle;
-import org.w3c.dom.svg.SVGStyleElement;
 
 /**
  * This class implements {@link SVGStyleElement}.

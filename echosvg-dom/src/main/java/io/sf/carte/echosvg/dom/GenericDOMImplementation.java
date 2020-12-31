@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.xml.XMLUtilities;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
+
+import io.sf.carte.echosvg.xml.XMLUtilities;
 
 /**
  * This class implements the {@link org.w3c.dom.DOMImplementation}.

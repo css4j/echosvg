@@ -18,13 +18,14 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import org.w3c.dom.css.CSSPrimitiveValue;
+
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.RGBColorValue;
 import io.sf.carte.echosvg.css.engine.value.StringValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.util.CSSConstants;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 /**
  * This interface provides constants for SVG values.

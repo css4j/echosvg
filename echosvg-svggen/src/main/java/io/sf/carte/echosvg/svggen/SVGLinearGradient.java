@@ -22,9 +22,10 @@ import java.awt.GradientPaint;
 import java.awt.Paint;
 import java.awt.geom.Point2D;
 
-import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
  * Utility class that converts a Java GradientPaint into an

@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * This class provides the interface for the SVGTextContentElement

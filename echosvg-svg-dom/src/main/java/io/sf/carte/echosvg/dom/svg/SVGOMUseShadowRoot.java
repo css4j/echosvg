@@ -18,12 +18,13 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.css.engine.CSSNavigableNode;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.AbstractDocumentFragment;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * This class implements {@link org.w3c.dom.DocumentFragment} interface.

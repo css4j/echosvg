@@ -23,6 +23,9 @@ import java.awt.Paint;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.css.CSSValue;
+
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.bridge.AnimatableGenericSVGBridge;
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -37,11 +40,9 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import io.sf.carte.echosvg.util.SVG12Constants;
-import io.sf.carte.echosvg.util.SVG12CSSConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
-import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSValue;
+import io.sf.carte.echosvg.util.SVG12CSSConstants;
+import io.sf.carte.echosvg.util.SVG12Constants;
 
 /**
  * Bridge class for a regular polygon element.

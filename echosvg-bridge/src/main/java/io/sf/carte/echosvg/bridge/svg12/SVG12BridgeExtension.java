@@ -21,12 +21,13 @@ package io.sf.carte.echosvg.bridge.svg12;
 import java.util.Collections;
 import java.util.Iterator;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.SVGBridgeExtension;
-import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.SVG12Constants;
+import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.XBLConstants;
-import org.w3c.dom.Element;
 
 /**
  * This is a Service interface for classes that want to extend the

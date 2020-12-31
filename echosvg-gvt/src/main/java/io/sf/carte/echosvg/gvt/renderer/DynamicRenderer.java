@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.gvt.renderer;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;

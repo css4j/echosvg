@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.dom.events;
 
-import org.w3c.dom.views.AbstractView;
 import org.w3c.dom.smil.TimeEvent;
+import org.w3c.dom.views.AbstractView;
 
 /**
  * An event class for SMIL timing events.

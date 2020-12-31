@@ -19,24 +19,19 @@
 package io.sf.carte.echosvg.test.svg;
 
 import java.awt.Graphics2D;
-
+import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
-
 import java.util.List;
 
+import io.sf.carte.echosvg.swing.JSVGCanvas;
+import io.sf.carte.echosvg.swing.JSVGCanvasHandler;
+import io.sf.carte.echosvg.swing.gvt.Overlay;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
-
-import io.sf.carte.echosvg.swing.JSVGCanvasHandler;
-
-import io.sf.carte.echosvg.swing.JSVGCanvas;
-import io.sf.carte.echosvg.swing.gvt.Overlay;
-
-import java.awt.image.BufferedImage;
 
 /**
  * One line Class Desc

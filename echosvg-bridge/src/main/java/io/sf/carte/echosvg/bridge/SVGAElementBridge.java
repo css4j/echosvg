@@ -19,22 +19,21 @@
 package io.sf.carte.echosvg.bridge;
 
 import java.awt.Cursor;
-
 import java.util.List;
-
-import io.sf.carte.echosvg.anim.dom.SVGOMAElement;
-import io.sf.carte.echosvg.anim.dom.SVGOMAnimationElement;
-import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
-import io.sf.carte.echosvg.dom.events.AbstractEvent;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-import io.sf.carte.echosvg.gvt.GraphicsNode;
-import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.carte.echosvg.constants.XMLConstants;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.svg.SVGAElement;
+
+import io.sf.carte.echosvg.anim.dom.SVGOMAElement;
+import io.sf.carte.echosvg.anim.dom.SVGOMAnimationElement;
+import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.events.AbstractEvent;
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
+import io.sf.carte.echosvg.gvt.GraphicsNode;
+import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * Bridge class for the &lt;a&gt; element.

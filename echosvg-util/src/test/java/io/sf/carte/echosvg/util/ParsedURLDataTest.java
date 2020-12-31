@@ -18,14 +18,14 @@
  */
 package io.sf.carte.echosvg.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
-
-import java.io.StringWriter;
-import java.io.PrintWriter;
-import java.io.InputStream;
-import java.io.IOException;
 /**
  * This test validates that the ParsedURL class properly parses and
  * cascades URLs.

@@ -18,6 +18,14 @@
  */
 package io.sf.carte.echosvg.bridge.svg12;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.svg.SVGDocument;
+
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.anim.dom.XBLEventSupport;
 import io.sf.carte.echosvg.anim.dom.XBLOMShadowTreeElement;
@@ -27,6 +35,7 @@ import io.sf.carte.echosvg.bridge.DocumentLoader;
 import io.sf.carte.echosvg.bridge.ScriptingEnvironment;
 import io.sf.carte.echosvg.bridge.URIResolver;
 import io.sf.carte.echosvg.bridge.UserAgent;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.AbstractNode;
@@ -37,15 +46,6 @@ import io.sf.carte.echosvg.dom.xbl.XBLManager;
 import io.sf.carte.echosvg.script.Interpreter;
 import io.sf.carte.echosvg.script.InterpreterPool;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.svg.SVGDocument;
 
 /**
  * Bridge context for SVG 1.2 documents.  This is primarily for dispatching

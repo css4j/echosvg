@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.bridge.svg12;
 
-import io.sf.carte.echosvg.bridge.BridgeUpdateHandler;
-
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.bridge.BridgeUpdateHandler;
 
 /**
  * A BridgeUpdateHandler interface for SVG 1.2 specific events.  This is

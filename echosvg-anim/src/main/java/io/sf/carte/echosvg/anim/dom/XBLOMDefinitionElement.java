@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.util.DOMUtilities;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.util.DOMUtilities;
 
 /**
  * This class implements the xbl:definition element.

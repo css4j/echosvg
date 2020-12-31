@@ -18,43 +18,37 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.RenderedImage;
+import java.awt.image.WritableRaster;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
-import java.net.URL;
 import java.net.MalformedURLException;
-
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.awt.image.WritableRaster;
-import java.awt.image.ColorModel;
-
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
-
+import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
-import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
-
-import io.sf.carte.echosvg.util.ParsedURL;
-
 import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * Checks for regressions in rendering a specific SVG document.

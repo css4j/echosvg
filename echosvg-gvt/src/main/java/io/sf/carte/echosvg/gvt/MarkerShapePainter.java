@@ -25,8 +25,8 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.sf.carte.echosvg.ext.awt.geom.ExtendedGeneralPath;
 import io.sf.carte.echosvg.ext.awt.geom.ExtendedPathIterator;

@@ -24,11 +24,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collection;
+import java.util.List;
 
-import io.sf.carte.echosvg.gvt.renderer.ImageRenderer;
 import io.sf.carte.echosvg.ext.awt.geom.RectListManager;
+import io.sf.carte.echosvg.gvt.renderer.ImageRenderer;
 
 /**
  * This class manages the rendering of a GVT tree.

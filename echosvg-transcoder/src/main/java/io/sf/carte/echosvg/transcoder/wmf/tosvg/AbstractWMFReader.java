@@ -23,8 +23,8 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
 import io.sf.carte.echosvg.util.Platform;

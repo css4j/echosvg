@@ -18,15 +18,16 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSValue;
+
 import io.sf.carte.doc.style.css.CSSUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
 /**
  * This class provides a manager for the property with support for

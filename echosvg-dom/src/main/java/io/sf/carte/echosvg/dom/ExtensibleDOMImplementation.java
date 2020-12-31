@@ -18,11 +18,17 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.Element;
+import org.w3c.dom.css.DOMImplementationCSS;
+import org.w3c.dom.css.ViewCSS;
 
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.doc.style.css.parser.CSSParser;
@@ -33,15 +39,7 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.Service;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 import io.sf.carte.echosvg.xml.XMLUtilities;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
-import org.w3c.dom.css.DOMImplementationCSS;
-import org.w3c.dom.css.ViewCSS;
 
 /**
  * This class implements the {@link org.w3c.dom.DOMImplementation} interface.

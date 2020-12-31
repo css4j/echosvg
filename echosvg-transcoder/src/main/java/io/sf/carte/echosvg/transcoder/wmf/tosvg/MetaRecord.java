@@ -19,8 +19,8 @@
 
 package io.sf.carte.echosvg.transcoder.wmf.tosvg;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is used to keep data while processing WMF-files.

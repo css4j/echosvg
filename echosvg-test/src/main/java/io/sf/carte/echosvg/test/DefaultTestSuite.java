@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.test;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Default implementation of the <code>TestSuite</code> interface.

@@ -18,13 +18,13 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.dom.util.XMLSupport;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAltGlyphElement;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.util.XLinkSupport;
+import io.sf.carte.echosvg.dom.util.XMLSupport;
 
 /**
  * This class implements {@link SVGAltGlyphElement}.

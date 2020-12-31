@@ -23,12 +23,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import org.w3c.dom.DOMImplementation;
+
 import io.sf.carte.echosvg.dom.events.DocumentEventSupport;
 import io.sf.carte.echosvg.dom.events.EventSupport;
 import io.sf.carte.echosvg.i18n.Localizable;
 import io.sf.carte.echosvg.i18n.LocalizableSupport;
-
-import org.w3c.dom.DOMImplementation;
 
 /**
  * This class implements the {@link org.w3c.dom.DOMImplementation},

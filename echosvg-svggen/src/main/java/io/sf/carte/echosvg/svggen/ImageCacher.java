@@ -25,10 +25,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.zip.Adler32;
 import java.util.zip.Checksum;
 

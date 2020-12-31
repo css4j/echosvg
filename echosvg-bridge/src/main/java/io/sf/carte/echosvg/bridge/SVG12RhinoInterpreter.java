@@ -20,11 +20,11 @@ package io.sf.carte.echosvg.bridge;
 
 import java.net.URL;
 
-import io.sf.carte.echosvg.script.ImportInfo;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
+
+import io.sf.carte.echosvg.script.ImportInfo;
 
 /**
  * A RhinoInterpreter for SVG 1.2 documents.

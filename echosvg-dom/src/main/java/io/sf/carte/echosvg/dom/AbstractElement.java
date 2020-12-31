@@ -20,18 +20,18 @@ package io.sf.carte.echosvg.dom;
 
 import java.io.Serializable;
 
-import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
-import io.sf.carte.echosvg.dom.util.DOMUtilities;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
-import io.sf.carte.echosvg.w3c.dom.ElementTraversal;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.TypeInfo;
 import org.w3c.dom.events.MutationEvent;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
+import io.sf.carte.echosvg.dom.util.DOMUtilities;
+import io.sf.carte.echosvg.w3c.dom.ElementTraversal;
 
 /**
  * This class implements the {@link org.w3c.dom.Element} interface.

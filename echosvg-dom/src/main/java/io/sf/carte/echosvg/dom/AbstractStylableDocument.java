@@ -19,16 +19,16 @@
 
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.css.engine.CSSEngine;
-
-import org.w3c.dom.css.DocumentCSS;
-import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.DocumentType;
 import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
+import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.dom.css.DocumentCSS;
 import org.w3c.dom.stylesheets.StyleSheetList;
-import org.w3c.dom.views.DocumentView;
 import org.w3c.dom.views.AbstractView;
+import org.w3c.dom.views.DocumentView;
+
+import io.sf.carte.echosvg.css.engine.CSSEngine;
 
 /**
  * A Document that supports CSS styling.

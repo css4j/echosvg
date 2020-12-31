@@ -23,6 +23,14 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.lang.ref.SoftReference;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.DocumentEvent;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.events.MutationEvent;
+import org.w3c.dom.svg.SVGFitToViewBox;
+import org.w3c.dom.svg.SVGTransformable;
+
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedTransformList;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
@@ -37,14 +45,6 @@ import io.sf.carte.echosvg.ext.awt.geom.SegmentList;
 import io.sf.carte.echosvg.gvt.CanvasGraphicsNode;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.DocumentEvent;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.events.MutationEvent;
-import org.w3c.dom.svg.SVGFitToViewBox;
-import org.w3c.dom.svg.SVGTransformable;
 
 /**
  * The base bridge class for SVG graphics node. By default, the namespace URI is

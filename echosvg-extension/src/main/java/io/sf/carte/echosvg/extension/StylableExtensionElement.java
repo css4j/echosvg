@@ -18,17 +18,17 @@
  */
 package io.sf.carte.echosvg.extension;
 
-import io.sf.carte.echosvg.css.engine.CSSStylableElement;
-import io.sf.carte.echosvg.css.engine.StyleDeclarationProvider;
-import io.sf.carte.echosvg.css.engine.StyleMap;
-import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.util.ParsedURL;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.css.CSSStyleDeclaration;
 import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.svg.SVGAnimatedString;
 import org.w3c.dom.svg.SVGStylable;
+
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.StyleDeclarationProvider;
+import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * This class implements the basic features an element must have in

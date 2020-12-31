@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.svg.SVGAnimatedPoints;
+import org.w3c.dom.svg.SVGPointList;
+
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.svg.SVGAnimatedPoints;
-import org.w3c.dom.svg.SVGPointList;
 
 /**
  * This class provides a common superclass for shape elements that are

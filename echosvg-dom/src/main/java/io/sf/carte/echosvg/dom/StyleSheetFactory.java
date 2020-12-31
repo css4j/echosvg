@@ -19,10 +19,10 @@
 package io.sf.carte.echosvg.dom;
 
 
+import java.util.HashMap;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.stylesheets.StyleSheet;
-
-import java.util.HashMap;
 
 /**
  * This interface represents a StyleSheet factory.

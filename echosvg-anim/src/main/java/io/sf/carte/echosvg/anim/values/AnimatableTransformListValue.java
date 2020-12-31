@@ -19,15 +19,15 @@
 package io.sf.carte.echosvg.anim.values;
 
 import java.util.Iterator;
-import java.util.Vector;
 import java.util.List;
+import java.util.Vector;
+
+import org.w3c.dom.svg.SVGMatrix;
+import org.w3c.dom.svg.SVGTransform;
 
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGTransform;
 import io.sf.carte.echosvg.dom.svg.SVGOMTransform;
-
-import org.w3c.dom.svg.SVGMatrix;
-import org.w3c.dom.svg.SVGTransform;
 
 /**
  * An SVG transform list value in the animation system.

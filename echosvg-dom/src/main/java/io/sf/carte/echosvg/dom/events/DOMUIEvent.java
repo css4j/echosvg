@@ -21,10 +21,10 @@ package io.sf.carte.echosvg.dom.events;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.sf.carte.echosvg.xml.XMLUtilities;
-
 import org.w3c.dom.events.UIEvent;
 import org.w3c.dom.views.AbstractView;
+
+import io.sf.carte.echosvg.xml.XMLUtilities;
 
 /**
  * The UIEvent class provides specific contextual information

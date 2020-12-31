@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.svg.SVGAnimatedString;
+import org.w3c.dom.svg.SVGURIReference;
+
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.svg.SVGAnimatedString;
-import org.w3c.dom.svg.SVGURIReference;
 
 /**
  * This class implements both {@link org.w3c.dom.svg.SVGTextPositioningElement}

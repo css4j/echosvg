@@ -20,21 +20,19 @@ package io.sf.carte.echosvg.test.svg;
 
 import java.awt.Color;
 import java.io.FileOutputStream;
-import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 
-import io.sf.carte.echosvg.transcoder.TranscoderException;
-import io.sf.carte.echosvg.transcoder.TranscoderInput;
-import io.sf.carte.echosvg.transcoder.TranscoderOutput;
-
-import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
-import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
+import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
-
-import org.w3c.dom.Document;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
+import io.sf.carte.echosvg.transcoder.TranscoderInput;
+import io.sf.carte.echosvg.transcoder.TranscoderOutput;
+import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
+import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 
 
 /**

@@ -27,6 +27,29 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.Comment;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentFragment;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.Element;
+import org.w3c.dom.EntityReference;
+import org.w3c.dom.Node;
+import org.w3c.dom.ProcessingInstruction;
+import org.w3c.dom.Text;
+import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.dom.css.DocumentCSS;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.MutationEvent;
+import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGLangSpace;
+import org.w3c.dom.svg.SVGSVGElement;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSNavigableDocument;
 import io.sf.carte.echosvg.css.engine.CSSNavigableDocumentListener;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -49,29 +72,6 @@ import io.sf.carte.echosvg.i18n.Localizable;
 import io.sf.carte.echosvg.i18n.LocalizableSupport;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.CDATASection;
-import org.w3c.dom.Comment;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentFragment;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
-import org.w3c.dom.EntityReference;
-import org.w3c.dom.Node;
-import org.w3c.dom.ProcessingInstruction;
-import org.w3c.dom.Text;
-import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.css.DocumentCSS;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.MutationEvent;
-import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGLangSpace;
-import org.w3c.dom.svg.SVGSVGElement;
 
 /**
  * This class implements {@link SVGDocument}.

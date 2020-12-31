@@ -26,18 +26,17 @@ import java.net.MalformedURLException;
 import java.util.MissingResourceException;
 import java.util.Properties;
 
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.svg.SVGDocument;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.SVGDocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.util.MimeTypeConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.svg.SVGDocument;
 
 /**
  * This class contains methods for creating SVGDocument instances

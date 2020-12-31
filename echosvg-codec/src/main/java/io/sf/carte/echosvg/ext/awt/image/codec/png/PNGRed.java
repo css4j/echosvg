@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
-import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
-
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -40,18 +38,19 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
-import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
+import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
 import io.sf.carte.echosvg.ext.awt.image.rendered.AbstractRed;
 import io.sf.carte.echosvg.ext.awt.image.rendered.CachableRed;
 

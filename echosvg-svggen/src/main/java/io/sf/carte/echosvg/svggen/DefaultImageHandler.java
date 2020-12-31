@@ -22,9 +22,9 @@ import java.awt.Image;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
 
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
 
 /**
  * This class provides a default implementation of the ImageHandler

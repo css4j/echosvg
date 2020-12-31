@@ -39,25 +39,6 @@ import java.util.TimerTask;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPOutputStream;
 
-import io.sf.carte.echosvg.dom.AbstractElement;
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-import io.sf.carte.echosvg.dom.util.DOMUtilities;
-import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.dom.util.XLinkSupport;
-import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
-import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
-import io.sf.carte.echosvg.anim.dom.SVGOMScriptElement;
-import io.sf.carte.echosvg.script.Interpreter;
-import io.sf.carte.echosvg.script.InterpreterException;
-import io.sf.carte.echosvg.script.ScriptEventWrapper;
-import io.sf.carte.echosvg.util.EncodingUtilities;
-import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.carte.echosvg.util.RunnableQueue;
-import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -65,6 +46,25 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.MutationEvent;
 import org.w3c.dom.svg.SVGDocument;
+
+import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
+import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
+import io.sf.carte.echosvg.anim.dom.SVGOMScriptElement;
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.AbstractElement;
+import io.sf.carte.echosvg.dom.GenericDOMImplementation;
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
+import io.sf.carte.echosvg.dom.util.DOMUtilities;
+import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.dom.util.XLinkSupport;
+import io.sf.carte.echosvg.script.Interpreter;
+import io.sf.carte.echosvg.script.InterpreterException;
+import io.sf.carte.echosvg.script.ScriptEventWrapper;
+import io.sf.carte.echosvg.util.EncodingUtilities;
+import io.sf.carte.echosvg.util.ParsedURL;
+import io.sf.carte.echosvg.util.RunnableQueue;
+import io.sf.carte.echosvg.util.SVGConstants;
+import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This class contains the informations needed by the SVG scripting.

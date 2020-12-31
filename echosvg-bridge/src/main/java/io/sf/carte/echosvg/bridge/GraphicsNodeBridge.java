@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.gvt.GraphicsNode;
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
  * Bridge class for creating, building, and updating a <code>GraphicsNode</code>

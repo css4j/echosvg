@@ -17,21 +17,22 @@
 
  */
 package io.sf.carte.echosvg.bridge;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
+
+import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.FontFaceRule;
-import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
-import org.w3c.dom.css.CSSValue;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 /**
  * This class represents a &lt;font-face&gt; element or @font-face rule

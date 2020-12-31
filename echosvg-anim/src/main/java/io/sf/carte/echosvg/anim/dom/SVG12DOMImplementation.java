@@ -21,6 +21,13 @@ package io.sf.carte.echosvg.anim.dom;
 import java.net.URL;
 import java.util.HashMap;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+
 import io.sf.carte.doc.style.css.nsac.InputSource;
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.echosvg.css.engine.CSSContext;
@@ -36,18 +43,10 @@ import io.sf.carte.echosvg.dom.events.DocumentEventSupport;
 import io.sf.carte.echosvg.dom.events.EventSupport;
 import io.sf.carte.echosvg.dom.svg12.SVGOMWheelEvent;
 import io.sf.carte.echosvg.dom.svg12.XBLOMShadowTreeEvent;
-
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVG12Constants;
 import io.sf.carte.echosvg.util.XBLConstants;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
 
 /**
  * This class implements the {@link DOMImplementation} interface.

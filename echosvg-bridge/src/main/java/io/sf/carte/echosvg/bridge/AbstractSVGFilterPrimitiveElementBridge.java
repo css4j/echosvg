@@ -23,6 +23,8 @@ import java.awt.Paint;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.ext.awt.image.PadMode;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.renderable.FilterAlphaRable;
@@ -31,7 +33,6 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.FloodRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.filter.BackgroundRable8Bit;
-import org.w3c.dom.Element;
 
 /**
  * The base bridge class for SVG filter primitives.

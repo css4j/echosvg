@@ -18,11 +18,12 @@
  */
 package io.sf.carte.echosvg.dom.traversal;
 
-import io.sf.carte.echosvg.dom.AbstractDocument;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
+
+import io.sf.carte.echosvg.dom.AbstractDocument;
 
 /**
  * This class implements the {@link org.w3c.dom.traversal.NodeIterator}

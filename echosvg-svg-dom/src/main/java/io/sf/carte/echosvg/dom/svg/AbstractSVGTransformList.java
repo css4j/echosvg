@@ -20,15 +20,15 @@ package io.sf.carte.echosvg.dom.svg;
 
 import java.awt.geom.AffineTransform;
 
-import io.sf.carte.echosvg.parser.ParseException;
-import io.sf.carte.echosvg.parser.TransformListHandler;
-import io.sf.carte.echosvg.parser.TransformListParser;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGMatrix;
 import org.w3c.dom.svg.SVGTransform;
 import org.w3c.dom.svg.SVGTransformList;
+
+import io.sf.carte.echosvg.parser.ParseException;
+import io.sf.carte.echosvg.parser.TransformListHandler;
+import io.sf.carte.echosvg.parser.TransformListParser;
 
 /**
  * This class is the implementation of

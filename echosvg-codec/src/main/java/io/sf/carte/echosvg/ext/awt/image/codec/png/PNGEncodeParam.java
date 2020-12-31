@@ -18,16 +18,16 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
-import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncodeParam;
-import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
-
 import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
+
+import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncodeParam;
+import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
 
 /**
  * An instance of <code>ImageEncodeParam</code> for encoding images in

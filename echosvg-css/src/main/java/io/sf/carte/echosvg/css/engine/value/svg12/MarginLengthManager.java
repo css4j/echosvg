@@ -19,6 +19,8 @@
 
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
+import org.w3c.dom.DOMException;
+
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
@@ -26,8 +28,6 @@ import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.DOMException;
 
 /**
  * This class provides a factory for the 'margin-*' properties values.

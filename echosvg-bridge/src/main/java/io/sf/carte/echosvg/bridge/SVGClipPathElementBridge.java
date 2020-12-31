@@ -24,14 +24,15 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.anim.dom.SVGOMUseElement;
 import io.sf.carte.echosvg.ext.awt.image.renderable.ClipRable;
 import io.sf.carte.echosvg.ext.awt.image.renderable.ClipRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.ShapeNode;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the &lt;clipPath&gt; element.

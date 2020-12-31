@@ -18,10 +18,10 @@
  */
 package io.sf.carte.echosvg.dom.util;
 
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
 
 /**
  * This class provides support for XLink features.

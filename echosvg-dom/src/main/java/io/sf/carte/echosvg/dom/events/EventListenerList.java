@@ -18,12 +18,11 @@
  */
 package io.sf.carte.echosvg.dom.events;
 
-import io.sf.carte.echosvg.dom.util.IntTable;
-
+import java.util.HashMap;
 
 import org.w3c.dom.events.EventListener;
 
-import java.util.HashMap;
+import io.sf.carte.echosvg.dom.util.IntTable;
 
 /**
  * Class to manager event listeners for one event type.

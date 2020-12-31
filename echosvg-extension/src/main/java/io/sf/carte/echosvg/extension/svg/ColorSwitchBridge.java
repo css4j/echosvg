@@ -21,14 +21,15 @@ package io.sf.carte.echosvg.extension.svg;
 import java.awt.Color;
 import java.awt.Paint;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import io.sf.carte.echosvg.bridge.AbstractSVGBridge;
 import io.sf.carte.echosvg.bridge.Bridge;
 import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.PaintBridge;
 import io.sf.carte.echosvg.bridge.SVGUtilities;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * Bridge class for the "color switch" extension element.

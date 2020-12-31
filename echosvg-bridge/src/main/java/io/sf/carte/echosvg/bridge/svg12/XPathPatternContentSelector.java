@@ -23,14 +23,13 @@ import java.util.ArrayList;
 import org.apache.xml.utils.PrefixResolver;
 import org.apache.xpath.XPath;
 import org.apache.xpath.XPathContext;
-
-import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
-import io.sf.carte.echosvg.dom.AbstractDocument;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.xpath.XPathException;
+
+import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
+import io.sf.carte.echosvg.dom.AbstractDocument;
 
 /**
  * A class to handle the XPath Pattern syntax for XBL content elements.

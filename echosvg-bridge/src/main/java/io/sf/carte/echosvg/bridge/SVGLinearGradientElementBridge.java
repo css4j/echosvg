@@ -24,12 +24,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.dom.svg.SVGContext;
 import io.sf.carte.echosvg.ext.awt.LinearGradientPaint;
 import io.sf.carte.echosvg.ext.awt.MultipleGradientPaint;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-
-import org.w3c.dom.Element;
 
 /**
  * Bridge class for the &lt;linearGradient&gt; element.

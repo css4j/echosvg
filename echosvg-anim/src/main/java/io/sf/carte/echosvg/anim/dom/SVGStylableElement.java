@@ -18,6 +18,13 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Node;
+import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.dom.css.CSSValue;
+import org.w3c.dom.svg.SVGAnimatedString;
+
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.css.dom.CSSOMSVGColor;
 import io.sf.carte.echosvg.css.dom.CSSOMSVGPaint;
@@ -36,13 +43,6 @@ import io.sf.carte.echosvg.dom.svg.LiveAttributeValue;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.css.CSSValue;
-import org.w3c.dom.svg.SVGAnimatedString;
 
 /**
  * This class provides a common superclass for elements which implement

@@ -25,17 +25,30 @@ import java.awt.color.ICC_Profile;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
+import org.apache.xmlgraphics.java2d.color.RenderingIntent;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.DocumentEvent;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGImageElement;
+import org.w3c.dom.svg.SVGSVGElement;
 
 import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedPreserveAspectRatio;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.dom.AbstractNode;
@@ -55,20 +68,6 @@ import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.util.HaltingThread;
 import io.sf.carte.echosvg.util.MimeTypeConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
-import org.apache.xmlgraphics.java2d.color.RenderingIntent;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.events.DocumentEvent;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGImageElement;
-import org.w3c.dom.svg.SVGSVGElement;
 
 /**
  * Bridge class for the &lt;image&gt; element.

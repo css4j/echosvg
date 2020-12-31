@@ -18,10 +18,6 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.dom.events.DOMUIEvent;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.DocumentEvent;
@@ -29,6 +25,10 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MouseEvent;
+
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.events.DOMUIEvent;
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 
 /**
  * A class that manages focus on elements.

@@ -30,9 +30,11 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
-import java.util.StringTokenizer;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.ext.awt.RenderingHintsKeyExt;
@@ -45,8 +47,6 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.keys.BooleanKey;
 import io.sf.carte.echosvg.transcoder.keys.LengthKey;
 import io.sf.carte.echosvg.transcoder.keys.StringKey;
-
-import org.w3c.dom.Document;
 
 /**
  * This class is a <code>Transcoder</code> that prints SVG images.

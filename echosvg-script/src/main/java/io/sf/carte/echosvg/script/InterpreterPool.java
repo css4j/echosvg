@@ -24,10 +24,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.w3c.dom.Document;
+
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.util.Service;
-
-import org.w3c.dom.Document;
 
 /**
  * A class allowing to create/query an {@link

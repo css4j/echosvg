@@ -25,6 +25,8 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.w3c.dom.Document;
+
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.transcoder.AbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
@@ -35,7 +37,6 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.keys.BooleanKey;
 import io.sf.carte.echosvg.transcoder.keys.IntegerKey;
 import io.sf.carte.echosvg.transcoder.keys.StringKey;
-import org.w3c.dom.Document;
 
 /**
  * This class is a trancoder from SVG to SVG.

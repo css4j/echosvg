@@ -20,18 +20,18 @@ package io.sf.carte.echosvg.bridge;
 
 import java.util.Calendar;
 
-import io.sf.carte.echosvg.anim.dom.SVGOMAnimationElement;
-import io.sf.carte.echosvg.anim.timing.TimedElement;
-import io.sf.carte.echosvg.dom.events.DOMTimeEvent;
-import io.sf.carte.echosvg.dom.svg.IdContainer;
-import io.sf.carte.echosvg.dom.svg.SVGOMUseShadowRoot;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.DocumentEvent;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.smil.TimeEvent;
+
+import io.sf.carte.echosvg.anim.dom.SVGOMAnimationElement;
+import io.sf.carte.echosvg.anim.timing.TimedElement;
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.events.DOMTimeEvent;
+import io.sf.carte.echosvg.dom.svg.IdContainer;
+import io.sf.carte.echosvg.dom.svg.SVGOMUseShadowRoot;
 
 /**
  * Class that provides utilities for animation support.

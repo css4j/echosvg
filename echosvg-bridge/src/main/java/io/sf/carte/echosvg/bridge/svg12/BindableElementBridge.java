@@ -18,6 +18,10 @@
  */
 package io.sf.carte.echosvg.bridge.svg12;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.MutationEvent;
+
 import io.sf.carte.echosvg.anim.dom.BindableElement;
 import io.sf.carte.echosvg.bridge.AbstractGraphicsNodeBridge;
 import io.sf.carte.echosvg.bridge.Bridge;
@@ -28,10 +32,6 @@ import io.sf.carte.echosvg.bridge.ScriptingEnvironment;
 import io.sf.carte.echosvg.bridge.UpdateManager;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.MutationEvent;
 
 /**
  * Bridge class for foreign namespace elements that can be bound with sXBL.

@@ -19,14 +19,14 @@
 package io.sf.carte.echosvg.gvt.flow;
 
 import java.awt.Shape;
-import java.util.Iterator;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
-import io.sf.carte.echosvg.ext.awt.geom.SegmentList;
 import io.sf.carte.echosvg.ext.awt.geom.Segment;
+import io.sf.carte.echosvg.ext.awt.geom.SegmentList;
 
 /**
  * A class to hold flow region information for a given shape.

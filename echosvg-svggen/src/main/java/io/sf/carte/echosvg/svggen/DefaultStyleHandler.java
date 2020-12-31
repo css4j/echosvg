@@ -18,14 +18,14 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import io.sf.carte.echosvg.util.SVGConstants;
-
-import java.util.Map;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * The <code>DefaultStyleHandler</code> class provides the default

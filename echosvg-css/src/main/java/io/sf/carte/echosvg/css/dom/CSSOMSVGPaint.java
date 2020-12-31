@@ -18,15 +18,15 @@
  */
 package io.sf.carte.echosvg.css.dom;
 
-import io.sf.carte.echosvg.css.engine.value.FloatValue;
-import io.sf.carte.echosvg.css.engine.value.Value;
-import io.sf.carte.echosvg.css.engine.value.svg.ICCColor;
-import io.sf.carte.echosvg.util.CSSConstants;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.svg.SVGPaint;
+
+import io.sf.carte.echosvg.css.engine.value.FloatValue;
+import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.svg.ICCColor;
+import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
  * This class implements the {@link SVGPaint} interface.

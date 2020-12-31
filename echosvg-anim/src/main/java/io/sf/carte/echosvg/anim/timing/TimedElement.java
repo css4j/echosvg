@@ -18,7 +18,22 @@
  */
 package io.sf.carte.echosvg.anim.timing;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.Set;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventTarget;
 
 import io.sf.carte.echosvg.anim.AnimationException;
 import io.sf.carte.echosvg.i18n.LocalizableSupport;
@@ -26,10 +41,6 @@ import io.sf.carte.echosvg.parser.ClockHandler;
 import io.sf.carte.echosvg.parser.ClockParser;
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.util.SMILConstants;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventTarget;
 
 /**
  * An abstract base class for elements that can have timing applied to them.

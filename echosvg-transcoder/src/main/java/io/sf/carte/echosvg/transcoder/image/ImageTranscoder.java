@@ -28,6 +28,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.awt.image.SinglePixelPackedSampleModel;
 
+import org.w3c.dom.Document;
+
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 import io.sf.carte.echosvg.gvt.renderer.ConcreteImageRendererFactory;
 import io.sf.carte.echosvg.gvt.renderer.ImageRenderer;
@@ -38,7 +40,6 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.keys.BooleanKey;
 import io.sf.carte.echosvg.transcoder.keys.PaintKey;
-import org.w3c.dom.Document;
 
 /**
  * This class enables to transcode an input to an image of any format.

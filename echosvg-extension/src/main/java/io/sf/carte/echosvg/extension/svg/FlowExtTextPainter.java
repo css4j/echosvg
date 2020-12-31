@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.extension.svg;
 
 import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 
 import io.sf.carte.echosvg.bridge.StrokingTextPainter;
 import io.sf.carte.echosvg.bridge.TextNode;

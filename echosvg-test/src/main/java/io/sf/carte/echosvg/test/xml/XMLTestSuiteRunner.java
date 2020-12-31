@@ -19,34 +19,31 @@
 package io.sf.carte.echosvg.test.xml;
 
 import java.io.File;
-import java.io.StringWriter;
 import java.io.PrintWriter;
-
-import java.net.URL;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-import io.sf.carte.echosvg.test.DefaultTestSuite;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
-import io.sf.carte.echosvg.test.TestSuite;
-import io.sf.carte.echosvg.test.Test;
-import io.sf.carte.echosvg.test.TestFilter;
-import io.sf.carte.echosvg.test.TestException;
-import io.sf.carte.echosvg.test.TestReportProcessor;
-
-
-import org.w3c.dom.Element;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.DefaultTestSuite;
+import io.sf.carte.echosvg.test.Test;
+import io.sf.carte.echosvg.test.TestException;
+import io.sf.carte.echosvg.test.TestFilter;
+import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.test.TestReportProcessor;
+import io.sf.carte.echosvg.test.TestSuite;
 
 /**
  * This class can be used to build and run a <code>TestSuite</code> from

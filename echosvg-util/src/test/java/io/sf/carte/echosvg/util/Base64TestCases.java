@@ -18,11 +18,12 @@
  */
 package io.sf.carte.echosvg.util;
 
+import static org.junit.Assert.assertTrue;
+
 import java.net.URL;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
 
 public class Base64TestCases {
 

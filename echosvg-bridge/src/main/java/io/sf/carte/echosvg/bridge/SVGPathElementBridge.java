@@ -22,6 +22,9 @@ import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGPathSegList;
+
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedPathData;
 import io.sf.carte.echosvg.anim.dom.SVGOMPathElement;
@@ -32,9 +35,6 @@ import io.sf.carte.echosvg.dom.svg.SVGPathContext;
 import io.sf.carte.echosvg.ext.awt.geom.PathLength;
 import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.parser.AWTPathProducer;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGPathSegList;
 
 /**
  * Bridge class for the &lt;path&gt; element.

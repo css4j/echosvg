@@ -18,16 +18,16 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.svg.SVGAnimatedLength;
+import org.w3c.dom.svg.SVGLength;
+
 import io.sf.carte.echosvg.anim.values.AnimatableLengthValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeValue;
 import io.sf.carte.echosvg.parser.UnitProcessor;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.svg.SVGAnimatedLength;
-import org.w3c.dom.svg.SVGLength;
 
 /**
  * This class provides an implementation of the {@link

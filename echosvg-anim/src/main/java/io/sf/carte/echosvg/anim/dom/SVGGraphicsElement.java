@@ -20,6 +20,14 @@ package io.sf.carte.echosvg.anim.dom;
 
 import java.awt.geom.AffineTransform;
 
+import org.w3c.dom.svg.SVGAnimatedBoolean;
+import org.w3c.dom.svg.SVGAnimatedTransformList;
+import org.w3c.dom.svg.SVGElement;
+import org.w3c.dom.svg.SVGException;
+import org.w3c.dom.svg.SVGMatrix;
+import org.w3c.dom.svg.SVGRect;
+import org.w3c.dom.svg.SVGStringList;
+
 import io.sf.carte.echosvg.anim.values.AnimatableMotionPointValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.AbstractDocument;
@@ -28,14 +36,6 @@ import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.svg.SVGAnimatedBoolean;
-import org.w3c.dom.svg.SVGAnimatedTransformList;
-import org.w3c.dom.svg.SVGElement;
-import org.w3c.dom.svg.SVGException;
-import org.w3c.dom.svg.SVGMatrix;
-import org.w3c.dom.svg.SVGRect;
-import org.w3c.dom.svg.SVGStringList;
 
 /**
  * This class provides a common superclass for all graphics elements.

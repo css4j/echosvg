@@ -18,10 +18,10 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import org.w3c.dom.events.MutationEvent;
+
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
-
-import org.w3c.dom.events.MutationEvent;
 
 /**
  * Interface for objects interested in being notified of updates.

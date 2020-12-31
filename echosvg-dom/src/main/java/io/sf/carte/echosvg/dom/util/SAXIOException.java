@@ -19,8 +19,9 @@
 
 package io.sf.carte.echosvg.dom.util;
 
-import org.xml.sax.SAXException;
 import java.io.IOException;
+
+import org.xml.sax.SAXException;
 
 /**
  * Wrapper for SAX Exceptions which would make it possible to

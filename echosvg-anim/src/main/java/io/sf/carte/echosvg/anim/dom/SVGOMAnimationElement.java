@@ -18,18 +18,18 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.svg.SVGAnimatedBoolean;
+import org.w3c.dom.svg.SVGAnimationElement;
+import org.w3c.dom.svg.SVGElement;
+import org.w3c.dom.svg.SVGStringList;
+
 import io.sf.carte.echosvg.anim.timing.TimedElement;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.SVGAnimationContext;
 import io.sf.carte.echosvg.dom.svg.SVGTestsSupport;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.svg.SVGAnimatedBoolean;
-import org.w3c.dom.svg.SVGAnimationElement;
-import org.w3c.dom.svg.SVGElement;
-import org.w3c.dom.svg.SVGStringList;
 
 /**
  * This class provides an implementation of the {@link SVGAnimationElement} interface.

@@ -23,11 +23,11 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
 
-import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 import io.sf.carte.echosvg.gvt.font.AWTGVTFont;
 import io.sf.carte.echosvg.gvt.font.GVTFont;
 import io.sf.carte.echosvg.gvt.font.GVTGlyphVector;
 import io.sf.carte.echosvg.gvt.font.GVTLineMetrics;
+import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 
 /**
  *

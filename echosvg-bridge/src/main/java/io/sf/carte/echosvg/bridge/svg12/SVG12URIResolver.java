@@ -18,16 +18,16 @@
  */
 package io.sf.carte.echosvg.bridge.svg12;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.svg.SVGDocument;
+
 import io.sf.carte.echosvg.bridge.DocumentLoader;
 import io.sf.carte.echosvg.bridge.URIResolver;
 import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.xbl.NodeXBL;
 import io.sf.carte.echosvg.dom.xbl.XBLShadowTreeElement;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.svg.SVGDocument;
 
 /**
  * A URIResolver for SVG 1.2 documents.  This is to allow resolution of

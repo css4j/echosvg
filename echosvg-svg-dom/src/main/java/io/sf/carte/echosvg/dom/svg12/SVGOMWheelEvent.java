@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.dom.svg12;
 
-import io.sf.carte.echosvg.dom.events.DOMUIEvent;
-
 import org.w3c.dom.views.AbstractView;
+
+import io.sf.carte.echosvg.dom.events.DOMUIEvent;
 
 /**
  * SVG 1.2 mouse wheel event.

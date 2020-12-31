@@ -20,16 +20,17 @@ package io.sf.carte.echosvg.bridge;
 
 import java.text.AttributedCharacterIterator;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.util.XLinkSupport;
 import io.sf.carte.echosvg.gvt.font.Glyph;
 import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
-import io.sf.carte.echosvg.constants.XMLConstants;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * Bridge class for the &lt;altGlyph&gt; element.

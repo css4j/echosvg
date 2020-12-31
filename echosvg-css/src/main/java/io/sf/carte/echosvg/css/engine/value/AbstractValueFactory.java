@@ -18,9 +18,10 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.dom.DOMException;
+
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.util.ParsedURL;
-import org.w3c.dom.DOMException;
 
 /**
  * This class provides a base implementation for the value factories.

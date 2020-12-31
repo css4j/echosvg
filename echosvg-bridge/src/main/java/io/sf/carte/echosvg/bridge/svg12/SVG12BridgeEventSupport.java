@@ -21,10 +21,17 @@ package io.sf.carte.echosvg.bridge.svg12;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.DocumentEvent;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+
 import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.BridgeEventSupport;
 import io.sf.carte.echosvg.bridge.FocusManager;
 import io.sf.carte.echosvg.bridge.UserAgent;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.events.DOMKeyboardEvent;
 import io.sf.carte.echosvg.dom.events.DOMMouseEvent;
 import io.sf.carte.echosvg.dom.events.DOMTextEvent;
@@ -37,13 +44,6 @@ import io.sf.carte.echosvg.gvt.event.GraphicsNodeKeyEvent;
 import io.sf.carte.echosvg.gvt.event.GraphicsNodeMouseEvent;
 import io.sf.carte.echosvg.gvt.event.GraphicsNodeMouseWheelEvent;
 import io.sf.carte.echosvg.gvt.event.GraphicsNodeMouseWheelListener;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.events.DocumentEvent;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 
 /**
  * This class is responsible for tracking GraphicsNodeMouseEvents and

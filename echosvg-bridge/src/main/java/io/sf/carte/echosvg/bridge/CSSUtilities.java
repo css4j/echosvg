@@ -26,7 +26,12 @@ import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSValue;
+
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
@@ -39,10 +44,6 @@ import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.filter.Mask;
 import io.sf.carte.echosvg.util.CSSConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
-import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
 /**
  * A collection of utility method involving CSS property. The listed

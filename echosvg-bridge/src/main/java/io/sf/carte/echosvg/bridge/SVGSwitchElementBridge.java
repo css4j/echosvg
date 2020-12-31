@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
-import io.sf.carte.echosvg.gvt.GraphicsNode;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGTests;
+
+import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
+import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
  * Bridge class for the &lt;switch&gt; element.

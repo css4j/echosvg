@@ -18,6 +18,9 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.css.CSSValue;
+
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -31,9 +34,6 @@ import io.sf.carte.echosvg.css.engine.value.svg12.DeviceColor;
 import io.sf.carte.echosvg.css.engine.value.svg12.ICCNamedColor;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSValue;
 
 /**
  * This class provides a manager for the SVGColor property values.

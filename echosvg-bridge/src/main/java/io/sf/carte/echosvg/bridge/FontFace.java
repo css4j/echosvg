@@ -25,11 +25,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
 
+import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.gvt.font.GVTFontFace;
 import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
 import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.carte.echosvg.constants.XMLConstants;
 
 /**
  * This class represents a &lt;font-face&gt; element or @font-face rule

@@ -20,11 +20,11 @@ package io.sf.carte.echosvg.bridge.svg12;
 
 import java.util.ArrayList;
 
-import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
 
 /**
  * A class to handle content selection when the includes attribute is not

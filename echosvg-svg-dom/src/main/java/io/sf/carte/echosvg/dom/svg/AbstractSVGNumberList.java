@@ -18,15 +18,15 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
-import io.sf.carte.echosvg.parser.NumberListHandler;
-import io.sf.carte.echosvg.parser.NumberListParser;
-import io.sf.carte.echosvg.parser.ParseException;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGNumber;
 import org.w3c.dom.svg.SVGNumberList;
+
+import io.sf.carte.echosvg.parser.NumberListHandler;
+import io.sf.carte.echosvg.parser.NumberListParser;
+import io.sf.carte.echosvg.parser.ParseException;
 
 /**
  * This class is the implementation of {@link SVGNumberList}.

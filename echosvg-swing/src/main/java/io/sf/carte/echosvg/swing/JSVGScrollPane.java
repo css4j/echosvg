@@ -18,52 +18,44 @@
  */
 package io.sf.carte.echosvg.swing;
 
-import java.awt.Component;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-
 import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.AffineTransform;
-
-import java.awt.event.ComponentEvent;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.BoundedRangeModel;
-import javax.swing.JScrollBar;
 import javax.swing.Box;
 import javax.swing.JPanel;
-
-import javax.swing.event.ChangeListener;
+import javax.swing.JScrollBar;
 import javax.swing.event.ChangeEvent;
-
-import io.sf.carte.echosvg.bridge.ViewBox;
-import io.sf.carte.echosvg.bridge.UpdateManagerListener;
-import io.sf.carte.echosvg.bridge.UpdateManagerEvent;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
-
-import io.sf.carte.echosvg.gvt.GraphicsNode;
-
-import io.sf.carte.echosvg.swing.gvt.JGVTComponentListener;
-import io.sf.carte.echosvg.swing.gvt.GVTTreeRendererListener;
-import io.sf.carte.echosvg.swing.gvt.GVTTreeRendererEvent;
-import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderAdapter;
-import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderEvent;
-import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderListener;
-import io.sf.carte.echosvg.swing.svg.GVTTreeBuilderListener;
-import io.sf.carte.echosvg.swing.svg.GVTTreeBuilderEvent;
-
-import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.constants.XMLConstants;
-
-import org.w3c.dom.svg.SVGSVGElement;
-import org.w3c.dom.svg.SVGDocument;
+import javax.swing.event.ChangeListener;
 
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
+import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGSVGElement;
+
+import io.sf.carte.echosvg.bridge.UpdateManagerEvent;
+import io.sf.carte.echosvg.bridge.UpdateManagerListener;
+import io.sf.carte.echosvg.bridge.ViewBox;
+import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.dom.events.NodeEventTarget;
+import io.sf.carte.echosvg.gvt.GraphicsNode;
+import io.sf.carte.echosvg.swing.gvt.GVTTreeRendererEvent;
+import io.sf.carte.echosvg.swing.gvt.GVTTreeRendererListener;
+import io.sf.carte.echosvg.swing.gvt.JGVTComponentListener;
+import io.sf.carte.echosvg.swing.svg.GVTTreeBuilderEvent;
+import io.sf.carte.echosvg.swing.svg.GVTTreeBuilderListener;
+import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderAdapter;
+import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderEvent;
+import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderListener;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 
 /**

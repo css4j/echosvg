@@ -21,16 +21,6 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.geom.AffineTransform;
 import java.util.StringTokenizer;
 
-import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedRect;
-import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
-import io.sf.carte.echosvg.parser.AWTTransformProducer;
-import io.sf.carte.echosvg.parser.FragmentIdentifierHandler;
-import io.sf.carte.echosvg.parser.FragmentIdentifierParser;
-import io.sf.carte.echosvg.parser.ParseException;
-import io.sf.carte.echosvg.parser.PreserveAspectRatioParser;
-import io.sf.carte.echosvg.dom.util.DOMUtilities;
-import io.sf.carte.echosvg.util.SVGConstants;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -38,6 +28,16 @@ import org.w3c.dom.svg.SVGAnimatedPreserveAspectRatio;
 import org.w3c.dom.svg.SVGAnimatedRect;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
 import org.w3c.dom.svg.SVGRect;
+
+import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedRect;
+import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
+import io.sf.carte.echosvg.dom.util.DOMUtilities;
+import io.sf.carte.echosvg.parser.AWTTransformProducer;
+import io.sf.carte.echosvg.parser.FragmentIdentifierHandler;
+import io.sf.carte.echosvg.parser.FragmentIdentifierParser;
+import io.sf.carte.echosvg.parser.ParseException;
+import io.sf.carte.echosvg.parser.PreserveAspectRatioParser;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * This class provides convenient methods to handle viewport.

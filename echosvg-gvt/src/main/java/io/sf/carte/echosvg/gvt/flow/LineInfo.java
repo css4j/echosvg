@@ -20,6 +20,7 @@
 package io.sf.carte.echosvg.gvt.flow;
 
 import java.awt.geom.Point2D;
+
 import io.sf.carte.echosvg.gvt.font.GVTGlyphVector;
 
 /**

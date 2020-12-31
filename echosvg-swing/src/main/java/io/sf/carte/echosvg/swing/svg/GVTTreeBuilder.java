@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.w3c.dom.svg.SVGDocument;
+
 import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.BridgeException;
 import io.sf.carte.echosvg.bridge.DynamicGVTBuilder;
@@ -31,8 +33,6 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.EventDispatcher;
 import io.sf.carte.echosvg.util.EventDispatcher.Dispatcher;
 import io.sf.carte.echosvg.util.HaltingThread;
-
-import org.w3c.dom.svg.SVGDocument;
 
 
 /**

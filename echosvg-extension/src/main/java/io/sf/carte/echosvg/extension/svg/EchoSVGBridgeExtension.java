@@ -18,14 +18,15 @@
  */
 package io.sf.carte.echosvg.extension.svg;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Arrays;
+
+import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.BridgeExtension;
-import org.w3c.dom.Element;
 
 /**
  * This is a Service interface for classes that want to extend the
