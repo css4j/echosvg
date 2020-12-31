@@ -21,13 +21,14 @@ package io.sf.carte.echosvg.anim.dom;
 import java.net.URL;
 import java.util.HashMap;
 
+import io.sf.carte.doc.style.css.nsac.InputSource;
+import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.echosvg.css.dom.CSSOMSVGViewCSS;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
-import io.sf.carte.echosvg.css.parser.ExtendedParser;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.AbstractStylableDocument;
 import io.sf.carte.echosvg.dom.ExtensibleDOMImplementation;
@@ -41,7 +42,6 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
 
-import org.w3c.css.sac.InputSource;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -104,12 +104,12 @@ public class SVGDOMImplementation
 
     public CSSEngine createCSSEngine(AbstractStylableDocument doc,
                                      CSSContext               ctx,
-                                     ExtendedParser           ep,
+                                     Parser                   p,
                                      ValueManager     []      vms,
                                      ShorthandManager []      sms) {
 
         ParsedURL durl = ((SVGOMDocument)doc).getParsedURL();
-        CSSEngine result = new SVGCSSEngine(doc, durl, ep, vms, sms, ctx);
+        CSSEngine result = new SVGCSSEngine(doc, durl, p, vms, sms, ctx);
 
         URL url = getClass().getResource("resources/UserAgentStyleSheet.css");
         if (url != null) {

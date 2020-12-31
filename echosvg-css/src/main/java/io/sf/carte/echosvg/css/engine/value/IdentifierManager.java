@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
@@ -38,10 +38,10 @@ public abstract class IdentifierManager extends AbstractValueManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return ValueConstants.INHERIT_VALUE;
 
-        case LexicalUnit.SAC_IDENT:
+        case IDENT:
             String s = lu.getStringValue().toLowerCase().intern();
             Object v = getIdentifiers().get(s);
             if (v == null) {

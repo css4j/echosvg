@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-import org.w3c.css.sac.SACMediaList;
+import io.sf.carte.doc.style.css.MediaQueryList;
 
 /**
  * This class represents a list of rules.
@@ -51,7 +51,7 @@ public class StyleSheet {
     /**
      * The media to use to cascade properties.
      */
-    protected SACMediaList media;
+    protected MediaQueryList media;
 
     /**
      * The style sheet title.
@@ -61,14 +61,14 @@ public class StyleSheet {
     /**
      * Sets the media to use to compute the styles.
      */
-    public void setMedia(SACMediaList m) {
+    public void setMedia(MediaQueryList m) {
         media = m;
     }
 
     /**
      * Returns the media to use to compute the styles.
      */
-    public SACMediaList getMedia() {
+    public MediaQueryList getMedia() {
         return media;
     }
 

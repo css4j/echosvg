@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
@@ -32,7 +33,6 @@ import io.sf.carte.echosvg.util.SVGTypes;
 
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.DOMException;
-import org.w3c.css.sac.LexicalUnit;
 
 /**
  * One line Class Desc
@@ -109,35 +109,35 @@ public class SrcManager extends IdentifierManager {
         throws DOMException {
 
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return ValueConstants.INHERIT_VALUE;
 
         default:
             throw createInvalidLexicalUnitDOMException
                 (lu.getLexicalUnitType());
 
-        case LexicalUnit.SAC_IDENT:
-        case LexicalUnit.SAC_STRING_VALUE:
-        case LexicalUnit.SAC_URI:
+        case IDENT:
+        case STRING:
+        case URI:
         }
 
         ListValue result = new ListValue();
         for (;;) {
             switch (lu.getLexicalUnitType()) {
-            case LexicalUnit.SAC_STRING_VALUE:
+            case STRING:
                 result.append(new StringValue(CSSPrimitiveValue.CSS_STRING,
                                               lu.getStringValue()));
                 lu = lu.getNextLexicalUnit();
                 break;
 
-            case LexicalUnit.SAC_URI:
+            case URI:
                 String uri = resolveURI(engine.getCSSBaseURI(),
                                         lu.getStringValue());
 
                 result.append(new URIValue(lu.getStringValue(), uri));
                 lu = lu.getNextLexicalUnit();
                 if ((lu != null) &&
-                    (lu.getLexicalUnitType() == LexicalUnit.SAC_FUNCTION)) {
+                    (lu.getLexicalUnitType() == LexicalUnit.LexicalType.FUNCTION)) {
                     if (!lu.getFunctionName().equalsIgnoreCase("format")) {
                         break;
                     }
@@ -149,17 +149,17 @@ public class SrcManager extends IdentifierManager {
                 }
                 break;
 
-            case LexicalUnit.SAC_IDENT:
+            case IDENT:
                 StringBuffer sb = new StringBuffer(lu.getStringValue());
                 lu = lu.getNextLexicalUnit();
                 if (lu != null &&
-                    lu.getLexicalUnitType() == LexicalUnit.SAC_IDENT) {
+                    lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
                     do {
                         sb.append(' ');
                         sb.append(lu.getStringValue());
                         lu = lu.getNextLexicalUnit();
                     } while (lu != null &&
-                             lu.getLexicalUnitType() == LexicalUnit.SAC_IDENT);
+                             lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT);
                     result.append(new StringValue(CSSPrimitiveValue.CSS_STRING,
                                                   sb.toString()));
                 } else {
@@ -172,11 +172,15 @@ public class SrcManager extends IdentifierManager {
                                         (CSSPrimitiveValue.CSS_STRING, id));
                 }
                 break;
+
+            default:
+                break;
+
             }
             if (lu == null) {
                 return result;
             }
-            if (lu.getLexicalUnitType() != LexicalUnit.SAC_OPERATOR_COMMA) {
+            if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
                 throw createInvalidLexicalUnitDOMException
                     (lu.getLexicalUnitType());
             }

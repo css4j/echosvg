@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -32,7 +33,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
@@ -126,10 +126,10 @@ public class FontSizeManager extends LengthManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return ValueConstants.INHERIT_VALUE;
 
-        case LexicalUnit.SAC_IDENT:
+        case IDENT:
             String s = lu.getStringValue().toLowerCase().intern();
             Object v = values.get(s);
             if (v == null) {

@@ -19,6 +19,7 @@
 
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.Value;
@@ -26,7 +27,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 
 /**
@@ -90,7 +90,7 @@ public class MarginLengthManager extends LengthManager {
      */
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
-        if (lu.getLexicalUnitType() == LexicalUnit.SAC_INHERIT) {
+        if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INHERIT) {
             return SVGValueConstants.INHERIT_VALUE;
         }
         return super.createValue(lu, engine);

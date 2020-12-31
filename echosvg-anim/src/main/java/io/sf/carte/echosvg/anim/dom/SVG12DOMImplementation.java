@@ -21,12 +21,13 @@ package io.sf.carte.echosvg.anim.dom;
 import java.net.URL;
 import java.util.HashMap;
 
+import io.sf.carte.doc.style.css.nsac.InputSource;
+import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVG12CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
-import io.sf.carte.echosvg.css.parser.ExtendedParser;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.AbstractStylableDocument;
@@ -41,7 +42,6 @@ import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVG12Constants;
 import io.sf.carte.echosvg.util.XBLConstants;
 
-import org.w3c.css.sac.InputSource;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.DOMImplementation;
@@ -72,11 +72,11 @@ public class SVG12DOMImplementation
 
     public CSSEngine createCSSEngine(AbstractStylableDocument doc,
                                      CSSContext               ctx,
-                                     ExtendedParser      ep,
+                                     Parser              p,
                                      ValueManager     [] vms,
                                      ShorthandManager [] sms) {
         ParsedURL durl = ((SVGOMDocument)doc).getParsedURL();
-        CSSEngine result = new SVG12CSSEngine(doc, durl, ep, vms, sms, ctx);
+        CSSEngine result = new SVG12CSSEngine(doc, durl, p, vms, sms, ctx);
 
         URL url = getClass().getResource("resources/UserAgentStyleSheet.css");
         if (url != null) {

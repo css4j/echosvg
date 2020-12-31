@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
@@ -27,7 +28,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
@@ -102,17 +102,17 @@ public class TextDecorationManager extends AbstractValueManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return ValueConstants.INHERIT_VALUE;
 
-        case LexicalUnit.SAC_IDENT:
+        case IDENT:
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_NONE_VALUE)) {
                 return ValueConstants.NONE_VALUE;
             }
             ListValue lv = new ListValue(' ');
             do {
-                if (lu.getLexicalUnitType() == LexicalUnit.SAC_IDENT) {
+                if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
                     String s = lu.getStringValue().toLowerCase().intern();
                     Object obj = values.get(s);
                     if (obj == null) {
@@ -128,6 +128,9 @@ public class TextDecorationManager extends AbstractValueManager {
 
             } while (lu != null);
             return lv;
+
+        default:
+            break;
         }
         throw createInvalidLexicalUnitDOMException
             (lu.getLexicalUnitType());

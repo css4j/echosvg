@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -31,7 +32,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSValue;
@@ -132,10 +132,10 @@ public class CursorManager extends AbstractValueManager {
         throws DOMException {
         ListValue result = new ListValue();
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return ValueConstants.INHERIT_VALUE;
 
-        case LexicalUnit.SAC_URI:
+        case URI:
             do {
                 result.append(new URIValue(lu.getStringValue(),
                                            resolveURI(engine.getCSSBaseURI(),
@@ -145,7 +145,7 @@ public class CursorManager extends AbstractValueManager {
                     throw createMalformedLexicalUnitDOMException();
                 }
                 if (lu.getLexicalUnitType() !=
-                    LexicalUnit.SAC_OPERATOR_COMMA) {
+                        LexicalUnit.LexicalType.OPERATOR_COMMA) {
                     throw createInvalidLexicalUnitDOMException
                         (lu.getLexicalUnitType());
                 }
@@ -153,14 +153,14 @@ public class CursorManager extends AbstractValueManager {
                 if (lu == null) {
                     throw createMalformedLexicalUnitDOMException();
                 }
-            } while (lu.getLexicalUnitType() == LexicalUnit.SAC_URI);
-            if (lu.getLexicalUnitType() != LexicalUnit.SAC_IDENT) {
+            } while (lu.getLexicalUnitType() == LexicalUnit.LexicalType.URI);
+            if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.IDENT) {
                 throw createInvalidLexicalUnitDOMException
                     (lu.getLexicalUnitType());
             }
             // Fall through...
 
-        case LexicalUnit.SAC_IDENT:
+        case IDENT:
             String s = lu.getStringValue().toLowerCase().intern();
             Object v = values.get(s);
             if (v == null) {
@@ -168,6 +168,9 @@ public class CursorManager extends AbstractValueManager {
             }
             result.append((Value)v);
             lu = lu.getNextLexicalUnit();
+            break;
+        default:
+            break;
         }
         if (lu != null) {
             throw createInvalidLexicalUnitDOMException

@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
@@ -26,7 +27,6 @@ import io.sf.carte.echosvg.css.engine.value.svg12.LineHeightManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.MarginLengthManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.MarginShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.TextAlignManager;
-import io.sf.carte.echosvg.css.parser.ExtendedParser;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
 
@@ -49,7 +49,7 @@ public class SVG12CSSEngine extends SVGCSSEngine {
      */
     public SVG12CSSEngine(Document doc,
                           ParsedURL uri,
-                          ExtendedParser p,
+                          Parser p,
                           CSSContext ctx) {
         super(doc, uri, p,
               SVG_VALUE_MANAGERS,
@@ -69,7 +69,7 @@ public class SVG12CSSEngine extends SVGCSSEngine {
      */
     public SVG12CSSEngine(Document doc,
                           ParsedURL uri,
-                          ExtendedParser p,
+                          Parser p,
                           ValueManager[] vms,
                           ShorthandManager[] sms,
                           CSSContext ctx) {

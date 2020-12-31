@@ -18,11 +18,12 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.util.CSSConstants;
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
@@ -31,6 +32,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
  * CSS color values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractColorManager extends IdentifierManager {
@@ -175,12 +177,18 @@ public abstract class AbstractColorManager extends IdentifierManager {
      */
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
-        if (lu.getLexicalUnitType() == LexicalUnit.SAC_RGBCOLOR) {
+        if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.RGBCOLOR) {
             lu = lu.getParameters();
             Value red = createColorComponent(lu);
-            lu = lu.getNextLexicalUnit().getNextLexicalUnit();
+            lu = lu.getNextLexicalUnit();
+            if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
+                lu = lu.getNextLexicalUnit();
+            }
             Value green = createColorComponent(lu);
-            lu = lu.getNextLexicalUnit().getNextLexicalUnit();
+            lu = lu.getNextLexicalUnit();
+            if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
+                lu = lu.getNextLexicalUnit();
+            }
             Value blue = createColorComponent(lu);
             return createRGBColor(red, green, blue);
         }
@@ -225,17 +233,19 @@ public abstract class AbstractColorManager extends IdentifierManager {
      */
     protected Value createColorComponent(LexicalUnit lu) throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INTEGER:
+        case INTEGER:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
                                   lu.getIntegerValue());
 
-        case LexicalUnit.SAC_REAL:
+        case REAL:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
                                   lu.getFloatValue());
 
-        case LexicalUnit.SAC_PERCENTAGE:
+        case PERCENTAGE:
             return new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE,
                                   lu.getFloatValue());
+
+        default:
         }
         throw createInvalidRGBComponentUnitDOMException
             (lu.getLexicalUnitType());
@@ -249,9 +259,9 @@ public abstract class AbstractColorManager extends IdentifierManager {
     }
 
     private DOMException createInvalidRGBComponentUnitDOMException
-        (short type) {
+        (LexicalType lexicalType) {
         Object[] p = new Object[] { getPropertyName(),
-                (int) type};
+                lexicalType.toString()};
         String s = Messages.formatMessage("invalid.rgb.component.unit", p);
         return new DOMException(DOMException.NOT_SUPPORTED_ERR, s);
     }

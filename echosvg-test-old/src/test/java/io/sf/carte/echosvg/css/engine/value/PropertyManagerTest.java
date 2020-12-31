@@ -19,16 +19,17 @@
 
 package io.sf.carte.echosvg.css.engine.value;
 
+import java.io.StringReader;
 import java.util.StringTokenizer;
 
-import org.w3c.css.sac.LexicalUnit;
-
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.Parser;
+import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.echosvg.css.engine.value.svg.MarkerManager;
 import io.sf.carte.echosvg.css.engine.value.svg.OpacityManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SpacingManager;
-import io.sf.carte.echosvg.css.parser.Parser;
 import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
@@ -159,10 +160,10 @@ public class PropertyManagerTest extends AbstractTest {
             report.addDescriptionEntry(ERROR_IS_INHERITED, "");
         }
 
-        Parser cssParser = new Parser();
+        Parser cssParser = new CSSParser();
         // see if the property supports the value 'inherit'
         try {
-            LexicalUnit lu = cssParser.parsePropertyValue("inherit");
+            LexicalUnit lu = cssParser.parsePropertyValue(new StringReader("inherit"));
             Value v = manager.createValue(lu, null);
             String s = v.getCssText();
             if (!"inherit".equalsIgnoreCase(s)) {
@@ -180,7 +181,7 @@ public class PropertyManagerTest extends AbstractTest {
         if (identValues != null) {
             try {
                 for (String identValue : identValues) {
-                    LexicalUnit lu = cssParser.parsePropertyValue(identValue);
+                    LexicalUnit lu = cssParser.parsePropertyValue(new StringReader(identValue));
                     Value v = manager.createValue(lu, null);
                     String s = v.getCssText();
                     if (!identValue.equalsIgnoreCase(s)) {

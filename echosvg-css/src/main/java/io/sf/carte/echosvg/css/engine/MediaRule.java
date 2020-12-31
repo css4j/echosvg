@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-import org.w3c.css.sac.SACMediaList;
+import io.sf.carte.doc.style.css.MediaQueryList;
 
 /**
  * This class represents a @media CSS rule.
@@ -36,7 +36,7 @@ public class MediaRule extends StyleSheet implements Rule {
     /**
      * The media list.
      */
-    protected SACMediaList mediaList;
+    protected MediaQueryList mediaList;
 
     /**
      * Returns a constant identifying the rule type.
@@ -48,14 +48,14 @@ public class MediaRule extends StyleSheet implements Rule {
     /**
      * Sets the media list.
      */
-    public void setMediaList(SACMediaList ml) {
+    public void setMediaList(MediaQueryList ml) {
         mediaList = ml;
     }
 
     /**
      * Returns the media list.
      */
-    public SACMediaList getMediaList() {
+    public MediaQueryList getMediaList() {
         return mediaList;
     }
 

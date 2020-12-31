@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import io.sf.carte.doc.style.css.CSSUnit;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
@@ -25,7 +27,6 @@ import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
@@ -33,6 +34,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
  * This class provides a manager for the 'glyph-orientation' property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class GlyphOrientationManager extends AbstractValueManager {
@@ -72,28 +74,32 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return SVGValueConstants.INHERIT_VALUE;
 
-        case LexicalUnit.SAC_DEGREE:
-            return new FloatValue(CSSPrimitiveValue.CSS_DEG,
-                                  lu.getFloatValue());
-
-        case LexicalUnit.SAC_GRADIAN:
-            return new FloatValue(CSSPrimitiveValue.CSS_GRAD,
-                                  lu.getFloatValue());
-
-        case LexicalUnit.SAC_RADIAN:
-            return new FloatValue(CSSPrimitiveValue.CSS_RAD,
-                                  lu.getFloatValue());
+        case DIMENSION:
+            switch (lu.getCssUnit()) {
+            case CSSUnit.CSS_DEG:
+                return new FloatValue(CSSPrimitiveValue.CSS_DEG,
+                        lu.getFloatValue());
+            case CSSUnit.CSS_RAD:
+                return new FloatValue(CSSPrimitiveValue.CSS_RAD,
+                        lu.getFloatValue());
+            case CSSUnit.CSS_GRAD:
+                return new FloatValue(CSSPrimitiveValue.CSS_GRAD,
+                        lu.getFloatValue());
+            case CSSUnit.CSS_TURN:
+                return new FloatValue(CSSPrimitiveValue.CSS_DEG,
+                        lu.getFloatValue() * 360f);
+            }
 
             // For SVG angle properties unit defaults to 'deg'.
-        case LexicalUnit.SAC_INTEGER:
+        case INTEGER:
             { 
                 int n = lu.getIntegerValue();
                 return new FloatValue(CSSPrimitiveValue.CSS_DEG, n);
             }
-        case LexicalUnit.SAC_REAL:
+        case REAL:
             { 
                 float n = lu.getFloatValue();
                 return new FloatValue(CSSPrimitiveValue.CSS_DEG, n);

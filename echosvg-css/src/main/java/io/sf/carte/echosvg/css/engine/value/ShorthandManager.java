@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 
 /**

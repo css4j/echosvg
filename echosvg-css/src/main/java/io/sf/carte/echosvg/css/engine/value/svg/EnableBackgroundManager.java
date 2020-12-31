@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -28,7 +29,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSValue;
@@ -94,14 +94,14 @@ public class EnableBackgroundManager extends LengthManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return SVGValueConstants.INHERIT_VALUE;
 
         default:
             throw createInvalidLexicalUnitDOMException
                 (lu.getLexicalUnitType());
 
-        case LexicalUnit.SAC_IDENT:
+        case IDENT:
             String id = lu.getStringValue().toLowerCase().intern();
             if (id == CSSConstants.CSS_ACCUMULATE_VALUE) {
                 return SVGValueConstants.ACCUMULATE_VALUE;

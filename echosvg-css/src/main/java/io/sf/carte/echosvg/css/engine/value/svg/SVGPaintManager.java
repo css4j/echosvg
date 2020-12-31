@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -28,7 +29,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.DOMException;
@@ -91,7 +91,7 @@ public class SVGPaintManager extends SVGColorManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_IDENT:
+        case IDENT:
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_NONE_VALUE)) {
                 return SVGValueConstants.NONE_VALUE;
@@ -99,7 +99,7 @@ public class SVGPaintManager extends SVGColorManager {
             // Fall through
         default:
             return super.createValue(lu, engine);
-        case LexicalUnit.SAC_URI:
+        case URI:
         }
         String value = lu.getStringValue();
         String uri = resolveURI(engine.getCSSBaseURI(), value);
@@ -111,7 +111,7 @@ public class SVGPaintManager extends SVGColorManager {
         ListValue result = new ListValue(' ');
         result.append(new URIValue(value, uri));
 
-        if (lu.getLexicalUnitType() == LexicalUnit.SAC_IDENT) {
+        if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_NONE_VALUE)) {
                 result.append(SVGValueConstants.NONE_VALUE);

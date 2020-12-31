@@ -19,6 +19,7 @@
 
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -29,7 +30,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.DOMException;
@@ -93,9 +93,9 @@ public class LineHeightManager extends LengthManager {
         throws DOMException {
 
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return SVG12ValueConstants.INHERIT_VALUE;
-        case LexicalUnit.SAC_IDENT: {
+        case IDENT: {
             String s = lu.getStringValue().toLowerCase();
             if (SVG12CSSConstants.CSS_NORMAL_VALUE.equals(s))
                 return SVG12ValueConstants.NORMAL_VALUE;

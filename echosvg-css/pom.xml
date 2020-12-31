@@ -55,6 +55,11 @@
       <artifactId>xml-apis-ext</artifactId>
       <version>${xmlapisext.version}</version>
     </dependency>
+    <dependency>
+      <groupId>io.sf.carte</groupId>
+      <artifactId>css4j</artifactId>
+      <version>3.3.0</version>
+    </dependency>
   </dependencies>
 
   <build>

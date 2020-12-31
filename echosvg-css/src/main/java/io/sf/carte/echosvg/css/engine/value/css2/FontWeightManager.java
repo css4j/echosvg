@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -30,7 +31,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
@@ -106,7 +106,7 @@ public class FontWeightManager extends IdentifierManager {
      */
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
-        if (lu.getLexicalUnitType() == LexicalUnit.SAC_INTEGER) {
+        if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INTEGER) {
             int i = lu.getIntegerValue();
             switch (i) {
             case 100:

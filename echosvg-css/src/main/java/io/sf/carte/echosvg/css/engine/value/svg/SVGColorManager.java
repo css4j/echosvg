@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -31,7 +32,6 @@ import io.sf.carte.echosvg.css.engine.value.svg12.ICCNamedColor;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSValue;
 
@@ -118,7 +118,7 @@ public class SVGColorManager extends ColorManager {
      */
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
-        if (lu.getLexicalUnitType() == LexicalUnit.SAC_IDENT) {
+        if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_CURRENTCOLOR_VALUE)) {
                 return SVGValueConstants.CURRENTCOLOR_VALUE;
@@ -131,7 +131,7 @@ public class SVGColorManager extends ColorManager {
         }
 
         //If we have more content here, there is a color function after the sRGB color.
-        if (lu.getLexicalUnitType() != LexicalUnit.SAC_FUNCTION) {
+        if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.FUNCTION) {
             throw createInvalidLexicalUnitDOMException
                 (lu.getLexicalUnitType());
         }
@@ -268,14 +268,14 @@ public class SVGColorManager extends ColorManager {
     }
 
     private void expectIdent(LexicalUnit lu) {
-        if (lu.getLexicalUnitType() != LexicalUnit.SAC_IDENT) {
+        if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.IDENT) {
             throw createInvalidLexicalUnitDOMException
                 (lu.getLexicalUnitType());
         }
     }
 
     private void expectComma(LexicalUnit lu) {
-        if (lu.getLexicalUnitType() != LexicalUnit.SAC_OPERATOR_COMMA) {
+        if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
             throw createInvalidLexicalUnitDOMException
                 (lu.getLexicalUnitType());
         }
@@ -283,7 +283,7 @@ public class SVGColorManager extends ColorManager {
 
     private void expectNonNull(LexicalUnit lu) {
         if (lu == null) {
-            throw createInvalidLexicalUnitDOMException((short)-1);
+            throw createInvalidLexicalUnitDOMException(LexicalUnit.LexicalType.UNKNOWN);
         }
     }
 
@@ -324,9 +324,9 @@ public class SVGColorManager extends ColorManager {
     protected float getColorValue(LexicalUnit lu) {
         expectNonNull(lu);
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INTEGER:
+        case INTEGER:
             return lu.getIntegerValue();
-        case LexicalUnit.SAC_REAL:
+        case REAL:
             return lu.getFloatValue();
         }
         throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());

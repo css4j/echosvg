@@ -18,20 +18,22 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.CSSValue;
+
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.util.CSSConstants;
-import org.w3c.css.sac.LexicalUnit;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
 /**
  * This class provides a manager for the property with support for
  * rect values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class RectManager extends LengthManager {
@@ -47,80 +49,66 @@ public abstract class RectManager extends LengthManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_FUNCTION:
+        case FUNCTION:
             if (!lu.getFunctionName().equalsIgnoreCase("rect")) {
                 break;
             }
-        case LexicalUnit.SAC_RECT_FUNCTION:
+        case RECT_FUNCTION:
             lu = lu.getParameters();
             Value top = createRectComponent(lu);
             lu = lu.getNextLexicalUnit();
             if (lu == null ||
-                lu.getLexicalUnitType() != LexicalUnit.SAC_OPERATOR_COMMA) {
+                lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
                 throw createMalformedRectDOMException();
             }
             lu = lu.getNextLexicalUnit();
             Value right = createRectComponent(lu);
             lu = lu.getNextLexicalUnit();
             if (lu == null ||
-                lu.getLexicalUnitType() != LexicalUnit.SAC_OPERATOR_COMMA) {
+                lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
                 throw createMalformedRectDOMException();
             }
             lu = lu.getNextLexicalUnit();
             Value bottom = createRectComponent(lu);
             lu = lu.getNextLexicalUnit();
             if (lu == null ||
-                lu.getLexicalUnitType() != LexicalUnit.SAC_OPERATOR_COMMA) {
+                lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
                 throw createMalformedRectDOMException();
             }
             lu = lu.getNextLexicalUnit();
             Value left = createRectComponent(lu);
             return new RectValue(top, right, bottom, left);
+		default:
+			break;
         }
         throw createMalformedRectDOMException();
     }
 
     private Value createRectComponent(LexicalUnit lu) throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_IDENT:
+        case IDENT:
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_AUTO_VALUE)) {
                 return ValueConstants.AUTO_VALUE;
             }
             break;
-        case LexicalUnit.SAC_EM:
-            return new FloatValue(CSSPrimitiveValue.CSS_EMS,
-                                  lu.getFloatValue());
-        case LexicalUnit.SAC_EX:
-            return new FloatValue(CSSPrimitiveValue.CSS_EXS,
-                                  lu.getFloatValue());
-        case LexicalUnit.SAC_PIXEL:
-            return new FloatValue(CSSPrimitiveValue.CSS_PX,
-                                  lu.getFloatValue());
-        case LexicalUnit.SAC_CENTIMETER:
-            return new FloatValue(CSSPrimitiveValue.CSS_CM,
-                                  lu.getFloatValue());
-        case LexicalUnit.SAC_MILLIMETER:
-            return new FloatValue(CSSPrimitiveValue.CSS_MM,
-                                  lu.getFloatValue());
-        case LexicalUnit.SAC_INCH:
-            return new FloatValue(CSSPrimitiveValue.CSS_IN,
-                                  lu.getFloatValue());
-        case LexicalUnit.SAC_POINT:
-            return new FloatValue(CSSPrimitiveValue.CSS_PT,
-                                  lu.getFloatValue());
-        case LexicalUnit.SAC_PICA:
-            return new FloatValue(CSSPrimitiveValue.CSS_PC,
-                                  lu.getFloatValue());
-        case LexicalUnit.SAC_INTEGER:
+        case DIMENSION:
+            Value value = createLength(lu);
+            if (value != null) {
+                return value;
+            }
+            break;
+        case INTEGER:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                                  lu.getIntegerValue());
-        case LexicalUnit.SAC_REAL:
+                    lu.getIntegerValue());
+        case REAL:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                                  lu.getFloatValue());
-        case LexicalUnit.SAC_PERCENTAGE:
+                    lu.getFloatValue());
+        case PERCENTAGE:
             return new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE,
-                                  lu.getFloatValue());
+                    lu.getFloatValue());
+		default:
+			break;
         }
         throw createMalformedRectDOMException();
     }

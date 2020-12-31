@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.util.ParsedURL;
 import org.w3c.dom.DOMException;
 
@@ -53,9 +54,9 @@ public abstract class AbstractValueFactory {
     /**
      * Creates a DOM exception, given an invalid lexical unit type.
      */
-    protected DOMException createInvalidLexicalUnitDOMException(short type) {
+    protected DOMException createInvalidLexicalUnitDOMException(LexicalUnit.LexicalType type) {
         Object[] p = new Object[] { getPropertyName(),
-                (int) type};
+                type.toString()};
         String s = Messages.formatMessage("invalid.lexical.unit", p);
         return new DOMException(DOMException.NOT_SUPPORTED_ERR, s);
     }

@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.URIValue;
@@ -27,7 +28,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
@@ -87,15 +87,15 @@ public class ClipPathManager extends AbstractValueManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return ValueConstants.INHERIT_VALUE;
 
-        case LexicalUnit.SAC_URI:
+        case URI:
             return new URIValue(lu.getStringValue(),
                                 resolveURI(engine.getCSSBaseURI(),
                                            lu.getStringValue()));
 
-        case LexicalUnit.SAC_IDENT:
+        case IDENT:
             if (lu.getStringValue().equalsIgnoreCase
                 (CSSConstants.CSS_NONE_VALUE)) {
                 return ValueConstants.NONE_VALUE;

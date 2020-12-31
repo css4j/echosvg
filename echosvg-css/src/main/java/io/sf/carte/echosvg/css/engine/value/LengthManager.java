@@ -18,11 +18,12 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import io.sf.carte.doc.style.css.CSSUnit;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSValue;
@@ -32,6 +33,7 @@ import org.w3c.dom.css.CSSValue;
  * length values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class LengthManager extends AbstractValueManager {
@@ -47,51 +49,65 @@ public abstract class LengthManager extends AbstractValueManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_EM:
-            return new FloatValue(CSSPrimitiveValue.CSS_EMS,
-                                  lu.getFloatValue());
+        case DIMENSION:
+            Value value = createLength(lu);
+            if (value != null) {
+                return value;
+            }
+            break;
 
-        case LexicalUnit.SAC_EX:
-            return new FloatValue(CSSPrimitiveValue.CSS_EXS,
-                                  lu.getFloatValue());
-
-        case LexicalUnit.SAC_PIXEL:
-            return new FloatValue(CSSPrimitiveValue.CSS_PX,
-                                  lu.getFloatValue());
-
-        case LexicalUnit.SAC_CENTIMETER:
-            return new FloatValue(CSSPrimitiveValue.CSS_CM,
-                                  lu.getFloatValue());
-
-        case LexicalUnit.SAC_MILLIMETER:
-            return new FloatValue(CSSPrimitiveValue.CSS_MM,
-                                  lu.getFloatValue());
-
-        case LexicalUnit.SAC_INCH:
-            return new FloatValue(CSSPrimitiveValue.CSS_IN,
-                                  lu.getFloatValue());
-
-        case LexicalUnit.SAC_POINT:
-            return new FloatValue(CSSPrimitiveValue.CSS_PT,
-                                  lu.getFloatValue());
-
-        case LexicalUnit.SAC_PICA:
-            return new FloatValue(CSSPrimitiveValue.CSS_PC,
-                                  lu.getFloatValue());
-
-        case LexicalUnit.SAC_INTEGER:
+        case INTEGER:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
                                   lu.getIntegerValue());
 
-        case LexicalUnit.SAC_REAL:
+        case REAL:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
                                   lu.getFloatValue());
 
-        case LexicalUnit.SAC_PERCENTAGE:
+        case PERCENTAGE:
             return new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE,
                                   lu.getFloatValue());
+        default:
+            break;
         }
         throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+    }
+
+    static Value createLength(LexicalUnit lu) {
+        if (CSSUnit.isLengthUnitType(lu.getCssUnit())) {
+            short omUnit;
+            switch (lu.getCssUnit()) {
+            case CSSUnit.CSS_PX:
+                omUnit = CSSPrimitiveValue.CSS_PX;
+                break;
+            case CSSUnit.CSS_IN:
+                omUnit = CSSPrimitiveValue.CSS_IN;
+                break;
+            case CSSUnit.CSS_PC:
+                omUnit = CSSPrimitiveValue.CSS_PC;
+                break;
+            case CSSUnit.CSS_PT:
+                omUnit = CSSPrimitiveValue.CSS_PT;
+                break;
+            case CSSUnit.CSS_CM:
+                omUnit = CSSPrimitiveValue.CSS_CM;
+                break;
+            case CSSUnit.CSS_MM:
+                omUnit = CSSPrimitiveValue.CSS_MM;
+                break;
+            case CSSUnit.CSS_EM:
+                omUnit = CSSPrimitiveValue.CSS_EMS;
+                break;
+            case CSSUnit.CSS_EX:
+                omUnit = CSSPrimitiveValue.CSS_EXS;
+                break;
+            default:
+                return null;
+            }
+            return new FloatValue(omUnit,
+                                  lu.getFloatValue());
+        }
+        return null;
     }
 
     /**

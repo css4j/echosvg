@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -32,7 +34,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
@@ -125,39 +126,41 @@ public class FontFamilyManager extends AbstractValueManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return ValueConstants.INHERIT_VALUE;
 
         default:
             throw createInvalidLexicalUnitDOMException
                 (lu.getLexicalUnitType());
 
-        case LexicalUnit.SAC_IDENT:
-        case LexicalUnit.SAC_STRING_VALUE:
+        case IDENT:
+        case STRING:
         }
         ListValue result = new ListValue();
         for (;;) {
             switch (lu.getLexicalUnitType()) {
-            case LexicalUnit.SAC_STRING_VALUE:
+            case STRING:
                 result.append(new StringValue(CSSPrimitiveValue.CSS_STRING,
                                               lu.getStringValue()));
                 lu = lu.getNextLexicalUnit();
                 break;
 
-            case LexicalUnit.SAC_IDENT:
+            case IDENT:
                 StringBuffer sb = new StringBuffer(lu.getStringValue());
                 lu = lu.getNextLexicalUnit();
                 if (lu != null && isIdentOrNumber(lu)) {
                     do {
                         sb.append(' ');
                         switch (lu.getLexicalUnitType()) {
-                        case LexicalUnit.SAC_IDENT:
+                        case IDENT:
                             sb.append(lu.getStringValue());
                             break;
-                        case LexicalUnit.SAC_INTEGER:
+                        case INTEGER:
                             //Some font names contain integer values but are not quoted!
                             //Example: "Univers 45 Light"
                             sb.append(Integer.toString(lu.getIntegerValue()));
+                        default:
+                            break;
                         }
                         lu = lu.getNextLexicalUnit();
                     } while (lu != null && isIdentOrNumber(lu));
@@ -172,10 +175,12 @@ public class FontFamilyManager extends AbstractValueManager {
                                   : new StringValue
                                         (CSSPrimitiveValue.CSS_STRING, id));
                 }
+                break;
+                default:
             }
             if (lu == null)
                 return result;
-            if (lu.getLexicalUnitType() != LexicalUnit.SAC_OPERATOR_COMMA)
+            if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA)
                 throw createInvalidLexicalUnitDOMException
                     (lu.getLexicalUnitType());
             lu = lu.getNextLexicalUnit();
@@ -185,10 +190,10 @@ public class FontFamilyManager extends AbstractValueManager {
     }
 
     private boolean isIdentOrNumber(LexicalUnit lu) {
-        short type = lu.getLexicalUnitType();
+        LexicalType type = lu.getLexicalUnitType();
         switch (type) {
-        case LexicalUnit.SAC_IDENT:
-        case LexicalUnit.SAC_INTEGER:
+        case IDENT:
+        case INTEGER:
             return true;
         default:
             return false;

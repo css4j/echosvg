@@ -19,18 +19,22 @@
 
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.sf.carte.doc.style.css.CSSUnit;
+import io.sf.carte.doc.style.css.nsac.CSSParseException;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueFactory;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
-import io.sf.carte.echosvg.css.parser.CSSLexicalUnit;
 import io.sf.carte.echosvg.util.CSSConstants;
-import org.w3c.css.sac.LexicalUnit;
 
 /**
  * This class provides support for the CSS2 'font' shorthand property.
@@ -48,6 +52,7 @@ import org.w3c.css.sac.LexicalUnit;
  * number to be font-weight.
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FontShorthandManager
@@ -77,30 +82,28 @@ public class FontShorthandManager
         return false;
     }
 
-    static LexicalUnit NORMAL_LU = CSSLexicalUnit.createString
-        (LexicalUnit.SAC_IDENT, CSSConstants.CSS_NORMAL_VALUE, null);
-    static LexicalUnit BOLD_LU = CSSLexicalUnit.createString
-        (LexicalUnit.SAC_IDENT, CSSConstants.CSS_BOLD_VALUE, null);
+    static LexicalUnit NORMAL_LU;
+    static LexicalUnit BOLD_LU;
 
-    static LexicalUnit MEDIUM_LU = CSSLexicalUnit.createString
-        (LexicalUnit.SAC_IDENT, CSSConstants.CSS_MEDIUM_VALUE, null);
+    static LexicalUnit MEDIUM_LU;
 
-    static LexicalUnit SZ_10PT_LU = CSSLexicalUnit.createFloat
-        (LexicalUnit.SAC_POINT, 10, null);
-    static LexicalUnit SZ_8PT_LU = CSSLexicalUnit.createFloat
-        (LexicalUnit.SAC_POINT, 8, null);
+    static LexicalUnit SZ_10PT_LU;
+    static LexicalUnit SZ_8PT_LU;
 
 
     static LexicalUnit FONT_FAMILY_LU;
     static {
-        LexicalUnit lu;
-        FONT_FAMILY_LU = CSSLexicalUnit.createString
-            (LexicalUnit.SAC_IDENT, "Dialog", null);
-        lu = CSSLexicalUnit.createString
-            (LexicalUnit.SAC_IDENT, "Helvetica", FONT_FAMILY_LU);
-        CSSLexicalUnit.createString
-            (LexicalUnit.SAC_IDENT,
-             CSSConstants.CSS_SANS_SERIF_VALUE, lu);
+        CSSParser parser = new CSSParser();
+        try {
+            NORMAL_LU = parser.parsePropertyValue(new StringReader(CSSConstants.CSS_NORMAL_VALUE));
+            BOLD_LU = parser.parsePropertyValue(new StringReader(CSSConstants.CSS_BOLD_VALUE));
+            MEDIUM_LU = parser.parsePropertyValue(new StringReader(CSSConstants.CSS_MEDIUM_VALUE));
+            SZ_10PT_LU = parser.parsePropertyValue(new StringReader("10pt"));
+            SZ_8PT_LU = parser.parsePropertyValue(new StringReader("8pt"));
+            FONT_FAMILY_LU = parser.parsePropertyValue(new StringReader("\"Dialog\",\"Helvetica\","
+                    + CSSConstants.CSS_SANS_SERIF_VALUE));
+        } catch (CSSParseException | IOException e) {
+        }
     }
 
     protected static final Set values = new HashSet();
@@ -146,8 +149,8 @@ public class FontShorthandManager
                           LexicalUnit lu,
                           boolean imp) {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT: return;
-        case LexicalUnit.SAC_IDENT: {
+        case INHERIT: return;
+        case IDENT: {
             String s = lu.getStringValue().toLowerCase();
             if (values.contains(s)) {
                 handleSystemFont(eng, ph, s, imp);
@@ -189,7 +192,7 @@ public class FontShorthandManager
         LexicalUnit intLU = null;
         while (!svwDone && (lu != null)) {
             switch (lu.getLexicalUnitType()) {
-            case LexicalUnit.SAC_IDENT: {
+            case IDENT: {
                 String s = lu.getStringValue().toLowerCase().intern();
                 if (fontStyle == null && fstSM.get(s) != null) {
                     fontStyle = lu;
@@ -228,7 +231,7 @@ public class FontShorthandManager
                 svwDone = true;
                 break;
             }
-            case LexicalUnit.SAC_INTEGER:
+            case INTEGER:
                 if (intLU == null && fontWeight == null) {
                     intLU = lu;
                     break;
@@ -249,7 +252,7 @@ public class FontShorthandManager
 
         // Now we need to get font-size
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_IDENT: {
+        case IDENT: {
             String s= lu.getStringValue().toLowerCase().intern();
             if (fszSM.get(s) != null) {
                 fontSize = lu; // This is a font-size ident.
@@ -258,17 +261,14 @@ public class FontShorthandManager
         }
             break;
 
-        case LexicalUnit.SAC_EM:
-        case LexicalUnit.SAC_EX:
-        case LexicalUnit.SAC_PIXEL:
-        case LexicalUnit.SAC_CENTIMETER:
-        case LexicalUnit.SAC_MILLIMETER:
-        case LexicalUnit.SAC_INCH:
-        case LexicalUnit.SAC_POINT:
-        case LexicalUnit.SAC_PICA:
-        case LexicalUnit.SAC_INTEGER:
-        case LexicalUnit.SAC_REAL:
-        case LexicalUnit.SAC_PERCENTAGE:
+        case DIMENSION:
+            if (!CSSUnit.isLengthUnitType(lu.getCssUnit())) {
+                throw createInvalidLexicalUnitDOMException
+                    (lu.getLexicalUnitType());
+            }
+        case INTEGER:
+        case REAL:
+        case PERCENTAGE:
             fontSize = lu;
             lu = lu.getNextLexicalUnit();
             break;
@@ -304,7 +304,7 @@ public class FontShorthandManager
         // Now at this point we want to look for
         // line-height.
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_OPERATOR_SLASH: // we have line-height
+        case OPERATOR_SLASH: // we have line-height
             lu = lu.getNextLexicalUnit();
             if (lu == null) // OOPS!
                 throw createMalformedLexicalUnitDOMException();

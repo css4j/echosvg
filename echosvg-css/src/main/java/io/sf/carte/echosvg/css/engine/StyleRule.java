@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
-import org.w3c.css.sac.SelectorList;
+import io.sf.carte.doc.style.css.nsac.SelectorList;
 
 /**
  * This class represents a style rule.

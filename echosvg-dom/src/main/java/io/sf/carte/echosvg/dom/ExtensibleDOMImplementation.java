@@ -24,19 +24,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import io.sf.carte.doc.style.css.nsac.Parser;
+import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
-import io.sf.carte.echosvg.css.parser.ExtendedParser;
-import io.sf.carte.echosvg.css.parser.ExtendedParserWrapper;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.Service;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 import io.sf.carte.echosvg.xml.XMLUtilities;
 
-import org.w3c.css.sac.Parser;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -121,32 +120,7 @@ public abstract class ExtensibleDOMImplementation
      */
     public CSSEngine createCSSEngine(AbstractStylableDocument doc,
                                      CSSContext ctx) {
-        String pn = XMLResourceDescriptor.getCSSParserClassName();
-        Parser p;
-        try {
-            p = (Parser)Class.forName(pn).getDeclaredConstructor().newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new DOMException(DOMException.INVALID_ACCESS_ERR,
-                                   formatMessage("css.parser.class",
-                                                 new Object[] { pn }));
-        } catch (InstantiationException e) {
-            throw new DOMException(DOMException.INVALID_ACCESS_ERR,
-                                   formatMessage("css.parser.creation",
-                                                 new Object[] { pn }));
-        } catch (IllegalAccessException e) {
-            throw new DOMException(DOMException.INVALID_ACCESS_ERR,
-                                   formatMessage("css.parser.access",
-                                                 new Object[] { pn }));
-        } catch (NoSuchMethodException e) {
-            throw new DOMException(DOMException.INVALID_ACCESS_ERR,
-                    formatMessage("css.parser.access",
-                            new Object[] { pn }));
-        } catch (InvocationTargetException e) {
-            throw new DOMException(DOMException.INVALID_ACCESS_ERR,
-                    formatMessage("css.parser.access",
-                            new Object[] { pn }));
-        }
-        ExtendedParser ep = ExtendedParserWrapper.wrap(p);
+        Parser p = new CSSParser();
 
         ValueManager[] vms;
         if (customValueManagers == null) {
@@ -172,14 +146,14 @@ public abstract class ExtensibleDOMImplementation
             }
         }
 
-        CSSEngine result = createCSSEngine(doc, ctx, ep, vms, sms);
+        CSSEngine result = createCSSEngine(doc, ctx, p, vms, sms);
         doc.setCSSEngine(result);
         return result;
     }
 
     public abstract CSSEngine createCSSEngine(AbstractStylableDocument doc,
                                               CSSContext               ctx,
-                                              ExtendedParser           ep,
+                                              Parser                   p,
                                               ValueManager     []      vms,
                                               ShorthandManager []      sms);
 

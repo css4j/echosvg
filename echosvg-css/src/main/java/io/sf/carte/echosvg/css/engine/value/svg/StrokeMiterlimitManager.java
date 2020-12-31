@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
@@ -26,7 +27,6 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
@@ -86,14 +86,14 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
     public Value createValue(LexicalUnit lu, CSSEngine engine)
         throws DOMException {
         switch (lu.getLexicalUnitType()) {
-        case LexicalUnit.SAC_INHERIT:
+        case INHERIT:
             return SVGValueConstants.INHERIT_VALUE;
 
-        case  LexicalUnit.SAC_INTEGER:
+        case INTEGER:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
                                   lu.getIntegerValue());
 
-        case  LexicalUnit.SAC_REAL:
+        case REAL:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
                                   lu.getFloatValue());
 

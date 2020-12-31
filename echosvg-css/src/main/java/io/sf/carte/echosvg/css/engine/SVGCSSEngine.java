@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -73,7 +74,6 @@ import io.sf.carte.echosvg.css.engine.value.svg.StrokeWidthManager;
 import io.sf.carte.echosvg.css.engine.value.svg.TextAnchorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.TextRenderingManager;
 import io.sf.carte.echosvg.css.engine.value.svg.WritingModeManager;
-import io.sf.carte.echosvg.css.parser.ExtendedParser;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
 
@@ -96,7 +96,7 @@ public class SVGCSSEngine extends CSSEngine {
      */
     public SVGCSSEngine(Document doc,
                         ParsedURL uri,
-                        ExtendedParser p,
+                        Parser p,
                         CSSContext ctx) {
         super(doc, uri, p,
               SVG_VALUE_MANAGERS,
@@ -124,7 +124,7 @@ public class SVGCSSEngine extends CSSEngine {
      */
     public SVGCSSEngine(Document doc,
                         ParsedURL uri,
-                        ExtendedParser p,
+                        Parser p,
                         ValueManager[] vms,
                         ShorthandManager[] sms,
                         CSSContext ctx) {
@@ -145,7 +145,7 @@ public class SVGCSSEngine extends CSSEngine {
 
     protected SVGCSSEngine(Document doc,
                            ParsedURL uri,
-                           ExtendedParser p,
+                           Parser p,
                            ValueManager[] vms,
                            ShorthandManager[] sms,
                            String[] pe,

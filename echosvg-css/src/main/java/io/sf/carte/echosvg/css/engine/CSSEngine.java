@@ -27,24 +27,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import io.sf.carte.echosvg.css.engine.sac.CSSConditionFactory;
-import io.sf.carte.echosvg.css.engine.sac.CSSSelectorFactory;
-import io.sf.carte.echosvg.css.engine.sac.ExtendedSelector;
-import io.sf.carte.echosvg.css.engine.value.ComputedValue;
-import io.sf.carte.echosvg.css.engine.value.InheritValue;
-import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
-import io.sf.carte.echosvg.css.engine.value.Value;
-import io.sf.carte.echosvg.css.engine.value.ValueManager;
-import io.sf.carte.echosvg.css.parser.ExtendedParser;
-import io.sf.carte.echosvg.util.CSSConstants;
-import io.sf.carte.echosvg.util.ParsedURL;
-
-import org.w3c.css.sac.CSSException;
-import org.w3c.css.sac.DocumentHandler;
-import org.w3c.css.sac.InputSource;
-import org.w3c.css.sac.LexicalUnit;
-import org.w3c.css.sac.SACMediaList;
-import org.w3c.css.sac.SelectorList;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -56,10 +38,36 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MutationEvent;
 
+import io.sf.carte.doc.style.css.BooleanCondition;
+import io.sf.carte.doc.style.css.MediaQueryList;
+import io.sf.carte.doc.style.css.SelectorMatcher;
+import io.sf.carte.doc.style.css.nsac.AttributeCondition;
+import io.sf.carte.doc.style.css.nsac.CSSHandler;
+import io.sf.carte.doc.style.css.nsac.Condition;
+import io.sf.carte.doc.style.css.nsac.InputSource;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.PageSelectorList;
+import io.sf.carte.doc.style.css.nsac.Parser;
+import io.sf.carte.doc.style.css.nsac.ParserControl;
+import io.sf.carte.doc.style.css.nsac.Selector;
+import io.sf.carte.doc.style.css.nsac.SelectorList;
+import io.sf.carte.doc.style.css.om.DOMSelectorMatcher;
+import io.sf.carte.doc.style.css.om.Specificity;
+import io.sf.carte.doc.style.css.parser.AttributeConditionVisitor;
+import io.sf.carte.doc.style.css.parser.CSSParser;
+import io.sf.carte.echosvg.css.engine.value.ComputedValue;
+import io.sf.carte.echosvg.css.engine.value.InheritValue;
+import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
+import io.sf.carte.echosvg.css.engine.value.Value;
+import io.sf.carte.echosvg.css.engine.value.ValueManager;
+import io.sf.carte.echosvg.util.CSSConstants;
+import io.sf.carte.echosvg.util.ParsedURL;
+
 /**
  * This is the base class for all the CSS engines.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class CSSEngine {
@@ -166,7 +174,7 @@ public abstract class CSSEngine {
     /**
      * The CSS parser.
      */
-    protected ExtendedParser parser;
+    protected Parser parser;
 
     /**
      * The pseudo-element names.
@@ -201,7 +209,7 @@ public abstract class CSSEngine {
     /**
      * The media to use to cascade properties.
      */
-    protected SACMediaList media;
+    protected MediaQueryList media;
 
     /**
      * The DOM nodes which contains StyleSheets.
@@ -331,17 +339,12 @@ public abstract class CSSEngine {
     /**
      * The attributes found in stylesheets selectors.
      */
-    protected Set selectorAttributes;
+    protected Set<String> selectorAttributes;
 
     /**
      * Used to fire a change event for all the properties.
      */
     protected final int[] ALL_PROPERTIES;
-
-    /**
-     * The CSS condition factory.
-     */
-    protected CSSConditionFactory cssConditionFactory;
 
     /**
      * Creates a new CSSEngine.
@@ -364,7 +367,7 @@ public abstract class CSSEngine {
      */
     protected CSSEngine(Document doc,
                         ParsedURL uri,
-                        ExtendedParser p,
+                        Parser p,
                         ValueManager[] vm,
                         ShorthandManager[] sm,
                         String[] pe,
@@ -386,8 +389,6 @@ public abstract class CSSEngine {
         cssContext = ctx;
 
         isCSSNavigableDocument = doc instanceof CSSNavigableDocument;
-
-        cssConditionFactory = new CSSConditionFactory(cns, cln, null, "id");
 
         int len = vm.length;
         indexes = new StringIntMap(len);
@@ -645,7 +646,7 @@ public abstract class CSSEngine {
      */
     public void setMedia(String str) {
         try {
-            media = parser.parseMedia(str);
+            media = parser.parseMediaQueryList(str, null);
         } catch (Exception e) {
             String m = e.getMessage();
             if (m == null) m = "";
@@ -715,18 +716,25 @@ public abstract class CSSEngine {
         int props = getNumberOfProperties();
         final StyleMap result = new StyleMap(props);
 
+        SelectorMatcher matcher = new SVGSelectorMatcher(elt);
+        if (pseudo != null) {
+            CSSParser parser = new CSSParser();
+            Condition pseCond = parser.parsePseudoElement(pseudo);
+            matcher.setPseudoElement(pseCond);
+        }
+
         // Apply the user-agent style-sheet to the result.
         if (userAgentStyleSheet != null) {
             ArrayList rules = new ArrayList();
-            addMatchingRules(rules, userAgentStyleSheet, elt, pseudo);
-            addRules(elt, pseudo, result, rules, StyleMap.USER_AGENT_ORIGIN);
+            addMatchingRules(rules, userAgentStyleSheet, matcher);
+            addRules(matcher, result, rules, StyleMap.USER_AGENT_ORIGIN);
         }
 
         // Apply the user properties style-sheet to the result.
         if (userStyleSheet != null) {
             ArrayList rules = new ArrayList();
-            addMatchingRules(rules, userStyleSheet, elt, pseudo);
-            addRules(elt, pseudo, result, rules, StyleMap.USER_ORIGIN);
+            addMatchingRules(rules, userStyleSheet, matcher);
+            addRules(matcher, result, rules, StyleMap.USER_ORIGIN);
         }
 
         element = elt;
@@ -762,7 +770,7 @@ public abstract class CSSEngine {
                     if (nonCSSPresentationalHints.contains(an)) {
                         try {
                             LexicalUnit lu;
-                            lu = parser.parsePropertyValue(attr.getNodeValue());
+                            lu = parser.parsePropertyValue(new StringReader(attr.getNodeValue()));
                             ph.property(an, lu, false);
                         } catch (Exception e) {
                             String m = e.getMessage();
@@ -773,6 +781,7 @@ public abstract class CSSEngine {
                                 ("property.syntax.error.at",
                                  new Object[] { u, an, attr.getNodeValue(), m});
                             DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+                            de.initCause(e);
                             if (userAgent == null) throw de;
                             userAgent.displayError(de);
                         }
@@ -794,10 +803,10 @@ public abstract class CSSEngine {
                                     ss.getTitle() == null ||
                                     ss.getTitle().equals(alternateStyleSheet)) &&
                             mediaMatch(ss.getMedia())) {
-                        addMatchingRules(rules, ss, elt, pseudo);
+                        addMatchingRules(rules, ss, matcher);
                     }
                 }
-                addRules(elt, pseudo, result, rules, StyleMap.AUTHOR_ORIGIN);
+                addRules(matcher, result, rules, StyleMap.AUTHOR_ORIGIN);
             }
 
             // Apply the inline style to the result.
@@ -806,12 +815,10 @@ public abstract class CSSEngine {
                                                   styleLocalName);
                 if (style.length() > 0) {
                     try {
-                        parser.setSelectorFactory(CSSSelectorFactory.INSTANCE);
-                        parser.setConditionFactory(cssConditionFactory);
                         styleDeclarationDocumentHandler.styleMap = result;
                         parser.setDocumentHandler
                             (styleDeclarationDocumentHandler);
-                        parser.parseStyleDeclaration(style);
+                        parser.parseStyleDeclaration(new StringReader(style));
                         styleDeclarationDocumentHandler.styleMap = null;
                     } catch (Exception e) {
                         String m = e.getMessage();
@@ -822,6 +829,7 @@ public abstract class CSSEngine {
                             ("style.syntax.error.at",
                              new Object[] { u, styleLocalName, style, m });
                         DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+                        de.initCause(e);
                         if (userAgent == null) throw de;
                         userAgent.displayError(de);
                     }
@@ -913,7 +921,9 @@ public abstract class CSSEngine {
     public List getStyleSheetNodes() {
         if (styleSheetNodes == null) {
             styleSheetNodes = new ArrayList();
-            selectorAttributes = new HashSet();
+            selectorAttributes = new HashSet<>();
+            // Create the attribute visitor
+            AttributeVisitor visitor = new AttributeVisitor();
             // Find all the style-sheets in the document.
             findStyleSheetNodes(document);
             int len = styleSheetNodes.size();
@@ -922,7 +932,7 @@ public abstract class CSSEngine {
                 ssn = (CSSStyleSheetNode) styleSheetNode;
                 StyleSheet ss = ssn.getCSSStyleSheet();
                 if (ss != null) {
-                    findSelectorAttributes(selectorAttributes, ss);
+                    findSelectorAttributes(visitor, ss);
                 }
             }
         }
@@ -946,7 +956,7 @@ public abstract class CSSEngine {
     /**
      * Finds the selector attributes in the given stylesheet.
      */
-    protected void findSelectorAttributes(Set attrs, StyleSheet ss) {
+    private void findSelectorAttributes(AttributeVisitor visitor, StyleSheet ss) {
         int len = ss.getSize();
         for (int i = 0; i < len; i++) {
             Rule r = ss.getRule(i);
@@ -954,22 +964,42 @@ public abstract class CSSEngine {
             case StyleRule.TYPE:
                 StyleRule style = (StyleRule)r;
                 SelectorList sl = style.getSelectorList();
-                int slen = sl.getLength();
-                for (int j = 0; j < slen; j++) {
-                    ExtendedSelector s = (ExtendedSelector)sl.item(j);
-                    s.fillAttributeSet(attrs);
-                }
+                visitor.visit(sl);
                 break;
 
             case MediaRule.TYPE:
             case ImportRule.TYPE:
                 MediaRule mr = (MediaRule)r;
                 if (mediaMatch(mr.getMediaList())) {
-                    findSelectorAttributes(attrs, mr);
+                    findSelectorAttributes(visitor, mr);
                 }
                 break;
             }
         }
+    }
+
+    private class AttributeVisitor extends AttributeConditionVisitor {
+
+        AttributeVisitor() {
+            super();
+        }
+
+        @Override
+        public void visit(AttributeCondition condition) {
+            switch (condition.getConditionType()) {
+            case ATTRIBUTE:
+            case ONE_OF_ATTRIBUTE:
+            case BEGIN_HYPHEN_ATTRIBUTE:
+            case BEGINS_ATTRIBUTE:
+            case ENDS_ATTRIBUTE:
+            case SUBSTRING_ATTRIBUTE:
+                selectorAttributes.add(condition.getLocalName());
+                break;
+            default:
+                break;
+            }
+        }
+
     }
 
     /**
@@ -989,7 +1019,7 @@ public abstract class CSSEngine {
          String pname, String value, boolean important){
         try {
             element = elt;
-            LexicalUnit lu = parser.parsePropertyValue(value);
+            LexicalUnit lu = parser.parsePropertyValue(new StringReader(value));
             ShorthandManager.PropertyHandler ph =
                 new ShorthandManager.PropertyHandler() {
                     public void property(String pname, LexicalUnit lu,
@@ -1019,6 +1049,7 @@ public abstract class CSSEngine {
                 ("property.syntax.error.at",
                  new Object[] { u, pname, value, m});
             DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+            de.initCause(e);
             if (userAgent == null) throw de;
             userAgent.displayError(de);
         } finally {
@@ -1041,7 +1072,7 @@ public abstract class CSSEngine {
         try {
             element = elt;
             LexicalUnit lu;
-            lu = parser.parsePropertyValue(value);
+            lu = parser.parsePropertyValue(new StringReader(value));
             return vm.createValue(lu, this);
         } catch (Exception e) {
             String m = e.getMessage();
@@ -1052,6 +1083,7 @@ public abstract class CSSEngine {
                 ("property.syntax.error.at",
                  new Object[] { u, prop, value, m });
             DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+            de.initCause(e);
             if (userAgent == null) throw de;
             userAgent.displayError(de);
         } finally {
@@ -1070,10 +1102,8 @@ public abstract class CSSEngine {
         styleDeclarationBuilder.styleDeclaration = new StyleDeclaration();
         try {
             element = elt;
-            parser.setSelectorFactory(CSSSelectorFactory.INSTANCE);
-            parser.setConditionFactory(cssConditionFactory);
             parser.setDocumentHandler(styleDeclarationBuilder);
-            parser.parseStyleDeclaration(value);
+            parser.parseStyleDeclaration(new StringReader(value));
         } catch (Exception e) {
             String m = e.getMessage();
             if (m == null) m = "";
@@ -1082,6 +1112,7 @@ public abstract class CSSEngine {
             String s = Messages.formatMessage
                 ("syntax.error.at", new Object[] { u, m });
             DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+            de.initCause(e);
             if (userAgent == null) throw de;
             userAgent.displayError(de);
         } finally {
@@ -1100,7 +1131,7 @@ public abstract class CSSEngine {
         throws DOMException {
         StyleSheet ss = new StyleSheet();
         try {
-            ss.setMedia(parser.parseMedia(media));
+            ss.setMedia(parser.parseMediaQueryList(media, null));
         } catch (Exception e) {
             String m = e.getMessage();
             if (m == null) m = "";
@@ -1109,6 +1140,7 @@ public abstract class CSSEngine {
             String s = Messages.formatMessage
                 ("syntax.error.at", new Object[] { u, m });
             DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+            de.initCause(e);
             if (userAgent == null) throw de;
             userAgent.displayError(de);
             return ss;
@@ -1128,7 +1160,7 @@ public abstract class CSSEngine {
         throws DOMException {
         StyleSheet ss = new StyleSheet();
         try {
-            ss.setMedia(parser.parseMedia(media));
+            ss.setMedia(parser.parseMediaQueryList(media, null));
             parseStyleSheet(ss, is, uri);
         } catch (Exception e) {
             String m = e.getMessage();
@@ -1138,6 +1170,7 @@ public abstract class CSSEngine {
             String s = Messages.formatMessage
                 ("syntax.error.at", new Object[] { u, m });
             DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+            de.initCause(e);
             if (userAgent == null) throw de;
             userAgent.displayError(de);
         }
@@ -1173,6 +1206,7 @@ public abstract class CSSEngine {
             String s = Messages.formatMessage
                 ("syntax.error.at", new Object[] { uri.toString(), m });
             DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+            de.initCause(e);
             if (userAgent == null) throw de;
             userAgent.displayError(de);
         }
@@ -1188,7 +1222,7 @@ public abstract class CSSEngine {
             throws DOMException {
         StyleSheet ss = new StyleSheet();
         try {
-            ss.setMedia(parser.parseMedia(media));
+            ss.setMedia(parser.parseMediaQueryList(media, null));
         } catch (Exception e) {
             String m = e.getMessage();
             if (m == null) m = "";
@@ -1197,6 +1231,7 @@ public abstract class CSSEngine {
             String s = Messages.formatMessage
                 ("syntax.error.at", new Object[] { u, m });
             DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+            de.initCause(e);
             if (userAgent == null) throw de;
             userAgent.displayError(de);
             return ss;
@@ -1224,6 +1259,7 @@ public abstract class CSSEngine {
                 ("stylesheet.syntax.error",
                  new Object[] { uri.toString(), rules, m });
             DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+            de.initCause(e);
             if (userAgent == null) throw de;
             userAgent.displayError(de);
         }
@@ -1236,8 +1272,6 @@ public abstract class CSSEngine {
      */
     protected void parseStyleSheet(StyleSheet ss, InputSource is, ParsedURL uri)
         throws IOException {
-        parser.setSelectorFactory(CSSSelectorFactory.INSTANCE);
-        parser.setConditionFactory(cssConditionFactory);
         try {
             cssBaseURI = uri;
             styleSheetDocumentHandler.styleSheet = ss;
@@ -1303,8 +1337,7 @@ public abstract class CSSEngine {
      */
     protected void addMatchingRules(List rules,
                                     StyleSheet ss,
-                                    Element elt,
-                                    String pseudo) {
+                                    SelectorMatcher matcher) {
         int len = ss.getSize();
         for (int i = 0; i < len; i++) {
             Rule r = ss.getRule(i);
@@ -1314,8 +1347,8 @@ public abstract class CSSEngine {
                 SelectorList sl = style.getSelectorList();
                 int slen = sl.getLength();
                 for (int j = 0; j < slen; j++) {
-                    ExtendedSelector s = (ExtendedSelector)sl.item(j);
-                    if (s.match(elt, pseudo)) {
+                    Selector s = sl.item(j);
+                    if (matcher.matches(s)) {
                         rules.add(style);
                     }
                 }
@@ -1325,7 +1358,7 @@ public abstract class CSSEngine {
             case ImportRule.TYPE:
                 MediaRule mr = (MediaRule)r;
                 if (mediaMatch(mr.getMediaList())) {
-                    addMatchingRules(rules, mr, elt, pseudo);
+                    addMatchingRules(rules, mr, matcher);
                 }
                 break;
             }
@@ -1335,12 +1368,11 @@ public abstract class CSSEngine {
     /**
      * Adds the rules contained in the given list to a stylemap.
      */
-    protected void addRules(Element elt,
-                            String pseudo,
+    protected void addRules(SelectorMatcher matcher,
                             StyleMap sm,
                             ArrayList rules,
                             short origin) {
-        sortRules(rules, elt, pseudo);
+        sortRules(rules, matcher);
         int rlen = rules.size();
 
         if (origin == StyleMap.AUTHOR_ORIGIN) {
@@ -1375,20 +1407,27 @@ public abstract class CSSEngine {
      * Sorts the rules matching the element/pseudo-element of given style
      * sheet to the list.
      */
-    protected void sortRules(ArrayList rules, Element elt, String pseudo) {
+    protected void sortRules(ArrayList rules, SelectorMatcher matcher) {
         int len = rules.size();
         int[] specificities = new int[len];
         for (int i = 0; i < len; i++) {
             StyleRule r = (StyleRule) rules.get(i);
             SelectorList sl = r.getSelectorList();
             int spec = 0;
+            Specificity mostSpecific = null;
             int slen = sl.getLength();
             for (int k = 0; k < slen; k++) {
-                ExtendedSelector s = (ExtendedSelector) sl.item(k);
-                if (s.match(elt, pseudo)) {
-                    int sp = s.getSpecificity();
-                    if (sp > spec) {
-                        spec = sp;
+                Selector s = sl.item(k);
+                if (matcher.matches(s)) {
+                    Specificity specificity = new Specificity(s, matcher);
+                    if (mostSpecific == null) {
+                        mostSpecific = specificity;
+                    } else {
+                        int sp = Specificity.selectorCompare(specificity, mostSpecific);
+                        if (sp > spec) {
+                            spec = sp;
+                            mostSpecific = specificity;
+                       }
                     }
                 }
             }
@@ -1412,24 +1451,14 @@ public abstract class CSSEngine {
      * Whether the given media list matches the media list of this
      * CSSEngine object.
      */
-    protected boolean mediaMatch(SACMediaList ml) {
+    protected boolean mediaMatch(MediaQueryList ml) {
     if (media == null ||
             ml == null ||
-            media.getLength() == 0 ||
-            ml.getLength() == 0) {
+            media.isAllMedia() ||
+            ml.isAllMedia()) {
         return true;
     }
-    for (int i = 0; i < ml.getLength(); i++) {
-            if (ml.item(i).equalsIgnoreCase("all"))
-                return true;
-        for (int j = 0; j < media.getLength(); j++) {
-        if (media.item(j).equalsIgnoreCase("all") ||
-                    ml.item(i).equalsIgnoreCase(media.item(j))) {
-            return true;
-        }
-        }
-    }
-    return false;
+    return ml.matches(media);
     }
 
     /**
@@ -1440,12 +1469,7 @@ public abstract class CSSEngine {
         implements ShorthandManager.PropertyHandler {
         public StyleMap styleMap;
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#property(String,LexicalUnit,boolean)}.
-         */
-        public void property(String name, LexicalUnit value, boolean important)
-            throws CSSException {
+        public void property(String name, LexicalUnit value, boolean important, int index) {
             int i = getPropertyIndex(name);
             if (i == -1) {
                 i = getShorthandIndex(name);
@@ -1473,12 +1497,7 @@ public abstract class CSSEngine {
         implements ShorthandManager.PropertyHandler {
         public StyleDeclaration styleDeclaration;
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#property(String,LexicalUnit,boolean)}.
-         */
-        public void property(String name, LexicalUnit value, boolean important)
-            throws CSSException {
+        public void property(String name, LexicalUnit value, boolean important, int index) {
             int i = getPropertyIndex(name);
             if (i == -1) {
                 i = getShorthandIndex(name);
@@ -1507,36 +1526,18 @@ public abstract class CSSEngine {
         protected StyleRule styleRule;
         protected StyleDeclaration styleDeclaration;
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#startDocument(InputSource)}.
-         */
-        public void startDocument(InputSource source)
-            throws CSSException {
+        public void parseStart(ParserControl parserctl) {
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#endDocument(InputSource)}.
-         */
-        public void endDocument(InputSource source) throws CSSException {
+        public void endOfStream() {
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * org.w3c.css.sac.DocumentHandler#ignorableAtRule(String)}.
-         */
-        public void ignorableAtRule(String atRule) throws CSSException {
+        public void ignorableAtRule(String atRule) {
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#importStyle(String,SACMediaList,String)}.
-         */
-        public void importStyle(String       uri,
-                                SACMediaList media,
-                                String       defaultNamespaceURI)
-            throws CSSException {
+        public void importStyle(String         uri,
+                                MediaQueryList media,
+                                String         defaultNamespaceURI) {
             ImportRule ir = new ImportRule();
             ir.setMediaList(media);
             ir.setParent(styleSheet);
@@ -1551,11 +1552,7 @@ public abstract class CSSEngine {
             styleSheet.append(ir);
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * org.w3c.css.sac.DocumentHandler#startMedia(SACMediaList)}.
-         */
-        public void startMedia(SACMediaList media) throws CSSException {
+        public void startMedia(MediaQueryList media) {
             MediaRule mr = new MediaRule();
             mr.setMediaList(media);
             mr.setParent(styleSheet);
@@ -1563,43 +1560,21 @@ public abstract class CSSEngine {
             styleSheet = mr;
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * org.w3c.css.sac.DocumentHandler#endMedia(SACMediaList)}.
-         */
-        public void endMedia(SACMediaList media) throws CSSException {
+        public void endMedia(MediaQueryList media) {
             styleSheet = styleSheet.getParent();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * org.w3c.css.sac.DocumentHandler#startPage(String,String)}.
-         */
-        public void startPage(String name, String pseudo_page)
-            throws CSSException {
+        public void startPage(PageSelectorList pageSelectorList) {
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * org.w3c.css.sac.DocumentHandler#endPage(String,String)}.
-         */
-        public void endPage(String name, String pseudo_page)
-            throws CSSException {
+        public void endPage(PageSelectorList pageSelectorList) {
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * org.w3c.css.sac.DocumentHandler#startFontFace()}.
-         */
-        public void startFontFace() throws CSSException {
+        public void startFontFace() {
             styleDeclaration = new StyleDeclaration();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * org.w3c.css.sac.DocumentHandler#endFontFace()}.
-         */
-        public void endFontFace() throws CSSException {
+        public void endFontFace() {
             StyleMap sm = new StyleMap(getNumberOfProperties());
             int len = styleDeclaration.size();
             for (int i=0; i<len; i++) {
@@ -1619,11 +1594,7 @@ public abstract class CSSEngine {
             fontFaces.add(new FontFaceRule(sm, base));
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * org.w3c.css.sac.DocumentHandler#startSelector(SelectorList)}.
-         */
-        public void startSelector(SelectorList selectors) throws CSSException {
+        public void startSelector(SelectorList selectors) {
             styleRule = new StyleRule();
             styleRule.setSelectorList(selectors);
             styleDeclaration = new StyleDeclaration();
@@ -1631,21 +1602,12 @@ public abstract class CSSEngine {
             styleSheet.append(styleRule);
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * org.w3c.css.sac.DocumentHandler#endSelector(SelectorList)}.
-         */
-        public void endSelector(SelectorList selectors) throws CSSException {
+        public void endSelector(SelectorList selectors) {
             styleRule = null;
             styleDeclaration = null;
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#property(String,LexicalUnit,boolean)}.
-         */
-        public void property(String name, LexicalUnit value, boolean important)
-            throws CSSException {
+        public void property(String name, LexicalUnit value, boolean important) {
             int i = getPropertyIndex(name);
             if (i == -1) {
                 i = getShorthandIndex(name);
@@ -1669,124 +1631,144 @@ public abstract class CSSEngine {
      * Most methods just throw an UnsupportedOperationException, so
      * the subclasses <i>must</i> override them with 'real' methods.
      */
-    protected static class DocumentAdapter implements DocumentHandler {
+    protected static class DocumentAdapter implements CSSHandler {
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#startDocument(InputSource)}.
-         */
-        public void startDocument(InputSource source){
-            throwUnsupportedEx();
+        public void parseStart(ParserControl parserctl){
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#endDocument(InputSource)}.
-         */
-        public void endDocument(InputSource source) {
-            throwUnsupportedEx();
+        public void endOfStream() {
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#comment(String)}.
-         */
-        public void comment(String text) {
+        public void comment(String text, boolean precededByLF) {
             // We always ignore the comments.
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#ignorableAtRule(String)}.
-         */
         public void ignorableAtRule(String atRule) {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#namespaceDeclaration(String,String)}.
-         */
         public void namespaceDeclaration(String prefix, String uri) {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#importStyle(String,SACMediaList,String)}.
-         */
-        public void importStyle(String       uri,
-                                SACMediaList media,
-                                String       defaultNamespaceURI) {
+        public void importStyle(String         uri,
+                                MediaQueryList media,
+                                String         defaultNamespaceURI) {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#startMedia(SACMediaList)}.
-         */
-        public void startMedia(SACMediaList media) {
+        public void startMedia(MediaQueryList media) {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#endMedia(SACMediaList)}.
-         */
-        public void endMedia(SACMediaList media) {
+        public void endMedia(MediaQueryList media) {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#startPage(String,String)}.
-         */
-        public void startPage(String name, String pseudo_page) {
+        public void startPage(PageSelectorList pageSelectorList) {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#endPage(String,String)}.
-         */
-        public void endPage(String name, String pseudo_page) {
+        public void endPage(PageSelectorList pageSelectorList) {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link DocumentHandler#startFontFace()}.
-         */
         public void startFontFace() {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link DocumentHandler#endFontFace()}.
-         */
         public void endFontFace() {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#startSelector(SelectorList)}.
-         */
+        @Override
+        public void startMargin(String name) {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void endMargin() {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void startCounterStyle(String name) {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void endCounterStyle() {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void startKeyframes(String name) {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void endKeyframes() {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void startKeyframe(LexicalUnit keyframeSelector) {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void endKeyframe() {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void startFontFeatures(String[] familyName) {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void endFontFeatures() {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void startFeatureMap(String mapName) {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void endFeatureMap() {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void startSupports(BooleanCondition condition) {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void endSupports(BooleanCondition condition) {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void startViewport() {
+            throwUnsupportedEx();
+        }
+
+        @Override
+        public void endViewport() {
+            throwUnsupportedEx();
+        }
+
         public void startSelector(SelectorList selectors) {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#endSelector(SelectorList)}.
-         */
         public void endSelector(SelectorList selectors) {
             throwUnsupportedEx();
         }
 
-        /**
-         * <b>SAC</b>: Implements {@link
-         * DocumentHandler#property(String,LexicalUnit,boolean)}.
-         */
         public void property(String name, LexicalUnit value, boolean important) {
             throwUnsupportedEx();
         }
@@ -1853,11 +1835,9 @@ public abstract class CSSEngine {
             if (newValue.length() > 0) {
                 element = elt;
                 try {
-                    parser.setSelectorFactory(CSSSelectorFactory.INSTANCE);
-                    parser.setConditionFactory(cssConditionFactory);
                     styleDeclarationUpdateHandler.styleMap = style;
                     parser.setDocumentHandler(styleDeclarationUpdateHandler);
-                    parser.parseStyleDeclaration(newValue);
+                    parser.parseStyleDeclaration(new StringReader(newValue));
                     styleDeclarationUpdateHandler.styleMap = null;
                 } catch (Exception e) {
                     String m = e.getMessage();
@@ -1868,6 +1848,7 @@ public abstract class CSSEngine {
                         ("style.syntax.error.at",
                          new Object[] { u, styleLocalName, newValue, m });
                     DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+                    de.initCause(e);
                     if (userAgent == null) throw de;
                     userAgent.displayError(de);
                 } finally {
@@ -2146,8 +2127,7 @@ public abstract class CSSEngine {
          * <b>SAC</b>: Implements {@link
          * DocumentHandler#property(String,LexicalUnit,boolean)}.
          */
-        public void property(String name, LexicalUnit value, boolean important)
-            throws CSSException {
+        public void property(String name, LexicalUnit value, boolean important, int index) {
             int i = getPropertyIndex(name);
             if (i == -1) {
                 i = getShorthandIndex(name);
@@ -2203,7 +2183,7 @@ public abstract class CSSEngine {
             element = elt;
             try {
                 LexicalUnit lu;
-                lu = parser.parsePropertyValue(newValue);
+                lu = parser.parsePropertyValue(new StringReader(newValue));
                 ValueManager vm = valueManagers[idx];
                 Value v = vm.createValue(lu, CSSEngine.this);
                 style.putMask(idx, (short)0);
@@ -2218,6 +2198,7 @@ public abstract class CSSEngine {
                     ("property.syntax.error.at",
                      new Object[] { u, property, newValue, m });
                 DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
+                de.initCause(e);
                 if (userAgent == null) throw de;
                 userAgent.displayError(de);
             } finally {

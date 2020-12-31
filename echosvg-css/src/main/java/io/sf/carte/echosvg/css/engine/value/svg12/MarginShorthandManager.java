@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueFactory;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
-import org.w3c.css.sac.LexicalUnit;
 import org.w3c.dom.DOMException;
 
 /**
@@ -68,7 +68,7 @@ public class MarginShorthandManager
                           LexicalUnit lu,
                           boolean imp)
         throws DOMException {
-        if (lu.getLexicalUnitType() == LexicalUnit.SAC_INHERIT)
+        if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INHERIT)
             return;
 
         LexicalUnit []lus  = new LexicalUnit[4];
