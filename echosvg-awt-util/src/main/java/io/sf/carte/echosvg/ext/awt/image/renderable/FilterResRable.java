@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
  * Interface for implementing filter resolution.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface FilterResRable extends Filter {

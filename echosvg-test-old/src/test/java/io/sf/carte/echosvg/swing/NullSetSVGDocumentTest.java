@@ -24,6 +24,7 @@ import java.io.StringWriter;
 
 import org.w3c.dom.svg.SVGDocument;
 
+import io.sf.carte.echosvg.swing.svg.JSVGComponent;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
 
@@ -35,6 +36,7 @@ import io.sf.carte.echosvg.test.TestReport;
  * properly imported to an SVGOMDocument and rendered from there.
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NullSetSVGDocumentTest extends JSVGMemoryLeakTest {
@@ -59,12 +61,16 @@ public class NullSetSVGDocumentTest extends JSVGMemoryLeakTest {
     public static final String ERROR_ON_SET 
         = "NullSetSVGDocumentTest.message.error.on.set";
 
+    @Override
     public String getName() { return getId(); }
 
+    @Override
     public JSVGCanvasHandler createHandler() {
         return new JSVGCanvasHandler(this, this) {
+                @Override
                 public JSVGCanvas createCanvas() { 
                     return new JSVGCanvas() {
+                            @Override
                             protected void installSVGDocument(SVGDocument doc){
                                 super.installSVGDocument(doc);
                                 if (doc != null) return;
@@ -77,17 +83,19 @@ public class NullSetSVGDocumentTest extends JSVGMemoryLeakTest {
 
     public Runnable getRunnable(final JSVGCanvas canvas) {
         return new Runnable () {
+                @Override
                 public void run() {
                     canvas.setSVGDocument(null);
                 }};
             }
 
     /* JSVGCanvasHandler.Delegate Interface */
+    @Override
     public boolean canvasInit(JSVGCanvas canvas) {
         setTheCanvas(canvas);
         theFrame  = handler.getFrame();
 
-        canvas.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
+        canvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
         canvas.setURI(TEST_NON_NULL_URI);
 
         registerObjectDesc(canvas, "JSVGCanvas");
@@ -95,6 +103,7 @@ public class NullSetSVGDocumentTest extends JSVGMemoryLeakTest {
         return true; // We did trigger a load event.
     }
 
+    @Override
     public void canvasRendered(JSVGCanvas canvas) {
         super.canvasRendered(canvas);
         try {
@@ -115,11 +124,13 @@ public class NullSetSVGDocumentTest extends JSVGMemoryLeakTest {
         }
     }
 
+    @Override
     public boolean canvasUpdated(JSVGCanvas canvas) {
         return true;
     }
 
 
+    @Override
     public void canvasDone(JSVGCanvas canvas) {
         synchronized (this) {
             // Check that the original SVG

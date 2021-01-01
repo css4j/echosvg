@@ -23,6 +23,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.MagicNumberRegistryEntry;
 /**
  * RegistryEntry implementation for loading TIFF images through Image I/O.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageIOTIFFRegistryEntry 

@@ -40,6 +40,7 @@ import io.sf.carte.echosvg.parser.AWTPathProducer;
  * Bridge class for the &lt;path&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge 

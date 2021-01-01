@@ -24,9 +24,11 @@ import org.w3c.dom.Document;
  * Tests Node.compareDocumentPosition.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NodeCompareDocumentPositionTest extends DOM3Test {
+    @Override
     public boolean runImplBasic() throws Exception {
         Document doc = newSVGDoc();
         AbstractNode e = (AbstractNode) doc.createElementNS(null, "test");

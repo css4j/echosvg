@@ -26,6 +26,7 @@ import java.io.StringWriter;
  * <code>rumImpl</code> method to report an error condition.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TestErrorConditionException extends Exception {

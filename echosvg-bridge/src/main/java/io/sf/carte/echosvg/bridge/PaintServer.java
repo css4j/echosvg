@@ -62,6 +62,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * Paint using the ShapePainter interface.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class PaintServer

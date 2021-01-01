@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.extension.PrefixableStylableExtensionElement;
  * This class implements a histogram normalization extension to SVG.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGHistogramNormalizationElement

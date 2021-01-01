@@ -24,6 +24,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * Contains the definition of the SVG tags and attribute names.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGSyntax extends SVGConstants {

@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.svggen.font.SVGFont;
  * to the SVG Font format.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Main {

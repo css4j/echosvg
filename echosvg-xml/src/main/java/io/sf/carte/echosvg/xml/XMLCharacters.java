@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.xml;
  * the type of the characters found in an XML document.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 

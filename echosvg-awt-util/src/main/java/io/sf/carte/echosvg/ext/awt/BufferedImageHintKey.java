@@ -27,6 +27,7 @@ import java.lang.ref.Reference;
  * <code>GraphicsNode</code>.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 final class BufferedImageHintKey extends RenderingHints.Key {
@@ -39,7 +40,7 @@ final class BufferedImageHintKey extends RenderingHints.Key {
 
         if (!(val instanceof Reference))
             return false;
-        Reference ref = (Reference)val;
+        Reference<?> ref = (Reference<?>)val;
         val = ref.get();
         if (val == null)
             return true;

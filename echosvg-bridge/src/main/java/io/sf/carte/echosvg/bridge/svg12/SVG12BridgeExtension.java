@@ -18,9 +18,6 @@
  */
 package io.sf.carte.echosvg.bridge.svg12;
 
-import java.util.Collections;
-import java.util.Iterator;
-
 import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -34,6 +31,7 @@ import io.sf.carte.echosvg.util.XBLConstants;
  * functionality of the Bridge, to support new tags in the rendering tree.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVG12BridgeExtension extends SVGBridgeExtension {
@@ -48,23 +46,12 @@ public class SVG12BridgeExtension extends SVGBridgeExtension {
     public float getPriority() { return 0f; }
 
     /**
-     * This should return the list of extensions implemented
-     * by this BridgeExtension.
-     * @return An iterator containing strings one for each implemented
-     *         extension.
-     */
-    @Override
-    public Iterator getImplementedExtensions() {
-        return Collections.EMPTY_LIST.iterator();
-    }
-
-    /**
      * This should return the individual or company name responsible
      * for the this implementation of the extension.
      */
     @Override
     public String getAuthor() {
-        return "The EchoSVG Team.";
+        return "The Apache Batik Team.";
     }
 
     /**

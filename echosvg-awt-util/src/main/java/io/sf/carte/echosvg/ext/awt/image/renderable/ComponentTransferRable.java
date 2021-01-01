@@ -25,6 +25,7 @@ import io.sf.carte.echosvg.ext.awt.image.ComponentTransferFunction;
  * transfer operation.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ComponentTransferRable extends FilterColorInterpolation {

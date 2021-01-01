@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.w3c.dom.events.KeyboardEvent;
  * A class to handle SMIL access key timing specifiers.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AccesskeyTimingSpecifier

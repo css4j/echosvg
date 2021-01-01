@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a common superclass for all graphics elements.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGGraphicsElement
@@ -52,10 +53,10 @@ public abstract class SVGGraphicsElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGStylableElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
         t.put(null, SVG_TRANSFORM_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
         t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,
@@ -125,7 +126,7 @@ public abstract class SVGGraphicsElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 

@@ -29,9 +29,11 @@ import java.awt.Graphics2D;
  * does not apply to <rect>) are not written out.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Bug17965 implements Painter {
+    @Override
     public void paint(Graphics2D g) {
         g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
                            java.awt.RenderingHints.VALUE_ANTIALIAS_ON);

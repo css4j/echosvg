@@ -27,19 +27,16 @@ import java.util.Set;
  * to a given element type.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAttribute {
-    /**
-     * SVG syntax for the attribute
-     */
-    private String name;
 
     /**
      * Set of Element tags to which the attribute does or
      * does not apply.
      */
-    private Set applicabilitySet;
+    private Set<String> applicabilitySet;
 
     /**
      * Controls the semantic of applicabilitySet. If
@@ -57,9 +54,9 @@ public class SVGAttribute {
      *        define the list of elements to which the attribute
      *        applies or to which it does not apply
      */
-    public SVGAttribute(Set applicabilitySet, boolean isSetInclusive){
+    public SVGAttribute(Set<String> applicabilitySet, boolean isSetInclusive){
         if(applicabilitySet == null)
-            applicabilitySet = new HashSet();
+            applicabilitySet = new HashSet<>();
 
         this.applicabilitySet = applicabilitySet;
         this.isSetInclusive = isSetInclusive;

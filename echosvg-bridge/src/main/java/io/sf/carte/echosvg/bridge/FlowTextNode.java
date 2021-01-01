@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.bridge;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FlowTextNode extends TextNode{

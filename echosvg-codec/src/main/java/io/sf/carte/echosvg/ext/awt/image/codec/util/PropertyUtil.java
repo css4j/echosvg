@@ -24,6 +24,7 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PropertyUtil {

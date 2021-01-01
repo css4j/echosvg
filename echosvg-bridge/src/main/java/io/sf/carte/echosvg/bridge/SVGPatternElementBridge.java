@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * Bridge class for the &lt;pattern&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGPatternElementBridge extends AnimatableGenericSVGBridge
@@ -243,7 +244,7 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge
         RootGraphicsNode extractPatternContent(Element patternElement,
                                                BridgeContext ctx) {
 
-        List refs = new LinkedList();
+        List<ParsedURL> refs = new LinkedList<>();
         for (;;) {
             RootGraphicsNode content
                 = extractLocalPatternContent(patternElement, ctx);
@@ -310,8 +311,8 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge
      *
      * @param urls the list of ParsedURLs
      * @param key the url to search for */
-    private static boolean contains(List urls, ParsedURL key) {
-        for (Object url : urls) {
+    private static boolean contains(List<ParsedURL> urls, ParsedURL key) {
+        for (ParsedURL url : urls) {
             if (key.equals(url))
                 return true;
         }

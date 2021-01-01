@@ -45,6 +45,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * displayed is the one created by the <code>SVGGraphics2D</code>
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JPainterCompare extends JPanel implements SVGConstants{
@@ -108,12 +109,14 @@ public class JPainterCompare extends JPanel implements SVGConstants{
     static class LoaderListener extends SVGDocumentLoaderAdapter{
         public final String sem = "sem";
         public boolean success = false;
+        @Override
         public void documentLoadingFailed(SVGDocumentLoaderEvent e){
             synchronized(sem){
                 sem.notifyAll();
             }
         }
 
+        @Override
         public void documentLoadingCompleted(SVGDocumentLoaderEvent e){
             success = true;
             synchronized(sem){
@@ -185,6 +188,7 @@ public class JPainterCompare extends JPanel implements SVGConstants{
         }
     }
 
+    @Override
     public Dimension getPreferredSize(){
         return new Dimension(CANVAS_SIZE.width*2, CANVAS_SIZE.height);
     }

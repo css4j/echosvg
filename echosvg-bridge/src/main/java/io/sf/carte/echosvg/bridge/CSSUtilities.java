@@ -51,6 +51,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * concrete objects regarding to CSS properties.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class CSSUtilities

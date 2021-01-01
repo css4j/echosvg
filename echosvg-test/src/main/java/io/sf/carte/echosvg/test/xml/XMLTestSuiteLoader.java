@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.test.TestSuite;
  * into a <code>TestSuite</code> object.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XMLTestSuiteLoader implements XTSConstants {

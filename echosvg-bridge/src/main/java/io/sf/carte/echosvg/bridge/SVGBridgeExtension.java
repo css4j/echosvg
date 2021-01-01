@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * functionality of the Bridge, to support new tags in the rendering tree.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGBridgeExtension implements BridgeExtension {
@@ -50,8 +51,8 @@ public class SVGBridgeExtension implements BridgeExtension {
      *         extension.
      */
     @Override
-    public Iterator getImplementedExtensions() {
-        return Collections.EMPTY_LIST.iterator();
+    public Iterator<String> getImplementedExtensions() {
+        return Collections.emptyIterator();
     }
 
     /**
@@ -60,7 +61,7 @@ public class SVGBridgeExtension implements BridgeExtension {
      */
     @Override
     public String getAuthor() {
-        return "The EchoSVG Team.";
+        return "The Apache Batik Team.";
     }
 
     /**

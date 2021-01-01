@@ -25,6 +25,7 @@ import java.awt.Shape;
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
  * @author <a href="mailto:tkormann@ilog.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SelectionEvent {

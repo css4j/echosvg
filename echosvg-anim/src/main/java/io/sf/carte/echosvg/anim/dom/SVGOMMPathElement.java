@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class implements {@link SVGMPathElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMMPathElement
@@ -41,10 +42,10 @@ public class SVGOMMPathElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGOMURIReferenceElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGOMURIReferenceElement.xmlTraitInformation);
         t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
         xmlTraitInformation = t;
@@ -146,7 +147,7 @@ public class SVGOMMPathElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

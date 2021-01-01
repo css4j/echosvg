@@ -24,6 +24,7 @@ import org.w3c.dom.events.EventTarget;
  * Interface for a global scripting object for an SVG document.
  * Eventually will move to org.w3c.dom.svg (or some such package).
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGGlobal extends Global {

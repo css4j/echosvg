@@ -56,6 +56,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * This class represents a dialog to select the user style sheet.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class UserStyleDialog extends JDialog implements ActionMap {
@@ -214,7 +215,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
     /**
      * The map that contains the listeners
      */
-    protected Map listeners = new HashMap();
+    protected Map<String, AbstractAction> listeners = new HashMap<>();
 
     /**
      * Returns the action associated with the given string
@@ -224,7 +225,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
      */
     @Override
     public Action getAction(String key) throws MissingListenerException {
-        return (Action)listeners.get(key);
+        return listeners.get(key);
     }
 
     /**

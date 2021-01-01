@@ -27,6 +27,7 @@ import org.w3c.dom.events.MutationEvent;
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOMMutationEvent extends AbstractEvent implements MutationEvent {

@@ -24,6 +24,7 @@ import java.awt.geom.AffineTransform;
  * Adjusts the input images coordinate system by a general Affine transform
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface AffineRable extends Filter {

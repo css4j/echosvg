@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a manager for the '*-opacity' property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class OpacityManager extends AbstractValueManager {
@@ -121,6 +122,9 @@ public class OpacityManager extends AbstractValueManager {
         case REAL:
             return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
                                   lu.getFloatValue());
+
+        default:
+            break;
         }
         throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
     }

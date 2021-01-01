@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.swing.svg;
  * events.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class GVTTreeBuilderAdapter implements GVTTreeBuilderListener {

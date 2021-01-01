@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class implements {@link org.w3c.dom.svg.SVGUseElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMUseElement
@@ -44,10 +45,10 @@ public class SVGOMUseElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGURIReferenceGraphicsElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGURIReferenceGraphicsElement.xmlTraitInformation);
         t.put(null, SVG_X_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
         t.put(null, SVG_Y_ATTRIBUTE,
@@ -265,7 +266,7 @@ public class SVGOMUseElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

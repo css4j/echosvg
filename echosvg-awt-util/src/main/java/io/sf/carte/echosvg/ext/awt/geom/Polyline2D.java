@@ -35,6 +35,7 @@ import java.io.Serializable;
  * This class has the same behavior than {@link Polygon2D}, except that
  * the figure is not closed.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Polyline2D implements Shape, Cloneable, Serializable {

@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.gvt.text.AttributedCharacterSpanIterator;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MultiGlyphVector implements GVTGlyphVector {
@@ -44,18 +45,18 @@ public class MultiGlyphVector implements GVTGlyphVector {
 
     int nGlyph;
 
-    public MultiGlyphVector(List gvs) {
+    public MultiGlyphVector(List<GVTGlyphVector> gvs) {
         int nSlots = gvs.size();
         this.gvs     = new GVTGlyphVector[ nSlots ];
         this.nGlyphs = new int[ nSlots ];
         this.off     = new int[ nSlots ];
 
-        Iterator iter = gvs.iterator();
+        Iterator<GVTGlyphVector> iter = gvs.iterator();
         int i=0;
         while (iter.hasNext()) {
             off[i]      = nGlyph;
 
-            GVTGlyphVector gv = (GVTGlyphVector)iter.next();
+            GVTGlyphVector gv = iter.next();
             this.gvs[i] = gv;
             nGlyphs[i]  = gv.getNumGlyphs();
             nGlyph     += nGlyphs[i];

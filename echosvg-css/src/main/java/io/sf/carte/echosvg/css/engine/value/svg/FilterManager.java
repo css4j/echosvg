@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a factory for the 'filter' property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FilterManager extends AbstractValueManager {
@@ -109,6 +110,9 @@ public class FilterManager extends AbstractValueManager {
                 return ValueConstants.NONE_VALUE;
             }
             throw createInvalidIdentifierDOMException(lu.getStringValue());
+
+        default:
+            break;
         }
         throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
     }

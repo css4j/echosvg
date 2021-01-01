@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.gvt.filter.GraphicsNodeRable8Bit;
  * fails to handle a given reference.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGBrokenLinkProvider 
@@ -58,7 +59,7 @@ public class SVGBrokenLinkProvider
     public Filter getBrokenLinkImage(Object base, String code, 
                                      Object[] params) {
         String message = formatMessage(base, code, params);
-        Map props = new HashMap();
+        Map<String, Object> props = new HashMap<>();
         props.put(BROKEN_LINK_PROPERTY, message);
 
         CompositeGraphicsNode cgn = new CompositeGraphicsNode();

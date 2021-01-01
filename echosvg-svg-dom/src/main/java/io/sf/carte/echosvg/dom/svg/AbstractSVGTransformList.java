@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.parser.TransformListParser;
  * <code>SVGTransformList</code>.
  *
  * @author <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGTransformList

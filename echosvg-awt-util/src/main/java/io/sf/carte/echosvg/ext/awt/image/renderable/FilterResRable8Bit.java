@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.TileCacheRed;
  * Interface for implementing filter resolution.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FilterResRable8Bit extends AbstractRable
@@ -147,12 +148,11 @@ public class FilterResRable8Bit extends AbstractRable
         if (!(ri instanceof PaintRable))
             return false;
 
-        List v = ri.getSources();
+        List<RenderableImage> v = ri.getSources();
         // No sources and we are PaintRable so the chain is PaintRable.
         if (v == null) return true;
 
-        for (Object aV : v) {
-            RenderableImage nri = (RenderableImage) aV;
+        for (RenderableImage nri : v) {
             // A source is not paintRable so we are not 100% paintRable.
             if (!allPaintRable(nri)) return false;
         }
@@ -197,11 +197,11 @@ public class FilterResRable8Bit extends AbstractRable
                     return false;
             }
 
-            List v = comp.getSources();
+            List<RenderableImage> v = comp.getSources();
             if (v == null) return true;
-            ListIterator li = v.listIterator(v.size());
+            ListIterator<RenderableImage> li = v.listIterator(v.size());
             while (li.hasPrevious()) {
-                RenderableImage csrc = (RenderableImage)li.previous();
+                RenderableImage csrc = li.previous();
                 if (!allPaintRable(csrc)) {
                     li.next();
                     break;
@@ -282,7 +282,7 @@ public class FilterResRable8Bit extends AbstractRable
     /**
      * Cached Rendered image at filterRes.
      */
-    Reference resRed = null;
+    Reference<RenderedImage> resRed = null;
     float     resScale = 0;
 
     private float getResScale() {
@@ -303,7 +303,7 @@ public class FilterResRable8Bit extends AbstractRable
         RenderedImage ret;
         if (resScale == this.resScale) {
             // System.out.println("Matched");
-            ret = (RenderedImage)resRed.get();
+            ret = resRed.get();
             if (ret != null)
                 return ret;
         }
@@ -324,7 +324,7 @@ public class FilterResRable8Bit extends AbstractRable
         // screen resolution always - right?
         ret = new TileCacheRed(GraphicsUtil.wrap(ret));
         this.resScale = resScale;
-        this.resRed   = new SoftReference(ret);
+        this.resRed   = new SoftReference<>(ret);
 
         return ret;
     }

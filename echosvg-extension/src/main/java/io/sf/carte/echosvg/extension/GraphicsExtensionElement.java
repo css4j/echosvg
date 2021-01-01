@@ -50,6 +50,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * {@link SVGLangSpace} and {@link SVGTests}.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class GraphicsExtensionElement
@@ -61,10 +62,10 @@ public abstract class GraphicsExtensionElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGOMElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
         t.put(null, SVG_TRANSFORM_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
         t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,

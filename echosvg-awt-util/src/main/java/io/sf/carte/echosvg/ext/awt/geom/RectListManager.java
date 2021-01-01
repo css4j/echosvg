@@ -36,9 +36,10 @@ import java.util.NoSuchElementException;
  * this reason it uses Rectangle not Rectangle2D).
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class RectListManager implements Collection {
+public class RectListManager implements Collection<Rectangle> {
     Rectangle [] rects = null;
     int size = 0;
 
@@ -58,18 +59,23 @@ public class RectListManager implements Collection {
      * The comparator used to sort the elements of this List.
      * Sorts on x value of Rectangle.
      */
-    public static Comparator comparator = new RectXComparator();
+    public static Comparator<Rectangle> comparator = new RectXComparator();
 
     /**
      * Construct a <code>RectListManager</code> from a Collection of Rectangles
      * @param rects Collection that must only contain rectangles.
      */
-    public RectListManager(Collection rects) {
+    public RectListManager(Collection<?> rects) {
         this.rects = new Rectangle[rects.size()];
-        Iterator i = rects.iterator();
+        Iterator<?> i = rects.iterator();
         int j=0;
-        while (i.hasNext())          // todo can be replaced by rects.toArray()
-            this.rects[j++] = (Rectangle)i.next();
+        while (i.hasNext()) {         // todo can be replaced by rects.toArray()
+            Object o = i.next();
+            if (!(o instanceof Rectangle)) {
+                throw new IllegalArgumentException("Collection must have only rectangles.");
+            }
+            this.rects[j++] = (Rectangle) o;
+        }
         this.size  = this.rects.length;
 
 
@@ -202,7 +208,7 @@ public class RectListManager implements Collection {
      * Returns an iterator over the elements in this collection
      */
     @Override
-    public Iterator iterator() {
+    public Iterator<Rectangle> iterator() {
         return new RLMIterator();
     }
 
@@ -210,7 +216,7 @@ public class RectListManager implements Collection {
      * Returns a list iterator of the elements in this list
      * (in proper sequence).
      */
-    public ListIterator listIterator() {
+    public ListIterator<Rectangle> listIterator() {
         return new RLMIterator();
     }
 
@@ -230,9 +236,10 @@ public class RectListManager implements Collection {
      * @param a array to fill (must not be null!)
      * @return the content of rects, either in a[] or a fresh array.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Object [] toArray(Object[] a) {
-        Class t = a.getClass().getComponentType();
+        Class<?> t = a.getClass().getComponentType();
         if ((t != Object.class) &&
             (t != Rectangle.class)) {
             // Nothing here for it...
@@ -248,18 +255,14 @@ public class RectListManager implements Collection {
         return a;
     }
 
-    @Override
-    public boolean add(Object o) {
-        add((Rectangle)o);
-        return true;
-    }
-
     /**
      * Ensures that this collection contains the specified element
      * @param rect The rectangle to add
      */
-    public void add(Rectangle rect) {
+    @Override
+    public boolean add(Rectangle rect) {
         add(rect, 0, size-1);
+        return true;
     }
 
     /**
@@ -322,7 +325,7 @@ public class RectListManager implements Collection {
     }
 
     @Override
-    public boolean addAll(Collection c) {
+    public boolean addAll(Collection<? extends Rectangle> c) {
         if (c instanceof RectListManager) {
             add((RectListManager)c);
         } else {
@@ -373,7 +376,7 @@ public class RectListManager implements Collection {
      * the specified collection.
      */
     @Override
-    public boolean containsAll(Collection c) {
+    public boolean containsAll(Collection<?> c) {
         if (c instanceof RectListManager)
             return containsAll((RectListManager)c);
         return containsAll(new RectListManager(c));
@@ -459,7 +462,7 @@ public class RectListManager implements Collection {
     }
 
     @Override
-    public boolean removeAll(Collection c) {
+    public boolean removeAll(Collection<?> c) {
         if (c instanceof RectListManager)
             return removeAll((RectListManager)c);
         return removeAll(new RectListManager(c));
@@ -511,7 +514,7 @@ public class RectListManager implements Collection {
     }
 
     @Override
-    public boolean retainAll(Collection c) {
+    public boolean retainAll(Collection<?> c) {
         if (c instanceof RectListManager)
             return retainAll((RectListManager)c);
         return retainAll(new RectListManager(c));
@@ -934,20 +937,20 @@ public class RectListManager implements Collection {
      * Note: this comparator imposes orderings that are inconsistent
      *       with equals.
      */
-    private static class RectXComparator implements Comparator, Serializable {
+    private static class RectXComparator implements Comparator<Rectangle>, Serializable {
 
         private static final long serialVersionUID = 1L;
 
         RectXComparator() { }
 
         @Override
-        public final int compare(Object o1, Object o2) {
-            return ((Rectangle)o1).x-((Rectangle)o2).x;
+        public final int compare(Rectangle o1, Rectangle o2) {
+            return o1.x-o2.x;
         }
     }
 
 
-    private class RLMIterator implements ListIterator {
+    private class RLMIterator implements ListIterator<Rectangle> {
         int idx = 0;
         boolean removeOk = false;
         boolean forward  = true;
@@ -958,7 +961,7 @@ public class RectListManager implements Collection {
         @Override
         public int nextIndex() { return idx; }
         @Override
-        public Object next() {
+        public Rectangle next() {
             if (idx >= size)
                 throw new NoSuchElementException("No Next Element");
             forward = true;
@@ -971,7 +974,7 @@ public class RectListManager implements Collection {
         @Override
         public int previousIndex() { return idx-1; }
         @Override
-        public Object previous() {
+        public Rectangle previous() {
             if (idx <= 0)
                 throw new NoSuchElementException("No Previous Element");
             forward = false;
@@ -995,8 +998,7 @@ public class RectListManager implements Collection {
 
 
         @Override
-        public void set(Object o) {
-            Rectangle r = (Rectangle)o;
+        public void set(Rectangle r) {
 
             if (!removeOk)
                 throw new IllegalStateException
@@ -1020,8 +1022,7 @@ public class RectListManager implements Collection {
         }
 
         @Override
-        public void add(Object o) {
-            Rectangle r = (Rectangle)o;
+        public void add(Rectangle r) {
             if (idx<size) {
                 if (rects[idx].x < r.x)
                     throw new UnsupportedOperationException

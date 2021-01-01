@@ -71,6 +71,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  *
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGMultiImageElementBridge extends SVGImageElementBridge {
@@ -155,9 +156,9 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
                          ((float)b.getWidth(), (float)b.getHeight()));
 
 
-        List elems  = new LinkedList();
-        List minDim = new LinkedList();
-        List maxDim = new LinkedList();
+        List<Element> elems  = new LinkedList<>();
+        List<Dimension> minDim = new LinkedList<>();
+        List<Dimension> maxDim = new LinkedList<>();
 
         for (Node n = e.getFirstChild(); n != null; n = n.getNextSibling()) {
             if (n.getNodeType() != Node.ELEMENT_NODE)
@@ -177,13 +178,13 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
         Dimension [] mindary = new Dimension[elems.size()];
         Dimension [] maxdary = new Dimension[elems.size()];
         Element   [] elemary = new Element  [elems.size()];
-        Iterator mindi = minDim.iterator();
-        Iterator maxdi = maxDim.iterator();
-        Iterator ei = elems.iterator();
+        Iterator<Dimension> mindi = minDim.iterator();
+        Iterator<Dimension> maxdi = maxDim.iterator();
+        Iterator<Element> ei = elems.iterator();
         int n=0;
         while (mindi.hasNext()) {
-            Dimension minD = (Dimension)mindi.next();
-            Dimension maxD = (Dimension)maxdi.next();
+            Dimension minD = mindi.next();
+            Dimension maxD = maxdi.next();
             int i =0;
             if (minD != null) {
                 for (; i<n; i++) {
@@ -199,7 +200,7 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
                 maxdary[j] = maxdary[j-1];
             }
             
-            elemary[i] = (Element)ei.next();
+            elemary[i] = ei.next();
             mindary[i] = minD;
             maxdary[i] = maxD;
             n++;
@@ -311,8 +312,8 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
         return new Rectangle2D.Float(x, y, w, h);
     }
 
-    protected void addInfo(Element e, Collection elems, 
-                           Collection minDim, Collection maxDim,
+    protected void addInfo(Element e, Collection<Element> elems, 
+                           Collection<Dimension> minDim, Collection<Dimension> maxDim,
                            Rectangle2D bounds) {
         Document doc   = e.getOwnerDocument();
         Element  gElem = doc.createElementNS(SVG_NAMESPACE_URI, 
@@ -337,8 +338,8 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
         maxDim.add(getElementMaxPixel(e, bounds));
     }
 
-    protected void addRefInfo(Element e, Collection elems, 
-                              Collection minDim, Collection maxDim,
+    protected void addRefInfo(Element e, Collection<Element> elems, 
+                              Collection<Dimension> minDim, Collection<Dimension> maxDim,
                               Rectangle2D bounds) {
         String uriStr = XLinkSupport.getXLinkHref(e);
         if (uriStr.length() == 0) {

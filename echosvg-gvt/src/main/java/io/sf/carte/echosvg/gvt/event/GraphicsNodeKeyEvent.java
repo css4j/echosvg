@@ -24,6 +24,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * An event which indicates that a keystroke occurred in a graphics node.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GraphicsNodeKeyEvent extends GraphicsNodeInputEvent {

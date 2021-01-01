@@ -18,14 +18,17 @@
  */
 package io.sf.carte.echosvg.parser;
 
-import java.io.*;
+import java.io.StringReader;
 
-import io.sf.carte.echosvg.test.*;
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.TestReport;
 
 /**
  * To test the length parser.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class LengthParserTest extends AbstractTest {
@@ -46,6 +49,7 @@ public class LengthParserTest extends AbstractTest {
         destinationLength = dlength;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         LengthParser pp = new LengthParser();
         pp.setLengthHandler(new TestHandler());
@@ -75,50 +79,62 @@ public class LengthParserTest extends AbstractTest {
     class TestHandler extends DefaultLengthHandler {
         public TestHandler() {}
 
+        @Override
         public void startLength() throws ParseException {
             buffer = new StringBuffer();
         }
         
+        @Override
         public void lengthValue(float v) throws ParseException {
             buffer.append(v);
         }
 
+        @Override
         public void em() throws ParseException {
             buffer.append("em");
         }
 
+        @Override
         public void ex() throws ParseException {
             buffer.append("ex");
         }
 
+        @Override
         public void in() throws ParseException {
             buffer.append("in");
         }
 
+        @Override
         public void cm() throws ParseException {
             buffer.append("cm");
         }
 
+        @Override
         public void mm() throws ParseException {
             buffer.append("mm");
         }
 
+        @Override
         public void pc() throws ParseException {
             buffer.append("pc");
         }
 
+        @Override
         public void pt() throws ParseException {
             buffer.append("pt");
         }
 
+        @Override
         public void px() throws ParseException {
             buffer.append("px");
         }
 
+        @Override
         public void percentage() throws ParseException {
             buffer.append("%");
         }
 
+        @Override
         public void endLength() throws ParseException {
             resultLength = buffer.toString();
         }

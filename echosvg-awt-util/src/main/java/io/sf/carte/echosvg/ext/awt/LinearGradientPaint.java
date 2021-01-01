@@ -80,6 +80,7 @@ import java.awt.image.ColorModel;
  *
  * @author Nicholas Talian, Vincent Hardy, Jim Graham, Jerry Evans
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see java.awt.Paint
  * @see java.awt.Graphics2D#setPaint

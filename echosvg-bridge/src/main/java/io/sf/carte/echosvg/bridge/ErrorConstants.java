@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.bridge;
  * The error code.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ErrorConstants {

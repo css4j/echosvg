@@ -50,6 +50,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * This class implements the {@link org.w3c.dom.Node} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractNode
@@ -83,12 +84,12 @@ public abstract class AbstractNode
     /**
      * User data.
      */
-    protected HashMap userData;
+    protected HashMap<String, Object> userData;
 
     /**
      * User data handlers.
      */
-    protected HashMap userDataHandlers;
+    protected HashMap<String, Object> userDataHandlers;
 
     /**
      * The XBL manager data.
@@ -517,8 +518,8 @@ public abstract class AbstractNode
         if (this == other) {
             return 0;
         }
-        ArrayList a1 = new ArrayList(10);
-        ArrayList a2 = new ArrayList(10);
+        ArrayList<Node> a1 = new ArrayList<>(10);
+        ArrayList<Node> a2 = new ArrayList<>(10);
         int c1 = 0;
         int c2 = 0;
         Node n;
@@ -931,8 +932,8 @@ public abstract class AbstractNode
     @Override
     public Object setUserData(String key, Object data, UserDataHandler handler) {
         if (userData == null) {
-            userData = new HashMap();
-            userDataHandlers = new HashMap();
+            userData = new HashMap<>();
+            userDataHandlers = new HashMap<>();
         }
         if (data == null) {
             userData.remove(key);
@@ -950,13 +951,12 @@ public abstract class AbstractNode
                                         Node newNode) {
         AbstractNode an = (AbstractNode) oldNode;
         if (an.userData != null) {
-            for (Object o : an.userData.entrySet()) {
-                Map.Entry e = (Map.Entry) o;
+            for (Map.Entry<String,Object> e : an.userData.entrySet()) {
                 UserDataHandler h
                         = (UserDataHandler) an.userDataHandlers.get(e.getKey());
                 if (h != null) {
                     h.handle(type,
-                            (String) e.getKey(),
+                            e.getKey(),
                             e.getValue(),
                             oldNode,
                             newNode);

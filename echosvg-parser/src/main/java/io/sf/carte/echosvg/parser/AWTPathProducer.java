@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.ext.awt.geom.ExtendedGeneralPath;
  * a Shape from the value of a path's 'd' attribute.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AWTPathProducer implements PathHandler, ShapeProducer {

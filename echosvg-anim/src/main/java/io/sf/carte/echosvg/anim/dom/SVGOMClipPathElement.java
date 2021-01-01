@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class implements {@link SVGClipPathElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMClipPathElement
@@ -41,10 +42,10 @@ public class SVGOMClipPathElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGGraphicsElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGGraphicsElement.xmlTraitInformation);
         t.put(null, SVG_CLIP_PATH_UNITS_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_IDENT));
         xmlTraitInformation = t;
@@ -127,7 +128,7 @@ public class SVGOMClipPathElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

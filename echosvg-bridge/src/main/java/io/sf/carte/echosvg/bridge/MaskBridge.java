@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.gvt.filter.Mask;
  * Factory class for vending <code>Mask</code> objects.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface MaskBridge extends Bridge {

@@ -23,6 +23,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderContext;
+import java.awt.image.renderable.RenderableImage;
 import java.util.Map;
 import java.util.Vector;
 
@@ -36,12 +37,13 @@ import java.util.Vector;
  * this is probably best represented using the Proxy class in the
  * Reflection APIs.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DeferRable implements Filter {
-    volatile Filter  src;
-    Rectangle2D bounds;
-    Map         props;
+    volatile Filter     src;
+    Rectangle2D         bounds;
+    Map<String, Object> props;
     /**
      * Constructor takes nothing
      */
@@ -86,7 +88,7 @@ public class DeferRable implements Filter {
         notifyAll();
     }
 
-    public synchronized void setProperties(Map props) {
+    public synchronized void setProperties(Map<String, Object> props) {
         this.props = props;
         notifyAll();
     }
@@ -97,7 +99,7 @@ public class DeferRable implements Filter {
     }
 
     @Override
-    public Vector getSources() {
+    public Vector<RenderableImage> getSources() {
         return getSource().getSources();
     }
 

@@ -25,10 +25,11 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 
 /**
- * This class describes the XML resources needed to use the various batik
+ * This class describes the XML resources needed to use the various EchoSVG
  * modules.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XMLResourceDescriptor {
@@ -61,17 +62,12 @@ public class XMLResourceDescriptor {
      */
     protected static String xmlParserClassName;
 
-    /**
-     * The class name of the CSS parser to use.
-     */
-    protected static String cssParserClassName;
-
     protected static synchronized Properties getParserProps() {
         if (parserProps != null) return parserProps;
 
         parserProps = new Properties();
         try {
-            Class cls = XMLResourceDescriptor.class;
+            Class<XMLResourceDescriptor> cls = XMLResourceDescriptor.class;
             InputStream is = cls.getResourceAsStream(RESOURCES);
             parserProps.load(is);
         } catch (IOException ioe) {
@@ -109,27 +105,9 @@ public class XMLResourceDescriptor {
     /**
      * Returns the class name of the CSS parser to use.
      *
-     * <p>This method first checks if any CSS parser has been
-     * specified using the <code>setCSSParserClassName</code> method. If
-     * any, this method will return the value of the property
-     * 'org.w3c.css.sac.driver' specified in the
-     * <code>resources/XMLResourceDescriptor.properties</code> resource
-     * file.
      */
     public static String getCSSParserClassName() {
-        if (cssParserClassName == null) {
-            cssParserClassName = getParserProps().getProperty
-                (CSS_PARSER_CLASS_NAME_KEY);
-        }
-        return cssParserClassName;
+        return "io.sf.carte.doc.style.css.parser.CSSParser";
     }
 
-    /**
-     * Sets the class name of the CSS parser to use.
-     *
-     * @param cssParserClassName the classname of the CSS parser
-     */
-    public static void setCSSParserClassName(String cssParserClassName) {
-        XMLResourceDescriptor.cssParserClassName = cssParserClassName;
-    }
 }

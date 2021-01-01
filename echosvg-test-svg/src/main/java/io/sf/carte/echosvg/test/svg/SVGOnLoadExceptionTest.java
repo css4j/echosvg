@@ -82,6 +82,7 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * - Validate (e.g., "true")
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOnLoadExceptionTest extends AbstractTest {
@@ -355,9 +356,9 @@ public class SVGOnLoadExceptionTest extends AbstractTest {
                 PermissionCollection permissionsOrig
                     = policy.getPermissions(cs);
                 Permissions permissions = new Permissions();
-                Enumeration iter = permissionsOrig.elements();
+                Enumeration<Permission> iter = permissionsOrig.elements();
                 while (iter.hasMoreElements()) {
-                    Permission p = (Permission)iter.nextElement();
+                    Permission p = iter.nextElement();
                     if (!(p instanceof RuntimePermission)) {
                         if (!(p instanceof java.security.AllPermission)) {
                             permissions.add(p);
@@ -379,10 +380,10 @@ public class SVGOnLoadExceptionTest extends AbstractTest {
                 ctx = new AccessControlContext(new ProtectionDomain[]{domain});
 
                 try {
-                    return (TestReport)AccessController.doPrivileged
-                        (new PrivilegedExceptionAction() {
+                    return AccessController.doPrivileged
+                        (new PrivilegedExceptionAction<TestReport>() {
                                 @Override
-                                public Object run() throws Exception {
+                                public TestReport run() throws Exception {
                                     return testImpl();
                                 }
                             }, ctx);
@@ -501,7 +502,7 @@ public class SVGOnLoadExceptionTest extends AbstractTest {
      * Check if the input class' name (or one of its base classes) matches
      * the input name.
      */
-    protected boolean isMatch(final Class cl, final String name) {
+    protected boolean isMatch(final Class<?> cl, final String name) {
         if (cl == null) {
             return false;
         } else if (cl.getName().equals(name)) {

@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.test.TestReport;
  * detected and reported.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SelfContainedSVGOnLoadTestValidator extends DefaultTestSuite {
@@ -228,7 +229,7 @@ public class SelfContainedSVGOnLoadTestValidator extends DefaultTestSuite {
             }
 
             if (nDesc > 0){
-                Vector veDesc = new Vector();
+                Vector<String> veDesc = new Vector<>();
                 for(int i=0; i<nDesc; i++){
                     veDesc.add(expectedEntryCodes[i]);
                 }

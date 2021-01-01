@@ -31,6 +31,7 @@ package io.sf.carte.echosvg.gvt.event;
  * methods for events you care about.)
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class GraphicsNodeChangeAdapter

@@ -77,6 +77,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * This class implements {@link SVGDocument}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMDocument
@@ -124,7 +125,7 @@ public class SVGOMDocument
      * Map of CSSNavigableDocumentListeners to an array of wrapper
      * DOM listeners.
      */
-    protected HashMap cssNavigableDocumentListeners = new HashMap();
+    protected HashMap<CSSNavigableDocumentListener, EventListener[]> cssNavigableDocumentListeners = new HashMap<>();
 
     /**
      * The main {@link AnimatedAttributeListener} that redispatches to all
@@ -136,7 +137,7 @@ public class SVGOMDocument
     /**
      * List of {@link AnimatedAttributeListener}s attached to this document.
      */
-    protected LinkedList animatedAttributeListeners = new LinkedList();
+    protected LinkedList<AnimatedAttributeListener> animatedAttributeListeners = new LinkedList<>();
 
     /**
      * The SVG context.
@@ -487,7 +488,7 @@ public class SVGOMDocument
     public void removeCSSNavigableDocumentListener
             (CSSNavigableDocumentListener l) {
         EventListener[] listeners
-            = (EventListener[]) cssNavigableDocumentListeners.get(l);
+            = cssNavigableDocumentListeners.get(l);
         if (listeners == null) {
             return;
         }
@@ -518,9 +519,7 @@ public class SVGOMDocument
      * modified.
      */
     protected void overrideStyleTextChanged(CSSStylableElement e, String text) {
-        for (Object o : cssNavigableDocumentListeners.keySet()) {
-            CSSNavigableDocumentListener l =
-                    (CSSNavigableDocumentListener) o;
+        for (CSSNavigableDocumentListener l : cssNavigableDocumentListeners.keySet()) {
             l.overrideStyleTextChanged(e, text);
         }
     }
@@ -530,9 +529,7 @@ public class SVGOMDocument
      */
     protected void overrideStylePropertyRemoved(CSSStylableElement e,
                                                 String name) {
-        for (Object o : cssNavigableDocumentListeners.keySet()) {
-            CSSNavigableDocumentListener l =
-                    (CSSNavigableDocumentListener) o;
+        for (CSSNavigableDocumentListener l : cssNavigableDocumentListeners.keySet()) {
             l.overrideStylePropertyRemoved(e, name);
         }
     }
@@ -542,9 +539,7 @@ public class SVGOMDocument
      */
     protected void overrideStylePropertyChanged
             (CSSStylableElement e, String name, String value, String prio) {
-        for (Object o : cssNavigableDocumentListeners.keySet()) {
-            CSSNavigableDocumentListener l =
-                    (CSSNavigableDocumentListener) o;
+        for (CSSNavigableDocumentListener l : cssNavigableDocumentListeners.keySet()) {
             l.overrideStylePropertyChanged(e, name, value, prio);
         }
     }
@@ -726,9 +721,7 @@ public class SVGOMDocument
         @Override
         public void animatedAttributeChanged(Element e,
                                              AnimatedLiveAttributeValue alav) {
-            for (Object animatedAttributeListener : animatedAttributeListeners) {
-                AnimatedAttributeListener aal =
-                        (AnimatedAttributeListener) animatedAttributeListener;
+            for (AnimatedAttributeListener aal : animatedAttributeListeners) {
                 aal.animatedAttributeChanged(e, alav);
             }
         }
@@ -741,9 +734,7 @@ public class SVGOMDocument
          */
         @Override
         public void otherAnimationChanged(Element e, String type) {
-            for (Object animatedAttributeListener : animatedAttributeListeners) {
-                AnimatedAttributeListener aal =
-                        (AnimatedAttributeListener) animatedAttributeListener;
+            for (AnimatedAttributeListener aal : animatedAttributeListeners) {
                 aal.otherAnimationChanged(e, type);
             }
         }

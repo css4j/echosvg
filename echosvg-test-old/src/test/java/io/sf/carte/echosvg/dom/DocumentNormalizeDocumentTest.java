@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.test.TestReport;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMConfiguration;
 import org.w3c.dom.DOMError;
@@ -28,10 +26,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import io.sf.carte.echosvg.test.TestReport;
+
 /**
  * Tests Document.normalizeDocument.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DocumentNormalizeDocumentTest extends DOM3Test {
@@ -39,6 +40,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
         int cd = 0;
         int wf = 0;
         int wfn = 0;
+        @Override
         public boolean handleError(DOMError e) {
             if (e.getType().equals("cdata-sections-splitted")) {
                 cd++;
@@ -62,6 +64,7 @@ public class DocumentNormalizeDocumentTest extends DOM3Test {
         }
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         Handler h = new Handler();
         TestReport report = null;

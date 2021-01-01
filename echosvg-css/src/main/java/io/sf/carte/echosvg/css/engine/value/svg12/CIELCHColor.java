@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.css.engine.value.svg12;
 /**
  * This class represents an CIE LCH color value.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CIELCHColor extends AbstractCIEColor {

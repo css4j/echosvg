@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * the bridge.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 
@@ -40,6 +41,7 @@ public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
 
     TestUserAgent userAgent = new TestUserAgent();
 
+    @Override
     public void setId(String id){
         super.setId(id);
 
@@ -77,6 +79,7 @@ public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
         return scripts;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         ApplicationSecurityEnforcer ase
             = new ApplicationSecurityEnforcer(this.getClass(),
@@ -99,11 +102,13 @@ public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
         }
     }
 
+    @Override
     protected UserAgent buildUserAgent(){
         return userAgent;
     }
     
     class TestUserAgent extends UserAgentAdapter {
+        @Override
         public ScriptSecurity getScriptSecurity(String scriptType,
                                                 ParsedURL scriptPURL,
                                                 ParsedURL docPURL){

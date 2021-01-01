@@ -76,6 +76,7 @@ import java.util.ResourceBundle;
  * default group common to each instance of LocalizableSupport.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class LocalizableSupport implements Localizable {
@@ -107,26 +108,26 @@ public class LocalizableSupport implements Localizable {
     /**
      * The resources
      */
-    List resourceBundles = new ArrayList();
-    Class lastResourceClass;
+    List<ResourceBundle> resourceBundles = new ArrayList<>();
+    Class<?> lastResourceClass;
 
 
     /**
      * The class to lookup bundleName from.
      */
-    Class cls;
+    Class<?> cls;
 
     /**
      * Same as LocalizableSupport(cls, null).
      */
-    public LocalizableSupport(String s, Class cls) {
+    public LocalizableSupport(String s, Class<?> cls) {
         this(s, cls, null);
     }
 
     /**
      * Same as LocalizableSupport(cls, null).
      */
-    public LocalizableSupport(String s, Class cls, ClassLoader cl) {
+    public LocalizableSupport(String s, Class<?> cls, ClassLoader cl) {
         bundleName = s;
         this.cls = cls;
         classLoader = cl;
@@ -254,7 +255,7 @@ public class LocalizableSupport implements Localizable {
     }
 
     protected ResourceBundle lookupResourceBundle(String bundle,
-                                                  Class theClass){
+                                                  Class<?> theClass){
         ClassLoader cl = classLoader;
         ResourceBundle rb=null;
         if (cl != null) {
@@ -290,7 +291,7 @@ public class LocalizableSupport implements Localizable {
                 rb = lookupResourceBundle(bundleName, null);
                 resourceBundles.add(rb);
             }
-            return (ResourceBundle)resourceBundles.get(0);
+            return resourceBundles.get(0);
         }
 
         while (i >= resourceBundles.size()) {
@@ -300,11 +301,11 @@ public class LocalizableSupport implements Localizable {
                 lastResourceClass = cls;
             else
                 lastResourceClass = lastResourceClass.getSuperclass();
-            Class cl = lastResourceClass;
+            Class<?> cl = lastResourceClass;
             String bundle = (cl.getPackage().getName() + "." + bundleName);
             resourceBundles.add(lookupResourceBundle(bundle, cl));
         }
-        return (ResourceBundle)resourceBundles.get(i);
+        return resourceBundles.get(i);
     }
 
     /**

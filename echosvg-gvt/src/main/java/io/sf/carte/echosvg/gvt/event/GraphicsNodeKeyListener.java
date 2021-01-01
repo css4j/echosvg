@@ -24,6 +24,7 @@ import java.util.EventListener;
  * The listener interface for receiving graphics node key events.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface GraphicsNodeKeyListener extends EventListener {

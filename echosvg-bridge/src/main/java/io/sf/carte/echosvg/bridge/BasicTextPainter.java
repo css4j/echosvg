@@ -31,6 +31,7 @@ import java.awt.geom.Rectangle2D;
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class BasicTextPainter implements TextPainter {

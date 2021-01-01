@@ -29,6 +29,7 @@ package io.sf.carte.echosvg.anim.dom;
  * @see org.w3c.dom.svg.SVGSVGElement#createSVGLength()
  *
  * @author nicolas.socheleau@bitflash.com
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMLength extends AbstractSVGLength {

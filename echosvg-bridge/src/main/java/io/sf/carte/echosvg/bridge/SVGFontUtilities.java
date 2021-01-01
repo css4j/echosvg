@@ -41,20 +41,22 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * Utility class for SVG fonts.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGFontUtilities implements SVGConstants {
 
-    public static List getFontFaces(Document doc,
+    public static List<FontFace> getFontFaces(Document doc,
                                     BridgeContext ctx) {
         // check fontFamilyMap to see if we have already created an
         // FontFamily that matches
-        Map fontFamilyMap = ctx.getFontFamilyMap();
-        List ret = (List)fontFamilyMap.get(doc);
+        Map<Object, Object> fontFamilyMap = ctx.getFontFamilyMap();
+        @SuppressWarnings("unchecked")
+        List<FontFace> ret = (List<FontFace>)fontFamilyMap.get(doc);
         if (ret != null)
             return ret;
 
-        ret = new LinkedList();
+        ret = new LinkedList<>();
 
         NodeList fontFaceElements = doc.getElementsByTagNameNS
             (SVG_NAMESPACE_URI, SVG_FONT_FACE_TAG);
@@ -70,9 +72,8 @@ public abstract class SVGFontUtilities implements SVGConstants {
         }
 
         CSSEngine engine = ((SVGOMDocument)doc).getCSSEngine();
-        List sms = engine.getFontFaces();
-        for (Object sm : sms) {
-            FontFaceRule ffr = (FontFaceRule) sm;
+        List<FontFaceRule> sms = engine.getFontFaces();
+        for (FontFaceRule ffr : sms) {
             ret.add(CSSFontFace.createCSSFontFace(engine, ffr));
         }
         return ret;
@@ -110,7 +111,7 @@ public abstract class SVGFontUtilities implements SVGConstants {
 
         // check fontFamilyMap to see if we have already created an
         // FontFamily that matches
-        Map fontFamilyMap = ctx.getFontFamilyMap();
+        Map<Object, Object> fontFamilyMap = ctx.getFontFamilyMap();
         GVTFontFamily fontFamily =
             (GVTFontFamily)fontFamilyMap.get(fontKeyName);
         if (fontFamily != null) {
@@ -120,7 +121,8 @@ public abstract class SVGFontUtilities implements SVGConstants {
         // try to find a matching SVGFontFace element
         Document doc = textElement.getOwnerDocument();
 
-        List fontFaces = (List)fontFamilyMap.get(doc);
+        @SuppressWarnings("unchecked")
+        List<FontFace> fontFaces = (List<FontFace>)fontFamilyMap.get(doc);
 
         if (fontFaces == null) {
             fontFaces = getFontFaces(doc, ctx);
@@ -128,10 +130,10 @@ public abstract class SVGFontUtilities implements SVGConstants {
         }
 
 
-        Iterator iter = fontFaces.iterator();
-        List svgFontFamilies = new LinkedList();
+        Iterator<FontFace> iter = fontFaces.iterator();
+        List<GVTFontFamily> svgFontFamilies = new LinkedList<>();
         while (iter.hasNext()) {
-            FontFace fontFace = (FontFace)iter.next();
+            FontFace fontFace = iter.next();
 
             if (!fontFace.hasFamilyName(fontFamilyName)) {
                 continue;
@@ -149,17 +151,17 @@ public abstract class SVGFontUtilities implements SVGConstants {
         if (svgFontFamilies.size() == 1) {
             // only found one matching svg font family
             fontFamilyMap.put(fontKeyName, svgFontFamilies.get(0));
-            return (GVTFontFamily)svgFontFamilies.get(0);
+            return svgFontFamilies.get(0);
 
         } else if (svgFontFamilies.size() > 1) {
             // need to find font face that matches the font-weight closest
             String fontWeightNumber = getFontWeightNumberString(fontWeight);
 
             // create lists of font weight numbers for each font family
-            List fontFamilyWeights = new ArrayList(svgFontFamilies.size());
-            for (Object svgFontFamily : svgFontFamilies) {
+            List<String> fontFamilyWeights = new ArrayList<>(svgFontFamilies.size());
+            for (GVTFontFamily svgFontFamily : svgFontFamilies) {
                 GVTFontFace fontFace;
-                fontFace = ((GVTFontFamily) svgFontFamily).getFontFace();
+                fontFace = svgFontFamily.getFontFace();
                 String fontFaceWeight = fontFace.getFontWeight();
                 fontFaceWeight = getFontWeightNumberString(fontFaceWeight);
                 fontFamilyWeights.add(fontFaceWeight);
@@ -169,14 +171,14 @@ public abstract class SVGFontUtilities implements SVGConstants {
             // assigned to a font-face, if not then need to "fill the
             // holes"
 
-            List newFontFamilyWeights = new ArrayList(fontFamilyWeights);
+            List<String> newFontFamilyWeights = new ArrayList<>(fontFamilyWeights);
             for (int i = 100; i <= 900; i+= 100) {
                 String weightString = String.valueOf(i);
                 boolean matched = false;
                 int minDifference = 1000;
                 int minDifferenceIndex = 0;
                 for (int j = 0; j < fontFamilyWeights.size(); j++) {
-                    String fontFamilyWeight = (String)fontFamilyWeights.get(j);
+                    String fontFamilyWeight = fontFamilyWeights.get(j);
                     if (fontFamilyWeight.indexOf(weightString) > -1) {
                         matched = true;
                         break;
@@ -204,15 +206,15 @@ public abstract class SVGFontUtilities implements SVGConstants {
 
             // now find matching font weight
             for (int i = 0; i < svgFontFamilies.size(); i++) {
-                String fontFaceWeight = (String)newFontFamilyWeights.get(i);
+                String fontFaceWeight = newFontFamilyWeights.get(i);
                 if (fontFaceWeight.indexOf(fontWeightNumber) > -1) {
                     fontFamilyMap.put(fontKeyName, svgFontFamilies.get(i));
-                    return (GVTFontFamily)svgFontFamilies.get(i);
+                    return svgFontFamilies.get(i);
                 }
             }
             // should not get here, just return the first svg font family
             fontFamilyMap.put(fontKeyName, svgFontFamilies.get(0));
-            return (GVTFontFamily) svgFontFamilies.get(0);
+            return svgFontFamilies.get(0);
 
         } else {
             // couldn't find one so return an UnresolvedFontFamily object

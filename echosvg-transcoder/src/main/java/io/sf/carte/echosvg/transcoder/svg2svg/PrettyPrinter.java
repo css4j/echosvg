@@ -26,6 +26,8 @@ import java.util.List;
 
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
+import io.sf.carte.echosvg.transcoder.svg2svg.OutputManager.AttributeInfo;
+import io.sf.carte.echosvg.transcoder.svg2svg.OutputManager.NameInfo;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.xml.LexicalUnits;
 import io.sf.carte.echosvg.xml.XMLException;
@@ -35,6 +37,7 @@ import io.sf.carte.echosvg.xml.XMLScanner;
  * This class represents an SVG source files pretty-printer.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PrettyPrinter {
@@ -831,7 +834,7 @@ public class PrettyPrinter {
                IOException {
         char[] name = getCurrentValue();
         String nameStr = new String(name);
-        List attributes = new LinkedList();
+        List<AttributeInfo> attributes = new LinkedList<>();
         char[] space = null;
 
         type = scanner.next();
@@ -1183,7 +1186,7 @@ public class PrettyPrinter {
                 }
                 type = scanner.next();
 
-                List names = new LinkedList();
+                List<NameInfo> names = new LinkedList<>();
                 space = null;
 
                 if (type == LexicalUnits.S) {
@@ -1243,7 +1246,7 @@ public class PrettyPrinter {
             case LexicalUnits.LEFT_BRACE:
                 type = scanner.next();
 
-                names = new LinkedList();
+                names = new LinkedList<>();
                 space = null;
 
                 if (type == LexicalUnits.S) {

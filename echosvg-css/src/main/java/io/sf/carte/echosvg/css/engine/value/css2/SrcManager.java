@@ -40,6 +40,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SrcManager extends IdentifierManager {

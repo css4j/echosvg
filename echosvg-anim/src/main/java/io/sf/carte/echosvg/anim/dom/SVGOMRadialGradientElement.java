@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class implements {@link SVGRadialGradientElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMRadialGradientElement
@@ -42,10 +43,10 @@ public class SVGOMRadialGradientElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGOMGradientElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGOMGradientElement.xmlTraitInformation);
         t.put(null, SVG_CX_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
         t.put(null, SVG_CY_ATTRIBUTE,
@@ -220,7 +221,7 @@ public class SVGOMRadialGradientElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.PadRed;
  * This fills the input image with a given flood paint
  *
  * @author <a href="mailto:dean@w3.org">Dean Jackson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 

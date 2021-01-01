@@ -26,6 +26,7 @@ import java.util.List;
  * Default implementation of the <code>TestSuite</code> interface.
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultTestSuite extends AbstractTest implements TestSuite {
@@ -37,7 +38,7 @@ public class DefaultTestSuite extends AbstractTest implements TestSuite {
     /**
      * Stores the list of child tests
      */
-    protected List tests = new ArrayList();
+    protected List<Test> tests = new ArrayList<>();
 
     /**
      * Adds a <code>Test</code> to the suite
@@ -65,13 +66,13 @@ public class DefaultTestSuite extends AbstractTest implements TestSuite {
      */
     @Override
     public TestReport runImpl(){
-        Iterator iter = tests.iterator();
+        Iterator<Test> iter = tests.iterator();
 
         DefaultTestSuiteReport report
             = new DefaultTestSuiteReport(this);
 
         while(iter.hasNext()){
-            Test t = (Test)iter.next();
+            Test t = iter.next();
             System.err.println("Running " + t.getName());
             TestReport tr = t.run();
             if (tr == null){

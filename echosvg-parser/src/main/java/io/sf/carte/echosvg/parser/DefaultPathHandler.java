@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.parser;
  * The class provides an adapter for PathHandler.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultPathHandler implements PathHandler {

@@ -26,6 +26,7 @@ import java.awt.event.MouseEvent;
  * This class represents an interactor which never interacts.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class InteractorAdapter implements Interactor {

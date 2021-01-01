@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * come from the same server as the document they are referenced from.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultExternalResourceSecurity implements ExternalResourceSecurity {

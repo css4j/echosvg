@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface FilterBridge extends Bridge {

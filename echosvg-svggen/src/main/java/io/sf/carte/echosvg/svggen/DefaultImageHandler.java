@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.constants.XMLConstants;
  * attribute and sets the width and height of the element.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see             io.sf.carte.echosvg.svggen.SVGGraphics2D
  */

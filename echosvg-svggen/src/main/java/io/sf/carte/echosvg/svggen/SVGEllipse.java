@@ -28,6 +28,7 @@ import org.w3c.dom.Element;
  * a corresponding SVG element, i.e., a circle or an ellipse.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGEllipse extends SVGGraphicObjectConverter {

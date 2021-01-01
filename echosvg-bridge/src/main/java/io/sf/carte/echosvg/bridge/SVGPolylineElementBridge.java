@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.parser.AWTPolylineProducer;
  * Bridge class for the &lt;polyline&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGPolylineElementBridge extends SVGDecoratedShapeElementBridge {

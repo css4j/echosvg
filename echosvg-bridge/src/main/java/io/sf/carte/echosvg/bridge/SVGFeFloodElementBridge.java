@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * Bridge class for the &lt;feFlood&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFeFloodElementBridge
@@ -75,7 +76,7 @@ public class SVGFeFloodElementBridge
                                GraphicsNode filteredNode,
                                Filter inputFilter,
                                Rectangle2D filterRegion,
-                               Map filterMap) {
+                               Map<String, Filter> filterMap) {
 
         Rectangle2D primitiveRegion
             = SVGUtilities.convertFilterPrimitiveRegion(filterElement,

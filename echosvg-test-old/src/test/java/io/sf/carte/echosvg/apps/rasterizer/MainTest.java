@@ -22,8 +22,8 @@ package io.sf.carte.echosvg.apps.rasterizer;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
-import java.util.StringTokenizer;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.DefaultTestSuite;
@@ -34,12 +34,14 @@ import io.sf.carte.echosvg.test.TestReport;
  * Validates the operation of the <code>Main</code> class.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MainTest extends DefaultTestSuite {
 
     public MainTest(){
         Test t = new MainConfigTest("-d samples") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     File dst = c.getDst();
                     if(dst!= null && dst.equals(new File("samples"))){
@@ -57,6 +59,7 @@ public class MainTest extends DefaultTestSuite {
         t = new MainConfigTest("samples/anne.svg") {
                 String ERROR_UNEXPECTED_SOURCES = "MainConfigTest.error.unexpected.sources";
 
+                @Override
                 public TestReport validate(SVGConverter c){
                     List sources = c.getSources();
                     if(sources.size() == 1){
@@ -75,6 +78,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.source");
 
         t = new MainConfigTest("-m image/jpeg") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     DestinationType type = c.getDestinationType();
                     if(type.equals(DestinationType.JPEG)){
@@ -90,6 +94,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.mimeType.jpegA");
 
         t = new MainConfigTest("-m image/jpg") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     DestinationType type = c.getDestinationType();
                     if(type.equals(DestinationType.JPEG)){
@@ -105,6 +110,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.mimeType.jpegB");
 
         t = new MainConfigTest("-m image/jpe") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     DestinationType type = c.getDestinationType();
                     if(type.equals(DestinationType.JPEG)){
@@ -120,6 +126,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.mimeType.jpegC");
 
         t = new MainConfigTest("-m image/png") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     DestinationType type = c.getDestinationType();
                     if(type.equals(DestinationType.PNG)){
@@ -135,6 +142,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.mimeType.png");
 
         t = new MainConfigTest("-m application/pdf") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     DestinationType type = c.getDestinationType();
                     if(type.equals(DestinationType.PDF)){
@@ -150,6 +158,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.mimeType.pdf");
 
         t = new MainConfigTest("-m image/tiff") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     DestinationType type = c.getDestinationType();
                     if(type.equals(DestinationType.TIFF)){
@@ -165,6 +174,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.mimeType.tiff");
 
         t = new MainConfigTest("-w 467.69") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     float width = c.getWidth();
                     if(width == 467.69f){
@@ -180,6 +190,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.width");
 
         t = new MainConfigTest("-h 345.67") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     float height = c.getHeight();
                     if(height == 345.67f){
@@ -195,6 +206,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.height");
 
         t = new MainConfigTest("-maxw 467.69") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     float maxWidth = c.getMaxWidth();
                     if(maxWidth == 467.69f){
@@ -209,6 +221,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.maxWidth");
 
         t = new MainConfigTest("-maxh 345.67") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     float maxHeight = c.getMaxHeight();
                     if(maxHeight == 345.67f){
@@ -222,6 +235,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.maxHeight");
 
         t = new MainConfigTest("-a 5,10,20,30") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     Rectangle2D aoi = c.getArea();
                     Rectangle2D.Float eAoi = new Rectangle2D.Float(5,10,20,30);
@@ -247,6 +261,7 @@ public class MainTest extends DefaultTestSuite {
 
 
         t = new MainConfigTest("-bg 128.200.100.50") {
+                @Override
                 public TestReport validate(SVGConverter c){
                     Color bg = c.getBackgroundColor();
                     Color eBg = new Color(200,100,50,128); // Alpha is last
@@ -271,6 +286,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.backgroundColor");
 
         t = new MainConfigTest("-cssMedia projection"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     String cssMedia = c.getMediaType();
                     String eCssMedia = "projection";
@@ -287,6 +303,7 @@ public class MainTest extends DefaultTestSuite {
 
 
         t = new MainConfigTest("-font-family Arial, Comic Sans MS"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     String fontFamily = c.getDefaultFontFamily();
                     String eFontFamily = "Arial, Comic Sans MS";
@@ -297,6 +314,7 @@ public class MainTest extends DefaultTestSuite {
                     }
                 }
 
+                @Override
                 String[] makeArgsArray(String args) {
                     return new String[] {"-font-family",
                                         "Arial, Comic Sans MS"};
@@ -310,6 +328,7 @@ public class MainTest extends DefaultTestSuite {
 
 
         t = new MainConfigTest("-cssAlternate myAlternateStylesheet"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     String alternate = c.getAlternateStylesheet();
                     String eAlternate = "myAlternateStylesheet";
@@ -324,6 +343,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.cssAlternate");
 
         t = new MainConfigTest("-validate"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     if(c.getValidate()){
                         return reportSuccess();
@@ -337,6 +357,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.validate");
 
         t = new MainConfigTest("-onload"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     if(c.getExecuteOnload()){
                         return reportSuccess();
@@ -350,6 +371,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.onload");
 
         t = new MainConfigTest("-scripts text/jpython"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     if("text/jpython".equals(c.getAllowedScriptTypes())){
                         return reportSuccess();
@@ -363,6 +385,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.scripts");
 
         t = new MainConfigTest("-anyScriptOrigin"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     if(!c.getConstrainScriptOrigin()){
                         return reportSuccess();
@@ -376,6 +399,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.anyScriptOrigin");
 
         t = new MainConfigTest("-scriptSecurityOff"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     if(c.getSecurityOff()){
                         return reportSuccess();
@@ -389,6 +413,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.scriptSecurityOff");
 
         t = new MainConfigTest("-lang fr"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     if("fr".equals(c.getLanguage())){
                         return reportSuccess();
@@ -401,6 +426,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.lang");
 
         t = new MainConfigTest("-cssUser myStylesheet.css"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     if("myStylesheet.css".equals(c.getUserStylesheet())){
                         return reportSuccess();
@@ -413,6 +439,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.cssUser");
 
         t = new MainConfigTest("-dpi 5.08"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     if(c.getPixelUnitToMillimeter() == 5f){
                         return reportSuccess();
@@ -425,6 +452,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.dpi");
 
         t = new MainConfigTest("-q .5"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     if(c.getQuality() == .5f){
                         return reportSuccess();
@@ -437,6 +465,7 @@ public class MainTest extends DefaultTestSuite {
         t.setId("MainConfigTest.quality");
 
         t = new MainConfigTest("-indexed 8"){
+                @Override
                 public TestReport validate(SVGConverter c){
                     if(c.getIndexed() == 8){
                         return reportSuccess();
@@ -563,6 +592,7 @@ class MainIllegalArgTest extends AbstractTest {
         this.args = args;
     }
 
+    @Override
     public String getName(){
         return getId();
     }
@@ -579,9 +609,11 @@ class MainIllegalArgTest extends AbstractTest {
     public static final String ENTRY_KEY_GOT_ERROR_CODE
         = "MainIllegalArgTest.entry.key.got.error.code";
 
+    @Override
     public TestReport runImpl() throws Exception {
         String[] argsArray = makeArgsArray(args);
         Main main = new Main(argsArray) {
+                @Override
                 public void error(String errorCode,
                                   Object[] errorArgs){
                     if (Main.ERROR_ILLEGAL_ARGUMENT.equals(errorCode)){
@@ -650,13 +682,16 @@ class MainConfigErrorTest extends AbstractTest {
         this.args = args;
     }
 
+    @Override
     public String getName(){
         return getId();
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         String[] argsArray = makeArgsArray(args);
         Main main = new Main(argsArray) {
+                @Override
                 public void error(String errorCode,
                                   Object[] errorArgs){
                     if (Main.ERROR_NOT_ENOUGH_OPTION_VALUES.equals(errorCode)){
@@ -731,13 +766,16 @@ abstract class MainConfigTest extends AbstractTest {
         this.args = args;
     }
 
+    @Override
     public String getName(){
         return getId();
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         String[] argsArray = makeArgsArray(args);
         Main main = new Main(argsArray) {
+                @Override
                 public void validateConverterConfig(SVGConverter c){
                     report = validate(c);
                 }

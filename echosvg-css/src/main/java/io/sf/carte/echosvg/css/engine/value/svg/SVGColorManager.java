@@ -40,6 +40,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a manager for the SVGColor property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGColorManager extends ColorManager {
@@ -337,6 +338,8 @@ public class SVGColorManager extends ColorManager {
             return lu.getIntegerValue();
         case REAL:
             return lu.getFloatValue();
+        default:
+            break;
         }
         throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
     }

@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * the subclass implementation.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractTiledRed
@@ -65,7 +66,7 @@ public abstract class AbstractTiledRed
      * user coordinate system.
      * @param props this initializes the props Map (may be null)
      */
-    protected AbstractTiledRed(Rectangle bounds, Map props) {
+    protected AbstractTiledRed(Rectangle bounds, Map<String, ?> props) {
         super(bounds, props);
     }
 
@@ -76,7 +77,7 @@ public abstract class AbstractTiledRed
      * Vector. Src is also used to set the bounds, ColorModel,
      * SampleModel, and tile grid offsets.
      * @param props this initializes the props Map.  */
-    protected AbstractTiledRed(CachableRed src, Map props) {
+    protected AbstractTiledRed(CachableRed src, Map<String, ?> props) {
         super(src, props);
     }
 
@@ -88,7 +89,7 @@ public abstract class AbstractTiledRed
      * and tile grid offsets.
      * @param bounds The bounds of this image.
      * @param props this initializes the props Map.  */
-    protected AbstractTiledRed(CachableRed src, Rectangle bounds, Map props) {
+    protected AbstractTiledRed(CachableRed src, Rectangle bounds, Map<String, ?> props) {
         super(src, bounds, props);
     }
 
@@ -107,7 +108,7 @@ public abstract class AbstractTiledRed
      * @param props this initializes the props Map.  */
     protected AbstractTiledRed(CachableRed src, Rectangle bounds,
                           ColorModel cm, SampleModel sm,
-                          Map props) {
+                          Map<String, ?> props) {
         super(src, bounds, cm, sm, props);
     }
 
@@ -131,7 +132,7 @@ public abstract class AbstractTiledRed
     protected AbstractTiledRed(CachableRed src, Rectangle bounds,
                           ColorModel cm, SampleModel sm,
                           int tileGridXOff, int tileGridYOff,
-                          Map props) {
+                          Map<String, ?> props) {
         super(src, bounds, cm, sm, tileGridXOff, tileGridYOff, props);
     }
 
@@ -159,7 +160,7 @@ public abstract class AbstractTiledRed
     protected void init(CachableRed src, Rectangle   bounds,
                         ColorModel  cm,   SampleModel sm,
                         int tileGridXOff, int tileGridYOff,
-                        Map props) {
+                        Map<String, ?> props) {
         init(src, bounds, cm, sm, tileGridXOff, tileGridYOff, null, props);
     }
 
@@ -189,7 +190,7 @@ public abstract class AbstractTiledRed
                         ColorModel  cm,   SampleModel sm,
                         int tileGridXOff, int tileGridYOff,
                         TileStore tiles,
-                        Map props) {
+                        Map<String, ?> props) {
         super.init(src, bounds, cm, sm, tileGridXOff, tileGridYOff, props);
         this.tiles = tiles;
         if (this.tiles == null)
@@ -205,7 +206,7 @@ public abstract class AbstractTiledRed
      * @param bounds this defines the extent of the rendered in pixels
      * @param props this initializes the props Map.
      */
-    protected AbstractTiledRed(List srcs, Rectangle bounds, Map props) {
+    protected AbstractTiledRed(List<CachableRed> srcs, Rectangle bounds, Map<String, ?> props) {
         super(srcs, bounds, props);
     }
 
@@ -224,9 +225,9 @@ public abstract class AbstractTiledRed
      * the size of bounds.
      * @param props this initializes the props Map.
      */
-    protected AbstractTiledRed(List srcs, Rectangle bounds,
+    protected AbstractTiledRed(List<CachableRed> srcs, Rectangle bounds,
                           ColorModel cm, SampleModel sm,
-                          Map props) {
+                          Map<String, ?> props) {
         super(srcs, bounds, cm, sm, props);
     }
 
@@ -249,10 +250,10 @@ public abstract class AbstractTiledRed
      * @param tileGridYOff The y location of tile 0,0.
      * @param props this initializes the props Map.
      */
-    protected AbstractTiledRed(List srcs, Rectangle bounds,
+    protected AbstractTiledRed(List<CachableRed> srcs, Rectangle bounds,
                           ColorModel cm, SampleModel sm,
                           int tileGridXOff, int tileGridYOff,
-                          Map props) {
+                          Map<String, ?> props) {
         super(srcs, bounds, cm, sm, tileGridXOff, tileGridYOff, props);
     }
 
@@ -275,10 +276,10 @@ public abstract class AbstractTiledRed
      * @param props  Any properties you want to associate with the image.
      */
     @Override
-    protected void init(List srcs, Rectangle bounds,
+    protected void init(List<CachableRed> srcs, Rectangle bounds,
                         ColorModel cm, SampleModel sm,
                         int tileGridXOff, int tileGridYOff,
-                        Map props) {
+                        Map<String, ?> props) {
         super.init(srcs, bounds, cm, sm, tileGridXOff, tileGridYOff, props);
         tiles = createTileStore();
     }

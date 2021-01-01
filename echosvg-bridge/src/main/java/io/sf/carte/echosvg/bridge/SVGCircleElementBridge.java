@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
  * Bridge class for the &lt;circle&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGCircleElementBridge extends SVGShapeElementBridge {

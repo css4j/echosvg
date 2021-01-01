@@ -19,16 +19,16 @@
 
 package io.sf.carte.echosvg.script.rhino;
 
-import io.sf.carte.echosvg.test.*;
-import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
-import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
-import io.sf.carte.echosvg.bridge.UserAgent;
-import io.sf.carte.echosvg.bridge.UserAgentAdapter;
-import io.sf.carte.echosvg.bridge.ScriptSecurity;
 import io.sf.carte.echosvg.bridge.DefaultScriptSecurity;
 import io.sf.carte.echosvg.bridge.NoLoadScriptSecurity;
 import io.sf.carte.echosvg.bridge.RelaxedScriptSecurity;
+import io.sf.carte.echosvg.bridge.ScriptSecurity;
+import io.sf.carte.echosvg.bridge.UserAgent;
+import io.sf.carte.echosvg.bridge.UserAgentAdapter;
+import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
+import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
+import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * Helper class to simplify writing the unitTesting.xml file for
@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.bridge.RelaxedScriptSecurity;
  * <xml-batik-dir>/test-resources/io/sf/carte/echosvg/
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 
@@ -46,6 +47,7 @@ public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
     String scripts = "text/ecmascript, application/java-archive";
     TestUserAgent userAgent = new TestUserAgent();
 
+    @Override
     public void setId(String id){
         super.setId(id);
         svgURL = resolveURL("test-resources/io/sf/carte/echosvg/" + id + ".svg");
@@ -75,6 +77,7 @@ public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
         return scripts;
     }
 
+    @Override
     public TestReport runImpl() throws Exception{
         ApplicationSecurityEnforcer ase
             = new ApplicationSecurityEnforcer(this.getClass(),
@@ -91,11 +94,13 @@ public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
         }
     }
 
+    @Override
     protected UserAgent buildUserAgent(){
         return userAgent;
     }
 
     class TestUserAgent extends UserAgentAdapter {
+        @Override
         public ScriptSecurity getScriptSecurity(String scriptType,
                                                 ParsedURL scriptPURL,
                                                 ParsedURL docPURL){

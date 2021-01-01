@@ -40,12 +40,13 @@ import java.util.List;
  * be missing in the JDK.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Service {
 
     // Remember providers we have looked up before.
-    static HashMap providerMap = new HashMap();
+    static HashMap<String, List<Object>> providerMap = new HashMap<>();
 
     /**
      * Returns an iterator where each element should implement the
@@ -58,16 +59,16 @@ public class Service {
      *
      * @param cls The class/interface to search for providers of.
      */
-    public static synchronized Iterator providers(Class cls) {
+    public static synchronized Iterator<Object> providers(Class<?> cls) {
         String serviceFile = "META-INF/services/"+cls.getName();
 
         // System.out.println("File: " + serviceFile);
 
-        List l = (List)providerMap.get(serviceFile);
+        List<Object> l = providerMap.get(serviceFile);
         if (l != null)
             return l.iterator();
 
-        l = new ArrayList();
+        l = new ArrayList<>();
         providerMap.put(serviceFile, l);
 
         ClassLoader cl = null;
@@ -82,7 +83,7 @@ public class Service {
         // No class loader so we can't find 'serviceFile'.
         if (cl == null) return l.iterator();
 
-        Enumeration e;
+        Enumeration<URL> e;
         try {
             e = cl.getResources(serviceFile);
         } catch (IOException ioe) {
@@ -94,7 +95,7 @@ public class Service {
             Reader         r  = null;
             BufferedReader br = null;
             try {
-                URL u = (URL)e.nextElement();
+                URL u = e.nextElement();
                 // System.out.println("URL: " + u);
 
                 is = u.openStream();

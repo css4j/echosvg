@@ -19,17 +19,22 @@
 
 package io.sf.carte.echosvg.dom;
 
-import org.w3c.dom.*;
+import java.io.File;
+import java.net.URL;
 
-import java.io.*;
-import java.net.*;
-import io.sf.carte.echosvg.dom.util.*;
-import io.sf.carte.echosvg.util.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.test.*;
+import io.sf.carte.echosvg.dom.util.DocumentFactory;
+import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * @author <a href="mailto:shillion@ilog.fr">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SetAttributeTest extends AbstractTest {
@@ -67,6 +72,7 @@ public class SetAttributeTest extends AbstractTest {
         this.parserClassName = parserClassName;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         DocumentFactory df 
             = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), 

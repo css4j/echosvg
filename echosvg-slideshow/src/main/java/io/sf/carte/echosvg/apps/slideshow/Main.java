@@ -57,6 +57,7 @@ import io.sf.carte.echosvg.gvt.renderer.StaticRenderer;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Main extends JComponent {
@@ -304,7 +305,7 @@ public class Main extends JComponent {
         g2d.drawImage(display, null, 0, 0);
     }
 
-    public static void readFileList(String file, List fileVec) {
+    public static void readFileList(String file, List<String> fileVec) {
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));
@@ -339,7 +340,7 @@ public class Main extends JComponent {
 
     public static void main(String []args) {
 
-        List fileVec = new ArrayList();
+        List<String> fileVec = new ArrayList<>();
 
         Dimension d = null;
 
@@ -432,7 +433,7 @@ public class Main extends JComponent {
 
         for (int i=0; i<fileVec.size(); i++) {
             try {
-                files[i] = new File((String)fileVec.get(i));
+                files[i] = new File(fileVec.get(i));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

@@ -28,6 +28,7 @@ import org.w3c.dom.Element;
  * an SVG element.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGPolygon extends SVGGraphicObjectConverter {

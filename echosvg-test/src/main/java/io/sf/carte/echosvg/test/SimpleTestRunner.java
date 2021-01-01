@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.test;
  * <code>SimpleTestReportProcessor</code>
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SimpleTestRunner {

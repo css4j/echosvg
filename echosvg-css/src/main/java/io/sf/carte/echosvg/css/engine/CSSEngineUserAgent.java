@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.css.engine;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface CSSEngineUserAgent {

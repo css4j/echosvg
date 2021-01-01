@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.transcoder;
  * Thrown when a transcoder is not able to transcode its input.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TranscoderException extends Exception {

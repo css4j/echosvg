@@ -38,12 +38,13 @@ import io.sf.carte.echosvg.gvt.event.GraphicsNodeChangeEvent;
  * This class tracks the changes on a GVT tree
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class UpdateTracker extends GraphicsNodeChangeAdapter {
 
-    Map dirtyNodes = null;
-    Map fromBounds = new HashMap();
+    Map<WeakReference<AbstractGraphicsNode>, AffineTransform> dirtyNodes = null;
+    Map<WeakReference<AbstractGraphicsNode>, Rectangle2D> fromBounds = new HashMap<>();
     protected static Rectangle2D NULL_RECT = new Rectangle();
 
     public UpdateTracker(){
@@ -59,15 +60,14 @@ public class UpdateTracker extends GraphicsNodeChangeAdapter {
     /**
      * Returns the list of dirty areas on GVT.
      */
-    public List getDirtyAreas() {
+    public List<Shape> getDirtyAreas() {
         if (dirtyNodes == null)
             return null;
 
-        List ret = new LinkedList();
-        Set keys = dirtyNodes.keySet();
-        for (Object key : keys) {
-            WeakReference gnWRef = (WeakReference) key;
-            GraphicsNode gn = (GraphicsNode) gnWRef.get();
+        List<Shape> ret = new LinkedList<>();
+        Set<WeakReference<AbstractGraphicsNode>> keys = dirtyNodes.keySet();
+        for (WeakReference<AbstractGraphicsNode> gnWRef : keys) {
+            GraphicsNode gn = gnWRef.get();
             // GraphicsNode  srcGN  = gn;
 
             // if the weak ref has been cleared then this node is no
@@ -77,12 +77,12 @@ public class UpdateTracker extends GraphicsNodeChangeAdapter {
             if (gn == null) continue;
 
             AffineTransform oat;
-            oat = (AffineTransform) dirtyNodes.get(gnWRef);
+            oat = dirtyNodes.get(gnWRef);
             if (oat != null) {
                 oat = new AffineTransform(oat);
             }
 
-            Rectangle2D srcORgn = (Rectangle2D) fromBounds.remove(gnWRef);
+            Rectangle2D srcORgn = fromBounds.remove(gnWRef);
 
             Rectangle2D srcNRgn = null;
             AffineTransform nat = null;
@@ -120,7 +120,7 @@ public class UpdateTracker extends GraphicsNodeChangeAdapter {
                 AffineTransform at = gn.getTransform();
                 // Get the parent's Affine last time we rendered.
                 gnWRef = gn.getWeakReference();
-                AffineTransform poat = (AffineTransform) dirtyNodes.get(gnWRef);
+                AffineTransform poat = dirtyNodes.get(gnWRef);
                 if (poat == null) poat = at;
                 if (poat != null) {
                     if (oat != null)
@@ -176,8 +176,8 @@ public class UpdateTracker extends GraphicsNodeChangeAdapter {
      */
     public Rectangle2D getNodeDirtyRegion(GraphicsNode gn,
                                           AffineTransform at) {
-        WeakReference gnWRef = gn.getWeakReference();
-        AffineTransform nat = (AffineTransform)dirtyNodes.get(gnWRef);
+        WeakReference<AbstractGraphicsNode> gnWRef = gn.getWeakReference();
+        AffineTransform nat = dirtyNodes.get(gnWRef);
         if (nat == null) nat = gn.getTransform();
         if (nat != null) {
             at = new AffineTransform(at);
@@ -189,8 +189,7 @@ public class UpdateTracker extends GraphicsNodeChangeAdapter {
         if (gn instanceof CompositeGraphicsNode) {
             CompositeGraphicsNode cgn = (CompositeGraphicsNode)gn;
 
-            for (Object aCgn : cgn) {
-                GraphicsNode childGN = (GraphicsNode) aCgn;
+            for (GraphicsNode childGN : cgn) {
                 Rectangle2D r2d = getNodeDirtyRegion(childGN, at);
                 if (r2d != null) {
                     if (f != null) {
@@ -206,7 +205,7 @@ public class UpdateTracker extends GraphicsNodeChangeAdapter {
                 }
             }
         } else {
-            ret = (Rectangle2D)fromBounds.remove(gnWRef);
+            ret = fromBounds.remove(gnWRef);
             if (ret == null) {
                 if (f != null) ret = f.getBounds2D();
                 else           ret = gn.getBounds();
@@ -230,11 +229,11 @@ public class UpdateTracker extends GraphicsNodeChangeAdapter {
     public void changeStarted(GraphicsNodeChangeEvent gnce) {
         // System.out.println("A node has changed for: " + this);
         GraphicsNode gn = gnce.getGraphicsNode();
-        WeakReference gnWRef = gn.getWeakReference();
+        WeakReference<AbstractGraphicsNode> gnWRef = gn.getWeakReference();
 
         boolean doPut = false;
         if (dirtyNodes == null) {
-            dirtyNodes = new HashMap();
+            dirtyNodes = new HashMap<>();
             doPut = true;
         } else if (!dirtyNodes.containsKey(gnWRef))
             doPut = true;
@@ -259,7 +258,7 @@ public class UpdateTracker extends GraphicsNodeChangeAdapter {
             rgn = gn.getBounds();
         }
         // Add this dirty region to any existing dirty region.
-        Rectangle2D r2d = (Rectangle2D)fromBounds.remove(gnWRef);
+        Rectangle2D r2d = fromBounds.remove(gnWRef);
         if (rgn != null) {
             if ((r2d != null) && (r2d != NULL_RECT)) {
                 // System.err.println("GN: " + gn);

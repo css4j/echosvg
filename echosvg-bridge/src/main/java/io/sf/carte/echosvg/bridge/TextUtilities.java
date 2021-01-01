@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class TextUtilities implements CSSConstants, ErrorConstants {
@@ -69,13 +70,13 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
      * @param ctx the bridge context
      */
     public static
-        ArrayList svgHorizontalCoordinateArrayToUserSpace(Element element,
+        ArrayList<Float> svgHorizontalCoordinateArrayToUserSpace(Element element,
                                                           String attrName,
                                                           String valueStr,
                                                           BridgeContext ctx) {
 
         UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, element);
-        ArrayList values = new ArrayList();
+        ArrayList<Float> values = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(valueStr, ", ", false);
         while (st.hasMoreTokens()) {
             values.add
@@ -95,13 +96,13 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
      * @param ctx the bridge context
      */
     public static
-        ArrayList svgVerticalCoordinateArrayToUserSpace(Element element,
+        ArrayList<Float> svgVerticalCoordinateArrayToUserSpace(Element element,
                                                         String attrName,
                                                         String valueStr,
                                                         BridgeContext ctx) {
 
         UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, element);
-        ArrayList values = new ArrayList();
+        ArrayList<Float> values = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(valueStr, ", ", false);
         while (st.hasMoreTokens()) {
             values.add
@@ -112,13 +113,13 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
     }
 
 
-    public static ArrayList svgRotateArrayToFloats(Element element,
+    public static ArrayList<Float> svgRotateArrayToFloats(Element element,
                                                    String attrName,
                                                    String valueStr,
                                                    BridgeContext ctx) {
 
         StringTokenizer st = new StringTokenizer(valueStr, ", ", false);
-        ArrayList values = new ArrayList();
+        ArrayList<Float> values = new ArrayList<>();
         String s;
         while (st.hasMoreTokens()) {
             try {

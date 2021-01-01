@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * This class is responsible for creating a GVT tree using an SVG DOM tree.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GVTBuilder implements SVGConstants {

@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.css.engine.value.AbstractValue;
 /**
  * This is a base class for CIE Lab/LCH color values.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractCIEColor extends AbstractValue {

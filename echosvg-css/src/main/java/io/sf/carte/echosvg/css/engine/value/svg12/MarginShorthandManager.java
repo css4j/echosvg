@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.util.SVG12CSSConstants;
  * 'margin' shorthand property.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MarginShorthandManager

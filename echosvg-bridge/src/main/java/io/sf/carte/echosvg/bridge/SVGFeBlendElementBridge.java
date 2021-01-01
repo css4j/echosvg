@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * Bridge class for the &lt;feBlend&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFeBlendElementBridge
@@ -80,7 +81,7 @@ public class SVGFeBlendElementBridge
                                GraphicsNode filteredNode,
                                Filter inputFilter,
                                Rectangle2D filterRegion,
-                               Map filterMap) {
+                               Map<String, Filter> filterMap) {
 
 
         // 'mode' attribute - default is 'normal'
@@ -122,7 +123,7 @@ public class SVGFeBlendElementBridge
                                                         ctx);
 
         // build the blend filter
-        List srcs = new ArrayList(2);
+        List<Filter> srcs = new ArrayList<>(2);
         srcs.add(in2);
         srcs.add(in);
 

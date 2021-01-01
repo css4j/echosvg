@@ -24,6 +24,7 @@ import io.sf.carte.echosvg.xml.XMLUtilities;
  * XML scanner for parsing xml text
  *
  * @author <a href="mailto:tonny@kiyut.com">Tonny Kohar</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XMLScanner {

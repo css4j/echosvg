@@ -25,6 +25,7 @@ import java.awt.Shape;
  * made on it.
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Selectable {

@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.parser;
 /**
  *
  * @author  tonny@kiyut.com
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultNumberListHandler implements NumberListHandler {

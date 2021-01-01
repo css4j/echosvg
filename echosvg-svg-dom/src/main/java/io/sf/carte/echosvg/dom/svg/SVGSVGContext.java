@@ -31,6 +31,7 @@ import org.w3c.dom.svg.SVGRect;
  * and enclosure checking.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGSVGContext extends SVGContext {
@@ -40,14 +41,14 @@ public interface SVGSVGContext extends SVGContext {
      * <code>svgRect</code> that are below <code>end</code> in the
      * rendering order.
      */
-    List getIntersectionList(SVGRect svgRect, Element end);
+    List<Element> getIntersectionList(SVGRect svgRect, Element end);
 
     /**
      * Returns a List of all the DOM elements that are encosed in
      * <code>svgRect</code> that are below <code>end</code> in the
      * rendering order.
      */
-    List getEnclosureList(SVGRect rect, Element end);
+    List<Element> getEnclosureList(SVGRect rect, Element end);
 
     /**
      * Returns true if the given DOM element intersects

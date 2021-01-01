@@ -29,6 +29,7 @@ import java.net.URL;
  * 'normal' URL formats, so in many cases 
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class ParsedURLDefaultProtocolHandler 

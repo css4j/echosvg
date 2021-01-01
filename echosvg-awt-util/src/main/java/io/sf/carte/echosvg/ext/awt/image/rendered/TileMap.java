@@ -28,24 +28,25 @@ import io.sf.carte.echosvg.util.HaltingThread;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TileMap implements TileStore {
     private static final boolean DEBUG = false;
     private static final boolean COUNT = false;
 
-    private HashMap rasters=new HashMap();
+    private HashMap<Point, TileMapLRUMember> rasters=new HashMap<>();
 
     static class TileMapLRUMember extends TileLRUMember {
         public Point   pt;
-        public SoftReference parent;
+        public SoftReference<TileMap> parent;
 
-        class RasterSoftRef extends CleanerThread.SoftReferenceCleared {
-            RasterSoftRef(Object o) { super(o); }
+        class RasterSoftRef extends CleanerThread.SoftReferenceCleared<Raster> {
+            RasterSoftRef(Raster o) { super(o); }
             @Override
             public void cleared() {
                 if (DEBUG) System.err.println("Cleaned: " + this);
-                TileMap tm = (TileMap)parent.get();
+                TileMap tm = parent.get();
                 if (tm != null)
                     tm.rasters.remove(pt);
             }
@@ -53,7 +54,7 @@ public class TileMap implements TileStore {
 
         TileMapLRUMember(TileMap parent, Point pt, Raster ras) {
             super(ras);
-            this.parent = new SoftReference(parent);
+            this.parent = new SoftReference<>(parent);
             this.pt     = pt;
         }
 

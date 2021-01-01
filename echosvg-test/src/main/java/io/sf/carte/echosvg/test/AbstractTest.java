@@ -80,6 +80,7 @@ import java.io.StringWriter;
  * </code>
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractTest implements Test {

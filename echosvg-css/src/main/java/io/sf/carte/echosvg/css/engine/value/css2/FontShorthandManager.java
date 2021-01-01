@@ -109,7 +109,7 @@ public class FontShorthandManager
         }
     }
 
-    protected static final Set values = new HashSet();
+    protected static final Set<String> values = new HashSet<>();
     static {
         values.add(CSSConstants.CSS_CAPTION_VALUE);
         values.add(CSSConstants.CSS_ICON_VALUE);
@@ -161,6 +161,8 @@ public class FontShorthandManager
                 return;
             }
         }
+        default:
+            break;
         }
 
         LexicalUnit fontStyle   = null;
@@ -276,6 +278,8 @@ public class FontShorthandManager
             fontSize = lu;
             lu = lu.getNextLexicalUnit();
             break;
+        default:
+            break;
         }
 
 
@@ -314,6 +318,8 @@ public class FontShorthandManager
                 throw createMalformedLexicalUnitDOMException();
             lineHeight = lu;
             lu = lu.getNextLexicalUnit();
+            break;
+        default:
             break;
         }
 

@@ -68,6 +68,7 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * &lt;/svg&gt;</code>
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SelfContainedSVGOnLoadTest extends AbstractTest {

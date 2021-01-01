@@ -30,6 +30,7 @@ import org.w3c.dom.events.EventTarget;
  * <code>EventTarget</code> objects as DOM Level 2 recommendation
  * required.
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 class EchoSVGWrapFactory extends WrapFactory {
@@ -42,7 +43,7 @@ class EchoSVGWrapFactory extends WrapFactory {
 
     @Override
     public Object wrap(Context ctx, Scriptable scope,
-                       Object obj, Class staticType) {
+                       Object obj, Class<?> staticType) {
         if (obj instanceof EventTarget) {
             return interpreter.buildEventTargetWrapper((EventTarget)obj);
         }

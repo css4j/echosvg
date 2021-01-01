@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.gvt.font.UnicodeRange;
  * A base Bridge class for the kerning elements.
  *
  * @author <a href="mailto:dean.jackson@cmis.csiro.au">Dean Jackson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGKernElementBridge extends AbstractSVGBridge {
@@ -66,8 +67,8 @@ public abstract class SVGKernElementBridge extends AbstractSVGBridge {
         int firstGlyphLen = 0, secondGlyphLen = 0;
         int [] firstGlyphSet = null;
         int [] secondGlyphSet = null;
-        List firstUnicodeRanges = new ArrayList();
-        List secondUnicodeRanges = new ArrayList();
+        List<UnicodeRange> firstUnicodeRanges = new ArrayList<>();
+        List<UnicodeRange> secondUnicodeRanges = new ArrayList<>();
 
         // process the u1 attribute
         StringTokenizer st = new StringTokenizer(u1, ",");

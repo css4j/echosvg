@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.gvt.flow;
 
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextAttribute;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import io.sf.carte.echosvg.gvt.font.GVTLineMetrics;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class BlockInfo {
@@ -46,8 +48,8 @@ public class BlockInfo {
     protected int     alignment;
 
     protected float   lineHeight;
-    protected List    fontList;
-    protected Map     fontAttrs;
+    protected List<GVTFont>    fontList;
+    protected Map<Attribute, Object>     fontAttrs;
     protected float   ascent=-1;
     protected float   descent=-1;
 
@@ -56,7 +58,7 @@ public class BlockInfo {
 
     public BlockInfo(float top, float right, float bottom, float left,
                      float indent, int alignment, float lineHeight,
-                     List fontList, Map fontAttrs,
+                     List<GVTFont> fontList, Map<Attribute, Object> fontAttrs,
                      boolean flowRegionBreak) {
         this.top    = top;
         this.right  = right;
@@ -94,8 +96,7 @@ public class BlockInfo {
         if (fsFloat != null)
             fontSize = fsFloat;
 
-        for (Object aFontList : fontList) {
-            GVTFont font = (GVTFont) aFontList;
+        for (GVTFont font : fontList) {
             GVTLineMetrics lm = font.getLineMetrics("", frc);
             this.ascent = lm.getAscent();
             this.descent = lm.getDescent();
@@ -118,8 +119,8 @@ public class BlockInfo {
 
 
     public float   getLineHeight()      { return lineHeight; }
-    public List    getFontList()        { return fontList; }
-    public Map     getFontAttrs()       { return fontAttrs; }
+    public List<GVTFont> getFontList()  { return fontList; }
+    public Map<Attribute, Object> getFontAttrs() { return fontAttrs; }
     public float   getAscent()          { return ascent; }
     public float   getDescent()         { return descent; }
 

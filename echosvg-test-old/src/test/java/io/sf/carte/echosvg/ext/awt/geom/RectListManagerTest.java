@@ -47,6 +47,7 @@ import io.sf.carte.echosvg.util.Base64Test;
  * This test validates that the text selection API's work properly.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RectListManagerTest extends AbstractTest {
@@ -146,6 +147,7 @@ public class RectListManagerTest extends AbstractTest {
     /**
      * Returns this Test's name
      */
+    @Override
     public String getName() {
         return rects.toString();
     }
@@ -165,6 +167,7 @@ public class RectListManagerTest extends AbstractTest {
      * This method will only throw exceptions if some aspect
      * of the test's internal operation fails.
      */
+    @Override
     public TestReport runImpl() throws Exception {
         DefaultTestReport report = new DefaultTestReport(this);
 
@@ -181,7 +184,7 @@ public class RectListManagerTest extends AbstractTest {
             FileOutputStream fos = new FileOutputStream(can);
             PrintStream ps = new PrintStream(fos);
 
-            Map rlms = new HashMap();
+            Map<String, Object> rlms = new HashMap<>();
             RectListManager currRLM = null;
             String          currID  = null;
             String line;
@@ -380,6 +383,7 @@ public class RectListManagerTest extends AbstractTest {
 
             return mismatch;
         }
+        @Override
         public void run() {
             mismatch = Base64Test.compareStreams (is1, is2, true);
         }

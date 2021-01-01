@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class implements {@link org.w3c.dom.svg.SVGGradientElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGOMGradientElement
@@ -45,10 +46,10 @@ public abstract class SVGOMGradientElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGStylableElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
         t.put(null, SVG_GRADIENT_UNITS_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_IDENT));
         t.put(null, SVG_SPREAD_METHOD_ATTRIBUTE,
@@ -230,7 +231,7 @@ public abstract class SVGOMGradientElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

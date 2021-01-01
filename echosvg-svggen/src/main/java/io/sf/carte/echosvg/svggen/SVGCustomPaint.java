@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * a set of SVG properties and definitions.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see                io.sf.carte.echosvg.svggen.SVGPaint
  */

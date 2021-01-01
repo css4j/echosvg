@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  * This class implements a simple method for handling the node 'prefix'.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas Deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class PrefixableStylableExtensionElement

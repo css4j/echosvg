@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.gvt.renderer;
  * Interface for GVT renderer factory.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface RendererFactory {

@@ -24,6 +24,7 @@ import java.awt.geom.Rectangle2D;
 /**
  * An interface that path segments must implement.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Segment extends Cloneable {

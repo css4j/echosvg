@@ -25,6 +25,7 @@ import java.awt.image.renderable.RenderableImage;
  * Describes a mask.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Mask extends RenderableImage {

@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.util;
  * Important: Constants must not contain uppercase characters.
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVG12CSSConstants extends CSSConstants {

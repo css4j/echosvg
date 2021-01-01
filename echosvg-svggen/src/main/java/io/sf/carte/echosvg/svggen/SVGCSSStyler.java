@@ -32,6 +32,7 @@ import org.w3c.dom.NodeList;
  * attribute into one that uses the CSS style attribute instead.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGCSSStyler implements SVGSyntax{
@@ -56,7 +57,7 @@ public class SVGCSSStyler implements SVGSyntax{
             Element element = (Element)node;
             StringBuffer styleAttrBuffer = new StringBuffer();
             int nAttr = attributes.getLength();
-            List toBeRemoved = new ArrayList();
+            List<String> toBeRemoved = new ArrayList<>();
             for(int i=0; i<nAttr; i++){
                 Attr attr = (Attr)attributes.item(i);
                 String attrName = attr.getName();
@@ -78,9 +79,8 @@ public class SVGCSSStyler implements SVGSyntax{
                                        SVG_STYLE_ATTRIBUTE,
                                        styleAttrBuffer.toString().trim());
 
-                int n = toBeRemoved.size();
-                for (Object aToBeRemoved : toBeRemoved) {
-                    element.removeAttribute((String) aToBeRemoved);
+                for (String aToBeRemoved : toBeRemoved) {
+                    element.removeAttribute(aToBeRemoved);
                 }
             }
             // else

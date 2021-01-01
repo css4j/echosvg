@@ -24,6 +24,7 @@ import org.w3c.dom.svg.SVGException;
  * An implementation of the SVGException class.
  *
  * @author <a href="mailto:tkormann@ilog.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMException extends SVGException {

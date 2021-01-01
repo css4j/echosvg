@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * Bridge class for vending gradients.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGGradientElementBridge
@@ -67,7 +68,7 @@ public abstract class AbstractSVGGradientElementBridge
         String s;
 
         // stop elements
-        List stops = extractStop(paintElement, opacity, ctx);
+        List<Stop> stops = extractStop(paintElement, opacity, ctx);
         // if no stops are defined, painting is the same as 'none'
         if (stops == null) {
             return null;
@@ -75,13 +76,13 @@ public abstract class AbstractSVGGradientElementBridge
         int stopLength = stops.size();
         // if one stops is defined, painting is the same as a single color
         if (stopLength == 1) {
-            return ((Stop)stops.get(0)).color;
+            return stops.get(0).color;
         }
         float [] offsets = new float[stopLength];
         Color [] colors = new Color[stopLength];
-        Iterator iter = stops.iterator();
+        Iterator<Stop> iter = stops.iterator();
         for (int i=0; iter.hasNext(); ++i) {
-            Stop stop = (Stop)iter.next();
+            Stop stop = iter.next();
             offsets[i] = stop.offset;
             colors[i] = stop.color;
         }
@@ -180,13 +181,13 @@ public abstract class AbstractSVGGradientElementBridge
      * @param opacity the opacity
      * @param ctx the bridge context to use
      */
-    protected static List extractStop(Element paintElement,
+    protected static List<Stop> extractStop(Element paintElement,
                                       float opacity,
                                       BridgeContext ctx) {
 
-        List refs = new LinkedList();
+        List<ParsedURL> refs = new LinkedList<>();
         for (;;) {
-            List stops = extractLocalStop(paintElement, opacity, ctx);
+            List<Stop> stops = extractLocalStop(paintElement, opacity, ctx);
             if (stops != null) {
                 return stops; // stop elements found, exit
             }
@@ -216,10 +217,10 @@ public abstract class AbstractSVGGradientElementBridge
      * @param opacity the opacity
      * @param ctx the bridge context
      */
-    protected static List extractLocalStop(Element gradientElement,
+    protected static List<Stop> extractLocalStop(Element gradientElement,
                                            float opacity,
                                            BridgeContext ctx) {
-        LinkedList stops = null;
+        LinkedList<Stop> stops = null;
         Stop previous = null;
         for (Node n = gradientElement.getFirstChild();
              n != null;
@@ -237,7 +238,7 @@ public abstract class AbstractSVGGradientElementBridge
             Stop stop = ((SVGStopElementBridge)bridge).createStop
                 (ctx, gradientElement, e, opacity);
             if (stops == null) {
-                stops = new LinkedList();
+                stops = new LinkedList<>();
             }
             if (previous != null) {
                 if (stop.offset < previous.offset) {
@@ -256,8 +257,8 @@ public abstract class AbstractSVGGradientElementBridge
      * @param urls the list of URLs
      * @param key the url to search for
      */
-    private static boolean contains(List urls, ParsedURL key) {
-        for (Object url : urls) {
+    private static boolean contains(List<ParsedURL> urls, ParsedURL key) {
+        for (ParsedURL url : urls) {
             if (key.equals(url))
                 return true;
         }

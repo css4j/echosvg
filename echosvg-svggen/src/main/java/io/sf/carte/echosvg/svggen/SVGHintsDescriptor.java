@@ -23,10 +23,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+
 /**
  * Describes a set of SVG hints
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see             io.sf.carte.echosvg.svggen.SVGRenderingHints
  */
@@ -60,9 +63,9 @@ public class SVGHintsDescriptor implements SVGDescriptor, SVGSyntax {
     }
 
     @Override
-    public Map getAttributeMap(Map attrMap) {
+    public Map<String, String> getAttributeMap(Map<String, String> attrMap) {
         if (attrMap == null)
-            attrMap = new HashMap();
+            attrMap = new HashMap<>();
 
         attrMap.put(SVG_COLOR_INTERPOLATION_ATTRIBUTE, colorInterpolation);
         attrMap.put(SVG_COLOR_RENDERING_ATTRIBUTE, colorRendering);
@@ -74,9 +77,9 @@ public class SVGHintsDescriptor implements SVGDescriptor, SVGSyntax {
     }
 
     @Override
-    public List getDefinitionSet(List defSet) {
+    public List<Element> getDefinitionSet(List<Element> defSet) {
         if (defSet == null)
-            defSet = new LinkedList();
+            defSet = new LinkedList<>();
 
         return defSet;
     }

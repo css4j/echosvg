@@ -47,6 +47,7 @@ import io.sf.carte.echosvg.script.ScriptEventWrapper;
  * a parameter instead of a function provided the fact that this object
  * has a <code>handleEvent</code> method.
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 class EventTargetWrapper extends NativeJavaObject {
@@ -93,7 +94,7 @@ class EventTargetWrapper extends NativeJavaObject {
             } else {
                 array[0] = evt;
             }
-            ContextAction handleEventAction = new ContextAction() {
+            ContextAction<Object> handleEventAction = new ContextAction<Object>() {
                 @Override
                 public Object run(Context cx) {
                     ScriptableObject.callMethod
@@ -189,7 +190,7 @@ class EventTargetWrapper extends NativeJavaObject {
         }
 
         @Override
-        public Object getDefaultValue(Class hint) {
+        public Object getDefaultValue(Class<?> hint) {
             return this.delegate.getDefaultValue(hint);
         }
 
@@ -209,10 +210,10 @@ class EventTargetWrapper extends NativeJavaObject {
      * cases.
      */
     static class FunctionAddProxy extends FunctionProxy {
-        protected Map              listenerMap;
+        protected Map<Object, SoftReference<EventListener>>              listenerMap;
         protected RhinoInterpreter interpreter;
         FunctionAddProxy(RhinoInterpreter interpreter,
-                         Function delegate, Map listenerMap) {
+                         Function delegate, Map<Object, SoftReference<EventListener>> listenerMap) {
             super(delegate);
             this.listenerMap = listenerMap;
             this.interpreter = interpreter;
@@ -224,16 +225,16 @@ class EventTargetWrapper extends NativeJavaObject {
             NativeJavaObject njo = (NativeJavaObject)thisObj;
             if (args[1] instanceof Function) {
                 EventListener evtListener = null;
-                SoftReference sr = (SoftReference)listenerMap.get(args[1]);
+                SoftReference<EventListener> sr = listenerMap.get(args[1]);
                 if (sr != null)
-                    evtListener = (EventListener)sr.get();
+                    evtListener = sr.get();
                 if (evtListener == null) {
                     evtListener = new FunctionEventListener
                         ((Function)args[1], interpreter);
-                    listenerMap.put(args[1], new SoftReference(evtListener));
+                    listenerMap.put(args[1], new SoftReference<>(evtListener));
                 }
                 // we need to marshall args
-                Class[] paramTypes = { String.class, Function.class,
+                Class<?>[] paramTypes = { String.class, Function.class,
                                        Boolean.TYPE };
                 for (int i = 0; i < args.length; i++)
                     args[i] = Context.jsToJava(args[i], paramTypes[i]);
@@ -244,17 +245,17 @@ class EventTargetWrapper extends NativeJavaObject {
             }
             if (args[1] instanceof NativeObject) {
                 EventListener evtListener = null;
-                SoftReference sr = (SoftReference)listenerMap.get(args[1]);
+                SoftReference<EventListener> sr = listenerMap.get(args[1]);
                 if (sr != null)
-                    evtListener = (EventListener)sr.get();
+                    evtListener = sr.get();
                 if (evtListener == null) {
                     evtListener = new HandleEventListener((Scriptable)args[1],
                                                           interpreter);
-                    listenerMap.put(args[1], new SoftReference(evtListener));
+                    listenerMap.put(args[1], new SoftReference<>(evtListener));
                 }
 
                 // we need to marshall args
-                Class[] paramTypes = { String.class, Scriptable.class,
+                Class<?>[] paramTypes = { String.class, Scriptable.class,
                                        Boolean.TYPE };
                 for (int i = 0; i < args.length; i++)
                     args[i] = Context.jsToJava(args[i], paramTypes[i]);
@@ -268,9 +269,9 @@ class EventTargetWrapper extends NativeJavaObject {
     }
 
     static class FunctionRemoveProxy extends FunctionProxy {
-        public Map listenerMap;
+        public Map<Object, SoftReference<EventListener>> listenerMap;
 
-        FunctionRemoveProxy(Function delegate, Map listenerMap) {
+        FunctionRemoveProxy(Function delegate, Map<Object, SoftReference<EventListener>> listenerMap) {
             super(delegate);
             this.listenerMap = listenerMap;
         }
@@ -280,15 +281,15 @@ class EventTargetWrapper extends NativeJavaObject {
                            Scriptable thisObj, Object[] args) {
             NativeJavaObject njo = (NativeJavaObject)thisObj;
             if (args[1] instanceof Function) {
-                SoftReference sr = (SoftReference)listenerMap.get(args[1]);
+                SoftReference<EventListener> sr = listenerMap.get(args[1]);
                 if (sr == null)
                     return Undefined.instance;
-                EventListener el = (EventListener)sr.get();
+                EventListener el = sr.get();
                 if (el == null)
                     return Undefined.instance;
 
                 // we need to marshall args
-                Class[] paramTypes = { String.class, Function.class,
+                Class<?>[] paramTypes = { String.class, Function.class,
                                        Boolean.TYPE };
                 for (int i = 0; i < args.length; i++)
                     args[i] = Context.jsToJava(args[i], paramTypes[i]);
@@ -297,14 +298,14 @@ class EventTargetWrapper extends NativeJavaObject {
                 return Undefined.instance;
             }
             if (args[1] instanceof NativeObject) {
-                SoftReference sr = (SoftReference)listenerMap.get(args[1]);
+                SoftReference<EventListener> sr = listenerMap.get(args[1]);
                 if (sr == null)
                     return Undefined.instance;
-                EventListener el = (EventListener)sr.get();
+                EventListener el = sr.get();
                 if (el == null)
                     return Undefined.instance;
                 // we need to marshall args
-                Class[] paramTypes = { String.class, Scriptable.class,
+                Class<?>[] paramTypes = { String.class, Scriptable.class,
                                        Boolean.TYPE };
                 for (int i = 0; i < args.length; i++)
                     args[i] = Context.jsToJava(args[i], paramTypes[i]);
@@ -317,11 +318,11 @@ class EventTargetWrapper extends NativeJavaObject {
     }
 
     static class FunctionAddNSProxy extends FunctionProxy {
-        protected Map              listenerMap;
+        protected Map<Object, SoftReference<EventListener>>              listenerMap;
         protected RhinoInterpreter interpreter;
 
         FunctionAddNSProxy(RhinoInterpreter interpreter,
-                           Function delegate, Map listenerMap) {
+                           Function delegate, Map<Object, SoftReference<EventListener>> listenerMap) {
             super(delegate);
             this.listenerMap = listenerMap;
             this.interpreter = interpreter;
@@ -334,9 +335,9 @@ class EventTargetWrapper extends NativeJavaObject {
             if (args[2] instanceof Function) {
                 EventListener evtListener = new FunctionEventListener
                     ((Function)args[2], interpreter);
-                listenerMap.put(args[2], new SoftReference(evtListener));
+                listenerMap.put(args[2], new SoftReference<>(evtListener));
                 // we need to marshall args
-                Class[] paramTypes = { String.class, String.class,
+                Class<?>[] paramTypes = { String.class, String.class,
                                        Function.class, Boolean.TYPE,
                                        Object.class };
                 for (int i = 0; i < args.length; i++)
@@ -353,9 +354,9 @@ class EventTargetWrapper extends NativeJavaObject {
             if (args[2] instanceof NativeObject) {
                 EventListener evtListener =
                     new HandleEventListener((Scriptable)args[2], interpreter);
-                listenerMap.put(args[2], new SoftReference(evtListener));
+                listenerMap.put(args[2], new SoftReference<>(evtListener));
                 // we need to marshall args
-                Class[] paramTypes = { String.class, String.class,
+                Class<?>[] paramTypes = { String.class, String.class,
                                        Scriptable.class, Boolean.TYPE,
                                        Object.class };
                 for (int i = 0; i < args.length; i++)
@@ -374,9 +375,9 @@ class EventTargetWrapper extends NativeJavaObject {
     }
 
     static class FunctionRemoveNSProxy extends FunctionProxy {
-        protected Map listenerMap;
+        protected Map<Object, SoftReference<EventListener>> listenerMap;
 
-        FunctionRemoveNSProxy(Function delegate, Map listenerMap) {
+        FunctionRemoveNSProxy(Function delegate, Map<Object, SoftReference<EventListener>> listenerMap) {
             super(delegate);
             this.listenerMap = listenerMap;
         }
@@ -386,14 +387,14 @@ class EventTargetWrapper extends NativeJavaObject {
                            Scriptable thisObj, Object[] args) {
             NativeJavaObject njo = (NativeJavaObject)thisObj;
             if (args[2] instanceof Function) {
-                SoftReference sr = (SoftReference)listenerMap.get(args[2]);
+                SoftReference<EventListener> sr = listenerMap.get(args[2]);
                 if (sr == null)
                     return Undefined.instance;
-                EventListener el = (EventListener)sr.get();
+                EventListener el = sr.get();
                 if (el == null)
                     return Undefined.instance;
                 // we need to marshall args
-                Class[] paramTypes = { String.class, String.class,
+                Class<?>[] paramTypes = { String.class, String.class,
                                        Function.class, Boolean.TYPE };
                 for (int i = 0; i < args.length; i++)
                     args[i] = Context.jsToJava(args[i], paramTypes[i]);
@@ -406,14 +407,14 @@ class EventTargetWrapper extends NativeJavaObject {
                 return Undefined.instance;
             }
             if (args[2] instanceof NativeObject) {
-                SoftReference sr = (SoftReference)listenerMap.get(args[2]);
+                SoftReference<EventListener> sr = listenerMap.get(args[2]);
                 if (sr == null)
                     return Undefined.instance;
-                EventListener el = (EventListener)sr.get();
+                EventListener el = sr.get();
                 if (el == null)
                     return Undefined.instance;
                 // we need to marshall args
-                Class[] paramTypes = { String.class, String.class,
+                Class<?>[] paramTypes = { String.class, String.class,
                                        Scriptable.class, Boolean.TYPE };
                 for (int i = 0; i < args.length; i++)
                     args[i] = Context.jsToJava(args[i], paramTypes[i]);
@@ -434,7 +435,7 @@ class EventTargetWrapper extends NativeJavaObject {
     // to remove potential memory leaks use a WeakHashMap to allow
     // to collect entries as soon as the underlying Java object is
     // not available anymore.
-    protected static WeakHashMap mapOfListenerMap;
+    protected static WeakHashMap<Object, Map<Object, SoftReference<EventListener>>> mapOfListenerMap;
 
     public static final String ADD_NAME      = "addEventListener";
     public static final String ADDNS_NAME    = "addEventListenerNS";
@@ -476,12 +477,12 @@ class EventTargetWrapper extends NativeJavaObject {
     // we have to store the listenerMap in a Map because
     // several EventTargetWrapper may be created for the exact
     // same underlying Java object.
-    public Map initMap() {
-        Map map = null;
+    public Map<Object, SoftReference<EventListener>> initMap() {
+        Map<Object, SoftReference<EventListener>> map = null;
         if (mapOfListenerMap == null)
-            mapOfListenerMap = new WeakHashMap(10);
-        if ((map = (Map)mapOfListenerMap.get(unwrap())) == null) {
-            mapOfListenerMap.put(unwrap(), map = new WeakHashMap(2));
+            mapOfListenerMap = new WeakHashMap<>(10);
+        if ((map = mapOfListenerMap.get(unwrap())) == null) {
+            mapOfListenerMap.put(unwrap(), map = new WeakHashMap<>(2));
         }
         return map;
     }

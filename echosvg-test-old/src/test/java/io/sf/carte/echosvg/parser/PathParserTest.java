@@ -18,14 +18,17 @@
  */
 package io.sf.carte.echosvg.parser;
 
-import java.io.*;
+import java.io.StringReader;
 
-import io.sf.carte.echosvg.test.*;
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.TestReport;
 
 /**
  * To test the path parser.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PathParserTest extends AbstractTest {
@@ -46,6 +49,7 @@ public class PathParserTest extends AbstractTest {
         destinationPath = dpath;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         PathParser pp = new PathParser();
         pp.setPathHandler(new TestHandler());
@@ -75,10 +79,12 @@ public class PathParserTest extends AbstractTest {
     class TestHandler extends DefaultPathHandler {
         public TestHandler() {}
 
+        @Override
         public void startPath() throws ParseException {
             buffer = new StringBuffer();
         }
         
+        @Override
         public void movetoRel(float x, float y) throws ParseException {
             buffer.append('m');
             buffer.append(x);
@@ -86,6 +92,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void movetoAbs(float x, float y) throws ParseException {
             buffer.append('M');
             buffer.append(x);
@@ -93,14 +100,17 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void endPath() throws ParseException {
             resultPath = buffer.toString();
         }
 
+        @Override
         public void closePath() throws ParseException {
             buffer.append('Z');
         }
 
+        @Override
         public void linetoRel(float x, float y) throws ParseException {
             buffer.append('l');
             buffer.append(x);
@@ -108,6 +118,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void linetoAbs(float x, float y) throws ParseException {
             buffer.append('L');
             buffer.append(x);
@@ -115,26 +126,31 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void linetoHorizontalRel(float x) throws ParseException {
             buffer.append('h');
             buffer.append(x);
         }
 
+        @Override
         public void linetoHorizontalAbs(float x) throws ParseException {
             buffer.append('H');
             buffer.append(x);
         }
 
+        @Override
         public void linetoVerticalRel(float y) throws ParseException {
             buffer.append('v');
             buffer.append(y);
         }
 
+        @Override
         public void linetoVerticalAbs(float y) throws ParseException {
             buffer.append('V');
             buffer.append(y);
         }
 
+        @Override
         public void curvetoCubicRel(float x1, float y1, 
                                     float x2, float y2, 
                                     float x, float y) throws ParseException {
@@ -152,6 +168,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void curvetoCubicAbs(float x1, float y1, 
                                     float x2, float y2, 
                                     float x, float y) throws ParseException {
@@ -169,6 +186,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void curvetoCubicSmoothRel(float x2, float y2, 
                                           float x, float y) throws ParseException {
             buffer.append('s');
@@ -181,6 +199,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void curvetoCubicSmoothAbs(float x2, float y2, 
                                           float x, float y) throws ParseException {
             buffer.append('S');
@@ -193,6 +212,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void curvetoQuadraticRel(float x1, float y1, 
                                         float x, float y) throws ParseException {
             buffer.append('q');
@@ -205,6 +225,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void curvetoQuadraticAbs(float x1, float y1, 
                                         float x, float y) throws ParseException {
             buffer.append('Q');
@@ -217,6 +238,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void curvetoQuadraticSmoothRel(float x, float y)
             throws ParseException {
             buffer.append('t');
@@ -225,6 +247,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void curvetoQuadraticSmoothAbs(float x, float y)
             throws ParseException {
             buffer.append('T');
@@ -233,6 +256,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void arcRel(float rx, float ry, 
                            float xAxisRotation, 
                            boolean largeArcFlag, boolean sweepFlag, 
@@ -253,6 +277,7 @@ public class PathParserTest extends AbstractTest {
             buffer.append(y);
         }
 
+        @Override
         public void arcAbs(float rx, float ry, 
                            float xAxisRotation, 
                            boolean largeArcFlag, boolean sweepFlag, 

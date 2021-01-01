@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.svggen;
  * how the error will be set on an SVG <code>Element</code>.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultErrorHandler implements ErrorHandler {

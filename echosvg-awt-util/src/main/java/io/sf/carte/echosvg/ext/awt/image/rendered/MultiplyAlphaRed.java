@@ -41,6 +41,7 @@ import java.util.List;
  * one image by a luminance image (the mask).
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public class MultiplyAlphaRed extends AbstractRed {
 
@@ -286,8 +287,8 @@ public class MultiplyAlphaRed extends AbstractRed {
         return wr;
     }
 
-    public static List makeList(CachableRed src1, CachableRed src2) {
-        List ret = new ArrayList(2);
+    public static List<CachableRed> makeList(CachableRed src1, CachableRed src2) {
+        List<CachableRed> ret = new ArrayList<>(2);
         ret.add(src1);
         ret.add(src2);
         return ret;

@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.extension.GraphicsExtensionElement;
  * This class implements a star shape extension to sVG
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGStarElement

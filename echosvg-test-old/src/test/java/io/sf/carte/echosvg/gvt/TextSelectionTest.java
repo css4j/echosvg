@@ -27,6 +27,7 @@ import org.w3c.dom.svg.SVGTextContentElement;
 
 import io.sf.carte.echosvg.swing.JSVGCanvas;
 import io.sf.carte.echosvg.swing.JSVGCanvasHandler;
+import io.sf.carte.echosvg.swing.svg.JSVGComponent;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.test.svg.JSVGRenderingAccuracyTest;
@@ -36,6 +37,7 @@ import io.sf.carte.echosvg.test.svg.JSVGRenderingAccuracyTest;
  * This test validates that the text selection API's work properly.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TextSelectionTest extends JSVGRenderingAccuracyTest {
@@ -116,6 +118,7 @@ public class TextSelectionTest extends JSVGRenderingAccuracyTest {
     protected int    start;
     protected int    end;
 
+    @Override
     public void setId(String id) { this.id = id; }
 
     /**
@@ -133,22 +136,26 @@ public class TextSelectionTest extends JSVGRenderingAccuracyTest {
         super.setFile(file);
     }
 
+    @Override
     protected String buildRefImgURL(String svgDir, String svgFile){
         return getRefImagePrefix() + svgDir + getRefImageSuffix() +
             svgFile + '-' +textID+ '-' + start + '-' + end +PNG_EXTENSION;
     }
 
+    @Override
     public String[] buildVariationURLs(String svgDir, String svgFile){
         return new String[] {getVariationPrefix() + svgDir + getVariationSuffix() +
             svgFile + '-' +textID+ '-' + start + '-' + end +PNG_EXTENSION};
 
     }
 
+    @Override
     public String  buildSaveVariationFile(String svgDir, String svgFile){
         return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() +
             svgFile + '-' +textID+ '-' + start + '-' + end +PNG_EXTENSION;
     }
 
+    @Override
     public String  buildCandidateReferenceFile(String svgDir, String svgFile){
         return getCandidateReferencePrefix() + svgDir + getCandidateReferenceSuffix() +
             svgFile + '-' +textID+ '-' + start + '-' + end +PNG_EXTENSION;
@@ -156,20 +163,24 @@ public class TextSelectionTest extends JSVGRenderingAccuracyTest {
     /**
      * Returns this Test's name
      */
+    @Override
     public String getName() {
         return super.getName() + '#' +textID+ '(' + start + ',' + end + ')';
     }
 
+    @Override
     public JSVGCanvasHandler createCanvasHandler() {
         return new JSVGCanvasHandler(this, this) {
+                @Override
                 public JSVGCanvas createCanvas() {
                     JSVGCanvas ret = new JSVGCanvas();
-                    ret.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
+                    ret.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
                     return ret;
                 }
             };
     }
 
+    @Override
     public void canvasRendered(JSVGCanvas canvas) {
         DefaultTestReport report = new DefaultTestReport(this);
         try {

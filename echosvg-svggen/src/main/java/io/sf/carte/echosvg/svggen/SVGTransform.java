@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.TransformType;
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author <a href="mailto:paul_evenblij@compuware.com">Paul Evenblij</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGTransform extends AbstractSVGConverter{
@@ -86,16 +87,16 @@ public class SVGTransform extends AbstractSVGConverter{
         //
         // Append transforms in the presentation stack
         //
-        Stack presentation = new Stack() {
+        Stack<TransformStackElement> presentation = new Stack<TransformStackElement>() {
             private static final long serialVersionUID = 1L;
 
             /**
              * Adapted push implementation
              */
             @Override
-            public Object push(Object o) {
-                Object element;
-                if(((TransformStackElement)o).isIdentity()) {
+            public TransformStackElement push(TransformStackElement o) {
+                TransformStackElement element;
+                if(o.isIdentity()) {
                     // identity transform: don't push,
                     // and try to return top of stack
                     element = pop();
@@ -112,8 +113,8 @@ public class SVGTransform extends AbstractSVGConverter{
              * Adapted pop implementation
              */
             @Override
-            public Object pop() {
-                Object element = null;
+            public TransformStackElement pop() {
+                TransformStackElement element = null;
                 if(!super.empty()) {
                     element = super.pop();
                 }
@@ -138,7 +139,7 @@ public class SVGTransform extends AbstractSVGConverter{
             // we grab one here.
             next = i;
             if(element == null) {
-                element = (TransformStackElement) transformStack[i].clone();
+                element = transformStack[i].clone();
                 next++;
             }
 
@@ -164,7 +165,7 @@ public class SVGTransform extends AbstractSVGConverter{
             // If an identity is pushed, it is immediately removed, and
             // the current top of stack will be returned to concatenate onto.
             // Otherwise, null will be returned.
-            element = (TransformStackElement) presentation.push(element);
+            element = presentation.push(element);
         }
 
         // Push back teh last element popped, if not null
@@ -179,7 +180,7 @@ public class SVGTransform extends AbstractSVGConverter{
 
         StringBuffer transformStackBuffer = new StringBuffer( nPresentations * 8 );
         for(i = 0; i < nPresentations; i++) {
-            transformStackBuffer.append(convertTransform((TransformStackElement) presentation.get(i)));
+            transformStackBuffer.append(convertTransform(presentation.get(i)));
             transformStackBuffer.append(SPACE);
         }
 

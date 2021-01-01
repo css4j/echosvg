@@ -81,6 +81,7 @@ import io.sf.carte.echosvg.util.gui.JErrorPane;
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JSVGCanvas extends JSVGComponent {
@@ -193,10 +194,10 @@ public class JSVGCanvas extends JSVGComponent {
      * Mapping of elements to listeners so they can be removed,
      * if the tooltip is removed.
      */
-    protected Map toolTipMap = null;
+    protected Map<Element, String> toolTipMap = null;
     protected EventListener toolTipListener = new ToolTipModifier();
     protected EventTarget   lastTarget = null;
-    protected Map toolTipDocs = null;
+    protected Map<SVGDocument, Object> toolTipDocs = null;
     /**
      * This is used as the value in the toolTipDocs WeakHashMap.
      * This way we can tell if a document has already been added.
@@ -239,7 +240,7 @@ public class JSVGCanvas extends JSVGComponent {
         setPreferredSize(new Dimension(200, 200));
         setMinimumSize(new Dimension(100, 100));
 
-        List intl = getInteractors();
+        List<Interactor> intl = getInteractors();
         intl.add(zoomInteractor);
         intl.add(imageZoomInteractor);
         intl.add(panInteractor);
@@ -573,9 +574,7 @@ public class JSVGCanvas extends JSVGComponent {
     @Override
     protected void installSVGDocument(SVGDocument doc) {
         if (toolTipDocs != null) {
-            for (Object o : toolTipDocs.keySet()) {
-                SVGDocument ttdoc;
-                ttdoc = (SVGDocument) o;
+            for (SVGDocument ttdoc : toolTipDocs.keySet()) {
                 if (ttdoc == null) continue;
 
                 NodeEventTarget root;
@@ -1102,10 +1101,10 @@ public class JSVGCanvas extends JSVGComponent {
          */
         public void setToolTip(Element elt, String toolTip){
             if (toolTipMap == null) {
-                toolTipMap = new WeakHashMap();
+                toolTipMap = new WeakHashMap<>();
             }
             if (toolTipDocs == null) {
-                toolTipDocs = new WeakHashMap();
+                toolTipDocs = new WeakHashMap<>();
             }
             SVGDocument doc = (SVGDocument)elt.getOwnerDocument();
             if (toolTipDocs.put(doc, MAP_TOKEN) == null) {

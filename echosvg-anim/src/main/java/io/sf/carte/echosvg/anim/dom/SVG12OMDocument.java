@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.css.engine.CSSNavigableDocumentListener;
  * SVG 1.2 specifics.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVG12OMDocument extends SVGOMDocument {
@@ -124,7 +125,7 @@ public class SVG12OMDocument extends SVGOMDocument {
     public void removeCSSNavigableDocumentListener
             (CSSNavigableDocumentListener l) {
         EventListener[] listeners
-            = (EventListener[]) cssNavigableDocumentListeners.get(l);
+            = cssNavigableDocumentListeners.get(l);
         if (listeners == null) {
             return;
         }

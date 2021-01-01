@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.transcoder;
  * transcoding hints and/or error handler.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractTranscoder extends TranscoderSupport

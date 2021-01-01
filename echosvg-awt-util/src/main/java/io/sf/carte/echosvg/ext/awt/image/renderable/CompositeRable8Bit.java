@@ -28,6 +28,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderContext;
+import java.awt.image.renderable.RenderableImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.FloodRed;
  * the image are applied in the order they are in the List given.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CompositeRable8Bit
@@ -51,7 +53,7 @@ public class CompositeRable8Bit
 
     protected CompositeRule rule;
 
-    public CompositeRable8Bit(List srcs,
+    public CompositeRable8Bit(List<? extends RenderableImage> srcs,
                               CompositeRule rule,
                               boolean csIsLinear) {
         super(srcs);
@@ -66,7 +68,7 @@ public class CompositeRable8Bit
        * @param srcs The list of images to be composited by the composite rule.
        */
     @Override
-    public void setSources(List srcs) {
+    public void setSources(List<? extends RenderableImage> srcs) {
         init(srcs, null);
     }
 
@@ -119,8 +121,8 @@ public class CompositeRable8Bit
 
         // System.out.println("drawImage : " + g2dCS +
         //                    crCS);
-        for (Object o : getSources()) {
-            GraphicsUtil.drawImage(g2d, (Filter) o);
+        for (RenderableImage o : getSources()) {
+            GraphicsUtil.drawImage(g2d, o);
         }
         return true;
     }
@@ -155,9 +157,9 @@ public class CompositeRable8Bit
         rc = new RenderContext(at, aoiR, rh);
 
         // note: this hides a member in a superclass!
-        List srcs = new ArrayList();
+        List<CachableRed> srcs = new ArrayList<>();
 
-        for (Object o : getSources()) {
+        for (RenderableImage o : getSources()) {
             // Get the source to work with...
             Filter filt = (Filter) o;
 

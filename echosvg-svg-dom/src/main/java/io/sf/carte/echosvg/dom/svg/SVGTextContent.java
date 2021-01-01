@@ -26,6 +26,7 @@ import java.awt.geom.Rectangle2D;
  * for the bridge to implement.
  *
  * @author nicolas.socheleau@bitflash.com
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGTextContent

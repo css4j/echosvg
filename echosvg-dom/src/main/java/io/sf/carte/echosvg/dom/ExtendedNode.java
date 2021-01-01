@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.dom.events.NodeEventTarget;
  * all the nodes in this implementation.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ExtendedNode extends Node, NodeEventTarget {

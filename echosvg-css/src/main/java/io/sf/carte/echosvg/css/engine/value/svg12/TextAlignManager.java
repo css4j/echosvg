@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a manager for the 'text-align' property values.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TextAlignManager extends IdentifierManager {

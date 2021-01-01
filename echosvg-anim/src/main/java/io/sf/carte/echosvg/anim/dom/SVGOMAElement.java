@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class implements {@link SVGAElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAElement
@@ -58,10 +59,10 @@ public class SVGOMAElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGURIReferenceGraphicsElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGURIReferenceGraphicsElement.xmlTraitInformation);
         t.put(null, SVG_TARGET_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_CDATA));
         xmlTraitInformation = t;
@@ -141,7 +142,7 @@ public class SVGOMAElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

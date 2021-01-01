@@ -25,10 +25,12 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
  * DOM Tests.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 
 public class EcmaScriptDOMTest extends SelfContainedSVGOnLoadTest {
+    @Override
     public void setId(String id){
         super.setId(id);
         svgURL = resolveURL("test-resources/io/sf/carte/echosvg/dom/" + id + ".svg");

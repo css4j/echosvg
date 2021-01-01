@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.util.Platform;
  * This is a wrapper class for a java.awt.font.GlyphVector instance.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AWTGVTGlyphVector implements GVTGlyphVector {

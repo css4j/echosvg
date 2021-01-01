@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.transcoder.image.TIFFTranscoder;
  *
  * @author Henri Ruini
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class DestinationType {
@@ -94,7 +95,7 @@ public final class DestinationType {
                 return new TIFFTranscoder();
             case PDF_CODE:
                 try {
-                    Class pdfClass = Class.forName("org.apache.fop.svg.PDFTranscoder");
+                    Class<?> pdfClass = Class.forName("org.apache.fop.svg.PDFTranscoder");
                     return (Transcoder)pdfClass.getDeclaredConstructor().newInstance();
                 } catch(Exception e) {
                     return null;

@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.transcoder.image.resources.Messages;
  * This class is an <code>ImageTranscoder</code> that produces a JPEG image.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JPEGTranscoder extends ImageTranscoder {

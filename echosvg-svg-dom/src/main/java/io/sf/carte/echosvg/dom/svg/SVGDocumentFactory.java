@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.dom.util.DocumentFactory;
  * This interface represents an object which can build a SVGDocument.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGDocumentFactory extends DocumentFactory {

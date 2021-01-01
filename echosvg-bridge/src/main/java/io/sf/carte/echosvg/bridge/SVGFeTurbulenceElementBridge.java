@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * Bridge class for the &lt;feTurbulence&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFeTurbulenceElementBridge
@@ -76,7 +77,7 @@ public class SVGFeTurbulenceElementBridge
                                GraphicsNode filteredNode,
                                Filter inputFilter,
                                Rectangle2D filterRegion,
-                               Map filterMap) {
+                               Map<String, Filter> filterMap) {
 
         // 'in' attribute
         Filter in = getIn(filterElement,

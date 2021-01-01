@@ -42,6 +42,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
 /**
  * ImageWriter implementation that uses Image I/O to write images.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener {
@@ -71,11 +72,10 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
     public void writeImage(RenderedImage image, OutputStream out, 
             ImageWriterParams params) 
                 throws IOException {
-        Iterator iter;
-        iter = ImageIO.getImageWritersByMIMEType(getMIMEType());
+        Iterator<javax.imageio.ImageWriter> iter = ImageIO.getImageWritersByMIMEType(getMIMEType());
         javax.imageio.ImageWriter iiowriter = null;
         try {
-            iiowriter = (javax.imageio.ImageWriter)iter.next();
+            iiowriter = iter.next();
             if (iiowriter != null) {
                 iiowriter.addIIOWriteWarningListener(this);
 

@@ -24,6 +24,7 @@ import java.util.EventListener;
  * The interface for listening to changes on graphics nodes.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface GraphicsNodeChangeListener extends EventListener {

@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.swing.gvt;
  * <code>GVTTreeRendererEvent</code> events.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class GVTTreeRendererAdapter implements GVTTreeRendererListener {

@@ -27,12 +27,13 @@ import java.util.List;
  * or more simple glyphs, usually with some sort of transformation applied to
  * each.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  */
 public class GlyfCompositeDescript extends GlyfDescript {
 
-    private List components = new ArrayList();
+    private List<GlyfCompositeComp> components = new ArrayList<>();
 
     protected boolean beingResolved = false;
     protected boolean resolved      = false;
@@ -66,8 +67,7 @@ public class GlyfCompositeDescript extends GlyfDescript {
         int firstIndex = 0;
         int firstContour = 0;
 
-        for (Object component : components) {
-            GlyfCompositeComp comp = (GlyfCompositeComp) component;
+        for (GlyfCompositeComp comp : components) {
             comp.setFirstIndex(firstIndex);
             comp.setFirstContour(firstContour);
 
@@ -143,7 +143,7 @@ public class GlyfCompositeDescript extends GlyfDescript {
         if (!resolved)
             System.err.println("getPointCount called on unresolved GlyfCompositeDescript");
 
-        GlyfCompositeComp c = (GlyfCompositeComp) components.get(components.size()-1);
+        GlyfCompositeComp c = components.get(components.size()-1);
         // System.err.println("C: " + c + " Idx: " + c.getGlyphIndex());
         // System.err.println("Ptbl: " + parentTable);
         return c.getFirstIndex() + parentTable.getDescription(c.getGlyphIndex()).getPointCount();
@@ -154,12 +154,12 @@ public class GlyfCompositeDescript extends GlyfDescript {
         if (!resolved)
             System.err.println("getContourCount called on unresolved GlyfCompositeDescript");
 
-        GlyfCompositeComp c = (GlyfCompositeComp) components.get(components.size()-1);
+        GlyfCompositeComp c = components.get(components.size()-1);
         return c.getFirstContour() + parentTable.getDescription(c.getGlyphIndex()).getContourCount();
     }
 
     public int getComponentIndex(int i) {
-        return ((GlyfCompositeComp)components.get(i)).getFirstIndex();
+        return components.get(i).getFirstIndex();
     }
 
     public int getComponentCount() {
@@ -167,9 +167,7 @@ public class GlyfCompositeDescript extends GlyfDescript {
     }
 
     protected GlyfCompositeComp getCompositeComp(int i) {
-        GlyfCompositeComp c;
-        for (Object component : components) {
-            c = (GlyfCompositeComp) component;
+        for (GlyfCompositeComp c : components) {
             GlyphDescription gd = parentTable.getDescription(c.getGlyphIndex());
             if (c.getFirstIndex() <= i && i < (c.getFirstIndex() + gd.getPointCount())) {
                 return c;
@@ -179,9 +177,7 @@ public class GlyfCompositeDescript extends GlyfDescript {
     }
 
     protected GlyfCompositeComp getCompositeCompEndPt(int i) {
-        GlyfCompositeComp c;
-        for (Object component : components) {
-            c = (GlyfCompositeComp) component;
+        for (GlyfCompositeComp c : components) {
             GlyphDescription gd = parentTable.getDescription(c.getGlyphIndex());
             if (c.getFirstContour() <= i && i < (c.getFirstContour() + gd.getContourCount())) {
                 return c;

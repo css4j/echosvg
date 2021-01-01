@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.parser.ParseException;
  * This class is the implementation of {@link SVGNumberList}.
  *
  * @author <a href="mailto:tonny@kiyut.com">Tonny Kohar</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGNumberList

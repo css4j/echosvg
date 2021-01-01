@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * This class implements {@link SVGAnimateColorElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAnimateColorElement
@@ -36,10 +37,10 @@ public class SVGOMAnimateColorElement
 //     /**
 //      * Table mapping XML attribute names to TraitInformation objects.
 //      */
-//     protected static DoublyIndexedTable xmlTraitInformation;
+//     protected static DoublyIndexedTable<String,String> xmlTraitInformation;
 //     static {
-//         DoublyIndexedTable t =
-//             new DoublyIndexedTable(SVGOMAnimationElement.xmlTraitInformation);
+//         DoublyIndexedTable<String,String> t =
+//             new DoublyIndexedTable<>(SVGOMAnimationElement.xmlTraitInformation);
 //         t.put(null, SVG_ACCUMULATE_ATTRIBUTE,
 //                 new TraitInformation(false, SVGTypes.TYPE_IDENT));
 //         t.put(null, SVG_ADDITIVE_ATTRIBUTE,
@@ -119,7 +120,7 @@ public class SVGOMAnimateColorElement
 //     /**
 //      * Returns the table of TraitInformation objects for this element.
 //      */
-//     protected DoublyIndexedTable getTraitInformationTable() {
+//     protected DoublyIndexedTable<String,String> getTraitInformationTable() {
 //         return xmlTraitInformation;
 //     }
 }

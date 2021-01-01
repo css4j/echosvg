@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.css.engine.value.svg12;
 /**
  * This class represents an CIE L*a*b* color value.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CIELabColor extends AbstractCIEColor {

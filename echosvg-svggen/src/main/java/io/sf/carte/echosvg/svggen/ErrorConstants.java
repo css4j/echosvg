@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.svggen;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ErrorConstants {

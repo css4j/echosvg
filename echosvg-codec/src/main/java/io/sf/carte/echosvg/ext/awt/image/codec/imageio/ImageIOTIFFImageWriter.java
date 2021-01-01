@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.ext.awt.image.codec.imageio;
 /**
  * ImageWriter that encodes TIFF images using Image I/O.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageIOTIFFImageWriter extends ImageIOImageWriter {

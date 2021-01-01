@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.gvt.ShapeNode;
  * Bridge class for a regular polygon element.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas Deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGRegularPolygonElementBridge
@@ -112,7 +113,7 @@ public class EchoSVGRegularPolygonElementBridge
         }
 
         // 'sides' attribute - default is 3
-        int sides = convertSides(e, BATIK_EXT_SIDES_ATTRIBUTE, 3, ctx);
+        int sides = convertSides(e, EXT_SIDES_ATTRIBUTE, 3, ctx);
 
         GeneralPath gp = new GeneralPath();
         for (int i=0; i<sides; i++) {

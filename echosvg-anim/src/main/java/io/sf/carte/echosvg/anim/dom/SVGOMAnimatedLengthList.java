@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.parser.ParseException;
  * interface.
  *
  * @author <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAnimatedLengthList
@@ -342,7 +343,7 @@ public class SVGOMAnimatedLengthList
                 return;
             }
             if (isEmpty) {
-                itemList = new ArrayList(1);
+                itemList = new ArrayList<>(1);
             } else {
                 try {
                     ListBuilder builder = new ListBuilder(this);
@@ -354,7 +355,7 @@ public class SVGOMAnimatedLengthList
                     }
                     itemList = builder.getList();
                 } catch (ParseException e) {
-                    itemList = new ArrayList(1);
+                    itemList = new ArrayList<>(1);
                     valid = true;
                     malformed = true;
                 }
@@ -372,7 +373,7 @@ public class SVGOMAnimatedLengthList
          */
         public AnimSVGLengthList() {
             super(SVGOMAnimatedLengthList.this.direction);
-            itemList = new ArrayList(1);
+            itemList = new ArrayList<>(1);
         }
 
         /**
@@ -433,13 +434,13 @@ public class SVGOMAnimatedLengthList
                 return "";
             }
             StringBuffer sb = new StringBuffer( itemList.size() * 8 );
-            Iterator i = itemList.iterator();
+            Iterator<SVGItem> i = itemList.iterator();
             if (i.hasNext()) {
-                sb.append(((SVGItem) i.next()).getValueAsString());
+                sb.append(i.next().getValueAsString());
             }
             while (i.hasNext()) {
                 sb.append(getItemSeparator());
-                sb.append(((SVGItem) i.next()).getValueAsString());
+                sb.append(i.next().getValueAsString());
             }
             return sb.toString();
         }

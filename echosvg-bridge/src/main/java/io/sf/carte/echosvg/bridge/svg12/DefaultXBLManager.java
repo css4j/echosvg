@@ -69,6 +69,7 @@ import io.sf.carte.echosvg.util.XBLConstants;
  * A full featured sXBL manager.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultXBLManager implements XBLManager, XBLConstants {
@@ -92,22 +93,22 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * Map of namespace URI/local name pairs to ordered sets of
      * definition records.
      */
-    protected DoublyIndexedTable definitionLists = new DoublyIndexedTable();
+    protected DoublyIndexedTable<String,String> definitionLists = new DoublyIndexedTable<>();
 
     /**
      * Map of definition element/import element pairs to definition records.
      */
-    protected DoublyIndexedTable definitions = new DoublyIndexedTable();
+    protected DoublyIndexedTable<Node, Element> definitions = new DoublyIndexedTable<>();
 
     /**
      * Map of shadow trees to content managers.
      */
-    protected Map contentManagers = new HashMap();
+    protected Map<Element, ContentManager> contentManagers = new HashMap<>();
 
     /**
      * Map of import elements to import records.
      */
-    protected Map imports = new HashMap();
+    protected Map<Element, ImportRecord> imports = new HashMap<>();
 
     /**
      * DOM node inserted listener for the document.
@@ -266,18 +267,19 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         definitions.clear();
         for (Object defRec1 : defRecs) {
             DefinitionRecord defRec = (DefinitionRecord) defRec1;
-            TreeSet defs = (TreeSet) definitionLists.get(defRec.namespaceURI,
-                    defRec.localName);
+            @SuppressWarnings("unchecked")
+            TreeSet<DefinitionRecord> defs = (TreeSet<DefinitionRecord>)
+                    definitionLists.get(defRec.namespaceURI, defRec.localName);
             if (defs != null) {
                 while (!defs.isEmpty()) {
-                    defRec = (DefinitionRecord) defs.first();
+                    defRec = defs.first();
                     defs.remove(defRec);
                     removeDefinition(defRec);
                 }
                 definitionLists.put(defRec.namespaceURI, defRec.localName, null);
             }
         }
-        definitionLists = new DoublyIndexedTable();
+        definitionLists = new DoublyIndexedTable<>();
         contentManagers.clear();
     }
 
@@ -321,7 +323,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * with a 'ref' attribute).
      */
     protected void removeDefinitionRef(Element defRef) {
-        ImportRecord ir = (ImportRecord) imports.get(defRef);
+        ImportRecord ir = imports.get(defRef);
         NodeEventTarget et = (NodeEventTarget) defRef;
         et.removeEventListenerNS
             (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified",
@@ -388,7 +390,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * Removes an import.
      */
     protected void removeImport(Element imp) {
-        ImportRecord ir = (ImportRecord) imports.get(imp);
+        ImportRecord ir = imports.get(imp);
         NodeEventTarget et = (NodeEventTarget) ir.node;
         et.removeEventListenerNS
             (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted",
@@ -433,15 +435,17 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
                                  String localName,
                                  XBLOMDefinitionElement def,
                                  Element imp) {
-        ImportRecord ir = (ImportRecord) imports.get(imp);
+        ImportRecord ir = imports.get(imp);
         DefinitionRecord oldDefRec = null;
         DefinitionRecord defRec;
-        TreeSet defs = (TreeSet) definitionLists.get(namespaceURI, localName);
+        @SuppressWarnings("unchecked")
+        TreeSet<DefinitionRecord> defs = (TreeSet<DefinitionRecord>)
+                definitionLists.get(namespaceURI, localName);
         if (defs == null) {
-            defs = new TreeSet();
+            defs = new TreeSet<>();
             definitionLists.put(namespaceURI, localName, defs);
         } else if (defs.size() > 0) {
-            oldDefRec = (DefinitionRecord) defs.first();
+            oldDefRec = defs.first();
         }
         XBLOMTemplateElement template = null;
         for (Node n = def.getFirstChild(); n != null; n = n.getNextSibling()) {
@@ -526,14 +530,15 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * active.
      */
     protected void removeDefinition(DefinitionRecord defRec) {
-        TreeSet defs = (TreeSet) definitionLists.get(defRec.namespaceURI,
-                                                     defRec.localName);
+        @SuppressWarnings("unchecked")
+        TreeSet<DefinitionRecord> defs = (TreeSet<DefinitionRecord>)
+                definitionLists.get(defRec.namespaceURI, defRec.localName);
         if (defs == null) {
             return;
         }
         Element imp = defRec.importElement;
-        ImportRecord ir = (ImportRecord) imports.get(imp);
-        DefinitionRecord activeDefRec = (DefinitionRecord) defs.first();
+        ImportRecord ir = imports.get(imp);
+        DefinitionRecord activeDefRec = defs.first();
         defs.remove(defRec);
         definitions.remove(defRec.definition, imp);
         removeDefinitionElementListeners(defRec.definition, ir);
@@ -600,11 +605,13 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      */
     protected DefinitionRecord getActiveDefinition(String namespaceURI,
                                                    String localName) {
-        TreeSet defs = (TreeSet) definitionLists.get(namespaceURI, localName);
+        @SuppressWarnings("unchecked")
+        TreeSet<DefinitionRecord> defs = (TreeSet<DefinitionRecord>)
+            definitionLists.get(namespaceURI, localName);
         if (defs == null || defs.size() == 0) {
             return null;
         }
-        return (DefinitionRecord) defs.first();
+        return defs.first();
     }
 
     /**
@@ -976,16 +983,18 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         return new NodeList() {
             @Override
             public Node item(int i) {
-                TreeSet defs = (TreeSet) definitionLists.get(namespaceURI, localName);
+                @SuppressWarnings("unchecked")
+                TreeSet<DefinitionRecord> defs = (TreeSet<DefinitionRecord>)
+                    definitionLists.get(namespaceURI, localName);
                 if (defs != null && defs.size() != 0 && i == 0) {
-                    DefinitionRecord defRec = (DefinitionRecord) defs.first();
+                    DefinitionRecord defRec = defs.first();
                     return defRec.definition;
                 }
                 return null;
             }
             @Override
             public int getLength() {
-                Set defs = (TreeSet) definitionLists.get(namespaceURI, localName);
+                Set<?> defs = (Set<?>) definitionLists.get(namespaceURI, localName);
                 return defs != null && defs.size() != 0 ? 1 : 0;
             }
         };
@@ -1038,8 +1047,8 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * @param to   the element to which the mouse pointer moved
      */
     public static int computeBubbleLimit(Node from, Node to) {
-        ArrayList fromList = new ArrayList(10);
-        ArrayList toList = new ArrayList(10);
+        ArrayList<Node> fromList = new ArrayList<>(10);
+        ArrayList<Node> toList = new ArrayList<>(10);
         while (from != null) {
             fromList.add(from);
             from = ((NodeXBL) from).getXblParentNode();
@@ -1051,8 +1060,8 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         int fromSize = fromList.size();
         int toSize = toList.size();
         for (int i = 0; i < fromSize && i < toSize; i++) {
-            Node n1 = (Node) fromList.get(fromSize - i - 1);
-            Node n2 = (Node) toList.get(toSize - i - 1);
+            Node n1 = fromList.get(fromSize - i - 1);
+            Node n2 = toList.get(toSize - i - 1);
             if (n1 != n2) {
                 Node prevBoundElement = ((NodeXBL) n1).getXblBoundElement();
                 while (i > 0 && prevBoundElement != fromList.get(fromSize - i - 1)) {
@@ -1078,9 +1087,9 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
                 if (doc != document) {
                     DefaultXBLManager xm = (DefaultXBLManager)
                         ((AbstractDocument) doc).getXBLManager();
-                    cm = (ContentManager) xm.contentManagers.get(s);
+                    cm = xm.contentManagers.get(s);
                 } else {
-                    cm = (ContentManager) contentManagers.get(s);
+                    cm = contentManagers.get(s);
                 }
                 return cm;
             }
@@ -1144,17 +1153,17 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
      * Called by the ContentManager of a shadow tree to indicate some
      * selected nodes have changed.
      */
-    void shadowTreeSelectedContentChanged(Set deselected, Set selected) {
-        Iterator i = deselected.iterator();
+    void shadowTreeSelectedContentChanged(Set<Node> deselected, Set<Node> selected) {
+        Iterator<Node> i = deselected.iterator();
         while (i.hasNext()) {
-            Node n = (Node) i.next();
+            Node n = i.next();
             if (n.getNodeType() == Node.ELEMENT_NODE) {
                 unbind((Element) n);
             }
         }
         i = selected.iterator();
         while (i.hasNext()) {
-            Node n = (Node) i.next();
+            Node n = i.next();
             if (n.getNodeType() == Node.ELEMENT_NODE) {
                 bind((Element) n);
             }
@@ -1206,7 +1215,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
     /**
      * Record class for storing information about an XBL definition.
      */
-    protected static class DefinitionRecord implements Comparable {
+    protected static class DefinitionRecord implements Comparable<DefinitionRecord> {
 
         /**
          * The namespace URI.
@@ -1253,15 +1262,14 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
          */
         @Override
         public boolean equals(Object other) {
-            return compareTo(other) == 0;
+            return other instanceof DefinitionRecord && compareTo((DefinitionRecord) other) == 0;
         }
 
         /**
          * Compares two definition records.
          */
         @Override
-        public int compareTo(Object other) {
-            DefinitionRecord rec = (DefinitionRecord) other;
+        public int compareTo(DefinitionRecord rec) {
             AbstractNode n1, n2;
             if (importElement == null) {
                 n1 = definition;
@@ -1404,7 +1412,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * List of definition elements to be removed from the document.
          */
-        protected LinkedList toBeRemoved = new LinkedList();
+        protected LinkedList<EventTarget> toBeRemoved = new LinkedList<>();
 
         /**
          * Handles the event.
@@ -1520,17 +1528,17 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * List of definition elements to be removed from the document.
          */
-        protected LinkedList defsToBeRemoved = new LinkedList();
+        protected LinkedList<EventTarget> defsToBeRemoved = new LinkedList<>();
 
         /**
          * List of import elements to be removed from the document.
          */
-        protected LinkedList importsToBeRemoved = new LinkedList();
+        protected LinkedList<EventTarget> importsToBeRemoved = new LinkedList<>();
 
         /**
          * List of nodes to have their XBL child lists invalidated.
          */
-        protected LinkedList nodesToBeInvalidated = new LinkedList();
+        protected LinkedList<Node> nodesToBeInvalidated = new LinkedList<>();
 
         /**
          * Handles the event.
@@ -1726,7 +1734,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
                 return;
             }
 
-            ImportRecord ir = (ImportRecord) imports.get(importElement);
+            ImportRecord ir = imports.get(importElement);
 
             if (defRec.template != null) {
                 for (Node n = parent.getFirstChild();
@@ -1789,7 +1797,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
                 return;
             }
 
-            ImportRecord ir = (ImportRecord) imports.get(importElement);
+            ImportRecord ir = imports.get(importElement);
 
             removeTemplateElementListeners(template, ir);
             defRec.template = null;
@@ -1932,7 +1940,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
         /**
          * The nodes.
          */
-        protected List nodes;
+        protected List<Node> nodes;
 
         /**
          * The number of nodes.
@@ -1944,7 +1952,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
          */
         public XblChildNodes(XBLRecord rec) {
             record = rec;
-            nodes = new ArrayList();
+            nodes = new ArrayList<>();
             size = -1;
         }
 
@@ -2013,7 +2021,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
          */
         public void invalidate() {
             for (int i = 0; i < size; i++) {
-                XBLRecord rec = getRecord((Node) nodes.get(i));
+                XBLRecord rec = getRecord(nodes.get(i));
                 rec.previousSibling = null;
                 rec.nextSibling = null;
                 rec.linksValid = false;
@@ -2029,7 +2037,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
             if (size == -1) {
                 update();
             }
-            return size == 0 ? null : (Node) nodes.get(0);
+            return size == 0 ? null : nodes.get(0);
         }
 
         /**
@@ -2039,7 +2047,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
             if (size == -1) {
                 update();
             }
-            return size == 0 ? null : (Node) nodes.get( nodes.size() -1 );
+            return size == 0 ? null : nodes.get( nodes.size() -1 );
         }
 
         /**
@@ -2053,7 +2061,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
             if (index < 0 || index >= size) {
                 return null;
             }
-            return (Node) nodes.get(index);
+            return nodes.get(index);
         }
 
         /**

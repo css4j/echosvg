@@ -29,6 +29,7 @@ import java.lang.ref.SoftReference;
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author <a href="mailto:tkormann@ilog.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AWTGlyphGeometryCache {
@@ -51,7 +52,7 @@ public class AWTGlyphGeometryCache {
     /**
      * The reference queue.
      */
-    protected ReferenceQueue referenceQueue = new ReferenceQueue();
+    protected ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
 
     /**
      * Creates a new AWTGlyphGeometryCache.
@@ -85,7 +86,7 @@ public class AWTGlyphGeometryCache {
 
         for (Entry e = table[index]; e != null; e = e.next) {
             if ((e.hash == hash) && e.match(c)) {
-                return (Value)e.get();
+                return e.get();
             }
         }
         return null;
@@ -141,7 +142,7 @@ public class AWTGlyphGeometryCache {
     public void clear() {
         table = new Entry[INITIAL_CAPACITY];
         count = 0;
-        referenceQueue = new ReferenceQueue();
+        referenceQueue = new ReferenceQueue<>();
     }
 
     /**
@@ -238,7 +239,7 @@ public class AWTGlyphGeometryCache {
     /**
      * To manage collisions
      */
-    protected class Entry extends SoftReference {
+    protected class Entry extends SoftReference<Value> {
 
         /**
          * The hash code

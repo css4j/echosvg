@@ -22,6 +22,7 @@ import io.sf.carte.echosvg.util.DoublyLinkedList;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class LRUCache {

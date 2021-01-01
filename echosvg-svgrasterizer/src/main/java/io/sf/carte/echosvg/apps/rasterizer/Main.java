@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.parser.ClockHandler;
 import io.sf.carte.echosvg.parser.ClockParser;
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.transcoder.Transcoder;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
 
 /**
@@ -42,6 +43,7 @@ import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
  * <code>SVGConverter</code> which is used to perform the conversion.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Main implements SVGConverterController {
@@ -531,13 +533,13 @@ public class Main implements SVGConverterController {
      * Static map containing all the option handlers able to analyze the
      * various options.
      */
-    protected static Map optionMap = new HashMap();
+    protected static Map<String, AbstractOptionHandler> optionMap = new HashMap<>();
 
     /**
      * Static map containing all the mime types understood by the
      * rasterizer
      */
-    protected static Map mimeTypeMap = new HashMap();
+    protected static Map<String, DestinationType> mimeTypeMap = new HashMap<>();
 
     /**
      * Static initializer: adds all the option handlers to the
@@ -570,7 +572,7 @@ public class Main implements SVGConverterController {
                             public void handleOption(String optionValue,
                                                        SVGConverter c){
                                   DestinationType dstType =
-                                      (DestinationType)mimeTypeMap.get(optionValue);
+                                      mimeTypeMap.get(optionValue);
 
                                   if (dstType == null){
                                       throw new IllegalArgumentException();
@@ -909,10 +911,10 @@ public class Main implements SVGConverterController {
      * List of arguments describing the conversion task to be
      * performed.
      */
-    protected List args;
+    protected List<String> args;
 
     public Main(String[] args){
-        this.args = new ArrayList();
+        this.args = new ArrayList<>();
         for (String arg : args) {
             this.args.add(arg);
         }
@@ -950,12 +952,12 @@ public class Main implements SVGConverterController {
     public void execute(){
         SVGConverter c = new SVGConverter(this);
 
-        List sources = new ArrayList();
+        List<String> sources = new ArrayList<>();
 
         int nArgs = args.size();
         for (int i=0; i<nArgs; i++){
-            String v = (String)args.get(i);
-            OptionHandler optionHandler = (OptionHandler)optionMap.get(v);
+            String v = args.get(i);
+            OptionHandler optionHandler = optionMap.get(v);
             if (optionHandler == null){
                 // Assume v is a source.
                 sources.add(v);
@@ -970,7 +972,7 @@ public class Main implements SVGConverterController {
 
                 String[] optionValues = new String[nOptionArgs];
                 for (int j=0; j<nOptionArgs; j++){
-                    optionValues[j] = (String)args.get(1+i+j);
+                    optionValues[j] = args.get(1+i+j);
                 }
                 i += nOptionArgs;
 
@@ -1040,10 +1042,9 @@ public class Main implements SVGConverterController {
      * Scans the input vector and replaces directories with the list
      * of SVG files they contain
      */
-    protected String[] expandSources(List sources){
-        List expandedSources = new ArrayList();
-        for (Object source : sources) {
-            String v = (String) source;
+    protected String[] expandSources(List<String> sources){
+        List<String> expandedSources = new ArrayList<>();
+        for (String v : sources) {
             File f = new File(v);
             if (f.exists() && f.isDirectory()) {
                 File[] fl = f.listFiles(new SVGConverter.SVGFileFilter());
@@ -1082,9 +1083,9 @@ public class Main implements SVGConverterController {
 
     @Override
     public boolean proceedWithComputedTask(Transcoder transcoder,
-                                           Map hints,
-                                           List sources,
-                                           List dest){
+                                           Map<Key, ?> hints,
+                                           List<SVGConverterSource> sources,
+                                           List<File> dest){
         System.out.println(Messages.formatMessage(MESSAGE_ABOUT_TO_TRANSCODE,
                                                   new Object[]{"" + sources.size()}));
         return true;

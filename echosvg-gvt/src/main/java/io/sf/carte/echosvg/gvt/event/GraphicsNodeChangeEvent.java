@@ -24,6 +24,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * An event which indicates that a change action occurred on a graphics node.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GraphicsNodeChangeEvent extends GraphicsNodeEvent {

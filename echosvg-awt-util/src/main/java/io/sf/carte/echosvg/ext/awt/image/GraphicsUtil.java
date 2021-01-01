@@ -66,6 +66,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.TranslateRed;
  * implementations.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GraphicsUtil {
@@ -473,7 +474,7 @@ public class GraphicsUtil {
         if (hints != null)
             g2d.addRenderingHints(hints);
         g2d.setRenderingHint(RenderingHintsKeyExt.KEY_BUFFERED_IMAGE,
-                             new WeakReference(bi));
+                             new WeakReference<>(bi));
         g2d.clip(new Rectangle(0, 0, bi.getWidth(), bi.getHeight()));
         return g2d;
     }
@@ -482,7 +483,7 @@ public class GraphicsUtil {
     public static Graphics2D createGraphics(BufferedImage bi) {
         Graphics2D g2d = bi.createGraphics();
         g2d.setRenderingHint(RenderingHintsKeyExt.KEY_BUFFERED_IMAGE,
-                             new WeakReference(bi));
+                             new WeakReference<>(bi));
         g2d.clip(new Rectangle(0, 0, bi.getWidth(), bi.getHeight()));
         return g2d;
     }
@@ -504,10 +505,11 @@ public class GraphicsUtil {
     }
 
     public static BufferedImage getDestination(Graphics2D g2d) {
-        Object o = g2d.getRenderingHint
+        @SuppressWarnings("unchecked")
+        Reference<BufferedImage> o = (Reference<BufferedImage>) g2d.getRenderingHint
             (RenderingHintsKeyExt.KEY_BUFFERED_IMAGE);
         if (o != null)
-            return (BufferedImage)(((Reference)o).get());
+            return o.get();
 
         // Check if this is a BufferedImage G2d if so throw an error...
         GraphicsConfiguration gc = g2d.getDeviceConfiguration();

@@ -25,6 +25,7 @@ import org.w3c.dom.Node;
  * org.w3c.dom.ProcessingInstruction} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 

@@ -27,6 +27,7 @@ import org.w3c.dom.Element;
  * functionality of the Bridge, to support new tags in the rendering tree.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface BridgeExtension {
@@ -47,7 +48,7 @@ public interface BridgeExtension {
      * @return An iterator containing strings one for each implemented
      *         extension.
      */
-    Iterator getImplementedExtensions();
+    Iterator<String> getImplementedExtensions();
 
     /**
      * This should return the individual or company name responsible

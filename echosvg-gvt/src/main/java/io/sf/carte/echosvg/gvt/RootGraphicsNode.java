@@ -27,11 +27,12 @@ import io.sf.carte.echosvg.gvt.event.GraphicsNodeChangeListener;
  * The top-level graphics node of the GVT tree.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RootGraphicsNode extends CompositeGraphicsNode {
 
-    List treeGraphicsNodeChangeListeners = null;
+    List<GraphicsNodeChangeListener> treeGraphicsNodeChangeListeners = null;
 
    /**
      * Constructs a new empty <code>RootGraphicsNode</code>.
@@ -47,9 +48,9 @@ public class RootGraphicsNode extends CompositeGraphicsNode {
         return this;
     }
 
-    public List getTreeGraphicsNodeChangeListeners() {
+    public List<GraphicsNodeChangeListener> getTreeGraphicsNodeChangeListeners() {
         if (treeGraphicsNodeChangeListeners == null) {
-            treeGraphicsNodeChangeListeners = new LinkedList();
+            treeGraphicsNodeChangeListeners = new LinkedList<>();
         }
         return treeGraphicsNodeChangeListeners;
     }

@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PNGRegistryEntry

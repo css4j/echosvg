@@ -25,6 +25,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderInput;
  * Test the ImageTranscoder input with a URI.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class URITest extends AbstractImageTranscoderTest {
@@ -49,6 +50,7 @@ public class URITest extends AbstractImageTranscoderTest {
     /**
      * Creates the <code>TranscoderInput</code>.
      */
+    @Override
     protected TranscoderInput createTranscoderInput() {
         return new TranscoderInput(resolveURL(inputURI).toString());
     }
@@ -56,6 +58,7 @@ public class URITest extends AbstractImageTranscoderTest {
     /**
      * Returns the reference image for this test.
      */
+    @Override
     protected byte [] getReferenceImageData() {
         return createBufferedImageData(resolveURL(refImageURI));
     }

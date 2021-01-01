@@ -61,6 +61,7 @@ import java.util.Map;
  * are implemented by <code>AbstractGraphics2D</code>
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
  */
@@ -1142,7 +1143,7 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
      * @see RenderingHints
      */
     @Override
-    public void setRenderingHints(Map hints){
+    public void setRenderingHints(Map<?,?> hints){
         gc.setRenderingHints(hints);
     }
 
@@ -1162,7 +1163,7 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
      * @see RenderingHints
      */
     @Override
-    public void addRenderingHints(Map hints){
+    public void addRenderingHints(Map<?,?> hints){
         gc.addRenderingHints(hints);
     }
 

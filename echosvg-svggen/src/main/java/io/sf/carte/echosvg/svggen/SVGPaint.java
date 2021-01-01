@@ -25,6 +25,8 @@ import java.awt.TexturePaint;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
@@ -33,6 +35,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see              io.sf.carte.echosvg.svggen.SVGLinearGradient
  * @see              io.sf.carte.echosvg.svggen.SVGTexturePaint
@@ -79,8 +82,8 @@ public class SVGPaint implements SVGConverter {
      *         converter has processed since it was created
      */
     @Override
-    public List getDefinitionSet(){
-        List paintDefs = new LinkedList(svgLinearGradient.getDefinitionSet());
+    public List<Element> getDefinitionSet(){
+        List<Element> paintDefs = new LinkedList<>(svgLinearGradient.getDefinitionSet());
         paintDefs.addAll(svgTexturePaint.getDefinitionSet());
         paintDefs.addAll(svgCustomPaint.getDefinitionSet());
         paintDefs.addAll(svgColor.getDefinitionSet());

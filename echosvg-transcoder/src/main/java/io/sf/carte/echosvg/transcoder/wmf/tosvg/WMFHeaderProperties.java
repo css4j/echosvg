@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
  * This class holds simple properties about a WMF Metafile. It can be used
  * whenever general information must be retrieved about this file.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class WMFHeaderProperties extends AbstractWMFReader {

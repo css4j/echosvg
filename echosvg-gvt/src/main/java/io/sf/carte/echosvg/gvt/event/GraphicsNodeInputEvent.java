@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * The root event class for all graphics node-level input events.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class GraphicsNodeInputEvent extends GraphicsNodeEvent {

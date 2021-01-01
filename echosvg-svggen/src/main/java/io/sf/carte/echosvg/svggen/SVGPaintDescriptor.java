@@ -30,6 +30,7 @@ import org.w3c.dom.Element;
  * to values: an SVG paint value and an SVG opacity value
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGPaintDescriptor implements SVGDescriptor, SVGSyntax{
@@ -63,9 +64,9 @@ public class SVGPaintDescriptor implements SVGDescriptor, SVGSyntax{
     }
 
     @Override
-    public Map getAttributeMap(Map attrMap){
+    public Map<String, String> getAttributeMap(Map<String, String> attrMap){
         if(attrMap == null)
-            attrMap = new HashMap();
+            attrMap = new HashMap<>();
 
         attrMap.put(SVG_FILL_ATTRIBUTE, paintValue);
         attrMap.put(SVG_STROKE_ATTRIBUTE, paintValue);
@@ -76,9 +77,9 @@ public class SVGPaintDescriptor implements SVGDescriptor, SVGSyntax{
     }
 
     @Override
-    public List getDefinitionSet(List defSet){
+    public List<Element> getDefinitionSet(List<Element> defSet){
         if(defSet == null)
-            defSet = new LinkedList();
+            defSet = new LinkedList<>();
 
         if(def != null)
             defSet.add(def);

@@ -23,6 +23,8 @@ import java.awt.Composite;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
@@ -39,6 +41,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * </ul>
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see                io.sf.carte.echosvg.svggen.SVGAlphaComposite
  */
@@ -67,8 +70,8 @@ public class SVGComposite implements SVGConverter {
      *         Converter has processed since it was created.
      */
     @Override
-    public List getDefinitionSet() {
-        List compositeDefs = new LinkedList(svgAlphaComposite.getDefinitionSet());
+    public List<Element> getDefinitionSet() {
+        List<Element> compositeDefs = new LinkedList<>(svgAlphaComposite.getDefinitionSet());
         compositeDefs.addAll(svgCustomComposite.getDefinitionSet());
         return compositeDefs;
     }

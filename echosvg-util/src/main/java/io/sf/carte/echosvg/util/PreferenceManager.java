@@ -69,12 +69,13 @@ import java.util.StringTokenizer;
  * </pre></blockquote>
  * <p>
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PreferenceManager
 {
     protected Properties internal = null;
-    protected Map defaults = null;
+    protected Map<String, Object> defaults = null;
     protected String prefFileName = null;
     protected String fullName = null;
 
@@ -112,7 +113,7 @@ public class PreferenceManager
      * @param defaults where to get defaults value if the value is
      * not specified in the file.
      */
-    public PreferenceManager(String prefFileName, Map defaults)
+    public PreferenceManager(String prefFileName, Map<String, Object> defaults)
     {
         this.prefFileName = prefFileName;
         this.defaults = defaults;
@@ -482,7 +483,7 @@ public class PreferenceManager
     {
         String last;
         int i = 0;
-        ArrayList v = new ArrayList();
+        ArrayList<String> v = new ArrayList<>();
         while (true) {
             last = getString(mkey+i);
             i++;
@@ -492,7 +493,7 @@ public class PreferenceManager
         }
         if (v.size() != 0) {
             String[] str = new String[v.size()];
-            return (String[])v.toArray(str);
+            return v.toArray(str);
         } else {
             return (String[])getDefault(mkey);
         }
@@ -525,7 +526,7 @@ public class PreferenceManager
     {
         URL last;
         int i = 0;
-        ArrayList v = new ArrayList();
+        ArrayList<URL> v = new ArrayList<>();
         while (true) {
             last = getURL(mkey+i);
             i++;
@@ -535,7 +536,7 @@ public class PreferenceManager
         }
         if (v.size() != 0) {
             URL[] path = new URL[v.size()];
-            return (URL[])v.toArray(path);
+            return v.toArray(path);
         } else {
             return (URL[])getDefault(mkey);
         }
@@ -567,7 +568,7 @@ public class PreferenceManager
     {
         File last;
         int i = 0;
-        ArrayList v = new ArrayList();
+        ArrayList<File> v = new ArrayList<>();
         while (true) {
             last = getFile(mkey+i);
             i++;
@@ -577,7 +578,7 @@ public class PreferenceManager
         }
         if (v.size() != 0) {
             File[] path = new File[v.size()];
-            return (File[])v.toArray(path);
+            return v.toArray(path);
         } else {
             return (File[])getDefault(mkey);
         }

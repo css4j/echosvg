@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * URI to be used for 'src' URI resolution.
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FontFaceRule implements Rule {

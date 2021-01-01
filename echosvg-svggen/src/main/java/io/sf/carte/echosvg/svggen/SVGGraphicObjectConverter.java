@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.svggen;
 /**
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGGraphicObjectConverter implements SVGSyntax {

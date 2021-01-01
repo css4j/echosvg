@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * This class represents an object which loads asynchroneaously a SVG document.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGDocumentLoader extends HaltingThread {
@@ -56,7 +57,7 @@ public class SVGDocumentLoader extends HaltingThread {
     /**
      * The listeners.
      */
-    protected List listeners = Collections.synchronizedList(new LinkedList());
+    protected List<Object> listeners = Collections.synchronizedList(new LinkedList<>());
 
     /**
      * Creates a new SVGDocumentLoader.

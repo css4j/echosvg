@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * Simple implementation of the Renderer that supports dynamic updates.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MacRenderer implements ImageRenderer {
@@ -274,7 +275,7 @@ public class MacRenderer implements ImageRenderer {
      * Flush a list of rectangles of cached image data.
      */
     @Override
-    public void flush(Collection areas) {
+    public void flush(Collection<Shape> areas) {
         // Since we don't cache we don't need to flush
     }
 
@@ -349,10 +350,10 @@ public class MacRenderer implements ImageRenderer {
                 damagedAreas.mergeRects(COPY_OVERHEAD,
                                         COPY_LINE_OVERHEAD);
 
-                Iterator iter = damagedAreas.iterator();
+                Iterator<Rectangle> iter = damagedAreas.iterator();
                 g2d.setComposite(AlphaComposite.Src);
                 while (iter.hasNext()) {
-                    Rectangle r = (Rectangle)iter.next();
+                    Rectangle r = iter.next();
                     if (!dr.intersects(r)) continue;
                     r = dr.intersection(r);
                     g2d.setClip     (r.x, r.y, r.width, r.height);
@@ -364,8 +365,7 @@ public class MacRenderer implements ImageRenderer {
             }
 
 
-            for (Object aDevRLM : devRLM) {
-                Rectangle r = (Rectangle) aDevRLM;
+            for (Rectangle r : devRLM) {
                 if (!dr.intersects(r)) continue;
                 r = dr.intersection(r);
                 g2d.setTransform(IDENTITY);

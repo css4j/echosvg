@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
  *  Probably WMFRecordStore is what you need.
  *
  * @author <a href="mailto:luano@asd.ie">Luan O'Carroll</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 @Deprecated
@@ -52,8 +53,8 @@ public class RecordStore {
         vpW = 1000;
         vpH = 1000;
         numObjects = 0;
-        records = new Vector( 20, 20 );
-        objectVector = new Vector();
+        records = new Vector<>( 20, 20 );
+        objectVector = new Vector<>();
     }
 
     synchronized void setReading( boolean state ){
@@ -137,7 +138,7 @@ public class RecordStore {
      */
     public void addObject( int type, Object obj ) {
         for ( int i = 0; i < numObjects; i++ ) {
-            GdiObject gdi = (GdiObject)objectVector.get( i );
+            GdiObject gdi = objectVector.get( i );
             if ( ! gdi.used ) {
                 gdi.Setup( type, obj );
                 lastObjectIdx = i;
@@ -160,7 +161,7 @@ public class RecordStore {
         }
         lastObjectIdx = idx;
         for ( int i = 0; i < numObjects; i++ ) {
-            GdiObject gdi = (GdiObject)objectVector.get( i );
+            GdiObject gdi = objectVector.get( i );
             if ( i == idx ) {
                 gdi.Setup( type, obj );
                 break;
@@ -186,14 +187,14 @@ public class RecordStore {
      * Returns a GdiObject from the handle table
      */
     public GdiObject getObject( int idx ) {
-        return (GdiObject)objectVector.get( idx );
+        return objectVector.get( idx );
     }
 
     /**
      * Returns a meta record.
      */
     public MetaRecord getRecord( int idx ) {
-        return (MetaRecord)records.get( idx );
+        return records.get( idx );
     }
 
     /**
@@ -276,8 +277,8 @@ public class RecordStore {
     protected transient int vpW;
     protected transient int vpH;
 
-    protected transient Vector records;
-    protected transient Vector objectVector;
+    protected transient Vector<MetaRecord> records;
+    protected transient Vector<GdiObject> objectVector;
 
     protected transient boolean bReading = false;
 }

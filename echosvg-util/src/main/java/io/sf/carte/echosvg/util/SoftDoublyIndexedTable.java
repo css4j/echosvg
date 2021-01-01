@@ -27,9 +27,10 @@ import java.lang.ref.SoftReference;
  * <br>This HashMap is not Thread-safe.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SoftDoublyIndexedTable {
+public class SoftDoublyIndexedTable<K,L> {
 
     /**
      * The initial capacity
@@ -49,7 +50,7 @@ public class SoftDoublyIndexedTable {
     /**
      * The reference queue.
      */
-    protected ReferenceQueue referenceQueue = new ReferenceQueue();
+    protected ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
 
     /**
      * Creates a new SoftDoublyIndexedTable.
@@ -77,7 +78,7 @@ public class SoftDoublyIndexedTable {
      * Gets the value of a variable
      * @return the value or null
      */
-    public Object get( Object o1, Object o2 ) {
+    public Object get( K o1, L o2 ) {
         int hash = hashCode( o1, o2 ) & 0x7FFFFFFF;
         int index = hash % table.length;
 
@@ -93,7 +94,7 @@ public class SoftDoublyIndexedTable {
      * Sets a new value for the given variable
      * @return the old value or null
      */
-    public Object put( Object o1, Object o2, Object value ) {
+    public Object put( K o1, L o2, Object value ) {
         removeClearedEntries();
 
         int hash = hashCode( o1, o2 ) & 0x7FFFFFFF;
@@ -103,7 +104,7 @@ public class SoftDoublyIndexedTable {
         if ( e != null ) {
             if ( ( e.hash == hash ) && e.match( o1, o2 ) ) {
                 Object old = e.get();
-                table[ index ] = new Entry( hash, o1, o2, value, e.next );
+                table[ index ] = new Entry( hash, o1, o2, value, referenceQueue, e.next );
                 return old;
             }
             Entry o = e;
@@ -111,7 +112,7 @@ public class SoftDoublyIndexedTable {
             while ( e != null ) {
                 if ( ( e.hash == hash ) && e.match( o1, o2 ) ) {
                     Object old = e.get();
-                    e = new Entry( hash, o1, o2, value, e.next );
+                    e = new Entry( hash, o1, o2, value, referenceQueue, e.next );
                     o.next = e;
                     return old;
                 }
@@ -129,7 +130,7 @@ public class SoftDoublyIndexedTable {
             index = hash % table.length;
         }
 
-        table[ index ] = new Entry( hash, o1, o2, value, table[ index ] );
+        table[ index ] = new Entry( hash, o1, o2, value, referenceQueue, table[ index ] );
         return null;
     }
 
@@ -139,7 +140,7 @@ public class SoftDoublyIndexedTable {
     public void clear() {
         table = new Entry[INITIAL_CAPACITY];
         count = 0;
-        referenceQueue = new ReferenceQueue();
+        referenceQueue = new ReferenceQueue<>();
     }
 
     /**
@@ -197,7 +198,7 @@ public class SoftDoublyIndexedTable {
     /**
      * To manage collisions
      */
-    protected class Entry extends SoftReference {
+    private static class Entry extends SoftReference<Object> {
 
         /**
          * The hash code
@@ -222,7 +223,8 @@ public class SoftDoublyIndexedTable {
         /**
          * Creates a new entry
          */
-        public Entry( int hash, Object key1, Object key2, Object value, Entry next ) {
+        public Entry( int hash, Object key1, Object key2, Object value, ReferenceQueue<Object> referenceQueue,
+                Entry next ) {
             super( value, referenceQueue );
             this.hash = hash;
             this.key1 = key1;

@@ -26,6 +26,7 @@ import java.io.IOException;
  * An interface describing objects that transform an InputStream into a
  * BufferedImage or Raster.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ImageDecoder {

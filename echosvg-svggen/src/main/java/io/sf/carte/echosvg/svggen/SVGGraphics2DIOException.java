@@ -24,6 +24,7 @@ import java.io.IOException;
  * Thrown when an SVG Generator method receives an illegal argument in parameter.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGGraphics2DIOException extends IOException {

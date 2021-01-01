@@ -25,6 +25,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
  * This class represents CSS rect values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RectValue extends AbstractValue {

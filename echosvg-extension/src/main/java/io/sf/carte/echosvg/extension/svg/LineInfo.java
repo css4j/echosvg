@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.gvt.font.GVTGlyphVector;
  * in a multi-line flow.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class LineInfo {

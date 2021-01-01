@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.gvt.ShapeNode;
  * Bridge class for the &lt;clipPath&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGClipPathElementBridge extends AnimatableGenericSVGBridge

@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * This class provides support for traversal.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TraversalSupport {
@@ -41,7 +42,7 @@ public class TraversalSupport {
     /**
      * The iterators list.
      */
-    protected List iterators;
+    protected List<NodeIterator> iterators;
 
     /**
      * Creates a new TraversalSupport.
@@ -82,7 +83,7 @@ public class TraversalSupport {
                                                   filter,
                                                   entityReferenceExpansion);
         if (iterators == null) {
-            iterators = new LinkedList();
+            iterators = new LinkedList<>();
         }
         iterators.add(result);
 
@@ -94,7 +95,7 @@ public class TraversalSupport {
      */
     public void nodeToBeRemoved(Node removedNode) {
         if (iterators != null) {
-            for (Object iterator : iterators) {
+            for (NodeIterator iterator : iterators) {
                 ((DOMNodeIterator) iterator).nodeToBeRemoved(removedNode);
             }
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Carlos Amengual
+ * Copyright (c) 2020-2021 Carlos Amengual
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 module io.sf.carte.echosvg.util {
     exports io.sf.carte.echosvg.util.io;
     exports io.sf.carte.echosvg.util.resources;
-    exports io.sf.carte.echosvg;
     exports io.sf.carte.echosvg.util;
 
     requires transitive io.sf.carte.echosvg.constants;

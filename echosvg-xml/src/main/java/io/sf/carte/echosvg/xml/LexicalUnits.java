@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.xml;
  * This interface defines the constants that represent XML lexical units.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface LexicalUnits {

@@ -28,6 +28,7 @@ import java.util.List;
  * rerequesting significant numbers of tiles that are already
  * available.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TileBlock {
@@ -163,7 +164,7 @@ public class TileBlock {
 
     public TileBlock [] splitOneGo() {
         boolean [] filled = occupied.clone();
-        List items = new ArrayList();
+        List<TileBlock> items = new ArrayList<>();
         for (int y=yOff; y<yOff+h; y++)
             for (int x=xOff; x<xOff+w; x++) {
                 if (!filled[x+y*occW]) {

@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.anim.dom.SVGAnimationTargetContext;
  * Abstract bridge class for those elements that can be animated.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AnimatableSVGBridge
@@ -51,7 +52,7 @@ public abstract class AnimatableSVGBridge
      * Map of CSS property names to {@link LinkedList}s of
      * {@link AnimationTargetListener}s.
      */
-    protected HashMap targetListeners;
+    protected HashMap<String, LinkedList<AnimationTargetListener>> targetListeners;
 
     // SVGAnimationTargetContext /////////////////////////////////////////////
 
@@ -61,11 +62,11 @@ public abstract class AnimatableSVGBridge
     @Override
     public void addTargetListener(String pn, AnimationTargetListener l) {
         if (targetListeners == null) {
-            targetListeners = new HashMap();
+            targetListeners = new HashMap<>();
         }
-        LinkedList ll = (LinkedList) targetListeners.get(pn);
+        LinkedList<AnimationTargetListener> ll = targetListeners.get(pn);
         if (ll == null) {
-            ll = new LinkedList();
+            ll = new LinkedList<>();
             targetListeners.put(pn, ll);
         }
         ll.add(l);
@@ -76,7 +77,7 @@ public abstract class AnimatableSVGBridge
      */
     @Override
     public void removeTargetListener(String pn, AnimationTargetListener l) {
-        LinkedList ll = (LinkedList) targetListeners.get(pn);
+        LinkedList<AnimationTargetListener> ll = targetListeners.get(pn);
         ll.remove(l);
     }
 
@@ -86,11 +87,9 @@ public abstract class AnimatableSVGBridge
      */
     protected void fireBaseAttributeListeners(String pn) {
         if (targetListeners != null) {
-            LinkedList ll = (LinkedList) targetListeners.get(pn);
+            LinkedList<AnimationTargetListener> ll = targetListeners.get(pn);
             if (ll != null) {
-                for (Object aLl : ll) {
-                    AnimationTargetListener l =
-                            (AnimationTargetListener) aLl;
+                for (AnimationTargetListener l : ll) {
                     l.baseValueChanged((AnimationTarget) e, null, pn, true);
                 }
             }

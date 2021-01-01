@@ -25,6 +25,7 @@ import java.awt.geom.Point2D;
  * methods.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGPathContext extends SVGContext {

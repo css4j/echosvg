@@ -62,6 +62,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class LanguageDialog extends JDialog implements ActionMap {
@@ -102,7 +103,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
     /**
      * The map that contains the listeners
      */
-    protected Map listeners = new HashMap();
+    protected Map<String, AbstractAction> listeners = new HashMap<>();
 
     /**
      * The user languages panel.
@@ -164,7 +165,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
      */
     @Override
     public Action getAction(String key) throws MissingListenerException {
-        return (Action)listeners.get(key);
+        return listeners.get(key);
     }
 
     /**
@@ -188,22 +189,22 @@ public class LanguageDialog extends JDialog implements ActionMap {
         /**
          * The user languages list
          */
-        protected JList userList;
+        protected JList<Object> userList;
 
         /**
          * The languages list
          */
-        protected JList languageList;
+        protected JList<Object> languageList;
 
         /**
          * The user list model
          */
-        protected DefaultListModel userListModel = new DefaultListModel();
+        protected DefaultListModel<Object> userListModel = new DefaultListModel<>();
 
         /**
          * The language list model
          */
-        protected DefaultListModel languageListModel = new DefaultListModel();
+        protected DefaultListModel<Object> languageListModel = new DefaultListModel<>();
 
         /**
          * The AddLanguageButton.
@@ -233,13 +234,13 @@ public class LanguageDialog extends JDialog implements ActionMap {
         /**
          * The map that contains the listeners
          */
-        protected Map listeners = new HashMap();
+        protected Map<String, AbstractAction> listeners = new HashMap<>();
 
         /**
          * The cached map for country icons (takes more than 2 secs.
          * to be computed).
          */
-        private static Map iconMap = null;
+        private static Map<String, ImageIcon> iconMap = null;
 
         /**
          * Creates a new Panel object.
@@ -265,10 +266,10 @@ public class LanguageDialog extends JDialog implements ActionMap {
                           new ClearLanguageButtonAction());
 
             // Initalize the lists
-            userList = new JList(userListModel);
+            userList = new JList<>(userListModel);
             userList.setCellRenderer(new IconAndTextCellRenderer());
 
-            languageList = new JList(languageListModel);
+            languageList = new JList<>(languageListModel);
             languageList.setCellRenderer(new IconAndTextCellRenderer());
 
             StringTokenizer st;
@@ -363,7 +364,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
         {
             // don't need to init several times...
             if (iconMap == null) {
-                iconMap = new HashMap();
+                iconMap = new HashMap<>();
                 StringTokenizer st;
                 st = new StringTokenizer(resources.getString("Country.list"),
                                          " ");
@@ -463,11 +464,11 @@ public class LanguageDialog extends JDialog implements ActionMap {
             return computeCountryIcon(getClass(), code);
         }
 
-        private static Icon computeCountryIcon(Class ref,
+        private static Icon computeCountryIcon(Class<?> ref,
                                                String code) {
             ImageIcon icon = null;
             try {
-                if ((icon = (ImageIcon)iconMap.get(code)) != null)
+                if ((icon = iconMap.get(code)) != null)
                     return icon;
                 String s = resources.getString(code + ".icon");
                 URL url  = ref.getResource(s);
@@ -490,7 +491,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
          */
         @Override
         public Action getAction(String key) throws MissingListenerException {
-            return (Action)listeners.get(key);
+            return listeners.get(key);
         }
 
         /**
@@ -630,14 +631,14 @@ public class LanguageDialog extends JDialog implements ActionMap {
          */
         protected class IconAndTextCellRenderer
             extends    JLabel
-            implements ListCellRenderer {
+            implements ListCellRenderer<Object> {
             private static final long serialVersionUID = 1L;
             public IconAndTextCellRenderer() {
                 this.setOpaque(true);
                 this.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
             }
             @Override
-            public Component getListCellRendererComponent(JList   list,
+            public Component getListCellRendererComponent(JList<?>   list,
                                                           Object  value,
                                                           int     index,
                                                           boolean isSelected,

@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.bridge;
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGTitleElementBridge extends SVGDescriptiveElementBridge {

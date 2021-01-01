@@ -41,6 +41,7 @@ import java.util.Vector;
  * purpose, but in the interest of modularity the
  * use of <code>PlanarImage</code> has been avoided.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SimpleRenderedImage implements RenderedImage {
@@ -75,11 +76,8 @@ public abstract class SimpleRenderedImage implements RenderedImage {
     /** The image's ColorModel. */
     protected ColorModel colorModel = null;
 
-    /** The image's sources, stored in a Vector. */
-    protected List sources = new ArrayList();
-
     /** A Hashtable containing the image properties. */
-    protected Map properties = new HashMap();
+    protected Map<String, Object> properties = new HashMap<>();
 
     public SimpleRenderedImage() {}
 
@@ -290,7 +288,7 @@ public abstract class SimpleRenderedImage implements RenderedImage {
 
         prefix = prefix.toLowerCase();
 
-        List names = new ArrayList();
+        List<String> names = new ArrayList<>();
         for (String propertyName : propertyNames) {
             if (propertyName.startsWith(prefix)) {
                 names.add(propertyName);
@@ -408,7 +406,7 @@ public abstract class SimpleRenderedImage implements RenderedImage {
     }
 
     @Override
-    public Vector getSources() {
+    public Vector<RenderedImage> getSources() {
         return null;
     }
 

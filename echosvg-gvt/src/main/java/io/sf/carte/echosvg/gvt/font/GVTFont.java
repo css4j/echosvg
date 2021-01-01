@@ -25,6 +25,7 @@ import java.text.CharacterIterator;
  * An interface for all GVT font classes.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface GVTFont {

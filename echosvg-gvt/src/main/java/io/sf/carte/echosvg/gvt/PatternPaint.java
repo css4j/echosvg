@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
  * defined as a GVT Tree.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PatternPaint implements Paint {

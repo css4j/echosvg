@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * Bridge class for the &lt;feMerge&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFeMergeElementBridge
@@ -80,9 +81,9 @@ public class SVGFeMergeElementBridge
                                GraphicsNode filteredNode,
                                Filter inputFilter,
                                Rectangle2D filterRegion,
-                               Map filterMap) {
+                               Map<String, Filter> filterMap) {
 
-        List srcs = extractFeMergeNode(filterElement,
+        List<Filter> srcs = extractFeMergeNode(filterElement,
                                        filteredElement,
                                        filteredNode,
                                        inputFilter,
@@ -98,12 +99,12 @@ public class SVGFeMergeElementBridge
         }
 
         // the default region is the input sources regions union
-        Iterator iter = srcs.iterator();
+        Iterator<Filter> iter = srcs.iterator();
         Rectangle2D defaultRegion = 
-            (Rectangle2D)((Filter)iter.next()).getBounds2D().clone();
+            (Rectangle2D)iter.next().getBounds2D().clone();
 
         while (iter.hasNext()) {
-            defaultRegion.add(((Filter)iter.next()).getBounds2D());
+            defaultRegion.add(iter.next().getBounds2D());
         }
 
         // get filter primitive chain region
@@ -141,14 +142,14 @@ public class SVGFeMergeElementBridge
      * @param filterMap the filter map that contains named filter primitives
      * @param ctx the bridge context
      */
-    protected static List extractFeMergeNode(Element filterElement,
+    protected static List<Filter> extractFeMergeNode(Element filterElement,
                                              Element filteredElement,
                                              GraphicsNode filteredNode,
                                              Filter inputFilter,
-                                             Map filterMap,
+                                             Map<String, Filter> filterMap,
                                              BridgeContext ctx) {
 
-        List srcs = null;
+        List<Filter> srcs = null;
         for (Node n = filterElement.getFirstChild();
              n != null;
              n = n.getNextSibling()) {
@@ -172,7 +173,7 @@ public class SVGFeMergeElementBridge
                  filterMap);
             if (filter != null) {
                 if (srcs == null) {
-                    srcs = new LinkedList();
+                    srcs = new LinkedList<>();
                 }
                 srcs.add(filter);
             }
@@ -218,7 +219,7 @@ public class SVGFeMergeElementBridge
                                    Element filteredElement,
                                    GraphicsNode filteredNode,
                                    Filter inputFilter,
-                                   Map filterMap) {
+                                   Map<String, Filter> filterMap) {
             return getIn(filterElement,
                          filteredElement,
                          filteredNode,

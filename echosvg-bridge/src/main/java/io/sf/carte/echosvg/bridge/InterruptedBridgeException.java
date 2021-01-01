@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.bridge;
  * current thread was interrupted.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class InterruptedBridgeException extends RuntimeException {

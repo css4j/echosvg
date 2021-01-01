@@ -28,6 +28,7 @@ import java.awt.image.BufferedImage;
  * Validates the operation of the <code>PerformanceTest</code> class.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PerformanceTestValidator extends AbstractTest {

@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * Bridge class for the &lt;feOffset&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFeOffsetElementBridge
@@ -78,7 +79,7 @@ public class SVGFeOffsetElementBridge
                                GraphicsNode filteredNode,
                                Filter inputFilter,
                                Rectangle2D filterRegion,
-                               Map filterMap) {
+                               Map<String, Filter> filterMap) {
 
 
         // 'in' attribute

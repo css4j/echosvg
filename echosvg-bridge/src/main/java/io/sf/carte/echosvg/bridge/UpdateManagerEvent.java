@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.EventObject;
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.List;
  * from a UpdateManager instance.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class UpdateManagerEvent extends EventObject {
@@ -41,7 +43,7 @@ public class UpdateManagerEvent extends EventObject {
     /**
      * The dirty areas, as a List of Rectangles.
      */
-    protected List dirtyAreas;
+    protected List<Rectangle> dirtyAreas;
 
     /**
      * True if before painting this update the canvas's painting
@@ -57,7 +59,7 @@ public class UpdateManagerEvent extends EventObject {
      * @param das List of dirty areas.
      */
     public UpdateManagerEvent(Object source, BufferedImage bi, 
-                              List das) {
+                              List<Rectangle> das) {
         super(source);
         this.image = bi;
         this.dirtyAreas = das;
@@ -74,7 +76,7 @@ public class UpdateManagerEvent extends EventObject {
      *            cleared as a result of this event.
      */
     public UpdateManagerEvent(Object source, BufferedImage bi, 
-                              List das, boolean cpt) {
+                              List<Rectangle> das, boolean cpt) {
         super(source);
         this.image = bi;
         this.dirtyAreas = das;
@@ -91,7 +93,7 @@ public class UpdateManagerEvent extends EventObject {
     /**
      * Returns the dirty areas (list of rectangles)
      */
-    public List getDirtyAreas() {
+    public List<Rectangle> getDirtyAreas() {
         return dirtyAreas;
     }
 

@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.util.SoftReferenceCache;
  * we have already loaded.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NamedProfileCache extends SoftReferenceCache {

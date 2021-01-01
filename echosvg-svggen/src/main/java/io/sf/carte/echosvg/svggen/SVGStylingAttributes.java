@@ -26,10 +26,11 @@ import java.util.Set;
  * are defined as styling properties in Stylable SVG.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGStylingAttributes implements SVGSyntax{
-    static Set attrSet = new HashSet();
+    static Set<String> attrSet = new HashSet<>();
 
     static {
         attrSet.add(SVG_CLIP_PATH_ATTRIBUTE);
@@ -66,5 +67,5 @@ public class SVGStylingAttributes implements SVGSyntax{
     /**
      * Attributes that represent styling properties
      */
-    public static final Set set = attrSet;
+    public static final Set<String> set = attrSet;
 }

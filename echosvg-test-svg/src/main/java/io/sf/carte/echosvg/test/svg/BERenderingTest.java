@@ -19,10 +19,11 @@
 package io.sf.carte.echosvg.test.svg;
 
 /**
- * Preconfigured test for SVG files under the xml-batik/../beSuite
+ * Preconfigured test for SVG files under the beSuite
  * directory.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class BERenderingTest extends PreconfiguredRenderingTest {

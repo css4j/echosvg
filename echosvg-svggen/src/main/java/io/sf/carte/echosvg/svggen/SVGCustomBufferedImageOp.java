@@ -28,6 +28,7 @@ import org.w3c.dom.Element;
  * an equivalent SVG filter.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see                io.sf.carte.echosvg.svggen.SVGBufferedImageOp
  */
@@ -55,7 +56,7 @@ public class SVGCustomBufferedImageOp extends AbstractSVGFilterConverter {
     public SVGFilterDescriptor toSVG(BufferedImageOp filter,
                                      Rectangle filterRect) {
         SVGFilterDescriptor filterDesc =
-            (SVGFilterDescriptor)descMap.get(filter);
+            descMap.get(filter);
 
         if (filterDesc == null) {
             // First time this filter is used. Request handler

@@ -66,6 +66,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * </ul>
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
@@ -491,7 +492,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
         return getPixelUnitToMillimeter();
     }
 
-    protected SoftReference bboxShape = null;
+    protected SoftReference<Shape> bboxShape = null;
     protected Rectangle2D bbox = null;
 
     /**
@@ -508,7 +509,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
         Shape s = node.getOutline();
 
         if ((bboxShape != null) && (s == bboxShape.get())) return bbox;
-        bboxShape = new SoftReference(s); // don't keep this live.
+        bboxShape = new SoftReference<>(s); // don't keep this live.
         bbox = null;
         if (s == null) return bbox;
 

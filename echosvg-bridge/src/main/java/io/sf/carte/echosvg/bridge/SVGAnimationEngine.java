@@ -94,6 +94,7 @@ import io.sf.carte.echosvg.util.SMILConstants;
  * An AnimationEngine for SVG documents.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAnimationEngine extends AnimationEngine {
@@ -211,7 +212,7 @@ public class SVGAnimationEngine extends AnimationEngine {
     /**
      * List of bridges that will be initialized when the document is started.
      */
-    protected LinkedList initialBridges = new LinkedList();
+    protected LinkedList<SVGAnimationElementBridge> initialBridges = new LinkedList<>();
 
     /**
      * A StyleMap used by the {@link Factory}s when computing CSS values.
@@ -236,12 +237,12 @@ public class SVGAnimationEngine extends AnimationEngine {
     /**
      * Set of SMIL animation event names for SVG 1.1.
      */
-    protected static final Set animationEventNames11 = new HashSet();
+    protected static final Set<String> animationEventNames11 = new HashSet<>();
 
     /**
      * Set of SMIL animation event names for SVG 1.2.
      */
-    protected static final Set animationEventNames12 = new HashSet();
+    protected static final Set<String> animationEventNames12 = new HashSet<>();
 
     static {
         String[] eventNamesCommon = {
@@ -443,16 +444,12 @@ public class SVGAnimationEngine extends AnimationEngine {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(new Date(documentStartTime));
                 timedDocumentRoot.resetDocument(cal);
-                Object[] bridges = initialBridges.toArray();
+                SVGAnimationElementBridge[] bridges = initialBridges.toArray(new SVGAnimationElementBridge[0]);
                 initialBridges = null;
-                for (Object bridge2 : bridges) {
-                    SVGAnimationElementBridge bridge =
-                            (SVGAnimationElementBridge) bridge2;
+                for (SVGAnimationElementBridge bridge : bridges) {
                     bridge.initializeAnimation();
                 }
-                for (Object bridge1 : bridges) {
-                    SVGAnimationElementBridge bridge =
-                            (SVGAnimationElementBridge) bridge1;
+                for (SVGAnimationElementBridge bridge : bridges) {
                     bridge.initializeTimedElement();
                 }
 
@@ -829,7 +826,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * is for.  We make this a WeakReference so that a ticking animation
          * engine does not prevent from being GCed.
          */
-        protected WeakReference engRef;
+        protected WeakReference<SVGAnimationEngine> engRef;
 
         /**
          * The maximum number of consecutive exceptions to allow before
@@ -849,7 +846,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          */
         public AnimationTickRunnable(RunnableQueue q, SVGAnimationEngine eng) {
             this.q = q;
-            this.engRef = new WeakReference(eng);
+            this.engRef = new WeakReference<>(eng);
             // Initialize the past times to 100ms.
             Arrays.fill(times, 100);
             sumTime = 100 * NUM_TIMES;
@@ -964,7 +961,7 @@ public class SVGAnimationEngine extends AnimationEngine {
          * Returns the SVGAnimationEngine this AnimationTickRunnable is for.
          */
         protected SVGAnimationEngine getAnimationEngine() {
-            return (SVGAnimationEngine) engRef.get();
+            return engRef.get();
         }
     }
 

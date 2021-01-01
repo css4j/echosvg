@@ -20,6 +20,7 @@
 package io.sf.carte.echosvg.gvt.flow;
 
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.text.AttributedString;
 import java.text.CharacterIterator;
 import java.util.HashSet;
@@ -29,6 +30,7 @@ import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TextLineBreaks {
@@ -41,7 +43,7 @@ public class TextLineBreaks {
     public static final AttributedCharacterIterator.Attribute FLOW_LINE_BREAK
         = GVTAttributedCharacterIterator.TextAttribute.FLOW_LINE_BREAK;
 
-    static Set lineBrks = new HashSet();
+    static Set<Attribute> lineBrks = new HashSet<>();
 
     static {
         lineBrks.add(FLOW_PARAGRAPH);

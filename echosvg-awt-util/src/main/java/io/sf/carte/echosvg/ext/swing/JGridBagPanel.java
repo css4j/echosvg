@@ -30,6 +30,7 @@ import javax.swing.JPanel;
  * An implementation of JPanel that uses the GridBagLayout.
  *
  * @author  <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JGridBagPanel extends JPanel implements GridBagConstants{

@@ -40,9 +40,11 @@ import io.sf.carte.echosvg.test.TestReport;
  * an event handler has been added can be processed by EchoSVG.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ShowGraphics2DOutput extends AbstractTest {
+    @Override
     public TestReport runImpl() throws Exception {
 
         DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
@@ -93,6 +95,7 @@ public class ShowGraphics2DOutput extends AbstractTest {
     static class TestUserAgent extends UserAgentAdapter {
         boolean failed;
 
+        @Override
         public void displayError(Exception e) {
             failed = true;
         } 

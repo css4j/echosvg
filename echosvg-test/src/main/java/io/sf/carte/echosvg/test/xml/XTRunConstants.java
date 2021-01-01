@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.test.xml;
  * Contains constants for the XML Test Run (XTRun) syntax.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface XTRunConstants {

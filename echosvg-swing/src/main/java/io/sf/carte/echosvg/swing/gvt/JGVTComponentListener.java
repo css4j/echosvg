@@ -24,6 +24,7 @@ import java.awt.event.ComponentEvent;
  * An interface for listeners of {@link JGVTComponent} events.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface JGVTComponentListener {

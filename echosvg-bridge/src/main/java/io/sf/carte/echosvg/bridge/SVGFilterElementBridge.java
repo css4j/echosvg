@@ -43,6 +43,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * Bridge class for the &lt;filter&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFilterElementBridge extends AnimatableGenericSVGBridge
@@ -104,7 +105,7 @@ public class SVGFilterElementBridge extends AnimatableGenericSVGBridge
 
         // Create a map for filter nodes to advertise themselves as
         // named source
-        Map filterNodeMap = new HashMap(11);
+        Map<String, Filter> filterNodeMap = new HashMap<>(11);
         filterNodeMap.put(SVG_SOURCE_GRAPHIC_VALUE, sourceGraphic);
 
 
@@ -169,10 +170,10 @@ public class SVGFilterElementBridge extends AnimatableGenericSVGBridge
                                                   Element filteredElement,
                                                   GraphicsNode filteredNode,
                                                   Filter in,
-                                                  Map filterNodeMap,
+                                                  Map<String, Filter> filterNodeMap,
                                                   BridgeContext ctx) {
 
-        List refs = new LinkedList();
+        List<ParsedURL> refs = new LinkedList<>();
         for (;;) {
             Filter newIn = buildLocalFilterPrimitives(filterElement,
                                                       filterRegion,
@@ -221,7 +222,7 @@ public class SVGFilterElementBridge extends AnimatableGenericSVGBridge
                                           Element filteredElement,
                                           GraphicsNode filteredNode,
                                           Filter in,
-                                          Map filterNodeMap,
+                                          Map<String, Filter> filterNodeMap,
                                           BridgeContext ctx) {
 
         for (Node n = filterElement.getFirstChild();

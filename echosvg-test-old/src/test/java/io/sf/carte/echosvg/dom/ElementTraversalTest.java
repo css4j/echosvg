@@ -21,23 +21,25 @@ package io.sf.carte.echosvg.dom;
 
 import java.io.StringReader;
 
+import org.w3c.dom.Document;
+
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
-
-import org.w3c.dom.Document;
 import io.sf.carte.echosvg.w3c.dom.ElementTraversal;
 
 /**
  * Tests the {@link ElementTraversal} interface.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ElementTraversalTest extends AbstractTest {
 
     private String DOC = "<a><b/><c>.<?x?>.</c><d>.<?x?><e/><f/><?x?>.</d><g><h/>.<i/></g></a>";
 
+    @Override
     public boolean runImplBasic() throws Exception {
         String parser = XMLResourceDescriptor.getXMLParserClassName();
         SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);

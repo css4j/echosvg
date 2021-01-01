@@ -29,6 +29,7 @@ import java.awt.image.WritableRaster;
  * the coordinate system of the tiles.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TranslateRed extends AbstractRed {

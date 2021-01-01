@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
  * This class implements the Node interface with support for children.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractParentNode extends AbstractNode {

@@ -29,6 +29,7 @@ import java.awt.geom.Rectangle2D;
  * graphics node, its paint routine and bounds computation.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class ProxyGraphicsNode extends AbstractGraphicsNode {

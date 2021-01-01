@@ -38,6 +38,7 @@ import java.util.Set;
  * GVTAttributedCharacterIterator.TextAttributes.
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 
@@ -45,8 +46,8 @@ public class GVTACIImpl
                 implements GVTAttributedCharacterIterator {
 
     private String simpleString;
-    private Set allAttributes;
-    private ArrayList mapList;
+    private Set<Attribute> allAttributes;
+    private ArrayList<HashMap<Attribute,Object>> mapList;
     private static int START_RUN = 2;
     private static int END_RUN = 3;
     private static int MID_RUN = 1;
@@ -127,7 +128,7 @@ public class GVTACIImpl
         for (int i = beginIndex; i <= endIndex; ++i) {
             charInRun[i] = SINGLETON;
             int n = Math.min(i, attValues.length - 1);
-            ((Map) mapList.get(i)).put(attr, attValues[n]);
+            mapList.get(i).put(attr, attValues[n]);
         }
     }
 
@@ -137,7 +138,7 @@ public class GVTACIImpl
      * Get the keys of all attributes defined on the iterator's text range.
      */
     @Override
-    public Set getAllAttributeKeys() {
+    public Set<Attribute> getAllAttributeKeys() {
         return allAttributes;
     }
 
@@ -156,8 +157,8 @@ public class GVTACIImpl
      * character.
      */
     @Override
-    public Map getAttributes() {
-        return (Map) mapList.get(currentIndex);
+    public Map<Attribute, Object> getAttributes() {
+        return mapList.get(currentIndex);
     }
 
     /**
@@ -188,11 +189,11 @@ public class GVTACIImpl
         if (value == null) {
             do {
                  ++ndx;
-            } while (((Map) mapList.get(ndx)).get(attribute) == null);
+            } while (mapList.get(ndx).get(attribute) == null);
         } else {
             do {
                 ++ndx;
-            } while (value.equals(((Map) mapList.get(ndx)).get(attribute)));
+            } while (value.equals(mapList.get(ndx).get(attribute)));
         }
         return ndx;
     }
@@ -204,7 +205,7 @@ public class GVTACIImpl
      *     character.
      */
     @Override
-    public int getRunLimit(Set attributes) {
+    public int getRunLimit(Set<? extends Attribute> attributes) {
         int ndx = currentIndex;
         do {
             ++ndx;
@@ -237,11 +238,11 @@ public class GVTACIImpl
         //to avoid null pointer, treat null value as special case:-(
         try {
             if (value == null) {
-                while (((Map) mapList.get(ndx - 1)).get(attribute) == null)
+                while (mapList.get(ndx - 1).get(attribute) == null)
                     --ndx;
             } else {
                 while (value.equals(
-                        ((Map) mapList.get(ndx - 1)).get(attribute)) )
+                        mapList.get(ndx - 1).get(attribute)) )
                     --ndx;
             }
         } catch(IndexOutOfBoundsException e) {
@@ -256,10 +257,10 @@ public class GVTACIImpl
      *      index.
      */
     @Override
-    public int getRunStart(Set attributes) {
+    public int getRunStart(Set<? extends Attribute> attributes) {
         int ndx = currentIndex;
         try {
-            while (attributes.equals(mapList.get(ndx - 1))) --ndx;
+            while (attributes.equals(mapList.get(ndx - 1).keySet())) --ndx;
         } catch(IndexOutOfBoundsException e) {
         }
         return ndx;
@@ -368,8 +369,8 @@ public class GVTACIImpl
     //Private methods:
 
     private void buildAttributeTables() {
-        allAttributes = new HashSet();
-        mapList = new ArrayList(simpleString.length());
+        allAttributes = new HashSet<>();
+        mapList = new ArrayList<>(simpleString.length());
         charInRun = new int[simpleString.length()];
         for (int i = 0; i < charInRun.length; ++i) {
             charInRun[i] = SINGLETON;
@@ -377,14 +378,14 @@ public class GVTACIImpl
              * XXX TODO: loosen assumption, initially each character has its own
              * attribute map.
              */
-            mapList.set(i, new HashMap());
+            mapList.set(i, new HashMap<>());
         }
     }
 
     private void buildAttributeTables(AttributedCharacterIterator aci) {
         allAttributes = aci.getAllAttributeKeys();
         int length = aci.getEndIndex() - aci.getBeginIndex();
-        mapList = new ArrayList(length);
+        mapList = new ArrayList<>(length);
         charInRun = new int[length];
         char  c = aci.first();
         char[] chars = new char[length];
@@ -395,7 +396,7 @@ public class GVTACIImpl
              * XXX TODO:loosen assumption, initially each character
              * has its own attribute map.
              */
-            mapList.set(i, new HashMap(aci.getAttributes()));
+            mapList.set(i, new HashMap<>(aci.getAttributes()));
             c = aci.next();
         }
         simpleString = new String(chars);

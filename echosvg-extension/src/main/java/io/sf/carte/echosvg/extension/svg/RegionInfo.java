@@ -26,6 +26,7 @@ import java.awt.geom.Rectangle2D;
  * element.  Namely it holds the bounds of the region and the desired
  * vertical alignment.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RegionInfo

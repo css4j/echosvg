@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  * to do the work.  Eventually this may move to be more tiled in nature.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public class AffineRed extends AbstractRed {
 

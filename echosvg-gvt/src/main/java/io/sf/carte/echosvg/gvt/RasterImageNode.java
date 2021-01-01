@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author <a href="mailto:Thomas.DeWeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RasterImageNode extends AbstractGraphicsNode {

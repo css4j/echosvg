@@ -50,6 +50,7 @@ import io.sf.carte.echosvg.parser.PathParser;
  * <code>SVGPathSegList</code>.
  *
  * @author nicolas.socheleau@bitflash.com
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGPathSegList

@@ -29,6 +29,7 @@ import javax.swing.text.StyleContext;
  * A pool of styles and their associated resources
  *
  * @author <a href="mailto:tonny@kiyut.com">Tonny Kohar</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XMLContext extends StyleContext {
@@ -45,10 +46,10 @@ public class XMLContext extends StyleContext {
     public static final String CDATA_STYLE            = "cdata";
     
     //Map<String, Color>
-    protected Map syntaxForegroundMap = null;
+    protected Map<String, Color> syntaxForegroundMap = null;
     
     //Map<String, Font>
-    protected Map syntaxFontMap = null;
+    protected Map<String, Font> syntaxFontMap = null;
     
     
     public XMLContext() {
@@ -58,8 +59,8 @@ public class XMLContext extends StyleContext {
         String syntaxName;
         Font font;
         Color fontForeground;
-        syntaxFontMap = new HashMap();
-        syntaxForegroundMap = new HashMap();        
+        syntaxFontMap = new HashMap<>();
+        syntaxForegroundMap = new HashMap<>();        
 
         Font defaultFont = new Font("Monospaced", Font.PLAIN, 12);
         
@@ -118,19 +119,19 @@ public class XMLContext extends StyleContext {
         syntaxForegroundMap.put(syntaxName, fontForeground);
     }
     
-    public XMLContext(Map syntaxFontMap, Map syntaxForegroundMap) {
+    public XMLContext(Map<String, Font> syntaxFontMap, Map<String, Color> syntaxForegroundMap) {
         setSyntaxFont(syntaxFontMap);
         setSyntaxForeground(syntaxForegroundMap);
     }
     
-    public void setSyntaxForeground(Map syntaxForegroundMap) {
+    public void setSyntaxForeground(Map<String, Color> syntaxForegroundMap) {
         if (syntaxForegroundMap == null) {
             throw new IllegalArgumentException("syntaxForegroundMap can not be null");
         }
         this.syntaxForegroundMap = syntaxForegroundMap;
     }
     
-    public void setSyntaxFont(Map syntaxFontMap) {
+    public void setSyntaxFont(Map<String, Font> syntaxFontMap) {
         if (syntaxFontMap == null) {
             throw new IllegalArgumentException("syntaxFontMap can not be null");
         }
@@ -143,7 +144,7 @@ public class XMLContext extends StyleContext {
     }
     
     public Color getSyntaxForeground(String name) {
-        return (Color)syntaxForegroundMap.get(name);
+        return syntaxForegroundMap.get(name);
     }
     
     public Font getSyntaxFont(int ctx) {
@@ -152,7 +153,7 @@ public class XMLContext extends StyleContext {
     }
     
     public Font getSyntaxFont(String name) {
-        return (Font)syntaxFontMap.get(name);
+        return syntaxFontMap.get(name);
     }
     
     public String getSyntaxName(int ctx) {

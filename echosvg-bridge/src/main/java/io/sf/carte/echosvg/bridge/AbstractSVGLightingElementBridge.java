@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.ext.awt.image.SpotLight;
  * Bridge class for the &lt;feDiffuseLighting&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGLightingElementBridge

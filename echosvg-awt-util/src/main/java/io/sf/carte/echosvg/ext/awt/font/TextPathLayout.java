@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.ext.awt.geom.PathLength;
  * <li> The layout code works, but it's definitely not perfect.
  * </ul>
  * @author <a href="mailto:dean.jackson@cmis.csiro.au">Dean Jackson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 

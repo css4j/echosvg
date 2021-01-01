@@ -49,6 +49,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * describing why the two images are different.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageCompareTest extends AbstractTest {

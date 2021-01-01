@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.util.XBLConstants;
  * Bridge class for the &lt;xbl:content&gt; element.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {

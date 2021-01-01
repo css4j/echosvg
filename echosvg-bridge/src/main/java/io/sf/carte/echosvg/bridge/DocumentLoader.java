@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.util.CleanerThread;
  * maintaining a cache.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DocumentLoader {
@@ -52,7 +53,7 @@ public class DocumentLoader {
      * WARNING: tagged private as no element of this Map should be
      * referenced outise of this class
      */
-    protected HashMap cacheMap = new HashMap();
+    protected HashMap<String, DocumentState> cacheMap = new HashMap<>();
 
     /**
      * The user agent.
@@ -85,7 +86,7 @@ public class DocumentLoader {
         }
         DocumentState state;
         synchronized (cacheMap) {
-            state = (DocumentState)cacheMap.get(uri);
+            state = cacheMap.get(uri);
         }
         if (state != null)
             return state.getDocument();
@@ -166,7 +167,7 @@ public class DocumentLoader {
         String uri = ((SVGDocument)e.getOwnerDocument()).getURL();
         DocumentState state;
         synchronized (cacheMap) {
-            state = (DocumentState)cacheMap.get(uri);
+            state = cacheMap.get(uri);
         }
         if (state == null) {
             return -1;
@@ -178,7 +179,7 @@ public class DocumentLoader {
     /**
      * A simple class that contains a Document and its number of nodes.
      */
-    private class DocumentState extends CleanerThread.SoftReferenceCleared {
+    private class DocumentState extends CleanerThread.SoftReferenceCleared<Object> {
 
         private String uri;
         private DocumentDescriptor desc;

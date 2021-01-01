@@ -24,6 +24,7 @@ import javax.swing.Action;
  * This interface represents an object which maps actions to strings
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ActionMap {

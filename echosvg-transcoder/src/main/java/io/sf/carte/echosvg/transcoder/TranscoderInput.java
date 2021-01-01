@@ -28,6 +28,7 @@ import org.xml.sax.XMLReader;
  * This class represents a generic input of a <code>Transcoder</code>.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TranscoderInput {

@@ -24,6 +24,7 @@ import java.io.RandomAccessFile;
 
 /** 
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  */

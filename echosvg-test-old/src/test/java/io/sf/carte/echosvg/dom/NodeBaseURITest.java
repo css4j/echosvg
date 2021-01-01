@@ -25,9 +25,11 @@ import org.w3c.dom.Element;
  * Tests Node.baseURI.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NodeBaseURITest extends DOM3Test {
+    @Override
     public boolean runImplBasic() throws Exception {
         Document doc = newSVGDoc();
         doc.setDocumentURI("http://example.com/blah");

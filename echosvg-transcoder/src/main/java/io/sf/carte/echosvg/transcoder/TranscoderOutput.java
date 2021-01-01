@@ -28,6 +28,7 @@ import org.xml.sax.XMLFilter;
  * This class represents a single output for a <code>Transcoder</code>.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TranscoderOutput {

@@ -18,18 +18,26 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import org.w3c.dom.*;
+import java.io.File;
+import java.net.URL;
 
-import java.io.*;
-import java.net.*;
-import io.sf.carte.echosvg.dom.util.*;
-import io.sf.carte.echosvg.util.*;
-import io.sf.carte.echosvg.test.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import io.sf.carte.echosvg.dom.util.DocumentFactory;
+import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This class tests the getElementsByTagNameNS method.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GetElementsByTagNameNSTest extends AbstractTest {
@@ -45,6 +53,7 @@ public class GetElementsByTagNameNSTest extends AbstractTest {
         tagName = tag;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         String parser =
             XMLResourceDescriptor.getXMLParserClassName();

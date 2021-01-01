@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.anim.values.AnimatableValue;
  * An interface for targets of animation to provide context information.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface AnimationTarget {

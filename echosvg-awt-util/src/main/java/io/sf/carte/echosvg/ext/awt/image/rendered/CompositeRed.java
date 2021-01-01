@@ -28,6 +28,7 @@ import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.DirectColorModel;
 import java.awt.image.Raster;
+import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ import io.sf.carte.echosvg.ext.awt.image.SVGComposite;
  * to do the work.  Eventually this may move to be more tiled in nature.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CompositeRed extends AbstractRed {
@@ -52,10 +54,10 @@ public class CompositeRed extends AbstractRed {
     CompositeRule rule;
     CompositeContext [] contexts;
 
-    public CompositeRed(List srcs, CompositeRule rule) {
+    public CompositeRed(List<CachableRed> srcs, CompositeRule rule) {
         super(); // We _must_ call init...
 
-        CachableRed src = (CachableRed)srcs.get(0);
+        CachableRed src = srcs.get(0);
 
         ColorModel  cm = fixColorModel (src);
 
@@ -65,10 +67,10 @@ public class CompositeRed extends AbstractRed {
         contexts = new CompositeContext[srcs.size()];
 
         int idx = 0;
-        Iterator i = srcs.iterator();
+        Iterator<CachableRed> i = srcs.iterator();
         Rectangle myBounds = null;
         while (i.hasNext()) {
-            CachableRed cr = (CachableRed)i.next();
+            CachableRed cr = i.next();
 
             contexts[idx++] = comp.createContext(cr.getColorModel(), cm, null);
 
@@ -102,10 +104,10 @@ public class CompositeRed extends AbstractRed {
                 ("Composite Operation Must have some source!");
 
         if (rule.getRule() == CompositeRule.RULE_ARITHMETIC) {
-            List vec = new ArrayList( srcs.size() );
+            List<CachableRed> vec = new ArrayList<>( srcs.size() );
             i = srcs.iterator();
             while (i.hasNext()) {
-                CachableRed cr = (CachableRed)i.next();
+                CachableRed cr = i.next();
                 Rectangle r = cr.getBounds();
                 // For arithmetic make sure they are all the same size...
                 if ((r.x      != myBounds.x) ||
@@ -164,7 +166,7 @@ public class CompositeRed extends AbstractRed {
         Rectangle r = wr.getBounds();
 
         int idx = 0;
-        Iterator i = srcs.iterator();
+        Iterator<RenderedImage> i = srcs.iterator();
         boolean first = true;
         while (i.hasNext()) {
             CachableRed cr = (CachableRed)i.next();
@@ -219,7 +221,7 @@ public class CompositeRed extends AbstractRed {
         Graphics2D g2d = GraphicsUtil.createGraphics(bi);
         g2d.translate(-r.x, -r.y);
 
-        Iterator i = srcs.iterator();
+        Iterator<RenderedImage> i = srcs.iterator();
         boolean first = true;
         while (i.hasNext()) {
             CachableRed cr = (CachableRed)i.next();

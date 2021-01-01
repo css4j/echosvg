@@ -22,10 +22,10 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import io.sf.carte.echosvg.test.Test;
 import io.sf.carte.echosvg.test.DefaultTestSuite;
-import io.sf.carte.echosvg.test.svg.SVGRenderingAccuracyTest;
+import io.sf.carte.echosvg.test.Test;
 import io.sf.carte.echosvg.test.svg.ImageCompareTest;
+import io.sf.carte.echosvg.test.svg.SVGRenderingAccuracyTest;
 
 /**
  * This test validates that a given rendering sequence, modeled
@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.test.svg.ImageCompareTest;
  *   SVG for various configurations.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGGeneratorTests extends DefaultTestSuite {
@@ -81,6 +82,7 @@ public class SVGGeneratorTests extends DefaultTestSuite {
      * prefixed with the package name defined in
      * getPackageName
      */
+    @Override
     public void setId(String id){
         super.setId(id);
         String clName = getPackageName() + "." + id;
@@ -117,6 +119,7 @@ public class SVGGeneratorTests extends DefaultTestSuite {
     /**
      * For the Generator test, the relevant name is the id
      */
+    @Override
     public String getName(){
         return "SVGGeneratorTest - " + getId();
     }

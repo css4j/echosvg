@@ -45,13 +45,14 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.RenderedImageCachableRed;
  * implementation.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractRable implements Filter {
 
-    protected Vector srcs;
-    protected Map    props = new HashMap();
-    protected long   stamp = 0;
+    protected Vector<RenderableImage> srcs;
+    protected Map<String,Object> props = new HashMap<>();
+    protected long stamp = 0;
 
     /**
      * void constructor. The subclass must call one of the
@@ -60,7 +61,7 @@ public abstract class AbstractRable implements Filter {
      * method need to be computed in the subclasses constructor.
      */
     protected AbstractRable() {
-        srcs = new Vector();
+        srcs = new Vector<>();
     }
 
     /**
@@ -79,7 +80,7 @@ public abstract class AbstractRable implements Filter {
      * the srcs Vector.
      * @param props use to initialize the properties on this renderable image.
      */
-    protected AbstractRable(Filter src, Map props) {
+    protected AbstractRable(Filter src, Map<String,?> props) {
         init(src, props);
     }
 
@@ -90,7 +91,7 @@ public abstract class AbstractRable implements Filter {
      * of all the sources in srcs.  All the members of srcs must be
      * CacheableRable otherwise an error will be thrown.
      */
-    protected AbstractRable(List srcs) {
+    protected AbstractRable(List<? extends RenderableImage> srcs) {
         this(srcs, null);
     }
 
@@ -101,7 +102,7 @@ public abstract class AbstractRable implements Filter {
      * will be thrown.
      * @param props use to initialize the properties on this renderable image.
      */
-    protected AbstractRable(List srcs, Map props) {
+    protected AbstractRable(List<? extends RenderableImage> srcs, Map<String,Object> props) {
         init(srcs, props);
     }
 
@@ -127,10 +128,10 @@ public abstract class AbstractRable implements Filter {
      * state of the Renderable.
      * @param src will become the first (and only) member of the srcs Vector.
      */
-    protected void init(Filter src) {
+    protected void init(RenderableImage src) {
         touch();
 
-        this.srcs   = new Vector(1);
+        this.srcs   = new Vector<>(1);
         if (src != null) {
             this.srcs.add(src);
         }
@@ -145,7 +146,7 @@ public abstract class AbstractRable implements Filter {
      * @param props use to set the properties on this renderable image.
      * Always clears the current properties (even if null).
      */
-    protected void init(Filter src, Map props) {
+    protected void init(Filter src, Map<String,?> props) {
         init (src);
         if(props != null){
             this.props.putAll(props);
@@ -158,9 +159,9 @@ public abstract class AbstractRable implements Filter {
      * constructed to reset the state of the Renderable.
      * @param srcs Used the create a new srcs Vector (old sources are dropped).
      */
-    protected void init(List srcs) {
+    protected void init(List<? extends RenderableImage> srcs) {
         touch();
-        this.srcs   = new Vector(srcs);
+        this.srcs   = new Vector<>(srcs);
     }
 
     /**
@@ -171,7 +172,7 @@ public abstract class AbstractRable implements Filter {
      * @param props use to set the properties on this renderable image.
      * Always clears the current properties (even if null).
      */
-    protected void init(List srcs, Map props) {
+    protected void init(List<? extends RenderableImage> srcs, Map<String,Object> props) {
         init (srcs);
         if(props != null)
             this.props.putAll(props);
@@ -181,12 +182,12 @@ public abstract class AbstractRable implements Filter {
     public Rectangle2D getBounds2D() {
         Rectangle2D bounds = null;
         if (this.srcs.size() != 0) {
-            Iterator i = srcs.iterator();
-            Filter src = (Filter)i.next();
+            Iterator<RenderableImage> i = srcs.iterator();
+            Filter src = (Filter) i.next();
             bounds = (Rectangle2D)src.getBounds2D().clone();
             Rectangle2D r;
             while (i.hasNext()) {
-                src = (Filter)i.next();
+                src = (Filter) i.next();
                 r = src.getBounds2D();
                 Rectangle2D.union(bounds, r, bounds);
             }
@@ -195,7 +196,7 @@ public abstract class AbstractRable implements Filter {
     }
 
     @Override
-    public Vector getSources() {
+    public Vector<RenderableImage> getSources() {
         return srcs;
     }
 
@@ -242,29 +243,28 @@ public abstract class AbstractRable implements Filter {
 
     @Override
     public Object getProperty(String name) {
-        Object ret = props.get(name);
+        RenderableImage ret = (RenderableImage) props.get(name);
         if (ret != null) return ret;
-        for (Object src : srcs) {
-            RenderableImage ri = (RenderableImage) src;
-            ret = ri.getProperty(name);
-            if (ret != null) return ret;
+        for (RenderableImage src : srcs) {
+            Object pty = src.getProperty(name);
+            if (pty != null) return pty;
         }
         return null;
     }
 
     @Override
     public String [] getPropertyNames() {
-        Set keys = props.keySet();
-        Iterator iter = keys.iterator();
+        Set<String> keys = props.keySet();
+        Iterator<String> iter = keys.iterator();
         String[] ret  = new String[keys.size()];
         int i=0;
         while (iter.hasNext()) {
-            ret[i++] = (String)iter.next();
+            ret[i++] = iter.next();
         }
 
-        iter = srcs.iterator();
-        while (iter.hasNext()) {
-            RenderableImage ri = (RenderableImage)iter.next();
+        Iterator<RenderableImage> rIter = srcs.iterator();
+        while (rIter.hasNext()) {
+            RenderableImage ri = rIter.next();
             String [] srcProps = ri.getPropertyNames();
             if (srcProps.length != 0) {
                 String [] tmp = new String[ret.length+srcProps.length];

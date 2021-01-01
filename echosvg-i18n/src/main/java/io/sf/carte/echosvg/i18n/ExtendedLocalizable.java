@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
  * than the Localizable interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ExtendedLocalizable extends Localizable {

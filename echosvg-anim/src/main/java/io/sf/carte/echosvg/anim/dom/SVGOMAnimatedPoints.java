@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.parser.ParseException;
  * This class is the implementation of the SVGAnimatedPoints interface.
  *
  * @author <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAnimatedPoints
@@ -313,7 +314,7 @@ public class SVGOMAnimatedPoints
                 }
                 itemList = builder.getList();
             } catch (ParseException e) {
-                itemList = new ArrayList(1);
+                itemList = new ArrayList<>(1);
                 malformed = true;
             }
         }
@@ -328,7 +329,7 @@ public class SVGOMAnimatedPoints
          * Creates a new AnimSVGPointList.
          */
         public AnimSVGPointList() {
-            itemList = new ArrayList(1);
+            itemList = new ArrayList<>(1);
         }
 
         /**
@@ -381,13 +382,13 @@ public class SVGOMAnimatedPoints
                 return "";
             }
             StringBuffer sb = new StringBuffer( itemList.size() * 8 );
-            Iterator i = itemList.iterator();
+            Iterator<SVGItem> i = itemList.iterator();
             if (i.hasNext()) {
-                sb.append(((SVGItem) i.next()).getValueAsString());
+                sb.append(i.next().getValueAsString());
             }
             while (i.hasNext()) {
                 sb.append(getItemSeparator());
-                sb.append(((SVGItem) i.next()).getValueAsString());
+                sb.append(i.next().getValueAsString());
             }
             return sb.toString();
         }

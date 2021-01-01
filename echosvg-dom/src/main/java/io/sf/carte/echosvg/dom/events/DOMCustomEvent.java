@@ -24,6 +24,7 @@ import io.sf.carte.echosvg.w3c.dom.events.CustomEvent;
  * A custom event object.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOMCustomEvent extends DOMEvent implements CustomEvent {

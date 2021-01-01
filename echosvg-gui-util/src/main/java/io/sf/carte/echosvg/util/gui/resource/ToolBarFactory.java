@@ -43,6 +43,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * All entries are optional.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ToolBarFactory extends ResourceManager {
@@ -81,10 +82,9 @@ public class ToolBarFactory extends ResourceManager {
                ResourceFormatException,
                MissingListenerException {
         JToolBar result  = new JToolBar();
-        List     buttons = getStringList(name);
+        List<String>     buttons = getStringList(name);
 
-        for (Object button : buttons) {
-            String s = (String) button;
+        for (String s : buttons) {
             if (s.equals(SEPARATOR)) {
                 result.add(new JToolbarSeparator());
             } else {

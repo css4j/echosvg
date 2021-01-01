@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a manager for the SVGPaint property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGPaintManager extends SVGColorManager {

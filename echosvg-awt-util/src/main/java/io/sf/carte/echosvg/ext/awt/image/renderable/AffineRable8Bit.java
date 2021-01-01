@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  * This adjusts the input images coordinate system by a general affine
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AffineRable8Bit 

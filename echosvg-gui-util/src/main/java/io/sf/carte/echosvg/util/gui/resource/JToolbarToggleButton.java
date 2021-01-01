@@ -28,6 +28,7 @@ import javax.swing.UIManager;
 /**
  * This class represents the buttons used in toolbars.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JToolbarToggleButton extends JToggleButton {

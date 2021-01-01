@@ -28,6 +28,7 @@ import org.xml.sax.SAXException;
  * include line and column information with SAX parse errors.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SAXIOException extends IOException {

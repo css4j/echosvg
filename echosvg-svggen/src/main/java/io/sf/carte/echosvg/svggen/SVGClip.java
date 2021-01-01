@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * Utility class that converts a Path object into an SVG clip
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGClip extends AbstractSVGConverter {

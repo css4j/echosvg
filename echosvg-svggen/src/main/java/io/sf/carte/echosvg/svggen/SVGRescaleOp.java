@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  * offsets.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see                io.sf.carte.echosvg.svggen.SVGBufferedImageOp
  */
@@ -76,7 +77,7 @@ public class SVGRescaleOp extends AbstractSVGFilterConverter {
     public SVGFilterDescriptor toSVG(RescaleOp rescaleOp) {
         // Reuse definition if rescaleOp has already been converted
         SVGFilterDescriptor filterDesc =
-            (SVGFilterDescriptor)descMap.get(rescaleOp);
+            descMap.get(rescaleOp);
 
         Document domFactory = generatorContext.domFactory;
 

@@ -36,6 +36,7 @@ import org.w3c.dom.Element;
  * of the lookup table.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see                io.sf.carte.echosvg.svggen.SVGBufferedImageOp
  */
@@ -113,7 +114,7 @@ public class SVGLookupOp extends AbstractSVGFilterConverter {
     public SVGFilterDescriptor toSVG(LookupOp lookupOp) {
         // Reuse definition if lookupOp has already been converted
         SVGFilterDescriptor filterDesc =
-            (SVGFilterDescriptor)descMap.get(lookupOp);
+            descMap.get(lookupOp);
 
         Document domFactory = generatorContext.domFactory;
 

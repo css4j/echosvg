@@ -49,6 +49,7 @@ import java.util.Set;
  * Java class/package name (i.e.  java.lang.System).
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImportInfo {
@@ -91,7 +92,7 @@ public class ImportInfo {
         // No class loader so we can't find 'serviceFile'.
         if (cl == null) return ret;
 
-        Enumeration e;
+        Enumeration<URL> e;
         try {
             e = cl.getResources(importFile);
         } catch (IOException ioe) {
@@ -100,7 +101,7 @@ public class ImportInfo {
 
         while (e.hasMoreElements()) {
             try {
-                URL url = (URL)e.nextElement();
+                URL url = e.nextElement();
                 ret.addImports(url);
             } catch (Exception ex) {
                 // Just try the next file...
@@ -112,27 +113,27 @@ public class ImportInfo {
     }
 
     
-    protected Set classes;
-    protected Set packages;
+    protected Set<String> classes;
+    protected Set<String> packages;
 
     /**
      * Construct an empty ImportInfo instance
      */
     public ImportInfo() {
-        classes = new HashSet();
-        packages = new HashSet();
+        classes = new HashSet<>();
+        packages = new HashSet<>();
     }
 
     /**
      * Return an unmodifiable iterator over the list of classes 
      */
-    public Iterator getClasses()  { 
+    public Iterator<String> getClasses()  { 
         return Collections.unmodifiableSet(classes).iterator(); 
     }
     /**
      * Return an unmodifiable iterator over the list of packages 
      */
-    public Iterator getPackages() { 
+    public Iterator<String> getPackages() { 
         return Collections.unmodifiableSet(packages).iterator(); 
     }
 

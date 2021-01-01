@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.ext.awt.ColorSpaceHintKey;
  * This strips out the source alpha channel into a one band image.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public class FilterAlphaRed extends AbstractRed {
 

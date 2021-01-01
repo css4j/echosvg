@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.css.engine.value.Value;
  * This class represents a style declaration.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
@@ -54,7 +55,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
     /**
      * The values.
      */
-    protected Map values;
+    protected Map<String, CSSValue> values;
 
     /**
      * Creates a new style declaration.
@@ -199,12 +200,12 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
     protected CSSValue getCSSValue(String name) {
         CSSValue result = null;
         if (values != null) {
-            result = (CSSValue)values.get(name);
+            result = values.get(name);
         }
         if (result == null) {
             result = createCSSValue(name);
             if (values == null) {
-                values = new HashMap(11);
+                values = new HashMap<>(11);
             }
             values.put(name, result);
         }
@@ -297,7 +298,6 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
                     @Override
                     public void textChanged(String text) throws DOMException {
                         if (values == null ||
-                            values.get(this) == null ||
                             StyleDeclarationValue.this.handler == null) {
                             throw new DOMException
                                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "");

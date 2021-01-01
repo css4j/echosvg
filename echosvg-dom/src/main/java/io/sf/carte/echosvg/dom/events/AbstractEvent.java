@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.dom.xbl.OriginalEvent;
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractEvent
@@ -100,7 +101,7 @@ public abstract class AbstractEvent
     /**
      * List of default Actionables to run at the end of bubble phase.
      */
-    protected List defaultActions;
+    protected List<Runnable> defaultActions;
 
     /**
      * The number of nodes in the document this event will visit
@@ -242,13 +243,13 @@ public abstract class AbstractEvent
     /**
      * Returns the current list of default action runnables
      */
-    public List getDefaultActions() { return defaultActions; }
+    public List<Runnable> getDefaultActions() { return defaultActions; }
 
     /**
      * Adds the runnable to the list of default action runnables
      */
     public void addDefaultAction(Runnable rable) { 
-        if (defaultActions == null) defaultActions = new ArrayList();
+        if (defaultActions == null) defaultActions = new ArrayList<>();
         defaultActions.add(rable); 
     }
 

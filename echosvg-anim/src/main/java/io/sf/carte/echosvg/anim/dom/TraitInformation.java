@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.anim.dom;
 /**
  * Stores information about a specific XML attribute or CSS property.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TraitInformation {

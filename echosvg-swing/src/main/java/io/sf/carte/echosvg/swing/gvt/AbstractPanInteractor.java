@@ -28,6 +28,7 @@ import java.awt.geom.AffineTransform;
  * InteractorAdapter#startInteraction(java.awt.event.InputEvent)} method.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractPanInteractor extends InteractorAdapter {

@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractRegistryEntry
@@ -31,8 +32,8 @@ public abstract class AbstractRegistryEntry
 
     String name;
     float  priority;
-    List   exts;
-    List   mimeTypes;
+    List<String>   exts;
+    List<String>   mimeTypes;
 
     public AbstractRegistryEntry(String    name,
                                  float     priority,
@@ -41,11 +42,11 @@ public abstract class AbstractRegistryEntry
         this.name     = name;
         this.priority = priority;
 
-        this.exts     = new ArrayList(exts.length);
+        this.exts     = new ArrayList<>(exts.length);
         for (String ext : exts) this.exts.add(ext);
         this.exts = Collections.unmodifiableList(this.exts);
 
-        this.mimeTypes     = new ArrayList(mimeTypes.length);
+        this.mimeTypes     = new ArrayList<>(mimeTypes.length);
         for (String mimeType : mimeTypes) this.mimeTypes.add(mimeType);
         this.mimeTypes = Collections.unmodifiableList(this.mimeTypes);
     }
@@ -57,11 +58,11 @@ public abstract class AbstractRegistryEntry
         this.name = name;
         this.priority = priority;
 
-        this.exts = new ArrayList(1);
+        this.exts = new ArrayList<>(1);
         this.exts.add(ext);
         this.exts = Collections.unmodifiableList(exts);
 
-        this.mimeTypes = new ArrayList(1);
+        this.mimeTypes = new ArrayList<>(1);
         this.mimeTypes.add(mimeType);
         this.mimeTypes = Collections.unmodifiableList(mimeTypes);
     }
@@ -73,12 +74,12 @@ public abstract class AbstractRegistryEntry
     }
 
     @Override
-    public List   getStandardExtensions() {
+    public List<String>   getStandardExtensions() {
         return exts;
     }
 
     @Override
-    public List   getMimeTypes() {
+    public List<String>   getMimeTypes() {
         return mimeTypes;
     }
 

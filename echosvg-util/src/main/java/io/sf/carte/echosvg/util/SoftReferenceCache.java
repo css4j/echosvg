@@ -43,6 +43,7 @@ import java.util.Map;
  * </p>
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SoftReferenceCache {
@@ -51,7 +52,7 @@ public class SoftReferenceCache {
      * The map of cached objects. Must not change after creation,
      * so it's final.
      */
-    protected final Map map = new HashMap();
+    protected final Map<Object, SoftReference<Object>> map = new HashMap<>();
 
     private final boolean synchronous;
 
@@ -93,15 +94,14 @@ public class SoftReferenceCache {
         if (!map.containsKey(key))
             return false;
 
-        Object o = map.get(key);
-        if (o == null)
+        SoftReference<Object> sr = map.get(key);
+        if (sr == null)
             // It's been requested but hasn't been 'put' yet.
             return true;
 
         // It's been put let's make sure the soft reference hasn't
         // been cleared.
-        SoftReference sr = (SoftReference)o;
-        o = sr.get();
+        Object o = sr.get();
         if (o != null)
             return true;
 
@@ -117,10 +117,9 @@ public class SoftReferenceCache {
      * soft-reference will be cleared.
      */
     protected final synchronized boolean isDoneImpl(Object key) {
-        Object o = map.get(key);
-        if (o == null) return false;
-        SoftReference sr = (SoftReference)o;
-        o = sr.get();
+        SoftReference<Object> sr = map.get(key);
+        if (sr == null) return false;
+        Object o = sr.get();
         if (o != null)
             return true;
 
@@ -137,8 +136,8 @@ public class SoftReferenceCache {
     protected final synchronized Object requestImpl(Object key) {
         if (map.containsKey(key)) {
 
-            Object o = map.get(key);
-            while(o == null) {
+            SoftReference<Object> sr = map.get(key);
+            while(sr == null) {
                 if (synchronous) {
                     return null; //Noone will add the value asynchronously, so don't wait()
                 }
@@ -154,11 +153,10 @@ public class SoftReferenceCache {
                     break;
 
                 // Let's see if it was put...
-                o = map.get(key);
+                sr = map.get(key);
             }
-            if (o != null) {
-                SoftReference sr = (SoftReference)o;
-                o = sr.get();
+            if (sr != null) {
+                Object o = sr.get();
                 if (o != null)
                     return o;
             }
@@ -188,13 +186,13 @@ public class SoftReferenceCache {
      */
     protected final synchronized void putImpl(Object key, Object object) {
         if (map.containsKey(key)) {
-            SoftReference ref = new SoftRefKey(object, key);
+            SoftReference<Object> ref = new SoftRefKey(object, key);
             map.put(key, ref);
             this.notifyAll();
         }
     }
 
-    class SoftRefKey extends CleanerThread.SoftReferenceCleared {
+    class SoftRefKey extends CleanerThread.SoftReferenceCleared<Object> {
         Object key;
         public SoftRefKey(Object o, Object key) {
             super(o);
@@ -204,11 +202,10 @@ public class SoftReferenceCache {
         @Override
         public void cleared() {
             SoftReferenceCache cache = SoftReferenceCache.this;
-            if (cache == null) return; // Can't really happen.
             synchronized (cache) {
                 if (!cache.map.containsKey(key))
                     return;
-                Object o = cache.map.remove(key);
+                SoftReference<Object> o = cache.map.remove(key);
                 if (this == o) {
                     // Notify other threads that they may have
                     // to provide this resource now.

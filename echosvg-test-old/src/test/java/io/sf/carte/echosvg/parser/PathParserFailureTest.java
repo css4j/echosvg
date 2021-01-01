@@ -18,14 +18,17 @@
  */
 package io.sf.carte.echosvg.parser;
 
-import java.io.*;
+import java.io.StringReader;
 
-import io.sf.carte.echosvg.test.*;
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.TestReport;
 
 /**
  * To test the path parser.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PathParserFailureTest extends AbstractTest {
@@ -40,6 +43,7 @@ public class PathParserFailureTest extends AbstractTest {
         sourcePath = spath;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         PathParser pp = new PathParser();
         try {

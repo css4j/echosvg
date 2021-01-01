@@ -32,6 +32,7 @@ import java.text.AttributedString;
 /**
  *  This class provides generic methods that must be used by a particular WMFPainter.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AbstractWMFPainter {

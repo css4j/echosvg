@@ -24,6 +24,7 @@ import io.sf.carte.echosvg.css.engine.value.Value;
  * This class represents a collection of CSS property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class StyleDeclaration {

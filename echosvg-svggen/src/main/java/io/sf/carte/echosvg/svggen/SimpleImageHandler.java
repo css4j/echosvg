@@ -32,6 +32,7 @@ import org.w3c.dom.Element;
  * attribute on the elements it creates.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SimpleImageHandler implements GenericImageHandler, SVGSyntax, ErrorConstants {

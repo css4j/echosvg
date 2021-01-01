@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.svggen.font.table;
 
 /**
  * Specifies access to glyph description classes, simple and composite.
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  */

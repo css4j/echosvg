@@ -54,6 +54,7 @@ import io.sf.carte.echosvg.util.XBLConstants;
  * It provides support the SVG 1.2 documents.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVG12DOMImplementation
@@ -183,7 +184,7 @@ public class SVG12DOMImplementation
     /**
      * The SVG element factories.
      */
-    protected static HashMap<String, ElementFactory> svg12Factories = new HashMap<String, ElementFactory>(svg11Factories);
+    protected static HashMap<String, ElementFactory> svg12Factories = new HashMap<>(svg11Factories);
 
     static {
         svg12Factories.put(SVG12Constants.SVG_FLOW_DIV_TAG,
@@ -436,7 +437,7 @@ public class SVG12DOMImplementation
     /**
      * The XBL element factories.
      */
-    protected static HashMap<String, ElementFactory> xblFactories = new HashMap<String, ElementFactory>();
+    protected static HashMap<String, ElementFactory> xblFactories = new HashMap<>();
 
     static {
         xblFactories.put(XBLConstants.XBL_XBL_TAG,

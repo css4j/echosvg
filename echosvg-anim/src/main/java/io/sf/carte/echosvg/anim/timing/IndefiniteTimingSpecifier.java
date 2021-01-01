@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.anim.timing;
  * A class to handle the 'indefinite' SMIL timing specifier.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class IndefiniteTimingSpecifier extends TimingSpecifier {

@@ -28,6 +28,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.HashMap;
@@ -40,6 +41,7 @@ import io.sf.carte.echosvg.gvt.text.ArabicTextHandler;
  * This is a wrapper class for a java.awt.Font instance.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AWTGVTFont implements GVTFont {
@@ -78,7 +80,7 @@ public class AWTGVTFont implements GVTFont {
      *
      * @param attributes Contains attributes of the font to create.
      */
-    public AWTGVTFont(Map attributes) {
+    public AWTGVTFont(Map<Attribute, Object> attributes) {
         Float sz = (Float)attributes.get(TextAttribute.SIZE);
         if (sz != null) {
             this.size = sz;
@@ -334,7 +336,7 @@ public class AWTGVTFont implements GVTFont {
     // static cache for AWTGVTFont
     //
 
-    static Map fontCache = new HashMap(11);
+    static Map<Font, Object> fontCache = new HashMap<>(11);
 
     static void initializeFontCache(Font awtFont) {
         if (!fontCache.containsKey(awtFont)) {

@@ -42,6 +42,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * createRendering methods.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GraphicsNodeRable8Bit 
@@ -128,7 +129,7 @@ public class GraphicsNodeRable8Bit
      * @param props The Properties for this image.
      */
     public GraphicsNodeRable8Bit(GraphicsNode node,
-                                 Map props){
+                                 Map<String, ?> props){
         super((Filter)null, props);
 
         if(node == null)

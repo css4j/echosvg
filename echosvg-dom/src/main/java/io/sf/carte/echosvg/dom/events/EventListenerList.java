@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.dom.util.IntTable;
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EventListenerList {
@@ -56,7 +57,7 @@ public class EventListenerList {
     /**
      * Caches of listeners with a given namespace URI.
      */
-    protected HashMap listenersNS = new HashMap();
+    protected HashMap<String, Entry[]> listenersNS = new HashMap<>();
 
     /**
      * Adds a listener.
@@ -136,7 +137,7 @@ public class EventListenerList {
         if (namespaceURI == null) {
             return getEventListeners();
         }
-        Entry[] ls = (Entry[]) listenersNS.get(namespaceURI);
+        Entry[] ls = listenersNS.get(namespaceURI);
         if (ls != null) {
             return ls;
         }

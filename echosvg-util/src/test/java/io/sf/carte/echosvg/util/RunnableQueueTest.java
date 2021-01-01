@@ -59,7 +59,7 @@ public class RunnableQueueTest extends AbstractTest {
     public TestReport runImpl() throws Exception {
         rq = RunnableQueue.createRunnableQueue();
 
-        List l = new ArrayList(nThreads);
+        List<Runnable> l = new ArrayList<>(nThreads);
         rand = new Random(2345);
 
         // Two switch flickers to make things interesting...

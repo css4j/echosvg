@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * Bridge class for the &lt;feComposite&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFeCompositeElementBridge
@@ -80,7 +81,7 @@ public class SVGFeCompositeElementBridge
                                GraphicsNode filteredNode,
                                Filter inputFilter,
                                Rectangle2D filterRegion,
-                               Map filterMap) {
+                               Map<String, Filter> filterMap) {
 
         // 'operator' attribute - default is 'over'
         CompositeRule rule = convertOperator(filterElement, ctx);
@@ -120,7 +121,7 @@ public class SVGFeCompositeElementBridge
                                                         filterRegion,
                                                         ctx);
 
-        List srcs = new ArrayList(2);
+        List<Filter> srcs = new ArrayList<>(2);
         srcs.add(in2);
         srcs.add(in);
         Filter filter = new CompositeRable8Bit(srcs, rule, true);

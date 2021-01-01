@@ -18,9 +18,11 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 
 /**
  * This test validates the convertion of Java 2D RenderingHints
@@ -28,9 +30,11 @@ import java.awt.image.*;
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RHints implements Painter {
+    @Override
     public void paint(Graphics2D g) {
         java.awt.RenderingHints.Key antialiasKey = java.awt.RenderingHints.KEY_ANTIALIASING;
         Object antialiasOn= java.awt.RenderingHints.VALUE_ANTIALIAS_ON;

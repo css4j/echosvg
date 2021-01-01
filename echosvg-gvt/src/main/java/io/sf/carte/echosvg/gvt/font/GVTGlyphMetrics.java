@@ -26,6 +26,7 @@ import java.awt.geom.Rectangle2D;
  * with the addition of horizontal and vertical advance values.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GVTGlyphMetrics {

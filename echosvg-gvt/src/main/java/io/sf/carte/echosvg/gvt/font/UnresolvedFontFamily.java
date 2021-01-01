@@ -20,12 +20,14 @@
 package io.sf.carte.echosvg.gvt.font;
 
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.util.Map;
 
 /**
  * A font family class for unresolved fonts.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class UnresolvedFontFamily implements GVTFontFamily {
@@ -88,7 +90,7 @@ public class UnresolvedFontFamily implements GVTFontFamily {
      * @param attrs The Attribute Map to get Values from.
      */
     @Override
-    public GVTFont deriveFont(float size, Map attrs) { return null; }
+    public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) { return null; }
 
     @Override
     public boolean isComplex() {

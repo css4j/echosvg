@@ -23,12 +23,14 @@ import java.util.List;
 import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.Transcoder;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
  * Interface for controlling some aspectes of the
  * <code>SVGConverter</code> operation.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGConverterController {
@@ -44,9 +46,9 @@ public interface SVGConverterController {
      * @param dest list of destination file it will use
      */
     boolean proceedWithComputedTask(Transcoder transcoder,
-                                           Map hints,
-                                           List sources,
-                                           List dest);
+                                           Map<Key, ?> hints,
+                                           List<SVGConverterSource> sources,
+                                           List<File> dest);
 
     /**
      * Invoked when the rasterizer is about to start transcoding

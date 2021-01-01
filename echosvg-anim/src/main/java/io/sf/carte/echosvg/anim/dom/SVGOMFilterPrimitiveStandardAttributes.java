@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * attributes.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGOMFilterPrimitiveStandardAttributes
@@ -42,10 +43,10 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGStylableElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
         t.put(null, SVG_X_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
         t.put(null, SVG_Y_ATTRIBUTE,
@@ -182,7 +183,7 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

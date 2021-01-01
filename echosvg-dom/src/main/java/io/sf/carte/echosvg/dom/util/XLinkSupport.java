@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.constants.XMLConstants;
  * This class provides support for XLink features.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XLinkSupport implements XMLConstants {

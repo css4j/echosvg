@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.Transcoder;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.JPEGTranscoder;
@@ -94,6 +95,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  *     to use when processing the SVG documents.</li>
  * </ul>
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @author <a href="mailto:Henri.Ruini@nokia.com">Henri Ruini</a>
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
@@ -261,7 +263,7 @@ public class SVGConverter {
     protected boolean securityOff = false;
 
     /** Sources files or URLs */
-    protected List sources = null;
+    protected List<String> sources = null;
 
     /**
      * Destination image path. Can be a file (for single source) or
@@ -282,7 +284,7 @@ public class SVGConverter {
     protected String alternateStylesheet = null;
 
     /** Contents of <code>fileset</code> elements. */
-    protected List files = new ArrayList();
+    //protected List files = new ArrayList();
 
     /**
      * Controls some aspects of the converter's operation,
@@ -473,7 +475,7 @@ public class SVGConverter {
             this.sources = null;
         }
         else{
-            this.sources = new ArrayList();
+            this.sources = new ArrayList<>();
             for (String source : sources) {
                 if (source != null) {
                     this.sources.add(source);
@@ -486,7 +488,7 @@ public class SVGConverter {
         }
     }
 
-    public List getSources(){
+    public List<String> getSources(){
         return sources;
     }
 
@@ -678,12 +680,12 @@ public class SVGConverter {
         // Compute the set of SVGConverterSource from the source properties
         // (srcDir and srcFile);
         // This throws an exception if there is not at least one src file.
-        List sources = computeSources();
+        List<SVGConverterSource> sources = computeSources();
 
         // Compute the destination files from dest
-        List dstFiles = null;
+        List<File> dstFiles = null;
         if(sources.size() == 1 && dst != null && isFile(dst)){
-            dstFiles = new ArrayList();
+            dstFiles = new ArrayList<>();
             dstFiles.add(dst);
         }
         else{
@@ -699,7 +701,7 @@ public class SVGConverter {
         }
 
         // Now, compute the set of transcoding hints to use
-        Map hints = computeTranscodingHints();
+        Map<Key, Object> hints = computeTranscodingHints();
         transcoder.setTranscodingHints(hints);
 
         // Notify listener that task has been computed
@@ -714,8 +716,8 @@ public class SVGConverter {
         for(int i = 0 ; i < sources.size() ; i++) {
             // Get the file from the vector.
             SVGConverterSource currentFile
-                = (SVGConverterSource)sources.get(i);
-            File outputFile  = (File)dstFiles.get(i);
+                = sources.get(i);
+            File outputFile  = dstFiles.get(i);
 
             createOutputDir(outputFile);
             transcode(currentFile, outputFile, transcoder);
@@ -727,9 +729,9 @@ public class SVGConverter {
      * computed from the names of the files in the sources vector
      * and the value of the dst property
      */
-    protected List computeDstFiles(List sources)
+    protected List<File> computeDstFiles(List<SVGConverterSource> sources)
     throws SVGConverterException {
-        List dstFiles = new ArrayList();
+        List<File> dstFiles = new ArrayList<>();
         if (dst != null) {
             if (dst.exists() && dst.isFile()) {
                 throw new SVGConverterException(ERROR_CANNOT_USE_DST_FILE);
@@ -739,9 +741,7 @@ public class SVGConverter {
             // Either dst exist and is a directory or dst does not
             // exist and we may fail later on in createOutputDir
             //
-            int n = sources.size();
-            for (Object source : sources) {
-                SVGConverterSource src = (SVGConverterSource) source;
+            for (SVGConverterSource src : sources) {
                 // Generate output filename from input filename.
                 File outputName = new File(dst.getPath(),
                         getDestinationFile(src.getName()));
@@ -754,9 +754,7 @@ public class SVGConverter {
             // Try and create files in the same directory as the
             // sources. This only work if sources are files.
             //
-            int n = sources.size();
-            for (Object source : sources) {
-                SVGConverterSource src = (SVGConverterSource) source;
+            for (SVGConverterSource src : sources) {
                 if (!(src instanceof SVGConverterFileSource)) {
                     throw new SVGConverterException(ERROR_CANNOT_COMPUTE_DESTINATION,
                             new Object[]{src});
@@ -779,17 +777,15 @@ public class SVGConverter {
      * srcDir if it is not null and with the sources (files or URLs)
      * if any.
      */
-    protected List computeSources() throws SVGConverterException{
-        List sources = new ArrayList();
+    protected List<SVGConverterSource> computeSources() throws SVGConverterException{
+        List<SVGConverterSource> sources = new ArrayList<>();
 
         // Check that at least one source has been specified.
         if (this.sources == null){
             throw new SVGConverterException(ERROR_NO_SOURCES_SPECIFIED);
         }
 
-        int n = this.sources.size();
-        for (Object source : this.sources) {
-            String sourceString = (String) source;
+        for (String sourceString : this.sources) {
             File file = new File(sourceString);
             if (file.exists()) {
                 sources.add(new SVGConverterFileSource(file));
@@ -827,8 +823,8 @@ public class SVGConverter {
     /**
      * Computes the set of transcoding hints to use for the operation
      */
-    protected Map computeTranscodingHints(){
-        Map map = new HashMap();
+    protected Map<Key, Object> computeTranscodingHints(){
+        Map<Key, Object> map = new HashMap<>();
 
         // Set AOI. ----------------------------------------------------------
         if (area != null) {

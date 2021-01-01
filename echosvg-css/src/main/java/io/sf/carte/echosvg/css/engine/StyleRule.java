@@ -24,6 +24,7 @@ import io.sf.carte.doc.style.css.nsac.SelectorList;
  * This class represents a style rule.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class StyleRule implements Rule {

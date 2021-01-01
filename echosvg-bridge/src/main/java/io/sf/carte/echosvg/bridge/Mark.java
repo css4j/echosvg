@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.bridge;
  * selection gesture.
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Mark {

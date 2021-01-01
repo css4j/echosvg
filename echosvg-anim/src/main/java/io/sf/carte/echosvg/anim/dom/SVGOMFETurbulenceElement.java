@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class implements {@link SVGFETurbulenceElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMFETurbulenceElement
@@ -43,10 +44,10 @@ public class SVGOMFETurbulenceElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
         t.put(null, SVG_BASE_FREQUENCY_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
         t.put(null, SVG_NUM_OCTAVES_ATTRIBUTE,
@@ -212,7 +213,7 @@ public class SVGOMFETurbulenceElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 

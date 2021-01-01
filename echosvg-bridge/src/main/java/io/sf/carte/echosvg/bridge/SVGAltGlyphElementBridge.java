@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
  * Bridge class for the &lt;altGlyph&gt; element.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAltGlyphElementBridge extends AbstractSVGBridge

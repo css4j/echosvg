@@ -54,6 +54,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.PadRed;
  *   Does not support edgeMode="wrap" - pending Tile code.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ConvolveMatrixRable8Bit

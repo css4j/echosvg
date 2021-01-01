@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.util;
  * security related class.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGSecurityManager extends SecurityManager {
@@ -38,7 +39,7 @@ public class EchoSVGSecurityManager extends SecurityManager {
      * @return  the execution stack.
      */
     @Override
-    public Class[] getClassContext(){
+    public Class<?>[] getClassContext(){
         return super.getClassContext();
     }
 

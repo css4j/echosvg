@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.swing.svg;
  * This interface represents a listener to the GVTTreeBuilderEvent events.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface GVTTreeBuilderListener {

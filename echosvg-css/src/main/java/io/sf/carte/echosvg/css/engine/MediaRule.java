@@ -24,6 +24,7 @@ import io.sf.carte.doc.style.css.MediaQueryList;
  * This class represents a @media CSS rule.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MediaRule extends StyleSheet implements Rule {

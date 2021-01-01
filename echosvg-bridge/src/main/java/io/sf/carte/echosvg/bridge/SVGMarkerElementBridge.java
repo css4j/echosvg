@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.gvt.Marker;
  * Bridge class for the &lt;marker&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGMarkerElementBridge extends AnimatableGenericSVGBridge

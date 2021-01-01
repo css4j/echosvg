@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.ext.awt.image.spi;
  * The built in error codes.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ErrorConstants {

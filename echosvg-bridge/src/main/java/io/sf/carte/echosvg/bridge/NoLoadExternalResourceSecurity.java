@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.bridge;
  * referenced from an SVG document.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NoLoadExternalResourceSecurity implements ExternalResourceSecurity {

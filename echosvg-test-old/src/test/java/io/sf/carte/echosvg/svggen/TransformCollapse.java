@@ -26,9 +26,11 @@ import java.awt.Graphics2D;
  * should.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TransformCollapse implements Painter {
+    @Override
     public void paint(Graphics2D g){
         g.translate(10, 10);
         g.translate(20, 30);

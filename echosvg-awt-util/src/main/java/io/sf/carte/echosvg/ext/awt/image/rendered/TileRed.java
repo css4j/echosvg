@@ -42,6 +42,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * left corner of the tiled region.
  * 
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TileRed extends AbstractRed implements TileGenerator {

@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.dom.xbl.NodeXBL;
  * that has been specified with XBL.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVG12TextElementBridge

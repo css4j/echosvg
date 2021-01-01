@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.util;
  * Just handles the 'what protocol part'.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractParsedURLProtocolHandler 

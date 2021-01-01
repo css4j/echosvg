@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.ext.awt.image;
  * the CompositeRable operation. (over, in, out, atop, xor, arith)
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class CompositeRule implements java.io.Serializable {

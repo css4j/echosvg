@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.util.gui.xmleditor;
  * XML Token
  * 
  * @author <a href="mailto:tonny@kiyut.com">Tonny Kohar</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XMLToken {

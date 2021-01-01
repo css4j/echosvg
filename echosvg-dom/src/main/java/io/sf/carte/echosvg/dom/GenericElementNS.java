@@ -25,6 +25,7 @@ import org.w3c.dom.Node;
  * This class implements the {@link org.w3c.dom.Element} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GenericElementNS extends AbstractElementNS {

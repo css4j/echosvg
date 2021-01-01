@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.transcoder.keys.StringKey;
  * This class is an <code>ImageTranscoder</code> that produces a TIFF image.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TIFFTranscoder extends ImageTranscoder {
@@ -63,7 +64,7 @@ public class TIFFTranscoder extends ImageTranscoder {
     private WriteAdapter getWriteAdapter(String className) {
         WriteAdapter adapter;
         try {
-            Class clazz = Class.forName(className);
+            Class<?> clazz = Class.forName(className);
             adapter = (WriteAdapter)clazz.getDeclaredConstructor().newInstance();
             return adapter;
         } catch (ClassNotFoundException e) {

@@ -51,13 +51,14 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  * the subclass implementation.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractRed implements CachableRed {
 
     protected Rectangle   bounds;
-    protected Vector      srcs;
-    protected Map         props;
+    protected Vector<RenderedImage>     srcs;
+    protected Map<String, Object>       props;
     protected SampleModel sm;
     protected ColorModel  cm;
     protected int         tileGridXOff, tileGridYOff;
@@ -82,7 +83,7 @@ public abstract class AbstractRed implements CachableRed {
      * user coordinate system.
      * @param props this initializes the props Map (may be null)
      */
-    protected AbstractRed(Rectangle bounds, Map props) {
+    protected AbstractRed(Rectangle bounds, Map<String, ?> props) {
         init((CachableRed)null, bounds, null, null,
              bounds.x, bounds.y, props);
     }
@@ -94,7 +95,7 @@ public abstract class AbstractRed implements CachableRed {
      * Vector. Src is also used to set the bounds, ColorModel,
      * SampleModel, and tile grid offsets.
      * @param props this initializes the props Map.  */
-    protected AbstractRed(CachableRed src, Map props) {
+    protected AbstractRed(CachableRed src, Map<String, ?> props) {
         init(src, src.getBounds(), src.getColorModel(), src.getSampleModel(),
              src.getTileGridXOffset(),
              src.getTileGridYOffset(),
@@ -109,7 +110,7 @@ public abstract class AbstractRed implements CachableRed {
      * and tile grid offsets.
      * @param bounds The bounds of this image.
      * @param props this initializes the props Map.  */
-    protected AbstractRed(CachableRed src, Rectangle bounds, Map props) {
+    protected AbstractRed(CachableRed src, Rectangle bounds, Map<String, ?> props) {
         init(src, bounds, src.getColorModel(), src.getSampleModel(),
              src.getTileGridXOffset(),
              src.getTileGridYOffset(),
@@ -131,7 +132,7 @@ public abstract class AbstractRed implements CachableRed {
      * @param props this initializes the props Map.  */
     protected AbstractRed(CachableRed src, Rectangle bounds,
                           ColorModel cm, SampleModel sm,
-                          Map props) {
+                          Map<String, ?> props) {
         init(src, bounds, cm, sm,
              (src==null)?0:src.getTileGridXOffset(),
              (src==null)?0:src.getTileGridYOffset(),
@@ -158,7 +159,7 @@ public abstract class AbstractRed implements CachableRed {
     protected AbstractRed(CachableRed src, Rectangle bounds,
                           ColorModel cm, SampleModel sm,
                           int tileGridXOff, int tileGridYOff,
-                          Map props) {
+                          Map<String, ?> props) {
         init(src, bounds, cm, sm, tileGridXOff, tileGridYOff, props);
     }
 
@@ -185,8 +186,8 @@ public abstract class AbstractRed implements CachableRed {
     protected void init(CachableRed src, Rectangle   bounds,
                         ColorModel  cm,   SampleModel sm,
                         int tileGridXOff, int tileGridYOff,
-                        Map props) {
-        this.srcs         = new Vector(1);
+                        Map<String, ?> props) {
+        this.srcs         = new Vector<>(1);
         if (src != null) {
             this.srcs.add(src);
             if (bounds == null) bounds = src.getBounds();
@@ -198,7 +199,7 @@ public abstract class AbstractRed implements CachableRed {
         this.tileGridXOff = tileGridXOff;
         this.tileGridYOff = tileGridYOff;
 
-        this.props        = new HashMap();
+        this.props        = new HashMap<>();
         if(props != null){
             this.props.putAll(props);
         }
@@ -228,7 +229,7 @@ public abstract class AbstractRed implements CachableRed {
      * @param bounds this defines the extent of the rendered in pixels
      * @param props this initializes the props Map.
      */
-    protected AbstractRed(List srcs, Rectangle bounds, Map props) {
+    protected AbstractRed(List<CachableRed> srcs, Rectangle bounds, Map<String, ?> props) {
         init(srcs, bounds, null, null, bounds.x, bounds.y, props);
     }
 
@@ -247,9 +248,9 @@ public abstract class AbstractRed implements CachableRed {
      * the size of bounds.
      * @param props this initializes the props Map.
      */
-    protected AbstractRed(List srcs, Rectangle bounds,
+    protected AbstractRed(List<CachableRed> srcs, Rectangle bounds,
                           ColorModel cm, SampleModel sm,
-                          Map props) {
+                          Map<String, ?> props) {
         init(srcs, bounds, cm, sm, bounds.x, bounds.y, props);
     }
 
@@ -272,10 +273,10 @@ public abstract class AbstractRed implements CachableRed {
      * @param tileGridYOff The y location of tile 0,0.
      * @param props this initializes the props Map.
      */
-    protected AbstractRed(List srcs, Rectangle bounds,
+    protected AbstractRed(List<CachableRed> srcs, Rectangle bounds,
                           ColorModel cm, SampleModel sm,
                           int tileGridXOff, int tileGridYOff,
-                          Map props) {
+                          Map<String, ?> props) {
         init(srcs, bounds, cm, sm, tileGridXOff, tileGridYOff, props);
     }
 
@@ -297,17 +298,17 @@ public abstract class AbstractRed implements CachableRed {
      * @param tileGridYOff The y location of tile 0,0.
      * @param props  Any properties you want to associate with the image.
      */
-    protected void init(List srcs, Rectangle bounds,
+    protected void init(List<CachableRed> srcs, Rectangle bounds,
                         ColorModel cm, SampleModel sm,
                         int tileGridXOff, int tileGridYOff,
-                        Map props) {
-        this.srcs = new Vector();
+                        Map<String, ?> props) {
+        this.srcs = new Vector<>();
         if(srcs != null){
             this.srcs.addAll(srcs);
         }
 
         if (srcs.size() != 0) {
-            CachableRed src = (CachableRed)srcs.get(0);
+            CachableRed src = srcs.get(0);
             if (bounds == null) bounds = src.getBounds();
             if (cm     == null) cm     = src.getColorModel();
             if (sm     == null) sm     = src.getSampleModel();
@@ -316,7 +317,7 @@ public abstract class AbstractRed implements CachableRed {
         this.bounds       = bounds;
         this.tileGridXOff = tileGridXOff;
         this.tileGridYOff = tileGridYOff;
-        this.props        = new HashMap();
+        this.props        = new HashMap<>();
         if(props != null){
             this.props.putAll(props);
         }
@@ -373,7 +374,7 @@ public abstract class AbstractRed implements CachableRed {
     }
 
     @Override
-    public Vector getSources() {
+    public Vector<RenderedImage> getSources() {
         return srcs;
     }
 
@@ -450,8 +451,7 @@ public abstract class AbstractRed implements CachableRed {
     public Object getProperty(String name) {
         Object ret = props.get(name);
         if (ret != null) return ret;
-        for (Object src : srcs) {
-            RenderedImage ri = (RenderedImage) src;
+        for (RenderedImage ri : srcs) {
             ret = ri.getProperty(name);
             if (ret != null) return ret;
         }
@@ -460,7 +460,7 @@ public abstract class AbstractRed implements CachableRed {
 
     @Override
     public String [] getPropertyNames() {
-        Set keys = props.keySet();
+        Set<String> keys = props.keySet();
         String[] ret  = new String[keys.size()];
         keys.toArray( ret );
 
@@ -470,8 +470,7 @@ public abstract class AbstractRed implements CachableRed {
 //            ret[i++] = (String)iter.next();
 //        }
 
-        for (Object src : srcs) {
-            RenderedImage ri = (RenderedImage) src;
+        for (RenderedImage ri : srcs) {
             String[] srcProps = ri.getPropertyNames();
             if (srcProps.length != 0) {
                 String[] tmp = new String[ret.length + srcProps.length];

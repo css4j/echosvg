@@ -27,6 +27,7 @@ import javax.swing.text.PlainDocument;
  * A document that can be marked up using XML style.
  *
  * @author <a href="mailto:tonny@kiyut.com">Tonny Kohar</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XMLDocument extends PlainDocument {

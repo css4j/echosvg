@@ -40,6 +40,7 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
  * they are handled properly by the class.
  * 
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGRenderingAccuracyTestValidator extends DefaultTestSuite {

@@ -18,21 +18,21 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import java.awt.Graphics2D;
 import java.awt.Color;
-
-import java.net.URL;
+import java.awt.Graphics2D;
 import java.io.File;
+import java.net.URL;
 
 import io.sf.carte.echosvg.test.DefaultTestSuite;
 import io.sf.carte.echosvg.test.Test;
-import io.sf.carte.echosvg.test.TestReportValidator;
 import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.test.TestReportValidator;
 
 /**
  * Validates the operation of the <code>SVGAccuractyTest</code> class
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAccuracyTestValidator extends DefaultTestSuite {
@@ -54,6 +54,7 @@ public class SVGAccuracyTestValidator extends DefaultTestSuite {
     }
 
     static class NullPainter extends TestReportValidator {
+        @Override
         public TestReport runImpl() throws Exception {
             Painter painter = null;
             URL refURL = new URL("http",
@@ -74,11 +75,13 @@ public class SVGAccuracyTestValidator extends DefaultTestSuite {
     static class PainterWithException extends TestReportValidator 
         implements Painter {
 
+        @Override
         public void paint(Graphics2D g){
             g.setComposite(null); // Will cause the exception
             g.fillRect(0, 0, 20, 20);
         }
 
+        @Override
         public TestReport runImpl() throws Exception {
             Painter painter = this;
             URL refURL = new URL("http",
@@ -97,6 +100,7 @@ public class SVGAccuracyTestValidator extends DefaultTestSuite {
     static class ValidPainterTest extends TestReportValidator 
         implements Painter{
         
+        @Override
         public void paint(Graphics2D g){
             g.setPaint(Color.red);
             g.fillRect(0, 0, 40, 40);
@@ -104,6 +108,7 @@ public class SVGAccuracyTestValidator extends DefaultTestSuite {
     }
 
     static class NullReferenceURL extends ValidPainterTest {
+        @Override
         public TestReport runImpl() throws Exception {
             Test t = new SVGAccuracyTest(this, null);
 
@@ -116,6 +121,7 @@ public class SVGAccuracyTestValidator extends DefaultTestSuite {
     }
 
     static class InexistantReferenceURL extends ValidPainterTest {
+        @Override
         public TestReport runImpl() throws Exception {
             Test t = new SVGAccuracyTest(this,
                                          new URL("http",
@@ -131,6 +137,7 @@ public class SVGAccuracyTestValidator extends DefaultTestSuite {
     }
 
     static class DiffWithReferenceImage extends ValidPainterTest {
+        @Override
         public TestReport runImpl() throws Exception {
             File tmpFile = File.createTempFile("EmptySVGReference",
                                                null);
@@ -148,6 +155,7 @@ public class SVGAccuracyTestValidator extends DefaultTestSuite {
     }
 
     static class SameAsReferenceImage extends ValidPainterTest {
+        @Override
         public TestReport runImpl() throws Exception {
             File tmpFile = File.createTempFile("SVGReference",
                                                null);

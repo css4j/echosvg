@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.test.PerformanceTest;
@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.test.PerformanceTest;
  * doubleString utility method.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DoubleStringPerformanceTest extends PerformanceTest {
@@ -41,6 +42,7 @@ public class DoubleStringPerformanceTest extends PerformanceTest {
                                    234143,
                                    2.3333444000044e56,
                                    45.3456 };
+    @Override
     public void runOp() { 
         DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
         String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;

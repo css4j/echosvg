@@ -24,6 +24,7 @@ import java.util.Set;
  * Exposes the SVG feature strings that EchoSVG supports.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFeatureStrings {
@@ -34,7 +35,7 @@ public class SVGFeatureStrings {
      *
      * @param features The set to add feature strings to.
      */
-    public static void addSupportedFeatureStrings(Set features) {
+    public static void addSupportedFeatureStrings(Set<String> features) {
         // SVG 1.0 feature strings
         features.add(SVGConstants.SVG_ORG_W3C_SVG_FEATURE);
         features.add(SVGConstants.SVG_ORG_W3C_SVG_STATIC_FEATURE);

@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * of converting the GraphicsNode to a mask image.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Mask extends Filter {

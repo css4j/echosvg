@@ -28,6 +28,7 @@ import java.awt.image.ColorModel;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 class NullOp implements BufferedImageOp {

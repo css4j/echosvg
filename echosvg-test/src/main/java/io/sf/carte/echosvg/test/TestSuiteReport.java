@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.test;
  * by a <code>TestSuite</code>.
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TestSuiteReport extends TestReport{

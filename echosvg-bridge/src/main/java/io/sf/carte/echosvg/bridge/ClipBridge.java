@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ClipBridge extends Bridge {

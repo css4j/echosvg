@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.util.Platform;
  * GraphicsNode on demand for tiles.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GraphicsNodeRed8Bit extends AbstractRed {

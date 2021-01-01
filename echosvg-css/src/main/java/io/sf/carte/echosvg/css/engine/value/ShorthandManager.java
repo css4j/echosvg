@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
  * shorthand properties.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ShorthandManager {

@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.RenderedImageCachableRed;
  * according the the SVG Mask operation.
  *
  * @author <a href="mailto:Thomas.DeWeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FilterAsAlphaRable

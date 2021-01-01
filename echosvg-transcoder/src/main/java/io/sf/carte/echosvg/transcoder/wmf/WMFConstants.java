@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.transcoder.wmf;
  * Contains the definitions of WMF constants.
  *
  * @author <a href="mailto:luano@asd.ie">Luan O'Carroll</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface WMFConstants

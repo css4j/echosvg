@@ -26,9 +26,10 @@ import java.util.Map;
  * transcoding parameters or options to any transcoders.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class TranscodingHints extends HashMap {
+public class TranscodingHints extends HashMap<TranscodingHints.Key, Object> {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,7 +47,7 @@ public class TranscodingHints extends HashMap {
      * @param init a map of key/value pairs to initialize the hints
      *          or null if the object should be empty
      */
-    public TranscodingHints(Map init) {
+    public TranscodingHints(Map<TranscodingHints.Key, ?> init) {
         super(7);
         if (init != null) {
             putAll(init);
@@ -91,8 +92,8 @@ public class TranscodingHints extends HashMap {
      * <code>TranscodingHints.Key</code>
      */
     @Override
-    public Object put(Object key, Object value) {
-        if (!((Key) key).isCompatibleValue(value)) {
+    public Object put(TranscodingHints.Key key, Object value) {
+        if (!key.isCompatibleValue(value)) {
             throw new IllegalArgumentException(value+
                                                " incompatible with "+
                                                key);
@@ -131,12 +132,11 @@ public class TranscodingHints extends HashMap {
      * <code>TranscodingHints.Key</code>
      */
     @Override
-    public void putAll(Map m) {
+    public void putAll(Map<? extends TranscodingHints.Key, ? extends Object> m) {
         if (m instanceof TranscodingHints) {
             putAll(((TranscodingHints) m));
         } else {
-            for (Object o : m.entrySet()) {
-                Map.Entry entry = (Map.Entry) o;
+            for (Map.Entry<? extends TranscodingHints.Key, ? extends Object> entry : m.entrySet()) {
                 put(entry.getKey(), entry.getValue());
             }
         }

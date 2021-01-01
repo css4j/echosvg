@@ -19,11 +19,19 @@
 
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
-import io.sf.carte.echosvg.test.*;
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.*;
-import java.io.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.TestReport;
 
 /**
  * This test validates the PNGEncoder operation. It creates a
@@ -31,6 +39,7 @@ import java.io.*;
  * decodes it and compares the decoded image with the original one.
  *
  * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PNGEncoderTest extends AbstractTest {
@@ -54,6 +63,7 @@ public class PNGEncoderTest extends AbstractTest {
     public static final String ERROR_DECODED_DOES_NOT_MATCH_ENCODED
         = "PNGEncoderTest.error.decoded.does.not.match.encoded";
 
+    @Override
     public TestReport runImpl() throws Exception {
         // Create a BufferedImage to be encoded
         BufferedImage image = new BufferedImage(100, 75, BufferedImage.TYPE_INT_ARGB);

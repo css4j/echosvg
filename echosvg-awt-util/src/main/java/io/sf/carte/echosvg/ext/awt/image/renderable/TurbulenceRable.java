@@ -24,6 +24,7 @@ import java.awt.geom.Rectangle2D;
  * Creates a sourceless image from a turbulence function.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TurbulenceRable extends FilterColorInterpolation {

@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.gvt.text.ArabicTextHandler;
  * Bridge class for the &lt;font&gt; element.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFontElementBridge extends AbstractSVGBridge {

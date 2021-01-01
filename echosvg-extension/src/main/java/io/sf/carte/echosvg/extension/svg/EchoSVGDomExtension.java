@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.dom.ExtensibleDOMImplementation;
  * functionality of the Dom, to support new tags in the rendering tree.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGDomExtension

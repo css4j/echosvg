@@ -26,6 +26,7 @@ import java.awt.color.ColorSpace;
  * operation should take place in.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface FilterColorInterpolation extends Filter {

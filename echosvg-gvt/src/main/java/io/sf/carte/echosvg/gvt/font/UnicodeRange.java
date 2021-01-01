@@ -25,6 +25,7 @@ package io.sf.carte.echosvg.gvt.font;
  * (comma seperated) use a list of these.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class UnicodeRange {

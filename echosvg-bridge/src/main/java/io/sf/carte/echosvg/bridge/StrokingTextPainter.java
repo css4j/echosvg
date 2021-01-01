@@ -31,6 +31,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.text.AttributedString;
 import java.text.CharacterIterator;
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ import io.sf.carte.echosvg.gvt.text.TextPath;
  * @see io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class StrokingTextPainter extends BasicTextPainter {
@@ -125,7 +127,7 @@ public class StrokingTextPainter extends BasicTextPainter {
     public static final GVTAttributedCharacterIterator.TextAttribute ALT_GLYPH_HANDLER =
         GVTAttributedCharacterIterator.TextAttribute.ALT_GLYPH_HANDLER;
 
-    static Set extendedAtts = new HashSet();
+    static Set<Attribute> extendedAtts = new HashSet<>();
 
     static {
         extendedAtts.add(FLOW_PARAGRAPH);
@@ -159,7 +161,7 @@ public class StrokingTextPainter extends BasicTextPainter {
         if (aci == null)
             return;
 
-        List textRuns = getTextRuns(node, aci);
+        List<TextRun> textRuns = getTextRuns(node, aci);
 
         // draw the underline and overline first, then the actual text
         // and finally the strikethrough
@@ -183,8 +185,8 @@ public class StrokingTextPainter extends BasicTextPainter {
         System.out.println("");
     }
 
-    public List getTextRuns(TextNode node, AttributedCharacterIterator aci) {
-        List textRuns = node.getTextRuns();
+    public List<TextRun> getTextRuns(TextNode node, AttributedCharacterIterator aci) {
+        List<TextRun> textRuns = node.getTextRuns();
         if (textRuns != null) {
             return textRuns;
         }
@@ -197,7 +199,7 @@ public class StrokingTextPainter extends BasicTextPainter {
         return node.getTextRuns();
    }
 
-    public List computeTextRuns(TextNode node,
+    public List<TextRun> computeTextRuns(TextNode node,
                                 AttributedCharacterIterator aci,
                                 AttributedCharacterIterator [] chunkACIs) {
         int [][] chunkCharMaps = new int[chunkACIs.length][];
@@ -216,7 +218,7 @@ public class StrokingTextPainter extends BasicTextPainter {
         return computeTextRuns(node, aci, chunkACIs, chunkCharMaps);
     }
 
-    protected List computeTextRuns(TextNode node,
+    protected List<TextRun> computeTextRuns(TextNode node,
                                 AttributedCharacterIterator aci,
                                 AttributedCharacterIterator [] chunkACIs,
                                 int [][] chunkCharMaps) {
@@ -228,7 +230,7 @@ public class StrokingTextPainter extends BasicTextPainter {
         }
 
         // Create text runs for each chunk and add them to the list.
-        List perNodeRuns = new ArrayList();
+        List<TextRun> perNodeRuns = new ArrayList<>();
         TextChunk chunk, prevChunk=null;
         int currentChunk = 0;
 
@@ -238,7 +240,7 @@ public class StrokingTextPainter extends BasicTextPainter {
             // create from the ACI.
             chunkACIs[currentChunk].first();
 
-            List perChunkRuns = new ArrayList();
+            List<TextRun> perChunkRuns = new ArrayList<>();
             chunk = getTextChunk(node,
                                  chunkACIs[currentChunk],
                                  chunkCharMaps != null ? chunkCharMaps[currentChunk] : null,
@@ -271,11 +273,11 @@ public class StrokingTextPainter extends BasicTextPainter {
      * @param runs - unordered runs
      * @return reordered runs
      */
-    protected List reorderTextRuns(TextChunk chunk, List runs) {
-        // NOP here since they were previous reordered (by batik's
+    protected List<TextRun> reorderTextRuns(TextChunk chunk, List<TextRun> runs) {
+        // NOP here since they were previous reordered (by
         // BidiAttributedCharacterIterator); derived painters (e.g., FOP) may
         // use a different strategy.
-        // N.B. batik doesn't sub-divide a text chunk at bidi level
+        // N.B. this software doesn't sub-divide a text chunk at bidi level
         // boundaries; however, derived painters may do so.
         return runs;
     }
@@ -287,7 +289,7 @@ public class StrokingTextPainter extends BasicTextPainter {
     protected AttributedCharacterIterator[] getTextChunkACIs
         (AttributedCharacterIterator aci) {
 
-        List aciList = new ArrayList();
+        List<AttributedCharacterSpanIterator> aciList = new ArrayList<>();
         int chunkStartIndex = aci.getBeginIndex();
         aci.first();
         Object writingMode = aci.getAttribute(WRITING_MODE);
@@ -404,9 +406,9 @@ public class StrokingTextPainter extends BasicTextPainter {
         // copy the text chunks into an array
         AttributedCharacterIterator[] aciArray =
             new AttributedCharacterIterator[aciList.size()];
-        Iterator iter = aciList.iterator();
+        Iterator<AttributedCharacterSpanIterator> iter = aciList.iterator();
         for (int i=0; iter.hasNext(); ++i) {
-            aciArray[i] = (AttributedCharacterIterator)iter.next();
+            aciArray[i] = iter.next();
         }
         return aciArray;
     }
@@ -435,8 +437,8 @@ public class StrokingTextPainter extends BasicTextPainter {
             end = aci.getRunLimit(TEXT_COMPOUND_ID);
             int aciLength = end-start;
 
-            List fonts;
-            fonts = (List)aci.getAttribute(GVT_FONTS);
+            @SuppressWarnings("unchecked")
+            List<GVTFont> fonts = (List<GVTFont>)aci.getAttribute(GVT_FONTS);
 
 
             float fontSize = 12;
@@ -462,14 +464,13 @@ public class StrokingTextPainter extends BasicTextPainter {
             int numSet=0;
             int firstUnset=start;
             boolean firstUnsetSet;
-            for (Object font1 : fonts) {
+            for (GVTFont font : fonts) {
                 // assign this font to all characters it can display if it has
                 // not already been assigned
                 int currentIndex = firstUnset;
                 firstUnsetSet = false;
                 aci.setIndex(currentIndex);
 
-                GVTFont font = (GVTFont) font1;
                 if (defaultFont == null)
                     defaultFont = font;
 
@@ -595,14 +596,14 @@ public class StrokingTextPainter extends BasicTextPainter {
         return DefaultFontFamilyResolver.SINGLETON;
     }
 
-    protected Set getTextRunBoundaryAttributes() {
+    protected Set<Attribute> getTextRunBoundaryAttributes() {
         return extendedAtts;
     }
 
     protected TextChunk getTextChunk(TextNode node,
                                      AttributedCharacterIterator aci,
                                      int [] charMap,
-                                     List textRuns,
+                                     List<TextRun> textRuns,
                                      TextChunk prevChunk) {
         int beginChunk = 0;
         if (prevChunk != null)
@@ -618,7 +619,7 @@ public class StrokingTextPainter extends BasicTextPainter {
         Point2D.Float advance       = new Point2D.Float(0,0);
         boolean isChunkStart  = true;
         TextSpanLayout layout = null;
-        Set textRunBoundaryAttributes = getTextRunBoundaryAttributes();
+        Set<Attribute> textRunBoundaryAttributes = getTextRunBoundaryAttributes();
         do {
             int start = aci.getRunStart(textRunBoundaryAttributes);
             int end   = aci.getRunLimit(textRunBoundaryAttributes);
@@ -671,10 +672,10 @@ public class StrokingTextPainter extends BasicTextPainter {
      * to account for any text anchor properties.
      */
     protected Point2D adjustChunkOffsets(Point2D location,
-                                         List textRuns,
+                                         List<TextRun> textRuns,
                                          TextChunk chunk) {
         int     numRuns    = chunk.end - chunk.begin;
-        TextRun r          = (TextRun) textRuns.get(0);
+        TextRun r          = textRuns.get(0);
         int     anchorType = r.getAnchorType();
         Float   length     = r.getLength();
         Integer lengthAdj  = r.getLengthAdjust();
@@ -685,7 +686,7 @@ public class StrokingTextPainter extends BasicTextPainter {
 
         int numChars = 0;
         for (int i = 0; i < numRuns; ++i) {
-            r = (TextRun) textRuns.get(i);
+            r = textRuns.get(i);
             AttributedCharacterIterator aci = r.getACI();
             numChars += aci.getEndIndex() - aci.getBeginIndex();
         }
@@ -697,7 +698,7 @@ public class StrokingTextPainter extends BasicTextPainter {
         float xScale = 1;
         float yScale = 1;
 
-        r = (TextRun)textRuns.get(numRuns - 1);
+        r = textRuns.get(numRuns - 1);
         TextSpanLayout  layout          = r.getLayout();
         GVTGlyphMetrics lastMetrics =
             layout.getGlyphMetrics(layout.getGlyphCount()-1);
@@ -747,7 +748,7 @@ public class StrokingTextPainter extends BasicTextPainter {
 
             Point2D.Float adv = new Point2D.Float(0,0);
             for (int i = 0; i < numRuns; ++i) {
-                r = (TextRun) textRuns.get(i);
+                r = textRuns.get(i);
                 layout = r.getLayout();
                 layout.setScale(xScale, yScale, lengthAdj==ADJUST_SPACING);
                 Point2D lAdv = layout.getAdvance2D();
@@ -772,7 +773,7 @@ public class StrokingTextPainter extends BasicTextPainter {
             break; // leave untouched
         }
 
-        r = (TextRun) textRuns.get(0);
+        r = textRuns.get(0);
         layout = r.getLayout();
         AttributedCharacterIterator runaci = r.getACI();
         runaci.first();
@@ -814,7 +815,7 @@ public class StrokingTextPainter extends BasicTextPainter {
         }
 
         for (int i = 0; i < numRuns; ++i) {
-            r = (TextRun) textRuns.get(i);
+            r = textRuns.get(i);
             layout = r.getLayout();
             runaci = r.getACI();
             runaci.first();
@@ -855,7 +856,7 @@ public class StrokingTextPainter extends BasicTextPainter {
     /**
      * Paints decorations of the specified type.
      */
-    protected void paintDecorations(List textRuns,
+    protected void paintDecorations(List<TextRun> textRuns,
                                   Graphics2D g2d,
                                   int decorationType) {
         Paint prevPaint = null;
@@ -865,8 +866,7 @@ public class StrokingTextPainter extends BasicTextPainter {
         Rectangle2D decorationRect = null;
         double yLoc = 0, height = 0;
 
-        for (Object textRun1 : textRuns) {
-            TextRun textRun = (TextRun) textRun1;
+        for (TextRun textRun : textRuns) {
             AttributedCharacterIterator runaci = textRun.getACI();
             runaci.first();
 
@@ -984,10 +984,9 @@ public class StrokingTextPainter extends BasicTextPainter {
     /**
      * Paints the text in each text run. Decorations are not painted here.
      */
-    protected void paintTextRuns(List textRuns,
+    protected void paintTextRuns(List<TextRun> textRuns,
                                Graphics2D g2d) {
-        for (Object textRun1 : textRuns) {
-            TextRun textRun = (TextRun) textRun1;
+        for (TextRun textRun : textRuns) {
             AttributedCharacterIterator runaci = textRun.getACI();
             runaci.first();
 
@@ -1013,13 +1012,12 @@ public class StrokingTextPainter extends BasicTextPainter {
             return null;
 
         // get the list of text runs
-        List textRuns = getTextRuns(node, aci);
+        List<TextRun> textRuns = getTextRuns(node, aci);
 
         // for each text run, get its outline and append it to the overall
         // outline
 
-        for (Object textRun1 : textRuns) {
-            TextRun textRun = (TextRun) textRun1;
+        for (TextRun textRun : textRuns) {
             TextSpanLayout textRunLayout = textRun.getLayout();
             GeneralPath textRunOutline =
                     new GeneralPath(textRunLayout.getOutline());
@@ -1083,13 +1081,12 @@ public class StrokingTextPainter extends BasicTextPainter {
             return null;
 
         // get the list of text runs
-        List textRuns = getTextRuns(node, aci);
+        List<TextRun> textRuns = getTextRuns(node, aci);
 
         Rectangle2D bounds = null;
         // for each text run, get its stroke outline and append it to
         // the overall outline
-         for (Object textRun1 : textRuns) {
-             TextRun textRun = (TextRun) textRun1;
+         for (TextRun textRun : textRuns) {
              TextSpanLayout textRunLayout = textRun.getLayout();
              Rectangle2D runBounds = textRunLayout.getBounds2D();
              if (runBounds != null) {
@@ -1142,7 +1139,7 @@ public class StrokingTextPainter extends BasicTextPainter {
      *
      * @return The decoration outline or null if the text is not decorated.
      */
-    protected Shape getDecorationOutline(List textRuns, int decorationType) {
+    protected Shape getDecorationOutline(List<TextRun> textRuns, int decorationType) {
 
         GeneralPath outline = null;
 
@@ -1152,8 +1149,7 @@ public class StrokingTextPainter extends BasicTextPainter {
         Rectangle2D decorationRect = null;
         double yLoc = 0, height = 0;
 
-        for (Object textRun1 : textRuns) {
-            TextRun textRun = (TextRun) textRun1;
+        for (TextRun textRun : textRuns) {
             AttributedCharacterIterator runaci = textRun.getACI();
             runaci.first();
 
@@ -1263,7 +1259,7 @@ public class StrokingTextPainter extends BasicTextPainter {
      * @return The decoration outline or null if the text is not decorated.
      */
     protected Shape getDecorationStrokeOutline
-        (List textRuns, int decorationType) {
+        (List<TextRun> textRuns, int decorationType) {
 
         GeneralPath outline = null;
 
@@ -1273,9 +1269,8 @@ public class StrokingTextPainter extends BasicTextPainter {
         Rectangle2D decorationRect = null;
         double yLoc = 0, height = 0;
 
-        for (Object textRun1 : textRuns) {
+        for (TextRun textRun : textRuns) {
 
-            TextRun textRun = (TextRun) textRun1;
             AttributedCharacterIterator runaci = textRun.getACI();
             runaci.first();
 
@@ -1414,11 +1409,10 @@ public class StrokingTextPainter extends BasicTextPainter {
             return null;
 
         // get the list of text runs
-        List textRuns = getTextRuns(node, aci);
+        List<TextRun> textRuns = getTextRuns(node, aci);
         if (textRuns != null) {
             // for each text run, see if its been hit
-            for (Object textRun1 : textRuns) {
-                TextRun textRun = (TextRun) textRun1;
+            for (TextRun textRun : textRuns) {
                 TextSpanLayout layout = textRun.getLayout();
                 TextHit textHit = layout.hitTestChar((float) x, (float) y);
                 Rectangle2D bounds = layout.getBounds2D();
@@ -1499,13 +1493,13 @@ public class StrokingTextPainter extends BasicTextPainter {
         result[1] = finish.getHit().getCharIndex();
 
         // get the list of text runs
-        List textRuns = getTextRuns(textNode, aci);
-        Iterator trI = textRuns.iterator();
+        List<TextRun> textRuns = getTextRuns(textNode, aci);
+        Iterator<TextRun> trI = textRuns.iterator();
         int startGlyphIndex = -1;
         int endGlyphIndex = -1;
         TextSpanLayout startLayout=null, endLayout=null;
         while (trI.hasNext()) {
-            TextRun tr = (TextRun)trI.next();
+            TextRun tr = trI.next();
             TextSpanLayout tsl = tr.getLayout();
             if (startGlyphIndex == -1) {
                 startGlyphIndex  = tsl.getGlyphIndex(result[0]);
@@ -1592,14 +1586,13 @@ public class StrokingTextPainter extends BasicTextPainter {
         }
 
         // get the list of text runs
-        List textRuns = getTextRuns(textNode, aci);
+        List<TextRun> textRuns = getTextRuns(textNode, aci);
 
         GeneralPath highlightedShape = new GeneralPath();
 
         // for each text run, append any highlight it may contain for
         // the current selection
-        for (Object textRun1 : textRuns) {
-            TextRun textRun = (TextRun) textRun1;
+        for (TextRun textRun : textRuns) {
             TextSpanLayout layout = textRun.getLayout();
 
             Shape layoutHighlightedShape = layout.getHighlightShape

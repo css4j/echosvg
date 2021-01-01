@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
  * The base bridge class for shapes. Subclasses bridge <code>ShapeNode</code>.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {

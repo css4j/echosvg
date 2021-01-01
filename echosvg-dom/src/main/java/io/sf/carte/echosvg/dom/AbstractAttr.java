@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  * This class implements the {@link org.w3c.dom.Attr} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractAttr extends AbstractParentNode implements Attr {

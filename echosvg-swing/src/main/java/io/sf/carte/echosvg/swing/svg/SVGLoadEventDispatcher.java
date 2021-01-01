@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * This class dispatches the SVGLoadEvent event on a SVG document.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGLoadEventDispatcher extends HaltingThread {
@@ -63,7 +64,7 @@ public class SVGLoadEventDispatcher extends HaltingThread {
     /**
      * The listeners.
      */
-    protected List listeners = Collections.synchronizedList(new LinkedList());
+    protected List<Object> listeners = Collections.synchronizedList(new LinkedList<>());
 
     /**
      * The exception thrown.

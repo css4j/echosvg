@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.util;
  * Provider interface for new url protocols, used by the ParsedURL class.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ParsedURLProtocolHandler {

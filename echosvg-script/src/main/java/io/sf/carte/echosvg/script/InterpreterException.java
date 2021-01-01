@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.script;
  * script by an <code>Interpreter</code> interface implementation.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class InterpreterException extends RuntimeException {

@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GlyphIterator {

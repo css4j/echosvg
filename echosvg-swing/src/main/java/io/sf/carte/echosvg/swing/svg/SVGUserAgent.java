@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * a JSVGComponent.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGUserAgent {

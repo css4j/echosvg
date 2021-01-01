@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.extension.svg;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MarginInfo {

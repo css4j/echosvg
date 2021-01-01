@@ -66,6 +66,7 @@ import io.sf.carte.echosvg.transcoder.keys.PaintKey;
  * millimeters in each pixel .
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class ImageTranscoder extends SVGAbstractTranscoder {

@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.css.engine.value.Value;
  * This class represents the computed style of an element.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CSSOMComputedStyle implements CSSStyleDeclaration {
@@ -56,7 +57,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
     /**
      * The CSS values.
      */
-    protected Map values = new HashMap();
+    protected Map<String, CSSValue> values = new HashMap<>();
 
     /**
      * Creates a new computed style.
@@ -116,7 +117,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
      */
     @Override
     public CSSValue getPropertyCSSValue(String propertyName) {
-        CSSValue result = (CSSValue)values.get(propertyName);
+        CSSValue result = values.get(propertyName);
         if (result == null) {
             int idx = cssEngine.getPropertyIndex(propertyName);
             if (idx != -1) {

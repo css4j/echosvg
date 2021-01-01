@@ -21,12 +21,15 @@ package io.sf.carte.echosvg.transcoder.image;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
  * Test the ImageTranscoder with the KEY_LANGUAGE transcoding hint.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class LanguageTest extends AbstractImageTranscoderTest {
@@ -61,6 +64,7 @@ public class LanguageTest extends AbstractImageTranscoderTest {
     /**
      * Creates the <code>TranscoderInput</code>.
      */
+    @Override
     protected TranscoderInput createTranscoderInput() {
         return new TranscoderInput(resolveURL(inputURI).toString());
     }
@@ -68,15 +72,17 @@ public class LanguageTest extends AbstractImageTranscoderTest {
     /**
      * Creates a Map that contains additional transcoding hints.
      */
-    protected Map createTranscodingHints() {
-        Map hints = new HashMap(7);
-        hints.put(ImageTranscoder.KEY_LANGUAGE, language);
+    @Override
+    protected Map<Key, Object> createTranscodingHints() {
+        Map<Key, Object> hints = new HashMap<>(7);
+        hints.put(SVGAbstractTranscoder.KEY_LANGUAGE, language);
         return hints;
     }
 
     /**
      * Returns the reference image for this test.
      */
+    @Override
     protected byte [] getReferenceImageData() {
         return createBufferedImageData(resolveURL(refImageURI));
     }

@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.ext.awt.image.spi;
  * Parameters for the encoder which is accessed through the
  * ImageWriter interface.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageWriterParams {

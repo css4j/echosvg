@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.ext.awt.ColorSpaceHintKey;
  * This converts any source into a mask according to the SVG masking rules.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public class FilterAsAlphaRed extends AbstractRed {
 

@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
  * <p><b> This class is not a committed part of the JAI API.  It may
  * be removed or changed in future releases of JAI.</b>
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class PNGEncodeParam implements ImageEncodeParam {
@@ -1232,8 +1233,8 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 
     // Other chunk types
 
-    List chunkType = new ArrayList();
-    List chunkData = new ArrayList();
+    List<String> chunkType = new ArrayList<>();
+    List<byte[]> chunkData = new ArrayList<>();
 
     /**
      * Adds a private chunk, in binary form, to the list of chunks to
@@ -1262,7 +1263,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
      * than the return value of <code>getNumPrivateChunks</code>.
      */
     public synchronized String getPrivateChunkType(int index) {
-        return (String)chunkType.get(index);
+        return chunkType.get(index);
     }
 
     /**
@@ -1272,7 +1273,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
      * <code>getNumPrivateChunks</code>.
      */
     public synchronized byte[] getPrivateChunkData(int index) {
-        return (byte[])chunkData.get(index);
+        return chunkData.get(index);
     }
 
     /**
@@ -1281,8 +1282,8 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
      * transcoding PNG images.
      */
     public synchronized void removeUnsafeToCopyPrivateChunks() {
-        List newChunkType = new ArrayList();
-        List newChunkData = new ArrayList();
+        List<String> newChunkType = new ArrayList<>();
+        List<byte[]> newChunkData = new ArrayList<>();
 
         int len = getNumPrivateChunks();
         for (int i = 0; i < len; i++) {
@@ -1302,8 +1303,8 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
      * Remove all private chunks associated with this parameter instance.
      */
     public synchronized void removeAllPrivateChunks() {
-        chunkType = new ArrayList();
-        chunkData = new ArrayList();
+        chunkType = new ArrayList<>();
+        chunkData = new ArrayList<>();
     }
 
     /**

@@ -71,6 +71,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class implements {@link org.w3c.dom.svg.SVGSVGElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMSVGElement
@@ -82,10 +83,10 @@ public class SVGOMSVGElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGStylableElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
         t.put(null, SVG_X_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
         t.put(null, SVG_Y_ATTRIBUTE,
@@ -558,7 +559,7 @@ public class SVGOMSVGElement
     public NodeList getIntersectionList(SVGRect rect,
                                         SVGElement referenceElement) {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
-        List list = ctx.getIntersectionList(rect, referenceElement);
+        List<Element> list = ctx.getIntersectionList(rect, referenceElement);
         return new ListNodeList(list);
     }
 
@@ -570,7 +571,7 @@ public class SVGOMSVGElement
     public NodeList getEnclosureList(SVGRect rect,
                                      SVGElement referenceElement) {
         SVGSVGContext ctx = (SVGSVGContext)getSVGContext();
-        List list = ctx.getEnclosureList(rect, referenceElement);
+        List<Element> list = ctx.getEnclosureList(rect, referenceElement);
         return new ListNodeList(list);
     }
 
@@ -961,7 +962,7 @@ public class SVGOMSVGElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

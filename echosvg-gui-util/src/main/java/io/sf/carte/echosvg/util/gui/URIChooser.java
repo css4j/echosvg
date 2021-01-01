@@ -54,6 +54,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * This class is a dialog used to enter an URI or to choose a local file.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class URIChooser extends JDialog implements ActionMap {
@@ -349,7 +350,7 @@ public class URIChooser extends JDialog implements ActionMap {
     /**
      * The map that contains the listeners
      */
-    protected Map listeners = new HashMap(10);
+    protected Map<String, AbstractAction> listeners = new HashMap<>(10);
 
     /**
      * Returns the action associated with the given string
@@ -359,6 +360,6 @@ public class URIChooser extends JDialog implements ActionMap {
      */
     @Override
     public Action getAction(String key) throws MissingListenerException {
-        return (Action)listeners.get(key);
+        return listeners.get(key);
     }
 }

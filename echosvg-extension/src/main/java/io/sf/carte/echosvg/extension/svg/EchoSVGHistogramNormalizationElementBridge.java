@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * Bridge class for a histogram normalization element.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas Deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGHistogramNormalizationElementBridge
@@ -97,7 +98,7 @@ public class EchoSVGHistogramNormalizationElementBridge
                                GraphicsNode filteredNode,
                                Filter inputFilter,
                                Rectangle2D filterRegion,
-                               Map filterMap) {
+                               Map<String, Filter> filterMap) {
 
         // 'in' attribute
         Filter in = getIn(filterElement,
@@ -113,7 +114,7 @@ public class EchoSVGHistogramNormalizationElementBridge
         // The default region is the union of the input sources
         // regions unless 'in' is 'SourceGraphic' in which case the
         // default region is the filterChain's region
-        Filter sourceGraphics = (Filter)filterMap.get(SVG_SOURCE_GRAPHIC_VALUE);
+        Filter sourceGraphics = filterMap.get(SVG_SOURCE_GRAPHIC_VALUE);
         Rectangle2D defaultRegion;
         if (in == sourceGraphics) {
             defaultRegion = filterRegion;
@@ -131,7 +132,7 @@ public class EchoSVGHistogramNormalizationElementBridge
 
         float trim = 1;
         String s = filterElement.getAttributeNS
-            (null, BATIK_EXT_TRIM_ATTRIBUTE);
+            (null, EXT_TRIM_ATTRIBUTE);
 
         if (s.length() != 0) {
             try {
@@ -139,7 +140,7 @@ public class EchoSVGHistogramNormalizationElementBridge
             } catch (NumberFormatException nfEx ) {
                 throw new BridgeException
                     (ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-                     new Object[] {BATIK_EXT_TRIM_ATTRIBUTE, s});
+                     new Object[] {EXT_TRIM_ATTRIBUTE, s});
             }
         }
 

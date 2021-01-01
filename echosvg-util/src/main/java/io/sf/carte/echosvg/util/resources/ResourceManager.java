@@ -29,6 +29,7 @@ import java.util.StringTokenizer;
  * resource bundle entries
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ResourceManager {
@@ -62,7 +63,7 @@ public class ResourceManager {
      * @param  key          a key of the resource bundle
      * @throws MissingResourceException if key is not the name of a resource
      */
-    public List getStringList(String key)
+    public List<String> getStringList(String key)
         throws MissingResourceException {
         return getStringList(key, " \t\n\r\f", false);
     }
@@ -74,7 +75,7 @@ public class ResourceManager {
      * @param  delim        the delimiters of the tokens
      * @throws MissingResourceException if key is not the name of a resource
      */
-    public List getStringList(String key, String delim)
+    public List<String> getStringList(String key, String delim)
         throws MissingResourceException {
         return getStringList(key, delim, false);
     }
@@ -87,9 +88,9 @@ public class ResourceManager {
      * @param  returnDelims if true, the delimiters are returned in the list
      * @throws MissingResourceException if key is not the name of a resource
      */
-    public List getStringList(String key, String delim, boolean returnDelims) 
+    public List<String> getStringList(String key, String delim, boolean returnDelims) 
         throws MissingResourceException {
-        List            result = new ArrayList();
+        List<String>            result = new ArrayList<>();
         StringTokenizer st     = new StringTokenizer(getString(key),
                                                      delim,
                                                      returnDelims);

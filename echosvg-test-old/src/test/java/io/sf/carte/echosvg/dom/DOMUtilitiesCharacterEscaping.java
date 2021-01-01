@@ -18,20 +18,22 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.TestReport;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 
-import io.sf.carte.echosvg.util.SVGConstants;
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
-
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
-
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
-
-import org.w3c.dom.*;
-
-import java.io.*;
 
 /**
  * Checks that Text nodes can be properly written and read.
@@ -42,6 +44,7 @@ import java.io.*;
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  */
 public class DOMUtilitiesCharacterEscaping extends AbstractTest {
+    @Override
     public TestReport runImpl() throws Exception {
         DOMImplementation impl = new SVGDOMImplementation();
         Document doc = impl.createDocument(SVGConstants.SVG_NAMESPACE_URI,

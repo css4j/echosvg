@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.transcoder;
  * a message when a warning or an error occured.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultErrorHandler implements ErrorHandler {

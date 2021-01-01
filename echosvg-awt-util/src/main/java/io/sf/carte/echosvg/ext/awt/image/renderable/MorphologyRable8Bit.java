@@ -43,6 +43,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.RenderedImageCachableRed;
  * defined by radius along the x and y axis.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MorphologyRable8Bit 

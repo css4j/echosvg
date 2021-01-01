@@ -43,6 +43,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * from an URI using SAX2.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SAXSVGDocumentFactory
@@ -361,7 +362,7 @@ public class SAXSVGDocumentFactory
                 if (dtdProps == null) {
                     dtdProps = new Properties();
                     try {
-                        Class cls = SAXSVGDocumentFactory.class;
+                        Class<SAXSVGDocumentFactory> cls = SAXSVGDocumentFactory.class;
                         InputStream is = cls.getResourceAsStream
                             ("resources/dtdids.properties");
                         dtdProps.load(is);

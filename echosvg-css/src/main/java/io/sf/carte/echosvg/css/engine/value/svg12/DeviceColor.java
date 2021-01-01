@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.css.engine.value.AbstractValue;
 /**
  * This class represents an device-specific color value.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DeviceColor extends AbstractValue {

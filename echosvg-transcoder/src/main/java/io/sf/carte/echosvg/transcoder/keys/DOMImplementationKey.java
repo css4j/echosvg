@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  * A transcoding Key represented as a DOMImplementation.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOMImplementationKey extends TranscodingHints.Key {

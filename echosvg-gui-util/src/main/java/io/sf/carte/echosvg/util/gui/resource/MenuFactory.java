@@ -65,6 +65,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * Consecutive RADIO items are put in a ButtonGroup
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MenuFactory extends ResourceManager {
@@ -144,10 +145,10 @@ public class MenuFactory extends ResourceManager {
                ResourceFormatException,
                MissingListenerException {
         JMenuBar result = new JMenuBar();
-        List     menus  = getSpecializedStringList(name, specialization);
+        List<String>     menus  = getSpecializedStringList(name, specialization);
 
-        for (Object menu : menus) {
-            result.add(createJMenuComponent((String) menu, specialization));
+        for (String menu : menus) {
+            result.add(createJMenuComponent(menu, specialization));
         }
         return result;
     }
@@ -174,9 +175,9 @@ public class MenuFactory extends ResourceManager {
      * <code>name + '.' + specialization</code>, and if that resource
      * doesn't exist, <code>name</code>.
      */
-    protected List getSpecializedStringList(String name,
+    protected List<String> getSpecializedStringList(String name,
                                             String specialization) {
-        List l;
+        List<String> l;
         try {
             l = getStringList(name + '.' + specialization);
         } catch (MissingResourceException mre) {
@@ -292,10 +293,10 @@ public class MenuFactory extends ResourceManager {
                                                       specialization));
         initializeJMenuItem(result, name, specialization);
 
-        List     items = getSpecializedStringList(name, specialization);
+        List<String>     items = getSpecializedStringList(name, specialization);
 
-        for (Object item : items) {
-            result.add(createJMenuComponent((String) item, specialization));
+        for (String item : items) {
+            result.add(createJMenuComponent(item, specialization));
         }
         return result;
     }

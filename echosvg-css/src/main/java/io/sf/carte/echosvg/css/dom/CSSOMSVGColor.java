@@ -40,6 +40,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * This class implements the {@link SVGColor} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CSSOMSVGColor
@@ -76,7 +77,7 @@ public class CSSOMSVGColor
     /**
      * To store the ICC color list.
      */
-    protected ArrayList iccColors;
+    protected ArrayList<SVGNumber> iccColors;
 
     /**
      * Creates a new CSSOMSVGColor.
@@ -345,7 +346,7 @@ public class CSSOMSVGColor
                 (DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
         } else {
             float f = newItem.getValue();
-            iccColors = new ArrayList();
+            iccColors = new ArrayList<>();
             SVGNumber result = new ColorNumber(f);
             iccColors.add(result);
             handler.colorsInitialized(f);
@@ -366,7 +367,7 @@ public class CSSOMSVGColor
             throw new DOMException(DOMException.INDEX_SIZE_ERR, "");
         }
         if (iccColors == null) {
-            iccColors = new ArrayList(n);
+            iccColors = new ArrayList<>(n);
             for (int i = iccColors.size(); i < n; i++) {
                 iccColors.add(null);
             }
@@ -394,7 +395,7 @@ public class CSSOMSVGColor
                 throw new DOMException(DOMException.INDEX_SIZE_ERR, "");
             }
             if (iccColors == null) {
-                iccColors = new ArrayList(n);
+                iccColors = new ArrayList<>(n);
                 for (int i = iccColors.size(); i < n; i++) {
                     iccColors.add(null);
                 }
@@ -423,7 +424,7 @@ public class CSSOMSVGColor
                 throw new DOMException(DOMException.INDEX_SIZE_ERR, "");
             }
             if (iccColors == null) {
-                iccColors = new ArrayList(n);
+                iccColors = new ArrayList<>(n);
                 for (int i = iccColors.size(); i < n; i++) {
                     iccColors.add(null);
                 }
@@ -451,7 +452,7 @@ public class CSSOMSVGColor
             }
             SVGNumber result = null;
             if (iccColors != null) {
-                result = (ColorNumber)iccColors.get(index);
+                result = iccColors.get(index);
             }
             if (result == null) {
                 Value value = valueProvider.getValue().item(1);
@@ -474,7 +475,7 @@ public class CSSOMSVGColor
         } else {
             if (iccColors == null) {
                 int n = getNumberOfItems();
-                iccColors = new ArrayList(n);
+                iccColors = new ArrayList<>(n);
                 for (int i = 0; i < n; i++) {
                     iccColors.add(null);
                 }

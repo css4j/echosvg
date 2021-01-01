@@ -73,6 +73,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * </ul>
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
@@ -298,10 +299,10 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         if (!(gn instanceof CompositeGraphicsNode))
             return null;
         CompositeGraphicsNode cgn = (CompositeGraphicsNode)gn;
-        List children = cgn.getChildren();
+        List<GraphicsNode> children = cgn.getChildren();
         if (children.size() == 0)
             return null;
-        gn = (GraphicsNode)children.get(0);
+        gn = children.get(0);
         if (!(gn instanceof CanvasGraphicsNode))
             return null;
         return (CanvasGraphicsNode)gn;
@@ -894,7 +895,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
         /**
          * Vector containing the allowed script types
          */
-        protected List scripts;
+        protected List<String> scripts;
 
         public SVGAbstractTranscoderUserAgent() {
             addStdFeatures();
@@ -1118,7 +1119,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
          * values for the &lt;script&gt; element's type attribute.
          */
         protected void computeAllowedScripts(){
-            scripts = new LinkedList();
+            scripts = new LinkedList<>();
             if (!SVGAbstractTranscoder.this.hints.containsKey
                 (KEY_ALLOWED_SCRIPT_TYPES)) {
                 return;

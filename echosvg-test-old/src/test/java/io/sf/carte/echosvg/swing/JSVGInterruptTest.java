@@ -21,19 +21,19 @@ package io.sf.carte.echosvg.swing;
 import java.awt.EventQueue;
 import java.awt.geom.AffineTransform;
 import java.io.File;
-import java.net.MalformedURLException;
 import java.lang.ref.WeakReference;
-
-import io.sf.carte.echosvg.swing.gvt.GVTTreeRendererListener;
-import io.sf.carte.echosvg.swing.gvt.GVTTreeRendererEvent;
-import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderListener;
-import io.sf.carte.echosvg.swing.svg.SVGLoadEventDispatcherListener;
-import io.sf.carte.echosvg.swing.svg.SVGLoadEventDispatcherEvent;
-import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderEvent;
-import io.sf.carte.echosvg.swing.svg.GVTTreeBuilderListener;
-import io.sf.carte.echosvg.swing.svg.GVTTreeBuilderEvent;
+import java.net.MalformedURLException;
 
 import org.w3c.dom.svg.SVGDocument;
+
+import io.sf.carte.echosvg.swing.gvt.GVTTreeRendererEvent;
+import io.sf.carte.echosvg.swing.gvt.GVTTreeRendererListener;
+import io.sf.carte.echosvg.swing.svg.GVTTreeBuilderEvent;
+import io.sf.carte.echosvg.swing.svg.GVTTreeBuilderListener;
+import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderEvent;
+import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderListener;
+import io.sf.carte.echosvg.swing.svg.SVGLoadEventDispatcherEvent;
+import io.sf.carte.echosvg.swing.svg.SVGLoadEventDispatcherListener;
 
 /**
  * One line Class Desc
@@ -41,10 +41,12 @@ import org.w3c.dom.svg.SVGDocument;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JSVGInterruptTest extends JSVGMemoryLeakTest {
 
+    @Override
     public String getName() { return "JSVGInterruptTest."+getId(); }
 
     public JSVGInterruptTest() {
@@ -67,8 +69,10 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
     static final int FAILED    = 4;
     static final int MAX_WAIT  = 40000;
 
+    @Override
     public JSVGCanvasHandler createHandler() {
         return new JSVGCanvasHandler(this, this) {
+                @Override
                 public void runCanvas(String desc) {
                     this.desc = desc;
                     setupCanvas();
@@ -91,6 +95,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
                         dispose();
                     }
                 }
+                @Override
                 public void checkSomething(Object monitor, String errorCode) {
                     synchronized (monitor) {
                         try { monitor.wait(); }
@@ -101,9 +106,10 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
     }
 
 
+    @Override
     public boolean canvasInit(final JSVGCanvas canvas) {
         // System.err.println("In Init");
-        theCanvas = new WeakReference( canvas );
+        theCanvas = new WeakReference<>( canvas );
         theFrame  = handler.getFrame();
         registerObjectDesc(canvas, "JSVGCanvas");
         registerObjectDesc(handler.getFrame(), "JFrame");
@@ -123,6 +129,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
         return false;
     }
 
+    @Override
     public void canvasDone(JSVGCanvas canvas) {
         loadListener   = null;
         buildListener  = null;
@@ -134,9 +141,11 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
 
     public void tweakIt(final JSVGCanvas canvas, final String uri) {
         Thread t = new Thread() {
+                @Override
                 public void run() {
                     int state;
                     Runnable setURI = new Runnable() {
+                            @Override
                             public void run() {
                                 canvas.setURI(uri);
                             }
@@ -149,6 +158,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
 
                     final SVGDocument doc = canvas.getSVGDocument();
                     Runnable setDoc = new Runnable() {
+                            @Override
                             public void run() {
                                 canvas.setSVGDocument(doc);
                             }
@@ -170,6 +180,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
                     }
 
                     Runnable setTrans = new Runnable() {
+                            @Override
                             public void run() {
                                 canvas.setRenderingTransform
                                     (new AffineTransform(), true);
@@ -241,10 +252,13 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
 
     class MyLoaderListener implements SVGDocumentLoaderListener, SetDelayable {
         int delay = 0;
+        @Override
         public void setDelay(int delay) { this.delay = delay; }
+        @Override
         public void documentLoadingStarted(SVGDocumentLoaderEvent e) {
             triggerStopProcessing(delay);
         }
+        @Override
         public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
             stopStopper();
             synchronized (JSVGInterruptTest.this) {
@@ -252,12 +266,14 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
                 JSVGInterruptTest.this.notifyAll();
             }
         }
+        @Override
         public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {
             synchronized (JSVGInterruptTest.this) {
                 state |= CANCELLED;
                 JSVGInterruptTest.this.notifyAll();
             }
         }
+        @Override
         public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
             synchronized (JSVGInterruptTest.this) {
                 state |= FAILED;
@@ -268,11 +284,14 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
 
     class MyBuildListener implements GVTTreeBuilderListener, SetDelayable {
         int delay = 0;
+        @Override
         public void setDelay(int delay) { this.delay = delay; }
+        @Override
         public void gvtBuildStarted(GVTTreeBuilderEvent e) {
             // System.err.println("Build Start: " + e.getSource());
             triggerStopProcessing(delay);
         }
+        @Override
         public void gvtBuildCompleted(GVTTreeBuilderEvent e) {
             stopStopper();
             // System.err.println("Build Complete: " + e.getSource());
@@ -281,6 +300,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
                 JSVGInterruptTest.this.notifyAll();
             }
         }
+        @Override
         public void gvtBuildCancelled(GVTTreeBuilderEvent e) {
             // System.err.println("Build Cancelled");
             synchronized (JSVGInterruptTest.this) {
@@ -288,6 +308,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
                 JSVGInterruptTest.this.notifyAll();
             }
         }
+        @Override
         public void gvtBuildFailed(GVTTreeBuilderEvent e) {
             // System.err.println("Build Failed");
             synchronized (JSVGInterruptTest.this) {
@@ -300,12 +321,15 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
     class MyOnloadListener
         implements SVGLoadEventDispatcherListener, SetDelayable {
         int delay = 0;
+        @Override
         public void setDelay(int delay) { this.delay = delay; }
+        @Override
         public void svgLoadEventDispatchStarted
             (SVGLoadEventDispatcherEvent e) {
             // System.err.println("Onload Start: " + e.getSource());
                 triggerStopProcessing(delay);
             }
+            @Override
             public void svgLoadEventDispatchCompleted
                 (SVGLoadEventDispatcherEvent e) {
                 stopStopper();
@@ -315,6 +339,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
                     JSVGInterruptTest.this.notifyAll();
                 }
             }
+            @Override
             public void svgLoadEventDispatchCancelled
                 (SVGLoadEventDispatcherEvent e) {
                 // System.err.println("Onload Cancelled");
@@ -323,6 +348,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
                     JSVGInterruptTest.this.notifyAll();
                 }
             }
+            @Override
             public void svgLoadEventDispatchFailed
                 (SVGLoadEventDispatcherEvent e) {
                 // System.err.println("Onload Failed");
@@ -335,14 +361,18 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
 
     class MyRenderListener implements GVTTreeRendererListener, SetDelayable {
             int delay = 0;
+            @Override
             public void setDelay(int delay) { this.delay = delay; }
+            @Override
             public void gvtRenderingPrepare(GVTTreeRendererEvent e) {
                 // System.err.println("Render Prep");
                 triggerStopProcessing(delay);
             }
+            @Override
             public void gvtRenderingStarted(GVTTreeRendererEvent e) {
                 // System.err.println("Render Start");
             }
+            @Override
             public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
                 stopStopper();
                 // System.err.println("Render Complete");
@@ -351,6 +381,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
                     JSVGInterruptTest.this.notifyAll();
                 }
             }
+            @Override
             public void gvtRenderingCancelled(GVTTreeRendererEvent e) {
                 // System.err.println("Render Cancelled");
                 synchronized (JSVGInterruptTest.this) {
@@ -358,6 +389,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
                     JSVGInterruptTest.this.notifyAll();
                 }
             }
+            @Override
             public void gvtRenderingFailed(GVTTreeRendererEvent e) {
                 // System.err.println("Render Failed");
                 synchronized (JSVGInterruptTest.this) {
@@ -374,6 +406,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
             this.canvas = canvas;
         }
 
+        @Override
         public void run() {
             if (EventQueue.isDispatchThread())
                 canvas.stopProcessing();
@@ -428,6 +461,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
                 stop = true;  return true;
             }
         }
+        @Override
         public void run() {
             long start = System.currentTimeMillis();
             long end   = start + delay;

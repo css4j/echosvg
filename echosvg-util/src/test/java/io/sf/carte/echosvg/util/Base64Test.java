@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.test.TestReport;
  * This test validates that the Base65 encoder/decoders work properly.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Base64Test extends AbstractTest {

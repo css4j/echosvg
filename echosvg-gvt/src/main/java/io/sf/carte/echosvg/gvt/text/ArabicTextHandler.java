@@ -19,6 +19,7 @@
 package io.sf.carte.echosvg.gvt.text;
 
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.text.AttributedString;
 import java.text.CharacterIterator;
 import java.util.Map;
@@ -31,6 +32,7 @@ import java.util.Map;
  * text is rendered using an AWT font.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class ArabicTextHandler {
@@ -118,7 +120,7 @@ public final class ArabicTextHandler {
 
             for (int i = 0; i < numChars; i++) {
                 aci.setIndex(charOrder[i]);
-                Map attributes = aci.getAttributes();
+                Map<Attribute, Object> attributes = aci.getAttributes();
                 reorderedAS.addAttributes(attributes, i, i+1);
             }
 

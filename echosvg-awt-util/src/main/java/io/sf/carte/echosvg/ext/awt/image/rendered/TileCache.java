@@ -22,6 +22,7 @@ import java.awt.image.RenderedImage;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TileCache {

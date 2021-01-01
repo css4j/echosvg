@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
  * This class manages the message for the utilities classes.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Messages {

@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.bridge.BridgeExtension;
  * functionality of the Bridge, to support new tags in the rendering tree.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGBridgeExtension implements BridgeExtension {
@@ -53,7 +54,7 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
      *         extension.
      */
     @Override
-    public Iterator getImplementedExtensions() {
+    public Iterator<String> getImplementedExtensions() {
         String [] extensions = {
             "http://xml.apache.org/batik/ext/poly/1.0" ,
             "http://xml.apache.org/batik/ext/star/1.0" ,
@@ -65,7 +66,7 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
 //        for (int i=0; i<extensions.length; i++) {
 //            v.add(extensions[i]);
 //        }
-        List v = Arrays.asList( extensions );
+        List<String> v = Arrays.asList( extensions );
         return Collections.unmodifiableList(v).iterator();
     }
 

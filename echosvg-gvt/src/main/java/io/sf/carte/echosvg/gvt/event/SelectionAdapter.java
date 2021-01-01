@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.gvt.event;
  * Adapter for the listener interface for receiving selection events.
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SelectionAdapter implements SelectionListener {

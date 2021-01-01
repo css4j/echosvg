@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.dom.svg.SVGTextContent;
  * This class provides support for the SVGTextContentElement interface.
  *
  * @author nicolas.socheleau@bitflash.com
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGTextContentSupport {

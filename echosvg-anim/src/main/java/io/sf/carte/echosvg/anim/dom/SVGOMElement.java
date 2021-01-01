@@ -55,6 +55,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class implements the {@link SVGElement} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGOMElement
@@ -68,9 +69,9 @@ public abstract class SVGOMElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t = new DoublyIndexedTable();
+        DoublyIndexedTable<String,String> t = new DoublyIndexedTable<>();
         t.put(null, SVG_ID_ATTRIBUTE,
                 new TraitInformation(false, SVGTypes.TYPE_CDATA));
         t.put(XML_NAMESPACE_URI, XML_BASE_ATTRIBUTE,
@@ -103,7 +104,7 @@ public abstract class SVGOMElement
      * Table mapping namespaceURI/local name pairs to {@link LinkedList}s
      * of {@link AnimationTargetListener}s.
      */
-    protected DoublyIndexedTable targetListeners;
+    protected DoublyIndexedTable<String,String> targetListeners;
 
     /**
      * The context used to resolve the units.
@@ -361,7 +362,7 @@ public abstract class SVGOMElement
     /**
      * Returns the table of TraitInformation objects for this element.
      */
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 
@@ -617,7 +618,7 @@ public abstract class SVGOMElement
      */
     @Override
     public final boolean isAttributeAnimatable(String ns, String ln) {
-        DoublyIndexedTable t = getTraitInformationTable();
+        DoublyIndexedTable<String,String> t = getTraitInformationTable();
         TraitInformation ti = (TraitInformation) t.get(ns, ln);
         if (ti != null) {
             return ti.isAnimatable();
@@ -692,7 +693,7 @@ public abstract class SVGOMElement
      */
     @Override
     public final int getAttributeType(String ns, String ln) {
-        DoublyIndexedTable t = getTraitInformationTable();
+        DoublyIndexedTable<String,String> t = getTraitInformationTable();
         TraitInformation ti = (TraitInformation) t.get(ns, ln);
         if (ti != null) {
             return ti.getType();
@@ -784,7 +785,7 @@ public abstract class SVGOMElement
             }
         }
         if (!isCSS) {
-            DoublyIndexedTable t = getTraitInformationTable();
+            DoublyIndexedTable<String,String> t = getTraitInformationTable();
             TraitInformation ti = (TraitInformation) t.get(ns, an);
             if (ti != null) {
                 return ti.getPercentageInterpretation();
@@ -844,11 +845,12 @@ public abstract class SVGOMElement
                                   AnimationTargetListener l) {
         if (!isCSS) {
             if (targetListeners == null) {
-                targetListeners = new DoublyIndexedTable();
+                targetListeners = new DoublyIndexedTable<>();
             }
-            LinkedList ll = (LinkedList) targetListeners.get(ns, an);
+            @SuppressWarnings("unchecked")
+            LinkedList<AnimationTargetListener> ll = (LinkedList<AnimationTargetListener>) targetListeners.get(ns, an);
             if (ll == null) {
-                ll = new LinkedList();
+                ll = new LinkedList<>();
                 targetListeners.put(ns, an, ll);
             }
             ll.add(l);
@@ -862,7 +864,8 @@ public abstract class SVGOMElement
     public void removeTargetListener(String ns, String an, boolean isCSS,
                                      AnimationTargetListener l) {
         if (!isCSS) {
-            LinkedList ll = (LinkedList) targetListeners.get(ns, an);
+            LinkedList<AnimationTargetListener> ll = (LinkedList<AnimationTargetListener>)
+                targetListeners.get(ns, an);
             ll.remove(l);
         }
     }
@@ -873,9 +876,9 @@ public abstract class SVGOMElement
      */
     void fireBaseAttributeListeners(String ns, String ln) {
         if (targetListeners != null) {
-            LinkedList ll = (LinkedList) targetListeners.get(ns, ln);
-            for (Object aLl : ll) {
-                AnimationTargetListener l = (AnimationTargetListener) aLl;
+            LinkedList<AnimationTargetListener> ll = (LinkedList<AnimationTargetListener>)
+                targetListeners.get(ns, ln);
+            for (AnimationTargetListener l : ll) {
                 l.baseValueChanged(this, ns, ln, false);
             }
         }

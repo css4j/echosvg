@@ -29,6 +29,7 @@ import java.awt.color.ICC_Profile;
  * relative colorimetric.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @deprecated use the version from XML Graphics Commons instead
  */

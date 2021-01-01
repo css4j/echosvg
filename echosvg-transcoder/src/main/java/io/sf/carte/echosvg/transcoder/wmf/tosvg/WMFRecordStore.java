@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
  * Reads a WMF file, including an Aldus Placable Metafile Header.
  *
  * @author <a href="mailto:luano@asd.ie">Luan O'Carroll</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class WMFRecordStore extends AbstractWMFReader {
@@ -38,7 +39,7 @@ public class WMFRecordStore extends AbstractWMFReader {
 
     protected int numRecords;
     protected float vpX, vpY;
-    protected List records;
+    protected List<MetaRecord> records;
 
     private boolean _bext = true;
 
@@ -62,7 +63,7 @@ public class WMFRecordStore extends AbstractWMFReader {
       scaleY = 1;
       scaleXY = 1f;      
       inch = 84;
-      records = new ArrayList( 20 );
+      records = new ArrayList<>( 20 );
     }
 
     /**
@@ -759,7 +760,7 @@ public class WMFRecordStore extends AbstractWMFReader {
      * Returns a meta record.
      */
     public MetaRecord getRecord( int idx ) {
-      return (MetaRecord)records.get( idx );
+      return records.get( idx );
     }
 
     /**

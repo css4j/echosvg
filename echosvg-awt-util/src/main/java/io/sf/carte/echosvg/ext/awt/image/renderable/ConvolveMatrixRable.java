@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.ext.awt.image.PadMode;
  * Convolves an image with a convolution matrix.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ConvolveMatrixRable extends FilterColorInterpolation {

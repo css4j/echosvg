@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.ext.awt.image.codec.imageio;
 /**
  * ImageWriter that encodes PNG images using Image I/O.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageIOPNGImageWriter extends ImageIOImageWriter {

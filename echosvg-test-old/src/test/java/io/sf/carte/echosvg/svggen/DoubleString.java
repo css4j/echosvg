@@ -20,21 +20,22 @@ package io.sf.carte.echosvg.svggen;
 
 import java.awt.geom.Rectangle2D;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.TestReport;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.DOMImplementation;
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.TestReport;
 
 /**
  * Checks that no NullPointerException is thrown by default
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DoubleString extends AbstractTest {
+    @Override
     public TestReport runImpl() throws Exception {
         // Get a DOMImplementation
         DOMImplementation domImpl =

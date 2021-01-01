@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.dom.svg.SVGPathContext;
  * The class provides support for the SVGPath interface.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGPathSupport {

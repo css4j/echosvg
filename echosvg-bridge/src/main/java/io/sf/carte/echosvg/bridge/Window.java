@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.script.Interpreter;
  * environment of a SVG document.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Window extends io.sf.carte.echosvg.w3c.dom.Window

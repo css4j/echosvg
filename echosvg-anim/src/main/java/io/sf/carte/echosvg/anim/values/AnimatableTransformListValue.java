@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.dom.svg.SVGOMTransform;
  * An SVG transform list value in the animation system.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AnimatableTransformListValue extends AnimatableValue {
@@ -73,7 +74,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
     /**
      * List of transforms.
      */
-    protected Vector transforms;
+    protected Vector<SVGTransform> transforms;
 
     /**
      * Creates a new, uninitialized AnimatableTransformListValue.
@@ -88,7 +89,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
     public AnimatableTransformListValue(AnimationTarget target,
                                         AbstractSVGTransform t) {
         super(target);
-        this.transforms = new Vector();
+        this.transforms = new Vector<>();
         this.transforms.add(t);
     }
 
@@ -96,10 +97,10 @@ public class AnimatableTransformListValue extends AnimatableValue {
      * Creates a new AnimatableTransformListValue with a transform list.
      */
     public AnimatableTransformListValue(AnimationTarget target,
-                                        List transforms) {
+                                        List<SVGTransform> transforms) {
         super(target);
 
-        this.transforms = new Vector(transforms);
+        this.transforms = new Vector<>(transforms);
     }
 
     /**
@@ -123,12 +124,12 @@ public class AnimatableTransformListValue extends AnimatableValue {
         AnimatableTransformListValue res;
         if (result == null) {
             res = new AnimatableTransformListValue(target);
-            res.transforms = new Vector(newSize);
+            res.transforms = new Vector<>(newSize);
             res.transforms.setSize(newSize);
         } else {
             res = (AnimatableTransformListValue) result;
             if (res.transforms == null) {
-                res.transforms = new Vector(newSize);
+                res.transforms = new Vector<>(newSize);
                 res.transforms.setSize(newSize);
             } else if (res.transforms.size() != newSize) {
                 res.transforms.setSize(newSize);
@@ -271,11 +272,11 @@ public class AnimatableTransformListValue extends AnimatableValue {
 
         if (res == null) {
             res = new AnimatableTransformListValue(to1.target);
-            res.transforms = new Vector(newSize);
+            res.transforms = new Vector<>(newSize);
             res.transforms.setSize(newSize);
         } else {
             if (res.transforms == null) {
-                res.transforms = new Vector(newSize);
+                res.transforms = new Vector<>(newSize);
                 res.transforms.setSize(newSize);
             } else if (res.transforms.size() != newSize) {
                 res.transforms.setSize(newSize);
@@ -364,11 +365,11 @@ public class AnimatableTransformListValue extends AnimatableValue {
 
         if (res == null) {
             res = new AnimatableTransformListValue(to1.target);
-            res.transforms = new Vector(newSize);
+            res.transforms = new Vector<>(newSize);
             res.transforms.setSize(newSize);
         } else {
             if (res.transforms == null) {
-                res.transforms = new Vector(newSize);
+                res.transforms = new Vector<>(newSize);
                 res.transforms.setSize(newSize);
             } else if (res.transforms.size() != newSize) {
                 res.transforms.setSize(newSize);
@@ -425,7 +426,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
     /**
      * Gets the transforms.
      */
-    public Iterator getTransforms() {
+    public Iterator<SVGTransform> getTransforms() {
         return transforms.iterator();
     }
 
@@ -554,7 +555,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
      */
     @Override
     public AnimatableValue getZeroValue() {
-        return new AnimatableTransformListValue(target, new Vector(5));
+        return new AnimatableTransformListValue(target, new Vector<SVGTransform>(5));
     }
 
     /**
@@ -563,7 +564,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
     @Override
     public String toStringRep() {
         StringBuffer sb = new StringBuffer();
-        Iterator i = transforms.iterator();
+        Iterator<SVGTransform> i = transforms.iterator();
         while (i.hasNext()) {
             AbstractSVGTransform t = (AbstractSVGTransform) i.next();
             if (t == null) {

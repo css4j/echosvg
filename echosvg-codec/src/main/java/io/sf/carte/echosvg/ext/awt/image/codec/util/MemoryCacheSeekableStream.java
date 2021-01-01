@@ -36,6 +36,7 @@ import java.util.List;
  * <p><b> This class is not a committed part of the JAI API.  It may
  * be removed or changed in future releases of JAI.</b>
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class MemoryCacheSeekableStream extends SeekableStream {
@@ -56,7 +57,7 @@ public final class MemoryCacheSeekableStream extends SeekableStream {
     private static final int SECTOR_MASK = SECTOR_SIZE - 1;
 
     /** A Vector of source sectors. */
-    private List data = new ArrayList();
+    private List<byte[]> data = new ArrayList<>();
 
     /** Number of sectors stored. */
     int sectors = 0;
@@ -179,7 +180,7 @@ public final class MemoryCacheSeekableStream extends SeekableStream {
         long pos = readUntil(next);
         if (pos >= next) {
             byte[] buf =
-                (byte[])data.get((int)(pointer >> SECTOR_SHIFT));
+                data.get((int)(pointer >> SECTOR_SHIFT));
             return buf[(int)(pointer++ & SECTOR_MASK)] & 0xff;
         } else {
             return -1;
@@ -251,7 +252,7 @@ public final class MemoryCacheSeekableStream extends SeekableStream {
             return -1;
         }
 
-        byte[] buf = (byte[])data.get((int)(pointer >> SECTOR_SHIFT));
+        byte[] buf = data.get((int)(pointer >> SECTOR_SHIFT));
         int nbytes = Math.min(len, SECTOR_SIZE - (int)(pointer & SECTOR_MASK));
         System.arraycopy(buf, (int)(pointer & SECTOR_MASK),
                          b, off, nbytes);

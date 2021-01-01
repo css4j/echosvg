@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.DisplacementMapRed;
  * another image to spatially displace the input image
  *
  * @author <a href="mailto:sheng.pei@eng.sun.com">Sheng Pei</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DisplacementMapRable8Bit
@@ -60,7 +61,7 @@ public class DisplacementMapRable8Bit
      */
     private ARGBChannel yChannelSelector;
 
-    public DisplacementMapRable8Bit(List sources,
+    public DisplacementMapRable8Bit(List<Filter> sources,
                                     double scale,
                                     ARGBChannel xChannelSelector,
                                     ARGBChannel yChannelSelector){
@@ -97,7 +98,7 @@ public class DisplacementMapRable8Bit
      * Sets this filter sources.
      */
     @Override
-    public void setSources(List sources){
+    public void setSources(List<Filter> sources){
         if(sources.size() != 2){
             throw new IllegalArgumentException();
         }

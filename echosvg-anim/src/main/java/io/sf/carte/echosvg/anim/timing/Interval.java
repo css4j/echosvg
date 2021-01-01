@@ -24,6 +24,7 @@ import java.util.LinkedList;
  * A class that represents an interval for a timed element.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Interval {
@@ -52,13 +53,13 @@ public class Interval {
      * The list of {@link InstanceTime} objects that are dependent
      * on the begin time of this Interval.
      */
-    protected LinkedList beginDependents = new LinkedList();
+    protected LinkedList<InstanceTime> beginDependents = new LinkedList<>();
 
     /**
      * The list of {@link InstanceTime} objects that are dependent
      * on the end time of this Interval.
      */
-    protected LinkedList endDependents = new LinkedList();
+    protected LinkedList<InstanceTime> endDependents = new LinkedList<>();
 
     /**
      * Creates a new Interval.
@@ -150,8 +151,7 @@ public class Interval {
         // Trace.enter(this, "setBegin", new Object[] { Float.valueOf(begin) } ); try {
         float minTime = Float.POSITIVE_INFINITY;
         this.begin = begin;
-        for (Object beginDependent : beginDependents) {
-            InstanceTime it = (InstanceTime) beginDependent;
+        for (InstanceTime it : beginDependents) {
             float t = it.dependentUpdate(begin);
             if (t < minTime) {
                 minTime = t;
@@ -169,8 +169,7 @@ public class Interval {
         float minTime = Float.POSITIVE_INFINITY;
         this.end = end;
         this.endInstanceTime = endInstanceTime;
-        for (Object endDependent : endDependents) {
-            InstanceTime it = (InstanceTime) endDependent;
+        for (InstanceTime it : endDependents) {
             float t = it.dependentUpdate(end);
             if (t < minTime) {
                 minTime = t;

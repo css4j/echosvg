@@ -37,10 +37,12 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * SVG Fonts.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GeneratorContext extends SVGAccuracyTest implements SVGConstants {
     public static class TestIDGenerator extends SVGIDGenerator {
+        @Override
         public String generateID(String prefix) {
             return "test"+super.generateID(prefix);
         }
@@ -51,6 +53,7 @@ public class GeneratorContext extends SVGAccuracyTest implements SVGConstants {
         public TestStyleHandler(CDATASection styleSheet) {
             this.styleSheet = styleSheet;
         }
+        @Override
         public void setStyle(Element element, Map styleMap,
                              SVGGeneratorContext generatorContext) {
             Iterator iter = styleMap.keySet().iterator();
@@ -76,6 +79,7 @@ public class GeneratorContext extends SVGAccuracyTest implements SVGConstants {
         super(painter, refURL);
     }
 
+    @Override
     protected SVGGraphics2D buildSVGGraphics2D(){
         // Use EchoSVG's DOM implementation to create a Document
         DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
@@ -125,6 +129,7 @@ public class GeneratorContext extends SVGAccuracyTest implements SVGConstants {
         return g2d;
     }
 
+    @Override
     protected void configureSVGGraphics2D(SVGGraphics2D g2d) {
         topLevelGroup.appendChild(g2d.getTopLevelGroup());
         g2d.setTopLevelGroup(topLevelGroup);

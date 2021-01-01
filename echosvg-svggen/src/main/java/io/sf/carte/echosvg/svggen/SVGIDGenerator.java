@@ -26,10 +26,11 @@ import java.util.Map;
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGIDGenerator {
-    private Map prefixMap = new HashMap();
+    private Map<String, Integer> prefixMap = new HashMap<>();
 
     public SVGIDGenerator() {
     }
@@ -43,7 +44,7 @@ public class SVGIDGenerator {
      * @return a value of the form &lt;prefix&gt;&lt;n&gt;
      */
     public String generateID(String prefix) {
-        Integer maxId = (Integer)prefixMap.get(prefix);
+        Integer maxId = prefixMap.get(prefix);
         if (maxId == null) {
             maxId = 0;
             prefixMap.put(prefix, maxId);

@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.i18n.Localizable;
  * This interface represents a parser.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Parser extends Localizable {

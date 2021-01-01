@@ -39,6 +39,7 @@ import org.w3c.dom.Document;
  *
  * @see io.sf.carte.echosvg.svggen.SVGGraphics2D#SVGGraphics2D(SVGGeneratorContext,boolean)
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGGeneratorContext implements ErrorConstants {

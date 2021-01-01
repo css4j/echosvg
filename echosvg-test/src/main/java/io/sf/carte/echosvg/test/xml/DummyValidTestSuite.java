@@ -25,6 +25,7 @@ import io.sf.carte.echosvg.test.DefaultTestSuite;
  * validation.
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DummyValidTestSuite extends DefaultTestSuite{

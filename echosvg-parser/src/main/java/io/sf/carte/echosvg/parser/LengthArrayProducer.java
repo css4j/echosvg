@@ -28,6 +28,7 @@ import org.w3c.dom.svg.SVGLength;
  * parsing a length list.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class LengthArrayProducer extends DefaultLengthListHandler {
@@ -35,7 +36,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * List of <code>float[]</code> objects.
      */
-    protected LinkedList vs;
+    protected LinkedList<Object> vs;
 
     /**
      * The current <code>float[]</code> object.
@@ -45,7 +46,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     /**
      * List of <code>short[]</code> objects.
      */
-    protected LinkedList us;
+    protected LinkedList<Object> us;
 
     /**
      * The current <code>short[]</code> object.
@@ -90,9 +91,9 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
      */
     @Override
     public void startLengthList() throws ParseException {
-        us = new LinkedList();
+        us = new LinkedList<>();
         u = new short[11];
-        vs = new LinkedList();
+        vs = new LinkedList<>();
         v = new float[11];
         count = 0;
         index = 0;
@@ -219,7 +220,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
     public void endLengthList() throws ParseException {
         float[] allValues = new float[count];
         int pos = 0;
-        Iterator it = vs.iterator();
+        Iterator<Object> it = vs.iterator();
         while (it.hasNext()) {
             float[] a = (float[]) it.next();
             System.arraycopy(a, 0, allValues, pos, a.length);

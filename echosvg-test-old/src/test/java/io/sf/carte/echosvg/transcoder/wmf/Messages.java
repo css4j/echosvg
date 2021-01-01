@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
  * This class manages the message for the test.wmf module.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Messages {

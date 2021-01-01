@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.gvt.filter.BackgroundRable8Bit;
  * The base bridge class for SVG filter primitives.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGFilterPrimitiveElementBridge
@@ -64,7 +65,7 @@ public abstract class AbstractSVGFilterPrimitiveElementBridge
                                   Element filteredElement,
                                   GraphicsNode filteredNode,
                                   Filter inputFilter,
-                                  Map filterMap,
+                                  Map<String, Filter> filterMap,
                                   BridgeContext ctx) {
 
         String s = filterElement.getAttributeNS(null, SVG_IN_ATTRIBUTE);
@@ -96,7 +97,7 @@ public abstract class AbstractSVGFilterPrimitiveElementBridge
                                    Element filteredElement,
                                    GraphicsNode filteredNode,
                                    Filter inputFilter,
-                                   Map filterMap,
+                                   Map<String, Filter> filterMap,
                                    BridgeContext ctx) {
 
         String s = filterElement.getAttributeNS(null, SVG_IN2_ATTRIBUTE);
@@ -121,7 +122,7 @@ public abstract class AbstractSVGFilterPrimitiveElementBridge
      */
     protected static void updateFilterMap(Element filterElement,
                                           Filter filter,
-                                          Map filterMap) {
+                                          Map<String, Filter> filterMap) {
 
         String s = filterElement.getAttributeNS(null, SVG_RESULT_ATTRIBUTE);
         if ((s.length() != 0) && (s.trim().length() != 0)) {
@@ -160,11 +161,11 @@ public abstract class AbstractSVGFilterPrimitiveElementBridge
                                   String s,
                                   Element filteredElement,
                                   GraphicsNode filteredNode,
-                                  Map filterMap,
+                                  Map<String, Filter> filterMap,
                                   BridgeContext ctx) {
 
         // SourceGraphic
-        Filter srcG = (Filter)filterMap.get(SVG_SOURCE_GRAPHIC_VALUE);
+        Filter srcG = filterMap.get(SVG_SOURCE_GRAPHIC_VALUE);
         Rectangle2D filterRegion = srcG.getBounds2D();
 
         int length = s.length();
@@ -221,7 +222,7 @@ public abstract class AbstractSVGFilterPrimitiveElementBridge
         }
         if (source == null) {
             // <identifier>
-            source = (Filter)filterMap.get(s);
+            source = filterMap.get(s);
         }
         return source;
     }

@@ -25,6 +25,7 @@ import java.text.AttributedCharacterIterator;
  * An interface for handling altGlyphs.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface AltGlyphHandler {

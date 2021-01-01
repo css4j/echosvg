@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * This class represents a &lt;font-face&gt; element or @font-face rule
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class FontFace extends GVTFontFace
@@ -44,13 +45,13 @@ public abstract class FontFace extends GVTFontFace
      * List of ParsedURL's referencing SVGFonts or TrueType fonts,
      * or Strings naming locally installed fonts.
      */
-    List srcs;
+    List<Object> srcs;
 
     /**
      * Constructes an SVGFontFace with the specfied font-face attributes.
      */
     public FontFace
-        (List srcs,
+        (List<Object> srcs,
          String familyName, float unitsPerEm, String fontWeight,
          String fontStyle, String fontVariant, String fontStretch,
          float slope, String panose1, float ascent, float descent,
@@ -76,7 +77,7 @@ public abstract class FontFace extends GVTFontFace
     public static CSSFontFace createFontFace(String familyName,
                                              FontFace src) {
         return new CSSFontFace
-            (new LinkedList(src.srcs),
+            (new LinkedList<>(src.srcs),
              familyName, src.unitsPerEm, src.fontWeight,
              src.fontStyle, src.fontVariant, src.fontStretch,
              src.slope, src.panose1, src.ascent, src.descent,

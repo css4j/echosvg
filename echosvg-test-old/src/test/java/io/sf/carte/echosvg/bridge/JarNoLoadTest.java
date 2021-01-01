@@ -18,8 +18,7 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.test.*;
-
+import io.sf.carte.echosvg.test.DefaultTestSuite;
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
 
 /**
@@ -27,6 +26,7 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
  * loaded.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JarNoLoadTest extends DefaultTestSuite {

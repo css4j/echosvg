@@ -24,6 +24,7 @@ import java.util.HashMap;
  * This class represents a stack of HashTable objects.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class HashTableStack {
@@ -63,7 +64,7 @@ public class HashTableStack {
             current = new Link(current);
         }
         if (s.length() == 0) current.defaultStr = v;
-        return (String)current.table.put(s, v);
+        return current.table.put(s, v);
     }
     
     /**
@@ -73,7 +74,7 @@ public class HashTableStack {
         if (s.length() == 0) return current.defaultStr;
 
         for (Link l = current; l != null; l = l.next) {
-            String uri = (String)l.table.get(s);
+            String uri = l.table.get(s);
             if (uri != null) {
                 return uri;
             }
@@ -88,7 +89,7 @@ public class HashTableStack {
         /**
          * The table.
          */
-        public HashMap table;
+        public HashMap<String, String> table;
         
         /**
          * The next link.
@@ -110,7 +111,7 @@ public class HashTableStack {
          * Creates a new link.
          */
         public Link(Link n) {
-            table = new HashMap();
+            table = new HashMap<>();
             next  = n;
             if (next != null) 
                 defaultStr = next.defaultStr;

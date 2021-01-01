@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * and {@link SVGURIReference}..
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGURIReferenceTextPositioningElement
@@ -40,10 +41,10 @@ public abstract class SVGURIReferenceTextPositioningElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGOMTextPositioningElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGOMTextPositioningElement.xmlTraitInformation);
         t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_URI));
         xmlTraitInformation = t;
@@ -100,7 +101,7 @@ public abstract class SVGURIReferenceTextPositioningElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

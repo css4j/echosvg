@@ -23,11 +23,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+
 /**
  * Used to represent an SVG Paint. This can be achieved with
  * to values: an SVG paint value and an SVG opacity value
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGStrokeDescriptor implements SVGDescriptor, SVGSyntax{
@@ -66,9 +69,9 @@ public class SVGStrokeDescriptor implements SVGDescriptor, SVGSyntax{
     String getDashOffset(){ return dashOffset; }
 
     @Override
-    public Map getAttributeMap(Map attrMap){
+    public Map<String, String> getAttributeMap(Map<String, String> attrMap){
         if(attrMap == null)
-            attrMap = new HashMap();
+            attrMap = new HashMap<>();
 
         attrMap.put(SVG_STROKE_WIDTH_ATTRIBUTE, strokeWidth);
         attrMap.put(SVG_STROKE_LINECAP_ATTRIBUTE, capStyle);
@@ -81,9 +84,9 @@ public class SVGStrokeDescriptor implements SVGDescriptor, SVGSyntax{
     }
 
     @Override
-    public List getDefinitionSet(List defSet){
+    public List<Element> getDefinitionSet(List<Element> defSet){
         if(defSet == null)
-            defSet = new LinkedList();
+            defSet = new LinkedList<>();
 
         return defSet;
     }

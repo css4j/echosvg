@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
  * GenericImageHandler which caches JPEG images.
  *
  * @author <a href="mailto:paul_evenblij@compuware.com">Paul Evenblij</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CachedImageHandlerJPEGEncoder extends DefaultCachedImageHandler {

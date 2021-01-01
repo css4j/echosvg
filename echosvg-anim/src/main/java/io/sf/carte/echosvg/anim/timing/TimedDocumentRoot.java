@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.util.DoublyIndexedSet;
  * for a document.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class TimedDocumentRoot extends TimeContainer {
@@ -53,13 +54,13 @@ public abstract class TimedDocumentRoot extends TimeContainer {
      * A set to determine when propagation of new Instance times should
      * be stopped.
      */
-    protected DoublyIndexedSet propagationFlags = new DoublyIndexedSet();
+    protected DoublyIndexedSet<InstanceTime,TimingSpecifier> propagationFlags = new DoublyIndexedSet<>();
 
     /**
      * List of {link TimegraphListener}s to be notified of changes to the
      * timed elements in this document.
      */
-    protected LinkedList listeners = new LinkedList();
+    protected LinkedList<TimegraphListener> listeners = new LinkedList<>();
 
     /**
      * Whether the document is currently being sampled.
@@ -222,8 +223,8 @@ public abstract class TimedDocumentRoot extends TimeContainer {
      * timegraph listeners.
      */
     void fireElementAdded(TimedElement e) {
-        for (Object listener : listeners) {
-            ((TimegraphListener) listener).elementAdded(e);
+        for (TimegraphListener listener : listeners) {
+            listener.elementAdded(e);
         }
     }
 
@@ -232,8 +233,8 @@ public abstract class TimedDocumentRoot extends TimeContainer {
      * timegraph listeners.
      */
     void fireElementRemoved(TimedElement e) {
-        for (Object listener : listeners) {
-            ((TimegraphListener) listener).elementRemoved(e);
+        for (TimegraphListener listener : listeners) {
+            listener.elementRemoved(e);
         }
     }
 

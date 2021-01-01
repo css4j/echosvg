@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.w3c.dom.Document;
 
@@ -37,6 +38,7 @@ import io.sf.carte.echosvg.util.DoublyIndexedTable;
  * An abstract base class for managing animation in a document.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AnimationEngine {
@@ -65,12 +67,12 @@ public abstract class AnimationEngine {
     /**
      * Map of AnimationTargets to TargetInfo objects.
      */
-    protected HashMap targets = new HashMap();
+    protected HashMap<AnimationTarget, TargetInfo> targets = new HashMap<>();
 
     /**
      * Map of AbstractAnimations to AnimationInfo objects.
      */
-    protected HashMap animations = new HashMap();
+    protected HashMap<AbstractAnimation, AnimationInfo> animations = new HashMap<>();
 
     /**
      * The listener object for animation target base value changes.
@@ -90,17 +92,15 @@ public abstract class AnimationEngine {
      */
     public void dispose() {
         // Remove any target listeners that are registered.
-        for (Object o : targets.entrySet()) {
-            Map.Entry e = (Map.Entry) o;
-            AnimationTarget target = (AnimationTarget) e.getKey();
-            TargetInfo info = (TargetInfo) e.getValue();
+        for (Map.Entry<AnimationTarget, TargetInfo> e : targets.entrySet()) {
+            AnimationTarget target = e.getKey();
+            TargetInfo info = e.getValue();
 
-            Iterator j = info.xmlAnimations.iterator();
+            Iterator<DoublyIndexedTable.Entry<String,String>> j = info.xmlAnimations.iterator();
             while (j.hasNext()) {
-                DoublyIndexedTable.Entry e2 =
-                        (DoublyIndexedTable.Entry) j.next();
-                String namespaceURI = (String) e2.getKey1();
-                String localName = (String) e2.getKey2();
+                DoublyIndexedTable.Entry<String,String> e2 = j.next();
+                String namespaceURI = e2.getKey1();
+                String localName = e2.getKey2();
                 Sandwich sandwich = (Sandwich) e2.getValue();
                 if (sandwich.listenerRegistered) {
                     target.removeTargetListener(namespaceURI, localName, false,
@@ -108,11 +108,11 @@ public abstract class AnimationEngine {
                 }
             }
 
-            j = info.cssAnimations.entrySet().iterator();
-            while (j.hasNext()) {
-                Map.Entry e2 = (Map.Entry) j.next();
-                String propertyName = (String) e2.getKey();
-                Sandwich sandwich = (Sandwich) e2.getValue();
+            Iterator<Entry<String, Sandwich>> cssIt = info.cssAnimations.entrySet().iterator();
+            while (cssIt.hasNext()) {
+                Entry<String, Sandwich> e2 = cssIt.next();
+                String propertyName = e2.getKey();
+                Sandwich sandwich = e2.getValue();
                 if (sandwich.listenerRegistered) {
                     target.removeTargetListener(null, propertyName, true,
                             targetListener);
@@ -252,13 +252,13 @@ public abstract class AnimationEngine {
                 info.xmlAnimations.put(ns, an, sandwich);
             }
         } else if (type == ANIM_TYPE_CSS) {
-            sandwich = (Sandwich) info.cssAnimations.get(an);
+            sandwich = info.cssAnimations.get(an);
             if (sandwich == null) {
                 sandwich = new Sandwich();
                 info.cssAnimations.put(an, sandwich);
             }
         } else {
-            sandwich = (Sandwich) info.otherAnimations.get(an);
+            sandwich = info.otherAnimations.get(an);
             if (sandwich == null) {
                 sandwich = new Sandwich();
                 info.otherAnimations.put(an, sandwich);
@@ -271,7 +271,7 @@ public abstract class AnimationEngine {
      * Returns the TargetInfo for the given AnimationTarget.
      */
     protected TargetInfo getTargetInfo(AnimationTarget target) {
-        TargetInfo info = (TargetInfo) targets.get(target);
+        TargetInfo info = targets.get(target);
         if (info == null) {
             info = new TargetInfo();
             targets.put(target, info);
@@ -283,7 +283,7 @@ public abstract class AnimationEngine {
      * Returns the AnimationInfo for the given AbstractAnimation.
      */
     protected AnimationInfo getAnimationInfo(AbstractAnimation anim) {
-        AnimationInfo info = (AnimationInfo) animations.get(anim);
+        AnimationInfo info = animations.get(anim);
         if (info == null) {
             info = new AnimationInfo();
             animations.put(anim, info);
@@ -291,7 +291,8 @@ public abstract class AnimationEngine {
         return info;
     }
 
-    protected static final Map.Entry[] MAP_ENTRY_ARRAY = new Map.Entry[0];
+    @SuppressWarnings("unchecked")
+    protected static final Map.Entry<AnimationTarget, TargetInfo>[] MAP_ENTRY_ARRAY = new Map.Entry[0];
 
     /**
      * Updates the animations in the document to the given document time.
@@ -301,19 +302,17 @@ public abstract class AnimationEngine {
      */
     protected float tick(float time, boolean hyperlinking) {
         float waitTime = timedDocumentRoot.seekTo(time, hyperlinking);
-        Map.Entry[] targetEntries =
-            (Map.Entry[]) targets.entrySet().toArray(MAP_ENTRY_ARRAY);
-        for (Map.Entry e : targetEntries) {
-            AnimationTarget target = (AnimationTarget) e.getKey();
-            TargetInfo info = (TargetInfo) e.getValue();
+        Entry<AnimationTarget, TargetInfo>[] targetEntries = targets.entrySet().toArray(MAP_ENTRY_ARRAY);
+        for (Map.Entry<AnimationTarget, TargetInfo> e : targetEntries) {
+            AnimationTarget target = e.getKey();
+            TargetInfo info = e.getValue();
 
             // Update the XML animations.
-            Iterator j = info.xmlAnimations.iterator();
+            Iterator<DoublyIndexedTable.Entry<String,String>> j = info.xmlAnimations.iterator();
             while (j.hasNext()) {
-                DoublyIndexedTable.Entry e2 =
-                        (DoublyIndexedTable.Entry) j.next();
-                String namespaceURI = (String) e2.getKey1();
-                String localName = (String) e2.getKey2();
+                DoublyIndexedTable.Entry<String,String> e2 = j.next();
+                String namespaceURI = e2.getKey1();
+                String localName = e2.getKey2();
                 Sandwich sandwich = (Sandwich) e2.getValue();
                 if (sandwich.shouldUpdate ||
                         sandwich.animation != null
@@ -342,11 +341,11 @@ public abstract class AnimationEngine {
             }
 
             // Update the CSS animations.
-            j = info.cssAnimations.entrySet().iterator();
-            while (j.hasNext()) {
-                Map.Entry e2 = (Map.Entry) j.next();
-                String propertyName = (String) e2.getKey();
-                Sandwich sandwich = (Sandwich) e2.getValue();
+            Iterator<Entry<String, Sandwich>> esIt = info.cssAnimations.entrySet().iterator();
+            while (esIt.hasNext()) {
+                Entry<String, Sandwich> e2 = esIt.next();
+                String propertyName = e2.getKey();
+                Sandwich sandwich = e2.getValue();
                 if (sandwich.shouldUpdate ||
                         sandwich.animation != null
                                 && sandwich.animation.isDirty) {
@@ -379,11 +378,11 @@ public abstract class AnimationEngine {
             }
 
             // Update the other animations.
-            j = info.otherAnimations.entrySet().iterator();
-            while (j.hasNext()) {
-                Map.Entry e2 = (Map.Entry) j.next();
-                String type = (String) e2.getKey();
-                Sandwich sandwich = (Sandwich) e2.getValue();
+            esIt = info.otherAnimations.entrySet().iterator();
+            while (esIt.hasNext()) {
+                Entry<String, Sandwich> e2 = esIt.next();
+                String type = e2.getKey();
+                Sandwich sandwich = e2.getValue();
                 if (sandwich.shouldUpdate ||
                         sandwich.animation != null
                                 && sandwich.animation.isDirty) {
@@ -623,19 +622,19 @@ public abstract class AnimationEngine {
          * Map of XML attribute names to the corresponding {@link Sandwich}
          * objects.
          */
-        public DoublyIndexedTable xmlAnimations = new DoublyIndexedTable();
+        public DoublyIndexedTable<String,String> xmlAnimations = new DoublyIndexedTable<>();
 
         /**
          * Map of CSS attribute names to the corresponding {@link Sandwich}
          * objects.
          */
-        public HashMap cssAnimations = new HashMap();
+        public HashMap<String, Sandwich> cssAnimations = new HashMap<>();
 
         /**
          * Map of other animation types to the corresponding {@link Sandwich}
          * objects.
          */
-        public HashMap otherAnimations = new HashMap();
+        public HashMap<String, Sandwich> otherAnimations = new HashMap<>();
     }
 
     /**

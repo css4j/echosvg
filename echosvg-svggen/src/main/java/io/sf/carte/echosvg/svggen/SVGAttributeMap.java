@@ -26,19 +26,20 @@ import java.util.Map;
  * name.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAttributeMap{
     /**
      * Map of attribute name to SVGAttribute objects
      */
-    private static Map attrMap = new HashMap();
+    private static Map<String, SVGAttribute> attrMap = new HashMap<>();
 
     /**
      * @param attrName SVG name of the requested attribute
      * @return attribute with requested name
      */
     public static SVGAttribute get(String attrName) {
-        return (SVGAttribute)attrMap.get(attrName);
+        return attrMap.get(attrName);
     }
 }

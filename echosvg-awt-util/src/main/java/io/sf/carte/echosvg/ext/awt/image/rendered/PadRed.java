@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.ext.awt.image.PadMode;
  * This is an implementation of a Pad operation as a RenderedImage.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public class PadRed extends AbstractRed {
 

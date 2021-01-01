@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
  * This class is a helper to <code>PNGTranscoder</code> that writes PNG images 
  * through the Image I/O API.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PNGTranscoderImageIOWriteAdapter implements

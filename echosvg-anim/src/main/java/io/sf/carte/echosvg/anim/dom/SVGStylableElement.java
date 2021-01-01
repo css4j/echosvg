@@ -49,6 +49,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * SVGStylable.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGStylableElement
@@ -60,10 +61,10 @@ public abstract class SVGStylableElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGOMElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
         t.put(null, SVG_CLASS_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_CDATA));
         xmlTraitInformation = t;
@@ -338,7 +339,7 @@ public abstract class SVGStylableElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 

@@ -33,10 +33,11 @@ import io.sf.carte.echosvg.swing.gvt.Overlay;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGUpdateOverlay implements Overlay {
-    List rects = new LinkedList();
+    List<Rectangle> rects = new LinkedList<>();
     int size, updateCount;
     int []counts;
     public SVGUpdateOverlay(int size, int numUpdates) {
@@ -71,7 +72,7 @@ public class SVGUpdateOverlay implements Overlay {
 
     @Override
     public void paint(Graphics g) {
-        Iterator i = rects.iterator();
+        Iterator<Rectangle> i = rects.iterator();
         int count = 0;
         int idx = 0;
         int group = 0;
@@ -80,7 +81,7 @@ public class SVGUpdateOverlay implements Overlay {
             group++;
         int cmax = counts.length-1;
         while (i.hasNext()) {
-            Rectangle r = (Rectangle)i.next();
+            Rectangle r = i.next();
             Color c;
             c = new Color(1.0f, (cmax-group)/(float)cmax, 0,
                           (count+1.0f)/rects.size());

@@ -30,6 +30,7 @@ import org.w3c.dom.views.AbstractView;
  * associated with Mouse events.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
@@ -44,7 +45,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
     /**
      * The modifier keys in effect at the time of the event.
      */
-    protected HashSet modifierKeys = new HashSet();
+    protected HashSet<String> modifierKeys = new HashSet<>();
 
     /**
      * DOM: <code>screenX</code> indicates the horizontal coordinate
@@ -168,11 +169,11 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
             return "";
         }
         StringBuffer sb = new StringBuffer(modifierKeys.size() * 8);
-        Iterator i = modifierKeys.iterator();
-        sb.append((String) i.next());
+        Iterator<String> i = modifierKeys.iterator();
+        sb.append(i.next());
         while (i.hasNext()) {
              sb.append(' ');
-             sb.append((String) i.next());
+             sb.append(i.next());
         }
         return sb.toString();
     }

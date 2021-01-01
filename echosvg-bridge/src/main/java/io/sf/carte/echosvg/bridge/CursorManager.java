@@ -64,13 +64,14 @@ import io.sf.carte.echosvg.util.SoftReferenceCache;
  * corresponding to the SVG built in cursors.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CursorManager implements SVGConstants, ErrorConstants {
     /**
      * Maps SVG Cursor Values to Java Cursors
      */
-    protected static Map cursorMap;
+    protected static Map<String, Cursor> cursorMap;
 
     /**
      * Default cursor when value is not found
@@ -101,7 +102,7 @@ public class CursorManager implements SVGConstants, ErrorConstants {
      */
     static {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        cursorMap = new HashMap();
+        cursorMap = new HashMap<>();
         cursorMap.put(SVG_CROSSHAIR_VALUE,
                       Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         cursorMap.put(SVG_DEFAULT_VALUE,
@@ -176,7 +177,7 @@ public class CursorManager implements SVGConstants, ErrorConstants {
      * always uses the cursor at the end of the list
      */
     public static Cursor getPredefinedCursor(String cursorName){
-        return (Cursor)cursorMap.get(cursorName);
+        return cursorMap.get(cursorName);
     }
 
     /**

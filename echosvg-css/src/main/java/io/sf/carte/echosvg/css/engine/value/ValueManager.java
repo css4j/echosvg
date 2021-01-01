@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
  * with a property.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ValueManager {

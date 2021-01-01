@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.parser.UnitProcessor;
  * held by this object.
  *
  * @author nicolas.socheleau@bitflash.com
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGLength

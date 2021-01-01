@@ -22,8 +22,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Attr;
@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.xml.XMLUtilities;
  * A collection of utility functions for the DOM.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOMUtilities extends XMLUtilities implements XMLConstants {
@@ -522,10 +523,8 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
      *            The potential descendant node
      * @return True if at least one node is ancestor of the given node
      */
-    public static boolean isAnyNodeAncestorOf(ArrayList ancestorNodes, Node node) {
-        int n = ancestorNodes.size();
-        for (Object ancestorNode : ancestorNodes) {
-            Node ancestor = (Node) ancestorNode;
+    public static boolean isAnyNodeAncestorOf(List<Node> ancestorNodes, Node node) {
+        for (Node ancestor : ancestorNodes) {
             if (isAncestorOf(ancestor, node)) {
                 return true;
             }
@@ -599,13 +598,11 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
      *            The potential parent node
      * @return true if at least one node from a list can be appended
      */
-    public static boolean canAppendAny(ArrayList children, Node parentNode) {
+    public static boolean canAppendAny(List<Node> children, Node parentNode) {
         if (!canHaveChildren(parentNode)) {
             return false;
         }
-        int n = children.size();
-        for (Object aChildren : children) {
-            Node child = (Node) aChildren;
+        for (Node child : children) {
             if (canAppend(child, parentNode)) {
                 return true;
             }
@@ -658,7 +655,7 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
      * @return The document fragment or null on error.
      */
     public static Node parseXML(String text, Document doc, String uri,
-            Map prefixes, String wrapperElementName,
+            Map<String, String> prefixes, String wrapperElementName,
             SAXDocumentFactory documentFactory) {
 
         // Create the wrapper element prefix and suffix, copying the (prefix,
@@ -670,10 +667,9 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
             // Copy the prefixes from the prefixes map to the wrapper element
             if (prefixes != null) {
                 wrapperElementPrefix += " ";
-                for (Object o : prefixes.entrySet()) {
-                    Map.Entry e = (Map.Entry) o;
-                    String currentKey = (String) e.getKey();
-                    String currentValue = (String) e.getValue();
+                for (Map.Entry<String, String> e : prefixes.entrySet()) {
+                    String currentKey = e.getKey();
+                    String currentValue = e.getValue();
                     wrapperElementPrefix += currentKey + "=\"" + currentValue
                             + "\" ";
                 }

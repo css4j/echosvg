@@ -27,6 +27,7 @@ import org.w3c.dom.Node;
  * This class implements the {@link org.w3c.dom.DocumentType} interface.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GenericDocumentType

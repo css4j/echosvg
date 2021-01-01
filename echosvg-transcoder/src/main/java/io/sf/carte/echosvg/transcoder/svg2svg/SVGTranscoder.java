@@ -42,6 +42,7 @@ import io.sf.carte.echosvg.transcoder.keys.StringKey;
  * This class is a trancoder from SVG to SVG.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGTranscoder extends AbstractTranscoder {

@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * This class represents a location bar.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class LocationBar extends JPanel {
@@ -65,7 +66,7 @@ public class LocationBar extends JPanel {
     /**
      * The combo box
      */
-    protected JComboBox comboBox;
+    protected JComboBox<String> comboBox;
 
     /**
      * Creates a new location bar.
@@ -82,7 +83,7 @@ public class LocationBar extends JPanel {
             }
         } catch (MissingResourceException e) {
         }
-        add("Center", comboBox = new JComboBox());
+        add("Center", comboBox = new JComboBox<>());
         comboBox.setEditable(true);
     }
 

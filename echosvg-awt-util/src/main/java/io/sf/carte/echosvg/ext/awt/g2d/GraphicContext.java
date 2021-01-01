@@ -49,6 +49,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GraphicContext implements Cloneable{
@@ -68,7 +69,7 @@ public class GraphicContext implements Cloneable{
     /**
      * Transform stack
      */
-    protected List transformStack = new ArrayList();
+    protected List<TransformStackElement> transformStack = new ArrayList<>();
 
     /**
      * Defines whether the transform stack is valide or not.
@@ -159,10 +160,10 @@ public class GraphicContext implements Cloneable{
         copyGc.transform = new AffineTransform(this.transform);
 
         // Transform stack
-        copyGc.transformStack = new ArrayList( transformStack.size() );
+        copyGc.transformStack = new ArrayList<>( transformStack.size() );
         for(int i=0; i<this.transformStack.size(); i++){
             TransformStackElement stackElement =
-                (TransformStackElement)this.transformStack.get(i);
+                this.transformStack.get(i);
             copyGc.transformStack.add(stackElement.clone());
         }
 
@@ -470,8 +471,9 @@ public class GraphicContext implements Cloneable{
      * @param hints the rendering hints to be set
      * @see RenderingHints
      */
-    public void setRenderingHints(Map hints){
-        this.hints = new RenderingHints(hints);
+    public void setRenderingHints(Map<?,?> hints){
+        this.hints.clear();
+        this.hints.putAll(hints);
     }
 
 
@@ -489,7 +491,7 @@ public class GraphicContext implements Cloneable{
      * @param hints the rendering hints to be set
      * @see RenderingHints
      */
-    public void addRenderingHints(Map hints){
+    public void addRenderingHints(Map<?,?> hints){
         this.hints.putAll(hints);
     }
 

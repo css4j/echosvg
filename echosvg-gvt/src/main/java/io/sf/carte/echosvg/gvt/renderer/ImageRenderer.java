@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.gvt.renderer;
 
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
@@ -28,6 +29,7 @@ import java.util.Collection;
  * Interface for GVT Renderers that render into raster images.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ImageRenderer extends Renderer{
@@ -99,5 +101,5 @@ public interface ImageRenderer extends Renderer{
      * interface). Each area are transformed via the usr2dev's renderer
      * transform before the flush(Rectangle) is called.
      */
-    void flush(Collection areas);
+    void flush(Collection<Shape> areas);
 }

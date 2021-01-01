@@ -23,13 +23,17 @@ package io.sf.carte.echosvg.swing;
  * null does not cause a NullPointerException
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NullURITest extends NullSetSVGDocumentTest {
+    @Override
     public String getName() { return getId(); }
 
+    @Override
     public Runnable getRunnable(final JSVGCanvas canvas) {
         return new Runnable () {
+                @Override
                 public void run() {
                     canvas.setURI(null);
                 }};

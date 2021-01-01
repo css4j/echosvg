@@ -28,6 +28,7 @@ import java.text.AttributedCharacterIterator;
  * Renders the attributed character iterator of a <code>TextNode</code>.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class ConcreteTextPainter extends BasicTextPainter {

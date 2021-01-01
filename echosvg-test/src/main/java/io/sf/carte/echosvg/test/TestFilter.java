@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.test;
  * Interace to accept or reject a test or testSuite.
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TestFilter {

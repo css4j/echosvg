@@ -42,19 +42,20 @@ import io.sf.carte.echosvg.constants.XMLConstants;
  * This class implements caching functionality for raster images.
  *
  * @author <a href="mailto:paul_evenblij@compuware.com">Paul Evenblij</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
 
     DOMTreeManager  domTreeManager = null;
-    Map             imageCache;
+    Map<Integer, LinkedList<ImageCacheEntry>>             imageCache;
     Checksum        checkSum;
 
     /**
      * Creates an ImageCacher.
      */
     public ImageCacher() {
-        imageCache = new HashMap();
+        imageCache = new HashMap<>();
         checkSum = new Adler32();
     }
 
@@ -110,15 +111,15 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
 
         Object data = getCacheableData(os);
 
-        LinkedList list = (LinkedList) imageCache.get(key);
+        LinkedList<ImageCacheEntry> list = imageCache.get(key);
         if(list == null) {
             // Key not found: make a new key/value pair
-            list = new LinkedList();
+            list = new LinkedList<>();
             imageCache.put(key, list);
         } else {
             // Key found: check if the image is already in the list
-            for(ListIterator i = list.listIterator(0); i.hasNext(); ) {
-                ImageCacheEntry entry = (ImageCacheEntry) i.next();
+            for(ListIterator<ImageCacheEntry> i = list.listIterator(0); i.hasNext(); ) {
+                ImageCacheEntry entry = i.next();
                 if(entry.checksum == checksum && imagesMatch(entry.src, data)) {
                     href = entry.href;
                     break;
@@ -227,7 +228,7 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
             // images in the SVG tree itself
             if(this.domTreeManager != domTreeManager) {
                 this.domTreeManager = domTreeManager;
-                this.imageCache     = new HashMap();
+                this.imageCache     = new HashMap<>();
             }
         }
 

@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * Bridge class for vending <code>Paint</code> objects.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface PaintBridge extends Bridge {

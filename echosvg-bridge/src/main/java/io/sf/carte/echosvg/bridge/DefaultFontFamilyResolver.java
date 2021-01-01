@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
  * The is a utility class that is used for resolving UnresolvedFontFamilies.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class DefaultFontFamilyResolver implements FontFamilyResolver {
@@ -57,11 +58,11 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
      * List of all available fonts on the current system, plus a few common
      * alternatives.
      */
-    protected static final Map fonts = new HashMap();
+    protected static final Map<String, String> fonts = new HashMap<>();
 
-    protected static final List awtFontFamilies = new ArrayList();
+    protected static final List<AWTFontFamily> awtFontFamilies = new ArrayList<>();
 
-    protected static final List awtFonts = new ArrayList();
+    protected static final List<AWTGVTFont> awtFonts = new ArrayList<>();
 
     /**
      * This sets up the list of available fonts.
@@ -116,9 +117,8 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
         awtFontFamilies.add(DEFAULT_FONT_FAMILY);
         awtFonts.add(new AWTGVTFont(DEFAULT_FONT_FAMILY.getFamilyName(), 0, 12));
 
-        Collection fontValues = fonts.values();
-        for (Object fontValue : fontValues) {
-            String fontFamily = (String) fontValue;
+        Collection<String> fontValues = fonts.values();
+        for (String fontFamily : fontValues) {
             AWTFontFamily awtFontFamily = new AWTFontFamily(fontFamily);
             awtFontFamilies.add(awtFontFamily);
             AWTGVTFont font = new AWTGVTFont(fontFamily, 0, 12);
@@ -131,16 +131,16 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
      * This keeps track of all the resolved font families. This is to hopefully
      * reduce the number of font family objects used.
      */
-    protected static final Map resolvedFontFamilies = new HashMap();
+    protected static final Map<String, GVTFontFamily> resolvedFontFamilies = new HashMap<>();
 
     @Override
     public AWTFontFamily resolve(String familyName, FontFace fontFace) {
-        String fontName = (String)fonts.get(fontFace.getFamilyName().toLowerCase());
+        String fontName = fonts.get(fontFace.getFamilyName().toLowerCase());
         if (fontName == null) {
             return null;
         } else {
             GVTFontFace face = FontFace.createFontFace(fontName, fontFace);
-            return new AWTFontFamily(fontFace);
+            return new AWTFontFamily(face);
         }
     }
 
@@ -158,12 +158,12 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
 
         // first see if this font family has already been resolved
         GVTFontFamily resolvedFF =
-                (GVTFontFamily)resolvedFontFamilies.get(familyName);
+                resolvedFontFamilies.get(familyName);
 
         if (resolvedFF == null) { // hasn't been resolved yet
             // try to find a matching family name in the list of
             // available fonts
-            String awtFamilyName = (String)fonts.get(familyName);
+            String awtFamilyName = fonts.get(familyName);
             if (awtFamilyName != null) {
                 resolvedFF = new AWTFontFamily(awtFamilyName);
             }
@@ -185,8 +185,8 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
     @Override
     public GVTFontFamily getFamilyThatCanDisplay(char c) {
         for (int i = 0; i < awtFontFamilies.size(); i++) {
-            AWTFontFamily fontFamily = (AWTFontFamily)awtFontFamilies.get(i);
-            AWTGVTFont font = (AWTGVTFont)awtFonts.get(i);
+            AWTFontFamily fontFamily = awtFontFamilies.get(i);
+            AWTGVTFont font = awtFonts.get(i);
             if (font.canDisplay(c) && fontFamily.getFamilyName().indexOf("Song") == -1) {
                 // the awt font for "MS Song" doesn't display chinese glyphs correctly
                 return fontFamily;

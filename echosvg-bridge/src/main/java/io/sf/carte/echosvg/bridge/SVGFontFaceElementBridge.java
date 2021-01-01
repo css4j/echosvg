@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * Bridge class for the &lt;font-face&gt; element.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFontFaceElementBridge extends AbstractSVGBridge
@@ -269,7 +270,7 @@ public class SVGFontFaceElementBridge extends AbstractSVGBridge
                                overlineThicknessStr});
         }
 
-        List srcs = null;
+        List<Object> srcs = null;
         Element fontElt = SVGUtilities.getParentElement(fontFaceElement);
         if (!fontElt.getNamespaceURI().equals(SVG_NAMESPACE_URI) ||
             !fontElt.getLocalName().equals(SVG_FONT_TAG)) {
@@ -289,7 +290,7 @@ public class SVGFontFaceElementBridge extends AbstractSVGBridge
     /**
      * the returned list may contain Strings and ParsedURLs
      */
-    public List getFontFaceSrcs(Element fontFaceElement) {
+    public List<Object> getFontFaceSrcs(Element fontFaceElement) {
         // Search for a font-face-src element
         Element ffsrc = null;
         for (Node n = fontFaceElement.getFirstChild();
@@ -305,7 +306,7 @@ public class SVGFontFaceElementBridge extends AbstractSVGBridge
         if (ffsrc == null)
             return null;
 
-        List ret = new LinkedList();
+        List<Object> ret = new LinkedList<>();
 
         // Search for a font-face-uri, or font-face-name elements
         for (Node n = ffsrc.getFirstChild();

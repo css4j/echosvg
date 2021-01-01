@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.anim.values.AnimatableValue;
  * This class implements the {@link SVGAnimatedInteger} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAnimatedInteger

@@ -25,6 +25,7 @@ package io.sf.carte.echosvg.gvt.font;
  * when laying out glyphs.
  *
  * @author <a href="mailto:dean.jackson@cmis.csiro.au">Dean Jackson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class KerningTable {

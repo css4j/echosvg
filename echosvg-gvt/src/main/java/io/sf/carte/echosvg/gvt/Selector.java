@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.gvt.event.SelectionListener;
  * Interface which allows selection of GraphicsNodes and their contents.
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Selector extends GraphicsNodeMouseListener,

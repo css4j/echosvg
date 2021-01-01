@@ -40,6 +40,7 @@ import io.sf.carte.echosvg.w3c.dom.Location;
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class WindowWrapper extends ImporterTopLevel {
@@ -184,16 +185,16 @@ public class WindowWrapper extends ImporterTopLevel {
         RhinoInterpreter     interp = (RhinoInterpreter)window.getInterpreter();
         AccessControlContext acc    = interp.getAccessControlContext();
 
-        PrivilegedAction pa = new PrivilegedAction() {
+        PrivilegedAction<Node> pa = new PrivilegedAction<Node>() {
                 @Override
-                public Object run() {
+                public Node run() {
                     return window.parseXML
                         ((String)Context.jsToJava(args[0], String.class),
                          (Document)Context.jsToJava(args[1], Document.class));
                 }
             };
 
-        Object ret;
+        Node ret;
         // If acc is null we are running in an Applet (or some other
         // restrictive environment) so don't sweat security it's
         // the "Browsers" problem...
@@ -220,14 +221,14 @@ public class WindowWrapper extends ImporterTopLevel {
         AccessControlContext acc =
             ((RhinoInterpreter)window.getInterpreter()).getAccessControlContext();
 
-        Object ret = AccessController.doPrivileged(new PrivilegedAction() {
+        String ret = AccessController.doPrivileged(new PrivilegedAction<String>() {
                 @Override
-                public Object run() {
+                public String run() {
                     return window.printNode
                         ((Node) Context.jsToJava(args[0], Node.class));
                 }
             }, acc);
-        return Context.toString(ret);
+        return ret;
     }
 
     /**
@@ -260,17 +261,17 @@ public class WindowWrapper extends ImporterTopLevel {
             ((RhinoInterpreter)window.getInterpreter()).getAccessControlContext();
 
         if (len == 2) {
-            AccessController.doPrivileged(new PrivilegedAction() {
+            AccessController.doPrivileged(new PrivilegedAction<Void>() {
                     @Override
-                    public Object run(){
+                    public Void run(){
                         window.getURL(uri, fw);
                         return null;
                     }
                 }, acc);
         } else {
-            AccessController.doPrivileged(new PrivilegedAction() {
+            AccessController.doPrivileged(new PrivilegedAction<Void>() {
                     @Override
-                    public Object run() {
+                    public Void run() {
                         window.getURL
                             (uri, fw,
                              (String)Context.jsToJava(args[2], String.class));
@@ -312,18 +313,18 @@ public class WindowWrapper extends ImporterTopLevel {
 
         switch (len) {
         case 3:
-            AccessController.doPrivileged(new PrivilegedAction() {
+            AccessController.doPrivileged(new PrivilegedAction<Void>() {
                     @Override
-                    public Object run(){
+                    public Void run(){
                         window.postURL(uri, content, fw);
                         return null;
                     }
                 }, acc);
             break;
         case 4:
-            AccessController.doPrivileged(new PrivilegedAction() {
+            AccessController.doPrivileged(new PrivilegedAction<Void>() {
                     @Override
-                    public Object run() {
+                    public Void run() {
                         window.postURL
                             (uri, content, fw,
                              (String)Context.jsToJava(args[3], String.class));
@@ -332,9 +333,9 @@ public class WindowWrapper extends ImporterTopLevel {
                 }, acc);
             break;
         default:
-            AccessController.doPrivileged(new PrivilegedAction() {
+            AccessController.doPrivileged(new PrivilegedAction<Void>() {
                     @Override
-                    public Object run() {
+                    public Void run() {
                         window.postURL
                             (uri, content, fw,
                              (String)Context.jsToJava(args[3], String.class),

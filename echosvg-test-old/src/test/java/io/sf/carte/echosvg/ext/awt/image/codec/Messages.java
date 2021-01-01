@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
  * This class manages the message for the test.svg module.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Messages {

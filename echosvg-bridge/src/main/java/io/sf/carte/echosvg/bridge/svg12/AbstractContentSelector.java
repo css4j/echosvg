@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
  * attribute syntaxes.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractContentSelector {
@@ -86,7 +87,7 @@ public abstract class AbstractContentSelector {
     /**
      * Map of selector languages to factories.
      */
-    protected static HashMap selectorFactories = new HashMap();
+    protected static HashMap<String, ContentSelectorFactory> selectorFactories = new HashMap<>();
     static {
         ContentSelectorFactory f1 = new XPathPatternContentSelectorFactory();
         ContentSelectorFactory f2 = new XPathSubsetContentSelectorFactory();
@@ -109,7 +110,7 @@ public abstract class AbstractContentSelector {
              String selector) {
 
         ContentSelectorFactory f =
-            (ContentSelectorFactory) selectorFactories.get(selectorLanguage);
+            selectorFactories.get(selectorLanguage);
         if (f == null) {
             throw new RuntimeException
                 ("Invalid XBL content selector language '"

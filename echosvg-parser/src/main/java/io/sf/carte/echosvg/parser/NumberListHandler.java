@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.parser;
  * An handler interface for parsing NumberLists.
  *
  * @author  tonny@kiyut.com
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface NumberListHandler {

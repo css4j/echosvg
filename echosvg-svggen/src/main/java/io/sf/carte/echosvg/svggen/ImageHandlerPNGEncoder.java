@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
  * image elements it handles.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see             io.sf.carte.echosvg.svggen.SVGGraphics2D
  * @see             io.sf.carte.echosvg.svggen.ImageHandlerJPEGEncoder

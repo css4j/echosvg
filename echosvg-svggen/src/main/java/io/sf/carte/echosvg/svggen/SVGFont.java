@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFont extends AbstractSVGConverter {
@@ -128,7 +129,7 @@ public class SVGFont extends AbstractSVGConverter {
     /**
      * Logical fonts mapping
      */
-    static Map logicalFontMap = new HashMap();
+    static Map<String, String> logicalFontMap = new HashMap<>();
 
     static {
         logicalFontMap.put("dialog", "sans-serif");
@@ -148,7 +149,7 @@ public class SVGFont extends AbstractSVGConverter {
      * Used to keep track of which characters have been rendered by each font
      * used. MapKey is the fontKey, mapValue is a sorted array of used characters.
      */
-    final Map fontStringMap = new HashMap();
+    final Map<String, CharListHelper> fontStringMap = new HashMap<>();
 
     /**
      * @param generatorContext used to build Elements
@@ -182,7 +183,7 @@ public class SVGFont extends AbstractSVGConverter {
 //                textUsingFont += ch;
 //            }
 //        }
-        CharListHelper chl = (CharListHelper) fontStringMap.get( fontKey );
+        CharListHelper chl = fontStringMap.get( fontKey );
         if ( chl == null ){
             // was not in use before, so we need to create a fresh one
             chl = new CharListHelper();
@@ -201,7 +202,7 @@ public class SVGFont extends AbstractSVGConverter {
      * only its size attribute modified.
      */
     private static Font createCommonSizeFont(Font font) {
-        Map attributes = new HashMap();
+        Map<TextAttribute, Float> attributes = new HashMap<>();
         attributes.put(TextAttribute.SIZE, (float) COMMON_FONT_SIZE);
         // Remove Transform from font otherwise it will be applied twice.
         attributes.put(TextAttribute.TRANSFORM, null);
@@ -246,7 +247,7 @@ public class SVGFont extends AbstractSVGConverter {
         String fontKey = (commonSizeFont.getFamily() +
                           commonSizeFont.getStyle());
 
-        CharListHelper clh = (CharListHelper)fontStringMap.get(fontKey);
+        CharListHelper clh = fontStringMap.get(fontKey);
 
         if (clh == null) {
             // this font hasn't been used by any text yet,
@@ -413,7 +414,7 @@ public class SVGFont extends AbstractSVGConverter {
     public static String familyToSVG(Font font) {
         String fontFamilyStr = font.getFamily();
         String logicalFontFamily =
-            (String)logicalFontMap.get(font.getName().toLowerCase());
+            logicalFontMap.get(font.getName().toLowerCase());
         if (logicalFontFamily != null)
             fontFamilyStr = logicalFontFamily;
         else {
@@ -428,7 +429,7 @@ public class SVGFont extends AbstractSVGConverter {
      *        value.
      */
     public static String styleToSVG(Font font) {
-        Map attrMap = font.getAttributes();
+        Map<TextAttribute, ?> attrMap = font.getAttributes();
         Float styleValue = (Float)attrMap.get(TextAttribute.POSTURE);
 
         if (styleValue == null) {
@@ -455,7 +456,7 @@ public class SVGFont extends AbstractSVGConverter {
      *        semibold and extrabold.
      */
     public static String weightToSVG(Font font) {
-        Map attrMap = font.getAttributes();
+        Map<TextAttribute, ?> attrMap = font.getAttributes();
         Float weightValue = (Float)attrMap.get(TextAttribute.WEIGHT);
         if (weightValue==null) {
             if (font.isBold())

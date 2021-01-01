@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
@@ -39,6 +40,7 @@ import java.util.zip.ZipEntry;
  * This class contains utility methods to manipulate Java classes.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ClassFileUtilities {
@@ -91,7 +93,7 @@ public class ClassFileUtilities {
         File buildDir = null;
         String[] cwdFiles = cwd.list();
         for (String cwdFile : cwdFiles) {
-            if (cwdFile.startsWith("batik-")) {
+            if (cwdFile.startsWith("echosvg-")) {
                 buildDir = new File(cwdFile);
                 if (!buildDir.isDirectory()) {
                     buildDir = null;
@@ -101,48 +103,47 @@ public class ClassFileUtilities {
             }
         }
         if (buildDir == null || !buildDir.isDirectory()) {
-            System.out.println("Directory 'batik-xxx' not found in current directory!");
+            System.out.println("Directory 'echosvg-xxx' not found in current directory!");
             return;
         }
 
         try {
-            Map cs = new HashMap();
-            Map js = new HashMap();
+            Map<String, ClassFile> cs = new HashMap<>();
+            Map<String, Jar> js = new HashMap<>();
             collectJars(buildDir, js, cs);
 
-            Set classpath = new HashSet();
-            Iterator i = js.values().iterator();
+            Set<Object> classpath = new HashSet<>();
+            Iterator<Jar> i = js.values().iterator();
             while (i.hasNext()) {
-                classpath.add(((Jar) i.next()).jarFile);
+                classpath.add(i.next().jarFile);
             }
 
-            i = cs.values().iterator();
-            while (i.hasNext()) {
-                ClassFile fromFile = (ClassFile) i.next();
+            Iterator<ClassFile> cfi = cs.values().iterator();
+            while (cfi.hasNext()) {
+                ClassFile fromFile = cfi.next();
                 // System.out.println(fromFile.name);
-                Set result = getClassDependencies(fromFile.getInputStream(),
+                Set<String> result = getClassDependencies(fromFile.getInputStream(),
                                                   classpath, false);
-                for (Object aResult : result) {
-                    ClassFile toFile = (ClassFile) cs.get(aResult);
+                for (String aResult : result) {
+                    ClassFile toFile = cs.get(aResult);
                     if (fromFile != toFile && toFile != null) {
                         fromFile.deps.add(toFile);
                     }
                 }
             }
 
-            i = cs.values().iterator();
-            while (i.hasNext()) {
-                ClassFile fromFile = (ClassFile) i.next();
-                for (Object dep : fromFile.deps) {
-                    ClassFile toFile = (ClassFile) dep;
+            cfi = cs.values().iterator();
+            while (cfi.hasNext()) {
+                ClassFile fromFile = cfi.next();
+                for (ClassFile toFile : fromFile.deps) {
                     Jar fromJar = fromFile.jar;
                     Jar toJar = toFile.jar;
                     if (fromFile.name.equals(toFile.name)
                             || toJar == fromJar
-                            || fromJar.files.contains(toFile.name)) {
+                            || fromJar.files.contains(toFile)) {
                         continue;
                     }
-                    Integer n = (Integer) fromJar.deps.get(toJar);
+                    Integer n = fromJar.deps.get(toJar);
                     if (n == null) {
                         fromJar.deps.put(toJar, 1);
                     } else {
@@ -151,33 +152,30 @@ public class ClassFileUtilities {
                 }
             }
 
-            List triples = new ArrayList(10);
+            List<Triple> triples = new ArrayList<>(10);
             i = js.values().iterator();
             while (i.hasNext()) {
-                Jar fromJar = (Jar) i.next();
-                for (Object o : fromJar.deps.keySet()) {
-                    Jar toJar = (Jar) o;
+                Jar fromJar = i.next();
+                for (Jar toJar : fromJar.deps.keySet()) {
                     Triple t = new Triple();
                     t.from = fromJar;
                     t.to = toJar;
-                    t.count = (Integer) fromJar.deps.get(toJar);
+                    t.count = fromJar.deps.get(toJar);
                     triples.add(t);
                 }
             }
             Collections.sort(triples);
 
-            i = triples.iterator();
-            while (i.hasNext()) {
-                Triple t = (Triple) i.next();
+            Iterator<Triple> ti = triples.iterator();
+            while (ti.hasNext()) {
+                Triple t = ti.next();
                 System.out.println
                     (t.count + "," + t.from.name + "," + t.to.name);
                 if (showFiles) {
-                    for (Object file : t.from.files) {
-                        ClassFile fromFile = (ClassFile) file;
-                        for (Object dep : fromFile.deps) {
-                            ClassFile toFile = (ClassFile) dep;
+                    for (ClassFile fromFile : t.from.files) {
+                        for (ClassFile toFile : fromFile.deps) {
                             if (toFile.jar == t.to
-                                    && !t.from.files.contains(toFile.name)) {
+                                    && !t.from.files.contains(toFile)) {
                                 System.out.println
                                         ("\t" + fromFile.name + " --> "
                                                 + toFile.name);
@@ -193,7 +191,7 @@ public class ClassFileUtilities {
 
     protected static class ClassFile {
         public String name;
-        public List deps = new ArrayList(10);
+        public List<ClassFile> deps = new ArrayList<>(10);
         public Jar jar;
         public InputStream getInputStream() throws IOException {
             return jar.jarFile.getInputStream(jar.jarFile.getEntry(name));
@@ -204,21 +202,21 @@ public class ClassFileUtilities {
         public String name;
         public File file;
         public JarFile jarFile;
-        public Map deps = new HashMap();
-        public Set files = new HashSet();
+        public Map<Jar, Integer> deps = new HashMap<>();
+        public Set<ClassFile> files = new HashSet<>();
     }
 
-    protected static class Triple implements Comparable {
+    protected static class Triple implements Comparable<Triple> {
         public Jar from;
         public Jar to;
         public int count;
         @Override
-        public int compareTo(Object o) {
-            return ((Triple) o).count - count;
+        public int compareTo(Triple o) {
+            return o.count - count;
         }
     }
 
-    private static void collectJars(File dir, Map jars, Map classFiles) throws IOException {
+    private static void collectJars(File dir, Map<String, Jar> jars, Map<String,ClassFile> classFiles) throws IOException {
         File[] files = dir.listFiles();
         for (File file : files) {
             String n = file.getName();
@@ -229,9 +227,9 @@ public class ClassFileUtilities {
                 j.jarFile = new JarFile(file);
                 jars.put(j.name, j);
 
-                Enumeration entries = j.jarFile.entries();
+                Enumeration<JarEntry> entries = j.jarFile.entries();
                 while (entries.hasMoreElements()) {
-                    ZipEntry ze = (ZipEntry) entries.nextElement();
+                    ZipEntry ze = entries.nextElement();
                     String name = ze.getName();
                     if (name.endsWith(".class")) {
                         ClassFile cf = new ClassFile();
@@ -254,21 +252,21 @@ public class ClassFileUtilities {
      * @param rec Whether to follow dependencies recursively.
      * @return a list of paths representing the used classes.
      */
-    public static Set getClassDependencies(String path,
-                                           Set classpath,
+    public static Set<String> getClassDependencies(String path,
+                                           Set<Object> classpath,
                                            boolean rec)
             throws IOException {
 
         return getClassDependencies(new FileInputStream(path), classpath, rec);
     }
 
-    public static Set getClassDependencies(InputStream is,
-                                           Set classpath,
+    public static Set<String> getClassDependencies(InputStream is,
+                                           Set<Object> classpath,
                                            boolean rec)
             throws IOException {
 
-        Set result = new HashSet();
-        Set done = new HashSet();
+        Set<String> result = new HashSet<>();
+        Set<String> done = new HashSet<>();
 
         computeClassDependencies(is, classpath, done, result, rec);
 
@@ -276,14 +274,13 @@ public class ClassFileUtilities {
     }
 
     private static void computeClassDependencies(InputStream is,
-                                                 Set classpath,
-                                                 Set done,
-                                                 Set result,
+                                                 Set<Object> classpath,
+                                                 Set<String> done,
+                                                 Set<String> result,
                                                  boolean rec)
             throws IOException {
 
-        for (Object o : getClassDependencies(is)) {
-            String s = (String) o;
+        for (String s : getClassDependencies(is)) {
             if (!done.contains(s)) {
                 done.add(s);
 
@@ -314,6 +311,7 @@ public class ClassFileUtilities {
                             computeClassDependencies
                                     (depis, classpath, done, result, rec);
                         }
+                        depis.close();
                     }
                 }
             }
@@ -324,7 +322,7 @@ public class ClassFileUtilities {
      * Returns the dependencies of the given class.
      * @return a list of strings representing the used classes.
      */
-    public static Set getClassDependencies(InputStream is) throws IOException {
+    public static Set<String> getClassDependencies(InputStream is) throws IOException {
         DataInputStream dis = new DataInputStream(is);
 
         if (dis.readInt() != 0xcafebabe) {
@@ -335,8 +333,8 @@ public class ClassFileUtilities {
 
         int len = dis.readShort();
         String[] strs = new String[len];
-        Set classes = new HashSet();
-        Set desc = new HashSet();
+        Set<Integer> classes = new HashSet<>();
+        Set<Integer> desc = new HashSet<>();
 
         for (int i = 1; i < len; i++) {
             int constCode = dis.readByte() & 0xff;
@@ -377,16 +375,16 @@ public class ClassFileUtilities {
             }
         }
 
-        Set result = new HashSet();
+        Set<String> result = new HashSet<>();
 
-        Iterator it = classes.iterator();
+        Iterator<Integer> it = classes.iterator();
         while (it.hasNext()) {
-            result.add(strs[((Integer) it.next())]);
+            result.add(strs[it.next()]);
         }
 
         it = desc.iterator();
         while (it.hasNext()) {
-            result.addAll(getDescriptorClasses(strs[((Integer) it.next())]));
+            result.addAll(getDescriptorClasses(strs[it.next()]));
         }
 
         return result;
@@ -395,8 +393,8 @@ public class ClassFileUtilities {
     /**
      * Returns the classes contained in a field or method desciptor.
      */
-    protected static Set getDescriptorClasses(String desc) {
-        Set result = new HashSet();
+    protected static Set<String> getDescriptorClasses(String desc) {
+        Set<String> result = new HashSet<>();
         int  i = 0;
         char c = desc.charAt(i);
         switch (c) {

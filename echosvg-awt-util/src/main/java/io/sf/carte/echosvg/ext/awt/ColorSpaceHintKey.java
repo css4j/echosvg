@@ -24,6 +24,7 @@ import java.awt.RenderingHints;
  * TranscodingHint as to what the destination of the drawing is.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class ColorSpaceHintKey extends RenderingHints.Key {

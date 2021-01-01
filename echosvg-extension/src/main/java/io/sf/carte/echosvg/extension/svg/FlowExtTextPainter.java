@@ -27,6 +27,7 @@ import java.util.List;
 import io.sf.carte.echosvg.bridge.StrokingTextPainter;
 import io.sf.carte.echosvg.bridge.TextNode;
 import io.sf.carte.echosvg.bridge.TextPainter;
+import io.sf.carte.echosvg.bridge.TextSpanLayout;
 
 /**
  * One line Class Desc
@@ -34,6 +35,7 @@ import io.sf.carte.echosvg.bridge.TextPainter;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FlowExtTextPainter extends StrokingTextPainter {
@@ -51,8 +53,8 @@ public class FlowExtTextPainter extends StrokingTextPainter {
     }
 
     @Override
-    public List getTextRuns(TextNode node, AttributedCharacterIterator aci) {
-        List textRuns = node.getTextRuns();
+    public List<TextRun> getTextRuns(TextNode node, AttributedCharacterIterator aci) {
+        List<TextRun> textRuns = node.getTextRuns();
         if (textRuns != null) {
             return textRuns;
         }
@@ -61,19 +63,20 @@ public class FlowExtTextPainter extends StrokingTextPainter {
         textRuns = computeTextRuns(node, aci, chunkACIs);
 
         aci.first();
-        List rgns = (List)aci.getAttribute(FLOW_REGIONS);
+        @SuppressWarnings("unchecked")
+        List<RegionInfo> rgns = (List<RegionInfo>)aci.getAttribute(FLOW_REGIONS);
 
         if (rgns != null) {
-            Iterator i = textRuns.iterator();
-            List chunkLayouts = new ArrayList();
-            TextRun tr = (TextRun)i.next();
-            List layouts = new ArrayList();
+            Iterator<TextRun> i = textRuns.iterator();
+            List<List<TextSpanLayout>> chunkLayouts = new ArrayList<>();
+            TextRun tr = i.next();
+            List<TextSpanLayout> layouts = new ArrayList<>();
             chunkLayouts.add(layouts);
             layouts.add(tr.getLayout());
             while (i.hasNext()) {
-                tr = (TextRun)i.next();
+                tr = i.next();
                 if (tr.isFirstRunInChunk()) {
-                    layouts = new ArrayList();
+                    layouts = new ArrayList<>();
                     chunkLayouts.add(layouts);
                 }
                 layouts.add(tr.getLayout());

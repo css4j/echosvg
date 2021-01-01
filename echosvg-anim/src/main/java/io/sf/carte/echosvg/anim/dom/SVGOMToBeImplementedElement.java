@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * been put in.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMToBeImplementedElement

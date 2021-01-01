@@ -48,6 +48,7 @@ import io.sf.carte.echosvg.xml.XMLUtilities;
  * {@link io.sf.carte.echosvg.util.Service}).
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class ExtensibleDOMImplementation
@@ -60,25 +61,24 @@ public abstract class ExtensibleDOMImplementation
     /**
      * The custom elements factories.
      */
-    protected DoublyIndexedTable customFactories;
+    protected DoublyIndexedTable<String,String> customFactories;
 
     /**
      * The custom value managers.
      */
-    protected List customValueManagers;
+    protected List<ValueManager> customValueManagers;
 
     /**
      * The custom shorthand value managers.
      */
-    protected List customShorthandManagers;
+    protected List<ShorthandManager> customShorthandManagers;
 
     /**
      * Creates a new DOMImplementation.
      */
     public ExtensibleDOMImplementation() {
 
-        for (Object o : getDomExtensions()) {
-            DomExtension de = (DomExtension) o;
+        for (DomExtension de : getDomExtensions()) {
             de.registerTags(this);
         }
     }
@@ -90,7 +90,7 @@ public abstract class ExtensibleDOMImplementation
                                              String localName,
                                              ElementFactory factory) {
         if (customFactories == null) {
-            customFactories = new DoublyIndexedTable();
+            customFactories = new DoublyIndexedTable<>();
         }
         customFactories.put(namespaceURI, localName, factory);
     }
@@ -100,7 +100,7 @@ public abstract class ExtensibleDOMImplementation
      */
     public void registerCustomCSSValueManager(ValueManager vm) {
         if (customValueManagers == null) {
-            customValueManagers = new LinkedList();
+            customValueManagers = new LinkedList<>();
         }
         customValueManagers.add(vm);
     }
@@ -110,7 +110,7 @@ public abstract class ExtensibleDOMImplementation
      */
     public void registerCustomCSSShorthandManager(ShorthandManager sm) {
         if (customShorthandManagers == null) {
-            customShorthandManagers = new LinkedList();
+            customShorthandManagers = new LinkedList<>();
         }
         customShorthandManagers.add(sm);
     }
@@ -127,10 +127,10 @@ public abstract class ExtensibleDOMImplementation
             vms = new ValueManager[0];
         } else {
             vms = new ValueManager[customValueManagers.size()];
-            Iterator it = customValueManagers.iterator();
+            Iterator<ValueManager> it = customValueManagers.iterator();
             int i = 0;
             while (it.hasNext()) {
-                vms[i++] = (ValueManager)it.next();
+                vms[i++] = it.next();
             }
         }
 
@@ -139,10 +139,10 @@ public abstract class ExtensibleDOMImplementation
             sms = new ShorthandManager[0];
         } else {
             sms = new ShorthandManager[customShorthandManagers.size()];
-            Iterator it = customShorthandManagers.iterator();
+            Iterator<ShorthandManager> it = customShorthandManagers.iterator();
             int i = 0;
             while (it.hasNext()) {
-                sms[i++] = (ShorthandManager)it.next();
+                sms[i++] = it.next();
             }
         }
 
@@ -230,26 +230,26 @@ public abstract class ExtensibleDOMImplementation
 
     // Service /////////////////////////////////////////////////////////
 
-    protected static List extensions = null;
+    protected static List<DomExtension> extensions = null;
 
-    protected static synchronized List getDomExtensions() {
+    protected static synchronized List<DomExtension> getDomExtensions() {
         if (extensions != null)
             return extensions;
 
-        extensions = new LinkedList();
+        extensions = new LinkedList<>();
 
-        Iterator iter = Service.providers(DomExtension.class);
+        Iterator<Object> iter = Service.providers(DomExtension.class);
 
         while (iter.hasNext()) {
             DomExtension de = (DomExtension)iter.next();
             float priority  = de.getPriority();
-            ListIterator li = extensions.listIterator();
+            ListIterator<DomExtension> li = extensions.listIterator();
             for (;;) {
                 if (!li.hasNext()) {
                     li.add(de);
                     break;
                 }
-                DomExtension lde = (DomExtension)li.next();
+                DomExtension lde = li.next();
                 if (lde.getPriority() > priority) {
                     li.previous();
                     li.add(de);

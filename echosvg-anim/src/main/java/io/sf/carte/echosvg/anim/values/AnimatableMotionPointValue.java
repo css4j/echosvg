@@ -24,6 +24,7 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  * A point value in the animation system from a motion animation.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AnimatableMotionPointValue extends AnimatableValue {

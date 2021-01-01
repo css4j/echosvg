@@ -29,6 +29,7 @@ import java.awt.image.BufferedImageOp;
  * Paints, Composites or BufferedImageOp filters).
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ExtensionHandler {

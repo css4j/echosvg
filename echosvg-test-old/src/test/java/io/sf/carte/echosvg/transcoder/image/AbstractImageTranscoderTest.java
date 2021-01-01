@@ -20,45 +20,42 @@ package io.sf.carte.echosvg.transcoder.image;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
-
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 
+import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
-import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
-
-import io.sf.carte.echosvg.transcoder.TranscoderException;
-import io.sf.carte.echosvg.transcoder.TranscoderInput;
-import io.sf.carte.echosvg.transcoder.TranscoderOutput;
-
 import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
-import io.sf.carte.echosvg.test.svg.SVGRenderingAccuracyTest;
+import io.sf.carte.echosvg.test.svg.AbstractRenderingAccuracyTest;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
+import io.sf.carte.echosvg.transcoder.TranscoderInput;
+import io.sf.carte.echosvg.transcoder.TranscoderOutput;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
  * The base class for the ImageTranscoder tests.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractImageTranscoderTest extends AbstractTest {
@@ -119,6 +116,7 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
      * Runs this test. This method will only throw exceptions if some aspect of
      * the test's internal operation fails.
      */
+    @Override
     public TestReport runImpl() throws Exception {
         report = new DefaultTestReport(this);
 
@@ -126,7 +124,7 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
             DiffImageTranscoder transcoder =
                 new DiffImageTranscoder(getReferenceImageData());
 
-            Map hints = createTranscodingHints();
+            Map<Key, Object> hints = createTranscodingHints();
             if (hints != null) {
                 transcoder.setTranscodingHints(hints);
             }
@@ -151,7 +149,7 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
     /**
      * Creates a Map that contains additional transcoding hints.
      */
-    protected Map createTranscodingHints() {
+    protected Map<Key, Object> createTranscodingHints() {
         return null;
     }
 
@@ -242,6 +240,7 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
          * @param w the image width in pixels
          * @param h the image height in pixels
          */
+        @Override
         public BufferedImage createImage(int w, int h) {
             return new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         }
@@ -255,6 +254,7 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
          * @throw TranscoderException if an error occured while storing the
          * image
          */
+        @Override
         public void writeImage(BufferedImage img, TranscoderOutput output)
             throws TranscoderException {
 
@@ -332,7 +332,7 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
 
         private byte[] createDiffImage(BufferedImage actualImage) throws IOException {
             BufferedImage referenceImage = getImage(new ByteArrayInputStream(refImgData));
-            BufferedImage diffImage = SVGRenderingAccuracyTest.buildDiffImage(referenceImage, actualImage);
+            BufferedImage diffImage = AbstractRenderingAccuracyTest.buildDiffImage(referenceImage, actualImage);
             ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
             ByteArrayOutputStream diff = new ByteArrayOutputStream();
             writer.writeImage(diffImage, diff);

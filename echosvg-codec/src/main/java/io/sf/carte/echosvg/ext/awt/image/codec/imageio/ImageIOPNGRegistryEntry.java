@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.ext.awt.image.codec.imageio;
 /**
  * RegistryEntry implementation for loading PNG images through Image I/O.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageIOPNGRegistryEntry 

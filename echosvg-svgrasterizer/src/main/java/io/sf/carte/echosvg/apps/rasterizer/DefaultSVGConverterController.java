@@ -23,12 +23,14 @@ import java.util.List;
 import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.Transcoder;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
  * Default controller for the
  * <code>SVGConverter</code> operation.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultSVGConverterController implements SVGConverterController {
@@ -45,9 +47,9 @@ public class DefaultSVGConverterController implements SVGConverterController {
      */
     @Override
     public boolean proceedWithComputedTask(Transcoder transcoder,
-                                           Map hints,
-                                           List sources,
-                                           List dest){
+                                           Map<Key, ?> hints,
+                                           List<SVGConverterSource> sources,
+                                           List<File> dest){
         return true;
     }
 

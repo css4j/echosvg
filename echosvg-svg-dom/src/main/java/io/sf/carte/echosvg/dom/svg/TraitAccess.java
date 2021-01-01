@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.dom.svg;
  * to org.w3c.dom.svg (presumably) and become just a copy of the interface
  * file the SVG WG produce.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TraitAccess {

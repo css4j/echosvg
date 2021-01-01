@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  * GraphicsNode on demand for tiles.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GaussianBlurRed8Bit extends AbstractRed {

@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.gvt.font;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
  * A font family class for AWT fonts.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AWTFontFamily implements GVTFontFamily {
@@ -109,11 +111,11 @@ public class AWTFontFamily implements GVTFontFamily {
      * @param attrs The Attribute Map to get Values from.
      */
     @Override
-    public GVTFont deriveFont(float size, Map attrs) {
+    public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) {
         if (font != null)
             return new AWTGVTFont(font, size);
 
-        Map fontAttributes = new HashMap(attrs);
+        Map<Attribute, Object> fontAttributes = new HashMap<>(attrs);
         fontAttributes.put(TextAttribute.SIZE, size);
         fontAttributes.put(TextAttribute.FAMILY, fontFace.getFamilyName());
         fontAttributes.remove(TEXT_COMPOUND_DELIMITER);

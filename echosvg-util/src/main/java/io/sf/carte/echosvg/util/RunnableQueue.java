@@ -26,6 +26,7 @@ import java.util.NoSuchElementException;
  * invocation in a single thread.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RunnableQueue implements Runnable {
@@ -471,8 +472,8 @@ public class RunnableQueue implements Runnable {
     /**
      * Returns an iterator over the runnables.
      */
-    public Iterator iterator() {
-        return new Iterator() {
+    public Iterator<Runnable> iterator() {
+        return new Iterator<Runnable>() {
                 Link head = (Link)list.getHead();
                 Link link;
                 @Override
@@ -486,7 +487,7 @@ public class RunnableQueue implements Runnable {
                     return link != head;
                 }
                 @Override
-                public Object next() {
+                public Runnable next() {
                     if (head == null || head == link) {
                         throw new NoSuchElementException();
                     }
@@ -494,7 +495,7 @@ public class RunnableQueue implements Runnable {
                         link = (Link)head.getNext();
                         return head.runnable;
                     }
-                    Object result = link.runnable;
+                    Runnable result = link.runnable;
                     link = (Link)link.getNext();
                     return result;
                 }

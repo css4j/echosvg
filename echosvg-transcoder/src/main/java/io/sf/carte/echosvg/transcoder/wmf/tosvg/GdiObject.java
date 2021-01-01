@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.transcoder.wmf.tosvg;
 /**
  * Represents GDI Objects encountred in WMF Files.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GdiObject {

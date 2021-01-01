@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.parser;
  * This class provides an adapter for PointsHandler.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultPointsHandler implements PointsHandler {

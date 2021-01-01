@@ -21,25 +21,24 @@ package io.sf.carte.echosvg.transcoder.image;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
 import java.io.ByteArrayOutputStream;
-
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
-import io.sf.carte.echosvg.transcoder.TranscoderInput;
-import io.sf.carte.echosvg.transcoder.TranscoderOutput;
-
-import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
-
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.DOMImplementation;
+
+import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
+import io.sf.carte.echosvg.transcoder.TranscoderInput;
+import io.sf.carte.echosvg.transcoder.TranscoderOutput;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
  * Test the ImageTranscoder with the KEY_BACKGROUND_COLOR transcoding hint.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class BackgroundColorTest extends AbstractImageTranscoderTest {
@@ -53,6 +52,7 @@ public class BackgroundColorTest extends AbstractImageTranscoderTest {
     /**
      * Creates the <code>TranscoderInput</code>.
      */
+    @Override
     protected TranscoderInput createTranscoderInput() {
         DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
         String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
@@ -77,8 +77,9 @@ public class BackgroundColorTest extends AbstractImageTranscoderTest {
     /**
      * Creates a Map that contains additional transcoding hints.
      */
-    protected Map createTranscodingHints() {
-        Map hints = new HashMap(7);
+    @Override
+    protected Map<Key, Object> createTranscodingHints() {
+        Map<Key, Object> hints = new HashMap<>(7);
         hints.put(ImageTranscoder.KEY_BACKGROUND_COLOR, Color.blue);
         return hints;
     }
@@ -86,6 +87,7 @@ public class BackgroundColorTest extends AbstractImageTranscoderTest {
     /**
      * Returns the reference image for this test.
      */
+    @Override
     protected byte [] getReferenceImageData() {
         try {
             BufferedImage img = new BufferedImage

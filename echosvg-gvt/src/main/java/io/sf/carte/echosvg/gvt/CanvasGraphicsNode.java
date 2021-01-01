@@ -27,6 +27,7 @@ import java.awt.geom.NoninvertibleTransformException;
  * The graphics node container with a background color.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CanvasGraphicsNode extends CompositeGraphicsNode {

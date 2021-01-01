@@ -44,6 +44,7 @@ import java.io.InputStream;
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author      Chuck McManis
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Base64DecodeStream extends InputStream {

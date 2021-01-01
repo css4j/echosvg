@@ -43,6 +43,7 @@ import java.text.AttributedCharacterIterator;
  * implementing a <code>Graphic2D</code> piece-meal.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see io.sf.carte.echosvg.ext.awt.g2d.AbstractGraphics2D
  */

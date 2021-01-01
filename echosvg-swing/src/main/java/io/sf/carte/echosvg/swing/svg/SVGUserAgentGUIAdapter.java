@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.util.gui.JErrorPane;
  *    displayMessage
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter{

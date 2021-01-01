@@ -29,6 +29,7 @@ import org.w3c.dom.Element;
  * Describes an SVG font
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see             io.sf.carte.echosvg.svggen.SVGFont
  */
@@ -61,9 +62,9 @@ public class SVGFontDescriptor implements SVGDescriptor, SVGSyntax {
     }
 
     @Override
-    public Map getAttributeMap(Map attrMap){
+    public Map<String, String> getAttributeMap(Map<String, String> attrMap){
         if(attrMap == null)
-            attrMap = new HashMap();
+            attrMap = new HashMap<>();
 
         attrMap.put(SVG_FONT_SIZE_ATTRIBUTE, fontSize);
         attrMap.put(SVG_FONT_WEIGHT_ATTRIBUTE, fontWeight);
@@ -78,9 +79,9 @@ public class SVGFontDescriptor implements SVGDescriptor, SVGSyntax {
     }
 
     @Override
-    public List getDefinitionSet(List defSet){
+    public List<Element> getDefinitionSet(List<Element> defSet){
         if (defSet == null)
-            defSet = new LinkedList();
+            defSet = new LinkedList<>();
 
         if(def != null && !defSet.contains(def))
             defSet.add(def);

@@ -31,9 +31,11 @@ import java.text.AttributedString;
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AttributedCharacterIterator implements Painter {
+    @Override
     public void paint(Graphics2D g) {
         String fontName = "Arial";
         int fontSize = 15;

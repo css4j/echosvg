@@ -27,6 +27,7 @@ import java.awt.event.MouseMotionListener;
  * This interface represents an object which interacts with a GVT component.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Interactor

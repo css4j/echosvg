@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.gvt.font.GVTLineMetrics;
  * @see io.sf.carte.echosvg.bridge.TextPainter
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TextSpanLayout {

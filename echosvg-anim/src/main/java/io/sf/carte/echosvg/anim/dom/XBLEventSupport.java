@@ -42,6 +42,7 @@ import io.sf.carte.echosvg.dom.xbl.ShadowTreeEvent;
  * An EventSupport class that handles XBL-specific event processing.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XBLEventSupport extends EventSupport {
@@ -59,7 +60,7 @@ public class XBLEventSupport extends EventSupport {
     /**
      * Map of event types to their aliases.
      */
-    protected static HashMap<String, String> eventTypeAliases = new HashMap<String, String>();
+    protected static HashMap<String, String> eventTypeAliases = new HashMap<>();
     static {
         eventTypeAliases.put("SVGLoad",   "load");
         eventTypeAliases.put("SVGUnoad",  "unload");
@@ -129,12 +130,12 @@ public class XBLEventSupport extends EventSupport {
         HashMap<String, EventListenerList> listeners;
         if (useCapture) {
             if (capturingImplementationListeners == null) {
-                capturingImplementationListeners = new HashMap<String, EventListenerList>();
+                capturingImplementationListeners = new HashMap<>();
             }
             listeners = capturingImplementationListeners;
         } else {
             if (bubblingImplementationListeners == null) {
-                bubblingImplementationListeners = new HashMap<String, EventListenerList>();
+                bubblingImplementationListeners = new HashMap<>();
             }
             listeners = bubblingImplementationListeners;
         }
@@ -275,8 +276,8 @@ public class XBLEventSupport extends EventSupport {
         AbstractEvent[] es = getRetargettedEvents(target, ancestors, e);
         boolean preventDefault = false;
         // CAPTURING_PHASE : fire event listeners from top to EventTarget
-        HashSet stoppedGroups = new HashSet();
-        HashSet toBeStoppedGroups = new HashSet();
+        HashSet<Object> stoppedGroups = new HashSet<>();
+        HashSet<Object> toBeStoppedGroups = new HashSet<>();
         for (int i = 0; i < minAncestor; i++) {
             NodeEventTarget node = ancestors[i];
 //             System.err.println("\t--   CAPTURING " + e.getType() + "  " + ((Node) node).getNodeName());
@@ -349,8 +350,8 @@ public class XBLEventSupport extends EventSupport {
     protected void fireHandlerGroupEventListeners(NodeEventTarget node, 
                                                   AbstractEvent e,
                                                   boolean useCapture,
-                                                  HashSet stoppedGroups,
-                                                  HashSet toBeStoppedGroups) {
+                                                  HashSet<Object> stoppedGroups,
+                                                  HashSet<Object> toBeStoppedGroups) {
         // get the XBL definitions in effect for the event target
         NodeList defs = ((NodeXBL) node).getXblDefinitions();
         for (int j = 0; j < defs.getLength(); j++) {

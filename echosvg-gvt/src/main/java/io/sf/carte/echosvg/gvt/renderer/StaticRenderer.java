@@ -51,6 +51,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * rendering in an offscreen buffer image.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class StaticRenderer implements ImageRenderer {
@@ -61,8 +62,8 @@ public class StaticRenderer implements ImageRenderer {
     protected GraphicsNode      rootGN;
     protected Filter            rootFilter;
     protected CachableRed       rootCR;
-    protected SoftReference     lastCR;
-    protected SoftReference     lastCache;
+    protected SoftReference<CachableRed>     lastCR;
+    protected SoftReference<CachableRed>     lastCache;
 
     /**
      * Flag for double buffering.
@@ -440,10 +441,9 @@ public class StaticRenderer implements ImageRenderer {
      * Flush a list of rectangles of cached image data.
      */
     @Override
-    public void flush(Collection areas) {
+    public void flush(Collection<Shape> areas) {
         AffineTransform at = getTransform();
-        for (Object area : areas) {
-            Shape s = (Shape) area;
+        for (Shape s : areas) {
             Rectangle r = at.createTransformedShape(s).getBounds();
             flush(r);
         }
@@ -469,7 +469,7 @@ public class StaticRenderer implements ImageRenderer {
     protected CachableRed setupCache(CachableRed img) {
         if ((lastCR == null) ||
             (img != lastCR.get())) {
-            lastCR    = new SoftReference(img);
+            lastCR    = new SoftReference<>(img);
             lastCache = null;
         }
 
@@ -480,7 +480,7 @@ public class StaticRenderer implements ImageRenderer {
             return (CachableRed)o;
 
         img       = new TileCacheRed(img);
-        lastCache = new SoftReference(img);
+        lastCache = new SoftReference<>(img);
         return img;
     }
 

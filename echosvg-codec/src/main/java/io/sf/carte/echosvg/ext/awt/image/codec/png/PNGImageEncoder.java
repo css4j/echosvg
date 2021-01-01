@@ -281,6 +281,7 @@ class IDATOutputStream extends FilterOutputStream {
  * An ImageEncoder for the PNG file format.
  *
  * @since EA4
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PNGImageEncoder extends ImageEncoderImpl {
@@ -590,7 +591,6 @@ public class PNGImageEncoder extends ImageEncoderImpl {
         if (param.isSignificantBitsSet()) {
             ChunkStream cs = new ChunkStream("sBIT");
             int[] significantBits = param.getSignificantBits();
-            int len = significantBits.length;
             for (int significantBit : significantBits) {
                 cs.writeByte(significantBit);
             }

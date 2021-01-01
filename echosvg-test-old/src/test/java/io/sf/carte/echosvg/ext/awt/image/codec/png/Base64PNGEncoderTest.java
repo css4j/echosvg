@@ -32,12 +32,14 @@ import io.sf.carte.echosvg.util.Base64EncoderStream;
  * Base64 encoding.
  *
  * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Base64PNGEncoderTest extends PNGEncoderTest {
     /**
      * Template method for building the PNG output stream
      */
+    @Override
     public OutputStream buildOutputStream(ByteArrayOutputStream bos){
         return new Base64EncoderStream(bos);
     }
@@ -45,6 +47,7 @@ public class Base64PNGEncoderTest extends PNGEncoderTest {
     /**
      * Template method for building the PNG input stream
      */
+    @Override
     public InputStream buildInputStream(ByteArrayOutputStream bos){
         ByteArrayInputStream bis 
             = new ByteArrayInputStream(bos.toByteArray());

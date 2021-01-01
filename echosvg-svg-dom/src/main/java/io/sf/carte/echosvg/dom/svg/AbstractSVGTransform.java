@@ -27,6 +27,7 @@ import org.w3c.dom.svg.SVGTransform;
  * Abstract implementation of {@link SVGTransform}.
  * 
  * @author nicolas.socheleau@bitflash.com
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGTransform implements SVGTransform {

@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * defined with a 'points' attribute (i.e., polygon and polyline).
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGPointShapeElement
@@ -40,10 +41,10 @@ public abstract class SVGPointShapeElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGGraphicsElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGGraphicsElement.xmlTraitInformation);
         t.put(null, SVG_POINTS_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_POINTS_VALUE));
         xmlTraitInformation = t;
@@ -116,7 +117,7 @@ public abstract class SVGPointShapeElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

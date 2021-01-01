@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.swing;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.lang.ref.WeakReference;
+import java.net.MalformedURLException;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -43,6 +43,7 @@ import io.sf.carte.echosvg.test.TestReport;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JSVGMemoryLeakTest extends MemoryLeakTest
@@ -50,6 +51,7 @@ public class JSVGMemoryLeakTest extends MemoryLeakTest
     public JSVGMemoryLeakTest() {
     }
 
+    @Override
     public String getName() { return "JSVGMemoryLeakTest."+getId(); }
 
     TestReport failReport = null;
@@ -60,14 +62,14 @@ public class JSVGMemoryLeakTest extends MemoryLeakTest
     /**
      * A WeakReference to the JSVGCanvas.
      */
-    WeakReference theCanvas;
+    WeakReference<JSVGCanvas> theCanvas;
 
     protected void setTheCanvas(JSVGCanvas c) {
-        theCanvas = new WeakReference(c);
+        theCanvas = new WeakReference<>(c);
     }
 
     protected JSVGCanvas getTheCanvas() {
-        return (JSVGCanvas) theCanvas.get();
+        return theCanvas.get();
     }
 
     public static String fmt(String key, Object []args) {
@@ -78,6 +80,7 @@ public class JSVGMemoryLeakTest extends MemoryLeakTest
         return new JSVGCanvasHandler(this, this);
     }
 
+    @Override
     public TestReport doSomething() throws Exception {
         handler = createHandler();
         registerObjectDesc(handler, "Handler");
@@ -85,6 +88,7 @@ public class JSVGMemoryLeakTest extends MemoryLeakTest
         handler.runCanvas(getId());
 
         SwingUtilities.invokeAndWait( new Runnable() {
+                @Override
                 public void run() {
                     // System.out.println("In Invoke");
                     theFrame.remove(getTheCanvas());
@@ -99,6 +103,7 @@ public class JSVGMemoryLeakTest extends MemoryLeakTest
         try  { Thread.sleep(100); } catch (InterruptedException ie) { }
 
         SwingUtilities.invokeAndWait( new Runnable() {
+                @Override
                 public void run() {
                     // Create a new Frame to take focus for Swing so old one
                     // can be GC'd.
@@ -111,6 +116,7 @@ public class JSVGMemoryLeakTest extends MemoryLeakTest
         try  { Thread.sleep(100); } catch (InterruptedException ie) { }
         
         SwingUtilities.invokeAndWait( new Runnable() {
+                @Override
                 public void run() {
                     theFrame.setVisible(false);
                     theFrame.dispose();
@@ -163,6 +169,7 @@ public class JSVGMemoryLeakTest extends MemoryLeakTest
     }
 
     /* JSVGCanvasHandler.Delegate Interface */
+    @Override
     public boolean canvasInit(JSVGCanvas canvas) {
         // System.err.println("In Init");
         setTheCanvas(canvas);
@@ -179,11 +186,13 @@ public class JSVGMemoryLeakTest extends MemoryLeakTest
         return true;
     }
 
+    @Override
     public void canvasLoaded(JSVGCanvas canvas) {
         // System.err.println("Loaded");
         registerObjectDesc(canvas.getSVGDocument(), "SVGDoc");
     }
 
+    @Override
     public void canvasRendered(JSVGCanvas canvas) {
         // System.err.println("Rendered");
         registerObjectDesc(canvas.getGraphicsNode(), "GVT");
@@ -203,16 +212,19 @@ public class JSVGMemoryLeakTest extends MemoryLeakTest
         }
     }
 
+    @Override
     public boolean canvasUpdated(JSVGCanvas canvas) {
         // System.err.println("Updated");
         synchronized (this) {
             return done;
         }
     }
+    @Override
     public void canvasDone(final JSVGCanvas canvas) {
         // System.err.println("Done");
     }
 
+    @Override
     public void failure(TestReport report) {
         synchronized (this) {
             done = true;

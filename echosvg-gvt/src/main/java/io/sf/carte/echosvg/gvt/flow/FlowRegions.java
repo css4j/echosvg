@@ -32,13 +32,14 @@ import io.sf.carte.echosvg.ext.awt.geom.SegmentList;
  * A class to hold flow region information for a given shape.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FlowRegions {
     Shape flowShape;
     SegmentList sl;
     SegmentList.SplitResults sr;
-    List validRanges;
+    List<double[]> validRanges;
     int currentRange;
     double currentY, lineHeight;
 
@@ -93,7 +94,7 @@ public class FlowRegions {
     public double [] nextRange() {
         if (currentRange >= validRanges.size())
             return null;
-        return (double [])validRanges.get(currentRange++);
+        return validRanges.get(currentRange++);
     }
     public void endLine() {
         sl = sr.getBelow();
@@ -135,17 +136,17 @@ public class FlowRegions {
     public void sortRow(SegmentList sl) {
         // System.err.println("sorting: " + sl.size());
         Transition [] segs = new Transition[sl.size()*2];
-        Iterator iter = sl.iterator();
+        Iterator<Segment> iter = sl.iterator();
         int i=0;
         while (iter.hasNext()) {
-            Segment seg = (Segment)iter.next();
+            Segment seg = iter.next();
             segs[i++] = new Transition(seg.minX(), true);
             segs[i++] = new Transition(seg.maxX(), false);
             // System.err.println("Seg: " + seg.minX() + ", " + seg.maxX());
         }
 
         Arrays.sort(segs, TransitionComp.COMP);
-        validRanges = new ArrayList();
+        validRanges = new ArrayList<>();
         int count = 1;
         double openStart =0;
         // Skip the first one as it always starts a geometry block.
@@ -178,13 +179,11 @@ public class FlowRegions {
         }
     }
 
-    static class TransitionComp implements Comparator {
-        public static Comparator COMP = new TransitionComp();
+    static class TransitionComp implements Comparator<Transition> {
+        public static Comparator<Transition> COMP = new TransitionComp();
         TransitionComp() { }
         @Override
-        public int compare(Object o1, Object o2) {
-            Transition t1 = (Transition)o1;
-            Transition t2 = (Transition)o2;
+        public int compare(Transition t1, Transition t2) {
             if (t1.loc < t2.loc) return -1;
             if (t1.loc > t2.loc) return 1;
             // Locs are equal.

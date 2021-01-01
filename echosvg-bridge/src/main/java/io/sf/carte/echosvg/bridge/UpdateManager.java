@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ import io.sf.carte.echosvg.util.RunnableQueue;
  * This class provides features to manage the update of an SVG document.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class UpdateManager  {
@@ -102,7 +104,7 @@ public class UpdateManager  {
     /**
      * The listeners.
      */
-    protected List listeners = Collections.synchronizedList(new LinkedList());
+    protected List<Object> listeners = Collections.synchronizedList(new LinkedList<>());
 
     /**
      * The scripting environment.
@@ -469,7 +471,7 @@ public class UpdateManager  {
                                 int width,
                                 int height) {
         repaintManager.setupRenderer(u2d,dbr,aoi,width,height);
-        List l = new ArrayList(1);
+        List<Shape> l = new ArrayList<>(1);
         l.add(aoi);
         updateRendering(l, false);
     }
@@ -492,7 +494,7 @@ public class UpdateManager  {
                                 int width,
                                 int height) {
         repaintManager.setupRenderer(u2d,dbr,aoi,width,height);
-        List l = new ArrayList(1);
+        List<Shape> l = new ArrayList<>(1);
         l.add(aoi);
         updateRendering(l, cpt);
     }
@@ -503,15 +505,15 @@ public class UpdateManager  {
      * @param clearPaintingTransform Indicates if the painting transform
      *        should be cleared as a result of this update.
      */
-    protected void updateRendering(List areas,
+    protected void updateRendering(List<Shape> areas,
                                    boolean clearPaintingTransform) {
         try {
             UpdateManagerEvent ev = new UpdateManagerEvent
                 (this, repaintManager.getOffScreen(), null);
             fireEvent(updateStartedDispatcher, ev);
 
-            Collection c = repaintManager.updateRendering(areas);
-            List l = new ArrayList(c);
+            Collection<Rectangle> c = repaintManager.updateRendering(areas);
+            List<Rectangle> l = new ArrayList<>(c);
 
             ev = new UpdateManagerEvent
                 (this, repaintManager.getOffScreen(),
@@ -559,7 +561,7 @@ public class UpdateManager  {
             // We very recently did a repaint check if other
             // repaint runnables are pending.
             synchronized (updateRunnableQueue.getIteratorLock()) {
-                Iterator i = updateRunnableQueue.iterator();
+                Iterator<Runnable> i = updateRunnableQueue.iterator();
                 while (i.hasNext())
                     if (!(i.next() instanceof NoRepaintRunnable))
                         // have a pending repaint runnable so we
@@ -570,7 +572,7 @@ public class UpdateManager  {
             }
         }
 
-        List dirtyAreas = updateTracker.getDirtyAreas();
+        List<Shape> dirtyAreas = updateTracker.getDirtyAreas();
         updateTracker.clear();
         if (dirtyAreas != null) {
             updateRendering(dirtyAreas, false);
@@ -598,7 +600,7 @@ public class UpdateManager  {
             return;
         }
 
-        List dirtyAreas = updateTracker.getDirtyAreas();
+        List<Shape> dirtyAreas = updateTracker.getDirtyAreas();
         updateTracker.clear();
         if (dirtyAreas != null) {
             updateRendering(dirtyAreas, false);
@@ -641,7 +643,7 @@ public class UpdateManager  {
         }
     }
 
-    List suspensionList = new ArrayList();
+    List<SuspensionInfo> suspensionList = new ArrayList<>();
     int nextSuspensionIndex = 1;
     long allResumeTime = -1;
     Timer repaintTriggerTimer = null;
@@ -704,14 +706,14 @@ public class UpdateManager  {
         int lo = 0, hi=suspensionList.size()-1;
         while (lo < hi) {
             int mid = (lo+hi)>>1;
-            SuspensionInfo si = (SuspensionInfo)suspensionList.get(mid);
+            SuspensionInfo si = suspensionList.get(mid);
             int idx = si.getIndex();
             if      (idx == index) { lo = hi = mid; }
             else if (idx <  index) { lo = mid+1; }
             else                   { hi = mid-1; }
         }
 
-        SuspensionInfo si = (SuspensionInfo)suspensionList.get(lo);
+        SuspensionInfo si = suspensionList.get(lo);
         int idx = si.getIndex();
         if (idx != index)
             return true;  // currently not in list but was at some point...
@@ -735,8 +737,7 @@ public class UpdateManager  {
 
     long findNewAllResumeTime() {
         long ret = -1;
-        for (Object aSuspensionList : suspensionList) {
-            SuspensionInfo si = (SuspensionInfo) aSuspensionList;
+        for (SuspensionInfo si : suspensionList) {
             long t = si.getResumeMilli();
             if (t > ret) ret = t;
         }

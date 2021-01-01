@@ -63,6 +63,7 @@ import io.sf.carte.echosvg.w3c.dom.Location;
  * This class is the base class for SVG scripting.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class BaseScriptingEnvironment {
@@ -125,7 +126,7 @@ public class BaseScriptingEnvironment {
     }
 
     public static boolean isDynamicElement(BridgeContext ctx, Element elt) {
-        List bridgeExtensions = ctx.getBridgeExtensions(elt.getOwnerDocument());
+        List<BridgeExtension> bridgeExtensions = ctx.getBridgeExtensions(elt.getOwnerDocument());
         return isDynamicElement(elt, ctx, bridgeExtensions);
     }
 
@@ -133,9 +134,8 @@ public class BaseScriptingEnvironment {
      * Tells whether the given SVG element is dynamic.
      */
     public static boolean isDynamicElement
-        (Element elt, BridgeContext ctx, List bridgeExtensions) {
-        for (Object bridgeExtension1 : bridgeExtensions) {
-            BridgeExtension bridgeExtension = (BridgeExtension) bridgeExtension1;
+        (Element elt, BridgeContext ctx, List<BridgeExtension> bridgeExtensions) {
+        for (BridgeExtension bridgeExtension : bridgeExtensions) {
             if (bridgeExtension.isDynamicElement(elt)) {
                 return true;
             }
@@ -241,7 +241,7 @@ public class BaseScriptingEnvironment {
      */
     protected ParsedURL docPURL;
 
-    protected Set languages = new HashSet();
+    protected Set<String> languages = new HashSet<>();
 
     /**
      * The default Interpreter for the document
@@ -252,12 +252,12 @@ public class BaseScriptingEnvironment {
      * Map of {@link Interpreter} to {@link io.sf.carte.echosvg.bridge.Window}
      * objects.
      */
-    protected Map windowObjects = new HashMap();
+    protected Map<Interpreter, io.sf.carte.echosvg.bridge.Window> windowObjects = new HashMap<>();
 
     /**
      * Set of &lt;script&gt; elements that have already been executed.
      */
-    protected WeakHashMap executedScripts = new WeakHashMap();
+    protected WeakHashMap<AbstractElement,Object> executedScripts = new WeakHashMap<>();
 
     /**
      * Creates a new BaseScriptingEnvironment.
@@ -276,7 +276,7 @@ public class BaseScriptingEnvironment {
     public io.sf.carte.echosvg.bridge.Window getWindow(Interpreter interp,
                                                     String lang) {
         io.sf.carte.echosvg.bridge.Window w =
-            (io.sf.carte.echosvg.bridge.Window) windowObjects.get(interp);
+            windowObjects.get(interp);
         if (w == null) {
             w = interp == null ? new Window(null, null)
                                : createWindow(interp, lang);

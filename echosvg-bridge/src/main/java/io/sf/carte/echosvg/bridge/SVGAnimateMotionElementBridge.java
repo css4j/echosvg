@@ -48,6 +48,7 @@ import io.sf.carte.echosvg.parser.PathParser;
  * Bridge class for the 'animateMotion' animation element.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
@@ -205,7 +206,7 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
         if (len == 0) {
             return null;
         }
-        List keyPoints = new ArrayList(7);
+        List<Float> keyPoints = new ArrayList<>(7);
         int i = 0, start = 0, end;
         char c;
 outer:  while (i < len) {
@@ -240,7 +241,7 @@ outer:  while (i < len) {
         len = keyPoints.size();
         float[] ret = new float[len];
         for (int j = 0; j < len; j++) {
-            ret[j] = (Float) keyPoints.get(j);
+            ret[j] = keyPoints.get(j);
         }
         return ret;
     }

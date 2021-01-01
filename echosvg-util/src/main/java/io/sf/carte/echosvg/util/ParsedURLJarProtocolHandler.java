@@ -27,6 +27,7 @@ import java.net.URL;
  * jar:&lt;URL for jar file&gt;!&lt;path in jar file&gt;
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class ParsedURLJarProtocolHandler 

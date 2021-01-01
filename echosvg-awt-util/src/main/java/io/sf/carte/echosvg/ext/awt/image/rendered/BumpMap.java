@@ -28,6 +28,7 @@ import java.awt.image.SinglePixelPackedSampleModel;
  * Default BumpMap implementation.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class BumpMap {

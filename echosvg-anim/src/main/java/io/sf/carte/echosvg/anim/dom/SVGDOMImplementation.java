@@ -58,6 +58,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * It provides support the SVG 1.1 documents.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGDOMImplementation
@@ -245,7 +246,7 @@ public class SVGDOMImplementation
     /**
      * The SVG element factories.
      */
-    protected static HashMap<String, ElementFactory> svg11Factories = new HashMap<String, ElementFactory>();
+    protected static HashMap<String, ElementFactory> svg11Factories = new HashMap<>();
 
     static {
         svg11Factories.put(SVGConstants.SVG_A_TAG,

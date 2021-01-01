@@ -58,6 +58,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * all pixel values are the same).
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractRenderingAccuracyTest extends AbstractTest {
@@ -217,7 +218,7 @@ public abstract class AbstractRenderingAccuracyTest extends AbstractTest {
      * A list of {@link URL}s of files containing an 'accepted'
      * variation from the reference image.
      */
-    protected List variationURLs;
+    protected List<URL> variationURLs;
 
     /**
      * The File where the newly computed variation
@@ -330,7 +331,7 @@ public abstract class AbstractRenderingAccuracyTest extends AbstractTest {
 
     public String[] getVariationURLs() {
         if (variationURLs != null) {
-            return (String[]) variationURLs.toArray(new String[0]);
+            return variationURLs.toArray(new String[0]);
         }
         return null;
     }
@@ -340,7 +341,7 @@ public abstract class AbstractRenderingAccuracyTest extends AbstractTest {
      */
     public void addVariationURL(String variationURL) {
         if (this.variationURLs == null) {
-            this.variationURLs = new LinkedList();
+            this.variationURLs = new LinkedList<>();
         }
         try {
             this.variationURLs.add(resolveURL(variationURL));
@@ -528,8 +529,7 @@ public abstract class AbstractRenderingAccuracyTest extends AbstractTest {
             // computed difference.
             //
             if (variationURLs != null) {
-                for (Object variationURL1 : variationURLs) {
-                    URL variationURL = (URL) variationURL1;
+                for (URL variationURL : variationURLs) {
                     File tmpDiff = imageToFile(diff, IMAGE_TYPE_DIFF);
 
                     InputStream variationURLStream = null;

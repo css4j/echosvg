@@ -19,12 +19,14 @@
 package io.sf.carte.echosvg.gvt.font;
 
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.util.Map;
 
 /**
  * An interface for all font family classes.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface GVTFontFamily {
@@ -55,7 +57,7 @@ public interface GVTFontFamily {
      * @param size  The required size of the derived font.
      * @param attrs The Attribute Map to get Values from.
      */
-    GVTFont deriveFont(float size, Map attrs);
+    GVTFont deriveFont(float size, Map<Attribute, ?> attrs);
 
     /**
      * This method returns true iff the font is a complex SVG font

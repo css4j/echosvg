@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.bridge;
  * Bridge class for the &lt;vkern&gt; element.
  *
  * @author <a href="mailto:dean.jackson@cmis.csiro.au">Dean Jackson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGVKernElementBridge extends SVGKernElementBridge {

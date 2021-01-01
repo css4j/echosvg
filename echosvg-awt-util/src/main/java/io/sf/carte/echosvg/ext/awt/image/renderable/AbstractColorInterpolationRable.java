@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
 
 import java.awt.color.ColorSpace;
 import java.awt.image.RenderedImage;
+import java.awt.image.renderable.RenderableImage;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.CachableRed;
  * gamma corrected sRBG).
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractColorInterpolationRable extends AbstractRable {
@@ -67,7 +69,7 @@ public abstract class AbstractColorInterpolationRable extends AbstractRable {
      * the srcs Vector.
      * @param props use to initialize the properties on this renderable image.
      */
-    protected AbstractColorInterpolationRable(Filter src, Map props) {
+    protected AbstractColorInterpolationRable(Filter src, Map<String,Object> props) {
         super(src, props);
     }
 
@@ -78,7 +80,7 @@ public abstract class AbstractColorInterpolationRable extends AbstractRable {
      * of all the sources in srcs.  All the members of srcs must be
      * CachableRable otherwise an error will be thrown.
      */
-    protected AbstractColorInterpolationRable(List srcs) {
+    protected AbstractColorInterpolationRable(List<? extends RenderableImage> srcs) {
         super(srcs);
     }
 
@@ -89,7 +91,7 @@ public abstract class AbstractColorInterpolationRable extends AbstractRable {
      * will be thrown.
      * @param props use to initialize the properties on this renderable image.
      */
-    protected AbstractColorInterpolationRable(List srcs, Map props) {
+    protected AbstractColorInterpolationRable(List<RenderableImage> srcs, Map<String,Object> props) {
         super(srcs, props);
     }
 

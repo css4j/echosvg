@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.test.xml;
  * in XML.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface XMLReflectConstants {

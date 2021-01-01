@@ -24,6 +24,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  * A transcoding Key represented as an int.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class IntegerKey extends TranscodingHints.Key {

@@ -26,13 +26,14 @@ import io.sf.carte.echosvg.util.Service;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class ImageWriterRegistry {
 
     private static ImageWriterRegistry instance;
 
-    private final Map imageWriterMap = new HashMap();
+    private final Map<String, ImageWriter> imageWriterMap = new HashMap<>();
 
     private ImageWriterRegistry() {
         setup();
@@ -48,7 +49,7 @@ public final class ImageWriterRegistry {
     }
 
     private void setup() {
-        Iterator iter = Service.providers(ImageWriter.class);
+        Iterator<Object> iter = Service.providers(ImageWriter.class);
         while (iter.hasNext()) {
             ImageWriter writer = (ImageWriter)iter.next();
             // System.out.println("RE: " + writer);
@@ -66,7 +67,7 @@ public final class ImageWriterRegistry {
      * @return the registered ImageWriter (maybe null)
      */
     public ImageWriter getWriterFor(String mime) {
-        return (ImageWriter)imageWriterMap.get(mime);
+        return imageWriterMap.get(mime);
     }
 
 }

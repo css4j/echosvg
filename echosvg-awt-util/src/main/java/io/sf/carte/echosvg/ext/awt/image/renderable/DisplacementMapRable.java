@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.ext.awt.image.ARGBChannel;
  * another image to spatially displace the input image
  *
  * @author <a href="mailto:sheng.pei@eng.sun.com">Sheng Pei</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface DisplacementMapRable extends FilterColorInterpolation {
@@ -45,7 +46,7 @@ public interface DisplacementMapRable extends FilterColorInterpolation {
      *
      * @param srcs The list of images used in the operation.
      */
-    void setSources(List srcs);
+    void setSources(List<Filter> srcs);
 
     /**
      * The displacement scale factor

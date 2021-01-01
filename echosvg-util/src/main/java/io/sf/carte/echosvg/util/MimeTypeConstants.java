@@ -25,6 +25,7 @@ import java.util.List;
  * This interface defines constants for Various Mime Types
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface MimeTypeConstants {
@@ -34,5 +35,5 @@ public interface MimeTypeConstants {
    String [] MIME_TYPES_SVG = {"image/svg+xml",
                                      "application/xml",
                                      "text/xml" };
-   List MIME_TYPES_SVG_LIST = Arrays.asList(MIME_TYPES_SVG);
+   List<String> MIME_TYPES_SVG_LIST = Arrays.asList(MIME_TYPES_SVG);
 }

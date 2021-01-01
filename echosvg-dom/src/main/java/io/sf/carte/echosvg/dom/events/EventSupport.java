@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.dom.AbstractNode;
  * @see NodeEventTarget
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EventSupport {
@@ -108,12 +109,12 @@ public class EventSupport {
         HashMap<String, EventListenerList> listeners;
         if (useCapture) {
             if (capturingListeners == null) {
-                capturingListeners = new HashMap();
+                capturingListeners = new HashMap<>();
             }
             listeners = capturingListeners;
         } else {
             if (bubblingListeners == null) {
-                bubblingListeners = new HashMap();
+                bubblingListeners = new HashMap<>();
             }
             listeners = bubblingListeners;
         }
@@ -248,8 +249,8 @@ public class EventSupport {
         NodeEventTarget[] ancestors = getAncestors(target);
         // CAPTURING_PHASE : fire event listeners from top to EventTarget
         e.setEventPhase(Event.CAPTURING_PHASE);
-        HashSet stoppedGroups = new HashSet();
-        HashSet toBeStoppedGroups = new HashSet();
+        HashSet<Object> stoppedGroups = new HashSet<>();
+        HashSet<Object> toBeStoppedGroups = new HashSet<>();
         for (NodeEventTarget node : ancestors) {
             e.setCurrentTarget(node);
             fireEventListeners(node, e, true, stoppedGroups,
@@ -286,10 +287,9 @@ public class EventSupport {
      * Runs all of the registered default actions for the given event object.
      */
     protected void runDefaultActions(AbstractEvent e) {
-        List runables = e.getDefaultActions();
+        List<Runnable> runables = e.getDefaultActions();
         if (runables != null) {
-            for (Object runable : runables) {
-                Runnable r = (Runnable) runable;
+            for (Runnable r : runables) {
                 r.run();
             }
         }
@@ -301,8 +301,8 @@ public class EventSupport {
     protected void fireEventListeners(NodeEventTarget node,
                                       AbstractEvent e,
                                       EventListenerList.Entry[] listeners,
-                                      HashSet stoppedGroups,
-                                      HashSet toBeStoppedGroups) {
+                                      HashSet<Object> stoppedGroups,
+                                      HashSet<Object> toBeStoppedGroups) {
         if (listeners == null) {
             return;
         }
@@ -344,8 +344,8 @@ public class EventSupport {
     protected void fireEventListeners(NodeEventTarget node,
                                       AbstractEvent e,
                                       boolean useCapture,
-                                      HashSet stoppedGroups,
-                                      HashSet toBeStoppedGroups) {
+                                      HashSet<Object> stoppedGroups,
+                                      HashSet<Object> toBeStoppedGroups) {
         String type = e.getType();
         EventSupport support = node.getEventSupport();
         // check if the event support has been instantiated

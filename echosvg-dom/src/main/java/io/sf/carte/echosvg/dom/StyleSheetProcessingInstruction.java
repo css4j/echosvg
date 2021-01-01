@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  * instructions.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class StyleSheetProcessingInstruction
@@ -127,7 +128,7 @@ public class StyleSheetProcessingInstruction
      */
     public HashMap<String, String> getPseudoAttributes() {
         if (pseudoAttributes == null) {
-            pseudoAttributes = new HashMap<String, String>();
+            pseudoAttributes = new HashMap<>();
             pseudoAttributes.put("alternate", "no");
             pseudoAttributes.put("media",     "all");
             DOMUtilities.parseStyleSheetPIData(data, pseudoAttributes);

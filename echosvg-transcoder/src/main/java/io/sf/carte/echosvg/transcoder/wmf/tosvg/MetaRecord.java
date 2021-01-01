@@ -28,6 +28,7 @@ import java.util.List;
  * It seems, it might be rewritten to keep just the plain int-data.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MetaRecord /*implements Serializable*/ {
@@ -35,7 +36,7 @@ public class MetaRecord /*implements Serializable*/ {
     public int functionId;
     public int numPoints;
 
-    private final List ptVector = new ArrayList();
+    private final List<Object> ptVector = new ArrayList<>();
 
     public MetaRecord() {
     }

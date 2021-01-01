@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.parser.AWTPolygonProducer;
  * Bridge class for the &lt;polygon&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {

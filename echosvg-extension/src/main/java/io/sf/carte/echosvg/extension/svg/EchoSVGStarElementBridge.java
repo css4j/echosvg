@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.gvt.ShapeNode;
  * Bridge class for a star element.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas Deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGStarElementBridge
@@ -110,18 +111,18 @@ public class EchoSVGStarElementBridge
             (s, SVG_R_ATTRIBUTE, uctx);
 
         // 'ir' attribute - required
-        s = e.getAttributeNS(null, BATIK_EXT_IR_ATTRIBUTE);
+        s = e.getAttributeNS(null, EXT_IR_ATTRIBUTE);
         float ir;
         if (s.length() == 0)
             throw new BridgeException
                 (ctx, e, ERR_ATTRIBUTE_MISSING,
-                 new Object[] {BATIK_EXT_IR_ATTRIBUTE, s});
+                 new Object[] {EXT_IR_ATTRIBUTE, s});
 
         ir = UnitProcessor.svgOtherLengthToUserSpace
-            (s, BATIK_EXT_IR_ATTRIBUTE, uctx);
+            (s, EXT_IR_ATTRIBUTE, uctx);
 
         // 'sides' attribute - default is 3
-        int sides = convertSides(e, BATIK_EXT_SIDES_ATTRIBUTE, 3, ctx);
+        int sides = convertSides(e, EXT_SIDES_ATTRIBUTE, 3, ctx);
 
         GeneralPath gp = new GeneralPath();
         double angle, x, y;

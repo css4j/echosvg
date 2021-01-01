@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.anim.values.AnimatableValue;
  * implements an {@link AnimatedAttributeListener} list.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGAnimatedValue
@@ -55,7 +56,7 @@ public abstract class AbstractSVGAnimatedValue
     /**
      * Listener list.
      */
-    protected LinkedList listeners = new LinkedList();
+    protected LinkedList<AnimatedAttributeListener> listeners = new LinkedList<>();
 
     /**
      * Creates a new AbstractSVGAnimatedValue.
@@ -128,9 +129,7 @@ public abstract class AbstractSVGAnimatedValue
      * Fires the listeners for the animated value.
      */
     protected void fireAnimatedAttributeListeners() {
-        for (Object listener1 : listeners) {
-            AnimatedAttributeListener listener =
-                    (AnimatedAttributeListener) listener1;
+        for (AnimatedAttributeListener listener : listeners) {
             listener.animatedAttributeChanged(element, this);
         }
     }

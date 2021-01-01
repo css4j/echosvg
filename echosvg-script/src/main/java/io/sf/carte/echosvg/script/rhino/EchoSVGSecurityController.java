@@ -36,6 +36,7 @@ import org.mozilla.javascript.WrappedException;
  * no more.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGSecurityController extends SecurityController {
@@ -102,7 +103,7 @@ public class EchoSVGSecurityController extends SecurityController {
             acc = loader.rhinoAccessControlContext;
         }
 
-        PrivilegedExceptionAction execAction = new PrivilegedExceptionAction() {
+        PrivilegedExceptionAction<Object> execAction = new PrivilegedExceptionAction<Object>() {
             @Override
             public Object run() {
                 return callable.call(cx, scope, thisObj, args);

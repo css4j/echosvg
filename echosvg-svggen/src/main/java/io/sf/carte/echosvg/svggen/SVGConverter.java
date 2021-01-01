@@ -20,6 +20,8 @@ package io.sf.carte.echosvg.svggen;
 
 import java.util.List;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
@@ -27,6 +29,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * part or all of a GraphicContext.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see           io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
  */
@@ -50,5 +53,5 @@ public interface SVGConverter extends SVGSyntax{
      *         If no definition is needed, an empty set should be
      *         returned.
      */
-    List getDefinitionSet();
+    List<Element> getDefinitionSet();
 }

@@ -33,6 +33,7 @@ import java.util.Vector;
  * the allowed deviation from the reference score.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class PerformanceTest extends AbstractTest {

@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * Bridge class for the 'animateTransform' animation element.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAnimateTransformElementBridge extends SVGAnimateElementBridge {
@@ -243,7 +244,7 @@ public class SVGAnimateTransformElementBridge extends SVGAnimateElementBridge {
         if (len == 0) {
             return null;
         }
-        ArrayList values = new ArrayList(7);
+        ArrayList<AnimatableValue> values = new ArrayList<>(7);
         int i = 0, start = 0, end;
         char c;
 outer:  while (i < len) {
@@ -275,7 +276,7 @@ outer:  while (i < len) {
             values.add(value);
         }
         AnimatableValue[] ret = new AnimatableValue[values.size()];
-        return (AnimatableValue[]) values.toArray(ret);
+        return values.toArray(ret);
     }
 
     /**

@@ -32,6 +32,7 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.text.CharacterIterator;
 import java.util.HashSet;
 import java.util.Set;
@@ -51,6 +52,7 @@ import io.sf.carte.echosvg.gvt.text.TextPath;
  * @see io.sf.carte.echosvg.bridge.TextSpanLayout
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GlyphLayout implements TextSpanLayout {
@@ -144,7 +146,7 @@ public class GlyphLayout implements TextSpanLayout {
     public static final AttributedCharacterIterator.Attribute GVT_FONT
         = GVTAttributedCharacterIterator.TextAttribute.GVT_FONT;
 
-    protected static Set runAtts = new HashSet();
+    protected static Set<Attribute> runAtts = new HashSet<>();
 
     static {
         runAtts.add(X);
@@ -155,7 +157,7 @@ public class GlyphLayout implements TextSpanLayout {
         runAtts.add(BASELINE_SHIFT);
     }
 
-    protected static Set szAtts = new HashSet();
+    protected static Set<Attribute> szAtts = new HashSet<>();
 
     static {
         szAtts.add(TextAttribute.SIZE);
@@ -1756,11 +1758,11 @@ public class GlyphLayout implements TextSpanLayout {
 
         boolean horizontal = !isVertical();
 
-        boolean glyphOrientationAuto = isGlyphOrientationAuto();
-        int glyphOrientationAngle = 0;
-        if (!glyphOrientationAuto) {
-            glyphOrientationAngle = getGlyphOrientationAngle();
-        }
+        // boolean glyphOrientationAuto = isGlyphOrientationAuto();
+        // int glyphOrientationAngle = 0;
+        // if (!glyphOrientationAuto) {
+        //     getGlyphOrientationAngle();
+        //}
 
         float pathLength  = textPath.lengthOfPath();
         float startOffset = textPath.getStartOffset();
@@ -1805,7 +1807,7 @@ public class GlyphLayout implements TextSpanLayout {
             currentPosition = (float)(firstGlyphPosition.getY() + startOffset);
         }
 
-        char ch = aci.first();
+        // char ch = aci.first();
         int start       = aci.getBeginIndex();
         int currentChar = 0;
         int lastGlyphDrawn = -1;
@@ -1912,7 +1914,7 @@ public class GlyphLayout implements TextSpanLayout {
             currentChar += gv.getCharacterCount(i,i);
             if (currentChar >= charMap.length)
                 currentChar = charMap.length-1;
-            ch = aci.setIndex(currentChar+start);
+            aci.setIndex(currentChar+start);
         }
 
         // store the position where a following glyph should be drawn,

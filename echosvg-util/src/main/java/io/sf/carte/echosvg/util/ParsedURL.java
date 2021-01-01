@@ -28,8 +28,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import io.sf.carte.echosvg.Version;
-
 /**
  * A {@link java.net.URL}-like class that supports custom URI schemes
  * and GZIP encoding.
@@ -60,6 +58,7 @@ import io.sf.carte.echosvg.Version;
  * </p>
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ParsedURL {
@@ -77,7 +76,7 @@ public class ParsedURL {
     /**
      * This maps between protocol names and ParsedURLProtocolHandler instances.
      */
-    private static Map handlersMap = null;
+    private static Map<String, ParsedURLProtocolHandler> handlersMap = null;
 
     /**
      * The default protocol handler.  This handler is used when
@@ -87,7 +86,7 @@ public class ParsedURL {
     private static ParsedURLProtocolHandler defaultHandler
         = new ParsedURLDefaultProtocolHandler();
 
-    private static String globalUserAgent = "EchoSVG/"+Version.getVersion();
+    private static String globalUserAgent = "EchoSVG/0.1";
 
     public static String getGlobalUserAgent() { return globalUserAgent; }
 
@@ -101,14 +100,14 @@ public class ParsedURL {
      * the first time it has been requested since the class was
      * loaded.
      */
-    private static synchronized Map getHandlersMap() {
+    private static synchronized Map<String, ParsedURLProtocolHandler> getHandlersMap() {
         if (handlersMap != null) return handlersMap;
 
-        handlersMap = new HashMap();
+        handlersMap = new HashMap<>();
         registerHandler(new ParsedURLDataProtocolHandler());
         registerHandler(new ParsedURLJarProtocolHandler());
 
-        Iterator iter = Service.providers(ParsedURLProtocolHandler.class);
+        Iterator<Object> iter = Service.providers(ParsedURLProtocolHandler.class);
         while (iter.hasNext()) {
             ParsedURLProtocolHandler handler;
             handler = (ParsedURLProtocolHandler)iter.next();
@@ -133,9 +132,9 @@ public class ParsedURL {
         if (protocol == null)
             return defaultHandler;
 
-        Map handlers = getHandlersMap();
+        Map<String, ParsedURLProtocolHandler> handlers = getHandlersMap();
         ParsedURLProtocolHandler ret;
-        ret = (ParsedURLProtocolHandler)handlers.get(protocol);
+        ret = handlers.get(protocol);
         if (ret == null)
             ret = defaultHandler;
         return ret;
@@ -155,7 +154,7 @@ public class ParsedURL {
             return;
         }
 
-        Map handlers = getHandlersMap();
+        Map<String, ParsedURLProtocolHandler> handlers = getHandlersMap();
         handlers.put(handler.getProtocolHandled(), handler);
     }
 
@@ -413,7 +412,7 @@ public class ParsedURL {
      *        header among other possibilities).
      */
     public InputStream openStream(String mimeType) throws IOException {
-        List mt = new ArrayList(1);
+        List<String> mt = new ArrayList<>(1);
         mt.add(mimeType);
         return data.openStream(userAgent, mt.iterator());
     }
@@ -426,7 +425,7 @@ public class ParsedURL {
      *        header among other possabilities).
      */
     public InputStream openStream(String [] mimeTypes) throws IOException {
-        List mt = new ArrayList(mimeTypes.length);
+        List<String> mt = new ArrayList<>(mimeTypes.length);
         for (String mimeType : mimeTypes) mt.add(mimeType);
         return data.openStream(userAgent, mt.iterator());
     }
@@ -439,7 +438,7 @@ public class ParsedURL {
      *        header among other possabilities).  The elements of
      *        the iterator must be strings.
      */
-    public InputStream openStream(Iterator mimeTypes) throws IOException {
+    public InputStream openStream(Iterator<String> mimeTypes) throws IOException {
         return data.openStream(userAgent, mimeTypes);
     }
 
@@ -459,7 +458,7 @@ public class ParsedURL {
      *        header among other possabilities).
      */
     public InputStream openStreamRaw(String mimeType) throws IOException {
-        List mt = new ArrayList(1);
+        List<String> mt = new ArrayList<>(1);
         mt.add(mimeType);
         return data.openStreamRaw(userAgent, mt.iterator());
     }
@@ -472,7 +471,7 @@ public class ParsedURL {
      *        header among other possabilities).
      */
     public InputStream openStreamRaw(String [] mimeTypes) throws IOException {
-        List mt = new ArrayList(mimeTypes.length);
+        List<String> mt = new ArrayList<>(mimeTypes.length);
         mt.addAll(Arrays.asList(mimeTypes));
         return data.openStreamRaw(userAgent, mt.iterator());
     }
@@ -485,7 +484,7 @@ public class ParsedURL {
      *        header among other possabilities).  The elements of
      *        the iterator must be strings.
      */
-    public InputStream openStreamRaw(Iterator mimeTypes) throws IOException {
+    public InputStream openStreamRaw(Iterator<String> mimeTypes) throws IOException {
         return data.openStreamRaw(userAgent, mimeTypes);
     }
 

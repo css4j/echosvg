@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.test.TestReport;
  * cascades URLs.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ParsedURLTest extends AbstractTest {

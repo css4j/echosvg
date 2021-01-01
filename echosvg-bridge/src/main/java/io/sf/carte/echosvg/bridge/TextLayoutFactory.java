@@ -30,6 +30,7 @@ import java.text.AttributedCharacterIterator;
  *
  * @see io.sf.carte.echosvg.bridge.TextSpanLayout
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TextLayoutFactory {

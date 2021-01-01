@@ -21,11 +21,14 @@ package io.sf.carte.echosvg.svggen;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+
 /**
  * Defines the interface for a set of SVG attributes and
  * related definitions.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see           io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
  */
@@ -38,7 +41,7 @@ public interface SVGDescriptor{
      * @return a map containing the SVG attributes needed by the
      *         descriptor.
      */
-    Map getAttributeMap(Map attrMap);
+    Map<String, String> getAttributeMap(Map<String, String> attrMap);
 
     /**
      * @param defSet if not null, definitions required to provide
@@ -49,5 +52,5 @@ public interface SVGDescriptor{
      * @return a set containing Elements that represent the definition
      *         of the descriptor's attribute values
      */
-    List getDefinitionSet(List defSet);
+    List<Element> getDefinitionSet(List<Element> defSet);
 }

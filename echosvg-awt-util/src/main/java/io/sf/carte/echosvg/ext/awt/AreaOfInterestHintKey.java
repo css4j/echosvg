@@ -26,6 +26,7 @@ import java.awt.Shape;
  * <code>GraphicsNode</code>.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 final class AreaOfInterestHintKey extends RenderingHints.Key {

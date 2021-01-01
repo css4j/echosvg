@@ -82,6 +82,7 @@ import io.sf.carte.echosvg.xml.XMLUtilities;
  * This class implements the {@link org.w3c.dom.Document} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractDocument
@@ -130,12 +131,12 @@ public abstract class AbstractDocument
     /**
      * The ElementsByTagName lists.
      */
-    protected transient WeakHashMap elementsByTagNames;
+    protected transient WeakHashMap<Node, SoftDoublyIndexedTable<String,String>> elementsByTagNames;
 
     /**
      * The ElementsByTagNameNS lists.
      */
-    protected transient WeakHashMap elementsByTagNamesNS;
+    protected transient WeakHashMap<Node, SoftDoublyIndexedTable<String,String>> elementsByTagNamesNS;
 
     /**
      * Input encoding of this document.
@@ -184,7 +185,7 @@ public abstract class AbstractDocument
      * IdSoftReferences (if there is more than one element
      * owned by this document with a particular 'id').
      */
-    protected transient Map elementsById;
+    protected transient Map<String, Object> elementsById;
 
     /**
      * Creates a new document.
@@ -497,10 +498,11 @@ public abstract class AbstractDocument
         }
 
         // Not a IdSoftRef so it must be a list.
-        List l = (List)o;
-        Iterator li = l.iterator();
+        @SuppressWarnings("unchecked")
+        List<IdSoftRef> l = (List<IdSoftRef>)o;
+        Iterator<IdSoftRef> li = l.iterator();
         while (li.hasNext()) {
-            IdSoftRef sr = (IdSoftRef)li.next();
+            IdSoftRef sr = li.next();
             o = sr.get();
             if (o == null) {
                 li.remove();
@@ -522,19 +524,19 @@ public abstract class AbstractDocument
         return r;
     }
 
-    protected class IdSoftRef extends CleanerThread.SoftReferenceCleared {
+    protected class IdSoftRef extends CleanerThread.SoftReferenceCleared<Object> {
         String id;
-        List   list;
+        List<IdSoftRef>   list;
         IdSoftRef(Object o, String id) {
             super(o);
             this.id = id;
         }
-        IdSoftRef(Object o, String id, List list) {
+        IdSoftRef(Object o, String id, List<IdSoftRef> list) {
             super(o);
             this.id = id;
             this.list = list;
         }
-        public void setList(List list) {
+        public void setList(List<IdSoftRef> list) {
             this.list = list;
         }
         @Override
@@ -569,10 +571,11 @@ public abstract class AbstractDocument
                 return;
             }
 
-            List l = (List)o;
-            Iterator li = l.iterator();
+            @SuppressWarnings("unchecked")
+            List<IdSoftRef> l = (List<IdSoftRef>)o;
+            Iterator<IdSoftRef> li = l.iterator();
             while (li.hasNext()) {
-                IdSoftRef ip = (IdSoftRef)li.next();
+                IdSoftRef ip = li.next();
                 o = ip.get();
                 if (o == null) {
                     li.remove();
@@ -591,7 +594,7 @@ public abstract class AbstractDocument
         if (id == null) return;
 
         if (elementsById == null) {
-            Map tmp = new HashMap();
+            Map<String, Object> tmp = new HashMap<>();
             tmp.put(id, new IdSoftRef(e, id));
             elementsById = tmp;
             return;
@@ -613,7 +616,7 @@ public abstract class AbstractDocument
                 }
 
                 // Create new List for this id.
-                List l = new ArrayList(4);
+                List<IdSoftRef> l = new ArrayList<>(4);
                 ip.setList(l);
                 l.add(ip);
                 l.add(new IdSoftRef(e, id, l));
@@ -621,7 +624,8 @@ public abstract class AbstractDocument
                 return;
             }
 
-            List l = (List)o;
+            @SuppressWarnings("unchecked")
+            List<IdSoftRef> l = (List<IdSoftRef>)o;
             l.add(new IdSoftRef(e, id, l));
         }
     }
@@ -644,8 +648,8 @@ public abstract class AbstractDocument
         if (elementsByTagNames == null) {
             return null;
         }
-        SoftDoublyIndexedTable t;
-        t = (SoftDoublyIndexedTable)elementsByTagNames.get(n);
+        SoftDoublyIndexedTable<String,String> t;
+        t = elementsByTagNames.get(n);
         if (t == null) {
             return null;
         }
@@ -657,12 +661,12 @@ public abstract class AbstractDocument
      */
     public void putElementsByTagName(Node n, String ln, ElementsByTagName l) {
         if (elementsByTagNames == null) {
-            elementsByTagNames = new WeakHashMap(11);
+            elementsByTagNames = new WeakHashMap<>(11);
         }
-        SoftDoublyIndexedTable t;
-        t = (SoftDoublyIndexedTable)elementsByTagNames.get(n);
+        SoftDoublyIndexedTable<String,String> t;
+        t = elementsByTagNames.get(n);
         if (t == null) {
-            elementsByTagNames.put(n, t = new SoftDoublyIndexedTable());
+            elementsByTagNames.put(n, t = new SoftDoublyIndexedTable<>());
         }
         t.put(null, ln, l);
     }
@@ -676,8 +680,8 @@ public abstract class AbstractDocument
         if (elementsByTagNamesNS == null) {
             return null;
         }
-        SoftDoublyIndexedTable t;
-        t = (SoftDoublyIndexedTable)elementsByTagNamesNS.get(n);
+        SoftDoublyIndexedTable<String,String> t;
+        t = elementsByTagNamesNS.get(n);
         if (t == null) {
             return null;
         }
@@ -690,12 +694,12 @@ public abstract class AbstractDocument
     public void putElementsByTagNameNS(Node n, String ns, String ln,
                                        ElementsByTagNameNS l) {
         if (elementsByTagNamesNS == null) {
-            elementsByTagNamesNS = new WeakHashMap(11);
+            elementsByTagNamesNS = new WeakHashMap<>(11);
         }
-        SoftDoublyIndexedTable t;
-        t = (SoftDoublyIndexedTable)elementsByTagNamesNS.get(n);
+        SoftDoublyIndexedTable<String,String> t;
+        t = elementsByTagNamesNS.get(n);
         if (t == null) {
-            elementsByTagNamesNS.put(n, t = new SoftDoublyIndexedTable());
+            elementsByTagNamesNS.put(n, t = new SoftDoublyIndexedTable<>());
         }
         t.put(ns, ln, l);
     }
@@ -1068,6 +1072,7 @@ public abstract class AbstractDocument
     /**
      * <b>DOM</b>: Implements {@link org.w3c.dom.Document#renameNode(Node,String,String)}.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Node renameNode(Node n, String ns, String qn) {
         AbstractNode an = (AbstractNode) n;
@@ -1151,15 +1156,15 @@ public abstract class AbstractDocument
             // Move user data across
             e.userData = e.userData == null
                 ? null
-                : (HashMap) an.userData.clone();
+                : (HashMap<String, Object>) an.userData.clone();
             e.userDataHandlers = e.userDataHandlers == null
                 ? null
-                : (HashMap) an.userDataHandlers.clone();
+                : (HashMap<String, Object>) an.userDataHandlers.clone();
 
             // Remove from parent
             Node next = null;
             if (parent != null) {
-                n.getNextSibling();
+                next = n.getNextSibling();
                 parent.removeChild(n);
             }
 
@@ -1251,10 +1256,10 @@ public abstract class AbstractDocument
                 // Move user data across
                 a2.userData = a.userData == null
                     ? null
-                    : (HashMap) a.userData.clone();
+                    : (HashMap<String, Object>) a.userData.clone();
                 a2.userDataHandlers = a.userDataHandlers == null
                     ? null
-                    : (HashMap) a.userDataHandlers.clone();
+                    : (HashMap<String, Object>) a.userDataHandlers.clone();
 
                 // Reinsert attribute into parent
                 if (e != null) {
@@ -1397,8 +1402,8 @@ public abstract class AbstractDocument
         }
 
         NamedNodeMap nnm = e.getAttributes();
-        LinkedList toRemove = new LinkedList();
-        HashMap names = new HashMap();                    // todo names is not used ?
+        LinkedList<Attr> toRemove = new LinkedList<>();
+        HashMap<String, String> names = new HashMap<>();                    // todo names is not used ?
         for (int i = 0; i < nnm.getLength(); i++) {
             Attr a = (Attr) nnm.item(i);
             String prefix = a.getPrefix();                // todo : this breaks when a is null
@@ -1422,8 +1427,8 @@ public abstract class AbstractDocument
 
         if (!namespaceDeclarations) {
             // remove namespace declarations
-            for (Object aToRemove : toRemove) {
-                e.removeAttributeNode((Attr) aToRemove);
+            for (Attr aToRemove : toRemove) {
+                e.removeAttributeNode(aToRemove);
             }
         } else {
             if (namespaces) {
@@ -2003,7 +2008,7 @@ public abstract class AbstractDocument
         /**
          * Map of parameter names to array indexes.
          */
-        protected Map booleanParamIndexes = new HashMap();
+        protected Map<String, Integer> booleanParamIndexes = new HashMap<>();
         {
             for (int i = 0; i < booleanParamNames.length; i++) {
                 booleanParamIndexes.put(booleanParamNames[i], i);
@@ -2035,7 +2040,7 @@ public abstract class AbstractDocument
                 errorHandler = value;
                 return;
             }
-            Integer i = (Integer) booleanParamIndexes.get(name);
+            Integer i = booleanParamIndexes.get(name);
             if (i == null) {
                 throw createDOMException
                     (DOMException.NOT_FOUND_ERR,
@@ -2084,7 +2089,7 @@ public abstract class AbstractDocument
             if (DOMConstants.DOM_ERROR_HANDLER_PARAM.equals(name)) {
                 return errorHandler;
             }
-            Integer index = (Integer) booleanParamIndexes.get(name);
+            Integer index = booleanParamIndexes.get(name);
             if (index == null) {
                 throw createDOMException
                     (DOMException.NOT_FOUND_ERR,
@@ -2111,7 +2116,7 @@ public abstract class AbstractDocument
             if (name.equals(DOMConstants.DOM_ERROR_HANDLER_PARAM)) {
                 return value == null || value instanceof DOMErrorHandler;
             }
-            Integer i = (Integer) booleanParamIndexes.get(name);
+            Integer i = booleanParamIndexes.get(name);
             if (i == null || value == null || !(value instanceof Boolean)) {
                 return false;
             }
@@ -2811,7 +2816,7 @@ public abstract class AbstractDocument
         localizableSupport = new LocalizableSupport
             (RESOURCES, getClass().getClassLoader());
 
-        Class c = Class.forName((String)s.readObject());
+        Class<?> c = Class.forName((String)s.readObject());
 
         try {
             Method m = c.getMethod("getDOMImplementation", (Class[])null);

@@ -25,6 +25,7 @@ import java.util.Map;
  * This class contains utility functions to manage encodings.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EncodingUtilities {
@@ -32,7 +33,7 @@ public class EncodingUtilities {
     /**
      * The standard to Java encoding table.
      */
-    protected static final Map ENCODINGS = new HashMap();
+    protected static final Map<String, String> ENCODINGS = new HashMap<>();
     static {
         ENCODINGS.put("UTF-8",           "UTF8");
         ENCODINGS.put("UTF-16",          "Unicode");
@@ -93,6 +94,6 @@ public class EncodingUtilities {
      * @return null if no mapping was found.
      */
     public static String javaEncoding(String encoding) {
-        return (String)ENCODINGS.get(encoding.toUpperCase());
+        return ENCODINGS.get(encoding.toUpperCase());
     }
 }

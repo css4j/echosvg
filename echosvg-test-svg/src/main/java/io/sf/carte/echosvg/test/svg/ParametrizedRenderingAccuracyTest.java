@@ -25,6 +25,7 @@ import java.io.File;
  * to the SVG file.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ParametrizedRenderingAccuracyTest

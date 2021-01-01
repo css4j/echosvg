@@ -43,6 +43,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * opacity property on the nodes to be composited.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see                io.sf.carte.echosvg.svggen.SVGAlphaComposite
  */
@@ -50,7 +51,7 @@ public class SVGAlphaComposite extends AbstractSVGConverter {
     /**
      * Map of all possible AlphaComposite filter equivalents
      */
-    private Map compositeDefsMap = new HashMap();
+    private Map<AlphaComposite, Element> compositeDefsMap = new HashMap<>();
 
     /**
      * By default, access to the background is not required.
@@ -85,8 +86,8 @@ public class SVGAlphaComposite extends AbstractSVGConverter {
     /**
      * @return set of all AlphaComposite filter definitions
      */
-    public List getAlphaCompositeFilterSet() {
-        return new LinkedList(compositeDefsMap.values());
+    public List<Element> getAlphaCompositeFilterSet() {
+        return new LinkedList<>(compositeDefsMap.values());
     }
 
     /**
@@ -135,7 +136,7 @@ public class SVGAlphaComposite extends AbstractSVGConverter {
                 // by the SVG_OPACITY_ATTRIBUTE value.
                 AlphaComposite majorComposite =
                     AlphaComposite.getInstance(composite.getRule());
-                filterDef = (Element)compositeDefsMap.get(majorComposite);
+                filterDef = compositeDefsMap.get(majorComposite);
                 defSet.add(filterDef);
 
                 // Process the filter value

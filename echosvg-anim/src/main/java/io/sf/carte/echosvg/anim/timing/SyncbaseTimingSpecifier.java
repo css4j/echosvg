@@ -25,6 +25,7 @@ import java.util.HashMap;
  * A class to handle syncbase SMIL timing specifiers.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
@@ -49,7 +50,7 @@ public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
      * Map of {@link Interval}s to <!--a {@link WeakReference} to -->an
      * {@link InstanceTime}.
      */
-    protected HashMap instances = new HashMap();
+    protected HashMap<Interval, InstanceTime> instances = new HashMap<>();
 
     /**
      * Creates a new SyncbaseTimingSpecifier object.
@@ -120,7 +121,7 @@ public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
         if (owner.hasPropagated) {
             return Float.POSITIVE_INFINITY;
         }
-        InstanceTime instance = (InstanceTime) instances.get(interval);
+        InstanceTime instance = instances.get(interval);
         interval.removeDependent(instance, syncBegin);
         return owner.removeInstanceTime(instance, isBegin);
         // } finally { Trace.exit(); }

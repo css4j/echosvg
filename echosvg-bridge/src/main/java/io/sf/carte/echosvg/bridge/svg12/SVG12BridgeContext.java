@@ -52,6 +52,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * XBL events to bridges and for handling resource documents.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVG12BridgeContext extends BridgeContext {
@@ -137,8 +138,7 @@ public class SVG12BridgeContext extends BridgeContext {
 
         synchronized (eventListenerSet) {
             // remove all listeners added by Bridges
-            for (Object anEventListenerSet : eventListenerSet) {
-                EventListenerMememto m = (EventListenerMememto) anEventListenerSet;
+            for (EventListenerMememto m : eventListenerSet) {
                 NodeEventTarget et = m.getTarget();
                 EventListener el = m.getListener();
                 boolean uc = m.getUseCapture();
@@ -175,8 +175,7 @@ public class SVG12BridgeContext extends BridgeContext {
             animationEngine = null;
         }
 
-        for (Object o : interpreterMap.values()) {
-            Interpreter interpreter = (Interpreter) o;
+        for (Interpreter interpreter : interpreterMap.values()) {
             if (interpreter != null)
                 interpreter.dispose();
         }
@@ -317,8 +316,7 @@ public class SVG12BridgeContext extends BridgeContext {
         XBLEventSupport es = (XBLEventSupport) n.initializeEventSupport();
 
         synchronized (eventListenerSet) {
-            for (Object anEventListenerSet : eventListenerSet) {
-                EventListenerMememto elm = (EventListenerMememto) anEventListenerSet;
+            for (EventListenerMememto elm : eventListenerSet) {
                 NodeEventTarget et = elm.getTarget();
                 if (et == evtTarget) {
                     EventListener el = elm.getListener();

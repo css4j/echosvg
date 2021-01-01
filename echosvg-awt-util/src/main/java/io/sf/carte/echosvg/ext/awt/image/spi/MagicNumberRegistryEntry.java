@@ -31,6 +31,7 @@ import java.io.StreamCorruptedException;
  * of Magic Numbers that correspond to your format (Some formats have
  * multiple magic numbers associated with them).
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class MagicNumberRegistryEntry

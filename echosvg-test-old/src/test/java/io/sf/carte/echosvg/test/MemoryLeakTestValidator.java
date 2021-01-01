@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.test;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MemoryLeakTestValidator extends MemoryLeakTest {
@@ -31,6 +32,7 @@ public class MemoryLeakTestValidator extends MemoryLeakTest {
     }
 
     Link start;
+    @Override
     public TestReport doSomething() throws Exception {
         for (int i=0; i<20; i++) 
             registerObjectDesc(new Object(), "Obj#"+i);

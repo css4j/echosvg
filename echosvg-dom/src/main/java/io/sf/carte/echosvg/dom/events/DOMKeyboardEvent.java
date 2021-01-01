@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.w3c.dom.events.KeyboardEvent;
  * DOM 3 Keyboard event class.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
@@ -235,7 +236,7 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
     /**
      * The modifier keys in effect at the time of the event.
      */
-    protected HashSet modifierKeys = new HashSet();
+    protected HashSet<String> modifierKeys = new HashSet<>();
 
     /**
      * The identifier string for the key.

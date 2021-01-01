@@ -40,6 +40,7 @@ import io.sf.carte.echosvg.util.Service;
  * files).</p>
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class InterpreterPool {
@@ -52,15 +53,15 @@ public class InterpreterPool {
     /**
      * The default InterpreterFactory map.
      */
-    protected static Map defaultFactories = new HashMap(7);
+    protected static Map<String, InterpreterFactory> defaultFactories = new HashMap<>(7);
 
     /**
      * The InterpreterFactory map.
      */
-    protected Map factories = new HashMap(7);
+    protected Map<String, InterpreterFactory> factories = new HashMap<>(7);
 
     static {
-        Iterator iter = Service.providers(InterpreterFactory.class);
+        Iterator<Object> iter = Service.providers(InterpreterFactory.class);
         while (iter.hasNext()) {
             InterpreterFactory factory = null;
             factory = (InterpreterFactory)iter.next();
@@ -107,7 +108,7 @@ public class InterpreterPool {
                                          String language,
                                          ImportInfo imports) {
         InterpreterFactory factory;
-        factory = (InterpreterFactory)factories.get(language);
+        factory = factories.get(language);
 
         if (factory == null) return null;
 

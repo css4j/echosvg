@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * This Image tag registy entry is setup to wrap the core JDK
  * Image stream tools.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JDKRegistryEntry extends AbstractRegistryEntry
@@ -165,7 +166,7 @@ public class JDKRegistryEntry extends AbstractRegistryEntry
         observer.waitTilImageDone();
         if (observer.imageError)
             return null;
-        dr.setProperties(new HashMap());
+        dr.setProperties(new HashMap<>());
 
         g2d.drawImage(img, 0, 0, null);
         g2d.dispose();

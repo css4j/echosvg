@@ -28,6 +28,7 @@ import org.w3c.dom.events.Event;
  * This class implements the behavior of DocumentEvent.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DocumentEventSupport {
@@ -100,7 +101,7 @@ public class DocumentEventSupport {
     /**
      * The event factories table.
      */
-    protected HashMap<String, EventFactory> eventFactories = new HashMap<String, EventFactory>();
+    protected HashMap<String, EventFactory> eventFactories = new HashMap<>();
     {
         // DOM 3 event names:
         eventFactories.put(EVENT_TYPE.toLowerCase(),

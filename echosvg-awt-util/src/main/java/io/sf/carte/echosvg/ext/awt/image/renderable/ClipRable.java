@@ -26,6 +26,7 @@ import java.awt.Shape;
  * shouldn't have any fluctions in side the outline of the shape.).
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public interface ClipRable extends Filter {
 

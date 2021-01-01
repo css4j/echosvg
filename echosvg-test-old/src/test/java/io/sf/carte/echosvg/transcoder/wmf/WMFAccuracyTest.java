@@ -47,6 +47,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * valid SVG reference.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class WMFAccuracyTest extends AbstractTest
@@ -169,6 +170,7 @@ public class WMFAccuracyTest extends AbstractTest
     public WMFAccuracyTest(){
     }
 
+    @Override
     public void setId(String id){
         super.setId(id);
         setFile(id);
@@ -228,6 +230,7 @@ public class WMFAccuracyTest extends AbstractTest
      * This method will only throw exceptions if some aspect
      * of the test's internal operation fails.
      */
+    @Override
     public TestReport runImpl() throws Exception {
         DefaultTestReport report = new DefaultTestReport(this);
         ByteArrayOutputStream out = new ByteArrayOutputStream();

@@ -31,6 +31,7 @@ import org.w3c.dom.Node;
 /**
  * Helper class for debugging stuff in Image I/O.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageIODebugUtil {

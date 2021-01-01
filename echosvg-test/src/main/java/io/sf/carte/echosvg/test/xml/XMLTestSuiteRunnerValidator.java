@@ -62,6 +62,7 @@ import io.sf.carte.echosvg.test.TestSuiteReport;
  * where all the leaf test pass. <br>
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XMLTestSuiteRunnerValidator extends DefaultTestSuite {

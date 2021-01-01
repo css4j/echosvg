@@ -25,6 +25,7 @@ import org.w3c.dom.svg.SVGElement;
  * Context class for SVG animation elements to support extra methods.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGAnimationContext extends SVGContext, ElementTimeControl {

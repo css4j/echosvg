@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * likely be asked to provide the decoded image next.
  * @see MagicNumberRegistryEntry
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface StreamRegistryEntry extends RegistryEntry {

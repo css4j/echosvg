@@ -18,18 +18,20 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 /**
  * This test validates outputing font-size as a float
  *
  * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Bug6535 implements Painter {
+    @Override
     public void paint(Graphics2D g){
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                            RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

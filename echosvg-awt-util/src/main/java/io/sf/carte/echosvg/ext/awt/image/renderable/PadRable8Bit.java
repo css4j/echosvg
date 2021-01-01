@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.PadRed;
  * This pads the image to a specified rectangle in user coord system.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PadRable8Bit extends AbstractRable

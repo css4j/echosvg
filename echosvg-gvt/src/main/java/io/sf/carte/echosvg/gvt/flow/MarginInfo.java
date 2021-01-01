@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.gvt.flow;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MarginInfo {

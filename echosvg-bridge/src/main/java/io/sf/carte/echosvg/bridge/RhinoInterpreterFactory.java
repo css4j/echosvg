@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.script.InterpreterFactory;
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RhinoInterpreterFactory implements InterpreterFactory {

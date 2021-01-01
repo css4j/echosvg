@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * This class provides support for AWT system colors.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SystemColorSupport implements CSSConstants {
@@ -43,7 +44,7 @@ public class SystemColorSupport implements CSSConstants {
      */
     public static Value getSystemColor(String ident) {
         ident = ident.toLowerCase( );                                 // todo locale??
-        SystemColor sc = (SystemColor)factories.get(ident);
+        SystemColor sc = factories.get(ident);
         return new RGBColorValue
             (new FloatValue(CSSPrimitiveValue.CSS_NUMBER, sc.getRed()),
              new FloatValue(CSSPrimitiveValue.CSS_NUMBER, sc.getGreen()),
@@ -53,7 +54,7 @@ public class SystemColorSupport implements CSSConstants {
     /**
      * The color factories.
      */
-    protected static final Map factories = new HashMap();
+    protected static final Map<String, SystemColor> factories = new HashMap<>();
     static {
         factories.put(CSS_ACTIVEBORDER_VALUE,
                       SystemColor.windowBorder);

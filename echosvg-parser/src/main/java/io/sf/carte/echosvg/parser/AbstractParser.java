@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.util.io.StringNormalizingReader;
  * and error handling methods.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractParser implements Parser {

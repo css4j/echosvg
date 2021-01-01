@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * This class implements the {@link SVGAnimatedPreserveAspectRatio} interface.
  *
  * @author <a href="mailto:tonny@kiyut.com">Tonny Kohar</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAnimatedPreserveAspectRatio

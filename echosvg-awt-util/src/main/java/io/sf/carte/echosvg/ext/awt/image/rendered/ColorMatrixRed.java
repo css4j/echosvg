@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 /**
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ColorMatrixRed extends AbstractRed{

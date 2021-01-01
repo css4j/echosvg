@@ -19,14 +19,17 @@
 
 package io.sf.carte.echosvg.parser;
 
-import java.io.*;
+import java.io.StringReader;
 
-import io.sf.carte.echosvg.test.*;
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.TestReport;
 
 /**
  * To test the transform list parser.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TransformListParserTest extends AbstractTest {
@@ -47,6 +50,7 @@ public class TransformListParserTest extends AbstractTest {
         destinationTransform = dtransform;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         TransformListParser pp = new TransformListParser();
         pp.setTransformListHandler(new TestHandler());
@@ -76,10 +80,12 @@ public class TransformListParserTest extends AbstractTest {
     class TestHandler extends DefaultTransformListHandler {
         boolean first;
         public TestHandler() {}
+        @Override
         public void startTransformList() throws ParseException {
             buffer = new StringBuffer();
             first = true;
         }
+        @Override
         public void matrix(float a, float b, float c, float d, float e, float f)
             throws ParseException {
             if (!first) {
@@ -100,18 +106,21 @@ public class TransformListParserTest extends AbstractTest {
             buffer.append(f);
             buffer.append(")");
         }
+        @Override
         public void rotate(float theta) throws ParseException {
             if (!first) {
                 buffer.append(' ');
             }
             first = false;
         }
+        @Override
         public void rotate(float theta, float cx, float cy) throws ParseException {
             if (!first) {
                 buffer.append(' ');
             }
             first = false;
         }
+        @Override
         public void translate(float tx) throws ParseException {
             if (!first) {
                 buffer.append(' ');
@@ -121,6 +130,7 @@ public class TransformListParserTest extends AbstractTest {
             buffer.append(tx);
             buffer.append(")");
         }
+        @Override
         public void translate(float tx, float ty) throws ParseException {
             if (!first) {
                 buffer.append(' ');
@@ -132,6 +142,7 @@ public class TransformListParserTest extends AbstractTest {
             buffer.append(ty);
             buffer.append(")");
         }
+        @Override
         public void scale(float sx) throws ParseException {
             if (!first) {
                 buffer.append(' ');
@@ -141,6 +152,7 @@ public class TransformListParserTest extends AbstractTest {
             buffer.append(sx);
             buffer.append(")");
         }
+        @Override
         public void scale(float sx, float sy) throws ParseException {
             if (!first) {
                 buffer.append(' ');
@@ -152,6 +164,7 @@ public class TransformListParserTest extends AbstractTest {
             buffer.append(sy);
             buffer.append(")");
         }
+        @Override
         public void skewX(float skx) throws ParseException {
             if (!first) {
                 buffer.append(' ');
@@ -161,6 +174,7 @@ public class TransformListParserTest extends AbstractTest {
             buffer.append(skx);
             buffer.append(")");
         }
+        @Override
         public void skewY(float sky) throws ParseException {
             if (!first) {
                 buffer.append(' ');
@@ -170,6 +184,7 @@ public class TransformListParserTest extends AbstractTest {
             buffer.append(sky);
             buffer.append(")");
         }
+        @Override
         public void endTransformList() throws ParseException {
             resultTransform = buffer.toString();
         }

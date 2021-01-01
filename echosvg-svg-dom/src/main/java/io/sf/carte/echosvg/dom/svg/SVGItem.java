@@ -35,6 +35,7 @@ package io.sf.carte.echosvg.dom.svg;
  * @see AbstractSVGList#itemChanged()
  *
  * @author <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGItem {

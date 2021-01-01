@@ -32,6 +32,7 @@ import org.w3c.dom.NodeList;
  * XML description.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XMLReflect implements XMLReflectConstants{

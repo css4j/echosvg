@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * a filter primitive.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface FilterPrimitiveBridge extends Bridge {
@@ -59,6 +60,6 @@ public interface FilterPrimitiveBridge extends Bridge {
                         GraphicsNode filteredNode,
                         Filter in,
                         Rectangle2D filterRegion,
-                        Map filterMap);
+                        Map<String, Filter> filterMap);
 
 }

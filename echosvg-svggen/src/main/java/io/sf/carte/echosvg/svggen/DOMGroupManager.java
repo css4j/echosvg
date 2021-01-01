@@ -56,6 +56,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.TransformStackElement;
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOMGroupManager implements SVGSyntax, ErrorConstants {
@@ -228,14 +229,13 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
      */
     protected void trimContextForElement(SVGGraphicContext svgGC, Element element) {
         String tag = element.getTagName();
-        Map groupAttrMap = svgGC.getGroupContext();
+        Map<String, String> groupAttrMap = svgGC.getGroupContext();
         if (tag != null) {
             // For each attribute, check if there is an attribute
             // descriptor. If there is, check if the attribute
             // applies to the input element. If there is none,
             // assume the attribute applies to the element.
-            for (Object o : groupAttrMap.keySet()) {
-                String attrName = (String) o;
+            for (String attrName : groupAttrMap.keySet()) {
                 SVGAttribute attr = SVGAttributeMap.get(attrName);
                 if (attr != null && !attr.appliesTo(tag))
                     groupAttrMap.remove(attrName);
@@ -262,9 +262,9 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
      */
     static SVGGraphicContext processDeltaGC(SVGGraphicContext gc,
                                             SVGGraphicContext referenceGc) {
-        Map groupDelta = processDeltaMap(gc.getGroupContext(),
+        Map<String, String> groupDelta = processDeltaMap(gc.getGroupContext(),
                                          referenceGc.getGroupContext());
-        Map graphicElementDelta = gc.getGraphicElementContext();
+        Map<String, String> graphicElementDelta = gc.getGraphicElementContext();
 
         TransformStackElement[] gcTransformStack = gc.getTransformStack();
         TransformStackElement[] referenceStack = referenceGc.getTransformStack();
@@ -311,13 +311,12 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
      * are different from values in referenceMap are place in the
      * returned delta Map.
      */
-    static Map processDeltaMap(Map map, Map referenceMap) {
+    static Map<String, String> processDeltaMap(Map<String, String> map, Map<String, String> referenceMap) {
         // no need to be synch => HashMap
-        Map mapDelta = new HashMap();
-        for (Object o : map.keySet()) {
-            String key = (String) o;
-            String value = (String) map.get(key);
-            String refValue = (String) referenceMap.get(key);
+        Map<String, String> mapDelta = new HashMap<>();
+        for (String key : map.keySet()) {
+            String value = map.get(key);
+            String refValue = referenceMap.get(key);
             if (!value.equals(refValue)) {
                 /*if(key.equals(SVG_TRANSFORM_ATTRIBUTE)){
                   // Special handling for the transform attribute.

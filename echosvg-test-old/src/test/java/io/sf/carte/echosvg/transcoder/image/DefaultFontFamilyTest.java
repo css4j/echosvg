@@ -21,12 +21,15 @@ package io.sf.carte.echosvg.transcoder.image;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
  * Test the ImageTranscoder with the KEY_DEFAULT_FONT_FAMILY transcoding hint.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class DefaultFontFamilyTest extends AbstractImageTranscoderTest {
@@ -58,6 +61,7 @@ public class DefaultFontFamilyTest extends AbstractImageTranscoderTest {
     /**
      * Creates the <code>TranscoderInput</code>.
      */
+    @Override
     protected TranscoderInput createTranscoderInput() {
         return new TranscoderInput(resolveURL(inputURI).toString());
     }
@@ -65,15 +69,17 @@ public class DefaultFontFamilyTest extends AbstractImageTranscoderTest {
     /**
      * Creates a Map that contains additional transcoding hints.
      */
-    protected Map createTranscodingHints() {
-        Map hints = new HashMap(3);
-        hints.put(ImageTranscoder.KEY_DEFAULT_FONT_FAMILY, defaultFontFamily);
+    @Override
+    protected Map<Key, Object> createTranscodingHints() {
+        Map<Key, Object> hints = new HashMap<>(3);
+        hints.put(SVGAbstractTranscoder.KEY_DEFAULT_FONT_FAMILY, defaultFontFamily);
         return hints;
     }
 
     /**
      * Returns the reference image for this test.
      */
+    @Override
     protected byte [] getReferenceImageData() {
         return createBufferedImageData(resolveURL(refImageURI));
     }

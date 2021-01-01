@@ -26,6 +26,7 @@ import java.io.Serializable;
  * This implementation is not Thread-safe.
  * 
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class IntTable implements Serializable {

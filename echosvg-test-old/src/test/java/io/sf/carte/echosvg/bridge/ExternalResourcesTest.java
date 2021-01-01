@@ -22,9 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.StringTokenizer;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -60,6 +60,7 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * to external resources is allowed.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 
@@ -161,6 +162,7 @@ public class ExternalResourcesTest extends AbstractTest
 
     String svgURL;
 
+    @Override
     public void setId(String id){
         super.setId(id);
         String file = id;
@@ -213,6 +215,7 @@ public class ExternalResourcesTest extends AbstractTest
      * should cause a SecurityException. If so, the test passes. Otherwise, the test
      * will fail
      */
+    @Override
     public TestReport runImpl() throws Exception{
         DefaultTestReport report
             = new DefaultTestReport(this);
@@ -242,7 +245,7 @@ public class ExternalResourcesTest extends AbstractTest
             return report;
         }
 
-        List failures = new ArrayList();
+        List<String> failures = new ArrayList<>();
 
         //
         // Do an initial processing to validate that the external
@@ -388,13 +391,13 @@ public class ExternalResourcesTest extends AbstractTest
 
         if (secure) {
             report.setErrorCode(ERROR_UNTHROWN_SECURITY_EXCEPTIONS);
-            for (Object failure : failures) {
+            for (String failure : failures) {
                 report.addDescriptionEntry(ENTRY_KEY_EXPECTED_EXCEPTION_ON,
                         failure);
             }
         } else {
             report.setErrorCode(ERROR_THROWN_SECURITY_EXCEPTIONS);
-            for (Object failure : failures) {
+            for (String failure : failures) {
                 report.addDescriptionEntry(ENTRY_KEY_UNEXPECTED_EXCEPTION_ON,
                         failure);
             }
@@ -418,15 +421,18 @@ public class ExternalResourcesTest extends AbstractTest
 
     static class MyUserAgentAdapter extends UserAgentAdapter implements MyUserAgent {
         Exception ex = null;
+        @Override
         public void displayError(Exception ex) {
             this.ex = ex;
             super.displayError(ex);
         }
 
+        @Override
         public Exception getDisplayError() { return ex; }
     }
 
     static class SecureUserAgent extends MyUserAgentAdapter {
+        @Override
         public ExternalResourceSecurity
             getExternalResourceSecurity(ParsedURL resourcePURL,
                                         ParsedURL docPURL){
@@ -436,6 +442,7 @@ public class ExternalResourcesTest extends AbstractTest
     }
 
     static class RelaxedUserAgent extends MyUserAgentAdapter {
+        @Override
         public ExternalResourceSecurity
             getExternalResourceSecurity(ParsedURL resourcePURL,
                                         ParsedURL docPURL){

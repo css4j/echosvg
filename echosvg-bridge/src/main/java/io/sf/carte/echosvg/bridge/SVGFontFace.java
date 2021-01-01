@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
  * This class represents a &lt;font-face&gt; element or @font-face rule
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFontFace extends FontFace {
@@ -38,7 +39,7 @@ public class SVGFontFace extends FontFace {
      * Constructes an SVGFontFace with the specfied font-face attributes.
      */
     public SVGFontFace
-        (Element fontFaceElement, List srcs,
+        (Element fontFaceElement, List<Object> srcs,
          String familyName, float unitsPerEm, String fontWeight,
          String fontStyle, String fontVariant, String fontStretch,
          float slope, String panose1, float ascent, float descent,

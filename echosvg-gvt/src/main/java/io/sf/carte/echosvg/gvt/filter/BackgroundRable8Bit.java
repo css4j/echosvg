@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * createRendering methods.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class BackgroundRable8Bit
@@ -92,11 +93,11 @@ public class BackgroundRable8Bit
         // System.out.println("CGN: " + cgn);
         // System.out.println("Child: " + child);
 
-        List children = cgn.getChildren();
-        Iterator i = children.iterator();
+        List<GraphicsNode> children = cgn.getChildren();
+        Iterator<GraphicsNode> i = children.iterator();
         Rectangle2D r2d = null;
         while (i.hasNext()) {
-            GraphicsNode gn = (GraphicsNode)i.next();
+            GraphicsNode gn = i.next();
             if (gn == child)
                 break;
 
@@ -276,7 +277,7 @@ public class BackgroundRable8Bit
             r2d = cgn.getBackgroundEnable();
         }
 
-        List srcs = new ArrayList();      // this hides a member in a super-class!!
+        List<Filter> srcs = new ArrayList<>();      // this hides a member in a super-class!!
         if (r2d == null) {
             Rectangle2D paoi = aoi;
             AffineTransform at = gn.getTransform();
@@ -292,9 +293,8 @@ public class BackgroundRable8Bit
 
         if (child != null) {
             CompositeGraphicsNode cgn = (CompositeGraphicsNode)gn;
-            List children = cgn.getChildren();
-            for (Object aChildren : children) {
-                GraphicsNode childGN = (GraphicsNode) aChildren;
+            List<GraphicsNode> children = cgn.getChildren();
+            for (GraphicsNode childGN : children) {
                 // System.out.println("Parent: "      + cgn +
                 //                    "\n  Child: "   + child +
                 //                    "\n  ChildGN: " + childGN);
@@ -324,7 +324,7 @@ public class BackgroundRable8Bit
 
         Filter ret = null;
         if (srcs.size() == 1)
-            ret = (Filter)srcs.get(0);
+            ret = srcs.get(0);
         else
             ret = new CompositeRable8Bit(srcs, CompositeRule.OVER, false);
 

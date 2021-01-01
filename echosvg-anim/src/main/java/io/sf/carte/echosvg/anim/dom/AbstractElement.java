@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * an element interoperable with the SVG elements.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractElement
@@ -44,11 +45,12 @@ public abstract class AbstractElement
         implements NodeEventTarget, CSSNavigableNode, SVGConstants {
 
     private static final long serialVersionUID = 1L;
+
     /**
      * The live attribute values.
      */
-    protected transient DoublyIndexedTable liveAttributeValues =
-        new DoublyIndexedTable();
+    protected transient DoublyIndexedTable<String,String> liveAttributeValues =
+        new DoublyIndexedTable<>();
 
     /**
      * Creates a new Element object.

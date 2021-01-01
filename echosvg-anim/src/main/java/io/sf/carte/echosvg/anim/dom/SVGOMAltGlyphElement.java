@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * This class implements {@link SVGAltGlyphElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAltGlyphElement
@@ -56,10 +57,10 @@ public class SVGOMAltGlyphElement
 //     /**
 //      * Table mapping XML attribute names to TraitInformation objects.
 //      */
-//     protected static DoublyIndexedTable xmlTraitInformation;
+//     protected static DoublyIndexedTable<String,String> xmlTraitInformation;
 //     static {
-//         DoublyIndexedTable t =
-//             new DoublyIndexedTable(SVGURIReferenceTextPositioningElement.xmlTraitInformation);
+//         DoublyIndexedTable<String,String> t =
+//             new DoublyIndexedTable<>(SVGURIReferenceTextPositioningElement.xmlTraitInformation);
 //         t.put(null, SVG_FORMAT_ATTRIBUTE,
 //                 new TraitInformation(false, SVGTypes.TYPE_CDATA));
 //         t.put(null, SVG_GLYPH_REF_ATTRIBUTE,
@@ -142,7 +143,7 @@ public class SVGOMAltGlyphElement
 //     /**
 //      * Returns the table of TraitInformation objects for this element.
 //      */
-//     protected DoublyIndexedTable getTraitInformationTable() {
+//     protected DoublyIndexedTable<String,String> getTraitInformationTable() {
 //         return xmlTraitInformation;
 //     }
 }

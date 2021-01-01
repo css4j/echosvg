@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.test.TestException;
  * XML file and stores the result in a configurable directory.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XSLXMLReportConsumer 

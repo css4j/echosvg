@@ -36,6 +36,7 @@ import java.util.zip.ZipException;
  * Holds the data for more URLs.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ParsedURLData {
@@ -46,7 +47,7 @@ public class ParsedURLData {
     protected static final String HTTP_ACCEPT_LANGUAGE_HEADER = "Accept-Language";
     protected static final String HTTP_ACCEPT_ENCODING_HEADER = "Accept-Encoding";
 
-    protected static List acceptedEncodings = new LinkedList();
+    protected static List<String> acceptedEncodings = new LinkedList<>();
     static {
         acceptedEncodings.add("gzip");
     }
@@ -473,7 +474,7 @@ loop2:          while (i < len) {
      *        header among other possability).  The elements of
      *        the iterator must be strings (may be null)
      */
-    public InputStream openStream(String userAgent, Iterator mimeTypes)
+    public InputStream openStream(String userAgent, Iterator<String> mimeTypes)
         throws IOException {
         InputStream raw = openStreamInternal(userAgent, mimeTypes,
                                              acceptedEncodings.iterator());
@@ -493,7 +494,7 @@ loop2:          while (i < len) {
      *        header among other possability).  The elements of
      *        the iterator must be strings (may be null)
      */
-    public InputStream openStreamRaw(String userAgent, Iterator mimeTypes)
+    public InputStream openStreamRaw(String userAgent, Iterator<String> mimeTypes)
         throws IOException {
 
         InputStream ret = openStreamInternal(userAgent, mimeTypes, null);
@@ -502,8 +503,8 @@ loop2:          while (i < len) {
     }
 
     protected InputStream openStreamInternal(String userAgent,
-                                             Iterator mimeTypes,
-                                             Iterator encodingTypes)
+                                             Iterator<String> mimeTypes,
+                                             Iterator<String> encodingTypes)
         throws IOException {
         if (stream != null)
             return stream;

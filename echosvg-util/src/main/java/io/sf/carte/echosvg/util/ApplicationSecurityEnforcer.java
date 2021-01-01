@@ -34,6 +34,7 @@ import java.security.Policy;
  * <br>
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ApplicationSecurityEnforcer {
@@ -93,7 +94,7 @@ public class ApplicationSecurityEnforcer {
     /**
      * The application's main entry point
      */
-    protected Class appMainClass;
+    protected Class<?> appMainClass;
 
     /**
      * The application's security policy
@@ -122,7 +123,7 @@ public class ApplicationSecurityEnforcer {
      *             be removed after the 1.5beta4 release.
      */
     @Deprecated
-    public ApplicationSecurityEnforcer(Class appMainClass,
+    public ApplicationSecurityEnforcer(Class<?> appMainClass,
                                        String securityPolicy,
                                        String appJarFile){
         this(appMainClass, securityPolicy);
@@ -135,7 +136,7 @@ public class ApplicationSecurityEnforcer {
      * @param securityPolicy resource for the security policy which 
      *        should be enforced for the application. 
      */
-    public ApplicationSecurityEnforcer(Class appMainClass,
+    public ApplicationSecurityEnforcer(Class<?> appMainClass,
                                        String securityPolicy){
         this.appMainClass = appMainClass;
         this.securityPolicy = securityPolicy;

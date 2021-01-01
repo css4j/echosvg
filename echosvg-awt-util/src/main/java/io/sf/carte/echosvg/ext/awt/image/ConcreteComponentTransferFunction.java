@@ -25,6 +25,7 @@ package io.sf.carte.echosvg.ext.awt.image;
  * transfer function.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class ConcreteComponentTransferFunction implements ComponentTransferFunction {

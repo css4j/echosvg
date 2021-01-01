@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.constants.XMLConstants;
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGConstants extends CSSConstants, XMLConstants {

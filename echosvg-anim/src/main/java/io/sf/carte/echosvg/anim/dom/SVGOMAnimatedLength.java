@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.anim.dom;
  * org.w3c.dom.svg.SVGAnimatedLength} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAnimatedLength extends AbstractSVGAnimatedLength {

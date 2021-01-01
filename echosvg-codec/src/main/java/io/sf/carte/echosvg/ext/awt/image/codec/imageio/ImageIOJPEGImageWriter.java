@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
 /**
  * ImageWriter that encodes JPEG images using Image I/O.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageIOJPEGImageWriter extends ImageIOImageWriter {

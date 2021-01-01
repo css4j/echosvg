@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * Bridge class for the &lt;feDisplacementMap&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFeDisplacementMapElementBridge
@@ -81,7 +82,7 @@ public class SVGFeDisplacementMapElementBridge
                                GraphicsNode filteredNode,
                                Filter inputFilter,
                                Rectangle2D filterRegion,
-                               Map filterMap) {
+                               Map<String, Filter> filterMap) {
 
         // 'scale' attribute - default is 0
         float scale = convertNumber(filterElement, SVG_SCALE_ATTRIBUTE, 0, ctx);
@@ -134,7 +135,7 @@ public class SVGFeDisplacementMapElementBridge
             = new PadRable8Bit(in, primitiveRegion, PadMode.ZERO_PAD);
 
         // build the displacement map filter
-        List srcs = new ArrayList(2);
+        List<Filter> srcs = new ArrayList<>(2);
         srcs.add(pad);
         srcs.add(in2);
         Filter displacementMap = new DisplacementMapRable8Bit

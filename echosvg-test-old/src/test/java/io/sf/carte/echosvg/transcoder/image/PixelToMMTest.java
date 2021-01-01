@@ -21,13 +21,16 @@ package io.sf.carte.echosvg.transcoder.image;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
  * Test the ImageTranscoder with the KEY_PIXEL_UNIT_TO_MILLIMETER
  * transcoding hint.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public class PixelToMMTest extends AbstractImageTranscoderTest {
 
@@ -58,6 +61,7 @@ public class PixelToMMTest extends AbstractImageTranscoderTest {
     /**
      * Creates the <code>TranscoderInput</code>.
      */
+    @Override
     protected TranscoderInput createTranscoderInput() {
         return new TranscoderInput(resolveURL(inputURI).toString());
     }
@@ -65,15 +69,17 @@ public class PixelToMMTest extends AbstractImageTranscoderTest {
     /**
      * Creates a Map that contains additional transcoding hints.
      */
-    protected Map createTranscodingHints() {
-        Map hints = new HashMap(3);
-        hints.put(ImageTranscoder.KEY_PIXEL_UNIT_TO_MILLIMETER, px2mm);
+    @Override
+    protected Map<Key, Object> createTranscodingHints() {
+        Map<Key, Object> hints = new HashMap<>(3);
+        hints.put(SVGAbstractTranscoder.KEY_PIXEL_UNIT_TO_MILLIMETER, px2mm);
         return hints;
     }
 
     /**
      * Returns the reference image for this test.
      */
+    @Override
     protected byte [] getReferenceImageData() {
         return createBufferedImageData(resolveURL(refImageURI));
     }

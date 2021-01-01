@@ -41,13 +41,14 @@ import io.sf.carte.echosvg.util.Service;
  * instances of RegistryEntry in this package.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageTagRegistry implements ErrorConstants {
 
-    List entries    = new LinkedList();
-    List extensions = null;
-    List mimeTypes  = null;
+    List<RegistryEntry> entries    = new LinkedList<>();
+    List<String> extensions = null;
+    List<String> mimeTypes  = null;
 
     URLImageCache rawCache;
     URLImageCache imgCache;
@@ -142,12 +143,12 @@ public class ImageTagRegistry implements ErrorConstants {
         // System.out.println("Image didn't come from cache: " + purl);
 
         boolean     openFailed = false;
-        List mimeTypes = getRegisteredMimeTypes();
+        List<String> mimeTypes = getRegisteredMimeTypes();
 
-        Iterator i;
+        Iterator<RegistryEntry> i;
         i = entries.iterator();
         while (i.hasNext()) {
-            RegistryEntry re = (RegistryEntry)i.next();
+            RegistryEntry re = i.next();
             if (re instanceof URLRegistryEntry) {
                 if ((purl == null) || !allowOpenStream) continue;
 
@@ -239,8 +240,7 @@ public class ImageTagRegistry implements ErrorConstants {
 
         Filter ret = null;
 
-        for (Object entry : entries) {
-            RegistryEntry re = (RegistryEntry) entry;
+        for (RegistryEntry re : entries) {
 
             if (!(re instanceof StreamRegistryEntry))
                 continue;
@@ -270,10 +270,10 @@ public class ImageTagRegistry implements ErrorConstants {
     public synchronized void register(RegistryEntry newRE) {
         float priority = newRE.getPriority();
 
-        ListIterator li;
+        ListIterator<RegistryEntry> li;
         li = entries.listIterator();
         while (li.hasNext()) {
-            RegistryEntry re = (RegistryEntry)li.next();
+            RegistryEntry re = li.next();
             if (re.getPriority() > priority) {
                 li.previous();
                 break; // Insertion point found.
@@ -289,13 +289,12 @@ public class ImageTagRegistry implements ErrorConstants {
      * can be handleded by the various registered image format
      * handlers.
      */
-    public synchronized List getRegisteredExtensions() {
+    public synchronized List<String> getRegisteredExtensions() {
         if (extensions != null)
             return extensions;
 
-        extensions = new LinkedList();
-        for (Object entry : entries) {
-            RegistryEntry re = (RegistryEntry) entry;
+        extensions = new LinkedList<>();
+        for (RegistryEntry re : entries) {
             extensions.addAll(re.getStandardExtensions());
         }
         extensions = Collections.unmodifiableList(extensions);
@@ -307,13 +306,12 @@ public class ImageTagRegistry implements ErrorConstants {
      * can be handleded by the various registered image format
      * handlers.
      */
-    public synchronized List getRegisteredMimeTypes() {
+    public synchronized List<String> getRegisteredMimeTypes() {
         if (mimeTypes != null)
             return mimeTypes;
 
-        mimeTypes = new LinkedList();
-        for (Object entry : entries) {
-            RegistryEntry re = (RegistryEntry) entry;
+        mimeTypes = new LinkedList<>();
+        for (RegistryEntry re : entries) {
             mimeTypes.addAll(re.getMimeTypes());
         }
         mimeTypes = Collections.unmodifiableList(mimeTypes);
@@ -333,7 +331,7 @@ public class ImageTagRegistry implements ErrorConstants {
         //registry.register(new JPEGRegistryEntry());
         registry.register(new JDKRegistryEntry());
 
-        Iterator iter = Service.providers(RegistryEntry.class);
+        Iterator<Object> iter = Service.providers(RegistryEntry.class);
         while (iter.hasNext()) {
             RegistryEntry re = (RegistryEntry)iter.next();
             // System.out.println("RE: " + re);

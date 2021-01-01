@@ -19,16 +19,18 @@
 package io.sf.carte.echosvg.transcoder.image;
 
 import java.awt.geom.Rectangle2D;
-
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
  * Test the ImageTranscoder with the KEY_AOI transcoding hint.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class AOITest extends AbstractImageTranscoderTest {
@@ -107,6 +109,7 @@ public class AOITest extends AbstractImageTranscoderTest {
     /**
      * Creates the <code>TranscoderInput</code>.
      */
+    @Override
     protected TranscoderInput createTranscoderInput() {
         return new TranscoderInput(resolveURL(inputURI).toString());
     }
@@ -114,14 +117,15 @@ public class AOITest extends AbstractImageTranscoderTest {
     /**
      * Creates a Map that contains additional transcoding hints.
      */
-    protected Map createTranscodingHints() {
-        Map hints = new HashMap(11);
-        hints.put(ImageTranscoder.KEY_AOI, aoi);
+    @Override
+    protected Map<Key, Object> createTranscodingHints() {
+        Map<Key, Object> hints = new HashMap<>(11);
+        hints.put(SVGAbstractTranscoder.KEY_AOI, aoi);
         if (imgWidth > 0) {
-            hints.put(ImageTranscoder.KEY_WIDTH, imgWidth);
+            hints.put(SVGAbstractTranscoder.KEY_WIDTH, imgWidth);
         }
         if (imgHeight > 0) {
-            hints.put(ImageTranscoder.KEY_HEIGHT, imgHeight);
+            hints.put(SVGAbstractTranscoder.KEY_HEIGHT, imgHeight);
         }
         return hints;
     }
@@ -129,6 +133,7 @@ public class AOITest extends AbstractImageTranscoderTest {
     /**
      * Returns the reference image for this test.
      */
+    @Override
     protected byte [] getReferenceImageData() {
         return createBufferedImageData(resolveURL(refImageURI));
     }

@@ -46,6 +46,7 @@ import io.sf.carte.echosvg.parser.PathArrayProducer;
  *
  * @author <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>
  * @author <a href="mailto:andrest@world-affair.com">Andres Toussaint</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAnimatedPathData
@@ -383,7 +384,7 @@ public class SVGOMAnimatedPathData
                 }
                 itemList = builder.getList();
             } catch (ParseException e) {
-                itemList = new ArrayList(1);
+                itemList = new ArrayList<>(1);
                 malformed = true;
             }
         }
@@ -477,7 +478,7 @@ public class SVGOMAnimatedPathData
                 }
                 itemList = builder.getList();
             } catch (ParseException e) {
-                itemList = new ArrayList(1);
+                itemList = new ArrayList<>(1);
                 malformed = true;
             }
         }
@@ -492,7 +493,7 @@ public class SVGOMAnimatedPathData
          * Creates a new AnimSVGPathSegList.
          */
         public AnimSVGPathSegList() {
-            itemList = new ArrayList(1);
+            itemList = new ArrayList<>(1);
         }
 
         /**
@@ -544,13 +545,13 @@ public class SVGOMAnimatedPathData
                 return "";
             }
             StringBuffer sb = new StringBuffer( itemList.size() * 8 );
-            Iterator i = itemList.iterator();
+            Iterator<SVGItem> i = itemList.iterator();
             if (i.hasNext()) {
-                sb.append(((SVGItem) i.next()).getValueAsString());
+                sb.append(i.next().getValueAsString());
             }
             while (i.hasNext()) {
                 sb.append(getItemSeparator());
-                sb.append(((SVGItem) i.next()).getValueAsString());
+                sb.append(i.next().getValueAsString());
             }
             return sb.toString();
         }

@@ -54,6 +54,7 @@ import io.sf.carte.echosvg.gvt.ShapeNode;
  * Bridge class for the &lt;svg&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGSVGElementBridge 
@@ -451,8 +452,8 @@ public class SVGSVGElementBridge
     }
 
     @Override
-    public List getIntersectionList(SVGRect svgRect, Element end) {
-        List ret = new ArrayList();
+    public List<Element> getIntersectionList(SVGRect svgRect, Element end) {
+        List<Element> ret = new ArrayList<>();
         Rectangle2D rect = new Rectangle2D.Float(svgRect.getX(),
                                                  svgRect.getY(),
                                                  svgRect.getWidth(),
@@ -487,7 +488,7 @@ public class SVGSVGElementBridge
         if (next == null) return ret;
         curr = (Element)next;
 
-        Set ancestors = null;
+        Set<Element> ancestors = null;
         if (end != null) {
             ancestors = getAncestors(end, base);
             if (ancestors == null)
@@ -566,7 +567,7 @@ public class SVGSVGElementBridge
                     SVGOMElement svgElem = (SVGOMElement)curr;
                     SVGTextElementBridge txtBridge;
                     txtBridge = (SVGTextElementBridge)svgElem.getSVGContext();
-                    Set elems = txtBridge.getTextIntersectionSet(at, rect);
+                    Set<Element> elems = txtBridge.getTextIntersectionSet(at, rect);
 
                     // filter elems based on who is before end as
                     // children of curr, if needed.
@@ -587,8 +588,8 @@ public class SVGSVGElementBridge
     }
 
     @Override
-    public List getEnclosureList(SVGRect svgRect, Element end) {
-        List ret = new ArrayList();
+    public List<Element> getEnclosureList(SVGRect svgRect, Element end) {
+        List<Element> ret = new ArrayList<>();
         Rectangle2D rect = new Rectangle2D.Float(svgRect.getX(),
                                                  svgRect.getY(),
                                                  svgRect.getWidth(),
@@ -623,7 +624,7 @@ public class SVGSVGElementBridge
         if (next == null) return ret;
         curr = (Element)next;
 
-        Set ancestors = null;
+        Set<Element> ancestors = null;
         if (end != null) {
             ancestors = getAncestors(end, base);
             if (ancestors == null)
@@ -694,7 +695,7 @@ public class SVGSVGElementBridge
                     SVGOMElement svgElem = (SVGOMElement)curr;
                     SVGTextElementBridge txtBridge;
                     txtBridge = (SVGTextElementBridge)svgElem.getSVGContext();
-                    Set elems = txtBridge.getTextEnclosureSet(at, rect);
+                    Set<Element> elems = txtBridge.getTextEnclosureSet(at, rect);
                     
                     // filter elems based on who is before end as
                     // children of curr if needed.
@@ -814,7 +815,7 @@ public class SVGSVGElementBridge
     }
 
     public boolean filterChildren(Element curr, Element end,
-                                  Set elems, List ret) {
+                                  Set<Element> elems, List<Element> ret) {
         Node child = curr.getFirstChild();
         while (child != null) {
             if ((child instanceof Element) &&
@@ -831,8 +832,8 @@ public class SVGSVGElementBridge
         return false;
     }
 
-    protected Set getAncestors(Element end, Element base) {
-        Set ret = new HashSet();
+    protected Set<Element> getAncestors(Element end, Element base) {
+        Set<Element> ret = new HashSet<>();
         Element p = end;
         do {
             ret.add(p);

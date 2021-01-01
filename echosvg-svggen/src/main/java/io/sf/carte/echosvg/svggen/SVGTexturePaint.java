@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * SVG pattern element
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGTexturePaint extends AbstractSVGConverter {

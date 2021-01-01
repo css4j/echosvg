@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.parser.PathParser;
  * Bridge class for the &lt;glyph&gt; element.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGGlyphElementBridge extends AbstractSVGBridge
@@ -185,7 +186,7 @@ public class SVGGlyphElementBridge extends AbstractSVGBridge
         // glyph-name
         String nameList
             = glyphElement.getAttributeNS(null, SVG_GLYPH_NAME_ATTRIBUTE);
-        List names = new ArrayList();
+        List<String> names = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(nameList, " ,");
         while (st.hasMoreTokens()) {
             names.add(st.nextToken());

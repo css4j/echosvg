@@ -21,13 +21,11 @@ package io.sf.carte.echosvg.svggen;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-
 import java.io.StringWriter;
 import java.io.Writer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.test.AbstractTest;
@@ -38,9 +36,11 @@ import io.sf.carte.echosvg.test.TestReport;
  * as shown by bug report 21259.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Bug21259 extends AbstractTest{
+    @Override
     public TestReport runImpl() throws Exception {
         Document document = 
             SVGDOMImplementation.getDOMImplementation()

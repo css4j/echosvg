@@ -24,6 +24,7 @@ import java.awt.RenderingHints;
  * A transcoding Key represented as a boolean to indicate whether tiling of
  * bitmaps is undesired by the destination.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AvoidTilingHintKey extends RenderingHints.Key {

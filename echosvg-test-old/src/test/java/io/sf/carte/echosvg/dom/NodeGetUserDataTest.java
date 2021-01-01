@@ -26,11 +26,13 @@ import org.w3c.dom.UserDataHandler;
  * Tests Node.setUserData and Node.getUserData.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NodeGetUserDataTest extends DOM3Test {
     static class UserHandler implements UserDataHandler {
         int count = 0;
+        @Override
         public void handle(short op,
                            String key,
                            Object data,
@@ -42,6 +44,7 @@ public class NodeGetUserDataTest extends DOM3Test {
             return count;
         }
     }
+    @Override
     public boolean runImplBasic() throws Exception {
         UserHandler udh = new UserHandler();
         Document doc = newDoc();

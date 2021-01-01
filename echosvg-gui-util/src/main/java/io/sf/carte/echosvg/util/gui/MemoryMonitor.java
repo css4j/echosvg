@@ -66,6 +66,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * track and display the memory usage.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MemoryMonitor extends JFrame implements ActionMap {
@@ -95,7 +96,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
     /**
      * The map that contains the listeners
      */
-    protected Map listeners = new HashMap();
+    protected Map<String, AbstractAction> listeners = new HashMap<>();
 
     /**
      * The Panel instance.
@@ -169,7 +170,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
      */
     @Override
     public Action getAction(String key) throws MissingListenerException {
-        return (Action)listeners.get(key);
+        return listeners.get(key);
     }
 
     /**
@@ -229,7 +230,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
                 = new ExtendedGridBagConstraints();
             constraints.insets = new Insets(5, 5, 5, 5);
 
-            List l = new ArrayList();
+            List<JComponent> l = new ArrayList<>();
             JPanel p = new JPanel(new BorderLayout());
             p.setBorder(BorderFactory.createLoweredBevelBorder());
             JComponent c = new Usage();
@@ -551,7 +552,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
         /**
          * The data.
          */
-        protected List data = new LinkedList();
+        protected List<Long> data = new LinkedList<>();
 
         /**
          * The vertical lines shift.
@@ -599,13 +600,13 @@ public class MemoryMonitor extends JFrame implements ActionMap {
             }
 
             // Create the path that match the data
-            Iterator it = data.iterator();
+            Iterator<Long> it = data.iterator();
             GeneralPath p = new GeneralPath();
-            long l = (Long) it.next();
+            long l = it.next();
             p.moveTo(5, ((float)(totalMemory - l) / totalMemory) * 80 + 10);
             int i = 6;
             while (it.hasNext()) {
-                l = (Long) it.next();
+                l = it.next();
                 p.lineTo(i, ((float)(totalMemory - l) / totalMemory) * 80 + 10);
                 i++;
             }
@@ -686,7 +687,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
         /**
          * The components to repaint.
          */
-        protected List components;
+        protected List<JComponent> components;
 
         /**
          * The runtime.
@@ -708,7 +709,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
          * @param timeout    The time between two repaint in ms.
          * @param components The components to repaint.
          */
-        public RepaintThread(long timeout, List components) {
+        public RepaintThread(long timeout, List<JComponent> components) {
             this.timeout = timeout;
             this.components = components;
             this.updateRunnable = createUpdateRunnable();
@@ -747,8 +748,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
             public void run() {
                 long free  = runtime.freeMemory();
                 long total = runtime.totalMemory();
-                for (Object component : components) {
-                    Component c = (Component) component;
+                for (Component c : components) {
                     ((MemoryChangeListener) c).memoryStateChanged(total, free);
                     c.repaint();
                 }

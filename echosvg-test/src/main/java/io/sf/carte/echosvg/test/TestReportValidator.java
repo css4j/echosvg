@@ -43,6 +43,7 @@ package io.sf.carte.echosvg.test;
  *   and ENTRY_KEY_RECEIVED_ERROR_CODE.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TestReportValidator extends AbstractTest {

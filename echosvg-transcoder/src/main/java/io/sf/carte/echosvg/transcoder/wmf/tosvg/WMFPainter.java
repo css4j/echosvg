@@ -142,7 +142,7 @@ public class WMFPainter extends AbstractWMFPainter {
         int fontObject = -1;
         Font font = null;
         int lastObjectIdx;
-        Stack dcStack = new Stack();
+        Stack<Object> dcStack = new Stack<>();
 
         int numRecords = currentStore.getNumRecords();
         int numObjects = currentStore.getNumObjects();
@@ -419,7 +419,7 @@ public class WMFPainter extends AbstractWMFPainter {
                         }
 
                         int offset = numPolygons+1;
-                        List v = new ArrayList( numPolygons );
+                        List<Polygon2D> v = new ArrayList<>( numPolygons );
                         for ( int j = 0; j < numPolygons; j++ ) {
                             int count = pts[ j ];
                             float[] xpts = new float[count];
@@ -1065,9 +1065,8 @@ public class WMFPainter extends AbstractWMFPainter {
 
     /** Just to be consistent with PolyPolygon filling.
      */
-    private void drawPolyPolygon(Graphics2D g2d, List pols) {
-        for (Object pol1 : pols) {
-            Polygon2D pol = (Polygon2D) (pol1);
+    private void drawPolyPolygon(Graphics2D g2d, List<Polygon2D> pols) {
+        for (Polygon2D pol : pols) {
             g2d.draw(pol);
         }
     }
@@ -1075,14 +1074,13 @@ public class WMFPainter extends AbstractWMFPainter {
     /** Need to do this for POLYPOLYGON, because only GeneralPaths can handle complex
      * WMF shapes.
      */
-    private void fillPolyPolygon(Graphics2D g2d, List pols) {
+    private void fillPolyPolygon(Graphics2D g2d, List<Polygon2D> pols) {
         // if there is only one Polygon, there is no need of a path
         if (pols.size() == 1) {
-            g2d.fill((Polygon2D)(pols.get(0)));
+            g2d.fill((pols.get(0)));
         } else {
             GeneralPath path = new GeneralPath(Path2D.WIND_EVEN_ODD);
-            for (Object pol1 : pols) {
-                Polygon2D pol = (Polygon2D) pol1;
+            for (Polygon2D pol : pols) {
                 path.append(pol, false);
             }
             g2d.fill(path);

@@ -29,6 +29,7 @@ import javax.swing.JComponent;
  * a <code>Painter</code>.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JPainterComponent extends JComponent {
@@ -40,6 +41,7 @@ public class JPainterComponent extends JComponent {
     /**
      * Delegates to its <code>Painter</code>
      */
+    @Override
     public void paint(Graphics _g){
         Graphics2D g = (Graphics2D)_g;
         BufferedImage buf = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);

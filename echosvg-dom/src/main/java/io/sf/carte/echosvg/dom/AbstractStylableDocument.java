@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
  * A Document that supports CSS styling.
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractStylableDocument extends AbstractDocument

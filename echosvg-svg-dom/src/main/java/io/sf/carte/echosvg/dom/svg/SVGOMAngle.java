@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.parser.ParseException;
  * Implementation of an {@link SVGAngle} not associated with any attribute.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAngle implements SVGAngle {

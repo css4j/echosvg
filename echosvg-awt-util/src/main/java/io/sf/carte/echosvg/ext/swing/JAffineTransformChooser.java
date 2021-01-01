@@ -51,6 +51,7 @@ import javax.swing.text.Document;
  * make up an <code>AffineTransform</code>
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JAffineTransformChooser extends JGridBagPanel{

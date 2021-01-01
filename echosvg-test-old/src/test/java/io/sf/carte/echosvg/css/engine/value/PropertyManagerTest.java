@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * The class to test the CSS properties's manager.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PropertyManagerTest extends AbstractTest {
@@ -129,6 +130,7 @@ public class PropertyManagerTest extends AbstractTest {
      * Runs this test. This method will only throw exceptions if some aspect of
      * the test's internal operation fails.
      */
+    @Override
     public TestReport runImpl() throws Exception {
         DefaultTestReport report = new DefaultTestReport(this);
 

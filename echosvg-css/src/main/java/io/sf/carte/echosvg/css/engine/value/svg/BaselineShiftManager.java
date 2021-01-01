@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a manager for the 'baseline-shift' property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class BaselineShiftManager extends LengthManager {
@@ -119,6 +120,8 @@ public class BaselineShiftManager extends LengthManager {
                 throw createInvalidIdentifierDOMException(lu.getStringValue());
             }
             return (Value)v;
+        default:
+            break;
         }
         return super.createValue(lu, engine);
     }

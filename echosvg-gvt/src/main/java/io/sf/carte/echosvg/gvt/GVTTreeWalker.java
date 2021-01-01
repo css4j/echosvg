@@ -24,6 +24,7 @@ import java.util.List;
  * <code>GVTTreeWalker</code> objects are used to navigate a GVT tree or subtree.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GVTTreeWalker {
@@ -239,12 +240,12 @@ public class GVTTreeWalker {
             return null;
         }
         CompositeGraphicsNode parent = (CompositeGraphicsNode)node;
-        List children = parent.getChildren();
+        List<GraphicsNode> children = parent.getChildren();
         if (children == null) {
             return null;
         }
         if (children.size() >= 1) {
-            return (GraphicsNode)children.get(children.size()-1);
+            return children.get(children.size()-1);
         } else {
             return null;
         }
@@ -255,13 +256,13 @@ public class GVTTreeWalker {
         if (parent == null) {
             return null;
         }
-        List children = parent.getChildren();
+        List<GraphicsNode> children = parent.getChildren();
         if (children == null) {
             return null;
         }
         int index = children.indexOf(node);
         if (index-1 >= 0) {
-            return (GraphicsNode)children.get(index-1);
+            return children.get(index-1);
         } else {
             return null;
         }
@@ -272,12 +273,12 @@ public class GVTTreeWalker {
             return null;
         }
         CompositeGraphicsNode parent = (CompositeGraphicsNode)node;
-        List children = parent.getChildren();
+        List<GraphicsNode> children = parent.getChildren();
         if (children == null) {
             return null;
         }
         if (children.size() >= 1) {
-            return (GraphicsNode)children.get(0);
+            return children.get(0);
         } else {
             return null;
         }
@@ -288,13 +289,13 @@ public class GVTTreeWalker {
         if (parent == null) {
             return null;
         }
-        List children = parent.getChildren();
+        List<GraphicsNode> children = parent.getChildren();
         if (children == null) {
             return null;
         }
         int index = children.indexOf(node);
         if (index+1 < children.size()) {
-            return (GraphicsNode)children.get(index+1);
+            return children.get(index+1);
         } else {
             return null;
         }

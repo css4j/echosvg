@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.test;
  * Exception which Tests can throw when a specific assertion fails.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AssertException extends TestErrorConditionException {

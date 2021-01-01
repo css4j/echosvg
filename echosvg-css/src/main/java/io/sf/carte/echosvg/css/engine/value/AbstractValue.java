@@ -25,6 +25,7 @@ import org.w3c.dom.css.CSSValue;
  * This class provides an abstract implementation of the Value interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractValue implements Value {

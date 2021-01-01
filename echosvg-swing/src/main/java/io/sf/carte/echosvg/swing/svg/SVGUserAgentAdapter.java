@@ -47,6 +47,7 @@ import io.sf.carte.echosvg.bridge.NoLoadScriptSecurity;
  * In a GUI environment you probably want to use SVGUserAgentGUIAdapter.
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGUserAgentAdapter implements SVGUserAgent {

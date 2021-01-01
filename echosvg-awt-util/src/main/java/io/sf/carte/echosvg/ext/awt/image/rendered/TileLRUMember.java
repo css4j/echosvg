@@ -29,13 +29,14 @@ import  java.lang.ref.SoftReference;
  * reference allowing for the recovery of the tile when the JVM is
  * not under memory pressure
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TileLRUMember implements LRUCache.LRUObj {
     private static final boolean DEBUG = false;
 
         protected LRUCache.LRUNode myNode  = null;
-        protected Reference        wRaster = null;
+        protected Reference<Raster>        wRaster = null;
         protected Raster           hRaster = null;
 
         public TileLRUMember() { }
@@ -46,7 +47,7 @@ public class TileLRUMember implements LRUCache.LRUObj {
 
         public void setRaster(Raster ras) {
             hRaster = ras;
-            wRaster = new SoftReference(ras);
+            wRaster = new SoftReference<>(ras);
         }
 
         public boolean checkRaster() {
@@ -62,7 +63,7 @@ public class TileLRUMember implements LRUCache.LRUObj {
             if (hRaster != null) return hRaster;
             if (wRaster == null) return null;
 
-            hRaster = (Raster)wRaster.get();
+            hRaster = wRaster.get();
 
             if (hRaster == null)  // didn't manage to retrieve it...
             wRaster = null;

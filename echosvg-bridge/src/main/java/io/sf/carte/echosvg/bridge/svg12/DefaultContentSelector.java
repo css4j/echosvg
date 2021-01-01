@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
  * present.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultContentSelector extends AbstractContentSelector {
@@ -86,7 +87,7 @@ public class DefaultContentSelector extends AbstractContentSelector {
         /**
          * The selected nodes.
          */
-        protected ArrayList nodes = new ArrayList(10);
+        protected ArrayList<Node> nodes = new ArrayList<>(10);
 
         /**
          * Creates a new SelectedNodes object.
@@ -96,7 +97,7 @@ public class DefaultContentSelector extends AbstractContentSelector {
         }
 
         protected boolean update() {
-            ArrayList oldNodes = (ArrayList) nodes.clone();
+            ArrayList<?> oldNodes = (ArrayList<?>) nodes.clone();
             nodes.clear();
             for (Node n = boundElement.getFirstChild(); n != null; n = n.getNextSibling()) {
                 if (isSelected(n)) {
@@ -124,7 +125,7 @@ public class DefaultContentSelector extends AbstractContentSelector {
             if (index < 0 || index >= nodes.size()) {
                 return null;
             }
-            return (Node) nodes.get(index);
+            return nodes.get(index);
         }
 
         /**

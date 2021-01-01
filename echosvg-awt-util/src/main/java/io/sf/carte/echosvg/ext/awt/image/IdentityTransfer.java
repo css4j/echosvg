@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.ext.awt.image;
  * specification.
  *
  * @author <a href="mailto:sheng.pei@sun.com">Sheng Pei</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class IdentityTransfer implements TransferFunction {

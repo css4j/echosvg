@@ -73,6 +73,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * Bridge class for the &lt;image&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
@@ -414,7 +415,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 
     protected ProtectedStream openStream(Element e, ParsedURL purl)
         throws IOException {
-        List mimeTypes = new ArrayList
+        List<String> mimeTypes = new ArrayList<>
             (ImageTagRegistry.getRegistry().getRegisteredMimeTypes());
         mimeTypes.addAll(MimeTypeConstants.MIME_TYPES_SVG_LIST);
         InputStream reference = purl.openStream(mimeTypes.iterator());

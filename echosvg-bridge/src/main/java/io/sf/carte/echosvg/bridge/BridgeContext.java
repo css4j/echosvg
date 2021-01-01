@@ -87,6 +87,7 @@ import io.sf.carte.echosvg.util.Service;
  * a SVG DOM tree such as the current viewport or the user agent.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class BridgeContext implements ErrorConstants, CSSContext {
@@ -111,26 +112,26 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      * key is the language -
      * value is a Interpreter
      */
-    protected Map interpreterMap = new HashMap(7);
+    protected Map<String, Interpreter> interpreterMap = new HashMap<>(7);
 
     /**
      * A Map of all the font families already matched. This is
      * to reduce the number of instances of GVTFontFamilies and to
      * hopefully reduce the time taken to search for a matching SVG font.
      */
-    private Map fontFamilyMap;
+    private Map<Object, Object> fontFamilyMap;
 
     /**
      * The viewports.
      * key is an Element -
      * value is a Viewport
      */
-    protected Map viewportMap = new WeakHashMap();
+    protected Map<Object, Viewport> viewportMap = new WeakHashMap<>();
 
     /**
      * The viewport stack. Used in building time.
      */
-    protected List viewportStack = new LinkedList();
+    protected List<Viewport> viewportStack = new LinkedList<>();
 
     /**
      * The user agent.
@@ -142,21 +143,21 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      * key is an SVG Element -
      * value is a GraphicsNode
      */
-    protected Map elementNodeMap;
+    protected Map<Node, SoftReference<GraphicsNode>> elementNodeMap;
 
     /**
      * Binding Map:
      * key is GraphicsNode -
      * value is a SVG Element.
      */
-    protected Map nodeElementMap;
+    protected Map<GraphicsNode, SoftReference<Node>> nodeElementMap;
 
     /**
      * Bridge Map:
      * Keys are namespace URI - values are HashMap (with keys are local
      * name and values are a Bridge instance).
      */
-    protected Map namespaceURIMap;
+    protected Map<String, HashMap<String, Bridge>> namespaceURIMap;
 
     /**
      * Default bridge.
@@ -172,7 +173,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      * Default bridges will not be created for elements that have a
      * namespace URI present in this set.
      */
-    protected Set reservedNamespaceSet;
+    protected Set<String> reservedNamespaceSet;
 
     /**
      * Element Data Map:
@@ -184,7 +185,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      * by SoftReference so both must be referenced elsewhere
      * to stay live.
      */
-    protected Map elementDataMap;
+    protected Map<Node, SoftReference<Object>> elementDataMap;
 
     /**
      * The interpreter pool used to handle scripts.
@@ -253,7 +254,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Set of WeakReferences to child BridgeContexts.
      */
-    protected HashSet childContexts = new HashSet();
+    protected HashSet<WeakReference<BridgeContext>> childContexts = new HashSet<>();
 
     /**
      * The animation engine for the document.
@@ -347,7 +348,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
 
         subCtx = createBridgeContext(newDoc);
         subCtx.primaryContext = primaryContext != null ? primaryContext : this;
-        subCtx.primaryContext.childContexts.add(new WeakReference(subCtx));
+        subCtx.primaryContext.childContexts.add(new WeakReference<>(subCtx));
         subCtx.dynamicStatus = dynamicStatus;
         subCtx.setGVTBuilder(getGVTBuilder());
         subCtx.setTextPainter(getTextPainter());
@@ -450,9 +451,9 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Returns the map of font families
      */
-    public Map getFontFamilyMap(){
+    public Map<Object, Object> getFontFamilyMap(){
         if (fontFamilyMap == null){
-            fontFamilyMap = new HashMap();
+            fontFamilyMap = new HashMap<>();
         }
         return fontFamilyMap;
     }
@@ -462,7 +463,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      *
      *@param fontFamilyMap the map of font families
      */
-    protected void setFontFamilyMap(Map fontFamilyMap) {
+    protected void setFontFamilyMap(Map<Object, Object> fontFamilyMap) {
         this.fontFamilyMap = fontFamilyMap;
     }
 
@@ -473,9 +474,9 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      */
     public void setElementData(Node n, Object data) {
         if (elementDataMap == null) {
-            elementDataMap = new WeakHashMap();
+            elementDataMap = new WeakHashMap<>();
         }
-        elementDataMap.put(n, new SoftReference(data));
+        elementDataMap.put(n, new SoftReference<>(data));
     }
 
     /**
@@ -484,10 +485,9 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     public Object getElementData(Node n) {
         if (elementDataMap == null)
             return null;
-        Object o = elementDataMap.get(n);
-        if (o == null) return null;
-        SoftReference sr = (SoftReference)o;
-        o = sr.get();
+        SoftReference<Object> sr = elementDataMap.get(n);
+        if (sr == null) return null;
+        Object o = sr.get();
         if (o == null) {
             elementDataMap.remove(n);
         }
@@ -562,7 +562,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         if (document == null) {
             throw new RuntimeException("Unknown document");
         }
-        Interpreter interpreter = (Interpreter)interpreterMap.get(language);
+        Interpreter interpreter = interpreterMap.get(language);
         if (interpreter == null) {
             try {
                 interpreter = interpreterPool.createInterpreter(document, 
@@ -721,10 +721,10 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      */
     public BridgeContext[] getChildContexts() {
         BridgeContext[] res = new BridgeContext[childContexts.size()];
-        Iterator it = childContexts.iterator();
+        Iterator<WeakReference<BridgeContext>> it = childContexts.iterator();
         for (int i = 0; i < res.length; i++) {
-            WeakReference wr = (WeakReference) it.next();
-            res[i] = (BridgeContext) wr.get();
+            WeakReference<BridgeContext> wr = it.next();
+            res[i] = wr.get();
         }
         return res;
     }
@@ -825,22 +825,22 @@ public class BridgeContext implements ErrorConstants, CSSContext {
             // building time
             if (viewportStack.size() == 0) {
                 // outermost svg element
-                return (Viewport)viewportMap.get(userAgent);
+                return viewportMap.get(userAgent);
             } else {
                 // current viewport
-                return (Viewport)viewportStack.get(0);
+                return viewportStack.get(0);
             }
         } else {
             // search the first parent which has defined a viewport
             e = SVGUtilities.getParentElement(e);
             while (e != null) {
-                Viewport viewport = (Viewport)viewportMap.get(e);
+                Viewport viewport = viewportMap.get(e);
                 if (viewport != null) {
                     return viewport;
                 }
                 e = SVGUtilities.getParentElement(e);
             }
-            return (Viewport)viewportMap.get(userAgent);
+            return viewportMap.get(userAgent);
         }
     }
 
@@ -853,7 +853,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     public void openViewport(Element e, Viewport viewport) {
         viewportMap.put(e, viewport);
         if (viewportStack == null) {
-            viewportStack = new LinkedList();
+            viewportStack = new LinkedList<>();
         }
         viewportStack.add(0, viewport);
     }
@@ -886,11 +886,11 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      */
     public void bind(Node node, GraphicsNode gn) {
         if (elementNodeMap == null) {
-            elementNodeMap = new WeakHashMap();
-            nodeElementMap = new WeakHashMap();
+            elementNodeMap = new WeakHashMap<>();
+            nodeElementMap = new WeakHashMap<>();
         }
-        elementNodeMap.put(node, new SoftReference(gn));
-        nodeElementMap.put(gn, new SoftReference(node));
+        elementNodeMap.put(node, new SoftReference<>(gn));
+        nodeElementMap.put(gn, new SoftReference<>(node));
     }
 
     /**
@@ -903,9 +903,9 @@ public class BridgeContext implements ErrorConstants, CSSContext {
             return;
         }
         GraphicsNode gn = null;
-        SoftReference sr = (SoftReference)elementNodeMap.get(node);
+        SoftReference<GraphicsNode> sr = elementNodeMap.get(node);
         if (sr != null)
-            gn = (GraphicsNode)sr.get();
+            gn = sr.get();
         elementNodeMap.remove(node);
         if (gn != null)
             nodeElementMap.remove(gn);
@@ -919,9 +919,9 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      */
     public GraphicsNode getGraphicsNode(Node node) {
         if (elementNodeMap != null) {
-            SoftReference sr = (SoftReference)elementNodeMap.get(node);
+            SoftReference<GraphicsNode> sr = elementNodeMap.get(node);
             if (sr != null)
-                return (GraphicsNode)sr.get();
+                return sr.get();
         }
         return null;
     }
@@ -934,9 +934,9 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      */
     public Element getElement(GraphicsNode gn) {
         if (nodeElementMap != null) {
-            SoftReference sr = (SoftReference)nodeElementMap.get(gn);
+            SoftReference<Node> sr = nodeElementMap.get(gn);
             if (sr != null) {
-                Node n = (Node) sr.get();
+                Node n = sr.get();
                 if (n.getNodeType() == Node.ELEMENT_NODE) {
                     return (Element) n;
                 }
@@ -960,7 +960,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         String localName = element.getLocalName();
         String namespaceURI = element.getNamespaceURI();
         namespaceURI = ((namespaceURI == null)? "" : namespaceURI);
-        HashMap localNameMap = (HashMap) namespaceURIMap.get(namespaceURI);
+        HashMap<String, Bridge> localNameMap = namespaceURIMap.get(namespaceURI);
         if (localNameMap == null) {
             return false;
         }
@@ -999,9 +999,9 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     public Bridge getBridge(String namespaceURI, String localName) {
         Bridge bridge = null;
         if (namespaceURIMap != null) {
-            HashMap localNameMap = (HashMap) namespaceURIMap.get(namespaceURI);
+            HashMap<String, Bridge> localNameMap = namespaceURIMap.get(namespaceURI);
             if (localNameMap != null) {
-                bridge = (Bridge)localNameMap.get(localName);
+                bridge = localNameMap.get(localName);
             }
         }
         if (bridge == null
@@ -1034,12 +1034,12 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         }
         // end assert
         if (namespaceURIMap == null) {
-            namespaceURIMap = new HashMap();
+            namespaceURIMap = new HashMap<>();
         }
         namespaceURI = ((namespaceURI == null)? "" : namespaceURI);
-        HashMap localNameMap = (HashMap) namespaceURIMap.get(namespaceURI);
+        HashMap<String, Bridge> localNameMap = namespaceURIMap.get(namespaceURI);
         if (localNameMap == null) {
-            localNameMap = new HashMap();
+            localNameMap = new HashMap<>();
             namespaceURIMap.put(namespaceURI, localNameMap);
         }
         localNameMap.put(localName, bridge);
@@ -1067,7 +1067,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
             return;
         }
         namespaceURI = ((namespaceURI == null)? "" : namespaceURI);
-        HashMap localNameMap = (HashMap) namespaceURIMap.get(namespaceURI);
+        Map<String, Bridge> localNameMap = namespaceURIMap.get(namespaceURI);
         if (localNameMap != null) {
             localNameMap.remove(localName);
             if (localNameMap.isEmpty()) {
@@ -1097,7 +1097,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
             namespaceURI = "";
         }
         if (reservedNamespaceSet == null) {
-            reservedNamespaceSet = new HashSet();
+            reservedNamespaceSet = new HashSet<>();
         }
         reservedNamespaceSet.add(namespaceURI);
     }
@@ -1123,7 +1123,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      * The list of all EventListener attached by bridges that need to
      * be removed on a dispose() call.
      */
-    protected Set eventListenerSet = new HashSet();
+    protected Set<EventListenerMememto> eventListenerSet = new HashSet<>();
 
     /**
      * The DOM EventListener to receive 'DOMCharacterDataModified' event.
@@ -1209,8 +1209,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     public void removeUIEventListeners(Document doc) {
         EventTarget evtTarget = (EventTarget)doc.getDocumentElement();
         synchronized (eventListenerSet) {
-            for (Object anEventListenerSet : eventListenerSet) {
-                EventListenerMememto elm = (EventListenerMememto) anEventListenerSet;
+            for (EventListenerMememto elm : eventListenerSet) {
                 NodeEventTarget et = elm.getTarget();
                 if (et == evtTarget) {
                     EventListener el = elm.getListener();
@@ -1331,12 +1330,12 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         }
     }
 
-    public static class SoftReferenceMememto
-        extends CleanerThread.SoftReferenceCleared {
+    public static class SoftReferenceMememto<T>
+        extends CleanerThread.SoftReferenceCleared<T> {
         Object mememto;
-        Set    set;
+        Set<EventListenerMememto>    set;
         // String refStr;
-        SoftReferenceMememto(Object ref, Object mememto, Set set) {
+        SoftReferenceMememto(T ref, Object mememto, Set<EventListenerMememto> set) {
             super(ref);
             // refStr = ref.toString();
             this.mememto = mememto;
@@ -1359,8 +1358,8 @@ public class BridgeContext implements ErrorConstants, CSSContext {
      */
     protected static class EventListenerMememto {
 
-        public SoftReference target; // Soft ref to EventTarget
-        public SoftReference listener; // Soft ref to EventListener
+        public SoftReference<EventTarget> target; // Soft ref to EventTarget
+        public SoftReference<EventListener> listener; // Soft ref to EventListener
         public boolean useCapture;
         public String namespaceURI;
         public String eventType;
@@ -1371,9 +1370,9 @@ public class BridgeContext implements ErrorConstants, CSSContext {
                                     EventListener l,
                                     boolean b,
                                     BridgeContext ctx) {
-            Set set = ctx.eventListenerSet;
-            target = new SoftReferenceMememto(t, this, set);
-            listener = new SoftReferenceMememto(l, this, set);
+            Set<EventListenerMememto> set = ctx.eventListenerSet;
+            target = new SoftReferenceMememto<>(t, this, set);
+            listener = new SoftReferenceMememto<>(l, this, set);
             eventType = s;
             useCapture = b;
         }
@@ -1390,7 +1389,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
         }
 
         public EventListener getListener() {
-            return (EventListener)listener.get();
+            return listener.get();
         }
         public NodeEventTarget getTarget() {
             return (NodeEventTarget)target.get();
@@ -1432,8 +1431,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
 
         synchronized (eventListenerSet) {
             // remove all listeners added by Bridges
-            for (Object anEventListenerSet : eventListenerSet) {
-                EventListenerMememto m = (EventListenerMememto) anEventListenerSet;
+            for (EventListenerMememto m : eventListenerSet) {
                 NodeEventTarget et = m.getTarget();
                 EventListener el = m.getListener();
                 boolean uc = m.getUseCapture();
@@ -1461,8 +1459,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
             animationEngine = null;
         }
 
-        for (Object o : interpreterMap.values()) {
-            Interpreter interpreter = (Interpreter) o;
+        for (Interpreter interpreter : interpreterMap.values()) {
             if (interpreter != null)
                 interpreter.dispose();
         }
@@ -2058,23 +2055,22 @@ public class BridgeContext implements ErrorConstants, CSSContext {
 
     // bridge extensions support //////////////////////////////////////////////
 
-    protected List extensions = null;
+    protected List<BridgeExtension> extensions = null;
 
     /**
      * Registers the bridges to handle SVG 1.0 elements.
      */
     public void registerSVGBridges() {
         UserAgent ua = getUserAgent();
-        List ext = getBridgeExtensions(document);
+        List<BridgeExtension> ext = getBridgeExtensions(document);
 
-        for (Object anExt : ext) {
-            BridgeExtension be = (BridgeExtension) anExt;
+        for (BridgeExtension be : ext) {
             be.registerTags(this);
             ua.registerExtension(be);
         }
     }
 
-    public List getBridgeExtensions(Document doc) {
+    public List<BridgeExtension> getBridgeExtensions(Document doc) {
         Element root = ((SVGOMDocument)doc).getRootElement();
         String ver = root.getAttributeNS
             (null, SVGConstants.SVG_VERSION_ATTRIBUTE);
@@ -2085,15 +2081,15 @@ public class BridgeContext implements ErrorConstants, CSSContext {
             svgBE = new SVG12BridgeExtension();
 
         float priority = svgBE.getPriority();
-        extensions = new LinkedList(getGlobalBridgeExtensions());
+        extensions = new LinkedList<>(getGlobalBridgeExtensions());
 
-        ListIterator li = extensions.listIterator();
+        ListIterator<BridgeExtension> li = extensions.listIterator();
         for (;;) {
             if (!li.hasNext()) {
                 li.add(svgBE);
                 break;
             }
-            BridgeExtension lbe = (BridgeExtension)li.next();
+            BridgeExtension lbe = li.next();
             if (lbe.getPriority() > priority) {
                 li.previous();
                 li.add(svgBE);
@@ -2107,26 +2103,26 @@ public class BridgeContext implements ErrorConstants, CSSContext {
     /**
      * Returns the extensions supported by this bridge context.
      */
-    protected static List globalExtensions = null;
+    protected static List<BridgeExtension> globalExtensions = null;
 
-    public static synchronized List getGlobalBridgeExtensions() {
+    public static synchronized List<BridgeExtension> getGlobalBridgeExtensions() {
         if (globalExtensions != null) {
             return globalExtensions;
         }
-        globalExtensions = new LinkedList();
+        globalExtensions = new LinkedList<>();
 
-        Iterator iter = Service.providers(BridgeExtension.class);
+        Iterator<Object> iter = Service.providers(BridgeExtension.class);
 
         while (iter.hasNext()) {
             BridgeExtension be = (BridgeExtension)iter.next();
             float priority  = be.getPriority();
-            ListIterator li = globalExtensions.listIterator();
+            ListIterator<BridgeExtension> li = globalExtensions.listIterator();
             for (;;) {
                 if (!li.hasNext()) {
                     li.add(be);
                     break;
                 }
-                BridgeExtension lbe = (BridgeExtension)li.next();
+                BridgeExtension lbe = li.next();
                 if (lbe.getPriority() > priority) {
                     li.previous();
                     li.add(be);

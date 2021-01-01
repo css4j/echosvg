@@ -24,6 +24,7 @@ import io.sf.carte.echosvg.util.DoublyIndexedTable;
  * This class is used by elements to initialize and reset their attributes.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AttributeInitializer {
@@ -41,7 +42,7 @@ public class AttributeInitializer {
     /**
      * The attribute values table.
      */
-    protected DoublyIndexedTable values = new DoublyIndexedTable();
+    protected DoublyIndexedTable<String,String> values = new DoublyIndexedTable<>();
 
     /**
      * Creates a new AttributeInitializer.

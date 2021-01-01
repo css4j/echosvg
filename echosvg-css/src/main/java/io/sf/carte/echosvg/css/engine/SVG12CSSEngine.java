@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.util.SVG12CSSConstants;
  * This class provides a CSS engine initialized for SVG.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVG12CSSEngine extends SVGCSSEngine {

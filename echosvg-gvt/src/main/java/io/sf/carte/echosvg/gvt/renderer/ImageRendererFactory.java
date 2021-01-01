@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.gvt.renderer;
  * Interface for a factory of ImageRenderers
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ImageRendererFactory extends RendererFactory{

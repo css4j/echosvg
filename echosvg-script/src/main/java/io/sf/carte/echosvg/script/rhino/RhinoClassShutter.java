@@ -24,6 +24,7 @@ import org.mozilla.javascript.ClassShutter;
  * Class shutter that restricts access to EchoSVG internals from script.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RhinoClassShutter implements ClassShutter {
@@ -61,32 +62,32 @@ public class RhinoClassShutter implements ClassShutter {
             return false;
 
         if (fullClassName.startsWith("io.sf.carte.echosvg.")) {
-            // Just get package within batik.
-            String batikPkg = fullClassName.substring(17);
+            // Just get package within this implementation.
+            String implPkg = fullClassName.substring(17);
 
-            // Don't let them mess with EchoSVG script internals.
-            if (batikPkg.startsWith("script"))
+            // Don't let them mess with this implementation's script internals.
+            if (implPkg.startsWith("script"))
                 return false;
 
             // Don't let them get global structures.
-            if (batikPkg.startsWith("apps"))
+            if (implPkg.startsWith("apps"))
                 return false;
 
             // Don't let them get scripting stuff from bridge, but specifically
             // allow access to:
             //
-            //   o.a.b.bridge.ScriptingEnvironment$Window$IntervalScriptTimerTask
-            //   o.a.b.bridge.ScriptingEnvironment$Window$IntervalRunnableTimerTask
-            //   o.a.b.bridge.ScriptingEnvironment$Window$TimeoutScriptTimerTask
-            //   o.a.b.bridge.ScriptingEnvironment$Window$TimeoutRunnableTimerTask
+            //   i.s.c.e.bridge.ScriptingEnvironment$Window$IntervalScriptTimerTask
+            //   i.s.c.e.bridge.ScriptingEnvironment$Window$IntervalRunnableTimerTask
+            //   i.s.c.e.bridge.ScriptingEnvironment$Window$TimeoutScriptTimerTask
+            //   i.s.c.e.bridge.ScriptingEnvironment$Window$TimeoutRunnableTimerTask
             //
             // since objects of these classes are returned by setInterval() and
             // setTimeout().
-            if (batikPkg.startsWith("bridge.")) {
-                String batikBridgeClass = batikPkg.substring(7);
-                if (batikBridgeClass.startsWith("ScriptingEnvironment")) {
-                    if (batikBridgeClass.startsWith("$Window$", 20)) {
-                        String c = batikBridgeClass.substring(28);
+            if (implPkg.startsWith("bridge.")) {
+                String implBridgeClass = implPkg.substring(7);
+                if (implBridgeClass.startsWith("ScriptingEnvironment")) {
+                    if (implBridgeClass.startsWith("$Window$", 20)) {
+                        String c = implBridgeClass.substring(28);
                         if (c.equals("IntervalScriptTimerTask")
                                 || c.equals("IntervalRunnableTimerTask")
                                 || c.equals("TimeoutScriptTimerTask")
@@ -96,7 +97,7 @@ public class RhinoClassShutter implements ClassShutter {
                     }
                     return false;
                 }
-                if (batikBridgeClass.startsWith("BaseScriptingEnvironment")) {
+                if (implBridgeClass.startsWith("BaseScriptingEnvironment")) {
                     return false;
                 }
             }

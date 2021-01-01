@@ -27,6 +27,7 @@ import java.awt.image.RenderedImage;
  * better analyse the dependencies between nodes in a render graph.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
 */
 public interface CachableRed extends RenderedImage {

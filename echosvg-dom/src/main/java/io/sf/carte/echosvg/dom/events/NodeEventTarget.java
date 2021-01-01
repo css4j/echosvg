@@ -30,6 +30,7 @@ import org.w3c.dom.events.EventTarget;
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface NodeEventTarget extends EventTarget {

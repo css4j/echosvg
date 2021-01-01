@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.gvt.renderer.ImageRenderer;
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RepaintManager {
@@ -58,14 +59,13 @@ public class RepaintManager {
      * @param areas The areas of interest in renderer space units.
      * @return the list of the rectangles to repaint.
      */
-    public Collection updateRendering(Collection areas)
+    public Collection<Rectangle> updateRendering(Collection<Shape> areas)
         throws InterruptedException {
         renderer.flush(areas);
-        List rects = new ArrayList(areas.size());
+        List<Rectangle> rects = new ArrayList<>(areas.size());
         AffineTransform at = renderer.getTransform();
 
-        for (Object area : areas) {
-            Shape s = (Shape) area;
+        for (Shape s : areas) {
             s = at.createTransformedShape(s);
             Rectangle2D r2d = s.getBounds2D();
             int x0 = (int) Math.floor(r2d.getX());

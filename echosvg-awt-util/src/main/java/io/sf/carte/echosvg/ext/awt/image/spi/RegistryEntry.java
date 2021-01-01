@@ -25,6 +25,7 @@ import java.util.List;
  * probably need to implement on of the flavors of registry entries (such as
  * StreamRegistryEntry or URLRegistryEntry).
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface RegistryEntry {
@@ -35,12 +36,12 @@ public interface RegistryEntry {
      * in this format (when we add support for writing that is).  This may also
      * be used to build a selection expression for finding files of this type.
      */
-    List getStandardExtensions();
+    List<String> getStandardExtensions();
 
     /**
      * Return a List of mime types for this file format.  The first entry in the
      * list may be used as the default mime type.  */
-    List getMimeTypes();
+    List<String> getMimeTypes();
 
     /**
      * Returns the name of the format. For example "JPEG", "PNG", ...

@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * Bridge class for the &lt;a&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAElementBridge extends SVGGElementBridge {
@@ -180,9 +181,9 @@ public class SVGAElementBridge extends SVGGElementBridge {
             if (!(evt instanceof AbstractEvent)) return;
             final AbstractEvent ae = (AbstractEvent)evt;
 
-            List l = ae.getDefaultActions();
+            List<Runnable> l = ae.getDefaultActions();
             if (l != null) {
-                for (Object o : l) {
+                for (Runnable o : l) {
                     if (o instanceof AnchorDefaultActionable)
                         return; // only one anchor in default list...
                 }
@@ -256,9 +257,9 @@ public class SVGAElementBridge extends SVGGElementBridge {
             if (!(evt instanceof AbstractEvent)) return;
             final AbstractEvent ae = (AbstractEvent)evt;
 
-            List l = ae.getDefaultActions();
+            List<Runnable> l = ae.getDefaultActions();
             if (l != null) {
-                for (Object o : l) {
+                for (Runnable o : l) {
                     if (o instanceof MouseOverDefaultActionable)
                         return; // only one anchor in default list...
                 }
@@ -342,9 +343,9 @@ public class SVGAElementBridge extends SVGGElementBridge {
             if (!(evt instanceof AbstractEvent)) return;
             final AbstractEvent ae = (AbstractEvent)evt;
             
-            List l = ae.getDefaultActions();
+            List<Runnable> l = ae.getDefaultActions();
             if (l != null) {
-                for (Object o : l) {
+                for (Runnable o : l) {
                     if (o instanceof MouseOutDefaultActionable)
                         return; // only one anchor in default list...
                 }

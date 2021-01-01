@@ -47,6 +47,7 @@ import io.sf.carte.echosvg.dom.util.XLinkSupport;
  * An abstract base class for the SVG animation element bridges.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGAnimationElementBridge extends AbstractSVGBridge

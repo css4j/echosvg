@@ -49,6 +49,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * Bridge class for a regular polygon element.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas Deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge
@@ -99,7 +100,7 @@ public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge
     protected static float extractOpacity(Element paintElement,
                                           float opacity,
                                           BridgeContext ctx) {
-        Map refs = new HashMap();
+        Map<ParsedURL, ParsedURL> refs = new HashMap<>();
         CSSEngine eng = CSSUtilities.getCSSEngine(paintElement);
         int pidx = eng.getPropertyIndex
             (SVG12CSSConstants.CSS_SOLID_OPACITY_PROPERTY);
@@ -140,7 +141,7 @@ public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge
     protected static Color extractColor(Element paintElement,
                                         float opacity,
                                         BridgeContext ctx) {
-        Map refs = new HashMap();
+        Map<ParsedURL, ParsedURL> refs = new HashMap<>();
         CSSEngine eng = CSSUtilities.getCSSEngine(paintElement);
         int pidx = eng.getPropertyIndex
             (SVG12CSSConstants.CSS_SOLID_COLOR_PROPERTY);

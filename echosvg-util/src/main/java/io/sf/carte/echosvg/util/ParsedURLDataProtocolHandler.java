@@ -29,6 +29,7 @@ import java.util.Iterator;
  * http://www.ietf.org/rfc/rfc2397.txt
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class ParsedURLDataProtocolHandler 
@@ -178,7 +179,7 @@ public class ParsedURLDataProtocolHandler
 
         @Override
         protected InputStream openStreamInternal
-            (String userAgent, Iterator mimeTypes, Iterator encodingTypes)
+            (String userAgent, Iterator<String> mimeTypes, Iterator<String> encodingTypes)
             throws IOException {
             stream = decode(path);
             if (BASE64.equals(contentEncoding)) {

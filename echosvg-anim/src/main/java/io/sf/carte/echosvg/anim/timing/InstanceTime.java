@@ -23,9 +23,10 @@ package io.sf.carte.echosvg.anim.timing;
  * specification.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class InstanceTime implements Comparable {
+public class InstanceTime implements Comparable<InstanceTime> {
 
     /**
      * The time.
@@ -110,8 +111,7 @@ public class InstanceTime implements Comparable {
      * Compares this InstanceTime with another.
      */
     @Override
-    public int compareTo(Object o) {
-        InstanceTime it = (InstanceTime)o;
+    public int compareTo(InstanceTime it) {
         if (time == it.time) return 0;
         if (time >  it.time) return 1;
         return -1;

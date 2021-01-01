@@ -48,6 +48,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * Represents an SVG font.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class SVGGVTFont implements GVTFont, SVGConstants {
@@ -223,7 +224,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      * @return An array of matching glyph codes. This may be empty.
      */
     public int[] getGlyphCodesForName(String name) {
-        List glyphCodes = new ArrayList();
+        List<Integer> glyphCodes = new ArrayList<>();
         for (int i = 0; i < glyphNames.length; i++) {
             if (glyphNames[i] != null && glyphNames[i].equals(name)) {
                 glyphCodes.add(i);
@@ -231,7 +232,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
         }
         int[] glyphCodeArray = new int[glyphCodes.size()];
         for (int i = 0; i < glyphCodes.size(); i++) {
-            glyphCodeArray[i] = (Integer) glyphCodes.get(i);
+            glyphCodeArray[i] = glyphCodes.get(i);
         }
         return glyphCodeArray;
     }
@@ -245,7 +246,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
      * @return An array of matching glyph codes. This may be empty.
      */
     public int[] getGlyphCodesForUnicode(String unicode) {
-        List glyphCodes = new ArrayList();
+        List<Integer> glyphCodes = new ArrayList<>();
         for (int i = 0; i < glyphUnicodes.length; i++) {
             if (glyphUnicodes[i] != null && glyphUnicodes[i].equals(unicode)) {
                 glyphCodes.add(i);
@@ -253,7 +254,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
         }
         int[] glyphCodeArray = new int[glyphCodes.size()];
         for (int i = 0; i < glyphCodes.size(); i++) {
-            glyphCodeArray[i] = (Integer) glyphCodes.get(i);
+            glyphCodeArray[i] = glyphCodes.get(i);
         }
         return glyphCodeArray;
     }
@@ -584,7 +585,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
             aci = (AttributedCharacterIterator)ci;
         }
 
-        List glyphs = new ArrayList();
+        List<Glyph> glyphs = new ArrayList<>();
         char c = ci.first();
         while (c != CharacterIterator.DONE) {
             boolean foundMatchingGlyph = false;
@@ -668,7 +669,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
         // turn the vector of glyphs into an array;
         int numGlyphs = glyphs.size();
 
-        Glyph[] glyphArray = (Glyph[])glyphs.toArray( new Glyph[numGlyphs] );
+        Glyph[] glyphArray = glyphs.toArray( new Glyph[numGlyphs] );
 
         // return a new SVGGVTGlyphVector
         return new SVGGVTGlyphVector(this, glyphArray, frc);

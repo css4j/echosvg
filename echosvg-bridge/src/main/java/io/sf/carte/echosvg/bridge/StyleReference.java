@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * filter) changes due to a modification of the DOM.
  *
  * @author <a href="mailto:etissandier@ilog.fr">Emmanuel Tissandier</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class StyleReference {

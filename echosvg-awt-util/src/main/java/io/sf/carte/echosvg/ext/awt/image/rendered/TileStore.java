@@ -25,6 +25,7 @@ import  java.awt.image.Raster;
  * This the generic interface for a TileStore.  This is used to
  * store and retrieve tiles from the cache.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TileStore {

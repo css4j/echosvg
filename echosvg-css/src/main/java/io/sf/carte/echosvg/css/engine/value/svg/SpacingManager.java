@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a manager for the '*-spacing' property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SpacingManager extends LengthManager {
@@ -115,6 +116,8 @@ public class SpacingManager extends LengthManager {
                 return ValueConstants.NORMAL_VALUE;
             }
             throw createInvalidIdentifierDOMException(lu.getStringValue());
+        default:
+            break;
         }
         return super.createValue(lu, engine);
     }

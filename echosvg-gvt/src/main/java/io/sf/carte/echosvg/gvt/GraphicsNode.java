@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.gvt.filter.Mask;
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author <a href="mailto:etissandier@ilog.fr">Emmanuel Tissandier</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface GraphicsNode {
@@ -105,7 +106,7 @@ public interface GraphicsNode {
      * Returns a canonical WeakReference to this GraphicsNode.
      * This is suitable for use as a key value in a hash map
      */
-    WeakReference getWeakReference();
+    WeakReference<AbstractGraphicsNode> getWeakReference();
 
     //
     // Properties methods
@@ -202,7 +203,7 @@ public interface GraphicsNode {
      *
      * @param hints the rendering hints to be set
      */
-    void setRenderingHints(Map hints);
+    void setRenderingHints(Map<RenderingHints.Key,Object> hints);
 
     /**
      * Sets the rendering hints of this node.

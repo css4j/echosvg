@@ -23,10 +23,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+
 /**
  * Describes an SVG transform
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see           io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
  */
@@ -46,9 +49,9 @@ public class SVGTransformDescriptor implements SVGDescriptor, SVGSyntax{
      *         descriptor.
      */
     @Override
-    public Map getAttributeMap(Map attrMap){
+    public Map<String, String> getAttributeMap(Map<String, String> attrMap){
         if(attrMap == null)
-            attrMap = new HashMap();
+            attrMap = new HashMap<>();
 
         attrMap.put(SVG_TRANSFORM_ATTRIBUTE, transform);
 
@@ -65,9 +68,9 @@ public class SVGTransformDescriptor implements SVGDescriptor, SVGSyntax{
      *         of the descriptor's attribute values
      */
     @Override
-    public List getDefinitionSet(List defSet) {
+    public List<Element> getDefinitionSet(List<Element> defSet) {
         if (defSet == null)
-            defSet = new LinkedList();
+            defSet = new LinkedList<>();
 
         return defSet;
     }

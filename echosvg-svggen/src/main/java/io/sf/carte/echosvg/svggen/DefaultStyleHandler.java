@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * way to style an SVG <code>Element</code>.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultStyleHandler implements StyleHandler, SVGConstants {
@@ -43,11 +44,11 @@ public class DefaultStyleHandler implements StyleHandler, SVGConstants {
      * map-entry is a set of strings, which denote font-attributes to ignore.
      * The set is shared by all map-entries.
      */
-    static Map ignoreAttributes = new HashMap();
+    static Map<String, Set<String>> ignoreAttributes = new HashMap<>();
 
     static {
         // this is just used for read-only 'contains'-tests
-        Set textAttributes = new HashSet( );
+        Set<String> textAttributes = new HashSet<>( );
         textAttributes.add(SVG_FONT_SIZE_ATTRIBUTE);
         textAttributes.add(SVG_FONT_FAMILY_ATTRIBUTE);
         textAttributes.add(SVG_FONT_STYLE_ATTRIBUTE);
@@ -71,15 +72,14 @@ public class DefaultStyleHandler implements StyleHandler, SVGConstants {
      * property names, style values.
      */
     @Override
-    public void setStyle(Element element, Map styleMap,
+    public void setStyle(Element element, Map<String, String> styleMap,
                          SVGGeneratorContext generatorContext) {
         String tagName = element.getTagName();
-        for (Object o : styleMap.keySet()) {
-            String styleName = (String) o;
+        for (String styleName : styleMap.keySet()) {
             if (element.getAttributeNS(null, styleName).length() == 0) {
                 if (appliesTo(styleName, tagName)) {
                     element.setAttributeNS(null, styleName,
-                            (String) styleMap.get(styleName));
+                            styleMap.get(styleName));
                 }
             }
         }
@@ -90,7 +90,7 @@ public class DefaultStyleHandler implements StyleHandler, SVGConstants {
      * element.
      */
     protected boolean appliesTo(String styleName, String tagName) {
-        Set s = (Set)ignoreAttributes.get(tagName);
+        Set<String> s = ignoreAttributes.get(tagName);
         if (s == null) {
             return true;
         } else {

@@ -73,6 +73,7 @@ import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
  * <p><b> This class is not a committed part of the JAI API.  It may
  * be removed or changed in future releases of JAI.</b>
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PNGDecodeParam implements ImageDecodeParam {

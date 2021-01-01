@@ -26,9 +26,11 @@ import org.w3c.dom.Node;
  * Tests Node.textContent.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NodeTextContentTest extends DOM3Test {
+    @Override
     public boolean runImplBasic() throws Exception {
         Document doc = newSVGDoc();
         AbstractElement e = (AbstractElement) doc.getDocumentElement();

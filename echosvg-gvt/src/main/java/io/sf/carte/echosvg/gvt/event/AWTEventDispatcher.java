@@ -52,6 +52,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:tkormann@ilog.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AWTEventDispatcher
@@ -91,7 +92,7 @@ public class AWTEventDispatcher
      * These are used to queue events while a rendering event
      * is in progress.
      */
-    protected List    eventQueue = new LinkedList();
+    protected List<EventObject>    eventQueue = new LinkedList<>();
     protected boolean eventDispatchEnabled = true;
     protected int     eventQueueMaxSize = MAX_QUEUE_SIZE;
     /**
@@ -358,7 +359,7 @@ public class AWTEventDispatcher
      * @param listenerType the type of the listeners to return
      */
     @Override
-    public EventListener [] getListeners(Class listenerType) {
+    public EventListener [] getListeners(Class<?> listenerType) {
 
         // TODO the listeners should be cached per class in a map.
         // this list is build again and again in mouse-event-handling...
@@ -385,7 +386,7 @@ public class AWTEventDispatcher
         if (eventDispatchEnabled) {
             // Dispatch any queued events.
             while (eventQueue.size() > 0) {
-                EventObject evt =  (EventObject)eventQueue.remove(0);
+                EventObject evt =  eventQueue.remove(0);
                 dispatchEvent(evt);
             }
         }

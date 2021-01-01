@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.parser.TimingSpecifierListParser;
  * {@link TimingSpecifier}s.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TimingSpecifierListProducer
@@ -37,7 +38,7 @@ public class TimingSpecifierListProducer
     /**
      * The list of parsed timing specifiers.
      */
-    protected LinkedList timingSpecifiers = new LinkedList();
+    protected LinkedList<TimingSpecifier> timingSpecifiers = new LinkedList<>();
 
     /**
      * The owner TimedElement used when creating the TimingSpecifiers.
@@ -61,7 +62,7 @@ public class TimingSpecifierListProducer
      * Returns an array of the parsed TimingSpecifiers.
      */
     public TimingSpecifier[] getTimingSpecifiers() {
-        return (TimingSpecifier[]) timingSpecifiers.toArray(new TimingSpecifier[timingSpecifiers.size()]);
+        return timingSpecifiers.toArray(new TimingSpecifier[timingSpecifiers.size()]);
     }
 
     /**

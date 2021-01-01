@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * a GVT tree.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GVTTreeRenderer extends HaltingThread {
@@ -72,7 +73,7 @@ public class GVTTreeRenderer extends HaltingThread {
     /**
      * The listeners.
      */
-    protected List listeners = Collections.synchronizedList(new LinkedList());
+    protected List<Object> listeners = Collections.synchronizedList(new LinkedList<>());
 
     /**
      * Creates a new GVTTreeRenderer.

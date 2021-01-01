@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
  * ImageWriter implementation that uses EchoSVG's PNG codec to
  * write PNG files.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PNGImageWriter implements ImageWriter {

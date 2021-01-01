@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.script.InterpreterException;
  * A simple implementation of <code>Interpreter</code> interface to use
  * JPython python parser.
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JPythonInterpreter implements io.sf.carte.echosvg.script.Interpreter {

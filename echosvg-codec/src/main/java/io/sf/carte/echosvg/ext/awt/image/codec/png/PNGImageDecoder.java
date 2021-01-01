@@ -52,6 +52,7 @@ import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.SimpleRenderedImage;
 
 /**
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PNGImageDecoder extends ImageDecoderImpl {
@@ -294,7 +295,7 @@ class PNGImage extends SimpleRenderedImage {
     private static final int POST_ADD_GRAY_TRANS_EXP =
         POST_ADD_GRAY_TRANS | POST_EXP_MASK;
 
-    private List streamVec = new ArrayList();
+    private List<ByteArrayInputStream> streamVec = new ArrayList<>();
     private DataInputStream dataStream;
 
     private int bytesPerPixel; // number of bytes per input pixel
@@ -304,11 +305,11 @@ class PNGImage extends SimpleRenderedImage {
     // Number of private chunks
     private int chunkIndex = 0;
 
-    private List textKeys = new ArrayList();
-    private List textStrings = new ArrayList();
+    private List<String> textKeys = new ArrayList<>();
+    private List<String> textStrings = new ArrayList<>();
 
-    private List ztextKeys = new ArrayList();
-    private List ztextStrings = new ArrayList();
+    private List<String> ztextKeys = new ArrayList<>();
+    private List<String> ztextStrings = new ArrayList<>();
 
     private WritableRaster theTile;
 
@@ -721,8 +722,8 @@ class PNGImage extends SimpleRenderedImage {
         int textLen = textKeys.size();
         String[] textArray = new String[2*textLen];
         for (int i = 0; i < textLen; i++) {
-            String key = (String)textKeys.get(i);
-            String val = (String)textStrings.get(i);
+            String key = textKeys.get(i);
+            String val = textStrings.get(i);
             textArray[2*i] = key;
             textArray[2*i + 1] = val;
             if (emitProperties) {
@@ -738,8 +739,8 @@ class PNGImage extends SimpleRenderedImage {
         int ztextLen = ztextKeys.size();
         String[] ztextArray = new String[2*ztextLen];
         for (int i = 0; i < ztextLen; i++) {
-            String key = (String)ztextKeys.get(i);
-            String val = (String)ztextStrings.get(i);
+            String key = ztextKeys.get(i);
+            String val = ztextStrings.get(i);
             ztextArray[2*i] = key;
             ztextArray[2*i + 1] = val;
             if (emitProperties) {

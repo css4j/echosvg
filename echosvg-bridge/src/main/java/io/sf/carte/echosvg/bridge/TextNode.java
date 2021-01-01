@@ -28,6 +28,7 @@ import java.text.AttributedCharacterIterator;
 import java.text.CharacterIterator;
 import java.util.List;
 
+import io.sf.carte.echosvg.bridge.StrokingTextPainter.TextRun;
 import io.sf.carte.echosvg.gvt.AbstractGraphicsNode;
 import io.sf.carte.echosvg.gvt.Selectable;
 import io.sf.carte.echosvg.gvt.text.AttributedCharacterSpanIterator;
@@ -38,6 +39,7 @@ import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
  * A graphics node that represents text.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TextNode extends AbstractGraphicsNode implements Selectable {
@@ -75,7 +77,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
     /**
      * The list of text runs.
      */
-    protected List textRuns;
+    protected List<TextRun> textRuns;
 
     /**
      * The text painter used to display the text of this text node.
@@ -129,7 +131,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
     /**
      * Returns a list of text runs.
      */
-    public List getTextRuns() {
+    public List<TextRun> getTextRuns() {
         return textRuns;
     }
 
@@ -138,7 +140,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
      *
      * @param textRuns the new list of text runs
      */
-    public void setTextRuns(List textRuns) {
+    public void setTextRuns(List<TextRun> textRuns) {
         this.textRuns = textRuns;
     }
 
@@ -431,11 +433,9 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
         if (!super.contains(p)) {
             return false;
         }
-        List list = getTextRuns();
+        List<TextRun> list = getTextRuns();
         // place coords in text node coordinate system
-        for (Object aList : list) {
-            StrokingTextPainter.TextRun run =
-                    (StrokingTextPainter.TextRun) aList;
+        for (TextRun run : list) {
             TextSpanLayout layout = run.getLayout();
             float x = (float) p.getX();
             float y = (float) p.getY();

@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.svggen;
  * allow caching of raster images in generated SVG content.
  *
  * @author <a href="mailto:paul_evenblij@compuware.com">Paul Evenblij</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface CachedImageHandler extends GenericImageHandler {

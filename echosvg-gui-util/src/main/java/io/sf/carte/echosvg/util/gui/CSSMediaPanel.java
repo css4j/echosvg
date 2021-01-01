@@ -61,6 +61,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * This class represents a panel to edit/add/remove CSS media.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CSSMediaPanel extends JPanel implements ActionMap {
@@ -106,12 +107,12 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
     /**
      * The list that represents the CSS media.
      */
-    protected DefaultListModel listModel = new DefaultListModel();
+    protected DefaultListModel<Object> listModel = new DefaultListModel<>();
 
     /**
      * The list that represents the CSS media.
      */
-    protected JList mediaList;
+    protected JList<Object> mediaList;
 
     /**
      * Constructs a new panel to edit CSS media.
@@ -132,7 +133,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 
         constraints.insets = new Insets(5, 5, 5, 5);
 
-        mediaList = new JList();
+        mediaList = new JList<>();
         mediaList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mediaList.setModel(listModel);
         mediaList.addListSelectionListener(new MediaListSelectionListener());
@@ -181,9 +182,9 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
      *
      * @param mediaList the list of media to edit
      */
-    public void setMedia(List mediaList) {
+    public void setMedia(List<String> mediaList) {
         listModel.removeAllElements();
-        for (Object aMediaList : mediaList) {
+        for (String aMediaList : mediaList) {
             listModel.addElement(aMediaList);
         }
     }
@@ -205,9 +206,9 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
     /**
      * Returns the list of media.
      */
-    public List getMedia() {
-        List media = new ArrayList(listModel.size());
-        Enumeration e = listModel.elements();
+    public List<Object> getMedia() {
+        List<Object> media = new ArrayList<>(listModel.size());
+        Enumeration<Object> e = listModel.elements();
         while (e.hasMoreElements()) {
             media.add(e.nextElement());
         }
@@ -219,7 +220,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
      */
     public String getMediaAsString() {
         StringBuffer buffer = new StringBuffer();
-        Enumeration e = listModel.elements();
+        Enumeration<Object> e = listModel.elements();
         while (e.hasMoreElements()) {
             buffer.append((String)e.nextElement());
             buffer.append( ' ' );
@@ -246,7 +247,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
      */
     public static int showDialog(Component parent,
                                  String title,
-                                 List mediaList) {
+                                 List<String> mediaList) {
         Dialog dialog = new Dialog(parent, title, mediaList);
         dialog.setModal(true);
         dialog.pack();
@@ -274,7 +275,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
     /**
      * The map that contains the listeners
      */
-    protected Map listeners = new HashMap();
+    protected Map<String, AbstractAction> listeners = new HashMap<>();
 
     /**
      * Returns the action associated with the given string or null on error
@@ -284,7 +285,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
      */
     @Override
     public Action getAction(String key) throws MissingListenerException {
-        return (Action)listeners.get(key);
+        return listeners.get(key);
     }
 
     /**
@@ -409,7 +410,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
         /**
          * The new medium.
          */
-        protected JComboBox medium;
+        protected JComboBox<String> medium;
 
         /**
          * The return code.
@@ -449,7 +450,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
             panel.add(new JLabel(resources.getString("AddMediumDialog.label")),
                       BorderLayout.WEST);
 
-            medium = new JComboBox();
+            medium = new JComboBox<>();
             medium.setEditable(true);
             String media = resources.getString("Media.list");
             StringTokenizer tokens = new StringTokenizer(media, " ");
@@ -482,7 +483,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
         /**
          * The map that contains the listeners
          */
-        protected Map listeners = new HashMap();
+        protected Map<String, AbstractAction> listeners = new HashMap<>();
 
         /**
          * Returns the action associated with the given string or null on error
@@ -492,7 +493,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
          */
         @Override
         public Action getAction(String key) throws MissingListenerException {
-            return (Action)listeners.get(key);
+            return listeners.get(key);
         }
 
         /**
@@ -560,7 +561,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
          * @param title the title of this dialog
          * @param mediaList the media list
          */
-        public Dialog(Component parent, String title, List mediaList) {
+        public Dialog(Component parent, String title, List<String> mediaList) {
             super(JOptionPane.getFrameForComponent(parent), title);
 
             listeners.put("OKButtonAction", new OKButtonAction());
@@ -613,7 +614,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
         /**
          * The map that contains the listeners
          */
-        protected Map listeners = new HashMap();
+        protected Map<String, AbstractAction> listeners = new HashMap<>();
 
         /**
          * Returns the action associated with the given string or null on error
@@ -623,7 +624,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
          */
         @Override
         public Action getAction(String key) throws MissingListenerException {
-            return (Action)listeners.get(key);
+            return listeners.get(key);
         }
 
         /**

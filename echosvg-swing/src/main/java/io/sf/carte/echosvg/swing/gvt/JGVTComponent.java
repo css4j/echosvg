@@ -68,6 +68,7 @@ import io.sf.carte.echosvg.util.Platform;
  * This class represents a component which can display a GVT tree.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JGVTComponent extends JComponent {
@@ -103,8 +104,8 @@ public class JGVTComponent extends JComponent {
     /**
      * The GVT tree renderer listeners.
      */
-    protected List gvtTreeRendererListeners =
-        Collections.synchronizedList(new LinkedList());
+    protected List<GVTTreeRendererListener> gvtTreeRendererListeners =
+        Collections.synchronizedList(new LinkedList<GVTTreeRendererListener>());
 
     /**
      * Whether a render was requested.
@@ -144,7 +145,7 @@ public class JGVTComponent extends JComponent {
     /**
      * The interactor list.
      */
-    protected List interactors = new LinkedList();
+    protected List<Interactor> interactors = new LinkedList<>();
 
     /**
      * The current interactor.
@@ -154,12 +155,12 @@ public class JGVTComponent extends JComponent {
     /**
      * The overlays.
      */
-    protected List overlays = new LinkedList();
+    protected List<Overlay> overlays = new LinkedList<>();
 
     /**
      * The JGVTComponentListener list.
      */
-    protected List jgvtListeners = null;
+    protected List<JGVTComponentListener> jgvtListeners = null;
 
     /**
      * The event dispatcher.
@@ -298,14 +299,14 @@ public class JGVTComponent extends JComponent {
     /**
      * Returns the interactor list.
      */
-    public List getInteractors() {
+    public List<Interactor> getInteractors() {
         return interactors;
     }
 
     /**
      * Returns the overlay list.
      */
-    public List getOverlays() {
+    public List<Overlay> getOverlays() {
         return overlays;
     }
 
@@ -319,7 +320,7 @@ public class JGVTComponent extends JComponent {
 
     public void addJGVTComponentListener(JGVTComponentListener listener) {
         if (jgvtListeners == null)
-            jgvtListeners = new LinkedList();
+            jgvtListeners = new LinkedList<>();
         jgvtListeners.add(listener);
     }
 
@@ -583,8 +584,8 @@ public class JGVTComponent extends JComponent {
             g2d.drawRenderedImage(image, null);
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                                  RenderingHints.VALUE_ANTIALIAS_OFF);
-            for (Object overlay : overlays) {
-                ((Overlay) overlay).paint(g);
+            for (Overlay overlay : overlays) {
+                (overlay).paint(g);
             }
         }
     }
@@ -627,11 +628,11 @@ public class JGVTComponent extends JComponent {
             }
         }
         if (jgvtListeners != null) {
-            Iterator iter = jgvtListeners.iterator();
+            Iterator<JGVTComponentListener> iter = jgvtListeners.iterator();
             ComponentEvent ce = new ComponentEvent
                 (this, JGVTComponentListener.COMPONENT_TRANSFORM_CHANGED);
             while (iter.hasNext()) {
-                JGVTComponentListener l = (JGVTComponentListener)iter.next();
+                JGVTComponentListener l = iter.next();
                 l.componentTransformChanged(ce);
             }
         }
@@ -738,9 +739,9 @@ public class JGVTComponent extends JComponent {
                                               visRect.width, visRect.height);
         gvtTreeRenderer.setPriority(Thread.MIN_PRIORITY);
 
-        for (Object gvtTreeRendererListener : gvtTreeRendererListeners) {
+        for (GVTTreeRendererListener gvtTreeRendererListener : gvtTreeRendererListeners) {
             gvtTreeRenderer.addGVTTreeRendererListener
-                    ((GVTTreeRendererListener) gvtTreeRendererListener);
+                    (gvtTreeRendererListener);
         }
 
         // Disable the dispatch during the rendering
@@ -1260,8 +1261,7 @@ public class JGVTComponent extends JComponent {
                 !suspendInteractions &&
                 interactor == null &&
                 gvtRoot != null) {
-                for (Object interactor1 : interactors) {
-                    Interactor i = (Interactor) interactor1;
+                for (Interactor i : interactors) {
                     if (i.startInteraction(ie)) {
                         interactor = i;
                         break;

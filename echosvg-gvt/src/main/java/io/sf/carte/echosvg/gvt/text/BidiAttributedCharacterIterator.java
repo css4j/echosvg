@@ -34,6 +34,7 @@ import java.util.Set;
  * in a text run will all have the same bidi level.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class BidiAttributedCharacterIterator implements AttributedCharacterIterator {
@@ -95,14 +96,13 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
             int index = start;
             while (index < end) {
                 aci.setIndex(index);
-                Map attrMap = aci.getAttributes();
+                Map<Attribute, Object> attrMap = aci.getAttributes();
                 int extent  = aci.getRunLimit();
-                Map destMap = new HashMap(attrMap.size());
-                for (Object o : attrMap.entrySet()) {
+                Map<Attribute, Object> destMap = new HashMap<>(attrMap.size());
+                for (Map.Entry<Attribute, Object> e : attrMap.entrySet()) {
                     // Font doesn't like getting attribute sets with
                     // null keys or values so we strip them here.
-                    Map.Entry e = (Map.Entry) o;
-                    Object key = e.getKey();
+                    Attribute key = e.getKey();
                     if (key == null) continue;
                     Object value = e.getValue();
                     if (value == null) continue;
@@ -186,13 +186,14 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
         // construct the reordered ACI
         AttributedString reorderedAS
             = new AttributedString(reorderedString.toString());
-        Map [] attrs = new Map[numChars];
+        @SuppressWarnings("unchecked")
+        Map<Attribute, Object> [] attrs = new Map[numChars];
         int start=aci.getBeginIndex();
         int end  =aci.getEndIndex();
         int index = start;
         while (index < end) {
             aci.setIndex(index);
-            Map attrMap = aci.getAttributes();
+            Map<Attribute, Object> attrMap = aci.getAttributes();
             int extent  = aci.getRunLimit();
             for (int i=index; i<extent; i++)
                 attrs[i-start] = attrMap;
@@ -200,9 +201,9 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
         }
 
         runStart=0;
-        Map prevAttrMap = attrs[newCharOrder[0]];
+        Map<Attribute, Object> prevAttrMap = attrs[newCharOrder[0]];
         for (int i = 1; i < numChars; i++) {
-            Map attrMap = attrs[newCharOrder[i]];
+            Map<Attribute, Object> attrMap = attrs[newCharOrder[i]];
             if (attrMap != prevAttrMap) {
                 // Change in attrs set last run...
                 reorderedAS.addAttributes(prevAttrMap, runStart, i);
@@ -330,7 +331,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      * Get the keys of all attributes defined on the iterator's text range.
      */
     @Override
-    public Set getAllAttributeKeys() {
+    public Set<Attribute> getAllAttributeKeys() {
         return reorderedACI.getAllAttributeKeys();
     }
 
@@ -348,7 +349,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      * character.
      */
     @Override
-    public Map getAttributes() {
+    public Map<Attribute, Object> getAttributes() {
         return reorderedACI.getAttributes();
     }
 
@@ -378,7 +379,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      *     character.
      */
     @Override
-    public int getRunLimit(Set attributes) {
+    public int getRunLimit(Set<? extends Attribute> attributes) {
         return reorderedACI.getRunLimit(attributes);
     }
 
@@ -408,7 +409,7 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
      * @param attributes the Set of attributes which begins at the returned index.
      */
     @Override
-    public int getRunStart(Set attributes) {
+    public int getRunStart(Set<? extends Attribute> attributes) {
         return reorderedACI.getRunStart(attributes);
     }
 

@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.event.EventListenerList;
 
@@ -35,6 +35,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MutationEvent;
 
+import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.XBLEventSupport;
 import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
 import io.sf.carte.echosvg.anim.dom.XBLOMShadowTreeElement;
@@ -48,6 +49,7 @@ import io.sf.carte.echosvg.util.XBLConstants;
  * A class to manage all XBL content elements in a shadow tree.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ContentManager {
@@ -71,20 +73,20 @@ public class ContentManager {
      * Map of content elements to selectors.
      * [XBLContentElement, AbstractContentSelector]
      */
-    protected HashMap selectors = new HashMap();
+    protected HashMap<Node, AbstractContentSelector> selectors = new HashMap<>();
 
     /**
      * Map of content elements to a list of nodes that were selected
      * by that content element.
      * [XBLContentElement, NodeList]
      */
-    protected HashMap selectedNodes = new HashMap();
+    protected HashMap<Node, NodeList> selectedNodes = new HashMap<>();
 
     /**
      * List of content elements.
      * [XBLContentElement]
      */
-    protected LinkedList contentElementList = new LinkedList();
+    protected LinkedList<SVGOMElement> contentElementList = new LinkedList<>();
 
     /**
      * The recently removed node from the shadow tree.
@@ -95,7 +97,7 @@ public class ContentManager {
      * Map of XBLContentElement objects to EventListenerList
      * objects.
      */
-    protected HashMap listeners = new HashMap();
+    protected HashMap<XBLOMContentElement, EventListenerList> listeners = new HashMap<>();
 
     /**
      * DOMAttrModified listener for content elements.
@@ -206,19 +208,19 @@ public class ContentManager {
     public void dispose() {
         xblManager.setContentManager(shadowTree, null);
 
-        Iterator i = selectedNodes.entrySet().iterator();
+        Iterator<Entry<Node, NodeList>> i = selectedNodes.entrySet().iterator();
         while (i.hasNext()) {
-            Map.Entry e = (Map.Entry) i.next();
-            NodeList nl = (NodeList) e.getValue();
+            Entry<Node, NodeList> e = i.next();
+            NodeList nl = e.getValue();
             for (int j = 0; j < nl.getLength(); j++) {
                 Node n = nl.item(j);
                 xblManager.getRecord(n).contentElement = null;
             }
         }
 
-        i = contentElementList.iterator();
-        while (i.hasNext()) {
-            NodeEventTarget n = (NodeEventTarget) i.next();
+        Iterator<SVGOMElement> celIt = contentElementList.iterator();
+        while (celIt.hasNext()) {
+            NodeEventTarget n = celIt.next();
             n.removeEventListenerNS
                 (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified",
                  contentElementDomAttrModifiedEventListener, false);
@@ -252,7 +254,7 @@ public class ContentManager {
      * given content element.
      */
     public NodeList getSelectedContent(XBLOMContentElement e) {
-        return (NodeList) selectedNodes.get(e);
+        return selectedNodes.get(e);
     }
 
     /**
@@ -268,7 +270,7 @@ public class ContentManager {
      */
     public void addContentSelectionChangedListener
             (XBLOMContentElement e, ContentSelectionChangedListener l) {
-        EventListenerList ll = (EventListenerList) listeners.get(e);
+        EventListenerList ll = listeners.get(e);
         if (ll == null) {
             ll = new EventListenerList();
             listeners.put(e, ll);
@@ -282,7 +284,7 @@ public class ContentManager {
      */
     public void removeContentSelectionChangedListener
             (XBLOMContentElement e, ContentSelectionChangedListener l) {
-        EventListenerList ll = (EventListenerList) listeners.get(e);
+        EventListenerList ll = listeners.get(e);
         if (ll != null) {
             ll.remove(ContentSelectionChangedListener.class, l);
         }
@@ -298,7 +300,7 @@ public class ContentManager {
         ContentSelectionChangedEvent evt =
             new ContentSelectionChangedEvent(e);
 
-        EventListenerList ll = (EventListenerList) listeners.get(e);
+        EventListenerList ll = listeners.get(e);
         if (ll != null) {
             Object[] ls = ll.getListenerList();
             for (int i = ls.length - 2; i >= 0; i -= 2) {
@@ -321,11 +323,11 @@ public class ContentManager {
      * @param first Whether this is the first update for this ContentManager.
      */
     protected void update(boolean first) {
-        HashSet previouslySelectedNodes = new HashSet();
-        Iterator i = selectedNodes.entrySet().iterator();
+        HashSet<Node> previouslySelectedNodes = new HashSet<>();
+        Iterator<Entry<Node, NodeList>> i = selectedNodes.entrySet().iterator();
         while (i.hasNext()) {
-            Map.Entry e = (Map.Entry) i.next();
-            NodeList nl = (NodeList) e.getValue();
+            Entry<Node, NodeList> e = i.next();
+            NodeList nl = e.getValue();
             for (int j = 0; j < nl.getLength(); j++) {
                 Node n = nl.item(j);
                 xblManager.getRecord(n).contentElement = null;
@@ -333,9 +335,9 @@ public class ContentManager {
             }
         }
 
-        i = contentElementList.iterator();
-        while (i.hasNext()) {
-            NodeEventTarget n = (NodeEventTarget) i.next();
+        Iterator<SVGOMElement> netIt = contentElementList.iterator();
+        while (netIt.hasNext()) {
+            NodeEventTarget n = netIt.next();
             n.removeEventListenerNS
                 (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified",
                  contentElementDomAttrModifiedEventListener, false);
@@ -354,22 +356,22 @@ public class ContentManager {
         }
 
         if (updated) {
-            HashSet newlySelectedNodes = new HashSet();
+            HashSet<Node> newlySelectedNodes = new HashSet<>();
             i = selectedNodes.entrySet().iterator();
             while (i.hasNext()) {
-                Map.Entry e = (Map.Entry) i.next();
-                NodeList nl = (NodeList) e.getValue();
+                Entry<Node, NodeList> e = i.next();
+                NodeList nl = e.getValue();
                 for (int j = 0; j < nl.getLength(); j++) {
                     Node n = nl.item(j);
                     newlySelectedNodes.add(n);
                 }
             }
 
-            HashSet removed = new HashSet();
+            HashSet<Node> removed = new HashSet<>();
             removed.addAll(previouslySelectedNodes);
             removed.removeAll(newlySelectedNodes);
 
-            HashSet added = new HashSet();
+            HashSet<Node> added = new HashSet<>();
             added.addAll(newlySelectedNodes);
             added.removeAll(previouslySelectedNodes);
 
@@ -387,13 +389,13 @@ public class ContentManager {
             }
         }
         if (n instanceof XBLOMContentElement) {
-            contentElementList.add(n);
             XBLOMContentElement e = (XBLOMContentElement) n;
+            contentElementList.add(e);
             e.addEventListenerNS
                 (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified",
                  contentElementDomAttrModifiedEventListener, false, null);
             AbstractContentSelector s =
-                (AbstractContentSelector) selectors.get(n);
+                selectors.get(n);
             boolean changed;
             if (s == null) {
                 if (e.hasAttributeNS(null,

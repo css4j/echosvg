@@ -51,6 +51,7 @@ import io.sf.carte.echosvg.util.RunnableQueue;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JSVGCanvasHandler {
@@ -104,7 +105,7 @@ public class JSVGCanvasHandler {
 
     JFrame     frame = null;
     JSVGCanvas canvas = null;
-    WeakReference updateManager = null;
+    WeakReference<UpdateManager> updateManager = null;
     WindowListener wl = null;
     InitialRenderListener irl = null;
     LoadListener ll = null;
@@ -312,7 +313,7 @@ public class JSVGCanvasHandler {
 
     protected UpdateManager getUpdateManager() {
         if (updateManager != null) {
-            return (UpdateManager) updateManager.get();
+            return updateManager.get();
         }
         return null;
     }
@@ -400,7 +401,7 @@ public class JSVGCanvasHandler {
             SVGLoadEventDispatcher dispatcher;
             dispatcher = (SVGLoadEventDispatcher)e.getSource();
             UpdateManager um = dispatcher.getUpdateManager();
-            updateManager = new WeakReference(um);
+            updateManager = new WeakReference<>(um);
             url = new UpdateRenderListener();
             um.addUpdateManagerListener(url);
         }

@@ -26,6 +26,7 @@ import java.util.List;
  * Generic class to dispatch events in a highly reliable way.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EventDispatcher {
@@ -37,7 +38,7 @@ public class EventDispatcher {
 
 
     public static void fireEvent(final Dispatcher dispatcher,
-                                 final List listeners,
+                                 final List<Object> listeners,
                                  final Object evt,
                                  final boolean useEventQueue) {
         if (useEventQueue && !EventQueue.isDispatchThread()) {

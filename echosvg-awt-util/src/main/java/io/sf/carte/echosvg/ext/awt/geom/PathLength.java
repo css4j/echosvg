@@ -42,6 +42,7 @@ import java.util.List;
  * </p>
  *
  * @author <a href="mailto:dean.jackson@cmis.csiro.au">Dean Jackson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PathLength {
@@ -54,7 +55,7 @@ public class PathLength {
     /**
      * The list of flattened path segments.
      */
-    protected List segments;
+    protected List<PathSegment> segments;
 
     /**
      * Array where the index is the index of the original path segment
@@ -117,8 +118,8 @@ public class PathLength {
 
         PathIterator pi = path.getPathIterator(new AffineTransform());
         SingleSegmentPathIterator sspi = new SingleSegmentPathIterator();
-        segments = new ArrayList(20);
-        List indexes = new ArrayList(20);
+        segments = new ArrayList<>(20);
+        List<Integer> indexes = new ArrayList<>(20);
         int index = 0;
         int origIndex = -1;
         float lastMoveX = 0f;
@@ -189,7 +190,7 @@ public class PathLength {
         }
         segmentIndexes = new int[indexes.size()];
         for (int i = 0; i < segmentIndexes.length; i++) {
-            segmentIndexes[i] = (Integer) indexes.get(i);
+            segmentIndexes[i] = indexes.get(i);
         }
         initialised = true;
     }
@@ -218,7 +219,7 @@ public class PathLength {
         if (index >= segmentIndexes.length) {
             return pathLength;
         }
-        PathSegment seg = (PathSegment) segments.get(segmentIndexes[index]);
+        PathSegment seg = segments.get(segmentIndexes[index]);
         return seg.getLength();
     }
 
@@ -234,11 +235,11 @@ public class PathLength {
 
         if (upperIndex == 0) {
             // Length was probably zero, so return the upper segment.
-            PathSegment upper = (PathSegment) segments.get(upperIndex);
+            PathSegment upper = segments.get(upperIndex);
             return upper.getIndex();
         }
 
-        PathSegment lower = (PathSegment) segments.get(upperIndex - 1);
+        PathSegment lower = segments.get(upperIndex - 1);
         return lower.getIndex();
     }
 
@@ -253,13 +254,13 @@ public class PathLength {
         if (index < 0 || index >= segmentIndexes.length) {
             return null;
         }
-        PathSegment seg = (PathSegment) segments.get(segmentIndexes[index]);
+        PathSegment seg = segments.get(segmentIndexes[index]);
         float start = seg.getLength();
         float end;
         if (index == segmentIndexes.length - 1) {
             end = pathLength;
         } else {
-            seg = (PathSegment) segments.get(segmentIndexes[index + 1]);
+            seg = segments.get(segmentIndexes[index + 1]);
             end = seg.getLength();
         }
         return pointAtLength(start + (end - start) * proportion);
@@ -277,14 +278,14 @@ public class PathLength {
             return null;
         }
 
-        PathSegment upper = (PathSegment) segments.get(upperIndex);
+        PathSegment upper = segments.get(upperIndex);
 
         if (upperIndex == 0) {
             // Length was probably zero, so return the upper point.
             return new Point2D.Float(upper.getX(), upper.getY());
         }
 
-        PathSegment lower = (PathSegment) segments.get(upperIndex - 1);
+        PathSegment lower = segments.get(upperIndex - 1);
 
         // Now work out where along the line would be the length.
         float offset = length - lower.getLength();
@@ -313,13 +314,13 @@ public class PathLength {
         if (index < 0 || index >= segmentIndexes.length) {
             return 0f;
         }
-        PathSegment seg = (PathSegment) segments.get(segmentIndexes[index]);
+        PathSegment seg = segments.get(segmentIndexes[index]);
         float start = seg.getLength();
         float end;
         if (index == segmentIndexes.length - 1) {
             end = pathLength;
         } else {
-            seg = (PathSegment) segments.get(segmentIndexes[index + 1]);
+            seg = segments.get(segmentIndexes[index + 1]);
             end = seg.getLength();
         }
         return angleAtLength(start + (end - start) * proportion);
@@ -338,7 +339,7 @@ public class PathLength {
             return 0f;
         }
 
-        PathSegment upper = (PathSegment) segments.get(upperIndex);
+        PathSegment upper = segments.get(upperIndex);
 
         if (upperIndex == 0) {
             // Length was probably zero, so return the angle between the first
@@ -346,7 +347,7 @@ public class PathLength {
             upperIndex = 1;
         }
 
-        PathSegment lower = (PathSegment) segments.get(upperIndex - 1);
+        PathSegment lower = segments.get(upperIndex - 1);
 
         // Compute the slope.
         return (float) Math.atan2(upper.getY() - lower.getY(),
@@ -374,7 +375,7 @@ public class PathLength {
         int ub = segments.size() - 1;
         while (lb != ub) {
             int curr = (lb + ub) >> 1;
-            PathSegment ps = (PathSegment) segments.get(curr);
+            PathSegment ps = segments.get(curr);
             if (ps.getLength() >= length) {
                 ub = curr;
             } else {
@@ -382,7 +383,7 @@ public class PathLength {
             }
         }
         for (;;) {
-            PathSegment ps = (PathSegment) segments.get(ub);
+            PathSegment ps = segments.get(ub);
             if (ps.getSegType() != PathIterator.SEG_MOVETO
                     || ub == segments.size() - 1) {
                 break;
@@ -394,7 +395,7 @@ public class PathLength {
         int currentIndex = 0;
         int numSegments = segments.size();
         while (upperIndex <= 0 && currentIndex < numSegments) {
-            PathSegment ps = (PathSegment) segments.get(currentIndex);
+            PathSegment ps = segments.get(currentIndex);
             if (ps.getLength() >= length
                     && ps.getSegType() != PathIterator.SEG_MOVETO) {
                 upperIndex = currentIndex;

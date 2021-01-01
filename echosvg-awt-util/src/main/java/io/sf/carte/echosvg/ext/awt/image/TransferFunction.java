@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.ext.awt.image;
  * functions, which can all be converted to a lookup table
  *
  * @author <a href="mailto:sheng.pei@eng.sun.com">Sheng Pei</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TransferFunction {

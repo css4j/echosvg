@@ -28,6 +28,7 @@ import java.text.AttributedCharacterIterator;
  *
  * @see io.sf.carte.echosvg.bridge.TextSpanLayout
  * @author <a href="mailto:dewese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FlowTextLayoutFactory implements TextLayoutFactory {

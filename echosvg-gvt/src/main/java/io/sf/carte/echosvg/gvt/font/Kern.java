@@ -26,6 +26,7 @@ import java.util.Arrays;
  * by side. It may be used for either horizontal or vertical kerning.
  *
  * @author <a href="mailto:dean.jackson@cmis.csiro.au">Dean Jackson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Kern {

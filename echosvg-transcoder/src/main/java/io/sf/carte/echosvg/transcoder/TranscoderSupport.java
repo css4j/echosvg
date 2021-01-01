@@ -25,6 +25,7 @@ import java.util.Map;
  * support transcoding hints and/or error handler.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TranscoderSupport {
@@ -71,7 +72,7 @@ public class TranscoderSupport {
      * with the specified hints.
      * @param hints the rendering hints to be set
      */
-    public void setTranscodingHints(Map hints) {
+    public void setTranscodingHints(Map<TranscodingHints.Key, ?> hints) {
         this.hints.putAll(hints);
     }
 

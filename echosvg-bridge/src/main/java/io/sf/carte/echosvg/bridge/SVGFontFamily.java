@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.bridge;
 
 import java.lang.ref.SoftReference;
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.util.Map;
 
 import org.w3c.dom.Element;
@@ -36,6 +37,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * A font family class for SVG fonts.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFontFamily implements GVTFontFamily {
@@ -107,11 +109,12 @@ public class SVGFontFamily implements GVTFontFamily {
      * @param attrs The Attribute Map to get Values from.
      */
     @Override
-    public GVTFont deriveFont(float size, Map attrs) {
+    public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) {
         SVGFontElementBridge fontBridge;
         fontBridge = (SVGFontElementBridge)ctx.getBridge(fontElement);
-        SoftReference sr = (SoftReference)attrs.get(TEXT_COMPOUND_ID);
-        Element textElement = (Element)sr.get();
+        @SuppressWarnings("unchecked")
+        SoftReference<Element> sr = (SoftReference<Element>)attrs.get(TEXT_COMPOUND_ID);
+        Element textElement = sr.get();
         return fontBridge.createFont(ctx, fontElement, textElement,
                                      size, fontFace);
     }

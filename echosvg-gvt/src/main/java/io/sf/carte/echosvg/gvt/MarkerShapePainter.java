@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.ext.awt.geom.ShapeExtender;
  * A shape painter that can be used to paint markers on a shape.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MarkerShapePainter implements ShapePainter {
@@ -303,7 +304,7 @@ public class MarkerShapePainter implements ShapePainter {
         }
 
         CompositeGraphicsNode group = new CompositeGraphicsNode();
-        List children = group.getChildren();
+        List<GraphicsNode> children = group.getChildren();
         if (startMarkerProxy != null) {
             children.add(startMarkerProxy);
         }
@@ -512,7 +513,7 @@ public class MarkerShapePainter implements ShapePainter {
 
         iter.next();
 
-        List proxies = new ArrayList();
+        List<ProxyGraphicsNode> proxies = new ArrayList<>();
         while (!iter.isDone()) {
             nextSegType = iter.currentSegment(next);
 

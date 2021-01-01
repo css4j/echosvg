@@ -46,6 +46,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * have a slightly lower priority than the RegistryEntry implementations using the
  * internal codecs, so these take precedence if they are available.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractImageIORegistryEntry

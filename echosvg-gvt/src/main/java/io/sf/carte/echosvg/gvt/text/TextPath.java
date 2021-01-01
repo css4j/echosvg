@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.ext.awt.geom.PathLength;
  * A text path describes a path along which some text will be rendered.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TextPath {

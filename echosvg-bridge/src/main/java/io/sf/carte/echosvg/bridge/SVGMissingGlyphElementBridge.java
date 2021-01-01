@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.bridge;
  * Bridge class for the &lt;missing-glyph&gt; element.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGMissingGlyphElementBridge extends SVGGlyphElementBridge {

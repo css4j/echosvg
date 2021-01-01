@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * A class to handle the XPath Pattern syntax for XBL content elements.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XPathPatternContentSelector extends AbstractContentSelector {
@@ -131,7 +132,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
         /**
          * The selected nodes.
          */
-        protected ArrayList nodes = new ArrayList(10);
+        protected ArrayList<Node> nodes = new ArrayList<>(10);
 
         /**
          * Creates a new SelectedNodes object.
@@ -141,7 +142,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
         }
 
         protected boolean update() {
-            ArrayList oldNodes = (ArrayList) nodes.clone();
+            ArrayList<?> oldNodes = (ArrayList<?>) nodes.clone();
             nodes.clear();
             for (Node n = boundElement.getFirstChild();
                     n != null;
@@ -206,7 +207,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
             if (index < 0 || index >= nodes.size()) {
                 return null;
             }
-            return (Node) nodes.get(index);
+            return nodes.get(index);
         }
 
         /**

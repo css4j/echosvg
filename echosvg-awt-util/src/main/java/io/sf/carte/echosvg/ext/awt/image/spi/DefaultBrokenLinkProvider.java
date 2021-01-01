@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultBrokenLinkProvider
@@ -70,7 +71,7 @@ public class DefaultBrokenLinkProvider
 
             // Put the broken link property in the image so people know
             // This isn't the "real" image.
-            Hashtable ht = new Hashtable();
+            Hashtable<String, String> ht = new Hashtable<>();
             ht.put(BROKEN_LINK_PROPERTY,
                    formatMessage(base, code, params));
             bi = new BufferedImage(bi.getColorModel(), bi.getRaster(),

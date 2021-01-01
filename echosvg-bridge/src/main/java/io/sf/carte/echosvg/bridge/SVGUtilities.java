@@ -50,6 +50,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
@@ -249,7 +250,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 
         DocumentLoader loader = ctx.getDocumentLoader();
         Element e = element;
-        List refs = new LinkedList();
+        List<ParsedURL> refs = new LinkedList<>();
         for (;;) {
             String v = e.getAttributeNS(namespaceURI, attrName);
             if (v.length() > 0) { // exit if attribute defined
@@ -262,7 +263,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
             String baseURI = e.getBaseURI();
             ParsedURL purl = new ParsedURL(baseURI, uriStr);
 
-            for (Object ref : refs) {
+            for (ParsedURL ref : refs) {
                 if (purl.equals(ref))
                     throw new BridgeException
                             (ctx, e, ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
@@ -654,23 +655,23 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
                 SVG12Constants.SVG_FILTER_MARGINS_UNITS_ATTRIBUTE, units, ctx);
        }
 
-       // 'batik:dx' attribute - default is 0
+       // 'dx' attribute - default is 0
        String dxStr = filterElement.getAttributeNS(null,
                                                    SVG12Constants.SVG_MX_ATRIBUTE);
        if (dxStr.length() == 0) {
            dxStr = SVG12Constants.SVG_FILTER_MX_DEFAULT_VALUE;
        }
-       // 'batik:dy' attribute - default is 0
+       // 'dy' attribute - default is 0
        String dyStr = filterElement.getAttributeNS(null, SVG12Constants.SVG_MY_ATRIBUTE);
        if (dyStr.length() == 0) {
            dyStr = SVG12Constants.SVG_FILTER_MY_DEFAULT_VALUE;
        }
-       // 'batik:dw' attribute - default is 0
+       // 'dw' attribute - default is 0
        String dwStr = filterElement.getAttributeNS(null, SVG12Constants.SVG_MW_ATRIBUTE);
        if (dwStr.length() == 0) {
            dwStr = SVG12Constants.SVG_FILTER_MW_DEFAULT_VALUE;
        }
-       // 'batik:dh' attribute - default is 0
+       // 'dh' attribute - default is 0
        String dhStr = filterElement.getAttributeNS(null, SVG12Constants.SVG_MH_ATRIBUTE);
        if (dhStr.length() == 0) {
            dhStr = SVG12Constants.SVG_FILTER_MH_DEFAULT_VALUE;
@@ -947,19 +948,19 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
         String dxStr = "", dyStr = "", dwStr = "", dhStr = "";
 
         if (filterPrimitiveElement != null) {
-            // 'batik:dx' attribute - default is 0
+            // 'dx' attribute - default is 0
             dxStr = filterPrimitiveElement.getAttributeNS
                 (null, SVG12Constants.SVG_MX_ATRIBUTE);
 
-            // 'batik:dy' attribute - default is 0
+            // 'dy' attribute - default is 0
             dyStr = filterPrimitiveElement.getAttributeNS
                 (null, SVG12Constants.SVG_MY_ATRIBUTE);
 
-            // 'batik:dw' attribute - default is 0
+            // 'dw' attribute - default is 0
             dwStr = filterPrimitiveElement.getAttributeNS
                 (null, SVG12Constants.SVG_MW_ATRIBUTE);
 
-            // 'batik:dh' attribute - default is 0
+            // 'dh' attribute - default is 0
             dhStr = filterPrimitiveElement.getAttributeNS
                 (null, SVG12Constants.SVG_MH_ATRIBUTE);
         }

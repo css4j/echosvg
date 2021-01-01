@@ -27,11 +27,13 @@ import org.w3c.dom.events.EventListener;
  * Tests EventTarget.addEventListenerNS.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EventTargetAddEventListenerNSTest extends DOM3Test {
     static class Listener1 implements EventListener {
         int count = 0;
+        @Override
         public void handleEvent(Event e) {
             count++;
         }
@@ -43,6 +45,7 @@ public class EventTargetAddEventListenerNSTest extends DOM3Test {
     }
     static class Listener2 implements EventListener {
         int count = 0;
+        @Override
         public void handleEvent(Event e) {
             count++;
             e.stopPropagation();
@@ -53,6 +56,7 @@ public class EventTargetAddEventListenerNSTest extends DOM3Test {
             return c;
         }
     }
+    @Override
     public boolean runImplBasic() throws Exception {
         Listener1 l1 = new Listener1();
         Listener2 l2 = new Listener2();

@@ -36,6 +36,7 @@ import java.util.Vector;
  * It essentially ignores the dependency and dirty region methods.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RenderedImageCachableRed implements CachableRed {
@@ -49,7 +50,7 @@ public class RenderedImageCachableRed implements CachableRed {
     }
 
     private RenderedImage src;
-    private Vector srcs = new Vector(0);
+    private Vector<RenderedImage> srcs = new Vector<>(0);
 
     public RenderedImageCachableRed(RenderedImage src) {
         if(src == null){
@@ -59,7 +60,7 @@ public class RenderedImageCachableRed implements CachableRed {
     }
 
     @Override
-    public Vector getSources() {
+    public Vector<RenderedImage> getSources() {
         return srcs; // should always be empty...
     }
 

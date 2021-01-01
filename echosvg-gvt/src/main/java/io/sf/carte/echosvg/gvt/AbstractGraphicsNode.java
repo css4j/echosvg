@@ -27,6 +27,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.renderable.RenderableImage;
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +51,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author <a href="mailto:etissandier@ilog.fr">Emmanuel Tissandier</a>
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractGraphicsNode implements GraphicsNode {
@@ -120,17 +122,17 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     /**
      * The GraphicsNodeRable for this node.
      */
-    protected WeakReference graphicsNodeRable;
+    protected WeakReference<GraphicsNodeRable> graphicsNodeRable;
 
     /**
      * The GraphicsNodeRable for this node with all filtering applied
      */
-    protected WeakReference enableBackgroundGraphicsNodeRable;
+    protected WeakReference<GraphicsNodeRable> enableBackgroundGraphicsNodeRable;
 
     /**
      * A Weak Reference to this.
      */
-    protected WeakReference weakRef;
+    protected WeakReference<AbstractGraphicsNode> weakRef;
 
     /**
      * Internal Cache: node bounds
@@ -151,9 +153,9 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * This is suitable for use as a key value in a hash map
      */
     @Override
-    public WeakReference getWeakReference() {
+    public WeakReference<AbstractGraphicsNode> getWeakReference() {
         if (weakRef == null)
-            weakRef =  new WeakReference(this);
+            weakRef =  new WeakReference<>(this);
         return weakRef;
     }
 
@@ -329,7 +331,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
      * @param hints the rendering hints to be set
      */
     @Override
-    public void setRenderingHints(Map hints) {
+    public void setRenderingHints(Map<RenderingHints.Key,Object> hints) {
         fireGraphicsNodeChangeStarted();
         if (this.hints == null) {
             this.hints = new RenderingHints(hints);
@@ -416,12 +418,12 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     public Filter getGraphicsNodeRable(boolean createIfNeeded) {
         GraphicsNodeRable ret = null;
         if (graphicsNodeRable != null) {
-            ret = (GraphicsNodeRable)graphicsNodeRable.get();
+            ret = graphicsNodeRable.get();
             if (ret != null) return ret;
         }
         if (createIfNeeded) {
         ret = new GraphicsNodeRable8Bit(this);
-        graphicsNodeRable = new WeakReference(ret);
+        graphicsNodeRable = new WeakReference<>(ret);
         }
         return ret;
     }
@@ -436,13 +438,13 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
         (boolean createIfNeeded) {
         GraphicsNodeRable ret = null;
         if (enableBackgroundGraphicsNodeRable != null) {
-            ret = (GraphicsNodeRable)enableBackgroundGraphicsNodeRable.get();
+            ret = enableBackgroundGraphicsNodeRable.get();
             if (ret != null) return ret;
         }
         if (createIfNeeded) {
             ret = new GraphicsNodeRable8Bit(this);
             ret.setUsePrimitivePaint(false);
-            enableBackgroundGraphicsNodeRable = new WeakReference(ret);
+            enableBackgroundGraphicsNodeRable = new WeakReference<>(ret);
         }
         return ret;
     }
@@ -599,7 +601,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
     private void traceFilter(Filter filter, String prefix){
         System.out.println(prefix + filter.getClass().getName());
         System.out.println(prefix + filter.getBounds2D());
-        List sources = filter.getSources();
+        List<RenderableImage> sources = filter.getSources();
         int nSources = sources != null ? sources.size() : 0;
         prefix += "\t";
         for(int i=0; i<nSources; i++){
@@ -686,13 +688,13 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
         RootGraphicsNode rootGN = getRoot();
         if (rootGN == null) return;
 
-        List l = rootGN.getTreeGraphicsNodeChangeListeners();
+        List<GraphicsNodeChangeListener> l = rootGN.getTreeGraphicsNodeChangeListeners();
         if (l == null) return;
 
-        Iterator i = l.iterator();
+        Iterator<GraphicsNodeChangeListener> i = l.iterator();
         GraphicsNodeChangeListener gncl;
         while (i.hasNext()) {
-            gncl = (GraphicsNodeChangeListener)i.next();
+            gncl = i.next();
             gncl.changeStarted(changeStartedEvent);
         }
     }
@@ -708,13 +710,13 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
         RootGraphicsNode rootGN = getRoot();
         if (rootGN == null) return;
 
-        List l = rootGN.getTreeGraphicsNodeChangeListeners();
+        List<GraphicsNodeChangeListener> l = rootGN.getTreeGraphicsNodeChangeListeners();
         if (l == null) return;
 
-        Iterator i = l.iterator();
+        Iterator<GraphicsNodeChangeListener> i = l.iterator();
         GraphicsNodeChangeListener gncl;
         while (i.hasNext()) {
-            gncl = (GraphicsNodeChangeListener)i.next();
+            gncl = i.next();
             gncl.changeCompleted(changeCompletedEvent);
         }
     }

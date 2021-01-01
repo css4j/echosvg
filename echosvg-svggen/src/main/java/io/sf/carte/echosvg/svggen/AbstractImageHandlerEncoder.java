@@ -40,6 +40,7 @@ import org.w3c.dom.Element;
  * of the file created by this handler.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see             io.sf.carte.echosvg.svggen.SVGGraphics2D
  * @see             io.sf.carte.echosvg.svggen.ImageHandlerJPEGEncoder
@@ -61,7 +62,7 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
     // for createGraphics method.
     private static Method createGraphics = null;
     private static boolean initDone = false;
-    private static final Class[] paramc = new Class[] {BufferedImage.class};
+    private static final Class<?>[] paramc = new Class[] {BufferedImage.class};
     private static Object[] paramo = null;
 
     /**
@@ -73,7 +74,7 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
     private static Graphics2D createGraphics(BufferedImage buf) {
         if (!initDone) {
             try {
-                Class clazz = Class.forName("io.sf.carte.echosvg.ext.awt.image.GraphicsUtil");
+                Class<?> clazz = Class.forName("io.sf.carte.echosvg.ext.awt.image.GraphicsUtil");
                 createGraphics = clazz.getMethod("createGraphics", paramc);
                 paramo = new Object[1];
             } catch (ThreadDeath td) {

@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.util.CleanerThread;
  * This class contains informations about a document.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DocumentDescriptor {
@@ -174,7 +175,7 @@ public class DocumentDescriptor {
     /**
      * To manage collisions
      */
-    protected class Entry extends CleanerThread.WeakReferenceCleared {
+    protected class Entry extends CleanerThread.WeakReferenceCleared<Element> {
       /**
        * The hash code
        */

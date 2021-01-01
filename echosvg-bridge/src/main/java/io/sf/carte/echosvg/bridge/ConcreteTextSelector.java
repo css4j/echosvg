@@ -38,12 +38,13 @@ import io.sf.carte.echosvg.gvt.event.SelectionListener;
  * A simple implementation of GraphicsNodeMouseListener for text selection.
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 
 public class ConcreteTextSelector implements Selector {
 
-    private ArrayList listeners;
+    private ArrayList<SelectionListener> listeners;
     private GraphicsNode selectionNode;
     private RootGraphicsNode selectionNodeRoot;
 
@@ -286,26 +287,26 @@ public class ConcreteTextSelector implements Selector {
      */
     public void dispatchSelectionEvent(SelectionEvent e) {
         if (listeners != null) {
-            Iterator iter = listeners.iterator();
+            Iterator<SelectionListener> iter = listeners.iterator();
             switch(e.getID()) {
             case SelectionEvent.SELECTION_DONE:
                 while (iter.hasNext()) {
-                    ((SelectionListener)iter.next()).selectionDone(e);
+                    iter.next().selectionDone(e);
                 }
                 break;
             case SelectionEvent.SELECTION_CHANGED:
                 while (iter.hasNext()) {
-                    ((SelectionListener)iter.next()).selectionChanged(e);
+                    iter.next().selectionChanged(e);
                 }
                 break;
             case SelectionEvent.SELECTION_CLEARED:
                 while (iter.hasNext()) {
-                    ((SelectionListener)iter.next()).selectionCleared(e);
+                    iter.next().selectionCleared(e);
                 }
                 break;
             case SelectionEvent.SELECTION_STARTED:
                 while (iter.hasNext()) {
-                    ((SelectionListener)iter.next()).selectionStarted(e);
+                    iter.next().selectionStarted(e);
                 }
                 break;
             }
@@ -319,7 +320,7 @@ public class ConcreteTextSelector implements Selector {
     @Override
     public void addSelectionListener(SelectionListener l) {
         if (listeners == null) {
-            listeners = new ArrayList();
+            listeners = new ArrayList<>();
         }
         listeners.add(l);
     }

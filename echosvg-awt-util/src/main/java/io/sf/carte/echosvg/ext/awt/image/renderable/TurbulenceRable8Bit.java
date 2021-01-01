@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.TurbulencePatternRed;
  * Creates a sourceless image from a turbulence function.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TurbulenceRable8Bit

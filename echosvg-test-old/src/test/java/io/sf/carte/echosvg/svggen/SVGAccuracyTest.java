@@ -18,34 +18,31 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
-
 import java.awt.Dimension;
 import java.awt.Font;
-
-import java.net.URL;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.URL;
 
-import io.sf.carte.echosvg.util.SVGConstants;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+
+import io.sf.carte.echosvg.dom.GenericDOMImplementation;
+import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
 import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
-
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.DOMImplementation;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * This test validates that a given rendering sequence, modeled
@@ -54,6 +51,7 @@ import org.w3c.dom.DOMImplementation;
  * SVG reference.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAccuracyTest extends AbstractTest
@@ -161,6 +159,7 @@ public class SVGAccuracyTest extends AbstractTest
      * This method will only throw exceptions if some aspect
      * of the test's internal operation fails.
      */
+    @Override
     public TestReport runImpl() throws Exception {
         DefaultTestReport report
             = new DefaultTestReport(this);

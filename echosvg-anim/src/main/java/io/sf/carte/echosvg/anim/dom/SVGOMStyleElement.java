@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * This class implements {@link SVGStyleElement}.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMStyleElement
@@ -49,10 +50,10 @@ public class SVGOMStyleElement
 //     /**
 //      * Table mapping XML attribute names to TraitInformation objects.
 //      */
-//     protected static DoublyIndexedTable xmlTraitInformation;
+//     protected static DoublyIndexedTable<String,String> xmlTraitInformation;
 //     static {
-//         DoublyIndexedTable t =
-//             new DoublyIndexedTable(SVGOMElement.xmlTraitInformation);
+//         DoublyIndexedTable<String,String> t =
+//             new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
 //         t.put(null, SVG_MEDIA_ATTRIBUTE,
 //                 new TraitInformation(false, SVGTypes.TYPE_CDATA));
 //         t.put(null, SVG_TITLE_ATTRIBUTE,
@@ -249,7 +250,7 @@ public class SVGOMStyleElement
 //     /**
 //      * Returns the table of TraitInformation objects for this element.
 //      */
-//     protected DoublyIndexedTable getTraitInformationTable() {
+//     protected DoublyIndexedTable<String,String> getTraitInformationTable() {
 //         return xmlTraitInformation;
 //     }
 

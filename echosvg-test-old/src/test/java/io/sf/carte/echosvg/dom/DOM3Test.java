@@ -18,14 +18,15 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import io.sf.carte.echosvg.test.AbstractTest;
+import org.w3c.dom.Document;
+
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
-
-import org.w3c.dom.Document;
+import io.sf.carte.echosvg.test.AbstractTest;
 
 /**
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOM3Test extends AbstractTest {

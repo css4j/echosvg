@@ -25,6 +25,7 @@ import javax.swing.JComponent;
  * to have an access to their associated component(s)
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface JComponentModifier {

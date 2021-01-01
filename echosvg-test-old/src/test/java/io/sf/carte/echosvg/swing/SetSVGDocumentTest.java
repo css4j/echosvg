@@ -18,13 +18,13 @@
  */
 package io.sf.carte.echosvg.swing;
 
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.test.svg.JSVGRenderingAccuracyTest;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.dom.GenericDOMImplementation;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Element;
 
 /**
  * Test setDocument on JSVGComponent with non-EchoSVG SVGOMDocument.
@@ -34,11 +34,13 @@ import org.w3c.dom.Element;
  * properly imported to an SVGOMDocument and rendered from there.
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SetSVGDocumentTest extends JSVGRenderingAccuracyTest {
     public SetSVGDocumentTest() {
     }
+    @Override
     protected String[] breakSVGFile(String svgFile){
         if(svgFile == null) {
             throw new IllegalArgumentException(svgFile);
@@ -52,6 +54,7 @@ public class SetSVGDocumentTest extends JSVGRenderingAccuracyTest {
     }
 
     /* JSVGCanvasHandler.Delegate Interface */
+    @Override
     public boolean canvasInit(JSVGCanvas canvas) {
         DOMImplementation impl = 
             GenericDOMImplementation.getDOMImplementation();
@@ -78,6 +81,7 @@ public class SetSVGDocumentTest extends JSVGRenderingAccuracyTest {
         return false; // We didn't trigger a load event.
     }
 
+    @Override
     public boolean canvasUpdated(JSVGCanvas canvas) {
         return true;
     }

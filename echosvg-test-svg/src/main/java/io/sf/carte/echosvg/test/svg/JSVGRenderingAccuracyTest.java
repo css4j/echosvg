@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.test.TestReport;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JSVGRenderingAccuracyTest extends SamplesRenderingTest 
@@ -130,12 +131,12 @@ public class JSVGRenderingAccuracyTest extends SamplesRenderingTest
                 BufferedImage theImage = copyImage(canvas.getOffScreen());
 
                 // Capture the overlays
-                List overlays = canvas.getOverlays();
+                List<Overlay> overlays = canvas.getOverlays();
 
                 // Paint the overlays
                 Graphics2D g = theImage.createGraphics();
-                for (Object overlay : overlays) {
-                    ((Overlay) overlay).paint(g);
+                for (Overlay overlay : overlays) {
+                    overlay.paint(g);
                 }
 
                 saveImage(theImage, fos);

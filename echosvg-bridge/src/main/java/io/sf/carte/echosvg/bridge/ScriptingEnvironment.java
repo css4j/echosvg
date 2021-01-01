@@ -31,6 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -69,6 +70,7 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * This class contains the informations needed by the SVG scripting.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ScriptingEnvironment extends BaseScriptingEnvironment {
@@ -312,8 +314,8 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
         keyupListener
     };
 
-    Map attrToDOMEvent = new HashMap(SVG_EVENT_ATTRS.length);
-    Map attrToListener = new HashMap(SVG_EVENT_ATTRS.length);
+    Map<String, String> attrToDOMEvent = new HashMap<>(SVG_EVENT_ATTRS.length);
+    Map<String, EventListener> attrToListener = new HashMap<>(SVG_EVENT_ATTRS.length);
     {
         for (int i = 0; i < SVG_EVENT_ATTRS.length; i++) {
             attrToDOMEvent.put(SVG_EVENT_ATTRS[i], SVG_DOM_EVENT[i]);
@@ -673,11 +675,11 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
      * Updates the registration of a listener on the given element.
      */
     protected void updateScriptingListeners(Element elt, String attr) {
-        String domEvt = (String) attrToDOMEvent.get(attr);
+        String domEvt = attrToDOMEvent.get(attr);
         if (domEvt == null) {
             return;  // Not an event attr.
         }
-        EventListener listener = (EventListener) attrToListener.get(attr);
+        EventListener listener = attrToListener.get(attr);
         NodeEventTarget target = (NodeEventTarget) elt;
         if (elt.hasAttributeNS(null, attr)) {
             target.addEventListenerNS
@@ -1030,7 +1032,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                 // Only do this when generating a doc fragment, since
                 // a 'rect' element can not be root of SVG Document
                 // (only an svg element can be).
-                Map prefixes = new HashMap();
+                Map<String, String> prefixes = new HashMap<>();
                 prefixes.put(XMLConstants.XMLNS_PREFIX,
                         XMLConstants.XMLNS_NAMESPACE_URI);
                 prefixes.put(XMLConstants.XMLNS_PREFIX + ':'
@@ -1232,7 +1234,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
                             }
                             Writer w;
                             if (e == null)
-                                w = new OutputStreamWriter(os);
+                                w = new OutputStreamWriter(os, StandardCharsets.UTF_8);
                             else
                                 w = new OutputStreamWriter(os, e);
                             w.write(content);
@@ -1242,9 +1244,8 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 
                             InputStream is = conn.getInputStream();
                             Reader r;
-                            e = UTF_8;
                             if (e == null)
-                                r = new InputStreamReader(is);
+                                r = new InputStreamReader(is, StandardCharsets.UTF_8);
                             else
                                 r = new InputStreamReader(is, e);
                             r = new BufferedReader(r);
@@ -1378,7 +1379,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
      * The listener class for 'DOMNodeInserted' event.
      */
     protected class DOMNodeInsertedListener implements EventListener {
-        protected LinkedList toExecute = new LinkedList();
+        protected LinkedList<Node> toExecute = new LinkedList<>();
 
         @Override
         public void handleEvent(Event evt) {

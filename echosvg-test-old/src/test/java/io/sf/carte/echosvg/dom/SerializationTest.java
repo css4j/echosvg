@@ -18,19 +18,29 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import org.w3c.dom.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.URL;
 
-import java.io.*;
-import java.net.*;
-import io.sf.carte.echosvg.dom.util.*;
-import io.sf.carte.echosvg.util.*;
+import org.w3c.dom.Document;
 
-import io.sf.carte.echosvg.test.*;
+import io.sf.carte.echosvg.dom.util.DocumentFactory;
+import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * To test the Java serialization.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SerializationTest extends AbstractTest {
@@ -45,6 +55,7 @@ public class SerializationTest extends AbstractTest {
         rootTag = root;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         DocumentFactory df 
             = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), 

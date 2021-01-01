@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.transcoder.image.TIFFTranscoder;
  * This class is a helper to <code>TIFFTranscoder</code> that writes TIFF images 
  * through the Image I/O API.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TIFFTranscoderImageIOWriteAdapter 

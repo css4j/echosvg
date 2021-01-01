@@ -24,6 +24,7 @@ import java.io.RandomAccessFile;
 /**
  *
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class KernSubtable {

@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.xml.XMLUtilities;
  * associated with User Interface events.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOMUIEvent extends AbstractEvent implements UIEvent {
@@ -102,7 +103,7 @@ public class DOMUIEvent extends AbstractEvent implements UIEvent {
      * Splits a whitespace separated string into tokens.
      */
     protected String[] split(String s) {
-        List a = new ArrayList(8);
+        List<String> a = new ArrayList<>(8);
         StringBuffer sb;
         int i = 0;
         int len = s.length();
@@ -125,6 +126,6 @@ public class DOMUIEvent extends AbstractEvent implements UIEvent {
                 a.add(sb.toString());
             }
         }
-        return (String[]) a.toArray(new String[a.size()]);
+        return a.toArray(new String[a.size()]);
     }
 }

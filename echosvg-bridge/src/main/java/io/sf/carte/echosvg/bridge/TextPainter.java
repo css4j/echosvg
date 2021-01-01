@@ -27,6 +27,7 @@ import java.awt.geom.Rectangle2D;
  * Renders the attributed character iterator of a <code>TextNode</code>.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TextPainter {

@@ -27,6 +27,7 @@ import java.awt.geom.Rectangle2D;
  * Renders the shape of a <code>ShapeNode</code>.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ShapePainter {

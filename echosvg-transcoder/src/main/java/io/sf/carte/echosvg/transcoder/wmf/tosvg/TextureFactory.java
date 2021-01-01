@@ -34,11 +34,12 @@ import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
  * This class generate Paints from WMF hatch definitions. All generated
  * Paints are cached for future use.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class TextureFactory {
     private static TextureFactory fac = null;
-    private Map textures = new HashMap(1);
+    private Map<Object, Paint> textures = new HashMap<>(1);
     private static final int SIZE = 10;
     private float scale = 1.0f;
 
@@ -73,7 +74,7 @@ public final class TextureFactory {
     public Paint getTexture(int textureId) {
         Integer _itexture = textureId;
         if (textures.containsKey( _itexture)) {
-            Paint paint = (Paint)(textures.get(_itexture));
+            Paint paint = (textures.get(_itexture));
             return paint;
         } else {
             Paint paint = createTexture(textureId, null, null);
@@ -88,7 +89,7 @@ public final class TextureFactory {
     public Paint getTexture(int textureId, Color foreground) {
         ColoredTexture _ctexture = new ColoredTexture(textureId, foreground, null);
         if (textures.containsKey(_ctexture)) {
-            Paint paint = (Paint)(textures.get(_ctexture));
+            Paint paint = (textures.get(_ctexture));
             return paint;
         } else {
             Paint paint = createTexture(textureId, foreground, null);
@@ -104,7 +105,7 @@ public final class TextureFactory {
     public Paint getTexture(int textureId, Color foreground, Color background) {
         ColoredTexture _ctexture = new ColoredTexture(textureId, foreground, background);
         if (textures.containsKey(_ctexture)) {
-            Paint paint = (Paint)(textures.get(_ctexture));
+            Paint paint = (textures.get(_ctexture));
             return paint;
         } else {
             Paint paint = createTexture(textureId, foreground, background);

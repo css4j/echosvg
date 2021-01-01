@@ -45,6 +45,7 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
  * all pixel values are the same).
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {

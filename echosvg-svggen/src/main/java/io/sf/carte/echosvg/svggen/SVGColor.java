@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * corresponding SVG attributes.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see                 io.sf.carte.echosvg.svggen.DOMTreeManager
  */
@@ -57,7 +58,7 @@ public class SVGColor extends AbstractSVGConverter{
     /**
      * Color map maps Color values to HTML 4.0 color names
      */
-    private static Map colorMap = new HashMap();
+    private static Map<Color, String> colorMap = new HashMap<>();
 
     static {
         colorMap.put(black, "black");
@@ -110,7 +111,7 @@ public class SVGColor extends AbstractSVGConverter{
         //
         // First, convert the color value
         //
-        String cssColor = (String)colorMap.get(color);
+        String cssColor = colorMap.get(color);
         if (cssColor==null) {
             // color is not one of the predefined colors
             StringBuffer cssColorBuffer = new StringBuffer(RGB_PREFIX);

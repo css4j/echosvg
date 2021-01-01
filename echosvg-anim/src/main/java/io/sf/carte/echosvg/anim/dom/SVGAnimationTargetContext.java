@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.dom.svg.SVGContext;
  * to the element.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGAnimationTargetContext extends SVGContext {

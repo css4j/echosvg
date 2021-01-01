@@ -36,16 +36,17 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * RenderableImage world.
  *
  * @author <a href="mailto:Thomas.DeWeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class MultiResGraphicsNode
     extends AbstractGraphicsNode implements SVGConstants {
 
-    SoftReference [] srcs;
-    Element       [] srcElems;
-    Dimension     [] minSz;
-    Dimension     [] maxSz;
-    Rectangle2D      bounds;
+    SoftReference<?> [] srcs;
+    Element          [] srcElems;
+    Dimension        [] minSz;
+    Dimension        [] maxSz;
+    Rectangle2D         bounds;
 
     BridgeContext  ctx;
 
@@ -229,7 +230,7 @@ public class MultiResGraphicsNode
             GVTBuilder builder = ctx.getGVTBuilder();
             GraphicsNode gn;
             gn = builder.build(ctx, srcElems[idx]);
-            srcs[idx] = new SoftReference(gn);
+            srcs[idx] = new SoftReference<>(gn);
             return gn;
         } catch (Exception ex) { ex.printStackTrace();  }
 

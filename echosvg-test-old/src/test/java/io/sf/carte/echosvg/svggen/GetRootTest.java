@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * with the two versions of its getRoot method.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GetRootTest extends AbstractTest implements SVGConstants {
@@ -51,6 +52,7 @@ public class GetRootTest extends AbstractTest implements SVGConstants {
     public static final String ENTRY_KEY_SVG_ARG_OUTPUT
         = "GetRootTest.entry.key.svg.arg.output";
 
+    @Override
     public TestReport runImpl() throws Exception {
         // First, use the no-argument getRoot
 

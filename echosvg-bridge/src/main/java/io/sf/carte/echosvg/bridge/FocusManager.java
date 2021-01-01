@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.dom.events.NodeEventTarget;
  * A class that manages focus on elements.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FocusManager {

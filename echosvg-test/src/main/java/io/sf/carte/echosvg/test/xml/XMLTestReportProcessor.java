@@ -60,6 +60,7 @@ import io.sf.carte.echosvg.test.TestSuite;
  * report consumer of the XML file it created.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class XMLTestReportProcessor

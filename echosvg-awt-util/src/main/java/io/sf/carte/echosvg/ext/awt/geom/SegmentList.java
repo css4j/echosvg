@@ -29,10 +29,11 @@ import java.util.List;
 /**
  * A class representing a list of path segments.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SegmentList {
-    List segments = new LinkedList();
+    List<Segment> segments = new LinkedList<>();
 
     public SegmentList() {
     }
@@ -83,13 +84,13 @@ public class SegmentList {
     }
 
     public Rectangle2D getBounds2D() {
-        Iterator iter = iterator();
+        Iterator<Segment> iter = iterator();
         if (!iter.hasNext()) return null;
 
         Rectangle2D ret;
-        ret = (Rectangle2D)((Segment)iter.next()).getBounds2D().clone();
+        ret = (Rectangle2D)iter.next().getBounds2D().clone();
         while (iter.hasNext()) {
-            Segment seg = (Segment)iter.next();
+            Segment seg = iter.next();
             Rectangle2D segB = seg.getBounds2D();
             Rectangle2D.union(segB, ret, ret);
         }
@@ -100,16 +101,16 @@ public class SegmentList {
         segments.add(s);
     }
 
-    public Iterator iterator() { return segments.iterator(); }
+    public Iterator<Segment> iterator() { return segments.iterator(); }
 
     public int size() { return segments.size(); }
 
     public SegmentList.SplitResults split(double y) {
-        Iterator iter = segments.iterator();
+        Iterator<Segment> iter = segments.iterator();
         SegmentList above = new SegmentList();
         SegmentList below = new SegmentList();
         while (iter.hasNext()) {
-            Segment seg = (Segment)iter.next();
+            Segment seg = iter.next();
             Segment.SplitResults results = seg.split(y);
             if (results == null) {
                 Rectangle2D bounds = seg.getBounds2D();

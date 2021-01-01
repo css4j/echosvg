@@ -24,6 +24,7 @@ import org.w3c.dom.events.Event;
  * document.
  * Eventually will move to org.w3c.dom.xbl (or some such package).
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface OriginalEvent {

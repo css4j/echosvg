@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
@@ -40,6 +41,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * Simple implementation of the Renderer that supports dynamic updates.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DynamicRenderer extends StaticRenderer {
@@ -77,7 +79,7 @@ public class DynamicRenderer extends StaticRenderer {
      * Flush a list of rectangles of cached image data.
      */
     @Override
-    public void flush(Collection areas) {
+    public void flush(Collection<Shape> areas) {
         // Since we don't cache we don't need to flush
         return;
     }
@@ -219,8 +221,7 @@ public class DynamicRenderer extends StaticRenderer {
                     Color fillColor   = new Color( 0, 0, 255, 50 );
                     Color borderColor = new Color( 0, 0,   0, 50 );
 
-                    for (Object damagedArea : damagedAreas) {
-                        Rectangle r = (Rectangle) damagedArea;
+                    for (Rectangle r : damagedAreas) {
                         if (!dr.intersects(r)) continue;
                         r = dr.intersection(r);
                         if (sr != null && !sr.intersects(r)) continue;
@@ -241,8 +242,7 @@ public class DynamicRenderer extends StaticRenderer {
                 Color fillColor   = new Color( 255, 0, 0, 50 );
                 Color borderColor = new Color(   0, 0, 0, 50 );
 
-                for (Object aDevRLM : devRLM) {
-                    Rectangle r = (Rectangle) aDevRLM;
+                for (Rectangle r : devRLM) {
                     if (!dr.intersects(r)) continue;
                     r = dr.intersection(r);
 

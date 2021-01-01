@@ -31,6 +31,7 @@ import java.util.Set;
  * AttributedString.
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 
@@ -62,7 +63,7 @@ public class AttributedCharacterSpanIterator implements
      * Get the keys of all attributes defined on the iterator's text range.
      */
     @Override
-    public Set getAllAttributeKeys() {
+    public Set<Attribute> getAllAttributeKeys() {
         return aci.getAllAttributeKeys();
         // FIXME: not if there are atts outside the substring!
     }
@@ -81,7 +82,7 @@ public class AttributedCharacterSpanIterator implements
      * character.
      */
     @Override
-    public Map getAttributes() {
+    public Map<Attribute, Object> getAttributes() {
         return aci.getAttributes();
     }
 
@@ -111,7 +112,7 @@ public class AttributedCharacterSpanIterator implements
      *     character.
      */
     @Override
-    public int getRunLimit(Set attributes) {
+    public int getRunLimit(Set<? extends Attribute> attributes) {
         return Math.min(aci.getRunLimit(attributes), end);
     }
 
@@ -142,7 +143,7 @@ public class AttributedCharacterSpanIterator implements
      * returned index.  
      */
     @Override
-    public int getRunStart(Set attributes) {
+    public int getRunStart(Set<? extends Attribute> attributes) {
         return Math.max(aci.getRunStart(attributes), begin);
     }
 

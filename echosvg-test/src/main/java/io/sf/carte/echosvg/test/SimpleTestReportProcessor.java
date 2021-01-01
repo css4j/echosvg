@@ -27,6 +27,7 @@ import java.io.StringWriter;
  * that prints out the <code>TestReport</code> to the standard output.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SimpleTestReportProcessor implements TestReportProcessor {

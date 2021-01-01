@@ -25,6 +25,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -40,10 +41,11 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * <br>Note: this class is a 'little bit aware of' other threads, but not really threadsafe.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CompositeGraphicsNode extends AbstractGraphicsNode
-    implements List {
+    implements List<GraphicsNode> {
 
     public static final Rectangle2D VIEWPORT  = new Rectangle();
     public static final Rectangle2D NULL_RECT = new Rectangle();
@@ -102,7 +104,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
     /**
      * Returns the list of children.
      */
-    public List getChildren() {
+    public List<GraphicsNode> getChildren() {
         return this;
     }
 
@@ -596,7 +598,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * Returns an iterator over the children of this graphics node.
      */
     @Override
-    public Iterator iterator() {
+    public Iterator<GraphicsNode> iterator() {
         return new Itr();
     }
 
@@ -605,7 +607,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * of this composite graphics node in the correct order.
      */
     @Override
-    public Object [] toArray() {
+    public GraphicsNode[] toArray() {
         GraphicsNode [] result = new GraphicsNode[count];
 
         System.arraycopy( children, 0, result, 0, count );
@@ -621,10 +623,12 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      *
      * @param a the array to fit if possible
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Object[] toArray(Object [] a) {
+    public <T> T[] toArray(T[] a) {
         if (a.length < count) {
-            a = new GraphicsNode[count];
+            // We need a bigger array
+            return (T[]) Arrays.copyOf(children, count, a.getClass());
         }
         System.arraycopy(children, 0, a, 0, count);
         if (a.length > count) {
@@ -640,7 +644,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * @exception IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public Object get(int index) {
+    public GraphicsNode get(int index) {
         checkRange(index);
         return children[index];
     }
@@ -659,13 +663,13 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * instance of GraphicsNode
      */
     @Override
-    public Object set(int index, Object o) {
+    public GraphicsNode set(int index, GraphicsNode o) {
         // Check for correct arguments
         if (!(o instanceof GraphicsNode)) {
             throw new IllegalArgumentException(o+" is not a GraphicsNode");
         }
         checkRange(index);
-        GraphicsNode node = (GraphicsNode) o;
+        GraphicsNode node = o;
         {
             fireGraphicsNodeChangeStarted(node);
         }
@@ -696,18 +700,13 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
     /**
      * Adds the specified graphics node to this composite graphics node.
      *
-     * @param o the graphics node to add
+     * @param node the graphics node to add
      * @return true (as per the general contract of Collection.add)
      * @exception IllegalArgumentException if the node is not an
      * instance of GraphicsNode
      */
     @Override
-    public boolean add(Object o) {
-        // Check for correct argument
-        if (!(o instanceof GraphicsNode)) {
-            throw new IllegalArgumentException(o+" is not a GraphicsNode");
-        }
-        GraphicsNode node = (GraphicsNode) o;
+    public boolean add(GraphicsNode node) {
         {
             fireGraphicsNodeChangeStarted(node);
         }
@@ -739,22 +738,17 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      *
      * @param index the position at which the specified graphics node is to
      * be inserted.
-     * @param o the graphics node to be inserted.
+     * @param node the graphics node to be inserted.
      * @exception IndexOutOfBoundsException if the index is out of range
      * @exception IllegalArgumentException if the node is not an
      * instance of GraphicsNode
      */
     @Override
-    public void add(int index, Object o) {
-        // Check for correct arguments
-        if (!(o instanceof GraphicsNode)) {
-            throw new IllegalArgumentException(o+" is not a GraphicsNode");
-        }
+    public void add(int index, GraphicsNode node) {
         if (index > count || index < 0) {
             throw new IndexOutOfBoundsException(
                 "Index: "+index+", Size: "+count);
         }
-        GraphicsNode node = (GraphicsNode) o;
         {
             fireGraphicsNodeChangeStarted(node);
         }
@@ -784,7 +778,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * Throws <code>UnsupportedOperationException</code> exception.
      */
     @Override
-    public boolean addAll(Collection c) {
+    public boolean addAll(Collection<? extends GraphicsNode> c) {
         throw new UnsupportedOperationException();
     }
 
@@ -793,7 +787,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * Throws <code>UnsupportedOperationException</code> exception.
      */
     @Override
-    public boolean addAll(int index, Collection c) {
+    public boolean addAll(int index, Collection<? extends GraphicsNode> c) {
         throw new UnsupportedOperationException();
     }
 
@@ -835,7 +829,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * @exception IndexOutOfBoundsException if index out of range
      */
     @Override
-    public Object remove(int index) {
+    public GraphicsNode remove(int index) {
         // Check for correct argument
         checkRange(index);
         GraphicsNode oldNode = children[index];
@@ -870,7 +864,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * Throws <code>UnsupportedOperationException</code> exception.
      */
     @Override
-    public boolean removeAll(Collection c) {
+    public boolean removeAll(Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 
@@ -879,7 +873,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * Throws <code>UnsupportedOperationException</code> exception.
      */
     @Override
-    public boolean retainAll(Collection c) {
+    public boolean retainAll(Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 
@@ -899,7 +893,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * @param c the collection to be checked for containment
      */
     @Override
-    public boolean containsAll(Collection c) {
+    public boolean containsAll(Collection<?> c) {
         for (Object aC : c) {
             if (!contains(aC)) {
                 return false;
@@ -961,7 +955,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * Returns an iterator over the children of this graphics node.
      */
     @Override
-    public ListIterator listIterator() {
+    public ListIterator<GraphicsNode> listIterator() {
         return listIterator(0);
     }
 
@@ -973,7 +967,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * from the children list
      */
     @Override
-    public ListIterator listIterator(int index) {
+    public ListIterator<GraphicsNode> listIterator(int index) {
         if (index < 0 || index > count) {
             throw new IndexOutOfBoundsException("Index: "+index);
         }
@@ -987,7 +981,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
      * Throws <code>UnsupportedOperationException</code> exception.
      */
     @Override
-    public List subList(int fromIndex, int toIndex) {
+    public List<GraphicsNode> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException();
     }
 
@@ -1031,7 +1025,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
     /**
      * An implementation of the java.util.Iterator interface.
      */
-    private class Itr implements Iterator {
+    private class Itr implements Iterator<GraphicsNode> {
 
         /**
          * Index of graphics node to be returned by subsequent call to next.
@@ -1058,9 +1052,9 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
         }
 
         @Override
-        public Object next() {
+        public GraphicsNode next() {
             try {
-                Object next = get(cursor);
+                GraphicsNode next = get(cursor);
                 checkForComodification();
                 lastRet = cursor++;
                 return next;
@@ -1100,7 +1094,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
     /**
      * An implementation of the java.util.ListIterator interface.
      */
-    private class ListItr extends Itr implements ListIterator {
+    private class ListItr extends Itr implements ListIterator<GraphicsNode> {
 
         ListItr(int index) {
             cursor = index;
@@ -1112,9 +1106,9 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
         }
 
         @Override
-        public Object previous() {
+        public GraphicsNode previous() {
             try {
-                Object previous = get(--cursor);
+                GraphicsNode previous = get(--cursor);
                 checkForComodification();
                 lastRet = cursor;
                 return previous;
@@ -1135,7 +1129,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
         }
 
         @Override
-        public void set(Object o) {
+        public void set(GraphicsNode o) {
             if (lastRet == -1) {
                 throw new IllegalStateException();
             }
@@ -1149,7 +1143,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode
         }
 
         @Override
-        public void add(Object o) {
+        public void add(GraphicsNode o) {
             checkForComodification();
             try {
                 CompositeGraphicsNode.this.add(cursor++, o);

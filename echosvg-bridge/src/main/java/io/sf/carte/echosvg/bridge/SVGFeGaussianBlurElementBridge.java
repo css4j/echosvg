@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * Bridge class for the &lt;feGaussianBlur&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFeGaussianBlurElementBridge
@@ -79,7 +80,7 @@ public class SVGFeGaussianBlurElementBridge
                                GraphicsNode filteredNode,
                                Filter inputFilter,
                                Rectangle2D filterRegion,
-                               Map filterMap) {
+                               Map<String, Filter> filterMap) {
 
         // 'stdDeviation' attribute - default is [0, 0]
         float[] stdDeviationXY = convertStdDeviation(filterElement, ctx);

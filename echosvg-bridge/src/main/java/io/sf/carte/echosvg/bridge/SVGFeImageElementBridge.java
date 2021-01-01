@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * Bridge class for the &lt;feImage&gt; element.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFeImageElementBridge
@@ -81,7 +82,7 @@ public class SVGFeImageElementBridge
                                GraphicsNode filteredNode,
                                Filter inputFilter,
                                Rectangle2D filterRegion,
-                               Map filterMap) {
+                               Map<String, Filter> filterMap) {
 
         // 'xlink:href' attribute
         String uriStr = XLinkSupport.getXLinkHref(filterElement);

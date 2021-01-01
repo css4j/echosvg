@@ -20,13 +20,13 @@
 package io.sf.carte.echosvg.anim.dom;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
-import java.util.MissingResourceException;
 
 import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.TestReport;
 
 /**
  * This class tests that there is System Id for each public Id
@@ -45,6 +45,7 @@ public class SystemIdTest extends AbstractTest {
     public SystemIdTest() {
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         ResourceBundle rb = 
             ResourceBundle.getBundle(SAXSVGDocumentFactory.DTDIDS,

@@ -25,6 +25,7 @@ package io.sf.carte.echosvg.test;
  * same class.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ParametrizedTest extends AbstractTest {

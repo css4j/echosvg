@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  * It essentially ignores the dependency and dirty region methods.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public class BufferedImageCachableRed extends AbstractRed {
     // The bufferedImage that we wrap...

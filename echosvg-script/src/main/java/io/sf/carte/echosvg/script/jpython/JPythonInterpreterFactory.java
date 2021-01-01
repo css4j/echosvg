@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.script.InterpreterFactory;
 /**
  * Allows to create instances of <code>JPythonInterpreter</code> class.
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JPythonInterpreterFactory implements InterpreterFactory {

@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
  * generating a placeholder image when the ImageTagRegistry
  * fails to handle a given reference.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class BrokenLinkProvider {

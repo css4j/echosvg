@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.parser;
  * This class provides a default implementation of ErrorHandler.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 

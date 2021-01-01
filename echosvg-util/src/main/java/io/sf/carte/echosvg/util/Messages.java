@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * This class manages the message for the security utilities
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Messages {

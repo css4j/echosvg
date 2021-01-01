@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.Platform;
 
 /**
  * This class provides a general framework to read WMF Metafiles.
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractWMFReader {
@@ -52,7 +53,7 @@ public abstract class AbstractWMFReader {
     protected int mtMaxRecord, mtNoParameters;
     protected int windowWidth, windowHeight;
     protected int numObjects;
-    protected List objectVector;
+    protected List<GdiObject> objectVector;
 
     public int lastObjectIdx;
 
@@ -67,7 +68,7 @@ public abstract class AbstractWMFReader {
         right = left + width;
         bottom = top + height;
         numObjects = 0;
-        objectVector = new ArrayList();
+        objectVector = new ArrayList<>();
     }
 
     public AbstractWMFReader(int width, int height) {
@@ -404,7 +405,7 @@ public abstract class AbstractWMFReader {
         mtNoParameters = readShort( is );
 
         numObjects = mtNoObjects;
-        List tempList = new ArrayList( numObjects );
+        List<GdiObject> tempList = new ArrayList<>( numObjects );
         for ( int i = 0; i < numObjects; i++ ) {
             tempList.add( new GdiObject( i, false ));
         }
@@ -421,7 +422,7 @@ public abstract class AbstractWMFReader {
         //       startIdx = 2;
         //     }
         for ( int i = startIdx; i < numObjects; i++ ) {
-            GdiObject gdi = (GdiObject)objectVector.get( i );
+            GdiObject gdi = objectVector.get( i );
             if ( ! gdi.used ) {
                 gdi.Setup( type, obj );
                 lastObjectIdx = i;
@@ -447,7 +448,7 @@ public abstract class AbstractWMFReader {
       }
       lastObjectIdx = idx;
       for ( int i = 0; i < numObjects; i++ ) {
-        GdiObject gdi = (GdiObject)objectVector.get( i );
+        GdiObject gdi = objectVector.get( i );
         if ( i == idx ) {
           gdi.Setup( type, obj );
           break;
@@ -461,7 +462,7 @@ public abstract class AbstractWMFReader {
      * Returns a GdiObject from the handle table
      */
     public GdiObject getObject( int idx ) {
-        return (GdiObject)objectVector.get( idx );
+        return objectVector.get( idx );
     }
 
     /**

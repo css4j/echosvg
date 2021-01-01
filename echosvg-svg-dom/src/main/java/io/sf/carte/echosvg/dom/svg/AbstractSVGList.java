@@ -47,6 +47,7 @@ import io.sf.carte.echosvg.parser.ParseException;
  * </p>
  *
  * @author <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGList {
@@ -59,7 +60,7 @@ public abstract class AbstractSVGList {
     /**
      * The list of items.
      */
-    protected List itemList;
+    protected List<SVGItem> itemList;
 
     /**
      * Returns the separator string to use when constructing a string
@@ -155,7 +156,7 @@ public abstract class AbstractSVGList {
 
         // Clear the list, creating it if it doesn't exist yet.
         if (itemList == null) {
-            itemList = new ArrayList(1);
+            itemList = new ArrayList<>(1);
         } else {
             clear(itemList);
         }
@@ -193,7 +194,7 @@ public abstract class AbstractSVGList {
                  new Object[] {index} );
         }
 
-        return (SVGItem)itemList.get(index);
+        return itemList.get(index);
     }
 
     /**
@@ -318,7 +319,7 @@ public abstract class AbstractSVGList {
                  new Object[] {index} );
         }
 
-        SVGItem item = (SVGItem)itemList.remove(index);
+        SVGItem item = itemList.remove(index);
 
         // Set the item to have no parent list.
         item.setParent(null);
@@ -404,7 +405,7 @@ public abstract class AbstractSVGList {
 
             doParse(getValueAsString(), builder);
 
-            List parsedList = builder.getList();
+            List<SVGItem> parsedList = builder.getList();
             if (parsedList != null) {
                 clear(itemList);
             }
@@ -419,15 +420,15 @@ public abstract class AbstractSVGList {
      * Sets the DOM attribute value to be the string representation of the
      * given list.
      */
-    protected void setValueAsString(List value) throws DOMException {
+    protected void setValueAsString(List<SVGItem> value) throws DOMException {
         String finalValue = null;
-        Iterator it = value.iterator();
+        Iterator<SVGItem> it = value.iterator();
         if (it.hasNext()) {
-            SVGItem item = (SVGItem) it.next();
+            SVGItem item = it.next();
             StringBuffer buf = new StringBuffer( value.size() * 8 );
             buf.append(  item.getValueAsString() );
             while (it.hasNext()) {
-                item = (SVGItem) it.next();
+                item = it.next();
                 buf.append(getItemSeparator());
                 buf.append(item.getValueAsString());
             }
@@ -488,12 +489,11 @@ public abstract class AbstractSVGList {
     /**
      * Clears the list and sets the parent of the former list items to null.
      */
-    protected void clear(List list) {
+    protected void clear(List<SVGItem> list) {
         if (list == null) {
             return;
         }
-        for (Object aList : list) {
-            SVGItem item = (SVGItem) aList;
+        for (SVGItem item : list) {
             item.setParent(null);
         }
         list.clear();

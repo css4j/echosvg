@@ -25,6 +25,7 @@ import java.util.List;
  * An abstract base class for time container elements.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class TimeContainer extends TimedElement {
@@ -32,7 +33,7 @@ public abstract class TimeContainer extends TimedElement {
     /**
      * The child {@link TimedElement}s of this time container.
      */
-    protected List children = new LinkedList();
+    protected List<TimedElement> children = new LinkedList<>();
 
     /**
      * Adds a {@link TimedElement} to this container.
@@ -56,8 +57,7 @@ public abstract class TimeContainer extends TimedElement {
         e.root = root;
         if (e instanceof TimeContainer) {
             TimeContainer c = (TimeContainer) e;
-            for (Object aChildren : c.children) {
-                TimedElement te = (TimedElement) aChildren;
+            for (TimedElement te : c.children) {
                 setRoot(te, root);
             }
         }
@@ -78,7 +78,7 @@ public abstract class TimeContainer extends TimedElement {
      * Returns an array of the children of this container.
      */
     public TimedElement[] getChildren() {
-        return (TimedElement[]) children.toArray(new TimedElement[children.size()]);
+        return children.toArray(new TimedElement[children.size()]);
     }
 
     /**
@@ -107,8 +107,7 @@ public abstract class TimeContainer extends TimedElement {
     protected float sampleChildren(float parentSimpleTime,
                                    boolean hyperlinking) {
         float mint = Float.POSITIVE_INFINITY;
-        for (Object aChildren : children) {
-            TimedElement e = (TimedElement) aChildren;
+        for (TimedElement e : children) {
             float t = e.sampleAt(parentSimpleTime, hyperlinking);
             if (t < mint) {
                 mint = t;
@@ -123,8 +122,7 @@ public abstract class TimeContainer extends TimedElement {
     @Override
     protected void reset(boolean clearCurrentBegin) {
         super.reset(clearCurrentBegin);
-        for (Object aChildren : children) {
-            TimedElement e = (TimedElement) aChildren;
+        for (TimedElement e : children) {
             e.reset(clearCurrentBegin);
         }
     }

@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.dom.svg.SVGContext;
  * Base class for 'descriptive' elements, mostly title and desc.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge

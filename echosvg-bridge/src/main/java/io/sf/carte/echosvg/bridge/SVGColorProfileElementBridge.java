@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * <code>ICC_ColorSpace</code> object.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public class SVGColorProfileElementBridge extends AbstractSVGBridge
     implements ErrorConstants {

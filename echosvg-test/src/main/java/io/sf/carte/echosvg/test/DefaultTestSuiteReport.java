@@ -27,6 +27,7 @@ import java.util.List;
  * for <code>TestSuite</code>
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultTestSuiteReport implements TestSuiteReport {

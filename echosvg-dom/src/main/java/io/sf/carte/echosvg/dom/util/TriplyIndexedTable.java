@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.dom.util;
  * <br>Note: This implementation is not Thread-safe.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TriplyIndexedTable {

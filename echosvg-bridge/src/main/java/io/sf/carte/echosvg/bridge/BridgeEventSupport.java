@@ -33,6 +33,7 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
+import io.sf.carte.echosvg.bridge.StrokingTextPainter.TextRun;
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.events.DOMKeyEvent;
 import io.sf.carte.echosvg.dom.events.DOMMouseEvent;
@@ -52,6 +53,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * fowarding them to the DOM as regular DOM MouseEvent.
  *
  * @author <a href="mailto:tkormann@ilog.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class BridgeEventSupport implements SVGConstants {
@@ -441,21 +443,19 @@ public abstract class BridgeEventSupport implements SVGConstants {
             // is a tspan or textPath
             if (target != null && node instanceof TextNode) {
                 TextNode textNode = (TextNode)node;
-                List list = textNode.getTextRuns();
+                List<TextRun> list = textNode.getTextRuns();
                 if (list != null){
                     float x = (float)pt.getX();
                     float y = (float)pt.getY();
-                    for (Object aList : list) {
-                        StrokingTextPainter.TextRun run =
-                                (StrokingTextPainter.TextRun) aList;
+                    for (TextRun run : list) {
                         AttributedCharacterIterator aci = run.getACI();
                         TextSpanLayout layout = run.getLayout();
                         TextHit textHit = layout.hitTestChar(x, y);
                         Rectangle2D bounds = layout.getBounds2D();
                         if ((textHit != null) &&
                                 (bounds != null) && bounds.contains(x, y)) {
-                            SoftReference sr;
-                            sr = (SoftReference) aci.getAttribute
+                            SoftReference<?> sr;
+                            sr = (SoftReference<?>) aci.getAttribute
                                     (TEXT_COMPOUND_ID);
                             Object delimiter = sr.get();
                             if (delimiter instanceof Element) {

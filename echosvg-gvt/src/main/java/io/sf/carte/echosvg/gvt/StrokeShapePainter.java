@@ -29,6 +29,7 @@ import java.awt.geom.Rectangle2D;
  * A shape painter that can be used to draw the outline of a shape.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class StrokeShapePainter implements ShapePainter {

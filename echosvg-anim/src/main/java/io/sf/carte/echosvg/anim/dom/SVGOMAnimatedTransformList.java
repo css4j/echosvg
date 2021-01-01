@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.parser.ParseException;
  * This class is the implementation of the SVGAnimatedTransformList interface.
  *
  * @author <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMAnimatedTransformList
@@ -134,7 +135,7 @@ public class SVGOMAnimatedTransformList
     public AnimatableValue getUnderlyingValue(AnimationTarget target) {
         SVGTransformList tl = getBaseVal();
         int n = tl.getNumberOfItems();
-        List v = new ArrayList(n);
+        List<SVGTransform> v = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
             v.add(tl.getItem(i));
         }
@@ -311,7 +312,7 @@ public class SVGOMAnimatedTransformList
                 }
                 itemList = builder.getList();
             } catch (ParseException e) {
-                itemList = new ArrayList(1);
+                itemList = new ArrayList<>(1);
                 malformed = true;
             }
         }
@@ -327,7 +328,7 @@ public class SVGOMAnimatedTransformList
          * Creates a new AnimSVGTransformList.
          */
         public AnimSVGTransformList() {
-            itemList = new ArrayList(1);
+            itemList = new ArrayList<>(1);
         }
 
         /**
@@ -380,13 +381,13 @@ public class SVGOMAnimatedTransformList
                 return "";
             }
             StringBuffer sb = new StringBuffer( itemList.size() * 8 );
-            Iterator i = itemList.iterator();
+            Iterator<SVGItem> i = itemList.iterator();
             if (i.hasNext()) {
-                sb.append(((SVGItem) i.next()).getValueAsString());
+                sb.append(i.next().getValueAsString());
             }
             while (i.hasNext()) {
                 sb.append(getItemSeparator());
-                sb.append(((SVGItem) i.next()).getValueAsString());
+                sb.append(i.next().getValueAsString());
             }
             return sb.toString();
         }
@@ -476,16 +477,16 @@ public class SVGOMAnimatedTransformList
         /**
          * Sets the animated value to a list of transforms.
          */
-        protected void setAnimatedValue(Iterator it) {
+        protected void setAnimatedValue(Iterator<SVGTransform> it) {
             int size = itemList.size();
             int i = 0;
             while (i < size && it.hasNext()) {
                 SVGTransformItem t = (SVGTransformItem) itemList.get(i);
-                t.assign((SVGTransform) it.next());
+                t.assign(it.next());
                 i++;
             }
             while (it.hasNext()) {
-                appendItemImpl(new SVGTransformItem((SVGTransform) it.next()));
+                appendItemImpl(new SVGTransformItem(it.next()));
                 i++;
             }
             while (size > i) {

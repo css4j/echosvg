@@ -110,6 +110,8 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
                 float n = lu.getFloatValue();
                 return new FloatValue(CSSPrimitiveValue.CSS_DEG, n);
             }
+        default:
+            break;
         }
     
         throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());

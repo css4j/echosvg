@@ -33,25 +33,25 @@ import java.util.Random;
  * thread.
  */
 public class ThreadPounder {
-    List runnables;
+    List<Runnable> runnables;
     Object [] threads;
     Object lock = new Object();
 
-    public ThreadPounder(List runnables)  
+    public ThreadPounder(List<Runnable> runnables)  
         throws InterruptedException {
         this(runnables, new Random(1234));
     }
 
-    public ThreadPounder(List runnables, Random rand) 
+    public ThreadPounder(List<Runnable> runnables, Random rand) 
         throws InterruptedException {
-        this.runnables = new ArrayList(runnables);
+        this.runnables = new ArrayList<>(runnables);
         Collections.shuffle(this.runnables, rand);
         threads = new Object[this.runnables.size()];
         int i=0;
-        Iterator iter= this.runnables.iterator();
+        Iterator<Runnable> iter= this.runnables.iterator();
         synchronized (lock) {
             while (iter.hasNext()) {
-                Thread t = new SyncThread((Runnable)iter.next());
+                Thread t = new SyncThread(iter.next());
                 t.start();
                 lock.wait();
                 threads[i] = t;
@@ -92,7 +92,7 @@ public class ThreadPounder {
     }
 
     public static void main(String [] str) { 
-        List l = new ArrayList(20);
+        List<Runnable> l = new ArrayList<>(20);
         for (int i=0; i<20; i++) {
             final int x = i;
             l.add(new Runnable() {

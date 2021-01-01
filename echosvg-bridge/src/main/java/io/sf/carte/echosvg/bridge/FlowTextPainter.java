@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -49,6 +50,7 @@ import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FlowTextPainter extends StrokingTextPainter {
@@ -65,8 +67,8 @@ public class FlowTextPainter extends StrokingTextPainter {
     }
 
     @Override
-    public List getTextRuns(TextNode node, AttributedCharacterIterator aci) {
-        List textRuns = node.getTextRuns();
+    public List<TextRun> getTextRuns(TextNode node, AttributedCharacterIterator aci) {
+        List<TextRun> textRuns = node.getTextRuns();
         if (textRuns != null) {
             return textRuns;
         }
@@ -75,19 +77,20 @@ public class FlowTextPainter extends StrokingTextPainter {
         textRuns = computeTextRuns(node, aci, chunkACIs);
 
         aci.first();
-        List rgns = (List)aci.getAttribute(FLOW_REGIONS);
+        @SuppressWarnings("unchecked")
+        List<RegionInfo> rgns = (List<RegionInfo>)aci.getAttribute(FLOW_REGIONS);
 
         if (rgns != null) {
-            Iterator i = textRuns.iterator();
-            List chunkLayouts = new ArrayList();
-            TextRun tr = (TextRun)i.next();
-            List layouts = new ArrayList();
+            Iterator<TextRun> i = textRuns.iterator();
+            List<List<TextSpanLayout>> chunkLayouts = new ArrayList<>();
+            TextRun tr = i.next();
+            List<TextSpanLayout> layouts = new ArrayList<>();
             chunkLayouts.add(layouts);
             layouts.add(tr.getLayout());
             while (i.hasNext()) {
-                tr = (TextRun)i.next();
+                tr = i.next();
                 if (tr.isFirstRunInChunk()) {
-                    layouts = new ArrayList();
+                    layouts = new ArrayList<>();
                     chunkLayouts.add(layouts);
                 }
                 layouts.add(tr.getLayout());
@@ -120,7 +123,7 @@ public class FlowTextPainter extends StrokingTextPainter {
     public static final AttributedCharacterIterator.Attribute GVT_FONT
         = GVTAttributedCharacterIterator.TextAttribute.GVT_FONT;
 
-    protected static Set szAtts = new HashSet();
+    protected static Set<Attribute> szAtts = new HashSet<>();
 
     static {
         szAtts.add(TextAttribute.SIZE);
@@ -129,8 +132,8 @@ public class FlowTextPainter extends StrokingTextPainter {
     }
 
     public static boolean textWrap(AttributedCharacterIterator [] acis,
-                                   List chunkLayouts,
-                                   List flowRects,
+                                   List<List<TextSpanLayout>> chunkLayouts,
+                                   List<RegionInfo> flowRects,
                                    FontRenderContext frc) {
 
         // System.out.println("Len: " + acis.length + " Size: " +
@@ -141,7 +144,7 @@ public class FlowTextPainter extends StrokingTextPainter {
         // glyphVector
         // GVTGlyphVector [] gvs            = new GVTGlyphVector[acis.length];       // todo - not used?
         WordInfo       [][] wordInfos    = new WordInfo[acis.length][];
-        Iterator clIter = chunkLayouts.iterator();
+        Iterator<List<TextSpanLayout>> clIter = chunkLayouts.iterator();
 
         float prevBotMargin = 0;
         int numWords = 0;
@@ -150,10 +153,9 @@ public class FlowTextPainter extends StrokingTextPainter {
         for (int chunk=0; clIter.hasNext(); chunk++) {
             // System.err.print("Chunk: " + chunk + " Str: '");
             AttributedCharacterIterator aci = acis[chunk];
-            List gvl = new LinkedList();
-            List layouts = (List)clIter.next();
-            for (Object layout : layouts) {
-                GlyphLayout gl = (GlyphLayout) layout;
+            List<GVTGlyphVector> gvl = new LinkedList<>();
+            List<TextSpanLayout> layouts = clIter.next();
+            for (TextSpanLayout gl : layouts) {
                 gvl.add(gl.getGlyphVector());
             }
             GVTGlyphVector gv = new MultiGlyphVector(gvl);
@@ -171,13 +173,13 @@ public class FlowTextPainter extends StrokingTextPainter {
             numWords += wordInfos[chunk].length;
         }
 
-        Iterator frIter = flowRects.iterator();
+        Iterator<RegionInfo> frIter = flowRects.iterator();
         RegionInfo currentRegion = null;
         int currWord = 0;
         int chunk = 0;
-        List lineInfos = new LinkedList();
+        List<LineInfo> lineInfos = new LinkedList<>();
         while(frIter.hasNext()) {
-            currentRegion = (RegionInfo) frIter.next();
+            currentRegion = frIter.next();
             FlowRegions fr = new FlowRegions(currentRegion.getShape());
 
             while (chunk < wordInfos.length) {

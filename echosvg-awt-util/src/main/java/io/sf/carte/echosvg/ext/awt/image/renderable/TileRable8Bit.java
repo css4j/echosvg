@@ -40,6 +40,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.TileRed;
  * 8 bit TileRable implementation
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TileRable8Bit

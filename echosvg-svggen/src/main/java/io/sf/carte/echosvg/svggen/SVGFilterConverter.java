@@ -22,11 +22,14 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImageOp;
 import java.util.List;
 
+import org.w3c.dom.Element;
+
 /**
  * Defines the interface for classes that are able to convert
  * a BufferedImageOp filter.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see           io.sf.carte.echosvg.svggen.SVGFilterDescriptor
  */
@@ -52,5 +55,5 @@ public interface SVGFilterConverter extends SVGSyntax {
      *         If no definition is needed, an empty set should be
      *         returned.
      */
-    List getDefinitionSet();
+    List<Element> getDefinitionSet();
 }

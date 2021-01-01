@@ -41,7 +41,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 /** This class implements the <code>Transcoder</code> interface and
  *  can convert a WMF input document into an SVG document.
  *  <p>This class is copied from
- *  batik io.sf.carte.echosvg.transcoder.wmf.tosvg.WMFTranscoder class.</p>
+ *  batik org.apache.batik.transcoder.wmf.tosvg.WMFTranscoder class.</p>
  *  <p>It can use <code>TranscoderInput</code> that are either a URI
  *  or a <code>InputStream</code> or a <code>Reader</code>. The
  *  <code>XMLReader</code> and <code>Document</code> <code>TranscoderInput</code>
@@ -81,6 +81,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
  *     transcoder.addTranscodingHint(FromWMFTranscoder.KEY_WIDTH, Float.valueOf(width));
  *  </pre>
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class WMFTranscoder extends ToSVGAbstractTranscoder {
@@ -241,7 +242,6 @@ public class WMFTranscoder extends ToSVGAbstractTranscoder {
         }
 
         WMFTranscoder transcoder = new WMFTranscoder();
-        int nFiles = args.length;
 
         for (String fileName : args) {
             if (!fileName.toLowerCase().endsWith(WMF_EXTENSION)) {

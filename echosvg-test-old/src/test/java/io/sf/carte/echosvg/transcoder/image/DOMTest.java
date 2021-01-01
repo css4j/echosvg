@@ -20,22 +20,22 @@ package io.sf.carte.echosvg.transcoder.image;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage; 
-
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
-import io.sf.carte.echosvg.transcoder.TranscoderInput;
-import io.sf.carte.echosvg.transcoder.TranscoderOutput;
-import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
-
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.DOMImplementation;
+
+import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
+import io.sf.carte.echosvg.transcoder.TranscoderInput;
+import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 
 /**
  * Test the ImageTranscoder input with a DOM tree.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOMTest extends AbstractImageTranscoderTest {
@@ -49,6 +49,7 @@ public class DOMTest extends AbstractImageTranscoderTest {
     /**
      * Creates the <code>TranscoderInput</code>.
      */
+    @Override
     protected TranscoderInput createTranscoderInput() {
         DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
         String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
@@ -81,6 +82,7 @@ public class DOMTest extends AbstractImageTranscoderTest {
     /**
      * Returns the reference image for this test.
      */
+    @Override
     protected byte [] getReferenceImageData() {
         try {
             BufferedImage img = new BufferedImage

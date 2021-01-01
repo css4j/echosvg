@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * This class tests the cloneNode method.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CloneNodeTest extends AbstractTest {
@@ -48,6 +49,7 @@ public class CloneNodeTest extends AbstractTest {
         targetId = id;
     }
     
+    @Override
     public TestReport runImpl() throws Exception {
         String parser =
             XMLResourceDescriptor.getXMLParserClassName();

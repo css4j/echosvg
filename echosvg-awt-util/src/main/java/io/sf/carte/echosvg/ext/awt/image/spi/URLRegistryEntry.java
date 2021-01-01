@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * URLStreamHandler using one of the methods listed in
  * @see java.net.URL#URL(java.lang.String, java.lang.String, int, java.lang.String)
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface URLRegistryEntry extends RegistryEntry {

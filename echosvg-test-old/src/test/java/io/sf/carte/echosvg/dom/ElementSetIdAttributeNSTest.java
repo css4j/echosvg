@@ -25,6 +25,7 @@ import org.w3c.dom.Element;
  * Tests Element.setIdAttributeNS.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ElementSetIdAttributeNSTest extends DOM3Test {
@@ -33,6 +34,7 @@ public class ElementSetIdAttributeNSTest extends DOM3Test {
 
     private static final String ATTR_VALUE = "abc";
 
+    @Override
     public boolean runImplBasic() throws Exception {
         Document doc = newSVGDoc();
         doc.getDocumentElement().setAttributeNS(null, ATTR_NAME, ATTR_VALUE);

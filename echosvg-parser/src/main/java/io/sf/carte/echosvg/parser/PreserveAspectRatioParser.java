@@ -25,6 +25,7 @@ import java.io.IOException;
  * attribute values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PreserveAspectRatioParser extends AbstractParser {

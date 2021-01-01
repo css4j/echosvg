@@ -23,14 +23,15 @@ package io.sf.carte.echosvg.util;
  * A set that uses two keys.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DoublyIndexedSet {
+public class DoublyIndexedSet<K,L> {
 
     /**
      * The table to store entries.
      */
-    protected DoublyIndexedTable table = new DoublyIndexedTable();
+    protected DoublyIndexedTable<K,L> table = new DoublyIndexedTable<>();
 
     /**
      * Dummy value object for the table.
@@ -47,21 +48,21 @@ public class DoublyIndexedSet {
     /**
      * Adds an entry to the set.
      */
-    public void add(Object o1, Object o2) {
+    public void add(K o1, L o2) {
         table.put(o1, o2, value);
     }
 
     /**
      * Removes an entry from the set.
      */
-    public void remove(Object o1, Object o2) {
+    public void remove(K o1, L o2) {
         table.remove(o1, o2);
     }
 
     /**
      * Returns whether the given keys are in the set.
      */
-    public boolean contains(Object o1, Object o2) {
+    public boolean contains(K o1, L o2) {
         return table.get(o1, o2) != null;
     }
 

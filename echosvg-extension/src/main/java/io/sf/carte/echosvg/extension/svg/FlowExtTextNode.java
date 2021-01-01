@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.bridge.TextPainter;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FlowExtTextNode extends TextNode{

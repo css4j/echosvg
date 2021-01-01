@@ -26,6 +26,7 @@ import java.awt.Graphics2D;
  * compare it to a reference.
  *
  * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Painter {

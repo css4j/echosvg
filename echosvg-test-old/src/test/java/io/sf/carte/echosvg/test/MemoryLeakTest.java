@@ -19,9 +19,9 @@
 package io.sf.carte.echosvg.test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 import io.sf.carte.echosvg.util.CleanerThread;
 
@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.CleanerThread;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class MemoryLeakTest  extends AbstractTest {
@@ -58,8 +59,8 @@ public abstract class MemoryLeakTest  extends AbstractTest {
     public MemoryLeakTest() {
     }
 
-    Map objs = new HashMap();
-    List entries = new ArrayList();
+    Map<String, WeakRef> objs = new HashMap<>();
+    List<TestReport.Entry> entries = new ArrayList<>();
 
     public void registerObject(Object o) {
         synchronized (objs) {
@@ -81,7 +82,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
 
     public boolean checkObjects(String [] descs) {
         Runtime rt = Runtime.getRuntime();
-        List l = new ArrayList();
+        List<List<byte[]>> l = new ArrayList<>();
         int nBlock = (int)(rt.totalMemory()/(ALLOC_SZ*NUM_GC));
         try {
             while (true) {
@@ -91,7 +92,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
                     //                    " of " +rt.totalMemory());
 
                     for (String desc : descs) {
-                        WeakRef wr = (WeakRef) objs.get(desc);
+                        WeakRef wr = objs.get(desc);
                         if ((wr == null) || (wr.get() == null)) continue;
                         passed = false;
                         break;
@@ -99,7 +100,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
                 }
                 if (passed) return true;
 
-                List l2 = new ArrayList();
+                List<byte[]> l2 = new ArrayList<>();
                 for (int i=0; i<nBlock; i++) {
                     l2.add(new byte[ALLOC_SZ]);
                 }
@@ -117,7 +118,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
         boolean passed = true;
         synchronized (objs) {
             for (String desc : descs) {
-                WeakRef wr = (WeakRef) objs.get(desc);
+                WeakRef wr = objs.get(desc);
                 if (wr == null) continue;
                 Object o = wr.get();
                 if (o == null) continue;
@@ -145,7 +146,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
         return false;
     }
 
-    public boolean checkObjectsList(List descs) {
+    public boolean checkObjectsList(List<String> descs) {
         String [] strs = new String[descs.size()];
         descs.toArray(strs);
         return checkObjects(strs);
@@ -153,7 +154,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
 
     public boolean checkAllObjects() {
         Runtime rt = Runtime.getRuntime();
-        List l = new ArrayList();
+        List<List<byte[]>> l = new ArrayList<>();
         int nBlock = (int)(rt.totalMemory()/(ALLOC_SZ*NUM_GC));
         try {
             while (true) {
@@ -162,8 +163,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
 
                 boolean passed = true;
                 synchronized (objs) {
-                    for (Object o : objs.values()) {
-                        WeakRef wr = (WeakRef) o;
+                    for (WeakRef wr : objs.values()) {
                         if ((wr != null) && (wr.get() != null)) {
                             passed = false;
                             break;
@@ -172,7 +172,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
                 }
                 if (passed) return true;
 
-                List l2 = new ArrayList();
+                List<byte[]> l2 = new ArrayList<>();
                 for (int i=0; i<nBlock; i++) {
                     l2.add(new byte[ALLOC_SZ]);
                 }
@@ -190,8 +190,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
         StringBuffer sb = new StringBuffer();
         synchronized (objs) {
             boolean passed = true;
-            for (Object o1 : objs.values()) {
-                WeakRef wr = (WeakRef) o1;
+            for (WeakRef wr : objs.values()) {
                 Object o = wr.get();
                 if (o == null) continue;
                 if (!passed)
@@ -219,6 +218,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
         return false;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         TestReport ret = doSomething();
         if ((ret != null) && !ret.hasPassed())
@@ -233,7 +233,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
         }
         report.setErrorCode(ERROR_OBJS_NOT_CLEARED);
         report.setDescription
-            ((TestReport.Entry[])entries.toArray
+            (entries.toArray
              (new TestReport.Entry[entries.size()]));
         report.setPassed(false);
         return report;
@@ -241,7 +241,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
 
     public abstract TestReport doSomething() throws Exception;
 
-    public class WeakRef extends CleanerThread.WeakReferenceCleared {
+    public class WeakRef extends CleanerThread.WeakReferenceCleared<Object> {
         String desc;
         public WeakRef(Object o) {
             super(o);
@@ -254,6 +254,7 @@ public abstract class MemoryLeakTest  extends AbstractTest {
 
         public String getDesc() { return desc; }
 
+        @Override
         public void cleared() {
             synchronized (objs) {
                 objs.remove(desc);

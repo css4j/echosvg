@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * This is the base implementation for SVGPreservAspectRatio
  *
  * @author  Tonny Kohar
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractSVGPreserveAspectRatio

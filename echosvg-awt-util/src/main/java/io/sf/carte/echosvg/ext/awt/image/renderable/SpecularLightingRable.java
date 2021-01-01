@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.ext.awt.image.Light;
  * the SVG 1.0 specification.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SpecularLightingRable extends FilterColorInterpolation {

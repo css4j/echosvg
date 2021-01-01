@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.bridge;
  * Bridge class for the &lt;desc&gt; element.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGDescElementBridge extends SVGDescriptiveElementBridge {

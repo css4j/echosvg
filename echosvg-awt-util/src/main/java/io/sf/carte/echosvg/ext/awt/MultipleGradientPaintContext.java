@@ -45,6 +45,7 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  *
  * @author Nicholas Talian, Vincent Hardy, Jim Graham, Jerry Evans
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 abstract class MultipleGradientPaintContext implements PaintContext {
@@ -88,7 +89,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
     protected static ColorModel cachedModel;
 
     /** The cached raster, which is reusable among instances */
-    protected static WeakReference cached;
+    protected static WeakReference<WritableRaster> cached;
 
     /** Raster is reused whenever possible */
     protected WritableRaster saved;
@@ -1414,7 +1415,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
         (ColorModel cm, int w, int h) {
         if (cm == cachedModel) {
             if (cached != null) {
-                WritableRaster ras = (WritableRaster) cached.get();
+                WritableRaster ras = cached.get();
                 if (ras != null &&
                     ras.getWidth() >= w &&
                     ras.getHeight() >= h)
@@ -1438,7 +1439,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
     synchronized void putCachedRaster(ColorModel cm,
                                              WritableRaster ras) {
         if (cached != null) {
-            WritableRaster cras = (WritableRaster) cached.get();
+            WritableRaster cras = cached.get();
             if (cras != null) {
                 int cw = cras.getWidth();
                 int ch = cras.getHeight();
@@ -1453,7 +1454,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
             }
         }
         cachedModel = cm;
-        cached = new WeakReference(ras);
+        cached = new WeakReference<>(ras);
     }
 
     /**

@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.dom.events.NodeEventTarget;
  * It is used to implement the SVG use element behavioUr.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMUseShadowRoot

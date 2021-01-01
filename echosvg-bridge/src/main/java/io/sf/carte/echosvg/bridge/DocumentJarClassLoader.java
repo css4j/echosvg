@@ -37,6 +37,7 @@ import java.util.Enumeration;
  * the document referencing them.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DocumentJarClassLoader extends URLClassLoader {
@@ -92,9 +93,9 @@ public class DocumentJarClassLoader extends URLClassLoader {
                 = super.getPermissions(documentCodeSource);
 
             if (pc != null) {
-                Enumeration items = urlPC.elements();
+                Enumeration<Permission> items = urlPC.elements();
                 while (items.hasMoreElements()) {
-                    pc.add((Permission)(items.nextElement()));
+                    pc.add(items.nextElement());
                 }
             } else {
                 pc = urlPC;

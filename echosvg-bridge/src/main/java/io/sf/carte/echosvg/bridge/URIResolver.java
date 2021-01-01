@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * This class is used to resolve the URI that can be found in a SVG document.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class URIResolver {

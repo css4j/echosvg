@@ -20,10 +20,13 @@ package io.sf.carte.echosvg.transcoder;
 
 import java.util.Map;
 
+import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
+
 /**
  * This class defines an API for transcoding.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Transcoder {
@@ -61,7 +64,7 @@ public interface Transcoder {
      * with the specified hints.
      * @param hints the rendering hints to be set
      */
-    void setTranscodingHints(Map hints);
+    void setTranscodingHints(Map<Key, ?> hints);
 
     /**
      * Sets the values of all preferences for the transcoding algorithms

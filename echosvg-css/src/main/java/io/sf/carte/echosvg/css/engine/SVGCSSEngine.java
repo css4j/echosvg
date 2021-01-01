@@ -83,6 +83,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * This class provides a CSS engine initialized for SVG.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGCSSEngine extends CSSEngine {

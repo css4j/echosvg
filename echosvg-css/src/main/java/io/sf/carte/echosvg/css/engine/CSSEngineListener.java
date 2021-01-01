@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.css.engine;
  * This class must be implemented in order to be notified of CSS events.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface CSSEngineListener {

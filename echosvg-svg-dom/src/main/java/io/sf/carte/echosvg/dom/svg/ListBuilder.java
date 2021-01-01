@@ -41,12 +41,12 @@ public class ListBuilder implements ListHandler {
     /**
      * The list being built.
      */
-    protected List list;
+    protected List<SVGItem> list;
 
     /**
      * Returns the newly created list.
      */
-    public List getList() {
+    public List<SVGItem> getList() {
         return list;
     }
 
@@ -55,7 +55,7 @@ public class ListBuilder implements ListHandler {
      */
     @Override
     public void startList(){
-        list = new ArrayList();
+        list = new ArrayList<>();
     }
 
     /**

@@ -74,6 +74,7 @@ import io.sf.carte.echosvg.transcoder.keys.StringKey;
  * </ul>
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PrintTranscoder extends SVGAbstractTranscoder
@@ -107,13 +108,13 @@ public class PrintTranscoder extends SVGAbstractTranscoder
      * Purpose is not really clear: some data is added, and it is copied into
      * printedInputs. But it is never read or cleared...
      */
-    private List inputs = new ArrayList();
+    private List<TranscoderInput> inputs = new ArrayList<>();
 
     /**
      * Currently printing set of pages. This vector is
      * created as a clone of inputs when the first page is printed.
      */
-    private List printedInputs = null;
+    private List<TranscoderInput> printedInputs = null;
 
     /**
      * Index of the page corresponding to root
@@ -280,7 +281,7 @@ public class PrintTranscoder extends SVGAbstractTranscoder
         // TranscodeInputs.
         //
         if(printedInputs == null){
-            printedInputs = new ArrayList( inputs );
+            printedInputs = new ArrayList<>( inputs );
         }
 
         //
@@ -308,7 +309,7 @@ public class PrintTranscoder extends SVGAbstractTranscoder
                 width  = (int)pageFormat.getImageableWidth();
                 height = (int)pageFormat.getImageableHeight();
                 super.transcode
-                    ((TranscoderInput)printedInputs.get(pageIndex),null);
+                    (printedInputs.get(pageIndex),null);
                 curIndex = pageIndex;
             }catch(TranscoderException e){
                 drawError(_g, e);

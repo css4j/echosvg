@@ -56,6 +56,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * from an URI using SAX2.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SAXDocumentFactory
@@ -213,7 +214,7 @@ public class SAXDocumentFactory
      * Various elements encountered prior to real document root element.
      * List of PreInfo objects.
      */
-    protected List preInfo;
+    protected List<PreInfo> preInfo;
 
     /**
      * Creates a new SAXDocumentFactory object.
@@ -559,7 +560,7 @@ public class SAXDocumentFactory
      */
     @Override
     public void startDocument() throws SAXException {
-        preInfo    = new LinkedList();
+        preInfo    = new LinkedList<>();
         namespaces = new HashTableStack();
         namespaces.put("xml", XMLConstants.XML_NAMESPACE_URI);
         namespaces.put("xmlns", XMLConstants.XMLNS_NAMESPACE_URI);
@@ -656,10 +657,10 @@ public class SAXDocumentFactory
         if (currentNode == null) {
             implementation = getDOMImplementation(version);
             document = implementation.createDocument(nsURI, rawName, doctype);
-            Iterator i = preInfo.iterator();
+            Iterator<PreInfo> i = preInfo.iterator();
             currentNode = e = document.getDocumentElement();
             while (i.hasNext()) {
-                PreInfo pi = (PreInfo)i.next();
+                PreInfo pi = i.next();
                 Node n = pi.createNode(document);
                 document.insertBefore(n, e);
             }

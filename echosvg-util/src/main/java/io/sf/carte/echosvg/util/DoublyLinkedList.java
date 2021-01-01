@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.util;
  * O(n) behaviour on insert and delete.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DoublyLinkedList {

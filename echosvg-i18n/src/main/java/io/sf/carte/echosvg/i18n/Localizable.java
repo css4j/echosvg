@@ -26,6 +26,7 @@ import java.util.MissingResourceException;
  * way to override the default locale. 
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Localizable {

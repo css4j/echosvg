@@ -25,6 +25,7 @@ import java.awt.geom.Rectangle2D;
 /**
  * A class representing a quadratic path segment.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Quadradic extends AbstractSegment {

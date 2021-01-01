@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.util.SVG12Constants;
  * This class implements the flowDiv element from SVG 1.2
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMFlowDivElement 

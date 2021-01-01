@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.EncodingUtilities;
  * bytes.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class StreamNormalizingReader extends NormalizingReader {
@@ -160,7 +161,7 @@ public class StreamNormalizingReader extends NormalizingReader {
     protected CharDecoder createCharDecoder(InputStream is, String enc)
         throws IOException {
         CharDecoderFactory cdf =
-            (CharDecoderFactory)charDecoderFactories.get(enc.toUpperCase());
+            charDecoderFactories.get(enc.toUpperCase());
         if (cdf != null) {
             return cdf.createCharDecoder(is);
         }
@@ -174,7 +175,7 @@ public class StreamNormalizingReader extends NormalizingReader {
     /**
      * The CharDecoder factories map.
      */
-    protected static final Map charDecoderFactories = new HashMap(11);
+    protected static final Map<String, CharDecoderFactory> charDecoderFactories = new HashMap<>(11);
     static {
         CharDecoderFactory cdf = new ASCIIDecoderFactory();
         charDecoderFactories.put("ASCII", cdf);

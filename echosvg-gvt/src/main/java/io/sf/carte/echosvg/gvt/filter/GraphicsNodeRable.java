@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * created through a <code>GraphicsNodeRableFactory</code>.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface GraphicsNodeRable extends Filter {

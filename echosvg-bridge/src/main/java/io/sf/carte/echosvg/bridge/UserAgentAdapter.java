@@ -41,11 +41,12 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * the creation of UserAgent instances.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class UserAgentAdapter implements UserAgent {
-    protected Set FEATURES   = new HashSet();
-    protected Set extensions = new HashSet();
+    protected Set<String> FEATURES   = new HashSet<>();
+    protected Set<String> extensions = new HashSet<>();
 
     /**
      * The BridgeContext to use for error information.
@@ -314,7 +315,7 @@ public class UserAgentAdapter implements UserAgent {
      */
     @Override
     public void registerExtension(BridgeExtension ext) {
-        Iterator i = ext.getImplementedExtensions();
+        Iterator<String> i = ext.getImplementedExtensions();
         while (i.hasNext())
             extensions.add(i.next());
     }

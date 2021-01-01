@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a manager for the 'color-interpolation' property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ColorProfileManager extends AbstractValueManager {
@@ -112,6 +113,8 @@ public class ColorProfileManager extends AbstractValueManager {
             return new URIValue(lu.getStringValue(),
                                 resolveURI(engine.getCSSBaseURI(),
                                            lu.getStringValue()));
+        default:
+            break;
         }
         throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
     }

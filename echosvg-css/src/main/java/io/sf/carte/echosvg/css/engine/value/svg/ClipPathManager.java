@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a manager for the 'clip-path' property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ClipPathManager extends AbstractValueManager {
@@ -107,6 +108,8 @@ public class ClipPathManager extends AbstractValueManager {
                 (CSSConstants.CSS_NONE_VALUE)) {
                 return ValueConstants.NONE_VALUE;
             }
+        default:
+            break;
         }
         throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
     }

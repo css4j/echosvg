@@ -30,6 +30,10 @@ import java.net.URL;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.xml.sax.XMLReader;
+
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
@@ -39,19 +43,16 @@ import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
-import org.xml.sax.XMLReader;
-
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-
 /**
  * This test validates that the various configurations of TranscoderInput 
  * are supported by the XMLAbstractTranscoder class.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TranscoderInputTest extends AbstractTest {
+    @Override
     public TestReport runImpl() throws Exception {
         String TEST_URI = (new File("samples/anne.svg")).toURI().toURL().toString();
 
@@ -143,6 +144,7 @@ public class TranscoderInputTest extends AbstractTest {
                                SVGDOMImplementation.getDOMImplementation());
         }
 
+        @Override
         protected void transcode(Document document,
                                  String uri,
                                  TranscoderOutput output) {

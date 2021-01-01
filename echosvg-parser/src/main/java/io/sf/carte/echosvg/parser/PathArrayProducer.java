@@ -28,6 +28,7 @@ import org.w3c.dom.svg.SVGPathSeg;
  * parsing path data.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PathArrayProducer implements PathHandler {
@@ -35,7 +36,7 @@ public class PathArrayProducer implements PathHandler {
     /**
      * List of <code>float[]</code> objects.
      */
-    protected LinkedList ps;
+    protected LinkedList<Object> ps;
 
     /**
      * The current <code>float[]</code> object.
@@ -45,7 +46,7 @@ public class PathArrayProducer implements PathHandler {
     /**
      * List of <code>short[]</code> objects.
      */
-    protected LinkedList cs;
+    protected LinkedList<Object> cs;
 
     /**
      * The current <code>short[]</code> object.
@@ -93,9 +94,9 @@ public class PathArrayProducer implements PathHandler {
      */
     @Override
     public void startPath() throws ParseException {
-        cs = new LinkedList();
+        cs = new LinkedList<>();
         c = new short[11];
-        ps = new LinkedList();
+        ps = new LinkedList<>();
         p = new float[11];
         ccount = 0;
         pcount = 0;
@@ -370,7 +371,7 @@ public class PathArrayProducer implements PathHandler {
     public void endPath() throws ParseException {
         short[] allCommands = new short[ccount];
         int pos = 0;
-        Iterator it = cs.iterator();
+        Iterator<Object> it = cs.iterator();
         while (it.hasNext()) {
             short[] a = (short[]) it.next();
             System.arraycopy(a, 0, allCommands, pos, a.length);

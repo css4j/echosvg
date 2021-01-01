@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import java.awt.Graphics2D;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
 /**
@@ -27,9 +27,11 @@ import java.awt.geom.AffineTransform;
  * the generator handles Font transform.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Bug4945 implements Painter {
+    @Override
     public void paint(Graphics2D g){
         Font origFont = g.getFont(); 
 

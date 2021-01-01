@@ -30,6 +30,7 @@ import java.text.AttributedCharacterIterator;
  * Complete Class Desc
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FlowGlyphLayout extends GlyphLayout {

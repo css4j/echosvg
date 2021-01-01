@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
  * This class is a helper to <code>PNGTranscoder</code> that writes PNG images
  * through the internal PNG codec.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PNGTranscoderInternalCodecWriteAdapter implements

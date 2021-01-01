@@ -25,6 +25,7 @@ import java.awt.geom.Rectangle2D;
  * Fills the input image with a given paint
  *
  * @author <a href="mailto:dean@w3.org">Dean Jackson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 

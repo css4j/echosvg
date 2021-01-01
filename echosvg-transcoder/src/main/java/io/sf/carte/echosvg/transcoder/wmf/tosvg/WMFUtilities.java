@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
  *  {@link io.sf.carte.echosvg.transcoder.wmf.tosvg.AbstractWMFReader}s and
  *  {@link io.sf.carte.echosvg.transcoder.wmf.tosvg.AbstractWMFPainter}s
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class WMFUtilities {

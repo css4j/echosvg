@@ -27,6 +27,7 @@ import java.io.Writer;
  * a particular scripting language.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Interpreter extends io.sf.carte.echosvg.i18n.Localizable {

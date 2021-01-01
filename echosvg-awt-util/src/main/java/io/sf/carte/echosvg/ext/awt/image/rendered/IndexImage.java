@@ -47,6 +47,7 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
  * @author <a href="mailto:jun@oop-reserch.com">Jun Inamori</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 
@@ -608,13 +609,14 @@ public class IndexImage{
      * @param bi input-image
      * @return a List[] where each slot is a List of Counters (or null)
      */
-    static List[] createColorList( BufferedImage bi ){
+    static List<Counter>[] createColorList( BufferedImage bi ){
 
         int w= bi.getWidth();
         int h= bi.getHeight();
 
         // Using 4 bits from RG & B.
-        List[] colors = new ArrayList[1<<12];
+        @SuppressWarnings("unchecked")
+        List<Counter>[] colors = new ArrayList[1<<12];
 
         for(int i_w=0; i_w<w; i_w++){
             for(int i_h=0; i_h<h; i_h++){
@@ -625,20 +627,20 @@ public class IndexImage{
                            ((rgb&0x0000F0)>>>  4));
 
                 // Get the 'hash vector' for that key.
-                List v = colors[idx];
+                List<Counter> v = colors[idx];
                 if (v == null) {
                     // No colors in this bin yet so create list and
                     // add color.
-                    v = new ArrayList();
+                    v = new ArrayList<>();
                     v.add(new Counter(rgb));
                     colors[idx] = v;
                 } else {
                     // find our color in the bin or create a counter for it.
-                    Iterator i = v.iterator();
+                    Iterator<Counter> i = v.iterator();
                     while (true) {
                         if (i.hasNext()) {
                             // try adding our color to each counter...
-                            if (((Counter)i.next()).add(rgb)) break;
+                            if (i.next().add(rgb)) break;
                         } else {
                             v.add(new Counter(rgb));
                             break;
@@ -663,20 +665,20 @@ public class IndexImage{
      * empty after conversion!
      * @return same data as in colors, but Lists are converted to arrays.
      */
-    static Counter[][] convertColorList( List[] colors ){
+    static Counter[][] convertColorList( List<Counter>[] colors ){
 
         // used to fill empty slots
         final Counter[] EMPTY_COUNTER = new Counter[0];
 
         Counter[][] colorTbl= new Counter[ 1<< 12 ][];
         for( int i= 0; i < colors.length; i++ ){
-            List cl = colors[ i ];
+            List<Counter> cl = colors[ i ];
             if ( cl == null ){
                 colorTbl[ i ] = EMPTY_COUNTER;
                 continue;
             }
             int nSlots = cl.size();
-            colorTbl[i] = (Counter[])cl.toArray( new Counter[ nSlots ] );
+            colorTbl[i] = cl.toArray( new Counter[ nSlots ] );
 
             // the colors[ i ] - data is no longer needed: discard
             colors[ i ] = null;
@@ -697,7 +699,7 @@ public class IndexImage{
         int h=bi.getHeight();
 
         // Using 4 bits from RG & B.
-        List[] colors = createColorList( bi );
+        List<Counter>[] colors = createColorList( bi );
 
         // now we have initialized the colors[] with lists of Counters.
         // from now on, this data-structure is just read, not modified.

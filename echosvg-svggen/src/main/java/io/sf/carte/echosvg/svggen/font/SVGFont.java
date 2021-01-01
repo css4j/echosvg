@@ -43,6 +43,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
 /**
  * Converts a TrueType font to an SVG embedded font.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  */
@@ -372,7 +373,7 @@ public class SVGFont implements XMLConstants, SVGConstants, ScriptTags, FeatureT
             }
 
             // Include our requested range
-            Set glyphSet = new HashSet();
+            Set<Integer> glyphSet = new HashSet<>();
             for (int i = first; i <= last; i++) {
                 int glyphIndex = cmapFmt.mapCharCode(i);
                 //        ps.println(String.valueOf(i) + " -> " + String.valueOf(glyphIndex));

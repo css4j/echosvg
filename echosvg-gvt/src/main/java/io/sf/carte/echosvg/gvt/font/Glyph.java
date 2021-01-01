@@ -37,12 +37,13 @@ import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
  * attributes.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Glyph {
 
     private String unicode;
-    private Vector names;
+    private Vector<String> names;
     private String orientation;
     private String arabicForm;
     private String lang;
@@ -67,7 +68,7 @@ public class Glyph {
     /**
      * Constructs a Glyph with the specified parameters.
      */
-    public Glyph(String unicode, List names,
+    public Glyph(String unicode, List<String> names,
                  String orientation, String arabicForm, String lang,
                  Point2D horizOrigin, Point2D vertOrigin, float horizAdvX,
                  float vertAdvY, int glyphCode,
@@ -85,7 +86,7 @@ public class Glyph {
         }
 
         this.unicode = unicode;
-        this.names = new Vector( names );
+        this.names = new Vector<>( names );
         this.orientation = orientation;
         this.arabicForm = arabicForm;
         this.lang = lang;
@@ -118,7 +119,7 @@ public class Glyph {
      *
      * @return The glyph names.
      */
-    public Vector getNames() {
+    public Vector<String> getNames() {
         return names;
     }
 

@@ -27,6 +27,7 @@ import java.awt.Color;
  * is at elevation 0.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Light {

@@ -78,6 +78,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  *     transcoder.addTranscodingHint(ToSVGAbstractTranscoder.KEY_WIDTH, Float.valueOf(width));
  *  </pre>
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class ToSVGAbstractTranscoder extends AbstractTranscoder

@@ -25,6 +25,7 @@ import org.w3c.dom.views.AbstractView;
  * An event class for SMIL timing events.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DOMTimeEvent extends AbstractEvent implements TimeEvent {

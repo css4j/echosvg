@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * This interface defines constants for CSS values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ValueConstants {

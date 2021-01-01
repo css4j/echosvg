@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * This class represents a &lt;font-face&gt; element or @font-face rule
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CSSFontFace extends FontFace implements SVGConstants {
@@ -48,7 +49,7 @@ public class CSSFontFace extends FontFace implements SVGConstants {
      * Constructes an CSSFontFace with the specfied font-face attributes.
      */
     public CSSFontFace
-        (List srcs,
+        (List<Object> srcs,
          String familyName, float unitsPerEm, String fontWeight,
          String fontStyle, String fontVariant, String fontStretch,
          float slope, String panose1, float ascent, float descent,
@@ -93,10 +94,10 @@ public class CSSFontFace extends FontFace implements SVGConstants {
         ParsedURL base = ffr.getURL();
         if ((v != null) && (v != ValueConstants.NONE_VALUE)) {
             if (v.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
-                ret.srcs = new LinkedList();
+                ret.srcs = new LinkedList<>();
                 ret.srcs.add(getSrcValue(v, base));
             } else if (v.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
-                ret.srcs = new LinkedList();
+                ret.srcs = new LinkedList<>();
                 for (int i=0; i<v.getLength(); i++) {
                     ret.srcs.add(getSrcValue(v.item(i), base));
                 }

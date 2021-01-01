@@ -24,6 +24,7 @@ import java.awt.Color;
  * A light source which emits a light of constant intensity in all directions.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SpotLight extends AbstractLight {

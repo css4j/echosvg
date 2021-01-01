@@ -25,6 +25,7 @@ import org.w3c.dom.Element;
  * to values: an SVG opacity and a filter
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFilterDescriptor {

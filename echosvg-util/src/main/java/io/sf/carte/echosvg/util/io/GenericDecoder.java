@@ -28,6 +28,7 @@ import java.io.Reader;
  * This class delegates to a reader the decoding of an input stream.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class GenericDecoder implements CharDecoder {

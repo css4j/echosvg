@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * Test the ImageTranscoder input with a DOM tree.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ParametrizedDOMTest extends AbstractImageTranscoderTest {
@@ -54,6 +55,7 @@ public class ParametrizedDOMTest extends AbstractImageTranscoderTest {
     /**
      * Creates the <code>TranscoderInput</code>.
      */
+    @Override
     protected TranscoderInput createTranscoderInput() {
         try {
             String parser = XMLResourceDescriptor.getXMLParserClassName();
@@ -68,6 +70,7 @@ public class ParametrizedDOMTest extends AbstractImageTranscoderTest {
     /**
      * Returns the reference image for this test.
      */
+    @Override
     protected byte [] getReferenceImageData() {
         return createBufferedImageData(resolveURL(refImageURI));
     }

@@ -23,6 +23,7 @@ import java.awt.Color;
 import java.awt.font.TextAttribute;
 import java.awt.geom.Point2D;
 import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +61,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * Bridge class for the &lt;flowText&gt; element.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
@@ -170,7 +172,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
     @Override
     protected AttributedString buildAttributedString(BridgeContext ctx,
                                                      Element element) {
-        List rgns = getRegions(ctx, element);
+        List<RegionInfo> rgns = getRegions(ctx, element);
         AttributedString ret = getFlowDiv(ctx, element);
         if (ret == null) return ret;
 
@@ -334,9 +336,9 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         elemTPI.put(div, divTPI);
 
         AttributedStringBuffer asb = new AttributedStringBuffer();
-        List paraEnds  = new ArrayList();
-        List paraElems = new ArrayList();
-        List lnLocs    = new ArrayList();
+        List<Integer> paraEnds  = new ArrayList<>();
+        List<Element> paraElems = new ArrayList<>();
+        List<Integer> lnLocs    = new ArrayList<>();
         for (Node n = div.getFirstChild();
              n != null;
              n = n.getNextSibling()) {
@@ -372,8 +374,8 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         // Note: The Working Group (in conjunction with XHTML working
         // group) has decided that multiple line elements collapse.
         int prevLN = 0;
-        for (Object lnLoc : lnLocs) {
-            int nextLN = (Integer) lnLoc;
+        for (Integer lnLoc : lnLocs) {
+            int nextLN = lnLoc;
             if (nextLN == prevLN) continue;
 
             ret.addAttribute(FLOW_LINE_BREAK,
@@ -385,13 +387,13 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
 
         int start=0;
         int end;
-        List emptyPara = null;
+        List<MarginInfo> emptyPara = null;
         for (int i=0; i<paraElems.size(); i++, start=end) {
-            Element elem = (Element)paraElems.get(i);
-            end  = (Integer) paraEnds.get(i);
+            Element elem = paraElems.get(i);
+            end  = paraEnds.get(i);
             if (start == end) {
                 if (emptyPara == null)
-                    emptyPara = new LinkedList();
+                    emptyPara = new LinkedList<>();
                 emptyPara.add(makeMarginInfo(elem));
                 continue;
             }
@@ -406,8 +408,8 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         return ret;
     }
 
-    protected List getRegions(BridgeContext ctx, Element element)  {
-        List ret = new LinkedList();
+    protected List<RegionInfo> getRegions(BridgeContext ctx, Element element)  {
+        List<RegionInfo> ret = new LinkedList<>();
         for (Node n = element.getFirstChild();
              n != null; n = n.getNextSibling()) {
 
@@ -422,17 +424,17 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
             // our default alignment is to the top of the flow rect.
             float verticalAlignment = 0.0f;
             String verticalAlignmentAttribute
-                = e.getAttribute(BATIK_EXT_VERTICAL_ALIGN_ATTRIBUTE);
+                = e.getAttribute(EXT_VERTICAL_ALIGN_ATTRIBUTE);
 
             if ((verticalAlignmentAttribute != null) &&
                 (verticalAlignmentAttribute.length() > 0)) {
-                if (BATIK_EXT_ALIGN_TOP_VALUE.equals
+                if (EXT_ALIGN_TOP_VALUE.equals
                     (verticalAlignmentAttribute)) {
                     verticalAlignment = 0.0f;
-                } else if (BATIK_EXT_ALIGN_MIDDLE_VALUE.equals
+                } else if (EXT_ALIGN_MIDDLE_VALUE.equals
                            (verticalAlignmentAttribute)) {
                     verticalAlignment = 0.5f;
-                } else if (BATIK_EXT_ALIGN_BOTTOM_VALUE.equals
+                } else if (EXT_ALIGN_BOTTOM_VALUE.equals
                            (verticalAlignmentAttribute)) {
                     verticalAlignment = 1.0f;
                 }
@@ -445,7 +447,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
     }
 
     protected void gatherRegionInfo(BridgeContext ctx, Element rgn,
-                                    float verticalAlign, List regions) {
+                                    float verticalAlign, List<RegionInfo> regions) {
 
         for (Node n = rgn.getFirstChild();
              n != null; n = n.getNextSibling()) {
@@ -471,31 +473,31 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         String s;
 
         // 'x' attribute - default is 0
-        s = e.getAttribute(BATIK_EXT_X_ATTRIBUTE);
+        s = e.getAttribute(EXT_X_ATTRIBUTE);
         float x = 0;
         if (s.length() != 0) {
             x = UnitProcessor.svgHorizontalCoordinateToUserSpace
-                (s, BATIK_EXT_X_ATTRIBUTE, uctx);
+                (s, EXT_X_ATTRIBUTE, uctx);
         }
 
         // 'y' attribute - default is 0
-        s = e.getAttribute(BATIK_EXT_Y_ATTRIBUTE);
+        s = e.getAttribute(EXT_Y_ATTRIBUTE);
         float y = 0;
         if (s.length() != 0) {
             y = UnitProcessor.svgVerticalCoordinateToUserSpace
-                (s, BATIK_EXT_Y_ATTRIBUTE, uctx);
+                (s, EXT_Y_ATTRIBUTE, uctx);
         }
 
         // 'width' attribute - required
-        s = e.getAttribute(BATIK_EXT_WIDTH_ATTRIBUTE);
+        s = e.getAttribute(EXT_WIDTH_ATTRIBUTE);
         float w;
         if (s.length() != 0) {
             w = UnitProcessor.svgHorizontalLengthToUserSpace
-                (s, BATIK_EXT_WIDTH_ATTRIBUTE, uctx);
+                (s, EXT_WIDTH_ATTRIBUTE, uctx);
         } else {
             throw new BridgeException
                 (ctx, e, ERR_ATTRIBUTE_MISSING,
-                 new Object[] {BATIK_EXT_WIDTH_ATTRIBUTE, s});
+                 new Object[] {EXT_WIDTH_ATTRIBUTE, s});
         }
         // A value of zero disables rendering of the element
         if (w == 0) {
@@ -503,15 +505,15 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         }
 
         // 'height' attribute - required
-        s = e.getAttribute(BATIK_EXT_HEIGHT_ATTRIBUTE);
+        s = e.getAttribute(EXT_HEIGHT_ATTRIBUTE);
         float h;
         if (s.length() != 0) {
             h = UnitProcessor.svgVerticalLengthToUserSpace
-                (s, BATIK_EXT_HEIGHT_ATTRIBUTE, uctx);
+                (s, EXT_HEIGHT_ATTRIBUTE, uctx);
         } else {
             throw new BridgeException
                 (ctx, e, ERR_ATTRIBUTE_MISSING,
-                 new Object[] {BATIK_EXT_HEIGHT_ATTRIBUTE, s});
+                 new Object[] {EXT_HEIGHT_ATTRIBUTE, s});
         }
         // A value of zero disables rendering of the element
         if (h == 0) {
@@ -528,9 +530,9 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
                                               Element element,
                                               boolean top,
                                               Integer bidiLevel,
-                                              Map initialAttributes,
+                                              Map<Attribute, Object> initialAttributes,
                                               AttributedStringBuffer asb,
-                                              List lnLocs) {
+                                              List<Integer> lnLocs) {
         // 'requiredFeatures', 'requiredExtensions', 'systemLanguage' &
         // 'display="none".
         if ((!SVGUtilities.matchUserAgent(element, ctx.getUserAgent())) ||
@@ -549,9 +551,9 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         if (preserve)
             endLimit = asb.length();
 
-        Map map = initialAttributes == null
-                ? new HashMap()
-                : new HashMap(initialAttributes);
+        Map<Attribute, Object> map = initialAttributes == null
+                ? new HashMap<>()
+                : new HashMap<>(initialAttributes);
         initialAttributes = getAttributeMap(ctx, element, null, bidiLevel, map);
         Object o = map.get(TextAttribute.BIDI_EMBEDDING);
         Integer subBidiLevel = bidiLevel;
@@ -643,14 +645,14 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
                     s = normalizeString(s, preserve, prevEndsWithSpace);
                     if (s.length() != 0) {
                         int trefStart = asb.length();
-                        HashMap m = initialAttributes == null
-                                ? new HashMap()
-                                : new HashMap(initialAttributes);
+                        HashMap<Attribute, Object> m = initialAttributes == null
+                                ? new HashMap<>()
+                                : new HashMap<>(initialAttributes);
                         getAttributeMap(ctx, nodeElement, null, bidiLevel, m);
                         asb.append(s, m);
                         int trefEnd = asb.length()-1;
                         TextPaintInfo tpi;
-                        tpi = (TextPaintInfo)elemTPI.get(nodeElement);
+                        tpi = elemTPI.get(nodeElement);
                         tpi.startChar = trefStart;
                         tpi.endChar   = trefEnd;
                         initialAttributes = null;
@@ -679,8 +681,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
                 strippedSome = true;
             }
             if (strippedSome) {
-                for (Object o1 : elemTPI.values()) {
-                    TextPaintInfo tpi = (TextPaintInfo) o1;
+                for (TextPaintInfo tpi : elemTPI.values()) {
                     if (tpi.endChar >= asb.length()) {
                         tpi.endChar = asb.length() - 1;
                         if (tpi.startChar > tpi.endChar)
@@ -690,21 +691,21 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
             }
         }
         int elementEndChar = asb.length()-1;
-        TextPaintInfo tpi = (TextPaintInfo)elemTPI.get(element);
+        TextPaintInfo tpi = elemTPI.get(element);
         tpi.startChar = elementStartChar;
         tpi.endChar   = elementEndChar;
     }
 
     @Override
-    protected Map getAttributeMap(BridgeContext ctx,
+    protected Map<Attribute, Object> getAttributeMap(BridgeContext ctx,
                                   Element element,
                                   TextPath textPath,
                                   Integer bidiLevel,
-                                  Map result) {
-        Map initialMap =
+                                  Map<Attribute, Object> result) {
+        Map<Attribute, Object> initialMap =
             super.getAttributeMap(ctx, element, textPath, bidiLevel, result);
         String s;
-        s = element.getAttribute(BATIK_EXT_PREFORMATTED_ATTRIBUTE);
+        s = element.getAttribute(EXT_PREFORMATTED_ATTRIBUTE);
         if (s.length() != 0) {
             if (s.equals("true")) {
                 result.put(PREFORMATTED, Boolean.TRUE);
@@ -714,7 +715,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
     }
 
 
-    protected void checkMap(Map attrs) {
+    protected void checkMap(Map<Attribute, ?> attrs) {
         if (attrs.containsKey(TEXTPATH)) {
             return; // Problem, unsupported attr
         }
@@ -780,7 +781,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         String s;
         float top=0, right=0, bottom=0, left=0;
 
-        s = e.getAttribute(BATIK_EXT_MARGIN_ATTRIBUTE);
+        s = e.getAttribute(EXT_MARGIN_ATTRIBUTE);
         try {
             if (s.length() != 0) {
                 float f = Float.parseFloat(s);
@@ -788,28 +789,28 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
             }
         } catch(NumberFormatException nfe) { /* nothing */ }
 
-        s = e.getAttribute(BATIK_EXT_TOP_MARGIN_ATTRIBUTE);
+        s = e.getAttribute(EXT_TOP_MARGIN_ATTRIBUTE);
         try {
             if (s.length() != 0) {
                 float f = Float.parseFloat(s);
                 top = f;
             }
         } catch(NumberFormatException nfe) { /* nothing */ }
-        s = e.getAttribute(BATIK_EXT_RIGHT_MARGIN_ATTRIBUTE);
+        s = e.getAttribute(EXT_RIGHT_MARGIN_ATTRIBUTE);
         try {
             if (s.length() != 0) {
                 float f = Float.parseFloat(s);
                 right = f;
             }
         } catch(NumberFormatException nfe) { /* nothing */ }
-        s = e.getAttribute(BATIK_EXT_BOTTOM_MARGIN_ATTRIBUTE);
+        s = e.getAttribute(EXT_BOTTOM_MARGIN_ATTRIBUTE);
         try {
             if (s.length() != 0) {
                 float f = Float.parseFloat(s);
                 bottom = f;
             }
         } catch(NumberFormatException nfe) { /* nothing */ }
-        s = e.getAttribute(BATIK_EXT_LEFT_MARGIN_ATTRIBUTE);
+        s = e.getAttribute(EXT_LEFT_MARGIN_ATTRIBUTE);
         try {
             if (s.length() != 0) {
                 float f = Float.parseFloat(s);
@@ -818,7 +819,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         } catch(NumberFormatException nfe) { /* nothing */ }
 
         float indent = 0;
-        s = e.getAttribute(BATIK_EXT_INDENT_ATTRIBUTE);
+        s = e.getAttribute(EXT_INDENT_ATTRIBUTE);
         try {
             if (s.length() != 0) {
                 float f = Float.parseFloat(s);
@@ -827,16 +828,16 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge
         } catch(NumberFormatException nfe) { /* nothing */ }
 
         int justification = MarginInfo.JUSTIFY_START;
-        s = e.getAttribute(BATIK_EXT_JUSTIFICATION_ATTRIBUTE);
+        s = e.getAttribute(EXT_JUSTIFICATION_ATTRIBUTE);
         try {
             if (s.length() != 0) {
-                if (BATIK_EXT_JUSTIFICATION_START_VALUE.equals(s)) {
+                if (EXT_JUSTIFICATION_START_VALUE.equals(s)) {
                     justification = MarginInfo.JUSTIFY_START;
-                } else if (BATIK_EXT_JUSTIFICATION_MIDDLE_VALUE.equals(s)) {
+                } else if (EXT_JUSTIFICATION_MIDDLE_VALUE.equals(s)) {
                     justification = MarginInfo.JUSTIFY_MIDDLE;
-                } else if (BATIK_EXT_JUSTIFICATION_END_VALUE.equals(s)) {
+                } else if (EXT_JUSTIFICATION_END_VALUE.equals(s)) {
                     justification = MarginInfo.JUSTIFY_END;
-                } else if (BATIK_EXT_JUSTIFICATION_FULL_VALUE.equals(s)) {
+                } else if (EXT_JUSTIFICATION_FULL_VALUE.equals(s)) {
                     justification = MarginInfo.JUSTIFY_FULL;
                 }
             }

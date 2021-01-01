@@ -25,6 +25,7 @@ import java.awt.Shape;
  * path constructed from straight lines, quadratic and cubic (Bezier)
  * curves and elliptical arcs.
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ExtendedShape extends Shape {

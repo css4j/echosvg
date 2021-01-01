@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class represents the component transfer function elements.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGOMComponentTransferFunctionElement
@@ -42,10 +43,10 @@ public abstract class SVGOMComponentTransferFunctionElement
     /**
      * Table mapping XML attribute names to TraitInformation objects.
      */
-    protected static DoublyIndexedTable xmlTraitInformation;
+    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
     static {
-        DoublyIndexedTable t =
-            new DoublyIndexedTable(SVGOMElement.xmlTraitInformation);
+        DoublyIndexedTable<String,String> t =
+            new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
         t.put(null, SVG_TYPE_ATTRIBUTE,
                 new TraitInformation(true, SVGTypes.TYPE_IDENT));
         t.put(null, SVG_TABLE_VALUES_ATTRIBUTE,
@@ -225,7 +226,7 @@ public abstract class SVGOMComponentTransferFunctionElement
      * Returns the table of TraitInformation objects for this element.
      */
     @Override
-    protected DoublyIndexedTable getTraitInformationTable() {
+    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
         return xmlTraitInformation;
     }
 }

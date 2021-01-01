@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * This interface provides constants for SVG values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGValueConstants extends ValueConstants {

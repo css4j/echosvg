@@ -23,6 +23,7 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
  * defined by standard deviations along the x and y axis.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface GaussianBlurRable extends FilterColorInterpolation {

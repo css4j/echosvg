@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.apps.rasterizer;
  * Describes an error condition in <code>SVGConverter</code>
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGConverterException extends Exception {

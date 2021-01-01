@@ -18,19 +18,24 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import org.w3c.dom.*;
+import java.io.File;
+import java.net.URL;
 
-import java.io.*;
-import java.net.*;
-import io.sf.carte.echosvg.dom.util.*;
-import io.sf.carte.echosvg.util.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.test.*;
+import io.sf.carte.echosvg.dom.util.DocumentFactory;
+import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.test.AbstractTest;
+import io.sf.carte.echosvg.test.DefaultTestReport;
+import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This class tests the hasChildNodes method.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class HasChildNodesTest extends AbstractTest {
@@ -52,6 +57,7 @@ public class HasChildNodesTest extends AbstractTest {
         targetId = id;
     }
 
+    @Override
     public TestReport runImpl() throws Exception {
         String parser =
             XMLResourceDescriptor.getXMLParserClassName();

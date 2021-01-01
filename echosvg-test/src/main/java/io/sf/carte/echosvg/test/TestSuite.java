@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.test;
  * <code>TestSuite</code> will simply run the children test cases.
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TestSuite extends Test {

@@ -37,6 +37,7 @@ import org.mozilla.javascript.GeneratedClassLoader;
  * documentURL is null.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLoader {
@@ -104,7 +105,7 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
      * Define and load a Java class
      */
     @Override
-    public Class defineClass(String name,
+    public Class<?> defineClass(String name,
                              byte[] data) {
         return super.defineClass(name, data, 0, data.length, codeSource);
     }
@@ -113,7 +114,7 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
      * Links the Java class.
      */
     @Override
-    public void linkClass(Class clazz) {
+    public void linkClass(Class<?> clazz) {
         super.resolveClass(clazz);
     }
 

@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.TranslateRed;
  * RenderableImage world.
  *
  * @author <a href="mailto:Thomas.DeWeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RedRable

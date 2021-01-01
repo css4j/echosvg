@@ -31,6 +31,7 @@ import org.w3c.dom.Element;
  * an SVG filter descriptor.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see                io.sf.carte.echosvg.svggen.SVGBufferedImageOp
  */
@@ -72,7 +73,7 @@ public class SVGConvolveOp extends AbstractSVGFilterConverter {
     public SVGFilterDescriptor toSVG(ConvolveOp convolveOp){
         // Reuse definition if convolveOp has already been converted
         SVGFilterDescriptor filterDesc =
-            (SVGFilterDescriptor)descMap.get(convolveOp);
+            descMap.get(convolveOp);
         Document domFactory = generatorContext.domFactory;
 
         if (filterDesc == null) {

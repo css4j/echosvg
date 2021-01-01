@@ -26,11 +26,14 @@ import java.awt.image.RescaleOp;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.w3c.dom.Element;
+
 /**
  * Utility class that converts a BufferedImageOp object into
  * an SVG filter.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  * @see                io.sf.carte.echosvg.svggen.SVGCustomBufferedImageOp
  * @see                io.sf.carte.echosvg.svggen.SVGLookupOp
@@ -78,8 +81,8 @@ public class SVGBufferedImageOp extends AbstractSVGFilterConverter {
      *         Converter has processed since it was created.
      */
     @Override
-    public List getDefinitionSet(){
-        List filterSet = new LinkedList(svgLookupOp.getDefinitionSet());
+    public List<Element> getDefinitionSet(){
+        List<Element> filterSet = new LinkedList<>(svgLookupOp.getDefinitionSet());
         filterSet.addAll(svgRescaleOp.getDefinitionSet());
         filterSet.addAll(svgConvolveOp.getDefinitionSet());
         filterSet.addAll(svgCustomBufferedImageOp.getDefinitionSet());

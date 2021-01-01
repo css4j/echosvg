@@ -58,6 +58,7 @@ import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
  * A simple implementation of <code>Interpreter</code> interface to use
  * Rhino ECMAScript interpreter.
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class RhinoInterpreter implements Interpreter {
@@ -81,7 +82,7 @@ public class RhinoInterpreter implements Interpreter {
      * Context vector, to make sure we are not
      * setting the security context too many times
      */
-    protected static List contexts = new LinkedList();
+    protected static List<?> contexts = new LinkedList<>();
 
     /**
      * The window object.
@@ -96,7 +97,7 @@ public class RhinoInterpreter implements Interpreter {
     /**
      * List of cached compiled scripts.
      */
-    protected LinkedList compiledScripts = new LinkedList();
+    protected LinkedList<Entry> compiledScripts = new LinkedList<>();
 
     /**
      * Factory for Java wrapper objects.
@@ -170,7 +171,7 @@ public class RhinoInterpreter implements Interpreter {
         } catch (SecurityException se) {
             rhinoClassLoader = null;
         }
-        ContextAction initAction = new ContextAction() {
+        ContextAction<?> initAction = new ContextAction<Object>() {
             @Override
             public Object run(Context cx) {
                 Scriptable scriptable = cx.initStandardObjects(null, false);
@@ -184,17 +185,17 @@ public class RhinoInterpreter implements Interpreter {
 
                 // import Java lang package & DOM Level 3 & SVG DOM packages
                 StringBuffer sb = new StringBuffer();
-                Iterator iter;
+                Iterator<String> iter;
                 iter = ii.getPackages();
                 while (iter.hasNext()) {
-                    String pkg = (String)iter.next();
+                    String pkg = iter.next();
                     sb.append("importPackage(Packages.");
                     sb.append(pkg);
                     sb.append(");");
                 }
                 iter = ii.getClasses();
                 while (iter.hasNext()) {
-                    String cls = (String)iter.next();
+                    String cls = iter.next();
                     sb.append("importClass(Packages.");
                     sb.append(cls);
                     sb.append(");");
@@ -290,7 +291,7 @@ public class RhinoInterpreter implements Interpreter {
     public Object evaluate(final Reader scriptReader, final String description)
         throws IOException {
 
-        ContextAction evaluateAction = new ContextAction() {
+        ContextAction<?> evaluateAction = new ContextAction<Object>() {
             @Override
             public Object run(Context cx) {
                 try {
@@ -337,16 +338,16 @@ public class RhinoInterpreter implements Interpreter {
     @Override
     public Object evaluate(final String scriptStr) {
 
-        ContextAction evalAction = new ContextAction() {
+        ContextAction<?> evalAction = new ContextAction<Object>() {
             @Override
             public Object run(final Context cx) {
                 Script script = null;
                 Entry entry = null;
-                Iterator it = compiledScripts.iterator();
+                Iterator<Entry> it = compiledScripts.iterator();
                 // between nlog(n) and log(n) because it is
                 // an AbstractSequentialList
                 while (it.hasNext()) {
-                    if ((entry = (Entry) it.next()).str.equals(scriptStr)) {
+                    if ((entry = it.next()).str.equals(scriptStr)) {
                         // if it is not at the end, remove it because
                         // it will change from place (it is faster
                         // to remove it now)
@@ -361,7 +362,7 @@ public class RhinoInterpreter implements Interpreter {
                     // forgotten since the compilation:
                     // compile it and store it for future use.
 
-                    PrivilegedAction compile = new PrivilegedAction() {
+                    PrivilegedAction<?> compile = new PrivilegedAction<Object>() {
                         @Override
                         public Object run() {
                             try {
@@ -435,7 +436,7 @@ public class RhinoInterpreter implements Interpreter {
      */
     @Override
     public void bindObject(final String name, final Object object) {
-        contextFactory.call(new ContextAction() {
+        contextFactory.call(new ContextAction<Object>() {
             @Override
             public Object run(Context cx) {
                 Object o = object;
@@ -456,7 +457,7 @@ public class RhinoInterpreter implements Interpreter {
      * To be used by <code>EventTargetWrapper</code>.
      */
     void callHandler(final Function handler, final Object arg) {
-        contextFactory.call(new ContextAction() {
+        contextFactory.call(new ContextAction<Object>() {
             @Override
             public Object run(Context cx) {
                 Object a = Context.toObject(arg, globalObject);
@@ -473,7 +474,7 @@ public class RhinoInterpreter implements Interpreter {
     void callMethod(final ScriptableObject obj,
                     final String methodName,
                     final ArgumentsBuilder ab) {
-        contextFactory.call(new ContextAction() {
+        contextFactory.call(new ContextAction<Object>() {
             @Override
             public Object run(Context cx) {
                 ScriptableObject.callMethod
@@ -487,7 +488,7 @@ public class RhinoInterpreter implements Interpreter {
      * To be used by <code>WindowWrapper</code>.
      */
     void callHandler(final Function handler, final Object[] args) {
-        contextFactory.call(new ContextAction() {
+        contextFactory.call(new ContextAction<Object>() {
             @Override
             public Object run(Context cx) {
                 handler.call(cx, globalObject, globalObject, args);
@@ -500,7 +501,7 @@ public class RhinoInterpreter implements Interpreter {
      * To be used by <code>WindowWrapper</code>.
      */
     void callHandler(final Function handler, final ArgumentsBuilder ab) {
-        contextFactory.call(new ContextAction() {
+        contextFactory.call(new ContextAction<Object>() {
             @Override
             public Object run(Context cx) {
                 Object[] args = ab.buildArguments();
@@ -513,7 +514,7 @@ public class RhinoInterpreter implements Interpreter {
     /**
      * To be used by <code>EventTargetWrapper</code>.
      */
-    Object call(ContextAction action) {
+    Object call(ContextAction<?> action) {
         return contextFactory.call(action);
     }
 

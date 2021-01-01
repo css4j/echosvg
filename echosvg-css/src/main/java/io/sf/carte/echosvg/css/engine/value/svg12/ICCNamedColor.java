@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.css.engine.value.AbstractValue;
 /**
  * This class represents an ICC named color value.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ICCNamedColor extends AbstractValue {

@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
  * Adjusts the input images coordinate system by dx, dy.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface OffsetRable extends Filter {

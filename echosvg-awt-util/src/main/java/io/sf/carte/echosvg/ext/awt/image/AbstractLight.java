@@ -24,6 +24,7 @@ import java.awt.Color;
  * An abstract implementation of the Light interface.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractLight implements Light {

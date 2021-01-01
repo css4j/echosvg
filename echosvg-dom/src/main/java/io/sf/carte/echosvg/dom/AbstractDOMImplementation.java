@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
  * {@link org.w3c.dom.css.DOMImplementationCSS} interfaces.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 
@@ -60,7 +61,7 @@ public abstract class AbstractDOMImplementation
     /**
      * The supported features.
      */
-    protected final HashMap<String, Object> features = new HashMap<String, Object>();
+    protected final HashMap<String, Object> features = new HashMap<>();
     {
         // registerFeature("BasicEvents",        "3.0");
         registerFeature("Core",               new String[] { "2.0", "3.0" });

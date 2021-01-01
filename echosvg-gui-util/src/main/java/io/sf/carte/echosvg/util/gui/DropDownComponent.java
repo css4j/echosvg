@@ -53,6 +53,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * The drop down menu component. Supports drop down popup menu and the main
  * button.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DropDownComponent extends JPanel {

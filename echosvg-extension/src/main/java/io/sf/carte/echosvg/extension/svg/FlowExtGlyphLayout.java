@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import io.sf.carte.echosvg.bridge.GlyphLayout;
+import io.sf.carte.echosvg.bridge.TextSpanLayout;
 import io.sf.carte.echosvg.gvt.font.GVTGlyphVector;
 import io.sf.carte.echosvg.gvt.font.MultiGlyphVector;
 
@@ -34,6 +35,7 @@ import io.sf.carte.echosvg.gvt.font.MultiGlyphVector;
  * A GlyphLayout class for SVG 1.2 flowing text.
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FlowExtGlyphLayout extends GlyphLayout {
@@ -114,8 +116,8 @@ public class FlowExtGlyphLayout extends GlyphLayout {
      *                  to flow text into.
      */
     public static void textWrapTextChunk(AttributedCharacterIterator [] acis,
-                                         List chunkLayouts,
-                                         List flowRects) {
+                                         List<List<TextSpanLayout>> chunkLayouts,
+                                         List<RegionInfo> flowRects) {
         // System.out.println("Len: " + acis.length + " Size: " + 
         //                    chunkLayouts.size());
 
@@ -123,17 +125,17 @@ public class FlowExtGlyphLayout extends GlyphLayout {
         // multiGlyphVector that makes them all look like one big
         // glyphVector
         GVTGlyphVector [] gvs            = new GVTGlyphVector[acis.length];
-        List           [] chunkLineInfos = new List          [acis.length];
+        List<?>        [] chunkLineInfos = new List[acis.length];
         GlyphIterator  [] gis            = new GlyphIterator [acis.length];
-        Iterator clIter = chunkLayouts.iterator();
+        Iterator<List<TextSpanLayout>> clIter = chunkLayouts.iterator();
 
         // Get an iterator for the flow rects.
-        Iterator flowRectsIter = flowRects.iterator();
+        Iterator<RegionInfo> flowRectsIter = flowRects.iterator();
         // Get info for new flow rect.
         RegionInfo currentRegion = null;
         float y0, x0, width, height=0;
         if (flowRectsIter.hasNext()) {
-            currentRegion = (RegionInfo) flowRectsIter.next();
+            currentRegion = flowRectsIter.next();
             height = (float) currentRegion.getHeight();
         }
 
@@ -153,10 +155,10 @@ public class FlowExtGlyphLayout extends GlyphLayout {
             AttributedCharacterIterator aci = acis[chunk];
             if (currentRegion != null)
             {
-                List extraP = (List)aci.getAttribute(FLOW_EMPTY_PARAGRAPH);
+                @SuppressWarnings("unchecked")
+                List<MarginInfo> extraP = (List<MarginInfo>)aci.getAttribute(FLOW_EMPTY_PARAGRAPH);
                 if (extraP != null) {
-                    for (Object anExtraP : extraP) {
-                        MarginInfo emi = (MarginInfo) anExtraP;
+                    for (MarginInfo emi : extraP) {
                         float inc = ((prevBotMargin > emi.getTopMargin())
                                 ? prevBotMargin
                                 : emi.getTopMargin());
@@ -172,7 +174,7 @@ public class FlowExtGlyphLayout extends GlyphLayout {
                             }
 
                             // NEXT FLOW REGION
-                            currentRegion = (RegionInfo) flowRectsIter.next();
+                            currentRegion = flowRectsIter.next();
                             height = (float) currentRegion.getHeight();
                             // start a new alignment offset for this flow rect.
                             verticalAlignOffset = new Point2D.Float(0, 0);
@@ -188,10 +190,9 @@ public class FlowExtGlyphLayout extends GlyphLayout {
                 }
             }
 
-            List gvl = new LinkedList();
-            List layouts = (List)clIter.next();
-            for (Object layout : layouts) {
-                GlyphLayout gl = (GlyphLayout) layout;
+            List<GVTGlyphVector> gvl = new LinkedList<>();
+            List<TextSpanLayout> layouts = clIter.next();
+            for (TextSpanLayout gl : layouts) {
                 gvl.add(gl.getGlyphVector());
             }
             GVTGlyphVector gv = new MultiGlyphVector(gvl);
@@ -226,7 +227,7 @@ public class FlowExtGlyphLayout extends GlyphLayout {
                 }
 
                 // NEXT FLOW REGION
-                currentRegion = (RegionInfo) flowRectsIter.next();
+                currentRegion = flowRectsIter.next();
                 height = (float) currentRegion.getHeight();
                 // start a new alignment offset for this flow rect..
                 verticalAlignOffset = new Point2D.Float(0,0);
@@ -250,7 +251,7 @@ public class FlowExtGlyphLayout extends GlyphLayout {
                              (leftMargin + rightMargin));
             height = (float) currentRegion.getHeight();
             
-            List lineInfos = new LinkedList();
+            List<LineInfo> lineInfos = new LinkedList<>();
             chunkLineInfos[chunk] = lineInfos;
 
             float prevDesc = 0.0f;
@@ -290,7 +291,7 @@ public class FlowExtGlyphLayout extends GlyphLayout {
                         }
 
                         // NEXT FLOW REGION
-                        currentRegion = (RegionInfo) flowRectsIter.next();
+                        currentRegion = flowRectsIter.next();
                         x0 = (float) currentRegion.getX() + leftMargin;
                         y0 = (float) currentRegion.getY();
                         width = (float) (currentRegion.getWidth() -
@@ -394,7 +395,7 @@ public class FlowExtGlyphLayout extends GlyphLayout {
                     float oldWidth = width;
 
                     // Get info for new flow rect.
-                    currentRegion = (RegionInfo) flowRectsIter.next();
+                    currentRegion = flowRectsIter.next();
                     x0     = (float) currentRegion.getX() + leftMargin;
                     y0     = (float) currentRegion.getY();
                     width  = (float)(currentRegion.getWidth() -
@@ -447,7 +448,7 @@ public class FlowExtGlyphLayout extends GlyphLayout {
                 // Move to next flow region..
                 currentRegion = null;
                 if (flowRectsIter.hasNext()) {
-                    currentRegion = (RegionInfo) flowRectsIter.next();
+                    currentRegion = flowRectsIter.next();
                     height = (float) currentRegion.getHeight();
 
                     // Don't use this paragraph's info in next
@@ -460,7 +461,7 @@ public class FlowExtGlyphLayout extends GlyphLayout {
         }
 
         for (int chunk=0; chunk < acis.length; chunk++) {
-            List lineInfos = chunkLineInfos[chunk];
+            List<?> lineInfos = chunkLineInfos[chunk];
             if (lineInfos == null) continue;
 
             AttributedCharacterIterator aci = acis[chunk];
@@ -510,8 +511,8 @@ public class FlowExtGlyphLayout extends GlyphLayout {
 
     public static void layoutChunk(GVTGlyphVector gv, Point2D origin,
                                    int justification,
-                                   List lineInfos) {
-        Iterator lInfoIter = lineInfos.iterator();
+                                   List<?> lineInfos) {
+        Iterator<?> lInfoIter = lineInfos.iterator();
         int numGlyphs      = gv.getNumGlyphs();
         float [] gp        = gv.getGlyphPositions(0, numGlyphs+1, null);
         Point2D.Float lineLoc  = null;

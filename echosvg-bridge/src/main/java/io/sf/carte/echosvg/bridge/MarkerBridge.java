@@ -26,6 +26,7 @@ import io.sf.carte.echosvg.gvt.Marker;
  * Factory class for vending <code>Marker</code> objects.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface MarkerBridge extends Bridge {

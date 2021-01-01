@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.xml.XMLUtilities;
  * This class is responsible of the output of XML constructs.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class OutputManager {
@@ -67,7 +68,7 @@ public class OutputManager {
     /**
      * The xml:space values.
      */
-    protected List xmlSpace = new LinkedList();
+    protected List<Boolean> xmlSpace = new LinkedList<>();
     {
         xmlSpace.add(Boolean.FALSE);
     }
@@ -80,7 +81,7 @@ public class OutputManager {
     /**
      * The elements starting lines.
      */
-    protected List startingLines = new LinkedList();
+    protected List<Integer> startingLines = new LinkedList<>();
 
     /**
      * Whether the attribute layout must be done on a single line.
@@ -447,7 +448,7 @@ public class OutputManager {
     /**
      * Prints the start of an element.
      */
-    public void printElementStart(char[] name, List attributes, char[] space)
+    public void printElementStart(char[] name, List<AttributeInfo> attributes, char[] space)
         throws IOException {
         xmlSpace.add(0, xmlSpace.get(0));
 
@@ -463,9 +464,9 @@ public class OutputManager {
         printCharacters(name);
 
         if (prettyPrinter.getFormat()) {
-            Iterator it = attributes.iterator();
+            Iterator<AttributeInfo> it = attributes.iterator();
             if (it.hasNext()) {
-                AttributeInfo ai = (AttributeInfo)it.next();
+                AttributeInfo ai = it.next();
 
                 if (ai.isAttribute("xml:space")) {
                     xmlSpace.set(0, (ai.value.equals("preserve")
@@ -481,7 +482,7 @@ public class OutputManager {
                 printCharacter(ai.delimiter);
             }
             while (it.hasNext()) {
-                AttributeInfo ai = (AttributeInfo)it.next();
+                AttributeInfo ai = it.next();
 
                 if (ai.isAttribute("xml:space")) {
                     xmlSpace.set(0, (ai.value.equals("preserve")
@@ -507,8 +508,7 @@ public class OutputManager {
                 printCharacter(ai.delimiter);
             }
         } else {
-            for (Object attribute : attributes) {
-                AttributeInfo ai = (AttributeInfo) attribute;
+            for (AttributeInfo ai : attributes) {
 
                 if (ai.isAttribute("xml:space")) {
                     xmlSpace.set(0, (ai.value.equals("preserve")
@@ -554,7 +554,7 @@ public class OutputManager {
         if (name != null) {
             if (prettyPrinter.getFormat()) {
                 if (xmlSpace.get(0) != Boolean.TRUE &&
-                    (line != (Integer) startingLines.get(0) ||
+                    (line != startingLines.get(0) ||
                      column + name.length + 3 >= prettyPrinter.getDocumentWidth())) {
                     printNewline();
                     printString(margin.toString());
@@ -687,11 +687,11 @@ public class OutputManager {
     /**
      * Prints an enumeration.
      */
-    public void printEnumeration(List names) throws IOException {
+    public void printEnumeration(List<NameInfo> names) throws IOException {
         writer.write('(');
 
-        Iterator it = names.iterator();
-        NameInfo ni = (NameInfo)it.next();
+        Iterator<NameInfo> it = names.iterator();
+        NameInfo ni = it.next();
         if (ni.space1 != null) {
             printSpaces(ni.space1, true);
         }
@@ -704,7 +704,7 @@ public class OutputManager {
         while (it.hasNext()) {
             writer.write('|');
 
-            ni = (NameInfo)it.next();
+            ni = it.next();
             if (ni.space1 != null) {
                 printSpaces(ni.space1, true);
             }

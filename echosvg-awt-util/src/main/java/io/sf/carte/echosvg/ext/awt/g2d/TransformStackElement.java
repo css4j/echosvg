@@ -27,6 +27,7 @@ import java.awt.geom.AffineTransform;
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author <a href="mailto:paul_evenblij@compuware.com">Paul Evenblij</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class TransformStackElement implements Cloneable{
@@ -55,7 +56,7 @@ public abstract class TransformStackElement implements Cloneable{
      * @return an object which is a deep copy of this one
      */
     @Override
-    public Object clone() {
+    public TransformStackElement clone() {
         TransformStackElement newElement = null;
 
         // start with a shallow copy to get our implementations right

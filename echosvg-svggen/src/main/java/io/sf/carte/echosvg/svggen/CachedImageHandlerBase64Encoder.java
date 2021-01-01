@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.util.Base64EncoderStream;
  * encoder.
  *
  * @author <a href="mailto:paul_evenblij@compuware.com">Paul Evenblij</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CachedImageHandlerBase64Encoder extends DefaultCachedImageHandler {

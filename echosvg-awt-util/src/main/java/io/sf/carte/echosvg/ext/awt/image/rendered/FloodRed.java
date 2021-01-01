@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  * out to infinity.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ 
  */
 public class FloodRed extends AbstractRed {

@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * This makes it pretty quick, but it can use a fair amount of
  * memory for large tile grids.
  *
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TileGrid implements TileStore {

@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * context attribute.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGGraphicContext implements SVGConstants, ErrorConstants {
@@ -46,9 +47,9 @@ public class SVGGraphicContext implements SVGConstants, ErrorConstants {
         SVG_NONE_VALUE
     };
 
-    private Map context;
-    private Map groupContext;
-    private Map graphicElementContext;
+    private Map<String, String> context;
+    private Map<String, String> groupContext;
+    private Map<String, String> graphicElementContext;
     private TransformStackElement[] transformStack;
 
     /**
@@ -56,7 +57,7 @@ public class SVGGraphicContext implements SVGConstants, ErrorConstants {
      * @param transformStack Sequence of transforms that where
      *        applied to create the context's current transform.
      */
-    public SVGGraphicContext(Map context,
+    public SVGGraphicContext(Map<String, String> context,
                              TransformStackElement[] transformStack) {
         if (context == null)
             throw new SVGGraphics2DRuntimeException(ERR_MAP_NULL);
@@ -74,7 +75,7 @@ public class SVGGraphicContext implements SVGConstants, ErrorConstants {
      * @param transformStack Sequence of transforms that where
      *        applied to create the context's current transform.
      */
-    public SVGGraphicContext(Map groupContext, Map graphicElementContext,
+    public SVGGraphicContext(Map<String, String> groupContext, Map<String, String> graphicElementContext,
                              TransformStackElement[] transformStack) {
         if (groupContext == null || graphicElementContext == null)
             throw new SVGGraphics2DRuntimeException(ERR_MAP_NULL);
@@ -91,21 +92,21 @@ public class SVGGraphicContext implements SVGConstants, ErrorConstants {
     /**
      * @return set of all attributes.
      */
-    public Map getContext() {
+    public Map<String, String> getContext() {
         return context;
     }
 
     /**
      * @return set of attributes that can be set on a group
      */
-    public Map getGroupContext() {
+    public Map<String, String> getGroupContext() {
         return groupContext;
     }
 
     /**
      * @return set of attributes that can be set on leaf node
      */
-    public Map getGraphicElementContext() {
+    public Map<String, String> getGraphicElementContext() {
         return graphicElementContext;
     }
 
@@ -120,7 +121,7 @@ public class SVGGraphicContext implements SVGConstants, ErrorConstants {
         if (context != null)
             return;
 
-        context = new HashMap(groupContext);
+        context = new HashMap<>(groupContext);
         context.putAll(graphicElementContext);
     }
 
@@ -131,10 +132,10 @@ public class SVGGraphicContext implements SVGConstants, ErrorConstants {
         // Now, move attributes that only apply to
         // leaf elements to a separate map.
         //
-        groupContext = new HashMap(context);
-        graphicElementContext = new HashMap();
+        groupContext = new HashMap<>(context);
+        graphicElementContext = new HashMap<>();
         for (int i=0; i< leafOnlyAttributes.length; i++) {
-            Object attrValue = groupContext.get(leafOnlyAttributes[i]);
+            String attrValue = groupContext.get(leafOnlyAttributes[i]);
             if (attrValue != null){
                 if (!attrValue.equals(defaultValues[i]))
                     graphicElementContext.put(leafOnlyAttributes[i], attrValue);

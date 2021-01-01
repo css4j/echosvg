@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.util.SMILConstants;
  * Bridge class for the 'animate' animation element.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
@@ -150,7 +151,7 @@ public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
         if (len == 0) {
             return null;
         }
-        ArrayList values = new ArrayList(7);
+        ArrayList<AnimatableValue> values = new ArrayList<>(7);
         int i = 0, start = 0, end;
         char c;
 outer:  while (i < len) {
@@ -183,7 +184,7 @@ outer:  while (i < len) {
             values.add(val);
         }
         AnimatableValue[] ret = new AnimatableValue[values.size()];
-        return (AnimatableValue[]) values.toArray(ret);
+        return values.toArray(ret);
     }
 
     /**
@@ -196,7 +197,7 @@ outer:  while (i < len) {
         if (len == 0) {
             return null;
         }
-        ArrayList keyTimes = new ArrayList(7);
+        ArrayList<Float> keyTimes = new ArrayList<>(7);
         int i = 0, start = 0, end;
         char c;
 outer:  while (i < len) {
@@ -231,7 +232,7 @@ outer:  while (i < len) {
         len = keyTimes.size();
         float[] ret = new float[len];
         for (int j = 0; j < len; j++) {
-            ret[j] = (Float) keyTimes.get(j);
+            ret[j] = keyTimes.get(j);
         }
         return ret;
     }
@@ -246,7 +247,7 @@ outer:  while (i < len) {
         if (len == 0) {
             return null;
         }
-        List keySplines = new ArrayList(7);
+        List<Float> keySplines = new ArrayList<>(7);
         int count = 0, i = 0, start = 0, end;
         char c;
 outer:  while (i < len) {
@@ -307,7 +308,7 @@ outer:  while (i < len) {
         len = keySplines.size();
         float[] ret = new float[len];
         for (int j = 0; j < len; j++) {
-            ret[j] = (Float) keySplines.get(j);
+            ret[j] = keySplines.get(j);
         }
         return ret;
     }

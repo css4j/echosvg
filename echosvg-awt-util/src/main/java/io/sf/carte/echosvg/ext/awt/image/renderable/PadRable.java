@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.ext.awt.image.PadMode;
  * specified in the user coordinate system of this Renderable.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public interface PadRable extends Filter {
     /**

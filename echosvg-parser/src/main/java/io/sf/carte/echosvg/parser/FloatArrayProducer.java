@@ -25,6 +25,7 @@ import java.util.LinkedList;
  * number list or a point list.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FloatArrayProducer
@@ -34,7 +35,7 @@ public class FloatArrayProducer
     /**
      * List of <code>float[]</code> objects.
      */
-    protected LinkedList as;
+    protected LinkedList<float[]> as;
 
     /**
      * The current <code>float[]</code> object.
@@ -67,7 +68,7 @@ public class FloatArrayProducer
      */
     @Override
     public void startNumberList() throws ParseException {
-        as = new LinkedList();
+        as = new LinkedList<>();
         a = new float[11];
         count = 0;
         index = 0;
@@ -98,8 +99,7 @@ public class FloatArrayProducer
     public void endNumberList() throws ParseException {
         float[] all = new float[count];
         int pos = 0;
-        for (Object a1 : as) {
-            float[] b = (float[]) a1;
+        for (float[] b : as) {
             System.arraycopy(b, 0, all, pos, b.length);
             pos += b.length;
         }

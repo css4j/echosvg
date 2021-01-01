@@ -46,6 +46,7 @@ import io.sf.carte.echosvg.parser.PathHandler;
  * interface.
  *
  * @author <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class SVGAnimatedPathDataSupport {

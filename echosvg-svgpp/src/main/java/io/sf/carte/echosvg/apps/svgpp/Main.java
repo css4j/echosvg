@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.transcoder.svg2svg.SVGTranscoder;
  * svgpp is a pretty-printer for SVG source files.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Main {
@@ -71,7 +72,7 @@ public class Main {
     /**
      * The option handlers.
      */
-    protected Map handlers = new HashMap();
+    protected Map<String, OptionHandler> handlers = new HashMap<>();
     {
         handlers.put("-doctype", new DoctypeHandler());
         handlers.put("-doc-width", new DocWidthHandler());
@@ -106,7 +107,7 @@ public class Main {
         }
         try {
             for (;;) {
-                OptionHandler oh = (OptionHandler)handlers.get(arguments[index]);
+                OptionHandler oh = handlers.get(arguments[index]);
                 if (oh == null) {
                     break;
                 }
@@ -135,9 +136,8 @@ public class Main {
         System.out.println(localizableSupport.formatMessage("syntax", null));
         System.out.println();
         System.out.println(localizableSupport.formatMessage("options", null));
-        for (Object o : handlers.keySet()) {
-            String s = (String) o;
-            System.out.println(((OptionHandler) handlers.get(s)).getDescription());
+        for (String s : handlers.keySet()) {
+            System.out.println(handlers.get(s).getDescription());
         }
     }
 
@@ -167,7 +167,7 @@ public class Main {
      * To handle the '-doctype' option.
      */
     protected class DoctypeHandler implements OptionHandler {
-        protected final Map values = new HashMap(6);
+        protected final Map<String, Object> values = new HashMap<>(6);
         {
             values.put("remove", SVGTranscoder.VALUE_DOCTYPE_REMOVE);
             values.put("change", SVGTranscoder.VALUE_DOCTYPE_CHANGE);
@@ -195,7 +195,7 @@ public class Main {
      * To handle the '-newline' option.
      */
     protected class NewlineHandler implements OptionHandler {
-        protected final Map values = new HashMap(6);
+        protected final Map<String, Object> values = new HashMap<>(6);
         {
             values.put("cr",    SVGTranscoder.VALUE_NEWLINE_CR);
             values.put("cr-lf", SVGTranscoder.VALUE_NEWLINE_CR_LF);

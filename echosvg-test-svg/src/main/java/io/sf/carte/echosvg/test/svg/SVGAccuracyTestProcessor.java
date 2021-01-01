@@ -27,6 +27,7 @@ import io.sf.carte.echosvg.test.xml.XMLTestReportProcessor;
  * used by the object can be configured at creation time.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGAccuracyTestProcessor extends XMLTestReportProcessor{

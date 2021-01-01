@@ -33,6 +33,7 @@ import java.util.Set;
  * SVGAttributedCharacterIterator.TextAttributes.
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 
@@ -70,7 +71,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      * Get the keys of all attributes defined on the iterator's text range.
      */
     @Override
-    Set getAllAttributeKeys();
+    Set<Attribute> getAllAttributeKeys();
 
     /**
      * Get the value of the named attribute for the current
@@ -84,7 +85,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      * character.
      */
     @Override
-    Map getAttributes();
+    Map<Attribute,Object> getAttributes();
 
     /**
      * Get the index of the first character following the
@@ -108,7 +109,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      *     character.
      */
     @Override
-    int getRunLimit(Set attributes);
+    int getRunLimit(Set<? extends Attribute> attributes);
 
     /**
      * Get the index of the first character of the run with
@@ -132,7 +133,7 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
      * @param attributes the Set of attributes which begins at the returned index.
      */
     @Override
-    int getRunStart(Set attributes);
+    int getRunStart(Set<? extends Attribute> attributes);
 
     //From CharacterIterator
 

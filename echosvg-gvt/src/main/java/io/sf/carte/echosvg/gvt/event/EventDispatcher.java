@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
  * @author <a href="mailto:tkormann@ilog.fr">Thierry Kormann</a>
+ * @author For later modifications, see Git history.
  * @version $Id$ */
 public interface EventDispatcher {
 
@@ -129,7 +130,7 @@ public interface EventDispatcher {
      * dispatcher and of the specified type.
      * @param listenerType the type of the listeners to return
      */
-    EventListener [] getListeners(Class listenerType);
+    EventListener [] getListeners(Class<?> listenerType);
 
     /**
      * Associates all InputEvents of type <code>e.getID()</code>

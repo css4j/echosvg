@@ -18,13 +18,14 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.test.*;
+import io.sf.carte.echosvg.test.DefaultTestSuite;
 
 /**
  * Checks that JAR Scripts which should  be loaded are indeed
  * loaded.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JarLoadTest extends DefaultTestSuite {
