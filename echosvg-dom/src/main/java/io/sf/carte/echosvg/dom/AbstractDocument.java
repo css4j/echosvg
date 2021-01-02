@@ -1105,10 +1105,6 @@ public abstract class AbstractDocument extends AbstractParentNode
 				Attr a = (Attr) nnm.item(j);
 				e.setAttributeNodeNS(a);
 			}
-			// while (nnm.getLength() > 0) {
-			// Attr a = (Attr) nnm.item(0);
-			// e.setAttributeNodeNS(a);
-			// }
 
 			// Reinsert into parent
 			if (parent != null) {
