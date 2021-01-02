@@ -78,11 +78,16 @@ public class DefaultExternalResourceSecurity implements ExternalResourceSecurity
 					Messages.formatMessage(ERROR_CANNOT_ACCESS_DOCUMENT_URL, new Object[] { externalResourceURL }));
 		} else {
 			String docHost = docURL.getHost();
+
+			if (externalResourceURL == null) {
+				throw new NullPointerException();
+			}
+
 			String externalResourceHost = externalResourceURL.getHost();
 
 			if ((docHost != externalResourceHost) && ((docHost == null) || (!docHost.equals(externalResourceHost)))) {
 
-				if (externalResourceURL == null || !DATA_PROTOCOL.equals(externalResourceURL.getProtocol())) {
+				if (!DATA_PROTOCOL.equals(externalResourceURL.getProtocol())) {
 					se = new SecurityException(Messages.formatMessage(ERROR_EXTERNAL_RESOURCE_FROM_DIFFERENT_URL,
 							new Object[] { externalResourceURL }));
 				}

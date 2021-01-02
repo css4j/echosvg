@@ -111,7 +111,7 @@ public class XMLTestSuiteRunner implements XTRunConstants, XTSConstants {
 	 */
 	public static class IdBasedTestFilter implements TestFilter {
 		protected String[] ids;
-		protected Set unmatchedIds = new HashSet();
+		protected Set<String> unmatchedIds = new HashSet<>();
 
 		public IdBasedTestFilter(String[] ids) {
 			this.ids = ids;
@@ -224,7 +224,7 @@ public class XMLTestSuiteRunner implements XTRunConstants, XTSConstants {
 	 * assuming the input element is a &lt;testSuite&gt; instance,
 	 */
 	protected TestReportProcessor[] extractTestReportProcessor(Element element) throws TestException {
-		List processors = new ArrayList();
+		List<TestReportProcessor> processors = new ArrayList<>();
 
 		NodeList children = element.getChildNodes();
 		if (children != null && children.getLength() > 0) {
@@ -304,7 +304,7 @@ public class XMLTestSuiteRunner implements XTRunConstants, XTSConstants {
 	 */
 	protected Element[] getChildrenByTagName(Element element, String tagName) {
 		tagName = tagName.intern();
-		List childrenWithTagName = new ArrayList();
+		List<Element> childrenWithTagName = new ArrayList<>();
 
 		NodeList children = element.getChildNodes();
 		if (children != null && children.getLength() > 0) {

@@ -48,6 +48,9 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @version $Id$
  */
 public class JPainterCompare extends JPanel implements SVGConstants {
+
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Canvas size for all tests
 	 */
@@ -193,7 +196,7 @@ public class JPainterCompare extends JPanel implements SVGConstants {
 		String className = args[0];
 		System.out.println(Messages.formatMessage(MESSAGES_LOADING_CLASS, new Object[] { className }));
 
-		Class cl = null;
+		Class<?> cl = null;
 
 		try {
 			cl = Class.forName(className);

@@ -264,7 +264,7 @@ public class RectListManagerTest extends AbstractTest {
 					if (currRLM == null)
 						continue;
 
-					Iterator i = currRLM.iterator();
+					Iterator<Rectangle> i = currRLM.iterator();
 					ps.println("ID: " + currID + " Sz: " + currRLM.size());
 					while (i.hasNext()) {
 						ps.println("  " + i.next());

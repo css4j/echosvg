@@ -278,9 +278,10 @@ public class ClassFileUtilities {
 				for (Object aClasspath : classpath) {
 					InputStream depis = null;
 					String path = null;
+					JarFile jarFile = null;
 					Object cpEntry = aClasspath;
 					if (cpEntry instanceof JarFile) {
-						JarFile jarFile = (JarFile) cpEntry;
+						jarFile = (JarFile) cpEntry;
 						String classFileName = s + ".class";
 						ZipEntry ze = jarFile.getEntry(classFileName);
 						if (ze != null) {
@@ -302,6 +303,9 @@ public class ClassFileUtilities {
 							computeClassDependencies(depis, classpath, done, result, rec);
 						}
 						depis.close();
+					}
+					if (jarFile != null) {
+						jarFile.close();
 					}
 				}
 			}

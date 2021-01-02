@@ -95,18 +95,26 @@ public class SerializationTest extends AbstractTest {
 		InputStream is1 = new FileInputStream(ser1);
 		InputStream is2 = new FileInputStream(ser2);
 
-		for (;;) {
-			int i1 = is1.read();
-			int i2 = is2.read();
-			if (i1 == -1 && i2 == -1) {
-				return reportSuccess();
+		try {
+			for (;;) {
+				int i1 = is1.read();
+				int i2 = is2.read();
+				if (i1 == -1 && i2 == -1) {
+					return reportSuccess();
+				}
+				if (i1 != i2) {
+					DefaultTestReport report = new DefaultTestReport(this);
+					report.setErrorCode("difference.found");
+					report.addDescriptionEntry("file.name", testFileName);
+					report.setPassed(false);
+					return report;
+				}
 			}
-			if (i1 != i2) {
-				DefaultTestReport report = new DefaultTestReport(this);
-				report.setErrorCode("difference.found");
-				report.addDescriptionEntry("file.name", testFileName);
-				report.setPassed(false);
-				return report;
+		} finally {
+			try {
+				is1.close();
+				is2.close();
+			} catch (IOException e) {
 			}
 		}
 	}

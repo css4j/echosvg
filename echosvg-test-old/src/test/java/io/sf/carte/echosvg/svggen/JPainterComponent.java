@@ -33,6 +33,9 @@ import javax.swing.JComponent;
  * @version $Id$
  */
 public class JPainterComponent extends JComponent {
+
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * <code>Painter</code>
 	 */

@@ -33,7 +33,7 @@ public abstract class AbstractTestSuite implements TestSuite {
 	/**
 	 * Stores the list of children <code>Test</code> instances.
 	 */
-	protected List children = new LinkedList();
+	protected List<Test> children = new LinkedList<>();
 
 	/**
 	 * Adds a <code>Test</code> to the suite

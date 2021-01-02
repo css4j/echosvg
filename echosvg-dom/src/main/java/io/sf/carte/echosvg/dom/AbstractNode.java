@@ -775,7 +775,6 @@ public abstract class AbstractNode implements ExtendedNode, NodeXBL, XBLManagerD
 				|| !compareStrings(getLocalName(), other.getLocalName())
 				|| !compareStrings(getPrefix(), other.getPrefix())
 				|| !compareStrings(getNodeValue(), other.getNodeValue())
-				|| !compareStrings(getNodeValue(), other.getNodeValue())
 				|| !compareNamedNodeMaps(getAttributes(), other.getAttributes())) {
 			return false;
 		}

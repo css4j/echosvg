@@ -53,7 +53,7 @@ public class SimpleTestRunner {
 
 		String className = args[0];
 
-		Class cl = null;
+		Class<?> cl = null;
 
 		try {
 			cl = Class.forName(className);

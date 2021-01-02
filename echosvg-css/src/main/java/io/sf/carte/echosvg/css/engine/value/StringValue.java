@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import java.util.Objects;
+
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
@@ -69,6 +71,11 @@ public class StringValue extends AbstractValue {
 	@Override
 	public short getPrimitiveType() {
 		return unitType;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(unitType, value);
 	}
 
 	/**

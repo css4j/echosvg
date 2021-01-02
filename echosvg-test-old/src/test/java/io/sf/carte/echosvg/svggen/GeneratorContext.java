@@ -55,15 +55,15 @@ public class GeneratorContext extends SVGAccuracyTest implements SVGConstants {
 		}
 
 		@Override
-		public void setStyle(Element element, Map styleMap, SVGGeneratorContext generatorContext) {
-			Iterator iter = styleMap.keySet().iterator();
+		public void setStyle(Element element, Map<String, String> styleMap, SVGGeneratorContext generatorContext) {
+			Iterator<String> iter = styleMap.keySet().iterator();
 			// create a new class id in the style sheet
 			String id = generatorContext.getIDGenerator().generateID("C");
 			styleSheet.appendData("." + id + " {");
 			// append each key/value pairs
 			while (iter.hasNext()) {
-				String key = (String) iter.next();
-				String value = (String) styleMap.get(key);
+				String key = iter.next();
+				String value = styleMap.get(key);
 				styleSheet.appendData(key + ":" + value + ";");
 			}
 			styleSheet.appendData("}\n");

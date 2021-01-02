@@ -914,7 +914,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
 			SoftReference<Node> sr = nodeElementMap.get(gn);
 			if (sr != null) {
 				Node n = sr.get();
-				if (n.getNodeType() == Node.ELEMENT_NODE) {
+				if (n != null && n.getNodeType() == Node.ELEMENT_NODE) {
 					return (Element) n;
 				}
 			}
@@ -1000,8 +1000,11 @@ public class BridgeContext implements ErrorConstants, CSSContext {
 	 * @param bridge       the bridge that manages the element
 	 */
 	public void putBridge(String namespaceURI, String localName, Bridge bridge) {
+		String brNamespaceURI = bridge.getNamespaceURI();
+		brNamespaceURI = ((brNamespaceURI == null) ? "" : brNamespaceURI);
+		namespaceURI = ((namespaceURI == null) ? "" : namespaceURI);
 		// start assert
-		if (!(namespaceURI.equals(bridge.getNamespaceURI()) && localName.equals(bridge.getLocalName()))) {
+		if (!(namespaceURI.equals(brNamespaceURI) && localName.equals(bridge.getLocalName()))) {
 			throw new RuntimeException("Invalid Bridge: " + namespaceURI + "/" + bridge.getNamespaceURI() + " "
 					+ localName + "/" + bridge.getLocalName() + " " + bridge.getClass());
 		}
@@ -1009,7 +1012,6 @@ public class BridgeContext implements ErrorConstants, CSSContext {
 		if (namespaceURIMap == null) {
 			namespaceURIMap = new HashMap<>();
 		}
-		namespaceURI = ((namespaceURI == null) ? "" : namespaceURI);
 		HashMap<String, Bridge> localNameMap = namespaceURIMap.get(namespaceURI);
 		if (localNameMap == null) {
 			localNameMap = new HashMap<>();

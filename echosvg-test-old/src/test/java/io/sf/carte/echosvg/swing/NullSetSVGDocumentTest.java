@@ -68,6 +68,7 @@ public class NullSetSVGDocumentTest extends JSVGMemoryLeakTest {
 			@Override
 			public JSVGCanvas createCanvas() {
 				return new JSVGCanvas() {
+					private static final long serialVersionUID = 1L;
 					@Override
 					protected void installSVGDocument(SVGDocument doc) {
 						super.installSVGDocument(doc);

@@ -74,7 +74,7 @@ public class SVGGeneratorTests extends DefaultTestSuite {
 	public void setId(String id) {
 		super.setId(id);
 		String clName = getPackageName() + "." + id;
-		Class cl = null;
+		Class<?> cl = null;
 
 		try {
 			cl = Class.forName(clName);

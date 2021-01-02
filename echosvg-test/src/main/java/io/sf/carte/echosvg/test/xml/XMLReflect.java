@@ -52,14 +52,14 @@ public class XMLReflect implements XMLReflectConstants {
 
 		String className = classDefiningElement.getAttribute(XR_CLASS_ATTRIBUTE);
 
-		Class cl = Class.forName(className);
+		Class<?> cl = Class.forName(className);
 		Object[] argsArray = null;
-		Class[] argsClasses = null;
+		Class<?>[] argsClasses = null;
 
 		NodeList children = element.getChildNodes();
 		if (children != null && children.getLength() > 0) {
 			int n = children.getLength();
-			List args = new ArrayList();
+			List<Object> args = new ArrayList<>();
 			for (int i = 0; i < n; i++) {
 				Node child = children.item(i);
 				if (child.getNodeType() == Node.ELEMENT_NODE) {
@@ -84,13 +84,13 @@ public class XMLReflect implements XMLReflectConstants {
 			}
 		}
 
-		Constructor constructor = getDeclaredConstructor(cl, argsClasses);
+		Constructor<?> constructor = getDeclaredConstructor(cl, argsClasses);
 
 		if (constructor == null) {
 			String argsClassesStr = "null";
 			if (argsClasses != null) {
 				argsClassesStr = "";
-				for (Class argsClass : argsClasses) {
+				for (Class<?> argsClass : argsClasses) {
 					argsClassesStr += argsClass.getName() + " / ";
 				}
 			}
@@ -108,7 +108,7 @@ public class XMLReflect implements XMLReflectConstants {
 		// to the classDefiningElement so that we can go from the
 		// top (classDefiningElement) to the child and apply properties
 		// as we iterate
-		List v = new ArrayList();
+		List<Element> v = new ArrayList<>();
 		v.add(element);
 		while (element != classDefiningElement) {
 			element = (Element) element.getParentNode();
@@ -144,7 +144,7 @@ public class XMLReflect implements XMLReflectConstants {
 	 * Sets the property with given name on object to the input value
 	 */
 	public static void setObjectProperty(Object obj, String propertyName, Object propertyValue) throws Exception {
-		Class cl = obj.getClass();
+		Class<?> cl = obj.getClass();
 		Method m = null;
 		try {
 			m = cl.getMethod("set" + propertyName, new Class[] { propertyValue.getClass() });
@@ -154,7 +154,7 @@ public class XMLReflect implements XMLReflectConstants {
 			// Check if the type was one of the primitive types, Double,
 			// Float, Boolean or Integer
 			//
-			Class propertyClass = propertyValue.getClass();
+			Class<?> propertyClass = propertyValue.getClass();
 			try {
 				if (propertyClass == java.lang.Double.class) {
 					m = cl.getMethod("set" + propertyName, new Class[] { java.lang.Double.TYPE });
@@ -181,10 +181,10 @@ public class XMLReflect implements XMLReflectConstants {
 	/**
 	 * Returns a constructor that has can be used for the input class types.
 	 */
-	public static Constructor getDeclaredConstructor(Class cl, Class[] argClasses) {
-		Constructor[] cs = cl.getDeclaredConstructors();
-		for (Constructor c : cs) {
-			Class[] reqArgClasses = c.getParameterTypes();
+	public static Constructor<?> getDeclaredConstructor(Class<?> cl, Class<?>[] argClasses) {
+		Constructor<?>[] cs = cl.getDeclaredConstructors();
+		for (Constructor<?> c : cs) {
+			Class<?>[] reqArgClasses = c.getParameterTypes();
 			if (reqArgClasses != null && reqArgClasses.length > 0) {
 				if (reqArgClasses.length == argClasses.length) {
 					int j = 0;
@@ -218,12 +218,12 @@ public class XMLReflect implements XMLReflectConstants {
 			String classAttr = classDefiningElement.getAttribute(XR_CLASS_ATTRIBUTE);
 
 			// String based argument
-			Class cl = Class.forName(classAttr);
+			Class<?> cl = Class.forName(classAttr);
 
 			if (element.hasAttribute(XR_VALUE_ATTRIBUTE)) {
 				String value = element.getAttribute(XR_VALUE_ATTRIBUTE);
 
-				Constructor constructor = cl.getDeclaredConstructor(new Class[] { String.class });
+				Constructor<?> constructor = cl.getDeclaredConstructor(new Class[] { String.class });
 
 				return constructor.newInstance(new Object[] { value });
 			} else {

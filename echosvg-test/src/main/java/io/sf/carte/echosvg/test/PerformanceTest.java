@@ -209,7 +209,7 @@ public abstract class PerformanceTest extends AbstractTest {
 	 * drawing operation 10000 times
 	 */
 	protected void runRef() {
-		Vector v = new Vector();
+		Vector<String> v = new Vector<>();
 		for (int i = 0; i < 10000; i++) {
 			v.addElement("" + i);
 		}

@@ -49,7 +49,7 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
 	/**
 	 * Set of <code>TestReport</code> coming from the <code>TestSuite</code>
 	 */
-	protected List reports = new ArrayList();
+	protected List<TestReport> reports = new ArrayList<>();
 
 	/**
 	 * TestSuite that created this report
@@ -100,7 +100,7 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
 
 	@Override
 	public boolean hasPassed() {
-		Iterator iter = reports.iterator();
+		Iterator<TestReport> iter = reports.iterator();
 
 		boolean passed = true;
 
@@ -131,8 +131,8 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
 
 	@Override
 	public Entry[] getDescription() {
-		Iterator iter = reports.iterator();
-		List descs = new ArrayList();
+		Iterator<TestReport> iter = reports.iterator();
+		List<TestReport.Entry> descs = new ArrayList<>();
 
 		while (iter.hasNext()) {
 			TestReport childReport = (TestReport) iter.next();
