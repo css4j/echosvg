@@ -43,8 +43,17 @@ public class ParsedURLDataProtocolHandler extends AbstractParsedURLProtocolHandl
 
 	@Override
 	public ParsedURLData parseURL(ParsedURL baseURL, String urlStr) {
-		// No relative form...
-		return parseURL(urlStr);
+		// Credits to Dan Caprioara (BATIK-1227).
+		if (urlStr.startsWith("#")) {
+			// Use the base, it contains the encoded document
+			ParsedURLData parseURL = parseURL(baseURL.toString());
+			// .. and pass the reference
+			parseURL.ref = urlStr.substring(1); // Skip the #
+			return parseURL;
+		} else {
+			// No relative form...
+			return parseURL(urlStr);
+		}
 	}
 
 	@Override
