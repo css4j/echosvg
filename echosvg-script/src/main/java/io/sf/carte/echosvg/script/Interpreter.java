@@ -23,8 +23,8 @@ import java.io.Reader;
 import java.io.Writer;
 
 /**
- * A high level interface that represents an interpreter engine for
- * a particular scripting language.
+ * A high level interface that represents an interpreter engine for a particular
+ * scripting language.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author For later modifications, see Git history.
@@ -32,68 +32,65 @@ import java.io.Writer;
  */
 public interface Interpreter extends io.sf.carte.echosvg.i18n.Localizable {
 
-    /**
-     * Returns the content types of the scripting languages this interpreter
-     * handles.
-     */
-    String[] getMimeTypes();
+	/**
+	 * Returns the content types of the scripting languages this interpreter
+	 * handles.
+	 */
+	String[] getMimeTypes();
 
-    /**
-     * This method should evaluate a piece of script associated to a given 
-     * description.
-     *
-     * @param scriptreader a <code>java.io.Reader</code> on the piece of script
-     * @param description description which can be later used (e.g., for error 
-     *        messages).
-     * @return if no exception is thrown during the call, should return the
-     * value of the last expression evaluated in the script
-     */
-    Object evaluate(Reader scriptreader, String description)
-        throws InterpreterException, IOException;
+	/**
+	 * This method should evaluate a piece of script associated to a given
+	 * description.
+	 *
+	 * @param scriptreader a <code>java.io.Reader</code> on the piece of script
+	 * @param description  description which can be later used (e.g., for error
+	 *                     messages).
+	 * @return if no exception is thrown during the call, should return the value of
+	 *         the last expression evaluated in the script
+	 */
+	Object evaluate(Reader scriptreader, String description) throws InterpreterException, IOException;
 
-    /**
-     * This method should evaluate a piece of script.
-     *
-     * @param scriptreader a <code>java.io.Reader</code> on the piece of script
-     * @return if no exception is thrown during the call, should return the
-     * value of the last expression evaluated in the script
-     */
-    Object evaluate(Reader scriptreader)
-        throws InterpreterException, IOException;
+	/**
+	 * This method should evaluate a piece of script.
+	 *
+	 * @param scriptreader a <code>java.io.Reader</code> on the piece of script
+	 * @return if no exception is thrown during the call, should return the value of
+	 *         the last expression evaluated in the script
+	 */
+	Object evaluate(Reader scriptreader) throws InterpreterException, IOException;
 
-    /**
-     * This method should evaluate a piece of script using a <code>String</code>
-     * instead of a <code>Reader</code>. This usually allows do easily do some
-     * caching.
-     *
-     * @param script the piece of script
-     * @return if no exception is thrown during the call, should return the
-     * value of the last expression evaluated in the script
-     */
-    Object evaluate(String script)
-        throws InterpreterException;
+	/**
+	 * This method should evaluate a piece of script using a <code>String</code>
+	 * instead of a <code>Reader</code>. This usually allows do easily do some
+	 * caching.
+	 *
+	 * @param script the piece of script
+	 * @return if no exception is thrown during the call, should return the value of
+	 *         the last expression evaluated in the script
+	 */
+	Object evaluate(String script) throws InterpreterException;
 
-    /**
-     * This method should register a particular Java <code>Object</code> in
-     * the environment of the interpreter.
-     *
-     * @param name the name of the script object to create
-     * @param object the Java object
-     */
-    void bindObject(String name, Object object);
+	/**
+	 * This method should register a particular Java <code>Object</code> in the
+	 * environment of the interpreter.
+	 *
+	 * @param name   the name of the script object to create
+	 * @param object the Java object
+	 */
+	void bindObject(String name, Object object);
 
-    /**
-     * This method should change the output <code>Writer</code> that will be
-     * used when output function of the scripting langage is used.
-     *
-     * @param output the new out <code>Writer</code>.
-     */
-    void setOut(Writer output);
+	/**
+	 * This method should change the output <code>Writer</code> that will be used
+	 * when output function of the scripting langage is used.
+	 *
+	 * @param output the new out <code>Writer</code>.
+	 */
+	void setOut(Writer output);
 
-    /**
-     * This method can dispose resources used by the interpreter when it is
-     * no longer used. Be careful, you SHOULD NOT use this interpreter instance
-     * after calling this method.
-     */
-    void dispose();
+	/**
+	 * This method can dispose resources used by the interpreter when it is no
+	 * longer used. Be careful, you SHOULD NOT use this interpreter instance after
+	 * calling this method.
+	 */
+	void dispose();
 }

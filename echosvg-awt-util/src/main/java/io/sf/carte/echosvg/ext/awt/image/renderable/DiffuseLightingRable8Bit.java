@@ -42,274 +42,254 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.PadRed;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DiffuseLightingRable8Bit
-    extends AbstractColorInterpolationRable
-    implements DiffuseLightingRable {
-    /**
-     * Surface Scale
-     */
-    private double surfaceScale;
+public class DiffuseLightingRable8Bit extends AbstractColorInterpolationRable implements DiffuseLightingRable {
+	/**
+	 * Surface Scale
+	 */
+	private double surfaceScale;
 
-    /**
-     * Diffuse constant
-     */
-    private double kd;
+	/**
+	 * Diffuse constant
+	 */
+	private double kd;
 
-    /**
-     * Light used for the diffuse lighting computations
-     */
-    private Light light;
+	/**
+	 * Light used for the diffuse lighting computations
+	 */
+	private Light light;
 
-    /**
-     * Lit Area
-     */
-    private Rectangle2D litRegion;
+	/**
+	 * Lit Area
+	 */
+	private Rectangle2D litRegion;
 
-    /**
-     * The dx/dy to use in user space for the sobel gradient.
-     */
-    private float [] kernelUnitLength = null;
+	/**
+	 * The dx/dy to use in user space for the sobel gradient.
+	 */
+	private float[] kernelUnitLength = null;
 
-    public DiffuseLightingRable8Bit(Filter src,
-                                    Rectangle2D litRegion,
-                                    Light light,
-                                    double kd,
-                                    double surfaceScale,
-                                    double [] kernelUnitLength) {
-        super(src, null);
-        setLight(light);
-        setKd(kd);
-        setSurfaceScale(surfaceScale);
-        setLitRegion(litRegion);
-        setKernelUnitLength(kernelUnitLength);
-    }
+	public DiffuseLightingRable8Bit(Filter src, Rectangle2D litRegion, Light light, double kd, double surfaceScale,
+			double[] kernelUnitLength) {
+		super(src, null);
+		setLight(light);
+		setKd(kd);
+		setSurfaceScale(surfaceScale);
+		setLitRegion(litRegion);
+		setKernelUnitLength(kernelUnitLength);
+	}
 
-    /**
-     * Returns the source to be filtered
-     */
-    @Override
-    public Filter getSource(){
-        return (Filter)getSources().get(0);
-    }
+	/**
+	 * Returns the source to be filtered
+	 */
+	@Override
+	public Filter getSource() {
+		return (Filter) getSources().get(0);
+	}
 
-    /**
-     * Sets the source to be filtered
-     */
-    @Override
-    public void setSource(Filter src){
-        init(src, null);
-    }
+	/**
+	 * Sets the source to be filtered
+	 */
+	@Override
+	public void setSource(Filter src) {
+		init(src, null);
+	}
 
-    /**
-     * Returns this filter's bounds
-     */
-    @Override
-    public Rectangle2D getBounds2D(){
-        return (Rectangle2D)(litRegion.clone());
-    }
+	/**
+	 * Returns this filter's bounds
+	 */
+	@Override
+	public Rectangle2D getBounds2D() {
+		return (Rectangle2D) (litRegion.clone());
+	}
 
-    /**
-     * Returns this filter's litRegion
-     */
-    @Override
-    public Rectangle2D getLitRegion(){
-        return getBounds2D();
-    }
+	/**
+	 * Returns this filter's litRegion
+	 */
+	@Override
+	public Rectangle2D getLitRegion() {
+		return getBounds2D();
+	}
 
-    /**
-     * Set this filter's litRegion
-     */
-    @Override
-    public void setLitRegion(Rectangle2D litRegion){
-        touch();
-        this.litRegion = litRegion;
-    }
+	/**
+	 * Set this filter's litRegion
+	 */
+	@Override
+	public void setLitRegion(Rectangle2D litRegion) {
+		touch();
+		this.litRegion = litRegion;
+	}
 
-    /**
-     * @return Light object used for the diffuse lighting
-     */
-    @Override
-    public Light getLight(){
-        return light;
-    }
+	/**
+	 * @return Light object used for the diffuse lighting
+	 */
+	@Override
+	public Light getLight() {
+		return light;
+	}
 
-    /**
-     * @param light New Light object
-     */
-    @Override
-    public void setLight(Light light){
-        touch();
-        this.light = light;
-    }
+	/**
+	 * @param light New Light object
+	 */
+	@Override
+	public void setLight(Light light) {
+		touch();
+		this.light = light;
+	}
 
-    /**
-     * @return surfaceScale
-     */
-    @Override
-    public double getSurfaceScale(){
-        return surfaceScale;
-    }
+	/**
+	 * @return surfaceScale
+	 */
+	@Override
+	public double getSurfaceScale() {
+		return surfaceScale;
+	}
 
-    /**
-     * Sets the surface scale
-     */
-    @Override
-    public void setSurfaceScale(double surfaceScale){
-        touch();
-        this.surfaceScale = surfaceScale;
-    }
+	/**
+	 * Sets the surface scale
+	 */
+	@Override
+	public void setSurfaceScale(double surfaceScale) {
+		touch();
+		this.surfaceScale = surfaceScale;
+	}
 
-    /**
-     * @return diffuse constant, or kd.
-     */
-    @Override
-    public double getKd(){
-        return kd;
-    }
+	/**
+	 * @return diffuse constant, or kd.
+	 */
+	@Override
+	public double getKd() {
+		return kd;
+	}
 
-    /**
-     * Sets the diffuse constant, or kd
-     */
-    @Override
-    public void setKd(double kd){
-        touch();
-        this.kd = kd;
-    }
+	/**
+	 * Sets the diffuse constant, or kd
+	 */
+	@Override
+	public void setKd(double kd) {
+		touch();
+		this.kd = kd;
+	}
 
-    /**
-     * Returns the min [dx,dy] distance in user space for evalutation of
-     * the sobel gradient.
-     */
-    @Override
-    public double [] getKernelUnitLength() {
-        if (kernelUnitLength == null)
-            return null;
+	/**
+	 * Returns the min [dx,dy] distance in user space for evalutation of the sobel
+	 * gradient.
+	 */
+	@Override
+	public double[] getKernelUnitLength() {
+		if (kernelUnitLength == null)
+			return null;
 
-        double [] ret = new double[2];
-        ret[0] = kernelUnitLength[0];
-        ret[1] = kernelUnitLength[1];
-        return ret;
-    }
+		double[] ret = new double[2];
+		ret[0] = kernelUnitLength[0];
+		ret[1] = kernelUnitLength[1];
+		return ret;
+	}
 
-    /**
-     * Sets the min [dx,dy] distance in user space for evaluation of the
-     * sobel gradient. If set to zero or null then device space will be used.
-     */
-    @Override
-    public void setKernelUnitLength(double [] kernelUnitLength) {
-        touch();
-        if (kernelUnitLength == null) {
-            this.kernelUnitLength = null;
-            return;
-        }
+	/**
+	 * Sets the min [dx,dy] distance in user space for evaluation of the sobel
+	 * gradient. If set to zero or null then device space will be used.
+	 */
+	@Override
+	public void setKernelUnitLength(double[] kernelUnitLength) {
+		touch();
+		if (kernelUnitLength == null) {
+			this.kernelUnitLength = null;
+			return;
+		}
 
-        if (this.kernelUnitLength == null)
-            this.kernelUnitLength = new float[2];
+		if (this.kernelUnitLength == null)
+			this.kernelUnitLength = new float[2];
 
-        this.kernelUnitLength[0] = (float)kernelUnitLength[0];
-        this.kernelUnitLength[1] = (float)kernelUnitLength[1];
-    }
+		this.kernelUnitLength[0] = (float) kernelUnitLength[0];
+		this.kernelUnitLength[1] = (float) kernelUnitLength[1];
+	}
 
-    @Override
-    public RenderedImage createRendering(RenderContext rc) {
-        Shape aoi = rc.getAreaOfInterest();
-        if (aoi == null)
-            aoi = getBounds2D();
+	@Override
+	public RenderedImage createRendering(RenderContext rc) {
+		Shape aoi = rc.getAreaOfInterest();
+		if (aoi == null)
+			aoi = getBounds2D();
 
-        Rectangle2D aoiR = aoi.getBounds2D();
-        Rectangle2D.intersect(aoiR, getBounds2D(), aoiR);
+		Rectangle2D aoiR = aoi.getBounds2D();
+		Rectangle2D.intersect(aoiR, getBounds2D(), aoiR);
 
-        AffineTransform at = rc.getTransform();
-        Rectangle devRect = at.createTransformedShape(aoiR).getBounds();
+		AffineTransform at = rc.getTransform();
+		Rectangle devRect = at.createTransformedShape(aoiR).getBounds();
 
-        if(devRect.width == 0 || devRect.height == 0){
-            return null;
-        }
+		if (devRect.width == 0 || devRect.height == 0) {
+			return null;
+		}
 
-        //
-        // DiffuseLightingRed only operates on a scaled space.
-        // The following extracts the scale portion of the
-        // user to device transform
-        //
-        // The source is rendered with the scale-only transform
-        // and the rendered result is used as a bumpMap for the
-        // DiffuseLightingRed filter.
-        //
-        double sx = at.getScaleX();
-        double sy = at.getScaleY();
+		//
+		// DiffuseLightingRed only operates on a scaled space.
+		// The following extracts the scale portion of the
+		// user to device transform
+		//
+		// The source is rendered with the scale-only transform
+		// and the rendered result is used as a bumpMap for the
+		// DiffuseLightingRed filter.
+		//
+		double sx = at.getScaleX();
+		double sy = at.getScaleY();
 
-        double shx = at.getShearX();
-        double shy = at.getShearY();
+		double shx = at.getShearX();
+		double shy = at.getShearY();
 
-        double tx = at.getTranslateX();
-        double ty = at.getTranslateY();
+		double tx = at.getTranslateX();
+		double ty = at.getTranslateY();
 
-         // The Scale is the "hypotonose" of the matrix vectors.
-        double scaleX = Math.sqrt(sx*sx + shy*shy);
-        double scaleY = Math.sqrt(sy*sy + shx*shx);
+		// The Scale is the "hypotonose" of the matrix vectors.
+		double scaleX = Math.sqrt(sx * sx + shy * shy);
+		double scaleY = Math.sqrt(sy * sy + shx * shx);
 
-        if(scaleX == 0 || scaleY == 0){
-            // Non invertible transform
-            return null;
-        }
+		if (scaleX == 0 || scaleY == 0) {
+			// Non invertible transform
+			return null;
+		}
 
-        // These values represent the scale factor to the intermediate
-        // coordinate system where we will apply our convolution.
-        if (kernelUnitLength != null) {
-            if ((kernelUnitLength[0] > 0) &&
-                (scaleX > 1/kernelUnitLength[0]))
-                scaleX = 1/kernelUnitLength[0];
+		// These values represent the scale factor to the intermediate
+		// coordinate system where we will apply our convolution.
+		if (kernelUnitLength != null) {
+			if ((kernelUnitLength[0] > 0) && (scaleX > 1 / kernelUnitLength[0]))
+				scaleX = 1 / kernelUnitLength[0];
 
-            if ((kernelUnitLength[1] > 0) &&
-                (scaleY > 1/kernelUnitLength[1]))
-                scaleY = 1/kernelUnitLength[1];
-        }
+			if ((kernelUnitLength[1] > 0) && (scaleY > 1 / kernelUnitLength[1]))
+				scaleY = 1 / kernelUnitLength[1];
+		}
 
-        AffineTransform scale =
-            AffineTransform.getScaleInstance(scaleX, scaleY);
+		AffineTransform scale = AffineTransform.getScaleInstance(scaleX, scaleY);
 
-        devRect = scale.createTransformedShape(aoiR).getBounds();
+		devRect = scale.createTransformedShape(aoiR).getBounds();
 
-        // Grow for surround needs of bump map.
-        aoiR.setRect(aoiR.getX()     -(2/scaleX),
-                     aoiR.getY()     -(2/scaleY),
-                     aoiR.getWidth() +(4/scaleX),
-                     aoiR.getHeight()+(4/scaleY));
+		// Grow for surround needs of bump map.
+		aoiR.setRect(aoiR.getX() - (2 / scaleX), aoiR.getY() - (2 / scaleY), aoiR.getWidth() + (4 / scaleX),
+				aoiR.getHeight() + (4 / scaleY));
 
+		// Build texture from the source
+		rc = (RenderContext) rc.clone();
+		rc.setAreaOfInterest(aoiR);
+		rc.setTransform(scale);
 
-        // Build texture from the source
-        rc = (RenderContext)rc.clone();
-        rc.setAreaOfInterest(aoiR);
-        rc.setTransform(scale);
+		// System.out.println("scaleX / scaleY : " + scaleX + "/" + scaleY);
 
-        // System.out.println("scaleX / scaleY : " + scaleX + "/" + scaleY);
+		CachableRed cr;
+		cr = GraphicsUtil.wrap(getSource().createRendering(rc));
 
-        CachableRed cr;
-        cr = GraphicsUtil.wrap(getSource().createRendering(rc));
+		BumpMap bumpMap = new BumpMap(cr, surfaceScale, scaleX, scaleY);
 
-        BumpMap bumpMap = new BumpMap(cr, surfaceScale, scaleX, scaleY);
+		cr = new DiffuseLightingRed(kd, light, bumpMap, devRect, 1 / scaleX, 1 / scaleY, isColorSpaceLinear());
 
-        cr = new DiffuseLightingRed(kd, light, bumpMap,
-                                    devRect, 1/scaleX, 1/scaleY,
-                                    isColorSpaceLinear());
+		// Return sheared/rotated tiled image
+		AffineTransform shearAt = new AffineTransform(sx / scaleX, shy / scaleX, shx / scaleY, sy / scaleY, tx, ty);
 
-        // Return sheared/rotated tiled image
-        AffineTransform shearAt =
-            new AffineTransform(sx/scaleX, shy/scaleX,
-                                shx/scaleY, sy/scaleY,
-                                tx, ty);
+		if (!shearAt.isIdentity()) {
+			RenderingHints rh = rc.getRenderingHints();
+			Rectangle padRect = new Rectangle(devRect.x - 1, devRect.y - 1, devRect.width + 2, devRect.height + 2);
+			cr = new PadRed(cr, padRect, PadMode.REPLICATE, rh);
 
-        if(!shearAt.isIdentity()) {
-            RenderingHints rh = rc.getRenderingHints();
-            Rectangle padRect = new Rectangle(devRect.x-1, devRect.y-1,
-                                              devRect.width+2,
-                                              devRect.height+2);
-            cr = new PadRed(cr, padRect, PadMode.REPLICATE, rh);
+			cr = new AffineRed(cr, shearAt, rh);
+		}
 
-            cr = new AffineRed(cr, shearAt, rh);
-        }
-
-        return cr;
-    }
+		return cr;
+	}
 }
-

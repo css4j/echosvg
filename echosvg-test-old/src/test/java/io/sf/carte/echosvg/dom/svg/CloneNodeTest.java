@@ -32,7 +32,6 @@ import io.sf.carte.echosvg.test.DefaultTestReport;
 import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
-
 /**
  * This class tests the cloneNode method.
  *
@@ -41,57 +40,53 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @version $Id$
  */
 public class CloneNodeTest extends AbstractTest {
-    protected String testFileName;
-    protected String targetId;
+	protected String testFileName;
+	protected String targetId;
 
-    public CloneNodeTest(String file, String id) {
-        testFileName = file;
-        targetId = id;
-    }
-    
-    @Override
-    public TestReport runImpl() throws Exception {
-        String parser =
-            XMLResourceDescriptor.getXMLParserClassName();
+	public CloneNodeTest(String file, String id) {
+		testFileName = file;
+		targetId = id;
+	}
 
-        SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(parser);
+	@Override
+	public TestReport runImpl() throws Exception {
+		String parser = XMLResourceDescriptor.getXMLParserClassName();
 
-        File f = (new File(testFileName));
-        URL url = f.toURI().toURL();
-        Document doc = df.createDocument(url.toString(),
-                                         url.openStream());
-        
-        Element e = doc.getElementById(targetId);
+		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(parser);
 
-        if (e == null){
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode("error.get.element.by.id.failed");
-            report.addDescriptionEntry("entry.key.id", targetId);
-            report.setPassed(false);
-            return report;
-        }
+		File f = (new File(testFileName));
+		URL url = f.toURI().toURL();
+		Document doc = df.createDocument(url.toString(), url.openStream());
 
-        Element celt = (Element)e.cloneNode(true);
+		Element e = doc.getElementById(targetId);
 
-        NamedNodeMap attrs = e.getAttributes();
+		if (e == null) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode("error.get.element.by.id.failed");
+			report.addDescriptionEntry("entry.key.id", targetId);
+			report.setPassed(false);
+			return report;
+		}
 
-        for (int i = 0; i < attrs.getLength(); i++) {
-            Node attr = attrs.item(i);
-            String ns = attr.getNamespaceURI();
-            String name = (ns == null)
-                ? attr.getNodeName()
-                : attr.getLocalName();
-            String val = attr.getNodeValue();
-            String val2 = celt.getAttributeNS(ns, name);
-            if (!val.equals(val2)) {
-                DefaultTestReport report = new DefaultTestReport(this);
-                report.setErrorCode("error.attr.comparison.failed");
-                report.addDescriptionEntry("entry.attr.name", name);
-                report.setPassed(false);
-                return report;
-            }
-        }
+		Element celt = (Element) e.cloneNode(true);
 
-        return reportSuccess();
-    }
+		NamedNodeMap attrs = e.getAttributes();
+
+		for (int i = 0; i < attrs.getLength(); i++) {
+			Node attr = attrs.item(i);
+			String ns = attr.getNamespaceURI();
+			String name = (ns == null) ? attr.getNodeName() : attr.getLocalName();
+			String val = attr.getNodeValue();
+			String val2 = celt.getAttributeNS(ns, name);
+			if (!val.equals(val2)) {
+				DefaultTestReport report = new DefaultTestReport(this);
+				report.setErrorCode("error.attr.comparison.failed");
+				report.addDescriptionEntry("entry.attr.name", name);
+				report.setPassed(false);
+				return report;
+			}
+		}
+
+		return reportSuccess();
+	}
 }

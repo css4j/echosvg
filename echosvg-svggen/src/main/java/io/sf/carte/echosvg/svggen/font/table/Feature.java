@@ -29,27 +29,27 @@ import java.io.RandomAccessFile;
  */
 public class Feature {
 
-    private int featureParams;
-    private int lookupCount;
-    private int[] lookupListIndex;
+	private int featureParams;
+	private int lookupCount;
+	private int[] lookupListIndex;
 
-    /** Creates new Feature */
-    protected Feature(RandomAccessFile raf, int offset) throws IOException {
-        raf.seek(offset);
-        featureParams = raf.readUnsignedShort();
-        lookupCount = raf.readUnsignedShort();
-        lookupListIndex = new int[lookupCount];
-        for (int i = 0; i < lookupCount; i++) {
-            lookupListIndex[i] = raf.readUnsignedShort();
-        }
-    }
+	/** Creates new Feature */
+	protected Feature(RandomAccessFile raf, int offset) throws IOException {
+		raf.seek(offset);
+		featureParams = raf.readUnsignedShort();
+		lookupCount = raf.readUnsignedShort();
+		lookupListIndex = new int[lookupCount];
+		for (int i = 0; i < lookupCount; i++) {
+			lookupListIndex[i] = raf.readUnsignedShort();
+		}
+	}
 
-    public int getLookupCount() {
-        return lookupCount;
-    }
+	public int getLookupCount() {
+		return lookupCount;
+	}
 
-    public int getLookupListIndex(int i) {
-        return lookupListIndex[i];
-    }
+	public int getLookupListIndex(int i) {
+		return lookupListIndex[i];
+	}
 
 }

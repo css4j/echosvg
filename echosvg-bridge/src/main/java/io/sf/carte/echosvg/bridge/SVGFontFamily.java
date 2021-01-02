@@ -42,116 +42,110 @@ import io.sf.carte.echosvg.util.SVGConstants;
  */
 public class SVGFontFamily implements GVTFontFamily {
 
-    public static final
-        AttributedCharacterIterator.Attribute TEXT_COMPOUND_ID =
-        GVTAttributedCharacterIterator.TextAttribute.TEXT_COMPOUND_ID;
+	public static final AttributedCharacterIterator.Attribute TEXT_COMPOUND_ID = GVTAttributedCharacterIterator.TextAttribute.TEXT_COMPOUND_ID;
 
-    protected GVTFontFace fontFace;
-    protected Element fontElement;
-    protected BridgeContext ctx;
-    protected Boolean complex = null;
+	protected GVTFontFace fontFace;
+	protected Element fontElement;
+	protected BridgeContext ctx;
+	protected Boolean complex = null;
 
+	/**
+	 * Constructs an SVGFontFamily.
+	 *
+	 * @param fontFace    The font face object that describes this font family.
+	 * @param fontElement The element that contains the font data for this family.
+	 * @param ctx         The bridge context. This is required for lazily loading
+	 *                    the font data at render time.
+	 */
+	public SVGFontFamily(GVTFontFace fontFace, Element fontElement, BridgeContext ctx) {
+		this.fontFace = fontFace;
+		this.fontElement = fontElement;
+		this.ctx = ctx;
+	}
 
+	/**
+	 * Returns the family name of this font.
+	 *
+	 * @return The font family name.
+	 */
+	@Override
+	public String getFamilyName() {
+		return fontFace.getFamilyName();
+	}
 
-    /**
-     * Constructs an SVGFontFamily.
-     *
-     * @param fontFace The font face object that describes this font family.
-     * @param fontElement The element that contains the font data for this family.
-     * @param ctx The bridge context. This is required for lazily loading the
-     * font data at render time.
-     */
-    public SVGFontFamily(GVTFontFace fontFace,
-                         Element fontElement,
-                         BridgeContext ctx) {
-        this.fontFace = fontFace;
-        this.fontElement = fontElement;
-        this.ctx = ctx;
-    }
+	/**
+	 * Returns the font-face associated with this font family.
+	 *
+	 * @return The font face.
+	 */
+	@Override
+	public GVTFontFace getFontFace() {
+		return fontFace;
+	}
 
-    /**
-     * Returns the family name of this font.
-     *
-     * @return The font family name.
-     */
-    @Override
-    public String getFamilyName() {
-        return fontFace.getFamilyName();
-    }
+	/**
+	 * Derives a GVTFont object of the correct size.
+	 *
+	 * @param size The required size of the derived font.
+	 * @param aci  The character iterator containing the text to be rendered using
+	 *             the derived font.
+	 *
+	 * @return The derived font.
+	 */
+	@Override
+	public GVTFont deriveFont(float size, AttributedCharacterIterator aci) {
+		return deriveFont(size, aci.getAttributes());
+	}
 
-    /**
-     * Returns the font-face associated with this font family.
-     *
-     * @return The font face.
-     */
-    @Override
-    public GVTFontFace getFontFace() {
-        return fontFace;
-    }
+	/**
+	 * Derives a GVTFont object of the correct size from an attribute Map.
+	 * 
+	 * @param size  The required size of the derived font.
+	 * @param attrs The Attribute Map to get Values from.
+	 */
+	@Override
+	public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) {
+		SVGFontElementBridge fontBridge;
+		fontBridge = (SVGFontElementBridge) ctx.getBridge(fontElement);
+		@SuppressWarnings("unchecked")
+		SoftReference<Element> sr = (SoftReference<Element>) attrs.get(TEXT_COMPOUND_ID);
+		Element textElement = sr.get();
+		return fontBridge.createFont(ctx, fontElement, textElement, size, fontFace);
+	}
 
-    /**
-     * Derives a GVTFont object of the correct size.
-     *
-     * @param size The required size of the derived font.
-     * @param aci The character iterator containing the text to be rendered
-     * using the derived font.
-     *
-     * @return The derived font.
-     */
-    @Override
-    public GVTFont deriveFont(float size, AttributedCharacterIterator aci) {
-        return deriveFont(size, aci.getAttributes());
-    }
+	/**
+	 * This method looks at the SVG font and checks if any of the glyphs use
+	 * renderable child elements. If so this is a complex font in that full CSS
+	 * inheritance needs to be applied. Otherwise if it only uses the 'd' attribute
+	 * it does not need CSS treatment.
+	 */
+	@Override
+	public boolean isComplex() {
+		if (complex != null)
+			return complex;
+		boolean ret = isComplex(fontElement, ctx);
+		complex = ret ? Boolean.TRUE : Boolean.FALSE;
+		return ret;
+	}
 
-    /**
-     * Derives a GVTFont object of the correct size from an attribute Map.
-     * @param size  The required size of the derived font.
-     * @param attrs The Attribute Map to get Values from.
-     */
-    @Override
-    public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) {
-        SVGFontElementBridge fontBridge;
-        fontBridge = (SVGFontElementBridge)ctx.getBridge(fontElement);
-        @SuppressWarnings("unchecked")
-        SoftReference<Element> sr = (SoftReference<Element>)attrs.get(TEXT_COMPOUND_ID);
-        Element textElement = sr.get();
-        return fontBridge.createFont(ctx, fontElement, textElement,
-                                     size, fontFace);
-    }
+	public static boolean isComplex(Element fontElement, BridgeContext ctx) {
+		NodeList glyphElements = fontElement.getElementsByTagNameNS(SVGConstants.SVG_NAMESPACE_URI,
+				SVGConstants.SVG_GLYPH_TAG);
 
-    /**
-     * This method looks at the SVG font and checks if any of
-     * the glyphs use renderable child elements.  If so this
-     * is a complex font in that full CSS inheritance needs to
-     * be applied.  Otherwise if it only uses the 'd' attribute
-     * it does not need CSS treatment.
-     */
-    @Override
-    public boolean isComplex() {
-        if (complex != null) return complex;
-        boolean ret = isComplex(fontElement, ctx);
-        complex = ret ? Boolean.TRUE : Boolean.FALSE;
-        return ret;
-    }
-
-    public static boolean isComplex(Element fontElement, BridgeContext ctx) {
-        NodeList glyphElements = fontElement.getElementsByTagNameNS
-            (SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_GLYPH_TAG);
-
-        int numGlyphs = glyphElements.getLength();
-        for (int i = 0; i < numGlyphs; i++) {
-            Element glyph = (Element)glyphElements.item(i);
-            Node child    = glyph.getFirstChild();
-            for (;child != null; child = child.getNextSibling()) {
-                if (child.getNodeType() != Node.ELEMENT_NODE)
-                    continue;
-                Element e = (Element)child;
-                Bridge b = ctx.getBridge(e);
-                if ((b != null) && (b instanceof GraphicsNodeBridge)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+		int numGlyphs = glyphElements.getLength();
+		for (int i = 0; i < numGlyphs; i++) {
+			Element glyph = (Element) glyphElements.item(i);
+			Node child = glyph.getFirstChild();
+			for (; child != null; child = child.getNextSibling()) {
+				if (child.getNodeType() != Node.ELEMENT_NODE)
+					continue;
+				Element e = (Element) child;
+				Bridge b = ctx.getBridge(e);
+				if ((b != null) && (b instanceof GraphicsNodeBridge)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

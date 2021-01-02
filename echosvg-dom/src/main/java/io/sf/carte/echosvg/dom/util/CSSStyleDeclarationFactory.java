@@ -28,8 +28,8 @@ import org.w3c.dom.css.CSSStyleDeclaration;
  * @version $Id$
  */
 public interface CSSStyleDeclarationFactory {
-    /**
-     * Creates a stylesheet declaration.
-     */
-    CSSStyleDeclaration createCSSStyleDeclaration();
+	/**
+	 * Creates a stylesheet declaration.
+	 */
+	CSSStyleDeclaration createCSSStyleDeclaration();
 }

@@ -28,22 +28,25 @@ package io.sf.carte.echosvg.bridge;
  */
 public class SVGTitleElementBridge extends SVGDescriptiveElementBridge {
 
-    /**
-     * Constructs a new bridge for the &lt;title&gt; element.
-     */
-    public SVGTitleElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;title&gt; element.
+	 */
+	public SVGTitleElementBridge() {
+	}
 
-    /**
-     * Returns 'title'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_TITLE_TAG;
-    }
+	/**
+	 * Returns 'title'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_TITLE_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() { return new SVGTitleElementBridge(); }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGTitleElementBridge();
+	}
 }

@@ -23,21 +23,21 @@ import java.util.Map;
 import org.w3c.dom.Element;
 
 /**
- * The <code>StyleHandler</code> interface allows you to specialize
- * how the style will be set on an SVG <code>Element</code>.
+ * The <code>StyleHandler</code> interface allows you to specialize how the
+ * style will be set on an SVG <code>Element</code>.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface StyleHandler {
-    /**
-     * Sets the style described by <code>styleMap</code> on the given
-     * <code>element</code>.
-     * @param element the SVG <code>Element</code> to be styled.
-     * @param styleMap the <code>Map</code> containing pairs of style
-     * property names, style values.
-     */
-    void setStyle(Element element, Map<String, String> styleMap,
-                         SVGGeneratorContext generatorContext);
+	/**
+	 * Sets the style described by <code>styleMap</code> on the given
+	 * <code>element</code>.
+	 * 
+	 * @param element  the SVG <code>Element</code> to be styled.
+	 * @param styleMap the <code>Map</code> containing pairs of style property
+	 *                 names, style values.
+	 */
+	void setStyle(Element element, Map<String, String> styleMap, SVGGeneratorContext generatorContext);
 }

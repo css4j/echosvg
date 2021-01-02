@@ -21,8 +21,7 @@ package io.sf.carte.echosvg.dom;
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 
 /**
- * Helper class to simplify writing the unitTesting.xml file for 
- * DOM Tests.
+ * Helper class to simplify writing the unitTesting.xml file for DOM Tests.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -30,9 +29,9 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
  */
 
 public class EcmaScriptDOMTest extends SelfContainedSVGOnLoadTest {
-    @Override
-    public void setId(String id){
-        super.setId(id);
-        svgURL = resolveURL("test-resources/io/sf/carte/echosvg/dom/" + id + ".svg");
-    }
+	@Override
+	public void setId(String id) {
+		super.setId(id);
+		svgURL = resolveURL("test-resources/io/sf/carte/echosvg/dom/" + id + ".svg");
+	}
 }

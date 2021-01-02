@@ -30,41 +30,40 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMDefsElement
-    extends    SVGGraphicsElement
-    implements SVGDefsElement {
+public class SVGOMDefsElement extends SVGGraphicsElement implements SVGDefsElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new SVGOMDefsElement object.
-     */
-    protected SVGOMDefsElement() {
-    }
+	/**
+	 * Creates a new SVGOMDefsElement object.
+	 */
+	protected SVGOMDefsElement() {
+	}
 
-    /**
-     * Creates a new SVGOMDefsElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMDefsElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
+	/**
+	 * Creates a new SVGOMDefsElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMDefsElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
 
-    }
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_DEFS_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_DEFS_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMDefsElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMDefsElement();
+	}
 }

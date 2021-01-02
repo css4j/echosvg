@@ -27,55 +27,58 @@ package io.sf.carte.echosvg.transcoder;
  */
 public class TranscoderException extends Exception {
 
-    private static final long serialVersionUID = 1L;
-    /** The enclosed exception. */
-    protected Exception ex;
+	private static final long serialVersionUID = 1L;
+	/** The enclosed exception. */
+	protected Exception ex;
 
-    /**
-     * Constructs a new transcoder exception with the specified detail message.
-     * @param s the detail message of this exception
-     */
-    public TranscoderException(String s) {
-        this(s, null);
-    }
+	/**
+	 * Constructs a new transcoder exception with the specified detail message.
+	 * 
+	 * @param s the detail message of this exception
+	 */
+	public TranscoderException(String s) {
+		this(s, null);
+	}
 
-    /**
-     * Constructs a new transcoder exception with the specified detail message.
-     * @param ex the enclosed exception
-     */
-    public TranscoderException(Exception ex) {
-        this(null, ex);
-    }
+	/**
+	 * Constructs a new transcoder exception with the specified detail message.
+	 * 
+	 * @param ex the enclosed exception
+	 */
+	public TranscoderException(Exception ex) {
+		this(null, ex);
+	}
 
-    /**
-     * Constructs a new transcoder exception with the specified detail message.
-     * @param s the detail message of this exception
-     * @param ex the original exception
-     */
-    public TranscoderException(String s, Exception ex) {
-        super(s, ex);
-        this.ex = ex;
-    }
+	/**
+	 * Constructs a new transcoder exception with the specified detail message.
+	 * 
+	 * @param s  the detail message of this exception
+	 * @param ex the original exception
+	 */
+	public TranscoderException(String s, Exception ex) {
+		super(s, ex);
+		this.ex = ex;
+	}
 
-    /**
-     * Returns the message of this exception. If an error message has
-     * been specified, returns that one. Otherwise, return the error message
-     * of enclosed exception or null if any.
-     */
-    @Override
-    public String getMessage() {
-        String msg = super.getMessage();
-        if (ex != null) {
-            msg += "\nEnclosed Exception:\n";
-            msg += ex.getMessage();
-        }
-        return msg;
-    }
+	/**
+	 * Returns the message of this exception. If an error message has been
+	 * specified, returns that one. Otherwise, return the error message of enclosed
+	 * exception or null if any.
+	 */
+	@Override
+	public String getMessage() {
+		String msg = super.getMessage();
+		if (ex != null) {
+			msg += "\nEnclosed Exception:\n";
+			msg += ex.getMessage();
+		}
+		return msg;
+	}
 
-    /**
-     * Returns the original enclosed exception or null if any.
-     */
-    public Exception getException() {
-        return ex;
-    }
+	/**
+	 * Returns the original enclosed exception or null if any.
+	 */
+	public Exception getException() {
+		return ex;
+	}
 }

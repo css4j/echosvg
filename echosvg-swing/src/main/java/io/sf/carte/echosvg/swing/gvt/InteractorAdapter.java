@@ -30,103 +30,102 @@ import java.awt.event.MouseEvent;
  * @version $Id$
  */
 public class InteractorAdapter implements Interactor {
-    
-    /**
-     * Tells whether the given event will start the interactor.
-     */
-    @Override
-    public boolean startInteraction(InputEvent ie) {
-        return false;
-    }
 
-    /**
-     * Tells whether the interaction has finished.
-     */
-    @Override
-    public boolean endInteraction() {
-        return false;
-    }
+	/**
+	 * Tells whether the given event will start the interactor.
+	 */
+	@Override
+	public boolean startInteraction(InputEvent ie) {
+		return false;
+	}
 
-    // KeyListener //////////////////////////////////////////////////////////
+	/**
+	 * Tells whether the interaction has finished.
+	 */
+	@Override
+	public boolean endInteraction() {
+		return false;
+	}
 
-    /**
-     * Invoked when a key has been typed.
-     * This event occurs when a key press is followed by a key release.
-     */
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-        
-    /**
-     * Invoked when a key has been pressed.
-     */
-    @Override
-    public void keyPressed(KeyEvent e) {
-    }
+	// KeyListener //////////////////////////////////////////////////////////
 
-    /**
-     * Invoked when a key has been released.
-     */
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
+	/**
+	 * Invoked when a key has been typed. This event occurs when a key press is
+	 * followed by a key release.
+	 */
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
 
-    // MouseListener ///////////////////////////////////////////////////////
-        
-    /**
-     * Invoked when the mouse has been clicked on a component.
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
+	/**
+	 * Invoked when a key has been pressed.
+	 */
+	@Override
+	public void keyPressed(KeyEvent e) {
+	}
 
-    /**
-     * Invoked when a mouse button has been pressed on a component.
-     */
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
+	/**
+	 * Invoked when a key has been released.
+	 */
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
 
-    /**
-     * Invoked when a mouse button has been released on a component.
-     */
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
+	// MouseListener ///////////////////////////////////////////////////////
 
-    /**
-     * Invoked when the mouse enters a component.
-     */
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
+	/**
+	 * Invoked when the mouse has been clicked on a component.
+	 */
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
 
-    /**
-     * Invoked when the mouse exits a component.
-     */
-    @Override
-    public void mouseExited(MouseEvent e) {
+	/**
+	 * Invoked when a mouse button has been pressed on a component.
+	 */
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
 
-    }
+	/**
+	 * Invoked when a mouse button has been released on a component.
+	 */
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
 
-    // MouseMotionListener /////////////////////////////////////////////////
+	/**
+	 * Invoked when the mouse enters a component.
+	 */
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
 
-    /**
-     * Invoked when a mouse button is pressed on a component and then 
-     * dragged.  Mouse drag events will continue to be delivered to
-     * the component where the first originated until the mouse button is
-     * released (regardless of whether the mouse position is within the
-     * bounds of the component).
-     */
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
+	/**
+	 * Invoked when the mouse exits a component.
+	 */
+	@Override
+	public void mouseExited(MouseEvent e) {
 
-    /**
-     * Invoked when the mouse button has been moved on a component
-     * (with no buttons no down).
-     */
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
+	}
+
+	// MouseMotionListener /////////////////////////////////////////////////
+
+	/**
+	 * Invoked when a mouse button is pressed on a component and then dragged. Mouse
+	 * drag events will continue to be delivered to the component where the first
+	 * originated until the mouse button is released (regardless of whether the
+	 * mouse position is within the bounds of the component).
+	 */
+	@Override
+	public void mouseDragged(MouseEvent e) {
+	}
+
+	/**
+	 * Invoked when the mouse button has been moved on a component (with no buttons
+	 * no down).
+	 */
+	@Override
+	public void mouseMoved(MouseEvent e) {
+	}
 }

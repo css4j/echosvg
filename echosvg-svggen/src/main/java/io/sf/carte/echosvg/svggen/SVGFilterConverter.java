@@ -25,35 +25,32 @@ import java.util.List;
 import org.w3c.dom.Element;
 
 /**
- * Defines the interface for classes that are able to convert
- * a BufferedImageOp filter.
+ * Defines the interface for classes that are able to convert a BufferedImageOp
+ * filter.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see           io.sf.carte.echosvg.svggen.SVGFilterDescriptor
+ * @see io.sf.carte.echosvg.svggen.SVGFilterDescriptor
  */
 public interface SVGFilterConverter extends SVGSyntax {
-    /**
-     * Converts a Java 2D API BufferedImageOp into
-     * a set of attribute/value pairs and related definitions
-     *
-     * @param filter BufferedImageOp filter to be converted
-     * @param filterRect Rectangle, in device space, that defines the area
-     *        to which filtering applies. May be null, meaning that the
-     *        area is undefined.
-     * @return descriptor of the attributes required to represent
-     *         the input filter
-     * @see io.sf.carte.echosvg.svggen.SVGFilterDescriptor
-     */
-    SVGFilterDescriptor toSVG(BufferedImageOp filter, Rectangle filterRect);
+	/**
+	 * Converts a Java 2D API BufferedImageOp into a set of attribute/value pairs
+	 * and related definitions
+	 *
+	 * @param filter     BufferedImageOp filter to be converted
+	 * @param filterRect Rectangle, in device space, that defines the area to which
+	 *                   filtering applies. May be null, meaning that the area is
+	 *                   undefined.
+	 * @return descriptor of the attributes required to represent the input filter
+	 * @see io.sf.carte.echosvg.svggen.SVGFilterDescriptor
+	 */
+	SVGFilterDescriptor toSVG(BufferedImageOp filter, Rectangle filterRect);
 
-    /**
-     * @return set of definitions referenced by the attribute
-     *         values created by the implementation since its
-     *         creation. The return value should never be null.
-     *         If no definition is needed, an empty set should be
-     *         returned.
-     */
-    List<Element> getDefinitionSet();
+	/**
+	 * @return set of definitions referenced by the attribute values created by the
+	 *         implementation since its creation. The return value should never be
+	 *         null. If no definition is needed, an empty set should be returned.
+	 */
+	List<Element> getDefinitionSet();
 }

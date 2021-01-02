@@ -29,9 +29,10 @@ import java.util.EventListener;
  */
 public interface GraphicsNodeMouseWheelListener extends EventListener {
 
-    /**
-     * Invoked when the mouse wheel has been moved.
-     * @param evt the graphics node mouse event
-     */
-    void mouseWheelMoved(GraphicsNodeMouseWheelEvent evt);
+	/**
+	 * Invoked when the mouse wheel has been moved.
+	 * 
+	 * @param evt the graphics node mouse event
+	 */
+	void mouseWheelMoved(GraphicsNodeMouseWheelEvent evt);
 }

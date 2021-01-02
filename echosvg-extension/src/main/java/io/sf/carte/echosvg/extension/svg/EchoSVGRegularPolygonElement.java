@@ -30,48 +30,47 @@ import io.sf.carte.echosvg.extension.GraphicsExtensionElement;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class EchoSVGRegularPolygonElement
-    extends    GraphicsExtensionElement 
-    implements EchoSVGExtConstants {
+public class EchoSVGRegularPolygonElement extends GraphicsExtensionElement implements EchoSVGExtConstants {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new EchoSVGRegularPolygonElement object.
-     */
-    protected EchoSVGRegularPolygonElement() {
-    }
+	/**
+	 * Creates a new EchoSVGRegularPolygonElement object.
+	 */
+	protected EchoSVGRegularPolygonElement() {
+	}
 
-    /**
-     * Creates a new EchoSVGRegularPolygonElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public EchoSVGRegularPolygonElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new EchoSVGRegularPolygonElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public EchoSVGRegularPolygonElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return BATIK_EXT_REGULAR_POLYGON_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return BATIK_EXT_REGULAR_POLYGON_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return BATIK_EXT_NAMESPACE_URI;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return BATIK_EXT_NAMESPACE_URI;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new EchoSVGRegularPolygonElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new EchoSVGRegularPolygonElement();
+	}
 }

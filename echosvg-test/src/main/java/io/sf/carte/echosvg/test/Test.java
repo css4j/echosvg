@@ -19,64 +19,58 @@
 package io.sf.carte.echosvg.test;
 
 /**
- * Defines the interface of a <code>Test</code> case. It is
- * highly recommended that implementations derive from the
- * <code>AbstractTest</code> class or follow the same implementation
- * approach, so that no exception is thrown from the
- * <code>run</code> method, which is critical for the operation
- * of the test infrastructure.
+ * Defines the interface of a <code>Test</code> case. It is highly recommended
+ * that implementations derive from the <code>AbstractTest</code> class or
+ * follow the same implementation approach, so that no exception is thrown from
+ * the <code>run</code> method, which is critical for the operation of the test
+ * infrastructure.
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Test {
-    /**
-     * Returns this <code>Test</code>'s name.
-     */
-    String getName();
+	/**
+	 * Returns this <code>Test</code>'s name.
+	 */
+	String getName();
 
-    /**
-     * Returns the <code>Test</code>'s qualified id, that is,
-     * the string made of all the id's parents separated
-     * by ".". For example, if this test's id is "C",
-     * its parent id is "B" and its grand-parent id is
-     * "A", this method should return "A.B.C".
-     */
-    String getQualifiedId();
+	/**
+	 * Returns the <code>Test</code>'s qualified id, that is, the string made of all
+	 * the id's parents separated by ".". For example, if this test's id is "C", its
+	 * parent id is "B" and its grand-parent id is "A", this method should return
+	 * "A.B.C".
+	 */
+	String getQualifiedId();
 
-    /**
-     * Returns the <code>Test</code>'s id. The notion of
-     * identifier is left to the user of the <code>Test</code>
-     * object, which explains why the user may set the
-     * id.
-     */
-    String getId();
+	/**
+	 * Returns the <code>Test</code>'s id. The notion of identifier is left to the
+	 * user of the <code>Test</code> object, which explains why the user may set the
+	 * id.
+	 */
+	String getId();
 
-    /**
-     * Sets this <code>Test</code>'s id.
-     */
-    void setId(String id);
+	/**
+	 * Sets this <code>Test</code>'s id.
+	 */
+	void setId(String id);
 
-    /**
-     * Requests this <code>Test</code> to run and produce a
-     * report. It is critical for the test infrastructure
-     * that implementations never throw exceptions
-     * from the run method, even if an error occurs internally
-     * in the test.
-     *
-     */
-    TestReport run();
+	/**
+	 * Requests this <code>Test</code> to run and produce a report. It is critical
+	 * for the test infrastructure that implementations never throw exceptions from
+	 * the run method, even if an error occurs internally in the test.
+	 *
+	 */
+	TestReport run();
 
-    /**
-     * Returns this <code>Test</code>'s parent, in case this
-     * <code>Test</code> is part of a <code>TestSuite</code>.
-     * The returned value may be null.
-     */
-    TestSuite getParent();
+	/**
+	 * Returns this <code>Test</code>'s parent, in case this <code>Test</code> is
+	 * part of a <code>TestSuite</code>. The returned value may be null.
+	 */
+	TestSuite getParent();
 
-    /**
-     * Set this <code>Test</code>'s parent.
-     */
-    void setParent(TestSuite parent);
+	/**
+	 * Set this <code>Test</code>'s parent.
+	 */
+	void setParent(TestSuite parent);
 }

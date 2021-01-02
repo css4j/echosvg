@@ -34,119 +34,120 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.ComponentTransferRed;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class EchoSVGHistogramNormalizationFilter8Bit
-    extends      AbstractColorInterpolationRable
-    implements   EchoSVGHistogramNormalizationFilter {
+public class EchoSVGHistogramNormalizationFilter8Bit extends AbstractColorInterpolationRable
+		implements EchoSVGHistogramNormalizationFilter {
 
-    private float trim = 0.01f;
+	private float trim = 0.01f;
 
-    /**
-     * Sets the source of the operation
-     */
-    @Override
-    public void setSource(Filter src){
-        init(src, null);
-    }
+	/**
+	 * Sets the source of the operation
+	 */
+	@Override
+	public void setSource(Filter src) {
+		init(src, null);
+	}
 
-    /**
-     * Returns the source of the operation
-     */
-    @Override
-    public Filter getSource(){
-        return (Filter)getSources().get(0);
-    }
+	/**
+	 * Returns the source of the operation
+	 */
+	@Override
+	public Filter getSource() {
+		return (Filter) getSources().get(0);
+	}
 
-    /**
-     * Returns the trim percent for this normalization.
-     */
-    @Override
-    public float getTrim() {
-        return trim;
-    }
+	/**
+	 * Returns the trim percent for this normalization.
+	 */
+	@Override
+	public float getTrim() {
+		return trim;
+	}
 
-    /**
-     * Sets the trim percent for this normalization.
-     */
-    @Override
-    public void setTrim(float trim) {
-        this.trim = trim;
-        touch();
-    }
+	/**
+	 * Sets the trim percent for this normalization.
+	 */
+	@Override
+	public void setTrim(float trim) {
+		this.trim = trim;
+		touch();
+	}
 
-    public EchoSVGHistogramNormalizationFilter8Bit(Filter src, float trim) {
-        setSource(src);
-        setTrim(trim);
-    }
+	public EchoSVGHistogramNormalizationFilter8Bit(Filter src, float trim) {
+		setSource(src);
+		setTrim(trim);
+	}
 
-    protected int [] histo = null;
-    protected float slope, intercept;
+	protected int[] histo = null;
+	protected float slope, intercept;
 
-    /**
-     * This method computes the histogram of the image and
-     * from that the appropriate clipping points, which leads
-     * to a slope and intercept for a LinearTransfer function
-     *
-     * @param rc We get the set of rendering hints from rc.
-     */
-    public void computeHistogram(RenderContext rc) {
-        if (histo != null)
-            return;
+	/**
+	 * This method computes the histogram of the image and from that the appropriate
+	 * clipping points, which leads to a slope and intercept for a LinearTransfer
+	 * function
+	 *
+	 * @param rc We get the set of rendering hints from rc.
+	 */
+	public void computeHistogram(RenderContext rc) {
+		if (histo != null)
+			return;
 
-        Filter src = getSource();
+		Filter src = getSource();
 
-        float scale  = 100.0f/src.getWidth();
-        float yscale = 100.0f/src.getHeight();
+		float scale = 100.0f / src.getWidth();
+		float yscale = 100.0f / src.getHeight();
 
-        if (scale > yscale) scale=yscale;
+		if (scale > yscale)
+			scale = yscale;
 
-        AffineTransform at = AffineTransform.getScaleInstance(scale, scale);
-        rc = new RenderContext(at, rc.getRenderingHints());
-        RenderedImage histRI = getSource().createRendering(rc);
+		AffineTransform at = AffineTransform.getScaleInstance(scale, scale);
+		rc = new RenderContext(at, rc.getRenderingHints());
+		RenderedImage histRI = getSource().createRendering(rc);
 
-        histo = new HistogramRed(convertSourceCS(histRI)).getHistogram();
+		histo = new HistogramRed(convertSourceCS(histRI)).getHistogram();
 
-        int t = (int)(histRI.getWidth()*histRI.getHeight()*trim+0.5);
-        int c, i;
-        for (c=0, i=0; i<255; i++) {
-            c+=histo[i];
-            // System.out.println("C[" + i + "] = " + c + "  T: " + t);
-            if (c>=t) break;
-        }
-        int low = i;
+		int t = (int) (histRI.getWidth() * histRI.getHeight() * trim + 0.5);
+		int c, i;
+		for (c = 0, i = 0; i < 255; i++) {
+			c += histo[i];
+			// System.out.println("C[" + i + "] = " + c + " T: " + t);
+			if (c >= t)
+				break;
+		}
+		int low = i;
 
-        for (c=0, i=255; i>0; i--) {
-            c+=histo[i];
-            // System.out.println("C[" + i + "] = " + c + "  T: " + t);
-            if (c>=t) break;
-        }
-        int hi = i;
+		for (c = 0, i = 255; i > 0; i--) {
+			c += histo[i];
+			// System.out.println("C[" + i + "] = " + c + " T: " + t);
+			if (c >= t)
+				break;
+		}
+		int hi = i;
 
-        slope = 255f/(hi-low);
-        intercept = (slope*-low)/255f;
-    }
+		slope = 255f / (hi - low);
+		intercept = (slope * -low) / 255f;
+	}
 
+	@Override
+	public RenderedImage createRendering(RenderContext rc) {
+		//
+		// Get source's rendered image
+		//
+		RenderedImage srcRI = getSource().createRendering(rc);
 
-    @Override
-    public RenderedImage createRendering(RenderContext rc) {
-        //
-        // Get source's rendered image
-        //
-        RenderedImage srcRI = getSource().createRendering(rc);
+		if (srcRI == null)
+			return null;
 
-        if(srcRI == null)
-            return null;
+		computeHistogram(rc);
 
-        computeHistogram(rc);
+		SampleModel sm = srcRI.getSampleModel();
+		int bands = sm.getNumBands();
 
-        SampleModel sm = srcRI.getSampleModel();
-        int bands = sm.getNumBands();
+		// System.out.println("Slope, Intercept: " + slope + ", " + intercept);
+		TransferFunction[] tfs = new TransferFunction[bands];
+		TransferFunction tf = new LinearTransfer(slope, intercept);
+		for (int i = 0; i < tfs.length; i++)
+			tfs[i] = tf;
 
-        // System.out.println("Slope, Intercept: " + slope + ", " + intercept);
-        TransferFunction [] tfs = new TransferFunction[bands];
-        TransferFunction    tf  = new LinearTransfer(slope, intercept);
-        for (int i=0; i<tfs.length; i++)
-            tfs[i] = tf;
-
-        return new ComponentTransferRed(convertSourceCS(srcRI), tfs, null);
-    }
+		return new ComponentTransferRed(convertSourceCS(srcRI), tfs, null);
+	}
 }

@@ -27,17 +27,18 @@ package io.sf.carte.echosvg.bridge;
  */
 public class SVGHKernElementBridge extends SVGKernElementBridge {
 
-    /**
-     * Constructs a new bridge for the &lt;hkern&gt; element.
-     */
-    public SVGHKernElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;hkern&gt; element.
+	 */
+	public SVGHKernElementBridge() {
+	}
 
-    /**
-     * Returns 'hkern'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_HKERN_TAG;
-    }
+	/**
+	 * Returns 'hkern'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_HKERN_TAG;
+	}
 
 }

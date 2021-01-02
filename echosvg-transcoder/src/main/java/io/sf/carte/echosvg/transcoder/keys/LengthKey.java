@@ -20,7 +20,6 @@ package io.sf.carte.echosvg.transcoder.keys;
 
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
 
-
 /**
  * A transcoding Key represented as a length.
  *
@@ -30,8 +29,8 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  */
 public class LengthKey extends TranscodingHints.Key {
 
-    @Override
-    public boolean isCompatibleValue(Object v) {
-        return (v instanceof Float && (Float) v > 0);
-    }
+	@Override
+	public boolean isCompatibleValue(Object v) {
+		return (v instanceof Float && (Float) v > 0);
+	}
 }

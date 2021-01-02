@@ -32,58 +32,54 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
  */
 public class Messages {
 
-    /**
-     * This class does not need to be instantiated.
-     */
-    protected Messages() { }
+	/**
+	 * This class does not need to be instantiated.
+	 */
+	protected Messages() {
+	}
 
-    /**
-     * The error messages bundle class name.
-     */
-    protected static final String RESOURCES =
-        "io.sf.carte.echosvg.script.rhino.resources.messages";
+	/**
+	 * The error messages bundle class name.
+	 */
+	protected static final String RESOURCES = "io.sf.carte.echosvg.script.rhino.resources.messages";
 
-    /**
-     * The localizable support for the error messages.
-     */
-    protected static LocalizableSupport localizableSupport =
-        new LocalizableSupport(RESOURCES, Messages.class.getClassLoader());
+	/**
+	 * The localizable support for the error messages.
+	 */
+	protected static LocalizableSupport localizableSupport = new LocalizableSupport(RESOURCES,
+			Messages.class.getClassLoader());
 
-    /**
-     * Implements {@link io.sf.carte.echosvg.i18n.Localizable#setLocale(Locale)}.
-     */
-    public static void setLocale(Locale l) {
-        localizableSupport.setLocale(l);
-    }
+	/**
+	 * Implements {@link io.sf.carte.echosvg.i18n.Localizable#setLocale(Locale)}.
+	 */
+	public static void setLocale(Locale l) {
+		localizableSupport.setLocale(l);
+	}
 
-    /**
-     * Implements {@link io.sf.carte.echosvg.i18n.Localizable#getLocale()}.
-     */
-    public static Locale getLocale() {
-        return localizableSupport.getLocale();
-    }
+	/**
+	 * Implements {@link io.sf.carte.echosvg.i18n.Localizable#getLocale()}.
+	 */
+	public static Locale getLocale() {
+		return localizableSupport.getLocale();
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.i18n.Localizable#formatMessage(String,Object[])}.
-     */
-    public static String formatMessage(String key, Object[] args)
-        throws MissingResourceException {
-        return localizableSupport.formatMessage(key, args);
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.i18n.Localizable#formatMessage(String,Object[])}.
+	 */
+	public static String formatMessage(String key, Object[] args) throws MissingResourceException {
+		return localizableSupport.formatMessage(key, args);
+	}
 
-    public static String getString(String key)
-        throws MissingResourceException {
-        return localizableSupport.getString(key);
-    }
+	public static String getString(String key) throws MissingResourceException {
+		return localizableSupport.getString(key);
+	}
 
-    public static int getInteger(String key)
-        throws MissingResourceException {
-        return localizableSupport.getInteger(key);
-    }
+	public static int getInteger(String key) throws MissingResourceException {
+		return localizableSupport.getInteger(key);
+	}
 
-    public static int getCharacter(String key)
-        throws MissingResourceException {
-        return localizableSupport.getCharacter(key);
-    }
+	public static int getCharacter(String key) throws MissingResourceException {
+		return localizableSupport.getCharacter(key);
+	}
 }

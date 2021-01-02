@@ -29,26 +29,27 @@ import io.sf.carte.echosvg.util.SVGConstants;
  */
 public abstract class AbstractSVGBridge implements Bridge, SVGConstants {
 
-    /**
-     * Constructs a new abstract bridge for SVG elements.
-     */
-    protected AbstractSVGBridge() {}
+	/**
+	 * Constructs a new abstract bridge for SVG elements.
+	 */
+	protected AbstractSVGBridge() {
+	}
 
-    /**
-     * Returns the SVG namespace URI.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return SVG_NAMESPACE_URI;
-    }
+	/**
+	 * Returns the SVG namespace URI.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return SVG_NAMESPACE_URI;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        // <!> FIXME: temporary fix for progressive implementation
-        //System.out.println("use static bridge for: "+getLocalName());
-        return this;
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		// <!> FIXME: temporary fix for progressive implementation
+		// System.out.println("use static bridge for: "+getLocalName());
+		return this;
+	}
 }

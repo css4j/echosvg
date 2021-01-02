@@ -32,91 +32,91 @@ import io.sf.carte.echosvg.css.engine.value.AbstractValue;
  */
 public class ICCColor extends AbstractValue {
 
-    public static final String ICC_COLOR_FUNCTION = "icc-color";
+	public static final String ICC_COLOR_FUNCTION = "icc-color";
 
-    /**
-     * The color profile.
-     */
-    protected String colorProfile;
+	/**
+	 * The color profile.
+	 */
+	protected String colorProfile;
 
-    /**
-     * The color count.
-     */
-    protected int count;
+	/**
+	 * The color count.
+	 */
+	protected int count;
 
-    /**
-     * The colors.
-     */
-    protected float[] colors = new float[5];
+	/**
+	 * The colors.
+	 */
+	protected float[] colors = new float[5];
 
-    /**
-     * Creates a new ICCColor.
-     */
-    public ICCColor(String name) {
-        colorProfile = name;
-    }
+	/**
+	 * Creates a new ICCColor.
+	 */
+	public ICCColor(String name) {
+		colorProfile = name;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
-     */
-    @Override
-    public short getCssValueType() {
-        return CSSValue.CSS_CUSTOM;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
+	 */
+	@Override
+	public short getCssValueType() {
+		return CSSValue.CSS_CUSTOM;
+	}
 
-    /**
-     * Returns the color name.
-     */
-    public String getColorProfile() throws DOMException {
-        return colorProfile;
-    }
+	/**
+	 * Returns the color name.
+	 */
+	public String getColorProfile() throws DOMException {
+		return colorProfile;
+	}
 
-    /**
-     * Returns the number of colors.
-     */
-    public int getNumberOfColors() throws DOMException {
-        return count;
-    }
+	/**
+	 * Returns the number of colors.
+	 */
+	public int getNumberOfColors() throws DOMException {
+		return count;
+	}
 
-    /**
-     * Returns the color at the given index.
-     */
-    public float getColor(int i) throws DOMException {
-        return colors[i];
-    }
+	/**
+	 * Returns the color at the given index.
+	 */
+	public float getColor(int i) throws DOMException {
+		return colors[i];
+	}
 
-    /**
-     *  A string representation of the current value.
-     */
-    @Override
-    public String getCssText() {
-        StringBuffer sb = new StringBuffer( count * 8 );
-        sb.append(ICC_COLOR_FUNCTION).append('(');
-        sb.append(colorProfile);
-        for (int i = 0; i < count; i++) {
-            sb.append(", ");
-            sb.append(colors[i]);
-        }
-        sb.append( ')' );
-        return sb.toString();
-    }
+	/**
+	 * A string representation of the current value.
+	 */
+	@Override
+	public String getCssText() {
+		StringBuffer sb = new StringBuffer(count * 8);
+		sb.append(ICC_COLOR_FUNCTION).append('(');
+		sb.append(colorProfile);
+		for (int i = 0; i < count; i++) {
+			sb.append(", ");
+			sb.append(colors[i]);
+		}
+		sb.append(')');
+		return sb.toString();
+	}
 
-    /**
-     * Appends a color to the list.
-     */
-    public void append(float c) {
-        if (count == colors.length) {
-            float[] t = new float[count * 2];
-            System.arraycopy( colors, 0, t, 0, count );
-            colors = t;
-        }
-        colors[count++] = c;
-    }
+	/**
+	 * Appends a color to the list.
+	 */
+	public void append(float c) {
+		if (count == colors.length) {
+			float[] t = new float[count * 2];
+			System.arraycopy(colors, 0, t, 0, count);
+			colors = t;
+		}
+		colors[count++] = c;
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return getCssText();
-    }
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return getCssText();
+	}
 }

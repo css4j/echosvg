@@ -31,23 +31,24 @@ import java.awt.Toolkit;
  */
 public abstract class Platform {
 
-    /**
-     * Whether we are running on Mac OS X.
-     */
-    public static boolean isOSX =
-        System.getProperty("os.name").equals("Mac OS X");
+	/**
+	 * Whether we are running on Mac OS X.
+	 */
+	public static boolean isOSX = System.getProperty("os.name").equals("Mac OS X");
 
-    /**
-     * Returns the active screen resolution. If EchoSVG is run in a headless environment, this
-     * method will return the default "96" unlike {@link Toolkit#getScreenResolution()} which
-     * will throw a {@link HeadlessException}.
-     * @return the screen resolution in dpi
-     */
-    public static int getScreenResolution() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return 96;
-        } else {
-            return Toolkit.getDefaultToolkit().getScreenResolution();
-        }
-    }
+	/**
+	 * Returns the active screen resolution. If EchoSVG is run in a headless
+	 * environment, this method will return the default "96" unlike
+	 * {@link Toolkit#getScreenResolution()} which will throw a
+	 * {@link HeadlessException}.
+	 * 
+	 * @return the screen resolution in dpi
+	 */
+	public static int getScreenResolution() {
+		if (GraphicsEnvironment.isHeadless()) {
+			return 96;
+		} else {
+			return Toolkit.getDefaultToolkit().getScreenResolution();
+		}
+	}
 }

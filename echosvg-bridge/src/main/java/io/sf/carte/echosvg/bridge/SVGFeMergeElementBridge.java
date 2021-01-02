@@ -41,191 +41,154 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGFeMergeElementBridge
-    extends AbstractSVGFilterPrimitiveElementBridge {
+public class SVGFeMergeElementBridge extends AbstractSVGFilterPrimitiveElementBridge {
 
-    /**
-     * Constructs a new bridge for the &lt;feMerge&gt; element.
-     */
-    public SVGFeMergeElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;feMerge&gt; element.
+	 */
+	public SVGFeMergeElementBridge() {
+	}
 
-    /**
-     * Returns 'feMerge'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_MERGE_TAG;
-    }
+	/**
+	 * Returns 'feMerge'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_MERGE_TAG;
+	}
 
-    /**
-     * Creates a <code>Filter</code> primitive according to the specified
-     * parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param filterElement the element that defines a filter
-     * @param filteredElement the element that references the filter
-     * @param filteredNode the graphics node to filter
-     * @param inputFilter the <code>Filter</code> that represents the current
-     *        filter input if the filter chain.
-     * @param filterRegion the filter area defined for the filter chain
-     *        the new node will be part of.
-     * @param filterMap a map where the mediator can map a name to the
-     *        <code>Filter</code> it creates. Other <code>FilterBridge</code>s
-     *        can then access a filter node from the filterMap if they
-     *        know its name.
-     */
-    @Override
-    public Filter createFilter(BridgeContext ctx,
-                               Element filterElement,
-                               Element filteredElement,
-                               GraphicsNode filteredNode,
-                               Filter inputFilter,
-                               Rectangle2D filterRegion,
-                               Map<String, Filter> filterMap) {
+	/**
+	 * Creates a <code>Filter</code> primitive according to the specified
+	 * parameters.
+	 *
+	 * @param ctx             the bridge context to use
+	 * @param filterElement   the element that defines a filter
+	 * @param filteredElement the element that references the filter
+	 * @param filteredNode    the graphics node to filter
+	 * @param inputFilter     the <code>Filter</code> that represents the current
+	 *                        filter input if the filter chain.
+	 * @param filterRegion    the filter area defined for the filter chain the new
+	 *                        node will be part of.
+	 * @param filterMap       a map where the mediator can map a name to the
+	 *                        <code>Filter</code> it creates. Other
+	 *                        <code>FilterBridge</code>s can then access a filter
+	 *                        node from the filterMap if they know its name.
+	 */
+	@Override
+	public Filter createFilter(BridgeContext ctx, Element filterElement, Element filteredElement,
+			GraphicsNode filteredNode, Filter inputFilter, Rectangle2D filterRegion, Map<String, Filter> filterMap) {
 
-        List<Filter> srcs = extractFeMergeNode(filterElement,
-                                       filteredElement,
-                                       filteredNode,
-                                       inputFilter,
-                                       filterMap,
-                                       ctx);
+		List<Filter> srcs = extractFeMergeNode(filterElement, filteredElement, filteredNode, inputFilter, filterMap,
+				ctx);
 
-        if (srcs == null) {
-            return null; // <!> FIXME: no subelement found, result unspecified
-        }
+		if (srcs == null) {
+			return null; // <!> FIXME: no subelement found, result unspecified
+		}
 
-        if (srcs.size() == 0) {
-            return null; // <!> FIXME: no subelement found, result unspecified
-        }
+		if (srcs.size() == 0) {
+			return null; // <!> FIXME: no subelement found, result unspecified
+		}
 
-        // the default region is the input sources regions union
-        Iterator<Filter> iter = srcs.iterator();
-        Rectangle2D defaultRegion = 
-            (Rectangle2D)iter.next().getBounds2D().clone();
+		// the default region is the input sources regions union
+		Iterator<Filter> iter = srcs.iterator();
+		Rectangle2D defaultRegion = (Rectangle2D) iter.next().getBounds2D().clone();
 
-        while (iter.hasNext()) {
-            defaultRegion.add(iter.next().getBounds2D());
-        }
+		while (iter.hasNext()) {
+			defaultRegion.add(iter.next().getBounds2D());
+		}
 
-        // get filter primitive chain region
-        Rectangle2D primitiveRegion
-            = SVGUtilities.convertFilterPrimitiveRegion(filterElement,
-                                                        filteredElement,
-                                                        filteredNode,
-                                                        defaultRegion,
-                                                        filterRegion,
-                                                        ctx);
+		// get filter primitive chain region
+		Rectangle2D primitiveRegion = SVGUtilities.convertFilterPrimitiveRegion(filterElement, filteredElement,
+				filteredNode, defaultRegion, filterRegion, ctx);
 
-        Filter filter = new CompositeRable8Bit(srcs, CompositeRule.OVER, true);
+		Filter filter = new CompositeRable8Bit(srcs, CompositeRule.OVER, true);
 
-        // handle the 'color-interpolation-filters' property
-        handleColorInterpolationFilters(filter, filterElement);
+		// handle the 'color-interpolation-filters' property
+		handleColorInterpolationFilters(filter, filterElement);
 
-        filter = new PadRable8Bit(filter, primitiveRegion, PadMode.ZERO_PAD);
+		filter = new PadRable8Bit(filter, primitiveRegion, PadMode.ZERO_PAD);
 
-        // update the filter Map
-        updateFilterMap(filterElement, filter, filterMap);
+		// update the filter Map
+		updateFilterMap(filterElement, filter, filterMap);
 
-        return filter;
-    }
+		return filter;
+	}
 
+	/**
+	 * Returns a list of Filter objects that represents the feMergeNode of the
+	 * specified feMerge filter element.
+	 *
+	 * @param filterElement   the feMerge filter element
+	 * @param filteredElement the filtered element
+	 * @param filteredNode    the filtered graphics node
+	 * @param inputFilter     the <code>Filter</code> that represents the current
+	 *                        filter input if the filter chain.
+	 * @param filterMap       the filter map that contains named filter primitives
+	 * @param ctx             the bridge context
+	 */
+	protected static List<Filter> extractFeMergeNode(Element filterElement, Element filteredElement,
+			GraphicsNode filteredNode, Filter inputFilter, Map<String, Filter> filterMap, BridgeContext ctx) {
 
-    /**
-     * Returns a list of Filter objects that represents the feMergeNode of
-     * the specified feMerge filter element.
-     *
-     * @param filterElement the feMerge filter element
-     * @param filteredElement the filtered element
-     * @param filteredNode the filtered graphics node
-     * @param inputFilter the <code>Filter</code> that represents the current
-     *        filter input if the filter chain.
-     * @param filterMap the filter map that contains named filter primitives
-     * @param ctx the bridge context
-     */
-    protected static List<Filter> extractFeMergeNode(Element filterElement,
-                                             Element filteredElement,
-                                             GraphicsNode filteredNode,
-                                             Filter inputFilter,
-                                             Map<String, Filter> filterMap,
-                                             BridgeContext ctx) {
+		List<Filter> srcs = null;
+		for (Node n = filterElement.getFirstChild(); n != null; n = n.getNextSibling()) {
 
-        List<Filter> srcs = null;
-        for (Node n = filterElement.getFirstChild();
-             n != null;
-             n = n.getNextSibling()) {
+			if (n.getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
 
-            if (n.getNodeType() != Node.ELEMENT_NODE) {
-                continue;
-            }
+			Element e = (Element) n;
+			Bridge bridge = ctx.getBridge(e);
+			if (bridge == null || !(bridge instanceof SVGFeMergeNodeElementBridge)) {
+				continue;
+			}
+			Filter filter = ((SVGFeMergeNodeElementBridge) bridge).createFilter(ctx, e, filteredElement, filteredNode,
+					inputFilter, filterMap);
+			if (filter != null) {
+				if (srcs == null) {
+					srcs = new LinkedList<>();
+				}
+				srcs.add(filter);
+			}
+		}
+		return srcs;
+	}
 
-            Element e = (Element)n;
-            Bridge bridge = ctx.getBridge(e);
-            if (bridge == null ||
-                !(bridge instanceof SVGFeMergeNodeElementBridge)) {
-                continue;
-            }
-            Filter filter =  ((SVGFeMergeNodeElementBridge)bridge).createFilter
-                (ctx,
-                 e,
-                 filteredElement,
-                 filteredNode,
-                 inputFilter,
-                 filterMap);
-            if (filter != null) {
-                if (srcs == null) {
-                    srcs = new LinkedList<>();
-                }
-                srcs.add(filter);
-            }
-        }
-        return srcs;
-    }
+	/**
+	 * Bridge class for the &lt;feMergeNode&gt; element.
+	 */
+	public static class SVGFeMergeNodeElementBridge extends AnimatableGenericSVGBridge {
 
-    /**
-     * Bridge class for the &lt;feMergeNode&gt; element.
-     */
-    public static class SVGFeMergeNodeElementBridge
-            extends AnimatableGenericSVGBridge {
+		/**
+		 * Constructs a new bridge for the &lt;feMergeNode&gt; element.
+		 */
+		public SVGFeMergeNodeElementBridge() {
+		}
 
-        /**
-         * Constructs a new bridge for the &lt;feMergeNode&gt; element.
-         */
-        public SVGFeMergeNodeElementBridge() {}
+		/**
+		 * Returns 'feMergeNode'.
+		 */
+		@Override
+		public String getLocalName() {
+			return SVG_FE_MERGE_NODE_TAG;
+		}
 
-        /**
-         * Returns 'feMergeNode'.
-         */
-        @Override
-        public String getLocalName() {
-            return SVG_FE_MERGE_NODE_TAG;
-        }
-
-        /**
-         * Creates a <code>Filter</code> according to the specified parameters.
-         *
-         * @param ctx the bridge context to use
-         * @param filterElement the element that defines a filter
-         * @param filteredElement the element that references the filter
-         * @param filteredNode the graphics node to filter
-         * @param inputFilter the <code>Filter</code> that represents the current
-         *        filter input if the filter chain.
-         * @param filterMap a map where the mediator can map a name to the
-         *        <code>Filter</code> it creates. Other <code>FilterBridge</code>s
-         *        can then access a filter node from the filterMap if they
-         *        know its name.
-         */
-        public Filter createFilter(BridgeContext ctx,
-                                   Element filterElement,
-                                   Element filteredElement,
-                                   GraphicsNode filteredNode,
-                                   Filter inputFilter,
-                                   Map<String, Filter> filterMap) {
-            return getIn(filterElement,
-                         filteredElement,
-                         filteredNode,
-                         inputFilter,
-                         filterMap,
-                         ctx);
-        }
-    }
+		/**
+		 * Creates a <code>Filter</code> according to the specified parameters.
+		 *
+		 * @param ctx             the bridge context to use
+		 * @param filterElement   the element that defines a filter
+		 * @param filteredElement the element that references the filter
+		 * @param filteredNode    the graphics node to filter
+		 * @param inputFilter     the <code>Filter</code> that represents the current
+		 *                        filter input if the filter chain.
+		 * @param filterMap       a map where the mediator can map a name to the
+		 *                        <code>Filter</code> it creates. Other
+		 *                        <code>FilterBridge</code>s can then access a filter
+		 *                        node from the filterMap if they know its name.
+		 */
+		public Filter createFilter(BridgeContext ctx, Element filterElement, Element filteredElement,
+				GraphicsNode filteredNode, Filter inputFilter, Map<String, Filter> filterMap) {
+			return getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
+		}
+	}
 }

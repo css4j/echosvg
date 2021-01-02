@@ -38,72 +38,70 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class StrokeWidthManager extends LengthManager {
 
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_LENGTH_OR_INHERIT;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_LENGTH_OR_INHERIT;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_STROKE_WIDTH_PROPERTY;
-    }
-    
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return SVGValueConstants.NUMBER_1;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_STROKE_WIDTH_PROPERTY;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INHERIT) {
-            return ValueConstants.INHERIT_VALUE;
-        }
-        return super.createValue(lu, engine);
-    }
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return SVGValueConstants.NUMBER_1;
+	}
 
-    /**
-     * Indicates the orientation of the property associated with
-     * this manager.
-     */
-    @Override
-    protected int getOrientation() {
-        return BOTH_ORIENTATION;
-    }
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INHERIT) {
+			return ValueConstants.INHERIT_VALUE;
+		}
+		return super.createValue(lu, engine);
+	}
+
+	/**
+	 * Indicates the orientation of the property associated with this manager.
+	 */
+	@Override
+	protected int getOrientation() {
+		return BOTH_ORIENTATION;
+	}
 }

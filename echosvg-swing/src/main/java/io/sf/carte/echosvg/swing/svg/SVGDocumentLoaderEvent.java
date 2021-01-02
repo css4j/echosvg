@@ -23,37 +23,38 @@ import java.util.EventObject;
 import org.w3c.dom.svg.SVGDocument;
 
 /**
- * This class represents an event which indicate an event originated
- * from a SVGDocumentLoader instance.
+ * This class represents an event which indicate an event originated from a
+ * SVGDocumentLoader instance.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGDocumentLoaderEvent extends EventObject {
-    
-    private static final long serialVersionUID = 1L;
-    /**
-     * The associated SVG document.
-     */
-    protected SVGDocument svgDocument;
 
-    /**
-     * Creates a new SVGDocumentLoaderEvent.
-     * @param source the object that originated the event, ie. the
-     *               SVGDocumentLoader.
-     * @param doc The associated document.
-     */
-    public SVGDocumentLoaderEvent(Object source, SVGDocument doc) {
-        super(source);
-        svgDocument = doc;
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The associated SVG document.
+	 */
+	protected SVGDocument svgDocument;
 
-    /**
-     * Returns the associated SVG document, or null if the loading
-     * was just started or an error occured.
-     */
-    public SVGDocument getSVGDocument() {
-        return svgDocument;
-    }
+	/**
+	 * Creates a new SVGDocumentLoaderEvent.
+	 * 
+	 * @param source the object that originated the event, ie. the
+	 *               SVGDocumentLoader.
+	 * @param doc    The associated document.
+	 */
+	public SVGDocumentLoaderEvent(Object source, SVGDocument doc) {
+		super(source);
+		svgDocument = doc;
+	}
+
+	/**
+	 * Returns the associated SVG document, or null if the loading was just started
+	 * or an error occured.
+	 */
+	public SVGDocument getSVGDocument() {
+		return svgDocument;
+	}
 }

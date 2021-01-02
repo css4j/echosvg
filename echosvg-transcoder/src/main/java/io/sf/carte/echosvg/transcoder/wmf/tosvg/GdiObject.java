@@ -26,62 +26,72 @@ package io.sf.carte.echosvg.transcoder.wmf.tosvg;
  * @version $Id$
  */
 public class GdiObject {
-    GdiObject( int _id, boolean _used ) {
-        id = _id;
-        used = _used;
-        type = 0;
-    }
+	GdiObject(int _id, boolean _used) {
+		id = _id;
+		used = _used;
+		type = 0;
+	}
 
-    public void clear() {
-        used = false;
-        type = 0;
-    }
+	public void clear() {
+		used = false;
+		type = 0;
+	}
 
-    /** Setup this Object, which means that it is used and associated with an Object.
-     *  <p>The Object can be any Java <i>Object</i> that is useful for an implementation of
-     *  {@link AbstractWMFPainter} that uses this GdiObject.</p>
-     *  <p>For example, if the painter paints in a Java <i>Graphics2D</i> :</p>
-     *  <ul>
-     *  <li>For a PEN or BRUSH GdiObject : the Object will be a <i>Color</i></li>
-     *  <li>For a FONT GdiObject : the Object can be a <i>Font</i> (in fact, the actual
-     *  {@link WMFPainter} implementation uses a more sophisticated kind of Object in order to keep
-     *  track of the associated charset)</li>
-     *  </ul>
-     *  @param _type the type of this object
-     *  @param _obj the associated Object
-     */
-    public void Setup( int _type, Object _obj ) {
-        obj = _obj;
-        type = _type;
-        used = true;
-    }
+	/**
+	 * Setup this Object, which means that it is used and associated with an Object.
+	 * <p>
+	 * The Object can be any Java <i>Object</i> that is useful for an implementation
+	 * of {@link AbstractWMFPainter} that uses this GdiObject.
+	 * </p>
+	 * <p>
+	 * For example, if the painter paints in a Java <i>Graphics2D</i> :
+	 * </p>
+	 * <ul>
+	 * <li>For a PEN or BRUSH GdiObject : the Object will be a <i>Color</i></li>
+	 * <li>For a FONT GdiObject : the Object can be a <i>Font</i> (in fact, the
+	 * actual {@link WMFPainter} implementation uses a more sophisticated kind of
+	 * Object in order to keep track of the associated charset)</li>
+	 * </ul>
+	 * 
+	 * @param _type the type of this object
+	 * @param _obj  the associated Object
+	 */
+	public void Setup(int _type, Object _obj) {
+		obj = _obj;
+		type = _type;
+		used = true;
+	}
 
-    /** Return true if this GdiObject is used.
-     */
-    public boolean isUsed() {
-        return used;
-    }
+	/**
+	 * Return true if this GdiObject is used.
+	 */
+	public boolean isUsed() {
+		return used;
+	}
 
-    /** Return the type of this GdiObject.
-     */
-    public int getType() {
-        return type;
-    }
+	/**
+	 * Return the type of this GdiObject.
+	 */
+	public int getType() {
+		return type;
+	}
 
-    /** Return the Object associated with this GdiObject.
-     */
-    public Object getObject() {
-        return obj;
-    }
+	/**
+	 * Return the Object associated with this GdiObject.
+	 */
+	public Object getObject() {
+		return obj;
+	}
 
-    /** Return the identification of this GdiObject.
-     */
-    public int getID() {
-        return id;
-    }
+	/**
+	 * Return the identification of this GdiObject.
+	 */
+	public int getID() {
+		return id;
+	}
 
-    int id;
-    boolean used;
-    Object obj;
-    int type = 0;
+	int id;
+	boolean used;
+	Object obj;
+	int type = 0;
 }

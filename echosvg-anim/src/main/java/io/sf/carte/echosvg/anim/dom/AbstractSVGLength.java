@@ -29,287 +29,268 @@ import io.sf.carte.echosvg.parser.UnitProcessor;
 /**
  * Default implementation for SVGLength.
  *
- * This implementation provides the basic
- * functionalities of SVGLength. To have
- * a complete implementation, an element is
- * required to resolve the units.
+ * This implementation provides the basic functionalities of SVGLength. To have
+ * a complete implementation, an element is required to resolve the units.
  *
- * According to the usage of this AbstractSVGLength,
- * the <code>reset()</code> method is after
- * changes being made to the unitType or the value
- * of this length. Before any values are return
- * to the user of the AbstractSVGLength, the
- * <code>revalidate()</code> method is being called
- * to insure the validity of the value and unit type
- * held by this object.
+ * According to the usage of this AbstractSVGLength, the <code>reset()</code>
+ * method is after changes being made to the unitType or the value of this
+ * length. Before any values are return to the user of the AbstractSVGLength,
+ * the <code>revalidate()</code> method is being called to insure the validity
+ * of the value and unit type held by this object.
  *
  * @author nicolas.socheleau@bitflash.com
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractSVGLength
-    implements SVGLength {
+public abstract class AbstractSVGLength implements SVGLength {
 
-    /**
-     * This constant represents horizontal lengths.
-     */
-    public static final short HORIZONTAL_LENGTH =
-        UnitProcessor.HORIZONTAL_LENGTH;
+	/**
+	 * This constant represents horizontal lengths.
+	 */
+	public static final short HORIZONTAL_LENGTH = UnitProcessor.HORIZONTAL_LENGTH;
 
-    /**
-     * This constant represents vertical lengths.
-     */
-    public static final short VERTICAL_LENGTH =
-        UnitProcessor.VERTICAL_LENGTH;
+	/**
+	 * This constant represents vertical lengths.
+	 */
+	public static final short VERTICAL_LENGTH = UnitProcessor.VERTICAL_LENGTH;
 
-    /**
-     * This constant represents other lengths.
-     */
-    public static final short OTHER_LENGTH =
-        UnitProcessor.OTHER_LENGTH;
+	/**
+	 * This constant represents other lengths.
+	 */
+	public static final short OTHER_LENGTH = UnitProcessor.OTHER_LENGTH;
 
-    /**
-     * The type of this length.
-     */
-    protected short unitType;
+	/**
+	 * The type of this length.
+	 */
+	protected short unitType;
 
-    /**
-     * The value of this length.
-     */
-    protected float value;
+	/**
+	 * The value of this length.
+	 */
+	protected float value;
 
-    /**
-     * This length's direction.
-     */
-    protected short direction;
+	/**
+	 * This length's direction.
+	 */
+	protected short direction;
 
-    /**
-     * The context used to resolve the units.
-     */
-    protected UnitProcessor.Context context;
+	/**
+	 * The context used to resolve the units.
+	 */
+	protected UnitProcessor.Context context;
 
-    /**
-     * The unit string representations.
-     */
-    protected static final String[] UNITS = {
-        "", "", "%", "em", "ex", "px", "cm", "mm", "in", "pt", "pc"
-    };
+	/**
+	 * The unit string representations.
+	 */
+	protected static final String[] UNITS = { "", "", "%", "em", "ex", "px", "cm", "mm", "in", "pt", "pc" };
 
-    /**
-     * Return the SVGElement associated to this length.
-     */
-    protected abstract SVGOMElement getAssociatedElement();
+	/**
+	 * Return the SVGElement associated to this length.
+	 */
+	protected abstract SVGOMElement getAssociatedElement();
 
-    /**
-     * Creates a new AbstractSVGLength.
-     */
-    public AbstractSVGLength(short direction) {
-        context = new DefaultContext();
-        this.direction = direction;
-        this.value = 0.0f;
-        this.unitType = SVGLength.SVG_LENGTHTYPE_NUMBER;
-    }
+	/**
+	 * Creates a new AbstractSVGLength.
+	 */
+	public AbstractSVGLength(short direction) {
+		context = new DefaultContext();
+		this.direction = direction;
+		this.value = 0.0f;
+		this.unitType = SVGLength.SVG_LENGTHTYPE_NUMBER;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGLength#getUnitType()}.
-     */
-    @Override
-    public short getUnitType() {
-        revalidate();
-        return unitType;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGLength#getUnitType()}.
+	 */
+	@Override
+	public short getUnitType() {
+		revalidate();
+		return unitType;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGLength#getValue()}.
-     */
-    @Override
-    public float getValue() {
-        revalidate();
-        try {
-            return UnitProcessor.svgToUserSpace(value, unitType,
-                                                direction, context);
-        } catch (IllegalArgumentException ex) {
-            // XXX Should we throw an exception here when the length
-            //     type is unknown?
-            return 0f;
-        }
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGLength#getValue()}.
+	 */
+	@Override
+	public float getValue() {
+		revalidate();
+		try {
+			return UnitProcessor.svgToUserSpace(value, unitType, direction, context);
+		} catch (IllegalArgumentException ex) {
+			// XXX Should we throw an exception here when the length
+			// type is unknown?
+			return 0f;
+		}
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGLength#setValue(float)}.
-     */
-    @Override
-    public void setValue(float value) throws DOMException {
-        this.value = UnitProcessor.userSpaceToSVG(value, unitType,
-                                                  direction, context);
-        reset();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGLength#setValue(float)}.
+	 */
+	@Override
+	public void setValue(float value) throws DOMException {
+		this.value = UnitProcessor.userSpaceToSVG(value, unitType, direction, context);
+		reset();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGLength#getValueInSpecifiedUnits()}.
-     */
-    @Override
-    public float getValueInSpecifiedUnits() {
-        revalidate();
-        return value;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGLength#getValueInSpecifiedUnits()}.
+	 */
+	@Override
+	public float getValueInSpecifiedUnits() {
+		revalidate();
+		return value;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGLength#setValueInSpecifiedUnits(float)}.
-     */
-    @Override
-    public void setValueInSpecifiedUnits(float value) throws DOMException {
-        revalidate();
-        this.value = value;
-        reset();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGLength#setValueInSpecifiedUnits(float)}.
+	 */
+	@Override
+	public void setValueInSpecifiedUnits(float value) throws DOMException {
+		revalidate();
+		this.value = value;
+		reset();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGLength#getValueAsString()}.
-     */
-    @Override
-    public String getValueAsString() {
-        revalidate();
-        if (unitType == SVGLength.SVG_LENGTHTYPE_UNKNOWN) {
-            return "";
-        }
-        return Float.toString(value) + UNITS[unitType];
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGLength#getValueAsString()}.
+	 */
+	@Override
+	public String getValueAsString() {
+		revalidate();
+		if (unitType == SVGLength.SVG_LENGTHTYPE_UNKNOWN) {
+			return "";
+		}
+		return Float.toString(value) + UNITS[unitType];
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGLength#setValueAsString(String)}.
-     */
-    @Override
-    public void setValueAsString(String value) throws DOMException {
-        parse(value);
-        reset();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGLength#setValueAsString(String)}.
+	 */
+	@Override
+	public void setValueAsString(String value) throws DOMException {
+		parse(value);
+		reset();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGLength#newValueSpecifiedUnits(short,float)}.
-     */
-    @Override
-    public void newValueSpecifiedUnits(short unit, float value) {
-        unitType = unit;
-        this.value = value;
-        reset();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGLength#newValueSpecifiedUnits(short,float)}.
+	 */
+	@Override
+	public void newValueSpecifiedUnits(short unit, float value) {
+		unitType = unit;
+		this.value = value;
+		reset();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGLength#convertToSpecifiedUnits(short)}.
-     */
-    @Override
-    public void convertToSpecifiedUnits(short unit) {
-        float v = getValue();
-        unitType = unit;
-        setValue(v);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGLength#convertToSpecifiedUnits(short)}.
+	 */
+	@Override
+	public void convertToSpecifiedUnits(short unit) {
+		float v = getValue();
+		unitType = unit;
+		setValue(v);
+	}
 
-    /**
-     * Callback method after changes
-     * made to this length.
-     *
-     * The default implementation does nothing.
-     */
-    protected void reset() {
-    }
+	/**
+	 * Callback method after changes made to this length.
+	 *
+	 * The default implementation does nothing.
+	 */
+	protected void reset() {
+	}
 
-    /**
-     * Callback method before any value
-     * is return from this length.
-     *
-     * The default implementation does nothing.
-     */
-    protected void revalidate() {
-    }
+	/**
+	 * Callback method before any value is return from this length.
+	 *
+	 * The default implementation does nothing.
+	 */
+	protected void revalidate() {
+	}
 
-    /**
-     * Parse a String value as a SVGLength.
-     *
-     * Initialize this length with the result
-     * of the parsing of this value.
-     * @param s String representation of a SVGlength.
-     */
-    protected void parse(String s) {
-        try {
-            LengthParser lengthParser = new LengthParser();
-            UnitProcessor.UnitResolver ur =
-                new UnitProcessor.UnitResolver();
-            lengthParser.setLengthHandler(ur);
-            lengthParser.parse(s);
-            unitType = ur.unit;
-            value = ur.value;
-        } catch (ParseException e) {
-            unitType = SVG_LENGTHTYPE_UNKNOWN;
-            value = 0;
-        }
-    }
+	/**
+	 * Parse a String value as a SVGLength.
+	 *
+	 * Initialize this length with the result of the parsing of this value.
+	 * 
+	 * @param s String representation of a SVGlength.
+	 */
+	protected void parse(String s) {
+		try {
+			LengthParser lengthParser = new LengthParser();
+			UnitProcessor.UnitResolver ur = new UnitProcessor.UnitResolver();
+			lengthParser.setLengthHandler(ur);
+			lengthParser.parse(s);
+			unitType = ur.unit;
+			value = ur.value;
+		} catch (ParseException e) {
+			unitType = SVG_LENGTHTYPE_UNKNOWN;
+			value = 0;
+		}
+	}
 
-    /**
-     * To resolve the units.
-     */
-    protected class DefaultContext implements UnitProcessor.Context {
+	/**
+	 * To resolve the units.
+	 */
+	protected class DefaultContext implements UnitProcessor.Context {
 
-        /**
-         * Returns the element.
-         */
-        @Override
-        public Element getElement() {
-            return getAssociatedElement();
-        }
+		/**
+		 * Returns the element.
+		 */
+		@Override
+		public Element getElement() {
+			return getAssociatedElement();
+		}
 
-        /**
-         * Returns the size of a px CSS unit in millimeters.
-         */
-        @Override
-        public float getPixelUnitToMillimeter() {
-            return getAssociatedElement().getSVGContext()
-                .getPixelUnitToMillimeter();
-        }
+		/**
+		 * Returns the size of a px CSS unit in millimeters.
+		 */
+		@Override
+		public float getPixelUnitToMillimeter() {
+			return getAssociatedElement().getSVGContext().getPixelUnitToMillimeter();
+		}
 
-        /**
-         * Returns the size of a px CSS unit in millimeters.
-         * This will be removed after next release.
-         * @see #getPixelUnitToMillimeter()
-         */
-        @Override
-        public float getPixelToMM() {
-            return getPixelUnitToMillimeter();
-        }
+		/**
+		 * Returns the size of a px CSS unit in millimeters. This will be removed after
+		 * next release.
+		 * 
+		 * @see #getPixelUnitToMillimeter()
+		 */
+		@Override
+		public float getPixelToMM() {
+			return getPixelUnitToMillimeter();
+		}
 
-        /**
-         * Returns the font-size value.
-         */
-        @Override
-        public float getFontSize() {
-            return getAssociatedElement().getSVGContext().getFontSize();
-        }
+		/**
+		 * Returns the font-size value.
+		 */
+		@Override
+		public float getFontSize() {
+			return getAssociatedElement().getSVGContext().getFontSize();
+		}
 
-        /**
-         * Returns the x-height value.
-         */
-        @Override
-        public float getXHeight() {
-            return 0.5f;
-        }
+		/**
+		 * Returns the x-height value.
+		 */
+		@Override
+		public float getXHeight() {
+			return 0.5f;
+		}
 
-        /**
-         * Returns the viewport width used to compute units.
-         */
-        @Override
-        public float getViewportWidth() {
-            return getAssociatedElement().getSVGContext().getViewportWidth();
-        }
+		/**
+		 * Returns the viewport width used to compute units.
+		 */
+		@Override
+		public float getViewportWidth() {
+			return getAssociatedElement().getSVGContext().getViewportWidth();
+		}
 
-        /**
-         * Returns the viewport height used to compute units.
-         */
-        @Override
-        public float getViewportHeight() {
-            return getAssociatedElement().getSVGContext().getViewportHeight();
-        }
-    }
+		/**
+		 * Returns the viewport height used to compute units.
+		 */
+		@Override
+		public float getViewportHeight() {
+			return getAssociatedElement().getSVGContext().getViewportHeight();
+		}
+	}
 }

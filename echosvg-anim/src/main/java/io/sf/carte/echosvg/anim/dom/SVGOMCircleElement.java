@@ -33,128 +33,122 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMCircleElement
-    extends    SVGGraphicsElement
-    implements SVGCircleElement {
+public class SVGOMCircleElement extends SVGGraphicsElement implements SVGCircleElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGGraphicsElement.xmlTraitInformation);
-        t.put(null, SVG_CX_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, TraitInformation.PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_CY_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, TraitInformation.PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_R_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, TraitInformation.PERCENTAGE_VIEWPORT_SIZE));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGGraphicsElement.xmlTraitInformation);
+		t.put(null, SVG_CX_ATTRIBUTE,
+				new TraitInformation(true, SVGTypes.TYPE_LENGTH, TraitInformation.PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_CY_ATTRIBUTE,
+				new TraitInformation(true, SVGTypes.TYPE_LENGTH, TraitInformation.PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_R_ATTRIBUTE,
+				new TraitInformation(true, SVGTypes.TYPE_LENGTH, TraitInformation.PERCENTAGE_VIEWPORT_SIZE));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'cx' attribute value.
-     */
-    protected SVGOMAnimatedLength cx;
+	/**
+	 * The 'cx' attribute value.
+	 */
+	protected SVGOMAnimatedLength cx;
 
-    /**
-     * The 'cy' attribute value.
-     */
-    protected SVGOMAnimatedLength cy;
+	/**
+	 * The 'cy' attribute value.
+	 */
+	protected SVGOMAnimatedLength cy;
 
-    /**
-     * The 'r' attribute value.
-     */
-    protected SVGOMAnimatedLength r;
+	/**
+	 * The 'r' attribute value.
+	 */
+	protected SVGOMAnimatedLength r;
 
-    /**
-     * Creates a new SVGOMCircleElement object.
-     */
-    protected SVGOMCircleElement() {
-    }
+	/**
+	 * Creates a new SVGOMCircleElement object.
+	 */
+	protected SVGOMCircleElement() {
+	}
 
-    /**
-     * Creates a new SVGOMCircleElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMCircleElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMCircleElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMCircleElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        cx = createLiveAnimatedLength
-            (null, SVG_CX_ATTRIBUTE, SVG_CIRCLE_CX_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-        cy = createLiveAnimatedLength
-            (null, SVG_CY_ATTRIBUTE, SVG_CIRCLE_CY_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-        r = createLiveAnimatedLength
-            (null, SVG_R_ATTRIBUTE, null, AbstractSVGAnimatedLength.OTHER_LENGTH,
-             true);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		cx = createLiveAnimatedLength(null, SVG_CX_ATTRIBUTE, SVG_CIRCLE_CX_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
+		cy = createLiveAnimatedLength(null, SVG_CY_ATTRIBUTE, SVG_CIRCLE_CY_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
+		r = createLiveAnimatedLength(null, SVG_R_ATTRIBUTE, null, AbstractSVGAnimatedLength.OTHER_LENGTH, true);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_CIRCLE_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_CIRCLE_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGCircleElement#getCx()}.
-     */
-    @Override
-    public SVGAnimatedLength getCx() {
-        return cx;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGCircleElement#getCx()}.
+	 */
+	@Override
+	public SVGAnimatedLength getCx() {
+		return cx;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGCircleElement#getCy()}.
-     */
-    @Override
-    public SVGAnimatedLength getCy() {
-        return cy;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGCircleElement#getCy()}.
+	 */
+	@Override
+	public SVGAnimatedLength getCy() {
+		return cy;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGCircleElement#getR()}.
-     */
-    @Override
-    public SVGAnimatedLength getR() {
-        return r;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGCircleElement#getR()}.
+	 */
+	@Override
+	public SVGAnimatedLength getR() {
+		return r;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMCircleElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMCircleElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

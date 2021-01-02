@@ -20,8 +20,8 @@ package io.sf.carte.echosvg.transcoder;
 
 /**
  * A default <code>ErrorHandler</code> that throws a
- * <code>TranscoderException</code> when a fatal error occured and display
- * a message when a warning or an error occured.
+ * <code>TranscoderException</code> when a fatal error occured and display a
+ * message when a warning or an error occured.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author For later modifications, see Git history.
@@ -29,37 +29,36 @@ package io.sf.carte.echosvg.transcoder;
  */
 public class DefaultErrorHandler implements ErrorHandler {
 
-    /**
-     * Invoked when an error occured while transcoding.
-     * @param ex the error informations encapsulated in a TranscoderException
-     * @exception TranscoderException if the method want to forward
-     * the exception
-     */
-    @Override
-    public void error(TranscoderException ex) throws TranscoderException {
-        System.err.println("ERROR: "+ex.getMessage());
-    }
+	/**
+	 * Invoked when an error occured while transcoding.
+	 * 
+	 * @param ex the error informations encapsulated in a TranscoderException
+	 * @exception TranscoderException if the method want to forward the exception
+	 */
+	@Override
+	public void error(TranscoderException ex) throws TranscoderException {
+		System.err.println("ERROR: " + ex.getMessage());
+	}
 
-    /**
-     * Invoked when an fatal error occured while transcoding.
-     * @param ex the fatal error informations encapsulated in a
-     * TranscoderException
-     * @exception TranscoderException if the method want to forward
-     * the exception
-     */
-    @Override
-    public void fatalError(TranscoderException ex) throws TranscoderException {
-        throw ex;
-    }
+	/**
+	 * Invoked when an fatal error occured while transcoding.
+	 * 
+	 * @param ex the fatal error informations encapsulated in a TranscoderException
+	 * @exception TranscoderException if the method want to forward the exception
+	 */
+	@Override
+	public void fatalError(TranscoderException ex) throws TranscoderException {
+		throw ex;
+	}
 
-    /**
-     * Invoked when a warning occured while transcoding.
-     * @param ex the warning informations encapsulated in a TranscoderException
-     * @exception TranscoderException if the method want to forward
-     * the exception
-     */
-    @Override
-    public void warning(TranscoderException ex) throws TranscoderException {
-        System.err.println("WARNING: "+ex.getMessage());
-    }
+	/**
+	 * Invoked when a warning occured while transcoding.
+	 * 
+	 * @param ex the warning informations encapsulated in a TranscoderException
+	 * @exception TranscoderException if the method want to forward the exception
+	 */
+	@Override
+	public void warning(TranscoderException ex) throws TranscoderException {
+		System.err.println("WARNING: " + ex.getMessage());
+	}
 }

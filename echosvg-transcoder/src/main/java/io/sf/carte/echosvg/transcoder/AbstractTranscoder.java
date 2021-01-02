@@ -26,11 +26,11 @@ package io.sf.carte.echosvg.transcoder;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractTranscoder extends TranscoderSupport
-    implements Transcoder {
+public abstract class AbstractTranscoder extends TranscoderSupport implements Transcoder {
 
-    /**
-     * Constructs a new <code>AbstractTranscoder</code>.
-     */
-    protected AbstractTranscoder() {}
+	/**
+	 * Constructs a new <code>AbstractTranscoder</code>.
+	 */
+	protected AbstractTranscoder() {
+	}
 }

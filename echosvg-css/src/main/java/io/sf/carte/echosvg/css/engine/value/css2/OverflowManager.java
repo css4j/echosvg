@@ -35,77 +35,73 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class OverflowManager extends IdentifierManager {
 
-    /**
-     * The identifier values.
-     */
-    protected static final StringMap values = new StringMap();
-    static {
-        values.put(CSSConstants.CSS_AUTO_VALUE,
-                   ValueConstants.AUTO_VALUE);
-        values.put(CSSConstants.CSS_HIDDEN_VALUE,
-                   ValueConstants.HIDDEN_VALUE);
-        values.put(CSSConstants.CSS_SCROLL_VALUE,
-                   ValueConstants.SCROLL_VALUE);
-        values.put(CSSConstants.CSS_VISIBLE_VALUE,
-                   ValueConstants.VISIBLE_VALUE);
-    }
+	/**
+	 * The identifier values.
+	 */
+	protected static final StringMap values = new StringMap();
+	static {
+		values.put(CSSConstants.CSS_AUTO_VALUE, ValueConstants.AUTO_VALUE);
+		values.put(CSSConstants.CSS_HIDDEN_VALUE, ValueConstants.HIDDEN_VALUE);
+		values.put(CSSConstants.CSS_SCROLL_VALUE, ValueConstants.SCROLL_VALUE);
+		values.put(CSSConstants.CSS_VISIBLE_VALUE, ValueConstants.VISIBLE_VALUE);
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return false;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_IDENT;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_IDENT;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_OVERFLOW_PROPERTY;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_OVERFLOW_PROPERTY;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return ValueConstants.VISIBLE_VALUE;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return ValueConstants.VISIBLE_VALUE;
+	}
 
-    /**
-     * Implements {@link IdentifierManager#getIdentifiers()}.
-     */
-    @Override
-    public StringMap getIdentifiers() {
-        return values;
-    }
+	/**
+	 * Implements {@link IdentifierManager#getIdentifiers()}.
+	 */
+	@Override
+	public StringMap getIdentifiers() {
+		return values;
+	}
 }

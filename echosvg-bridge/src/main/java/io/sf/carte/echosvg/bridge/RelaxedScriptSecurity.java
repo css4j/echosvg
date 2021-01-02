@@ -21,43 +21,35 @@ package io.sf.carte.echosvg.bridge;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
- * This implementation for the <code>ScriptSecurity</code> interface.
- * allows the script to be loaded and does not impose constraints
- * on the urls.
- * Note that this only means there is no check on the script's
- * origin, not that it will run without security checks. 
+ * This implementation for the <code>ScriptSecurity</code> interface. allows the
+ * script to be loaded and does not impose constraints on the urls. Note that
+ * this only means there is no check on the script's origin, not that it will
+ * run without security checks.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class RelaxedScriptSecurity  implements ScriptSecurity {
-    /**
-     * Controls whether the script should be loaded or not.
-     *
-     * @throws SecurityException if the script should not be loaded.
-     */
-    @Override
-    public void checkLoadScript(){
-        /* do nothing */
-    }
+public class RelaxedScriptSecurity implements ScriptSecurity {
+	/**
+	 * Controls whether the script should be loaded or not.
+	 *
+	 * @throws SecurityException if the script should not be loaded.
+	 */
+	@Override
+	public void checkLoadScript() {
+		/* do nothing */
+	}
 
-    /**
-     * @param scriptType type of script, as found in the 
-     *        type attribute of the &lt;script&gt; element.
-     * @param scriptURL url for the script, as defined in
-     *        the script's xlink:href attribute. If that
-     *        attribute was empty, then this parameter should
-     *        be null
-     * @param docURL url for the document into which the 
-     *        script was found.
-     */
-    public RelaxedScriptSecurity(String scriptType,
-                                 ParsedURL scriptURL,
-                                 ParsedURL docURL){
-        /* do nothing */
-    }
+	/**
+	 * @param scriptType type of script, as found in the type attribute of the
+	 *                   &lt;script&gt; element.
+	 * @param scriptURL  url for the script, as defined in the script's xlink:href
+	 *                   attribute. If that attribute was empty, then this parameter
+	 *                   should be null
+	 * @param docURL     url for the document into which the script was found.
+	 */
+	public RelaxedScriptSecurity(String scriptType, ParsedURL scriptURL, ParsedURL docURL) {
+		/* do nothing */
+	}
 }
-
-
-    

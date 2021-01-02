@@ -28,9 +28,9 @@ package io.sf.carte.echosvg.ext.awt.image;
  */
 public interface TransferFunction {
 
-    /**
-     * Returns the lookup table.
-     */
-    byte[] getLookupTable();
+	/**
+	 * Returns the lookup table.
+	 */
+	byte[] getLookupTable();
 
 }

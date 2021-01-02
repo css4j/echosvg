@@ -29,8 +29,8 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  */
 public class BooleanKey extends TranscodingHints.Key {
 
-    @Override
-    public boolean isCompatibleValue(Object v) {
-        return (v != null && v instanceof Boolean);
-    }
+	@Override
+	public boolean isCompatibleValue(Object v) {
+		return (v != null && v instanceof Boolean);
+	}
 }

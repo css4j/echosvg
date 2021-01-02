@@ -39,97 +39,86 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
  */
 public class SVGEllipseElementBridge extends SVGShapeElementBridge {
 
-    /**
-     * Constructs a new bridge for the &lt;ellipse&gt; element.
-     */
-    public SVGEllipseElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;ellipse&gt; element.
+	 */
+	public SVGEllipseElementBridge() {
+	}
 
-    /**
-     * Returns 'ellipse'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_ELLIPSE_TAG;
-    }
+	/**
+	 * Returns 'ellipse'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_ELLIPSE_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new SVGEllipseElementBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGEllipseElementBridge();
+	}
 
-    /**
-     * Constructs an ellipse according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes a rect element
-     * @param shapeNode the shape node to initialize
-     */
-    @Override
-    protected void buildShape(BridgeContext ctx,
-                              Element e,
-                              ShapeNode shapeNode) {
-        try {
-            SVGOMEllipseElement ee = (SVGOMEllipseElement) e;
+	/**
+	 * Constructs an ellipse according to the specified parameters.
+	 *
+	 * @param ctx       the bridge context to use
+	 * @param e         the element that describes a rect element
+	 * @param shapeNode the shape node to initialize
+	 */
+	@Override
+	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+		try {
+			SVGOMEllipseElement ee = (SVGOMEllipseElement) e;
 
-            // 'cx' attribute - default is 0
-            AbstractSVGAnimatedLength _cx =
-                (AbstractSVGAnimatedLength) ee.getCx();
-            float cx = _cx.getCheckedValue();
+			// 'cx' attribute - default is 0
+			AbstractSVGAnimatedLength _cx = (AbstractSVGAnimatedLength) ee.getCx();
+			float cx = _cx.getCheckedValue();
 
-            // 'cy' attribute - default is 0
-            AbstractSVGAnimatedLength _cy =
-                (AbstractSVGAnimatedLength) ee.getCy();
-            float cy = _cy.getCheckedValue();
+			// 'cy' attribute - default is 0
+			AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ee.getCy();
+			float cy = _cy.getCheckedValue();
 
-            // 'rx' attribute - required
-            AbstractSVGAnimatedLength _rx =
-                (AbstractSVGAnimatedLength) ee.getRx();
-            float rx = _rx.getCheckedValue();
+			// 'rx' attribute - required
+			AbstractSVGAnimatedLength _rx = (AbstractSVGAnimatedLength) ee.getRx();
+			float rx = _rx.getCheckedValue();
 
-            // 'ry' attribute - required
-            AbstractSVGAnimatedLength _ry =
-                (AbstractSVGAnimatedLength) ee.getRy();
-            float ry = _ry.getCheckedValue();
+			// 'ry' attribute - required
+			AbstractSVGAnimatedLength _ry = (AbstractSVGAnimatedLength) ee.getRy();
+			float ry = _ry.getCheckedValue();
 
-            shapeNode.setShape(new Ellipse2D.Float(cx - rx, cy - ry,
-                                                   rx * 2, ry * 2));
-        } catch (LiveAttributeException ex) {
-            throw new BridgeException(ctx, ex);
-        }
-    }
+			shapeNode.setShape(new Ellipse2D.Float(cx - rx, cy - ry, rx * 2, ry * 2));
+		} catch (LiveAttributeException ex) {
+			throw new BridgeException(ctx, ex);
+		}
+	}
 
-    // BridgeUpdateHandler implementation //////////////////////////////////
+	// BridgeUpdateHandler implementation //////////////////////////////////
 
-    /**
-     * Invoked when the animated value of an animatable attribute has changed.
-     */
-    @Override
-    public void handleAnimatedAttributeChanged
-            (AnimatedLiveAttributeValue alav) {
-        if (alav.getNamespaceURI() == null) {
-            String ln = alav.getLocalName();
-            if (ln.equals(SVG_CX_ATTRIBUTE)
-                    || ln.equals(SVG_CY_ATTRIBUTE)
-                    || ln.equals(SVG_RX_ATTRIBUTE)
-                    || ln.equals(SVG_RY_ATTRIBUTE)) {
-                buildShape(ctx, e, (ShapeNode)node);
-                handleGeometryChanged();
-                return;
-            }
-        }
-        super.handleAnimatedAttributeChanged(alav);
-    }
+	/**
+	 * Invoked when the animated value of an animatable attribute has changed.
+	 */
+	@Override
+	public void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav) {
+		if (alav.getNamespaceURI() == null) {
+			String ln = alav.getLocalName();
+			if (ln.equals(SVG_CX_ATTRIBUTE) || ln.equals(SVG_CY_ATTRIBUTE) || ln.equals(SVG_RX_ATTRIBUTE)
+					|| ln.equals(SVG_RY_ATTRIBUTE)) {
+				buildShape(ctx, e, (ShapeNode) node);
+				handleGeometryChanged();
+				return;
+			}
+		}
+		super.handleAnimatedAttributeChanged(alav);
+	}
 
-    @Override
-    protected ShapePainter createShapePainter(BridgeContext ctx,
-                                              Element e,
-                                              ShapeNode shapeNode) {
-        Rectangle2D r2d = shapeNode.getShape().getBounds2D();
-        if ((r2d.getWidth() == 0) || (r2d.getHeight() == 0))
-            return null;
-        return super.createShapePainter(ctx, e, shapeNode);
-    }
+	@Override
+	protected ShapePainter createShapePainter(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+		Rectangle2D r2d = shapeNode.getShape().getBounds2D();
+		if ((r2d.getWidth() == 0) || (r2d.getHeight() == 0))
+			return null;
+		return super.createShapePainter(ctx, e, shapeNode);
+	}
 }

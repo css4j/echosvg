@@ -46,211 +46,168 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGFilterElementBridge extends AnimatableGenericSVGBridge
-        implements FilterBridge, ErrorConstants {
+public class SVGFilterElementBridge extends AnimatableGenericSVGBridge implements FilterBridge, ErrorConstants {
 
-    /**
-     * Transparent black color.
-     */
-    protected static final Color TRANSPARENT_BLACK = new Color(0, true);
+	/**
+	 * Transparent black color.
+	 */
+	protected static final Color TRANSPARENT_BLACK = new Color(0, true);
 
-    /**
-     * Constructs a new bridge for the &lt;filter&gt; element.
-     */
-    public SVGFilterElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;filter&gt; element.
+	 */
+	public SVGFilterElementBridge() {
+	}
 
-    /**
-     * Returns 'filter'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FILTER_TAG;
-    }
+	/**
+	 * Returns 'filter'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FILTER_TAG;
+	}
 
-    /**
-     * Creates a <code>Filter</code> according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param filterElement the element that defines the filter
-     * @param filteredElement the element that references the filter element
-     * @param filteredNode the graphics node to filter
-     */
-    @Override
-    public Filter createFilter(BridgeContext ctx,
-                               Element filterElement,
-                               Element filteredElement,
-                               GraphicsNode filteredNode) {
+	/**
+	 * Creates a <code>Filter</code> according to the specified parameters.
+	 *
+	 * @param ctx             the bridge context to use
+	 * @param filterElement   the element that defines the filter
+	 * @param filteredElement the element that references the filter element
+	 * @param filteredNode    the graphics node to filter
+	 */
+	@Override
+	public Filter createFilter(BridgeContext ctx, Element filterElement, Element filteredElement,
+			GraphicsNode filteredNode) {
 
-        // get filter chain region
-        Rectangle2D filterRegion = SVGUtilities.convertFilterChainRegion
-            (filterElement, filteredElement, filteredNode, ctx);
-        if (filterRegion == null) {
-            return null;
-        }
+		// get filter chain region
+		Rectangle2D filterRegion = SVGUtilities.convertFilterChainRegion(filterElement, filteredElement, filteredNode,
+				ctx);
+		if (filterRegion == null) {
+			return null;
+		}
 
-        // make the initial source as a RenderableImage
-        Filter sourceGraphic = filteredNode.getGraphicsNodeRable(true);
-        // Pad out to filterRegion
-        sourceGraphic = new PadRable8Bit(sourceGraphic, filterRegion,
-                                         PadMode.ZERO_PAD);
+		// make the initial source as a RenderableImage
+		Filter sourceGraphic = filteredNode.getGraphicsNodeRable(true);
+		// Pad out to filterRegion
+		sourceGraphic = new PadRable8Bit(sourceGraphic, filterRegion, PadMode.ZERO_PAD);
 
-        // build a FilterChainRable8Bit
-        FilterChainRable filterChain
-            = new FilterChainRable8Bit(sourceGraphic, filterRegion);
+		// build a FilterChainRable8Bit
+		FilterChainRable filterChain = new FilterChainRable8Bit(sourceGraphic, filterRegion);
 
-        // 'filterRes' attribute - default is implementation specific
-        float [] filterRes = SVGUtilities.convertFilterRes(filterElement, ctx);
-        filterChain.setFilterResolutionX((int)filterRes[0]);
-        filterChain.setFilterResolutionY((int)filterRes[1]);
+		// 'filterRes' attribute - default is implementation specific
+		float[] filterRes = SVGUtilities.convertFilterRes(filterElement, ctx);
+		filterChain.setFilterResolutionX((int) filterRes[0]);
+		filterChain.setFilterResolutionY((int) filterRes[1]);
 
-        // Create a map for filter nodes to advertise themselves as
-        // named source
-        Map<String, Filter> filterNodeMap = new HashMap<>(11);
-        filterNodeMap.put(SVG_SOURCE_GRAPHIC_VALUE, sourceGraphic);
+		// Create a map for filter nodes to advertise themselves as
+		// named source
+		Map<String, Filter> filterNodeMap = new HashMap<>(11);
+		filterNodeMap.put(SVG_SOURCE_GRAPHIC_VALUE, sourceGraphic);
 
+		Filter in = buildFilterPrimitives(filterElement, filterRegion, filteredElement, filteredNode, sourceGraphic,
+				filterNodeMap, ctx);
+		if (in == null) {
+			// error in one of the primitives, disable the filter
+			return null;
+		} else if (in == sourceGraphic) {
+			// no filter primitive found, so output transparent black
+			in = createEmptyFilter(filterElement, filterRegion, filteredElement, filteredNode, ctx);
+		}
+		filterChain.setSource(in);
+		return filterChain;
+	}
 
-        Filter in = buildFilterPrimitives(filterElement,
-                                          filterRegion,
-                                          filteredElement,
-                                          filteredNode,
-                                          sourceGraphic,
-                                          filterNodeMap,
-                                          ctx);
-        if (in == null) {
-            // error in one of the primitives, disable the filter
-            return null;
-        } else if (in == sourceGraphic) {
-            // no filter primitive found, so output transparent black
-            in = createEmptyFilter(filterElement, filterRegion, filteredElement,
-                                   filteredNode, ctx);
-        }
-        filterChain.setSource(in);
-        return filterChain;
-    }
+	/**
+	 * Creates a new returns a new filter that fills its output with transparent
+	 * black. This is used when a &lt;filter&gt; element has no filter primitive
+	 * children.
+	 */
+	protected static Filter createEmptyFilter(Element filterElement, Rectangle2D filterRegion, Element filteredElement,
+			GraphicsNode filteredNode, BridgeContext ctx) {
+		Rectangle2D primitiveRegion = SVGUtilities.convertFilterPrimitiveRegion(null, filterElement, filteredElement,
+				filteredNode, filterRegion, filterRegion, ctx);
+		return new FloodRable8Bit(primitiveRegion, TRANSPARENT_BLACK);
+	}
 
-    /**
-     * Creates a new returns a new filter that fills its output with
-     * transparent black.  This is used when a &lt;filter&gt; element
-     * has no filter primitive children.
-     */
-    protected static Filter createEmptyFilter(Element filterElement,
-                                              Rectangle2D filterRegion,
-                                              Element filteredElement,
-                                              GraphicsNode filteredNode,
-                                              BridgeContext ctx) {
-        Rectangle2D primitiveRegion
-            = SVGUtilities.convertFilterPrimitiveRegion(null,
-                                                        filterElement,
-                                                        filteredElement,
-                                                        filteredNode,
-                                                        filterRegion,
-                                                        filterRegion,
-                                                        ctx);
-        return new FloodRable8Bit(primitiveRegion, TRANSPARENT_BLACK);
-    }
+	/**
+	 * Builds the filter primitives of filter chain of the specified filter element
+	 * and returns the last filter primitive created. Filter primitives can be
+	 * children of the filter or defined on one of its 'ancestor' (linked with the
+	 * xlink:href attribute).
+	 *
+	 * @param filterElement   the filter element
+	 * @param filterRegion    the filter chain region
+	 * @param filteredElement the filtered element
+	 * @param filteredNode    the filtered node
+	 * @param in              the input Filter
+	 * @param filterNodeMap   the map used by named filter primitives
+	 * @param ctx             the bridge context
+	 * @return the last filter primitive created
+	 */
+	protected static Filter buildFilterPrimitives(Element filterElement, Rectangle2D filterRegion,
+			Element filteredElement, GraphicsNode filteredNode, Filter in, Map<String, Filter> filterNodeMap,
+			BridgeContext ctx) {
 
-    /**
-     * Builds the filter primitives of filter chain of the specified
-     * filter element and returns the last filter primitive
-     * created. Filter primitives can be children of the filter or
-     * defined on one of its 'ancestor' (linked with the xlink:href
-     * attribute).
-     *
-     * @param filterElement the filter element
-     * @param filterRegion the filter chain region
-     * @param filteredElement the filtered element
-     * @param filteredNode the filtered node
-     * @param in the input Filter
-     * @param filterNodeMap the map used by named filter primitives
-     * @param ctx the bridge context
-     * @return the last filter primitive created
-     */
-    protected static Filter buildFilterPrimitives(Element filterElement,
-                                                  Rectangle2D filterRegion,
-                                                  Element filteredElement,
-                                                  GraphicsNode filteredNode,
-                                                  Filter in,
-                                                  Map<String, Filter> filterNodeMap,
-                                                  BridgeContext ctx) {
+		List<ParsedURL> refs = new LinkedList<>();
+		for (;;) {
+			Filter newIn = buildLocalFilterPrimitives(filterElement, filterRegion, filteredElement, filteredNode, in,
+					filterNodeMap, ctx);
+			if (newIn != in) {
+				return newIn; // filter primitives found, exit
+			}
+			String uri = XLinkSupport.getXLinkHref(filterElement);
+			if (uri.length() == 0) {
+				return in; // no xlink:href found, exit
+			}
+			// check if there is circular dependencies
+			SVGOMDocument doc = (SVGOMDocument) filterElement.getOwnerDocument();
+			ParsedURL url = new ParsedURL(doc.getURLObject(), uri);
+			if (refs.contains(url)) {
+				throw new BridgeException(ctx, filterElement, ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
+						new Object[] { uri });
+			}
+			refs.add(url);
+			filterElement = ctx.getReferencedElement(filterElement, uri);
+		}
+	}
 
-        List<ParsedURL> refs = new LinkedList<>();
-        for (;;) {
-            Filter newIn = buildLocalFilterPrimitives(filterElement,
-                                                      filterRegion,
-                                                      filteredElement,
-                                                      filteredNode,
-                                                      in,
-                                                      filterNodeMap,
-                                                      ctx);
-            if (newIn != in) {
-                return newIn; // filter primitives found, exit
-            }
-            String uri = XLinkSupport.getXLinkHref(filterElement);
-            if (uri.length() == 0) {
-                return in; // no xlink:href found, exit
-            }
-            // check if there is circular dependencies
-            SVGOMDocument doc = (SVGOMDocument)filterElement.getOwnerDocument();
-            ParsedURL url = new ParsedURL(doc.getURLObject(), uri);
-            if (refs.contains(url)) {
-                throw new BridgeException(ctx, filterElement,
-                                          ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
-                                          new Object[] {uri});
-            }
-            refs.add(url);
-            filterElement = ctx.getReferencedElement(filterElement, uri);
-        }
-    }
+	/**
+	 * Builds the filter primitives of filter chain of the specified filter element
+	 * and returns the last filter primitive created or 'in' if no filter primitive
+	 * has been specified.
+	 *
+	 * @param filterElement   the filter element
+	 * @param filterRegion    the filter chain region
+	 * @param filteredElement the filtered element
+	 * @param filteredNode    the filtered node
+	 * @param in              the input Filter
+	 * @param filterNodeMap   the map used by named filter primitives
+	 * @param ctx             the bridge context
+	 * @return the last filter primitive created or 'in'
+	 */
+	protected static Filter buildLocalFilterPrimitives(Element filterElement, Rectangle2D filterRegion,
+			Element filteredElement, GraphicsNode filteredNode, Filter in, Map<String, Filter> filterNodeMap,
+			BridgeContext ctx) {
 
-    /**
-     * Builds the filter primitives of filter chain of the specified
-     * filter element and returns the last filter primitive
-     * created or 'in' if no filter primitive has been specified.
-     *
-     * @param filterElement the filter element
-     * @param filterRegion the filter chain region
-     * @param filteredElement the filtered element
-     * @param filteredNode the filtered node
-     * @param in the input Filter
-     * @param filterNodeMap the map used by named filter primitives
-     * @param ctx the bridge context
-     * @return the last filter primitive created or 'in'
-     */
-    protected static
-        Filter buildLocalFilterPrimitives(Element filterElement,
-                                          Rectangle2D filterRegion,
-                                          Element filteredElement,
-                                          GraphicsNode filteredNode,
-                                          Filter in,
-                                          Map<String, Filter> filterNodeMap,
-                                          BridgeContext ctx) {
+		for (Node n = filterElement.getFirstChild(); n != null; n = n.getNextSibling()) {
 
-        for (Node n = filterElement.getFirstChild();
-             n != null;
-             n = n.getNextSibling()) {
-
-            if (n.getNodeType() != Node.ELEMENT_NODE) {
-                continue; // skip node that is not an Element
-            }
-            Element e = (Element)n;
-            Bridge bridge = ctx.getBridge(e);
-            if (bridge == null || !(bridge instanceof FilterPrimitiveBridge)) {
-                continue;
-            }
-            FilterPrimitiveBridge filterBridge = (FilterPrimitiveBridge)bridge;
-            Filter filterNode = filterBridge.createFilter(ctx,
-                                                          e,
-                                                          filteredElement,
-                                                          filteredNode,
-                                                          in,
-                                                          filterRegion,
-                                                          filterNodeMap);
-            if (filterNode == null) {
-                return null; // disable the filter if a primitive is null
-            } else {
-                in = filterNode;
-            }
-        }
-        return in;
-    }
+			if (n.getNodeType() != Node.ELEMENT_NODE) {
+				continue; // skip node that is not an Element
+			}
+			Element e = (Element) n;
+			Bridge bridge = ctx.getBridge(e);
+			if (bridge == null || !(bridge instanceof FilterPrimitiveBridge)) {
+				continue;
+			}
+			FilterPrimitiveBridge filterBridge = (FilterPrimitiveBridge) bridge;
+			Filter filterNode = filterBridge.createFilter(ctx, e, filteredElement, filteredNode, in, filterRegion,
+					filterNodeMap);
+			if (filterNode == null) {
+				return null; // disable the filter if a primitive is null
+			} else {
+				in = filterNode;
+			}
+		}
+		return in;
+	}
 }

@@ -28,19 +28,16 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
  * @version $Id$
  */
 public class PropertyUtil {
-    protected static final String RESOURCES =
-        "io.sf.carte.echosvg.bridge.resources.properties";
+	protected static final String RESOURCES = "io.sf.carte.echosvg.bridge.resources.properties";
 
+	protected static LocalizableSupport localizableSupport = new LocalizableSupport(RESOURCES,
+			PropertyUtil.class.getClassLoader());
 
-    protected static LocalizableSupport localizableSupport =
-        new LocalizableSupport
-        (RESOURCES, PropertyUtil.class.getClassLoader());
-
-    public static String getString(String key) {
-        try{
-            return localizableSupport.formatMessage(key, null);
-        }catch(MissingResourceException e){
-            return key;
-        }
-   }
+	public static String getString(String key) {
+		try {
+			return localizableSupport.formatMessage(key, null);
+		} catch (MissingResourceException e) {
+			return key;
+		}
+	}
 }

@@ -28,135 +28,134 @@ import org.w3c.dom.DOMException;
  * @version $Id$
  */
 public interface Value {
-    
-    /**
-     *  A string representation of the current value. 
-     */
-    String getCssText();
 
-    /**
-     * A code defining the type of the value. 
-     */
-    short getCssValueType();
+	/**
+	 * A string representation of the current value.
+	 */
+	String getCssText();
 
-    /**
-     * The type of the value.
-     */
-    short getPrimitiveType();
+	/**
+	 * A code defining the type of the value.
+	 */
+	short getCssValueType();
 
-    /**
-     *  This method is used to get the float value.
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a float
-     *    value. 
-     */
-    float getFloatValue() throws DOMException;
+	/**
+	 * The type of the value.
+	 */
+	short getPrimitiveType();
 
-    /**
-     *  This method is used to get the string value.
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a string
-     *    value. 
-     */
-    String getStringValue() throws DOMException;
+	/**
+	 * This method is used to get the float value.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a float value.
+	 */
+	float getFloatValue() throws DOMException;
 
-    /**
-     * The red value of the RGB color. 
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a RGB
-     *    color value. 
-     */
-    Value getRed() throws DOMException;
+	/**
+	 * This method is used to get the string value.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a string value.
+	 */
+	String getStringValue() throws DOMException;
 
-    /**
-     * The green value of the RGB color. 
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a RGB
-     *    color value. 
-     */
-    Value getGreen() throws DOMException;
+	/**
+	 * The red value of the RGB color.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a RGB color value.
+	 */
+	Value getRed() throws DOMException;
 
-    /**
-     * The blue value of the RGB color. 
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a RGB
-     *    color value. 
-     */
-    Value getBlue() throws DOMException;
+	/**
+	 * The green value of the RGB color.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a RGB color value.
+	 */
+	Value getGreen() throws DOMException;
 
-    /**
-     * The number of <code>CSSValues</code> in the list. The range of valid 
-     * values of the indices is <code>0</code> to <code>length-1</code> 
-     * inclusive.
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a list
-     *    value. 
-     */
-    int getLength() throws DOMException;
+	/**
+	 * The blue value of the RGB color.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a RGB color value.
+	 */
+	Value getBlue() throws DOMException;
 
-    /**
-     * Used to retrieve a rule by ordinal index.
-     * @return The style rule at the <code>index</code> position in the 
-     *   list, or <code>null</code> if that is not a valid index.
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a list
-     *    value. 
-     */
-    Value item(int index) throws DOMException;
+	/**
+	 * The number of <code>CSSValues</code> in the list. The range of valid values
+	 * of the indices is <code>0</code> to <code>length-1</code> inclusive.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a list value.
+	 */
+	int getLength() throws DOMException;
 
-    /**
-     * The top value of the rect. 
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a Rect
-     *    value. 
-     */
-    Value getTop() throws DOMException;
+	/**
+	 * Used to retrieve a rule by ordinal index.
+	 * 
+	 * @return The style rule at the <code>index</code> position in the list, or
+	 *         <code>null</code> if that is not a valid index.
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a list value.
+	 */
+	Value item(int index) throws DOMException;
 
-    /**
-     * The right value of the rect. 
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a Rect
-     *    value. 
-     */
-    Value getRight() throws DOMException;
+	/**
+	 * The top value of the rect.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a Rect value.
+	 */
+	Value getTop() throws DOMException;
 
-    /**
-     * The bottom value of the rect. 
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a Rect
-     *    value. 
-     */
-    Value getBottom() throws DOMException;
+	/**
+	 * The right value of the rect.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a Rect value.
+	 */
+	Value getRight() throws DOMException;
 
-    /**
-     * The left value of the rect. 
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a Rect
-     *    value. 
-     */
-    Value getLeft() throws DOMException;
+	/**
+	 * The bottom value of the rect.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a Rect value.
+	 */
+	Value getBottom() throws DOMException;
 
-    /**
-     * The identifier value of the counter.
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a Counter
-     *    value. 
-     */
-    String getIdentifier() throws DOMException;
+	/**
+	 * The left value of the rect.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a Rect value.
+	 */
+	Value getLeft() throws DOMException;
 
-    /**
-     * The listStyle value of the counter.
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a Counter
-     *    value. 
-     */
-    String getListStyle() throws DOMException;
+	/**
+	 * The identifier value of the counter.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a Counter value.
+	 */
+	String getIdentifier() throws DOMException;
 
-    /**
-     * The separator value of the counter.
-     * @exception DOMException
-     *    INVALID_ACCESS_ERR: Raised if the value doesn't contain a Counter
-     *    value. 
-     */
-    String getSeparator() throws DOMException;
+	/**
+	 * The listStyle value of the counter.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a Counter value.
+	 */
+	String getListStyle() throws DOMException;
+
+	/**
+	 * The separator value of the counter.
+	 * 
+	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
+	 *                         contain a Counter value.
+	 */
+	String getSeparator() throws DOMException;
 }

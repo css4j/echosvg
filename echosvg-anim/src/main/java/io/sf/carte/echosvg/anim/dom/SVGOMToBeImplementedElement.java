@@ -23,101 +23,101 @@ import org.w3c.dom.Node;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 
 /**
- * This is a development only class. It is used temporarily in the
- * SVG DOM implementation for SVG elements whose DOM support has not
- * been put in.
+ * This is a development only class. It is used temporarily in the SVG DOM
+ * implementation for SVG elements whose DOM support has not been put in.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMToBeImplementedElement
-    extends SVGGraphicsElement {
-    
-    private static final long serialVersionUID = 1L;
-    /**
-     * This element's local name
-     */
-    protected String localName;
+public class SVGOMToBeImplementedElement extends SVGGraphicsElement {
 
-    /**
-     * Creates a new SVGOMToBeImplementedElement object.
-     */
-    protected SVGOMToBeImplementedElement() {
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * This element's local name
+	 */
+	protected String localName;
 
-    /**
-     * Creates a new SVGOMToBeImplementedElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     * @param localName the local name for the element.
-     */
-    public SVGOMToBeImplementedElement(String prefix, AbstractDocument owner,
-                                       String localName) {
-        super(prefix, owner);
-        this.localName = localName;
-    }
+	/**
+	 * Creates a new SVGOMToBeImplementedElement object.
+	 */
+	protected SVGOMToBeImplementedElement() {
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return localName;
-    }
+	/**
+	 * Creates a new SVGOMToBeImplementedElement object.
+	 * 
+	 * @param prefix    The namespace prefix.
+	 * @param owner     The owner document.
+	 * @param localName the local name for the element.
+	 */
+	public SVGOMToBeImplementedElement(String prefix, AbstractDocument owner, String localName) {
+		super(prefix, owner);
+		this.localName = localName;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMToBeImplementedElement();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return localName;
+	}
 
-    /**
-     * Exports this node to the given document.
-     */
-    @Override
-    protected Node export(Node n, AbstractDocument d) {
-        super.export(n, d);
-        SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement)n;
-        ae.localName = localName;
-        return n;
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMToBeImplementedElement();
+	}
 
-    /**
-     * Deeply exports this node to the given document.
-     */
-    @Override
-    protected Node deepExport(Node n, AbstractDocument d) {
-        super.deepExport(n, d);
-        SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement)n;
-        ae.localName = localName;
-        return n;
-    }
+	/**
+	 * Exports this node to the given document.
+	 */
+	@Override
+	protected Node export(Node n, AbstractDocument d) {
+		super.export(n, d);
+		SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement) n;
+		ae.localName = localName;
+		return n;
+	}
 
-    /**
-     * Copy the fields of the current node into the given node.
-     * @param n a node of the type of this.
-     */
-    @Override
-    protected Node copyInto(Node n) {
-        super.copyInto(n);
-        SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement)n;
-        ae.localName = localName;
-        return n;
-    }
+	/**
+	 * Deeply exports this node to the given document.
+	 */
+	@Override
+	protected Node deepExport(Node n, AbstractDocument d) {
+		super.deepExport(n, d);
+		SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement) n;
+		ae.localName = localName;
+		return n;
+	}
 
-    /**
-     * Deeply copy the fields of the current node into the given node.
-     * @param n a node of the type of this.
-     */
-    @Override
-    protected Node deepCopyInto(Node n) {
-        super.deepCopyInto(n);
-        SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement)n;
-        ae.localName = localName;
-        return n;
-    }
+	/**
+	 * Copy the fields of the current node into the given node.
+	 * 
+	 * @param n a node of the type of this.
+	 */
+	@Override
+	protected Node copyInto(Node n) {
+		super.copyInto(n);
+		SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement) n;
+		ae.localName = localName;
+		return n;
+	}
+
+	/**
+	 * Deeply copy the fields of the current node into the given node.
+	 * 
+	 * @param n a node of the type of this.
+	 */
+	@Override
+	protected Node deepCopyInto(Node n) {
+		super.deepCopyInto(n);
+		SVGOMToBeImplementedElement ae = (SVGOMToBeImplementedElement) n;
+		ae.localName = localName;
+		return n;
+	}
 
 }

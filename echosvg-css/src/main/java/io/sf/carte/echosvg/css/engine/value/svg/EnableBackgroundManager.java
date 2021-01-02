@@ -42,178 +42,163 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @version $Id$
  */
 public class EnableBackgroundManager extends LengthManager {
-    
-    /**
-     * The length orientation.
-     */
-    protected int orientation;
 
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return false;
-    }
+	/**
+	 * The length orientation.
+	 */
+	protected int orientation;
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_ENABLE_BACKGROUND_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_ENABLE_BACKGROUND_PROPERTY;
-    }
-    
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return SVGValueConstants.ACCUMULATE_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_ENABLE_BACKGROUND_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_ENABLE_BACKGROUND_PROPERTY;
+	}
 
-        default:
-            throw createInvalidLexicalUnitDOMException
-                (lu.getLexicalUnitType());
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return SVGValueConstants.ACCUMULATE_VALUE;
+	}
 
-        case IDENT:
-            String id = lu.getStringValue().toLowerCase().intern();
-            if (id == CSSConstants.CSS_ACCUMULATE_VALUE) {
-                return SVGValueConstants.ACCUMULATE_VALUE;
-            }
-            if (id != CSSConstants.CSS_NEW_VALUE) {
-                throw createInvalidIdentifierDOMException(id);
-            }
-            ListValue result = new ListValue(' ');
-            result.append(SVGValueConstants.NEW_VALUE);
-            lu = lu.getNextLexicalUnit();
-            if (lu == null) {
-                return result;
-            }
-            result.append(super.createValue(lu, engine));
-            for (int i = 1; i < 4; i++) {
-                lu = lu.getNextLexicalUnit();
-                if (lu == null){
-                    throw createMalformedLexicalUnitDOMException();
-                }
-                result.append(super.createValue(lu, engine));
-            }
-            return result;
-        }
-    }
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value,
-                                   CSSEngine engine) {
-        if (type != CSSPrimitiveValue.CSS_IDENT) {
-            throw createInvalidStringTypeDOMException(type);
-        }
-        if (!value.equalsIgnoreCase(CSSConstants.CSS_ACCUMULATE_VALUE)) {
-            throw createInvalidIdentifierDOMException(value);
-        }
-        return SVGValueConstants.ACCUMULATE_VALUE;
-    }
+		default:
+			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 
-    /**
-     * Implements {@link ValueManager#createFloatValue(short,float)}.
-     */
-    @Override
-    public Value createFloatValue(short unitType, float floatValue)
-        throws DOMException {
-        throw createDOMException();
-    }
+		case IDENT:
+			String id = lu.getStringValue().toLowerCase().intern();
+			if (id == CSSConstants.CSS_ACCUMULATE_VALUE) {
+				return SVGValueConstants.ACCUMULATE_VALUE;
+			}
+			if (id != CSSConstants.CSS_NEW_VALUE) {
+				throw createInvalidIdentifierDOMException(id);
+			}
+			ListValue result = new ListValue(' ');
+			result.append(SVGValueConstants.NEW_VALUE);
+			lu = lu.getNextLexicalUnit();
+			if (lu == null) {
+				return result;
+			}
+			result.append(super.createValue(lu, engine));
+			for (int i = 1; i < 4; i++) {
+				lu = lu.getNextLexicalUnit();
+				if (lu == null) {
+					throw createMalformedLexicalUnitDOMException();
+				}
+				result.append(super.createValue(lu, engine));
+			}
+			return result;
+		}
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
-     */
-    @Override
-    public Value computeValue(CSSStylableElement elt,
-                              String pseudo,
-                              CSSEngine engine,
-                              int idx,
-                              StyleMap sm,
-                              Value value) {
-        if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
-            ListValue lv = (ListValue)value;
-            if (lv.getLength() == 5) {
-                Value lv1 = lv.item(1);
-                orientation = HORIZONTAL_ORIENTATION;
-                Value v1 = super.computeValue(elt, pseudo, engine,
-                                              idx, sm, lv1);
-                Value lv2 = lv.item(2);
-                orientation = VERTICAL_ORIENTATION;
-                Value v2 = super.computeValue(elt, pseudo, engine,
-                                              idx, sm, lv2);
-                Value lv3 = lv.item(3);
-                orientation = HORIZONTAL_ORIENTATION;
-                Value v3 = super.computeValue(elt, pseudo, engine,
-                                              idx, sm, lv3);
-                Value lv4 = lv.item(4);
-                orientation = VERTICAL_ORIENTATION;
-                Value v4 = super.computeValue(elt, pseudo, engine,
-                                              idx, sm, lv4);
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) {
+		if (type != CSSPrimitiveValue.CSS_IDENT) {
+			throw createInvalidStringTypeDOMException(type);
+		}
+		if (!value.equalsIgnoreCase(CSSConstants.CSS_ACCUMULATE_VALUE)) {
+			throw createInvalidIdentifierDOMException(value);
+		}
+		return SVGValueConstants.ACCUMULATE_VALUE;
+	}
 
-                if (lv1 != v1 || lv2 != v2 ||
-                    lv3 != v3 || lv4 != v4) {
-                    ListValue result = new ListValue(' ');
-                    result.append(lv.item(0));
-                    result.append(v1);
-                    result.append(v2);
-                    result.append(v3);
-                    result.append(v4);
-                    return result;
-                }
-            }
-        }
-        return value;
-    }
+	/**
+	 * Implements {@link ValueManager#createFloatValue(short,float)}.
+	 */
+	@Override
+	public Value createFloatValue(short unitType, float floatValue) throws DOMException {
+		throw createDOMException();
+	}
 
-    /**
-     * Indicates the orientation of the property associated with
-     * this manager.
-     */
-    @Override
-    protected int getOrientation() {
-        return orientation;
-    }
+	/**
+	 * Implements
+	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
+	 */
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
+			ListValue lv = (ListValue) value;
+			if (lv.getLength() == 5) {
+				Value lv1 = lv.item(1);
+				orientation = HORIZONTAL_ORIENTATION;
+				Value v1 = super.computeValue(elt, pseudo, engine, idx, sm, lv1);
+				Value lv2 = lv.item(2);
+				orientation = VERTICAL_ORIENTATION;
+				Value v2 = super.computeValue(elt, pseudo, engine, idx, sm, lv2);
+				Value lv3 = lv.item(3);
+				orientation = HORIZONTAL_ORIENTATION;
+				Value v3 = super.computeValue(elt, pseudo, engine, idx, sm, lv3);
+				Value lv4 = lv.item(4);
+				orientation = VERTICAL_ORIENTATION;
+				Value v4 = super.computeValue(elt, pseudo, engine, idx, sm, lv4);
+
+				if (lv1 != v1 || lv2 != v2 || lv3 != v3 || lv4 != v4) {
+					ListValue result = new ListValue(' ');
+					result.append(lv.item(0));
+					result.append(v1);
+					result.append(v2);
+					result.append(v3);
+					result.append(v4);
+					return result;
+				}
+			}
+		}
+		return value;
+	}
+
+	/**
+	 * Indicates the orientation of the property associated with this manager.
+	 */
+	@Override
+	protected int getOrientation() {
+		return orientation;
+	}
 
 }

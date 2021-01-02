@@ -26,33 +26,35 @@ package io.sf.carte.echosvg.css.engine.value.svg12;
  */
 public class CIELCHColor extends AbstractCIEColor {
 
-    public static final String CIE_LCH_COLOR_FUNCTION = "cielch";
+	public static final String CIE_LCH_COLOR_FUNCTION = "cielch";
 
-    /**
-     * Creates a new CIELCHColor.
-     * @param l the lightness (L) value
-     * @param c the chroma (C) value
-     * @param h the hue (H) value
-     * @param whitepoint the white point in CIE XYZ coordinates
-     */
-    public CIELCHColor(float l, float c, float h, float[] whitepoint) {
-        super(new float[] {l, c, h}, whitepoint);
-    }
+	/**
+	 * Creates a new CIELCHColor.
+	 * 
+	 * @param l          the lightness (L) value
+	 * @param c          the chroma (C) value
+	 * @param h          the hue (H) value
+	 * @param whitepoint the white point in CIE XYZ coordinates
+	 */
+	public CIELCHColor(float l, float c, float h, float[] whitepoint) {
+		super(new float[] { l, c, h }, whitepoint);
+	}
 
-    /**
-     * Creates a new CIELCHColor with D65 as illuminant.
-     * @param l the lightness (L) value
-     * @param c the chroma (C) value
-     * @param h the hue (H) value
-     */
-    public CIELCHColor(float l, float c, float h) {
-        this(l, c, h, null);
-    }
+	/**
+	 * Creates a new CIELCHColor with D65 as illuminant.
+	 * 
+	 * @param l the lightness (L) value
+	 * @param c the chroma (C) value
+	 * @param h the hue (H) value
+	 */
+	public CIELCHColor(float l, float c, float h) {
+		this(l, c, h, null);
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public String getFunctionName() {
-        return CIE_LCH_COLOR_FUNCTION;
-    }
+	/** {@inheritDoc} */
+	@Override
+	public String getFunctionName() {
+		return CIE_LCH_COLOR_FUNCTION;
+	}
 
 }

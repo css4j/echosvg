@@ -24,9 +24,10 @@ import java.text.AttributedCharacterIterator;
 
 import io.sf.carte.echosvg.bridge.TextLayoutFactory;
 import io.sf.carte.echosvg.bridge.TextSpanLayout;
+
 /**
- * Factory instance that returns TextSpanLayouts appropriate to
- * FlowRoot instances.
+ * Factory instance that returns TextSpanLayouts appropriate to FlowRoot
+ * instances.
  *
  * @see io.sf.carte.echosvg.bridge.TextSpanLayout
  * @author <a href="mailto:dewese@apache.org">Thomas DeWeese</a>
@@ -35,23 +36,18 @@ import io.sf.carte.echosvg.bridge.TextSpanLayout;
  */
 public class FlowExtTextLayoutFactory implements TextLayoutFactory {
 
-    /**
-     * Returns an instance of TextSpanLayout suitable for rendering the
-     * AttributedCharacterIterator.
-     *
-     * @param aci The character iterator to be laid out
-     * @param charMap Indicates how chars in aci map to original
-     *                text char array.
-     * @param offset The offset position for the text layout.
-     * @param frc The font render context to use when creating the text layout.
-     */
-    @Override
-    public TextSpanLayout createTextLayout(AttributedCharacterIterator aci,
-                                           int [] charMap,
-                                           Point2D offset,
-                                           FontRenderContext frc) {
-        return new FlowExtGlyphLayout(aci, charMap, offset, frc);
-    }
+	/**
+	 * Returns an instance of TextSpanLayout suitable for rendering the
+	 * AttributedCharacterIterator.
+	 *
+	 * @param aci     The character iterator to be laid out
+	 * @param charMap Indicates how chars in aci map to original text char array.
+	 * @param offset  The offset position for the text layout.
+	 * @param frc     The font render context to use when creating the text layout.
+	 */
+	@Override
+	public TextSpanLayout createTextLayout(AttributedCharacterIterator aci, int[] charMap, Point2D offset,
+			FontRenderContext frc) {
+		return new FlowExtGlyphLayout(aci, charMap, offset, frc);
+	}
 }
-
-

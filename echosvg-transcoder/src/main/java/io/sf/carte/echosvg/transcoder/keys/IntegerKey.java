@@ -29,8 +29,8 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  */
 public class IntegerKey extends TranscodingHints.Key {
 
-    @Override
-    public boolean isCompatibleValue(Object v) {
-        return (v instanceof Integer);
-    }
+	@Override
+	public boolean isCompatibleValue(Object v) {
+		return (v instanceof Integer);
+	}
 }

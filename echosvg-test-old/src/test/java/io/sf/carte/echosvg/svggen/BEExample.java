@@ -23,7 +23,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-
 /**
  * This test validates the convertion of Java 2D AffineTransform into SVG
  * Shapes.
@@ -34,16 +33,15 @@ import java.awt.RenderingHints;
  * @version $Id$
  */
 public class BEExample implements Painter {
-    @Override
-    public void paint(Graphics2D g) {
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                           RenderingHints.VALUE_ANTIALIAS_ON);
+	@Override
+	public void paint(Graphics2D g) {
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Text
-        g.setPaint(new Color(103, 103, 152));
-        g.fillRect(10, 10, 200, 50);
-        g.setPaint(Color.white);
-        g.setFont(new Font("SunSansCondensed-Heavy", Font.PLAIN, 20));
-        g.drawString("Hello Java 2D to SVG", 40, 40);
-    }
+		// Text
+		g.setPaint(new Color(103, 103, 152));
+		g.fillRect(10, 10, 200, 50);
+		g.setPaint(Color.white);
+		g.setFont(new Font("SunSansCondensed-Heavy", Font.PLAIN, 20));
+		g.drawString("Hello Java 2D to SVG", 40, 40);
+	}
 }

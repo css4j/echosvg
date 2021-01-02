@@ -32,62 +32,84 @@ import io.sf.carte.echosvg.gvt.font.GVTLineMetrics;
  * @version $Id$
  */
 public class WordInfo {
-    int      index = -1;
-    float    ascent=-1, descent=-1, lineHeight=-1;
-    GlyphGroupInfo [] glyphGroups=null;
-    Object            flowLine=null;
+	int index = -1;
+	float ascent = -1, descent = -1, lineHeight = -1;
+	GlyphGroupInfo[] glyphGroups = null;
+	Object flowLine = null;
 
-    public WordInfo(int index) {
-        this.index = index;
-    }
+	public WordInfo(int index) {
+		this.index = index;
+	}
 
-    WordInfo(int index,
-             float ascent, float descent, float lineHeight,
-             GlyphGroupInfo [] glyphGroups) {
-        this.index   = index;
-        this.ascent  = ascent;
-        this.descent = descent;
-        this.lineHeight  = lineHeight;
-        this.glyphGroups = glyphGroups;
-    }
+	WordInfo(int index, float ascent, float descent, float lineHeight, GlyphGroupInfo[] glyphGroups) {
+		this.index = index;
+		this.ascent = ascent;
+		this.descent = descent;
+		this.lineHeight = lineHeight;
+		this.glyphGroups = glyphGroups;
+	}
 
-    public int getIndex() { return index; }
+	public int getIndex() {
+		return index;
+	}
 
-    public float getAscent()             { return ascent; }
-    public void  setAscent(float ascent) { this.ascent = ascent; }
+	public float getAscent() {
+		return ascent;
+	}
 
-    public float getDescent()              { return descent; }
-    public void  setDescent(float descent) { this.descent = descent; }
+	public void setAscent(float ascent) {
+		this.ascent = ascent;
+	}
 
-    public void addLineMetrics(GVTFont font, GVTLineMetrics lm) {
-        if (ascent < lm.getAscent())
-            ascent = lm.getAscent();
-        if (descent < lm.getDescent())
-            descent = lm.getDescent();
-    }
+	public float getDescent() {
+		return descent;
+	}
 
+	public void setDescent(float descent) {
+		this.descent = descent;
+	}
 
-    public float getLineHeight()                 { return this.lineHeight; }
-    public void  setLineHeight(float lineHeight) { 
-        this.lineHeight = lineHeight; }
-    public void  addLineHeight(float lineHeight) { 
-        if (this.lineHeight < lineHeight) 
-            this.lineHeight = lineHeight; 
-    }
+	public void addLineMetrics(GVTFont font, GVTLineMetrics lm) {
+		if (ascent < lm.getAscent())
+			ascent = lm.getAscent();
+		if (descent < lm.getDescent())
+			descent = lm.getDescent();
+	}
 
-    public Object getFlowLine()         { return this.flowLine; }
-    public void   setFlowLine(Object fl) { this.flowLine = fl; }
+	public float getLineHeight() {
+		return this.lineHeight;
+	}
 
-    public int getNumGlyphGroups() { 
-        if (glyphGroups == null)
-            return -1;
-        return glyphGroups.length; 
-    }
-    public void setGlyphGroups(GlyphGroupInfo []glyphGroups) {
-        this.glyphGroups = glyphGroups;
-    }
-    public GlyphGroupInfo getGlyphGroup(int idx) {
-        if (glyphGroups == null) return null;
-        return glyphGroups[idx]; 
-    }
+	public void setLineHeight(float lineHeight) {
+		this.lineHeight = lineHeight;
+	}
+
+	public void addLineHeight(float lineHeight) {
+		if (this.lineHeight < lineHeight)
+			this.lineHeight = lineHeight;
+	}
+
+	public Object getFlowLine() {
+		return this.flowLine;
+	}
+
+	public void setFlowLine(Object fl) {
+		this.flowLine = fl;
+	}
+
+	public int getNumGlyphGroups() {
+		if (glyphGroups == null)
+			return -1;
+		return glyphGroups.length;
+	}
+
+	public void setGlyphGroups(GlyphGroupInfo[] glyphGroups) {
+		this.glyphGroups = glyphGroups;
+	}
+
+	public GlyphGroupInfo getGlyphGroup(int idx) {
+		if (glyphGroups == null)
+			return null;
+		return glyphGroups[idx];
+	}
 }

@@ -28,38 +28,38 @@ import org.w3c.dom.css.CSSValue;
  * @version $Id$
  */
 public class InheritValue extends AbstractValue {
-    /**
-     * The only instance of this class.
-     */
-    public static final InheritValue INSTANCE = new InheritValue();
+	/**
+	 * The only instance of this class.
+	 */
+	public static final InheritValue INSTANCE = new InheritValue();
 
-    /**
-     * Creates a new InheritValue object.
-     */
-    protected InheritValue() {
-    }
+	/**
+	 * Creates a new InheritValue object.
+	 */
+	protected InheritValue() {
+	}
 
-    /**
-     *  A string representation of the current value.
-     */
-    @Override
-    public String getCssText() {
-        return "inherit";
-    }
+	/**
+	 * A string representation of the current value.
+	 */
+	@Override
+	public String getCssText() {
+		return "inherit";
+	}
 
-    /**
-     * A code defining the type of the value.
-     */
-    @Override
-    public short getCssValueType() {
-        return CSSValue.CSS_INHERIT;
-    }
+	/**
+	 * A code defining the type of the value.
+	 */
+	@Override
+	public short getCssValueType() {
+		return CSSValue.CSS_INHERIT;
+	}
 
-    /**
-     * Returns a printable representation of this object.
-     */
-    @Override
-    public String toString() {
-        return getCssText();
-    }
+	/**
+	 * Returns a printable representation of this object.
+	 */
+	@Override
+	public String toString() {
+		return getCssText();
+	}
 }

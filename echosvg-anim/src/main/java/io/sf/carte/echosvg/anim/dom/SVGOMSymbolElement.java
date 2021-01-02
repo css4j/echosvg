@@ -37,195 +37,185 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMSymbolElement
-    extends    SVGStylableElement
-    implements SVGSymbolElement {
+public class SVGOMSymbolElement extends SVGStylableElement implements SVGSymbolElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
-        t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
-        t.put(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_PRESERVE_ASPECT_RATIO_VALUE));
-        t.put(null, SVG_VIEW_BOX_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER_LIST));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
+		t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
+		t.put(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
+				new TraitInformation(true, SVGTypes.TYPE_PRESERVE_ASPECT_RATIO_VALUE));
+		t.put(null, SVG_VIEW_BOX_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER_LIST));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'preserveAspectRatio' attribute value.
-     */
-    protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
+	/**
+	 * The 'preserveAspectRatio' attribute value.
+	 */
+	protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
 
-    /**
-     * The attribute initializer.
-     */
-    protected static final AttributeInitializer attributeInitializer;
-    static {
-        attributeInitializer = new AttributeInitializer(1);
-        attributeInitializer.addAttribute(null,
-                                          null,
-                                          SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
-                                          "xMidYMid meet");
-    }
+	/**
+	 * The attribute initializer.
+	 */
+	protected static final AttributeInitializer attributeInitializer;
+	static {
+		attributeInitializer = new AttributeInitializer(1);
+		attributeInitializer.addAttribute(null, null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE, "xMidYMid meet");
+	}
 
-    /**
-     * The 'externalResourcesRequired' attribute value.
-     */
-    protected SVGOMAnimatedBoolean externalResourcesRequired;
+	/**
+	 * The 'externalResourcesRequired' attribute value.
+	 */
+	protected SVGOMAnimatedBoolean externalResourcesRequired;
 
-    /**
-     * Creates a new SVGOMSymbolElement object.
-     */
-    protected SVGOMSymbolElement() {
-    }
+	/**
+	 * Creates a new SVGOMSymbolElement object.
+	 */
+	protected SVGOMSymbolElement() {
+	}
 
-    /**
-     * Creates a new SVGOMSymbolElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMSymbolElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMSymbolElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMSymbolElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_SYMBOL_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_SYMBOL_TAG;
+	}
 
-    // SVGLangSpace support //////////////////////////////////////////////////
+	// SVGLangSpace support //////////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Returns the xml:lang attribute value.
-     */
-    @Override
-    public String getXMLlang() {
-        return XMLSupport.getXMLLang(this);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:lang attribute value.
+	 */
+	@Override
+	public String getXMLlang() {
+		return XMLSupport.getXMLLang(this);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:lang attribute value.
-     */
-    @Override
-    public void setXMLlang(String lang) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
-    }
+	/**
+	 * <b>DOM</b>: Sets the xml:lang attribute value.
+	 */
+	@Override
+	public void setXMLlang(String lang) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
+	}
 
-    /**
-     * <b>DOM</b>: Returns the xml:space attribute value.
-     */
-    @Override
-    public String getXMLspace() {
-        return XMLSupport.getXMLSpace(this);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:space attribute value.
+	 */
+	@Override
+	public String getXMLspace() {
+		return XMLSupport.getXMLSpace(this);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:space attribute value.
-     */
-    @Override
-    public void setXMLspace(String space) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
-    }
+	/**
+	 * <b>DOM</b>: Sets the xml:space attribute value.
+	 */
+	@Override
+	public void setXMLspace(String space) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
+	}
 
-    // SVGZoomAndPan support ///////////////////////////////////////////////
+	// SVGZoomAndPan support ///////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGZoomAndPan#getZoomAndPan()}.
-     */
-    public short getZoomAndPan() {
-        return SVGZoomAndPanSupport.getZoomAndPan(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGZoomAndPan#getZoomAndPan()}.
+	 */
+	public short getZoomAndPan() {
+		return SVGZoomAndPanSupport.getZoomAndPan(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGZoomAndPan#getZoomAndPan()}.
-     */
-    public void setZoomAndPan(short val) {
-        SVGZoomAndPanSupport.setZoomAndPan(this, val);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGZoomAndPan#getZoomAndPan()}.
+	 */
+	public void setZoomAndPan(short val) {
+		SVGZoomAndPanSupport.setZoomAndPan(this, val);
+	}
 
-    // SVGFitToViewBox support ////////////////////////////////////////////
+	// SVGFitToViewBox support ////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGFitToViewBox#getViewBox()}.
-     */
-    @Override
-    public SVGAnimatedRect getViewBox() {
-        throw new UnsupportedOperationException
-            ("SVGFitToViewBox.getViewBox is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGFitToViewBox#getViewBox()}.
+	 */
+	@Override
+	public SVGAnimatedRect getViewBox() {
+		throw new UnsupportedOperationException("SVGFitToViewBox.getViewBox is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFitToViewBox#getPreserveAspectRatio()}.
-     */
-    @Override
-    public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
-        return preserveAspectRatio;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFitToViewBox#getPreserveAspectRatio()}.
+	 */
+	@Override
+	public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
+		return preserveAspectRatio;
+	}
 
-    // SVGExternalResourcesRequired support /////////////////////////////
+	// SVGExternalResourcesRequired support /////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGExternalResourcesRequired}.
-     */
-    @Override
-    public SVGAnimatedBoolean getExternalResourcesRequired() {
-        return externalResourcesRequired;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGExternalResourcesRequired}.
+	 */
+	@Override
+	public SVGAnimatedBoolean getExternalResourcesRequired() {
+		return externalResourcesRequired;
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return attributeInitializer;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return attributeInitializer;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMSymbolElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMSymbolElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

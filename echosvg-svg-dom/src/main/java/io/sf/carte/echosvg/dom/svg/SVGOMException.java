@@ -29,15 +29,15 @@ import org.w3c.dom.svg.SVGException;
  */
 public class SVGOMException extends SVGException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructs a new <code>SVGOMException</code> with the specified parameters.
-     *
-     * @param code the exception code
-     * @param message the error message
-     */
-    public SVGOMException(short code, String message) {
-        super(code, message);
-    }
+	/**
+	 * Constructs a new <code>SVGOMException</code> with the specified parameters.
+	 *
+	 * @param code    the exception code
+	 * @param message the error message
+	 */
+	public SVGOMException(short code, String message) {
+		super(code, message);
+	}
 }

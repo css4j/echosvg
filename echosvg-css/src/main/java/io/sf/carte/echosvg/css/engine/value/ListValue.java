@@ -30,98 +30,98 @@ import org.w3c.dom.css.CSSValue;
  */
 public class ListValue extends AbstractValue {
 
-    /**
-     * The length of the list.
-     */
-    protected int length;
+	/**
+	 * The length of the list.
+	 */
+	protected int length;
 
-    /**
-     * The items.
-     */
-    protected Value[] items = new Value[5];
+	/**
+	 * The items.
+	 */
+	protected Value[] items = new Value[5];
 
-    /**
-     * The list separator.
-     */
-    protected char separator = ',';
+	/**
+	 * The list separator.
+	 */
+	protected char separator = ',';
 
-    /**
-     * Creates a ListValue.
-     */
-    public ListValue() {
-    }
+	/**
+	 * Creates a ListValue.
+	 */
+	public ListValue() {
+	}
 
-    /**
-     * Creates a ListValue with the given separator.
-     */
-    public ListValue(char s) {
-        separator = s;
-    }
+	/**
+	 * Creates a ListValue with the given separator.
+	 */
+	public ListValue(char s) {
+		separator = s;
+	}
 
-    /**
-     * Returns the separator used for this list.
-     */
-    public char getSeparatorChar() {
-        return separator;
-    }
+	/**
+	 * Returns the separator used for this list.
+	 */
+	public char getSeparatorChar() {
+		return separator;
+	}
 
-    /**
-     * Implements {@link Value#getCssValueType()}.
-     */
-    @Override
-    public short getCssValueType() {
-        return CSSValue.CSS_VALUE_LIST;
-    }
+	/**
+	 * Implements {@link Value#getCssValueType()}.
+	 */
+	@Override
+	public short getCssValueType() {
+		return CSSValue.CSS_VALUE_LIST;
+	}
 
-    /**
-     *  A string representation of the current value.
-     */
-    @Override
-    public String getCssText() {
-        StringBuffer sb = new StringBuffer( length * 8 );
-        if (length > 0) {
-            sb.append(items[0].getCssText());
-        }
-        for (int i = 1; i < length; i++) {
-            sb.append(separator);
-            sb.append(items[i].getCssText());
-        }
-        return sb.toString();
-    }
+	/**
+	 * A string representation of the current value.
+	 */
+	@Override
+	public String getCssText() {
+		StringBuffer sb = new StringBuffer(length * 8);
+		if (length > 0) {
+			sb.append(items[0].getCssText());
+		}
+		for (int i = 1; i < length; i++) {
+			sb.append(separator);
+			sb.append(items[i].getCssText());
+		}
+		return sb.toString();
+	}
 
-    /**
-     * Implements {@link Value#getLength()}.
-     */
-    @Override
-    public int getLength() throws DOMException {
-        return length;
-    }
+	/**
+	 * Implements {@link Value#getLength()}.
+	 */
+	@Override
+	public int getLength() throws DOMException {
+		return length;
+	}
 
-    /**
-     * Implements {@link Value#item(int)}.
-     */
-    @Override
-    public Value item(int index) throws DOMException {
-        return items[index];
-    }
+	/**
+	 * Implements {@link Value#item(int)}.
+	 */
+	@Override
+	public Value item(int index) throws DOMException {
+		return items[index];
+	}
 
-    /**
-     * Returns a printable representation of this value.
-     */
-    @Override
-    public String toString() {
-        return getCssText();
-    }
+	/**
+	 * Returns a printable representation of this value.
+	 */
+	@Override
+	public String toString() {
+		return getCssText();
+	}
 
-    /**
-     * Appends an item to the list.
-     */
-    public void append(Value v) {
-        if (length == items.length) {
-            Value[] t = new Value[length * 2];
-            System.arraycopy( items, 0, t, 0, length );
-            items = t;
-        }
-        items[length++] = v;
-    }
+	/**
+	 * Appends an item to the list.
+	 */
+	public void append(Value v) {
+		if (length == items.length) {
+			Value[] t = new Value[length * 2];
+			System.arraycopy(items, 0, t, 0, length);
+			items = t;
+		}
+		items[length++] = v;
+	}
 }

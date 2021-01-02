@@ -23,30 +23,28 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.WrapFactory;
 import org.w3c.dom.events.EventTarget;
 
-
 /**
- * This is an utility class allowing to pass an ECMAScript function
- * as a parameter of the <code>addEventListener</code> method of
- * <code>EventTarget</code> objects as DOM Level 2 recommendation
- * required.
+ * This is an utility class allowing to pass an ECMAScript function as a
+ * parameter of the <code>addEventListener</code> method of
+ * <code>EventTarget</code> objects as DOM Level 2 recommendation required.
+ * 
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 class EchoSVGWrapFactory extends WrapFactory {
-    private RhinoInterpreter interpreter;
+	private RhinoInterpreter interpreter;
 
-    public EchoSVGWrapFactory(RhinoInterpreter interp) {
-        interpreter = interp;
-        setJavaPrimitiveWrap(false);
-    }
+	public EchoSVGWrapFactory(RhinoInterpreter interp) {
+		interpreter = interp;
+		setJavaPrimitiveWrap(false);
+	}
 
-    @Override
-    public Object wrap(Context ctx, Scriptable scope,
-                       Object obj, Class<?> staticType) {
-        if (obj instanceof EventTarget) {
-            return interpreter.buildEventTargetWrapper((EventTarget)obj);
-        }
-        return super.wrap(ctx, scope, obj, staticType);
-    }
+	@Override
+	public Object wrap(Context ctx, Scriptable scope, Object obj, Class<?> staticType) {
+		if (obj instanceof EventTarget) {
+			return interpreter.buildEventTargetWrapper((EventTarget) obj);
+		}
+		return super.wrap(ctx, scope, obj, staticType);
+	}
 }

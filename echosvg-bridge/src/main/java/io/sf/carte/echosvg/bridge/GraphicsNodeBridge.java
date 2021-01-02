@@ -32,51 +32,47 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public interface GraphicsNodeBridge extends Bridge {
 
-    /**
-     * Creates a <code>GraphicsNode</code> according to the specified parameters.
-     * This is called before children have been added to the
-     * returned GraphicsNode (obviously since you construct and return it).
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @return a graphics node that represents the specified element
-     */
-    GraphicsNode createGraphicsNode(BridgeContext ctx, Element e);
+	/**
+	 * Creates a <code>GraphicsNode</code> according to the specified parameters.
+	 * This is called before children have been added to the returned GraphicsNode
+	 * (obviously since you construct and return it).
+	 *
+	 * @param ctx the bridge context to use
+	 * @param e   the element that describes the graphics node to build
+	 * @return a graphics node that represents the specified element
+	 */
+	GraphicsNode createGraphicsNode(BridgeContext ctx, Element e);
 
-    /**
-     * Builds using the specified BridgeContext and element, the
-     * specified graphics node.  This is called after all the children
-     * of the node have been constructed and added, so it is safe to
-     * do work that depends on being able to see your children nodes
-     * in this method.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @param node the graphics node to build
-     */
-    void buildGraphicsNode(BridgeContext ctx, Element e, GraphicsNode node);
+	/**
+	 * Builds using the specified BridgeContext and element, the specified graphics
+	 * node. This is called after all the children of the node have been constructed
+	 * and added, so it is safe to do work that depends on being able to see your
+	 * children nodes in this method.
+	 *
+	 * @param ctx  the bridge context to use
+	 * @param e    the element that describes the graphics node to build
+	 * @param node the graphics node to build
+	 */
+	void buildGraphicsNode(BridgeContext ctx, Element e, GraphicsNode node);
 
-    /**
-     * Returns true if the bridge handles container element, false
-     * otherwise.
-     */
-    boolean isComposite();
+	/**
+	 * Returns true if the bridge handles container element, false otherwise.
+	 */
+	boolean isComposite();
 
-    /**
-     * Returns true if the graphics node has to be displayed, false
-     * otherwise.
-     */
-    boolean getDisplay(Element e);
+	/**
+	 * Returns true if the graphics node has to be displayed, false otherwise.
+	 */
+	boolean getDisplay(Element e);
 
-    /**
-     * Returns the Bridge instance to be used for a single DOM 
-     * element. For example, a static Bridge (i.e., a Bridge for
-     * static SVG content) will always return the same instance.
-     * A dynamic Bridge will return a new instance on each call.
-     *
-     * FIX ME: Move to Bridge
-     */
-    @Override
-    Bridge getInstance();
+	/**
+	 * Returns the Bridge instance to be used for a single DOM element. For example,
+	 * a static Bridge (i.e., a Bridge for static SVG content) will always return
+	 * the same instance. A dynamic Bridge will return a new instance on each call.
+	 *
+	 * FIX ME: Move to Bridge
+	 */
+	@Override
+	Bridge getInstance();
 
 }

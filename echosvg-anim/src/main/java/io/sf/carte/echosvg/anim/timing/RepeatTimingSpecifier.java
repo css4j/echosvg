@@ -30,57 +30,52 @@ import org.w3c.dom.smil.TimeEvent;
  */
 public class RepeatTimingSpecifier extends EventbaseTimingSpecifier {
 
-    /**
-     * The repeat iteration.
-     */
-    protected int repeatIteration;
+	/**
+	 * The repeat iteration.
+	 */
+	protected int repeatIteration;
 
-    /**
-     * Whether a repeat iteration was specified.
-     */
-    protected boolean repeatIterationSpecified;
+	/**
+	 * Whether a repeat iteration was specified.
+	 */
+	protected boolean repeatIterationSpecified;
 
-    /**
-     * Creates a new RepeatTimingSpecifier object without a repeat iteration.
-     */
-    public RepeatTimingSpecifier(TimedElement owner, boolean isBegin,
-                                 float offset, String syncbaseID) {
-        super(owner, isBegin, offset, syncbaseID,
-              owner.getRoot().getRepeatEventName());
-    }
+	/**
+	 * Creates a new RepeatTimingSpecifier object without a repeat iteration.
+	 */
+	public RepeatTimingSpecifier(TimedElement owner, boolean isBegin, float offset, String syncbaseID) {
+		super(owner, isBegin, offset, syncbaseID, owner.getRoot().getRepeatEventName());
+	}
 
-    /**
-     * Creates a new RepeatTimingSpecifier object with a repeat iteration.
-     */
-    public RepeatTimingSpecifier(TimedElement owner, boolean isBegin,
-                                 float offset, String syncbaseID,
-                                 int repeatIteration) {
-        super(owner, isBegin, offset, syncbaseID,
-              owner.getRoot().getRepeatEventName());
-        this.repeatIteration = repeatIteration;
-        this.repeatIterationSpecified = true;
-    }
-    
-    /**
-     * Returns a string representation of this timing specifier.
-     */
-    @Override
-    public String toString() {
-        return (eventbaseID == null ? "" : eventbaseID + ".") + "repeat"
-            + (repeatIterationSpecified ? "(" + repeatIteration + ")" : "")
-            + (offset != 0 ? super.toString() : "");
-    }
+	/**
+	 * Creates a new RepeatTimingSpecifier object with a repeat iteration.
+	 */
+	public RepeatTimingSpecifier(TimedElement owner, boolean isBegin, float offset, String syncbaseID,
+			int repeatIteration) {
+		super(owner, isBegin, offset, syncbaseID, owner.getRoot().getRepeatEventName());
+		this.repeatIteration = repeatIteration;
+		this.repeatIterationSpecified = true;
+	}
 
-    // EventListener /////////////////////////////////////////////////////////
+	/**
+	 * Returns a string representation of this timing specifier.
+	 */
+	@Override
+	public String toString() {
+		return (eventbaseID == null ? "" : eventbaseID + ".") + "repeat"
+				+ (repeatIterationSpecified ? "(" + repeatIteration + ")" : "") + (offset != 0 ? super.toString() : "");
+	}
 
-    /**
-     * Handles an event fired on the eventbase element.
-     */
-    @Override
-    public void handleEvent(Event e) {
-        TimeEvent evt = (TimeEvent) e;
-        if (!repeatIterationSpecified || evt.getDetail() == repeatIteration) {
-            super.handleEvent(e);
-        }
-    }
+	// EventListener /////////////////////////////////////////////////////////
+
+	/**
+	 * Handles an event fired on the eventbase element.
+	 */
+	@Override
+	public void handleEvent(Event e) {
+		TimeEvent evt = (TimeEvent) e;
+		if (!repeatIterationSpecified || evt.getDetail() == repeatIteration) {
+			super.handleEvent(e);
+		}
+	}
 }

@@ -32,131 +32,141 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * @version $Id$
  */
 public class TileMap implements TileStore {
-    private static final boolean DEBUG = false;
-    private static final boolean COUNT = false;
+	private static final boolean DEBUG = false;
+	private static final boolean COUNT = false;
 
-    private HashMap<Point, TileMapLRUMember> rasters=new HashMap<>();
+	private HashMap<Point, TileMapLRUMember> rasters = new HashMap<>();
 
-    static class TileMapLRUMember extends TileLRUMember {
-        public Point   pt;
-        public SoftReference<TileMap> parent;
+	static class TileMapLRUMember extends TileLRUMember {
+		public Point pt;
+		public SoftReference<TileMap> parent;
 
-        class RasterSoftRef extends CleanerThread.SoftReferenceCleared<Raster> {
-            RasterSoftRef(Raster o) { super(o); }
-            @Override
-            public void cleared() {
-                if (DEBUG) System.err.println("Cleaned: " + this);
-                TileMap tm = parent.get();
-                if (tm != null)
-                    tm.rasters.remove(pt);
-            }
-        }
+		class RasterSoftRef extends CleanerThread.SoftReferenceCleared<Raster> {
+			RasterSoftRef(Raster o) {
+				super(o);
+			}
 
-        TileMapLRUMember(TileMap parent, Point pt, Raster ras) {
-            super(ras);
-            this.parent = new SoftReference<>(parent);
-            this.pt     = pt;
-        }
+			@Override
+			public void cleared() {
+				if (DEBUG)
+					System.err.println("Cleaned: " + this);
+				TileMap tm = parent.get();
+				if (tm != null)
+					tm.rasters.remove(pt);
+			}
+		}
 
-        @Override
-        public void setRaster(Raster ras) {
-            hRaster = ras;
-            wRaster = new RasterSoftRef(ras);
-        }
-    }
+		TileMapLRUMember(TileMap parent, Point pt, Raster ras) {
+			super(ras);
+			this.parent = new SoftReference<>(parent);
+			this.pt = pt;
+		}
 
-    private TileGenerator source = null;
-    private LRUCache      cache = null;
+		@Override
+		public void setRaster(Raster ras) {
+			hRaster = ras;
+			wRaster = new RasterSoftRef(ras);
+		}
+	}
 
-    public TileMap(TileGenerator source,
-                   LRUCache cache) {
-        this.cache    = cache;
-        this.source   = source;
-    }
+	private TileGenerator source = null;
+	private LRUCache cache = null;
 
-    @Override
-    public void setTile(int x, int y, Raster ras) {
-        Point pt = new Point(x, y);
+	public TileMap(TileGenerator source, LRUCache cache) {
+		this.cache = cache;
+		this.source = source;
+	}
 
-        if (ras == null) {
-            // Clearing entry...
-            Object o = rasters.remove(pt);
-            if (o != null)
-                cache.remove((TileMapLRUMember)o);
-            return;
-        }
+	@Override
+	public void setTile(int x, int y, Raster ras) {
+		Point pt = new Point(x, y);
 
-        Object o = rasters.get(pt);
-        TileMapLRUMember item;
-        if (o == null) {
-            item = new TileMapLRUMember(this, pt, ras);
-            rasters.put(pt, item);
-        } else {
-            item = (TileMapLRUMember)o;
-            item.setRaster(ras);
-        }
+		if (ras == null) {
+			// Clearing entry...
+			Object o = rasters.remove(pt);
+			if (o != null)
+				cache.remove((TileMapLRUMember) o);
+			return;
+		}
 
-        cache.add(item);
-        if (DEBUG) System.out.println("Setting: (" + x + ", " + y + ')' );
-    }
+		Object o = rasters.get(pt);
+		TileMapLRUMember item;
+		if (o == null) {
+			item = new TileMapLRUMember(this, pt, ras);
+			rasters.put(pt, item);
+		} else {
+			item = (TileMapLRUMember) o;
+			item.setRaster(ras);
+		}
 
-    // Returns Raster if the tile is _currently_ in the cache.
-    // If it is not currently in the cache it returns null.
-    @Override
-    public Raster getTileNoCompute(int x, int y) {
-        Point pt = new Point(x, y);
-        Object o = rasters.get(pt);
-        if (o == null)
-            return null;
+		cache.add(item);
+		if (DEBUG)
+			System.out.println("Setting: (" + x + ", " + y + ')');
+	}
 
-        TileMapLRUMember item = (TileMapLRUMember)o;
-        Raster ret = item.retrieveRaster();
-        if (ret != null)
-            cache.add(item);
-        return ret;
-    }
+	// Returns Raster if the tile is _currently_ in the cache.
+	// If it is not currently in the cache it returns null.
+	@Override
+	public Raster getTileNoCompute(int x, int y) {
+		Point pt = new Point(x, y);
+		Object o = rasters.get(pt);
+		if (o == null)
+			return null;
 
-    @Override
-    public Raster getTile(int x, int y) {
-        if (DEBUG) System.out.println("Fetching: (" + (x) + ", " +
-                                      (y) + ')' );
-        if (COUNT) synchronized (TileMap.class) { requests++; }
+		TileMapLRUMember item = (TileMapLRUMember) o;
+		Raster ret = item.retrieveRaster();
+		if (ret != null)
+			cache.add(item);
+		return ret;
+	}
 
-        Raster       ras  = null;
-        Point pt = new Point(x, y);
-        Object o = rasters.get(pt);
-        TileMapLRUMember item = null;
-        if (o != null) {
-            item = (TileMapLRUMember)o;
-            ras = item.retrieveRaster();
-        }
+	@Override
+	public Raster getTile(int x, int y) {
+		if (DEBUG)
+			System.out.println("Fetching: (" + (x) + ", " + (y) + ')');
+		if (COUNT)
+			synchronized (TileMap.class) {
+				requests++;
+			}
 
-        if (ras == null) {
-            if (DEBUG) System.out.println("Generating: ("+(x)+", "+
-                                          (y) + ")");
-            if (COUNT) synchronized (TileMap.class) { misses++; }
-            ras = source.genTile(x, y);
+		Raster ras = null;
+		Point pt = new Point(x, y);
+		Object o = rasters.get(pt);
+		TileMapLRUMember item = null;
+		if (o != null) {
+			item = (TileMapLRUMember) o;
+			ras = item.retrieveRaster();
+		}
 
-            // In all likelyhood the contents of this tile is junk!
-            // So don't cache it (returning is probably fine since it
-            // shouldn't come back to haunt us...)
-            if (HaltingThread.hasBeenHalted())
-                return ras;
+		if (ras == null) {
+			if (DEBUG)
+				System.out.println("Generating: (" + (x) + ", " + (y) + ")");
+			if (COUNT)
+				synchronized (TileMap.class) {
+					misses++;
+				}
+			ras = source.genTile(x, y);
 
-            if (item != null)
-                item.setRaster(ras);
-            else  {
-                item = new TileMapLRUMember(this, pt, ras);
-                rasters.put(pt, item);
-            }
-        }
+			// In all likelyhood the contents of this tile is junk!
+			// So don't cache it (returning is probably fine since it
+			// shouldn't come back to haunt us...)
+			if (HaltingThread.hasBeenHalted())
+				return ras;
 
-        // Update the item's position in the cache..
-        cache.add(item);
+			if (item != null)
+				item.setRaster(ras);
+			else {
+				item = new TileMapLRUMember(this, pt, ras);
+				rasters.put(pt, item);
+			}
+		}
 
-        return ras;
-    }
+		// Update the item's position in the cache..
+		cache.add(item);
 
-    static int requests;
-    static int misses;
+		return ras;
+	}
+
+	static int requests;
+	static int misses;
 }

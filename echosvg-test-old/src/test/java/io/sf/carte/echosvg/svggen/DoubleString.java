@@ -35,19 +35,18 @@ import io.sf.carte.echosvg.test.TestReport;
  * @version $Id$
  */
 public class DoubleString extends AbstractTest {
-    @Override
-    public TestReport runImpl() throws Exception {
-        // Get a DOMImplementation
-        DOMImplementation domImpl =
-            GenericDOMImplementation.getDOMImplementation();
-        
-        // Create an instance of org.w3c.dom.Document
-        Document document = domImpl.createDocument(null, "svg", null);
-        
-        SVGGraphics2D g = new SVGGraphics2D(document);
-        Rectangle2D r = new Rectangle2D.Float(0.5f, 0.5f, 2.33f, 2.33f);
-        g.fill(r);
+	@Override
+	public TestReport runImpl() throws Exception {
+		// Get a DOMImplementation
+		DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
 
-        return reportSuccess();
-    }
+		// Create an instance of org.w3c.dom.Document
+		Document document = domImpl.createDocument(null, "svg", null);
+
+		SVGGraphics2D g = new SVGGraphics2D(document);
+		Rectangle2D r = new Rectangle2D.Float(0.5f, 0.5f, 2.33f, 2.33f);
+		g.fill(r);
+
+		return reportSuccess();
+	}
 }

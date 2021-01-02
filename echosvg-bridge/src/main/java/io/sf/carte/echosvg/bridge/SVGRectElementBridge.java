@@ -40,122 +40,108 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
  */
 public class SVGRectElementBridge extends SVGShapeElementBridge {
 
-    /**
-     * Constructs a new bridge for the &lt;rect&gt; element.
-     */
-    public SVGRectElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;rect&gt; element.
+	 */
+	public SVGRectElementBridge() {
+	}
 
-    /**
-     * Returns 'rect'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_RECT_TAG;
-    }
+	/**
+	 * Returns 'rect'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_RECT_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new SVGRectElementBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGRectElementBridge();
+	}
 
-    /**
-     * Constructs a rectangle according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes a rect element
-     * @param shapeNode the shape node to initialize
-     */
-    @Override
-    protected void buildShape(BridgeContext ctx,
-                              Element e,
-                              ShapeNode shapeNode) {
+	/**
+	 * Constructs a rectangle according to the specified parameters.
+	 *
+	 * @param ctx       the bridge context to use
+	 * @param e         the element that describes a rect element
+	 * @param shapeNode the shape node to initialize
+	 */
+	@Override
+	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode) {
 
-        try {
-            SVGOMRectElement re = (SVGOMRectElement) e;
+		try {
+			SVGOMRectElement re = (SVGOMRectElement) e;
 
-            // 'x' attribute - default is 0
-            AbstractSVGAnimatedLength _x =
-                (AbstractSVGAnimatedLength) re.getX();
-            float x = _x.getCheckedValue();
+			// 'x' attribute - default is 0
+			AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) re.getX();
+			float x = _x.getCheckedValue();
 
-            // 'y' attribute - default is 0
-            AbstractSVGAnimatedLength _y =
-                (AbstractSVGAnimatedLength) re.getY();
-            float y = _y.getCheckedValue();
+			// 'y' attribute - default is 0
+			AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) re.getY();
+			float y = _y.getCheckedValue();
 
-            // 'width' attribute - required
-            AbstractSVGAnimatedLength _width =
-                (AbstractSVGAnimatedLength) re.getWidth();
-            float w = _width.getCheckedValue();
+			// 'width' attribute - required
+			AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) re.getWidth();
+			float w = _width.getCheckedValue();
 
-            // 'height' attribute - required
-            AbstractSVGAnimatedLength _height =
-                (AbstractSVGAnimatedLength) re.getHeight();
-            float h = _height.getCheckedValue();
+			// 'height' attribute - required
+			AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) re.getHeight();
+			float h = _height.getCheckedValue();
 
-            // 'rx' attribute - default is 0
-            AbstractSVGAnimatedLength _rx =
-                (AbstractSVGAnimatedLength) re.getRx();
-            float rx = _rx.getCheckedValue();
-            if (rx > w / 2) {
-                rx = w / 2;
-            }
+			// 'rx' attribute - default is 0
+			AbstractSVGAnimatedLength _rx = (AbstractSVGAnimatedLength) re.getRx();
+			float rx = _rx.getCheckedValue();
+			if (rx > w / 2) {
+				rx = w / 2;
+			}
 
-            // 'ry' attribute - default is rx
-            AbstractSVGAnimatedLength _ry =
-                (AbstractSVGAnimatedLength) re.getRy();
-            float ry = _ry.getCheckedValue();
-            if (ry > h / 2) {
-                ry = h / 2;
-            }
+			// 'ry' attribute - default is rx
+			AbstractSVGAnimatedLength _ry = (AbstractSVGAnimatedLength) re.getRy();
+			float ry = _ry.getCheckedValue();
+			if (ry > h / 2) {
+				ry = h / 2;
+			}
 
-            Shape shape;
-            if (rx == 0 || ry == 0) {
-                shape = new Rectangle2D.Float(x, y, w, h);
-            } else {
-                shape = new RoundRectangle2D.Float(x, y, w, h, rx * 2, ry * 2);
-            }
-            shapeNode.setShape(shape);
-        } catch (LiveAttributeException ex) {
-            throw new BridgeException(ctx, ex);
-        }
-    }
+			Shape shape;
+			if (rx == 0 || ry == 0) {
+				shape = new Rectangle2D.Float(x, y, w, h);
+			} else {
+				shape = new RoundRectangle2D.Float(x, y, w, h, rx * 2, ry * 2);
+			}
+			shapeNode.setShape(shape);
+		} catch (LiveAttributeException ex) {
+			throw new BridgeException(ctx, ex);
+		}
+	}
 
-    // BridgeUpdateHandler implementation //////////////////////////////////
+	// BridgeUpdateHandler implementation //////////////////////////////////
 
-    /**
-     * Invoked when the animated value of an animatable attribute has changed.
-     */
-    @Override
-    public void handleAnimatedAttributeChanged
-            (AnimatedLiveAttributeValue alav) {
-        if (alav.getNamespaceURI() == null) {
-            String ln = alav.getLocalName();
-            if (ln.equals(SVG_X_ATTRIBUTE)
-                    || ln.equals(SVG_Y_ATTRIBUTE)
-                    || ln.equals(SVG_WIDTH_ATTRIBUTE)
-                    || ln.equals(SVG_HEIGHT_ATTRIBUTE)
-                    || ln.equals(SVG_RX_ATTRIBUTE)
-                    || ln.equals(SVG_RY_ATTRIBUTE)) {
-                buildShape(ctx, e, (ShapeNode)node);
-                handleGeometryChanged();
-                return;
-            }
-        }
-        super.handleAnimatedAttributeChanged(alav);
-    }
+	/**
+	 * Invoked when the animated value of an animatable attribute has changed.
+	 */
+	@Override
+	public void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav) {
+		if (alav.getNamespaceURI() == null) {
+			String ln = alav.getLocalName();
+			if (ln.equals(SVG_X_ATTRIBUTE) || ln.equals(SVG_Y_ATTRIBUTE) || ln.equals(SVG_WIDTH_ATTRIBUTE)
+					|| ln.equals(SVG_HEIGHT_ATTRIBUTE) || ln.equals(SVG_RX_ATTRIBUTE) || ln.equals(SVG_RY_ATTRIBUTE)) {
+				buildShape(ctx, e, (ShapeNode) node);
+				handleGeometryChanged();
+				return;
+			}
+		}
+		super.handleAnimatedAttributeChanged(alav);
+	}
 
-    @Override
-    protected ShapePainter createShapePainter(BridgeContext ctx,
-                                              Element e,
-                                              ShapeNode shapeNode) {
-        Shape shape = shapeNode.getShape();
-        Rectangle2D r2d = shape.getBounds2D();
-        if ((r2d.getWidth() == 0) || (r2d.getHeight() == 0))
-            return null;
-        return super.createShapePainter(ctx, e, shapeNode);
-    }
+	@Override
+	protected ShapePainter createShapePainter(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+		Shape shape = shapeNode.getShape();
+		Rectangle2D r2d = shape.getBounds2D();
+		if ((r2d.getWidth() == 0) || (r2d.getHeight() == 0))
+			return null;
+		return super.createShapePainter(ctx, e, shapeNode);
+	}
 }

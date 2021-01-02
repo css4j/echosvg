@@ -29,88 +29,85 @@ import io.sf.carte.echosvg.util.gui.JErrorPane;
 /**
  * One line Class Desc
  *
- * Methods users may want to implement:
- *    displayMessage
+ * Methods users may want to implement: displayMessage
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter{
-    public Component parentComponent;
-    public SVGUserAgentGUIAdapter(Component parentComponent) {
-        this.parentComponent = parentComponent;
-    }
+public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter {
+	public Component parentComponent;
 
-    /**
-     * Displays an error message.
-     */
-    @Override
-    public void displayError(String message) {
-        JOptionPane pane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
-        JDialog dialog = pane.createDialog(parentComponent, "ERROR");
-        dialog.setModal(false);
-        dialog.setVisible(true);
-    }
+	public SVGUserAgentGUIAdapter(Component parentComponent) {
+		this.parentComponent = parentComponent;
+	}
 
-    /**
-     * Displays an error resulting from the specified Exception.
-     */
-    @Override
-    public void displayError(Exception ex) {
-        JErrorPane pane = new JErrorPane(ex, JOptionPane.ERROR_MESSAGE);
-        JDialog dialog = pane.createDialog(parentComponent, "ERROR");
-        dialog.setModal(false);
-        dialog.setVisible(true);
-    }
+	/**
+	 * Displays an error message.
+	 */
+	@Override
+	public void displayError(String message) {
+		JOptionPane pane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
+		JDialog dialog = pane.createDialog(parentComponent, "ERROR");
+		dialog.setModal(false);
+		dialog.setVisible(true);
+	}
 
-    /**
-     * Displays a message in the User Agent interface.
-     * The given message is typically displayed in a status bar.
-     */
-    @Override
-    public void displayMessage(String message) {
-        // Can't do anything don't have a status bar...
-    }
+	/**
+	 * Displays an error resulting from the specified Exception.
+	 */
+	@Override
+	public void displayError(Exception ex) {
+		JErrorPane pane = new JErrorPane(ex, JOptionPane.ERROR_MESSAGE);
+		JDialog dialog = pane.createDialog(parentComponent, "ERROR");
+		dialog.setModal(false);
+		dialog.setVisible(true);
+	}
 
-    /**
-     * Shows an alert dialog box.
-     */
-    @Override
-    public void showAlert(String message) {
-        String str = "Script alert:\n" + message;
-        JOptionPane.showMessageDialog(parentComponent, str);
-    }
+	/**
+	 * Displays a message in the User Agent interface. The given message is
+	 * typically displayed in a status bar.
+	 */
+	@Override
+	public void displayMessage(String message) {
+		// Can't do anything don't have a status bar...
+	}
 
-    /**
-     * Shows a prompt dialog box.
-     */
-    @Override
-    public String showPrompt(String message) {
-        String str = "Script prompt:\n" + message;
-        return JOptionPane.showInputDialog(parentComponent, str);
-    }
-    
-    /**
-     * Shows a prompt dialog box.
-     */
-    @Override
-    public String showPrompt(String message, String defaultValue) {
-        String str = "Script prompt:\n" + message;
-        return (String)JOptionPane.showInputDialog
-            (parentComponent, str, null,
-             JOptionPane.PLAIN_MESSAGE,
-             null, null, defaultValue);
-    }
+	/**
+	 * Shows an alert dialog box.
+	 */
+	@Override
+	public void showAlert(String message) {
+		String str = "Script alert:\n" + message;
+		JOptionPane.showMessageDialog(parentComponent, str);
+	}
 
-    /**
-     * Shows a confirm dialog box.
-     */
-    @Override
-    public boolean showConfirm(String message) {
-        String str = "Script confirm:\n" + message;
-        return JOptionPane.showConfirmDialog
-            (parentComponent, str, 
-             "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-    }
+	/**
+	 * Shows a prompt dialog box.
+	 */
+	@Override
+	public String showPrompt(String message) {
+		String str = "Script prompt:\n" + message;
+		return JOptionPane.showInputDialog(parentComponent, str);
+	}
+
+	/**
+	 * Shows a prompt dialog box.
+	 */
+	@Override
+	public String showPrompt(String message, String defaultValue) {
+		String str = "Script prompt:\n" + message;
+		return (String) JOptionPane.showInputDialog(parentComponent, str, null, JOptionPane.PLAIN_MESSAGE, null, null,
+				defaultValue);
+	}
+
+	/**
+	 * Shows a confirm dialog box.
+	 */
+	@Override
+	public boolean showConfirm(String message) {
+		String str = "Script confirm:\n" + message;
+		return JOptionPane.showConfirmDialog(parentComponent, str, "Confirm",
+				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+	}
 }

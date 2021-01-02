@@ -19,8 +19,7 @@
 package io.sf.carte.echosvg.anim.timing;
 
 /**
- * A class that represents an instance time created from a timing
- * specification.
+ * A class that represents an instance time created from a timing specification.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -28,92 +27,95 @@ package io.sf.carte.echosvg.anim.timing;
  */
 public class InstanceTime implements Comparable<InstanceTime> {
 
-    /**
-     * The time.
-     */
-    protected float time;
+	/**
+	 * The time.
+	 */
+	protected float time;
 
-    /**
-     * The {@link TimingSpecifier} that created this InstanceTime.
-     */
-    protected TimingSpecifier creator;
+	/**
+	 * The {@link TimingSpecifier} that created this InstanceTime.
+	 */
+	protected TimingSpecifier creator;
 
-    /**
-     * Whether this InstanceTime should be removed from an element's
-     * begin or end instance time lists upon reset.
-     */
-    protected boolean clearOnReset;
+	/**
+	 * Whether this InstanceTime should be removed from an element's begin or end
+	 * instance time lists upon reset.
+	 */
+	protected boolean clearOnReset;
 
-    /**
-     * Creates a new InstanceTime.
-     * @param creator the TimingSpecifier that created this InstanceTime
-     * @param time the new time, in parent simple time
-     * @param clearOnReset whether this InstanceTime should be removed from
-     *                     an instance time list upon element reset
-     */
-    public InstanceTime(TimingSpecifier creator,
-                        float time,
-                        boolean clearOnReset) {
-        // Trace.enter(this, null, new Object[] { creator, Float.valueOf(time), timebase, new Boolean(clearOnReset) } ); try {
-        this.creator = creator;
-        // XXX Convert time from the creator's syncbase's
-        //     time system into this time system.  Not
-        //     strictly necessary in SVG.
-        this.time = time;
-        this.clearOnReset = clearOnReset;
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Creates a new InstanceTime.
+	 * 
+	 * @param creator      the TimingSpecifier that created this InstanceTime
+	 * @param time         the new time, in parent simple time
+	 * @param clearOnReset whether this InstanceTime should be removed from an
+	 *                     instance time list upon element reset
+	 */
+	public InstanceTime(TimingSpecifier creator, float time, boolean clearOnReset) {
+		// Trace.enter(this, null, new Object[] { creator, Float.valueOf(time),
+		// timebase, new Boolean(clearOnReset) } ); try {
+		this.creator = creator;
+		// XXX Convert time from the creator's syncbase's
+		// time system into this time system. Not
+		// strictly necessary in SVG.
+		this.time = time;
+		this.clearOnReset = clearOnReset;
+		// } finally { Trace.exit(); }
+	}
 
-    /**
-     * Returns whether the InstanceTime should be removed from the
-     * element's begin or end instance time list when it is reset.
-     */
-    public boolean getClearOnReset() {
-        return clearOnReset;
-    }
+	/**
+	 * Returns whether the InstanceTime should be removed from the element's begin
+	 * or end instance time list when it is reset.
+	 */
+	public boolean getClearOnReset() {
+		return clearOnReset;
+	}
 
-    /**
-     * Returns the time of this instance time.
-     */
-    public float getTime() {
-        return time;
-    }
+	/**
+	 * Returns the time of this instance time.
+	 */
+	public float getTime() {
+		return time;
+	}
 
-    /**
-     * Called by the dependent Interval to indicate that its time
-     * has changed.
-     * @param newTime the new time, in parent simple time
-     */
-    float dependentUpdate(float newTime) {
-        // Trace.enter(this, "dependentUpdate", new Object[] { Float.valueOf(newTime) } ); try {
-        // XXX Convert time from the creator's syncbase's
-        //     time system into this time system.  Not
-        //     strictly necessary in SVG.
-        time = newTime;
-        if (creator != null) {
-            return creator.handleTimebaseUpdate(this, time);
-        }
-        return Float.POSITIVE_INFINITY;
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Called by the dependent Interval to indicate that its time has changed.
+	 * 
+	 * @param newTime the new time, in parent simple time
+	 */
+	float dependentUpdate(float newTime) {
+		// Trace.enter(this, "dependentUpdate", new Object[] { Float.valueOf(newTime) }
+		// ); try {
+		// XXX Convert time from the creator's syncbase's
+		// time system into this time system. Not
+		// strictly necessary in SVG.
+		time = newTime;
+		if (creator != null) {
+			return creator.handleTimebaseUpdate(this, time);
+		}
+		return Float.POSITIVE_INFINITY;
+		// } finally { Trace.exit(); }
+	}
 
-    /**
-     * Returns a string representation of this InstanceTime.
-     */
-    @Override
-    public String toString() {
-        return Float.toString(time);
-    }
+	/**
+	 * Returns a string representation of this InstanceTime.
+	 */
+	@Override
+	public String toString() {
+		return Float.toString(time);
+	}
 
-    // Comparable ////////////////////////////////////////////////////////////
+	// Comparable ////////////////////////////////////////////////////////////
 
-    /**
-     * Compares this InstanceTime with another.
-     */
-    @Override
-    public int compareTo(InstanceTime it) {
-        if (time == it.time) return 0;
-        if (time >  it.time) return 1;
-        return -1;
-    }
+	/**
+	 * Compares this InstanceTime with another.
+	 */
+	@Override
+	public int compareTo(InstanceTime it) {
+		if (time == it.time)
+			return 0;
+		if (time > it.time)
+			return 1;
+		return -1;
+	}
 }

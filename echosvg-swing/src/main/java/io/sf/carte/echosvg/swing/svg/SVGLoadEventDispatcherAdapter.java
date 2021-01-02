@@ -26,34 +26,33 @@ package io.sf.carte.echosvg.swing.svg;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGLoadEventDispatcherAdapter
-    implements SVGLoadEventDispatcherListener {
+public class SVGLoadEventDispatcherAdapter implements SVGLoadEventDispatcherListener {
 
-    /**
-     * Called when a onload event dispatch started.
-     */
-    @Override
-    public void svgLoadEventDispatchStarted(SVGLoadEventDispatcherEvent e) {
-    }
+	/**
+	 * Called when a onload event dispatch started.
+	 */
+	@Override
+	public void svgLoadEventDispatchStarted(SVGLoadEventDispatcherEvent e) {
+	}
 
-    /**
-     * Called when a onload event dispatch was completed.
-     */
-    @Override
-    public void svgLoadEventDispatchCompleted(SVGLoadEventDispatcherEvent e) {
-    }
+	/**
+	 * Called when a onload event dispatch was completed.
+	 */
+	@Override
+	public void svgLoadEventDispatchCompleted(SVGLoadEventDispatcherEvent e) {
+	}
 
-    /**
-     * Called when a onload event dispatch was cancelled.
-     */
-    @Override
-    public void svgLoadEventDispatchCancelled(SVGLoadEventDispatcherEvent e) {
-    }
+	/**
+	 * Called when a onload event dispatch was cancelled.
+	 */
+	@Override
+	public void svgLoadEventDispatchCancelled(SVGLoadEventDispatcherEvent e) {
+	}
 
-    /**
-     * Called when a onload event dispatch failed.
-     */
-    @Override
-    public void svgLoadEventDispatchFailed(SVGLoadEventDispatcherEvent e) {
-    }
+	/**
+	 * Called when a onload event dispatch failed.
+	 */
+	@Override
+	public void svgLoadEventDispatchFailed(SVGLoadEventDispatcherEvent e) {
+	}
 }

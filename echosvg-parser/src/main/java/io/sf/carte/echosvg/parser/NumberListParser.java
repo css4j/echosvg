@@ -21,71 +21,72 @@ package io.sf.carte.echosvg.parser;
 import java.io.IOException;
 
 /**
- * This class implements an event-based parser for the SVG Number
- * list values.
+ * This class implements an event-based parser for the SVG Number list values.
  *
- * @author  tonny@kiyut.com
+ * @author tonny@kiyut.com
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NumberListParser extends NumberParser {
-    /**
-     * The number list handler used to report parse events.
-     */
-    protected NumberListHandler numberListHandler;
+	/**
+	 * The number list handler used to report parse events.
+	 */
+	protected NumberListHandler numberListHandler;
 
+	/** Creates a new instance of NumberListParser */
+	public NumberListParser() {
+		numberListHandler = DefaultNumberListHandler.INSTANCE;
+	}
 
-    /** Creates a new instance of NumberListParser */
-    public NumberListParser() {
-        numberListHandler = DefaultNumberListHandler.INSTANCE;
-    }
+	/**
+	 * Allows an application to register a number list handler.
+	 *
+	 * <p>
+	 * If the application does not register a handler, all events reported by the
+	 * parser will be silently ignored.
+	 *
+	 * <p>
+	 * Applications may register a new or different handler in the middle of a
+	 * parse, and the parser must begin using the new handler immediately.
+	 * </p>
+	 * 
+	 * @param handler The number list handler.
+	 */
+	public void setNumberListHandler(NumberListHandler handler) {
+		numberListHandler = handler;
+	}
 
-    /**
-     * Allows an application to register a number list handler.
-     *
-     * <p>If the application does not register a handler, all
-     * events reported by the parser will be silently ignored.
-     *
-     * <p>Applications may register a new or different handler in the
-     * middle of a parse, and the parser must begin using the new
-     * handler immediately.</p>
-     * @param handler The number list handler.
-     */
-    public void setNumberListHandler(NumberListHandler handler) {
-        numberListHandler = handler;
-    }
+	/**
+	 * Returns the number list handler in use.
+	 */
+	public NumberListHandler getNumberListHandler() {
+		return numberListHandler;
+	}
 
-    /**
-     * Returns the number list handler in use.
-     */
-    public NumberListHandler getNumberListHandler() {
-        return numberListHandler;
-    }
+	/**
+	 * Parses the given reader.
+	 */
+	@Override
+	protected void doParse() throws ParseException, IOException {
+		numberListHandler.startNumberList();
 
-    /**
-     * Parses the given reader.
-     */
-    @Override
-    protected void doParse() throws ParseException, IOException {
-        numberListHandler.startNumberList();
+		current = reader.read();
+		skipSpaces();
 
-        current = reader.read();
-        skipSpaces();
-
-        try {
-            for (;;) {
-                numberListHandler.startNumber();
-                float f = parseFloat();
-                numberListHandler.numberValue(f);
-                numberListHandler.endNumber();
-                skipCommaSpaces();
-                if (current == -1) {
-                    break;
-                }
-            }
-        } catch (NumberFormatException e) {
-            reportUnexpectedCharacterError( current );
-        }
-        numberListHandler.endNumberList();
-    }
+		try {
+			for (;;) {
+				numberListHandler.startNumber();
+				float f = parseFloat();
+				numberListHandler.numberValue(f);
+				numberListHandler.endNumber();
+				skipCommaSpaces();
+				if (current == -1) {
+					break;
+				}
+			}
+		} catch (NumberFormatException e) {
+			reportUnexpectedCharacterError(current);
+		}
+		numberListHandler.endNumberList();
+	}
 }

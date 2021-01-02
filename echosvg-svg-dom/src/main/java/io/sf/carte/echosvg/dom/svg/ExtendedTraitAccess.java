@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.dom.svg;
 
 /**
- * Interface for SVG DOM classes to expose information about the traits
- * (XML attributes and CSS properties) their elements support.
+ * Interface for SVG DOM classes to expose information about the traits (XML
+ * attributes and CSS properties) their elements support.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -28,55 +28,55 @@ package io.sf.carte.echosvg.dom.svg;
  */
 public interface ExtendedTraitAccess extends TraitAccess {
 
-    /**
-     * Returns whether the given CSS property is available on this element.
-     */
-    boolean hasProperty(String pn);
+	/**
+	 * Returns whether the given CSS property is available on this element.
+	 */
+	boolean hasProperty(String pn);
 
-    /**
-     * Returns whether the given trait is available on this element.
-     */
-    boolean hasTrait(String ns, String ln);
+	/**
+	 * Returns whether the given trait is available on this element.
+	 */
+	boolean hasTrait(String ns, String ln);
 
-    /**
-     * Returns whether the given CSS property is animatable.
-     */
-    boolean isPropertyAnimatable(String pn);
+	/**
+	 * Returns whether the given CSS property is animatable.
+	 */
+	boolean isPropertyAnimatable(String pn);
 
-    /**
-     * Returns whether the given XML attribute is animatable.
-     */
-    boolean isAttributeAnimatable(String ns, String ln);
+	/**
+	 * Returns whether the given XML attribute is animatable.
+	 */
+	boolean isAttributeAnimatable(String ns, String ln);
 
-    /**
-     * Returns whether the given CSS property is additive.
-     */
-    boolean isPropertyAdditive(String pn);
+	/**
+	 * Returns whether the given CSS property is additive.
+	 */
+	boolean isPropertyAdditive(String pn);
 
-    /**
-     * Returns whether the given XML attribute is additive.
-     */
-    boolean isAttributeAdditive(String ns, String ln);
+	/**
+	 * Returns whether the given XML attribute is additive.
+	 */
+	boolean isAttributeAdditive(String ns, String ln);
 
-    /**
-     * Returns whether the given trait is animatable.
-     */
-    boolean isTraitAnimatable(String ns, String tn);
+	/**
+	 * Returns whether the given trait is animatable.
+	 */
+	boolean isTraitAnimatable(String ns, String tn);
 
-    /**
-     * Returns whether the given trait is additive.
-     */
-    boolean isTraitAdditive(String ns, String tn);
+	/**
+	 * Returns whether the given trait is additive.
+	 */
+	boolean isTraitAdditive(String ns, String tn);
 
-    /**
-     * Returns the SVG type of the given CSS property.  Must return one of
-     * the TYPE_* constants defined in {@link io.sf.carte.echosvg.util.SVGTypes}.
-     */
-    int getPropertyType(String pn);
+	/**
+	 * Returns the SVG type of the given CSS property. Must return one of the TYPE_*
+	 * constants defined in {@link io.sf.carte.echosvg.util.SVGTypes}.
+	 */
+	int getPropertyType(String pn);
 
-    /**
-     * Returns the SVG type of the given XML attribute.  Must return one of
-     * the TYPE_* constants defined in {@link io.sf.carte.echosvg.util.SVGTypes}.
-     */
-    int getAttributeType(String ns, String ln);
+	/**
+	 * Returns the SVG type of the given XML attribute. Must return one of the
+	 * TYPE_* constants defined in {@link io.sf.carte.echosvg.util.SVGTypes}.
+	 */
+	int getAttributeType(String ns, String ln);
 }

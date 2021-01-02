@@ -31,136 +31,130 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractEntityReference
-    extends    AbstractParentChildNode
-    implements EntityReference {
+public abstract class AbstractEntityReference extends AbstractParentChildNode implements EntityReference {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * The node name.
-     */
-    protected String nodeName;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The node name.
+	 */
+	protected String nodeName;
 
-    /**
-     * Creates a new EntityReference object.
-     */
-    protected AbstractEntityReference() {
-    }
+	/**
+	 * Creates a new EntityReference object.
+	 */
+	protected AbstractEntityReference() {
+	}
 
-    /**
-     * Creates a new EntityReference object.
-     * @param name The entity name.
-     * @param owner The owner document.
-     * @exception DOMException
-     *   INVALID_CHARACTER_ERR: Raised if the specified name contains an 
-     *   illegal character.
-     */
-    protected AbstractEntityReference(String name, AbstractDocument owner)
-        throws DOMException {
-        ownerDocument = owner;
+	/**
+	 * Creates a new EntityReference object.
+	 * 
+	 * @param name  The entity name.
+	 * @param owner The owner document.
+	 * @exception DOMException INVALID_CHARACTER_ERR: Raised if the specified name
+	 *                         contains an illegal character.
+	 */
+	protected AbstractEntityReference(String name, AbstractDocument owner) throws DOMException {
+		ownerDocument = owner;
 
-        if (owner.getStrictErrorChecking() && !DOMUtilities.isValidName(name)) {
-            throw createDOMException(DOMException.INVALID_CHARACTER_ERR,
-                                     "xml.name",
-                                     new Object[] { name });
-        }
-        nodeName = name;
-    }
+		if (owner.getStrictErrorChecking() && !DOMUtilities.isValidName(name)) {
+			throw createDOMException(DOMException.INVALID_CHARACTER_ERR, "xml.name", new Object[] { name });
+		}
+		nodeName = name;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
-     * @return {@link org.w3c.dom.Node#ENTITY_REFERENCE_NODE}
-     */
-    @Override
-    public short getNodeType() {
-        return ENTITY_REFERENCE_NODE;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
+	 * 
+	 * @return {@link org.w3c.dom.Node#ENTITY_REFERENCE_NODE}
+	 */
+	@Override
+	public short getNodeType() {
+		return ENTITY_REFERENCE_NODE;
+	}
 
-    /**
-     * Sets the name of this node.
-     */
-    @Override
-    public void setNodeName(String v) {
-        nodeName = v;
-    }
+	/**
+	 * Sets the name of this node.
+	 */
+	@Override
+	public void setNodeName(String v) {
+		nodeName = v;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
-     * @return {@link #nodeName}.
-     */
-    @Override
-    public String getNodeName() {
-        return nodeName;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
+	 * 
+	 * @return {@link #nodeName}.
+	 */
+	@Override
+	public String getNodeName() {
+		return nodeName;
+	}
 
-    /**
-     * Exports this node to the given document.
-     */
-    @Override
-    protected Node export(Node n, AbstractDocument d) {
-        super.export(n, d);
-        AbstractEntityReference ae = (AbstractEntityReference)n;
-        ae.nodeName = nodeName;
-        return n;
-    }
+	/**
+	 * Exports this node to the given document.
+	 */
+	@Override
+	protected Node export(Node n, AbstractDocument d) {
+		super.export(n, d);
+		AbstractEntityReference ae = (AbstractEntityReference) n;
+		ae.nodeName = nodeName;
+		return n;
+	}
 
-    /**
-     * Deeply exports this node to the given document.
-     */
-    @Override
-    protected Node deepExport(Node n, AbstractDocument d) {
-        super.deepExport(n, d);
-        AbstractEntityReference ae = (AbstractEntityReference)n;
-        ae.nodeName = nodeName;
-        return n;
-    }
+	/**
+	 * Deeply exports this node to the given document.
+	 */
+	@Override
+	protected Node deepExport(Node n, AbstractDocument d) {
+		super.deepExport(n, d);
+		AbstractEntityReference ae = (AbstractEntityReference) n;
+		ae.nodeName = nodeName;
+		return n;
+	}
 
-    /**
-     * Copy the fields of the current node into the given node.
-     * @param n a node of the type of this.
-     */
-    @Override
-    protected Node copyInto(Node n) {
-        super.copyInto(n);
-        AbstractEntityReference ae = (AbstractEntityReference)n;
-        ae.nodeName = nodeName;
-        return n;
-    }
+	/**
+	 * Copy the fields of the current node into the given node.
+	 * 
+	 * @param n a node of the type of this.
+	 */
+	@Override
+	protected Node copyInto(Node n) {
+		super.copyInto(n);
+		AbstractEntityReference ae = (AbstractEntityReference) n;
+		ae.nodeName = nodeName;
+		return n;
+	}
 
-    /**
-     * Deeply copy the fields of the current node into the given node.
-     * @param n a node of the type of this.
-     */
-    @Override
-    protected Node deepCopyInto(Node n) {
-        super.deepCopyInto(n);
-        AbstractEntityReference ae = (AbstractEntityReference)n;
-        ae.nodeName = nodeName;
-        return n;
-    }
+	/**
+	 * Deeply copy the fields of the current node into the given node.
+	 * 
+	 * @param n a node of the type of this.
+	 */
+	@Override
+	protected Node deepCopyInto(Node n) {
+		super.deepCopyInto(n);
+		AbstractEntityReference ae = (AbstractEntityReference) n;
+		ae.nodeName = nodeName;
+		return n;
+	}
 
-    /**
-     * Checks the validity of a node to be inserted.
-     */
-    @Override
-    protected void checkChildType(Node n, boolean replace) {
-        switch (n.getNodeType()) {
-        case ELEMENT_NODE:
-        case PROCESSING_INSTRUCTION_NODE:
-        case COMMENT_NODE:
-        case TEXT_NODE:
-        case CDATA_SECTION_NODE:
-        case ENTITY_REFERENCE_NODE:
-        case DOCUMENT_FRAGMENT_NODE:
-            break;
-        default:
-            throw createDOMException
-                (DOMException.HIERARCHY_REQUEST_ERR,
-                 "child.type",
-                 new Object[] {(int) getNodeType(),
-                                getNodeName(),
-                         (int) n.getNodeType(),
-                                n.getNodeName() });
-        }
-    }
+	/**
+	 * Checks the validity of a node to be inserted.
+	 */
+	@Override
+	protected void checkChildType(Node n, boolean replace) {
+		switch (n.getNodeType()) {
+		case ELEMENT_NODE:
+		case PROCESSING_INSTRUCTION_NODE:
+		case COMMENT_NODE:
+		case TEXT_NODE:
+		case CDATA_SECTION_NODE:
+		case ENTITY_REFERENCE_NODE:
+		case DOCUMENT_FRAGMENT_NODE:
+			break;
+		default:
+			throw createDOMException(DOMException.HIERARCHY_REQUEST_ERR, "child.type",
+					new Object[] { (int) getNodeType(), getNodeName(), (int) n.getNodeType(), n.getNodeName() });
+		}
+	}
 }

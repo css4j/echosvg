@@ -43,9 +43,9 @@ import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
- * An abstract base class for graphical extension elements.  This class
- * inherits {@link org.w3c.dom.svg.SVGStylable} functionality from {@link
- * StylableExtensionElement} and implements {@link SVGLocatable},
+ * An abstract base class for graphical extension elements. This class inherits
+ * {@link org.w3c.dom.svg.SVGStylable} functionality from
+ * {@link StylableExtensionElement} and implements {@link SVGLocatable},
  * {@link SVGTransformable}, {@link SVGExternalResourcesRequired},
  * {@link SVGLangSpace} and {@link SVGTests}.
  *
@@ -53,199 +53,184 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class GraphicsExtensionElement
-        extends    StylableExtensionElement
-        implements SVGTransformable {
+public abstract class GraphicsExtensionElement extends StylableExtensionElement implements SVGTransformable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
-        t.put(null, SVG_TRANSFORM_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
-        t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
-        t.put(null, SVG_REQUIRED_EXTENSIONS_ATTRIBUTE,
-                new TraitInformation(false, SVGTypes.TYPE_URI_LIST));
-        t.put(null, SVG_REQUIRED_FEATURES_ATTRIBUTE,
-                new TraitInformation(false, SVGTypes.TYPE_URI_LIST));
-        t.put(null, SVG_SYSTEM_LANGUAGE_ATTRIBUTE,
-                new TraitInformation(false, SVGTypes.TYPE_LANG_LIST));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
+		t.put(null, SVG_TRANSFORM_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
+		t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
+		t.put(null, SVG_REQUIRED_EXTENSIONS_ATTRIBUTE, new TraitInformation(false, SVGTypes.TYPE_URI_LIST));
+		t.put(null, SVG_REQUIRED_FEATURES_ATTRIBUTE, new TraitInformation(false, SVGTypes.TYPE_URI_LIST));
+		t.put(null, SVG_SYSTEM_LANGUAGE_ATTRIBUTE, new TraitInformation(false, SVGTypes.TYPE_LANG_LIST));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'transform' attribute value.
-     */
-    protected SVGOMAnimatedTransformList transform =
-        createLiveAnimatedTransformList(null, SVG_TRANSFORM_ATTRIBUTE, "");
+	/**
+	 * The 'transform' attribute value.
+	 */
+	protected SVGOMAnimatedTransformList transform = createLiveAnimatedTransformList(null, SVG_TRANSFORM_ATTRIBUTE, "");
 
-    /**
-     * The 'externalResourcesRequired' attribute value.
-     */
-    protected SVGOMAnimatedBoolean externalResourcesRequired =
-        createLiveAnimatedBoolean
-            (null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
+	/**
+	 * The 'externalResourcesRequired' attribute value.
+	 */
+	protected SVGOMAnimatedBoolean externalResourcesRequired = createLiveAnimatedBoolean(null,
+			SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
 
-    /**
-     * Creates a new GraphicsExtensionElement object.
-     */
-    protected GraphicsExtensionElement() {
-    }
+	/**
+	 * Creates a new GraphicsExtensionElement object.
+	 */
+	protected GraphicsExtensionElement() {
+	}
 
-    /**
-     * Creates a new GraphicsExtensionElement object.
-     * @param name The element name, for validation purposes.
-     * @param owner The owner document.
-     */
-    protected GraphicsExtensionElement(String name, AbstractDocument owner) {
-        super(name, owner);
-    }
+	/**
+	 * Creates a new GraphicsExtensionElement object.
+	 * 
+	 * @param name  The element name, for validation purposes.
+	 * @param owner The owner document.
+	 */
+	protected GraphicsExtensionElement(String name, AbstractDocument owner) {
+		super(name, owner);
+	}
 
-    // SVGLocatable support /////////////////////////////////////////////
+	// SVGLocatable support /////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGLocatable#getNearestViewportElement()}.
-     */
-    @Override
-    public SVGElement getNearestViewportElement() {
-        return SVGLocatableSupport.getNearestViewportElement(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGLocatable#getNearestViewportElement()}.
+	 */
+	@Override
+	public SVGElement getNearestViewportElement() {
+		return SVGLocatableSupport.getNearestViewportElement(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGLocatable#getFarthestViewportElement()}.
-     */
-    @Override
-    public SVGElement getFarthestViewportElement() {
-        return SVGLocatableSupport.getFarthestViewportElement(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGLocatable#getFarthestViewportElement()}.
+	 */
+	@Override
+	public SVGElement getFarthestViewportElement() {
+		return SVGLocatableSupport.getFarthestViewportElement(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGLocatable#getBBox()}.
-     */
-    @Override
-    public SVGRect getBBox() {
-        return SVGLocatableSupport.getBBox(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGLocatable#getBBox()}.
+	 */
+	@Override
+	public SVGRect getBBox() {
+		return SVGLocatableSupport.getBBox(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGLocatable#getCTM()}.
-     */
-    @Override
-    public SVGMatrix getCTM() {
-        return SVGLocatableSupport.getCTM(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGLocatable#getCTM()}.
+	 */
+	@Override
+	public SVGMatrix getCTM() {
+		return SVGLocatableSupport.getCTM(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGLocatable#getScreenCTM()}.
-     */
-    @Override
-    public SVGMatrix getScreenCTM() {
-        return SVGLocatableSupport.getScreenCTM(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGLocatable#getScreenCTM()}.
+	 */
+	@Override
+	public SVGMatrix getScreenCTM() {
+		return SVGLocatableSupport.getScreenCTM(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGLocatable#getTransformToElement(SVGElement)}.
-     */
-    @Override
-    public SVGMatrix getTransformToElement(SVGElement element)
-        throws SVGException {
-        return SVGLocatableSupport.getTransformToElement(this, element);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGLocatable#getTransformToElement(SVGElement)}.
+	 */
+	@Override
+	public SVGMatrix getTransformToElement(SVGElement element) throws SVGException {
+		return SVGLocatableSupport.getTransformToElement(this, element);
+	}
 
-    // SVGTransformable support //////////////////////////////////////////////
+	// SVGTransformable support //////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGTransformable#getTransform()}.
-     */
-    @Override
-    public SVGAnimatedTransformList getTransform() {
-        return transform;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGTransformable#getTransform()}.
+	 */
+	@Override
+	public SVGAnimatedTransformList getTransform() {
+		return transform;
+	}
 
-    // SVGExternalResourcesRequired support /////////////////////////////
+	// SVGExternalResourcesRequired support /////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
-     */
-    public SVGAnimatedBoolean getExternalResourcesRequired() {
-        return externalResourcesRequired;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
+	 */
+	public SVGAnimatedBoolean getExternalResourcesRequired() {
+		return externalResourcesRequired;
+	}
 
-    // SVGLangSpace support //////////////////////////////////////////////////
+	// SVGLangSpace support //////////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Returns the xml:lang attribute value.
-     */
-    public String getXMLlang() {
-        return XMLSupport.getXMLLang(this);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:lang attribute value.
+	 */
+	public String getXMLlang() {
+		return XMLSupport.getXMLLang(this);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:lang attribute value.
-     */
-    public void setXMLlang(String lang) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
-    }
+	/**
+	 * <b>DOM</b>: Sets the xml:lang attribute value.
+	 */
+	public void setXMLlang(String lang) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
+	}
 
-    /**
-     * <b>DOM</b>: Returns the xml:space attribute value.
-     */
-    public String getXMLspace() {
-        return XMLSupport.getXMLSpace(this);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:space attribute value.
+	 */
+	public String getXMLspace() {
+		return XMLSupport.getXMLSpace(this);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:space attribute value.
-     */
-    public void setXMLspace(String space) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
-    }
+	/**
+	 * <b>DOM</b>: Sets the xml:space attribute value.
+	 */
+	public void setXMLspace(String space) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
+	}
 
-    // SVGTests support ///////////////////////////////////////////////////
+	// SVGTests support ///////////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGTests#getRequiredFeatures()}.
-     */
-    public SVGStringList getRequiredFeatures() {
-        return SVGTestsSupport.getRequiredFeatures(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGTests#getRequiredFeatures()}.
+	 */
+	public SVGStringList getRequiredFeatures() {
+		return SVGTestsSupport.getRequiredFeatures(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGTests#getRequiredExtensions()}.
-     */
-    public SVGStringList getRequiredExtensions() {
-        return SVGTestsSupport.getRequiredExtensions(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGTests#getRequiredExtensions()}.
+	 */
+	public SVGStringList getRequiredExtensions() {
+		return SVGTestsSupport.getRequiredExtensions(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGTests#getSystemLanguage()}.
-     */
-    public SVGStringList getSystemLanguage() {
-        return SVGTestsSupport.getSystemLanguage(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGTests#getSystemLanguage()}.
+	 */
+	public SVGStringList getSystemLanguage() {
+		return SVGTestsSupport.getSystemLanguage(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGTests#hasExtension(String)}.
-     */
-    public boolean hasExtension(String extension) {
-        return SVGTestsSupport.hasExtension(this, extension);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGTests#hasExtension(String)}.
+	 */
+	public boolean hasExtension(String extension) {
+		return SVGTestsSupport.hasExtension(this, extension);
+	}
 }

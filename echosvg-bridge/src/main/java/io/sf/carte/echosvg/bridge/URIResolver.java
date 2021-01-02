@@ -37,124 +37,122 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class URIResolver {
-    /**
-     * The reference document.
-     */
-    protected SVGOMDocument document;
+	/**
+	 * The reference document.
+	 */
+	protected SVGOMDocument document;
 
-    /**
-     * The document URI.
-     */
-    protected String documentURI;
+	/**
+	 * The document URI.
+	 */
+	protected String documentURI;
 
-    /**
-     * The document loader.
-     */
-    protected DocumentLoader documentLoader;
+	/**
+	 * The document loader.
+	 */
+	protected DocumentLoader documentLoader;
 
-    /**
-     * Creates a new URI resolver object.
-     * @param doc The reference document.
-     * @param dl The document loader.
-     */
-    public URIResolver(SVGDocument doc, DocumentLoader dl) {
-        document = (SVGOMDocument)doc;
-        documentLoader = dl;
-    }
+	/**
+	 * Creates a new URI resolver object.
+	 * 
+	 * @param doc The reference document.
+	 * @param dl  The document loader.
+	 */
+	public URIResolver(SVGDocument doc, DocumentLoader dl) {
+		document = (SVGOMDocument) doc;
+		documentLoader = dl;
+	}
 
-    /**
-     * Imports the Element referenced by the given URI on Element
-     * <code>ref</code>.
-     * @param uri The element URI.
-     * @param ref The Element in the DOM tree to evaluate <code>uri</code>
-     *            from.  
-     * @return The referenced element or null if element can't be found.
-     */
-    public Element getElement(String uri, Element ref)
-        throws MalformedURLException, IOException {
+	/**
+	 * Imports the Element referenced by the given URI on Element <code>ref</code>.
+	 * 
+	 * @param uri The element URI.
+	 * @param ref The Element in the DOM tree to evaluate <code>uri</code> from.
+	 * @return The referenced element or null if element can't be found.
+	 */
+	public Element getElement(String uri, Element ref) throws MalformedURLException, IOException {
 
-        Node n = getNode(uri, ref);
-        if (n == null) {
-            return null;
-        } else if (n.getNodeType() == Node.DOCUMENT_NODE) {
-            throw new IllegalArgumentException();
-        } else {
-            return (Element)n;
-        }
-    }
+		Node n = getNode(uri, ref);
+		if (n == null) {
+			return null;
+		} else if (n.getNodeType() == Node.DOCUMENT_NODE) {
+			throw new IllegalArgumentException();
+		} else {
+			return (Element) n;
+		}
+	}
 
-    /**
-     * Imports the Node referenced by the given URI on Element
-     * <code>ref</code>.
-     * @param uri The element URI.
-     * @param ref The Element in the DOM tree to evaluate <code>uri</code>
-     *            from. 
-     * @return The referenced Node/Document or null if element can't be found.
-     */
-    public Node getNode(String uri, Element ref)
-        throws MalformedURLException, IOException, SecurityException {
+	/**
+	 * Imports the Node referenced by the given URI on Element <code>ref</code>.
+	 * 
+	 * @param uri The element URI.
+	 * @param ref The Element in the DOM tree to evaluate <code>uri</code> from.
+	 * @return The referenced Node/Document or null if element can't be found.
+	 */
+	public Node getNode(String uri, Element ref) throws MalformedURLException, IOException, SecurityException {
 
-        String baseURI = getRefererBaseURI(ref);
-        // System.err.println("baseURI: " + baseURI);
-        // System.err.println("URI: " + uri);
-        if (baseURI == null && uri.charAt(0) == '#') {
-            return getNodeByFragment(uri.substring(1), ref);
-        }
+		String baseURI = getRefererBaseURI(ref);
+		// System.err.println("baseURI: " + baseURI);
+		// System.err.println("URI: " + uri);
+		if (baseURI == null && uri.charAt(0) == '#') {
+			return getNodeByFragment(uri.substring(1), ref);
+		}
 
-        ParsedURL purl = new ParsedURL(baseURI, uri);
-        // System.err.println("PURL: " + purl);
+		ParsedURL purl = new ParsedURL(baseURI, uri);
+		// System.err.println("PURL: " + purl);
 
-        if (documentURI == null)
-            documentURI = document.getURL();
+		if (documentURI == null)
+			documentURI = document.getURL();
 
-        String    frag  = purl.getRef();
-        if ((frag != null) && (documentURI != null)) {
-            ParsedURL pDocURL = new ParsedURL(documentURI);
-            // System.out.println("doc: " + pDocURL);
-            // System.out.println("Purl: " + purl);
-            if (pDocURL.sameFile(purl)) {
-                // System.out.println("match");
-                return document.getElementById(frag);
-            }
-        }
+		String frag = purl.getRef();
+		if ((frag != null) && (documentURI != null)) {
+			ParsedURL pDocURL = new ParsedURL(documentURI);
+			// System.out.println("doc: " + pDocURL);
+			// System.out.println("Purl: " + purl);
+			if (pDocURL.sameFile(purl)) {
+				// System.out.println("match");
+				return document.getElementById(frag);
+			}
+		}
 
-        // uri is not a reference into this document, so load the 
-        // document it does reference after doing a security 
-        // check with the UserAgent
-        ParsedURL pDocURL = null;
-        if (documentURI != null) {
-            pDocURL = new ParsedURL(documentURI);
-        }
+		// uri is not a reference into this document, so load the
+		// document it does reference after doing a security
+		// check with the UserAgent
+		ParsedURL pDocURL = null;
+		if (documentURI != null) {
+			pDocURL = new ParsedURL(documentURI);
+		}
 
-        UserAgent userAgent = documentLoader.getUserAgent();
-        userAgent.checkLoadExternalResource(purl, pDocURL);
+		UserAgent userAgent = documentLoader.getUserAgent();
+		userAgent.checkLoadExternalResource(purl, pDocURL);
 
-        String purlStr = purl.toString();
-        if (frag != null) {
-            purlStr = purlStr.substring(0, purlStr.length()-(frag.length()+1));
-        }
+		String purlStr = purl.toString();
+		if (frag != null) {
+			purlStr = purlStr.substring(0, purlStr.length() - (frag.length() + 1));
+		}
 
-        Document doc = documentLoader.loadDocument(purlStr);
-        if (frag != null)
-            return doc.getElementById(frag);
-        return doc;
-    }
+		Document doc = documentLoader.loadDocument(purlStr);
+		if (frag != null)
+			return doc.getElementById(frag);
+		return doc;
+	}
 
-    /**
-     * Returns the base URI of the referer element.
-     */
-    protected String getRefererBaseURI(Element ref) {
-        return ref.getBaseURI();
-    }
+	/**
+	 * Returns the base URI of the referer element.
+	 */
+	protected String getRefererBaseURI(Element ref) {
+		return ref.getBaseURI();
+	}
 
-    /**
-     * Returns the node referenced by the given fragment identifier.
-     * This is called when the whole URI just contains a fragment identifier
-     * and there is no XML Base URI in effect.
-     * @param frag the URI fragment
-     * @param ref  the context element from which to resolve the URI fragment
-     */
-    protected Node getNodeByFragment(String frag, Element ref) {
-        return ref.getOwnerDocument().getElementById(frag);
-    }
+	/**
+	 * Returns the node referenced by the given fragment identifier. This is called
+	 * when the whole URI just contains a fragment identifier and there is no XML
+	 * Base URI in effect.
+	 * 
+	 * @param frag the URI fragment
+	 * @param ref  the context element from which to resolve the URI fragment
+	 */
+	protected Node getNodeByFragment(String frag, Element ref) {
+		return ref.getOwnerDocument().getElementById(frag);
+	}
 }

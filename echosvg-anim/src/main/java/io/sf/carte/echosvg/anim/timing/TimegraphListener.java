@@ -27,70 +27,67 @@ package io.sf.carte.echosvg.anim.timing;
  */
 public interface TimegraphListener {
 
-    /**
-     * Invoked to indicate that a timed element has been added to the
-     * document.
-     */
-    void elementAdded(TimedElement e);
+	/**
+	 * Invoked to indicate that a timed element has been added to the document.
+	 */
+	void elementAdded(TimedElement e);
 
-    /**
-     * Invoked to indicate that a timed element has been removed from the
-     * document.
-     */
-    void elementRemoved(TimedElement e);
+	/**
+	 * Invoked to indicate that a timed element has been removed from the document.
+	 */
+	void elementRemoved(TimedElement e);
 
-    /**
-     * Invoked to indicate that a timed element has become active.
-     * @param e the TimedElement that became active
-     * @param t the time (in parent simple time) that the element became active
-     */
-    void elementActivated(TimedElement e, float t);
+	/**
+	 * Invoked to indicate that a timed element has become active.
+	 * 
+	 * @param e the TimedElement that became active
+	 * @param t the time (in parent simple time) that the element became active
+	 */
+	void elementActivated(TimedElement e, float t);
 
-    /**
-     * Invoked to indicate that a timed element has become inactive
-     * and is filling.
-     */
-    void elementFilled(TimedElement e, float t);
+	/**
+	 * Invoked to indicate that a timed element has become inactive and is filling.
+	 */
+	void elementFilled(TimedElement e, float t);
 
-    /**
-     * Invoked to indicate that a timed element has become inactive
-     * and is not filling.
-     */
-    void elementDeactivated(TimedElement e, float t);
+	/**
+	 * Invoked to indicate that a timed element has become inactive and is not
+	 * filling.
+	 */
+	void elementDeactivated(TimedElement e, float t);
 
-    /**
-     * Invoked to indivate that an interval was created for the given
-     * timed element.
-     */
-    void intervalCreated(TimedElement e, Interval i);
+	/**
+	 * Invoked to indivate that an interval was created for the given timed element.
+	 */
+	void intervalCreated(TimedElement e, Interval i);
 
-    /**
-     * Invoked to indivate that an interval was removed for the given
-     * timed element.
-     */
-    void intervalRemoved(TimedElement e, Interval i);
+	/**
+	 * Invoked to indivate that an interval was removed for the given timed element.
+	 */
+	void intervalRemoved(TimedElement e, Interval i);
 
-    /**
-     * Invoked to indivate that an interval's endpoints were changed.
-     */
-    void intervalChanged(TimedElement e, Interval i);
+	/**
+	 * Invoked to indivate that an interval's endpoints were changed.
+	 */
+	void intervalChanged(TimedElement e, Interval i);
 
-    /**
-     * Invoked to indivate that the given interval began.
-     * @param i the Interval that began, or null if no interval is
-     *          active for the given timed element.
-     */
-    void intervalBegan(TimedElement e, Interval i);
+	/**
+	 * Invoked to indivate that the given interval began.
+	 * 
+	 * @param i the Interval that began, or null if no interval is active for the
+	 *          given timed element.
+	 */
+	void intervalBegan(TimedElement e, Interval i);
 
-    /**
-     * Invoked to indicate that the given timed element began a repeat
-     * iteration at the specified time.
-     */
-    void elementRepeated(TimedElement e, int i, float t);
+	/**
+	 * Invoked to indicate that the given timed element began a repeat iteration at
+	 * the specified time.
+	 */
+	void elementRepeated(TimedElement e, int i, float t);
 
-    /**
-     * Invoked to indicate that the list of instance times for the given
-     * timed element has been updated.
-     */
-    void elementInstanceTimesChanged(TimedElement e, float isBegin);
+	/**
+	 * Invoked to indicate that the list of instance times for the given timed
+	 * element has been updated.
+	 */
+	void elementInstanceTimesChanged(TimedElement e, float isBegin);
 }

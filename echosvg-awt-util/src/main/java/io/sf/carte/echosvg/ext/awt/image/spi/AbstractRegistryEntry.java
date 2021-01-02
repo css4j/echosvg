@@ -27,64 +27,58 @@ import java.util.List;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractRegistryEntry
-    implements RegistryEntry, ErrorConstants {
+public abstract class AbstractRegistryEntry implements RegistryEntry, ErrorConstants {
 
-    String name;
-    float  priority;
-    List<String>   exts;
-    List<String>   mimeTypes;
+	String name;
+	float priority;
+	List<String> exts;
+	List<String> mimeTypes;
 
-    public AbstractRegistryEntry(String    name,
-                                 float     priority,
-                                 String [] exts,
-                                 String [] mimeTypes) {
-        this.name     = name;
-        this.priority = priority;
+	public AbstractRegistryEntry(String name, float priority, String[] exts, String[] mimeTypes) {
+		this.name = name;
+		this.priority = priority;
 
-        this.exts     = new ArrayList<>(exts.length);
-        for (String ext : exts) this.exts.add(ext);
-        this.exts = Collections.unmodifiableList(this.exts);
+		this.exts = new ArrayList<>(exts.length);
+		for (String ext : exts)
+			this.exts.add(ext);
+		this.exts = Collections.unmodifiableList(this.exts);
 
-        this.mimeTypes     = new ArrayList<>(mimeTypes.length);
-        for (String mimeType : mimeTypes) this.mimeTypes.add(mimeType);
-        this.mimeTypes = Collections.unmodifiableList(this.mimeTypes);
-    }
+		this.mimeTypes = new ArrayList<>(mimeTypes.length);
+		for (String mimeType : mimeTypes)
+			this.mimeTypes.add(mimeType);
+		this.mimeTypes = Collections.unmodifiableList(this.mimeTypes);
+	}
 
-    public AbstractRegistryEntry(String name,
-                                 float  priority,
-                                 String ext,
-                                 String mimeType) {
-        this.name = name;
-        this.priority = priority;
+	public AbstractRegistryEntry(String name, float priority, String ext, String mimeType) {
+		this.name = name;
+		this.priority = priority;
 
-        this.exts = new ArrayList<>(1);
-        this.exts.add(ext);
-        this.exts = Collections.unmodifiableList(exts);
+		this.exts = new ArrayList<>(1);
+		this.exts.add(ext);
+		this.exts = Collections.unmodifiableList(exts);
 
-        this.mimeTypes = new ArrayList<>(1);
-        this.mimeTypes.add(mimeType);
-        this.mimeTypes = Collections.unmodifiableList(mimeTypes);
-    }
+		this.mimeTypes = new ArrayList<>(1);
+		this.mimeTypes.add(mimeType);
+		this.mimeTypes = Collections.unmodifiableList(mimeTypes);
+	}
 
+	@Override
+	public String getFormatName() {
+		return name;
+	}
 
-    @Override
-    public String getFormatName() {
-        return name;
-    }
+	@Override
+	public List<String> getStandardExtensions() {
+		return exts;
+	}
 
-    @Override
-    public List<String>   getStandardExtensions() {
-        return exts;
-    }
+	@Override
+	public List<String> getMimeTypes() {
+		return mimeTypes;
+	}
 
-    @Override
-    public List<String>   getMimeTypes() {
-        return mimeTypes;
-    }
-
-    @Override
-    public float  getPriority() {
-        return priority;
-    }
+	@Override
+	public float getPriority() {
+		return priority;
+	}
 }

@@ -28,86 +28,87 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
- * Utility class that converts a Composite object into
- * a set of SVG properties and definitions.
- * <p>Here is how Composites are mapped to SVG:</p>
+ * Utility class that converts a Composite object into a set of SVG properties
+ * and definitions.
+ * <p>
+ * Here is how Composites are mapped to SVG:
+ * </p>
  * <ul>
- *   <li>AlphaComposite.SRC_OVER with extra alpha is mapped
- *     to the opacity attribute</li>
- *   <li>AlphaComposite's other rules are translated into
- *     predefined filter effects.</li>
- *   <li>Custom Composite implementations are handled by the
- *     extension mechanism.</li>
+ * <li>AlphaComposite.SRC_OVER with extra alpha is mapped to the opacity
+ * attribute</li>
+ * <li>AlphaComposite's other rules are translated into predefined filter
+ * effects.</li>
+ * <li>Custom Composite implementations are handled by the extension
+ * mechanism.</li>
  * </ul>
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see                io.sf.carte.echosvg.svggen.SVGAlphaComposite
+ * @see io.sf.carte.echosvg.svggen.SVGAlphaComposite
  */
 public class SVGComposite implements SVGConverter {
-    /**
-     * All AlphaComposite convertion is handed to svgAlphaComposite
-     */
-    private SVGAlphaComposite svgAlphaComposite;
+	/**
+	 * All AlphaComposite convertion is handed to svgAlphaComposite
+	 */
+	private SVGAlphaComposite svgAlphaComposite;
 
-    /**
-     * All custom Composite convertion is handed to svgCustomComposite
-     */
-    private SVGCustomComposite svgCustomComposite;
+	/**
+	 * All custom Composite convertion is handed to svgCustomComposite
+	 */
+	private SVGCustomComposite svgCustomComposite;
 
-    /**
-     * @param generatorContext The generator context used for handling
-     *        custom and alpha composites
-     */
-    public SVGComposite(SVGGeneratorContext generatorContext) {
-        this.svgAlphaComposite =  new SVGAlphaComposite(generatorContext);
-        this.svgCustomComposite = new SVGCustomComposite(generatorContext);
-    }
+	/**
+	 * @param generatorContext The generator context used for handling custom and
+	 *                         alpha composites
+	 */
+	public SVGComposite(SVGGeneratorContext generatorContext) {
+		this.svgAlphaComposite = new SVGAlphaComposite(generatorContext);
+		this.svgCustomComposite = new SVGCustomComposite(generatorContext);
+	}
 
-    /**
-     * @return Set of filter Elements defining the composites this
-     *         Converter has processed since it was created.
-     */
-    @Override
-    public List<Element> getDefinitionSet() {
-        List<Element> compositeDefs = new LinkedList<>(svgAlphaComposite.getDefinitionSet());
-        compositeDefs.addAll(svgCustomComposite.getDefinitionSet());
-        return compositeDefs;
-    }
+	/**
+	 * @return Set of filter Elements defining the composites this Converter has
+	 *         processed since it was created.
+	 */
+	@Override
+	public List<Element> getDefinitionSet() {
+		List<Element> compositeDefs = new LinkedList<>(svgAlphaComposite.getDefinitionSet());
+		compositeDefs.addAll(svgCustomComposite.getDefinitionSet());
+		return compositeDefs;
+	}
 
-    public SVGAlphaComposite getAlphaCompositeConverter() {
-        return svgAlphaComposite;
-    }
+	public SVGAlphaComposite getAlphaCompositeConverter() {
+		return svgAlphaComposite;
+	}
 
-    public SVGCustomComposite getCustomCompositeConverter() {
-        return svgCustomComposite;
-    }
+	public SVGCustomComposite getCustomCompositeConverter() {
+		return svgCustomComposite;
+	}
 
-    /**
-     * Converts part or all of the input GraphicContext into
-     * a set of attribute/value pairs and related definitions
-     *
-     * @param gc GraphicContext to be converted
-     * @return descriptor of the attributes required to represent
-     *         some or all of the GraphicContext state, along
-     *         with the related definitions
-     * @see io.sf.carte.echosvg.svggen.SVGDescriptor
-     */
-    @Override
-    public SVGDescriptor toSVG(GraphicContext gc) {
-        return toSVG(gc.getComposite());
-    }
+	/**
+	 * Converts part or all of the input GraphicContext into a set of
+	 * attribute/value pairs and related definitions
+	 *
+	 * @param gc GraphicContext to be converted
+	 * @return descriptor of the attributes required to represent some or all of the
+	 *         GraphicContext state, along with the related definitions
+	 * @see io.sf.carte.echosvg.svggen.SVGDescriptor
+	 */
+	@Override
+	public SVGDescriptor toSVG(GraphicContext gc) {
+		return toSVG(gc.getComposite());
+	}
 
-    /**
-     * @param composite Composite to be converted to SVG
-     * @return an SVGCompositeDescriptor mapping the SVG composite
-     *         equivalent of the input Composite
-     */
-    public SVGCompositeDescriptor toSVG(Composite composite) {
-        if (composite instanceof AlphaComposite)
-            return svgAlphaComposite.toSVG((AlphaComposite)composite);
-        else
-            return svgCustomComposite.toSVG(composite);
-    }
+	/**
+	 * @param composite Composite to be converted to SVG
+	 * @return an SVGCompositeDescriptor mapping the SVG composite equivalent of the
+	 *         input Composite
+	 */
+	public SVGCompositeDescriptor toSVG(Composite composite) {
+		if (composite instanceof AlphaComposite)
+			return svgAlphaComposite.toSVG((AlphaComposite) composite);
+		else
+			return svgCustomComposite.toSVG(composite);
+	}
 }

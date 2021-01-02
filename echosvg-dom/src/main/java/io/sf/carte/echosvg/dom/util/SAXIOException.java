@@ -24,8 +24,8 @@ import java.io.IOException;
 import org.xml.sax.SAXException;
 
 /**
- * Wrapper for SAX Exceptions which would make it possible to
- * include line and column information with SAX parse errors.
+ * Wrapper for SAX Exceptions which would make it possible to include line and
+ * column information with SAX parse errors.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
@@ -33,15 +33,20 @@ import org.xml.sax.SAXException;
  */
 public class SAXIOException extends IOException {
 
-    private static final long serialVersionUID = 1L;
-    protected SAXException saxe;
+	private static final long serialVersionUID = 1L;
+	protected SAXException saxe;
 
-    public SAXIOException( SAXException saxe) {
-        super(saxe.getMessage());
-        this.saxe = saxe;
-    }
+	public SAXIOException(SAXException saxe) {
+		super(saxe.getMessage());
+		this.saxe = saxe;
+	}
 
-    public SAXException getSAXException() { return saxe; }
-    @Override
-    public Throwable    getCause() { return saxe; }
+	public SAXException getSAXException() {
+		return saxe;
+	}
+
+	@Override
+	public Throwable getCause() {
+		return saxe;
+	}
 }

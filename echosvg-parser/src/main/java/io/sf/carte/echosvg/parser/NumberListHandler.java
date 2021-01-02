@@ -21,44 +21,45 @@ package io.sf.carte.echosvg.parser;
 /**
  * An handler interface for parsing NumberLists.
  *
- * @author  tonny@kiyut.com
+ * @author tonny@kiyut.com
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface NumberListHandler {
-    /**
-     * Invoked when the number list attribute starts.
-     * @exception ParseException if an error occures while processing the
-     *                           number list.
-     */
-    void startNumberList() throws ParseException;
+	/**
+	 * Invoked when the number list attribute starts.
+	 * 
+	 * @exception ParseException if an error occures while processing the number
+	 *                           list.
+	 */
+	void startNumberList() throws ParseException;
 
-    /**
-     * Invoked when the number list attribute ends.
-     * @exception ParseException if an error occures while processing the
-     *                           number list.
-     */
-    void endNumberList() throws ParseException;
-    
-    /**
-     * Invoked when the number attribute starts.
-     * @exception ParseException if an error occures while processing
-     *                           the number
-     */    
-    void startNumber() throws ParseException;
-    
-    
-    /**
-     * Invoked when the number attribute ends.
-     * @exception ParseException if an error occures while processing
-     *                           the number
-     */
-    void endNumber() throws ParseException;
-    
-    /**
-     * Invoked when a float value has been parsed.
-     * @exception ParseException if an error occures while processing
-     *                           the number
-     */
-    void numberValue(float v) throws ParseException;
+	/**
+	 * Invoked when the number list attribute ends.
+	 * 
+	 * @exception ParseException if an error occures while processing the number
+	 *                           list.
+	 */
+	void endNumberList() throws ParseException;
+
+	/**
+	 * Invoked when the number attribute starts.
+	 * 
+	 * @exception ParseException if an error occures while processing the number
+	 */
+	void startNumber() throws ParseException;
+
+	/**
+	 * Invoked when the number attribute ends.
+	 * 
+	 * @exception ParseException if an error occures while processing the number
+	 */
+	void endNumber() throws ParseException;
+
+	/**
+	 * Invoked when a float value has been parsed.
+	 * 
+	 * @exception ParseException if an error occures while processing the number
+	 */
+	void numberValue(float v) throws ParseException;
 }

@@ -19,7 +19,6 @@
 
 package io.sf.carte.echosvg.bridge;
 
-
 /**
  * One line Class Desc
  *
@@ -29,17 +28,17 @@ package io.sf.carte.echosvg.bridge;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class FlowTextNode extends TextNode{
+public class FlowTextNode extends TextNode {
 
-    public FlowTextNode() {
-        textPainter = FlowTextPainter.getInstance();
-    }
+	public FlowTextNode() {
+		textPainter = FlowTextPainter.getInstance();
+	}
 
-    @Override
-    public void setTextPainter(TextPainter textPainter) {
-        if (textPainter == null)
-            this.textPainter = FlowTextPainter.getInstance();
-        else
-            this.textPainter = textPainter;
-    }
+	@Override
+	public void setTextPainter(TextPainter textPainter) {
+		if (textPainter == null)
+			this.textPainter = FlowTextPainter.getInstance();
+		else
+			this.textPainter = textPainter;
+	}
 }

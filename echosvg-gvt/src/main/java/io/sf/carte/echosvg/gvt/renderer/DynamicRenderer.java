@@ -46,238 +46,221 @@ import io.sf.carte.echosvg.util.HaltingThread;
  */
 public class DynamicRenderer extends StaticRenderer {
 
-    static final int COPY_OVERHEAD      = 1000;
-    static final int COPY_LINE_OVERHEAD = 10;
+	static final int COPY_OVERHEAD = 1000;
+	static final int COPY_LINE_OVERHEAD = 10;
 
-    /**
-     * Constructs a new dynamic renderer with the specified buffer image.
-     */
-    public DynamicRenderer() {
-        super();
-    }
+	/**
+	 * Constructs a new dynamic renderer with the specified buffer image.
+	 */
+	public DynamicRenderer() {
+		super();
+	}
 
-    public DynamicRenderer(RenderingHints rh,
-                           AffineTransform at){
-        super(rh, at);
-    }
+	public DynamicRenderer(RenderingHints rh, AffineTransform at) {
+		super(rh, at);
+	}
 
-    RectListManager damagedAreas;
+	RectListManager damagedAreas;
 
-    @Override
-    protected CachableRed setupCache(CachableRed img) {
-        // Don't do any caching of content for dynamic case
-        return img;
-    }
+	@Override
+	protected CachableRed setupCache(CachableRed img) {
+		// Don't do any caching of content for dynamic case
+		return img;
+	}
 
-    @Override
-    public void flush(Rectangle r) {
-        // Since we don't cache we don't need to flush
-        return;
-    }
+	@Override
+	public void flush(Rectangle r) {
+		// Since we don't cache we don't need to flush
+		return;
+	}
 
-    /**
-     * Flush a list of rectangles of cached image data.
-     */
-    @Override
-    public void flush(Collection<Shape> areas) {
-        // Since we don't cache we don't need to flush
-        return;
-    }
+	/**
+	 * Flush a list of rectangles of cached image data.
+	 */
+	@Override
+	public void flush(Collection<Shape> areas) {
+		// Since we don't cache we don't need to flush
+		return;
+	}
 
-    @Override
-    protected void updateWorkingBuffers() {
-        if (rootFilter == null) {
-            rootFilter = rootGN.getGraphicsNodeRable(true);
-            rootCR = null;
-        }
+	@Override
+	protected void updateWorkingBuffers() {
+		if (rootFilter == null) {
+			rootFilter = rootGN.getGraphicsNodeRable(true);
+			rootCR = null;
+		}
 
-        rootCR = renderGNR();
-        if (rootCR == null) {
-            // No image to display so clear everything out...
-            workingRaster = null;
-            workingOffScreen = null;
-            workingBaseRaster = null;
+		rootCR = renderGNR();
+		if (rootCR == null) {
+			// No image to display so clear everything out...
+			workingRaster = null;
+			workingOffScreen = null;
+			workingBaseRaster = null;
 
-            currentOffScreen = null;
-            currentBaseRaster = null;
-            currentRaster = null;
-            return;
-        }
+			currentOffScreen = null;
+			currentBaseRaster = null;
+			currentRaster = null;
+			return;
+		}
 
-        SampleModel sm = rootCR.getSampleModel();
-        int         w  = offScreenWidth;
-        int         h  = offScreenHeight;
+		SampleModel sm = rootCR.getSampleModel();
+		int w = offScreenWidth;
+		int h = offScreenHeight;
 
-        if ((workingBaseRaster == null) ||
-            (workingBaseRaster.getWidth()  < w) ||
-            (workingBaseRaster.getHeight() < h)) {
+		if ((workingBaseRaster == null) || (workingBaseRaster.getWidth() < w) || (workingBaseRaster.getHeight() < h)) {
 
-            sm = sm.createCompatibleSampleModel(w, h);
+			sm = sm.createCompatibleSampleModel(w, h);
 
-            workingBaseRaster
-                = Raster.createWritableRaster(sm, new Point(0,0));
+			workingBaseRaster = Raster.createWritableRaster(sm, new Point(0, 0));
 
-            workingRaster = workingBaseRaster.createWritableChild
-                (0, 0, w, h, 0, 0, null);
+			workingRaster = workingBaseRaster.createWritableChild(0, 0, w, h, 0, 0, null);
 
-            workingOffScreen =  new BufferedImage
-                (rootCR.getColorModel(),
-                 workingRaster,
-                 rootCR.getColorModel().isAlphaPremultiplied(), null);
-        }
+			workingOffScreen = new BufferedImage(rootCR.getColorModel(), workingRaster,
+					rootCR.getColorModel().isAlphaPremultiplied(), null);
+		}
 
-        if (!isDoubleBuffered) {
-            currentOffScreen  = workingOffScreen;
-            currentBaseRaster = workingBaseRaster;
-            currentRaster     = workingRaster;
-        }
-    }
+		if (!isDoubleBuffered) {
+			currentOffScreen = workingOffScreen;
+			currentBaseRaster = workingBaseRaster;
+			currentRaster = workingRaster;
+		}
+	}
 
-    /**
-     * Repaints the associated GVT tree under the list of <code>areas</code>.
-     *
-     * If double buffered is true and this method completes cleanly it
-     * will set the result of the repaint as the image returned by
-     * getOffscreen otherwise the old image will still be returned.
-     * If double buffered is false it is possible some effects of
-     * the failed rendering will be visible in the image returned
-     * by getOffscreen.
-     *
-     * @param devRLM regions to be repainted, in the current
-     * user space coordinate system.
-     */
-    // long lastFrame = -1;
-    @Override
-    public void repaint(RectListManager devRLM) {
-        if (devRLM == null)
-            return;
+	/**
+	 * Repaints the associated GVT tree under the list of <code>areas</code>.
+	 *
+	 * If double buffered is true and this method completes cleanly it will set the
+	 * result of the repaint as the image returned by getOffscreen otherwise the old
+	 * image will still be returned. If double buffered is false it is possible some
+	 * effects of the failed rendering will be visible in the image returned by
+	 * getOffscreen.
+	 *
+	 * @param devRLM regions to be repainted, in the current user space coordinate
+	 *               system.
+	 */
+	// long lastFrame = -1;
+	@Override
+	public void repaint(RectListManager devRLM) {
+		if (devRLM == null)
+			return;
 
-        // long t0 = System.currentTimeMillis();
-        // if (lastFrame != -1) {
-        //     System.out.println("InterFrame time: " + (t0-lastFrame));
-        // }
-        // lastFrame = t0;
+		// long t0 = System.currentTimeMillis();
+		// if (lastFrame != -1) {
+		// System.out.println("InterFrame time: " + (t0-lastFrame));
+		// }
+		// lastFrame = t0;
 
-        CachableRed cr;
-        WritableRaster syncRaster;
-        WritableRaster copyRaster;
+		CachableRed cr;
+		WritableRaster syncRaster;
+		WritableRaster copyRaster;
 
-        updateWorkingBuffers();
-        if ((rootCR == null)           ||
-            (workingBaseRaster == null)) {
-            // System.err.println("RootCR: " + rootCR);
-            // System.err.println("wrkBaseRaster: " + workingBaseRaster);
-            return;
-        }
-        cr = rootCR;
-        syncRaster = workingBaseRaster;
-        copyRaster = workingRaster;
+		updateWorkingBuffers();
+		if ((rootCR == null) || (workingBaseRaster == null)) {
+			// System.err.println("RootCR: " + rootCR);
+			// System.err.println("wrkBaseRaster: " + workingBaseRaster);
+			return;
+		}
+		cr = rootCR;
+		syncRaster = workingBaseRaster;
+		copyRaster = workingRaster;
 
-        Rectangle srcR = rootCR.getBounds();
-        // System.out.println("RootCR: " + srcR);
-        Rectangle dstR = workingRaster.getBounds();
-        if ((dstR.x < srcR.x) ||
-            (dstR.y < srcR.y) ||
-            (dstR.x+dstR.width  > srcR.x+srcR.width) ||
-            (dstR.y+dstR.height > srcR.y+srcR.height))
-            cr = new PadRed(cr, dstR, PadMode.ZERO_PAD, null);
+		Rectangle srcR = rootCR.getBounds();
+		// System.out.println("RootCR: " + srcR);
+		Rectangle dstR = workingRaster.getBounds();
+		if ((dstR.x < srcR.x) || (dstR.y < srcR.y) || (dstR.x + dstR.width > srcR.x + srcR.width)
+				|| (dstR.y + dstR.height > srcR.y + srcR.height))
+			cr = new PadRed(cr, dstR, PadMode.ZERO_PAD, null);
 
-        boolean repaintAll = false;
+		boolean repaintAll = false;
 
-        Rectangle dr = copyRaster.getBounds();
-        Rectangle sr = null;
-        if (currentRaster != null) {
-            sr = currentRaster.getBounds();
-        }
+		Rectangle dr = copyRaster.getBounds();
+		Rectangle sr = null;
+		if (currentRaster != null) {
+			sr = currentRaster.getBounds();
+		}
 
-        // Ensure only one thread works on baseRaster at a time...
-        synchronized (syncRaster) {
-            // System.out.println("Dynamic:");
-            if (repaintAll) {
-                // System.out.println("Repainting All");
-                cr.copyData(copyRaster);
-            } else {
-                java.awt.Graphics2D g2d = null;
-                if (false) {
-                    BufferedImage tmpBI = new BufferedImage
-                        (workingOffScreen.getColorModel(),
-                         copyRaster.createWritableTranslatedChild(0, 0),
-                         workingOffScreen.isAlphaPremultiplied(), null);
-                    g2d = GraphicsUtil.createGraphics(tmpBI);
-                    g2d.translate(-copyRaster.getMinX(),
-                                  -copyRaster.getMinY());
-                }
+		// Ensure only one thread works on baseRaster at a time...
+		synchronized (syncRaster) {
+			// System.out.println("Dynamic:");
+			if (repaintAll) {
+				// System.out.println("Repainting All");
+				cr.copyData(copyRaster);
+			} else {
+				java.awt.Graphics2D g2d = null;
+				if (false) {
+					BufferedImage tmpBI = new BufferedImage(workingOffScreen.getColorModel(),
+							copyRaster.createWritableTranslatedChild(0, 0), workingOffScreen.isAlphaPremultiplied(),
+							null);
+					g2d = GraphicsUtil.createGraphics(tmpBI);
+					g2d.translate(-copyRaster.getMinX(), -copyRaster.getMinY());
+				}
 
+				if ((isDoubleBuffered) && (currentRaster != null) && (damagedAreas != null)) {
+					damagedAreas.subtract(devRLM, COPY_OVERHEAD, COPY_LINE_OVERHEAD);
+					damagedAreas.mergeRects(COPY_OVERHEAD, COPY_LINE_OVERHEAD);
 
-                if ((isDoubleBuffered) &&
-                    (currentRaster != null) &&
-                    (damagedAreas  != null)) {
-                    damagedAreas.subtract(devRLM, COPY_OVERHEAD,
-                                          COPY_LINE_OVERHEAD);
-                    damagedAreas.mergeRects(COPY_OVERHEAD,
-                                            COPY_LINE_OVERHEAD);
+					// color-objects are immutable, so we can reuse this handful of instances
+					Color fillColor = new Color(0, 0, 255, 50);
+					Color borderColor = new Color(0, 0, 0, 50);
 
-                    // color-objects are immutable, so we can reuse this handful of instances
-                    Color fillColor   = new Color( 0, 0, 255, 50 );
-                    Color borderColor = new Color( 0, 0,   0, 50 );
+					for (Rectangle r : damagedAreas) {
+						if (!dr.intersects(r))
+							continue;
+						r = dr.intersection(r);
+						if (sr != null && !sr.intersects(r))
+							continue;
+						r = sr.intersection(r);
+						// System.err.println("Copy: " + r);
+						Raster src = currentRaster.createWritableChild(r.x, r.y, r.width, r.height, r.x, r.y, null);
+						GraphicsUtil.copyData(src, copyRaster);
+						if (g2d != null) {
+							g2d.setPaint(fillColor);
+							g2d.fill(r);
+							g2d.setPaint(borderColor);
+							g2d.draw(r);
+						}
+					}
+				}
 
-                    for (Rectangle r : damagedAreas) {
-                        if (!dr.intersects(r)) continue;
-                        r = dr.intersection(r);
-                        if (sr != null && !sr.intersects(r)) continue;
-                        r = sr.intersection(r);
-                        // System.err.println("Copy: " + r);
-                        Raster src = currentRaster.createWritableChild
-                                (r.x, r.y, r.width, r.height, r.x, r.y, null);
-                        GraphicsUtil.copyData(src, copyRaster);
-                        if (g2d != null) {
-                            g2d.setPaint(fillColor);
-                            g2d.fill(r);
-                            g2d.setPaint(borderColor);
-                            g2d.draw(r);
-                        }
-                    }
-                }
+				Color fillColor = new Color(255, 0, 0, 50);
+				Color borderColor = new Color(0, 0, 0, 50);
 
-                Color fillColor   = new Color( 255, 0, 0, 50 );
-                Color borderColor = new Color(   0, 0, 0, 50 );
+				for (Rectangle r : devRLM) {
+					if (!dr.intersects(r))
+						continue;
+					r = dr.intersection(r);
 
-                for (Rectangle r : devRLM) {
-                    if (!dr.intersects(r)) continue;
-                    r = dr.intersection(r);
+					// System.err.println("Render: " + r);
+					WritableRaster dst = copyRaster.createWritableChild(r.x, r.y, r.width, r.height, r.x, r.y, null);
+					cr.copyData(dst);
+					if (g2d != null) {
+						g2d.setPaint(fillColor);
+						g2d.fill(r);
+						g2d.setPaint(borderColor);
+						g2d.draw(r);
+					}
+				}
+			}
+		}
 
-                    // System.err.println("Render: " + r);
-                    WritableRaster dst = copyRaster.createWritableChild
-                            (r.x, r.y, r.width, r.height, r.x, r.y, null);
-                    cr.copyData(dst);
-                    if (g2d != null) {
-                        g2d.setPaint(fillColor);
-                        g2d.fill(r);
-                        g2d.setPaint(borderColor);
-                        g2d.draw(r);
-                    }
-                }
-            }
-        }
+		if (HaltingThread.hasBeenHalted()) {
+			return;
+		}
 
-        if (HaltingThread.hasBeenHalted()) {
-            return;
-        }
+		// System.out.println("Dmg: " + damagedAreas);
+		// System.out.println("Areas: " + devRLM);
 
-        // System.out.println("Dmg: "   + damagedAreas);
-        // System.out.println("Areas: " + devRLM);
+		// Swap the buffers if the rendering completed cleanly.
+		BufferedImage tmpBI = workingOffScreen;
 
-        // Swap the buffers if the rendering completed cleanly.
-        BufferedImage tmpBI = workingOffScreen;
+		workingBaseRaster = currentBaseRaster;
+		workingRaster = currentRaster;
+		workingOffScreen = currentOffScreen;
 
-        workingBaseRaster = currentBaseRaster;
-        workingRaster     = currentRaster;
-        workingOffScreen  = currentOffScreen;
+		currentRaster = copyRaster;
+		currentBaseRaster = syncRaster;
+		currentOffScreen = tmpBI;
 
-        currentRaster     = copyRaster;
-        currentBaseRaster = syncRaster;
-        currentOffScreen  = tmpBI;
-
-        damagedAreas = devRLM;
-    }
+		damagedAreas = devRLM;
+	}
 }

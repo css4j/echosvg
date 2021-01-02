@@ -31,20 +31,19 @@ import java.awt.RenderingHints;
  * @version $Id$
  */
 public class IdentityTest implements Painter {
-    @Override
-    public void paint(Graphics2D g) {
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                           RenderingHints.VALUE_ANTIALIAS_ON);
+	@Override
+	public void paint(Graphics2D g) {
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g.setPaint(Color.black); // new Color(102, 102, 144));
+		g.setPaint(Color.black); // new Color(102, 102, 144));
 
-        g.translate(10,10);        
-        g.scale(2, 2);        
-        g.scale(0.5, 0.5);
-        g.translate(20,40);
-        g.rotate(0);
-        g.translate(-30,-50);
-        
-        g.fillRect(10,10, 100,80);
-    }
+		g.translate(10, 10);
+		g.scale(2, 2);
+		g.scale(0.5, 0.5);
+		g.translate(20, 40);
+		g.rotate(0);
+		g.translate(-30, -50);
+
+		g.fillRect(10, 10, 100, 80);
+	}
 }

@@ -23,8 +23,8 @@ import java.io.File;
 import javax.swing.filechooser.FileFilter;
 
 /**
- * This implementation of FileFilter will allows SVG files
- * with extention '.svg' or '.svgz'.
+ * This implementation of FileFilter will allows SVG files with extention '.svg'
+ * or '.svgz'.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
@@ -32,30 +32,30 @@ import javax.swing.filechooser.FileFilter;
  * @version $Id$
  */
 public class SVGFileFilter extends FileFilter {
-    /**
-     * Returns true if <code>f</code> is an SVG file
-     */
-    @Override
-    public boolean accept(File f) {
-        boolean accept = false;
-        String fileName = null;
-        if (f != null) {
-            if (f.isDirectory()) {
-                accept = true;
-            } else {
-                fileName = f.getPath().toLowerCase();
-                if (fileName.endsWith(".svg") || fileName.endsWith(".svgz"))
-                    accept = true;
-            }
-        }
-        return accept;
-    }
+	/**
+	 * Returns true if <code>f</code> is an SVG file
+	 */
+	@Override
+	public boolean accept(File f) {
+		boolean accept = false;
+		String fileName = null;
+		if (f != null) {
+			if (f.isDirectory()) {
+				accept = true;
+			} else {
+				fileName = f.getPath().toLowerCase();
+				if (fileName.endsWith(".svg") || fileName.endsWith(".svgz"))
+					accept = true;
+			}
+		}
+		return accept;
+	}
 
-    /**
-     * Returns the file description
-     */
-    @Override
-    public String getDescription() {
-        return ".svg, .svgz";
-    }
+	/**
+	 * Returns the file description
+	 */
+	@Override
+	public String getDescription() {
+		return ".svg, .svgz";
+	}
 }

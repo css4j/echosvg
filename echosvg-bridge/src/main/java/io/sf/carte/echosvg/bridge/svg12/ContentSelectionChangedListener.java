@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.bridge.svg12;
 import java.util.EventListener;
 
 /**
- * The interface for listening to changes in selected nodes on an
- * xbl:content element.
+ * The interface for listening to changes in selected nodes on an xbl:content
+ * element.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -30,10 +30,10 @@ import java.util.EventListener;
  */
 public interface ContentSelectionChangedListener extends EventListener {
 
-    /**
-     * Invoked after an xbl:content element has updated its selected
-     * nodes list.
-     * @param csce the ContentSelectionChangedEvent object
-     */
-    void contentSelectionChanged(ContentSelectionChangedEvent csce);
+	/**
+	 * Invoked after an xbl:content element has updated its selected nodes list.
+	 * 
+	 * @param csce the ContentSelectionChangedEvent object
+	 */
+	void contentSelectionChanged(ContentSelectionChangedEvent csce);
 }

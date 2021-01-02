@@ -18,15 +18,15 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.rendered;
 
-import  java.awt.image.Raster;
+import java.awt.image.Raster;
 
 /**
- * This the generic interface for a source of tiles.  This is used
- * when the cache has a miss.
+ * This the generic interface for a source of tiles. This is used when the cache
+ * has a miss.
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TileGenerator {
-        Raster genTile(int x, int y);
+	Raster genTile(int x, int y);
 }

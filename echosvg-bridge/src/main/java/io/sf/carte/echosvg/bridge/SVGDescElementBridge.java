@@ -27,22 +27,25 @@ package io.sf.carte.echosvg.bridge;
  */
 public class SVGDescElementBridge extends SVGDescriptiveElementBridge {
 
-    /**
-     * Constructs a new bridge for the &lt;desc&gt; element.
-     */
-    public SVGDescElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;desc&gt; element.
+	 */
+	public SVGDescElementBridge() {
+	}
 
-    /**
-     * Returns 'desc'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_DESC_TAG;
-    }
+	/**
+	 * Returns 'desc'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_DESC_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() { return new SVGDescElementBridge(); }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGDescElementBridge();
+	}
 }

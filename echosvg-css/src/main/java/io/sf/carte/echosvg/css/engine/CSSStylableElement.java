@@ -23,49 +23,48 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
- * This interface must be implemented by the DOM elements which needs
- * CSS support.
+ * This interface must be implemented by the DOM elements which needs CSS
+ * support.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface CSSStylableElement extends Element {
-    
-    /**
-     * Returns the computed style of this element/pseudo-element.
-     */
-    StyleMap getComputedStyleMap(String pseudoElement);
 
-    /**
-     * Sets the computed style of this element/pseudo-element.
-     */
-    void setComputedStyleMap(String pseudoElement, StyleMap sm);
+	/**
+	 * Returns the computed style of this element/pseudo-element.
+	 */
+	StyleMap getComputedStyleMap(String pseudoElement);
 
-    /**
-     * Returns the ID of this element.
-     */
-    String getXMLId();
+	/**
+	 * Sets the computed style of this element/pseudo-element.
+	 */
+	void setComputedStyleMap(String pseudoElement, StyleMap sm);
 
-    /**
-     * Returns the class of this element.
-     */
-    String getCSSClass();
+	/**
+	 * Returns the ID of this element.
+	 */
+	String getXMLId();
 
-    /**
-     * Returns the CSS base URL of this element.
-     */
-    ParsedURL getCSSBase();
+	/**
+	 * Returns the class of this element.
+	 */
+	String getCSSClass();
 
-    /**
-     * Tells whether this element is an instance of the given pseudo
-     * class.
-     */
-    boolean isPseudoInstanceOf(String pseudoClass);
+	/**
+	 * Returns the CSS base URL of this element.
+	 */
+	ParsedURL getCSSBase();
 
-    /**
-     * Returns the object that gives access to the underlying
-     * {@link StyleDeclaration} for the override style of this element.
-     */
-    StyleDeclarationProvider getOverrideStyleDeclarationProvider();
+	/**
+	 * Tells whether this element is an instance of the given pseudo class.
+	 */
+	boolean isPseudoInstanceOf(String pseudoClass);
+
+	/**
+	 * Returns the object that gives access to the underlying
+	 * {@link StyleDeclaration} for the override style of this element.
+	 */
+	StyleDeclarationProvider getOverrideStyleDeclarationProvider();
 }

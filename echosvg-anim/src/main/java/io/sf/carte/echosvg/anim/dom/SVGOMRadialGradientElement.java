@@ -34,194 +34,181 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMRadialGradientElement
-    extends    SVGOMGradientElement
-    implements SVGRadialGradientElement {
+public class SVGOMRadialGradientElement extends SVGOMGradientElement implements SVGRadialGradientElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMGradientElement.xmlTraitInformation);
-        t.put(null, SVG_CX_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_CY_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_FX_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_FY_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_R_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_SIZE));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGOMGradientElement.xmlTraitInformation);
+		t.put(null, SVG_CX_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_CY_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_FX_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_FY_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_R_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_SIZE));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'cx' attribute value.
-     */
-    protected SVGOMAnimatedLength cx;
+	/**
+	 * The 'cx' attribute value.
+	 */
+	protected SVGOMAnimatedLength cx;
 
-    /**
-     * The 'cy' attribute value.
-     */
-    protected SVGOMAnimatedLength cy;
+	/**
+	 * The 'cy' attribute value.
+	 */
+	protected SVGOMAnimatedLength cy;
 
-    /**
-     * The 'fx' attribute value.
-     */
-    protected AbstractSVGAnimatedLength fx;
+	/**
+	 * The 'fx' attribute value.
+	 */
+	protected AbstractSVGAnimatedLength fx;
 
-    /**
-     * The 'fy' attribute value.
-     */
-    protected AbstractSVGAnimatedLength fy;
+	/**
+	 * The 'fy' attribute value.
+	 */
+	protected AbstractSVGAnimatedLength fy;
 
-    /**
-     * The 'r' attribute value.
-     */
-    protected SVGOMAnimatedLength r;
+	/**
+	 * The 'r' attribute value.
+	 */
+	protected SVGOMAnimatedLength r;
 
-    /**
-     * Creates a new SVGOMRadialGradientElement object.
-     */
-    protected SVGOMRadialGradientElement() {
-    }
+	/**
+	 * Creates a new SVGOMRadialGradientElement object.
+	 */
+	protected SVGOMRadialGradientElement() {
+	}
 
-    /**
-     * Creates a new SVGOMRadialGradientElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMRadialGradientElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMRadialGradientElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMRadialGradientElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        cx = createLiveAnimatedLength
-            (null, SVG_CX_ATTRIBUTE, SVG_RADIAL_GRADIENT_CX_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-        cy = createLiveAnimatedLength
-            (null, SVG_CY_ATTRIBUTE, SVG_RADIAL_GRADIENT_CY_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-        r = createLiveAnimatedLength
-            (null, SVG_R_ATTRIBUTE, SVG_RADIAL_GRADIENT_R_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.OTHER_LENGTH, false);
-        fx = new AbstractSVGAnimatedLength
-            (this, null, SVG_FX_ATTRIBUTE,
-             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false) {
-                @Override
-                protected String getDefaultValue() {
-                    Attr attr = getAttributeNodeNS(null, SVG_CX_ATTRIBUTE);
-                    if (attr == null) {
-                        return SVG_RADIAL_GRADIENT_CX_DEFAULT_VALUE;
-                    }
-                    return attr.getValue();
-                }
-            };
-        fy = new AbstractSVGAnimatedLength
-            (this, null, SVG_FY_ATTRIBUTE,
-             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false) {
-                @Override
-                protected String getDefaultValue() {
-                    Attr attr = getAttributeNodeNS(null, SVG_CY_ATTRIBUTE);
-                    if (attr == null) {
-                        return SVG_RADIAL_GRADIENT_CY_DEFAULT_VALUE;
-                    }
-                    return attr.getValue();
-                }
-            };
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		cx = createLiveAnimatedLength(null, SVG_CX_ATTRIBUTE, SVG_RADIAL_GRADIENT_CX_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
+		cy = createLiveAnimatedLength(null, SVG_CY_ATTRIBUTE, SVG_RADIAL_GRADIENT_CY_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
+		r = createLiveAnimatedLength(null, SVG_R_ATTRIBUTE, SVG_RADIAL_GRADIENT_R_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.OTHER_LENGTH, false);
+		fx = new AbstractSVGAnimatedLength(this, null, SVG_FX_ATTRIBUTE, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
+				false) {
+			@Override
+			protected String getDefaultValue() {
+				Attr attr = getAttributeNodeNS(null, SVG_CX_ATTRIBUTE);
+				if (attr == null) {
+					return SVG_RADIAL_GRADIENT_CX_DEFAULT_VALUE;
+				}
+				return attr.getValue();
+			}
+		};
+		fy = new AbstractSVGAnimatedLength(this, null, SVG_FY_ATTRIBUTE, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
+				false) {
+			@Override
+			protected String getDefaultValue() {
+				Attr attr = getAttributeNodeNS(null, SVG_CY_ATTRIBUTE);
+				if (attr == null) {
+					return SVG_RADIAL_GRADIENT_CY_DEFAULT_VALUE;
+				}
+				return attr.getValue();
+			}
+		};
 
-        liveAttributeValues.put(null, SVG_FX_ATTRIBUTE, fx);
-        liveAttributeValues.put(null, SVG_FY_ATTRIBUTE, fy);
-        AnimatedAttributeListener l =
-            ((SVGOMDocument) ownerDocument).getAnimatedAttributeListener();
-        fx.addAnimatedAttributeListener(l);
-        fy.addAnimatedAttributeListener(l);
-    }
+		liveAttributeValues.put(null, SVG_FX_ATTRIBUTE, fx);
+		liveAttributeValues.put(null, SVG_FY_ATTRIBUTE, fy);
+		AnimatedAttributeListener l = ((SVGOMDocument) ownerDocument).getAnimatedAttributeListener();
+		fx.addAnimatedAttributeListener(l);
+		fy.addAnimatedAttributeListener(l);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_RADIAL_GRADIENT_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_RADIAL_GRADIENT_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGRadialGradientElement#getCx()}.
-     */
-    @Override
-    public SVGAnimatedLength getCx() {
-        return cx;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGRadialGradientElement#getCx()}.
+	 */
+	@Override
+	public SVGAnimatedLength getCx() {
+		return cx;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGRadialGradientElement#getCy()}.
-     */
-    @Override
-    public SVGAnimatedLength getCy() {
-        return cy;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGRadialGradientElement#getCy()}.
+	 */
+	@Override
+	public SVGAnimatedLength getCy() {
+		return cy;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGRadialGradientElement#getR()}.
-     */
-    @Override
-    public SVGAnimatedLength getR() {
-        return r;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGRadialGradientElement#getR()}.
+	 */
+	@Override
+	public SVGAnimatedLength getR() {
+		return r;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGRadialGradientElement#getFx()}.
-     */
-    @Override
-    public SVGAnimatedLength getFx() {
-        return fx;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGRadialGradientElement#getFx()}.
+	 */
+	@Override
+	public SVGAnimatedLength getFx() {
+		return fx;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGRadialGradientElement#getFy()}.
-     */
-    @Override
-    public SVGAnimatedLength getFy() {
-        return fy;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGRadialGradientElement#getFy()}.
+	 */
+	@Override
+	public SVGAnimatedLength getFy() {
+		return fy;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMRadialGradientElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMRadialGradientElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

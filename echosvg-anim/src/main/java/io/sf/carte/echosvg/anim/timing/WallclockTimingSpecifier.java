@@ -29,50 +29,49 @@ import java.util.Calendar;
  */
 public class WallclockTimingSpecifier extends TimingSpecifier {
 
-    /**
-     * The wallclock time.
-     */
-    protected Calendar time;
+	/**
+	 * The wallclock time.
+	 */
+	protected Calendar time;
 
-    /**
-     * The instance time.
-     */
-    protected InstanceTime instance;
+	/**
+	 * The instance time.
+	 */
+	protected InstanceTime instance;
 
-    /**
-     * Creates a new WallclockTimingSpecifier object.
-     */
-    public WallclockTimingSpecifier(TimedElement owner, boolean isBegin,
-                                    Calendar time) {
-        super(owner, isBegin);
-        this.time = time;
-    }
-    
-    /**
-     * Returns a string representation of this timing specifier.
-     */
-    @Override
-    public String toString() {
-        return "wallclock(" + time.toString() + ")";
-    }
+	/**
+	 * Creates a new WallclockTimingSpecifier object.
+	 */
+	public WallclockTimingSpecifier(TimedElement owner, boolean isBegin, Calendar time) {
+		super(owner, isBegin);
+		this.time = time;
+	}
 
-    /**
-     * Initializes this timing specifier by adding the initial instance time
-     * to the owner's instance time list or setting up any event listeners.
-     */
-    @Override
-    public void initialize() {
-        float t = owner.getRoot().convertWallclockTime(time);
-        instance = new InstanceTime(this, t, false);
-        owner.addInstanceTime(instance, isBegin);
-    }
+	/**
+	 * Returns a string representation of this timing specifier.
+	 */
+	@Override
+	public String toString() {
+		return "wallclock(" + time.toString() + ")";
+	}
 
-    /**
-     * Returns whether this timing specifier is event-like (i.e., if it is
-     * an eventbase, accesskey or a repeat timing specifier).
-     */
-    @Override
-    public boolean isEventCondition() {
-        return false;
-    }
+	/**
+	 * Initializes this timing specifier by adding the initial instance time to the
+	 * owner's instance time list or setting up any event listeners.
+	 */
+	@Override
+	public void initialize() {
+		float t = owner.getRoot().convertWallclockTime(time);
+		instance = new InstanceTime(this, t, false);
+		owner.addInstanceTime(instance, isBegin);
+	}
+
+	/**
+	 * Returns whether this timing specifier is event-like (i.e., if it is an
+	 * eventbase, accesskey or a repeat timing specifier).
+	 */
+	@Override
+	public boolean isEventCondition() {
+		return false;
+	}
 }

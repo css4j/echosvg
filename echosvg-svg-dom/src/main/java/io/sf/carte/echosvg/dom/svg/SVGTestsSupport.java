@@ -30,41 +30,37 @@ import org.w3c.dom.svg.SVGStringList;
  */
 public class SVGTestsSupport {
 
-    /**
-     * Creates a new SVGTestsSupport object.
-     */
-    public SVGTestsSupport() {
-    }
+	/**
+	 * Creates a new SVGTestsSupport object.
+	 */
+	public SVGTestsSupport() {
+	}
 
-    /**
-     * To implements {@link org.w3c.dom.svg.SVGTests#getRequiredFeatures()}.
-     */
-    public static SVGStringList getRequiredFeatures(Element elt) {
-        throw new UnsupportedOperationException
-            ("SVGTests.getRequiredFeatures is not implemented"); // XXX
-    }
+	/**
+	 * To implements {@link org.w3c.dom.svg.SVGTests#getRequiredFeatures()}.
+	 */
+	public static SVGStringList getRequiredFeatures(Element elt) {
+		throw new UnsupportedOperationException("SVGTests.getRequiredFeatures is not implemented"); // XXX
+	}
 
-    /**
-     * To implements {@link org.w3c.dom.svg.SVGTests#getRequiredExtensions()}.
-     */
-    public static SVGStringList getRequiredExtensions(Element elt) {
-        throw new UnsupportedOperationException
-            ("SVGTests.getRequiredExtensions is not implemented"); // XXX
-    }
+	/**
+	 * To implements {@link org.w3c.dom.svg.SVGTests#getRequiredExtensions()}.
+	 */
+	public static SVGStringList getRequiredExtensions(Element elt) {
+		throw new UnsupportedOperationException("SVGTests.getRequiredExtensions is not implemented"); // XXX
+	}
 
-    /**
-     * To implements {@link org.w3c.dom.svg.SVGTests#getSystemLanguage()}.
-     */
-    public static SVGStringList getSystemLanguage(Element elt) {
-        throw new UnsupportedOperationException
-            ("SVGTests.getSystemLanguage is not implemented"); // XXX
-    }
+	/**
+	 * To implements {@link org.w3c.dom.svg.SVGTests#getSystemLanguage()}.
+	 */
+	public static SVGStringList getSystemLanguage(Element elt) {
+		throw new UnsupportedOperationException("SVGTests.getSystemLanguage is not implemented"); // XXX
+	}
 
-    /**
-     * To implements {@link org.w3c.dom.svg.SVGTests#hasExtension(String)}.
-     */
-    public static boolean hasExtension(Element elt, String extension) {
-        throw new UnsupportedOperationException
-            ("SVGTests.hasExtension is not implemented"); // XXX
-    }
+	/**
+	 * To implements {@link org.w3c.dom.svg.SVGTests#hasExtension(String)}.
+	 */
+	public static boolean hasExtension(Element elt, String extension) {
+		throw new UnsupportedOperationException("SVGTests.hasExtension is not implemented"); // XXX
+	}
 }

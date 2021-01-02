@@ -23,8 +23,8 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.bridge.BridgeUpdateHandler;
 
 /**
- * A BridgeUpdateHandler interface for SVG 1.2 specific events.  This is
- * for XBL event notification.
+ * A BridgeUpdateHandler interface for SVG 1.2 specific events. This is for XBL
+ * event notification.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -32,14 +32,14 @@ import io.sf.carte.echosvg.bridge.BridgeUpdateHandler;
  */
 public interface SVG12BridgeUpdateHandler extends BridgeUpdateHandler {
 
-    /**
-     * Invoked when a bindable element's binding has changed.
-     */
-    void handleBindingEvent(Element bindableElement, Element shadowTree);
+	/**
+	 * Invoked when a bindable element's binding has changed.
+	 */
+	void handleBindingEvent(Element bindableElement, Element shadowTree);
 
-    /**
-     * Invoked when the xblChildNodes property has changed because a
-     * descendant xbl:content element has updated its selected nodes.
-     */
-    void handleContentSelectionChangedEvent(ContentSelectionChangedEvent csce);
+	/**
+	 * Invoked when the xblChildNodes property has changed because a descendant
+	 * xbl:content element has updated its selected nodes.
+	 */
+	void handleContentSelectionChangedEvent(ContentSelectionChangedEvent csce);
 }

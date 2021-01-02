@@ -24,59 +24,53 @@ import java.awt.image.BufferedImageOp;
 import org.w3c.dom.Element;
 
 /**
- * Utility class that converts an custom BufferedImageOp object into
- * an equivalent SVG filter.
+ * Utility class that converts an custom BufferedImageOp object into an
+ * equivalent SVG filter.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see                io.sf.carte.echosvg.svggen.SVGBufferedImageOp
+ * @see io.sf.carte.echosvg.svggen.SVGBufferedImageOp
  */
 public class SVGCustomBufferedImageOp extends AbstractSVGFilterConverter {
-    private static final String ERROR_EXTENSION =
-        "SVGCustomBufferedImageOp:: ExtensionHandler could not convert filter";
+	private static final String ERROR_EXTENSION = "SVGCustomBufferedImageOp:: ExtensionHandler could not convert filter";
 
-    /**
-     * @param generatorContext for use by SVGCustomBufferedImageOp to
-     * build Elements.
-     */
-    public SVGCustomBufferedImageOp(SVGGeneratorContext generatorContext) {
-        super(generatorContext);
-    }
+	/**
+	 * @param generatorContext for use by SVGCustomBufferedImageOp to build
+	 *                         Elements.
+	 */
+	public SVGCustomBufferedImageOp(SVGGeneratorContext generatorContext) {
+		super(generatorContext);
+	}
 
-    /**
-     * @param filter the BufferedImageOp object to convert to SVG
-     * @param filterRect Rectangle, in device space, that defines the area
-     *        to which filtering applies. May be null, meaning that the
-     *        area is undefined.
-     * @return an SVGFilterDescriptor mapping the SVG
-     *         BufferedImageOp equivalent to the input BufferedImageOp.
-     */
-    @Override
-    public SVGFilterDescriptor toSVG(BufferedImageOp filter,
-                                     Rectangle filterRect) {
-        SVGFilterDescriptor filterDesc =
-            descMap.get(filter);
+	/**
+	 * @param filter     the BufferedImageOp object to convert to SVG
+	 * @param filterRect Rectangle, in device space, that defines the area to which
+	 *                   filtering applies. May be null, meaning that the area is
+	 *                   undefined.
+	 * @return an SVGFilterDescriptor mapping the SVG BufferedImageOp equivalent to
+	 *         the input BufferedImageOp.
+	 */
+	@Override
+	public SVGFilterDescriptor toSVG(BufferedImageOp filter, Rectangle filterRect) {
+		SVGFilterDescriptor filterDesc = descMap.get(filter);
 
-        if (filterDesc == null) {
-            // First time this filter is used. Request handler
-            // to do the convertion
-            filterDesc =
-                generatorContext.extensionHandler.
-                handleFilter(filter, filterRect, generatorContext);
+		if (filterDesc == null) {
+			// First time this filter is used. Request handler
+			// to do the convertion
+			filterDesc = generatorContext.extensionHandler.handleFilter(filter, filterRect, generatorContext);
 
-            if (filterDesc != null) {
-                Element def = filterDesc.getDef();
-                if(def != null)
-                    defSet.add(def);
-                descMap.put(filter, filterDesc);
-            } else {
-                System.err.println(ERROR_EXTENSION);
-            }
-        }
+			if (filterDesc != null) {
+				Element def = filterDesc.getDef();
+				if (def != null)
+					defSet.add(def);
+				descMap.put(filter, filterDesc);
+			} else {
+				System.err.println(ERROR_EXTENSION);
+			}
+		}
 
-        return filterDesc;
-    }
+		return filterDesc;
+	}
 
 }
-

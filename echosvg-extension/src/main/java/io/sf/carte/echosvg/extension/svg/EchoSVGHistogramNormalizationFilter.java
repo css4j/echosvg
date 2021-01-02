@@ -26,28 +26,27 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.FilterColorInterpolation;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public interface EchoSVGHistogramNormalizationFilter
-    extends FilterColorInterpolation {
+public interface EchoSVGHistogramNormalizationFilter extends FilterColorInterpolation {
 
-    /**
-     * Returns the source to be offset.
-     */
-    Filter getSource();
+	/**
+	 * Returns the source to be offset.
+	 */
+	Filter getSource();
 
-    /**
-     * Sets the source to be offset.
-     * @param src image to offset.
-     */
-    void setSource(Filter src);
+	/**
+	 * Sets the source to be offset.
+	 * 
+	 * @param src image to offset.
+	 */
+	void setSource(Filter src);
 
-    /**
-     * Returns the trim percent for this normalization.
-     */
-    float getTrim();
+	/**
+	 * Returns the trim percent for this normalization.
+	 */
+	float getTrim();
 
-
-    /**
-     * Sets the trim percent for this normalization.
-     */
-    void setTrim(float trim);
+	/**
+	 * Sets the trim percent for this normalization.
+	 */
+	void setTrim(float trim);
 }

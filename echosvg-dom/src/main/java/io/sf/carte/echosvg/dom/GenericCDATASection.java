@@ -29,77 +29,77 @@ import org.w3c.dom.Text;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class GenericCDATASection
-        extends AbstractText
-        implements CDATASection {
+public class GenericCDATASection extends AbstractText implements CDATASection {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * Is this element immutable?
-     */
-    protected boolean readonly;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Is this element immutable?
+	 */
+	protected boolean readonly;
 
-    /**
-     * Creates a new CDATASection object.
-     */
-    protected GenericCDATASection() {
-    }
+	/**
+	 * Creates a new CDATASection object.
+	 */
+	protected GenericCDATASection() {
+	}
 
-    /**
-     * Creates a new CDATASection object.
-     */
-    public GenericCDATASection(String value, AbstractDocument owner) {
-        ownerDocument = owner;
-        setNodeValue(value);
-    }
+	/**
+	 * Creates a new CDATASection object.
+	 */
+	public GenericCDATASection(String value, AbstractDocument owner) {
+		ownerDocument = owner;
+		setNodeValue(value);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
-     * @return "#cdata-section".
-     */
-    @Override
-    public String getNodeName() {
-        return "#cdata-section";
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
+	 * 
+	 * @return "#cdata-section".
+	 */
+	@Override
+	public String getNodeName() {
+		return "#cdata-section";
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
-     * @return {@link org.w3c.dom.Node#CDATA_SECTION_NODE}
-     */
-    @Override
-    public short getNodeType() {
-        return CDATA_SECTION_NODE;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
+	 * 
+	 * @return {@link org.w3c.dom.Node#CDATA_SECTION_NODE}
+	 */
+	@Override
+	public short getNodeType() {
+		return CDATA_SECTION_NODE;
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return readonly;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-        readonly = v;
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+		readonly = v;
+	}
 
-    /**
-     * Creates a text node of the current type.
-     */
-    @Override
-    protected Text createTextNode(String text) {
-        return getOwnerDocument().createCDATASection(text);
-    }
+	/**
+	 * Creates a text node of the current type.
+	 */
+	@Override
+	protected Text createTextNode(String text) {
+		return getOwnerDocument().createCDATASection(text);
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new GenericCDATASection();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new GenericCDATASection();
+	}
 }

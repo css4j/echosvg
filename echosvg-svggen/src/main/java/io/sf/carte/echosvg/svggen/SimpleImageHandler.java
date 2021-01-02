@@ -26,173 +26,137 @@ import java.awt.image.renderable.RenderableImage;
 import org.w3c.dom.Element;
 
 /**
- * Implements the <code>GenericImageHandler</code> interface and only
- * uses &lt;image&gt; elements. This class delegates to the
- * <code>ImageHandler</code> interface for handling the xlink:href
- * attribute on the elements it creates.
+ * Implements the <code>GenericImageHandler</code> interface and only uses
+ * &lt;image&gt; elements. This class delegates to the <code>ImageHandler</code>
+ * interface for handling the xlink:href attribute on the elements it creates.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SimpleImageHandler implements GenericImageHandler, SVGSyntax, ErrorConstants {
-    // duplicate the string here to remove dependencies on
-    // io.sf.carte.echosvg.dom.util.XLinkSupport
-    static final String XLINK_NAMESPACE_URI =
-        "http://www.w3.org/1999/xlink";
+	// duplicate the string here to remove dependencies on
+	// io.sf.carte.echosvg.dom.util.XLinkSupport
+	static final String XLINK_NAMESPACE_URI = "http://www.w3.org/1999/xlink";
 
-    /**
-     * <code>ImageHandler</code> which handles xlink:href attribute setting
-     */
-    protected ImageHandler imageHandler;
+	/**
+	 * <code>ImageHandler</code> which handles xlink:href attribute setting
+	 */
+	protected ImageHandler imageHandler;
 
-    /**
-     * @param imageHandler ImageHandler handling the xlink:href on the 
-     *        &lt;image&gt; elements this GenericImageHandler implementation
-     *        creates.
-     */
-    public SimpleImageHandler(ImageHandler imageHandler){
-        if (imageHandler == null){
-            throw new IllegalArgumentException();
-        }
+	/**
+	 * @param imageHandler ImageHandler handling the xlink:href on the &lt;image&gt;
+	 *                     elements this GenericImageHandler implementation creates.
+	 */
+	public SimpleImageHandler(ImageHandler imageHandler) {
+		if (imageHandler == null) {
+			throw new IllegalArgumentException();
+		}
 
-        this.imageHandler = imageHandler;
-    }
+		this.imageHandler = imageHandler;
+	}
 
-    /**
-     * This <code>GenericImageHandler</code> implementation does not
-     * need to interact with the DOMTreeManager.
-     */
-    @Override
-    public void setDOMTreeManager(DOMTreeManager domTreeManager){
-    }
+	/**
+	 * This <code>GenericImageHandler</code> implementation does not need to
+	 * interact with the DOMTreeManager.
+	 */
+	@Override
+	public void setDOMTreeManager(DOMTreeManager domTreeManager) {
+	}
 
-    /**
-     * Creates an Element which can refer to an image.
-     * Note that no assumptions should be made by the caller about the
-     * corresponding SVG tag.
-     */
-    @Override
-    public Element createElement(SVGGeneratorContext generatorContext) {
-        // Create a DOM Element in SVG namespace to refer to an image
-        Element imageElement =
-            generatorContext.getDOMFactory().createElementNS
-            (SVG_NAMESPACE_URI, SVG_IMAGE_TAG);
+	/**
+	 * Creates an Element which can refer to an image. Note that no assumptions
+	 * should be made by the caller about the corresponding SVG tag.
+	 */
+	@Override
+	public Element createElement(SVGGeneratorContext generatorContext) {
+		// Create a DOM Element in SVG namespace to refer to an image
+		Element imageElement = generatorContext.getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_IMAGE_TAG);
 
-        return imageElement;
-    }
+		return imageElement;
+	}
 
-    /**
-     * The handler sets the xlink:href tag and returns a transform
-     */
-    @Override
-    public AffineTransform handleImage(Image image,
-                                       Element imageElement,
-                                       int x, int y,
-                                       int width, int height,
-                                       SVGGeneratorContext generatorContext) {
+	/**
+	 * The handler sets the xlink:href tag and returns a transform
+	 */
+	@Override
+	public AffineTransform handleImage(Image image, Element imageElement, int x, int y, int width, int height,
+			SVGGeneratorContext generatorContext) {
 
-        int imageWidth      = image.getWidth(null);
-        int imageHeight     = image.getHeight(null);
-        if(imageWidth == 0 || imageHeight == 0 ||
-           width == 0 || height == 0) {
+		int imageWidth = image.getWidth(null);
+		int imageHeight = image.getHeight(null);
+		if (imageWidth == 0 || imageHeight == 0 || width == 0 || height == 0) {
 
-            // Forget about it
-            handleEmptyImage(imageElement);
+			// Forget about it
+			handleEmptyImage(imageElement);
 
-        } else {
-            imageHandler.handleImage(image, imageElement, generatorContext);
-            setImageAttributes(imageElement, x, y, width, height,
-                               generatorContext);
-        }
-        return null;
-    }
+		} else {
+			imageHandler.handleImage(image, imageElement, generatorContext);
+			setImageAttributes(imageElement, x, y, width, height, generatorContext);
+		}
+		return null;
+	}
 
-    /**
-     * The handler sets the xlink:href tag and returns a transform
-     */
-    @Override
-    public AffineTransform handleImage(RenderedImage image,
-                                       Element imageElement,
-                                       int x, int y,
-                                       int width, int height,
-                                       SVGGeneratorContext generatorContext) {
+	/**
+	 * The handler sets the xlink:href tag and returns a transform
+	 */
+	@Override
+	public AffineTransform handleImage(RenderedImage image, Element imageElement, int x, int y, int width, int height,
+			SVGGeneratorContext generatorContext) {
 
-        int imageWidth      = image.getWidth();
-        int imageHeight     = image.getHeight();
+		int imageWidth = image.getWidth();
+		int imageHeight = image.getHeight();
 
-        if(imageWidth == 0 || imageHeight == 0 ||
-           width == 0 || height == 0) {
+		if (imageWidth == 0 || imageHeight == 0 || width == 0 || height == 0) {
 
-            // Forget about it
-            handleEmptyImage(imageElement);
+			// Forget about it
+			handleEmptyImage(imageElement);
 
-        } else {
-            imageHandler.handleImage(image, imageElement, generatorContext);
-            setImageAttributes(imageElement, x, y, width, height, 
-                               generatorContext);
-        }
-        return null;
-    }
+		} else {
+			imageHandler.handleImage(image, imageElement, generatorContext);
+			setImageAttributes(imageElement, x, y, width, height, generatorContext);
+		}
+		return null;
+	}
 
-    /**
-     * The handler sets the xlink:href tag and returns a transform
-     */
-    @Override
-    public AffineTransform handleImage(RenderableImage image,
-                                       Element imageElement,
-                                       double x, double y,
-                                       double width, double height,
-                                       SVGGeneratorContext generatorContext) {
+	/**
+	 * The handler sets the xlink:href tag and returns a transform
+	 */
+	@Override
+	public AffineTransform handleImage(RenderableImage image, Element imageElement, double x, double y, double width,
+			double height, SVGGeneratorContext generatorContext) {
 
-        double imageWidth   = image.getWidth();
-        double imageHeight  = image.getHeight();
+		double imageWidth = image.getWidth();
+		double imageHeight = image.getHeight();
 
-        if(imageWidth == 0 || imageHeight == 0 ||
-           width == 0 || height == 0) {
+		if (imageWidth == 0 || imageHeight == 0 || width == 0 || height == 0) {
 
-            // Forget about it
-            handleEmptyImage(imageElement);
+			// Forget about it
+			handleEmptyImage(imageElement);
 
-        } else {
-            imageHandler.handleImage(image, imageElement, generatorContext);
-            setImageAttributes(imageElement, x, y, width, height, generatorContext);
-        }
-        return null;
-    }
+		} else {
+			imageHandler.handleImage(image, imageElement, generatorContext);
+			setImageAttributes(imageElement, x, y, width, height, generatorContext);
+		}
+		return null;
+	}
 
-    /**
-     * Sets the x/y/width/height attributes on the &lt;image&gt; 
-     * element.
-     */
-    protected void setImageAttributes(Element imageElement,
-                                      double x, 
-                                      double y,
-                                      double width,
-                                      double height,
-                                      SVGGeneratorContext generatorContext) {
-        imageElement.setAttributeNS(null,
-                                    SVG_X_ATTRIBUTE,
-                                    generatorContext.doubleString(x));
-        imageElement.setAttributeNS(null,
-                                    SVG_Y_ATTRIBUTE,
-                                    generatorContext.doubleString(y));
-        imageElement.setAttributeNS(null,
-                                    SVG_WIDTH_ATTRIBUTE,
-                                    generatorContext.doubleString(width));
-        imageElement.setAttributeNS(null,
-                                    SVG_HEIGHT_ATTRIBUTE,
-                                    generatorContext.doubleString(height));
-        imageElement.setAttributeNS(null,
-                                    SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
-                                    SVG_NONE_VALUE);
-    }
-              
-    protected void handleEmptyImage(Element imageElement) {
-        imageElement.setAttributeNS(XLINK_NAMESPACE_URI,
-                                    XLINK_HREF_QNAME, "");
-        imageElement.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, "0");
-        imageElement.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, "0");
-    }
+	/**
+	 * Sets the x/y/width/height attributes on the &lt;image&gt; element.
+	 */
+	protected void setImageAttributes(Element imageElement, double x, double y, double width, double height,
+			SVGGeneratorContext generatorContext) {
+		imageElement.setAttributeNS(null, SVG_X_ATTRIBUTE, generatorContext.doubleString(x));
+		imageElement.setAttributeNS(null, SVG_Y_ATTRIBUTE, generatorContext.doubleString(y));
+		imageElement.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, generatorContext.doubleString(width));
+		imageElement.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, generatorContext.doubleString(height));
+		imageElement.setAttributeNS(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE, SVG_NONE_VALUE);
+	}
+
+	protected void handleEmptyImage(Element imageElement) {
+		imageElement.setAttributeNS(XLINK_NAMESPACE_URI, XLINK_HREF_QNAME, "");
+		imageElement.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, "0");
+		imageElement.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, "0");
+	}
 
 }

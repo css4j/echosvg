@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.rendered;
 
-
-
 import java.awt.Transparency;
 import java.awt.color.ColorSpace;
 import java.awt.image.ComponentColorModel;
@@ -37,119 +35,109 @@ import io.sf.carte.echosvg.ext.awt.ColorSpaceHintKey;
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
- * @version $Id$ */
+ * @version $Id$
+ */
 public class FilterAsAlphaRed extends AbstractRed {
 
-    /**
-     * Construct an alpah channel from the given src, according to
-     * the SVG masking rules.
-     *
-     * @param src The image to convert to an alpha channel (mask image)
-     */
-    public FilterAsAlphaRed(CachableRed src) {
-        super(new Any2LumRed(src),src.getBounds(), 
-              new ComponentColorModel
-                  (ColorSpace.getInstance(ColorSpace.CS_GRAY),
-                   new int [] {8}, false, false,
-                   Transparency.OPAQUE, 
-                   DataBuffer.TYPE_BYTE),
-              new PixelInterleavedSampleModel
-                  (DataBuffer.TYPE_BYTE, 
-                   src.getSampleModel().getWidth(),
-                   src.getSampleModel().getHeight(),
-                   1, src.getSampleModel().getWidth(),
-                   new int [] { 0 }),
-              src.getTileGridXOffset(),
-              src.getTileGridYOffset(),
-              null);
+	/**
+	 * Construct an alpah channel from the given src, according to the SVG masking
+	 * rules.
+	 *
+	 * @param src The image to convert to an alpha channel (mask image)
+	 */
+	public FilterAsAlphaRed(CachableRed src) {
+		super(new Any2LumRed(src), src.getBounds(),
+				new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_GRAY), new int[] { 8 }, false, false,
+						Transparency.OPAQUE, DataBuffer.TYPE_BYTE),
+				new PixelInterleavedSampleModel(DataBuffer.TYPE_BYTE, src.getSampleModel().getWidth(),
+						src.getSampleModel().getHeight(), 1, src.getSampleModel().getWidth(), new int[] { 0 }),
+				src.getTileGridXOffset(), src.getTileGridYOffset(), null);
 
-        props.put(ColorSpaceHintKey.PROPERTY_COLORSPACE,
-                  ColorSpaceHintKey.VALUE_COLORSPACE_ALPHA);
-    }
+		props.put(ColorSpaceHintKey.PROPERTY_COLORSPACE, ColorSpaceHintKey.VALUE_COLORSPACE_ALPHA);
+	}
 
-    @Override
-    public WritableRaster copyData(WritableRaster wr) {
-        // Get my source.
-        CachableRed srcRed = (CachableRed)getSources().get(0);
+	@Override
+	public WritableRaster copyData(WritableRaster wr) {
+		// Get my source.
+		CachableRed srcRed = (CachableRed) getSources().get(0);
 
-        SampleModel sm = srcRed.getSampleModel();
-        if (sm.getNumBands() == 1)
-            // Already one band of data so we just use it...
-            return srcRed.copyData(wr);
+		SampleModel sm = srcRed.getSampleModel();
+		if (sm.getNumBands() == 1)
+			// Already one band of data so we just use it...
+			return srcRed.copyData(wr);
 
-        // Two band case so we need to multiply them...
-        // Note: Our source will always have either one or two bands
-        // since we insert an Any2Lum transform before ourself in the
-        // rendering chain.
+		// Two band case so we need to multiply them...
+		// Note: Our source will always have either one or two bands
+		// since we insert an Any2Lum transform before ourself in the
+		// rendering chain.
 
-        Raster srcRas = srcRed.getData(wr.getBounds());
-        PixelInterleavedSampleModel srcSM;
-        srcSM = (PixelInterleavedSampleModel)srcRas.getSampleModel();
+		Raster srcRas = srcRed.getData(wr.getBounds());
+		PixelInterleavedSampleModel srcSM;
+		srcSM = (PixelInterleavedSampleModel) srcRas.getSampleModel();
 
-        DataBufferByte srcDB = (DataBufferByte)srcRas.getDataBuffer();
-        byte []        src   = srcDB.getData();
-        
-        PixelInterleavedSampleModel dstSM;
-        dstSM = (PixelInterleavedSampleModel)wr.getSampleModel();
+		DataBufferByte srcDB = (DataBufferByte) srcRas.getDataBuffer();
+		byte[] src = srcDB.getData();
 
-        DataBufferByte dstDB = (DataBufferByte)wr.getDataBuffer();
-        byte []        dst   = dstDB.getData();
+		PixelInterleavedSampleModel dstSM;
+		dstSM = (PixelInterleavedSampleModel) wr.getSampleModel();
 
-        int srcX0 = srcRas.getMinX()-srcRas.getSampleModelTranslateX();
-        int srcY0 = srcRas.getMinY()-srcRas.getSampleModelTranslateY();
+		DataBufferByte dstDB = (DataBufferByte) wr.getDataBuffer();
+		byte[] dst = dstDB.getData();
 
-        int dstX0 = wr.getMinX()-wr.getSampleModelTranslateX();
-        int dstX1 = dstX0+wr.getWidth()-1;
-        int dstY0 = wr.getMinY()-wr.getSampleModelTranslateY();
+		int srcX0 = srcRas.getMinX() - srcRas.getSampleModelTranslateX();
+		int srcY0 = srcRas.getMinY() - srcRas.getSampleModelTranslateY();
 
-        int    srcStep = srcSM.getPixelStride();
-        int [] offsets = srcSM.getBandOffsets();
-        int    srcLOff = offsets[0];
-        int    srcAOff = offsets[1];
+		int dstX0 = wr.getMinX() - wr.getSampleModelTranslateX();
+		int dstX1 = dstX0 + wr.getWidth() - 1;
+		int dstY0 = wr.getMinY() - wr.getSampleModelTranslateY();
 
-        if (srcRed.getColorModel().isAlphaPremultiplied()) {
-            // Lum is already multiplied by alpha so we just copy lum channel.
-            for (int y=0; y<srcRas.getHeight(); y++) {
-                int srcI  = srcDB.getOffset() + srcSM.getOffset(srcX0,  srcY0);
-                int dstI  = dstDB.getOffset() + dstSM.getOffset(dstX0,  dstY0);
-                int dstE  = dstDB.getOffset() + dstSM.getOffset(dstX1+1,dstY0);
+		int srcStep = srcSM.getPixelStride();
+		int[] offsets = srcSM.getBandOffsets();
+		int srcLOff = offsets[0];
+		int srcAOff = offsets[1];
 
-                srcI += srcLOff; // Go to Lum Channel (already mult by alpha).
+		if (srcRed.getColorModel().isAlphaPremultiplied()) {
+			// Lum is already multiplied by alpha so we just copy lum channel.
+			for (int y = 0; y < srcRas.getHeight(); y++) {
+				int srcI = srcDB.getOffset() + srcSM.getOffset(srcX0, srcY0);
+				int dstI = dstDB.getOffset() + dstSM.getOffset(dstX0, dstY0);
+				int dstE = dstDB.getOffset() + dstSM.getOffset(dstX1 + 1, dstY0);
 
-                while (dstI < dstE) {
-                    dst[dstI++] = src[srcI];
-                        srcI += srcStep; // Go to next pixel
-                }
-                srcY0++;
-                dstY0++;
-            }
-        }
-        else {
-            // This allows me to pre-adjust my index by srcLOff
-            // Then only add the offset for srcAOff
-            srcAOff = srcAOff-srcLOff;
+				srcI += srcLOff; // Go to Lum Channel (already mult by alpha).
 
-            for (int y=0; y<srcRas.getHeight(); y++) {
-                int srcI  = srcDB.getOffset() + srcSM.getOffset(srcX0,  srcY0);
-                int dstI  = dstDB.getOffset() + dstSM.getOffset(dstX0,  dstY0);
-                int dstE  = dstDB.getOffset() + dstSM.getOffset(dstX1+1,dstY0);
+				while (dstI < dstE) {
+					dst[dstI++] = src[srcI];
+					srcI += srcStep; // Go to next pixel
+				}
+				srcY0++;
+				dstY0++;
+			}
+		} else {
+			// This allows me to pre-adjust my index by srcLOff
+			// Then only add the offset for srcAOff
+			srcAOff = srcAOff - srcLOff;
 
-                srcI += srcLOff;
+			for (int y = 0; y < srcRas.getHeight(); y++) {
+				int srcI = srcDB.getOffset() + srcSM.getOffset(srcX0, srcY0);
+				int dstI = dstDB.getOffset() + dstSM.getOffset(dstX0, dstY0);
+				int dstE = dstDB.getOffset() + dstSM.getOffset(dstX1 + 1, dstY0);
 
-                while (dstI < dstE) {
-                    int sl = (src[srcI])&0xFF; // LOff already included
-                    int sa = (src[srcI+srcAOff])&0xFF;
-                    // the + 0x80 forces proper rounding.
-                    dst[dstI++] = (byte)((sl*sa+0x80)>>8);
+				srcI += srcLOff;
 
-                    srcI+= srcStep; //  next pixel
-                }
-                srcY0++;
-                dstY0++;
-            }
-        }
+				while (dstI < dstE) {
+					int sl = (src[srcI]) & 0xFF; // LOff already included
+					int sa = (src[srcI + srcAOff]) & 0xFF;
+					// the + 0x80 forces proper rounding.
+					dst[dstI++] = (byte) ((sl * sa + 0x80) >> 8);
 
-        return wr;
-    }
+					srcI += srcStep; // next pixel
+				}
+				srcY0++;
+				dstY0++;
+			}
+		}
 
-}    
+		return wr;
+	}
+
+}

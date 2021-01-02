@@ -33,154 +33,142 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMForeignObjectElement
-    extends    SVGGraphicsElement
-    implements SVGForeignObjectElement {
+public class SVGOMForeignObjectElement extends SVGGraphicsElement implements SVGForeignObjectElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGGraphicsElement.xmlTraitInformation);
-        t.put(null, SVG_X_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_Y_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_WIDTH_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_HEIGHT_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGGraphicsElement.xmlTraitInformation);
+		t.put(null, SVG_X_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_Y_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_WIDTH_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_HEIGHT_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'x' attribute value.
-     */
-    protected SVGOMAnimatedLength x;
+	/**
+	 * The 'x' attribute value.
+	 */
+	protected SVGOMAnimatedLength x;
 
-    /**
-     * The 'y' attribute value.
-     */
-    protected SVGOMAnimatedLength y;
+	/**
+	 * The 'y' attribute value.
+	 */
+	protected SVGOMAnimatedLength y;
 
-    /**
-     * The 'width' attribute value.
-     */
-    protected SVGOMAnimatedLength width;
+	/**
+	 * The 'width' attribute value.
+	 */
+	protected SVGOMAnimatedLength width;
 
-    /**
-     * The 'height' attribute value.
-     */
-    protected SVGOMAnimatedLength height;
+	/**
+	 * The 'height' attribute value.
+	 */
+	protected SVGOMAnimatedLength height;
 
-    /**
-     * The 'preserveAspectRatio' attribute value.
-     */
-    protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
+	/**
+	 * The 'preserveAspectRatio' attribute value.
+	 */
+	protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
 
-    /**
-     * Creates a new SVGOMForeignObjectElement object.
-     */
-    protected SVGOMForeignObjectElement() {
-    }
+	/**
+	 * Creates a new SVGOMForeignObjectElement object.
+	 */
+	protected SVGOMForeignObjectElement() {
+	}
 
-    /**
-     * Creates a new SVGOMForeignObjectElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMForeignObjectElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMForeignObjectElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMForeignObjectElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        x = createLiveAnimatedLength
-            (null, SVG_X_ATTRIBUTE, SVG_FOREIGN_OBJECT_X_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-        y = createLiveAnimatedLength
-            (null, SVG_Y_ATTRIBUTE, SVG_FOREIGN_OBJECT_Y_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-        width =
-            createLiveAnimatedLength
-                (null, SVG_WIDTH_ATTRIBUTE, null,
-                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
-        height =
-            createLiveAnimatedLength
-                (null, SVG_HEIGHT_ATTRIBUTE, null,
-                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
-        preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		x = createLiveAnimatedLength(null, SVG_X_ATTRIBUTE, SVG_FOREIGN_OBJECT_X_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
+		y = createLiveAnimatedLength(null, SVG_Y_ATTRIBUTE, SVG_FOREIGN_OBJECT_Y_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
+		width = createLiveAnimatedLength(null, SVG_WIDTH_ATTRIBUTE, null, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
+				true);
+		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, null, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
+				true);
+		preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FOREIGN_OBJECT_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FOREIGN_OBJECT_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGForeignObjectElement#getX()}.
-     */
-    @Override
-    public SVGAnimatedLength getX() {
-        return x;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGForeignObjectElement#getX()}.
+	 */
+	@Override
+	public SVGAnimatedLength getX() {
+		return x;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGForeignObjectElement#getY()}.
-     */
-    @Override
-    public SVGAnimatedLength getY() {
-        return y;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGForeignObjectElement#getY()}.
+	 */
+	@Override
+	public SVGAnimatedLength getY() {
+		return y;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGForeignObjectElement#getWidth()}.
-     */
-    @Override
-    public SVGAnimatedLength getWidth() {
-        return width;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGForeignObjectElement#getWidth()}.
+	 */
+	@Override
+	public SVGAnimatedLength getWidth() {
+		return width;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGForeignObjectElement#getHeight()}.
-     */
-    @Override
-    public SVGAnimatedLength getHeight() {
-        return height;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGForeignObjectElement#getHeight()}.
+	 */
+	@Override
+	public SVGAnimatedLength getHeight() {
+		return height;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMForeignObjectElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMForeignObjectElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

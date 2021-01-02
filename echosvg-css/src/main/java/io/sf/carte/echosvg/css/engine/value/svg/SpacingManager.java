@@ -38,112 +38,106 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @version $Id$
  */
 public class SpacingManager extends LengthManager {
-    
-    /**
-     * The handled property.
-     */
-    protected String property;
 
-    /**
-     * Creates a new SpacingManager.
-     */
-    public SpacingManager(String prop) {
-        property = prop;
-    }
+	/**
+	 * The handled property.
+	 */
+	protected String property;
 
+	/**
+	 * Creates a new SpacingManager.
+	 */
+	public SpacingManager(String prop) {
+		property = prop;
+	}
 
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_SPACING_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_SPACING_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return property;
-    }
-    
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return ValueConstants.NORMAL_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return property;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return ValueConstants.NORMAL_VALUE;
+	}
 
-        case IDENT:
-            if (lu.getStringValue().equalsIgnoreCase
-                (CSSConstants.CSS_NORMAL_VALUE)) {
-                return ValueConstants.NORMAL_VALUE;
-            }
-            throw createInvalidIdentifierDOMException(lu.getStringValue());
-        default:
-            break;
-        }
-        return super.createValue(lu, engine);
-    }
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        if (type != CSSPrimitiveValue.CSS_IDENT) {
-            throw createInvalidStringTypeDOMException(type);
-        }
-        if (value.equalsIgnoreCase(CSSConstants.CSS_NORMAL_VALUE)) {
-            return ValueConstants.NORMAL_VALUE;
-        }
-        throw createInvalidIdentifierDOMException(value);
-    }
+		case IDENT:
+			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NORMAL_VALUE)) {
+				return ValueConstants.NORMAL_VALUE;
+			}
+			throw createInvalidIdentifierDOMException(lu.getStringValue());
+		default:
+			break;
+		}
+		return super.createValue(lu, engine);
+	}
 
-    /**
-     * Indicates the orientation of the property associated with
-     * this manager.
-     */
-    @Override
-    protected int getOrientation() {
-        return BOTH_ORIENTATION;
-    }
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+		if (type != CSSPrimitiveValue.CSS_IDENT) {
+			throw createInvalidStringTypeDOMException(type);
+		}
+		if (value.equalsIgnoreCase(CSSConstants.CSS_NORMAL_VALUE)) {
+			return ValueConstants.NORMAL_VALUE;
+		}
+		throw createInvalidIdentifierDOMException(value);
+	}
+
+	/**
+	 * Indicates the orientation of the property associated with this manager.
+	 */
+	@Override
+	protected int getOrientation() {
+		return BOTH_ORIENTATION;
+	}
 }

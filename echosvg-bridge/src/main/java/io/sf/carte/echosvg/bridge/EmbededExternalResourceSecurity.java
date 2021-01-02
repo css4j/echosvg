@@ -21,60 +21,52 @@ package io.sf.carte.echosvg.bridge;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
- * This implementation of the <code>ExternalResourceSecurity</code> interface only
- * allows external resources embeded in the document, i.e., externalResources
- * embeded with the data protocol.
+ * This implementation of the <code>ExternalResourceSecurity</code> interface
+ * only allows external resources embeded in the document, i.e.,
+ * externalResources embeded with the data protocol.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EmbededExternalResourceSecurity implements ExternalResourceSecurity {
-    public static final String DATA_PROTOCOL = "data";
+	public static final String DATA_PROTOCOL = "data";
 
-    /**
-     * Message when trying to load a external resource that is not embeded
-     * in the document.
-     */
-    public static final String ERROR_EXTERNAL_RESOURCE_NOT_EMBEDED
-        = "EmbededExternalResourceSecurity.error.external.resource.not.embeded";
+	/**
+	 * Message when trying to load a external resource that is not embeded in the
+	 * document.
+	 */
+	public static final String ERROR_EXTERNAL_RESOURCE_NOT_EMBEDED = "EmbededExternalResourceSecurity.error.external.resource.not.embeded";
 
-    /**
-     * The exception is built in the constructor and thrown if 
-     * not null and the checkLoadExternalResource method is called.
-     */
-    protected SecurityException se;
+	/**
+	 * The exception is built in the constructor and thrown if not null and the
+	 * checkLoadExternalResource method is called.
+	 */
+	protected SecurityException se;
 
-    /**
-     * Controls whether the externalResource should be loaded or not.
-     *
-     * @throws SecurityException if the externalResource should not be loaded.
-     */
-    @Override
-    public void checkLoadExternalResource(){
-        if (se != null) {
-            throw se;
-        }
-    }
+	/**
+	 * Controls whether the externalResource should be loaded or not.
+	 *
+	 * @throws SecurityException if the externalResource should not be loaded.
+	 */
+	@Override
+	public void checkLoadExternalResource() {
+		if (se != null) {
+			throw se;
+		}
+	}
 
-    /**
-     * @param externalResourceURL url for the externalResource, as defined in
-     *        the externalResource's xlink:href attribute. If that
-     *        attribute was empty, then this parameter should
-     *        be null
-     */
-    public EmbededExternalResourceSecurity(ParsedURL externalResourceURL){
-        if ( externalResourceURL == null
-             ||
-             !DATA_PROTOCOL.equals(externalResourceURL.getProtocol()) ) {
-            se = new SecurityException
-                (Messages.formatMessage(ERROR_EXTERNAL_RESOURCE_NOT_EMBEDED,
-                                        new Object[]{externalResourceURL}));
-            
-            
-        }
-    }
+	/**
+	 * @param externalResourceURL url for the externalResource, as defined in the
+	 *                            externalResource's xlink:href attribute. If that
+	 *                            attribute was empty, then this parameter should be
+	 *                            null
+	 */
+	public EmbededExternalResourceSecurity(ParsedURL externalResourceURL) {
+		if (externalResourceURL == null || !DATA_PROTOCOL.equals(externalResourceURL.getProtocol())) {
+			se = new SecurityException(
+					Messages.formatMessage(ERROR_EXTERNAL_RESOURCE_NOT_EMBEDED, new Object[] { externalResourceURL }));
+
+		}
+	}
 }
-
-
-    

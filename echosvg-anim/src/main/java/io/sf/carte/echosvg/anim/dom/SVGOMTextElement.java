@@ -42,210 +42,205 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMTextElement
-    extends    SVGOMTextPositioningElement
-    implements SVGTextElement,
-               SVGMotionAnimatableElement {
+public class SVGOMTextElement extends SVGOMTextPositioningElement
+		implements SVGTextElement, SVGMotionAnimatableElement {
 
-    private static final long serialVersionUID = 1L;
-    // Default values for attributes on a text element
-    protected static final String X_DEFAULT_VALUE = "0";
-    protected static final String Y_DEFAULT_VALUE = "0";
+	private static final long serialVersionUID = 1L;
+	// Default values for attributes on a text element
+	protected static final String X_DEFAULT_VALUE = "0";
+	protected static final String Y_DEFAULT_VALUE = "0";
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMTextPositioningElement.xmlTraitInformation);
-        t.put(null, SVG_TRANSFORM_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
+				SVGOMTextPositioningElement.xmlTraitInformation);
+		t.put(null, SVG_TRANSFORM_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'transform' attribute value.
-     */
-    protected SVGOMAnimatedTransformList transform;
+	/**
+	 * The 'transform' attribute value.
+	 */
+	protected SVGOMAnimatedTransformList transform;
 
-    /**
-     * Supplemental transformation due to motion animation.
-     */
-    protected AffineTransform motionTransform;
+	/**
+	 * Supplemental transformation due to motion animation.
+	 */
+	protected AffineTransform motionTransform;
 
-    /**
-     * Creates a new SVGOMTextElement object.
-     */
-    protected SVGOMTextElement() {
-    }
+	/**
+	 * Creates a new SVGOMTextElement object.
+	 */
+	protected SVGOMTextElement() {
+	}
 
-    /**
-     * Creates a new SVGOMTextElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMTextElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMTextElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMTextElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        transform =
-            createLiveAnimatedTransformList(null, SVG_TRANSFORM_ATTRIBUTE, "");
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		transform = createLiveAnimatedTransformList(null, SVG_TRANSFORM_ATTRIBUTE, "");
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_TEXT_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_TEXT_TAG;
+	}
 
-    // SVGLocatable support /////////////////////////////////////////////
+	// SVGLocatable support /////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGLocatable#getNearestViewportElement()}.
-     */
-    @Override
-    public SVGElement getNearestViewportElement() {
-        return SVGLocatableSupport.getNearestViewportElement(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGLocatable#getNearestViewportElement()}.
+	 */
+	@Override
+	public SVGElement getNearestViewportElement() {
+		return SVGLocatableSupport.getNearestViewportElement(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGLocatable#getFarthestViewportElement()}.
-     */
-    @Override
-    public SVGElement getFarthestViewportElement() {
-        return SVGLocatableSupport.getFarthestViewportElement(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGLocatable#getFarthestViewportElement()}.
+	 */
+	@Override
+	public SVGElement getFarthestViewportElement() {
+		return SVGLocatableSupport.getFarthestViewportElement(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGLocatable#getBBox()}.
-     */
-    @Override
-    public SVGRect getBBox() {
-        return SVGLocatableSupport.getBBox(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGLocatable#getBBox()}.
+	 */
+	@Override
+	public SVGRect getBBox() {
+		return SVGLocatableSupport.getBBox(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGLocatable#getCTM()}.
-     */
-    @Override
-    public SVGMatrix getCTM() {
-        return SVGLocatableSupport.getCTM(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGLocatable#getCTM()}.
+	 */
+	@Override
+	public SVGMatrix getCTM() {
+		return SVGLocatableSupport.getCTM(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGLocatable#getScreenCTM()}.
-     */
-    @Override
-    public SVGMatrix getScreenCTM() {
-        return SVGLocatableSupport.getScreenCTM(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGLocatable#getScreenCTM()}.
+	 */
+	@Override
+	public SVGMatrix getScreenCTM() {
+		return SVGLocatableSupport.getScreenCTM(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGLocatable#getTransformToElement(SVGElement)}.
-     */
-    @Override
-    public SVGMatrix getTransformToElement(SVGElement element)
-        throws SVGException {
-        return SVGLocatableSupport.getTransformToElement(this, element);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGLocatable#getTransformToElement(SVGElement)}.
+	 */
+	@Override
+	public SVGMatrix getTransformToElement(SVGElement element) throws SVGException {
+		return SVGLocatableSupport.getTransformToElement(this, element);
+	}
 
-    // SVGTransformable support /////////////////////////////////////////////
+	// SVGTransformable support /////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGTransformable#getTransform()}.
-     */
-    @Override
-    public SVGAnimatedTransformList getTransform() {
-        return transform;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGTransformable#getTransform()}.
+	 */
+	@Override
+	public SVGAnimatedTransformList getTransform() {
+		return transform;
+	}
 
-    /**
-     * Returns the default value of the 'x' attribute.
-     */
-    @Override
-    protected String getDefaultXValue() {
-        return X_DEFAULT_VALUE;
-    }
+	/**
+	 * Returns the default value of the 'x' attribute.
+	 */
+	@Override
+	protected String getDefaultXValue() {
+		return X_DEFAULT_VALUE;
+	}
 
-    /**
-     * Returns the default value of the 'y' attribute.
-     */
-    @Override
-    protected String getDefaultYValue() {
-        return Y_DEFAULT_VALUE;
-    }
+	/**
+	 * Returns the default value of the 'y' attribute.
+	 */
+	@Override
+	protected String getDefaultYValue() {
+		return Y_DEFAULT_VALUE;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMTextElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMTextElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 
-    // SVGMotionAnimatableElement ////////////////////////////////////////////
+	// SVGMotionAnimatableElement ////////////////////////////////////////////
 
-    /**
-     * Returns the {@link AffineTransform} representing the current motion
-     * animation for this element.
-     */
-    @Override
-    public AffineTransform getMotionTransform() {
-        return motionTransform;
-    }
+	/**
+	 * Returns the {@link AffineTransform} representing the current motion animation
+	 * for this element.
+	 */
+	@Override
+	public AffineTransform getMotionTransform() {
+		return motionTransform;
+	}
 
-    // AnimationTarget ///////////////////////////////////////////////////////
+	// AnimationTarget ///////////////////////////////////////////////////////
 
-    /**
-     * Updates a 'other' animation value in this target.
-     */
-    @Override
-    public void updateOtherValue(String type, AnimatableValue val) {
-        if (type.equals("motion")) {
-            if (motionTransform == null) {
-                motionTransform = new AffineTransform();
-            }
-            if (val == null) {
-                motionTransform.setToIdentity();
-            } else {
-                AnimatableMotionPointValue p = (AnimatableMotionPointValue) val;
-                motionTransform.setToTranslation(p.getX(), p.getY());
-                motionTransform.rotate(p.getAngle());
-            }
-            SVGOMDocument d = (SVGOMDocument) ownerDocument;
-            d.getAnimatedAttributeListener().otherAnimationChanged(this, type);
-        } else {
-            super.updateOtherValue(type, val);
-        }
-    }
+	/**
+	 * Updates a 'other' animation value in this target.
+	 */
+	@Override
+	public void updateOtherValue(String type, AnimatableValue val) {
+		if (type.equals("motion")) {
+			if (motionTransform == null) {
+				motionTransform = new AffineTransform();
+			}
+			if (val == null) {
+				motionTransform.setToIdentity();
+			} else {
+				AnimatableMotionPointValue p = (AnimatableMotionPointValue) val;
+				motionTransform.setToTranslation(p.getX(), p.getY());
+				motionTransform.rotate(p.getAngle());
+			}
+			SVGOMDocument d = (SVGOMDocument) ownerDocument;
+			d.getAnimatedAttributeListener().otherAnimationChanged(this, type);
+		} else {
+			super.updateOtherValue(type, val);
+		}
+	}
 }

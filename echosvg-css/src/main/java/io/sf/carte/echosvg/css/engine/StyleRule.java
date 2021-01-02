@@ -29,75 +29,75 @@ import io.sf.carte.doc.style.css.nsac.SelectorList;
  */
 public class StyleRule implements Rule {
 
-    /**
-     * The type constant.
-     */
-    public static final short TYPE = 0;
+	/**
+	 * The type constant.
+	 */
+	public static final short TYPE = 0;
 
-    /**
-     * The selector list.
-     */
-    protected SelectorList selectorList;
+	/**
+	 * The selector list.
+	 */
+	protected SelectorList selectorList;
 
-    /**
-     * The style declaration.
-     */
-    protected StyleDeclaration styleDeclaration;
+	/**
+	 * The style declaration.
+	 */
+	protected StyleDeclaration styleDeclaration;
 
-    /**
-     * Returns a constant identifying the rule type.
-     */
-    @Override
-    public short getType() {
-        return TYPE;
-    }
+	/**
+	 * Returns a constant identifying the rule type.
+	 */
+	@Override
+	public short getType() {
+		return TYPE;
+	}
 
-    /**
-     * Sets the selector list.
-     */
-    public void setSelectorList(SelectorList sl) {
-        selectorList = sl;
-    }
+	/**
+	 * Sets the selector list.
+	 */
+	public void setSelectorList(SelectorList sl) {
+		selectorList = sl;
+	}
 
-    /**
-     * Returns the selector list.
-     */
-    public SelectorList getSelectorList() {
-        return selectorList;
-    }
+	/**
+	 * Returns the selector list.
+	 */
+	public SelectorList getSelectorList() {
+		return selectorList;
+	}
 
-    /**
-     * Sets the style map.
-     */
-    public void setStyleDeclaration(StyleDeclaration sd) {
-        styleDeclaration = sd;
-    }
+	/**
+	 * Sets the style map.
+	 */
+	public void setStyleDeclaration(StyleDeclaration sd) {
+		styleDeclaration = sd;
+	}
 
-    /**
-     * Returns the style declaration.
-     */
-    public StyleDeclaration getStyleDeclaration() {
-        return styleDeclaration;
-    }
+	/**
+	 * Returns the style declaration.
+	 */
+	public StyleDeclaration getStyleDeclaration() {
+		return styleDeclaration;
+	}
 
-    /**
-     * Returns a printable representation of this style rule.
-     */
-    @Override
-    public String toString(CSSEngine eng) {
-        StringBuffer sb = new StringBuffer();
-        if (selectorList != null) {
-            sb.append(selectorList.item(0));
-            for (int i = 1; i < selectorList.getLength(); i++) {
-                sb.append(", ");
-                sb.append(selectorList.item(i));
-            }
-        }
-        sb.append(" {\n");
-        if (styleDeclaration != null) {
-            sb.append(styleDeclaration.toString(eng));
-        }
-        sb.append("}\n");
-        return sb.toString();
-    }
+	/**
+	 * Returns a printable representation of this style rule.
+	 */
+	@Override
+	public String toString(CSSEngine eng) {
+		StringBuffer sb = new StringBuffer();
+		if (selectorList != null) {
+			sb.append(selectorList.item(0));
+			for (int i = 1; i < selectorList.getLength(); i++) {
+				sb.append(", ");
+				sb.append(selectorList.item(i));
+			}
+		}
+		sb.append(" {\n");
+		if (styleDeclaration != null) {
+			sb.append(styleDeclaration.toString(eng));
+		}
+		sb.append("}\n");
+		return sb.toString();
+	}
 }

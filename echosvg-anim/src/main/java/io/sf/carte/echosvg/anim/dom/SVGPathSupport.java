@@ -36,60 +36,58 @@ import io.sf.carte.echosvg.dom.svg.SVGPathContext;
  */
 public class SVGPathSupport {
 
-    /**
-     * To implement {@link org.w3c.dom.svg.SVGPathElement#getTotalLength()}.
-     */
-    public static float getTotalLength(SVGOMPathElement path) {
-        SVGPathContext pathCtx = (SVGPathContext)path.getSVGContext();
-        return pathCtx.getTotalLength();
-    }
+	/**
+	 * To implement {@link org.w3c.dom.svg.SVGPathElement#getTotalLength()}.
+	 */
+	public static float getTotalLength(SVGOMPathElement path) {
+		SVGPathContext pathCtx = (SVGPathContext) path.getSVGContext();
+		return pathCtx.getTotalLength();
+	}
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGPathElement#getPathSegAtLength(float)}.
-     */
-    public static int getPathSegAtLength(SVGOMPathElement path, float x) {
-        SVGPathContext pathCtx = (SVGPathContext)path.getSVGContext();
-        return pathCtx.getPathSegAtLength(x);
-    }
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGPathElement#getPathSegAtLength(float)}.
+	 */
+	public static int getPathSegAtLength(SVGOMPathElement path, float x) {
+		SVGPathContext pathCtx = (SVGPathContext) path.getSVGContext();
+		return pathCtx.getPathSegAtLength(x);
+	}
 
-    /**
-     * To implement {@link org.w3c.dom.svg.SVGPathElement#getPointAtLength(float)}.
-     */
-    public static SVGPoint getPointAtLength(final SVGOMPathElement path,
-                                            final float distance) {
-        final SVGPathContext pathCtx = (SVGPathContext)path.getSVGContext();
-        if (pathCtx == null) return null;
+	/**
+	 * To implement {@link org.w3c.dom.svg.SVGPathElement#getPointAtLength(float)}.
+	 */
+	public static SVGPoint getPointAtLength(final SVGOMPathElement path, final float distance) {
+		final SVGPathContext pathCtx = (SVGPathContext) path.getSVGContext();
+		if (pathCtx == null)
+			return null;
 
-        return new SVGPoint() {
-                @Override
-                public float getX() {
-                    Point2D pt = pathCtx.getPointAtLength(distance);
-                    return (float)pt.getX();
-                }
-                @Override
-                public float getY() {
-                    Point2D pt = pathCtx.getPointAtLength(distance);
-                    return (float)pt.getY();
-                }
-                @Override
-                public void setX(float x) throws DOMException {
-                    throw path.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.point", null);
-                }
-                @Override
-                public void setY(float y) throws DOMException {
-                    throw path.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.point", null);
-                }
-                @Override
-                public SVGPoint matrixTransform ( SVGMatrix matrix ) {
-                    throw path.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.point", null);
-                }
-            };
-    }
+		return new SVGPoint() {
+			@Override
+			public float getX() {
+				Point2D pt = pathCtx.getPointAtLength(distance);
+				return (float) pt.getX();
+			}
+
+			@Override
+			public float getY() {
+				Point2D pt = pathCtx.getPointAtLength(distance);
+				return (float) pt.getY();
+			}
+
+			@Override
+			public void setX(float x) throws DOMException {
+				throw path.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.point", null);
+			}
+
+			@Override
+			public void setY(float y) throws DOMException {
+				throw path.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.point", null);
+			}
+
+			@Override
+			public SVGPoint matrixTransform(SVGMatrix matrix) {
+				throw path.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.point", null);
+			}
+		};
+	}
 }

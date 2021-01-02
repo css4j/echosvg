@@ -18,10 +18,9 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-
 /**
- * This class provides an implementation of the {@link
- * org.w3c.dom.svg.SVGAnimatedLength} interface.
+ * This class provides an implementation of the
+ * {@link org.w3c.dom.svg.SVGAnimatedLength} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -29,36 +28,32 @@ package io.sf.carte.echosvg.anim.dom;
  */
 public class SVGOMAnimatedLength extends AbstractSVGAnimatedLength {
 
-    /**
-     * The default value if the attribute is not specified.
-     */
-    protected String defaultValue;
+	/**
+	 * The default value if the attribute is not specified.
+	 */
+	protected String defaultValue;
 
-    /**
-     * Creates a new SVGOMAnimatedLength.
-     * @param elt The associated element.
-     * @param ns The attribute's namespace URI.
-     * @param ln The attribute's local name.
-     * @param def The default value if the attribute is not specified.
-     * @param dir The length's direction.
-     * @param nonneg Whether the length must be non-negative.
-     */
-    public SVGOMAnimatedLength(AbstractElement elt,
-                               String ns,
-                               String ln,
-                               String def,
-                               short dir,
-                               boolean nonneg) {
-        super(elt, ns, ln, dir, nonneg);
-        defaultValue = def;
-    }
+	/**
+	 * Creates a new SVGOMAnimatedLength.
+	 * 
+	 * @param elt    The associated element.
+	 * @param ns     The attribute's namespace URI.
+	 * @param ln     The attribute's local name.
+	 * @param def    The default value if the attribute is not specified.
+	 * @param dir    The length's direction.
+	 * @param nonneg Whether the length must be non-negative.
+	 */
+	public SVGOMAnimatedLength(AbstractElement elt, String ns, String ln, String def, short dir, boolean nonneg) {
+		super(elt, ns, ln, dir, nonneg);
+		defaultValue = def;
+	}
 
-    /**
-     * Returns the default value to use when the associated attribute
-     * was not specified.
-     */
-    @Override
-    protected String getDefaultValue() {
-        return defaultValue;
-    }
+	/**
+	 * Returns the default value to use when the associated attribute was not
+	 * specified.
+	 */
+	@Override
+	protected String getDefaultValue() {
+		return defaultValue;
+	}
 }

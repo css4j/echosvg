@@ -27,65 +27,66 @@ package io.sf.carte.echosvg.dom.svg;
  */
 public abstract class AbstractSVGItem implements SVGItem {
 
-    /**
-     * List the item belongs to.
-     */
-    protected AbstractSVGList parent;
+	/**
+	 * List the item belongs to.
+	 */
+	protected AbstractSVGList parent;
 
-    /**
-     * String representation of the item.
-     * This is a cached representation of the item while it is not changed.
-     */
-    protected String itemStringValue;
+	/**
+	 * String representation of the item. This is a cached representation of the
+	 * item while it is not changed.
+	 */
+	protected String itemStringValue;
 
-    /**
-     * Return the string representation of the item.
-     */
-    protected abstract String getStringValue();
+	/**
+	 * Return the string representation of the item.
+	 */
+	protected abstract String getStringValue();
 
-    /**
-     * Creates a new AbstractSVGList.
-     */
-    protected AbstractSVGItem() {
-    }
+	/**
+	 * Creates a new AbstractSVGList.
+	 */
+	protected AbstractSVGItem() {
+	}
 
-    /**
-     * Assigns a parent list to this item.
-     * @param list The list the item belongs.
-     */
-    @Override
-    public void setParent(AbstractSVGList list) {
-        parent = list;
-    }
+	/**
+	 * Assigns a parent list to this item.
+	 * 
+	 * @param list The list the item belongs.
+	 */
+	@Override
+	public void setParent(AbstractSVGList list) {
+		parent = list;
+	}
 
-    /**
-     * Returns the parent list of this item.
-     */
-    @Override
-    public AbstractSVGList getParent() {
-        return parent;
-    }
+	/**
+	 * Returns the parent list of this item.
+	 */
+	@Override
+	public AbstractSVGList getParent() {
+		return parent;
+	}
 
-    /**
-     * Notifies the parent list that the item has changed.
-     * This discards the cached representation of the item.
-     */
-    protected void resetAttribute() {
-        if (parent != null) {
-            itemStringValue = null;
-            parent.itemChanged();
-        }
-    }
+	/**
+	 * Notifies the parent list that the item has changed. This discards the cached
+	 * representation of the item.
+	 */
+	protected void resetAttribute() {
+		if (parent != null) {
+			itemStringValue = null;
+			parent.itemChanged();
+		}
+	}
 
-    /**
-     * Returns the cached representation of the item if valid, otherwise
-     * recomputes the String representation of the item.
-     */
-    @Override
-    public String getValueAsString() {
-        if (itemStringValue == null) {
-            itemStringValue = getStringValue();
-        }
-        return itemStringValue;
-    }
+	/**
+	 * Returns the cached representation of the item if valid, otherwise recomputes
+	 * the String representation of the item.
+	 */
+	@Override
+	public String getValueAsString() {
+		if (itemStringValue == null) {
+			itemStringValue = getStringValue();
+		}
+		return itemStringValue;
+	}
 }

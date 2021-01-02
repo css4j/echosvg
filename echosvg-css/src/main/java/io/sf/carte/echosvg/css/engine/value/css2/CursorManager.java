@@ -45,176 +45,149 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class CursorManager extends AbstractValueManager {
 
-    /**
-     * The identifier values.
-     */
-    protected static final StringMap values = new StringMap();
-    static {
-        values.put(CSSConstants.CSS_AUTO_VALUE,
-                   ValueConstants.AUTO_VALUE);
-        values.put(CSSConstants.CSS_CROSSHAIR_VALUE,
-                   ValueConstants.CROSSHAIR_VALUE);
-        values.put(CSSConstants.CSS_DEFAULT_VALUE,
-                   ValueConstants.DEFAULT_VALUE);
-        values.put(CSSConstants.CSS_E_RESIZE_VALUE,
-                   ValueConstants.E_RESIZE_VALUE);
-        values.put(CSSConstants.CSS_HELP_VALUE,
-                   ValueConstants.HELP_VALUE);
-        values.put(CSSConstants.CSS_MOVE_VALUE,
-                   ValueConstants.MOVE_VALUE);
-        values.put(CSSConstants.CSS_N_RESIZE_VALUE,
-                   ValueConstants.N_RESIZE_VALUE);
-        values.put(CSSConstants.CSS_NE_RESIZE_VALUE,
-                   ValueConstants.NE_RESIZE_VALUE);
-        values.put(CSSConstants.CSS_NW_RESIZE_VALUE,
-                   ValueConstants.NW_RESIZE_VALUE);
-        values.put(CSSConstants.CSS_POINTER_VALUE,
-                   ValueConstants.POINTER_VALUE);
-        values.put(CSSConstants.CSS_S_RESIZE_VALUE,
-                   ValueConstants.S_RESIZE_VALUE);
-        values.put(CSSConstants.CSS_SE_RESIZE_VALUE,
-                   ValueConstants.SE_RESIZE_VALUE);
-        values.put(CSSConstants.CSS_SW_RESIZE_VALUE,
-                   ValueConstants.SW_RESIZE_VALUE);
-        values.put(CSSConstants.CSS_TEXT_VALUE,
-                   ValueConstants.TEXT_VALUE);
-        values.put(CSSConstants.CSS_W_RESIZE_VALUE,
-                   ValueConstants.W_RESIZE_VALUE);
-        values.put(CSSConstants.CSS_WAIT_VALUE,
-                   ValueConstants.WAIT_VALUE);
-    }
+	/**
+	 * The identifier values.
+	 */
+	protected static final StringMap values = new StringMap();
+	static {
+		values.put(CSSConstants.CSS_AUTO_VALUE, ValueConstants.AUTO_VALUE);
+		values.put(CSSConstants.CSS_CROSSHAIR_VALUE, ValueConstants.CROSSHAIR_VALUE);
+		values.put(CSSConstants.CSS_DEFAULT_VALUE, ValueConstants.DEFAULT_VALUE);
+		values.put(CSSConstants.CSS_E_RESIZE_VALUE, ValueConstants.E_RESIZE_VALUE);
+		values.put(CSSConstants.CSS_HELP_VALUE, ValueConstants.HELP_VALUE);
+		values.put(CSSConstants.CSS_MOVE_VALUE, ValueConstants.MOVE_VALUE);
+		values.put(CSSConstants.CSS_N_RESIZE_VALUE, ValueConstants.N_RESIZE_VALUE);
+		values.put(CSSConstants.CSS_NE_RESIZE_VALUE, ValueConstants.NE_RESIZE_VALUE);
+		values.put(CSSConstants.CSS_NW_RESIZE_VALUE, ValueConstants.NW_RESIZE_VALUE);
+		values.put(CSSConstants.CSS_POINTER_VALUE, ValueConstants.POINTER_VALUE);
+		values.put(CSSConstants.CSS_S_RESIZE_VALUE, ValueConstants.S_RESIZE_VALUE);
+		values.put(CSSConstants.CSS_SE_RESIZE_VALUE, ValueConstants.SE_RESIZE_VALUE);
+		values.put(CSSConstants.CSS_SW_RESIZE_VALUE, ValueConstants.SW_RESIZE_VALUE);
+		values.put(CSSConstants.CSS_TEXT_VALUE, ValueConstants.TEXT_VALUE);
+		values.put(CSSConstants.CSS_W_RESIZE_VALUE, ValueConstants.W_RESIZE_VALUE);
+		values.put(CSSConstants.CSS_WAIT_VALUE, ValueConstants.WAIT_VALUE);
+	}
 
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_CURSOR_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_CURSOR_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_CURSOR_PROPERTY;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_CURSOR_PROPERTY;
+	}
 
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return ValueConstants.AUTO_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return ValueConstants.AUTO_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        ListValue result = new ListValue();
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		ListValue result = new ListValue();
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-        case URI:
-            do {
-                result.append(new URIValue(lu.getStringValue(),
-                                           resolveURI(engine.getCSSBaseURI(),
-                                                      lu.getStringValue())));
-                lu = lu.getNextLexicalUnit();
-                if (lu == null) {
-                    throw createMalformedLexicalUnitDOMException();
-                }
-                if (lu.getLexicalUnitType() !=
-                        LexicalUnit.LexicalType.OPERATOR_COMMA) {
-                    throw createInvalidLexicalUnitDOMException
-                        (lu.getLexicalUnitType());
-                }
-                lu = lu.getNextLexicalUnit();
-                if (lu == null) {
-                    throw createMalformedLexicalUnitDOMException();
-                }
-            } while (lu.getLexicalUnitType() == LexicalUnit.LexicalType.URI);
-            if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.IDENT) {
-                throw createInvalidLexicalUnitDOMException
-                    (lu.getLexicalUnitType());
-            }
-            // Fall through...
+		case URI:
+			do {
+				result.append(
+						new URIValue(lu.getStringValue(), resolveURI(engine.getCSSBaseURI(), lu.getStringValue())));
+				lu = lu.getNextLexicalUnit();
+				if (lu == null) {
+					throw createMalformedLexicalUnitDOMException();
+				}
+				if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+					throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+				}
+				lu = lu.getNextLexicalUnit();
+				if (lu == null) {
+					throw createMalformedLexicalUnitDOMException();
+				}
+			} while (lu.getLexicalUnitType() == LexicalUnit.LexicalType.URI);
+			if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.IDENT) {
+				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+			}
+			// Fall through...
 
-        case IDENT:
-            String s = lu.getStringValue().toLowerCase().intern();
-            Object v = values.get(s);
-            if (v == null) {
-                throw createInvalidIdentifierDOMException(lu.getStringValue());
-            }
-            result.append((Value)v);
-            lu = lu.getNextLexicalUnit();
-            break;
-        default:
-            break;
-        }
-        if (lu != null) {
-            throw createInvalidLexicalUnitDOMException
-                (lu.getLexicalUnitType());
-        }
-        return result;
-    }
+		case IDENT:
+			String s = lu.getStringValue().toLowerCase().intern();
+			Object v = values.get(s);
+			if (v == null) {
+				throw createInvalidIdentifierDOMException(lu.getStringValue());
+			}
+			result.append((Value) v);
+			lu = lu.getNextLexicalUnit();
+			break;
+		default:
+			break;
+		}
+		if (lu != null) {
+			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+		}
+		return result;
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
-     */
-    @Override
-    public Value computeValue(CSSStylableElement elt,
-                              String pseudo,
-                              CSSEngine engine,
-                              int idx,
-                              StyleMap sm,
-                              Value value) {
-        if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
-            ListValue lv = (ListValue)value;
-            int len = lv.getLength();
-            ListValue result = new ListValue(' ');
-            for (int i=0; i<len; i++) {
-                Value v = lv.item(0);
-                if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_URI) {
-                    // Reveal the absolute value as the cssText now.
-                    result.append(new URIValue(v.getStringValue(),
-                                               v.getStringValue()));
-                } else {
-                    result.append(v);
-                }
-            }
-            return result;
-        }
-        return super.computeValue(elt, pseudo, engine, idx, sm, value);
-    }
+	/**
+	 * Implements
+	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
+	 */
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
+			ListValue lv = (ListValue) value;
+			int len = lv.getLength();
+			ListValue result = new ListValue(' ');
+			for (int i = 0; i < len; i++) {
+				Value v = lv.item(0);
+				if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_URI) {
+					// Reveal the absolute value as the cssText now.
+					result.append(new URIValue(v.getStringValue(), v.getStringValue()));
+				} else {
+					result.append(v);
+				}
+			}
+			return result;
+		}
+		return super.computeValue(elt, pseudo, engine, idx, sm, value);
+	}
 
 }

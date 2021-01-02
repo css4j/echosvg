@@ -31,128 +31,122 @@ import io.sf.carte.echosvg.test.TestReport;
 /**
  * Test setDocument on JSVGComponent with non-EchoSVG SVGOMDocument.
  *
- * This test constructs a generic Document with SVG content then it
- * ensures that when this is passed to JSVGComponet.setDocument it is
- * properly imported to an SVGOMDocument and rendered from there.
+ * This test constructs a generic Document with SVG content then it ensures that
+ * when this is passed to JSVGComponet.setDocument it is properly imported to an
+ * SVGOMDocument and rendered from there.
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NullSetSVGDocumentTest extends JSVGMemoryLeakTest {
-    public NullSetSVGDocumentTest() {
-    }
+	public NullSetSVGDocumentTest() {
+	}
 
-    public static final String TEST_NON_NULL_URI
-        = "file:samples/anne.svg";
+	public static final String TEST_NON_NULL_URI = "file:samples/anne.svg";
 
-    /**
-     * Entry describing the error
-     */
-    public static final String ENTRY_KEY_ERROR_DESCRIPTION 
-        = "JSVGCanvasHandler.entry.key.error.description";
+	/**
+	 * Entry describing the error
+	 */
+	public static final String ENTRY_KEY_ERROR_DESCRIPTION = "JSVGCanvasHandler.entry.key.error.description";
 
-    /**
-     * Entry describing the error
-     */
-    public static final String ERROR_IMAGE_NOT_CLEARED 
-        = "NullSetSVGDocumentTest.message.error.image.not.cleared";
+	/**
+	 * Entry describing the error
+	 */
+	public static final String ERROR_IMAGE_NOT_CLEARED = "NullSetSVGDocumentTest.message.error.image.not.cleared";
 
-    public static final String ERROR_ON_SET 
-        = "NullSetSVGDocumentTest.message.error.on.set";
+	public static final String ERROR_ON_SET = "NullSetSVGDocumentTest.message.error.on.set";
 
-    @Override
-    public String getName() { return getId(); }
+	@Override
+	public String getName() {
+		return getId();
+	}
 
-    @Override
-    public JSVGCanvasHandler createHandler() {
-        return new JSVGCanvasHandler(this, this) {
-                @Override
-                public JSVGCanvas createCanvas() { 
-                    return new JSVGCanvas() {
-                            @Override
-                            protected void installSVGDocument(SVGDocument doc){
-                                super.installSVGDocument(doc);
-                                if (doc != null) return;
-                                handler.scriptDone();
-                            }
-                        };
-                }
-            };
-    }
+	@Override
+	public JSVGCanvasHandler createHandler() {
+		return new JSVGCanvasHandler(this, this) {
+			@Override
+			public JSVGCanvas createCanvas() {
+				return new JSVGCanvas() {
+					@Override
+					protected void installSVGDocument(SVGDocument doc) {
+						super.installSVGDocument(doc);
+						if (doc != null)
+							return;
+						handler.scriptDone();
+					}
+				};
+			}
+		};
+	}
 
-    public Runnable getRunnable(final JSVGCanvas canvas) {
-        return new Runnable () {
-                @Override
-                public void run() {
-                    canvas.setSVGDocument(null);
-                }};
-            }
+	public Runnable getRunnable(final JSVGCanvas canvas) {
+		return new Runnable() {
+			@Override
+			public void run() {
+				canvas.setSVGDocument(null);
+			}
+		};
+	}
 
-    /* JSVGCanvasHandler.Delegate Interface */
-    @Override
-    public boolean canvasInit(JSVGCanvas canvas) {
-        setTheCanvas(canvas);
-        theFrame  = handler.getFrame();
+	/* JSVGCanvasHandler.Delegate Interface */
+	@Override
+	public boolean canvasInit(JSVGCanvas canvas) {
+		setTheCanvas(canvas);
+		theFrame = handler.getFrame();
 
-        canvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
-        canvas.setURI(TEST_NON_NULL_URI);
+		canvas.setDocumentState(JSVGComponent.ALWAYS_DYNAMIC);
+		canvas.setURI(TEST_NON_NULL_URI);
 
-        registerObjectDesc(canvas, "JSVGCanvas");
-        registerObjectDesc(handler.getFrame(), "JFrame");
-        return true; // We did trigger a load event.
-    }
+		registerObjectDesc(canvas, "JSVGCanvas");
+		registerObjectDesc(handler.getFrame(), "JFrame");
+		return true; // We did trigger a load event.
+	}
 
-    @Override
-    public void canvasRendered(JSVGCanvas canvas) {
-        super.canvasRendered(canvas);
-        try {
-            EventQueue.invokeAndWait(getRunnable(canvas));
-        } catch (Throwable t) {
-            t.printStackTrace();
-            StringWriter trace = new StringWriter();
-            t.printStackTrace(new PrintWriter(trace));
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode(ERROR_ON_SET);
-            report.setDescription(new TestReport.Entry[] { 
-                new TestReport.Entry
-                (fmt(ENTRY_KEY_ERROR_DESCRIPTION, null),
-                 fmt(ERROR_ON_SET, new Object[]{ trace.toString()}))
-            });
-            report.setPassed(false);
-            failReport = report;
-        }
-    }
+	@Override
+	public void canvasRendered(JSVGCanvas canvas) {
+		super.canvasRendered(canvas);
+		try {
+			EventQueue.invokeAndWait(getRunnable(canvas));
+		} catch (Throwable t) {
+			t.printStackTrace();
+			StringWriter trace = new StringWriter();
+			t.printStackTrace(new PrintWriter(trace));
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode(ERROR_ON_SET);
+			report.setDescription(new TestReport.Entry[] { new TestReport.Entry(fmt(ENTRY_KEY_ERROR_DESCRIPTION, null),
+					fmt(ERROR_ON_SET, new Object[] { trace.toString() })) });
+			report.setPassed(false);
+			failReport = report;
+		}
+	}
 
-    @Override
-    public boolean canvasUpdated(JSVGCanvas canvas) {
-        return true;
-    }
+	@Override
+	public boolean canvasUpdated(JSVGCanvas canvas) {
+		return true;
+	}
 
+	@Override
+	public void canvasDone(JSVGCanvas canvas) {
+		synchronized (this) {
+			// Check that the original SVG
+			// Document and GVT tree are cleared.
+			checkObjects(new String[] { "SVGDoc", "GVT", "updateManager" });
 
-    @Override
-    public void canvasDone(JSVGCanvas canvas) {
-        synchronized (this) {
-            // Check that the original SVG
-            // Document and GVT tree are cleared.
-            checkObjects(new String[] { "SVGDoc", "GVT", "updateManager" });
-
-            if (canvas.getOffScreen() == null)
-                return;
-            System.err.println(">>>>>>> Canvas not cleared");
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode(ERROR_IMAGE_NOT_CLEARED);
-            // It would be great to provide the image here
-            // but it's a lot of work and this isn't _really_
-            // what we are testing.  More testing that
-            // everything works (no exceptions thrown).
-            report.setDescription(new TestReport.Entry[] { 
-                new TestReport.Entry
-                (fmt(ENTRY_KEY_ERROR_DESCRIPTION, null),
-                 fmt(ERROR_IMAGE_NOT_CLEARED, null))});
-            report.setPassed(false);
-            failReport = report;
-            return;
-        }
-    }
+			if (canvas.getOffScreen() == null)
+				return;
+			System.err.println(">>>>>>> Canvas not cleared");
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode(ERROR_IMAGE_NOT_CLEARED);
+			// It would be great to provide the image here
+			// but it's a lot of work and this isn't _really_
+			// what we are testing. More testing that
+			// everything works (no exceptions thrown).
+			report.setDescription(new TestReport.Entry[] {
+					new TestReport.Entry(fmt(ENTRY_KEY_ERROR_DESCRIPTION, null), fmt(ERROR_IMAGE_NOT_CLEARED, null)) });
+			report.setPassed(false);
+			failReport = report;
+			return;
+		}
+	}
 }

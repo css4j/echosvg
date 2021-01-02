@@ -30,31 +30,30 @@ import io.sf.carte.echosvg.gvt.event.SelectionListener;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public interface Selector extends GraphicsNodeMouseListener,
-                                  GraphicsNodeKeyListener,
-                                  GraphicsNodeChangeListener {
+public interface Selector extends GraphicsNodeMouseListener, GraphicsNodeKeyListener, GraphicsNodeChangeListener {
 
-    /**
-     * Get the contents of the current selection buffer.
-     */
-    Object getSelection();
+	/**
+	 * Get the contents of the current selection buffer.
+	 */
+	Object getSelection();
 
-    /**
-     * Reports whether the current selection contains any objects.
-     */
-    boolean isEmpty();
+	/**
+	 * Reports whether the current selection contains any objects.
+	 */
+	boolean isEmpty();
 
-    /**
-     * Add a SelectionListener to this Selector's notification list.
-     * @param l the SelectionListener to add.
-     */
-    void addSelectionListener(SelectionListener l);
+	/**
+	 * Add a SelectionListener to this Selector's notification list.
+	 * 
+	 * @param l the SelectionListener to add.
+	 */
+	void addSelectionListener(SelectionListener l);
 
-
-    /**
-     * Remove a SelectionListener from this Selector's notification list.
-     * @param l the SelectionListener to be removed.
-     */
-    void removeSelectionListener(SelectionListener l);
+	/**
+	 * Remove a SelectionListener from this Selector's notification list.
+	 * 
+	 * @param l the SelectionListener to be removed.
+	 */
+	void removeSelectionListener(SelectionListener l);
 
 }

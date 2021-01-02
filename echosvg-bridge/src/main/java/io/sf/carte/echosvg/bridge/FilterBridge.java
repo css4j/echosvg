@@ -33,17 +33,14 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public interface FilterBridge extends Bridge {
 
-    /**
-     * Creates a <code>Filter</code> according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param filterElement the element that defines the filter
-     * @param filteredElement the element that references the filter element
-     * @param filteredNode the graphics node to filter
-     */
-    Filter createFilter(BridgeContext ctx,
-                        Element filterElement,
-                        Element filteredElement,
-                        GraphicsNode filteredNode);
+	/**
+	 * Creates a <code>Filter</code> according to the specified parameters.
+	 *
+	 * @param ctx             the bridge context to use
+	 * @param filterElement   the element that defines the filter
+	 * @param filteredElement the element that references the filter element
+	 * @param filteredNode    the graphics node to filter
+	 */
+	Filter createFilter(BridgeContext ctx, Element filterElement, Element filteredElement, GraphicsNode filteredNode);
 
 }

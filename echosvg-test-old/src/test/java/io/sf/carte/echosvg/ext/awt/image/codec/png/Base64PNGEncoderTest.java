@@ -26,32 +26,30 @@ import java.io.OutputStream;
 import io.sf.carte.echosvg.util.Base64DecodeStream;
 import io.sf.carte.echosvg.util.Base64EncoderStream;
 
-
 /**
- * This test validates the PNGEncoder operation when combined with
- * Base64 encoding.
+ * This test validates the PNGEncoder operation when combined with Base64
+ * encoding.
  *
  * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Base64PNGEncoderTest extends PNGEncoderTest {
-    /**
-     * Template method for building the PNG output stream
-     */
-    @Override
-    public OutputStream buildOutputStream(ByteArrayOutputStream bos){
-        return new Base64EncoderStream(bos);
-    }
+	/**
+	 * Template method for building the PNG output stream
+	 */
+	@Override
+	public OutputStream buildOutputStream(ByteArrayOutputStream bos) {
+		return new Base64EncoderStream(bos);
+	}
 
-    /**
-     * Template method for building the PNG input stream
-     */
-    @Override
-    public InputStream buildInputStream(ByteArrayOutputStream bos){
-        ByteArrayInputStream bis 
-            = new ByteArrayInputStream(bos.toByteArray());
+	/**
+	 * Template method for building the PNG input stream
+	 */
+	@Override
+	public InputStream buildInputStream(ByteArrayOutputStream bos) {
+		ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
 
-        return new Base64DecodeStream(bis);
-    }
+		return new Base64DecodeStream(bis);
+	}
 }

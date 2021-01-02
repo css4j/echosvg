@@ -30,9 +30,9 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * @version $Id$
  */
 public interface GraphicsNodeRableFactory {
-    /**
-     * Returns a <code>GraphicsNodeRable</code> initialized with the
-     * input <code>GraphicsNode</code>.
-     */
-    GraphicsNodeRable createGraphicsNodeRable(GraphicsNode node);
+	/**
+	 * Returns a <code>GraphicsNodeRable</code> initialized with the input
+	 * <code>GraphicsNode</code>.
+	 */
+	GraphicsNodeRable createGraphicsNodeRable(GraphicsNode node);
 }

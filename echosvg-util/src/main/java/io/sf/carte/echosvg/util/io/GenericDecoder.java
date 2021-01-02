@@ -33,47 +33,50 @@ import java.io.Reader;
  */
 public class GenericDecoder implements CharDecoder {
 
-    /**
-     * The reader used to decode the stream.
-     */
-    protected Reader reader;
+	/**
+	 * The reader used to decode the stream.
+	 */
+	protected Reader reader;
 
-    /**
-     * Creates a new GenericDecoder.
-     * @param is The input stream to decode.
-     * @param enc The Java encoding name.
-     */
-    public GenericDecoder(InputStream is, String enc) throws IOException {
-        reader = new InputStreamReader(is, enc);
-        reader = new BufferedReader(reader);
-    }
+	/**
+	 * Creates a new GenericDecoder.
+	 * 
+	 * @param is  The input stream to decode.
+	 * @param enc The Java encoding name.
+	 */
+	public GenericDecoder(InputStream is, String enc) throws IOException {
+		reader = new InputStreamReader(is, enc);
+		reader = new BufferedReader(reader);
+	}
 
-    /**
-     * Creates a new GenericDecoder.
-     * @param r The reader to use.
-     */
-    public GenericDecoder(Reader r) {
-        reader = r;
-        if (!(r instanceof BufferedReader)) {
-            reader = new BufferedReader(reader);
-        }
-    }
+	/**
+	 * Creates a new GenericDecoder.
+	 * 
+	 * @param r The reader to use.
+	 */
+	public GenericDecoder(Reader r) {
+		reader = r;
+		if (!(r instanceof BufferedReader)) {
+			reader = new BufferedReader(reader);
+		}
+	}
 
-    /**
-     * Reads the next character.
-     * @return a character or END_OF_STREAM.
-     */
-    @Override
-    public int readChar() throws IOException {
-        return reader.read();
-    }
+	/**
+	 * Reads the next character.
+	 * 
+	 * @return a character or END_OF_STREAM.
+	 */
+	@Override
+	public int readChar() throws IOException {
+		return reader.read();
+	}
 
-    /**
-     * Disposes the associated resources.
-     */
-    @Override
-    public void dispose() throws IOException {
-        reader.close();
-        reader = null;
-    }
+	/**
+	 * Disposes the associated resources.
+	 */
+	@Override
+	public void dispose() throws IOException {
+		reader.close();
+		reader = null;
+	}
 }

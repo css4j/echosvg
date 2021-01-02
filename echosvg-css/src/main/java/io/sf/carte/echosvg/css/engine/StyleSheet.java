@@ -29,134 +29,134 @@ import io.sf.carte.doc.style.css.MediaQueryList;
  */
 public class StyleSheet {
 
-    /**
-     * The rules.
-     */
-    protected Rule[] rules = new Rule[16];
+	/**
+	 * The rules.
+	 */
+	protected Rule[] rules = new Rule[16];
 
-    /**
-     * The number of rules.
-     */
-    protected int size;
+	/**
+	 * The number of rules.
+	 */
+	protected int size;
 
-    /**
-     * The parent sheet, if any.
-     */
-    protected StyleSheet parent;
+	/**
+	 * The parent sheet, if any.
+	 */
+	protected StyleSheet parent;
 
-    /**
-     * Whether or not this stylesheet is alternate.
-     */
-    protected boolean alternate;
+	/**
+	 * Whether or not this stylesheet is alternate.
+	 */
+	protected boolean alternate;
 
-    /**
-     * The media to use to cascade properties.
-     */
-    protected MediaQueryList media;
+	/**
+	 * The media to use to cascade properties.
+	 */
+	protected MediaQueryList media;
 
-    /**
-     * The style sheet title.
-     */
-    protected String title;
+	/**
+	 * The style sheet title.
+	 */
+	protected String title;
 
-    /**
-     * Sets the media to use to compute the styles.
-     */
-    public void setMedia(MediaQueryList m) {
-        media = m;
-    }
+	/**
+	 * Sets the media to use to compute the styles.
+	 */
+	public void setMedia(MediaQueryList m) {
+		media = m;
+	}
 
-    /**
-     * Returns the media to use to compute the styles.
-     */
-    public MediaQueryList getMedia() {
-        return media;
-    }
+	/**
+	 * Returns the media to use to compute the styles.
+	 */
+	public MediaQueryList getMedia() {
+		return media;
+	}
 
-    /**
-     * Returns the parent sheet.
-     */
-    public StyleSheet getParent() {
-        return parent;
-    }
+	/**
+	 * Returns the parent sheet.
+	 */
+	public StyleSheet getParent() {
+		return parent;
+	}
 
-    /**
-     * Sets the parent sheet.
-     */
-    public void setParent(StyleSheet ss) {
-        parent = ss;
-    }
+	/**
+	 * Sets the parent sheet.
+	 */
+	public void setParent(StyleSheet ss) {
+		parent = ss;
+	}
 
-    /**
-     * Sets the 'alternate' attribute of this style-sheet.
-     */
-    public void setAlternate(boolean b) {
-        alternate = b;
-    }
+	/**
+	 * Sets the 'alternate' attribute of this style-sheet.
+	 */
+	public void setAlternate(boolean b) {
+		alternate = b;
+	}
 
-    /**
-     * Tells whether or not this stylesheet is alternate.
-     */
-    public boolean isAlternate() {
-        return alternate;
-    }
+	/**
+	 * Tells whether or not this stylesheet is alternate.
+	 */
+	public boolean isAlternate() {
+		return alternate;
+	}
 
-    /**
-     * Sets the 'title' attribute of this style-sheet.
-     */
-    public void setTitle(String t) {
-        title = t;
-    }
+	/**
+	 * Sets the 'title' attribute of this style-sheet.
+	 */
+	public void setTitle(String t) {
+		title = t;
+	}
 
-    /**
-     * Returns the title of this style-sheet.
-     */
-    public String getTitle() {
-        return title;
-    }
+	/**
+	 * Returns the title of this style-sheet.
+	 */
+	public String getTitle() {
+		return title;
+	}
 
-    /**
-     * Returns the number of rules.
-     */
-    public int getSize() {
-        return size;
-    }
+	/**
+	 * Returns the number of rules.
+	 */
+	public int getSize() {
+		return size;
+	}
 
-    /**
-     * Returns the rule at the given index.
-     */
-    public Rule getRule(int i) {
-        return rules[i];
-    }
+	/**
+	 * Returns the rule at the given index.
+	 */
+	public Rule getRule(int i) {
+		return rules[i];
+	}
 
-    /**
-     * Clears the content.
-     */
-    public void clear() {
-        size = 0;
-        rules = new Rule[10];
-    }
+	/**
+	 * Clears the content.
+	 */
+	public void clear() {
+		size = 0;
+		rules = new Rule[10];
+	}
 
-    /**
-     * Appends a rule to the stylesheet.
-     */
-    public void append(Rule r) {
-        if (size == rules.length) {
-            Rule[] t = new Rule[size * 2];
-            System.arraycopy( rules, 0, t, 0, size );
-            rules = t;
-        }
-        rules[size++] = r;
-    }
+	/**
+	 * Appends a rule to the stylesheet.
+	 */
+	public void append(Rule r) {
+		if (size == rules.length) {
+			Rule[] t = new Rule[size * 2];
+			System.arraycopy(rules, 0, t, 0, size);
+			rules = t;
+		}
+		rules[size++] = r;
+	}
 
-    /**
-     * Returns a printable representation of this style-sheet.
-     */
-    public String toString(CSSEngine eng) {
-        StringBuffer sb = new StringBuffer( size * 8 );
-        for (int i = 0; i < size; i++) {
-            sb.append(rules[i].toString(eng));
-        }
-        return sb.toString();
-    }
+	/**
+	 * Returns a printable representation of this style-sheet.
+	 */
+	public String toString(CSSEngine eng) {
+		StringBuffer sb = new StringBuffer(size * 8);
+		for (int i = 0; i < size; i++) {
+			sb.append(rules[i].toString(eng));
+		}
+		return sb.toString();
+	}
 }

@@ -29,13 +29,13 @@ package io.sf.carte.echosvg.css.engine;
  */
 public interface StyleDeclarationProvider {
 
-    /**
-     * Returns the object storing the properties of this style declaration.
-     */
-    StyleDeclaration getStyleDeclaration();
+	/**
+	 * Returns the object storing the properties of this style declaration.
+	 */
+	StyleDeclaration getStyleDeclaration();
 
-    /**
-     * Sets the object storing the properties of this style declaration.
-     */
-    void setStyleDeclaration(StyleDeclaration sd);
+	/**
+	 * Sets the object storing the properties of this style declaration.
+	 */
+	void setStyleDeclaration(StyleDeclaration sd);
 }

@@ -23,37 +23,38 @@ import java.util.EventObject;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
- * This class represents an event which indicate an event originated
- * from a SVGLoadEventDispatcher instance.
+ * This class represents an event which indicate an event originated from a
+ * SVGLoadEventDispatcher instance.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGLoadEventDispatcherEvent extends EventObject {
-    
-    private static final long serialVersionUID = 1L;
-    /**
-     * The GVT root.
-     */
-    protected GraphicsNode gvtRoot;
 
-    /**
-     * Creates a new SVGLoadEventDispatcherEvent.
-     * @param source the object that originated the event, ie. the
-     *               SVGLoadEventDispatcher.
-     * @param root   the GVT root.
-     */
-    public SVGLoadEventDispatcherEvent(Object source, GraphicsNode root) {
-        super(source);
-        gvtRoot = root;
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The GVT root.
+	 */
+	protected GraphicsNode gvtRoot;
 
-    /**
-     * Returns the GVT tree root, or null if the gvt construction
-     * was not completed or just started.
-     */
-    public GraphicsNode getGVTRoot() {
-        return gvtRoot;
-    }
+	/**
+	 * Creates a new SVGLoadEventDispatcherEvent.
+	 * 
+	 * @param source the object that originated the event, ie. the
+	 *               SVGLoadEventDispatcher.
+	 * @param root   the GVT root.
+	 */
+	public SVGLoadEventDispatcherEvent(Object source, GraphicsNode root) {
+		super(source);
+		gvtRoot = root;
+	}
+
+	/**
+	 * Returns the GVT tree root, or null if the gvt construction was not completed
+	 * or just started.
+	 */
+	public GraphicsNode getGVTRoot() {
+		return gvtRoot;
+	}
 }

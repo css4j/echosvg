@@ -36,250 +36,240 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.RedRable;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
- * This Image tag registy entry is setup to wrap the core JDK
- * Image stream tools.
+ * This Image tag registy entry is setup to wrap the core JDK Image stream
+ * tools.
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class JDKRegistryEntry extends AbstractRegistryEntry
-    implements URLRegistryEntry {
+public class JDKRegistryEntry extends AbstractRegistryEntry implements URLRegistryEntry {
 
-    /**
-     * The priority of this entry.
-     * This entry should in most cases be the last entry.
-     * but if one wishes one could set a priority higher and be called
-     * afterwords
-     */
-    public static final float PRIORITY =
-        1000*MagicNumberRegistryEntry.PRIORITY;
+	/**
+	 * The priority of this entry. This entry should in most cases be the last
+	 * entry. but if one wishes one could set a priority higher and be called
+	 * afterwords
+	 */
+	public static final float PRIORITY = 1000 * MagicNumberRegistryEntry.PRIORITY;
 
-    public JDKRegistryEntry() {
-        super ("JDK", PRIORITY, new String[0], new String [] {"image/gif"});
-    }
+	public JDKRegistryEntry() {
+		super("JDK", PRIORITY, new String[0], new String[] { "image/gif" });
+	}
 
-    /**
-     * Check if the Stream references an image that can be handled by
-     * this format handler.  The input stream passed in should be
-     * assumed to support mark and reset.
-     *
-     * If this method throws a StreamCorruptedException then the
-     * InputStream will be closed and a new one opened (if possible).
-     *
-     * This method should only throw a StreamCorruptedException if it
-     * is unable to restore the state of the InputStream
-     * (i.e. mark/reset fails basically).
-     */
-    @Override
-    public boolean isCompatibleURL(ParsedURL purl) {
-        try {
-            new URL(purl.toString());
-        } catch (MalformedURLException mue) {
-            // No sense in trying it if we can't build a URL out of it.
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * Check if the Stream references an image that can be handled by this format
+	 * handler. The input stream passed in should be assumed to support mark and
+	 * reset.
+	 *
+	 * If this method throws a StreamCorruptedException then the InputStream will be
+	 * closed and a new one opened (if possible).
+	 *
+	 * This method should only throw a StreamCorruptedException if it is unable to
+	 * restore the state of the InputStream (i.e. mark/reset fails basically).
+	 */
+	@Override
+	public boolean isCompatibleURL(ParsedURL purl) {
+		try {
+			new URL(purl.toString());
+		} catch (MalformedURLException mue) {
+			// No sense in trying it if we can't build a URL out of it.
+			return false;
+		}
+		return true;
+	}
 
-    /**
-     * Decode the URL into a RenderableImage
-     *
-     * @param purl URL of the image.
-     * @param needRawData If true the image returned should not have
-     *                    any default color correction the file may
-     *                    specify applied.
-     */
-    @Override
-    public Filter handleURL(ParsedURL purl, boolean needRawData) {
+	/**
+	 * Decode the URL into a RenderableImage
+	 *
+	 * @param purl        URL of the image.
+	 * @param needRawData If true the image returned should not have any default
+	 *                    color correction the file may specify applied.
+	 */
+	@Override
+	public Filter handleURL(ParsedURL purl, boolean needRawData) {
 
-        final URL url;
-        try {
-            url = new URL(purl.toString());
-        } catch (MalformedURLException mue) {
-            return null;
-        }
+		final URL url;
+		try {
+			url = new URL(purl.toString());
+		} catch (MalformedURLException mue) {
+			return null;
+		}
 
-        final DeferRable  dr  = new DeferRable();
-        final String      errCode;
-        final Object []   errParam;
-        if (purl != null) {
-            errCode  = ERR_URL_FORMAT_UNREADABLE;
-            errParam = new Object[] {"JDK", url};
-        } else {
-            errCode  = ERR_STREAM_FORMAT_UNREADABLE;
-            errParam = new Object[] {"JDK"};
-        }
+		final DeferRable dr = new DeferRable();
+		final String errCode;
+		final Object[] errParam;
+		if (purl != null) {
+			errCode = ERR_URL_FORMAT_UNREADABLE;
+			errParam = new Object[] { "JDK", url };
+		} else {
+			errCode = ERR_STREAM_FORMAT_UNREADABLE;
+			errParam = new Object[] { "JDK" };
+		}
 
-        Thread t = new Thread() {
-                @Override
-                public void run() {
-                    Filter filt = null;
-                    try {
-                        Toolkit tk = Toolkit.getDefaultToolkit();
-                        Image img = tk.createImage(url);
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				Filter filt = null;
+				try {
+					Toolkit tk = Toolkit.getDefaultToolkit();
+					Image img = tk.createImage(url);
 
-                        if (img != null) {
-                            RenderedImage ri = loadImage(img, dr);
-                            if (ri != null) {
-                                filt = new RedRable(GraphicsUtil.wrap(ri));
-                            }
-                        }
-                    } catch (ThreadDeath td) {
-                        filt = ImageTagRegistry.getBrokenLinkImage
-                            (JDKRegistryEntry.this, errCode, errParam);
-                        dr.setSource(filt);
-                        throw td;
-                    } catch (Throwable t) { }
-                    if (filt == null)
-                        filt = ImageTagRegistry.getBrokenLinkImage
-                            (JDKRegistryEntry.this, errCode, errParam);
+					if (img != null) {
+						RenderedImage ri = loadImage(img, dr);
+						if (ri != null) {
+							filt = new RedRable(GraphicsUtil.wrap(ri));
+						}
+					}
+				} catch (ThreadDeath td) {
+					filt = ImageTagRegistry.getBrokenLinkImage(JDKRegistryEntry.this, errCode, errParam);
+					dr.setSource(filt);
+					throw td;
+				} catch (Throwable t) {
+				}
+				if (filt == null)
+					filt = ImageTagRegistry.getBrokenLinkImage(JDKRegistryEntry.this, errCode, errParam);
 
-                    dr.setSource(filt);
-                }
-            };
-        t.start();
-        return dr;
-    }
+				dr.setSource(filt);
+			}
+		};
+		t.start();
+		return dr;
+	}
 
-    // Stuff for Image Loading.
-    public RenderedImage loadImage(Image img, final DeferRable  dr) {
-        // In some cases the image will be a
-        // BufferedImage (subclass of RenderedImage).
-        if (img instanceof RenderedImage)
-            return (RenderedImage)img;
+	// Stuff for Image Loading.
+	public RenderedImage loadImage(Image img, final DeferRable dr) {
+		// In some cases the image will be a
+		// BufferedImage (subclass of RenderedImage).
+		if (img instanceof RenderedImage)
+			return (RenderedImage) img;
 
-        MyImgObs observer = new MyImgObs();
-        Toolkit.getDefaultToolkit().prepareImage(img, -1, -1, observer);
-        observer.waitTilWidthHeightDone();
-        if (observer.imageError)
-            return null;
-        int width  = observer.width;
-        int height = observer.height;
-        dr.setBounds(new Rectangle2D.Double(0, 0, width, height));
+		MyImgObs observer = new MyImgObs();
+		Toolkit.getDefaultToolkit().prepareImage(img, -1, -1, observer);
+		observer.waitTilWidthHeightDone();
+		if (observer.imageError)
+			return null;
+		int width = observer.width;
+		int height = observer.height;
+		dr.setBounds(new Rectangle2D.Double(0, 0, width, height));
 
-        // Build the image to draw into.
-        BufferedImage bi = new BufferedImage
-            (width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = bi.createGraphics();
+		// Build the image to draw into.
+		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = bi.createGraphics();
 
-        // Wait till the image is fully loaded.
-        observer.waitTilImageDone();
-        if (observer.imageError)
-            return null;
-        dr.setProperties(new HashMap<>());
+		// Wait till the image is fully loaded.
+		observer.waitTilImageDone();
+		if (observer.imageError)
+			return null;
+		dr.setProperties(new HashMap<>());
 
-        g2d.drawImage(img, 0, 0, null);
-        g2d.dispose();
+		g2d.drawImage(img, 0, 0, null);
+		g2d.dispose();
 
-        return bi;
-    }
+		return bi;
+	}
 
+	public static class MyImgObs implements ImageObserver {
+		boolean widthDone = false;
+		boolean heightDone = false;
+		boolean imageDone = false;
+		int width = -1;
+		int height = -1;
+		boolean imageError = false;
 
-    public static class MyImgObs implements ImageObserver {
-        boolean widthDone = false;
-        boolean heightDone = false;
-        boolean imageDone = false;
-        int width = -1;
-        int height = -1;
-        boolean imageError = false;
+		int IMG_BITS = ALLBITS | ERROR | ABORT;
 
-        int IMG_BITS = ALLBITS|ERROR|ABORT;
+		public void clear() {
+			width = -1;
+			height = -1;
+			widthDone = false;
+			heightDone = false;
+			imageDone = false;
+		}
 
-        public void clear() {
-            width=-1;
-            height=-1;
-            widthDone = false;
-            heightDone = false;
-            imageDone       = false;
-        }
+		@Override
+		public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+			synchronized (this) {
+				boolean notify = false;
 
-        @Override
-        public boolean imageUpdate(Image img, int infoflags,
-                                   int x, int y, int width, int height) {
-            synchronized (this) {
-                boolean notify = false;
+				if ((infoflags & WIDTH) != 0)
+					this.width = width;
+				if ((infoflags & HEIGHT) != 0)
+					this.height = height;
 
-                if ((infoflags & WIDTH)   != 0) this.width  = width;
-                if ((infoflags & HEIGHT)  != 0) this.height = height;
+				if ((infoflags & ALLBITS) != 0) {
+					this.width = width;
+					this.height = height;
+				}
 
-                if ((infoflags & ALLBITS) != 0) {
-                    this.width  = width;
-                    this.height = height;
-                }
+				if ((infoflags & IMG_BITS) != 0) {
+					if ((!widthDone) || (!heightDone) || (!imageDone)) {
+						widthDone = true;
+						heightDone = true;
+						imageDone = true;
+						notify = true;
+					}
+					if ((infoflags & ERROR) != 0) {
+						imageError = true;
+					}
+				}
 
-                if ((infoflags & IMG_BITS) != 0) {
-                    if ((!widthDone) || (!heightDone) || (!imageDone)) {
-                        widthDone  = true;
-                        heightDone = true;
-                        imageDone  = true;
-                        notify     = true;
-                    }
-                    if ((infoflags & ERROR) != 0) {
-                        imageError = true;
-                    }
-                }
+				if ((!widthDone) && (this.width != -1)) {
+					notify = true;
+					widthDone = true;
+				}
+				if ((!heightDone) && (this.height != -1)) {
+					notify = true;
+					heightDone = true;
+				}
 
+				if (notify)
+					notifyAll();
+			}
+			return true;
+		}
 
-                if ((!widthDone) && (this.width != -1)) {
-                    notify = true;
-                    widthDone = true;
-                }
-                if ((!heightDone) && (this.height != -1)) {
-                    notify = true;
-                    heightDone = true;
-                }
+		public synchronized void waitTilWidthHeightDone() {
+			while ((!widthDone) || (!heightDone)) {
+				try {
+					// Wait for someone to set xxxDone
+					wait();
+				} catch (InterruptedException ie) {
+					// Loop around again see if src is set now...
+				}
+			}
+		}
 
-                if (notify)
-                    notifyAll();
-            }
-            return true;
-        }
+		public synchronized void waitTilWidthDone() {
+			while (!widthDone) {
+				try {
+					// Wait for someone to set xxxDone
+					wait();
+				} catch (InterruptedException ie) {
+					// Loop around again see if src is set now...
+				}
+			}
+		}
 
-        public synchronized void waitTilWidthHeightDone() {
-            while ((!widthDone) || (!heightDone)) {
-                try {
-                    // Wait for someone to set xxxDone
-                    wait();
-                }
-                catch(InterruptedException ie) {
-                    // Loop around again see if src is set now...
-                }
-            }
-        }
-        public synchronized void waitTilWidthDone() {
-            while (!widthDone) {
-                try {
-                    // Wait for someone to set xxxDone
-                    wait();
-                }
-                catch(InterruptedException ie) {
-                    // Loop around again see if src is set now...
-                }
-            }
-        }
-        public synchronized void waitTilHeightDone() {
-            while (!heightDone) {
-                try {
-                    // Wait for someone to set xxxDone
-                    wait();
-                }
-                catch(InterruptedException ie) {
-                    // Loop around again see if src is set now...
-                }
-            }
-        }
+		public synchronized void waitTilHeightDone() {
+			while (!heightDone) {
+				try {
+					// Wait for someone to set xxxDone
+					wait();
+				} catch (InterruptedException ie) {
+					// Loop around again see if src is set now...
+				}
+			}
+		}
 
-        public synchronized void waitTilImageDone() {
-            while (!imageDone) {
-                try {
-                    // Wait for someone to set xxxDone
-                    wait();
-                }
-                catch(InterruptedException ie) {
-                    // Loop around again see if src is set now...
-                }
-            }
-        }
-    }
+		public synchronized void waitTilImageDone() {
+			while (!imageDone) {
+				try {
+					// Wait for someone to set xxxDone
+					wait();
+				} catch (InterruptedException ie) {
+					// Loop around again see if src is set now...
+				}
+			}
+		}
+	}
 
 }

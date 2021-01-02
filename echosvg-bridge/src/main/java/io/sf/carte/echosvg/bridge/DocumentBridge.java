@@ -31,27 +31,26 @@ import io.sf.carte.echosvg.gvt.RootGraphicsNode;
  */
 public interface DocumentBridge extends Bridge {
 
-    /**
-     * Creates a <code>GraphicsNode</code> according to the specified parameters.
-     * This is called before children have been added to the
-     * returned GraphicsNode (obviously since you construct and return it).
-     *
-     * @param ctx the bridge context to use
-     * @param doc the document node that describes the graphics node to build
-     * @return a graphics node that represents the specified document node
-     */
-    RootGraphicsNode createGraphicsNode(BridgeContext ctx, Document doc);
+	/**
+	 * Creates a <code>GraphicsNode</code> according to the specified parameters.
+	 * This is called before children have been added to the returned GraphicsNode
+	 * (obviously since you construct and return it).
+	 *
+	 * @param ctx the bridge context to use
+	 * @param doc the document node that describes the graphics node to build
+	 * @return a graphics node that represents the specified document node
+	 */
+	RootGraphicsNode createGraphicsNode(BridgeContext ctx, Document doc);
 
-    /**
-     * Builds using the specified BridgeContext and element, the
-     * specified graphics node.  This is called after all the children
-     * of the node have been constructed and added, so it is safe to
-     * do work that depends on being able to see your children nodes
-     * in this method.
-     *
-     * @param ctx the bridge context to use
-     * @param doc the document node that describes the graphics node to build
-     * @param node the graphics node to build
-     */
-    void buildGraphicsNode(BridgeContext ctx, Document doc, RootGraphicsNode node);
+	/**
+	 * Builds using the specified BridgeContext and element, the specified graphics
+	 * node. This is called after all the children of the node have been constructed
+	 * and added, so it is safe to do work that depends on being able to see your
+	 * children nodes in this method.
+	 *
+	 * @param ctx  the bridge context to use
+	 * @param doc  the document node that describes the graphics node to build
+	 * @param node the graphics node to build
+	 */
+	void buildGraphicsNode(BridgeContext ctx, Document doc, RootGraphicsNode node);
 }

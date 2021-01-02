@@ -29,16 +29,18 @@ import java.util.EventListener;
  */
 public interface GraphicsNodeChangeListener extends EventListener {
 
-    /**
-     * Invoked when a change has started on a graphics node, but before
-     * any changes occure in the graphics node it's self.
-     * @param gnce the graphics node change event
-     */
-    void changeStarted(GraphicsNodeChangeEvent gnce);
+	/**
+	 * Invoked when a change has started on a graphics node, but before any changes
+	 * occure in the graphics node it's self.
+	 * 
+	 * @param gnce the graphics node change event
+	 */
+	void changeStarted(GraphicsNodeChangeEvent gnce);
 
-    /**
-     * Invoked when a change on a graphics node has completed
-     * @param gnce the graphics node change event
-     */
-    void changeCompleted(GraphicsNodeChangeEvent gnce);
+	/**
+	 * Invoked when a change on a graphics node has completed
+	 * 
+	 * @param gnce the graphics node change event
+	 */
+	void changeCompleted(GraphicsNodeChangeEvent gnce);
 }

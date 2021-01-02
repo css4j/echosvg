@@ -34,120 +34,112 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMMPathElement
-    extends    SVGOMURIReferenceElement
-    implements SVGMPathElement {
+public class SVGOMMPathElement extends SVGOMURIReferenceElement implements SVGMPathElement {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMURIReferenceElement.xmlTraitInformation);
-        t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
-        xmlTraitInformation = t;
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGOMURIReferenceElement.xmlTraitInformation);
+		t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The attribute initializer.
-     */
-    protected static final AttributeInitializer attributeInitializer;
-    static {
-        attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
-                                          null, "xmlns:xlink",
-                                          XMLConstants.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "show", "other");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "actuate", "onLoad");
-    }
+	/**
+	 * The attribute initializer.
+	 */
+	protected static final AttributeInitializer attributeInitializer;
+	static {
+		attributeInitializer = new AttributeInitializer(4);
+		attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI, null, "xmlns:xlink",
+				XMLConstants.XLINK_NAMESPACE_URI);
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "type", "simple");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "show", "other");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "actuate", "onLoad");
+	}
 
-    /**
-     * The 'externalResourcesRequired' attribute value.
-     */
-    protected SVGOMAnimatedBoolean externalResourcesRequired;
+	/**
+	 * The 'externalResourcesRequired' attribute value.
+	 */
+	protected SVGOMAnimatedBoolean externalResourcesRequired;
 
-    /**
-     * Creates a new SVGOMMPathElement object.
-     */
-    protected SVGOMMPathElement() {
-    }
+	/**
+	 * Creates a new SVGOMMPathElement object.
+	 */
+	protected SVGOMMPathElement() {
+	}
 
-    /**
-     * Creates a new SVGOMMPathElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMMPathElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMMPathElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMMPathElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        externalResourcesRequired =
-            createLiveAnimatedBoolean
-                (null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		externalResourcesRequired = createLiveAnimatedBoolean(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_MPATH_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_MPATH_TAG;
+	}
 
-    // SVGExternalResourcesRequired support /////////////////////////////
+	// SVGExternalResourcesRequired support /////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
-     */
-    @Override
-    public SVGAnimatedBoolean getExternalResourcesRequired() {
-        return externalResourcesRequired;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
+	 */
+	@Override
+	public SVGAnimatedBoolean getExternalResourcesRequired() {
+		return externalResourcesRequired;
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return attributeInitializer;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return attributeInitializer;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMMPathElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMMPathElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

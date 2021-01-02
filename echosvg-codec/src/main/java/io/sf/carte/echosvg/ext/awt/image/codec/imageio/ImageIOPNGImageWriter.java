@@ -26,11 +26,11 @@ package io.sf.carte.echosvg.ext.awt.image.codec.imageio;
  */
 public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 
-    /**
-     * Main constructor.
-     */
-    public ImageIOPNGImageWriter() {
-        super("image/png");
-    }
-    
+	/**
+	 * Main constructor.
+	 */
+	public ImageIOPNGImageWriter() {
+		super("image/png");
+	}
+
 }

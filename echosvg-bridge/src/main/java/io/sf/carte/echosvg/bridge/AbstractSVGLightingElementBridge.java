@@ -36,261 +36,228 @@ import io.sf.carte.echosvg.ext.awt.image.SpotLight;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractSVGLightingElementBridge
-    extends AbstractSVGFilterPrimitiveElementBridge {
+public abstract class AbstractSVGLightingElementBridge extends AbstractSVGFilterPrimitiveElementBridge {
 
-    /**
-     * Constructs a new bridge for the lighting filter primitives.
-     */
-    protected AbstractSVGLightingElementBridge() {}
+	/**
+	 * Constructs a new bridge for the lighting filter primitives.
+	 */
+	protected AbstractSVGLightingElementBridge() {
+	}
 
-    /**
-     * Returns the light from the specified lighting filter primitive
-     * element or null if any
-     *
-     * @param filterElement the lighting filter primitive element
-     * @param ctx the bridge context
-     */
-    protected static
-        Light extractLight(Element filterElement, BridgeContext ctx) {
+	/**
+	 * Returns the light from the specified lighting filter primitive element or
+	 * null if any
+	 *
+	 * @param filterElement the lighting filter primitive element
+	 * @param ctx           the bridge context
+	 */
+	protected static Light extractLight(Element filterElement, BridgeContext ctx) {
 
-        Color color = CSSUtilities.convertLightingColor(filterElement, ctx);
+		Color color = CSSUtilities.convertLightingColor(filterElement, ctx);
 
-        for (Node n = filterElement.getFirstChild();
-             n != null;
-             n = n.getNextSibling()) {
+		for (Node n = filterElement.getFirstChild(); n != null; n = n.getNextSibling()) {
 
-            if (n.getNodeType() != Node.ELEMENT_NODE) {
-                continue;
-            }
+			if (n.getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
 
-            Element e = (Element)n;
-            Bridge bridge = ctx.getBridge(e);
-            if (bridge == null ||
-                !(bridge instanceof AbstractSVGLightElementBridge)) {
-                continue;
-            }
-            return ((AbstractSVGLightElementBridge)bridge).createLight
-                (ctx, filterElement, e, color);
-        }
-        return null;
-    }
+			Element e = (Element) n;
+			Bridge bridge = ctx.getBridge(e);
+			if (bridge == null || !(bridge instanceof AbstractSVGLightElementBridge)) {
+				continue;
+			}
+			return ((AbstractSVGLightElementBridge) bridge).createLight(ctx, filterElement, e, color);
+		}
+		return null;
+	}
 
-    /**
-     * Convert the 'kernelUnitLength' attribute of the specified
-     * feDiffuseLighting or feSpecularLighting filter primitive element.
-     *
-     * @param filterElement the filter primitive element
-     * @param ctx the BridgeContext to use for error information
-     */
-    protected static double[] convertKernelUnitLength(Element filterElement,
-                                                      BridgeContext ctx) {
-        String s = filterElement.getAttributeNS
-            (null, SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE);
-        if (s.length() == 0) {
-            return null;
-        }
-        double [] units = new double[2];
-        StringTokenizer tokens = new StringTokenizer(s, " ,");
-        try {
-            units[0] = SVGUtilities.convertSVGNumber(tokens.nextToken());
-            if (tokens.hasMoreTokens()) {
-                units[1] = SVGUtilities.convertSVGNumber(tokens.nextToken());
-            } else {
-                units[1] = units[0];
-            }
-        } catch (NumberFormatException nfEx ) {
-            throw new BridgeException
-                (ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-                 new Object[] {SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s});
+	/**
+	 * Convert the 'kernelUnitLength' attribute of the specified feDiffuseLighting
+	 * or feSpecularLighting filter primitive element.
+	 *
+	 * @param filterElement the filter primitive element
+	 * @param ctx           the BridgeContext to use for error information
+	 */
+	protected static double[] convertKernelUnitLength(Element filterElement, BridgeContext ctx) {
+		String s = filterElement.getAttributeNS(null, SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE);
+		if (s.length() == 0) {
+			return null;
+		}
+		double[] units = new double[2];
+		StringTokenizer tokens = new StringTokenizer(s, " ,");
+		try {
+			units[0] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+			if (tokens.hasMoreTokens()) {
+				units[1] = SVGUtilities.convertSVGNumber(tokens.nextToken());
+			} else {
+				units[1] = units[0];
+			}
+		} catch (NumberFormatException nfEx) {
+			throw new BridgeException(ctx, filterElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s });
 
-        }
-        if (tokens.hasMoreTokens() || units[0] <= 0 || units[1] <= 0) {
-            throw new BridgeException
-                (ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
-                 new Object[] {SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s});
-        }
-        return units;
-    }
+		}
+		if (tokens.hasMoreTokens() || units[0] <= 0 || units[1] <= 0) {
+			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, s });
+		}
+		return units;
+	}
 
-    /**
-     * The base bridge class for light element.
-     */
-    protected abstract static class AbstractSVGLightElementBridge
-        extends AnimatableGenericSVGBridge {
+	/**
+	 * The base bridge class for light element.
+	 */
+	protected abstract static class AbstractSVGLightElementBridge extends AnimatableGenericSVGBridge {
 
-        /**
-         * Creates a <code>Light</code> according to the specified parameters.
-         *
-         * @param ctx the bridge context to use
-         * @param filterElement the lighting filter primitive element
-         * @param lightElement the element describing a light
-         * @param color the color of the light
-         */
-        public abstract Light createLight(BridgeContext ctx,
-                                          Element filterElement,
-                                          Element lightElement,
-                                          Color color);
-    }
+		/**
+		 * Creates a <code>Light</code> according to the specified parameters.
+		 *
+		 * @param ctx           the bridge context to use
+		 * @param filterElement the lighting filter primitive element
+		 * @param lightElement  the element describing a light
+		 * @param color         the color of the light
+		 */
+		public abstract Light createLight(BridgeContext ctx, Element filterElement, Element lightElement, Color color);
+	}
 
-    /**
-     * Bridge class for the &lt;feSpotLight&gt; element.
-     */
-    public static class SVGFeSpotLightElementBridge
-        extends AbstractSVGLightElementBridge {
+	/**
+	 * Bridge class for the &lt;feSpotLight&gt; element.
+	 */
+	public static class SVGFeSpotLightElementBridge extends AbstractSVGLightElementBridge {
 
-        /**
-         * Constructs a new bridge for a light element.
-         */
-        public SVGFeSpotLightElementBridge() {}
+		/**
+		 * Constructs a new bridge for a light element.
+		 */
+		public SVGFeSpotLightElementBridge() {
+		}
 
-        /**
-         * Returns 'feSpotLight'.
-         */
-        @Override
-        public String getLocalName() {
-            return SVG_FE_SPOT_LIGHT_TAG;
-        }
+		/**
+		 * Returns 'feSpotLight'.
+		 */
+		@Override
+		public String getLocalName() {
+			return SVG_FE_SPOT_LIGHT_TAG;
+		}
 
-        /**
-         * Creates a <code>Light</code> according to the specified parameters.
-         *
-         * @param ctx the bridge context to use
-         * @param filterElement the lighting filter primitive element
-         * @param lightElement the element describing a light
-         * @param color the color of the light
-         */
-        @Override
-        public Light createLight(BridgeContext ctx,
-                                 Element filterElement,
-                                 Element lightElement,
-                                 Color color) {
+		/**
+		 * Creates a <code>Light</code> according to the specified parameters.
+		 *
+		 * @param ctx           the bridge context to use
+		 * @param filterElement the lighting filter primitive element
+		 * @param lightElement  the element describing a light
+		 * @param color         the color of the light
+		 */
+		@Override
+		public Light createLight(BridgeContext ctx, Element filterElement, Element lightElement, Color color) {
 
-            // 'x' attribute - default is 0
-            double x = convertNumber(lightElement, SVG_X_ATTRIBUTE, 0, ctx);
+			// 'x' attribute - default is 0
+			double x = convertNumber(lightElement, SVG_X_ATTRIBUTE, 0, ctx);
 
-            // 'y' attribute - default is 0
-            double y = convertNumber(lightElement, SVG_Y_ATTRIBUTE, 0, ctx);
+			// 'y' attribute - default is 0
+			double y = convertNumber(lightElement, SVG_Y_ATTRIBUTE, 0, ctx);
 
-            // 'z' attribute - default is 0
-            double z = convertNumber(lightElement, SVG_Z_ATTRIBUTE, 0, ctx);
+			// 'z' attribute - default is 0
+			double z = convertNumber(lightElement, SVG_Z_ATTRIBUTE, 0, ctx);
 
-            // 'pointsAtX' attribute - default is 0
-            double px = convertNumber(lightElement, SVG_POINTS_AT_X_ATTRIBUTE,
-                                      0, ctx);
+			// 'pointsAtX' attribute - default is 0
+			double px = convertNumber(lightElement, SVG_POINTS_AT_X_ATTRIBUTE, 0, ctx);
 
-            // 'pointsAtY' attribute - default is 0
-            double py = convertNumber(lightElement, SVG_POINTS_AT_Y_ATTRIBUTE,
-                                      0, ctx);
+			// 'pointsAtY' attribute - default is 0
+			double py = convertNumber(lightElement, SVG_POINTS_AT_Y_ATTRIBUTE, 0, ctx);
 
-            // 'pointsAtZ' attribute - default is 0
-            double pz = convertNumber(lightElement, SVG_POINTS_AT_Z_ATTRIBUTE,
-                                      0, ctx);
+			// 'pointsAtZ' attribute - default is 0
+			double pz = convertNumber(lightElement, SVG_POINTS_AT_Z_ATTRIBUTE, 0, ctx);
 
-            // 'specularExponent' attribute - default is 1
-            double specularExponent = convertNumber
-                (lightElement, SVG_SPECULAR_EXPONENT_ATTRIBUTE, 1, ctx);
+			// 'specularExponent' attribute - default is 1
+			double specularExponent = convertNumber(lightElement, SVG_SPECULAR_EXPONENT_ATTRIBUTE, 1, ctx);
 
-            // 'limitingConeAngle' attribute - default is 90
-            double limitingConeAngle = convertNumber
-                (lightElement, SVG_LIMITING_CONE_ANGLE_ATTRIBUTE, 90, ctx);
+			// 'limitingConeAngle' attribute - default is 90
+			double limitingConeAngle = convertNumber(lightElement, SVG_LIMITING_CONE_ANGLE_ATTRIBUTE, 90, ctx);
 
-            return new SpotLight(x, y, z,
-                                 px, py, pz,
-                                 specularExponent,
-                                 limitingConeAngle,
-                                 color);
-        }
-    }
+			return new SpotLight(x, y, z, px, py, pz, specularExponent, limitingConeAngle, color);
+		}
+	}
 
-    /**
-     * Bridge class for the &lt;feDistantLight&gt; element.
-     */
-    public static class SVGFeDistantLightElementBridge
-        extends AbstractSVGLightElementBridge {
+	/**
+	 * Bridge class for the &lt;feDistantLight&gt; element.
+	 */
+	public static class SVGFeDistantLightElementBridge extends AbstractSVGLightElementBridge {
 
-        /**
-         * Constructs a new bridge for a light element.
-         */
-        public SVGFeDistantLightElementBridge() {}
+		/**
+		 * Constructs a new bridge for a light element.
+		 */
+		public SVGFeDistantLightElementBridge() {
+		}
 
-        /**
-         * Returns 'feDistantLight'.
-         */
-        @Override
-        public String getLocalName() {
-            return SVG_FE_DISTANT_LIGHT_TAG;
-        }
+		/**
+		 * Returns 'feDistantLight'.
+		 */
+		@Override
+		public String getLocalName() {
+			return SVG_FE_DISTANT_LIGHT_TAG;
+		}
 
-        /**
-         * Creates a <code>Light</code> according to the specified parameters.
-         *
-         * @param ctx the bridge context to use
-         * @param filterElement the lighting filter primitive element
-         * @param lightElement the element describing a light
-         * @param color the color of the light
-         */
-        @Override
-        public Light createLight(BridgeContext ctx,
-                                 Element filterElement,
-                                 Element lightElement,
-                                 Color color) {
+		/**
+		 * Creates a <code>Light</code> according to the specified parameters.
+		 *
+		 * @param ctx           the bridge context to use
+		 * @param filterElement the lighting filter primitive element
+		 * @param lightElement  the element describing a light
+		 * @param color         the color of the light
+		 */
+		@Override
+		public Light createLight(BridgeContext ctx, Element filterElement, Element lightElement, Color color) {
 
-            // 'azimuth' attribute - default is 0
-            double azimuth
-                = convertNumber(lightElement, SVG_AZIMUTH_ATTRIBUTE, 0, ctx);
+			// 'azimuth' attribute - default is 0
+			double azimuth = convertNumber(lightElement, SVG_AZIMUTH_ATTRIBUTE, 0, ctx);
 
-            // 'elevation' attribute - default is 0
-            double elevation
-                = convertNumber(lightElement, SVG_ELEVATION_ATTRIBUTE, 0, ctx);
+			// 'elevation' attribute - default is 0
+			double elevation = convertNumber(lightElement, SVG_ELEVATION_ATTRIBUTE, 0, ctx);
 
-            return new DistantLight(azimuth, elevation, color);
-        }
-    }
+			return new DistantLight(azimuth, elevation, color);
+		}
+	}
 
-    /**
-     * Bridge class for the &lt;fePointLight&gt; element.
-     */
-    public static class SVGFePointLightElementBridge
-        extends AbstractSVGLightElementBridge {
+	/**
+	 * Bridge class for the &lt;fePointLight&gt; element.
+	 */
+	public static class SVGFePointLightElementBridge extends AbstractSVGLightElementBridge {
 
-        /**
-         * Constructs a new bridge for a light element.
-         */
-        public SVGFePointLightElementBridge() {}
+		/**
+		 * Constructs a new bridge for a light element.
+		 */
+		public SVGFePointLightElementBridge() {
+		}
 
-        /**
-         * Returns 'fePointLight'.
-         */
-        @Override
-        public String getLocalName() {
-            return SVG_FE_POINT_LIGHT_TAG;
-        }
+		/**
+		 * Returns 'fePointLight'.
+		 */
+		@Override
+		public String getLocalName() {
+			return SVG_FE_POINT_LIGHT_TAG;
+		}
 
-        /**
-         * Creates a <code>Light</code> according to the specified parameters.
-         *
-         * @param ctx the bridge context to use
-         * @param filterElement the lighting filter primitive element
-         * @param lightElement the element describing a light
-         * @param color the color of the light
-         */
-        @Override
-        public Light createLight(BridgeContext ctx,
-                                 Element filterElement,
-                                 Element lightElement,
-                                 Color color) {
+		/**
+		 * Creates a <code>Light</code> according to the specified parameters.
+		 *
+		 * @param ctx           the bridge context to use
+		 * @param filterElement the lighting filter primitive element
+		 * @param lightElement  the element describing a light
+		 * @param color         the color of the light
+		 */
+		@Override
+		public Light createLight(BridgeContext ctx, Element filterElement, Element lightElement, Color color) {
 
-            // 'x' attribute - default is 0
-            double x = convertNumber(lightElement, SVG_X_ATTRIBUTE, 0, ctx);
+			// 'x' attribute - default is 0
+			double x = convertNumber(lightElement, SVG_X_ATTRIBUTE, 0, ctx);
 
-            // 'y' attribute - default is 0
-            double y = convertNumber(lightElement, SVG_Y_ATTRIBUTE, 0, ctx);
+			// 'y' attribute - default is 0
+			double y = convertNumber(lightElement, SVG_Y_ATTRIBUTE, 0, ctx);
 
-            // 'z' attribute - default is 0
-            double z = convertNumber(lightElement, SVG_Z_ATTRIBUTE, 0, ctx);
+			// 'z' attribute - default is 0
+			double z = convertNumber(lightElement, SVG_Z_ATTRIBUTE, 0, ctx);
 
-            return new PointLight(x, y, z, color);
-        }
-    }
+			return new PointLight(x, y, z, color);
+		}
+	}
 }

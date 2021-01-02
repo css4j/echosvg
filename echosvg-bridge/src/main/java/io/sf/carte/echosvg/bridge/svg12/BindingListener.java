@@ -31,8 +31,8 @@ import org.w3c.dom.Element;
  */
 public interface BindingListener extends EventListener {
 
-    /**
-     * Invoked when the specified bindable element's binding has changed.
-     */
-    void bindingChanged(Element bindableElement, Element shadowTree);
+	/**
+	 * Invoked when the specified bindable element's binding has changed.
+	 */
+	void bindingChanged(Element bindableElement, Element shadowTree);
 }

@@ -34,102 +34,92 @@ import org.apache.xalan.xslt.XSLTProcessor;*/
 import io.sf.carte.echosvg.test.TestException;
 
 /**
- * This implementation of the <code>XMLTestReportProcessor.XMLReportConsumer</code>
- * interface simply applies an XSL transformation to the input
- * XML file and stores the result in a configurable directory.
+ * This implementation of the
+ * <code>XMLTestReportProcessor.XMLReportConsumer</code> interface simply
+ * applies an XSL transformation to the input XML file and stores the result in
+ * a configurable directory.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class XSLXMLReportConsumer 
-    implements XMLTestReportProcessor.XMLReportConsumer {
-    /**
-     * Error code used when the output directory cannot be used
-     */
-    public static final String ERROR_OUTPUT_DIRECTORY_UNUSABLE 
-        = "xml.XSLXMLReportConsumer.error.output.directory.unusable";
+public class XSLXMLReportConsumer implements XMLTestReportProcessor.XMLReportConsumer {
+	/**
+	 * Error code used when the output directory cannot be used
+	 */
+	public static final String ERROR_OUTPUT_DIRECTORY_UNUSABLE = "xml.XSLXMLReportConsumer.error.output.directory.unusable";
 
-    /**
-     * Stylesheet URI
-     */
-    private String stylesheet;
+	/**
+	 * Stylesheet URI
+	 */
+	private String stylesheet;
 
-    /**
-     * Output directory, i.e., the directory where the result
-     * of the XSL transformation will be stored.
-     */
-    private String outputDirectory;
+	/**
+	 * Output directory, i.e., the directory where the result of the XSL
+	 * transformation will be stored.
+	 */
+	private String outputDirectory;
 
-    /**
-     * Output file name
-     */
-    private String outputFileName;
+	/**
+	 * Output file name
+	 */
+	private String outputFileName;
 
-    /**
-     * Constructor
-     * @param stylesheet URI for the stylesheet to apply to the XML report
-     * @param outputDirectory directory where the result of the XSL transformation
-     *                  should be written
-     * @param outputFileName name of the output report.
-     */
-    public XSLXMLReportConsumer(String stylesheet,
-                                String outputDirectory,
-                                String outputFileName){
-        this.stylesheet = stylesheet;
-        this.outputDirectory = outputDirectory;
-        this.outputFileName = outputFileName;
-    }
+	/**
+	 * Constructor
+	 * 
+	 * @param stylesheet      URI for the stylesheet to apply to the XML report
+	 * @param outputDirectory directory where the result of the XSL transformation
+	 *                        should be written
+	 * @param outputFileName  name of the output report.
+	 */
+	public XSLXMLReportConsumer(String stylesheet, String outputDirectory, String outputFileName) {
+		this.stylesheet = stylesheet;
+		this.outputDirectory = outputDirectory;
+		this.outputFileName = outputFileName;
+	}
 
-    /**
-     * When a new report has been generated, this consumer
-     * applies the same stylesheet to the input XML document
-     */
-    @Override
-    public void onNewReport(File xmlReport, 
-                            File reportDirectory)
-        throws Exception{
+	/**
+	 * When a new report has been generated, this consumer applies the same
+	 * stylesheet to the input XML document
+	 */
+	@Override
+	public void onNewReport(File xmlReport, File reportDirectory) throws Exception {
 
-        TransformerFactory tFactory = TransformerFactory.newInstance();
-        Transformer transformer = tFactory.newTransformer(new StreamSource(stylesheet));
-        
-        transformer.transform(new StreamSource(xmlReport.toURI().toURL().toString()),
-                              new StreamResult(new FileOutputStream(createNewReportOutput(reportDirectory).getAbsolutePath())));
-    }
-    
-    /**
-     * Returns a new file in the outputDirectory, with 
-     * the requested report name.
-     */
-    public File createNewReportOutput(File reportDirectory) throws Exception{
-        File dir = new File(reportDirectory, outputDirectory);
-        checkDirectory(dir);
-        return new File(dir, outputFileName);
-    }
+		TransformerFactory tFactory = TransformerFactory.newInstance();
+		Transformer transformer = tFactory.newTransformer(new StreamSource(stylesheet));
 
-    /**
-     * Checks that the input File represents a directory that
-     * can be used. If the directory does not exist, this method
-     * will attempt to create it.
-     */
-    public void checkDirectory(File dir) 
-        throws TestException {
-        boolean dirOK = false;
-        try{
-            if(!dir.exists()){
-                dirOK = dir.mkdir();
-            }
-            else if(dir.isDirectory()){
-                dirOK = true;
-            }
-        }finally{
-            if(!dirOK){
-                throw new TestException(ERROR_OUTPUT_DIRECTORY_UNUSABLE,
-                                        new Object[] {dir.getAbsolutePath()},
-                                        null);
-                
-            }
-        }
-    }
+		transformer.transform(new StreamSource(xmlReport.toURI().toURL().toString()),
+				new StreamResult(new FileOutputStream(createNewReportOutput(reportDirectory).getAbsolutePath())));
+	}
+
+	/**
+	 * Returns a new file in the outputDirectory, with the requested report name.
+	 */
+	public File createNewReportOutput(File reportDirectory) throws Exception {
+		File dir = new File(reportDirectory, outputDirectory);
+		checkDirectory(dir);
+		return new File(dir, outputFileName);
+	}
+
+	/**
+	 * Checks that the input File represents a directory that can be used. If the
+	 * directory does not exist, this method will attempt to create it.
+	 */
+	public void checkDirectory(File dir) throws TestException {
+		boolean dirOK = false;
+		try {
+			if (!dir.exists()) {
+				dirOK = dir.mkdir();
+			} else if (dir.isDirectory()) {
+				dirOK = true;
+			}
+		} finally {
+			if (!dirOK) {
+				throw new TestException(ERROR_OUTPUT_DIRECTORY_UNUSABLE, new Object[] { dir.getAbsolutePath() }, null);
+
+			}
+		}
+	}
 
 }

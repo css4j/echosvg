@@ -33,269 +33,257 @@ import io.sf.carte.echosvg.test.TestReport;
  */
 public class PathParserTest extends AbstractTest {
 
-    protected String sourcePath;
-    protected String destinationPath;
+	protected String sourcePath;
+	protected String destinationPath;
 
-    protected StringBuffer buffer;
-    protected String resultPath;
+	protected StringBuffer buffer;
+	protected String resultPath;
 
-    /**
-     * Creates a new PathParserTest.
-     * @param spath The path to parse.
-     * @param dpath The path after serialization.
-     */
-    public PathParserTest(String spath, String dpath) {
-        sourcePath = spath;
-        destinationPath = dpath;
-    }
+	/**
+	 * Creates a new PathParserTest.
+	 * 
+	 * @param spath The path to parse.
+	 * @param dpath The path after serialization.
+	 */
+	public PathParserTest(String spath, String dpath) {
+		sourcePath = spath;
+		destinationPath = dpath;
+	}
 
-    @Override
-    public TestReport runImpl() throws Exception {
-        PathParser pp = new PathParser();
-        pp.setPathHandler(new TestHandler());
+	@Override
+	public TestReport runImpl() throws Exception {
+		PathParser pp = new PathParser();
+		pp.setPathHandler(new TestHandler());
 
-        try {
-            pp.parse(new StringReader(sourcePath));
-        } catch (ParseException e) {
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode("parse.error");
-            report.addDescriptionEntry("exception.text", e.getMessage());
-            report.setPassed(false);
-            return report;
-        }
+		try {
+			pp.parse(new StringReader(sourcePath));
+		} catch (ParseException e) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode("parse.error");
+			report.addDescriptionEntry("exception.text", e.getMessage());
+			report.setPassed(false);
+			return report;
+		}
 
-        if (!destinationPath.equals(resultPath)) {
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode("invalid.parsing.events");
-            report.addDescriptionEntry("expected.text", destinationPath);
-            report.addDescriptionEntry("generated.text", resultPath);
-            report.setPassed(false);
-            return report;
-        }
+		if (!destinationPath.equals(resultPath)) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode("invalid.parsing.events");
+			report.addDescriptionEntry("expected.text", destinationPath);
+			report.addDescriptionEntry("generated.text", resultPath);
+			report.setPassed(false);
+			return report;
+		}
 
-        return reportSuccess();
-    }
+		return reportSuccess();
+	}
 
-    class TestHandler extends DefaultPathHandler {
-        public TestHandler() {}
+	class TestHandler extends DefaultPathHandler {
+		public TestHandler() {
+		}
 
-        @Override
-        public void startPath() throws ParseException {
-            buffer = new StringBuffer();
-        }
-        
-        @Override
-        public void movetoRel(float x, float y) throws ParseException {
-            buffer.append('m');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void startPath() throws ParseException {
+			buffer = new StringBuffer();
+		}
 
-        @Override
-        public void movetoAbs(float x, float y) throws ParseException {
-            buffer.append('M');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void movetoRel(float x, float y) throws ParseException {
+			buffer.append('m');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void endPath() throws ParseException {
-            resultPath = buffer.toString();
-        }
+		@Override
+		public void movetoAbs(float x, float y) throws ParseException {
+			buffer.append('M');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void closePath() throws ParseException {
-            buffer.append('Z');
-        }
+		@Override
+		public void endPath() throws ParseException {
+			resultPath = buffer.toString();
+		}
 
-        @Override
-        public void linetoRel(float x, float y) throws ParseException {
-            buffer.append('l');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void closePath() throws ParseException {
+			buffer.append('Z');
+		}
 
-        @Override
-        public void linetoAbs(float x, float y) throws ParseException {
-            buffer.append('L');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void linetoRel(float x, float y) throws ParseException {
+			buffer.append('l');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void linetoHorizontalRel(float x) throws ParseException {
-            buffer.append('h');
-            buffer.append(x);
-        }
+		@Override
+		public void linetoAbs(float x, float y) throws ParseException {
+			buffer.append('L');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void linetoHorizontalAbs(float x) throws ParseException {
-            buffer.append('H');
-            buffer.append(x);
-        }
+		@Override
+		public void linetoHorizontalRel(float x) throws ParseException {
+			buffer.append('h');
+			buffer.append(x);
+		}
 
-        @Override
-        public void linetoVerticalRel(float y) throws ParseException {
-            buffer.append('v');
-            buffer.append(y);
-        }
+		@Override
+		public void linetoHorizontalAbs(float x) throws ParseException {
+			buffer.append('H');
+			buffer.append(x);
+		}
 
-        @Override
-        public void linetoVerticalAbs(float y) throws ParseException {
-            buffer.append('V');
-            buffer.append(y);
-        }
+		@Override
+		public void linetoVerticalRel(float y) throws ParseException {
+			buffer.append('v');
+			buffer.append(y);
+		}
 
-        @Override
-        public void curvetoCubicRel(float x1, float y1, 
-                                    float x2, float y2, 
-                                    float x, float y) throws ParseException {
-            buffer.append('c');
-            buffer.append(x1);
-            buffer.append(' ');
-            buffer.append(y1);
-            buffer.append(' ');
-            buffer.append(x2);
-            buffer.append(' ');
-            buffer.append(y2);
-            buffer.append(' ');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void linetoVerticalAbs(float y) throws ParseException {
+			buffer.append('V');
+			buffer.append(y);
+		}
 
-        @Override
-        public void curvetoCubicAbs(float x1, float y1, 
-                                    float x2, float y2, 
-                                    float x, float y) throws ParseException {
-            buffer.append('C');
-            buffer.append(x1);
-            buffer.append(' ');
-            buffer.append(y1);
-            buffer.append(' ');
-            buffer.append(x2);
-            buffer.append(' ');
-            buffer.append(y2);
-            buffer.append(' ');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void curvetoCubicRel(float x1, float y1, float x2, float y2, float x, float y) throws ParseException {
+			buffer.append('c');
+			buffer.append(x1);
+			buffer.append(' ');
+			buffer.append(y1);
+			buffer.append(' ');
+			buffer.append(x2);
+			buffer.append(' ');
+			buffer.append(y2);
+			buffer.append(' ');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void curvetoCubicSmoothRel(float x2, float y2, 
-                                          float x, float y) throws ParseException {
-            buffer.append('s');
-            buffer.append(x2);
-            buffer.append(' ');
-            buffer.append(y2);
-            buffer.append(' ');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void curvetoCubicAbs(float x1, float y1, float x2, float y2, float x, float y) throws ParseException {
+			buffer.append('C');
+			buffer.append(x1);
+			buffer.append(' ');
+			buffer.append(y1);
+			buffer.append(' ');
+			buffer.append(x2);
+			buffer.append(' ');
+			buffer.append(y2);
+			buffer.append(' ');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void curvetoCubicSmoothAbs(float x2, float y2, 
-                                          float x, float y) throws ParseException {
-            buffer.append('S');
-            buffer.append(x2);
-            buffer.append(' ');
-            buffer.append(y2);
-            buffer.append(' ');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void curvetoCubicSmoothRel(float x2, float y2, float x, float y) throws ParseException {
+			buffer.append('s');
+			buffer.append(x2);
+			buffer.append(' ');
+			buffer.append(y2);
+			buffer.append(' ');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void curvetoQuadraticRel(float x1, float y1, 
-                                        float x, float y) throws ParseException {
-            buffer.append('q');
-            buffer.append(x1);
-            buffer.append(' ');
-            buffer.append(y1);
-            buffer.append(' ');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void curvetoCubicSmoothAbs(float x2, float y2, float x, float y) throws ParseException {
+			buffer.append('S');
+			buffer.append(x2);
+			buffer.append(' ');
+			buffer.append(y2);
+			buffer.append(' ');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void curvetoQuadraticAbs(float x1, float y1, 
-                                        float x, float y) throws ParseException {
-            buffer.append('Q');
-            buffer.append(x1);
-            buffer.append(' ');
-            buffer.append(y1);
-            buffer.append(' ');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void curvetoQuadraticRel(float x1, float y1, float x, float y) throws ParseException {
+			buffer.append('q');
+			buffer.append(x1);
+			buffer.append(' ');
+			buffer.append(y1);
+			buffer.append(' ');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void curvetoQuadraticSmoothRel(float x, float y)
-            throws ParseException {
-            buffer.append('t');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void curvetoQuadraticAbs(float x1, float y1, float x, float y) throws ParseException {
+			buffer.append('Q');
+			buffer.append(x1);
+			buffer.append(' ');
+			buffer.append(y1);
+			buffer.append(' ');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void curvetoQuadraticSmoothAbs(float x, float y)
-            throws ParseException {
-            buffer.append('T');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void curvetoQuadraticSmoothRel(float x, float y) throws ParseException {
+			buffer.append('t');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void arcRel(float rx, float ry, 
-                           float xAxisRotation, 
-                           boolean largeArcFlag, boolean sweepFlag, 
-                           float x, float y) throws ParseException {
-            buffer.append('a');
-            buffer.append(rx);
-            buffer.append(' ');
-            buffer.append(ry);
-            buffer.append(' ');
-            buffer.append(xAxisRotation);
-            buffer.append(' ');
-            buffer.append(largeArcFlag ? '1' : '0');
-            buffer.append(' ');
-            buffer.append(sweepFlag ? '1' : '0');
-            buffer.append(' ');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
+		@Override
+		public void curvetoQuadraticSmoothAbs(float x, float y) throws ParseException {
+			buffer.append('T');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
 
-        @Override
-        public void arcAbs(float rx, float ry, 
-                           float xAxisRotation, 
-                           boolean largeArcFlag, boolean sweepFlag, 
-                           float x, float y) throws ParseException {
-            buffer.append('A');
-            buffer.append(rx);
-            buffer.append(' ');
-            buffer.append(ry);
-            buffer.append(' ');
-            buffer.append(xAxisRotation);
-            buffer.append(' ');
-            buffer.append(largeArcFlag ? '1' : '0');
-            buffer.append(' ');
-            buffer.append(sweepFlag ? '1' : '0');
-            buffer.append(' ');
-            buffer.append(x);
-            buffer.append(' ');
-            buffer.append(y);
-        }
-    }
+		@Override
+		public void arcRel(float rx, float ry, float xAxisRotation, boolean largeArcFlag, boolean sweepFlag, float x,
+				float y) throws ParseException {
+			buffer.append('a');
+			buffer.append(rx);
+			buffer.append(' ');
+			buffer.append(ry);
+			buffer.append(' ');
+			buffer.append(xAxisRotation);
+			buffer.append(' ');
+			buffer.append(largeArcFlag ? '1' : '0');
+			buffer.append(' ');
+			buffer.append(sweepFlag ? '1' : '0');
+			buffer.append(' ');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
+
+		@Override
+		public void arcAbs(float rx, float ry, float xAxisRotation, boolean largeArcFlag, boolean sweepFlag, float x,
+				float y) throws ParseException {
+			buffer.append('A');
+			buffer.append(rx);
+			buffer.append(' ');
+			buffer.append(ry);
+			buffer.append(' ');
+			buffer.append(xAxisRotation);
+			buffer.append(' ');
+			buffer.append(largeArcFlag ? '1' : '0');
+			buffer.append(' ');
+			buffer.append(sweepFlag ? '1' : '0');
+			buffer.append(' ');
+			buffer.append(x);
+			buffer.append(' ');
+			buffer.append(y);
+		}
+	}
 }

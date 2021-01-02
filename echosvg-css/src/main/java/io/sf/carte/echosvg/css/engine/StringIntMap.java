@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.css.engine;
 
 /**
- * A simple hashtable, not synchronized, with fixed load factor.
- * Keys are Strings and values are ints.
+ * A simple hashtable, not synchronized, with fixed load factor. Keys are
+ * Strings and values are ints.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -28,120 +28,122 @@ package io.sf.carte.echosvg.css.engine;
  */
 public class StringIntMap {
 
-    /**
-     * The underlying array
-     */
-    protected Entry[] table;
+	/**
+	 * The underlying array
+	 */
+	protected Entry[] table;
 
-    /**
-     * The number of entries
-     */
-    protected int count;
+	/**
+	 * The number of entries
+	 */
+	protected int count;
 
-    /**
-     * Creates a new table.
-     * @param c The capacity of the table.
-     */
-    public StringIntMap(int c) {
-        // the table is set to 75% of the requested size
-        table = new Entry[( c - ( c >> 2)) + 1];
-    }
+	/**
+	 * Creates a new table.
+	 * 
+	 * @param c The capacity of the table.
+	 */
+	public StringIntMap(int c) {
+		// the table is set to 75% of the requested size
+		table = new Entry[(c - (c >> 2)) + 1];
+	}
 
-    /**
-     * Gets the value corresponding to the given string.
-     * @return the value or -1.
-     */
-    public int get( String key ) {
-        int hash = key.hashCode() & 0x7FFFFFFF;
-        int index = hash % table.length;
+	/**
+	 * Gets the value corresponding to the given string.
+	 * 
+	 * @return the value or -1.
+	 */
+	public int get(String key) {
+		int hash = key.hashCode() & 0x7FFFFFFF;
+		int index = hash % table.length;
 
-        for ( Entry e = table[ index ]; e != null; e = e.next ) {
-            if ( ( e.hash == hash ) && e.key.equals( key ) ) {
-                return e.value;
-            }
-        }
-        return -1;
-    }
+		for (Entry e = table[index]; e != null; e = e.next) {
+			if ((e.hash == hash) && e.key.equals(key)) {
+				return e.value;
+			}
+		}
+		return -1;
+	}
 
-    /**
-     * Sets a new value for the given variable
-     */
-    public void put( String key, int value ) {
-        int hash = key.hashCode() & 0x7FFFFFFF;
-        int index = hash % table.length;
+	/**
+	 * Sets a new value for the given variable
+	 */
+	public void put(String key, int value) {
+		int hash = key.hashCode() & 0x7FFFFFFF;
+		int index = hash % table.length;
 
-        for ( Entry e = table[ index ]; e != null; e = e.next ) {
-            if ( ( e.hash == hash ) && e.key.equals( key ) ) {
-                e.value = value;
-                return;
-            }
-        }
+		for (Entry e = table[index]; e != null; e = e.next) {
+			if ((e.hash == hash) && e.key.equals(key)) {
+				e.value = value;
+				return;
+			}
+		}
 
-        // The key is not in the hash table
-        int len = table.length;
-        if ( count++ >= ( len - ( len >> 2 ) ) ) {
-            // more than 75% loaded: grow
-            rehash();
-            index = hash % table.length;
-        }
+		// The key is not in the hash table
+		int len = table.length;
+		if (count++ >= (len - (len >> 2))) {
+			// more than 75% loaded: grow
+			rehash();
+			index = hash % table.length;
+		}
 
-        Entry e = new Entry( hash, key, value, table[ index ] );
-        table[ index ] = e;
-    }
+		Entry e = new Entry(hash, key, value, table[index]);
+		table[index] = e;
+	}
 
-    /**
-     * Rehash the table
-     */
-    protected void rehash() {
-        Entry[] oldTable = table;
+	/**
+	 * Rehash the table
+	 */
+	protected void rehash() {
+		Entry[] oldTable = table;
 
-        table = new Entry[oldTable.length * 2 + 1];
+		table = new Entry[oldTable.length * 2 + 1];
 
-        for ( int i = oldTable.length - 1; i >= 0; i-- ) {
-            for ( Entry old = oldTable[ i ]; old != null; ) {
-                Entry e = old;
-                old = old.next;
+		for (int i = oldTable.length - 1; i >= 0; i--) {
+			for (Entry old = oldTable[i]; old != null;) {
+				Entry e = old;
+				old = old.next;
 
-                int index = e.hash % table.length;
-                e.next = table[ index ];
-                table[ index ] = e;
-            }
-        }
-    }
+				int index = e.hash % table.length;
+				e.next = table[index];
+				table[index] = e;
+			}
+		}
+	}
 
-    /**
-     * To manage collisions
-     */
-    protected static class Entry {
+	/**
+	 * To manage collisions
+	 */
+	protected static class Entry {
 
-        /**
-         * The hash code, must not change after init.
-         */
-        public final int hash;
+		/**
+		 * The hash code, must not change after init.
+		 */
+		public final int hash;
 
-        /**
-         * The key
-         */
-        public String key;
+		/**
+		 * The key
+		 */
+		public String key;
 
-        /**
-         * The value, not changed after creation.
-         */
-        public int value;
+		/**
+		 * The value, not changed after creation.
+		 */
+		public int value;
 
-        /**
-         * The next entry - changed, when table[] is reordered.
-         */
-        public Entry next;
+		/**
+		 * The next entry - changed, when table[] is reordered.
+		 */
+		public Entry next;
 
-        /**
-         * Creates a new entry
-         */
-        public Entry( int hash, String key, int value, Entry next ) {
-            this.hash  = hash;
-            this.key   = key;
-            this.value = value;
-            this.next  = next;
-        }
-    }
+		/**
+		 * Creates a new entry
+		 */
+		public Entry(int hash, String key, int value, Entry next) {
+			this.hash = hash;
+			this.key = key;
+			this.value = value;
+			this.next = next;
+		}
+	}
 }

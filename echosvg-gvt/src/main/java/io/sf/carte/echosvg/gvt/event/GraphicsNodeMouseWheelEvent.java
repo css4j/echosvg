@@ -30,37 +30,37 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class GraphicsNodeMouseWheelEvent extends GraphicsNodeInputEvent {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The id for the "mouseWheelMoved" event.
-     */
-    public static final int MOUSE_WHEEL = 600;
+	/**
+	 * The id for the "mouseWheelMoved" event.
+	 */
+	public static final int MOUSE_WHEEL = 600;
 
-    /**
-     * Indicates the number of wheel notches have been moved.
-     * Positive for scrolling up/left, negative for down/right.
-     */
-    protected int wheelDelta;
+	/**
+	 * Indicates the number of wheel notches have been moved. Positive for scrolling
+	 * up/left, negative for down/right.
+	 */
+	protected int wheelDelta;
 
-    /**
-     * Constructs a new graphics node mouse wheel event.
-     * @param source the graphics node where the event originated
-     * @param id the id of this event
-     * @param when the time the event occurred
-     * @param wheelDelta the number of clicks
-     */
-    public GraphicsNodeMouseWheelEvent(GraphicsNode source, int id,
-                                       long when, int modifiers, int lockState,
-                                       int wheelDelta) {
-        super(source, id, when, modifiers, lockState);
-        this.wheelDelta = wheelDelta;
-    }
+	/**
+	 * Constructs a new graphics node mouse wheel event.
+	 * 
+	 * @param source     the graphics node where the event originated
+	 * @param id         the id of this event
+	 * @param when       the time the event occurred
+	 * @param wheelDelta the number of clicks
+	 */
+	public GraphicsNodeMouseWheelEvent(GraphicsNode source, int id, long when, int modifiers, int lockState,
+			int wheelDelta) {
+		super(source, id, when, modifiers, lockState);
+		this.wheelDelta = wheelDelta;
+	}
 
-    /**
-     * Returns the number of clicks the wheel has been moved.
-     */
-    public int getWheelDelta() {
-        return wheelDelta;
-    }
+	/**
+	 * Returns the number of clicks the wheel has been moved.
+	 */
+	public int getWheelDelta() {
+		return wheelDelta;
+	}
 }

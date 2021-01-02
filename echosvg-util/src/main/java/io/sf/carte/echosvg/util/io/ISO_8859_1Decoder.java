@@ -22,34 +22,35 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * This class represents an object which decodes ISO-8859-1 characters from
- * a stream of bytes.
+ * This class represents an object which decodes ISO-8859-1 characters from a
+ * stream of bytes.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ISO_8859_1Decoder extends AbstractCharDecoder {
-    
-    /**
-     * Creates a new ISO_8859_1Decoder.
-     */
-    public ISO_8859_1Decoder(InputStream is) {
-        super(is);
-    }
 
-    /**
-     * Reads the next character.
-     * @return a character or END_OF_STREAM.
-     */
-    @Override
-    public int readChar() throws IOException {
-        if (position == count) {
-            fillBuffer();
-        }
-        if (count == -1) {
-            return -1;
-        }
-        return buffer[position++] & 0xff;
-    }
+	/**
+	 * Creates a new ISO_8859_1Decoder.
+	 */
+	public ISO_8859_1Decoder(InputStream is) {
+		super(is);
+	}
+
+	/**
+	 * Reads the next character.
+	 * 
+	 * @return a character or END_OF_STREAM.
+	 */
+	@Override
+	public int readChar() throws IOException {
+		if (position == count) {
+			fillBuffer();
+		}
+		if (count == -1) {
+			return -1;
+		}
+		return buffer[position++] & 0xff;
+	}
 }

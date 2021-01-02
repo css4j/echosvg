@@ -18,68 +18,77 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.rendered;
 
-import  java.awt.image.Raster;
-import  java.lang.ref.Reference;
-import  java.lang.ref.SoftReference;
+import java.awt.image.Raster;
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
 
 /**
- * This is a useful class that wraps a Raster for patricipation in
- * an LRU Cache.  When this object drops out of the LRU cache it
- * removes it's hard reference to the tile, but retains it's soft
- * reference allowing for the recovery of the tile when the JVM is
- * not under memory pressure
+ * This is a useful class that wraps a Raster for patricipation in an LRU Cache.
+ * When this object drops out of the LRU cache it removes it's hard reference to
+ * the tile, but retains it's soft reference allowing for the recovery of the
+ * tile when the JVM is not under memory pressure
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TileLRUMember implements LRUCache.LRUObj {
-    private static final boolean DEBUG = false;
+	private static final boolean DEBUG = false;
 
-        protected LRUCache.LRUNode myNode  = null;
-        protected Reference<Raster>        wRaster = null;
-        protected Raster           hRaster = null;
+	protected LRUCache.LRUNode myNode = null;
+	protected Reference<Raster> wRaster = null;
+	protected Raster hRaster = null;
 
-        public TileLRUMember() { }
+	public TileLRUMember() {
+	}
 
-        public TileLRUMember(Raster ras) {
-            setRaster(ras);
-        }
+	public TileLRUMember(Raster ras) {
+		setRaster(ras);
+	}
 
-        public void setRaster(Raster ras) {
-            hRaster = ras;
-            wRaster = new SoftReference<>(ras);
-        }
+	public void setRaster(Raster ras) {
+		hRaster = ras;
+		wRaster = new SoftReference<>(ras);
+	}
 
-        public boolean checkRaster() {
-            if (hRaster != null) return true;
+	public boolean checkRaster() {
+		if (hRaster != null)
+			return true;
 
-            if ((wRaster       != null) &&
-            (wRaster.get() != null)) return true;
+		if ((wRaster != null) && (wRaster.get() != null))
+			return true;
 
-            return false;
-        }
+		return false;
+	}
 
-        public Raster retrieveRaster() {
-            if (hRaster != null) return hRaster;
-            if (wRaster == null) return null;
+	public Raster retrieveRaster() {
+		if (hRaster != null)
+			return hRaster;
+		if (wRaster == null)
+			return null;
 
-            hRaster = wRaster.get();
+		hRaster = wRaster.get();
 
-            if (hRaster == null)  // didn't manage to retrieve it...
-            wRaster = null;
+		if (hRaster == null) // didn't manage to retrieve it...
+			wRaster = null;
 
-            return hRaster;
-        }
+		return hRaster;
+	}
 
-        @Override
-        public LRUCache.LRUNode lruGet()         { return myNode; }
-        @Override
-        public void lruSet(LRUCache.LRUNode nde) { myNode = nde; }
-        @Override
-        public void lruRemove()                  {
-            myNode  = null;
-            hRaster = null;
-            if (DEBUG) System.out.println("Removing");
-        }
+	@Override
+	public LRUCache.LRUNode lruGet() {
+		return myNode;
+	}
+
+	@Override
+	public void lruSet(LRUCache.LRUNode nde) {
+		myNode = nde;
+	}
+
+	@Override
+	public void lruRemove() {
+		myNode = null;
+		hRaster = null;
+		if (DEBUG)
+			System.out.println("Removing");
+	}
 }
-

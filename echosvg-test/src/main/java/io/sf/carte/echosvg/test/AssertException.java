@@ -26,33 +26,31 @@ package io.sf.carte.echosvg.test;
  * @version $Id$
  */
 public abstract class AssertException extends TestErrorConditionException {
-    private static final long serialVersionUID = 1L;
-    public static final String ENTRY_KEY_ASSERTION_TYPE 
-        = "AssertException.entry.key.assertion.type";
+	private static final long serialVersionUID = 1L;
+	public static final String ENTRY_KEY_ASSERTION_TYPE = "AssertException.entry.key.assertion.type";
 
-    /**
-     * <code>TestErrorConditionException</code> implementation.
-     */
-    @Override
-    public TestReport getTestReport(Test test){
-        DefaultTestReport report = new DefaultTestReport(test);
-        report.setErrorCode(TestReport.ERROR_ASSERTION_FAILED);
-        report.addDescriptionEntry(ENTRY_KEY_ASSERTION_TYPE,
-                                   getAssertionType());
-        addDescription(report);
-        addStackTraceDescription(report);  
-        report.setPassed(false);
-        return report;
-    }
+	/**
+	 * <code>TestErrorConditionException</code> implementation.
+	 */
+	@Override
+	public TestReport getTestReport(Test test) {
+		DefaultTestReport report = new DefaultTestReport(test);
+		report.setErrorCode(TestReport.ERROR_ASSERTION_FAILED);
+		report.addDescriptionEntry(ENTRY_KEY_ASSERTION_TYPE, getAssertionType());
+		addDescription(report);
+		addStackTraceDescription(report);
+		report.setPassed(false);
+		return report;
+	}
 
-    /**
-     * Requests that the exception populates the TestReport with the
-     * relevant information.
-     */
-    public abstract void addDescription(TestReport report);
+	/**
+	 * Requests that the exception populates the TestReport with the relevant
+	 * information.
+	 */
+	public abstract void addDescription(TestReport report);
 
-    /**
-     * Returns the type of assertion which failed. e.g., "assertEquals"
-     */
-    public abstract String getAssertionType();
+	/**
+	 * Returns the type of assertion which failed. e.g., "assertEquals"
+	 */
+	public abstract String getAssertionType();
 }

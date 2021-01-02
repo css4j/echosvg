@@ -19,8 +19,7 @@
 package io.sf.carte.echosvg.util;
 
 /**
- * Define XBL constants, such as tag names, attribute names and
- * namespace URI.
+ * Define XBL constants, such as tag names, attribute names and namespace URI.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -28,37 +27,37 @@ package io.sf.carte.echosvg.util;
  */
 public interface XBLConstants {
 
-    /**
-     * Namespace URI for XBL elements and events.
-     */
-    String XBL_NAMESPACE_URI = "http://www.w3.org/2004/xbl";
+	/**
+	 * Namespace URI for XBL elements and events.
+	 */
+	String XBL_NAMESPACE_URI = "http://www.w3.org/2004/xbl";
 
-    // -- Event types --------------------------------------------------------
+	// -- Event types --------------------------------------------------------
 
-    String XBL_PREBIND_EVENT_TYPE = "prebind";
-    String XBL_BOUND_EVENT_TYPE = "bound";
-    String XBL_UNBINDING_EVENT_TYPE = "unbinding";
+	String XBL_PREBIND_EVENT_TYPE = "prebind";
+	String XBL_BOUND_EVENT_TYPE = "bound";
+	String XBL_UNBINDING_EVENT_TYPE = "unbinding";
 
-    // -- Event handler attributes -------------------------------------------
+	// -- Event handler attributes -------------------------------------------
 
-    String XBL_ONPREBIND_ATTRIBUTE = "onprebind";
-    String XBL_ONBOUND_ATTRIBUTE = "onprebind";
-    String XBL_ONUNBINDING_ATTRIBUTE = "onprebind";
+	String XBL_ONPREBIND_ATTRIBUTE = "onprebind";
+	String XBL_ONBOUND_ATTRIBUTE = "onprebind";
+	String XBL_ONUNBINDING_ATTRIBUTE = "onprebind";
 
-    // -- XBL tags -----------------------------------------------------------
+	// -- XBL tags -----------------------------------------------------------
 
-    String XBL_XBL_TAG = "xbl";
-    String XBL_DEFINITION_TAG = "definition";
-    String XBL_TEMPLATE_TAG = "template";
-    String XBL_CONTENT_TAG = "content";
-    String XBL_HANDLER_GROUP_TAG = "handlerGroup";
-    String XBL_IMPORT_TAG = "import";
-    String XBL_SHADOW_TREE_TAG = "shadowTree";
+	String XBL_XBL_TAG = "xbl";
+	String XBL_DEFINITION_TAG = "definition";
+	String XBL_TEMPLATE_TAG = "template";
+	String XBL_CONTENT_TAG = "content";
+	String XBL_HANDLER_GROUP_TAG = "handlerGroup";
+	String XBL_IMPORT_TAG = "import";
+	String XBL_SHADOW_TREE_TAG = "shadowTree";
 
-    // -- XBL attributes -----------------------------------------------------
+	// -- XBL attributes -----------------------------------------------------
 
-    String XBL_BINDINGS_ATTRIBUTE = "bindings";
-    String XBL_ELEMENT_ATTRIBUTE = "element";
-    String XBL_INCLUDES_ATTRIBUTE = "includes";
-    String XBL_REF_ATTRIBUTE = "ref";
+	String XBL_BINDINGS_ATTRIBUTE = "bindings";
+	String XBL_ELEMENT_ATTRIBUTE = "element";
+	String XBL_INCLUDES_ATTRIBUTE = "includes";
+	String XBL_REF_ATTRIBUTE = "ref";
 }

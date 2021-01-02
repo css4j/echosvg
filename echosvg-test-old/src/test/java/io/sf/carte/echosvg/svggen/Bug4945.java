@@ -23,41 +23,39 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
 /**
- * This test validates fix to Bug #4945 which checks that 
- * the generator handles Font transform.
+ * This test validates fix to Bug #4945 which checks that the generator handles
+ * Font transform.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Bug4945 implements Painter {
-    @Override
-    public void paint(Graphics2D g){
-        Font origFont = g.getFont(); 
+	@Override
+	public void paint(Graphics2D g) {
+		Font origFont = g.getFont();
 
-        g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
-                           java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-       
-        // 1) create scaled font
-        Font font = origFont.deriveFont(AffineTransform.getScaleInstance(1.5, 3));
-        g.setFont(font);
-        g.drawString("Scaled Font", 20, 40);
+		g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // 2) create translated font
-        font = origFont.deriveFont(AffineTransform.getTranslateInstance(50, 20));
-        g.setFont(font);
-        g.drawString("Translated Font", 20, 80);
-        g.drawLine(20, 80, 120, 80);
+		// 1) create scaled font
+		Font font = origFont.deriveFont(AffineTransform.getScaleInstance(1.5, 3));
+		g.setFont(font);
+		g.drawString("Scaled Font", 20, 40);
 
-        // 3) create sheared font
-        font = origFont.deriveFont(AffineTransform.getShearInstance(.5, .5));
-        g.setFont(font);
-        g.drawString("Sheared Font", 20, 120);
+		// 2) create translated font
+		font = origFont.deriveFont(AffineTransform.getTranslateInstance(50, 20));
+		g.setFont(font);
+		g.drawString("Translated Font", 20, 80);
+		g.drawLine(20, 80, 120, 80);
 
-        // 4) create rotated font 
-        font = origFont.deriveFont(AffineTransform.getRotateInstance(Math.PI/4));
-        g.setFont(font);
-        g.drawString("Rotated Font", 220, 120);
-    }
+		// 3) create sheared font
+		font = origFont.deriveFont(AffineTransform.getShearInstance(.5, .5));
+		g.setFont(font);
+		g.drawString("Sheared Font", 20, 120);
+
+		// 4) create rotated font
+		font = origFont.deriveFont(AffineTransform.getRotateInstance(Math.PI / 4));
+		g.setFont(font);
+		g.drawString("Rotated Font", 220, 120);
+	}
 }
-

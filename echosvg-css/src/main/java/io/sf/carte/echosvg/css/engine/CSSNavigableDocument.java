@@ -27,15 +27,13 @@ package io.sf.carte.echosvg.css.engine;
  */
 public interface CSSNavigableDocument {
 
-    /**
-     * Adds an event listener for mutations on the
-     * CSSNavigableDocument tree.
-     */
-    void addCSSNavigableDocumentListener(CSSNavigableDocumentListener l);
+	/**
+	 * Adds an event listener for mutations on the CSSNavigableDocument tree.
+	 */
+	void addCSSNavigableDocumentListener(CSSNavigableDocumentListener l);
 
-    /**
-     * Removes an event listener for mutations on the
-     * CSSNavigableDocument tree.
-     */
-    void removeCSSNavigableDocumentListener(CSSNavigableDocumentListener l);
+	/**
+	 * Removes an event listener for mutations on the CSSNavigableDocument tree.
+	 */
+	void removeCSSNavigableDocumentListener(CSSNavigableDocumentListener l);
 }

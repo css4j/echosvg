@@ -24,8 +24,8 @@ import org.w3c.dom.Node;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 
 /**
- * This interface provides an access to the non DOM methods implemented by
- * all the nodes in this implementation.
+ * This interface provides an access to the non DOM methods implemented by all
+ * the nodes in this implementation.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -33,44 +33,44 @@ import io.sf.carte.echosvg.dom.events.NodeEventTarget;
  */
 public interface ExtendedNode extends Node, NodeEventTarget {
 
-    /**
-     * Sets the name of this node.
-     */
-    void setNodeName(String v);
+	/**
+	 * Sets the name of this node.
+	 */
+	void setNodeName(String v);
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    boolean isReadonly();
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	boolean isReadonly();
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    void setReadonly(boolean v);
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	void setReadonly(boolean v);
 
-    /**
-     * Sets the owner document of this node.
-     */
-    void setOwnerDocument(Document doc);
+	/**
+	 * Sets the owner document of this node.
+	 */
+	void setOwnerDocument(Document doc);
 
-    /**
-     * Sets the parent node.
-     */
-    void setParentNode(Node v);
+	/**
+	 * Sets the parent node.
+	 */
+	void setParentNode(Node v);
 
-    /**
-     * Sets the node immediately preceding this node.
-     */
-    void setPreviousSibling(Node n);
+	/**
+	 * Sets the node immediately preceding this node.
+	 */
+	void setPreviousSibling(Node n);
 
-    /**
-     * Sets the node immediately following this node.
-     */
-    void setNextSibling(Node n);
+	/**
+	 * Sets the node immediately following this node.
+	 */
+	void setNextSibling(Node n);
 
-    /**
-     * Sets the value of the specified attribute. This method only applies
-     * to Attr objects.
-     */
-    void setSpecified(boolean v);
+	/**
+	 * Sets the value of the specified attribute. This method only applies to Attr
+	 * objects.
+	 */
+	void setSpecified(boolean v);
 }

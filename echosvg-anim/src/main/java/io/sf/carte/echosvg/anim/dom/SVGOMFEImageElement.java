@@ -37,190 +37,179 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFEImageElement
-    extends    SVGOMFilterPrimitiveStandardAttributes
-    implements SVGFEImageElement {
+public class SVGOMFEImageElement extends SVGOMFilterPrimitiveStandardAttributes implements SVGFEImageElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
-        t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
-        t.put(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_PRESERVE_ASPECT_RATIO_VALUE));
-        t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_URI));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
+				SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
+		t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
+		t.put(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
+				new TraitInformation(true, SVGTypes.TYPE_PRESERVE_ASPECT_RATIO_VALUE));
+		t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The attribute initializer.
-     */
-    protected static final AttributeInitializer attributeInitializer;
-    static {
-        attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
-                                          null, "xmlns:xlink",
-                                          XMLConstants.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "show", "embed");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "actuate", "onLoad");
-    }
+	/**
+	 * The attribute initializer.
+	 */
+	protected static final AttributeInitializer attributeInitializer;
+	static {
+		attributeInitializer = new AttributeInitializer(4);
+		attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI, null, "xmlns:xlink",
+				XMLConstants.XLINK_NAMESPACE_URI);
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "type", "simple");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "show", "embed");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "actuate", "onLoad");
+	}
 
-    /**
-     * The 'xlink:href' attribute value.
-     */
-    protected SVGOMAnimatedString href;
+	/**
+	 * The 'xlink:href' attribute value.
+	 */
+	protected SVGOMAnimatedString href;
 
-    /**
-     * The 'preserveAspectRatio' attribute value.
-     */
-    protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
+	/**
+	 * The 'preserveAspectRatio' attribute value.
+	 */
+	protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
 
-    /**
-     * The 'externalResourcesRequired' attribute value.
-     */
-    protected SVGOMAnimatedBoolean externalResourcesRequired;
+	/**
+	 * The 'externalResourcesRequired' attribute value.
+	 */
+	protected SVGOMAnimatedBoolean externalResourcesRequired;
 
-    /**
-     * Creates a new SVGOMFEImageElement object.
-     */
-    protected SVGOMFEImageElement() {
-    }
+	/**
+	 * Creates a new SVGOMFEImageElement object.
+	 */
+	protected SVGOMFEImageElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFEImageElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFEImageElement(String prefix,
-                               AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFEImageElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFEImageElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        href =
-            createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
-        preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
-        externalResourcesRequired =
-            createLiveAnimatedBoolean
-                (null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
+		externalResourcesRequired = createLiveAnimatedBoolean(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_IMAGE_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_IMAGE_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGURIReference#getHref()}.
-     */
-    @Override
-    public SVGAnimatedString getHref() {
-        return href;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
+	 */
+	@Override
+	public SVGAnimatedString getHref() {
+		return href;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEImageElement#getPreserveAspectRatio()}.
-     */
-    @Override
-    public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
-        return preserveAspectRatio;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEImageElement#getPreserveAspectRatio()}.
+	 */
+	@Override
+	public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
+		return preserveAspectRatio;
+	}
 
-    // SVGLangSpace support //////////////////////////////////////////////////
+	// SVGLangSpace support //////////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Returns the xml:lang attribute value.
-     */
-    @Override
-    public String getXMLlang() {
-        return XMLSupport.getXMLLang(this);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:lang attribute value.
+	 */
+	@Override
+	public String getXMLlang() {
+		return XMLSupport.getXMLLang(this);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:lang attribute value.
-     */
-    @Override
-    public void setXMLlang(String lang) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
-    }
+	/**
+	 * <b>DOM</b>: Sets the xml:lang attribute value.
+	 */
+	@Override
+	public void setXMLlang(String lang) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
+	}
 
-    /**
-     * <b>DOM</b>: Returns the xml:space attribute value.
-     */
-    @Override
-    public String getXMLspace() {
-        return XMLSupport.getXMLSpace(this);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:space attribute value.
+	 */
+	@Override
+	public String getXMLspace() {
+		return XMLSupport.getXMLSpace(this);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:space attribute value.
-     */
-    @Override
-    public void setXMLspace(String space) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
-    }
+	/**
+	 * <b>DOM</b>: Sets the xml:space attribute value.
+	 */
+	@Override
+	public void setXMLspace(String space) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
+	}
 
-    // SVGExternalResourcesRequired support /////////////////////////////
+	// SVGExternalResourcesRequired support /////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
-     */
-    @Override
-    public SVGAnimatedBoolean getExternalResourcesRequired() {
-        return externalResourcesRequired;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
+	 */
+	@Override
+	public SVGAnimatedBoolean getExternalResourcesRequired() {
+		return externalResourcesRequired;
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return attributeInitializer;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return attributeInitializer;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFEImageElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFEImageElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

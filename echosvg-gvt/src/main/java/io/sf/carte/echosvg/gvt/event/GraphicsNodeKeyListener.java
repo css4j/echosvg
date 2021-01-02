@@ -29,22 +29,25 @@ import java.util.EventListener;
  */
 public interface GraphicsNodeKeyListener extends EventListener {
 
-    /**
-     * Invoked when a key has been pressed.
-     * @param evt the graphics node key event
-     */
-    void keyPressed(GraphicsNodeKeyEvent evt);
+	/**
+	 * Invoked when a key has been pressed.
+	 * 
+	 * @param evt the graphics node key event
+	 */
+	void keyPressed(GraphicsNodeKeyEvent evt);
 
-    /**
-     * Invoked when a key has been released.
-     * @param evt the graphics node key event
-     */
-    void keyReleased(GraphicsNodeKeyEvent evt);
+	/**
+	 * Invoked when a key has been released.
+	 * 
+	 * @param evt the graphics node key event
+	 */
+	void keyReleased(GraphicsNodeKeyEvent evt);
 
-    /**
-     * Invoked when a key has been typed.
-     * @param evt the graphics node key event
-     */
-    void keyTyped(GraphicsNodeKeyEvent evt);
+	/**
+	 * Invoked when a key has been typed.
+	 * 
+	 * @param evt the graphics node key event
+	 */
+	void keyTyped(GraphicsNodeKeyEvent evt);
 
 }

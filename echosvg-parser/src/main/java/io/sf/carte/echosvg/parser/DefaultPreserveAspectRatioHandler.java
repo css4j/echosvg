@@ -25,116 +25,113 @@ package io.sf.carte.echosvg.parser;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DefaultPreserveAspectRatioHandler
-    implements PreserveAspectRatioHandler {
-    /**
-     * The only instance of this class.
-     */
-    public static final PreserveAspectRatioHandler INSTANCE
-        = new DefaultPreserveAspectRatioHandler();
+public class DefaultPreserveAspectRatioHandler implements PreserveAspectRatioHandler {
+	/**
+	 * The only instance of this class.
+	 */
+	public static final PreserveAspectRatioHandler INSTANCE = new DefaultPreserveAspectRatioHandler();
 
-    /**
-     * This class does not need to be instantiated.
-     */
-    protected DefaultPreserveAspectRatioHandler() {
-    }
+	/**
+	 * This class does not need to be instantiated.
+	 */
+	protected DefaultPreserveAspectRatioHandler() {
+	}
 
-    /**
-     * Implements {@link
-     * PreserveAspectRatioHandler#startPreserveAspectRatio()}.
-     */
-    @Override
-    public void startPreserveAspectRatio() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#startPreserveAspectRatio()}.
+	 */
+	@Override
+	public void startPreserveAspectRatio() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#none()}.
-     */
-    @Override
-    public void none() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#none()}.
+	 */
+	@Override
+	public void none() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#xMaxYMax()}.
-     */
-    @Override
-    public void xMaxYMax() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#xMaxYMax()}.
+	 */
+	@Override
+	public void xMaxYMax() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#xMaxYMid()}.
-     */
-    @Override
-    public void xMaxYMid() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#xMaxYMid()}.
+	 */
+	@Override
+	public void xMaxYMid() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#xMaxYMin()}.
-     */
-    @Override
-    public void xMaxYMin() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#xMaxYMin()}.
+	 */
+	@Override
+	public void xMaxYMin() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#xMidYMax()}.
-     */
-    @Override
-    public void xMidYMax() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#xMidYMax()}.
+	 */
+	@Override
+	public void xMidYMax() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#xMidYMid()}.
-     */
-    @Override
-    public void xMidYMid() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#xMidYMid()}.
+	 */
+	@Override
+	public void xMidYMid() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#xMidYMin()}.
-     */
-    @Override
-    public void xMidYMin() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#xMidYMin()}.
+	 */
+	@Override
+	public void xMidYMin() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#xMinYMax()}.
-     */
-    @Override
-    public void xMinYMax() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#xMinYMax()}.
+	 */
+	@Override
+	public void xMinYMax() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#xMinYMid()}.
-     */
-    @Override
-    public void xMinYMid() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#xMinYMid()}.
+	 */
+	@Override
+	public void xMinYMid() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#xMinYMin()}.
-     */
-    @Override
-    public void xMinYMin() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#xMinYMin()}.
+	 */
+	@Override
+	public void xMinYMin() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#meet()}.
-     */
-    @Override
-    public void meet() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#meet()}.
+	 */
+	@Override
+	public void meet() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#slice()}.
-     */
-    @Override
-    public void slice() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#slice()}.
+	 */
+	@Override
+	public void slice() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PreserveAspectRatioHandler#endPreserveAspectRatio()}.
-     */
-    @Override
-    public void endPreserveAspectRatio() throws ParseException {
-    }
+	/**
+	 * Implements {@link PreserveAspectRatioHandler#endPreserveAspectRatio()}.
+	 */
+	@Override
+	public void endPreserveAspectRatio() throws ParseException {
+	}
 }

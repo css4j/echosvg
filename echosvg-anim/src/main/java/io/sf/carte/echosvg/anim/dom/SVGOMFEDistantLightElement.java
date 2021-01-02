@@ -33,107 +33,102 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFEDistantLightElement
-    extends    SVGOMElement
-    implements SVGFEDistantLightElement {
+public class SVGOMFEDistantLightElement extends SVGOMElement implements SVGFEDistantLightElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
-        t.put(null, SVG_AZIMUTH_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_ELEVATION_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
+		t.put(null, SVG_AZIMUTH_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_ELEVATION_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'azimuth' attribute value.
-     */
-    protected SVGOMAnimatedNumber azimuth;
+	/**
+	 * The 'azimuth' attribute value.
+	 */
+	protected SVGOMAnimatedNumber azimuth;
 
-    /**
-     * The 'elevation' attribute value.
-     */
-    protected SVGOMAnimatedNumber elevation;
+	/**
+	 * The 'elevation' attribute value.
+	 */
+	protected SVGOMAnimatedNumber elevation;
 
-    /**
-     * Creates a new SVGOMFEDistantLightElement object.
-     */
-    protected SVGOMFEDistantLightElement() {
-    }
+	/**
+	 * Creates a new SVGOMFEDistantLightElement object.
+	 */
+	protected SVGOMFEDistantLightElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFEDistantLightElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFEDistantLightElement(String prefix,
-                                      AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFEDistantLightElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFEDistantLightElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        azimuth = createLiveAnimatedNumber(null, SVG_AZIMUTH_ATTRIBUTE, 0f);
-        elevation = createLiveAnimatedNumber(null, SVG_ELEVATION_ATTRIBUTE, 0f);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		azimuth = createLiveAnimatedNumber(null, SVG_AZIMUTH_ATTRIBUTE, 0f);
+		elevation = createLiveAnimatedNumber(null, SVG_ELEVATION_ATTRIBUTE, 0f);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_DISTANT_LIGHT_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_DISTANT_LIGHT_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEDistantLightElement#getAzimuth()}.
-     */
-    @Override
-    public SVGAnimatedNumber getAzimuth() {
-        return azimuth;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEDistantLightElement#getAzimuth()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getAzimuth() {
+		return azimuth;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEDistantLightElement#getElevation()}.
-     */
-    @Override
-    public SVGAnimatedNumber getElevation() {
-        return elevation;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEDistantLightElement#getElevation()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getElevation() {
+		return elevation;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFEDistantLightElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFEDistantLightElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

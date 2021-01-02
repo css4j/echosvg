@@ -27,23 +27,23 @@ package io.sf.carte.echosvg.swing.svg;
  */
 public interface SVGDocumentLoaderListener {
 
-    /**
-     * Called when the loading of a document was started.
-     */
-    void documentLoadingStarted(SVGDocumentLoaderEvent e);
+	/**
+	 * Called when the loading of a document was started.
+	 */
+	void documentLoadingStarted(SVGDocumentLoaderEvent e);
 
-    /**
-     * Called when the loading of a document was completed.
-     */
-    void documentLoadingCompleted(SVGDocumentLoaderEvent e);
+	/**
+	 * Called when the loading of a document was completed.
+	 */
+	void documentLoadingCompleted(SVGDocumentLoaderEvent e);
 
-    /**
-     * Called when the loading of a document was cancelled.
-     */
-    void documentLoadingCancelled(SVGDocumentLoaderEvent e);
+	/**
+	 * Called when the loading of a document was cancelled.
+	 */
+	void documentLoadingCancelled(SVGDocumentLoaderEvent e);
 
-    /**
-     * Called when the loading of a document has failed.
-     */
-    void documentLoadingFailed(SVGDocumentLoaderEvent e);
+	/**
+	 * Called when the loading of a document has failed.
+	 */
+	void documentLoadingFailed(SVGDocumentLoaderEvent e);
 }

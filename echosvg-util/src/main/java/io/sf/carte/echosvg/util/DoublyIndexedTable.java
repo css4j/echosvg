@@ -28,349 +28,352 @@ import java.util.NoSuchElementException;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DoublyIndexedTable<K,L> {
+public class DoublyIndexedTable<K, L> {
 
-    /**
-     * The initial capacity
-     */
-    protected int initialCapacity;
+	/**
+	 * The initial capacity
+	 */
+	protected int initialCapacity;
 
-    /**
-     * The underlying array
-     */
-    protected Entry<K,L>[] table;
+	/**
+	 * The underlying array
+	 */
+	protected Entry<K, L>[] table;
 
-    /**
-     * The number of entries
-     */
-    protected int count;
+	/**
+	 * The number of entries
+	 */
+	protected int count;
 
-    /**
-     * Creates a new DoublyIndexedTable.
-     */
-    public DoublyIndexedTable() {
-        this(16);
-    }
+	/**
+	 * Creates a new DoublyIndexedTable.
+	 */
+	public DoublyIndexedTable() {
+		this(16);
+	}
 
-    /**
-     * Creates a new DoublyIndexedTable.
-     * @param c The initial capacity.
-     */
-    public DoublyIndexedTable(int c) {
-        initialCapacity = c;
-        table = new Entry[c];
-    }
+	/**
+	 * Creates a new DoublyIndexedTable.
+	 * 
+	 * @param c The initial capacity.
+	 */
+	public DoublyIndexedTable(int c) {
+		initialCapacity = c;
+		table = new Entry[c];
+	}
 
-    /**
-     * Creates a new DoublyIndexedTable<String,String> initialized to contain all of
-     * the entries of the specified other DoublyIndexedTable.
-     */
-    public DoublyIndexedTable(DoublyIndexedTable<K,L> other) {
-        initialCapacity = other.initialCapacity;
-        table = new Entry[other.table.length];
-        for (int i = 0; i < other.table.length; i++) {
-            Entry<K,L> newE = null;
-            Entry<K,L> e = other.table[i];
-            while (e != null) {
-                newE = new Entry<>(e.hash, e.key1, e.key2, e.value, newE);
-                e = e.next;
-            }
-            table[i] = newE;
-        }
-        count = other.count;
-    }
-    
-    /**
-     * Returns the size of this table.
-     */
-    public int size() {
-        return count;
-    }
+	/**
+	 * Creates a new DoublyIndexedTable<String,String> initialized to contain all of
+	 * the entries of the specified other DoublyIndexedTable.
+	 */
+	public DoublyIndexedTable(DoublyIndexedTable<K, L> other) {
+		initialCapacity = other.initialCapacity;
+		table = new Entry[other.table.length];
+		for (int i = 0; i < other.table.length; i++) {
+			Entry<K, L> newE = null;
+			Entry<K, L> e = other.table[i];
+			while (e != null) {
+				newE = new Entry<>(e.hash, e.key1, e.key2, e.value, newE);
+				e = e.next;
+			}
+			table[i] = newE;
+		}
+		count = other.count;
+	}
 
-    /**
-     * Puts a value in the table.
-     * @return the old value or null
-     */
-    public Object put(K o1, L o2, Object value) {
-        int hash  = hashCode(o1, o2) & 0x7FFFFFFF;
-        int index = hash % table.length;
+	/**
+	 * Returns the size of this table.
+	 */
+	public int size() {
+		return count;
+	}
 
-        for (Entry<K,L> e = table[index]; e != null; e = e.next) {
-            if ((e.hash == hash) && e.match(o1, o2)) {
-                Object old = e.value;
-                e.value = value;
-                return old;
-            }
-        }
+	/**
+	 * Puts a value in the table.
+	 * 
+	 * @return the old value or null
+	 */
+	public Object put(K o1, L o2, Object value) {
+		int hash = hashCode(o1, o2) & 0x7FFFFFFF;
+		int index = hash % table.length;
 
-        // The key is not in the hash table
-        int len = table.length;
-        if (count++ >= (len - (len >> 2))) {
-            // more than 75% loaded: grow
-            rehash();
-            index = hash % table.length;
-        }
+		for (Entry<K, L> e = table[index]; e != null; e = e.next) {
+			if ((e.hash == hash) && e.match(o1, o2)) {
+				Object old = e.value;
+				e.value = value;
+				return old;
+			}
+		}
 
-        Entry<K,L> e = new Entry<>(hash, o1, o2, value, table[index]);
-        table[index] = e;
-        return null;
-    }
+		// The key is not in the hash table
+		int len = table.length;
+		if (count++ >= (len - (len >> 2))) {
+			// more than 75% loaded: grow
+			rehash();
+			index = hash % table.length;
+		}
 
-    /**
-     * Gets the value of an entry
-     * @return the value or null
-     */
-    public Object get(K o1, L o2) {
-        int hash  = hashCode(o1, o2) & 0x7FFFFFFF;
-        int index = hash % table.length;
+		Entry<K, L> e = new Entry<>(hash, o1, o2, value, table[index]);
+		table[index] = e;
+		return null;
+	}
 
-        for (Entry<K,L> e = table[index]; e != null; e = e.next) {
-            if ((e.hash == hash) && e.match(o1, o2)) {
-                return e.value;
-            }
-        }
-        return null;
-    }
+	/**
+	 * Gets the value of an entry
+	 * 
+	 * @return the value or null
+	 */
+	public Object get(K o1, L o2) {
+		int hash = hashCode(o1, o2) & 0x7FFFFFFF;
+		int index = hash % table.length;
 
-    /**
-     * Removes an entry from the table.
-     * @return the value or null
-     */
-    public Object remove(K o1, L o2) {
-        int hash  = hashCode(o1, o2) & 0x7FFFFFFF;
-        int index = hash % table.length;
+		for (Entry<K, L> e = table[index]; e != null; e = e.next) {
+			if ((e.hash == hash) && e.match(o1, o2)) {
+				return e.value;
+			}
+		}
+		return null;
+	}
 
-        Entry<K,L> e = table[index];
-        if (e == null) {
-            return null;
-        }
+	/**
+	 * Removes an entry from the table.
+	 * 
+	 * @return the value or null
+	 */
+	public Object remove(K o1, L o2) {
+		int hash = hashCode(o1, o2) & 0x7FFFFFFF;
+		int index = hash % table.length;
 
-        if (e.hash == hash && e.match(o1, o2)) {
-            table[index] = e.next;
-            count--;
-            return e.value;
-        }
+		Entry<K, L> e = table[index];
+		if (e == null) {
+			return null;
+		}
 
-        Entry<K,L> prev = e;
-        for (e = e.next; e != null; prev = e, e = e.next) {
-            if (e.hash == hash && e.match(o1, o2)) {
-                prev.next = e.next;
-                count--;
-                return e.value;
-            }
-        }
-        return null;
-    }
+		if (e.hash == hash && e.match(o1, o2)) {
+			table[index] = e.next;
+			count--;
+			return e.value;
+		}
 
-    /**
-     * Returns an array of all of the values in the table.
-     */
-    public Object[] getValuesArray() {
-        Object[] values = new Object[count];
-        int i = 0;
+		Entry<K, L> prev = e;
+		for (e = e.next; e != null; prev = e, e = e.next) {
+			if (e.hash == hash && e.match(o1, o2)) {
+				prev.next = e.next;
+				count--;
+				return e.value;
+			}
+		}
+		return null;
+	}
 
-        for (Entry<K,L> aTable : table) {
-            for (Entry<K,L> e = aTable; e != null; e = e.next) {
-                values[i++] = e.value;
-            }
-        }
-        return values;
-    }
+	/**
+	 * Returns an array of all of the values in the table.
+	 */
+	public Object[] getValuesArray() {
+		Object[] values = new Object[count];
+		int i = 0;
 
-    /**
-     * Clears the table.
-     */
-    public void clear() {
-        table = new Entry[initialCapacity];
-        count = 0;
-    }
+		for (Entry<K, L> aTable : table) {
+			for (Entry<K, L> e = aTable; e != null; e = e.next) {
+				values[i++] = e.value;
+			}
+		}
+		return values;
+	}
 
-    /**
-     * Returns an iterator on the entries of the table.
-     */
-    public Iterator<Entry<K,L>> iterator() {
-        return new TableIterator();
-    }
+	/**
+	 * Clears the table.
+	 */
+	public void clear() {
+		table = new Entry[initialCapacity];
+		count = 0;
+	}
 
-    /**
-     * Rehash the table
-     */
-    protected void rehash() {
-        Entry<K,L>[] oldTable = table;
+	/**
+	 * Returns an iterator on the entries of the table.
+	 */
+	public Iterator<Entry<K, L>> iterator() {
+		return new TableIterator();
+	}
 
-        table = new Entry[oldTable.length * 2 + 1];
+	/**
+	 * Rehash the table
+	 */
+	protected void rehash() {
+		Entry<K, L>[] oldTable = table;
 
-        for (int i = oldTable.length-1; i >= 0; i--) {
-            for (Entry<K,L> old = oldTable[i]; old != null;) {
-                Entry<K,L> e = old;
-                old = old.next;
+		table = new Entry[oldTable.length * 2 + 1];
 
-                int index = e.hash % table.length;
-                e.next = table[index];
-                table[index] = e;
-            }
-        }
-    }
+		for (int i = oldTable.length - 1; i >= 0; i--) {
+			for (Entry<K, L> old = oldTable[i]; old != null;) {
+				Entry<K, L> e = old;
+				old = old.next;
 
-    /**
-     * Computes a hash code corresponding to the given objects.
-     */
-    protected int hashCode(Object o1, Object o2) {
-        int result = (o1 == null) ? 0 : o1.hashCode();
-        return result ^ ((o2 == null) ? 0 : o2.hashCode());
-    }
+				int index = e.hash % table.length;
+				e.next = table[index];
+				table[index] = e;
+			}
+		}
+	}
 
-    /**
-     * An entry in the {@link DoublyIndexedTable}.
-     */
-    public static class Entry<K,L> {
+	/**
+	 * Computes a hash code corresponding to the given objects.
+	 */
+	protected int hashCode(Object o1, Object o2) {
+		int result = (o1 == null) ? 0 : o1.hashCode();
+		return result ^ ((o2 == null) ? 0 : o2.hashCode());
+	}
 
-        /**
-         * The hash code.
-         */
-        protected int hash;
+	/**
+	 * An entry in the {@link DoublyIndexedTable}.
+	 */
+	public static class Entry<K, L> {
 
-        /**
-         * The first key.
-         */
-        protected K key1;
+		/**
+		 * The hash code.
+		 */
+		protected int hash;
 
-        /**
-         * The second key.
-         */
-        protected L key2;
+		/**
+		 * The first key.
+		 */
+		protected K key1;
 
-        /**
-         * The value.
-         */
-        protected Object value;
+		/**
+		 * The second key.
+		 */
+		protected L key2;
 
-        /**
-         * The next entry.
-         */
-        protected Entry<K,L> next;
+		/**
+		 * The value.
+		 */
+		protected Object value;
 
-        /**
-         * Creates a new entry.
-         */
-        public Entry(int hash, K key1, L key2, Object value,
-                     Entry<K,L> next) {
-            this.hash  = hash;
-            this.key1  = key1;
-            this.key2  = key2;
-            this.value = value;
-            this.next  = next;
-        }
+		/**
+		 * The next entry.
+		 */
+		protected Entry<K, L> next;
 
-        /**
-         * Returns this entry's first key.
-         */
-        public K getKey1() {
-            return key1;
-        }
+		/**
+		 * Creates a new entry.
+		 */
+		public Entry(int hash, K key1, L key2, Object value, Entry<K, L> next) {
+			this.hash = hash;
+			this.key1 = key1;
+			this.key2 = key2;
+			this.value = value;
+			this.next = next;
+		}
 
-        /**
-         * Returns this entry's second key.
-         */
-        public L getKey2() {
-            return key2;
-        }
+		/**
+		 * Returns this entry's first key.
+		 */
+		public K getKey1() {
+			return key1;
+		}
 
-        /**
-         * Returns this entry's value.
-         */
-        public Object getValue() {
-            return value;
-        }
+		/**
+		 * Returns this entry's second key.
+		 */
+		public L getKey2() {
+			return key2;
+		}
 
-        /**
-         * Whether this entry match the given keys.
-         */
-        protected boolean match(K o1, L o2) {
-            if (key1 != null) {
-                if (!key1.equals(o1)) {
-                    return false;
-                }
-            } else if (o1 != null) {
-                return false;
-            }
-            if (key2 != null) {
-                return key2.equals(o2);
-            }
-            return o2 == null;
-        }
-    }
+		/**
+		 * Returns this entry's value.
+		 */
+		public Object getValue() {
+			return value;
+		}
 
-    /**
-     * An Iterator class for a {@link DoublyIndexedTable}.
-     */
-    protected class TableIterator implements Iterator<Entry<K,L>> {
+		/**
+		 * Whether this entry match the given keys.
+		 */
+		protected boolean match(K o1, L o2) {
+			if (key1 != null) {
+				if (!key1.equals(o1)) {
+					return false;
+				}
+			} else if (o1 != null) {
+				return false;
+			}
+			if (key2 != null) {
+				return key2.equals(o2);
+			}
+			return o2 == null;
+		}
+	}
 
-        /**
-         * The index of the next entry to return.
-         */
-        private int nextIndex;
+	/**
+	 * An Iterator class for a {@link DoublyIndexedTable}.
+	 */
+	protected class TableIterator implements Iterator<Entry<K, L>> {
 
-        /**
-         * The next Entry to return.
-         */
-        private Entry<K,L> nextEntry;
+		/**
+		 * The index of the next entry to return.
+		 */
+		private int nextIndex;
 
-        /**
-         * Whether the Iterator has run out of elements.
-         */
-        private boolean finished;
+		/**
+		 * The next Entry to return.
+		 */
+		private Entry<K, L> nextEntry;
 
-        /**
-         * Creates a new TableIterator.
-         */
-        public TableIterator() {
-            while (nextIndex < table.length) {
-                nextEntry = table[nextIndex];
-                if (nextEntry != null) {
-                    break;
-                }
-                nextIndex++;
-            }
-            finished = nextEntry == null;
-        }
+		/**
+		 * Whether the Iterator has run out of elements.
+		 */
+		private boolean finished;
 
-        @Override
-        public boolean hasNext() {
-            return !finished;
-        }
+		/**
+		 * Creates a new TableIterator.
+		 */
+		public TableIterator() {
+			while (nextIndex < table.length) {
+				nextEntry = table[nextIndex];
+				if (nextEntry != null) {
+					break;
+				}
+				nextIndex++;
+			}
+			finished = nextEntry == null;
+		}
 
-        @Override
-        public Entry<K,L> next() {
-            if (finished) {
-                throw new NoSuchElementException();
-            }
-            Entry<K,L> ret = nextEntry;
-            findNext();
-            return ret;
-        }
+		@Override
+		public boolean hasNext() {
+			return !finished;
+		}
 
-        /**
-         * Searches for the next Entry in the table.
-         */
-        protected void findNext() {
-            nextEntry = nextEntry.next;
-            if (nextEntry == null) {
-                nextIndex++;
-                while (nextIndex < table.length) {
-                    nextEntry = table[nextIndex];
-                    if (nextEntry != null) {
-                        break;
-                    }
-                    nextIndex++;
-                }
-            }
-            finished = nextEntry == null;
-        }
+		@Override
+		public Entry<K, L> next() {
+			if (finished) {
+				throw new NoSuchElementException();
+			}
+			Entry<K, L> ret = nextEntry;
+			findNext();
+			return ret;
+		}
 
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
-    }
+		/**
+		 * Searches for the next Entry in the table.
+		 */
+		protected void findNext() {
+			nextEntry = nextEntry.next;
+			if (nextEntry == null) {
+				nextIndex++;
+				while (nextIndex < table.length) {
+					nextEntry = table[nextIndex];
+					if (nextEntry != null) {
+						break;
+					}
+					nextIndex++;
+				}
+			}
+			finished = nextEntry == null;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	}
 }

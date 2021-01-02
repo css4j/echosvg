@@ -22,73 +22,62 @@ import io.sf.carte.echosvg.test.DefaultTestSuite;
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
 
 /**
- * Checks that JAR Scripts which should not be loaded are not
- * loaded.
+ * Checks that JAR Scripts which should not be loaded are not loaded.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JarNoLoadTest extends DefaultTestSuite {
-    public JarNoLoadTest() {
-        String scripts = "text/ecmascript";
-        String[] scriptSource = {"bridge/jarCheckNoLoadAny",
-                                 "bridge/jarCheckNoLoadSameAsDocument",
-                                 "bridge/jarCheckNoLoadEmbed",
-        };
-        boolean[] secure = {true, false};
-        String[] scriptOrigin = {"ANY", "DOCUMENT", "EMBEDED", "NONE"};
+	public JarNoLoadTest() {
+		String scripts = "text/ecmascript";
+		String[] scriptSource = { "bridge/jarCheckNoLoadAny", "bridge/jarCheckNoLoadSameAsDocument",
+				"bridge/jarCheckNoLoadEmbed", };
+		boolean[] secure = { true, false };
+		String[] scriptOrigin = { "ANY", "DOCUMENT", "EMBEDED", "NONE" };
 
-        //
-        // If "application/java-archive" is disallowed, scripts
-        // should not be loaded, no matter their origin or the
-        // other security settings.
-        //
-        for (String aScriptSource : scriptSource) {
-            for (boolean aSecure : secure) {
-                for (String aScriptOrigin : scriptOrigin) {
-                    SVGOnLoadExceptionTest t = buildTest(scripts,
-                            aScriptSource,
-                            aScriptOrigin,
-                            aSecure);
-                    addTest(t);
-                }
-            }
-        }
+		//
+		// If "application/java-archive" is disallowed, scripts
+		// should not be loaded, no matter their origin or the
+		// other security settings.
+		//
+		for (String aScriptSource : scriptSource) {
+			for (boolean aSecure : secure) {
+				for (String aScriptOrigin : scriptOrigin) {
+					SVGOnLoadExceptionTest t = buildTest(scripts, aScriptSource, aScriptOrigin, aSecure);
+					addTest(t);
+				}
+			}
+		}
 
-        //
-        // If "application/java-archive" is allowed, but the accepted
-        // script origin is lower than the candidate script, then
-        // the script should not be loaded (e.g., if scriptOrigin
-        // is embeded and trying to load an external script).
-        //
-        scripts = "application/java-archive";
-        for (int j=0; j<scriptOrigin.length; j++) {
-            for (int i=0; i<j; i++) {
-                for (boolean aSecure : secure) {
-                    SVGOnLoadExceptionTest t = buildTest(scripts, scriptSource[i],
-                            scriptOrigin[j],
-                            aSecure);
-                    addTest(t);
-                }
-            }
-        }
-    }
+		//
+		// If "application/java-archive" is allowed, but the accepted
+		// script origin is lower than the candidate script, then
+		// the script should not be loaded (e.g., if scriptOrigin
+		// is embeded and trying to load an external script).
+		//
+		scripts = "application/java-archive";
+		for (int j = 0; j < scriptOrigin.length; j++) {
+			for (int i = 0; i < j; i++) {
+				for (boolean aSecure : secure) {
+					SVGOnLoadExceptionTest t = buildTest(scripts, scriptSource[i], scriptOrigin[j], aSecure);
+					addTest(t);
+				}
+			}
+		}
+	}
 
-    SVGOnLoadExceptionTest buildTest(String scripts, String id, String origin, boolean secure) {
-        SVGOnLoadExceptionTest t = new SVGOnLoadExceptionTest();
-        String desc = 
-            "(scripts=" + scripts + 
-            ")(scriptOrigin=" + origin +
-            ")(secure=" + secure + ")";
-        
-        t.setId(id + desc);
-        t.setScriptOrigin(origin);
-        t.setSecure(secure);
-        t.setScripts(scripts);
-        t.setExpectedExceptionClass("java.lang.SecurityException");
+	SVGOnLoadExceptionTest buildTest(String scripts, String id, String origin, boolean secure) {
+		SVGOnLoadExceptionTest t = new SVGOnLoadExceptionTest();
+		String desc = "(scripts=" + scripts + ")(scriptOrigin=" + origin + ")(secure=" + secure + ")";
 
-        return t;
-    }
-                             
+		t.setId(id + desc);
+		t.setScriptOrigin(origin);
+		t.setSecure(secure);
+		t.setScripts(scripts);
+		t.setExpectedExceptionClass("java.lang.SecurityException");
+
+		return t;
+	}
+
 }

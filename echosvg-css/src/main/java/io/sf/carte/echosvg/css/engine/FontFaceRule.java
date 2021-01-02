@@ -23,55 +23,58 @@ import io.sf.carte.echosvg.util.ParsedURL;
 /**
  * This class represents a @font-face CSS rule.
  *
- * This mostly exists to give us a place to store the
- * URI to be used for 'src' URI resolution.
+ * This mostly exists to give us a place to store the URI to be used for 'src'
+ * URI resolution.
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class FontFaceRule implements Rule {
-    /**
-     * The type constant.
-     */
-    public static final short TYPE = 3;
+	/**
+	 * The type constant.
+	 */
+	public static final short TYPE = 3;
 
-    StyleMap sm;
-    ParsedURL purl;
-    public FontFaceRule(StyleMap sm, ParsedURL purl) {
-        this.sm = sm;
-        this.purl = purl;
-    }
+	StyleMap sm;
+	ParsedURL purl;
 
-    /**
-     * Returns a constant identifying the rule type.
-     */
-    @Override
-    public short getType() { return TYPE; }
+	public FontFaceRule(StyleMap sm, ParsedURL purl) {
+		this.sm = sm;
+		this.purl = purl;
+	}
 
-    /**
-     * Returns the URI of the @font-face rule.
-     */
-    public ParsedURL getURL() {
-        return purl;
-    }
+	/**
+	 * Returns a constant identifying the rule type.
+	 */
+	@Override
+	public short getType() {
+		return TYPE;
+	}
 
-    /**
-     * Returns the StyleMap from the @font-face rule.
-     */
-    public StyleMap getStyleMap() {
-        return sm;
-    }
+	/**
+	 * Returns the URI of the @font-face rule.
+	 */
+	public ParsedURL getURL() {
+		return purl;
+	}
 
-    /**
-     * Returns a printable representation of this rule.
-     */
-    @Override
-    public String toString(CSSEngine eng) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("@font-face { ");
-        sb.append(sm.toString(eng));
-        sb.append(" }\n");
-        return sb.toString();
-    }
+	/**
+	 * Returns the StyleMap from the @font-face rule.
+	 */
+	public StyleMap getStyleMap() {
+		return sm;
+	}
+
+	/**
+	 * Returns a printable representation of this rule.
+	 */
+	@Override
+	public String toString(CSSEngine eng) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("@font-face { ");
+		sb.append(sm.toString(eng));
+		sb.append(" }\n");
+		return sb.toString();
+	}
 }

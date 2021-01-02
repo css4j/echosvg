@@ -25,8 +25,8 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 
 /**
- * This class provides a manager for the property with support for
- * identifier values.
+ * This class provides a manager for the property with support for identifier
+ * values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -34,50 +34,46 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
  */
 public abstract class IdentifierManager extends AbstractValueManager {
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-        case IDENT:
-            String s = lu.getStringValue().toLowerCase().intern();
-            Object v = getIdentifiers().get(s);
-            if (v == null) {
-                throw createInvalidIdentifierDOMException(lu.getStringValue());
-            }
-            return (Value)v;
+		case IDENT:
+			String s = lu.getStringValue().toLowerCase().intern();
+			Object v = getIdentifiers().get(s);
+			if (v == null) {
+				throw createInvalidIdentifierDOMException(lu.getStringValue());
+			}
+			return (Value) v;
 
-        default:
-            throw createInvalidLexicalUnitDOMException
-                (lu.getLexicalUnitType());
-        }
-    }
+		default:
+			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+		}
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        if (type != CSSPrimitiveValue.CSS_IDENT) {
-            throw createInvalidStringTypeDOMException(type);
-        }
-        Object v = getIdentifiers().get(value.toLowerCase().intern());
-        if (v == null) {
-            throw createInvalidIdentifierDOMException(value);
-        }
-        return (Value)v;
-    }
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+		if (type != CSSPrimitiveValue.CSS_IDENT) {
+			throw createInvalidStringTypeDOMException(type);
+		}
+		Object v = getIdentifiers().get(value.toLowerCase().intern());
+		if (v == null) {
+			throw createInvalidIdentifierDOMException(value);
+		}
+		return (Value) v;
+	}
 
-    /**
-     * Returns the map that contains the name/value mappings for each
-     * possible identifiers.
-     */
-    public abstract StringMap getIdentifiers();
+	/**
+	 * Returns the map that contains the name/value mappings for each possible
+	 * identifiers.
+	 */
+	public abstract StringMap getIdentifiers();
 }

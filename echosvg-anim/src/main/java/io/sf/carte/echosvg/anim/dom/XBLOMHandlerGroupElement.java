@@ -31,36 +31,37 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  */
 public class XBLOMHandlerGroupElement extends XBLOMElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new XBLOMHandlerGroupElement.
-     */
-    protected XBLOMHandlerGroupElement() {
-    }
+	/**
+	 * Creates a new XBLOMHandlerGroupElement.
+	 */
+	protected XBLOMHandlerGroupElement() {
+	}
 
-    /**
-     * Creates a new XBLOMHandlerGroupElement.
-     * @param prefix The namespace prefix.
-     * @param owner  The owner document.
-     */
-    public XBLOMHandlerGroupElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new XBLOMHandlerGroupElement.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public XBLOMHandlerGroupElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return XBL_HANDLER_GROUP_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return XBL_HANDLER_GROUP_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new XBLOMHandlerGroupElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new XBLOMHandlerGroupElement();
+	}
 }

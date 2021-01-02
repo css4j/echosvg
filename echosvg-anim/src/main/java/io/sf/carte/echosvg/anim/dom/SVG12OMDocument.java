@@ -28,8 +28,8 @@ import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSNavigableDocumentListener;
 
 /**
- * This class implements {@link SVGDocument} and provides support for
- * SVG 1.2 specifics.
+ * This class implements {@link SVGDocument} and provides support for SVG 1.2
+ * specifics.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -37,122 +37,88 @@ import io.sf.carte.echosvg.css.engine.CSSNavigableDocumentListener;
  */
 public class SVG12OMDocument extends SVGOMDocument {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new uninitialized document.
-     */
-    protected SVG12OMDocument() {
-    }
+	/**
+	 * Creates a new uninitialized document.
+	 */
+	protected SVG12OMDocument() {
+	}
 
-    /**
-     * Creates a new SVG12OMDocument.
-     */
-    public SVG12OMDocument(DocumentType dt, DOMImplementation impl) {
-        super(dt, impl);
-    }
+	/**
+	 * Creates a new SVG12OMDocument.
+	 */
+	public SVG12OMDocument(DocumentType dt, DOMImplementation impl) {
+		super(dt, impl);
+	}
 
-    // AbstractDocument ///////////////////////////////////////////////
+	// AbstractDocument ///////////////////////////////////////////////
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVG12OMDocument();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVG12OMDocument();
+	}
 
-    // CSSNavigableDocument ///////////////////////////////////////////
+	// CSSNavigableDocument ///////////////////////////////////////////
 
-    /**
-     * Adds an event listener for mutations on the
-     * CSSNavigableDocument tree.
-     */
-    @Override
-    public void addCSSNavigableDocumentListener
-            (CSSNavigableDocumentListener l) {
-        if (cssNavigableDocumentListeners.containsKey(l)) {
-            return;
-        }
+	/**
+	 * Adds an event listener for mutations on the CSSNavigableDocument tree.
+	 */
+	@Override
+	public void addCSSNavigableDocumentListener(CSSNavigableDocumentListener l) {
+		if (cssNavigableDocumentListeners.containsKey(l)) {
+			return;
+		}
 
-        DOMNodeInsertedListenerWrapper nodeInserted
-            = new DOMNodeInsertedListenerWrapper(l);
-        DOMNodeRemovedListenerWrapper nodeRemoved
-            = new DOMNodeRemovedListenerWrapper(l);
-        DOMSubtreeModifiedListenerWrapper subtreeModified
-            = new DOMSubtreeModifiedListenerWrapper(l);
-        DOMCharacterDataModifiedListenerWrapper cdataModified
-            = new DOMCharacterDataModifiedListenerWrapper(l);
-        DOMAttrModifiedListenerWrapper attrModified
-            = new DOMAttrModifiedListenerWrapper(l);
+		DOMNodeInsertedListenerWrapper nodeInserted = new DOMNodeInsertedListenerWrapper(l);
+		DOMNodeRemovedListenerWrapper nodeRemoved = new DOMNodeRemovedListenerWrapper(l);
+		DOMSubtreeModifiedListenerWrapper subtreeModified = new DOMSubtreeModifiedListenerWrapper(l);
+		DOMCharacterDataModifiedListenerWrapper cdataModified = new DOMCharacterDataModifiedListenerWrapper(l);
+		DOMAttrModifiedListenerWrapper attrModified = new DOMAttrModifiedListenerWrapper(l);
 
-        cssNavigableDocumentListeners.put
-            (l, new EventListener[] { nodeInserted,
-                                      nodeRemoved,
-                                      subtreeModified,
-                                      cdataModified,
-                                      attrModified });
+		cssNavigableDocumentListeners.put(l,
+				new EventListener[] { nodeInserted, nodeRemoved, subtreeModified, cdataModified, attrModified });
 
-        XBLEventSupport es = (XBLEventSupport) initializeEventSupport();
+		XBLEventSupport es = (XBLEventSupport) initializeEventSupport();
 
-        es.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMNodeInserted",
-             nodeInserted, false);
-        es.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMNodeRemoved",
-             nodeRemoved, false);
-        es.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMSubtreeModified",
-             subtreeModified, false);
-        es.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMCharacterDataModified",
-             cdataModified, false);
-        es.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMAttrModified",
-             attrModified, false);
-    }
+		es.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted", nodeInserted,
+				false);
+		es.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved", nodeRemoved,
+				false);
+		es.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
+				subtreeModified, false);
+		es.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified",
+				cdataModified, false);
+		es.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified", attrModified,
+				false);
+	}
 
-    /**
-     * Removes an event listener for mutations on the
-     * CSSNavigableDocument tree.
-     */
-    @Override
-    public void removeCSSNavigableDocumentListener
-            (CSSNavigableDocumentListener l) {
-        EventListener[] listeners
-            = cssNavigableDocumentListeners.get(l);
-        if (listeners == null) {
-            return;
-        }
+	/**
+	 * Removes an event listener for mutations on the CSSNavigableDocument tree.
+	 */
+	@Override
+	public void removeCSSNavigableDocumentListener(CSSNavigableDocumentListener l) {
+		EventListener[] listeners = cssNavigableDocumentListeners.get(l);
+		if (listeners == null) {
+			return;
+		}
 
-        XBLEventSupport es = (XBLEventSupport) initializeEventSupport();
+		XBLEventSupport es = (XBLEventSupport) initializeEventSupport();
 
-        es.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMNodeInserted",
-             listeners[0], false);
-        es.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMNodeRemoved",
-             listeners[1], false);
-        es.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMSubtreeModified",
-             listeners[2], false);
-        es.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMCharacterDataModified",
-             listeners[3], false);
-        es.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMAttrModified",
-             listeners[4], false);
+		es.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted", listeners[0],
+				false);
+		es.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved", listeners[1],
+				false);
+		es.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
+				listeners[2], false);
+		es.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified",
+				listeners[3], false);
+		es.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified", listeners[4],
+				false);
 
-        cssNavigableDocumentListeners.remove(l);
-    }
+		cssNavigableDocumentListeners.remove(l);
+	}
 }

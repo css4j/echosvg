@@ -26,12 +26,10 @@ package io.sf.carte.echosvg.test;
  * @version $Id$
  */
 public interface TestFilter {
-    /**
-     * The filter will return null or the input
-     * <code>Test</code>. The filter may modify the test content
-     * for example <code>TestSuites</code> may have some of their
-     * children tests removed.
-     */
-    Test filter(Test t);
+	/**
+	 * The filter will return null or the input <code>Test</code>. The filter may
+	 * modify the test content for example <code>TestSuites</code> may have some of
+	 * their children tests removed.
+	 */
+	Test filter(Test t);
 }
-

@@ -22,43 +22,39 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Protocol Handler for the 'jar' protocol.
- * This appears to have the format:
+ * Protocol Handler for the 'jar' protocol. This appears to have the format:
  * jar:&lt;URL for jar file&gt;!&lt;path in jar file&gt;
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
- * @version $Id$ 
+ * @version $Id$
  */
-public class ParsedURLJarProtocolHandler 
-    extends ParsedURLDefaultProtocolHandler {
+public class ParsedURLJarProtocolHandler extends ParsedURLDefaultProtocolHandler {
 
-    public static final String JAR = "jar";
+	public static final String JAR = "jar";
 
-    public ParsedURLJarProtocolHandler() {
-        super(JAR);
-    }
+	public ParsedURLJarProtocolHandler() {
+		super(JAR);
+	}
 
+	// We mostly use the base class parse methods (that leverage
+	// java.net.URL. But we take care to ignore the baseURL if urlStr
+	// is an absolute URL.
+	@Override
+	public ParsedURLData parseURL(ParsedURL baseURL, String urlStr) {
+		String start = urlStr.substring(0, JAR.length() + 1).toLowerCase();
 
-    // We mostly use the base class parse methods (that leverage
-    // java.net.URL.  But we take care to ignore the baseURL if urlStr
-    // is an absolute URL.
-    @Override
-    public ParsedURLData parseURL(ParsedURL baseURL, String urlStr) {
-        String start = urlStr.substring(0, JAR.length()+1).toLowerCase();
-        
-        // urlStr is absolute...
-        if (start.equals(JAR+":"))
-            return parseURL(urlStr);
+		// urlStr is absolute...
+		if (start.equals(JAR + ":"))
+			return parseURL(urlStr);
 
-        // It's relative so base it off baseURL.
-        try {
-            URL context = new URL(baseURL.toString());
-            URL url     = new URL(context, urlStr);
-            return constructParsedURLData(url);
-        } catch (MalformedURLException mue) {
-            return super.parseURL(baseURL, urlStr);
-        }
-    }
+		// It's relative so base it off baseURL.
+		try {
+			URL context = new URL(baseURL.toString());
+			URL url = new URL(context, urlStr);
+			return constructParsedURLData(url);
+		} catch (MalformedURLException mue) {
+			return super.parseURL(baseURL, urlStr);
+		}
+	}
 }
-

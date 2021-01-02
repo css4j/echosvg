@@ -29,23 +29,23 @@ import java.io.RandomAccessFile;
  */
 public class ClassDefFormat1 extends ClassDef {
 
-    private int startGlyph;
-    private int glyphCount;
-    private int[] classValues;
+	private int startGlyph;
+	private int glyphCount;
+	private int[] classValues;
 
-    /** Creates new ClassDefFormat1 */
-    public ClassDefFormat1(RandomAccessFile raf) throws IOException {
-        startGlyph = raf.readUnsignedShort();
-        glyphCount = raf.readUnsignedShort();
-        classValues = new int[glyphCount];
-        for (int i = 0; i < glyphCount; i++) {
-            classValues[i] = raf.readUnsignedShort();
-        }
-    }
+	/** Creates new ClassDefFormat1 */
+	public ClassDefFormat1(RandomAccessFile raf) throws IOException {
+		startGlyph = raf.readUnsignedShort();
+		glyphCount = raf.readUnsignedShort();
+		classValues = new int[glyphCount];
+		for (int i = 0; i < glyphCount; i++) {
+			classValues[i] = raf.readUnsignedShort();
+		}
+	}
 
-    @Override
-    public int getFormat() {
-        return 1;
-    }
+	@Override
+	public int getFormat() {
+		return 1;
+	}
 
 }

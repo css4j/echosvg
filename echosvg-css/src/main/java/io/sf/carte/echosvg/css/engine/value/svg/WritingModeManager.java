@@ -35,81 +35,75 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class WritingModeManager extends IdentifierManager {
 
-    /**
-     * The identifier values.
-     */
-    protected static final StringMap values = new StringMap();
-    static {
-        values.put(CSSConstants.CSS_LR_VALUE,
-                   SVGValueConstants.LR_VALUE);
-        values.put(CSSConstants.CSS_LR_TB_VALUE,
-                   SVGValueConstants.LR_TB_VALUE);
-        values.put(CSSConstants.CSS_RL_VALUE,
-                   SVGValueConstants.RL_VALUE);
-        values.put(CSSConstants.CSS_RL_TB_VALUE,
-                   SVGValueConstants.RL_TB_VALUE);
-        values.put(CSSConstants.CSS_TB_VALUE,
-                   SVGValueConstants.TB_VALUE);
-        values.put(CSSConstants.CSS_TB_RL_VALUE,
-                   SVGValueConstants.TB_RL_VALUE);
-    }
+	/**
+	 * The identifier values.
+	 */
+	protected static final StringMap values = new StringMap();
+	static {
+		values.put(CSSConstants.CSS_LR_VALUE, SVGValueConstants.LR_VALUE);
+		values.put(CSSConstants.CSS_LR_TB_VALUE, SVGValueConstants.LR_TB_VALUE);
+		values.put(CSSConstants.CSS_RL_VALUE, SVGValueConstants.RL_VALUE);
+		values.put(CSSConstants.CSS_RL_TB_VALUE, SVGValueConstants.RL_TB_VALUE);
+		values.put(CSSConstants.CSS_TB_VALUE, SVGValueConstants.TB_VALUE);
+		values.put(CSSConstants.CSS_TB_RL_VALUE, SVGValueConstants.TB_RL_VALUE);
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_IDENT;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_IDENT;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_WRITING_MODE_PROPERTY;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_WRITING_MODE_PROPERTY;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return SVGValueConstants.LR_TB_VALUE;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return SVGValueConstants.LR_TB_VALUE;
+	}
 
-    /**
-     * Implements {@link IdentifierManager#getIdentifiers()}.
-     */
-    @Override
-    public StringMap getIdentifiers() {
-        return values;
-    }
+	/**
+	 * Implements {@link IdentifierManager#getIdentifiers()}.
+	 */
+	@Override
+	public StringMap getIdentifiers() {
+		return values;
+	}
 }

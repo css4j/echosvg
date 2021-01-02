@@ -29,152 +29,145 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatableNumberOptionalNumberValue extends AnimatableValue {
 
-    /**
-     * The first number.
-     */
-    protected float number;
+	/**
+	 * The first number.
+	 */
+	protected float number;
 
-    /**
-     * Whether the optional number is present.
-     */
-    protected boolean hasOptionalNumber;
+	/**
+	 * Whether the optional number is present.
+	 */
+	protected boolean hasOptionalNumber;
 
-    /**
-     * The optional number.
-     */
-    protected float optionalNumber;
+	/**
+	 * The optional number.
+	 */
+	protected float optionalNumber;
 
-    /**
-     * Creates a new, uninitialized AnimatableNumberOptionalNumberValue.
-     */
-    protected AnimatableNumberOptionalNumberValue(AnimationTarget target) {
-        super(target);
-    }
-    
-    /**
-     * Creates a new AnimatableNumberOptionalNumberValue with one number.
-     */
-    public AnimatableNumberOptionalNumberValue(AnimationTarget target,
-                                               float n) {
-        super(target);
-        number = n;
-    }
+	/**
+	 * Creates a new, uninitialized AnimatableNumberOptionalNumberValue.
+	 */
+	protected AnimatableNumberOptionalNumberValue(AnimationTarget target) {
+		super(target);
+	}
 
-    /**
-     * Creates a new AnimatableNumberOptionalNumberValue with two numbers.
-     */
-    public AnimatableNumberOptionalNumberValue(AnimationTarget target, float n,
-                                               float on) {
-        super(target);
-        number = n;
-        optionalNumber = on;
-        hasOptionalNumber = true;
-    }
+	/**
+	 * Creates a new AnimatableNumberOptionalNumberValue with one number.
+	 */
+	public AnimatableNumberOptionalNumberValue(AnimationTarget target, float n) {
+		super(target);
+		number = n;
+	}
 
-    /**
-     * Performs interpolation to the given value.  Number-optional-number
-     * values cannot be interpolated.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to,
-                                       float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatableNumberOptionalNumberValue res;
-        if (result == null) {
-            res = new AnimatableNumberOptionalNumberValue(target);
-        } else {
-            res = (AnimatableNumberOptionalNumberValue) result;
-        }
+	/**
+	 * Creates a new AnimatableNumberOptionalNumberValue with two numbers.
+	 */
+	public AnimatableNumberOptionalNumberValue(AnimationTarget target, float n, float on) {
+		super(target);
+		number = n;
+		optionalNumber = on;
+		hasOptionalNumber = true;
+	}
 
-        float newNumber, newOptionalNumber;
-        boolean newHasOptionalNumber;
+	/**
+	 * Performs interpolation to the given value. Number-optional-number values
+	 * cannot be interpolated.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatableNumberOptionalNumberValue res;
+		if (result == null) {
+			res = new AnimatableNumberOptionalNumberValue(target);
+		} else {
+			res = (AnimatableNumberOptionalNumberValue) result;
+		}
 
-        if (to != null && interpolation >= 0.5) {
-            AnimatableNumberOptionalNumberValue toValue
-                = (AnimatableNumberOptionalNumberValue) to;
-            newNumber = toValue.number;
-            newOptionalNumber = toValue.optionalNumber;
-            newHasOptionalNumber = toValue.hasOptionalNumber;
-        } else {
-            newNumber = number;
-            newOptionalNumber = optionalNumber;
-            newHasOptionalNumber = hasOptionalNumber;
-        }
+		float newNumber, newOptionalNumber;
+		boolean newHasOptionalNumber;
 
-        if (res.number != newNumber
-                || res.hasOptionalNumber != newHasOptionalNumber
-                || res.optionalNumber != newOptionalNumber) {
-            res.number = number;
-            res.optionalNumber = optionalNumber;
-            res.hasOptionalNumber = hasOptionalNumber;
-            res.hasChanged = true;
-        }
-        return res;
-    }
+		if (to != null && interpolation >= 0.5) {
+			AnimatableNumberOptionalNumberValue toValue = (AnimatableNumberOptionalNumberValue) to;
+			newNumber = toValue.number;
+			newOptionalNumber = toValue.optionalNumber;
+			newHasOptionalNumber = toValue.hasOptionalNumber;
+		} else {
+			newNumber = number;
+			newOptionalNumber = optionalNumber;
+			newHasOptionalNumber = hasOptionalNumber;
+		}
 
-    /**
-     * Returns the first number.
-     */
-    public float getNumber() {
-        return number;
-    }
+		if (res.number != newNumber || res.hasOptionalNumber != newHasOptionalNumber
+				|| res.optionalNumber != newOptionalNumber) {
+			res.number = number;
+			res.optionalNumber = optionalNumber;
+			res.hasOptionalNumber = hasOptionalNumber;
+			res.hasChanged = true;
+		}
+		return res;
+	}
 
-    /**
-     * Returns whether the optional number is present.
-     */
-    public boolean hasOptionalNumber() {
-        return hasOptionalNumber;
-    }
+	/**
+	 * Returns the first number.
+	 */
+	public float getNumber() {
+		return number;
+	}
 
-    /**
-     * Returns the optional number.
-     */
-    public float getOptionalNumber() {
-        return optionalNumber;
-    }
+	/**
+	 * Returns whether the optional number is present.
+	 */
+	public boolean hasOptionalNumber() {
+		return hasOptionalNumber;
+	}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return false;
-    }
+	/**
+	 * Returns the optional number.
+	 */
+	public float getOptionalNumber() {
+		return optionalNumber;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        return 0f;
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return false;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        if (hasOptionalNumber) {
-            return new AnimatableNumberOptionalNumberValue(target, 0f, 0f);
-        }
-        return new AnimatableNumberOptionalNumberValue(target, 0f);
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		return 0f;
+	}
 
-    /**
-     * Returns the CSS text representation of the value.
-     */
-    @Override
-    public String getCssText() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(formatNumber(number));
-        if (hasOptionalNumber) {
-            sb.append(' ');
-            sb.append(formatNumber(optionalNumber));
-        }
-        return sb.toString();
-    }
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		if (hasOptionalNumber) {
+			return new AnimatableNumberOptionalNumberValue(target, 0f, 0f);
+		}
+		return new AnimatableNumberOptionalNumberValue(target, 0f);
+	}
+
+	/**
+	 * Returns the CSS text representation of the value.
+	 */
+	@Override
+	public String getCssText() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(formatNumber(number));
+		if (hasOptionalNumber) {
+			sb.append(' ');
+			sb.append(formatNumber(optionalNumber));
+		}
+		return sb.toString();
+	}
 }

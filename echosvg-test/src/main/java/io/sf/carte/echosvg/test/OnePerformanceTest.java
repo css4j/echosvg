@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.test;
 
 public class OnePerformanceTest extends PerformanceTest {
-    @Override
-    public void runOp() {
-        runRef();
-    }
+	@Override
+	public void runOp() {
+		runRef();
+	}
 }

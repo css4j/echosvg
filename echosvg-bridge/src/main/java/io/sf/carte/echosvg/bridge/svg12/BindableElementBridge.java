@@ -40,235 +40,219 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class BindableElementBridge
-        extends AbstractGraphicsNodeBridge
-        implements SVG12BridgeUpdateHandler {
+public class BindableElementBridge extends AbstractGraphicsNodeBridge implements SVG12BridgeUpdateHandler {
 
-    /**
-     * Constructs a new bridge for custom elements.
-     */
-    public BindableElementBridge() {
-    }
+	/**
+	 * Constructs a new bridge for custom elements.
+	 */
+	public BindableElementBridge() {
+	}
 
-    /**
-     * Returns "*" to indicate a default bridge.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return "*";
-    }
+	/**
+	 * Returns "*" to indicate a default bridge.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return "*";
+	}
 
-    /**
-     * Returns "*" to indicate a default bridge.
-     */
-    @Override
-    public String getLocalName() {
-        return "*";
-    }
+	/**
+	 * Returns "*" to indicate a default bridge.
+	 */
+	@Override
+	public String getLocalName() {
+		return "*";
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new BindableElementBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new BindableElementBridge();
+	}
 
-    /**
-     * Creates a <code>GraphicsNode</code> according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @return a graphics node that represents the specified element
-     */
-    @Override
-    public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
-        // 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
-        if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
-            return null;
-        }
+	/**
+	 * Creates a <code>GraphicsNode</code> according to the specified parameters.
+	 *
+	 * @param ctx the bridge context to use
+	 * @param e   the element that describes the graphics node to build
+	 * @return a graphics node that represents the specified element
+	 */
+	@Override
+	public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
+		// 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
+		if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
+			return null;
+		}
 
-        CompositeGraphicsNode gn = buildCompositeGraphicsNode(ctx, e, null);
+		CompositeGraphicsNode gn = buildCompositeGraphicsNode(ctx, e, null);
 
-        return gn;
-    }
+		return gn;
+	}
 
-    /**
-     * Creates a <code>GraphicsNode</code> from the input element and
-     * populates the input <code>CompositeGraphicsNode</code>
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @param gn the CompositeGraphicsNode where the use graphical 
-     *        content will be appended. The composite node is emptied
-     *        before appending new content.
-     */
-    public CompositeGraphicsNode
-            buildCompositeGraphicsNode(BridgeContext ctx, 
-                                       Element e,
-                                       CompositeGraphicsNode gn) {
+	/**
+	 * Creates a <code>GraphicsNode</code> from the input element and populates the
+	 * input <code>CompositeGraphicsNode</code>
+	 *
+	 * @param ctx the bridge context to use
+	 * @param e   the element that describes the graphics node to build
+	 * @param gn  the CompositeGraphicsNode where the use graphical content will be
+	 *            appended. The composite node is emptied before appending new
+	 *            content.
+	 */
+	public CompositeGraphicsNode buildCompositeGraphicsNode(BridgeContext ctx, Element e, CompositeGraphicsNode gn) {
 
-        BindableElement be = (BindableElement) e;
-        Element shadowTree = be.getXblShadowTree();
+		BindableElement be = (BindableElement) e;
+		Element shadowTree = be.getXblShadowTree();
 
-        UpdateManager um = ctx.getUpdateManager();
-        ScriptingEnvironment se = um == null ? null
-                                             : um.getScriptingEnvironment();
+		UpdateManager um = ctx.getUpdateManager();
+		ScriptingEnvironment se = um == null ? null : um.getScriptingEnvironment();
 
-        if (se != null && shadowTree != null) {
-            se.addScriptingListeners(shadowTree);
-        }
+		if (se != null && shadowTree != null) {
+			se.addScriptingListeners(shadowTree);
+		}
 
-        if (gn == null) {
-            gn = new CompositeGraphicsNode();
-            associateSVGContext(ctx, e, gn);
-        } else {
-            int s = gn.size();
-            for (int i = 0; i < s; i++) {
-                gn.remove(0);
-            }
-        }
+		if (gn == null) {
+			gn = new CompositeGraphicsNode();
+			associateSVGContext(ctx, e, gn);
+		} else {
+			int s = gn.size();
+			for (int i = 0; i < s; i++) {
+				gn.remove(0);
+			}
+		}
 
-        GVTBuilder builder = ctx.getGVTBuilder();
+		GVTBuilder builder = ctx.getGVTBuilder();
 
-        if (shadowTree != null) {
-            GraphicsNode shadowNode = builder.build(ctx, shadowTree);
-            if (shadowNode != null) {
-                gn.add(shadowNode);
-            }
-        } else {
-            for (Node m = e.getFirstChild(); m != null; m = m.getNextSibling()) {
-                if (m.getNodeType() == Node.ELEMENT_NODE) {
-                    GraphicsNode n = builder.build(ctx, (Element) m);
-                    if (n != null) {
-                        gn.add(n);
-                    }
-                }
-            }
-        }
+		if (shadowTree != null) {
+			GraphicsNode shadowNode = builder.build(ctx, shadowTree);
+			if (shadowNode != null) {
+				gn.add(shadowNode);
+			}
+		} else {
+			for (Node m = e.getFirstChild(); m != null; m = m.getNextSibling()) {
+				if (m.getNodeType() == Node.ELEMENT_NODE) {
+					GraphicsNode n = builder.build(ctx, (Element) m);
+					if (n != null) {
+						gn.add(n);
+					}
+				}
+			}
+		}
 
-        return gn;
-    }
+		return gn;
+	}
 
-    @Override
-    public void dispose() {
-        BindableElement be = (BindableElement) e;
-        if (be != null && be.getCSSFirstChild() != null) {
-            disposeTree(be.getCSSFirstChild());
-        }
+	@Override
+	public void dispose() {
+		BindableElement be = (BindableElement) e;
+		if (be != null && be.getCSSFirstChild() != null) {
+			disposeTree(be.getCSSFirstChild());
+		}
 
-        super.dispose();
-    }
+		super.dispose();
+	}
 
-    /**
-     * Creates the GraphicsNode depending on the GraphicsNodeBridge
-     * implementation.
-     */
-    @Override
-    protected GraphicsNode instantiateGraphicsNode() {
-        return null; // nothing to do, createGraphicsNode is fully overriden
-    }
+	/**
+	 * Creates the GraphicsNode depending on the GraphicsNodeBridge implementation.
+	 */
+	@Override
+	protected GraphicsNode instantiateGraphicsNode() {
+		return null; // nothing to do, createGraphicsNode is fully overriden
+	}
 
-    /**
-     * Returns false as the custom element is a not container.
-     */
-    @Override
-    public boolean isComposite() {
-        return false;
-    }
+	/**
+	 * Returns false as the custom element is a not container.
+	 */
+	@Override
+	public boolean isComposite() {
+		return false;
+	}
 
-    /**
-     * Builds using the specified BridgeContext and element, the
-     * specified graphics node.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @param node the graphics node to build
-     */
-    @Override
-    public void buildGraphicsNode(BridgeContext ctx,
-                                  Element e,
-                                  GraphicsNode node) {
+	/**
+	 * Builds using the specified BridgeContext and element, the specified graphics
+	 * node.
+	 *
+	 * @param ctx  the bridge context to use
+	 * @param e    the element that describes the graphics node to build
+	 * @param node the graphics node to build
+	 */
+	@Override
+	public void buildGraphicsNode(BridgeContext ctx, Element e, GraphicsNode node) {
 
-        initializeDynamicSupport(ctx, e, node);
-    }
+		initializeDynamicSupport(ctx, e, node);
+	}
 
-    // BridgeUpdateHandler implementation //////////////////////////////////
+	// BridgeUpdateHandler implementation //////////////////////////////////
 
-    /**
-     * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
-     */
-    @Override
-    public void handleDOMNodeInsertedEvent(MutationEvent evt) {
-        // Only rebuild the graphics tree if this custom element is not bound.
-        BindableElement be = (BindableElement) e;
-        Element shadowTree = be.getXblShadowTree();
+	/**
+	 * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
+	 */
+	@Override
+	public void handleDOMNodeInsertedEvent(MutationEvent evt) {
+		// Only rebuild the graphics tree if this custom element is not bound.
+		BindableElement be = (BindableElement) e;
+		Element shadowTree = be.getXblShadowTree();
 
-        if (shadowTree == null && evt.getTarget() instanceof Element) {
-            handleElementAdded((CompositeGraphicsNode) node, 
-                               e, 
-                               (Element) evt.getTarget());
-        }
-    }
+		if (shadowTree == null && evt.getTarget() instanceof Element) {
+			handleElementAdded((CompositeGraphicsNode) node, e, (Element) evt.getTarget());
+		}
+	}
 
-    /**
-     * Invoked when a bindable element's binding has changed.
-     */
-    @Override
-    public void handleBindingEvent(Element bindableElement,
-                                   Element shadowTree) {
-        CompositeGraphicsNode gn = node.getParent();
-        gn.remove(node);
-        disposeTree(e);
+	/**
+	 * Invoked when a bindable element's binding has changed.
+	 */
+	@Override
+	public void handleBindingEvent(Element bindableElement, Element shadowTree) {
+		CompositeGraphicsNode gn = node.getParent();
+		gn.remove(node);
+		disposeTree(e);
 
-        handleElementAdded(gn, e.getParentNode(), e);
-    }
+		handleElementAdded(gn, e.getParentNode(), e);
+	}
 
-    /**
-     * Invoked when the xblChildNodes property has changed because a
-     * descendant xbl:content element has updated its selected nodes.
-     */
-    @Override
-    public void handleContentSelectionChangedEvent
-            (ContentSelectionChangedEvent csce) {
-    }
+	/**
+	 * Invoked when the xblChildNodes property has changed because a descendant
+	 * xbl:content element has updated its selected nodes.
+	 */
+	@Override
+	public void handleContentSelectionChangedEvent(ContentSelectionChangedEvent csce) {
+	}
 
-    /**
-     * Rebuild the graphics tree.
-     */
-    protected void handleElementAdded(CompositeGraphicsNode gn, 
-                                      Node parent, 
-                                      Element childElt) {
-        // build the graphics node
-        GVTBuilder builder = ctx.getGVTBuilder();
-        GraphicsNode childNode = builder.build(ctx, childElt);
-        if (childNode == null) {
-            return; // the added element is not a graphic element
-        }
-        
-        // Find the index where the GraphicsNode should be added
-        int idx = -1;
-        for(Node ps = childElt.getPreviousSibling(); ps != null;
-            ps = ps.getPreviousSibling()) {
-            if (ps.getNodeType() != Node.ELEMENT_NODE)
-                continue;
-            Element pse = (Element)ps;
-            GraphicsNode psgn = ctx.getGraphicsNode(pse);
-            while ((psgn != null) && (psgn.getParent() != gn)) {
-                // In some cases the GN linked is
-                // a child (in particular for images).
-                psgn = psgn.getParent();
-            }
-            if (psgn == null)
-                continue;
-            idx = gn.indexOf(psgn);
-            if (idx == -1)
-                continue;
-            break;
-        }
-        // insert after prevSibling, if
-        // it was -1 this becomes 0 (first slot)
-        idx++; 
-        gn.add(idx, childNode);
-    }
+	/**
+	 * Rebuild the graphics tree.
+	 */
+	protected void handleElementAdded(CompositeGraphicsNode gn, Node parent, Element childElt) {
+		// build the graphics node
+		GVTBuilder builder = ctx.getGVTBuilder();
+		GraphicsNode childNode = builder.build(ctx, childElt);
+		if (childNode == null) {
+			return; // the added element is not a graphic element
+		}
+
+		// Find the index where the GraphicsNode should be added
+		int idx = -1;
+		for (Node ps = childElt.getPreviousSibling(); ps != null; ps = ps.getPreviousSibling()) {
+			if (ps.getNodeType() != Node.ELEMENT_NODE)
+				continue;
+			Element pse = (Element) ps;
+			GraphicsNode psgn = ctx.getGraphicsNode(pse);
+			while ((psgn != null) && (psgn.getParent() != gn)) {
+				// In some cases the GN linked is
+				// a child (in particular for images).
+				psgn = psgn.getParent();
+			}
+			if (psgn == null)
+				continue;
+			idx = gn.indexOf(psgn);
+			if (idx == -1)
+				continue;
+			break;
+		}
+		// insert after prevSibling, if
+		// it was -1 this becomes 0 (first slot)
+		idx++;
+		gn.add(idx, childNode);
+	}
 }

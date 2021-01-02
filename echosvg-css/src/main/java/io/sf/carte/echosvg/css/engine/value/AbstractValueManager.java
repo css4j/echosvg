@@ -27,54 +27,43 @@ import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 
 /**
- * This class provides an abstract implementation of the ValueManager
- * interface.
+ * This class provides an abstract implementation of the ValueManager interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractValueManager
-    extends AbstractValueFactory
-    implements ValueManager {
-    
-    /**
-     * Implements {@link ValueManager#createFloatValue(short,float)}.
-     */
-    @Override
-    public Value createFloatValue(short unitType, float floatValue)
-        throws DOMException {
-        throw createDOMException();
-    }
+public abstract class AbstractValueManager extends AbstractValueFactory implements ValueManager {
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        throw createDOMException();
-    }
+	/**
+	 * Implements {@link ValueManager#createFloatValue(short,float)}.
+	 */
+	@Override
+	public Value createFloatValue(short unitType, float floatValue) throws DOMException {
+		throw createDOMException();
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
-     */
-    @Override
-    public Value computeValue(CSSStylableElement elt,
-                              String pseudo,
-                              CSSEngine engine,
-                              int idx,
-                              StyleMap sm,
-                              Value value) {
-        
-        if ((value.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) &&
-            (value.getPrimitiveType() == CSSPrimitiveValue.CSS_URI)) {
-            // Reveal the absolute value as the cssText now.
-            return new URIValue(value.getStringValue(),
-                                value.getStringValue());
-        }
-        return value;
-    }
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+		throw createDOMException();
+	}
+
+	/**
+	 * Implements
+	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
+	 */
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+
+		if ((value.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE)
+				&& (value.getPrimitiveType() == CSSPrimitiveValue.CSS_URI)) {
+			// Reveal the absolute value as the cssText now.
+			return new URIValue(value.getStringValue(), value.getStringValue());
+		}
+		return value;
+	}
 }

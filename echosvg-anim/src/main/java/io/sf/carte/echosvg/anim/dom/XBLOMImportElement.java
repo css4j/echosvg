@@ -31,36 +31,37 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  */
 public class XBLOMImportElement extends XBLOMElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new XBLOMImportElement.
-     */
-    protected XBLOMImportElement() {
-    }
+	/**
+	 * Creates a new XBLOMImportElement.
+	 */
+	protected XBLOMImportElement() {
+	}
 
-    /**
-     * Creates a new XBLOMImportElement.
-     * @param prefix The namespace prefix.
-     * @param owner  The owner document.
-     */
-    public XBLOMImportElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new XBLOMImportElement.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public XBLOMImportElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return XBL_IMPORT_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return XBL_IMPORT_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new XBLOMImportElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new XBLOMImportElement();
+	}
 }

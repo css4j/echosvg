@@ -22,31 +22,30 @@ import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
- * This class provides a manager for the 'glyph-orientation-horizontal'
- * property values.
+ * This class provides a manager for the 'glyph-orientation-horizontal' property
+ * values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class GlyphOrientationHorizontalManager
-    extends GlyphOrientationManager {
-    
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_GLYPH_ORIENTATION_HORIZONTAL_PROPERTY;
-    }
-    
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return SVGValueConstants.ZERO_DEGREE;
-    }
+public class GlyphOrientationHorizontalManager extends GlyphOrientationManager {
+
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_GLYPH_ORIENTATION_HORIZONTAL_PROPERTY;
+	}
+
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return SVGValueConstants.ZERO_DEGREE;
+	}
 }

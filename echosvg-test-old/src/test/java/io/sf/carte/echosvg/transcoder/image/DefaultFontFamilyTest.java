@@ -30,57 +30,55 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
- * @version $Id$ 
+ * @version $Id$
  */
 public class DefaultFontFamilyTest extends AbstractImageTranscoderTest {
 
-    /** The URI of the input image. */
-    protected String inputURI;
+	/** The URI of the input image. */
+	protected String inputURI;
 
-    /** The URI of the reference image. */
-    protected String refImageURI;
+	/** The URI of the reference image. */
+	protected String refImageURI;
 
-    /** The default font-family to use. */
-    protected String defaultFontFamily;
+	/** The default font-family to use. */
+	protected String defaultFontFamily;
 
-    /**
-     * Constructs a new <code>DefaultFontFamilyTest</code>.
-     *
-     * @param inputURI the URI of the input image
-     * @param refImageURI the URI of the reference image
-     * @param defaultFontFamily the default font-family to use
-     */
-    public DefaultFontFamilyTest(String inputURI, 
-                                 String refImageURI, 
-                                 String defaultFontFamily) {
-        this.inputURI = inputURI;
-        this.refImageURI = refImageURI;
-        this.defaultFontFamily = defaultFontFamily;
-    }
+	/**
+	 * Constructs a new <code>DefaultFontFamilyTest</code>.
+	 *
+	 * @param inputURI          the URI of the input image
+	 * @param refImageURI       the URI of the reference image
+	 * @param defaultFontFamily the default font-family to use
+	 */
+	public DefaultFontFamilyTest(String inputURI, String refImageURI, String defaultFontFamily) {
+		this.inputURI = inputURI;
+		this.refImageURI = refImageURI;
+		this.defaultFontFamily = defaultFontFamily;
+	}
 
-    /**
-     * Creates the <code>TranscoderInput</code>.
-     */
-    @Override
-    protected TranscoderInput createTranscoderInput() {
-        return new TranscoderInput(resolveURL(inputURI).toString());
-    }
-    
-    /**
-     * Creates a Map that contains additional transcoding hints.
-     */
-    @Override
-    protected Map<Key, Object> createTranscodingHints() {
-        Map<Key, Object> hints = new HashMap<>(3);
-        hints.put(SVGAbstractTranscoder.KEY_DEFAULT_FONT_FAMILY, defaultFontFamily);
-        return hints;
-    }
+	/**
+	 * Creates the <code>TranscoderInput</code>.
+	 */
+	@Override
+	protected TranscoderInput createTranscoderInput() {
+		return new TranscoderInput(resolveURL(inputURI).toString());
+	}
 
-    /**
-     * Returns the reference image for this test.
-     */
-    @Override
-    protected byte [] getReferenceImageData() {
-        return createBufferedImageData(resolveURL(refImageURI));
-    }
+	/**
+	 * Creates a Map that contains additional transcoding hints.
+	 */
+	@Override
+	protected Map<Key, Object> createTranscodingHints() {
+		Map<Key, Object> hints = new HashMap<>(3);
+		hints.put(SVGAbstractTranscoder.KEY_DEFAULT_FONT_FAMILY, defaultFontFamily);
+		return hints;
+	}
+
+	/**
+	 * Returns the reference image for this test.
+	 */
+	@Override
+	protected byte[] getReferenceImageData() {
+		return createBufferedImageData(resolveURL(refImageURI));
+	}
 }

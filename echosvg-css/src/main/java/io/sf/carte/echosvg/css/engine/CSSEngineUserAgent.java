@@ -29,14 +29,14 @@ package io.sf.carte.echosvg.css.engine;
  */
 public interface CSSEngineUserAgent {
 
-    /**
-     * Displays an error resulting from the specified Exception.
-     */
-    void displayError(Exception ex);
+	/**
+	 * Displays an error resulting from the specified Exception.
+	 */
+	void displayError(Exception ex);
 
-    /**
-     * Displays a message in the User Agent interface.
-     */
-    void displayMessage(String message);
+	/**
+	 * Displays a message in the User Agent interface.
+	 */
+	void displayMessage(String message);
 
 }

@@ -34,125 +34,118 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFEGaussianBlurElement
-    extends    SVGOMFilterPrimitiveStandardAttributes
-    implements SVGFEGaussianBlurElement {
+public class SVGOMFEGaussianBlurElement extends SVGOMFilterPrimitiveStandardAttributes
+		implements SVGFEGaussianBlurElement {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
-        t.put(null, SVG_IN_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_CDATA));
-        t.put(null, SVG_STD_DEVIATION_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
-        xmlTraitInformation = t;
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
+				SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
+		t.put(null, SVG_IN_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_CDATA));
+		t.put(null, SVG_STD_DEVIATION_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'in' attribute value.
-     */
-    protected SVGOMAnimatedString in;
+	/**
+	 * The 'in' attribute value.
+	 */
+	protected SVGOMAnimatedString in;
 
-    /**
-     * Creates a new SVGOMFEGaussianBlurElement object.
-     */
-    protected SVGOMFEGaussianBlurElement() {
-    }
+	/**
+	 * Creates a new SVGOMFEGaussianBlurElement object.
+	 */
+	protected SVGOMFEGaussianBlurElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFEGaussianBlurElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFEGaussianBlurElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFEGaussianBlurElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFEGaussianBlurElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_GAUSSIAN_BLUR_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_GAUSSIAN_BLUR_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEGaussianBlurElement#getIn1()}.
-     */
-    @Override
-    public SVGAnimatedString getIn1() {
-        return in;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEGaussianBlurElement#getIn1()}.
+	 */
+	@Override
+	public SVGAnimatedString getIn1() {
+		return in;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGFEGaussianBlurElement#getStdDeviationX()}.
-     */
-    @Override
-    public SVGAnimatedNumber getStdDeviationX() {
-        throw new UnsupportedOperationException
-            ("SVGFEGaussianBlurElement.getStdDeviationX is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEGaussianBlurElement#getStdDeviationX()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getStdDeviationX() {
+		throw new UnsupportedOperationException("SVGFEGaussianBlurElement.getStdDeviationX is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGFEGaussianBlurElement#getStdDeviationY()}.
-     */
-    @Override
-    public SVGAnimatedNumber getStdDeviationY() {
-        throw new UnsupportedOperationException
-            ("SVGFEGaussianBlurElement.getStdDeviationY is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEGaussianBlurElement#getStdDeviationY()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getStdDeviationY() {
+		throw new UnsupportedOperationException("SVGFEGaussianBlurElement.getStdDeviationY is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGFEGaussianBlurElement#setStdDeviation(float,float)}.
-     */
-    @Override
-    public void setStdDeviation(float devX, float devY) {
-        setAttributeNS(null, SVG_STD_DEVIATION_ATTRIBUTE,
-                       Float.toString(devX) + " " + Float.toString(devY));
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link SVGFEGaussianBlurElement#setStdDeviation(float,float)}.
+	 */
+	@Override
+	public void setStdDeviation(float devX, float devY) {
+		setAttributeNS(null, SVG_STD_DEVIATION_ATTRIBUTE, Float.toString(devX) + " " + Float.toString(devY));
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFEGaussianBlurElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFEGaussianBlurElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 
-    // AnimationTarget ///////////////////////////////////////////////////////
+	// AnimationTarget ///////////////////////////////////////////////////////
 
 // XXX TBD
 //

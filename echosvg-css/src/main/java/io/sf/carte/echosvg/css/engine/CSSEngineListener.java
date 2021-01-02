@@ -26,9 +26,9 @@ package io.sf.carte.echosvg.css.engine;
  * @version $Id$
  */
 public interface CSSEngineListener {
-    
-    /**
-     * Called when a set of properties has been modified.
-     */
-    void propertiesChanged(CSSEngineEvent evt);
+
+	/**
+	 * Called when a set of properties has been modified.
+	 */
+	void propertiesChanged(CSSEngineEvent evt);
 }

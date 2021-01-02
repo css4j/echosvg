@@ -21,17 +21,18 @@ package io.sf.carte.echosvg.util.gui.resource;
 import javax.swing.JComponent;
 
 /**
- * This interface must be implemented by actions which need
- * to have an access to their associated component(s)
+ * This interface must be implemented by actions which need to have an access to
+ * their associated component(s)
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface JComponentModifier {
-    /**
-     * Gives a reference to a component to this object
-     * @param comp the component associed with this object
-     */
-    void addJComponent(JComponent comp);
+	/**
+	 * Gives a reference to a component to this object
+	 * 
+	 * @param comp the component associed with this object
+	 */
+	void addJComponent(JComponent comp);
 }

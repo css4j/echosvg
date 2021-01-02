@@ -27,85 +27,84 @@ package io.sf.carte.echosvg.anim.timing;
  */
 public abstract class TimingSpecifier {
 
-    /**
-     * The element that owns this timing specifier.
-     */
-    protected TimedElement owner;
+	/**
+	 * The element that owns this timing specifier.
+	 */
+	protected TimedElement owner;
 
-    /**
-     * Whether this timing specifier is for a begin time or an end time.
-     */
-    protected boolean isBegin;
+	/**
+	 * Whether this timing specifier is for a begin time or an end time.
+	 */
+	protected boolean isBegin;
 
-    /**
-     * Creates a new TimingSpecifier object.
-     */
-    protected TimingSpecifier(TimedElement owner, boolean isBegin) {
-        this.owner = owner;
-        this.isBegin = isBegin;
-    }
+	/**
+	 * Creates a new TimingSpecifier object.
+	 */
+	protected TimingSpecifier(TimedElement owner, boolean isBegin) {
+		this.owner = owner;
+		this.isBegin = isBegin;
+	}
 
-    /**
-     * Returns the element that owns this timing specifier.
-     */
-    public TimedElement getOwner() {
-        return owner;
-    }
+	/**
+	 * Returns the element that owns this timing specifier.
+	 */
+	public TimedElement getOwner() {
+		return owner;
+	}
 
-    /**
-     * Returns true if this timing specifier is in the owner's begin list,
-     * false if it is in the owner's end list.
-     */
-    public boolean isBegin() {
-        return isBegin;
-    }
+	/**
+	 * Returns true if this timing specifier is in the owner's begin list, false if
+	 * it is in the owner's end list.
+	 */
+	public boolean isBegin() {
+		return isBegin;
+	}
 
-    /**
-     * Initializes this timing specifier by adding the initial instance time
-     * to the owner's instance time list or setting up any event listeners.
-     * This should be overriden in descendant classes.
-     */
-    public void initialize() {
-    }
+	/**
+	 * Initializes this timing specifier by adding the initial instance time to the
+	 * owner's instance time list or setting up any event listeners. This should be
+	 * overriden in descendant classes.
+	 */
+	public void initialize() {
+	}
 
-    /**
-     * Deinitializes this timing specifier by removing any event listeners.
-     * This should be overriden in descendant classes.
-     */
-    public void deinitialize() {
-    }
+	/**
+	 * Deinitializes this timing specifier by removing any event listeners. This
+	 * should be overriden in descendant classes.
+	 */
+	public void deinitialize() {
+	}
 
-    /**
-     * Returns whether this timing specifier is event-like (i.e., if it is
-     * an eventbase, accesskey or a repeat timing specifier).
-     */
-    public abstract boolean isEventCondition();
+	/**
+	 * Returns whether this timing specifier is event-like (i.e., if it is an
+	 * eventbase, accesskey or a repeat timing specifier).
+	 */
+	public abstract boolean isEventCondition();
 
-    /**
-     * Called by the timebase element when it creates a new Interval.
-     * This should be overridden in descendant classes that generate
-     * time instances based on the interval of a timebase element.
-     */
-    float newInterval(Interval interval) {
-        return Float.POSITIVE_INFINITY;
-    }
+	/**
+	 * Called by the timebase element when it creates a new Interval. This should be
+	 * overridden in descendant classes that generate time instances based on the
+	 * interval of a timebase element.
+	 */
+	float newInterval(Interval interval) {
+		return Float.POSITIVE_INFINITY;
+	}
 
-    /**
-     * Called by the timebase element when it deletes an Interval.
-     * This should be overridden in descendant classes that generate
-     * time instances based on the interval of a timebase element.
-     */
-    float removeInterval(Interval interval) {
-        return Float.POSITIVE_INFINITY;
-    }
+	/**
+	 * Called by the timebase element when it deletes an Interval. This should be
+	 * overridden in descendant classes that generate time instances based on the
+	 * interval of a timebase element.
+	 */
+	float removeInterval(Interval interval) {
+		return Float.POSITIVE_INFINITY;
+	}
 
-    /**
-     * Called by an {@link InstanceTime} created by this TimingSpecifier
-     * to indicate that its value has changed.  This should be overriden
-     * in descendant classes that generate time instances based on the
-     * interval of a timebase element.
-     */
-    float handleTimebaseUpdate(InstanceTime instanceTime, float newTime) {
-        return Float.POSITIVE_INFINITY;
-    }
+	/**
+	 * Called by an {@link InstanceTime} created by this TimingSpecifier to indicate
+	 * that its value has changed. This should be overriden in descendant classes
+	 * that generate time instances based on the interval of a timebase element.
+	 */
+	float handleTimebaseUpdate(InstanceTime instanceTime, float newTime) {
+		return Float.POSITIVE_INFINITY;
+	}
 }

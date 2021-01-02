@@ -23,8 +23,7 @@ import org.w3c.dom.Node;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 
 /**
- * This class implements foreign namespace elements that can be
- * bound with XBL.
+ * This class implements foreign namespace elements that can be bound with XBL.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -32,110 +31,109 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  */
 public class BindableElement extends SVGGraphicsElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The namespace URI of the custom element.
-     */
-    protected String namespaceURI;
+	/**
+	 * The namespace URI of the custom element.
+	 */
+	protected String namespaceURI;
 
-    /**
-     * The local name of the custom element.
-     */
-    protected String localName;
+	/**
+	 * The local name of the custom element.
+	 */
+	protected String localName;
 
-    /**
-     * The shadow tree.
-     */
-    protected XBLOMShadowTreeElement xblShadowTree;
+	/**
+	 * The shadow tree.
+	 */
+	protected XBLOMShadowTreeElement xblShadowTree;
 
-    /**
-     * Creates a new BindableElement object.
-     */
-    protected BindableElement() {
-    }
+	/**
+	 * Creates a new BindableElement object.
+	 */
+	protected BindableElement() {
+	}
 
-    /**
-     * Creates a new BindableElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     * @param ns The namespace of the custom element.
-     * @param ln The local name of the custom element.
-     */
-    public BindableElement(String prefix,
-                           AbstractDocument owner,
-                           String ns,
-                           String ln) {
-        super(prefix, owner);
-        namespaceURI = ns;
-        localName = ln;
-    }
+	/**
+	 * Creates a new BindableElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 * @param ns     The namespace of the custom element.
+	 * @param ln     The local name of the custom element.
+	 */
+	public BindableElement(String prefix, AbstractDocument owner, String ns, String ln) {
+		super(prefix, owner);
+		namespaceURI = ns;
+		localName = ln;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getNamespaceURI()}.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return namespaceURI;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getNamespaceURI()}.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return namespaceURI;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return localName;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return localName;
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return null;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return null;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new BindableElement(null, null, namespaceURI, localName);
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new BindableElement(null, null, namespaceURI, localName);
+	}
 
-    /**
-     * Sets the shadow tree for this bindable element.
-     */
-    public void setShadowTree(XBLOMShadowTreeElement s) {
-        xblShadowTree = s;
-    }
+	/**
+	 * Sets the shadow tree for this bindable element.
+	 */
+	public void setShadowTree(XBLOMShadowTreeElement s) {
+		xblShadowTree = s;
+	}
 
-    /**
-     * Returns the shadow tree for this bindable element.
-     */
-    public XBLOMShadowTreeElement getShadowTree() {
-        return xblShadowTree;
-    }
+	/**
+	 * Returns the shadow tree for this bindable element.
+	 */
+	public XBLOMShadowTreeElement getShadowTree() {
+		return xblShadowTree;
+	}
 
-    // CSSNavigableNode ///////////////////////////////////////////////
+	// CSSNavigableNode ///////////////////////////////////////////////
 
-    /**
-     * Returns the shadow tree.
-     */
-    @Override
-    public Node getCSSFirstChild() {
-        if (xblShadowTree != null) {
-            return xblShadowTree.getFirstChild();
-        }
-        return null;
-    }
+	/**
+	 * Returns the shadow tree.
+	 */
+	@Override
+	public Node getCSSFirstChild() {
+		if (xblShadowTree != null) {
+			return xblShadowTree.getFirstChild();
+		}
+		return null;
+	}
 
-    /**
-     * Returns the shadow tree.
-     */
-    @Override
-    public Node getCSSLastChild() {
-        return getCSSFirstChild();
-    }
+	/**
+	 * Returns the shadow tree.
+	 */
+	@Override
+	public Node getCSSLastChild() {
+		return getCSSFirstChild();
+	}
 }

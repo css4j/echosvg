@@ -59,307 +59,308 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  */
 public class URIChooser extends JDialog implements ActionMap {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The return value if 'OK' is chosen.
-     */
-    public static final int OK_OPTION = 0;
+	/**
+	 * The return value if 'OK' is chosen.
+	 */
+	public static final int OK_OPTION = 0;
 
-    /**
-     * The return value if 'Cancel' is chosen.
-     */
-    public static final int CANCEL_OPTION = 1;
+	/**
+	 * The return value if 'Cancel' is chosen.
+	 */
+	public static final int CANCEL_OPTION = 1;
 
-    /**
-     * The resource file name
-     */
-    protected static final String RESOURCES =
-        "io.sf.carte.echosvg.util.gui.resources.URIChooserMessages";
+	/**
+	 * The resource file name
+	 */
+	protected static final String RESOURCES = "io.sf.carte.echosvg.util.gui.resources.URIChooserMessages";
 
-    /**
-     * The resource bundle
-     */
-    protected static ResourceBundle bundle;
+	/**
+	 * The resource bundle
+	 */
+	protected static ResourceBundle bundle;
 
-    /**
-     * The resource manager
-     */
-    protected static ResourceManager resources;
-    static {
-        bundle = ResourceBundle.getBundle(RESOURCES, Locale.getDefault());
-        resources = new ResourceManager(bundle);
-    }
+	/**
+	 * The resource manager
+	 */
+	protected static ResourceManager resources;
+	static {
+		bundle = ResourceBundle.getBundle(RESOURCES, Locale.getDefault());
+		resources = new ResourceManager(bundle);
+	}
 
-    /**
-     * The button factory
-     */
-    protected ButtonFactory buttonFactory;
+	/**
+	 * The button factory
+	 */
+	protected ButtonFactory buttonFactory;
 
-    /**
-     * The text field
-     */
-    protected JTextField textField;
+	/**
+	 * The text field
+	 */
+	protected JTextField textField;
 
-    /**
-     * The OK button
-     */
-    protected JButton okButton;
+	/**
+	 * The OK button
+	 */
+	protected JButton okButton;
 
-    /**
-     * The Clear button
-     */
-    protected JButton clearButton;
+	/**
+	 * The Clear button
+	 */
+	protected JButton clearButton;
 
-    /**
-     * The current path.
-     */
-    protected String currentPath = ".";
+	/**
+	 * The current path.
+	 */
+	protected String currentPath = ".";
 
-    /**
-     * The file filter.
-     */
-    protected FileFilter fileFilter;
+	/**
+	 * The file filter.
+	 */
+	protected FileFilter fileFilter;
 
-    /**
-     * The last return code.
-     */
-    protected int returnCode;
+	/**
+	 * The last return code.
+	 */
+	protected int returnCode;
 
-    /**
-     * The last chosen path.
-     */
-    protected String chosenPath;
+	/**
+	 * The last chosen path.
+	 */
+	protected String chosenPath;
 
-    /**
-     * Creates a new URIChooser.
-     * @param d the parent dialog
-     */
-    public URIChooser(JDialog d) {
-        super(d);
-        initialize();
-    }
+	/**
+	 * Creates a new URIChooser.
+	 * 
+	 * @param d the parent dialog
+	 */
+	public URIChooser(JDialog d) {
+		super(d);
+		initialize();
+	}
 
-    /**
-     * Creates a new URIChooser.
-     * @param f the parent frame
-     */
-    public URIChooser(JFrame f) {
-        super(f);
-        initialize();
-    }
+	/**
+	 * Creates a new URIChooser.
+	 * 
+	 * @param f the parent frame
+	 */
+	public URIChooser(JFrame f) {
+		super(f);
+		initialize();
+	}
 
-    /**
-     * Shows the dialog.
-     * @return OK_OPTION or CANCEL_OPTION.
-     */
-    public int showDialog() {
-        pack();
-        setVisible(true);
-        return returnCode;
-    }
+	/**
+	 * Shows the dialog.
+	 * 
+	 * @return OK_OPTION or CANCEL_OPTION.
+	 */
+	public int showDialog() {
+		pack();
+		setVisible(true);
+		return returnCode;
+	}
 
-    /**
-     * Returns the text entered by the user.
-     */
-    public String getText() {
-        return chosenPath;
-    }
+	/**
+	 * Returns the text entered by the user.
+	 */
+	public String getText() {
+		return chosenPath;
+	}
 
-    /**
-     * Sets the file filter to use with the file selector.
-     */
-    public void setFileFilter(FileFilter ff) {
-        fileFilter = ff;
-    }
+	/**
+	 * Sets the file filter to use with the file selector.
+	 */
+	public void setFileFilter(FileFilter ff) {
+		fileFilter = ff;
+	}
 
-    /**
-     * Initializes the dialog
-     */
-    protected void initialize() {
-        setModal(true);
+	/**
+	 * Initializes the dialog
+	 */
+	protected void initialize() {
+		setModal(true);
 
-        listeners.put("BrowseButtonAction", new BrowseButtonAction());
-        listeners.put("OKButtonAction",     new OKButtonAction());
-        listeners.put("CancelButtonAction", new CancelButtonAction());
-        listeners.put("ClearButtonAction",  new ClearButtonAction());
+		listeners.put("BrowseButtonAction", new BrowseButtonAction());
+		listeners.put("OKButtonAction", new OKButtonAction());
+		listeners.put("CancelButtonAction", new CancelButtonAction());
+		listeners.put("ClearButtonAction", new ClearButtonAction());
 
-        setTitle(resources.getString("Dialog.title"));
-        buttonFactory = new ButtonFactory(bundle, this);
+		setTitle(resources.getString("Dialog.title"));
+		buttonFactory = new ButtonFactory(bundle, this);
 
-        getContentPane().add( createURISelectionPanel(), BorderLayout.NORTH );
-        getContentPane().add( createButtonsPanel(),      BorderLayout.SOUTH );
-    }
+		getContentPane().add(createURISelectionPanel(), BorderLayout.NORTH);
+		getContentPane().add(createButtonsPanel(), BorderLayout.SOUTH);
+	}
 
-    /**
-     * Creates the URI selection panel
-     */
-    protected JPanel createURISelectionPanel() {
-        JPanel p = new JPanel(new GridBagLayout());
-        p.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+	/**
+	 * Creates the URI selection panel
+	 */
+	protected JPanel createURISelectionPanel() {
+		JPanel p = new JPanel(new GridBagLayout());
+		p.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        ExtendedGridBagConstraints constraints;
-        constraints = new ExtendedGridBagConstraints();
+		ExtendedGridBagConstraints constraints;
+		constraints = new ExtendedGridBagConstraints();
 
-        constraints.insets = new Insets(5, 5, 5, 5);
-        constraints.weightx = 0;
-        constraints.weighty = 0;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.setGridBounds(0, 0, 2, 1);
-        p.add(new JLabel(resources.getString("Dialog.label")), constraints);
+		constraints.insets = new Insets(5, 5, 5, 5);
+		constraints.weightx = 0;
+		constraints.weighty = 0;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.setGridBounds(0, 0, 2, 1);
+		p.add(new JLabel(resources.getString("Dialog.label")), constraints);
 
-        textField = new JTextField(30);
-        textField.getDocument().addDocumentListener(new DocumentAdapter());
-        constraints.weightx = 1.0;
-        constraints.weighty = 0;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.setGridBounds(0, 1, 1, 1);
-        p.add(textField, constraints);
+		textField = new JTextField(30);
+		textField.getDocument().addDocumentListener(new DocumentAdapter());
+		constraints.weightx = 1.0;
+		constraints.weighty = 0;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.setGridBounds(0, 1, 1, 1);
+		p.add(textField, constraints);
 
-        constraints.weightx = 0;
-        constraints.weighty = 0;
-        constraints.fill = GridBagConstraints.NONE;
-        constraints.setGridBounds(1, 1, 1, 1);
-        p.add(buttonFactory.createJButton("BrowseButton"), constraints);
+		constraints.weightx = 0;
+		constraints.weighty = 0;
+		constraints.fill = GridBagConstraints.NONE;
+		constraints.setGridBounds(1, 1, 1, 1);
+		p.add(buttonFactory.createJButton("BrowseButton"), constraints);
 
-        return p;
-    }
+		return p;
+	}
 
-    /**
-     * Creates the buttons panel
-     */
-    protected JPanel createButtonsPanel() {
-        JPanel  p = new JPanel(new FlowLayout());
+	/**
+	 * Creates the buttons panel
+	 */
+	protected JPanel createButtonsPanel() {
+		JPanel p = new JPanel(new FlowLayout());
 
-        p.add(okButton = buttonFactory.createJButton("OKButton"));
-        p.add(buttonFactory.createJButton("CancelButton"));
-        p.add(clearButton = buttonFactory.createJButton("ClearButton"));
+		p.add(okButton = buttonFactory.createJButton("OKButton"));
+		p.add(buttonFactory.createJButton("CancelButton"));
+		p.add(clearButton = buttonFactory.createJButton("ClearButton"));
 
-        okButton.setEnabled(false);
-        clearButton.setEnabled(false);
+		okButton.setEnabled(false);
+		clearButton.setEnabled(false);
 
-        return p;
-    }
+		return p;
+	}
 
-    /**
-     * To update the state of the OK button
-     */
-    protected void updateOKButtonAction() {
-        okButton.setEnabled(!textField.getText().equals(""));
-    }
+	/**
+	 * To update the state of the OK button
+	 */
+	protected void updateOKButtonAction() {
+		okButton.setEnabled(!textField.getText().equals(""));
+	}
 
-    /**
-     * To update the state of the Clear button
-     */
-    protected void updateClearButtonAction() {
-        clearButton.setEnabled(!textField.getText().equals(""));
-    }
+	/**
+	 * To update the state of the Clear button
+	 */
+	protected void updateClearButtonAction() {
+		clearButton.setEnabled(!textField.getText().equals(""));
+	}
 
-    /**
-     * To listen to the document changes
-     */
-    protected class DocumentAdapter implements DocumentListener {
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-            updateOKButtonAction();
-            updateClearButtonAction();
-        }
+	/**
+	 * To listen to the document changes
+	 */
+	protected class DocumentAdapter implements DocumentListener {
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			updateOKButtonAction();
+			updateClearButtonAction();
+		}
 
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            updateOKButtonAction();
-            updateClearButtonAction();
-        }
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			updateOKButtonAction();
+			updateClearButtonAction();
+		}
 
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            updateOKButtonAction();
-            updateClearButtonAction();
-        }
-    }
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			updateOKButtonAction();
+			updateClearButtonAction();
+		}
+	}
 
-    /**
-     * The action associated with the 'browse' button
-     */
-    protected class BrowseButtonAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
+	/**
+	 * The action associated with the 'browse' button
+	 */
+	protected class BrowseButtonAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser(currentPath);
-            fileChooser.setFileHidingEnabled(false);
-            fileChooser.setFileSelectionMode
-                (JFileChooser.FILES_AND_DIRECTORIES);
-            if (fileFilter != null) {
-                fileChooser.setFileFilter(fileFilter);
-            }
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser fileChooser = new JFileChooser(currentPath);
+			fileChooser.setFileHidingEnabled(false);
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			if (fileFilter != null) {
+				fileChooser.setFileFilter(fileFilter);
+			}
 
-            int choice = fileChooser.showOpenDialog(URIChooser.this);
-            if (choice == JFileChooser.APPROVE_OPTION) {
-                File f = fileChooser.getSelectedFile();
-                try {
-                    textField.setText(currentPath = f.getCanonicalPath());
-                } catch (IOException ex) {
-                }
-            }
-        }
-    }
+			int choice = fileChooser.showOpenDialog(URIChooser.this);
+			if (choice == JFileChooser.APPROVE_OPTION) {
+				File f = fileChooser.getSelectedFile();
+				try {
+					textField.setText(currentPath = f.getCanonicalPath());
+				} catch (IOException ex) {
+				}
+			}
+		}
+	}
 
-    /**
-     * The action associated with the 'OK' button of the URI chooser
-     */
-    protected class OKButtonAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
+	/**
+	 * The action associated with the 'OK' button of the URI chooser
+	 */
+	protected class OKButtonAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            returnCode = OK_OPTION;
-            chosenPath = textField.getText();
-            dispose();
-        }
-    }
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			returnCode = OK_OPTION;
+			chosenPath = textField.getText();
+			dispose();
+		}
+	}
 
-    /**
-     * The action associated with the 'Cancel' button of the URI chooser
-     */
-    protected class CancelButtonAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
+	/**
+	 * The action associated with the 'Cancel' button of the URI chooser
+	 */
+	protected class CancelButtonAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            returnCode = CANCEL_OPTION;
-            dispose();
-            textField.setText(chosenPath);
-        }
-    }
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			returnCode = CANCEL_OPTION;
+			dispose();
+			textField.setText(chosenPath);
+		}
+	}
 
-    /**
-     * The action associated with the 'Clear' button of the URI chooser
-     */
-    protected class ClearButtonAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
+	/**
+	 * The action associated with the 'Clear' button of the URI chooser
+	 */
+	protected class ClearButtonAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            textField.setText("");
-        }
-    }
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			textField.setText("");
+		}
+	}
 
-    // ActionMap implementation
+	// ActionMap implementation
 
-    /**
-     * The map that contains the listeners
-     */
-    protected Map<String, AbstractAction> listeners = new HashMap<>(10);
+	/**
+	 * The map that contains the listeners
+	 */
+	protected Map<String, AbstractAction> listeners = new HashMap<>(10);
 
-    /**
-     * Returns the action associated with the given string
-     * or null on error
-     * @param key the key mapped with the action to get
-     * @throws MissingListenerException if the action is not found
-     */
-    @Override
-    public Action getAction(String key) throws MissingListenerException {
-        return listeners.get(key);
-    }
+	/**
+	 * Returns the action associated with the given string or null on error
+	 * 
+	 * @param key the key mapped with the action to get
+	 * @throws MissingListenerException if the action is not found
+	 */
+	@Override
+	public Action getAction(String key) throws MissingListenerException {
+		return listeners.get(key);
+	}
 }

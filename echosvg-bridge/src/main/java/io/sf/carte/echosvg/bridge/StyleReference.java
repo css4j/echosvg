@@ -21,10 +21,10 @@ package io.sf.carte.echosvg.bridge;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
- * A style reference represents a graphics node, CSS property pair. It
- * describes which GraphicsNode and which property of this
- * GraphicsNode should be updated when a style element (for example a
- * filter) changes due to a modification of the DOM.
+ * A style reference represents a graphics node, CSS property pair. It describes
+ * which GraphicsNode and which property of this GraphicsNode should be updated
+ * when a style element (for example a filter) changes due to a modification of
+ * the DOM.
  *
  * @author <a href="mailto:etissandier@ilog.fr">Emmanuel Tissandier</a>
  * @author For later modifications, see Git history.
@@ -32,30 +32,31 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class StyleReference {
 
-    private GraphicsNode node;
-    private String styleAttribute;
+	private GraphicsNode node;
+	private String styleAttribute;
 
-    /**
-     * Creates a new <code>StyleReference</code>.
-     * @param node the graphics node impacted.
-     * @param styleAttribute the name of the style attribute that is impacted.
-     */
-    public StyleReference(GraphicsNode node, String styleAttribute) {
-        this.node = node;
-        this.styleAttribute = styleAttribute;
-    }
+	/**
+	 * Creates a new <code>StyleReference</code>.
+	 * 
+	 * @param node           the graphics node impacted.
+	 * @param styleAttribute the name of the style attribute that is impacted.
+	 */
+	public StyleReference(GraphicsNode node, String styleAttribute) {
+		this.node = node;
+		this.styleAttribute = styleAttribute;
+	}
 
-    /**
-     * Returns the graphics node.
-     */
-    public GraphicsNode getGraphicsNode(){
-        return node;
-    }
+	/**
+	 * Returns the graphics node.
+	 */
+	public GraphicsNode getGraphicsNode() {
+		return node;
+	}
 
-    /**
-     * Returns the style attribute
-     */
-    public String getStyleAttribute(){
-        return styleAttribute;
-    }
+	/**
+	 * Returns the style attribute
+	 */
+	public String getStyleAttribute() {
+		return styleAttribute;
+	}
 }

@@ -38,247 +38,219 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFEConvolveMatrixElement
-    extends    SVGOMFilterPrimitiveStandardAttributes
-    implements SVGFEConvolveMatrixElement {
+public class SVGOMFEConvolveMatrixElement extends SVGOMFilterPrimitiveStandardAttributes
+		implements SVGFEConvolveMatrixElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
-        t.put(null, SVG_IN_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_CDATA));
-        t.put(null, SVG_ORDER_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
-        t.put(null, SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
-        t.put(null, SVG_KERNEL_MATRIX_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER_LIST));
-        t.put(null, SVG_DIVISOR_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_BIAS_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_TARGET_X_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_INTEGER));
-        t.put(null, SVG_TARGET_Y_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_INTEGER));
-        t.put(null, SVG_EDGE_MODE_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        t.put(null, SVG_PRESERVE_ALPHA_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
+				SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
+		t.put(null, SVG_IN_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_CDATA));
+		t.put(null, SVG_ORDER_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
+		t.put(null, SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
+		t.put(null, SVG_KERNEL_MATRIX_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER_LIST));
+		t.put(null, SVG_DIVISOR_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_BIAS_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_TARGET_X_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_INTEGER));
+		t.put(null, SVG_TARGET_Y_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_INTEGER));
+		t.put(null, SVG_EDGE_MODE_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		t.put(null, SVG_PRESERVE_ALPHA_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'edgeMode' attribute values.
-     */
-    protected static final String[] EDGE_MODE_VALUES = {
-        "",
-        SVG_DUPLICATE_VALUE,
-        SVG_WRAP_VALUE,
-        SVG_NONE_VALUE
-    };
+	/**
+	 * The 'edgeMode' attribute values.
+	 */
+	protected static final String[] EDGE_MODE_VALUES = { "", SVG_DUPLICATE_VALUE, SVG_WRAP_VALUE, SVG_NONE_VALUE };
 
-    /**
-     * The 'in' attribute value.
-     */
-    protected SVGOMAnimatedString in;
+	/**
+	 * The 'in' attribute value.
+	 */
+	protected SVGOMAnimatedString in;
 
-    /**
-     * The 'edgeMode' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration edgeMode;
+	/**
+	 * The 'edgeMode' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration edgeMode;
 
-    /**
-     * The 'bias' attribute value.
-     */
-    protected SVGOMAnimatedNumber bias;
+	/**
+	 * The 'bias' attribute value.
+	 */
+	protected SVGOMAnimatedNumber bias;
 
-    /**
-     * The 'preserveAlpha' attribute value.
-     */
-    protected SVGOMAnimatedBoolean preserveAlpha;
+	/**
+	 * The 'preserveAlpha' attribute value.
+	 */
+	protected SVGOMAnimatedBoolean preserveAlpha;
 
-    /**
-     * Creates a new SVGOMFEConvolveMatrixElement object.
-     */
-    protected SVGOMFEConvolveMatrixElement() {
-    }
+	/**
+	 * Creates a new SVGOMFEConvolveMatrixElement object.
+	 */
+	protected SVGOMFEConvolveMatrixElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFEConvolveMatrixElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFEConvolveMatrixElement(String prefix,
-                                        AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFEConvolveMatrixElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFEConvolveMatrixElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
-        edgeMode =
-            createLiveAnimatedEnumeration
-                (null, SVG_EDGE_MODE_ATTRIBUTE, EDGE_MODE_VALUES, (short) 1);
-        bias = createLiveAnimatedNumber(null, SVG_BIAS_ATTRIBUTE, 0f);
-        preserveAlpha =
-            createLiveAnimatedBoolean
-                (null, SVG_PRESERVE_ALPHA_ATTRIBUTE, false);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
+		edgeMode = createLiveAnimatedEnumeration(null, SVG_EDGE_MODE_ATTRIBUTE, EDGE_MODE_VALUES, (short) 1);
+		bias = createLiveAnimatedNumber(null, SVG_BIAS_ATTRIBUTE, 0f);
+		preserveAlpha = createLiveAnimatedBoolean(null, SVG_PRESERVE_ALPHA_ATTRIBUTE, false);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_CONVOLVE_MATRIX_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_CONVOLVE_MATRIX_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements SVGFEConvolveMatrixElement#getIn1().
-     */
-    public SVGAnimatedString getIn1() {
-        return in;
-    }
+	/**
+	 * <b>DOM</b>: Implements SVGFEConvolveMatrixElement#getIn1().
+	 */
+	public SVGAnimatedString getIn1() {
+		return in;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getEdgeMode()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getEdgeMode() {
-        return edgeMode;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getEdgeMode()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getEdgeMode() {
+		return edgeMode;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getKernelMatrix()}.
-     */
-    @Override
-    public SVGAnimatedNumberList getKernelMatrix() {
-        throw new UnsupportedOperationException
-            ("SVGFEConvolveMatrixElement.getKernelMatrix is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getKernelMatrix()}.
+	 */
+	@Override
+	public SVGAnimatedNumberList getKernelMatrix() {
+		throw new UnsupportedOperationException("SVGFEConvolveMatrixElement.getKernelMatrix is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getOrderX()}.
-     */
-    @Override
-    public SVGAnimatedInteger getOrderX() {
-        throw new UnsupportedOperationException
-            ("SVGFEConvolveMatrixElement.getOrderX is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getOrderX()}.
+	 */
+	@Override
+	public SVGAnimatedInteger getOrderX() {
+		throw new UnsupportedOperationException("SVGFEConvolveMatrixElement.getOrderX is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getOrderY()}.
-     */
-    @Override
-    public SVGAnimatedInteger getOrderY() {
-        throw new UnsupportedOperationException
-            ("SVGFEConvolveMatrixElement.getOrderY is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getOrderY()}.
+	 */
+	@Override
+	public SVGAnimatedInteger getOrderY() {
+		throw new UnsupportedOperationException("SVGFEConvolveMatrixElement.getOrderY is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getTargetX()}.
-     */
-    @Override
-    public SVGAnimatedInteger getTargetX() {
-        // Default value relative to orderX...
-        throw new UnsupportedOperationException
-            ("SVGFEConvolveMatrixElement.getTargetX is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getTargetX()}.
+	 */
+	@Override
+	public SVGAnimatedInteger getTargetX() {
+		// Default value relative to orderX...
+		throw new UnsupportedOperationException("SVGFEConvolveMatrixElement.getTargetX is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getTargetY()}.
-     */
-    @Override
-    public SVGAnimatedInteger getTargetY() {
-        // Default value relative to orderY...
-        throw new UnsupportedOperationException
-            ("SVGFEConvolveMatrixElement.getTargetY is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getTargetY()}.
+	 */
+	@Override
+	public SVGAnimatedInteger getTargetY() {
+		// Default value relative to orderY...
+		throw new UnsupportedOperationException("SVGFEConvolveMatrixElement.getTargetY is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getDivisor()}.
-     */
-    @Override
-    public SVGAnimatedNumber getDivisor() {
-        // Default value relative to kernel matrix...
-        throw new UnsupportedOperationException
-            ("SVGFEConvolveMatrixElement.getDivisor is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEConvolveMatrixElement#getDivisor()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getDivisor() {
+		// Default value relative to kernel matrix...
+		throw new UnsupportedOperationException("SVGFEConvolveMatrixElement.getDivisor is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFEConvolveMatrixElement#getBias()}.
-     */
-    @Override
-    public SVGAnimatedNumber getBias() {
-        return bias;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFEConvolveMatrixElement#getBias()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getBias() {
+		return bias;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFEConvolveMatrixElement#getKernelUnitLengthX()}.
-     */
-    @Override
-    public SVGAnimatedNumber getKernelUnitLengthX() {
-        throw new UnsupportedOperationException
-            ("SVGFEConvolveMatrixElement.getKernelUnitLengthX is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFEConvolveMatrixElement#getKernelUnitLengthX()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getKernelUnitLengthX() {
+		throw new UnsupportedOperationException("SVGFEConvolveMatrixElement.getKernelUnitLengthX is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFEConvolveMatrixElement#getKernelUnitLengthY()}.
-     */
-    @Override
-    public SVGAnimatedNumber getKernelUnitLengthY() {
-        throw new UnsupportedOperationException
-            ("SVGFEConvolveMatrixElement.getKernelUnitLengthY is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFEConvolveMatrixElement#getKernelUnitLengthY()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getKernelUnitLengthY() {
+		throw new UnsupportedOperationException("SVGFEConvolveMatrixElement.getKernelUnitLengthY is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFEConvolveMatrixElement#getPreserveAlpha()}.
-     */
-    @Override
-    public SVGAnimatedBoolean getPreserveAlpha() {
-        return preserveAlpha;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFEConvolveMatrixElement#getPreserveAlpha()}.
+	 */
+	@Override
+	public SVGAnimatedBoolean getPreserveAlpha() {
+		return preserveAlpha;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFEConvolveMatrixElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFEConvolveMatrixElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 
-    // AnimationTarget ///////////////////////////////////////////////////////
+	// AnimationTarget ///////////////////////////////////////////////////////
 
 // XXX TBD
 //

@@ -36,104 +36,100 @@ import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
  */
 public class DefaultContentSelector extends AbstractContentSelector {
 
-    /**
-     * The selected nodes.
-     */
-    protected SelectedNodes selectedContent;
+	/**
+	 * The selected nodes.
+	 */
+	protected SelectedNodes selectedContent;
 
-    /**
-     * Creates a new XPathSubsetContentSelector object.
-     */
-    public DefaultContentSelector(ContentManager cm,
-                                  XBLOMContentElement content,
-                                  Element bound) {
-        super(cm, content, bound);
-    }
+	/**
+	 * Creates a new XPathSubsetContentSelector object.
+	 */
+	public DefaultContentSelector(ContentManager cm, XBLOMContentElement content, Element bound) {
+		super(cm, content, bound);
+	}
 
-    /**
-     * Returns a list of nodes that were matched by the given selector
-     * string.
-     */
-    @Override
-    public NodeList getSelectedContent() {
-        if (selectedContent == null) {
-            selectedContent = new SelectedNodes();
-        }
-        return selectedContent;
-    }
+	/**
+	 * Returns a list of nodes that were matched by the given selector string.
+	 */
+	@Override
+	public NodeList getSelectedContent() {
+		if (selectedContent == null) {
+			selectedContent = new SelectedNodes();
+		}
+		return selectedContent;
+	}
 
-    /**
-     * Forces this selector to update its selected nodes list.
-     * Returns true if the selected node list needed updating.
-     * This assumes that the previous content elements in this
-     * shadow tree (in document order) have up-to-date selectedContent
-     * lists.
-     */
-    @Override
-    boolean update() {
-        if (selectedContent == null) {
-            selectedContent = new SelectedNodes();
-            return true;
-        }
-        return selectedContent.update();
-    }
+	/**
+	 * Forces this selector to update its selected nodes list. Returns true if the
+	 * selected node list needed updating. This assumes that the previous content
+	 * elements in this shadow tree (in document order) have up-to-date
+	 * selectedContent lists.
+	 */
+	@Override
+	boolean update() {
+		if (selectedContent == null) {
+			selectedContent = new SelectedNodes();
+			return true;
+		}
+		return selectedContent.update();
+	}
 
-    /**
-     * Implementation of NodeList that contains the nodes that matched
-     * this selector.
-     */
-    protected class SelectedNodes implements NodeList {
+	/**
+	 * Implementation of NodeList that contains the nodes that matched this
+	 * selector.
+	 */
+	protected class SelectedNodes implements NodeList {
 
-        /**
-         * The selected nodes.
-         */
-        protected ArrayList<Node> nodes = new ArrayList<>(10);
+		/**
+		 * The selected nodes.
+		 */
+		protected ArrayList<Node> nodes = new ArrayList<>(10);
 
-        /**
-         * Creates a new SelectedNodes object.
-         */
-        public SelectedNodes() {
-            update();
-        }
+		/**
+		 * Creates a new SelectedNodes object.
+		 */
+		public SelectedNodes() {
+			update();
+		}
 
-        protected boolean update() {
-            ArrayList<?> oldNodes = (ArrayList<?>) nodes.clone();
-            nodes.clear();
-            for (Node n = boundElement.getFirstChild(); n != null; n = n.getNextSibling()) {
-                if (isSelected(n)) {
-                    continue;
-                }
-                nodes.add(n);
-            }
-            int nodesSize = nodes.size();
-            if (oldNodes.size() != nodesSize) {
-                return true;
-            }
-            for (int i = 0; i < nodesSize; i++) {
-                if (oldNodes.get(i) != nodes.get(i)) {
-                    return true;
-                }
-            }
-            return false;
-        }
+		protected boolean update() {
+			ArrayList<?> oldNodes = (ArrayList<?>) nodes.clone();
+			nodes.clear();
+			for (Node n = boundElement.getFirstChild(); n != null; n = n.getNextSibling()) {
+				if (isSelected(n)) {
+					continue;
+				}
+				nodes.add(n);
+			}
+			int nodesSize = nodes.size();
+			if (oldNodes.size() != nodesSize) {
+				return true;
+			}
+			for (int i = 0; i < nodesSize; i++) {
+				if (oldNodes.get(i) != nodes.get(i)) {
+					return true;
+				}
+			}
+			return false;
+		}
 
-        /**
-         * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#item(int)}.
-         */
-        @Override
-        public Node item(int index) {
-            if (index < 0 || index >= nodes.size()) {
-                return null;
-            }
-            return nodes.get(index);
-        }
+		/**
+		 * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#item(int)}.
+		 */
+		@Override
+		public Node item(int index) {
+			if (index < 0 || index >= nodes.size()) {
+				return null;
+			}
+			return nodes.get(index);
+		}
 
-        /**
-         * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#getLength()}.
-         */
-        @Override
-        public int getLength() {
-            return nodes.size();
-        }
-    }
+		/**
+		 * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#getLength()}.
+		 */
+		@Override
+		public int getLength() {
+			return nodes.size();
+		}
+	}
 }

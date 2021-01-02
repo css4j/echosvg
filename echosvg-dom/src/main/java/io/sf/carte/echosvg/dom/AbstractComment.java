@@ -28,35 +28,35 @@ import org.w3c.dom.Comment;
  * @version $Id$
  */
 
-public abstract class AbstractComment
-    extends    AbstractCharacterData
-    implements Comment {
+public abstract class AbstractComment extends AbstractCharacterData implements Comment {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
-     * @return "#comment".
-     */
-    @Override
-    public String getNodeName() {
-        return "#comment";
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
+	 * 
+	 * @return "#comment".
+	 */
+	@Override
+	public String getNodeName() {
+		return "#comment";
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
-     * @return {@link org.w3c.dom.Node#COMMENT_NODE}
-     */
-    @Override
-    public short getNodeType() {
-        return COMMENT_NODE;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
+	 * 
+	 * @return {@link org.w3c.dom.Node#COMMENT_NODE}
+	 */
+	@Override
+	public short getNodeType() {
+		return COMMENT_NODE;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getTextContent()}.
-     */
-    @Override
-    public String getTextContent() {
-        return getNodeValue();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getTextContent()}.
+	 */
+	@Override
+	public String getTextContent() {
+		return getNodeValue();
+	}
 }

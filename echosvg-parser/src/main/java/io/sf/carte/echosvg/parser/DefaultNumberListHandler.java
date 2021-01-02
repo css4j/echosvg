@@ -20,56 +20,55 @@ package io.sf.carte.echosvg.parser;
 
 /**
  *
- * @author  tonny@kiyut.com
+ * @author tonny@kiyut.com
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultNumberListHandler implements NumberListHandler {
-    /**
-     * The only instance of this class.
-     */
-    public static final NumberListHandler INSTANCE
-        = new DefaultNumberListHandler();
+	/**
+	 * The only instance of this class.
+	 */
+	public static final NumberListHandler INSTANCE = new DefaultNumberListHandler();
 
-    /**
-     * This class does not need to be instantiated.
-     */
-    protected DefaultNumberListHandler() {
-    }
+	/**
+	 * This class does not need to be instantiated.
+	 */
+	protected DefaultNumberListHandler() {
+	}
 
-    /**
-     * Implements {@link NumberListHandler#startNumberList()}.
-     */
-    @Override
-    public void startNumberList() throws ParseException {
-    }
+	/**
+	 * Implements {@link NumberListHandler#startNumberList()}.
+	 */
+	@Override
+	public void startNumberList() throws ParseException {
+	}
 
-    /**
-     * Implements {@link NumberListHandler#endNumberList()}.
-     */
-    @Override
-    public void endNumberList() throws ParseException {
-    }
+	/**
+	 * Implements {@link NumberListHandler#endNumberList()}.
+	 */
+	@Override
+	public void endNumberList() throws ParseException {
+	}
 
-    /**
-     * Implements {@link NumberListHandler#startNumber()}.
-     */
-    @Override
-    public void startNumber() throws ParseException {
-    }
+	/**
+	 * Implements {@link NumberListHandler#startNumber()}.
+	 */
+	@Override
+	public void startNumber() throws ParseException {
+	}
 
-    /**
-     * Implements {@link NumberListHandler#numberValue(float)}.
-     */
-    @Override
-    public void numberValue(float v) throws ParseException {
-    }
+	/**
+	 * Implements {@link NumberListHandler#numberValue(float)}.
+	 */
+	@Override
+	public void numberValue(float v) throws ParseException {
+	}
 
-    /**
-     * Implements {@link NumberListHandler#endNumber()}.
-     */
-    @Override
-    public void endNumber() throws ParseException {
-    }
+	/**
+	 * Implements {@link NumberListHandler#endNumber()}.
+	 */
+	@Override
+	public void endNumber() throws ParseException {
+	}
 
 }

@@ -19,53 +19,50 @@
 package io.sf.carte.echosvg.bridge;
 
 /**
- * This class implements the io.sf.carte.echosvg.w3c.dom.Location interface for EchoSVG
+ * This class implements the io.sf.carte.echosvg.w3c.dom.Location interface for
+ * EchoSVG
  *
  * @author <a href="mailto:gwadej@anomaly.org">G. Wade Johnson</a>
  * @version $Id: Location.java$
  */
-public class Location implements io.sf.carte.echosvg.w3c.dom.Location
-{
-    private BridgeContext bridgeContext;
+public class Location implements io.sf.carte.echosvg.w3c.dom.Location {
+	private BridgeContext bridgeContext;
 
-    /**
-     * Creates a new Location.
-     * @param ctx the bridge context
-     */
-    public Location(BridgeContext ctx) {
-        bridgeContext = ctx;
-    }
+	/**
+	 * Creates a new Location.
+	 * 
+	 * @param ctx the bridge context
+	 */
+	public Location(BridgeContext ctx) {
+		bridgeContext = ctx;
+	}
 
+	/**
+	 * Invocation of this method causes the user agent to navigate to the supplied
+	 * location.
+	 *
+	 * @param url A string containing the URL where the user agent should navigate
+	 *            to.
+	 */
+	@Override
+	public void assign(String url) {
+		bridgeContext.getUserAgent().loadDocument(url);
+	}
 
-    /**
-     * Invocation of this method causes the user agent to navigate to the
-     * supplied location.
-     *
-     * @param url A string containing the URL where the user agent should
-     *    navigate to.
-     */
-    @Override
-    public void assign(String url) {
-        bridgeContext.getUserAgent().loadDocument(url);
-    }
+	/**
+	 * The user agent reloads the current document.
+	 */
+	@Override
+	public void reload() {
+		String url = bridgeContext.getDocument().getDocumentURI();
+		bridgeContext.getUserAgent().loadDocument(url);
+	}
 
-    /**
-     * The user agent reloads the current document.
-     */
-    @Override
-    public void reload() {
-        String url = bridgeContext.getDocument()
-                    .getDocumentURI();
-        bridgeContext.getUserAgent().loadDocument(url);
-    }
-
-    /**
-     * Returns the URL of this location as a String.
-     */
-    @Override
-    public String toString() {
-        return bridgeContext.getDocument()
-                    .getDocumentURI();
-    }
+	/**
+	 * Returns the URL of this location as a String.
+	 */
+	@Override
+	public String toString() {
+		return bridgeContext.getDocument().getDocumentURI();
+	}
 }
-

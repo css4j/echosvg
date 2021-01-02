@@ -39,86 +39,82 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGStyleSheetProcessingInstruction
-    extends StyleSheetProcessingInstruction
-    implements CSSStyleSheetNode {
-    
-    private static final long serialVersionUID = 1L;
-    /**
-     * The style-sheet.
-     */
-    protected StyleSheet styleSheet;
+public class SVGStyleSheetProcessingInstruction extends StyleSheetProcessingInstruction implements CSSStyleSheetNode {
 
-    /**
-     * Creates a new ProcessingInstruction object.
-     */
-    protected SVGStyleSheetProcessingInstruction() {
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The style-sheet.
+	 */
+	protected StyleSheet styleSheet;
 
-    /**
-     * Creates a new ProcessingInstruction object.
-     */
-    public SVGStyleSheetProcessingInstruction(String            data,
-                                              AbstractDocument  owner,
-                                              StyleSheetFactory f) {
-        super(data, owner, f);
-    }
+	/**
+	 * Creates a new ProcessingInstruction object.
+	 */
+	protected SVGStyleSheetProcessingInstruction() {
+	}
 
-    /**
-     * Returns the URI of the referenced stylesheet.
-     */
-    public String getStyleSheetURI() {
-        SVGOMDocument svgDoc = (SVGOMDocument) getOwnerDocument();
-        ParsedURL url = svgDoc.getParsedURL();
-        String href = getPseudoAttributes().get("href");
-        if (url != null) {
-            return new ParsedURL(url, href).toString();
-        }
-        return href;
-    }
+	/**
+	 * Creates a new ProcessingInstruction object.
+	 */
+	public SVGStyleSheetProcessingInstruction(String data, AbstractDocument owner, StyleSheetFactory f) {
+		super(data, owner, f);
+	}
 
-    /**
-     * Returns the associated style-sheet.
-     */
-    @Override
-    public StyleSheet getCSSStyleSheet() {
-        if (styleSheet == null) {
-            HashMap<String, String> attrs = getPseudoAttributes();
-            String type = attrs.get("type");
+	/**
+	 * Returns the URI of the referenced stylesheet.
+	 */
+	public String getStyleSheetURI() {
+		SVGOMDocument svgDoc = (SVGOMDocument) getOwnerDocument();
+		ParsedURL url = svgDoc.getParsedURL();
+		String href = getPseudoAttributes().get("href");
+		if (url != null) {
+			return new ParsedURL(url, href).toString();
+		}
+		return href;
+	}
 
-            if ("text/css".equals(type)) {
-                String title     = attrs.get("title");
-                String media     = attrs.get("media");
-                String href      = attrs.get("href");
-                String alternate = attrs.get("alternate");
-                SVGOMDocument doc = (SVGOMDocument)getOwnerDocument();
-                ParsedURL durl = doc.getParsedURL();
-                ParsedURL burl = new ParsedURL(durl, href);
-                CSSEngine e = doc.getCSSEngine();
-                
-                styleSheet = e.parseStyleSheet(burl, media);
-                styleSheet.setAlternate("yes".equals(alternate));
-                styleSheet.setTitle(title);
-            }
-        }
-        return styleSheet;
-    }
+	/**
+	 * Returns the associated style-sheet.
+	 */
+	@Override
+	public StyleSheet getCSSStyleSheet() {
+		if (styleSheet == null) {
+			HashMap<String, String> attrs = getPseudoAttributes();
+			String type = attrs.get("type");
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.ProcessingInstruction#setData(String)}.
-     */
-    @Override
-    public void setData(String data) throws DOMException {
-        super.setData(data);
-        styleSheet = null;
-    }
+			if ("text/css".equals(type)) {
+				String title = attrs.get("title");
+				String media = attrs.get("media");
+				String href = attrs.get("href");
+				String alternate = attrs.get("alternate");
+				SVGOMDocument doc = (SVGOMDocument) getOwnerDocument();
+				ParsedURL durl = doc.getParsedURL();
+				ParsedURL burl = new ParsedURL(durl, href);
+				CSSEngine e = doc.getCSSEngine();
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGStyleSheetProcessingInstruction();
-    }
+				styleSheet = e.parseStyleSheet(burl, media);
+				styleSheet.setAlternate("yes".equals(alternate));
+				styleSheet.setTitle(title);
+			}
+		}
+		return styleSheet;
+	}
+
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.ProcessingInstruction#setData(String)}.
+	 */
+	@Override
+	public void setData(String data) throws DOMException {
+		super.setData(data);
+		styleSheet = null;
+	}
+
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGStyleSheetProcessingInstruction();
+	}
 }

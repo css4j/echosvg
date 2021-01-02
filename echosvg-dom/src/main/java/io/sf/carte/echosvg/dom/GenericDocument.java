@@ -41,180 +41,166 @@ import io.sf.carte.echosvg.constants.XMLConstants;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class GenericDocument
-    extends AbstractDocument {
+public class GenericDocument extends AbstractDocument {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Local name for 'id' attributes.
-     */
-    protected static final String ATTR_ID = XMLConstants.XML_ID_ATTRIBUTE;
+	/**
+	 * Local name for 'id' attributes.
+	 */
+	protected static final String ATTR_ID = XMLConstants.XML_ID_ATTRIBUTE;
 
-    /**
-     * Is this document immutable?
-     */
-    protected boolean readonly;
+	/**
+	 * Is this document immutable?
+	 */
+	protected boolean readonly;
 
-    /**
-     * Creates a new uninitialized document.
-     */
-    protected GenericDocument() {
-    }
+	/**
+	 * Creates a new uninitialized document.
+	 */
+	protected GenericDocument() {
+	}
 
-    /**
-     * Creates a new uninitialized document.
-     */
-    public GenericDocument(DocumentType dt, DOMImplementation impl) {
-        super(dt, impl);
-    }
+	/**
+	 * Creates a new uninitialized document.
+	 */
+	public GenericDocument(DocumentType dt, DOMImplementation impl) {
+		super(dt, impl);
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return readonly;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-        readonly = v;
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+		readonly = v;
+	}
 
-    /**
-     * Returns true if the given Attr node represents an 'id'
-     * for this document.
-     */
-    @Override
-    public boolean isId(Attr node) {
-        if (node.getNamespaceURI() != null) return false;
-        return ATTR_ID.equals(node.getNodeName());
-    }
+	/**
+	 * Returns true if the given Attr node represents an 'id' for this document.
+	 */
+	@Override
+	public boolean isId(Attr node) {
+		if (node.getNamespaceURI() != null)
+			return false;
+		return ATTR_ID.equals(node.getNodeName());
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.Document#createElement(String)}.
-     */
-    @Override
-    public Element createElement(String tagName) throws DOMException {
-        return new GenericElement(tagName.intern(), this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Document#createElement(String)}.
+	 */
+	@Override
+	public Element createElement(String tagName) throws DOMException {
+		return new GenericElement(tagName.intern(), this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.Document#createDocumentFragment()}.
-     */
-    @Override
-    public DocumentFragment createDocumentFragment() {
-        return new GenericDocumentFragment(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Document#createDocumentFragment()}.
+	 */
+	@Override
+	public DocumentFragment createDocumentFragment() {
+		return new GenericDocumentFragment(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.Document#createTextNode(String)}.
-     */
-    @Override
-    public Text createTextNode(String data) {
-        return new GenericText(data, this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Document#createTextNode(String)}.
+	 */
+	@Override
+	public Text createTextNode(String data) {
+		return new GenericText(data, this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.Document#createComment(String)}.
-     */
-    @Override
-    public Comment createComment(String data) {
-        return new GenericComment(data, this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Document#createComment(String)}.
+	 */
+	@Override
+	public Comment createComment(String data) {
+		return new GenericComment(data, this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.Document#createCDATASection(String)}.
-     */
-    @Override
-    public CDATASection createCDATASection(String data) throws DOMException {
-        return new GenericCDATASection(data, this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.Document#createCDATASection(String)}.
+	 */
+	@Override
+	public CDATASection createCDATASection(String data) throws DOMException {
+		return new GenericCDATASection(data, this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.Document#createProcessingInstruction(String,String)}.
-     * @return a {@link StyleSheetProcessingInstruction} if target is
-     *         "xml-stylesheet" or a GenericProcessingInstruction otherwise.
-     */
-    @Override
-    public ProcessingInstruction createProcessingInstruction(String target,
-                                                             String data)
-        throws DOMException {
-        return new GenericProcessingInstruction(target, data, this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.Document#createProcessingInstruction(String,String)}.
+	 * 
+	 * @return a {@link StyleSheetProcessingInstruction} if target is
+	 *         "xml-stylesheet" or a GenericProcessingInstruction otherwise.
+	 */
+	@Override
+	public ProcessingInstruction createProcessingInstruction(String target, String data) throws DOMException {
+		return new GenericProcessingInstruction(target, data, this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.Document#createAttribute(String)}.
-     */
-    @Override
-    public Attr createAttribute(String name) throws DOMException {
-        return new GenericAttr(name.intern(), this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Document#createAttribute(String)}.
+	 */
+	@Override
+	public Attr createAttribute(String name) throws DOMException {
+		return new GenericAttr(name.intern(), this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.Document#createEntityReference(String)}.
-     */
-    @Override
-    public EntityReference createEntityReference(String name)
-        throws DOMException {
-        return new GenericEntityReference(name, this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.Document#createEntityReference(String)}.
+	 */
+	@Override
+	public EntityReference createEntityReference(String name) throws DOMException {
+		return new GenericEntityReference(name, this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.Document#createElementNS(String,String)}.
-     */
-    @Override
-    public Element createElementNS(String namespaceURI, String qualifiedName)
-        throws DOMException {
-        if (namespaceURI != null && namespaceURI.length() == 0) {
-            namespaceURI = null;
-        }
-        if (namespaceURI == null) {
-            return new GenericElement(qualifiedName.intern(), this);
-        } else {
-            return new GenericElementNS(namespaceURI.intern(),
-                                        qualifiedName.intern(),
-                                        this);
-        }
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.Document#createElementNS(String,String)}.
+	 */
+	@Override
+	public Element createElementNS(String namespaceURI, String qualifiedName) throws DOMException {
+		if (namespaceURI != null && namespaceURI.length() == 0) {
+			namespaceURI = null;
+		}
+		if (namespaceURI == null) {
+			return new GenericElement(qualifiedName.intern(), this);
+		} else {
+			return new GenericElementNS(namespaceURI.intern(), qualifiedName.intern(), this);
+		}
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.Document#createAttributeNS(String,String)}.
-     */
-    @Override
-    public Attr createAttributeNS(String namespaceURI, String qualifiedName)
-        throws DOMException {
-        if (namespaceURI != null && namespaceURI.length() == 0) {
-            namespaceURI = null;
-        }
-        if (namespaceURI == null) {
-            return new GenericAttr(qualifiedName.intern(), this);
-        } else {
-            return new GenericAttrNS(namespaceURI.intern(),
-                                     qualifiedName.intern(),
-                                     this);
-        }
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.Document#createAttributeNS(String,String)}.
+	 */
+	@Override
+	public Attr createAttributeNS(String namespaceURI, String qualifiedName) throws DOMException {
+		if (namespaceURI != null && namespaceURI.length() == 0) {
+			namespaceURI = null;
+		}
+		if (namespaceURI == null) {
+			return new GenericAttr(qualifiedName.intern(), this);
+		} else {
+			return new GenericAttrNS(namespaceURI.intern(), qualifiedName.intern(), this);
+		}
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new GenericDocument();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new GenericDocument();
+	}
 }

@@ -32,82 +32,81 @@ import io.sf.carte.echosvg.ext.awt.image.PadMode;
  */
 public interface ConvolveMatrixRable extends FilterColorInterpolation {
 
-    /**
-     * Returns the source to be Convolved
-     */
-    Filter getSource();
+	/**
+	 * Returns the source to be Convolved
+	 */
+	Filter getSource();
 
-    /**
-     * Sets the source to be Convolved
-     * @param src image to Convolved.
-     */
-    void setSource(Filter src);
+	/**
+	 * Sets the source to be Convolved
+	 * 
+	 * @param src image to Convolved.
+	 */
+	void setSource(Filter src);
 
+	/**
+	 * Returns the Convolution Kernel in use
+	 */
+	Kernel getKernel();
 
-    /**
-     * Returns the Convolution Kernel in use
-     */
-    Kernel getKernel();
+	/**
+	 * Sets the Convolution Kernel to use.
+	 * 
+	 * @param k Kernel to use for convolution.
+	 */
+	void setKernel(Kernel k);
 
-    /**
-     * Sets the Convolution Kernel to use.
-     * @param k Kernel to use for convolution.
-     */
-    void setKernel(Kernel k);
+	/**
+	 * Returns the target point of the kernel (what pixel under the kernel should be
+	 * set to the result of convolution).
+	 */
+	Point getTarget();
 
-    /**
-     * Returns the target point of the kernel (what pixel under the kernel
-     * should be set to the result of convolution).
-     */
-    Point getTarget();
+	/**
+	 * Sets the target point of the kernel (what pixel under the kernel should be
+	 * set to the result of the convolution).
+	 */
+	void setTarget(Point pt);
 
-    /**
-     * Sets the target point of the kernel (what pixel under the kernel
-     * should be set to the result of the convolution).
-     */
-    void setTarget(Point pt);
+	/**
+	 * Returns the shift value to apply to the result of convolution
+	 */
+	double getBias();
 
-    /**
-     * Returns the shift value to apply to the result of convolution
-     */
-    double getBias();
+	/**
+	 * Sets the shift value to apply to the result of convolution
+	 */
+	void setBias(double bias);
 
-    /**
-     * Sets the shift value to apply to the result of convolution
-     */
-    void setBias(double bias);
+	/**
+	 * Returns the current edge handling mode.
+	 */
+	PadMode getEdgeMode();
 
-    /**
-     * Returns the current edge handling mode.
-     */
-    PadMode getEdgeMode();
+	/**
+	 * Sets the current edge handling mode.
+	 */
+	void setEdgeMode(PadMode edgeMode);
 
-    /**
-     * Sets the current edge handling mode.
-     */
-    void setEdgeMode(PadMode edgeMode);
+	/**
+	 * Returns the [x,y] distance in user space between kernel values
+	 */
+	double[] getKernelUnitLength();
 
-    /**
-     * Returns the [x,y] distance in user space between kernel values
-     */
-    double [] getKernelUnitLength();
+	/**
+	 * Sets the [x,y] distance in user space between kernel values If set to zero
+	 * then one pixel in device space will be used.
+	 */
+	void setKernelUnitLength(double[] kernelUnitLength);
 
-    /**
-     * Sets the [x,y] distance in user space between kernel values
-     * If set to zero then one pixel in device space will be used.
-     */
-    void setKernelUnitLength(double [] kernelUnitLength);
+	/**
+	 * Returns false if the convolution should affect the Alpha channel
+	 */
+	boolean getPreserveAlpha();
 
-    /**
-     * Returns false if the convolution should affect the Alpha channel
-     */
-    boolean getPreserveAlpha();
-
-    /**
-     * Sets Alpha channel handling.
-     * A value of False indicates that the convolution should apply to
-     * the Alpha Channel
-     */
-    void setPreserveAlpha(boolean preserveAlpha);
+	/**
+	 * Sets Alpha channel handling. A value of False indicates that the convolution
+	 * should apply to the Alpha Channel
+	 */
+	void setPreserveAlpha(boolean preserveAlpha);
 }
-

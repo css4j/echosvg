@@ -39,71 +39,70 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author For later modifications, see Git history.
- * @version $Id$ 
+ * @version $Id$
  */
 public class BackgroundColorTest extends AbstractImageTranscoderTest {
 
-    /**
-     * Constructs a new <code>BackgroundColorTest</code>.
-     */
-    public BackgroundColorTest() {
-    }
+	/**
+	 * Constructs a new <code>BackgroundColorTest</code>.
+	 */
+	public BackgroundColorTest() {
+	}
 
-    /**
-     * Creates the <code>TranscoderInput</code>.
-     */
-    @Override
-    protected TranscoderInput createTranscoderInput() {
-        DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-        String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
-        Document doc = impl.createDocument(svgNS, "svg", null);
+	/**
+	 * Creates the <code>TranscoderInput</code>.
+	 */
+	@Override
+	protected TranscoderInput createTranscoderInput() {
+		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
+		Document doc = impl.createDocument(svgNS, "svg", null);
 
-        Element root = doc.getDocumentElement();
+		Element root = doc.getDocumentElement();
 
-        root.setAttributeNS(null, "width", "400");
-        root.setAttributeNS(null, "height", "400");
+		root.setAttributeNS(null, "width", "400");
+		root.setAttributeNS(null, "height", "400");
 
-        Element r = doc.createElementNS(svgNS, "rect");
-        r.setAttributeNS(null, "x", "100");
-        r.setAttributeNS(null, "y", "50");
-        r.setAttributeNS(null, "width", "100");
-        r.setAttributeNS(null, "height", "50");
-        r.setAttributeNS(null, "style", "fill:red");
-        root.appendChild(r);
+		Element r = doc.createElementNS(svgNS, "rect");
+		r.setAttributeNS(null, "x", "100");
+		r.setAttributeNS(null, "y", "50");
+		r.setAttributeNS(null, "width", "100");
+		r.setAttributeNS(null, "height", "50");
+		r.setAttributeNS(null, "style", "fill:red");
+		root.appendChild(r);
 
-        return new TranscoderInput(doc);
-    }
-    
-    /**
-     * Creates a Map that contains additional transcoding hints.
-     */
-    @Override
-    protected Map<Key, Object> createTranscodingHints() {
-        Map<Key, Object> hints = new HashMap<>(7);
-        hints.put(ImageTranscoder.KEY_BACKGROUND_COLOR, Color.blue);
-        return hints;
-    }
+		return new TranscoderInput(doc);
+	}
 
-    /**
-     * Returns the reference image for this test.
-     */
-    @Override
-    protected byte [] getReferenceImageData() {
-        try {
-            BufferedImage img = new BufferedImage
-                (400, 400, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = img.createGraphics();
-            g2d.setColor(Color.blue);
-            g2d.fillRect(0, 0, 400, 400);
-            g2d.setColor(Color.red);
-            g2d.fillRect(100, 50, 100, 50);
-            ByteArrayOutputStream ostream = new ByteArrayOutputStream();
-            PNGTranscoder t = new PNGTranscoder();
-            TranscoderOutput output = new TranscoderOutput(ostream);
-            t.writeImage(img, output);
-            return ostream.toByteArray();
-        } catch (Exception ex) {
-            throw new RuntimeException("BackgroundColorTest error");
-        }
-    }
+	/**
+	 * Creates a Map that contains additional transcoding hints.
+	 */
+	@Override
+	protected Map<Key, Object> createTranscodingHints() {
+		Map<Key, Object> hints = new HashMap<>(7);
+		hints.put(ImageTranscoder.KEY_BACKGROUND_COLOR, Color.blue);
+		return hints;
+	}
+
+	/**
+	 * Returns the reference image for this test.
+	 */
+	@Override
+	protected byte[] getReferenceImageData() {
+		try {
+			BufferedImage img = new BufferedImage(400, 400, BufferedImage.TYPE_INT_ARGB);
+			Graphics2D g2d = img.createGraphics();
+			g2d.setColor(Color.blue);
+			g2d.fillRect(0, 0, 400, 400);
+			g2d.setColor(Color.red);
+			g2d.fillRect(100, 50, 100, 50);
+			ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+			PNGTranscoder t = new PNGTranscoder();
+			TranscoderOutput output = new TranscoderOutput(ostream);
+			t.writeImage(img, output);
+			return ostream.toByteArray();
+		} catch (Exception ex) {
+			throw new RuntimeException("BackgroundColorTest error");
+		}
+	}
 }

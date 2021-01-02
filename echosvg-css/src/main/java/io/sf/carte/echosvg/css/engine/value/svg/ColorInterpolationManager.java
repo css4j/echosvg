@@ -35,75 +35,72 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class ColorInterpolationManager extends IdentifierManager {
 
-    /**
-     * The identifier values.
-     */
-    protected static final StringMap values = new StringMap();
-    static {
-        values.put(CSSConstants.CSS_AUTO_VALUE,
-                   ValueConstants.AUTO_VALUE);
-        values.put(CSSConstants.CSS_LINEARRGB_VALUE,
-                   SVGValueConstants.LINEARRGB_VALUE);
-        values.put(CSSConstants.CSS_SRGB_VALUE,
-                   SVGValueConstants.SRGB_VALUE);
-    }
+	/**
+	 * The identifier values.
+	 */
+	protected static final StringMap values = new StringMap();
+	static {
+		values.put(CSSConstants.CSS_AUTO_VALUE, ValueConstants.AUTO_VALUE);
+		values.put(CSSConstants.CSS_LINEARRGB_VALUE, SVGValueConstants.LINEARRGB_VALUE);
+		values.put(CSSConstants.CSS_SRGB_VALUE, SVGValueConstants.SRGB_VALUE);
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_IDENT;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_IDENT;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_COLOR_INTERPOLATION_PROPERTY;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_COLOR_INTERPOLATION_PROPERTY;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return SVGValueConstants.SRGB_VALUE;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return SVGValueConstants.SRGB_VALUE;
+	}
 
-    /**
-     * Implements {@link IdentifierManager#getIdentifiers()}.
-     */
-    @Override
-    public StringMap getIdentifiers() {
-        return values;
-    }
+	/**
+	 * Implements {@link IdentifierManager#getIdentifiers()}.
+	 */
+	@Override
+	public StringMap getIdentifiers() {
+		return values;
+	}
 }

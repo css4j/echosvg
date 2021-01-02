@@ -32,37 +32,36 @@ import io.sf.carte.echosvg.gvt.event.GraphicsNodeChangeListener;
  */
 public class RootGraphicsNode extends CompositeGraphicsNode {
 
-    List<GraphicsNodeChangeListener> treeGraphicsNodeChangeListeners = null;
+	List<GraphicsNodeChangeListener> treeGraphicsNodeChangeListeners = null;
 
-   /**
-     * Constructs a new empty <code>RootGraphicsNode</code>.
-     */
-    public RootGraphicsNode() {}
+	/**
+	 * Constructs a new empty <code>RootGraphicsNode</code>.
+	 */
+	public RootGraphicsNode() {
+	}
 
-    /**
-     * Returns the root of the GVT tree or null if the node is not
-     * part of a GVT tree.  
-     */
-    @Override
-    public RootGraphicsNode getRoot() {
-        return this;
-    }
+	/**
+	 * Returns the root of the GVT tree or null if the node is not part of a GVT
+	 * tree.
+	 */
+	@Override
+	public RootGraphicsNode getRoot() {
+		return this;
+	}
 
-    public List<GraphicsNodeChangeListener> getTreeGraphicsNodeChangeListeners() {
-        if (treeGraphicsNodeChangeListeners == null) {
-            treeGraphicsNodeChangeListeners = new LinkedList<>();
-        }
-        return treeGraphicsNodeChangeListeners;
-    }
+	public List<GraphicsNodeChangeListener> getTreeGraphicsNodeChangeListeners() {
+		if (treeGraphicsNodeChangeListeners == null) {
+			treeGraphicsNodeChangeListeners = new LinkedList<>();
+		}
+		return treeGraphicsNodeChangeListeners;
+	}
 
-    public void addTreeGraphicsNodeChangeListener
-        (GraphicsNodeChangeListener l) {
-        getTreeGraphicsNodeChangeListeners().add(l);
-    }
+	public void addTreeGraphicsNodeChangeListener(GraphicsNodeChangeListener l) {
+		getTreeGraphicsNodeChangeListeners().add(l);
+	}
 
-    public void removeTreeGraphicsNodeChangeListener
-        (GraphicsNodeChangeListener l) {
-        getTreeGraphicsNodeChangeListeners().remove(l);
-    }
+	public void removeTreeGraphicsNodeChangeListener(GraphicsNodeChangeListener l) {
+		getTreeGraphicsNodeChangeListeners().remove(l);
+	}
 
 }

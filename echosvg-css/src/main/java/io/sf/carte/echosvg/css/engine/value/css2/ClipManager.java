@@ -39,89 +39,85 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @version $Id$
  */
 public class ClipManager extends RectManager {
-    
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return false;
-    }
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_CLIP_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_CLIP_PROPERTY;
-    }
-    
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return ValueConstants.AUTO_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_CLIP_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return InheritValue.INSTANCE;
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_CLIP_PROPERTY;
+	}
 
-        case IDENT:
-            if (lu.getStringValue().equalsIgnoreCase
-                (CSSConstants.CSS_AUTO_VALUE)) {
-                return ValueConstants.AUTO_VALUE;
-            }
-        default:
-            break;
-        }
-        return super.createValue(lu, engine);
-    }
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return ValueConstants.AUTO_VALUE;
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        if (type != CSSPrimitiveValue.CSS_IDENT) {
-            throw createInvalidStringTypeDOMException(type);
-        }
-        if (!value.equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
-            throw createInvalidIdentifierDOMException(value);
-        }
-        return ValueConstants.AUTO_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return InheritValue.INSTANCE;
+
+		case IDENT:
+			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
+				return ValueConstants.AUTO_VALUE;
+			}
+		default:
+			break;
+		}
+		return super.createValue(lu, engine);
+	}
+
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+		if (type != CSSPrimitiveValue.CSS_IDENT) {
+			throw createInvalidStringTypeDOMException(type);
+		}
+		if (!value.equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
+			throw createInvalidIdentifierDOMException(value);
+		}
+		return ValueConstants.AUTO_VALUE;
+	}
 }

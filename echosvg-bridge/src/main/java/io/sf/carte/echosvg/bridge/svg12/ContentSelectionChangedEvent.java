@@ -23,8 +23,8 @@ import java.util.EventObject;
 import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
 
 /**
- * An event to signify a change to the list of selected nodes for an
- * xbl;content element.
+ * An event to signify a change to the list of selected nodes for an xbl;content
+ * element.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -32,20 +32,21 @@ import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
  */
 public class ContentSelectionChangedEvent extends EventObject {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new ContentSelectionChangedEvent object.
-     * @param c the xbl:content element whose selection is changing
-     */
-    public ContentSelectionChangedEvent(XBLOMContentElement c) {
-        super(c);
-    }
+	/**
+	 * Creates a new ContentSelectionChangedEvent object.
+	 * 
+	 * @param c the xbl:content element whose selection is changing
+	 */
+	public ContentSelectionChangedEvent(XBLOMContentElement c) {
+		super(c);
+	}
 
-    /**
-     * Returns the xbl:content element where the event originated.
-     */
-    public XBLOMContentElement getContentElement() {
-        return (XBLOMContentElement) source;
-    }
+	/**
+	 * Returns the xbl:content element where the event originated.
+	 */
+	public XBLOMContentElement getContentElement() {
+		return (XBLOMContentElement) source;
+	}
 }

@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.anim.timing;
 
 /**
- * A class to handle media marker SMIL timing specifiers.  This class
- * of timing specifier is currently unused.
+ * A class to handle media marker SMIL timing specifiers. This class of timing
+ * specifier is currently unused.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -28,51 +28,50 @@ package io.sf.carte.echosvg.anim.timing;
  */
 public class MediaMarkerTimingSpecifier extends TimingSpecifier {
 
-    /**
-     * The ID of the media element.
-     */
-    protected String syncbaseID;
+	/**
+	 * The ID of the media element.
+	 */
+	protected String syncbaseID;
 
-    /**
-     * The media element.
-     */
-    protected TimedElement mediaElement;
+	/**
+	 * The media element.
+	 */
+	protected TimedElement mediaElement;
 
-    /**
-     * The media marker name.
-     */
-    protected String markerName;
+	/**
+	 * The media marker name.
+	 */
+	protected String markerName;
 
-    /**
-     * The instance time.
-     */
-    protected InstanceTime instance;
+	/**
+	 * The instance time.
+	 */
+	protected InstanceTime instance;
 
-    /**
-     * Creates a new MediaMarkerTimingSpecifier object.
-     */
-    public MediaMarkerTimingSpecifier(TimedElement owner, boolean isBegin,
-                                      String syncbaseID, String markerName) {
-        super(owner, isBegin);
-        this.syncbaseID = syncbaseID;
-        this.markerName = markerName;
-        this.mediaElement = owner.getTimedElementById(syncbaseID);
-    }
-    
-    /**
-     * Returns a string representation of this timing specifier.
-     */
-    @Override
-    public String toString() {
-        return syncbaseID + ".marker(" + markerName + ")";
-    }
+	/**
+	 * Creates a new MediaMarkerTimingSpecifier object.
+	 */
+	public MediaMarkerTimingSpecifier(TimedElement owner, boolean isBegin, String syncbaseID, String markerName) {
+		super(owner, isBegin);
+		this.syncbaseID = syncbaseID;
+		this.markerName = markerName;
+		this.mediaElement = owner.getTimedElementById(syncbaseID);
+	}
 
-    /**
-     * Returns whether this timing specifier is event-like (i.e., if it is
-     * an eventbase, accesskey or a repeat timing specifier).
-     */
-    @Override
-    public boolean isEventCondition() {
-        return false;
-    }
+	/**
+	 * Returns a string representation of this timing specifier.
+	 */
+	@Override
+	public String toString() {
+		return syncbaseID + ".marker(" + markerName + ")";
+	}
+
+	/**
+	 * Returns whether this timing specifier is event-like (i.e., if it is an
+	 * eventbase, accesskey or a repeat timing specifier).
+	 */
+	@Override
+	public boolean isEventCondition() {
+		return false;
+	}
 }

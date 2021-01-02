@@ -30,62 +30,54 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class PrefixableStylableExtensionElement
-    extends StylableExtensionElement {
+public abstract class PrefixableStylableExtensionElement extends StylableExtensionElement {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * The element prefix.
-     */
-    protected String prefix = null;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The element prefix.
+	 */
+	protected String prefix = null;
 
-    /**
-     * Creates a new EchoSVGStarElement object.
-     */
-    protected PrefixableStylableExtensionElement() {
-    }
+	/**
+	 * Creates a new EchoSVGStarElement object.
+	 */
+	protected PrefixableStylableExtensionElement() {
+	}
 
-    /**
-     * Creates a new EchoSVGStarElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public PrefixableStylableExtensionElement(String prefix,
-                                              AbstractDocument owner) {
-        super(prefix, owner);
-        setPrefix(prefix);
-    }
+	/**
+	 * Creates a new EchoSVGStarElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public PrefixableStylableExtensionElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		setPrefix(prefix);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
-     */
-    @Override
-    public String getNodeName() {
-        return (prefix == null || prefix.equals(""))
-            ? getLocalName() : prefix + ':' + getLocalName();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
+	 */
+	@Override
+	public String getNodeName() {
+		return (prefix == null || prefix.equals("")) ? getLocalName() : prefix + ':' + getLocalName();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setPrefix(String)}.
-     */
-    @Override
-    public void setPrefix(String prefix) throws DOMException {
-        if (isReadonly()) {
-            throw createDOMException
-                (DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.node",
-                 new Object[] {(int) getNodeType(), getNodeName() });
-        }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setPrefix(String)}.
+	 */
+	@Override
+	public void setPrefix(String prefix) throws DOMException {
+		if (isReadonly()) {
+			throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.node",
+					new Object[] { (int) getNodeType(), getNodeName() });
+		}
 
-        if (prefix != null &&
-            !prefix.equals("") &&
-            !DOMUtilities.isValidName(prefix)) {
-            throw createDOMException
-                (DOMException.INVALID_CHARACTER_ERR, "prefix",
-                 new Object[] {(int) getNodeType(),
-                                getNodeName(),
-                                prefix });
-        }
+		if (prefix != null && !prefix.equals("") && !DOMUtilities.isValidName(prefix)) {
+			throw createDOMException(DOMException.INVALID_CHARACTER_ERR, "prefix",
+					new Object[] { (int) getNodeType(), getNodeName(), prefix });
+		}
 
-        this.prefix = prefix;
-    }
+		this.prefix = prefix;
+	}
 }

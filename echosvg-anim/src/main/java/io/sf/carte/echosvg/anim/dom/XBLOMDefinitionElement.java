@@ -33,62 +33,59 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  */
 public class XBLOMDefinitionElement extends XBLOMElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new XBLOMDefinitionElement.
-     */
-    protected XBLOMDefinitionElement() {
-    }
+	/**
+	 * Creates a new XBLOMDefinitionElement.
+	 */
+	protected XBLOMDefinitionElement() {
+	}
 
-    /**
-     * Creates a new XBLOMDefinitionElement.
-     * @param prefix The namespace prefix.
-     * @param owner  The owner document.
-     */
-    public XBLOMDefinitionElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new XBLOMDefinitionElement.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public XBLOMDefinitionElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return XBL_DEFINITION_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return XBL_DEFINITION_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new XBLOMDefinitionElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new XBLOMDefinitionElement();
+	}
 
-    /**
-     * Returns the namspace URI of elements this definition will bind.
-     */
-    public String getElementNamespaceURI() {
-        String qname = getAttributeNS(null, XBL_ELEMENT_ATTRIBUTE);
-        String prefix = DOMUtilities.getPrefix(qname);
-        String ns = lookupNamespaceURI(prefix);
-        if (ns == null) {
-            throw createDOMException
-                        (DOMException.NAMESPACE_ERR,
-                         "prefix",
-                         new Object[] {(int) getNodeType(),
-                                        getNodeName(),
-                                        prefix });
-        }
-        return ns;
-    }
+	/**
+	 * Returns the namspace URI of elements this definition will bind.
+	 */
+	public String getElementNamespaceURI() {
+		String qname = getAttributeNS(null, XBL_ELEMENT_ATTRIBUTE);
+		String prefix = DOMUtilities.getPrefix(qname);
+		String ns = lookupNamespaceURI(prefix);
+		if (ns == null) {
+			throw createDOMException(DOMException.NAMESPACE_ERR, "prefix",
+					new Object[] { (int) getNodeType(), getNodeName(), prefix });
+		}
+		return ns;
+	}
 
-    /**
-     * Returns the local name of elements this definition will bind.
-     */
-    public String getElementLocalName() {
-        String qname = getAttributeNS(null, "element");
-        return DOMUtilities.getLocalName(qname);
-    }
+	/**
+	 * Returns the local name of elements this definition will bind.
+	 */
+	public String getElementLocalName() {
+		String qname = getAttributeNS(null, "element");
+		return DOMUtilities.getLocalName(qname);
+	}
 }

@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.css.engine;
 import org.w3c.dom.Node;
 
 /**
- * An interface for DOM classes that can be navigated for CSS selector
- * matching and cascade computation.
+ * An interface for DOM classes that can be navigated for CSS selector matching
+ * and cascade computation.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -30,34 +30,34 @@ import org.w3c.dom.Node;
  */
 public interface CSSNavigableNode {
 
-    /**
-     * Returns the CSS parent node of this node.
-     */
-    Node getCSSParentNode();
+	/**
+	 * Returns the CSS parent node of this node.
+	 */
+	Node getCSSParentNode();
 
-    /**
-     * Returns the CSS previous sibling node of this node.
-     */
-    Node getCSSPreviousSibling();
+	/**
+	 * Returns the CSS previous sibling node of this node.
+	 */
+	Node getCSSPreviousSibling();
 
-    /**
-     * Returns the CSS next sibling node of this node.
-     */
-    Node getCSSNextSibling();
+	/**
+	 * Returns the CSS next sibling node of this node.
+	 */
+	Node getCSSNextSibling();
 
-    /**
-     * Returns the CSS first child node of this node.
-     */
-    Node getCSSFirstChild();
+	/**
+	 * Returns the CSS first child node of this node.
+	 */
+	Node getCSSFirstChild();
 
-    /**
-     * Returns the CSS last child of this node.
-     */
-    Node getCSSLastChild();
+	/**
+	 * Returns the CSS last child of this node.
+	 */
+	Node getCSSLastChild();
 
-    /**
-     * Returns whether this node is the root of a (conceptual) hidden tree
-     * that selectors will not work across.
-     */
-    boolean isHiddenFromSelectors();
+	/**
+	 * Returns whether this node is the root of a (conceptual) hidden tree that
+	 * selectors will not work across.
+	 */
+	boolean isHiddenFromSelectors();
 }

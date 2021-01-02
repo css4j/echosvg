@@ -32,17 +32,14 @@ import io.sf.carte.echosvg.gvt.filter.Mask;
  */
 public interface MaskBridge extends Bridge {
 
-    /**
-     * Creates a <code>Mask</code> according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param maskElement the element that defines the mask
-     * @param maskedElement the element that references the mask element
-     * @param maskedNode the graphics node to mask
-     */
-    Mask createMask(BridgeContext ctx,
-                    Element maskElement,
-                    Element maskedElement,
-                    GraphicsNode maskedNode);
+	/**
+	 * Creates a <code>Mask</code> according to the specified parameters.
+	 *
+	 * @param ctx           the bridge context to use
+	 * @param maskElement   the element that defines the mask
+	 * @param maskedElement the element that references the mask element
+	 * @param maskedNode    the graphics node to mask
+	 */
+	Mask createMask(BridgeContext ctx, Element maskElement, Element maskedElement, GraphicsNode maskedNode);
 
 }

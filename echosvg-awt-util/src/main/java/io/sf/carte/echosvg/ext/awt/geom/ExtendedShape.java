@@ -21,17 +21,17 @@ package io.sf.carte.echosvg.ext.awt.geom;
 import java.awt.Shape;
 
 /**
- * The <code>ExtendedShape</code> class represents a geometric
- * path constructed from straight lines, quadratic and cubic (Bezier)
- * curves and elliptical arcs.
+ * The <code>ExtendedShape</code> class represents a geometric path constructed
+ * from straight lines, quadratic and cubic (Bezier) curves and elliptical arcs.
+ * 
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ExtendedShape extends Shape {
-    /**
-     * Get an extended Path iterator that may return SEG_ARCTO commands
-     */
-    ExtendedPathIterator getExtendedPathIterator();
+	/**
+	 * Get an extended Path iterator that may return SEG_ARCTO commands
+	 */
+	ExtendedPathIterator getExtendedPathIterator();
 
 }

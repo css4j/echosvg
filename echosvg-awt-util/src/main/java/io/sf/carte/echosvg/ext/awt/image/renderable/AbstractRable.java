@@ -39,10 +39,9 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.PadRed;
 import io.sf.carte.echosvg.ext.awt.image.rendered.RenderedImageCachableRed;
 
 /**
- * This is an abstract base class that takes care of most of the
- * normal issues surrounding the implementation of the RenderableImage
- * interface.  It tries to make no assumptions about the subclass
- * implementation.
+ * This is an abstract base class that takes care of most of the normal issues
+ * surrounding the implementation of the RenderableImage interface. It tries to
+ * make no assumptions about the subclass implementation.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
@@ -50,278 +49,284 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.RenderedImageCachableRed;
  */
 public abstract class AbstractRable implements Filter {
 
-    protected Vector<RenderableImage> srcs;
-    protected Map<String,Object> props = new HashMap<>();
-    protected long stamp = 0;
+	protected Vector<RenderableImage> srcs;
+	protected Map<String, Object> props = new HashMap<>();
+	protected long stamp = 0;
 
-    /**
-     * void constructor. The subclass must call one of the
-     * flavors of init before the object becomes usable.
-     * This is useful when the proper parameters to the init
-     * method need to be computed in the subclasses constructor.
-     */
-    protected AbstractRable() {
-        srcs = new Vector<>();
-    }
+	/**
+	 * void constructor. The subclass must call one of the flavors of init before
+	 * the object becomes usable. This is useful when the proper parameters to the
+	 * init method need to be computed in the subclasses constructor.
+	 */
+	protected AbstractRable() {
+		srcs = new Vector<>();
+	}
 
-    /**
-     * Construct an Abstract Rable from src.
-     * @param src will be the first (and only) member of the srcs
-     * Vector. The bounds of src are also used to set the bounds of
-     * this renderable.
-     */
-    protected AbstractRable(Filter src) {
-        init(src, null);
-    }
+	/**
+	 * Construct an Abstract Rable from src.
+	 * 
+	 * @param src will be the first (and only) member of the srcs Vector. The bounds
+	 *            of src are also used to set the bounds of this renderable.
+	 */
+	protected AbstractRable(Filter src) {
+		init(src, null);
+	}
 
-    /**
-     * Construct an Abstract Rable from src and props.
-     * @param src will also be set as the first (and only) member of
-     * the srcs Vector.
-     * @param props use to initialize the properties on this renderable image.
-     */
-    protected AbstractRable(Filter src, Map<String,?> props) {
-        init(src, props);
-    }
+	/**
+	 * Construct an Abstract Rable from src and props.
+	 * 
+	 * @param src   will also be set as the first (and only) member of the srcs
+	 *              Vector.
+	 * @param props use to initialize the properties on this renderable image.
+	 */
+	protected AbstractRable(Filter src, Map<String, ?> props) {
+		init(src, props);
+	}
 
-    /**
-     * Construct an Abstract Rable from a list of sources.
-     * @param srcs This is used to initialize the srcs Vector.
-     * The bounds of this renderable will be the union of the bounds
-     * of all the sources in srcs.  All the members of srcs must be
-     * CacheableRable otherwise an error will be thrown.
-     */
-    protected AbstractRable(List<? extends RenderableImage> srcs) {
-        this(srcs, null);
-    }
+	/**
+	 * Construct an Abstract Rable from a list of sources.
+	 * 
+	 * @param srcs This is used to initialize the srcs Vector. The bounds of this
+	 *             renderable will be the union of the bounds of all the sources in
+	 *             srcs. All the members of srcs must be CacheableRable otherwise an
+	 *             error will be thrown.
+	 */
+	protected AbstractRable(List<? extends RenderableImage> srcs) {
+		this(srcs, null);
+	}
 
-    /**
-     * Construct an Abstract Rable from a list of sources, and bounds.
-     * @param srcs This is used to initialize the srcs Vector.  All
-     * the members of srcs must be CacheableRable otherwise an error
-     * will be thrown.
-     * @param props use to initialize the properties on this renderable image.
-     */
-    protected AbstractRable(List<? extends RenderableImage> srcs, Map<String,Object> props) {
-        init(srcs, props);
-    }
+	/**
+	 * Construct an Abstract Rable from a list of sources, and bounds.
+	 * 
+	 * @param srcs  This is used to initialize the srcs Vector. All the members of
+	 *              srcs must be CacheableRable otherwise an error will be thrown.
+	 * @param props use to initialize the properties on this renderable image.
+	 */
+	protected AbstractRable(List<? extends RenderableImage> srcs, Map<String, Object> props) {
+		init(srcs, props);
+	}
 
-    /**
-     * Increments the time stamp.  This should be called when ever
-     * the image changes in such a way that cached output should be
-     * discarded.
-     */
-    public final void touch() { stamp++; }
+	/**
+	 * Increments the time stamp. This should be called when ever the image changes
+	 * in such a way that cached output should be discarded.
+	 */
+	public final void touch() {
+		stamp++;
+	}
 
-      /**
-       * Returns the current modification timestamp on this Renderable
-       * node.  This value will change whenever cached output data becomes
-       * invalid.
-       * @return Current modification timestamp value.
-       */
-    @Override
-    public long getTimeStamp() { return stamp; }
+	/**
+	 * Returns the current modification timestamp on this Renderable node. This
+	 * value will change whenever cached output data becomes invalid.
+	 * 
+	 * @return Current modification timestamp value.
+	 */
+	@Override
+	public long getTimeStamp() {
+		return stamp;
+	}
 
-    /**
-     * Initialize an Abstract Rable from src, bounds and props.  This
-     * can be called long after the object is constructed to reset the
-     * state of the Renderable.
-     * @param src will become the first (and only) member of the srcs Vector.
-     */
-    protected void init(RenderableImage src) {
-        touch();
+	/**
+	 * Initialize an Abstract Rable from src, bounds and props. This can be called
+	 * long after the object is constructed to reset the state of the Renderable.
+	 * 
+	 * @param src will become the first (and only) member of the srcs Vector.
+	 */
+	protected void init(RenderableImage src) {
+		touch();
 
-        this.srcs   = new Vector<>(1);
-        if (src != null) {
-            this.srcs.add(src);
-        }
-    }
+		this.srcs = new Vector<>(1);
+		if (src != null) {
+			this.srcs.add(src);
+		}
+	}
 
-    /**
-     * Initialize an Abstract Rable from src, bounds and props.  This
-     * can be called long after the object is constructed to reset the
-     * state of the Renderable.
-     * @param src will also be set as the first (and only) member of
-     * the srcs Vector.
-     * @param props use to set the properties on this renderable image.
-     * Always clears the current properties (even if null).
-     */
-    protected void init(Filter src, Map<String,?> props) {
-        init (src);
-        if(props != null){
-            this.props.putAll(props);
-        }
-    }
+	/**
+	 * Initialize an Abstract Rable from src, bounds and props. This can be called
+	 * long after the object is constructed to reset the state of the Renderable.
+	 * 
+	 * @param src   will also be set as the first (and only) member of the srcs
+	 *              Vector.
+	 * @param props use to set the properties on this renderable image. Always
+	 *              clears the current properties (even if null).
+	 */
+	protected void init(Filter src, Map<String, ?> props) {
+		init(src);
+		if (props != null) {
+			this.props.putAll(props);
+		}
+	}
 
-    /**
-     * Initialize an Abstract Rable from a list of sources, and
-     * possibly a bounds.  This can be called long after the object is
-     * constructed to reset the state of the Renderable.
-     * @param srcs Used the create a new srcs Vector (old sources are dropped).
-     */
-    protected void init(List<? extends RenderableImage> srcs) {
-        touch();
-        this.srcs   = new Vector<>(srcs);
-    }
+	/**
+	 * Initialize an Abstract Rable from a list of sources, and possibly a bounds.
+	 * This can be called long after the object is constructed to reset the state of
+	 * the Renderable.
+	 * 
+	 * @param srcs Used the create a new srcs Vector (old sources are dropped).
+	 */
+	protected void init(List<? extends RenderableImage> srcs) {
+		touch();
+		this.srcs = new Vector<>(srcs);
+	}
 
-    /**
-     * Initialize an Abstract Rable from a list of sources, and
-     * possibly a bounds.  This can be called long after the object is
-     * constructed to reset the state of the Renderable.
-     * @param srcs Used the create a new srcs Vector (old sources are dropped).
-     * @param props use to set the properties on this renderable image.
-     * Always clears the current properties (even if null).
-     */
-    protected void init(List<? extends RenderableImage> srcs, Map<String,Object> props) {
-        init (srcs);
-        if(props != null)
-            this.props.putAll(props);
-    }
+	/**
+	 * Initialize an Abstract Rable from a list of sources, and possibly a bounds.
+	 * This can be called long after the object is constructed to reset the state of
+	 * the Renderable.
+	 * 
+	 * @param srcs  Used the create a new srcs Vector (old sources are dropped).
+	 * @param props use to set the properties on this renderable image. Always
+	 *              clears the current properties (even if null).
+	 */
+	protected void init(List<? extends RenderableImage> srcs, Map<String, Object> props) {
+		init(srcs);
+		if (props != null)
+			this.props.putAll(props);
+	}
 
-    @Override
-    public Rectangle2D getBounds2D() {
-        Rectangle2D bounds = null;
-        if (this.srcs.size() != 0) {
-            Iterator<RenderableImage> i = srcs.iterator();
-            Filter src = (Filter) i.next();
-            bounds = (Rectangle2D)src.getBounds2D().clone();
-            Rectangle2D r;
-            while (i.hasNext()) {
-                src = (Filter) i.next();
-                r = src.getBounds2D();
-                Rectangle2D.union(bounds, r, bounds);
-            }
-        }
-        return bounds;
-    }
+	@Override
+	public Rectangle2D getBounds2D() {
+		Rectangle2D bounds = null;
+		if (this.srcs.size() != 0) {
+			Iterator<RenderableImage> i = srcs.iterator();
+			Filter src = (Filter) i.next();
+			bounds = (Rectangle2D) src.getBounds2D().clone();
+			Rectangle2D r;
+			while (i.hasNext()) {
+				src = (Filter) i.next();
+				r = src.getBounds2D();
+				Rectangle2D.union(bounds, r, bounds);
+			}
+		}
+		return bounds;
+	}
 
-    @Override
-    public Vector<RenderableImage> getSources() {
-        return srcs;
-    }
+	@Override
+	public Vector<RenderableImage> getSources() {
+		return srcs;
+	}
 
-    @Override
-    public RenderedImage createDefaultRendering() {
-        return createScaledRendering(100, 100, null);
-    }
+	@Override
+	public RenderedImage createDefaultRendering() {
+		return createScaledRendering(100, 100, null);
+	}
 
-    @Override
-    public RenderedImage createScaledRendering(int w, int h,
-                                           RenderingHints hints) {
-        float sX = w/getWidth();
-        float sY = h/getHeight();
-        float scale = Math.min(sX, sY);
+	@Override
+	public RenderedImage createScaledRendering(int w, int h, RenderingHints hints) {
+		float sX = w / getWidth();
+		float sY = h / getHeight();
+		float scale = Math.min(sX, sY);
 
-        AffineTransform at = AffineTransform.getScaleInstance(scale, scale);
-        RenderContext rc = new RenderContext(at, hints);
+		AffineTransform at = AffineTransform.getScaleInstance(scale, scale);
+		RenderContext rc = new RenderContext(at, hints);
 
-        float dX = (getWidth()*scale)-w;
-        float dY = (getHeight()*scale)-h;
+		float dX = (getWidth() * scale) - w;
+		float dY = (getHeight() * scale) - h;
 
-        RenderedImage ri = createRendering(rc);
-        CachableRed cr = RenderedImageCachableRed.wrap(ri);
-        return new PadRed(cr, new Rectangle((int)(dX/2), (int)(dY/2), w, h),
-                          PadMode.ZERO_PAD, null);
-    }
+		RenderedImage ri = createRendering(rc);
+		CachableRed cr = RenderedImageCachableRed.wrap(ri);
+		return new PadRed(cr, new Rectangle((int) (dX / 2), (int) (dY / 2), w, h), PadMode.ZERO_PAD, null);
+	}
 
-    @Override
-    public float getMinX() {
-        return (float)getBounds2D().getX();
-    }
-    @Override
-    public float getMinY() {
-        return (float)getBounds2D().getY();
-    }
-    @Override
-    public float getWidth() {
-        return (float)getBounds2D().getWidth();
-    }
-    @Override
-    public float getHeight() {
-        return (float)getBounds2D().getHeight();
-    }
+	@Override
+	public float getMinX() {
+		return (float) getBounds2D().getX();
+	}
 
-    @Override
-    public Object getProperty(String name) {
-        RenderableImage ret = (RenderableImage) props.get(name);
-        if (ret != null) return ret;
-        for (RenderableImage src : srcs) {
-            Object pty = src.getProperty(name);
-            if (pty != null) return pty;
-        }
-        return null;
-    }
+	@Override
+	public float getMinY() {
+		return (float) getBounds2D().getY();
+	}
 
-    @Override
-    public String [] getPropertyNames() {
-        Set<String> keys = props.keySet();
-        Iterator<String> iter = keys.iterator();
-        String[] ret  = new String[keys.size()];
-        int i=0;
-        while (iter.hasNext()) {
-            ret[i++] = iter.next();
-        }
+	@Override
+	public float getWidth() {
+		return (float) getBounds2D().getWidth();
+	}
 
-        Iterator<RenderableImage> rIter = srcs.iterator();
-        while (rIter.hasNext()) {
-            RenderableImage ri = rIter.next();
-            String [] srcProps = ri.getPropertyNames();
-            if (srcProps.length != 0) {
-                String [] tmp = new String[ret.length+srcProps.length];
-                System.arraycopy(ret,0,tmp,0,ret.length);
-                System.arraycopy(tmp,ret.length,srcProps,0,srcProps.length);
-                ret = tmp;
-            }
-        }
+	@Override
+	public float getHeight() {
+		return (float) getBounds2D().getHeight();
+	}
 
-        return ret;
-    }
+	@Override
+	public Object getProperty(String name) {
+		RenderableImage ret = (RenderableImage) props.get(name);
+		if (ret != null)
+			return ret;
+		for (RenderableImage src : srcs) {
+			Object pty = src.getProperty(name);
+			if (pty != null)
+				return pty;
+		}
+		return null;
+	}
 
-    @Override
-    public boolean isDynamic() { return false; }
+	@Override
+	public String[] getPropertyNames() {
+		Set<String> keys = props.keySet();
+		Iterator<String> iter = keys.iterator();
+		String[] ret = new String[keys.size()];
+		int i = 0;
+		while (iter.hasNext()) {
+			ret[i++] = iter.next();
+		}
 
-    @Override
-    public Shape getDependencyRegion(int srcIndex,
-                                     Rectangle2D outputRgn) {
-        if ((srcIndex < 0) || (srcIndex > srcs.size()))
-            throw new IndexOutOfBoundsException
-                ("Nonexistant source requested.");
+		Iterator<RenderableImage> rIter = srcs.iterator();
+		while (rIter.hasNext()) {
+			RenderableImage ri = rIter.next();
+			String[] srcProps = ri.getPropertyNames();
+			if (srcProps.length != 0) {
+				String[] tmp = new String[ret.length + srcProps.length];
+				System.arraycopy(ret, 0, tmp, 0, ret.length);
+				System.arraycopy(tmp, ret.length, srcProps, 0, srcProps.length);
+				ret = tmp;
+			}
+		}
 
-        // We only depend on our source for stuff that is inside
-        // our bounds...
-        Rectangle2D srect = (Rectangle2D)outputRgn.clone();
-        Rectangle2D bounds = getBounds2D();
+		return ret;
+	}
 
-        // Return empty rect if they don't intersect.
-        if ( ! bounds.intersects(srect) )
-            return new Rectangle2D.Float();
+	@Override
+	public boolean isDynamic() {
+		return false;
+	}
 
-        Rectangle2D.intersect(srect, bounds, srect);
-        return srect;
-    }
+	@Override
+	public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn) {
+		if ((srcIndex < 0) || (srcIndex > srcs.size()))
+			throw new IndexOutOfBoundsException("Nonexistant source requested.");
 
-    @Override
-    public Shape getDirtyRegion(int srcIndex,
-                                Rectangle2D inputRgn) {
-        if ((srcIndex < 0) || (srcIndex > srcs.size()))
-            throw new IndexOutOfBoundsException
-                ("Nonexistant source requested.");
+		// We only depend on our source for stuff that is inside
+		// our bounds...
+		Rectangle2D srect = (Rectangle2D) outputRgn.clone();
+		Rectangle2D bounds = getBounds2D();
 
-          // Changes in the input region don't propogate outside our
-          // bounds.
-        Rectangle2D drect = (Rectangle2D)inputRgn.clone();
-        Rectangle2D bounds = getBounds2D();
+		// Return empty rect if they don't intersect.
+		if (!bounds.intersects(srect))
+			return new Rectangle2D.Float();
 
-        // Return empty rect if they don't intersect.
-        if ( ! bounds.intersects(drect) )
-            return new Rectangle2D.Float();
+		Rectangle2D.intersect(srect, bounds, srect);
+		return srect;
+	}
 
-        Rectangle2D.intersect(drect, bounds, drect);
-        return drect;
-    }
+	@Override
+	public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn) {
+		if ((srcIndex < 0) || (srcIndex > srcs.size()))
+			throw new IndexOutOfBoundsException("Nonexistant source requested.");
 
+		// Changes in the input region don't propogate outside our
+		// bounds.
+		Rectangle2D drect = (Rectangle2D) inputRgn.clone();
+		Rectangle2D bounds = getBounds2D();
 
-    /* left for subclass:
-       public RenderedImage createRendering(RenderContext rc);
-    */
+		// Return empty rect if they don't intersect.
+		if (!bounds.intersects(drect))
+			return new Rectangle2D.Float();
+
+		Rectangle2D.intersect(drect, bounds, drect);
+		return drect;
+	}
+
+	/*
+	 * left for subclass: public RenderedImage createRendering(RenderContext rc);
+	 */
 }

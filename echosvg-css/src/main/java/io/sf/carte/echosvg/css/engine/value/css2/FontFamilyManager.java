@@ -46,183 +46,160 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class FontFamilyManager extends AbstractValueManager {
 
-    /**
-     * The default value.
-     */
-    protected static final ListValue DEFAULT_VALUE = new ListValue();
-    static {
-        DEFAULT_VALUE.append
-            (new StringValue(CSSPrimitiveValue.CSS_STRING,
-                             "Arial"));
-        DEFAULT_VALUE.append
-            (new StringValue(CSSPrimitiveValue.CSS_STRING,
-                             "Helvetica"));
-        DEFAULT_VALUE.append
-            (new StringValue(CSSPrimitiveValue.CSS_IDENT,
-                             CSSConstants.CSS_SANS_SERIF_VALUE));
-    }
+	/**
+	 * The default value.
+	 */
+	protected static final ListValue DEFAULT_VALUE = new ListValue();
+	static {
+		DEFAULT_VALUE.append(new StringValue(CSSPrimitiveValue.CSS_STRING, "Arial"));
+		DEFAULT_VALUE.append(new StringValue(CSSPrimitiveValue.CSS_STRING, "Helvetica"));
+		DEFAULT_VALUE.append(new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SANS_SERIF_VALUE));
+	}
 
-    /**
-     * The identifier values.
-     */
-    protected static final StringMap values = new StringMap();
-    static {
-        values.put(CSSConstants.CSS_CURSIVE_VALUE,
-                   ValueConstants.CURSIVE_VALUE);
-        values.put(CSSConstants.CSS_FANTASY_VALUE,
-                   ValueConstants.FANTASY_VALUE);
-        values.put(CSSConstants.CSS_MONOSPACE_VALUE,
-                   ValueConstants.MONOSPACE_VALUE);
-        values.put(CSSConstants.CSS_SERIF_VALUE,
-                   ValueConstants.SERIF_VALUE);
-        values.put(CSSConstants.CSS_SANS_SERIF_VALUE,
-                   ValueConstants.SANS_SERIF_VALUE);
-    }
+	/**
+	 * The identifier values.
+	 */
+	protected static final StringMap values = new StringMap();
+	static {
+		values.put(CSSConstants.CSS_CURSIVE_VALUE, ValueConstants.CURSIVE_VALUE);
+		values.put(CSSConstants.CSS_FANTASY_VALUE, ValueConstants.FANTASY_VALUE);
+		values.put(CSSConstants.CSS_MONOSPACE_VALUE, ValueConstants.MONOSPACE_VALUE);
+		values.put(CSSConstants.CSS_SERIF_VALUE, ValueConstants.SERIF_VALUE);
+		values.put(CSSConstants.CSS_SANS_SERIF_VALUE, ValueConstants.SANS_SERIF_VALUE);
+	}
 
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_FONT_FAMILY_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_FONT_FAMILY_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_FONT_FAMILY_PROPERTY;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_FONT_FAMILY_PROPERTY;
+	}
 
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return DEFAULT_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return DEFAULT_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-        default:
-            throw createInvalidLexicalUnitDOMException
-                (lu.getLexicalUnitType());
+		default:
+			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 
-        case IDENT:
-        case STRING:
-        }
-        ListValue result = new ListValue();
-        for (;;) {
-            switch (lu.getLexicalUnitType()) {
-            case STRING:
-                result.append(new StringValue(CSSPrimitiveValue.CSS_STRING,
-                                              lu.getStringValue()));
-                lu = lu.getNextLexicalUnit();
-                break;
+		case IDENT:
+		case STRING:
+		}
+		ListValue result = new ListValue();
+		for (;;) {
+			switch (lu.getLexicalUnitType()) {
+			case STRING:
+				result.append(new StringValue(CSSPrimitiveValue.CSS_STRING, lu.getStringValue()));
+				lu = lu.getNextLexicalUnit();
+				break;
 
-            case IDENT:
-                StringBuffer sb = new StringBuffer(lu.getStringValue());
-                lu = lu.getNextLexicalUnit();
-                if (lu != null && isIdentOrNumber(lu)) {
-                    do {
-                        sb.append(' ');
-                        switch (lu.getLexicalUnitType()) {
-                        case IDENT:
-                            sb.append(lu.getStringValue());
-                            break;
-                        case INTEGER:
-                            //Some font names contain integer values but are not quoted!
-                            //Example: "Univers 45 Light"
-                            sb.append(Integer.toString(lu.getIntegerValue()));
-                        default:
-                            break;
-                        }
-                        lu = lu.getNextLexicalUnit();
-                    } while (lu != null && isIdentOrNumber(lu));
-                    result.append(new StringValue(CSSPrimitiveValue.CSS_STRING,
-                                                  sb.toString()));
-                } else {
-                    String id = sb.toString();
-                    String s = id.toLowerCase().intern();
-                    Value v = (Value)values.get(s);
-                    result.append((v != null)
-                                  ? v
-                                  : new StringValue
-                                        (CSSPrimitiveValue.CSS_STRING, id));
-                }
-                break;
-                default:
-            }
-            if (lu == null)
-                return result;
-            if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA)
-                throw createInvalidLexicalUnitDOMException
-                    (lu.getLexicalUnitType());
-            lu = lu.getNextLexicalUnit();
-            if (lu == null)
-                throw createMalformedLexicalUnitDOMException();
-        }
-    }
+			case IDENT:
+				StringBuffer sb = new StringBuffer(lu.getStringValue());
+				lu = lu.getNextLexicalUnit();
+				if (lu != null && isIdentOrNumber(lu)) {
+					do {
+						sb.append(' ');
+						switch (lu.getLexicalUnitType()) {
+						case IDENT:
+							sb.append(lu.getStringValue());
+							break;
+						case INTEGER:
+							// Some font names contain integer values but are not quoted!
+							// Example: "Univers 45 Light"
+							sb.append(Integer.toString(lu.getIntegerValue()));
+						default:
+							break;
+						}
+						lu = lu.getNextLexicalUnit();
+					} while (lu != null && isIdentOrNumber(lu));
+					result.append(new StringValue(CSSPrimitiveValue.CSS_STRING, sb.toString()));
+				} else {
+					String id = sb.toString();
+					String s = id.toLowerCase().intern();
+					Value v = (Value) values.get(s);
+					result.append((v != null) ? v : new StringValue(CSSPrimitiveValue.CSS_STRING, id));
+				}
+				break;
+			default:
+			}
+			if (lu == null)
+				return result;
+			if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA)
+				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+			lu = lu.getNextLexicalUnit();
+			if (lu == null)
+				throw createMalformedLexicalUnitDOMException();
+		}
+	}
 
-    private boolean isIdentOrNumber(LexicalUnit lu) {
-        LexicalType type = lu.getLexicalUnitType();
-        switch (type) {
-        case IDENT:
-        case INTEGER:
-            return true;
-        default:
-            return false;
-        }
-    }
+	private boolean isIdentOrNumber(LexicalUnit lu) {
+		LexicalType type = lu.getLexicalUnitType();
+		switch (type) {
+		case IDENT:
+		case INTEGER:
+			return true;
+		default:
+			return false;
+		}
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
-     */
-    @Override
-    public Value computeValue(CSSStylableElement elt,
-                              String pseudo,
-                              CSSEngine engine,
-                              int idx,
-                              StyleMap sm,
-                              Value value) {
-        if (value == DEFAULT_VALUE) {
-            CSSContext ctx = engine.getCSSContext();
-            value = ctx.getDefaultFontFamily();
-        }
-        return value;
-    }
+	/**
+	 * Implements
+	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
+	 */
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		if (value == DEFAULT_VALUE) {
+			CSSContext ctx = engine.getCSSContext();
+			value = ctx.getDefaultFontFamily();
+		}
+		return value;
+	}
 }

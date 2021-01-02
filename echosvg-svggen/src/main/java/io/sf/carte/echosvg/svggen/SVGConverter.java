@@ -25,33 +25,30 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
- * Defines the interface for classes that are able to convert
- * part or all of a GraphicContext.
+ * Defines the interface for classes that are able to convert part or all of a
+ * GraphicContext.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see           io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
+ * @see io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
  */
-public interface SVGConverter extends SVGSyntax{
-    /**
-     * Converts part or all of the input GraphicContext into
-     * a set of attribute/value pairs and related definitions
-     *
-     * @param gc GraphicContext to be converted
-     * @return descriptor of the attributes required to represent
-     *         some or all of the GraphicContext state, along
-     *         with the related definitions
-     * @see io.sf.carte.echosvg.svggen.SVGDescriptor
-     */
-    SVGDescriptor toSVG(GraphicContext gc);
+public interface SVGConverter extends SVGSyntax {
+	/**
+	 * Converts part or all of the input GraphicContext into a set of
+	 * attribute/value pairs and related definitions
+	 *
+	 * @param gc GraphicContext to be converted
+	 * @return descriptor of the attributes required to represent some or all of the
+	 *         GraphicContext state, along with the related definitions
+	 * @see io.sf.carte.echosvg.svggen.SVGDescriptor
+	 */
+	SVGDescriptor toSVG(GraphicContext gc);
 
-    /**
-     * @return set of definitions referenced by the attribute
-     *         values created by the implementation since its
-     *         creation. The return value should never be null.
-     *         If no definition is needed, an empty set should be
-     *         returned.
-     */
-    List<Element> getDefinitionSet();
+	/**
+	 * @return set of definitions referenced by the attribute values created by the
+	 *         implementation since its creation. The return value should never be
+	 *         null. If no definition is needed, an empty set should be returned.
+	 */
+	List<Element> getDefinitionSet();
 }

@@ -30,96 +30,95 @@ import java.util.List;
  * @version $Id$
  */
 public class DefaultTestSuite extends AbstractTest implements TestSuite {
-    /**
-     * This Test's name
-     */
-    private String name = null;
+	/**
+	 * This Test's name
+	 */
+	private String name = null;
 
-    /**
-     * Stores the list of child tests
-     */
-    protected List<Test> tests = new ArrayList<>();
+	/**
+	 * Stores the list of child tests
+	 */
+	protected List<Test> tests = new ArrayList<>();
 
-    /**
-     * Adds a <code>Test</code> to the suite
-     */
-    @Override
-    public void addTest(Test test){
-        if(test == null){
-            throw new IllegalArgumentException();
-        }
+	/**
+	 * Adds a <code>Test</code> to the suite
+	 */
+	@Override
+	public void addTest(Test test) {
+		if (test == null) {
+			throw new IllegalArgumentException();
+		}
 
-        test.setParent(this);
-        tests.add(test);
-    }
+		test.setParent(this);
+		tests.add(test);
+	}
 
-    /**
-     * Removes a <code>Test</code> from the suite.
-     */
-    @Override
-    public void removeTest(Test test){
-        tests.remove(test);
-    }
+	/**
+	 * Removes a <code>Test</code> from the suite.
+	 */
+	@Override
+	public void removeTest(Test test) {
+		tests.remove(test);
+	}
 
-    /**
-     * Runs the tests and returns a report
-     */
-    @Override
-    public TestReport runImpl(){
-        Iterator<Test> iter = tests.iterator();
+	/**
+	 * Runs the tests and returns a report
+	 */
+	@Override
+	public TestReport runImpl() {
+		Iterator<Test> iter = tests.iterator();
 
-        DefaultTestSuiteReport report
-            = new DefaultTestSuiteReport(this);
+		DefaultTestSuiteReport report = new DefaultTestSuiteReport(this);
 
-        while(iter.hasNext()){
-            Test t = iter.next();
-            System.err.println("Running " + t.getName());
-            TestReport tr = t.run();
-            if (tr == null){
-                System.out.println("ERROR" + t.getId() + " returned a null report");
-            }
-            report.addReport(tr);
-        }
+		while (iter.hasNext()) {
+			Test t = iter.next();
+			System.err.println("Running " + t.getName());
+			TestReport tr = t.run();
+			if (tr == null) {
+				System.out.println("ERROR" + t.getId() + " returned a null report");
+			}
+			report.addReport(tr);
+		}
 
-        return report;
-    }
+		return report;
+	}
 
-    @Override
-    public String getName(){
-        if(name != null){
-            return name;
-        }
+	@Override
+	public String getName() {
+		if (name != null) {
+			return name;
+		}
 
-        String id = getId();
-        if(id != null && !"".equals(id)){
-            return id;
-        }
+		String id = getId();
+		if (id != null && !"".equals(id)) {
+			return id;
+		}
 
-        return this.getClass().getName();
-    }
+		return this.getClass().getName();
+	}
 
-    @Override
-    public void setName(String name){
-        if(name == null && !"".equals(name)){      // ?? logic ??
-            throw new IllegalArgumentException();
-        }
+	@Override
+	public void setName(String name) {
+		if (name == null && !"".equals(name)) { // ?? logic ??
+			throw new IllegalArgumentException();
+		}
 
-        this.name = name;
-    }
+		this.name = name;
+	}
 
-    @Override
-    public Test[] getChildrenTests(){
-        Test[] children = new Test[tests.size()];
-        tests.toArray(children);
-        return children;
-    }
+	@Override
+	public Test[] getChildrenTests() {
+		Test[] children = new Test[tests.size()];
+		tests.toArray(children);
+		return children;
+	}
 
-    /**
-     * Returns the number of child tests
-     */
-    @Override
-    public int getChildrenCount(){
-        return tests.size();
-    }
+	/**
+	 * Returns the number of child tests
+	 */
+	@Override
+	public int getChildrenCount() {
+		return tests.size();
+	}
 
 }

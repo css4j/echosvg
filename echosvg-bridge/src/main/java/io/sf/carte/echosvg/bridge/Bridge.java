@@ -19,9 +19,8 @@
 package io.sf.carte.echosvg.bridge;
 
 /**
- * A tagging interface that all bridges must implement. A bridge is
- * responsible for creating and maintaining an appropriate object
- * according to an Element.
+ * A tagging interface that all bridges must implement. A bridge is responsible
+ * for creating and maintaining an appropriate object according to an Element.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author For later modifications, see Git history.
@@ -29,20 +28,20 @@ package io.sf.carte.echosvg.bridge;
  */
 public interface Bridge {
 
-    /**
-     * Returns the namespace URI of the element this <code>Bridge</code> is
-     * dedicated to.
-     */
-    String getNamespaceURI();
+	/**
+	 * Returns the namespace URI of the element this <code>Bridge</code> is
+	 * dedicated to.
+	 */
+	String getNamespaceURI();
 
-    /**
-     * Returns the local name of the element this <code>Bridge</code> is dedicated
-     * to.
-     */
-    String getLocalName();
+	/**
+	 * Returns the local name of the element this <code>Bridge</code> is dedicated
+	 * to.
+	 */
+	String getLocalName();
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    Bridge getInstance();
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	Bridge getInstance();
 }

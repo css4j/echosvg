@@ -32,69 +32,71 @@ import java.util.Map;
  */
 public class UnresolvedFontFamily implements GVTFontFamily {
 
-    protected GVTFontFace fontFace;
+	protected GVTFontFace fontFace;
 
-    /**
-     * Constructs an UnresolvedFontFamily with the specified familyName.
-     *
-     * @param fontFace The name of the font family.
-     */
-    public UnresolvedFontFamily(GVTFontFace fontFace) {
-        this.fontFace = fontFace;
-    }
+	/**
+	 * Constructs an UnresolvedFontFamily with the specified familyName.
+	 *
+	 * @param fontFace The name of the font family.
+	 */
+	public UnresolvedFontFamily(GVTFontFace fontFace) {
+		this.fontFace = fontFace;
+	}
 
-    /**
-     * Constructs an UnresolvedFontFamily with the specified familyName.
-     *
-     * @param familyName The name of the font family.
-     */
-    public UnresolvedFontFamily(String familyName) {
-        this(new GVTFontFace(familyName));
-    }
+	/**
+	 * Constructs an UnresolvedFontFamily with the specified familyName.
+	 *
+	 * @param familyName The name of the font family.
+	 */
+	public UnresolvedFontFamily(String familyName) {
+		this(new GVTFontFace(familyName));
+	}
 
-    /**
-     * Returns the font-face information for this font family.
-     */
-    @Override
-    public GVTFontFace getFontFace() {
-        return fontFace;
-    }
+	/**
+	 * Returns the font-face information for this font family.
+	 */
+	@Override
+	public GVTFontFace getFontFace() {
+		return fontFace;
+	}
 
-    /**
-     * Returns the font family name.
-     *
-     * @return the family name.
-     */
-    @Override
-    public String getFamilyName() {
-        return fontFace.getFamilyName();
-    }
+	/**
+	 * Returns the font family name.
+	 *
+	 * @return the family name.
+	 */
+	@Override
+	public String getFamilyName() {
+		return fontFace.getFamilyName();
+	}
 
-    /**
-     * Derives a GVTFont object of the correct size. As this font family is yet
-     * to be resolved this will always return null.
-     *
-     * @param size The required size of the derived font.
-     * @param aci The character iterator that will be rendered using the derived
-     * font.
-     */
-    @Override
-    public GVTFont deriveFont(float size, AttributedCharacterIterator aci) {
-       return null;
-    }
+	/**
+	 * Derives a GVTFont object of the correct size. As this font family is yet to
+	 * be resolved this will always return null.
+	 *
+	 * @param size The required size of the derived font.
+	 * @param aci  The character iterator that will be rendered using the derived
+	 *             font.
+	 */
+	@Override
+	public GVTFont deriveFont(float size, AttributedCharacterIterator aci) {
+		return null;
+	}
 
+	/**
+	 * Derives a GVTFont object of the correct size from an attribute Map.
+	 * 
+	 * @param size  The required size of the derived font.
+	 * @param attrs The Attribute Map to get Values from.
+	 */
+	@Override
+	public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) {
+		return null;
+	}
 
-    /**
-     * Derives a GVTFont object of the correct size from an attribute Map.
-     * @param size  The required size of the derived font.
-     * @param attrs The Attribute Map to get Values from.
-     */
-    @Override
-    public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) { return null; }
+	@Override
+	public boolean isComplex() {
+		return false;
+	}
 
-    @Override
-    public boolean isComplex() {
-        return false;
-    }
-     
 }

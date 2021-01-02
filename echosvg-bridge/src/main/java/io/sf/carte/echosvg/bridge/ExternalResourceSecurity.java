@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.bridge;
 
 /**
- * An interface that allows UserAgents to describe the security 
- * constraints desired for external resources.
+ * An interface that allows UserAgents to describe the security constraints
+ * desired for external resources.
  *
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
@@ -29,10 +29,10 @@ package io.sf.carte.echosvg.bridge;
  */
 public interface ExternalResourceSecurity {
 
-    /**
-     * Controls whether the external resource should be loaded or not.
-     *
-     * @throws SecurityException if the resource should not be loaded.
-     */
-    void checkLoadExternalResource();
+	/**
+	 * Controls whether the external resource should be loaded or not.
+	 *
+	 * @throws SecurityException if the resource should not be loaded.
+	 */
+	void checkLoadExternalResource();
 }

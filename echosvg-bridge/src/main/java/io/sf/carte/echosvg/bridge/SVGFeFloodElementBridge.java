@@ -35,67 +35,57 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGFeFloodElementBridge
-    extends AbstractSVGFilterPrimitiveElementBridge {
+public class SVGFeFloodElementBridge extends AbstractSVGFilterPrimitiveElementBridge {
 
-    /**
-     * Constructs a new bridge for the &lt;feFlood&gt; element.
-     */
-    public SVGFeFloodElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;feFlood&gt; element.
+	 */
+	public SVGFeFloodElementBridge() {
+	}
 
-    /**
-     * Returns 'feFlood'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_FLOOD_TAG;
-    }
+	/**
+	 * Returns 'feFlood'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_FLOOD_TAG;
+	}
 
-    /**
-     * Creates a <code>Filter</code> primitive according to the specified
-     * parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param filterElement the element that defines a filter
-     * @param filteredElement the element that references the filter
-     * @param filteredNode the graphics node to filter
-     *
-     * @param inputFilter the <code>Filter</code> that represents the current
-     *        filter input if the filter chain.
-     * @param filterRegion the filter area defined for the filter chain
-     *        the new node will be part of.
-     * @param filterMap a map where the mediator can map a name to the
-     *        <code>Filter</code> it creates. Other <code>FilterBridge</code>s
-     *        can then access a filter node from the filterMap if they
-     *        know its name.
-     */
-    @Override
-    public Filter createFilter(BridgeContext ctx,
-                               Element filterElement,
-                               Element filteredElement,
-                               GraphicsNode filteredNode,
-                               Filter inputFilter,
-                               Rectangle2D filterRegion,
-                               Map<String, Filter> filterMap) {
+	/**
+	 * Creates a <code>Filter</code> primitive according to the specified
+	 * parameters.
+	 *
+	 * @param ctx             the bridge context to use
+	 * @param filterElement   the element that defines a filter
+	 * @param filteredElement the element that references the filter
+	 * @param filteredNode    the graphics node to filter
+	 *
+	 * @param inputFilter     the <code>Filter</code> that represents the current
+	 *                        filter input if the filter chain.
+	 * @param filterRegion    the filter area defined for the filter chain the new
+	 *                        node will be part of.
+	 * @param filterMap       a map where the mediator can map a name to the
+	 *                        <code>Filter</code> it creates. Other
+	 *                        <code>FilterBridge</code>s can then access a filter
+	 *                        node from the filterMap if they know its name.
+	 */
+	@Override
+	public Filter createFilter(BridgeContext ctx, Element filterElement, Element filteredElement,
+			GraphicsNode filteredNode, Filter inputFilter, Rectangle2D filterRegion, Map<String, Filter> filterMap) {
 
-        Rectangle2D primitiveRegion
-            = SVGUtilities.convertFilterPrimitiveRegion(filterElement,
-                                                        filteredElement,
-                                                        filteredNode,
-                                                        filterRegion,
-                                                        filterRegion,
-                                                        ctx);
+		Rectangle2D primitiveRegion = SVGUtilities.convertFilterPrimitiveRegion(filterElement, filteredElement,
+				filteredNode, filterRegion, filterRegion, ctx);
 
-        Color color = CSSUtilities.convertFloodColor(filterElement, ctx);
+		Color color = CSSUtilities.convertFloodColor(filterElement, ctx);
 
-        Filter filter = new FloodRable8Bit(primitiveRegion, color);
+		Filter filter = new FloodRable8Bit(primitiveRegion, color);
 
-        // handle the 'color-interpolation-filters' property
-        handleColorInterpolationFilters(filter, filterElement);
+		// handle the 'color-interpolation-filters' property
+		handleColorInterpolationFilters(filter, filterElement);
 
-        // update the filter Map
-        updateFilterMap(filterElement, filter, filterMap);
+		// update the filter Map
+		updateFilterMap(filterElement, filter, filterMap);
 
-        return filter;
-    }
+		return filter;
+	}
 }

@@ -36,149 +36,139 @@ import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
  * @version $Id$
  */
 public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
-    
-    /**
-     * The CSS engine.
-     */
-    protected CSSEngine cssEngine;
 
-    /**
-     * Creates a new CSSOMSVGStyleDeclaration.
-     */
-    public CSSOMSVGStyleDeclaration(ValueProvider vp,
-                                    CSSRule parent,
-                                    CSSEngine eng) {
-        super(vp, parent);
-        cssEngine = eng;
-    }
+	/**
+	 * The CSS engine.
+	 */
+	protected CSSEngine cssEngine;
 
-    /**
-     * Creates the CSS value associated with the given property.
-     */
-    @Override
-    protected CSSValue createCSSValue(String name) {
-        int idx = cssEngine.getPropertyIndex(name);
-        if (idx > SVGCSSEngine.FINAL_INDEX) {
-            if (cssEngine.getValueManagers()[idx] instanceof SVGPaintManager) {
-                return new StyleDeclarationPaintValue(name);
-            }
-            if (cssEngine.getValueManagers()[idx] instanceof SVGColorManager) {
-                return new StyleDeclarationColorValue(name);
-            }
-        } else {
-            switch (idx) {
-            case SVGCSSEngine.FILL_INDEX:
-            case SVGCSSEngine.STROKE_INDEX:
-                return new StyleDeclarationPaintValue(name);
+	/**
+	 * Creates a new CSSOMSVGStyleDeclaration.
+	 */
+	public CSSOMSVGStyleDeclaration(ValueProvider vp, CSSRule parent, CSSEngine eng) {
+		super(vp, parent);
+		cssEngine = eng;
+	}
 
-            case SVGCSSEngine.FLOOD_COLOR_INDEX:
-            case SVGCSSEngine.LIGHTING_COLOR_INDEX:
-            case SVGCSSEngine.STOP_COLOR_INDEX:
-                return new StyleDeclarationColorValue(name);
-            }
-        }
-        return super.createCSSValue(name);
-    }
+	/**
+	 * Creates the CSS value associated with the given property.
+	 */
+	@Override
+	protected CSSValue createCSSValue(String name) {
+		int idx = cssEngine.getPropertyIndex(name);
+		if (idx > SVGCSSEngine.FINAL_INDEX) {
+			if (cssEngine.getValueManagers()[idx] instanceof SVGPaintManager) {
+				return new StyleDeclarationPaintValue(name);
+			}
+			if (cssEngine.getValueManagers()[idx] instanceof SVGColorManager) {
+				return new StyleDeclarationColorValue(name);
+			}
+		} else {
+			switch (idx) {
+			case SVGCSSEngine.FILL_INDEX:
+			case SVGCSSEngine.STROKE_INDEX:
+				return new StyleDeclarationPaintValue(name);
 
-    /**
-     * This class represents a CSS value returned by this declaration.
-     */
-    public class StyleDeclarationColorValue
-        extends CSSOMSVGColor
-        implements CSSOMSVGColor.ValueProvider {
-        
-        /**
-         * The property name.
-         */
-        protected String property;
+			case SVGCSSEngine.FLOOD_COLOR_INDEX:
+			case SVGCSSEngine.LIGHTING_COLOR_INDEX:
+			case SVGCSSEngine.STOP_COLOR_INDEX:
+				return new StyleDeclarationColorValue(name);
+			}
+		}
+		return super.createCSSValue(name);
+	}
 
-        /**
-         * Creates a new StyleDeclarationColorValue.
-         */
-        public StyleDeclarationColorValue(String prop) {
-            super(null);
-            valueProvider = this;
-            setModificationHandler(new AbstractModificationHandler() {
-                    @Override
-                    protected Value getValue() {
-                        return StyleDeclarationColorValue.this.getValue();
-                    }
-                    @Override
-                    public void textChanged(String text) throws DOMException {
-                        if (handler == null) {
-                            throw new DOMException
-                                (DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-                        }
-                        String prio = getPropertyPriority(property);
-                        CSSOMSVGStyleDeclaration.this.
-                            handler.propertyChanged(property, text, prio);
-                    }
-                });
+	/**
+	 * This class represents a CSS value returned by this declaration.
+	 */
+	public class StyleDeclarationColorValue extends CSSOMSVGColor implements CSSOMSVGColor.ValueProvider {
 
-            property = prop;
-        }
+		/**
+		 * The property name.
+		 */
+		protected String property;
 
-        // ValueProvider ///////////////////////////////
+		/**
+		 * Creates a new StyleDeclarationColorValue.
+		 */
+		public StyleDeclarationColorValue(String prop) {
+			super(null);
+			valueProvider = this;
+			setModificationHandler(new AbstractModificationHandler() {
+				@Override
+				protected Value getValue() {
+					return StyleDeclarationColorValue.this.getValue();
+				}
 
-        /**
-         * Returns the current value associated with this object.
-         */
-        @Override
-        public Value getValue() {
-            return CSSOMSVGStyleDeclaration.this.
-                valueProvider.getValue(property);
-        }
+				@Override
+				public void textChanged(String text) throws DOMException {
+					if (handler == null) {
+						throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
+					}
+					String prio = getPropertyPriority(property);
+					CSSOMSVGStyleDeclaration.this.handler.propertyChanged(property, text, prio);
+				}
+			});
 
-    }
+			property = prop;
+		}
 
-    /**
-     * This class represents a CSS value returned by this declaration.
-     */
-    public class StyleDeclarationPaintValue
-        extends CSSOMSVGPaint
-        implements CSSOMSVGPaint.ValueProvider {
-        
-        /**
-         * The property name.
-         */
-        protected String property;
+		// ValueProvider ///////////////////////////////
 
-        /**
-         * Creates a new StyleDeclarationPaintValue.
-         */
-        public StyleDeclarationPaintValue(String prop) {
-            super(null);
-            valueProvider = this;
-            setModificationHandler(new AbstractModificationHandler() {
-                    @Override
-                    protected Value getValue() {
-                        return StyleDeclarationPaintValue.this.getValue();
-                    }
-                    @Override
-                    public void textChanged(String text) throws DOMException {
-                        if (handler == null) {
-                            throw new DOMException
-                                (DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-                        }
-                        String prio = getPropertyPriority(property);
-                        CSSOMSVGStyleDeclaration.this.
-                            handler.propertyChanged(property, text, prio);
-                    }
-                });
+		/**
+		 * Returns the current value associated with this object.
+		 */
+		@Override
+		public Value getValue() {
+			return CSSOMSVGStyleDeclaration.this.valueProvider.getValue(property);
+		}
 
-            property = prop;
-        }
+	}
 
-        // ValueProvider ///////////////////////////////
+	/**
+	 * This class represents a CSS value returned by this declaration.
+	 */
+	public class StyleDeclarationPaintValue extends CSSOMSVGPaint implements CSSOMSVGPaint.ValueProvider {
 
-        /**
-         * Returns the current value associated with this object.
-         */
-        @Override
-        public Value getValue() {
-            return CSSOMSVGStyleDeclaration.this.
-                valueProvider.getValue(property);
-        }
+		/**
+		 * The property name.
+		 */
+		protected String property;
 
-    }
+		/**
+		 * Creates a new StyleDeclarationPaintValue.
+		 */
+		public StyleDeclarationPaintValue(String prop) {
+			super(null);
+			valueProvider = this;
+			setModificationHandler(new AbstractModificationHandler() {
+				@Override
+				protected Value getValue() {
+					return StyleDeclarationPaintValue.this.getValue();
+				}
+
+				@Override
+				public void textChanged(String text) throws DOMException {
+					if (handler == null) {
+						throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
+					}
+					String prio = getPropertyPriority(property);
+					CSSOMSVGStyleDeclaration.this.handler.propertyChanged(property, text, prio);
+				}
+			});
+
+			property = prop;
+		}
+
+		// ValueProvider ///////////////////////////////
+
+		/**
+		 * Returns the current value associated with this object.
+		 */
+		@Override
+		public Value getValue() {
+			return CSSOMSVGStyleDeclaration.this.valueProvider.getValue(property);
+		}
+
+	}
 }

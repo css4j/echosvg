@@ -21,64 +21,52 @@ package io.sf.carte.echosvg.bridge;
 import io.sf.carte.echosvg.test.DefaultTestSuite;
 
 /**
- * Checks that ECMA Scripts which should  be loaded are indeed
- * loaded.
+ * Checks that ECMA Scripts which should be loaded are indeed loaded.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EcmaLoadTest extends DefaultTestSuite {
-    public EcmaLoadTest() {
-        String scripts = "text/ecmascript";
-        String[] scriptSource = {"ecmaCheckLoadAny",
-                                 "ecmaCheckLoadSameAsDocument",
-                                 "ecmaCheckLoadEmbed",
-                                 "ecmaCheckLoadEmbedAttr",
-        };
-        boolean[] secure = {true, false};
-        String[][] scriptOrigin = {{"any"},
-                                   {"any", "document"},
-                                   {"any", "document", "embeded"},
-                                   {"any", "document", "embeded"},
-                                   };
+	public EcmaLoadTest() {
+		String scripts = "text/ecmascript";
+		String[] scriptSource = { "ecmaCheckLoadAny", "ecmaCheckLoadSameAsDocument", "ecmaCheckLoadEmbed",
+				"ecmaCheckLoadEmbedAttr", };
+		boolean[] secure = { true, false };
+		String[][] scriptOrigin = { { "any" }, { "any", "document" }, { "any", "document", "embeded" },
+				{ "any", "document", "embeded" }, };
 
-        //
-        // <!> Need to make restricted {true/false}
-        //
+		//
+		// <!> Need to make restricted {true/false}
+		//
 
-        //
-        // An ecma script can be loaded if ECMA is listed
-        // as an allowed script _and_ the loaded script
-        // has an origin allowed by the scriptOrigin setting.
-        // All other security settings should not have an
-        // influence on whether or not the script can be loaded.
-        //
-        for (int i=0; i<scriptSource.length; i++) {
-            for (int j=0; j<scriptOrigin[i].length; j++) {
-                for (boolean aSecure : secure) {
-                    ScriptSelfTest t = buildTest(scripts, scriptSource[i],
-                            scriptOrigin[i][j],
-                            aSecure);
-                    addTest(t);
-                }
-            }
-        }
-    }
+		//
+		// An ecma script can be loaded if ECMA is listed
+		// as an allowed script _and_ the loaded script
+		// has an origin allowed by the scriptOrigin setting.
+		// All other security settings should not have an
+		// influence on whether or not the script can be loaded.
+		//
+		for (int i = 0; i < scriptSource.length; i++) {
+			for (int j = 0; j < scriptOrigin[i].length; j++) {
+				for (boolean aSecure : secure) {
+					ScriptSelfTest t = buildTest(scripts, scriptSource[i], scriptOrigin[i][j], aSecure);
+					addTest(t);
+				}
+			}
+		}
+	}
 
-    ScriptSelfTest buildTest(String scripts, String id, String origin, boolean secure) {
-        ScriptSelfTest t = new ScriptSelfTest();
-        String desc =
-            "(scripts=" + scripts +
-            ")(scriptOrigin=" + origin +
-            ")(secure=" + secure + ')';
+	ScriptSelfTest buildTest(String scripts, String id, String origin, boolean secure) {
+		ScriptSelfTest t = new ScriptSelfTest();
+		String desc = "(scripts=" + scripts + ")(scriptOrigin=" + origin + ")(secure=" + secure + ')';
 
-        t.setId(id + desc);
-        t.setScriptOrigin(origin);
-        t.setSecure(secure);
-        t.setScripts(scripts);
+		t.setId(id + desc);
+		t.setScriptOrigin(origin);
+		t.setSecure(secure);
+		t.setScripts(scripts);
 
-        return t;
-    }
+		return t;
+	}
 
 }

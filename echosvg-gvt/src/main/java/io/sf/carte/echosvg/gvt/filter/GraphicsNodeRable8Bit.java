@@ -37,291 +37,267 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.TranslateRed;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
- * This implementation of RenderableImage will render its input
- * GraphicsNode into a BufferedImage upon invokation of one of its
- * createRendering methods.
+ * This implementation of RenderableImage will render its input GraphicsNode
+ * into a BufferedImage upon invokation of one of its createRendering methods.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class GraphicsNodeRable8Bit 
-    extends    AbstractRable 
-    implements GraphicsNodeRable, PaintRable {
+public class GraphicsNodeRable8Bit extends AbstractRable implements GraphicsNodeRable, PaintRable {
 
-    private AffineTransform cachedGn2dev   = null;
-    private AffineTransform cachedUsr2dev  = null;
-    private CachableRed     cachedRed      = null;
-    private Rectangle2D     cachedBounds = null;
-    /**
-     * Should GraphicsNodeRable call primitivePaint or Paint.
-     */
-    private boolean usePrimitivePaint = true;
+	private AffineTransform cachedGn2dev = null;
+	private AffineTransform cachedUsr2dev = null;
+	private CachableRed cachedRed = null;
+	private Rectangle2D cachedBounds = null;
+	/**
+	 * Should GraphicsNodeRable call primitivePaint or Paint.
+	 */
+	private boolean usePrimitivePaint = true;
 
-    /**
-     * Returns true if this Rable get's it's contents by calling
-     * primitivePaint on the associated <code>GraphicsNode</code> or
-     * false if it uses paint.
-     */
-    @Override
-    public boolean getUsePrimitivePaint() {
-        return usePrimitivePaint;
-    }
+	/**
+	 * Returns true if this Rable get's it's contents by calling primitivePaint on
+	 * the associated <code>GraphicsNode</code> or false if it uses paint.
+	 */
+	@Override
+	public boolean getUsePrimitivePaint() {
+		return usePrimitivePaint;
+	}
 
-    /**
-     * Set to true if this Rable should get it's contents by calling
-     * primitivePaint on the associated <code>GraphicsNode</code> or false
-     * if it should use paint.  
-     */
-    @Override
-    public void setUsePrimitivePaint(boolean usePrimitivePaint) {
-        this.usePrimitivePaint = usePrimitivePaint;
-    }
+	/**
+	 * Set to true if this Rable should get it's contents by calling primitivePaint
+	 * on the associated <code>GraphicsNode</code> or false if it should use paint.
+	 */
+	@Override
+	public void setUsePrimitivePaint(boolean usePrimitivePaint) {
+		this.usePrimitivePaint = usePrimitivePaint;
+	}
 
-    /**
-     * GraphicsNode this image can render
-     */
-    private GraphicsNode node;
+	/**
+	 * GraphicsNode this image can render
+	 */
+	private GraphicsNode node;
 
-    /**
-     * Returns the <code>GraphicsNode</code> rendered by this image
-     */
-    @Override
-    public GraphicsNode getGraphicsNode(){
-        return node;
-    }
+	/**
+	 * Returns the <code>GraphicsNode</code> rendered by this image
+	 */
+	@Override
+	public GraphicsNode getGraphicsNode() {
+		return node;
+	}
 
-    /**
-     * Sets the <code>GraphicsNode</code> this image should render
-     */
-    @Override
-    public void setGraphicsNode(GraphicsNode node){
-        if(node == null){
-            throw new IllegalArgumentException();
-        }
+	/**
+	 * Sets the <code>GraphicsNode</code> this image should render
+	 */
+	@Override
+	public void setGraphicsNode(GraphicsNode node) {
+		if (node == null) {
+			throw new IllegalArgumentException();
+		}
 
-        this.node = node;
-    }
+		this.node = node;
+	}
 
-    /**
-     * Clear any cached Red.
-     */
-    public void clearCache() {
-        cachedRed     = null;
-        cachedUsr2dev = null;
-        cachedGn2dev  = null;
-        cachedBounds  = null;
-    }
+	/**
+	 * Clear any cached Red.
+	 */
+	public void clearCache() {
+		cachedRed = null;
+		cachedUsr2dev = null;
+		cachedGn2dev = null;
+		cachedBounds = null;
+	}
 
-    /**
-     * @param node The GraphicsNode this image should represent
-     */
-    public GraphicsNodeRable8Bit(GraphicsNode node){
-        if(node == null)
-            throw new IllegalArgumentException();
+	/**
+	 * @param node The GraphicsNode this image should represent
+	 */
+	public GraphicsNodeRable8Bit(GraphicsNode node) {
+		if (node == null)
+			throw new IllegalArgumentException();
 
-        this.node = node;
-        this.usePrimitivePaint = true;
-    }
+		this.node = node;
+		this.usePrimitivePaint = true;
+	}
 
-    /**
-     * @param node The GraphicsNode this image should represent
-     * @param props The Properties for this image.
-     */
-    public GraphicsNodeRable8Bit(GraphicsNode node,
-                                 Map<String, ?> props){
-        super((Filter)null, props);
+	/**
+	 * @param node  The GraphicsNode this image should represent
+	 * @param props The Properties for this image.
+	 */
+	public GraphicsNodeRable8Bit(GraphicsNode node, Map<String, ?> props) {
+		super((Filter) null, props);
 
-        if(node == null)
-            throw new IllegalArgumentException();
+		if (node == null)
+			throw new IllegalArgumentException();
 
-        this.node = node;
-        this.usePrimitivePaint = true;
-    }
+		this.node = node;
+		this.usePrimitivePaint = true;
+	}
 
-    /**
-     * @param node      the GraphicsNode this image should represent
-     * @param usePrimitivePaint indicates if the image should
-     *        include any filters or mask operations on <code>node</code>
-     */
-    public GraphicsNodeRable8Bit(GraphicsNode node, 
-                                 boolean      usePrimitivePaint){
-        if(node == null)
-            throw new IllegalArgumentException();
+	/**
+	 * @param node              the GraphicsNode this image should represent
+	 * @param usePrimitivePaint indicates if the image should include any filters or
+	 *                          mask operations on <code>node</code>
+	 */
+	public GraphicsNodeRable8Bit(GraphicsNode node, boolean usePrimitivePaint) {
+		if (node == null)
+			throw new IllegalArgumentException();
 
-        this.node = node;
-        this.usePrimitivePaint = usePrimitivePaint;
-    }
+		this.node = node;
+		this.usePrimitivePaint = usePrimitivePaint;
+	}
 
-    /**
-     * Returns the bounds of this Rable in the user coordinate system.
-     */
-    @Override
-    public Rectangle2D getBounds2D(){
-        if (usePrimitivePaint){
-            Rectangle2D primitiveBounds = node.getPrimitiveBounds();
-            if(primitiveBounds == null)
-                return new Rectangle2D.Double(0, 0, 0, 0);
+	/**
+	 * Returns the bounds of this Rable in the user coordinate system.
+	 */
+	@Override
+	public Rectangle2D getBounds2D() {
+		if (usePrimitivePaint) {
+			Rectangle2D primitiveBounds = node.getPrimitiveBounds();
+			if (primitiveBounds == null)
+				return new Rectangle2D.Double(0, 0, 0, 0);
 
-            return (Rectangle2D)(primitiveBounds.clone());
-        }
+			return (Rectangle2D) (primitiveBounds.clone());
+		}
 
-        // When not using Primitive paint we return out bounds in our
-        // parent's user space.  This makes sense since this is the
-        // space that we will draw our selves into (since paint unlike
-        // primitivePaint incorporates the transform from our user
-        // space to our parents user space).
-        Rectangle2D bounds = node.getBounds();
-        if(bounds == null){
-            return new Rectangle2D.Double(0, 0, 0, 0);
-        }
+		// When not using Primitive paint we return out bounds in our
+		// parent's user space. This makes sense since this is the
+		// space that we will draw our selves into (since paint unlike
+		// primitivePaint incorporates the transform from our user
+		// space to our parents user space).
+		Rectangle2D bounds = node.getBounds();
+		if (bounds == null) {
+			return new Rectangle2D.Double(0, 0, 0, 0);
+		}
 
-        AffineTransform at = node.getTransform();
-        if (at != null){
-           bounds = at.createTransformedShape(bounds).getBounds2D();
-        }
-        return bounds;
-    }
+		AffineTransform at = node.getTransform();
+		if (at != null) {
+			bounds = at.createTransformedShape(bounds).getBounds2D();
+		}
+		return bounds;
+	}
 
-    /**
-     * Returns true if successive renderings (that is, calls to
-     * createRendering() or createScaledRendering()) with the same arguments
-     * may produce different results.  This method may be used to
-     * determine whether an existing rendering may be cached and
-     * reused.  It is always safe to return true.
-     */
-    @Override
-    public boolean isDynamic(){
-        return false;
-    }
+	/**
+	 * Returns true if successive renderings (that is, calls to createRendering() or
+	 * createScaledRendering()) with the same arguments may produce different
+	 * results. This method may be used to determine whether an existing rendering
+	 * may be cached and reused. It is always safe to return true.
+	 */
+	@Override
+	public boolean isDynamic() {
+		return false;
+	}
 
-    /**
-     * Should perform the equivilent action as 
-     * createRendering followed by drawing the RenderedImage to 
-     * Graphics2D, or return false.
-     *
-     * @param g2d The Graphics2D to draw to.
-     * @return true if the paint call succeeded, false if
-     *         for some reason the paint failed (in which 
-     *         case a createRendering should be used).
-     */
-    @Override
-    public boolean paintRable(Graphics2D g2d) {
-        // This optimization only apply if we are using
-        // SrcOver.  Otherwise things break...
-        Composite c = g2d.getComposite();
-        if (!SVGComposite.OVER.equals(c))
-            return false;
-        
-        ColorSpace g2dCS = GraphicsUtil.getDestinationColorSpace(g2d);
-        if ((g2dCS == null) ||
-            (g2dCS != ColorSpace.getInstance(ColorSpace.CS_sRGB))){
-            // Only draw directly into sRGB destinations...
-            return false;
-        }
+	/**
+	 * Should perform the equivilent action as createRendering followed by drawing
+	 * the RenderedImage to Graphics2D, or return false.
+	 *
+	 * @param g2d The Graphics2D to draw to.
+	 * @return true if the paint call succeeded, false if for some reason the paint
+	 *         failed (in which case a createRendering should be used).
+	 */
+	@Override
+	public boolean paintRable(Graphics2D g2d) {
+		// This optimization only apply if we are using
+		// SrcOver. Otherwise things break...
+		Composite c = g2d.getComposite();
+		if (!SVGComposite.OVER.equals(c))
+			return false;
 
-        // System.out.println("drawImage GNR: " + g2dCS);
-        GraphicsNode gn = getGraphicsNode();
-        if (getUsePrimitivePaint()){
-            gn.primitivePaint(g2d);
-        }
-        else{
-            gn.paint(g2d);
-        }
+		ColorSpace g2dCS = GraphicsUtil.getDestinationColorSpace(g2d);
+		if ((g2dCS == null) || (g2dCS != ColorSpace.getInstance(ColorSpace.CS_sRGB))) {
+			// Only draw directly into sRGB destinations...
+			return false;
+		}
 
-        // Paint did the work...
-        return true;
-    }
+		// System.out.println("drawImage GNR: " + g2dCS);
+		GraphicsNode gn = getGraphicsNode();
+		if (getUsePrimitivePaint()) {
+			gn.primitivePaint(g2d);
+		} else {
+			gn.paint(g2d);
+		}
 
-    /**
-     * Creates a RenderedImage that represented a rendering of this image
-     * using a given RenderContext.  This is the most general way to obtain a
-     * rendering of a RenderableImage.
-     *
-     * <p> The created RenderedImage may have a property identified
-     * by the String HINTS_OBSERVED to indicate which RenderingHints
-     * (from the RenderContext) were used to create the image.
-     * In addition any RenderedImages
-     * that are obtained via the getSources() method on the created
-     * RenderedImage may have such a property.
-     *
-     * @param renderContext the RenderContext to use to produce the rendering.
-     * @return a RenderedImage containing the rendered data.
-     */
-    @Override
-    public RenderedImage createRendering(RenderContext renderContext){
-        // Get user space to device space transform
-        AffineTransform usr2dev = renderContext.getTransform();
+		// Paint did the work...
+		return true;
+	}
 
-        AffineTransform gn2dev;
-        if (usr2dev == null) {
-            usr2dev = new AffineTransform();
-            gn2dev  = usr2dev;
-        } else {
-            gn2dev = (AffineTransform)usr2dev.clone();
-        }
+	/**
+	 * Creates a RenderedImage that represented a rendering of this image using a
+	 * given RenderContext. This is the most general way to obtain a rendering of a
+	 * RenderableImage.
+	 *
+	 * <p>
+	 * The created RenderedImage may have a property identified by the String
+	 * HINTS_OBSERVED to indicate which RenderingHints (from the RenderContext) were
+	 * used to create the image. In addition any RenderedImages that are obtained
+	 * via the getSources() method on the created RenderedImage may have such a
+	 * property.
+	 *
+	 * @param renderContext the RenderContext to use to produce the rendering.
+	 * @return a RenderedImage containing the rendered data.
+	 */
+	@Override
+	public RenderedImage createRendering(RenderContext renderContext) {
+		// Get user space to device space transform
+		AffineTransform usr2dev = renderContext.getTransform();
 
-        // Get the nodes transform (so we can pick up changes in this.
-        AffineTransform gn2usr = node.getTransform();
-        if (gn2usr != null) {
-            gn2dev.concatenate(gn2usr);
-        }
+		AffineTransform gn2dev;
+		if (usr2dev == null) {
+			usr2dev = new AffineTransform();
+			gn2dev = usr2dev;
+		} else {
+			gn2dev = (AffineTransform) usr2dev.clone();
+		}
 
-        Rectangle2D bounds2D = getBounds2D();
+		// Get the nodes transform (so we can pick up changes in this.
+		AffineTransform gn2usr = node.getTransform();
+		if (gn2usr != null) {
+			gn2dev.concatenate(gn2usr);
+		}
 
-        if ((cachedBounds != null)                            &&
-            (cachedGn2dev != null)                            &&
-            (cachedBounds.equals(bounds2D))                   &&
-            (gn2dev.getScaleX()  == cachedGn2dev.getScaleX()) &&
-            (gn2dev.getScaleY()  == cachedGn2dev.getScaleY()) &&
-            (gn2dev.getShearX()  == cachedGn2dev.getShearX()) &&
-            (gn2dev.getShearY()  == cachedGn2dev.getShearY()))
-        {
-            // Just some form of Translation
-            double deltaX = (usr2dev.getTranslateX() - 
-                             cachedUsr2dev.getTranslateX());
-            double deltaY = (usr2dev.getTranslateY() - 
-                             cachedUsr2dev.getTranslateY());
+		Rectangle2D bounds2D = getBounds2D();
 
-            // System.out.println("Using Cached Red!!! " + 
-            //                    deltaX + "x" + deltaY);
-            if ((deltaX ==0) && (deltaY == 0))
-                // Actually no translation
-                return cachedRed;
+		if ((cachedBounds != null) && (cachedGn2dev != null) && (cachedBounds.equals(bounds2D))
+				&& (gn2dev.getScaleX() == cachedGn2dev.getScaleX()) && (gn2dev.getScaleY() == cachedGn2dev.getScaleY())
+				&& (gn2dev.getShearX() == cachedGn2dev.getShearX())
+				&& (gn2dev.getShearY() == cachedGn2dev.getShearY())) {
+			// Just some form of Translation
+			double deltaX = (usr2dev.getTranslateX() - cachedUsr2dev.getTranslateX());
+			double deltaY = (usr2dev.getTranslateY() - cachedUsr2dev.getTranslateY());
 
-            // System.out.println("Delta: [" + deltaX + ", " + deltaY + "]");
+			// System.out.println("Using Cached Red!!! " +
+			// deltaX + "x" + deltaY);
+			if ((deltaX == 0) && (deltaY == 0))
+				// Actually no translation
+				return cachedRed;
 
-            // Integer translation in device space..
-            if ((deltaX == (int)deltaX) &&
-                (deltaY == (int)deltaY)) {
-                return new TranslateRed
-                    (cachedRed, 
-                     (int)Math.round(cachedRed.getMinX()+deltaX),
-                     (int)Math.round(cachedRed.getMinY()+deltaY));
-            }
-        }
+			// System.out.println("Delta: [" + deltaX + ", " + deltaY + "]");
 
-        // Fell through let's do a new rendering...
-        if (false) {
-            System.out.println("Not using Cached Red: " + usr2dev);
-            System.out.println("Old:                  " + cachedUsr2dev);
-        }
+			// Integer translation in device space..
+			if ((deltaX == (int) deltaX) && (deltaY == (int) deltaY)) {
+				return new TranslateRed(cachedRed, (int) Math.round(cachedRed.getMinX() + deltaX),
+						(int) Math.round(cachedRed.getMinY() + deltaY));
+			}
+		}
 
-        if((bounds2D.getWidth()  > 0) && 
-           (bounds2D.getHeight() > 0)) {
-            cachedUsr2dev = (AffineTransform)usr2dev.clone();
-            cachedGn2dev  = gn2dev;
-            cachedBounds  = bounds2D;
-            cachedRed =  new GraphicsNodeRed8Bit
-                (node, usr2dev, usePrimitivePaint, 
-                 renderContext.getRenderingHints());
-            return cachedRed;
-        }
+		// Fell through let's do a new rendering...
+		if (false) {
+			System.out.println("Not using Cached Red: " + usr2dev);
+			System.out.println("Old:                  " + cachedUsr2dev);
+		}
 
-        cachedUsr2dev = null;
-        cachedGn2dev  = null;
-        cachedBounds  = null;
-        cachedRed     = null;
-        return null;
-    }
+		if ((bounds2D.getWidth() > 0) && (bounds2D.getHeight() > 0)) {
+			cachedUsr2dev = (AffineTransform) usr2dev.clone();
+			cachedGn2dev = gn2dev;
+			cachedBounds = bounds2D;
+			cachedRed = new GraphicsNodeRed8Bit(node, usr2dev, usePrimitivePaint, renderContext.getRenderingHints());
+			return cachedRed;
+		}
+
+		cachedUsr2dev = null;
+		cachedGn2dev = null;
+		cachedBounds = null;
+		cachedRed = null;
+		return null;
+	}
 }

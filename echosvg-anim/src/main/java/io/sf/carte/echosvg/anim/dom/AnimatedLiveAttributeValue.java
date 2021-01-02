@@ -31,28 +31,28 @@ import io.sf.carte.echosvg.dom.svg.LiveAttributeValue;
  */
 public interface AnimatedLiveAttributeValue extends LiveAttributeValue {
 
-    /**
-     * Returns the namespace URI of this animated live attribute.
-     */
-    String getNamespaceURI();
+	/**
+	 * Returns the namespace URI of this animated live attribute.
+	 */
+	String getNamespaceURI();
 
-    /**
-     * Returns the local name of this animated live attribute.
-     */
-    String getLocalName();
+	/**
+	 * Returns the local name of this animated live attribute.
+	 */
+	String getLocalName();
 
-    /**
-     * Returns the base value of the attribute as an {@link AnimatableValue}.
-     */
-    AnimatableValue getUnderlyingValue(AnimationTarget target);
+	/**
+	 * Returns the base value of the attribute as an {@link AnimatableValue}.
+	 */
+	AnimatableValue getUnderlyingValue(AnimationTarget target);
 
-    /**
-     * Adds a listener for changes to the animated value.
-     */
-    void addAnimatedAttributeListener(AnimatedAttributeListener aal);
+	/**
+	 * Adds a listener for changes to the animated value.
+	 */
+	void addAnimatedAttributeListener(AnimatedAttributeListener aal);
 
-    /**
-     * Removes a listener for changes to the animated value.
-     */
-    void removeAnimatedAttributeListener(AnimatedAttributeListener aal);
+	/**
+	 * Removes a listener for changes to the animated value.
+	 */
+	void removeAnimatedAttributeListener(AnimatedAttributeListener aal);
 }

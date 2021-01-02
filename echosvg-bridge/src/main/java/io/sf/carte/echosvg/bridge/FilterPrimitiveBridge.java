@@ -27,8 +27,8 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 
 /**
- * Factory class for vending <code>Filter</code> objects that represents
- * a filter primitive.
+ * Factory class for vending <code>Filter</code> objects that represents a
+ * filter primitive.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author For later modifications, see Git history.
@@ -36,30 +36,25 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public interface FilterPrimitiveBridge extends Bridge {
 
-    /**
-     * Creates a <code>Filter</code> primitive according to the specified
-     * parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param filterElement the element that defines a filter
-     * @param filteredElement the element that references the filter
-     * @param filteredNode the graphics node to filter
-     *
-     * @param in the <code>Filter</code> that represents the current
-     *        filter input if the filter chain.
-     * @param filterRegion the filter area defined for the filter chain
-     *        the new node will be part of.
-     * @param filterMap a map where the mediator can map a name to the
-     *        <code>Filter</code> it creates. Other <code>FilterBridge</code>s
-     *        can then access a filter node from the filterMap if they
-     *        know its name.
-     */
-    Filter createFilter(BridgeContext ctx,
-                        Element filterElement,
-                        Element filteredElement,
-                        GraphicsNode filteredNode,
-                        Filter in,
-                        Rectangle2D filterRegion,
-                        Map<String, Filter> filterMap);
+	/**
+	 * Creates a <code>Filter</code> primitive according to the specified
+	 * parameters.
+	 *
+	 * @param ctx             the bridge context to use
+	 * @param filterElement   the element that defines a filter
+	 * @param filteredElement the element that references the filter
+	 * @param filteredNode    the graphics node to filter
+	 *
+	 * @param in              the <code>Filter</code> that represents the current
+	 *                        filter input if the filter chain.
+	 * @param filterRegion    the filter area defined for the filter chain the new
+	 *                        node will be part of.
+	 * @param filterMap       a map where the mediator can map a name to the
+	 *                        <code>Filter</code> it creates. Other
+	 *                        <code>FilterBridge</code>s can then access a filter
+	 *                        node from the filterMap if they know its name.
+	 */
+	Filter createFilter(BridgeContext ctx, Element filterElement, Element filteredElement, GraphicsNode filteredNode,
+			Filter in, Rectangle2D filterRegion, Map<String, Filter> filterMap);
 
 }

@@ -40,221 +40,208 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  */
 public class XPathPatternContentSelector extends AbstractContentSelector {
 
-    /**
-     * The Xalan prefix resolver.
-     */
-    protected NSPrefixResolver prefixResolver = new NSPrefixResolver();
+	/**
+	 * The Xalan prefix resolver.
+	 */
+	protected NSPrefixResolver prefixResolver = new NSPrefixResolver();
 
-    /**
-     * The XPath expression.
-     */
-    protected XPath xpath;
+	/**
+	 * The XPath expression.
+	 */
+	protected XPath xpath;
 
-    /**
-     * The XPath context.
-     */
-    protected XPathContext context;
+	/**
+	 * The XPath context.
+	 */
+	protected XPathContext context;
 
-    /**
-     * The selected nodes.
-     */
-    protected SelectedNodes selectedContent;
+	/**
+	 * The selected nodes.
+	 */
+	protected SelectedNodes selectedContent;
 
-    /**
-     * The expression string.
-     */
-    protected String expression;
+	/**
+	 * The expression string.
+	 */
+	protected String expression;
 
-    /**
-     * Creates a new XPathPatternContentSelector.
-     */
-    public XPathPatternContentSelector(ContentManager cm,
-                                       XBLOMContentElement content,
-                                       Element bound,
-                                       String selector) {
-        super(cm, content, bound);
-        expression = selector;
-        parse();
-    }
+	/**
+	 * Creates a new XPathPatternContentSelector.
+	 */
+	public XPathPatternContentSelector(ContentManager cm, XBLOMContentElement content, Element bound, String selector) {
+		super(cm, content, bound);
+		expression = selector;
+		parse();
+	}
 
-    /**
-     * Parses the XPath selector.
-     */
-    protected void parse() {
-        context = new XPathContext();
-        try {
-            xpath = new XPath(expression, null, prefixResolver, XPath.MATCH);
-        } catch (javax.xml.transform.TransformerException te) {
-            AbstractDocument doc
-                = (AbstractDocument) contentElement.getOwnerDocument();
-            throw doc.createXPathException
-                (XPathException.INVALID_EXPRESSION_ERR,
-                 "xpath.invalid.expression",
-                 new Object[] { expression, te.getMessage() });
-        }
-    }
+	/**
+	 * Parses the XPath selector.
+	 */
+	protected void parse() {
+		context = new XPathContext();
+		try {
+			xpath = new XPath(expression, null, prefixResolver, XPath.MATCH);
+		} catch (javax.xml.transform.TransformerException te) {
+			AbstractDocument doc = (AbstractDocument) contentElement.getOwnerDocument();
+			throw doc.createXPathException(XPathException.INVALID_EXPRESSION_ERR, "xpath.invalid.expression",
+					new Object[] { expression, te.getMessage() });
+		}
+	}
 
-    /**
-     * Returns a list of nodes that were matched by the given selector
-     * string.
-     */
-    @Override
-    public NodeList getSelectedContent() {
-        if (selectedContent == null) {
-            selectedContent = new SelectedNodes();
-        }
-        return selectedContent;
-    }
+	/**
+	 * Returns a list of nodes that were matched by the given selector string.
+	 */
+	@Override
+	public NodeList getSelectedContent() {
+		if (selectedContent == null) {
+			selectedContent = new SelectedNodes();
+		}
+		return selectedContent;
+	}
 
-    /**
-     * Forces this selector to update its selected nodes list.
-     * Returns true if the selected node list needed updating.
-     * This assumes that the previous content elements in this
-     * shadow tree (in document order) have up-to-date selectedContent
-     * lists.
-     */
-    @Override
-    boolean update() {
-        if (selectedContent == null) {
-            selectedContent = new SelectedNodes();
-            return true;
-        }
-        parse();
-        return selectedContent.update();
-    }
+	/**
+	 * Forces this selector to update its selected nodes list. Returns true if the
+	 * selected node list needed updating. This assumes that the previous content
+	 * elements in this shadow tree (in document order) have up-to-date
+	 * selectedContent lists.
+	 */
+	@Override
+	boolean update() {
+		if (selectedContent == null) {
+			selectedContent = new SelectedNodes();
+			return true;
+		}
+		parse();
+		return selectedContent.update();
+	}
 
-    /**
-     * Implementation of NodeList that contains the nodes that matched
-     * this selector.
-     */
-    protected class SelectedNodes implements NodeList {
+	/**
+	 * Implementation of NodeList that contains the nodes that matched this
+	 * selector.
+	 */
+	protected class SelectedNodes implements NodeList {
 
-        /**
-         * The selected nodes.
-         */
-        protected ArrayList<Node> nodes = new ArrayList<>(10);
+		/**
+		 * The selected nodes.
+		 */
+		protected ArrayList<Node> nodes = new ArrayList<>(10);
 
-        /**
-         * Creates a new SelectedNodes object.
-         */
-        public SelectedNodes() {
-            update();
-        }
+		/**
+		 * Creates a new SelectedNodes object.
+		 */
+		public SelectedNodes() {
+			update();
+		}
 
-        protected boolean update() {
-            ArrayList<?> oldNodes = (ArrayList<?>) nodes.clone();
-            nodes.clear();
-            for (Node n = boundElement.getFirstChild();
-                    n != null;
-                    n = n.getNextSibling()) {
-                update(n);
-            }
-            int nodesSize = nodes.size();
-            if (oldNodes.size() != nodesSize) {
-                return true;
-            }
-            for (int i = 0; i < nodesSize; i++) {
-                if (oldNodes.get(i) != nodes.get(i)) {
-                    return true;
-                }
-            }
-            return false;
-        }
+		protected boolean update() {
+			ArrayList<?> oldNodes = (ArrayList<?>) nodes.clone();
+			nodes.clear();
+			for (Node n = boundElement.getFirstChild(); n != null; n = n.getNextSibling()) {
+				update(n);
+			}
+			int nodesSize = nodes.size();
+			if (oldNodes.size() != nodesSize) {
+				return true;
+			}
+			for (int i = 0; i < nodesSize; i++) {
+				if (oldNodes.get(i) != nodes.get(i)) {
+					return true;
+				}
+			}
+			return false;
+		}
 
-        protected boolean descendantSelected(Node n) {
-            n = n.getFirstChild();
-            while (n != null) {
-                if (isSelected(n) || descendantSelected(n)) {
-                    return true;
-                }
-                n = n.getNextSibling();
-            }
-            return false;
-        }
+		protected boolean descendantSelected(Node n) {
+			n = n.getFirstChild();
+			while (n != null) {
+				if (isSelected(n) || descendantSelected(n)) {
+					return true;
+				}
+				n = n.getNextSibling();
+			}
+			return false;
+		}
 
-        protected void update(Node n) {
-            if (!isSelected(n)) {
-                try {
-                    double matchScore
-                        = xpath.execute(context, n, prefixResolver).num();
-                    if (matchScore != XPath.MATCH_SCORE_NONE) {
-                        if (!descendantSelected(n)) {
-                            nodes.add(n);
-                        }
-                    } else {
-                        n = n.getFirstChild();
-                        while (n != null) {
-                            update(n);
-                            n = n.getNextSibling();
-                        }
-                    }
-                } catch (javax.xml.transform.TransformerException te) {
-                    AbstractDocument doc
-                        = (AbstractDocument) contentElement.getOwnerDocument();
-                    throw doc.createXPathException
-                        (XPathException.INVALID_EXPRESSION_ERR,
-                         "xpath.error",
-                         new Object[] { expression, te.getMessage() });
-                }
-            }
-        }
+		protected void update(Node n) {
+			if (!isSelected(n)) {
+				try {
+					double matchScore = xpath.execute(context, n, prefixResolver).num();
+					if (matchScore != XPath.MATCH_SCORE_NONE) {
+						if (!descendantSelected(n)) {
+							nodes.add(n);
+						}
+					} else {
+						n = n.getFirstChild();
+						while (n != null) {
+							update(n);
+							n = n.getNextSibling();
+						}
+					}
+				} catch (javax.xml.transform.TransformerException te) {
+					AbstractDocument doc = (AbstractDocument) contentElement.getOwnerDocument();
+					throw doc.createXPathException(XPathException.INVALID_EXPRESSION_ERR, "xpath.error",
+							new Object[] { expression, te.getMessage() });
+				}
+			}
+		}
 
-        /**
-         * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#item(int)}.
-         */
-        @Override
-        public Node item(int index) {
-            if (index < 0 || index >= nodes.size()) {
-                return null;
-            }
-            return nodes.get(index);
-        }
+		/**
+		 * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#item(int)}.
+		 */
+		@Override
+		public Node item(int index) {
+			if (index < 0 || index >= nodes.size()) {
+				return null;
+			}
+			return nodes.get(index);
+		}
 
-        /**
-         * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#getLength()}.
-         */
-        @Override
-        public int getLength() {
-            return nodes.size();
-        }
-    }
-    /**
-     * Xalan prefix resolver.
-     */
-    protected class NSPrefixResolver implements PrefixResolver {
+		/**
+		 * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#getLength()}.
+		 */
+		@Override
+		public int getLength() {
+			return nodes.size();
+		}
+	}
 
-        /**
-         * Get the base URI for this resolver.  Since this resolver isn't
-         * associated with a particular node, returns null.
-         */
-        @Override
-        public String getBaseIdentifier() {
-            return null;
-        }
+	/**
+	 * Xalan prefix resolver.
+	 */
+	protected class NSPrefixResolver implements PrefixResolver {
 
-        /**
-         * Resolves the given namespace prefix.
-         */
-        @Override
-        public String getNamespaceForPrefix(String prefix) {
-            return contentElement.lookupNamespaceURI(prefix);
-        }
+		/**
+		 * Get the base URI for this resolver. Since this resolver isn't associated with
+		 * a particular node, returns null.
+		 */
+		@Override
+		public String getBaseIdentifier() {
+			return null;
+		}
 
-        /**
-         * Resolves the given namespace prefix.
-         */
-        @Override
-        public String getNamespaceForPrefix(String prefix, Node context) {
-            // ignore the context node
-            return contentElement.lookupNamespaceURI(prefix);
-        }
+		/**
+		 * Resolves the given namespace prefix.
+		 */
+		@Override
+		public String getNamespaceForPrefix(String prefix) {
+			return contentElement.lookupNamespaceURI(prefix);
+		}
 
-        /**
-         * Returns whether this PrefixResolver handles a null prefix.
-         */
-        @Override
-        public boolean handlesNullPrefixes() {
-            return false;
-        }
-    }
+		/**
+		 * Resolves the given namespace prefix.
+		 */
+		@Override
+		public String getNamespaceForPrefix(String prefix, Node context) {
+			// ignore the context node
+			return contentElement.lookupNamespaceURI(prefix);
+		}
+
+		/**
+		 * Returns whether this PrefixResolver handles a null prefix.
+		 */
+		@Override
+		public boolean handlesNullPrefixes() {
+			return false;
+		}
+	}
 }

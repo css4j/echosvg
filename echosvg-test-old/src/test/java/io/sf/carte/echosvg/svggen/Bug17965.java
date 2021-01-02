@@ -22,29 +22,27 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-
 /**
- * This test validates fix to Bug #17965 and checks that 
- * attributes which do not apply to given element (eg., font-family
- * does not apply to <rect>) are not written out.
+ * This test validates fix to Bug #17965 and checks that attributes which do not
+ * apply to given element (eg., font-family does not apply to <rect>) are not
+ * written out.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Bug17965 implements Painter {
-    @Override
-    public void paint(Graphics2D g) {
-        g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
-                           java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+	@Override
+	public void paint(Graphics2D g) {
+		g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 
-        Font font = new Font("Arial", Font.PLAIN, 30);
-        g.setFont(font);
-        g.setPaint(Color.blue);
-        g.fillRect(0, 0, 50, 50);
+		Font font = new Font("Arial", Font.PLAIN, 30);
+		g.setFont(font);
+		g.setPaint(Color.blue);
+		g.fillRect(0, 0, 50, 50);
 
-        font = new Font("Helvetica", Font.PLAIN, 20);
-        g.setFont(font);
-        g.fillRect( 50, 50, 50, 50);
-    }
+		font = new Font("Helvetica", Font.PLAIN, 20);
+		g.setFont(font);
+		g.fillRect(50, 50, 50, 50);
+	}
 }

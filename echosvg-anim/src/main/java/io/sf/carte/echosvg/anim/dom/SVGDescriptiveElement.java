@@ -31,50 +31,51 @@ import io.sf.carte.echosvg.dom.util.XMLSupport;
  */
 public abstract class SVGDescriptiveElement extends SVGStylableElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new SVGDescriptiveElement object.
-     */
-    protected SVGDescriptiveElement() {
-    }
+	/**
+	 * Creates a new SVGDescriptiveElement object.
+	 */
+	protected SVGDescriptiveElement() {
+	}
 
-    /**
-     * Creates a new SVGDescriptiveElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    protected SVGDescriptiveElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
-    
-    // SVGLangSpace support //////////////////////////////////////////////////
-    
-    /**
-     * <b>DOM</b>: Returns the xml:lang attribute value.
-     */
-    public String getXMLlang() {
-        return XMLSupport.getXMLLang(this);
-    }
+	/**
+	 * Creates a new SVGDescriptiveElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	protected SVGDescriptiveElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:lang attribute value.
-     */
-    public void setXMLlang(String lang) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
-    }
-    
-    /**
-     * <b>DOM</b>: Returns the xml:space attribute value.
-     */
-    public String getXMLspace() {
-        return XMLSupport.getXMLSpace(this);
-    }
+	// SVGLangSpace support //////////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Sets the xml:space attribute value.
-     */
-    public void setXMLspace(String space) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:lang attribute value.
+	 */
+	public String getXMLlang() {
+		return XMLSupport.getXMLLang(this);
+	}
+
+	/**
+	 * <b>DOM</b>: Sets the xml:lang attribute value.
+	 */
+	public void setXMLlang(String lang) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
+	}
+
+	/**
+	 * <b>DOM</b>: Returns the xml:space attribute value.
+	 */
+	public String getXMLspace() {
+		return XMLSupport.getXMLSpace(this);
+	}
+
+	/**
+	 * <b>DOM</b>: Sets the xml:space attribute value.
+	 */
+	public void setXMLspace(String space) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
+	}
 }

@@ -23,46 +23,52 @@ import java.awt.geom.Rectangle2D;
 import io.sf.carte.echosvg.ext.awt.image.PadMode;
 
 /**
- * Pads image to the given Rectangle (the rect may be smaller than the
- * image in which case this is actually a crop). The rectangle is
- * specified in the user coordinate system of this Renderable.
+ * Pads image to the given Rectangle (the rect may be smaller than the image in
+ * which case this is actually a crop). The rectangle is specified in the user
+ * coordinate system of this Renderable.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
- * @version $Id$ */
+ * @version $Id$
+ */
 public interface PadRable extends Filter {
-    /**
-     * Returns the source to be padded
-     */
-    Filter getSource();
+	/**
+	 * Returns the source to be padded
+	 */
+	Filter getSource();
 
-    /**
-     * Sets the source to be padded
-     * @param src image to offset.
-     */
-    void setSource(Filter src);
+	/**
+	 * Sets the source to be padded
+	 * 
+	 * @param src image to offset.
+	 */
+	void setSource(Filter src);
 
-    /**
-     * Set the current rectangle for padding.
-     * @param rect the new rectangle to use for pad.
-     */
-    void setPadRect(Rectangle2D rect);
+	/**
+	 * Set the current rectangle for padding.
+	 * 
+	 * @param rect the new rectangle to use for pad.
+	 */
+	void setPadRect(Rectangle2D rect);
 
-    /**
-     * Get the current rectangle for padding
-     * @return Rectangle currently in use for pad.
-     */
-    Rectangle2D getPadRect();
+	/**
+	 * Get the current rectangle for padding
+	 * 
+	 * @return Rectangle currently in use for pad.
+	 */
+	Rectangle2D getPadRect();
 
-    /**
-     * Set the current extension mode for pad
-     * @param mode the new pad mode
-     */
-    void setPadMode(PadMode mode);
+	/**
+	 * Set the current extension mode for pad
+	 * 
+	 * @param mode the new pad mode
+	 */
+	void setPadMode(PadMode mode);
 
-    /**
-     * Get the current extension mode for pad
-     * @return Mode currently in use for pad
-     */
-    PadMode getPadMode();
+	/**
+	 * Get the current extension mode for pad
+	 * 
+	 * @return Mode currently in use for pad
+	 */
+	PadMode getPadMode();
 }

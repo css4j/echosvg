@@ -21,8 +21,7 @@ package io.sf.carte.echosvg.dom.svg;
 import java.awt.geom.Point2D;
 
 /**
- * Context class for the SVG path element to support extra
- * methods.
+ * Context class for the SVG path element to support extra methods.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
@@ -30,19 +29,18 @@ import java.awt.geom.Point2D;
  */
 public interface SVGPathContext extends SVGContext {
 
-    /**
-     * Returns the total length of the path.
-     */
-    float getTotalLength();
+	/**
+	 * Returns the total length of the path.
+	 */
+	float getTotalLength();
 
-    /**
-     * Returns the point at the given distance along the path.
-     */
-    Point2D getPointAtLength(float distance);
+	/**
+	 * Returns the point at the given distance along the path.
+	 */
+	Point2D getPointAtLength(float distance);
 
-    /**
-     * Returns the index of the path segment at the given distance along the
-     * path.
-     */
-    int getPathSegAtLength(float distance);
+	/**
+	 * Returns the index of the path segment at the given distance along the path.
+	 */
+	int getPathSegAtLength(float distance);
 }

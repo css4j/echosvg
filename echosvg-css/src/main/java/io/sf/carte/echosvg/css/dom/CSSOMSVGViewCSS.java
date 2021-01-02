@@ -25,34 +25,31 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 
 /**
- * This class represents an object which provides the computed styles
- * of the elements of a SVG document.
+ * This class represents an object which provides the computed styles of the
+ * elements of a SVG document.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CSSOMSVGViewCSS extends CSSOMViewCSS {
-    
-    /**
-     * Creates a new ViewCSS.
-     */
-    public CSSOMSVGViewCSS(CSSEngine engine) {
-        super(engine);
-    }
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.ViewCSS#getComputedStyle(Element,String)}.
-     */
-    @Override
-    public CSSStyleDeclaration getComputedStyle(Element elt,
-                                                String pseudoElt) {
-        if (elt instanceof CSSStylableElement) {
-            return new CSSOMSVGComputedStyle(cssEngine,
-                                             (CSSStylableElement)elt,
-                                             pseudoElt);
-        }
-        return null;
-    }
+	/**
+	 * Creates a new ViewCSS.
+	 */
+	public CSSOMSVGViewCSS(CSSEngine engine) {
+		super(engine);
+	}
+
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.css.ViewCSS#getComputedStyle(Element,String)}.
+	 */
+	@Override
+	public CSSStyleDeclaration getComputedStyle(Element elt, String pseudoElt) {
+		if (elt instanceof CSSStylableElement) {
+			return new CSSOMSVGComputedStyle(cssEngine, (CSSStylableElement) elt, pseudoElt);
+		}
+		return null;
+	}
 }

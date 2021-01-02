@@ -41,186 +41,173 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.PadRable8Bit;
  */
 public class PatternPaint implements Paint {
 
-    /**
-     * The <code>GraphicsNode</code> that this <code>Paint</code> uses to
-     * produce the pixel pattern
-     */
-    private GraphicsNode node;
+	/**
+	 * The <code>GraphicsNode</code> that this <code>Paint</code> uses to produce
+	 * the pixel pattern
+	 */
+	private GraphicsNode node;
 
-    /**
-     * The region to which this paint is constrained
-     */
-    private Rectangle2D patternRegion;
+	/**
+	 * The region to which this paint is constrained
+	 */
+	private Rectangle2D patternRegion;
 
-    /**
-     * Additional pattern transform, added on top of the
-     * user space to device space transform (i.e., before
-     * the tiling space
-     */
-    private AffineTransform patternTransform;
+	/**
+	 * Additional pattern transform, added on top of the user space to device space
+	 * transform (i.e., before the tiling space
+	 */
+	private AffineTransform patternTransform;
 
-    /*
-     * The basic tile to fill the region with.
-     * we replicate this out in the Context.
-     */
-    private Filter tile;
+	/*
+	 * The basic tile to fill the region with. we replicate this out in the Context.
+	 */
+	private Filter tile;
 
-    /**
-     * Controls whether or not the pattern overflows
-     * the pattern tile
-     */
-    private boolean overflow;
+	/**
+	 * Controls whether or not the pattern overflows the pattern tile
+	 */
+	private boolean overflow;
 
-    private PatternPaintContext lastContext;
+	private PatternPaintContext lastContext;
 
-    /**
-     * Constructs a new <code>PatternPaint</code>.
-     *
-     * @param node Used to generate the paint pixel pattern
-     * @param patternRegion Region to which this paint is constrained
-     * @param overflow controls whether or not the node can overflow
-     *        the patternRegion.
-     * @param patternTransform additional transform added on
-     *        top of the user space to device space transform.
-     */
-    public PatternPaint(GraphicsNode node,
-                        Rectangle2D patternRegion,
-                        boolean overflow,
-                        AffineTransform patternTransform){
+	/**
+	 * Constructs a new <code>PatternPaint</code>.
+	 *
+	 * @param node             Used to generate the paint pixel pattern
+	 * @param patternRegion    Region to which this paint is constrained
+	 * @param overflow         controls whether or not the node can overflow the
+	 *                         patternRegion.
+	 * @param patternTransform additional transform added on top of the user space
+	 *                         to device space transform.
+	 */
+	public PatternPaint(GraphicsNode node, Rectangle2D patternRegion, boolean overflow,
+			AffineTransform patternTransform) {
 
-        if (node == null) {
-            throw new IllegalArgumentException();
-        }
+		if (node == null) {
+			throw new IllegalArgumentException();
+		}
 
-        if (patternRegion == null) {
-            throw new IllegalArgumentException();
-        }
+		if (patternRegion == null) {
+			throw new IllegalArgumentException();
+		}
 
-        this.node             = node;
-        this.patternRegion    = patternRegion;
-        this.overflow         = overflow;
-        this.patternTransform = patternTransform;
+		this.node = node;
+		this.patternRegion = patternRegion;
+		this.overflow = overflow;
+		this.patternTransform = patternTransform;
 
-        // Wrap the input node so that the primitivePaint
-        // in GraphicsNodeRable takes the filter, clip....
-        // into account.
-        CompositeGraphicsNode comp = new CompositeGraphicsNode();
-        comp.getChildren().add(node);
-        Filter gnr = comp.getGraphicsNodeRable(true);
+		// Wrap the input node so that the primitivePaint
+		// in GraphicsNodeRable takes the filter, clip....
+		// into account.
+		CompositeGraphicsNode comp = new CompositeGraphicsNode();
+		comp.getChildren().add(node);
+		Filter gnr = comp.getGraphicsNodeRable(true);
 
-        Rectangle2D padBounds = (Rectangle2D)patternRegion.clone();
+		Rectangle2D padBounds = (Rectangle2D) patternRegion.clone();
 
-        // When there is overflow, make sure we take the full node bounds into
-        // account.
-        if (overflow) {
-            Rectangle2D nodeBounds = comp.getBounds();
-            // System.out.println("Comp Bounds    : " + nodeBounds);
-            // System.out.println("Node Bounds    : " + node.getBounds(gnrc));
-            padBounds.add(nodeBounds);
-        }
+		// When there is overflow, make sure we take the full node bounds into
+		// account.
+		if (overflow) {
+			Rectangle2D nodeBounds = comp.getBounds();
+			// System.out.println("Comp Bounds : " + nodeBounds);
+			// System.out.println("Node Bounds : " + node.getBounds(gnrc));
+			padBounds.add(nodeBounds);
+		}
 
-        // System.out.println("Pattern region : " + patternRegion);
-        // System.out.println("Node txf       : " + node.getTransform());
-        tile = new PadRable8Bit(gnr, padBounds, PadMode.ZERO_PAD);
-    }
+		// System.out.println("Pattern region : " + patternRegion);
+		// System.out.println("Node txf : " + node.getTransform());
+		tile = new PadRable8Bit(gnr, padBounds, PadMode.ZERO_PAD);
+	}
 
-    /**
-     * Returns the graphics node that define the pattern.
-     */
-    public GraphicsNode getGraphicsNode(){
-        return node;
-    }
+	/**
+	 * Returns the graphics node that define the pattern.
+	 */
+	public GraphicsNode getGraphicsNode() {
+		return node;
+	}
 
-    /**
-     * Returns the pattern region.
-     */
-    public Rectangle2D getPatternRect(){
-        return (Rectangle2D)patternRegion.clone();
-    }
+	/**
+	 * Returns the pattern region.
+	 */
+	public Rectangle2D getPatternRect() {
+		return (Rectangle2D) patternRegion.clone();
+	}
 
-    /**
-     * Returns the additional transform of the pattern paint.
-     */
-    public AffineTransform getPatternTransform(){
-        return patternTransform;
-    }
+	/**
+	 * Returns the additional transform of the pattern paint.
+	 */
+	public AffineTransform getPatternTransform() {
+		return patternTransform;
+	}
 
-    public boolean getOverflow() {
-        return overflow;
-    }
+	public boolean getOverflow() {
+		return overflow;
+	}
 
-    /**
-     * Creates and returns a context used to generate the pattern.
-     */
-    @Override
-    public PaintContext createContext(ColorModel      cm,
-                                      Rectangle       deviceBounds,
-                                      Rectangle2D     userBounds,
-                                      AffineTransform xform,
-                                      RenderingHints  hints) {
-        // Concatenate the patternTransform to xform
-        if (patternTransform != null) {
-            xform = new AffineTransform(xform);
-            xform.concatenate(patternTransform);
-        }
+	/**
+	 * Creates and returns a context used to generate the pattern.
+	 */
+	@Override
+	public PaintContext createContext(ColorModel cm, Rectangle deviceBounds, Rectangle2D userBounds,
+			AffineTransform xform, RenderingHints hints) {
+		// Concatenate the patternTransform to xform
+		if (patternTransform != null) {
+			xform = new AffineTransform(xform);
+			xform.concatenate(patternTransform);
+		}
 
-        if ((lastContext!= null) &&
-            lastContext.getColorModel().equals(cm)) {
+		if ((lastContext != null) && lastContext.getColorModel().equals(cm)) {
 
-            double[] p = new double[6];
-            double[] q = new double[6];
-            xform.getMatrix(p);
-            lastContext.getUsr2Dev().getMatrix(q);
-            if ((p[0] == q[0]) && (p[1] == q[1]) &&
-                (p[2] == q[2]) && (p[3] == q[3])) {
-                if ((p[4] == q[4]) && (p[5] == q[5]))
-                    return lastContext;
-                else
-                    return new PatternPaintContextWrapper
-                        (lastContext,
-                         (int)(q[4]-p[4]+0.5),
-                         (int)(q[5]-p[5]+0.5));
-            }
-        }
-        // System.out.println("CreateContext Called: " + this);
-        // System.out.println("CM : " + cm);
-        // System.out.println("xForm : " + xform);
+			double[] p = new double[6];
+			double[] q = new double[6];
+			xform.getMatrix(p);
+			lastContext.getUsr2Dev().getMatrix(q);
+			if ((p[0] == q[0]) && (p[1] == q[1]) && (p[2] == q[2]) && (p[3] == q[3])) {
+				if ((p[4] == q[4]) && (p[5] == q[5]))
+					return lastContext;
+				else
+					return new PatternPaintContextWrapper(lastContext, (int) (q[4] - p[4] + 0.5),
+							(int) (q[5] - p[5] + 0.5));
+			}
+		}
+		// System.out.println("CreateContext Called: " + this);
+		// System.out.println("CM : " + cm);
+		// System.out.println("xForm : " + xform);
 
-        lastContext = new PatternPaintContext(cm, xform,
-                                       hints, tile,
-                                       patternRegion,
-                                       overflow);
-        return lastContext;
-    }
+		lastContext = new PatternPaintContext(cm, xform, hints, tile, patternRegion, overflow);
+		return lastContext;
+	}
 
-    /**
-     * Returns the transparency mode for this pattern paint.
-     */
-    @Override
-    public int getTransparency(){
-        return TRANSLUCENT;
-    }
+	/**
+	 * Returns the transparency mode for this pattern paint.
+	 */
+	@Override
+	public int getTransparency() {
+		return TRANSLUCENT;
+	}
 
-    static class PatternPaintContextWrapper implements PaintContext {
-        PatternPaintContext ppc;
-        int xShift, yShift;
-        PatternPaintContextWrapper(PatternPaintContext ppc,
-                            int xShift, int yShift) {
-            this.ppc = ppc;
-            this.xShift = xShift;
-            this.yShift = yShift;
-        }
+	static class PatternPaintContextWrapper implements PaintContext {
+		PatternPaintContext ppc;
+		int xShift, yShift;
 
-        @Override
-        public void dispose(){ }
+		PatternPaintContextWrapper(PatternPaintContext ppc, int xShift, int yShift) {
+			this.ppc = ppc;
+			this.xShift = xShift;
+			this.yShift = yShift;
+		}
 
-        @Override
-        public ColorModel getColorModel(){
-            return ppc.getColorModel();
-        }
-        @Override
-        public Raster getRaster(int x, int y, int width, int height){
-            return ppc.getRaster(x+xShift, y+yShift, width, height);
-        }
-    }
+		@Override
+		public void dispose() {
+		}
+
+		@Override
+		public ColorModel getColorModel() {
+			return ppc.getColorModel();
+		}
+
+		@Override
+		public Raster getRaster(int x, int y, int width, int height) {
+			return ppc.getRaster(x + xShift, y + yShift, width, height);
+		}
+	}
 }

@@ -33,60 +33,52 @@ import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
  */
 public class SVGFontFace extends FontFace {
 
-    Element fontFaceElement;
-    GVTFontFamily fontFamily = null;
-    /**
-     * Constructes an SVGFontFace with the specfied font-face attributes.
-     */
-    public SVGFontFace
-        (Element fontFaceElement, List<Object> srcs,
-         String familyName, float unitsPerEm, String fontWeight,
-         String fontStyle, String fontVariant, String fontStretch,
-         float slope, String panose1, float ascent, float descent,
-         float strikethroughPosition, float strikethroughThickness,
-         float underlinePosition, float underlineThickness,
-         float overlinePosition, float overlineThickness) {
-        super(srcs,
-              familyName, unitsPerEm, fontWeight, 
-              fontStyle, fontVariant, fontStretch, 
-              slope, panose1, ascent, descent,
-              strikethroughPosition, strikethroughThickness,
-              underlinePosition, underlineThickness,
-              overlinePosition, overlineThickness);
-        this.fontFaceElement = fontFaceElement;
-    }
+	Element fontFaceElement;
+	GVTFontFamily fontFamily = null;
 
-    /**
-     * Returns the font associated with this rule or element.
-     */
-    @Override
-    public GVTFontFamily getFontFamily(BridgeContext ctx) {
-        if (fontFamily != null)
-            return fontFamily;
+	/**
+	 * Constructes an SVGFontFace with the specfied font-face attributes.
+	 */
+	public SVGFontFace(Element fontFaceElement, List<Object> srcs, String familyName, float unitsPerEm,
+			String fontWeight, String fontStyle, String fontVariant, String fontStretch, float slope, String panose1,
+			float ascent, float descent, float strikethroughPosition, float strikethroughThickness,
+			float underlinePosition, float underlineThickness, float overlinePosition, float overlineThickness) {
+		super(srcs, familyName, unitsPerEm, fontWeight, fontStyle, fontVariant, fontStretch, slope, panose1, ascent,
+				descent, strikethroughPosition, strikethroughThickness, underlinePosition, underlineThickness,
+				overlinePosition, overlineThickness);
+		this.fontFaceElement = fontFaceElement;
+	}
 
-        Element fontElt = SVGUtilities.getParentElement(fontFaceElement);
-        if (fontElt.getNamespaceURI().equals(SVG_NAMESPACE_URI) &&
-            fontElt.getLocalName().equals(SVG_FONT_TAG)) {
-            return new SVGFontFamily(this, fontElt, ctx);
-        }
+	/**
+	 * Returns the font associated with this rule or element.
+	 */
+	@Override
+	public GVTFontFamily getFontFamily(BridgeContext ctx) {
+		if (fontFamily != null)
+			return fontFamily;
 
-        fontFamily = super.getFontFamily(ctx);
-        return fontFamily;
-    }
+		Element fontElt = SVGUtilities.getParentElement(fontFaceElement);
+		if (fontElt.getNamespaceURI().equals(SVG_NAMESPACE_URI) && fontElt.getLocalName().equals(SVG_FONT_TAG)) {
+			return new SVGFontFamily(this, fontElt, ctx);
+		}
 
-    public Element getFontFaceElement() {
-        return fontFaceElement;
-    }
+		fontFamily = super.getFontFamily(ctx);
+		return fontFamily;
+	}
 
-    /**
-     * Default implementation uses the root element of the document 
-     * associated with BridgeContext.  This is useful for CSS case.
-     */
-    @Override
-    protected Element getBaseElement(BridgeContext ctx) {
-        if (fontFaceElement != null) 
-            return fontFaceElement;
-        return super.getBaseElement(ctx);
-    }
+	public Element getFontFaceElement() {
+		return fontFaceElement;
+	}
+
+	/**
+	 * Default implementation uses the root element of the document associated with
+	 * BridgeContext. This is useful for CSS case.
+	 */
+	@Override
+	protected Element getBaseElement(BridgeContext ctx) {
+		if (fontFaceElement != null)
+			return fontFaceElement;
+		return super.getBaseElement(ctx);
+	}
 
 }

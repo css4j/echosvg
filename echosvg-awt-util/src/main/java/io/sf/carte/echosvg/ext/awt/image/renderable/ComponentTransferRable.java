@@ -21,8 +21,7 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
 import io.sf.carte.echosvg.ext.awt.image.ComponentTransferFunction;
 
 /**
- * Defines the interface expected from a component
- * transfer operation.
+ * Defines the interface expected from a component transfer operation.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -30,54 +29,55 @@ import io.sf.carte.echosvg.ext.awt.image.ComponentTransferFunction;
  */
 public interface ComponentTransferRable extends FilterColorInterpolation {
 
-    /**
-     * Returns the source to be offset.
-     */
-    Filter getSource();
+	/**
+	 * Returns the source to be offset.
+	 */
+	Filter getSource();
 
-    /**
-     * Sets the source to be offset.
-     * @param src image to offset.
-     */
-    void setSource(Filter src);
+	/**
+	 * Sets the source to be offset.
+	 * 
+	 * @param src image to offset.
+	 */
+	void setSource(Filter src);
 
-    /**
-     * Returns the transfer function for the alpha channel
-     */
-    ComponentTransferFunction getAlphaFunction();
+	/**
+	 * Returns the transfer function for the alpha channel
+	 */
+	ComponentTransferFunction getAlphaFunction();
 
-    /**
-     * Sets the transfer function for the alpha channel
-     */
-    void setAlphaFunction(ComponentTransferFunction alphaFunction);
+	/**
+	 * Sets the transfer function for the alpha channel
+	 */
+	void setAlphaFunction(ComponentTransferFunction alphaFunction);
 
-    /**
-     * Returns the transfer function for the red channel
-     */
-    ComponentTransferFunction getRedFunction();
+	/**
+	 * Returns the transfer function for the red channel
+	 */
+	ComponentTransferFunction getRedFunction();
 
-    /**
-     * Sets the transfer function for the red channel
-     */
-    void setRedFunction(ComponentTransferFunction redFunction);
+	/**
+	 * Sets the transfer function for the red channel
+	 */
+	void setRedFunction(ComponentTransferFunction redFunction);
 
-    /**
-     * Returns the transfer function for the green channel
-     */
-    ComponentTransferFunction getGreenFunction();
+	/**
+	 * Returns the transfer function for the green channel
+	 */
+	ComponentTransferFunction getGreenFunction();
 
-    /**
-     * Sets the transfer function for the green channel
-     */
-    void setGreenFunction(ComponentTransferFunction greenFunction);
+	/**
+	 * Sets the transfer function for the green channel
+	 */
+	void setGreenFunction(ComponentTransferFunction greenFunction);
 
-    /**
-     * Returns the transfer function for the blue channel
-     */
-    ComponentTransferFunction getBlueFunction();
+	/**
+	 * Returns the transfer function for the blue channel
+	 */
+	ComponentTransferFunction getBlueFunction();
 
-    /**
-     * Sets the transfer function for the blue channel
-     */
-    void setBlueFunction(ComponentTransferFunction blueFunction);
+	/**
+	 * Sets the transfer function for the blue channel
+	 */
+	void setBlueFunction(ComponentTransferFunction blueFunction);
 }

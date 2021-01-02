@@ -26,53 +26,53 @@ import io.sf.carte.echosvg.script.InterpreterFactory;
 
 /**
  * Allows to create instances of <code>JPythonInterpreter</code> class.
+ * 
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JPythonInterpreterFactory implements InterpreterFactory {
 
-    /**
-     * The MIME types that JPython can handle.
-     */
-    public static final String[] JPYTHON_MIMETYPES =  { "text/python" };
+	/**
+	 * The MIME types that JPython can handle.
+	 */
+	public static final String[] JPYTHON_MIMETYPES = { "text/python" };
 
-    /**
-     * Builds a <code>JPythonInterpreterFactory</code>.
-     */
-    public JPythonInterpreterFactory() {
-    }
+	/**
+	 * Builds a <code>JPythonInterpreterFactory</code>.
+	 */
+	public JPythonInterpreterFactory() {
+	}
 
-    /**
-     * Returns the mime-types to register this interpereter with.
-     */
-    @Override
-    public String[] getMimeTypes() {
-        return JPYTHON_MIMETYPES;
-    }
+	/**
+	 * Returns the mime-types to register this interpereter with.
+	 */
+	@Override
+	public String[] getMimeTypes() {
+		return JPYTHON_MIMETYPES;
+	}
 
-    /**
-     * Creates an instance of <code>JPythonInterpreter</code> class.
-     *
-     * @param documentURL the url for the document which will be scripted
-     * @param svg12 whether the document is an SVG 1.2 document
-     */
-    @Override
-    public Interpreter createInterpreter(URL documentURL, boolean svg12) {
-        return new JPythonInterpreter();
-    }
+	/**
+	 * Creates an instance of <code>JPythonInterpreter</code> class.
+	 *
+	 * @param documentURL the url for the document which will be scripted
+	 * @param svg12       whether the document is an SVG 1.2 document
+	 */
+	@Override
+	public Interpreter createInterpreter(URL documentURL, boolean svg12) {
+		return new JPythonInterpreter();
+	}
 
-    /**
-     * Creates an instance of <code>JPythonInterpreter</code> class.
-     *
-     * @param documentURL the url for the document which will be scripted
-     * @param svg12 whether the document is an SVG 1.2 document
-     * @param imports The set of classes/packages to import (if
-     *                the interpreter supports that), may be null.
-     */
-    @Override
-    public Interpreter createInterpreter(URL documentURL, boolean svg12,
-                                         ImportInfo imports) {
-        return new JPythonInterpreter();
-    }
+	/**
+	 * Creates an instance of <code>JPythonInterpreter</code> class.
+	 *
+	 * @param documentURL the url for the document which will be scripted
+	 * @param svg12       whether the document is an SVG 1.2 document
+	 * @param imports     The set of classes/packages to import (if the interpreter
+	 *                    supports that), may be null.
+	 */
+	@Override
+	public Interpreter createInterpreter(URL documentURL, boolean svg12, ImportInfo imports) {
+		return new JPythonInterpreter();
+	}
 }

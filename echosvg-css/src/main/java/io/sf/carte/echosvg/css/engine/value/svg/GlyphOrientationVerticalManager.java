@@ -29,61 +29,56 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
- * This class provides a manager for the 'glyph-orientation-vertical'
- * property values.
+ * This class provides a manager for the 'glyph-orientation-vertical' property
+ * values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class GlyphOrientationVerticalManager
-    extends GlyphOrientationManager {
-    
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_GLYPH_ORIENTATION_VERTICAL_PROPERTY;
-    }
-    
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return ValueConstants.AUTO_VALUE;
-    }
+public class GlyphOrientationVerticalManager extends GlyphOrientationManager {
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
-            if (lu.getStringValue().equalsIgnoreCase
-                (CSSConstants.CSS_AUTO_VALUE)) {
-                return ValueConstants.AUTO_VALUE;
-            }
-            throw createInvalidIdentifierDOMException(lu.getStringValue());
-        }
-        return super.createValue(lu, engine);
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_GLYPH_ORIENTATION_VERTICAL_PROPERTY;
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        if (type != CSSPrimitiveValue.CSS_IDENT) {
-            throw createInvalidStringTypeDOMException(type);
-        }
-        if (value.equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
-            return ValueConstants.AUTO_VALUE;
-        }
-        throw createInvalidIdentifierDOMException(value);
-    }
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return ValueConstants.AUTO_VALUE;
+	}
+
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
+			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
+				return ValueConstants.AUTO_VALUE;
+			}
+			throw createInvalidIdentifierDOMException(lu.getStringValue());
+		}
+		return super.createValue(lu, engine);
+	}
+
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+		if (type != CSSPrimitiveValue.CSS_IDENT) {
+			throw createInvalidStringTypeDOMException(type);
+		}
+		if (value.equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
+			return ValueConstants.AUTO_VALUE;
+		}
+		throw createInvalidIdentifierDOMException(value);
+	}
 }

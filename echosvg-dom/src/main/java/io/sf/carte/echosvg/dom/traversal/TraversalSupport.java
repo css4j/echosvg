@@ -38,73 +38,61 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @version $Id$
  */
 public class TraversalSupport {
-    
-    /**
-     * The iterators list.
-     */
-    protected List<NodeIterator> iterators;
 
-    /**
-     * Creates a new TraversalSupport.
-     */
-    public TraversalSupport() {
-    }
+	/**
+	 * The iterators list.
+	 */
+	protected List<NodeIterator> iterators;
 
-    /**
-     * Creates a new tree walker.
-     */
-    public static TreeWalker createTreeWalker(AbstractDocument doc,
-                                              Node root,
-                                              int whatToShow, 
-                                              NodeFilter filter, 
-                                              boolean entityReferenceExpansion) {
-        if (root == null) {
-            throw doc.createDOMException
-                (DOMException.NOT_SUPPORTED_ERR, "null.root",  null);
-        }
-        return new DOMTreeWalker(root, whatToShow, filter,
-                                 entityReferenceExpansion);
-    }
+	/**
+	 * Creates a new TraversalSupport.
+	 */
+	public TraversalSupport() {
+	}
 
-    /**
-     * Creates a new node iterator.
-     */
-    public NodeIterator createNodeIterator(AbstractDocument doc,
-                                           Node root,
-                                           int whatToShow, 
-                                           NodeFilter filter, 
-                                           boolean entityReferenceExpansion)
-        throws DOMException {
-        if (root == null) {
-            throw doc.createDOMException
-                (DOMException.NOT_SUPPORTED_ERR, "null.root",  null);
-        }
-        NodeIterator result = new DOMNodeIterator(doc, root, whatToShow,
-                                                  filter,
-                                                  entityReferenceExpansion);
-        if (iterators == null) {
-            iterators = new LinkedList<>();
-        }
-        iterators.add(result);
+	/**
+	 * Creates a new tree walker.
+	 */
+	public static TreeWalker createTreeWalker(AbstractDocument doc, Node root, int whatToShow, NodeFilter filter,
+			boolean entityReferenceExpansion) {
+		if (root == null) {
+			throw doc.createDOMException(DOMException.NOT_SUPPORTED_ERR, "null.root", null);
+		}
+		return new DOMTreeWalker(root, whatToShow, filter, entityReferenceExpansion);
+	}
 
-        return result;
-    }
+	/**
+	 * Creates a new node iterator.
+	 */
+	public NodeIterator createNodeIterator(AbstractDocument doc, Node root, int whatToShow, NodeFilter filter,
+			boolean entityReferenceExpansion) throws DOMException {
+		if (root == null) {
+			throw doc.createDOMException(DOMException.NOT_SUPPORTED_ERR, "null.root", null);
+		}
+		NodeIterator result = new DOMNodeIterator(doc, root, whatToShow, filter, entityReferenceExpansion);
+		if (iterators == null) {
+			iterators = new LinkedList<>();
+		}
+		iterators.add(result);
 
-    /**
-     * Called by the DOM when a node will be removed from the current document.
-     */
-    public void nodeToBeRemoved(Node removedNode) {
-        if (iterators != null) {
-            for (NodeIterator iterator : iterators) {
-                ((DOMNodeIterator) iterator).nodeToBeRemoved(removedNode);
-            }
-        }
-    }
+		return result;
+	}
 
-    /**
-     * Detaches the given node iterator.
-     */
-    public void detachNodeIterator(NodeIterator it) {
-        iterators.remove(it);
-    }
+	/**
+	 * Called by the DOM when a node will be removed from the current document.
+	 */
+	public void nodeToBeRemoved(Node removedNode) {
+		if (iterators != null) {
+			for (NodeIterator iterator : iterators) {
+				((DOMNodeIterator) iterator).nodeToBeRemoved(removedNode);
+			}
+		}
+	}
+
+	/**
+	 * Detaches the given node iterator.
+	 */
+	public void detachNodeIterator(NodeIterator it) {
+		iterators.remove(it);
+	}
 }

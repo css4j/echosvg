@@ -36,68 +36,67 @@ import io.sf.carte.echosvg.test.AbstractTest;
 import io.sf.carte.echosvg.test.TestReport;
 
 /**
- * Checks that the content generated from the SVGGraphics2D and to which
- * an event handler has been added can be processed by EchoSVG.
+ * Checks that the content generated from the SVGGraphics2D and to which an
+ * event handler has been added can be processed by EchoSVG.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ShowGraphics2DOutput extends AbstractTest {
-    @Override
-    public TestReport runImpl() throws Exception {
+	@Override
+	public TestReport runImpl() throws Exception {
 
-        DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-        String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
-        SVGDocument doc = (SVGDocument)impl.createDocument(svgNS, "svg", null);
-        
-        SVGGraphics2D g = new SVGGraphics2D(doc);
+		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
+		SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
 
-        Shape circle = new Ellipse2D.Double(0,0,50,50);
-        g.setPaint(Color.red);
-        g.fill(circle);
-        g.translate(60,0);
-        g.setPaint(Color.green);
-        g.fill(circle);
-        g.translate(60,0);
-        g.setPaint(Color.blue);
-        g.fill(circle);
-        g.setSVGCanvasSize(new Dimension(180,50));
+		SVGGraphics2D g = new SVGGraphics2D(doc);
 
-        Element root = doc.getDocumentElement();
+		Shape circle = new Ellipse2D.Double(0, 0, 50, 50);
+		g.setPaint(Color.red);
+		g.fill(circle);
+		g.translate(60, 0);
+		g.setPaint(Color.green);
+		g.fill(circle);
+		g.translate(60, 0);
+		g.setPaint(Color.blue);
+		g.fill(circle);
+		g.setSVGCanvasSize(new Dimension(180, 50));
 
-        // The following populates the document root with the 
-        // generated SVG content.
-        g.getRoot(root);
+		Element root = doc.getDocumentElement();
 
-        root.setAttribute("onload", "System.out.println('hello')");
+		// The following populates the document root with the
+		// generated SVG content.
+		g.getRoot(root);
 
-        // Now that the SVG file has been loaded, build
-        // a GVT Tree from it
-        TestUserAgent userAgent = new TestUserAgent();
-        GVTBuilder builder = new GVTBuilder();
-        BridgeContext ctx = new BridgeContext(userAgent);
-        ctx.setDynamic(true);
+		root.setAttribute("onload", "System.out.println('hello')");
 
-        builder.build(ctx, doc);
-        BaseScriptingEnvironment scriptEnvironment 
-            = new BaseScriptingEnvironment(ctx);
-        scriptEnvironment.loadScripts();
-        scriptEnvironment.dispatchSVGLoadEvent();
+		// Now that the SVG file has been loaded, build
+		// a GVT Tree from it
+		TestUserAgent userAgent = new TestUserAgent();
+		GVTBuilder builder = new GVTBuilder();
+		BridgeContext ctx = new BridgeContext(userAgent);
+		ctx.setDynamic(true);
 
-        if (!userAgent.failed) {
-            return reportSuccess();
-        } else {
-            return reportError("Got exception while processing document");
-        }
-    }
+		builder.build(ctx, doc);
+		BaseScriptingEnvironment scriptEnvironment = new BaseScriptingEnvironment(ctx);
+		scriptEnvironment.loadScripts();
+		scriptEnvironment.dispatchSVGLoadEvent();
 
-    static class TestUserAgent extends UserAgentAdapter {
-        boolean failed;
+		if (!userAgent.failed) {
+			return reportSuccess();
+		} else {
+			return reportError("Got exception while processing document");
+		}
+	}
 
-        @Override
-        public void displayError(Exception e) {
-            failed = true;
-        } 
-    }
+	static class TestUserAgent extends UserAgentAdapter {
+		boolean failed;
+
+		@Override
+		public void displayError(Exception e) {
+			failed = true;
+		}
+	}
 }

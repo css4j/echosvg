@@ -28,33 +28,33 @@ import java.io.RandomAccessFile;
  * @version $Id$
  */
 public class KernSubtableFormat0 extends KernSubtable {
-    
-    private int nPairs;
-    private int searchRange;
-    private int entrySelector;
-    private int rangeShift;
-    private KerningPair[] kerningPairs;
 
-    /** Creates new KernSubtableFormat0 */
-    protected KernSubtableFormat0(RandomAccessFile raf) throws IOException {
-        nPairs = raf.readUnsignedShort();
-        searchRange = raf.readUnsignedShort();
-        entrySelector = raf.readUnsignedShort();
-        rangeShift = raf.readUnsignedShort();
-        kerningPairs = new KerningPair[nPairs];
-        for (int i = 0; i < nPairs; i++) {
-            kerningPairs[i] = new KerningPair(raf);
-        }
-    }
+	private int nPairs;
+	private int searchRange;
+	private int entrySelector;
+	private int rangeShift;
+	private KerningPair[] kerningPairs;
 
-    @Override
-    public int getKerningPairCount() {
-        return nPairs;
-    }
+	/** Creates new KernSubtableFormat0 */
+	protected KernSubtableFormat0(RandomAccessFile raf) throws IOException {
+		nPairs = raf.readUnsignedShort();
+		searchRange = raf.readUnsignedShort();
+		entrySelector = raf.readUnsignedShort();
+		rangeShift = raf.readUnsignedShort();
+		kerningPairs = new KerningPair[nPairs];
+		for (int i = 0; i < nPairs; i++) {
+			kerningPairs[i] = new KerningPair(raf);
+		}
+	}
 
-    @Override
-    public KerningPair getKerningPair(int i) {
-        return kerningPairs[i];
-    }
+	@Override
+	public int getKerningPairCount() {
+		return nPairs;
+	}
+
+	@Override
+	public KerningPair getKerningPair(int i) {
+		return kerningPairs[i];
+	}
 
 }

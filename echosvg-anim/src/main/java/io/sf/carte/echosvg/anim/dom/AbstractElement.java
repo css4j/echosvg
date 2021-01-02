@@ -33,336 +33,320 @@ import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
- * This class provides a superclass to implement an SVG element, or
- * an element interoperable with the SVG elements.
+ * This class provides a superclass to implement an SVG element, or an element
+ * interoperable with the SVG elements.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractElement
-        extends io.sf.carte.echosvg.dom.AbstractElement
-        implements NodeEventTarget, CSSNavigableNode, SVGConstants {
+public abstract class AbstractElement extends io.sf.carte.echosvg.dom.AbstractElement
+		implements NodeEventTarget, CSSNavigableNode, SVGConstants {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The live attribute values.
-     */
-    protected transient DoublyIndexedTable<String,String> liveAttributeValues =
-        new DoublyIndexedTable<>();
+	/**
+	 * The live attribute values.
+	 */
+	protected transient DoublyIndexedTable<String, String> liveAttributeValues = new DoublyIndexedTable<>();
 
-    /**
-     * Creates a new Element object.
-     */
-    protected AbstractElement() {
-    }
+	/**
+	 * Creates a new Element object.
+	 */
+	protected AbstractElement() {
+	}
 
-    /**
-     * Creates a new Element object.
-     * @param prefix The namespace prefix.
-     * @param owner  The owner document.
-     */
-    protected AbstractElement(String prefix, AbstractDocument owner) {
-        ownerDocument = owner;
-        setPrefix(prefix);
-        initializeAttributes();
-    }
+	/**
+	 * Creates a new Element object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	protected AbstractElement(String prefix, AbstractDocument owner) {
+		ownerDocument = owner;
+		setPrefix(prefix);
+		initializeAttributes();
+	}
 
-    // CSSNavigableNode ///////////////////////////////////////////////////
+	// CSSNavigableNode ///////////////////////////////////////////////////
 
-    /**
-     * Returns the CSS parent node of this node.
-     */
-    @Override
-    public Node getCSSParentNode() {
-        return getXblParentNode();
-    }
+	/**
+	 * Returns the CSS parent node of this node.
+	 */
+	@Override
+	public Node getCSSParentNode() {
+		return getXblParentNode();
+	}
 
-    /**
-     * Returns the CSS previous sibling node of this node.
-     */
-    @Override
-    public Node getCSSPreviousSibling() {
-        return getXblPreviousSibling();
-    }
+	/**
+	 * Returns the CSS previous sibling node of this node.
+	 */
+	@Override
+	public Node getCSSPreviousSibling() {
+		return getXblPreviousSibling();
+	}
 
-    /**
-     * Returns the CSS next sibling node of this node.
-     */
-    @Override
-    public Node getCSSNextSibling() {
-        return getXblNextSibling();
-    }
+	/**
+	 * Returns the CSS next sibling node of this node.
+	 */
+	@Override
+	public Node getCSSNextSibling() {
+		return getXblNextSibling();
+	}
 
-    /**
-     * Returns the CSS first child node of this node.
-     */
-    @Override
-    public Node getCSSFirstChild() {
-        return getXblFirstChild();
-    }
+	/**
+	 * Returns the CSS first child node of this node.
+	 */
+	@Override
+	public Node getCSSFirstChild() {
+		return getXblFirstChild();
+	}
 
-    /**
-     * Returns the CSS last child of this node.
-     */
-    @Override
-    public Node getCSSLastChild() {
-        return getXblLastChild();
-    }
+	/**
+	 * Returns the CSS last child of this node.
+	 */
+	@Override
+	public Node getCSSLastChild() {
+		return getXblLastChild();
+	}
 
-    /**
-     * Returns whether this node is the root of a (conceptual) hidden tree
-     * that selectors will not work across.
-     */
-    @Override
-    public boolean isHiddenFromSelectors() {
-        return false;
-    }
+	/**
+	 * Returns whether this node is the root of a (conceptual) hidden tree that
+	 * selectors will not work across.
+	 */
+	@Override
+	public boolean isHiddenFromSelectors() {
+		return false;
+	}
 
-    // Attributes /////////////////////////////////////////////////////////
+	// Attributes /////////////////////////////////////////////////////////
 
-    @Override
-    public void fireDOMAttrModifiedEvent(String name, Attr node, String oldv,
-                                         String newv, short change) {
-        super.fireDOMAttrModifiedEvent(name, node, oldv, newv, change);
-        // This handles the SVG 1.2 behaviour where setting the value of
-        // 'id' must also change 'xml:id', and vice versa.
-        if (((SVGOMDocument) ownerDocument).isSVG12
-                && (change == MutationEvent.ADDITION
-                    || change == MutationEvent.MODIFICATION)) {
-            if (node.getNamespaceURI() == null
-                    && node.getNodeName().equals(SVG_ID_ATTRIBUTE)) {
-                Attr a =
-                    getAttributeNodeNS(XML_NAMESPACE_URI, SVG_ID_ATTRIBUTE);
-                if (a == null) {
-                    setAttributeNS(XML_NAMESPACE_URI, XML_ID_QNAME, newv);
-                } else if (!a.getNodeValue().equals(newv)) {
-                    a.setNodeValue(newv);
-                }
-            } else if (node.getNodeName().equals(XML_ID_QNAME)) {
-                Attr a = getAttributeNodeNS(null, SVG_ID_ATTRIBUTE);
-                if (a == null) {
-                    setAttributeNS(null, SVG_ID_ATTRIBUTE, newv);
-                } else if (!a.getNodeValue().equals(newv)) {
-                    a.setNodeValue(newv);
-                }
-            }
-        }
-    }
+	@Override
+	public void fireDOMAttrModifiedEvent(String name, Attr node, String oldv, String newv, short change) {
+		super.fireDOMAttrModifiedEvent(name, node, oldv, newv, change);
+		// This handles the SVG 1.2 behaviour where setting the value of
+		// 'id' must also change 'xml:id', and vice versa.
+		if (((SVGOMDocument) ownerDocument).isSVG12
+				&& (change == MutationEvent.ADDITION || change == MutationEvent.MODIFICATION)) {
+			if (node.getNamespaceURI() == null && node.getNodeName().equals(SVG_ID_ATTRIBUTE)) {
+				Attr a = getAttributeNodeNS(XML_NAMESPACE_URI, SVG_ID_ATTRIBUTE);
+				if (a == null) {
+					setAttributeNS(XML_NAMESPACE_URI, XML_ID_QNAME, newv);
+				} else if (!a.getNodeValue().equals(newv)) {
+					a.setNodeValue(newv);
+				}
+			} else if (node.getNodeName().equals(XML_ID_QNAME)) {
+				Attr a = getAttributeNodeNS(null, SVG_ID_ATTRIBUTE);
+				if (a == null) {
+					setAttributeNS(null, SVG_ID_ATTRIBUTE, newv);
+				} else if (!a.getNodeValue().equals(newv)) {
+					a.setNodeValue(newv);
+				}
+			}
+		}
+	}
 
-    /**
-     * Returns the live attribute value associated with given
-     * attribute, if any.
-     * @param ns The attribute's namespace.
-     * @param ln The attribute's local name.
-     */
-    public LiveAttributeValue getLiveAttributeValue(String ns, String ln) {
+	/**
+	 * Returns the live attribute value associated with given attribute, if any.
+	 * 
+	 * @param ns The attribute's namespace.
+	 * @param ln The attribute's local name.
+	 */
+	public LiveAttributeValue getLiveAttributeValue(String ns, String ln) {
 //         if (liveAttributeValues == null) {
 //             return null;
 //         }
-        return (LiveAttributeValue)liveAttributeValues.get(ns, ln);
-    }
+		return (LiveAttributeValue) liveAttributeValues.get(ns, ln);
+	}
 
-    /**
-     * Associates a live attribute value to this element.
-     * @param ns The attribute's namespace.
-     * @param ln The attribute's local name.
-     * @param val The live value.
-     */
-    public void putLiveAttributeValue(String ns, String ln,
-                                      LiveAttributeValue val) {
+	/**
+	 * Associates a live attribute value to this element.
+	 * 
+	 * @param ns  The attribute's namespace.
+	 * @param ln  The attribute's local name.
+	 * @param val The live value.
+	 */
+	public void putLiveAttributeValue(String ns, String ln, LiveAttributeValue val) {
 //         if (liveAttributeValues == null) {
 //             liveAttributeValues = new SoftDoublyIndexedTable();
 //         }
-        liveAttributeValues.put(ns, ln, val);
-    }
+		liveAttributeValues.put(ns, ln, val);
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    protected AttributeInitializer getAttributeInitializer() {
-        return null;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	protected AttributeInitializer getAttributeInitializer() {
+		return null;
+	}
 
-    /**
-     * Initializes the attributes of this element to their default value.
-     */
-    protected void initializeAttributes() {
-        AttributeInitializer ai = getAttributeInitializer();
-        if (ai != null) {
-            ai.initializeAttributes(this);
-        }
-    }
+	/**
+	 * Initializes the attributes of this element to their default value.
+	 */
+	protected void initializeAttributes() {
+		AttributeInitializer ai = getAttributeInitializer();
+		if (ai != null) {
+			ai.initializeAttributes(this);
+		}
+	}
 
-    /**
-     * Resets an attribute to the default value.
-     * @return true if a default value is known for the given attribute.
-     */
-    protected boolean resetAttribute(String ns, String prefix, String ln) {
-        AttributeInitializer ai = getAttributeInitializer();
-        if (ai == null) {
-            return false;
-        }
-        return ai.resetAttribute(this, ns, prefix, ln);
-    }
+	/**
+	 * Resets an attribute to the default value.
+	 * 
+	 * @return true if a default value is known for the given attribute.
+	 */
+	protected boolean resetAttribute(String ns, String prefix, String ln) {
+		AttributeInitializer ai = getAttributeInitializer();
+		if (ai == null) {
+			return false;
+		}
+		return ai.resetAttribute(this, ns, prefix, ln);
+	}
 
-    /**
-     * Creates the attribute list.
-     */
-    @Override
-    protected NamedNodeMap createAttributes() {
-        return new ExtendedNamedNodeHashMap();
-    }
+	/**
+	 * Creates the attribute list.
+	 */
+	@Override
+	protected NamedNodeMap createAttributes() {
+		return new ExtendedNamedNodeHashMap();
+	}
 
-    /**
-     * Sets an unspecified attribute.
-     * @param nsURI The attribute namespace URI.
-     * @param name The attribute's qualified name.
-     * @param value The attribute's default value.
-    */
-    public void setUnspecifiedAttribute(String nsURI, String name,
-                                        String value) {
-        if (attributes == null) {
-            attributes = createAttributes();
-        }
-        ((ExtendedNamedNodeHashMap)attributes).
-            setUnspecifiedAttribute(nsURI, name, value);
-    }
+	/**
+	 * Sets an unspecified attribute.
+	 * 
+	 * @param nsURI The attribute namespace URI.
+	 * @param name  The attribute's qualified name.
+	 * @param value The attribute's default value.
+	 */
+	public void setUnspecifiedAttribute(String nsURI, String name, String value) {
+		if (attributes == null) {
+			attributes = createAttributes();
+		}
+		((ExtendedNamedNodeHashMap) attributes).setUnspecifiedAttribute(nsURI, name, value);
+	}
 
-    /**
-     * Called when an attribute has been added.
-     */
-    @Override
-    protected void attrAdded(Attr node, String newv) {
-        LiveAttributeValue lav = getLiveAttributeValue(node);
-        if (lav != null) {
-            lav.attrAdded(node, newv);
-        }
-    }
+	/**
+	 * Called when an attribute has been added.
+	 */
+	@Override
+	protected void attrAdded(Attr node, String newv) {
+		LiveAttributeValue lav = getLiveAttributeValue(node);
+		if (lav != null) {
+			lav.attrAdded(node, newv);
+		}
+	}
 
-    /**
-     * Called when an attribute has been modified.
-     */
-    @Override
-    protected void attrModified(Attr node, String oldv, String newv) {
-        LiveAttributeValue lav = getLiveAttributeValue(node);
-        if (lav != null) {
-            lav.attrModified(node, oldv, newv);
-        }
-    }
+	/**
+	 * Called when an attribute has been modified.
+	 */
+	@Override
+	protected void attrModified(Attr node, String oldv, String newv) {
+		LiveAttributeValue lav = getLiveAttributeValue(node);
+		if (lav != null) {
+			lav.attrModified(node, oldv, newv);
+		}
+	}
 
-    /**
-     * Called when an attribute has been removed.
-     */
-    @Override
-    protected void attrRemoved(Attr node, String oldv) {
-        LiveAttributeValue lav = getLiveAttributeValue(node);
-        if (lav != null) {
-            lav.attrRemoved(node, oldv);
-        }
-    }
+	/**
+	 * Called when an attribute has been removed.
+	 */
+	@Override
+	protected void attrRemoved(Attr node, String oldv) {
+		LiveAttributeValue lav = getLiveAttributeValue(node);
+		if (lav != null) {
+			lav.attrRemoved(node, oldv);
+		}
+	}
 
-    /**
-     * Gets Returns the live attribute value associated with given
-     * attribute, if any.
-     */
-    private LiveAttributeValue getLiveAttributeValue(Attr node) {
-        String ns = node.getNamespaceURI();
-        return getLiveAttributeValue(ns, (ns == null)
-                                     ? node.getNodeName()
-                                     : node.getLocalName());
-    }
+	/**
+	 * Gets Returns the live attribute value associated with given attribute, if
+	 * any.
+	 */
+	private LiveAttributeValue getLiveAttributeValue(Attr node) {
+		String ns = node.getNamespaceURI();
+		return getLiveAttributeValue(ns, (ns == null) ? node.getNodeName() : node.getLocalName());
+	}
 
-    // Importation ////////////////////////////////////////////////////
+	// Importation ////////////////////////////////////////////////////
 
-    /**
-     * Exports this node to the given document.
-     */
-    @Override
-    protected Node export(Node n, AbstractDocument d) {
-        super.export(n, d);
-        ((AbstractElement)n).initializeAttributes();
+	/**
+	 * Exports this node to the given document.
+	 */
+	@Override
+	protected Node export(Node n, AbstractDocument d) {
+		super.export(n, d);
+		((AbstractElement) n).initializeAttributes();
 
-        super.export(n, d);
-        return n;
-    }
+		super.export(n, d);
+		return n;
+	}
 
-    /**
-     * Deeply exports this node to the given document.
-     */
-    @Override
-    protected Node deepExport(Node n, AbstractDocument d) {
-        super.export(n, d);
-        ((AbstractElement)n).initializeAttributes();
+	/**
+	 * Deeply exports this node to the given document.
+	 */
+	@Override
+	protected Node deepExport(Node n, AbstractDocument d) {
+		super.export(n, d);
+		((AbstractElement) n).initializeAttributes();
 
-        super.deepExport(n, d);
-        return n;
-    }
+		super.deepExport(n, d);
+		return n;
+	}
 
-    /**
-     * An implementation of the {@link NamedNodeMap}.
-     */
-    protected class ExtendedNamedNodeHashMap extends NamedNodeHashMap {
+	/**
+	 * An implementation of the {@link NamedNodeMap}.
+	 */
+	protected class ExtendedNamedNodeHashMap extends NamedNodeHashMap {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        /**
-         * Creates a new ExtendedNamedNodeHashMap object.
-         */
-        public ExtendedNamedNodeHashMap() {
-        }
+		/**
+		 * Creates a new ExtendedNamedNodeHashMap object.
+		 */
+		public ExtendedNamedNodeHashMap() {
+		}
 
-        /**
-         * Adds an unspecified attribute to the map.
-         *
-         * @param nsURI The attribute namespace URI.
-         * @param name The attribute's qualified name.
-         * @param value The attribute's default value.
-         */
-        public void setUnspecifiedAttribute( String nsURI, String name,
-                                             String value ) {
-            Attr attr = getOwnerDocument().createAttributeNS( nsURI, name );
-            attr.setValue( value );
-            ( (AbstractAttr)attr ).setSpecified( false );
-            setNamedItemNS( attr );
-        }
+		/**
+		 * Adds an unspecified attribute to the map.
+		 *
+		 * @param nsURI The attribute namespace URI.
+		 * @param name  The attribute's qualified name.
+		 * @param value The attribute's default value.
+		 */
+		public void setUnspecifiedAttribute(String nsURI, String name, String value) {
+			Attr attr = getOwnerDocument().createAttributeNS(nsURI, name);
+			attr.setValue(value);
+			((AbstractAttr) attr).setSpecified(false);
+			setNamedItemNS(attr);
+		}
 
-        /**
-         * <b>DOM</b>: Implements {@link NamedNodeMap#removeNamedItemNS(String,String)}.
-         */
-        @Override
-        public Node removeNamedItemNS( String namespaceURI, String localName )
-                throws DOMException {
-            if ( isReadonly() ) {
-                throw createDOMException
-                        ( DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                                "readonly.node.map",
-                                new Object[]{} );
-            }
-            if ( localName == null ) {
-                throw createDOMException( DOMException.NOT_FOUND_ERR,
-                        "attribute.missing",
-                        new Object[]{""} );
-            }
-            AbstractAttr n = (AbstractAttr)remove( namespaceURI, localName );
-            if ( n == null ) {
-                throw createDOMException( DOMException.NOT_FOUND_ERR,
-                        "attribute.missing",
-                        new Object[]{localName} );
-            }
-            n.setOwnerElement( null );
-            String prefix = n.getPrefix();
+		/**
+		 * <b>DOM</b>: Implements {@link NamedNodeMap#removeNamedItemNS(String,String)}.
+		 */
+		@Override
+		public Node removeNamedItemNS(String namespaceURI, String localName) throws DOMException {
+			if (isReadonly()) {
+				throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.node.map",
+						new Object[] {});
+			}
+			if (localName == null) {
+				throw createDOMException(DOMException.NOT_FOUND_ERR, "attribute.missing", new Object[] { "" });
+			}
+			AbstractAttr n = (AbstractAttr) remove(namespaceURI, localName);
+			if (n == null) {
+				throw createDOMException(DOMException.NOT_FOUND_ERR, "attribute.missing", new Object[] { localName });
+			}
+			n.setOwnerElement(null);
+			String prefix = n.getPrefix();
 
-            // Reset the attribute to its default value
-            if ( !resetAttribute( namespaceURI, prefix, localName ) ) {
-                // Mutation event
-                fireDOMAttrModifiedEvent( n.getNodeName(), n,
-                        n.getNodeValue(), "",
-                        MutationEvent.REMOVAL );
-            }
-            return n;
-        }
-    }
+			// Reset the attribute to its default value
+			if (!resetAttribute(namespaceURI, prefix, localName)) {
+				// Mutation event
+				fireDOMAttrModifiedEvent(n.getNodeName(), n, n.getNodeValue(), "", MutationEvent.REMOVAL);
+			}
+			return n;
+		}
+	}
 }

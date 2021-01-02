@@ -28,66 +28,64 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.CachableRed;
 import io.sf.carte.echosvg.ext.awt.image.rendered.ProfileRed;
 
 /**
- * Implements the interface expected from a color matrix
- * operation
+ * Implements the interface expected from a color matrix operation
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class ProfileRable extends  AbstractRable{
+public class ProfileRable extends AbstractRable {
 
-    private ICCColorSpaceWithIntent colorSpace;
+	private ICCColorSpaceWithIntent colorSpace;
 
-    /**
-     * Instances should be built through the static
-     * factory methods
-     */
-    public ProfileRable(Filter src, ICCColorSpaceWithIntent colorSpace){
-        super(src);
-        this.colorSpace = colorSpace;
-    }
+	/**
+	 * Instances should be built through the static factory methods
+	 */
+	public ProfileRable(Filter src, ICCColorSpaceWithIntent colorSpace) {
+		super(src);
+		this.colorSpace = colorSpace;
+	}
 
-    /**
-     * Sets the source of the blur operation
-     */
-    public void setSource(Filter src){
-        init(src, null);
-    }
+	/**
+	 * Sets the source of the blur operation
+	 */
+	public void setSource(Filter src) {
+		init(src, null);
+	}
 
-    /**
-     * Returns the source of the blur operation
-     */
-    public Filter getSource(){
-        return (Filter)getSources().get(0);
-    }
+	/**
+	 * Returns the source of the blur operation
+	 */
+	public Filter getSource() {
+		return (Filter) getSources().get(0);
+	}
 
-    /**
-     * Sets the ColorSpace of the Profile operation
-     */
-    public void setColorSpace(ICCColorSpaceWithIntent colorSpace){
-        touch();
-        this.colorSpace = colorSpace;
-    }
+	/**
+	 * Sets the ColorSpace of the Profile operation
+	 */
+	public void setColorSpace(ICCColorSpaceWithIntent colorSpace) {
+		touch();
+		this.colorSpace = colorSpace;
+	}
 
-    /**
-     * Returns the ColorSpace of the Profile operation
-     */
-    public ICCColorSpaceWithIntent getColorSpace(){
-        return colorSpace;
-    }
+	/**
+	 * Returns the ColorSpace of the Profile operation
+	 */
+	public ICCColorSpaceWithIntent getColorSpace() {
+		return colorSpace;
+	}
 
-    @Override
-    public RenderedImage createRendering(RenderContext rc) {
-        //
-        // Get source's rendered image
-        //
-        RenderedImage srcRI = getSource().createRendering(rc);
+	@Override
+	public RenderedImage createRendering(RenderContext rc) {
+		//
+		// Get source's rendered image
+		//
+		RenderedImage srcRI = getSource().createRendering(rc);
 
-        if(srcRI == null)
-            return null;
+		if (srcRI == null)
+			return null;
 
-        CachableRed srcCR = GraphicsUtil.wrap(srcRI);
-        return new ProfileRed(srcCR, colorSpace);
-    }
+		CachableRed srcCR = GraphicsUtil.wrap(srcRI);
+		return new ProfileRed(srcCR, colorSpace);
+	}
 }

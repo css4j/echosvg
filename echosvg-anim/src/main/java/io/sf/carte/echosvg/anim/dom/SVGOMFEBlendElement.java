@@ -34,138 +34,125 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFEBlendElement
-    extends    SVGOMFilterPrimitiveStandardAttributes
-    implements SVGFEBlendElement {
+public class SVGOMFEBlendElement extends SVGOMFilterPrimitiveStandardAttributes implements SVGFEBlendElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
-        t.put(null, SVG_IN_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_CDATA));
-        t.put(null, SVG_SURFACE_SCALE_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_DIFFUSE_CONSTANT_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
+				SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
+		t.put(null, SVG_IN_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_CDATA));
+		t.put(null, SVG_SURFACE_SCALE_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_DIFFUSE_CONSTANT_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'mode' attribute values.
-     */
-    protected static final String[] MODE_VALUES = {
-        "",
-        SVG_NORMAL_VALUE,
-        SVG_MULTIPLY_VALUE,
-        SVG_SCREEN_VALUE,
-        SVG_DARKEN_VALUE,
-        SVG_LIGHTEN_VALUE
-    };
+	/**
+	 * The 'mode' attribute values.
+	 */
+	protected static final String[] MODE_VALUES = { "", SVG_NORMAL_VALUE, SVG_MULTIPLY_VALUE, SVG_SCREEN_VALUE,
+			SVG_DARKEN_VALUE, SVG_LIGHTEN_VALUE };
 
-    /**
-     * The 'in' attribute value.
-     */
-    protected SVGOMAnimatedString in;
+	/**
+	 * The 'in' attribute value.
+	 */
+	protected SVGOMAnimatedString in;
 
-    /**
-     * The 'in2' attribute value.
-     */
-    protected SVGOMAnimatedString in2;
+	/**
+	 * The 'in2' attribute value.
+	 */
+	protected SVGOMAnimatedString in2;
 
-    /**
-     * The 'mode' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration mode;
+	/**
+	 * The 'mode' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration mode;
 
-    /**
-     * Creates a new SVGOMFEBlendElement object.
-     */
-    protected SVGOMFEBlendElement() {
-    }
+	/**
+	 * Creates a new SVGOMFEBlendElement object.
+	 */
+	protected SVGOMFEBlendElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFEBlendElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFEBlendElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFEBlendElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFEBlendElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
-        in2 = createLiveAnimatedString(null, SVG_IN2_ATTRIBUTE);
-        mode =
-            createLiveAnimatedEnumeration
-                (null, SVG_MODE_ATTRIBUTE, MODE_VALUES, (short) 1);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
+		in2 = createLiveAnimatedString(null, SVG_IN2_ATTRIBUTE);
+		mode = createLiveAnimatedEnumeration(null, SVG_MODE_ATTRIBUTE, MODE_VALUES, (short) 1);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_BLEND_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_BLEND_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEBlendElement#getIn1()}.
-     */
-    @Override
-    public SVGAnimatedString getIn1() {
-        return in;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEBlendElement#getIn1()}.
+	 */
+	@Override
+	public SVGAnimatedString getIn1() {
+		return in;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEBlendElement#getIn2()}.
-     */
-    @Override
-    public SVGAnimatedString getIn2() {
-        return in2;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEBlendElement#getIn2()}.
+	 */
+	@Override
+	public SVGAnimatedString getIn2() {
+		return in2;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEBlendElement#getMode()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getMode() {
-        return mode;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEBlendElement#getMode()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getMode() {
+		return mode;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFEBlendElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFEBlendElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

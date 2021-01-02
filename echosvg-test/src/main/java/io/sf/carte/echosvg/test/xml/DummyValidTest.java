@@ -19,7 +19,7 @@
 package io.sf.carte.echosvg.test.xml;
 
 import io.sf.carte.echosvg.test.AbstractTest;
- 
+
 /**
  * Dummy Test which always passes. Needed for the test infrastructure
  * validation.
@@ -30,4 +30,3 @@ import io.sf.carte.echosvg.test.AbstractTest;
  */
 public class DummyValidTest extends AbstractTest {
 }
-

@@ -22,11 +22,9 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Point2D;
 import java.text.AttributedCharacterIterator;
 
-
 /**
- * Interface implemented by factory instances that can return
- * TextSpanLayouts appropriate to AttributedCharacterIterator
- * instances.
+ * Interface implemented by factory instances that can return TextSpanLayouts
+ * appropriate to AttributedCharacterIterator instances.
  *
  * @see io.sf.carte.echosvg.bridge.TextSpanLayout
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
@@ -35,18 +33,16 @@ import java.text.AttributedCharacterIterator;
  */
 public interface TextLayoutFactory {
 
-    /**
-     * Returns an instance of TextSpanLayout suitable for rendering the
-     * AttributedCharacterIterator.
-     * @param aci the character iterator to be laid out
-     * @param charMap Indicates how chars in aci map to original
-     *                text char array.
-     * @param offset The offset position for the text layout.
-     * @param frc the rendering context for the fonts used.
-     */
-    TextSpanLayout createTextLayout(AttributedCharacterIterator aci,
-                                    int [] charMap,
-                                    Point2D offset,
-                                    FontRenderContext frc);
+	/**
+	 * Returns an instance of TextSpanLayout suitable for rendering the
+	 * AttributedCharacterIterator.
+	 * 
+	 * @param aci     the character iterator to be laid out
+	 * @param charMap Indicates how chars in aci map to original text char array.
+	 * @param offset  The offset position for the text layout.
+	 * @param frc     the rendering context for the fonts used.
+	 */
+	TextSpanLayout createTextLayout(AttributedCharacterIterator aci, int[] charMap, Point2D offset,
+			FontRenderContext frc);
 
 }

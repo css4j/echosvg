@@ -29,60 +29,56 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatablePointListValue extends AnimatableNumberListValue {
 
-    /**
-     * Creates a new, uninitialized AnimatablePointListValue.
-     */
-    protected AnimatablePointListValue(AnimationTarget target) {
-        super(target);
-    }
+	/**
+	 * Creates a new, uninitialized AnimatablePointListValue.
+	 */
+	protected AnimatablePointListValue(AnimationTarget target) {
+		super(target);
+	}
 
-    /**
-     * Creates a new AnimatablePointListValue.
-     */
-    public AnimatablePointListValue(AnimationTarget target, float[] numbers) {
-        super(target, numbers);
-    }
+	/**
+	 * Creates a new AnimatablePointListValue.
+	 */
+	public AnimatablePointListValue(AnimationTarget target, float[] numbers) {
+		super(target, numbers);
+	}
 
-    /**
-     * Performs interpolation to the given value.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to,
-                                       float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        if (result == null) {
-            result = new AnimatablePointListValue(target);
-        }
-        return super.interpolate
-            (result, to, interpolation, accumulation, multiplier);
-    }
+	/**
+	 * Performs interpolation to the given value.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		if (result == null) {
+			result = new AnimatablePointListValue(target);
+		}
+		return super.interpolate(result, to, interpolation, accumulation, multiplier);
+	}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return false;
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return false;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        return 0f;
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		return 0f;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        float[] ns = new float[numbers.length];
-        return new AnimatablePointListValue(target, ns);
-    }
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		float[] ns = new float[numbers.length];
+		return new AnimatablePointListValue(target, ns);
+	}
 }

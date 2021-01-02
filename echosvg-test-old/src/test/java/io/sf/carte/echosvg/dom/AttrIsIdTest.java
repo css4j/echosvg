@@ -30,13 +30,13 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class AttrIsIdTest extends DOM3Test {
-    @Override
-    public boolean runImplBasic() throws Exception {
-        Document doc = newSVGDoc();
-        Element g = doc.createElementNS(SVG_NAMESPACE_URI, "g");
-        g.setAttributeNS(null, "id", "n1");
-        doc.getDocumentElement().appendChild(g);
-        Attr a = g.getAttributeNodeNS(null, "id");
-        return a.isId();
-    }
+	@Override
+	public boolean runImplBasic() throws Exception {
+		Document doc = newSVGDoc();
+		Element g = doc.createElementNS(SVG_NAMESPACE_URI, "g");
+		g.setAttributeNS(null, "id", "n1");
+		doc.getDocumentElement().appendChild(g);
+		Attr a = g.getAttributeNodeNS(null, "id");
+		return a.isId();
+	}
 }

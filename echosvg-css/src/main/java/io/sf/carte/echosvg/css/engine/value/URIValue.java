@@ -29,21 +29,21 @@ import org.w3c.dom.css.CSSPrimitiveValue;
  */
 public class URIValue extends StringValue {
 
-    String cssText;
+	String cssText;
 
-    /**
-     * Creates a new StringValue.
-     */
-    public URIValue(String cssText, String uri) {
-        super(CSSPrimitiveValue.CSS_URI, uri);
-        this.cssText = cssText;
-    }
+	/**
+	 * Creates a new StringValue.
+	 */
+	public URIValue(String cssText, String uri) {
+		super(CSSPrimitiveValue.CSS_URI, uri);
+		this.cssText = cssText;
+	}
 
-    /**
-     * A string representation of the current value.
-     */
-    @Override
-    public String getCssText() {
-        return "url(" + cssText + ')';
-    }
+	/**
+	 * A string representation of the current value.
+	 */
+	@Override
+	public String getCssText() {
+		return "url(" + cssText + ')';
+	}
 }

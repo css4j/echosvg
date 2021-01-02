@@ -32,65 +32,63 @@ import io.sf.carte.echosvg.ext.awt.geom.PathLength;
  */
 public class TextPath {
 
-    private PathLength pathLength;
-    private float startOffset;
+	private PathLength pathLength;
+	private float startOffset;
 
-    /**
-     * Constructs a TextPath based on the specified path.
-     *
-     * @param path The general path along which text is to be laid.
-     */
-    public TextPath(GeneralPath path) {
-        pathLength = new PathLength(path);
-        startOffset = 0;
-    }
+	/**
+	 * Constructs a TextPath based on the specified path.
+	 *
+	 * @param path The general path along which text is to be laid.
+	 */
+	public TextPath(GeneralPath path) {
+		pathLength = new PathLength(path);
+		startOffset = 0;
+	}
 
-    /**
-     * Sets the offset along the path where the first glyph should be rendered.
-     *
-     * @param startOffset An offset from the start of the path.
-     */
-    public void setStartOffset(float startOffset) {
-        this.startOffset = startOffset;
-    }
+	/**
+	 * Sets the offset along the path where the first glyph should be rendered.
+	 *
+	 * @param startOffset An offset from the start of the path.
+	 */
+	public void setStartOffset(float startOffset) {
+		this.startOffset = startOffset;
+	}
 
-    /**
-     * Returns the start offset of this text path.
-     *
-     * @return The start offset of this text path.
-     */
-    public float getStartOffset() {
-        return startOffset;
-    }
+	/**
+	 * Returns the start offset of this text path.
+	 *
+	 * @return The start offset of this text path.
+	 */
+	public float getStartOffset() {
+		return startOffset;
+	}
 
-    /**
-     * Returns the total length of the path.
-     *
-     * @return The lenght of the path.
-     */
-    public float lengthOfPath() {
-        return pathLength.lengthOfPath();
-    }
+	/**
+	 * Returns the total length of the path.
+	 *
+	 * @return The lenght of the path.
+	 */
+	public float lengthOfPath() {
+		return pathLength.lengthOfPath();
+	}
 
-    /**
-     * Returns the angle at the specified length
-     * along the path.
-     *
-     * @param length The length along the path.
-     * @return The angle.
-     */
-    public float angleAtLength(float length) {
-        return pathLength.angleAtLength(length);
-    }
+	/**
+	 * Returns the angle at the specified length along the path.
+	 *
+	 * @param length The length along the path.
+	 * @return The angle.
+	 */
+	public float angleAtLength(float length) {
+		return pathLength.angleAtLength(length);
+	}
 
-    /**
-     * Returns the point that is at the specified length
-     * along the path.
-     *
-     * @param length The length along the path.
-     * @return The point.
-     */
-    public Point2D pointAtLength(float length) {
-        return pathLength.pointAtLength(length);
-    }
+	/**
+	 * Returns the point that is at the specified length along the path.
+	 *
+	 * @param length The length along the path.
+	 * @return The point.
+	 */
+	public Point2D pointAtLength(float length) {
+		return pathLength.pointAtLength(length);
+	}
 }

@@ -38,273 +38,238 @@ import io.sf.carte.echosvg.dom.svg.SVGTextContent;
  */
 public class SVGTextContentSupport {
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGTextContentElement#getNumberOfChars()}.
-     */
-    public static int getNumberOfChars(Element elt)
-    {
-        final SVGOMElement svgelt = (SVGOMElement)elt;
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGTextContentElement#getNumberOfChars()}.
+	 */
+	public static int getNumberOfChars(Element elt) {
+		final SVGOMElement svgelt = (SVGOMElement) elt;
 
-        return (((SVGTextContent)svgelt.getSVGContext()).getNumberOfChars());
-    }
+		return (((SVGTextContent) svgelt.getSVGContext()).getNumberOfChars());
+	}
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGTextContentElement#getExtentOfChar(int charnum)}.
-     */
-    public static SVGRect getExtentOfChar(Element elt, final int charnum ) {
-        final SVGOMElement svgelt = (SVGOMElement)elt;
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGTextContentElement#getExtentOfChar(int charnum)}.
+	 */
+	public static SVGRect getExtentOfChar(Element elt, final int charnum) {
+		final SVGOMElement svgelt = (SVGOMElement) elt;
 
-        if ( (charnum < 0) || 
-             (charnum >= getNumberOfChars(elt)) ){
-            throw svgelt.createDOMException
-                (DOMException.INDEX_SIZE_ERR,
-                 "",null);
-        }
-        
-        final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
-        
-        return new SVGRect() {
-                @Override
-                public float getX() {
-                    return (float)SVGTextContentSupport.getExtent
-                        (svgelt, context, charnum).getX();
-                }
-                @Override
-                public void setX(float x) throws DOMException {
-                    throw svgelt.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.rect", null);
-                }
+		if ((charnum < 0) || (charnum >= getNumberOfChars(elt))) {
+			throw svgelt.createDOMException(DOMException.INDEX_SIZE_ERR, "", null);
+		}
 
-                @Override
-                public float getY() {
-                    return (float)SVGTextContentSupport.getExtent
-                        (svgelt, context, charnum).getY();
-                }
-                @Override
-                public void setY(float y) throws DOMException {
-                    throw svgelt.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.rect", null);
-                }
+		final SVGTextContent context = (SVGTextContent) svgelt.getSVGContext();
 
-                @Override
-                public float getWidth() {
-                    return (float)SVGTextContentSupport.getExtent
-                        (svgelt, context, charnum).getWidth();
-                }
-                @Override
-                public void setWidth(float width) throws DOMException {
-                    throw svgelt.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.rect", null);
-                }
+		return new SVGRect() {
+			@Override
+			public float getX() {
+				return (float) SVGTextContentSupport.getExtent(svgelt, context, charnum).getX();
+			}
 
-                @Override
-                public float getHeight() {
-                    return (float)SVGTextContentSupport.getExtent
-                        (svgelt, context, charnum).getHeight();
-                }
-                @Override
-                public void setHeight(float height) throws DOMException {
-                    throw svgelt.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.rect", null);
-                }
-            };
-    }
+			@Override
+			public void setX(float x) throws DOMException {
+				throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.rect", null);
+			}
 
-    protected static Rectangle2D getExtent
-        (SVGOMElement svgelt, SVGTextContent context, int charnum) {
-        Rectangle2D r2d = context.getExtentOfChar(charnum);
-        if (r2d == null) throw svgelt.createDOMException
-                             (DOMException.INDEX_SIZE_ERR, "",null);
-        return r2d;
-    }
-    
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGTextContentElement#getStartPositionOfChar(int charnum)}.
-     */
-    public static SVGPoint getStartPositionOfChar
-        (Element elt, final int charnum) throws DOMException {
+			@Override
+			public float getY() {
+				return (float) SVGTextContentSupport.getExtent(svgelt, context, charnum).getY();
+			}
 
-        final SVGOMElement svgelt = (SVGOMElement)elt;
+			@Override
+			public void setY(float y) throws DOMException {
+				throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.rect", null);
+			}
 
-        if ( (charnum < 0) || 
-             (charnum >= getNumberOfChars(elt)) ){
-            throw svgelt.createDOMException
-                (DOMException.INDEX_SIZE_ERR,
-                 "",null);
-        }
-        
-        final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
+			@Override
+			public float getWidth() {
+				return (float) SVGTextContentSupport.getExtent(svgelt, context, charnum).getWidth();
+			}
 
-        return new SVGTextPoint(svgelt){
-                @Override
-                public float getX(){
-                    return (float)SVGTextContentSupport.getStartPos
-                        (this.svgelt, context, charnum).getX();
-                }
-                @Override
-                public float getY(){
-                    return (float)SVGTextContentSupport.getStartPos
-                        (this.svgelt, context, charnum).getY();
-                }
-            };
-    }
+			@Override
+			public void setWidth(float width) throws DOMException {
+				throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.rect", null);
+			}
 
-    protected static Point2D getStartPos
-        (SVGOMElement svgelt, SVGTextContent context, int charnum) {
-        Point2D p2d = context.getStartPositionOfChar(charnum);
-        if (p2d == null) throw svgelt.createDOMException
-                             (DOMException.INDEX_SIZE_ERR, "",null);
-        return p2d;
-    }
-    
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGTextContentElement#getEndPositionOfChar(int charnum)}.
-     */
-    public static SVGPoint getEndPositionOfChar
-        (Element elt,final int charnum) throws DOMException {
+			@Override
+			public float getHeight() {
+				return (float) SVGTextContentSupport.getExtent(svgelt, context, charnum).getHeight();
+			}
 
-        final SVGOMElement svgelt = (SVGOMElement)elt;
+			@Override
+			public void setHeight(float height) throws DOMException {
+				throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.rect", null);
+			}
+		};
+	}
 
-        if ( (charnum < 0) || 
-             (charnum >= getNumberOfChars(elt)) ){
-            throw svgelt.createDOMException
-                (DOMException.INDEX_SIZE_ERR,
-                 "",null);
-        }
-        
-        final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
+	protected static Rectangle2D getExtent(SVGOMElement svgelt, SVGTextContent context, int charnum) {
+		Rectangle2D r2d = context.getExtentOfChar(charnum);
+		if (r2d == null)
+			throw svgelt.createDOMException(DOMException.INDEX_SIZE_ERR, "", null);
+		return r2d;
+	}
 
-        return new SVGTextPoint(svgelt){
-                @Override
-                public float getX(){
-                    return (float)SVGTextContentSupport.getEndPos
-                        (this.svgelt, context, charnum).getX();
-                }
-                @Override
-                public float getY(){
-                    return (float)SVGTextContentSupport.getEndPos
-                        (this.svgelt, context, charnum).getY();
-                }
-            };
-    }
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGTextContentElement#getStartPositionOfChar(int charnum)}.
+	 */
+	public static SVGPoint getStartPositionOfChar(Element elt, final int charnum) throws DOMException {
 
-    protected static Point2D getEndPos
-        (SVGOMElement svgelt, SVGTextContent context, int charnum) {
-        Point2D p2d = context.getEndPositionOfChar(charnum);
-        if (p2d == null) throw svgelt.createDOMException
-                             (DOMException.INDEX_SIZE_ERR, "",null);
-        return p2d;
-    }
+		final SVGOMElement svgelt = (SVGOMElement) elt;
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGTextContentElement#selectSubString(int charnum, int nchars)}.
-     */
-    public static void selectSubString(Element elt, int charnum, int nchars){
+		if ((charnum < 0) || (charnum >= getNumberOfChars(elt))) {
+			throw svgelt.createDOMException(DOMException.INDEX_SIZE_ERR, "", null);
+		}
 
-        final SVGOMElement svgelt = (SVGOMElement)elt;
+		final SVGTextContent context = (SVGTextContent) svgelt.getSVGContext();
 
-        if ( (charnum < 0) || 
-             (charnum >= getNumberOfChars(elt)) ){
-            throw svgelt.createDOMException
-                (DOMException.INDEX_SIZE_ERR,
-                 "",null);
-        }
-        
-        final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
+		return new SVGTextPoint(svgelt) {
+			@Override
+			public float getX() {
+				return (float) SVGTextContentSupport.getStartPos(this.svgelt, context, charnum).getX();
+			}
 
-        context.selectSubString(charnum, nchars);
-    }
+			@Override
+			public float getY() {
+				return (float) SVGTextContentSupport.getStartPos(this.svgelt, context, charnum).getY();
+			}
+		};
+	}
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGTextContentElement#getRotationOfChar(int charnum)}.
-     */
-    public static float getRotationOfChar(Element elt, final int charnum ) {
-        final SVGOMElement svgelt = (SVGOMElement)elt;
+	protected static Point2D getStartPos(SVGOMElement svgelt, SVGTextContent context, int charnum) {
+		Point2D p2d = context.getStartPositionOfChar(charnum);
+		if (p2d == null)
+			throw svgelt.createDOMException(DOMException.INDEX_SIZE_ERR, "", null);
+		return p2d;
+	}
 
-        if ( (charnum < 0) || 
-             (charnum >= getNumberOfChars(elt)) ){
-            throw svgelt.createDOMException
-                (DOMException.INDEX_SIZE_ERR,
-                 "",null);
-        }
-        
-        final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
-        
-        return context.getRotationOfChar(charnum);
-    }
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGTextContentElement#getEndPositionOfChar(int charnum)}.
+	 */
+	public static SVGPoint getEndPositionOfChar(Element elt, final int charnum) throws DOMException {
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGTextContentElement#selectSubString(int charnum, int nchars)}.
-     */
-    public static float getComputedTextLength(Element elt){
+		final SVGOMElement svgelt = (SVGOMElement) elt;
 
-        final SVGOMElement svgelt = (SVGOMElement)elt;
+		if ((charnum < 0) || (charnum >= getNumberOfChars(elt))) {
+			throw svgelt.createDOMException(DOMException.INDEX_SIZE_ERR, "", null);
+		}
 
-        final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
+		final SVGTextContent context = (SVGTextContent) svgelt.getSVGContext();
 
-        return context.getComputedTextLength();
-    }
+		return new SVGTextPoint(svgelt) {
+			@Override
+			public float getX() {
+				return (float) SVGTextContentSupport.getEndPos(this.svgelt, context, charnum).getX();
+			}
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGTextContentElement#selectSubString(int charnum, int nchars)}.
-     */
-    public static float getSubStringLength(Element elt, int charnum, int nchars){
+			@Override
+			public float getY() {
+				return (float) SVGTextContentSupport.getEndPos(this.svgelt, context, charnum).getY();
+			}
+		};
+	}
 
-        final SVGOMElement svgelt = (SVGOMElement)elt;
+	protected static Point2D getEndPos(SVGOMElement svgelt, SVGTextContent context, int charnum) {
+		Point2D p2d = context.getEndPositionOfChar(charnum);
+		if (p2d == null)
+			throw svgelt.createDOMException(DOMException.INDEX_SIZE_ERR, "", null);
+		return p2d;
+	}
 
-        if ( (charnum < 0) || 
-             (charnum >= getNumberOfChars(elt)) ){
-            throw svgelt.createDOMException
-                (DOMException.INDEX_SIZE_ERR,
-                 "",null);
-        }
-        
-        final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGTextContentElement#selectSubString(int charnum, int nchars)}.
+	 */
+	public static void selectSubString(Element elt, int charnum, int nchars) {
 
-        return context.getSubStringLength(charnum,nchars);
-    }
+		final SVGOMElement svgelt = (SVGOMElement) elt;
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGTextContentElement#getCharNumAtPosition(SVGPoint point)}.
-     */
-    public static int getCharNumAtPosition(Element elt, final float x, final float y) throws DOMException {
+		if ((charnum < 0) || (charnum >= getNumberOfChars(elt))) {
+			throw svgelt.createDOMException(DOMException.INDEX_SIZE_ERR, "", null);
+		}
 
-        final SVGOMElement svgelt = (SVGOMElement)elt;
+		final SVGTextContent context = (SVGTextContent) svgelt.getSVGContext();
 
-        final SVGTextContent context = (SVGTextContent)svgelt.getSVGContext();
-        
-        return context.getCharNumAtPosition(x,y);
-    }
+		context.selectSubString(charnum, nchars);
+	}
 
-    public static class SVGTextPoint extends SVGOMPoint {
-        SVGOMElement svgelt;
-        SVGTextPoint(SVGOMElement elem) {
-            svgelt = elem;
-        }
-        @Override
-        public void setX(float x) throws DOMException {
-            throw svgelt.createDOMException
-                (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                 "readonly.point", null);
-        }
-        @Override
-        public void setY(float y) throws DOMException {
-            throw svgelt.createDOMException
-                (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                 "readonly.point", null);
-        }
-    }
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGTextContentElement#getRotationOfChar(int charnum)}.
+	 */
+	public static float getRotationOfChar(Element elt, final int charnum) {
+		final SVGOMElement svgelt = (SVGOMElement) elt;
+
+		if ((charnum < 0) || (charnum >= getNumberOfChars(elt))) {
+			throw svgelt.createDOMException(DOMException.INDEX_SIZE_ERR, "", null);
+		}
+
+		final SVGTextContent context = (SVGTextContent) svgelt.getSVGContext();
+
+		return context.getRotationOfChar(charnum);
+	}
+
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGTextContentElement#selectSubString(int charnum, int nchars)}.
+	 */
+	public static float getComputedTextLength(Element elt) {
+
+		final SVGOMElement svgelt = (SVGOMElement) elt;
+
+		final SVGTextContent context = (SVGTextContent) svgelt.getSVGContext();
+
+		return context.getComputedTextLength();
+	}
+
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGTextContentElement#selectSubString(int charnum, int nchars)}.
+	 */
+	public static float getSubStringLength(Element elt, int charnum, int nchars) {
+
+		final SVGOMElement svgelt = (SVGOMElement) elt;
+
+		if ((charnum < 0) || (charnum >= getNumberOfChars(elt))) {
+			throw svgelt.createDOMException(DOMException.INDEX_SIZE_ERR, "", null);
+		}
+
+		final SVGTextContent context = (SVGTextContent) svgelt.getSVGContext();
+
+		return context.getSubStringLength(charnum, nchars);
+	}
+
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGTextContentElement#getCharNumAtPosition(SVGPoint point)}.
+	 */
+	public static int getCharNumAtPosition(Element elt, final float x, final float y) throws DOMException {
+
+		final SVGOMElement svgelt = (SVGOMElement) elt;
+
+		final SVGTextContent context = (SVGTextContent) svgelt.getSVGContext();
+
+		return context.getCharNumAtPosition(x, y);
+	}
+
+	public static class SVGTextPoint extends SVGOMPoint {
+		SVGOMElement svgelt;
+
+		SVGTextPoint(SVGOMElement elem) {
+			svgelt = elem;
+		}
+
+		@Override
+		public void setX(float x) throws DOMException {
+			throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.point", null);
+		}
+
+		@Override
+		public void setY(float y) throws DOMException {
+			throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.point", null);
+		}
+	}
 }

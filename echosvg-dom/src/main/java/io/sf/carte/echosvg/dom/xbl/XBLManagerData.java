@@ -27,13 +27,13 @@ package io.sf.carte.echosvg.dom.xbl;
  */
 public interface XBLManagerData {
 
-    /**
-     * Returns the XBL manager associated data for this node.
-     */
-    Object getManagerData();
+	/**
+	 * Returns the XBL manager associated data for this node.
+	 */
+	Object getManagerData();
 
-    /**
-     * Sets the XBL manager associated data for this node.
-     */
-    void setManagerData(Object data);
+	/**
+	 * Sets the XBL manager associated data for this node.
+	 */
+	void setManagerData(Object data);
 }

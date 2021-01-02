@@ -25,14 +25,14 @@ package io.sf.carte.echosvg.gvt.renderer;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public interface ImageRendererFactory extends RendererFactory{
-    /**
-     * Creates a new static renderer.
-     */
-    ImageRenderer createStaticImageRenderer();
+public interface ImageRendererFactory extends RendererFactory {
+	/**
+	 * Creates a new static renderer.
+	 */
+	ImageRenderer createStaticImageRenderer();
 
-    /**
-     * Creates a new dynamic renderer.
-     */
-    ImageRenderer createDynamicImageRenderer();
+	/**
+	 * Creates a new dynamic renderer.
+	 */
+	ImageRenderer createDynamicImageRenderer();
 }

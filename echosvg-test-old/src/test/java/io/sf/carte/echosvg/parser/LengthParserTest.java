@@ -33,110 +33,112 @@ import io.sf.carte.echosvg.test.TestReport;
  */
 public class LengthParserTest extends AbstractTest {
 
-    protected String sourceLength;
-    protected String destinationLength;
+	protected String sourceLength;
+	protected String destinationLength;
 
-    protected StringBuffer buffer;
-    protected String resultLength;
+	protected StringBuffer buffer;
+	protected String resultLength;
 
-    /**
-     * Creates a new LengthParserTest.
-     * @param slength The length to parse.
-     * @param dlength The length after serialization.
-     */
-    public LengthParserTest(String slength, String dlength) {
-        sourceLength = slength;
-        destinationLength = dlength;
-    }
+	/**
+	 * Creates a new LengthParserTest.
+	 * 
+	 * @param slength The length to parse.
+	 * @param dlength The length after serialization.
+	 */
+	public LengthParserTest(String slength, String dlength) {
+		sourceLength = slength;
+		destinationLength = dlength;
+	}
 
-    @Override
-    public TestReport runImpl() throws Exception {
-        LengthParser pp = new LengthParser();
-        pp.setLengthHandler(new TestHandler());
+	@Override
+	public TestReport runImpl() throws Exception {
+		LengthParser pp = new LengthParser();
+		pp.setLengthHandler(new TestHandler());
 
-        try {
-            pp.parse(new StringReader(sourceLength));
-        } catch (ParseException e) {
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode("parse.error");
-            report.addDescriptionEntry("exception.text", e.getMessage());
-            report.setPassed(false);
-            return report;
-        }
+		try {
+			pp.parse(new StringReader(sourceLength));
+		} catch (ParseException e) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode("parse.error");
+			report.addDescriptionEntry("exception.text", e.getMessage());
+			report.setPassed(false);
+			return report;
+		}
 
-        if (!destinationLength.equals(resultLength)) {
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode("invalid.parsing.events");
-            report.addDescriptionEntry("expected.text", destinationLength);
-            report.addDescriptionEntry("generated.text", resultLength);
-            report.setPassed(false);
-            return report;
-        }
+		if (!destinationLength.equals(resultLength)) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode("invalid.parsing.events");
+			report.addDescriptionEntry("expected.text", destinationLength);
+			report.addDescriptionEntry("generated.text", resultLength);
+			report.setPassed(false);
+			return report;
+		}
 
-        return reportSuccess();
-    }
+		return reportSuccess();
+	}
 
-    class TestHandler extends DefaultLengthHandler {
-        public TestHandler() {}
+	class TestHandler extends DefaultLengthHandler {
+		public TestHandler() {
+		}
 
-        @Override
-        public void startLength() throws ParseException {
-            buffer = new StringBuffer();
-        }
-        
-        @Override
-        public void lengthValue(float v) throws ParseException {
-            buffer.append(v);
-        }
+		@Override
+		public void startLength() throws ParseException {
+			buffer = new StringBuffer();
+		}
 
-        @Override
-        public void em() throws ParseException {
-            buffer.append("em");
-        }
+		@Override
+		public void lengthValue(float v) throws ParseException {
+			buffer.append(v);
+		}
 
-        @Override
-        public void ex() throws ParseException {
-            buffer.append("ex");
-        }
+		@Override
+		public void em() throws ParseException {
+			buffer.append("em");
+		}
 
-        @Override
-        public void in() throws ParseException {
-            buffer.append("in");
-        }
+		@Override
+		public void ex() throws ParseException {
+			buffer.append("ex");
+		}
 
-        @Override
-        public void cm() throws ParseException {
-            buffer.append("cm");
-        }
+		@Override
+		public void in() throws ParseException {
+			buffer.append("in");
+		}
 
-        @Override
-        public void mm() throws ParseException {
-            buffer.append("mm");
-        }
+		@Override
+		public void cm() throws ParseException {
+			buffer.append("cm");
+		}
 
-        @Override
-        public void pc() throws ParseException {
-            buffer.append("pc");
-        }
+		@Override
+		public void mm() throws ParseException {
+			buffer.append("mm");
+		}
 
-        @Override
-        public void pt() throws ParseException {
-            buffer.append("pt");
-        }
+		@Override
+		public void pc() throws ParseException {
+			buffer.append("pc");
+		}
 
-        @Override
-        public void px() throws ParseException {
-            buffer.append("px");
-        }
+		@Override
+		public void pt() throws ParseException {
+			buffer.append("pt");
+		}
 
-        @Override
-        public void percentage() throws ParseException {
-            buffer.append("%");
-        }
+		@Override
+		public void px() throws ParseException {
+			buffer.append("px");
+		}
 
-        @Override
-        public void endLength() throws ParseException {
-            resultLength = buffer.toString();
-        }
-    }
+		@Override
+		public void percentage() throws ParseException {
+			buffer.append("%");
+		}
+
+		@Override
+		public void endLength() throws ParseException {
+			resultLength = buffer.toString();
+		}
+	}
 }

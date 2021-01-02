@@ -28,74 +28,77 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
 
 /**
- * This class represents an object which provide support for the
- * 'margin' shorthand property.
+ * This class represents an object which provide support for the 'margin'
+ * shorthand property.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class MarginShorthandManager
-    extends AbstractValueFactory
-    implements ShorthandManager {
+public class MarginShorthandManager extends AbstractValueFactory implements ShorthandManager {
 
-    public MarginShorthandManager() { }
-    
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return SVG12CSSConstants.CSS_MARGIN_PROPERTY;
-    }
-    
-    /**
-     * Implements {@link ShorthandManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	public MarginShorthandManager() {
+	}
 
-    /**
-     * Implements {@link ShorthandManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return SVG12CSSConstants.CSS_MARGIN_PROPERTY;
+	}
 
-    /**
-     * Implements {@link ShorthandManager#setValues(CSSEngine,ShorthandManager.PropertyHandler,LexicalUnit,boolean)}.
-     */
-    @Override
-    public void setValues(CSSEngine eng,
-                          ShorthandManager.PropertyHandler ph,
-                          LexicalUnit lu,
-                          boolean imp)
-        throws DOMException {
-        if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INHERIT)
-            return;
+	/**
+	 * Implements {@link ShorthandManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-        LexicalUnit []lus  = new LexicalUnit[4];
-        int cnt=0;
-        while (lu != null) {
-            if (cnt == 4)
-                throw createInvalidLexicalUnitDOMException
-                    (lu.getLexicalUnitType());
-            lus[cnt++] = lu;
-            lu = lu.getNextLexicalUnit();
-        }
-        switch (cnt) {
-        case 1: lus[3] = lus[2] = lus[1] = lus[0]; break;
-        case 2: lus[2] = lus[0];  lus[3] = lus[1]; break;
-        case 3: lus[3] = lus[1]; break;
-        default:
-        }
+	/**
+	 * Implements {@link ShorthandManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-        ph.property(SVG12CSSConstants.CSS_MARGIN_TOP_PROPERTY,    lus[0], imp);
-        ph.property(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY,  lus[1], imp);
-        ph.property(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, lus[2], imp);
-        ph.property(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY,   lus[3], imp);
-    }
+	/**
+	 * Implements
+	 * {@link ShorthandManager#setValues(CSSEngine,ShorthandManager.PropertyHandler,LexicalUnit,boolean)}.
+	 */
+	@Override
+	public void setValues(CSSEngine eng, ShorthandManager.PropertyHandler ph, LexicalUnit lu, boolean imp)
+			throws DOMException {
+		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INHERIT)
+			return;
+
+		LexicalUnit[] lus = new LexicalUnit[4];
+		int cnt = 0;
+		while (lu != null) {
+			if (cnt == 4)
+				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+			lus[cnt++] = lu;
+			lu = lu.getNextLexicalUnit();
+		}
+		switch (cnt) {
+		case 1:
+			lus[3] = lus[2] = lus[1] = lus[0];
+			break;
+		case 2:
+			lus[2] = lus[0];
+			lus[3] = lus[1];
+			break;
+		case 3:
+			lus[3] = lus[1];
+			break;
+		default:
+		}
+
+		ph.property(SVG12CSSConstants.CSS_MARGIN_TOP_PROPERTY, lus[0], imp);
+		ph.property(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, lus[1], imp);
+		ph.property(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, lus[2], imp);
+		ph.property(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY, lus[3], imp);
+	}
 }

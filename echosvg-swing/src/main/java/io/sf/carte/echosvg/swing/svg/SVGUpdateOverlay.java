@@ -37,62 +37,61 @@ import io.sf.carte.echosvg.swing.gvt.Overlay;
  * @version $Id$
  */
 public class SVGUpdateOverlay implements Overlay {
-    List<Rectangle> rects = new LinkedList<>();
-    int size, updateCount;
-    int []counts;
-    public SVGUpdateOverlay(int size, int numUpdates) {
-        this.size = size;
-        counts = new int[numUpdates];
-    }
+	List<Rectangle> rects = new LinkedList<>();
+	int size, updateCount;
+	int[] counts;
 
-    public void addRect(Rectangle r) {
-        rects.add(r);
-        if (rects.size() > size)
-            rects.remove(0);
-        updateCount++;
-    }
+	public SVGUpdateOverlay(int size, int numUpdates) {
+		this.size = size;
+		counts = new int[numUpdates];
+	}
 
-    public void endUpdate() {
-        int i=0;
-        for (; i<counts.length-1; i++) {
-            counts[i] = counts[i+1];
-        }
-        counts[i] = updateCount;
-        updateCount = 0;
+	public void addRect(Rectangle r) {
+		rects.add(r);
+		if (rects.size() > size)
+			rects.remove(0);
+		updateCount++;
+	}
 
-        int num = rects.size();
-        for (i=counts.length-1; i>=0; i--) {
-            if (counts[i] > num) {
-                counts[i] = num;
-            }
-            num -= counts[i];
-        }
-        counts[0] += num;
-    }
+	public void endUpdate() {
+		int i = 0;
+		for (; i < counts.length - 1; i++) {
+			counts[i] = counts[i + 1];
+		}
+		counts[i] = updateCount;
+		updateCount = 0;
 
-    @Override
-    public void paint(Graphics g) {
-        Iterator<Rectangle> i = rects.iterator();
-        int count = 0;
-        int idx = 0;
-        int group = 0;
-        while ((group < counts.length-1) &&
-               (idx == counts[group]))
-            group++;
-        int cmax = counts.length-1;
-        while (i.hasNext()) {
-            Rectangle r = i.next();
-            Color c;
-            c = new Color(1.0f, (cmax-group)/(float)cmax, 0,
-                          (count+1.0f)/rects.size());
-            g.setColor(c);
-            g.drawRect(r.x, r.y, r.width, r.height);
-            count++; idx++;
-            while ((group < counts.length-1) &&
-                   (idx == counts[group])) {
-                group++;
-                idx = 0;
-            }
-        }
-    }
+		int num = rects.size();
+		for (i = counts.length - 1; i >= 0; i--) {
+			if (counts[i] > num) {
+				counts[i] = num;
+			}
+			num -= counts[i];
+		}
+		counts[0] += num;
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		Iterator<Rectangle> i = rects.iterator();
+		int count = 0;
+		int idx = 0;
+		int group = 0;
+		while ((group < counts.length - 1) && (idx == counts[group]))
+			group++;
+		int cmax = counts.length - 1;
+		while (i.hasNext()) {
+			Rectangle r = i.next();
+			Color c;
+			c = new Color(1.0f, (cmax - group) / (float) cmax, 0, (count + 1.0f) / rects.size());
+			g.setColor(c);
+			g.drawRect(r.x, r.y, r.width, r.height);
+			count++;
+			idx++;
+			while ((group < counts.length - 1) && (idx == counts[group])) {
+				group++;
+				idx = 0;
+			}
+		}
+	}
 }

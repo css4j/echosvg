@@ -34,169 +34,151 @@ import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.xbl.NodeXBL;
 
 /**
- * Bridge class for SVG 'text' elements with support for text content
- * that has been specified with XBL.
+ * Bridge class for SVG 'text' elements with support for text content that has
+ * been specified with XBL.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVG12TextElementBridge
-        extends SVGTextElementBridge
-        implements SVG12BridgeUpdateHandler {
+public class SVG12TextElementBridge extends SVGTextElementBridge implements SVG12BridgeUpdateHandler {
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new SVG12TextElementBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVG12TextElementBridge();
+	}
 
-    /**
-     * Adds the DOM listeners for this text bridge.
-     */
-    @Override
-    protected void addTextEventListeners(BridgeContext ctx, NodeEventTarget e) {
-        if (childNodeRemovedEventListener == null) {
-            childNodeRemovedEventListener =
-                new DOMChildNodeRemovedEventListener();
-        }
-        if (subtreeModifiedEventListener == null) {
-            subtreeModifiedEventListener =
-                new DOMSubtreeModifiedEventListener();
-        }
+	/**
+	 * Adds the DOM listeners for this text bridge.
+	 */
+	@Override
+	protected void addTextEventListeners(BridgeContext ctx, NodeEventTarget e) {
+		if (childNodeRemovedEventListener == null) {
+			childNodeRemovedEventListener = new DOMChildNodeRemovedEventListener();
+		}
+		if (subtreeModifiedEventListener == null) {
+			subtreeModifiedEventListener = new DOMSubtreeModifiedEventListener();
+		}
 
-        SVG12BridgeContext ctx12 = (SVG12BridgeContext) ctx;
-        AbstractNode n = (AbstractNode) e;
-        XBLEventSupport evtSupport =
-            (XBLEventSupport) n.initializeEventSupport();
+		SVG12BridgeContext ctx12 = (SVG12BridgeContext) ctx;
+		AbstractNode n = (AbstractNode) e;
+		XBLEventSupport evtSupport = (XBLEventSupport) n.initializeEventSupport();
 
-        //to be notified when a child is removed from the 
-        //<text> element.
-        evtSupport.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
-             childNodeRemovedEventListener, true);
-        ctx12.storeImplementationEventListenerNS
-            (e, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
-             childNodeRemovedEventListener, true);
-        
-        //to be notified when the modification of the subtree
-        //of the <text> element is done
-        evtSupport.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
-             subtreeModifiedEventListener, false);
-        ctx12.storeImplementationEventListenerNS
-            (e, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
-             subtreeModifiedEventListener, false);
-    }
+		// to be notified when a child is removed from the
+		// <text> element.
+		evtSupport.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
+				childNodeRemovedEventListener, true);
+		ctx12.storeImplementationEventListenerNS(e, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
+				childNodeRemovedEventListener, true);
 
-    /**
-     * Removes the DOM listeners for this text bridge.
-     */
-    @Override
-    protected void removeTextEventListeners(BridgeContext ctx,
-                                            NodeEventTarget e) {
-        AbstractNode n = (AbstractNode) e;
-        XBLEventSupport evtSupport =
-            (XBLEventSupport) n.initializeEventSupport();
+		// to be notified when the modification of the subtree
+		// of the <text> element is done
+		evtSupport.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
+				subtreeModifiedEventListener, false);
+		ctx12.storeImplementationEventListenerNS(e, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
+				subtreeModifiedEventListener, false);
+	}
 
-        evtSupport.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
-             childNodeRemovedEventListener, true);
-        evtSupport.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
-             subtreeModifiedEventListener, false);
-    }
+	/**
+	 * Removes the DOM listeners for this text bridge.
+	 */
+	@Override
+	protected void removeTextEventListeners(BridgeContext ctx, NodeEventTarget e) {
+		AbstractNode n = (AbstractNode) e;
+		XBLEventSupport evtSupport = (XBLEventSupport) n.initializeEventSupport();
 
-    /**
-     * The DOM EventListener invoked when a node is removed.
-     */
-    protected class DOMChildNodeRemovedEventListener
-            extends SVGTextElementBridge.DOMChildNodeRemovedEventListener {
-        @Override
-        public void handleEvent(Event evt) {
-            super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
-        }
-    }
+		evtSupport.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
+				childNodeRemovedEventListener, true);
+		evtSupport.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
+				subtreeModifiedEventListener, false);
+	}
 
-    /**
-     * The DOM EventListener invoked when the subtree is modified.
-     */
-    protected class DOMSubtreeModifiedEventListener
-            extends SVGTextElementBridge.DOMSubtreeModifiedEventListener {
-        @Override
-        public void handleEvent(Event evt) {
-            super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
-        }
-    }
+	/**
+	 * The DOM EventListener invoked when a node is removed.
+	 */
+	protected class DOMChildNodeRemovedEventListener extends SVGTextElementBridge.DOMChildNodeRemovedEventListener {
+		@Override
+		public void handleEvent(Event evt) {
+			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
+		}
+	}
 
-    // Tree navigation ------------------------------------------------------
+	/**
+	 * The DOM EventListener invoked when the subtree is modified.
+	 */
+	protected class DOMSubtreeModifiedEventListener extends SVGTextElementBridge.DOMSubtreeModifiedEventListener {
+		@Override
+		public void handleEvent(Event evt) {
+			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
+		}
+	}
 
-    /**
-     * Returns the first child node of the given node that should be
-     * processed by the text bridge.
-     */
-    @Override
-    protected Node getFirstChild(Node n) {
-        return ((NodeXBL) n).getXblFirstChild();
-    }
+	// Tree navigation ------------------------------------------------------
 
-    /**
-     * Returns the next sibling node of the given node that should be
-     * processed by the text bridge.
-     */
-    @Override
-    protected Node getNextSibling(Node n) {
-        return ((NodeXBL) n).getXblNextSibling();
-    }
+	/**
+	 * Returns the first child node of the given node that should be processed by
+	 * the text bridge.
+	 */
+	@Override
+	protected Node getFirstChild(Node n) {
+		return ((NodeXBL) n).getXblFirstChild();
+	}
 
-    /**
-     * Returns the parent node of the given node that should be
-     * processed by the text bridge.
-     */
-    @Override
-    protected Node getParentNode(Node n) {
-        return ((NodeXBL) n).getXblParentNode();
-    }
+	/**
+	 * Returns the next sibling node of the given node that should be processed by
+	 * the text bridge.
+	 */
+	@Override
+	protected Node getNextSibling(Node n) {
+		return ((NodeXBL) n).getXblNextSibling();
+	}
 
-    // SVG12BridgeUpdateHandler //////////////////////////////////////////////
+	/**
+	 * Returns the parent node of the given node that should be processed by the
+	 * text bridge.
+	 */
+	@Override
+	protected Node getParentNode(Node n) {
+		return ((NodeXBL) n).getXblParentNode();
+	}
 
-    /**
-     * Invoked when an MutationEvent of type 'DOMCharacterDataModified' 
-     * is fired.
-     */
-    @Override
-    public void handleDOMCharacterDataModified(MutationEvent evt) {
-        Node childNode = (Node)evt.getTarget();
-        //if the parent is displayed, then discard the layout.
-        if (isParentDisplayed(childNode)) {
-            if (getParentNode(childNode) != childNode.getParentNode()) {
-                // This text node was selected with an xbl:content element,
-                // so a DOMSubtreeModified event is not going to be captured.
-                // Better recompute the text layout now.
-                computeLaidoutText(ctx, e, node);
-            } else {
-                laidoutText = null;
-            }
-        }
-    }
+	// SVG12BridgeUpdateHandler //////////////////////////////////////////////
 
-    /**
-     * Invoked when a bindable element's binding has changed.
-     */
-    @Override
-    public void handleBindingEvent(Element bindableElement,
-                                   Element shadowTree) {
-    }
+	/**
+	 * Invoked when an MutationEvent of type 'DOMCharacterDataModified' is fired.
+	 */
+	@Override
+	public void handleDOMCharacterDataModified(MutationEvent evt) {
+		Node childNode = (Node) evt.getTarget();
+		// if the parent is displayed, then discard the layout.
+		if (isParentDisplayed(childNode)) {
+			if (getParentNode(childNode) != childNode.getParentNode()) {
+				// This text node was selected with an xbl:content element,
+				// so a DOMSubtreeModified event is not going to be captured.
+				// Better recompute the text layout now.
+				computeLaidoutText(ctx, e, node);
+			} else {
+				laidoutText = null;
+			}
+		}
+	}
 
-    /**
-     * Invoked when the xblChildNodes property has changed because a
-     * descendant xbl:content element has updated its selected nodes.
-     */
-    @Override
-    public void handleContentSelectionChangedEvent
-            (ContentSelectionChangedEvent csce) {
-        computeLaidoutText(ctx, e, node);
-    }
+	/**
+	 * Invoked when a bindable element's binding has changed.
+	 */
+	@Override
+	public void handleBindingEvent(Element bindableElement, Element shadowTree) {
+	}
+
+	/**
+	 * Invoked when the xblChildNodes property has changed because a descendant
+	 * xbl:content element has updated its selected nodes.
+	 */
+	@Override
+	public void handleContentSelectionChangedEvent(ContentSelectionChangedEvent csce) {
+		computeLaidoutText(ctx, e, node);
+	}
 }

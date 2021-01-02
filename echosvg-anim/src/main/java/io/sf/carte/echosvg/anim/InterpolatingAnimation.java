@@ -24,9 +24,9 @@ import io.sf.carte.echosvg.ext.awt.geom.Cubic;
 import io.sf.carte.echosvg.util.SMILConstants;
 
 /**
- * An abstract animation class for those animations that interpolate
- * values.  Specifically, this is for animations that have the 'calcMode',
- * 'keyTimes', 'keySplines', 'additive' and 'cumulative' attributes.
+ * An abstract animation class for those animations that interpolate values.
+ * Specifically, this is for animations that have the 'calcMode', 'keyTimes',
+ * 'keySplines', 'additive' and 'cumulative' attributes.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -34,138 +34,118 @@ import io.sf.carte.echosvg.util.SMILConstants;
  */
 public abstract class InterpolatingAnimation extends AbstractAnimation {
 
-    /**
-     * The interpolation mode of this animator.  This should take one
-     * of the CALC_MODE_* constants defined in {@link AbstractAnimation}.
-     */
-    protected int calcMode;
+	/**
+	 * The interpolation mode of this animator. This should take one of the
+	 * CALC_MODE_* constants defined in {@link AbstractAnimation}.
+	 */
+	protected int calcMode;
 
-    /**
-     * Time values to control the pacing of the animation.
-     */
-    protected float[] keyTimes;
+	/**
+	 * Time values to control the pacing of the animation.
+	 */
+	protected float[] keyTimes;
 
-    /**
-     * Bezier control points that control the pacing of the animation.
-     */
-    protected float[] keySplines;
+	/**
+	 * Bezier control points that control the pacing of the animation.
+	 */
+	protected float[] keySplines;
 
-    /**
-     * Cubics built from the bezier control points in {@link #keySplines}.
-     */
-    protected Cubic[] keySplineCubics;
-    
-    /**
-     * Whether this animation adds to ones below it in the animation sandwich
-     * or replaces them.
-     */
-    protected boolean additive;
+	/**
+	 * Cubics built from the bezier control points in {@link #keySplines}.
+	 */
+	protected Cubic[] keySplineCubics;
 
-    /**
-     * Whether this animation accumulates from previous iterations.
-     */
-    protected boolean cumulative;
+	/**
+	 * Whether this animation adds to ones below it in the animation sandwich or
+	 * replaces them.
+	 */
+	protected boolean additive;
 
-    /**
-     * Creates a new InterpolatingAnimation.
-     */
-    public InterpolatingAnimation(TimedElement timedElement,
-                                  AnimatableElement animatableElement,
-                                  int calcMode,
-                                  float[] keyTimes,
-                                  float[] keySplines,
-                                  boolean additive,
-                                  boolean cumulative) {
-        super(timedElement, animatableElement);
-        this.calcMode = calcMode;
-        this.keyTimes = keyTimes;
-        this.keySplines = keySplines;
-        this.additive = additive;
-        this.cumulative = cumulative;
+	/**
+	 * Whether this animation accumulates from previous iterations.
+	 */
+	protected boolean cumulative;
 
-        if (calcMode == CALC_MODE_SPLINE) {
-            if (keySplines == null || keySplines.length % 4 != 0) {
-                throw timedElement.createException
-                    ("attribute.malformed",
-                     new Object[] { null,
-                                    SMILConstants.SMIL_KEY_SPLINES_ATTRIBUTE });
-            }
-            keySplineCubics = new Cubic[keySplines.length / 4];
-            for (int i = 0; i < keySplines.length / 4; i++) {
-                keySplineCubics[i] = new Cubic(0, 0,
-                                               keySplines[i * 4],
-                                               keySplines[i * 4 + 1],
-                                               keySplines[i * 4 + 2],
-                                               keySplines[i * 4 + 3],
-                                               1, 1);
-            }
-        }
+	/**
+	 * Creates a new InterpolatingAnimation.
+	 */
+	public InterpolatingAnimation(TimedElement timedElement, AnimatableElement animatableElement, int calcMode,
+			float[] keyTimes, float[] keySplines, boolean additive, boolean cumulative) {
+		super(timedElement, animatableElement);
+		this.calcMode = calcMode;
+		this.keyTimes = keyTimes;
+		this.keySplines = keySplines;
+		this.additive = additive;
+		this.cumulative = cumulative;
 
-        if (keyTimes != null) {
-            boolean invalidKeyTimes = false;
-            if ((calcMode == CALC_MODE_LINEAR || calcMode == CALC_MODE_SPLINE
-                        || calcMode == CALC_MODE_PACED)
-                    && (keyTimes.length < 2
-                        || keyTimes[0] != 0
-                        || keyTimes[keyTimes.length - 1] != 1)
-                    || calcMode == CALC_MODE_DISCRETE
-                        && (keyTimes.length == 0 || keyTimes[0] != 0)) {
-                invalidKeyTimes = true;
-            }
-            if (!invalidKeyTimes) {
-                for (int i = 1; i < keyTimes.length; i++) {
-                    if (keyTimes[i] < 0 || keyTimes[1] > 1
-                            || keyTimes[i] < keyTimes[i - 1]) {
-                        invalidKeyTimes = true;
-                        break;
-                    }
-                }
-            }
-            if (invalidKeyTimes) {
-                throw timedElement.createException
-                    ("attribute.malformed",
-                     new Object[] { null,
-                                    SMILConstants.SMIL_KEY_TIMES_ATTRIBUTE });
-            }
-        }
-    }
+		if (calcMode == CALC_MODE_SPLINE) {
+			if (keySplines == null || keySplines.length % 4 != 0) {
+				throw timedElement.createException("attribute.malformed",
+						new Object[] { null, SMILConstants.SMIL_KEY_SPLINES_ATTRIBUTE });
+			}
+			keySplineCubics = new Cubic[keySplines.length / 4];
+			for (int i = 0; i < keySplines.length / 4; i++) {
+				keySplineCubics[i] = new Cubic(0, 0, keySplines[i * 4], keySplines[i * 4 + 1], keySplines[i * 4 + 2],
+						keySplines[i * 4 + 3], 1, 1);
+			}
+		}
 
-    /**
-     * Returns whether this animation will replace values on animations
-     * lower in the sandwich.
-     */
-    @Override
-    protected boolean willReplace() {
-        return !additive;
-    }
+		if (keyTimes != null) {
+			boolean invalidKeyTimes = false;
+			if ((calcMode == CALC_MODE_LINEAR || calcMode == CALC_MODE_SPLINE || calcMode == CALC_MODE_PACED)
+					&& (keyTimes.length < 2 || keyTimes[0] != 0 || keyTimes[keyTimes.length - 1] != 1)
+					|| calcMode == CALC_MODE_DISCRETE && (keyTimes.length == 0 || keyTimes[0] != 0)) {
+				invalidKeyTimes = true;
+			}
+			if (!invalidKeyTimes) {
+				for (int i = 1; i < keyTimes.length; i++) {
+					if (keyTimes[i] < 0 || keyTimes[1] > 1 || keyTimes[i] < keyTimes[i - 1]) {
+						invalidKeyTimes = true;
+						break;
+					}
+				}
+			}
+			if (invalidKeyTimes) {
+				throw timedElement.createException("attribute.malformed",
+						new Object[] { null, SMILConstants.SMIL_KEY_TIMES_ATTRIBUTE });
+			}
+		}
+	}
 
-    /**
-     * Called when the element is sampled for its "last" value.
-     */
-    @Override
-    protected void sampledLastValue(int repeatIteration) {
-        sampledAtUnitTime(1f, repeatIteration);
-    }
+	/**
+	 * Returns whether this animation will replace values on animations lower in the
+	 * sandwich.
+	 */
+	@Override
+	protected boolean willReplace() {
+		return !additive;
+	}
 
-    /**
-     * Called when the element is sampled at the given time.
-     */
-    @Override
-    protected void sampledAt(float simpleTime, float simpleDur,
-                             int repeatIteration) {
-        float unitTime;
-        if (simpleDur == TimedElement.INDEFINITE) {
-            unitTime = 0;
-        } else {
-            unitTime = simpleTime / simpleDur;
-        }
-        sampledAtUnitTime(unitTime, repeatIteration);
-    }
+	/**
+	 * Called when the element is sampled for its "last" value.
+	 */
+	@Override
+	protected void sampledLastValue(int repeatIteration) {
+		sampledAtUnitTime(1f, repeatIteration);
+	}
 
-    /**
-     * Called when the element is sampled at the given unit time.  This updates
-     * the {@link #value} of the animation if active.
-     */
-    protected abstract void sampledAtUnitTime(float unitTime,
-                                              int repeatIteration);
+	/**
+	 * Called when the element is sampled at the given time.
+	 */
+	@Override
+	protected void sampledAt(float simpleTime, float simpleDur, int repeatIteration) {
+		float unitTime;
+		if (simpleDur == TimedElement.INDEFINITE) {
+			unitTime = 0;
+		} else {
+			unitTime = simpleTime / simpleDur;
+		}
+		sampledAtUnitTime(unitTime, repeatIteration);
+	}
+
+	/**
+	 * Called when the element is sampled at the given unit time. This updates the
+	 * {@link #value} of the animation if active.
+	 */
+	protected abstract void sampledAtUnitTime(float unitTime, int repeatIteration);
 }

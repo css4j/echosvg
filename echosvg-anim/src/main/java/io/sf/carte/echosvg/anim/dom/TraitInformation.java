@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-
 /**
  * Stores information about a specific XML attribute or CSS property.
  *
@@ -27,79 +26,79 @@ package io.sf.carte.echosvg.anim.dom;
  */
 public class TraitInformation {
 
-    // Constants for percentage interpretation.
-    public static final short PERCENTAGE_FONT_SIZE       = AnimationTarget.PERCENTAGE_FONT_SIZE;
-    public static final short PERCENTAGE_VIEWPORT_WIDTH  = AnimationTarget.PERCENTAGE_VIEWPORT_WIDTH;
-    public static final short PERCENTAGE_VIEWPORT_HEIGHT = AnimationTarget.PERCENTAGE_VIEWPORT_HEIGHT;
-    public static final short PERCENTAGE_VIEWPORT_SIZE   = AnimationTarget.PERCENTAGE_VIEWPORT_SIZE;
+	// Constants for percentage interpretation.
+	public static final short PERCENTAGE_FONT_SIZE = AnimationTarget.PERCENTAGE_FONT_SIZE;
+	public static final short PERCENTAGE_VIEWPORT_WIDTH = AnimationTarget.PERCENTAGE_VIEWPORT_WIDTH;
+	public static final short PERCENTAGE_VIEWPORT_HEIGHT = AnimationTarget.PERCENTAGE_VIEWPORT_HEIGHT;
+	public static final short PERCENTAGE_VIEWPORT_SIZE = AnimationTarget.PERCENTAGE_VIEWPORT_SIZE;
 
-    /**
-     * Whether this trait can be animated.
-     */
-    protected boolean isAnimatable;
+	/**
+	 * Whether this trait can be animated.
+	 */
+	protected boolean isAnimatable;
 
-    // /**
-    //  * Whether animations of this trait can be additive.
-    //  */
-    // protected boolean isAdditive;
+	// /**
+	// * Whether animations of this trait can be additive.
+	// */
+	// protected boolean isAdditive;
 
-    /**
-     * The SVG type of this trait.
-     */
-    protected int type;
+	/**
+	 * The SVG type of this trait.
+	 */
+	protected int type;
 
-    /**
-     * What percentages in this trait are relative to.
-     */
-    protected short percentageInterpretation;
+	/**
+	 * What percentages in this trait are relative to.
+	 */
+	protected short percentageInterpretation;
 
-    /**
-     * Creates a new TraitInformation object.
-     */
-    public TraitInformation(boolean isAnimatable, // boolean isAdditive,
-                            int type, short percentageInterpretation) {
-        this.isAnimatable = isAnimatable;
-        // this.isAdditive = isAdditive;
-        this.type = type;
-        this.percentageInterpretation = percentageInterpretation;
-    }
+	/**
+	 * Creates a new TraitInformation object.
+	 */
+	public TraitInformation(boolean isAnimatable, // boolean isAdditive,
+			int type, short percentageInterpretation) {
+		this.isAnimatable = isAnimatable;
+		// this.isAdditive = isAdditive;
+		this.type = type;
+		this.percentageInterpretation = percentageInterpretation;
+	}
 
-    /**
-     * Creates a new TraitInformation object.
-     */
-    public TraitInformation(boolean isAnimatable, // boolean isAdditive,
-                            int type) {
-        this.isAnimatable = isAnimatable;
-        // this.isAdditive = isAdditive;
-        this.type = type;
-        this.percentageInterpretation = -1;
-    }
+	/**
+	 * Creates a new TraitInformation object.
+	 */
+	public TraitInformation(boolean isAnimatable, // boolean isAdditive,
+			int type) {
+		this.isAnimatable = isAnimatable;
+		// this.isAdditive = isAdditive;
+		this.type = type;
+		this.percentageInterpretation = -1;
+	}
 
-    /**
-     * Returns whether this trait is animatable.
-     */
-    public boolean isAnimatable() {
-        return isAnimatable;
-    }
+	/**
+	 * Returns whether this trait is animatable.
+	 */
+	public boolean isAnimatable() {
+		return isAnimatable;
+	}
 
-    // /**
-    //  * Returns whether animations of this trait can be additive.
-    //  */
-    // public boolean isAdditive() {
-    //     return isAdditive;
-    // }
+	// /**
+	// * Returns whether animations of this trait can be additive.
+	// */
+	// public boolean isAdditive() {
+	// return isAdditive;
+	// }
 
-    /**
-     * Returns the SVG type of this trait.
-     */
-    public int getType() {
-        return type;
-    }
+	/**
+	 * Returns the SVG type of this trait.
+	 */
+	public int getType() {
+		return type;
+	}
 
-    /**
-     * Returns how percentage values in this trait are resolved.
-     */
-    public short getPercentageInterpretation() {
-        return percentageInterpretation;
-    }
+	/**
+	 * Returns how percentage values in this trait are resolved.
+	 */
+	public short getPercentageInterpretation() {
+		return percentageInterpretation;
+	}
 }

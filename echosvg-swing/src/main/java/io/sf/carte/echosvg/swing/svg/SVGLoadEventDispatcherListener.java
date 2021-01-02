@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.swing.svg;
 
 /**
- * This interface represents a listener to the
- * SVGLoadEventDispatcherEvent events.
+ * This interface represents a listener to the SVGLoadEventDispatcherEvent
+ * events.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -28,24 +28,24 @@ package io.sf.carte.echosvg.swing.svg;
  */
 public interface SVGLoadEventDispatcherListener {
 
-    /**
-     * Called when a onload event dispatch started.
-     */
-    void svgLoadEventDispatchStarted(SVGLoadEventDispatcherEvent e);
+	/**
+	 * Called when a onload event dispatch started.
+	 */
+	void svgLoadEventDispatchStarted(SVGLoadEventDispatcherEvent e);
 
-    /**
-     * Called when a onload event dispatch was completed.
-     */
-    void svgLoadEventDispatchCompleted(SVGLoadEventDispatcherEvent e);
+	/**
+	 * Called when a onload event dispatch was completed.
+	 */
+	void svgLoadEventDispatchCompleted(SVGLoadEventDispatcherEvent e);
 
-    /**
-     * Called when a onload event dispatch was cancelled.
-     */
-    void svgLoadEventDispatchCancelled(SVGLoadEventDispatcherEvent e);
+	/**
+	 * Called when a onload event dispatch was cancelled.
+	 */
+	void svgLoadEventDispatchCancelled(SVGLoadEventDispatcherEvent e);
 
-    /**
-     * Called when a onload event dispatch failed.
-     */
-    void svgLoadEventDispatchFailed(SVGLoadEventDispatcherEvent e);
+	/**
+	 * Called when a onload event dispatch failed.
+	 */
+	void svgLoadEventDispatchFailed(SVGLoadEventDispatcherEvent e);
 
 }

@@ -27,42 +27,41 @@ package io.sf.carte.echosvg.anim.timing;
  */
 public class IndefiniteTimingSpecifier extends TimingSpecifier {
 
-    /**
-     * Creates a new IndefiniteTimingSpecifier object.
-     */
-    public IndefiniteTimingSpecifier(TimedElement owner, boolean isBegin) {
-        super(owner, isBegin);
-    }
-    
-    /**
-     * Returns a string representation of this timing specifier.
-     */
-    @Override
-    public String toString() {
-        return "indefinite";
-    }
+	/**
+	 * Creates a new IndefiniteTimingSpecifier object.
+	 */
+	public IndefiniteTimingSpecifier(TimedElement owner, boolean isBegin) {
+		super(owner, isBegin);
+	}
 
-    /**
-     * Initializes this timing specifier by adding the initial instance time
-     * to the owner's instance time list or setting up any event listeners.
-     */
-    @Override
-    public void initialize() {
-        if (!isBegin) {
-            // Only end instance lists get an 'indefinite' instance time from
-            // an indefinite timing specifier.
-            InstanceTime instance =
-                new InstanceTime(this, TimedElement.INDEFINITE, false);
-            owner.addInstanceTime(instance, isBegin);
-        }
-    }
+	/**
+	 * Returns a string representation of this timing specifier.
+	 */
+	@Override
+	public String toString() {
+		return "indefinite";
+	}
 
-    /**
-     * Returns whether this timing specifier is event-like (i.e., if it is
-     * an eventbase, accesskey or a repeat timing specifier).
-     */
-    @Override
-    public boolean isEventCondition() {
-        return false;
-    }
+	/**
+	 * Initializes this timing specifier by adding the initial instance time to the
+	 * owner's instance time list or setting up any event listeners.
+	 */
+	@Override
+	public void initialize() {
+		if (!isBegin) {
+			// Only end instance lists get an 'indefinite' instance time from
+			// an indefinite timing specifier.
+			InstanceTime instance = new InstanceTime(this, TimedElement.INDEFINITE, false);
+			owner.addInstanceTime(instance, isBegin);
+		}
+	}
+
+	/**
+	 * Returns whether this timing specifier is event-like (i.e., if it is an
+	 * eventbase, accesskey or a repeat timing specifier).
+	 */
+	@Override
+	public boolean isEventCondition() {
+		return false;
+	}
 }

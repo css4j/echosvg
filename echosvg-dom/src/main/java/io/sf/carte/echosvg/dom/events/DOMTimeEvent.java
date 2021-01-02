@@ -30,62 +30,57 @@ import org.w3c.dom.views.AbstractView;
  */
 public class DOMTimeEvent extends AbstractEvent implements TimeEvent {
 
-    /**
-     * The view from which the event was generated.
-     */
-    protected AbstractView view;
+	/**
+	 * The view from which the event was generated.
+	 */
+	protected AbstractView view;
 
-    /**
-     * For repeat events this is the repeat iteration.  Unused for the
-     * other time events.
-     */
-    protected int detail;
+	/**
+	 * For repeat events this is the repeat iteration. Unused for the other time
+	 * events.
+	 */
+	protected int detail;
 
-    /**
-     * Returns the view from which the event was generated.
-     */
-    @Override
-    public AbstractView getView() {
-        return view;
-    }
+	/**
+	 * Returns the view from which the event was generated.
+	 */
+	@Override
+	public AbstractView getView() {
+		return view;
+	}
 
-    /**
-     * Returns the repeat iteration if this is a repeat event.
-     */
-    @Override
-    public int getDetail() {
-        return detail;
-    }
+	/**
+	 * Returns the repeat iteration if this is a repeat event.
+	 */
+	@Override
+	public int getDetail() {
+		return detail;
+	}
 
-    /**
-     * Initializes the values of the TimeEvent object.
-     */
-    @Override
-    public void initTimeEvent(String typeArg,
-                              AbstractView viewArg,
-                              int detailArg) {
-        initEvent(typeArg, false, false);
-        this.view = viewArg;
-        this.detail = detailArg;
-    }
+	/**
+	 * Initializes the values of the TimeEvent object.
+	 */
+	@Override
+	public void initTimeEvent(String typeArg, AbstractView viewArg, int detailArg) {
+		initEvent(typeArg, false, false);
+		this.view = viewArg;
+		this.detail = detailArg;
+	}
 
-    /**
-     * Initializes the values of the TimeEvent object.
-     */
-    public void initTimeEventNS(String namespaceURIArg,
-                                String typeArg,
-                                AbstractView viewArg,
-                                int detailArg) {
-        initEventNS(namespaceURIArg, typeArg, false, false);
-        this.view = viewArg;
-        this.detail = detailArg;
-    }
+	/**
+	 * Initializes the values of the TimeEvent object.
+	 */
+	public void initTimeEventNS(String namespaceURIArg, String typeArg, AbstractView viewArg, int detailArg) {
+		initEventNS(namespaceURIArg, typeArg, false, false);
+		this.view = viewArg;
+		this.detail = detailArg;
+	}
 
-    /**
-     * Sets the timestamp of this time event.  This is required for
-     * synchronization of time events in the SMIL timing model.
-     */
-    public void setTimestamp(long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
+	/**
+	 * Sets the timestamp of this time event. This is required for synchronization
+	 * of time events in the SMIL timing model.
+	 */
+	public void setTimestamp(long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
 }

@@ -27,146 +27,106 @@ package io.sf.carte.echosvg.extension.svg;
  */
 public interface EchoSVGExtConstants {
 
-    /** Namespace for batik extentions. */
-    String BATIK_EXT_NAMESPACE_URI =
-        "http://xml.apache.org/batik/ext";
+	/** Namespace for batik extentions. */
+	String BATIK_EXT_NAMESPACE_URI = "http://xml.apache.org/batik/ext";
 
-    /** Namespace for batik experimental svg 1.2 elements. */
-    String BATIK_12_NAMESPACE_URI =
-        "http://xml.apache.org/batik/ext";
+	/** Namespace for batik experimental svg 1.2 elements. */
+	String BATIK_12_NAMESPACE_URI = "http://xml.apache.org/batik/ext";
 
-    /** Namespace for batik experimental svg 1.2 attributes. */
-    String BATIK_12_ATTR_NAMESPACE_URI =
-        "http://xml.apache.org/batik/ext";
-        // null;
+	/** Namespace for batik experimental svg 1.2 attributes. */
+	String BATIK_12_ATTR_NAMESPACE_URI = "http://xml.apache.org/batik/ext";
+	// null;
 
-    /** Tag name for Batik's regular poly extension. */
-    String BATIK_EXT_REGULAR_POLYGON_TAG =
-        "regularPolygon";
+	/** Tag name for Batik's regular poly extension. */
+	String BATIK_EXT_REGULAR_POLYGON_TAG = "regularPolygon";
 
-    /** Tag name for Batik's star extension. */
-    String BATIK_EXT_STAR_TAG =
-        "star";
+	/** Tag name for Batik's star extension. */
+	String BATIK_EXT_STAR_TAG = "star";
 
-    /** Tag name for Batik's color switch extension. */
-    String BATIK_EXT_COLOR_SWITCH_TAG =
-        "colorSwitch";
+	/** Tag name for Batik's color switch extension. */
+	String BATIK_EXT_COLOR_SWITCH_TAG = "colorSwitch";
 
-    /** Tag name for Batik's histogram normalization extension. */
-    String BATIK_EXT_HISTOGRAM_NORMALIZATION_TAG =
-        "histogramNormalization";
+	/** Tag name for Batik's histogram normalization extension. */
+	String BATIK_EXT_HISTOGRAM_NORMALIZATION_TAG = "histogramNormalization";
 
-    /** Attribute name for sides attribute */
-    String EXT_SIDES_ATTRIBUTE =
-        "sides";
+	/** Attribute name for sides attribute */
+	String EXT_SIDES_ATTRIBUTE = "sides";
 
-    /** Attribute name for inner radius attribute */
-    String EXT_IR_ATTRIBUTE =
-        "ir";
+	/** Attribute name for inner radius attribute */
+	String EXT_IR_ATTRIBUTE = "ir";
 
-    /** Attribute name for trim percent attribute */
-    String EXT_TRIM_ATTRIBUTE =
-        "trim";
+	/** Attribute name for trim percent attribute */
+	String EXT_TRIM_ATTRIBUTE = "trim";
 
+	/** Tag name for Batik's flowText extension (SVG 1.2). */
+	String BATIK_EXT_FLOW_TEXT_TAG = "flowText";
 
-    /** Tag name for Batik's flowText extension (SVG 1.2). */
-    String BATIK_EXT_FLOW_TEXT_TAG =
-        "flowText";
+	/** Tag name for Batik's flowText extension Region element (SVG 1.2). */
+	String BATIK_EXT_FLOW_REGION_TAG = "flowRegion";
 
-    /** Tag name for Batik's flowText extension Region element (SVG 1.2). */
-    String BATIK_EXT_FLOW_REGION_TAG =
-        "flowRegion";
+	/** Tag name for Batik's flowText extension Region element (SVG 1.2). */
+	String BATIK_EXT_FLOW_REGION_EXCLUDE_TAG = "flowRegionExclude";
 
-    /** Tag name for Batik's flowText extension Region element (SVG 1.2). */
-    String BATIK_EXT_FLOW_REGION_EXCLUDE_TAG =
-        "flowRegionExclude";
+	/** Tag name for Batik's flowText extension div element SVG 1.2). */
+	String BATIK_EXT_FLOW_DIV_TAG = "flowDiv";
 
-    /** Tag name for Batik's flowText extension div element SVG 1.2). */
-    String BATIK_EXT_FLOW_DIV_TAG =
-        "flowDiv";
+	/** Tag name for Batik's flowText extension p element SVG 1.2). */
+	String BATIK_EXT_FLOW_PARA_TAG = "flowPara";
 
-    /** Tag name for Batik's flowText extension p element SVG 1.2). */
-    String BATIK_EXT_FLOW_PARA_TAG =
-        "flowPara";
+	/**
+	 * Tag name for Batik's flowText extension flow Region break element SVG 1.2).
+	 */
+	String BATIK_EXT_FLOW_REGION_BREAK_TAG = "flowRegionBreak";
 
-    /** Tag name for Batik's flowText extension flow Region break
-     *  element SVG 1.2). */
-    String BATIK_EXT_FLOW_REGION_BREAK_TAG =
-        "flowRegionBreak";
+	/** Tag name for Batik's flowText extension line element SVG 1.2). */
+	String BATIK_EXT_FLOW_LINE_TAG = "flowLine";
 
-    /** Tag name for Batik's flowText extension line element SVG 1.2). */
-    String BATIK_EXT_FLOW_LINE_TAG =
-        "flowLine";
+	/** Tag name for Batik's flowText extension span element SVG 1.2). */
+	String BATIK_EXT_FLOW_SPAN_TAG = "flowSpan";
 
-    /** Tag name for Batik's flowText extension span element SVG 1.2). */
-    String BATIK_EXT_FLOW_SPAN_TAG =
-        "flowSpan";
+	/** Attribute name for x attribute */
+	String EXT_X_ATTRIBUTE = "x";
+	/** Attribute name for y attribute */
+	String EXT_Y_ATTRIBUTE = "y";
+	/** Attribute name for width attribute */
+	String EXT_WIDTH_ATTRIBUTE = "width";
+	/** Attribute name for height attribute */
+	String EXT_HEIGHT_ATTRIBUTE = "height";
 
+	/** Attribute name for margin psudo-attribute */
+	String EXT_MARGIN_ATTRIBUTE = "margin";
+	/** Attribute name for top-margin attribute */
+	String EXT_TOP_MARGIN_ATTRIBUTE = "top-margin";
+	/** Attribute name for right-margin attribute */
+	String EXT_RIGHT_MARGIN_ATTRIBUTE = "right-margin";
+	/** Attribute name for bottom-margin attribute */
+	String EXT_BOTTOM_MARGIN_ATTRIBUTE = "bottom-margin";
+	/** Attribute name for left-margin attribute */
+	String EXT_LEFT_MARGIN_ATTRIBUTE = "left-margin";
+	/** Attribute name for indent attribute/property */
+	String EXT_INDENT_ATTRIBUTE = "indent";
+	/** Attribute name for justification */
+	String EXT_JUSTIFICATION_ATTRIBUTE = "justification";
+	/** Value for justification to start of region */
+	String EXT_JUSTIFICATION_START_VALUE = "start";
+	/** Value for justification to middle of region */
+	String EXT_JUSTIFICATION_MIDDLE_VALUE = "middle";
+	/** Value for justification to end of region */
+	String EXT_JUSTIFICATION_END_VALUE = "end";
+	/** Value for justification to both edges of region */
+	String EXT_JUSTIFICATION_FULL_VALUE = "full";
 
-    /** Attribute name for x attribute */
-    String EXT_X_ATTRIBUTE =
-        "x";
-    /** Attribute name for y attribute */
-    String EXT_Y_ATTRIBUTE =
-        "y";
-    /** Attribute name for width attribute */
-    String EXT_WIDTH_ATTRIBUTE =
-        "width";
-    /** Attribute name for height attribute */
-    String EXT_HEIGHT_ATTRIBUTE =
-        "height";
+	/** Attribute name for preformated data */
+	String EXT_PREFORMATTED_ATTRIBUTE = "preformatted";
 
-    /** Attribute name for margin psudo-attribute */
-    String EXT_MARGIN_ATTRIBUTE =
-        "margin";
-    /** Attribute name for top-margin attribute */
-    String EXT_TOP_MARGIN_ATTRIBUTE =
-        "top-margin";
-    /** Attribute name for right-margin attribute */
-    String EXT_RIGHT_MARGIN_ATTRIBUTE =
-        "right-margin";
-    /** Attribute name for bottom-margin attribute */
-    String EXT_BOTTOM_MARGIN_ATTRIBUTE =
-        "bottom-margin";
-    /** Attribute name for left-margin attribute */
-    String EXT_LEFT_MARGIN_ATTRIBUTE =
-        "left-margin";
-    /** Attribute name for indent attribute/property */
-    String EXT_INDENT_ATTRIBUTE =
-        "indent";
-    /** Attribute name for justification */
-    String EXT_JUSTIFICATION_ATTRIBUTE =
-        "justification";
-    /** Value for justification to start of region */
-    String EXT_JUSTIFICATION_START_VALUE  = "start";
-    /** Value for justification to middle of region */
-    String EXT_JUSTIFICATION_MIDDLE_VALUE = "middle";
-    /** Value for justification to end of region */
-    String EXT_JUSTIFICATION_END_VALUE    = "end";
-    /** Value for justification to both edges of region */
-    String EXT_JUSTIFICATION_FULL_VALUE = "full";
+	/** Attribute name for preformated data */
+	String EXT_VERTICAL_ALIGN_ATTRIBUTE = "vertical-align";
 
-
-    /** Attribute name for preformated data */
-    String EXT_PREFORMATTED_ATTRIBUTE =
-        "preformatted";
-
-   /** Attribute name for preformated data */
-   String EXT_VERTICAL_ALIGN_ATTRIBUTE =
-        "vertical-align";
-
-    /** Value for vertical-align to top of region */
-    String EXT_ALIGN_TOP_VALUE    = "top";
-    /** Value for vertical-align to middle of region */
-    String EXT_ALIGN_MIDDLE_VALUE = "middle";
-    /** Value for vertical-align to bottom of region */
-    String EXT_ALIGN_BOTTOM_VALUE = "bottom";
+	/** Value for vertical-align to top of region */
+	String EXT_ALIGN_TOP_VALUE = "top";
+	/** Value for vertical-align to middle of region */
+	String EXT_ALIGN_MIDDLE_VALUE = "middle";
+	/** Value for vertical-align to bottom of region */
+	String EXT_ALIGN_BOTTOM_VALUE = "bottom";
 
 }
-
-
-
-
-
-
-

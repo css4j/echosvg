@@ -23,79 +23,83 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is used to keep data while processing WMF-files.
- * It is tagged with a type and holds a list of Integer-objects.
- * It seems, it might be rewritten to keep just the plain int-data.
+ * This is used to keep data while processing WMF-files. It is tagged with a
+ * type and holds a list of Integer-objects. It seems, it might be rewritten to
+ * keep just the plain int-data.
  *
  * @author <a href="mailto:bella.robinson@cmis.csiro.au">Bella Robinson</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class MetaRecord /*implements Serializable*/ {
+public class MetaRecord /* implements Serializable */ {
 
-    public int functionId;
-    public int numPoints;
+	public int functionId;
+	public int numPoints;
 
-    private final List<Object> ptVector = new ArrayList<>();
+	private final List<Object> ptVector = new ArrayList<>();
 
-    public MetaRecord() {
-    }
+	public MetaRecord() {
+	}
 
-    public void EnsureCapacity( int cc ) {
-    }
+	public void EnsureCapacity(int cc) {
+	}
 
-    /**
-     * when you are storing Integer-objects, consider using addElement( int ) instead.
-     * @param obj
-     */
-    public void AddElement( Object obj ) {
-        ptVector.add( obj );
-    }
+	/**
+	 * when you are storing Integer-objects, consider using addElement( int )
+	 * instead.
+	 * 
+	 * @param obj
+	 */
+	public void AddElement(Object obj) {
+		ptVector.add(obj);
+	}
 
-    /**
-     * helper method to add int-values. This way we keep the call to Integer.valueOf()
-     * in one place, here.
-     *
-     * @param iValue  the value to add to ptVector, wrapped in an Integer
-     */
-    public final void addElement( int iValue ){
-        ptVector.add(iValue);
-    }
+	/**
+	 * helper method to add int-values. This way we keep the call to
+	 * Integer.valueOf() in one place, here.
+	 *
+	 * @param iValue the value to add to ptVector, wrapped in an Integer
+	 */
+	public final void addElement(int iValue) {
+		ptVector.add(iValue);
+	}
 
-    /**
-     * if you dont really need the Integer-object from this method
-     * it is recommended to use the <code>elementAt()</code>-method instead,
-     * which returns an <code>int</code>.
-     */
-    public Integer ElementAt( int offset ) {
-        return (Integer)ptVector.get( offset );
-    }
+	/**
+	 * if you dont really need the Integer-object from this method it is recommended
+	 * to use the <code>elementAt()</code>-method instead, which returns an
+	 * <code>int</code>.
+	 */
+	public Integer ElementAt(int offset) {
+		return (Integer) ptVector.get(offset);
+	}
 
-    /**
-     * helper-method to return the plain int-value from the record
-     * and save the .intValue()-call at the caller's site.
-     * @param offset of the element to get
-     * @return the intValue of the element at offset
-     */
-    public final int elementAt( int offset ){
-        return (Integer) ptVector.get(offset);
-    }
+	/**
+	 * helper-method to return the plain int-value from the record and save the
+	 * .intValue()-call at the caller's site.
+	 * 
+	 * @param offset of the element to get
+	 * @return the intValue of the element at offset
+	 */
+	public final int elementAt(int offset) {
+		return (Integer) ptVector.get(offset);
+	}
 
-    /** A record that contain byte arrays elements.
-     */
-    public static class ByteRecord extends MetaRecord {
-        public final byte[] bstr;
+	/**
+	 * A record that contain byte arrays elements.
+	 */
+	public static class ByteRecord extends MetaRecord {
+		public final byte[] bstr;
 
-        public ByteRecord(byte[] bstr) {
-            this.bstr = bstr;
-        }
-    }
+		public ByteRecord(byte[] bstr) {
+			this.bstr = bstr;
+		}
+	}
 
-    public static class StringRecord extends MetaRecord /*implements Serializable*/ {
-        public final String text;
+	public static class StringRecord extends MetaRecord /* implements Serializable */ {
+		public final String text;
 
-        public StringRecord( String newText ) {
-            text = newText;
-        }
-    }
+		public StringRecord(String newText) {
+			text = newText;
+		}
+	}
 }

@@ -19,29 +19,28 @@
 package io.sf.carte.echosvg.util;
 
 /**
- * This <code>SecurityManager</code> extension exposes the <code>getClassContext</code>
- * method so that it can be used by the <code>EchoSVGSecuritySupport</code> or other
- * security related class.
+ * This <code>SecurityManager</code> extension exposes the
+ * <code>getClassContext</code> method so that it can be used by the
+ * <code>EchoSVGSecuritySupport</code> or other security related class.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class EchoSVGSecurityManager extends SecurityManager {
-    /**
-     * Returns the current execution stack as an array of classes. 
-     * <p>
-     * The length of the array is the number of methods on the execution 
-     * stack. The element at index <code>0</code> is the class of the 
-     * currently executing method, the element at index <code>1</code> is 
-     * the class of that method's caller, and so on. 
-     *
-     * @return  the execution stack.
-     */
-    @Override
-    public Class<?>[] getClassContext(){
-        return super.getClassContext();
-    }
+	/**
+	 * Returns the current execution stack as an array of classes.
+	 * <p>
+	 * The length of the array is the number of methods on the execution stack. The
+	 * element at index <code>0</code> is the class of the currently executing
+	 * method, the element at index <code>1</code> is the class of that method's
+	 * caller, and so on.
+	 *
+	 * @return the execution stack.
+	 */
+	@Override
+	public Class<?>[] getClassContext() {
+		return super.getClassContext();
+	}
 
-    
 }

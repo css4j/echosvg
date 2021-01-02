@@ -33,55 +33,57 @@ import javax.swing.UIManager;
  */
 public class JToolbarToggleButton extends JToggleButton {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new toolbar button.
-     */
-    public JToolbarToggleButton() {
-        initialize();
-    }
+	/**
+	 * Creates a new toolbar button.
+	 */
+	public JToolbarToggleButton() {
+		initialize();
+	}
 
-    /**
-     * Creates a new toolbar button.
-     * @param txt The button text.
-     */
-    public JToolbarToggleButton(String txt) {
-        super(txt);
-        initialize();
-    }
+	/**
+	 * Creates a new toolbar button.
+	 * 
+	 * @param txt The button text.
+	 */
+	public JToolbarToggleButton(String txt) {
+		super(txt);
+		initialize();
+	}
 
-    /**
-     * Initializes the button.
-     */
-    protected void initialize() {
-        if (!System.getProperty("java.version").startsWith("1.3")) {
-            setOpaque(false);
-            setBackground(new java.awt.Color(0, 0, 0, 0));
-        }
-        setBorderPainted(false);
-        setMargin(new Insets(2, 2, 2, 2));
+	/**
+	 * Initializes the button.
+	 */
+	protected void initialize() {
+		if (!System.getProperty("java.version").startsWith("1.3")) {
+			setOpaque(false);
+			setBackground(new java.awt.Color(0, 0, 0, 0));
+		}
+		setBorderPainted(false);
+		setMargin(new Insets(2, 2, 2, 2));
 
-        // Windows XP look and feel seems to have a bug due to which the
-        // size of the parent container changes when the border painted
-        // property is set. Temporary fix: disable mouseover behavior if
-        // installed lnf is Windows XP
-        if (!UIManager.getLookAndFeel().getName().equals("Windows")) {
-            addMouseListener(new MouseListener());
-        }
-    }
+		// Windows XP look and feel seems to have a bug due to which the
+		// size of the parent container changes when the border painted
+		// property is set. Temporary fix: disable mouseover behavior if
+		// installed lnf is Windows XP
+		if (!UIManager.getLookAndFeel().getName().equals("Windows")) {
+			addMouseListener(new MouseListener());
+		}
+	}
 
-    /**
-     * To manage the mouse interactions.
-     */
-    protected class MouseListener extends MouseAdapter {
-        @Override
-        public void mouseEntered(MouseEvent ev) {
-            setBorderPainted(true);
-        }
-        @Override
-        public void mouseExited(MouseEvent ev) {
-            setBorderPainted(false);
-        }
-    }
+	/**
+	 * To manage the mouse interactions.
+	 */
+	protected class MouseListener extends MouseAdapter {
+		@Override
+		public void mouseEntered(MouseEvent ev) {
+			setBorderPainted(true);
+		}
+
+		@Override
+		public void mouseExited(MouseEvent ev) {
+			setBorderPainted(false);
+		}
+	}
 }

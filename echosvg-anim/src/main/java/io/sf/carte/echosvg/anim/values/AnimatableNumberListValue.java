@@ -29,129 +29,124 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatableNumberListValue extends AnimatableValue {
 
-    /**
-     * The numbers.
-     */
-    protected float[] numbers;
+	/**
+	 * The numbers.
+	 */
+	protected float[] numbers;
 
-    /**
-     * Creates a new, uninitialized AnimatableNumberListValue.
-     */
-    protected AnimatableNumberListValue(AnimationTarget target) {
-        super(target);
-    }
-    
-    /**
-     * Creates a new AnimatableNumberListValue.
-     */
-    public AnimatableNumberListValue(AnimationTarget target, float[] numbers) {
-        super(target);
-        this.numbers = numbers;
-    }
+	/**
+	 * Creates a new, uninitialized AnimatableNumberListValue.
+	 */
+	protected AnimatableNumberListValue(AnimationTarget target) {
+		super(target);
+	}
 
-    /**
-     * Performs interpolation to the given value.  Number list values cannot
-     * be interpolated.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to,
-                                       float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatableNumberListValue toNumList = (AnimatableNumberListValue) to;
-        AnimatableNumberListValue accNumList =
-            (AnimatableNumberListValue) accumulation;
+	/**
+	 * Creates a new AnimatableNumberListValue.
+	 */
+	public AnimatableNumberListValue(AnimationTarget target, float[] numbers) {
+		super(target);
+		this.numbers = numbers;
+	}
 
-        boolean hasTo = to != null;
-        boolean hasAcc = accumulation != null;
-        boolean canInterpolate =
-            !(hasTo && toNumList.numbers.length != numbers.length)
-                && !(hasAcc && accNumList.numbers.length != numbers.length);
+	/**
+	 * Performs interpolation to the given value. Number list values cannot be
+	 * interpolated.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatableNumberListValue toNumList = (AnimatableNumberListValue) to;
+		AnimatableNumberListValue accNumList = (AnimatableNumberListValue) accumulation;
 
-        float[] baseValues;
-        if (!canInterpolate && hasTo && interpolation >= 0.5) {
-            baseValues = toNumList.numbers;
-        } else {
-            baseValues = numbers;
-        }
-        int len = baseValues.length;
+		boolean hasTo = to != null;
+		boolean hasAcc = accumulation != null;
+		boolean canInterpolate = !(hasTo && toNumList.numbers.length != numbers.length)
+				&& !(hasAcc && accNumList.numbers.length != numbers.length);
 
-        AnimatableNumberListValue res;
-        if (result == null) {
-            res = new AnimatableNumberListValue(target);
-            res.numbers = new float[len];
-        } else {
-            res = (AnimatableNumberListValue) result;
-            if (res.numbers == null || res.numbers.length != len) {
-                res.numbers = new float[len];
-            }
-        }
+		float[] baseValues;
+		if (!canInterpolate && hasTo && interpolation >= 0.5) {
+			baseValues = toNumList.numbers;
+		} else {
+			baseValues = numbers;
+		}
+		int len = baseValues.length;
 
-        for (int i = 0; i < len; i++) {
-            float newValue = baseValues[i];
-            if (canInterpolate) {
-                if (hasTo) {
-                    newValue += interpolation * (toNumList.numbers[i] - newValue);
-                }
-                if (hasAcc) {
-                    newValue += multiplier * accNumList.numbers[i];
-                }
-            }
-            if (res.numbers[i] != newValue) {
-                res.numbers[i] = newValue;
-                res.hasChanged = true;
-            }
-        }
+		AnimatableNumberListValue res;
+		if (result == null) {
+			res = new AnimatableNumberListValue(target);
+			res.numbers = new float[len];
+		} else {
+			res = (AnimatableNumberListValue) result;
+			if (res.numbers == null || res.numbers.length != len) {
+				res.numbers = new float[len];
+			}
+		}
 
-        return res;
-    }
+		for (int i = 0; i < len; i++) {
+			float newValue = baseValues[i];
+			if (canInterpolate) {
+				if (hasTo) {
+					newValue += interpolation * (toNumList.numbers[i] - newValue);
+				}
+				if (hasAcc) {
+					newValue += multiplier * accNumList.numbers[i];
+				}
+			}
+			if (res.numbers[i] != newValue) {
+				res.numbers[i] = newValue;
+				res.hasChanged = true;
+			}
+		}
 
-    /**
-     * Gets the numbers.
-     */
-    public float[] getNumbers() {
-        return numbers;
-    }
+		return res;
+	}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return false;
-    }
+	/**
+	 * Gets the numbers.
+	 */
+	public float[] getNumbers() {
+		return numbers;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        return 0f;
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return false;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        float[] ns = new float[numbers.length];
-        return new AnimatableNumberListValue(target, ns);
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		return 0f;
+	}
 
-    /**
-     * Returns the CSS text representation of the value.
-     */
-    @Override
-    public String getCssText() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(numbers[0]);
-        for (int i = 1; i < numbers.length; i++) {
-            sb.append(' ');
-            sb.append(numbers[i]);
-        }
-        return sb.toString();
-    }
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		float[] ns = new float[numbers.length];
+		return new AnimatableNumberListValue(target, ns);
+	}
+
+	/**
+	 * Returns the CSS text representation of the value.
+	 */
+	@Override
+	public String getCssText() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(numbers[0]);
+		for (int i = 1; i < numbers.length; i++) {
+			sb.append(' ');
+			sb.append(numbers[i]);
+		}
+		return sb.toString();
+	}
 }

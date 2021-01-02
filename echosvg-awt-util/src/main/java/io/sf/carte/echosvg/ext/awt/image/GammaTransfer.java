@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.ext.awt.image;
 
-
 /**
  * GammaTransfer.java
  *
@@ -28,65 +27,63 @@ package io.sf.carte.echosvg.ext.awt.image;
  *
  * @author <a href="mailto:sheng.pei@sun.com">Sheng Pei</a>
  * @author For later modifications, see Git history.
- * @version $Id$ 
+ * @version $Id$
  */
 public class GammaTransfer implements TransferFunction {
-    /**
-     * This byte array stores the lookuptable data
-     */
-    public byte [] lutData;
+	/**
+	 * This byte array stores the lookuptable data
+	 */
+	public byte[] lutData;
 
-    /**
-     * The amplitude of the Gamma function
-     */
-    public float amplitude;
+	/**
+	 * The amplitude of the Gamma function
+	 */
+	public float amplitude;
 
-    /**
-     * The exponent of the Gamma function
-     */
-    public float exponent;
+	/**
+	 * The exponent of the Gamma function
+	 */
+	public float exponent;
 
-    /**
-     * The offset of the Gamma function
-     */
-    public float offset;
+	/**
+	 * The offset of the Gamma function
+	 */
+	public float offset;
 
-    /**
-     * Three floats as the input for the Gamma function
-     */
-    public GammaTransfer(float amplitude, float exponent, float offset){
-        this.amplitude = amplitude;
-        this.exponent = exponent;
-        this.offset = offset;
-    }
+	/**
+	 * Three floats as the input for the Gamma function
+	 */
+	public GammaTransfer(float amplitude, float exponent, float offset) {
+		this.amplitude = amplitude;
+		this.exponent = exponent;
+		this.offset = offset;
+	}
 
-    /*
-     * This method will build the lut data. Each entry's
-     * value is in form of "amplitude*pow(C, exponent) + offset"
-     */
-    private void buildLutData(){
-        lutData = new byte [256];
-        int j, v;
-        for (j=0; j<=255; j++){
-            v = (int)Math.round(255*(amplitude*Math.pow(j/255f, exponent)+offset));
-            if(v > 255){
-                v = (byte)0xff;
-            }
-            else if(v < 0){
-                v = (byte)0x00;
-            }
-            lutData[j] = (byte)(v & 0xff);
-        }
-    }
+	/*
+	 * This method will build the lut data. Each entry's value is in form of
+	 * "amplitude*pow(C, exponent) + offset"
+	 */
+	private void buildLutData() {
+		lutData = new byte[256];
+		int j, v;
+		for (j = 0; j <= 255; j++) {
+			v = (int) Math.round(255 * (amplitude * Math.pow(j / 255f, exponent) + offset));
+			if (v > 255) {
+				v = (byte) 0xff;
+			} else if (v < 0) {
+				v = (byte) 0x00;
+			}
+			lutData[j] = (byte) (v & 0xff);
+		}
+	}
 
-
-    /**
-     * This method will return the lut data in order
-     * to construct a LookUpTable object
-     */
-    @Override
-    public byte [] getLookupTable(){
-        buildLutData();
-        return lutData;
-    }
+	/**
+	 * This method will return the lut data in order to construct a LookUpTable
+	 * object
+	 */
+	@Override
+	public byte[] getLookupTable() {
+		buildLutData();
+		return lutData;
+	}
 }

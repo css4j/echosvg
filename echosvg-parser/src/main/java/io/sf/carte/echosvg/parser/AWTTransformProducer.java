@@ -22,151 +22,146 @@ import java.awt.geom.AffineTransform;
 import java.io.Reader;
 
 /**
- * This class provides an implementation of the PathHandler that initializes
- * an AffineTransform from the value of a 'transform' attribute.
+ * This class provides an implementation of the PathHandler that initializes an
+ * AffineTransform from the value of a 'transform' attribute.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AWTTransformProducer implements TransformListHandler {
-    /**
-     * The value of the current affine transform.
-     */
-    protected AffineTransform affineTransform;
+	/**
+	 * The value of the current affine transform.
+	 */
+	protected AffineTransform affineTransform;
 
-    /**
-     * Utility method for creating an AffineTransform.
-     * @param r The reader used to read the transform specification.
-     */
-    public static AffineTransform createAffineTransform(Reader r)
-        throws ParseException {
-        TransformListParser p = new TransformListParser();
-        AWTTransformProducer th = new AWTTransformProducer();
+	/**
+	 * Utility method for creating an AffineTransform.
+	 * 
+	 * @param r The reader used to read the transform specification.
+	 */
+	public static AffineTransform createAffineTransform(Reader r) throws ParseException {
+		TransformListParser p = new TransformListParser();
+		AWTTransformProducer th = new AWTTransformProducer();
 
-        p.setTransformListHandler(th);
-        p.parse(r);
+		p.setTransformListHandler(th);
+		p.parse(r);
 
-        return th.getAffineTransform();
-    }
+		return th.getAffineTransform();
+	}
 
-    /**
-     * Utility method for creating an AffineTransform.
-     * @param s The transform specification.
-     */
-    public static AffineTransform createAffineTransform(String s)
-        throws ParseException {
-        TransformListParser p = new TransformListParser();
-        AWTTransformProducer th = new AWTTransformProducer();
+	/**
+	 * Utility method for creating an AffineTransform.
+	 * 
+	 * @param s The transform specification.
+	 */
+	public static AffineTransform createAffineTransform(String s) throws ParseException {
+		TransformListParser p = new TransformListParser();
+		AWTTransformProducer th = new AWTTransformProducer();
 
-        p.setTransformListHandler(th);
-        p.parse(s);
+		p.setTransformListHandler(th);
+		p.parse(s);
 
-        return th.getAffineTransform();
-    }
+		return th.getAffineTransform();
+	}
 
-    /**
-     * Returns the AffineTransform object initialized during the last parsing.
-     * @return the transform or null if this handler has not been used by
-     *         a parser.
-     */
-    public AffineTransform getAffineTransform() {
-        return affineTransform;
-    }
+	/**
+	 * Returns the AffineTransform object initialized during the last parsing.
+	 * 
+	 * @return the transform or null if this handler has not been used by a parser.
+	 */
+	public AffineTransform getAffineTransform() {
+		return affineTransform;
+	}
 
-    /**
-     * Implements {@link TransformListHandler#startTransformList()}.
-     */
-    @Override
-    public void startTransformList() throws ParseException {
-        affineTransform = new AffineTransform();
-    }
+	/**
+	 * Implements {@link TransformListHandler#startTransformList()}.
+	 */
+	@Override
+	public void startTransformList() throws ParseException {
+		affineTransform = new AffineTransform();
+	}
 
-    /**
-     * Implements {@link
-     * TransformListHandler#matrix(float,float,float,float,float,float)}.
-     */
-    @Override
-    public void matrix(float a, float b, float c, float d, float e, float f)
-        throws ParseException {
-        affineTransform.concatenate(new AffineTransform(a, b, c, d, e, f));
-    }
+	/**
+	 * Implements
+	 * {@link TransformListHandler#matrix(float,float,float,float,float,float)}.
+	 */
+	@Override
+	public void matrix(float a, float b, float c, float d, float e, float f) throws ParseException {
+		affineTransform.concatenate(new AffineTransform(a, b, c, d, e, f));
+	}
 
-    /**
-     * Implements {@link TransformListHandler#rotate(float)}.
-     */
-    @Override
-    public void rotate(float theta) throws ParseException {
-        affineTransform.concatenate
-            (AffineTransform.getRotateInstance( Math.toRadians( theta ) ));
-    }
+	/**
+	 * Implements {@link TransformListHandler#rotate(float)}.
+	 */
+	@Override
+	public void rotate(float theta) throws ParseException {
+		affineTransform.concatenate(AffineTransform.getRotateInstance(Math.toRadians(theta)));
+	}
 
-    /**
-     * Implements {@link TransformListHandler#rotate(float,float,float)}.
-     */
-    @Override
-    public void rotate(float theta, float cx, float cy) throws ParseException {
-        AffineTransform at
-            = AffineTransform.getRotateInstance( Math.toRadians( theta ), cx, cy);
-        affineTransform.concatenate(at);
-    }
+	/**
+	 * Implements {@link TransformListHandler#rotate(float,float,float)}.
+	 */
+	@Override
+	public void rotate(float theta, float cx, float cy) throws ParseException {
+		AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(theta), cx, cy);
+		affineTransform.concatenate(at);
+	}
 
-    /**
-     * Implements {@link TransformListHandler#translate(float)}.
-     */
-    @Override
-    public void translate(float tx) throws ParseException {
-        AffineTransform at = AffineTransform.getTranslateInstance(tx, 0);
-        affineTransform.concatenate(at);
-    }
+	/**
+	 * Implements {@link TransformListHandler#translate(float)}.
+	 */
+	@Override
+	public void translate(float tx) throws ParseException {
+		AffineTransform at = AffineTransform.getTranslateInstance(tx, 0);
+		affineTransform.concatenate(at);
+	}
 
-    /**
-     * Implements {@link TransformListHandler#translate(float,float)}.
-     */
-    @Override
-    public void translate(float tx, float ty) throws ParseException {
-        AffineTransform at = AffineTransform.getTranslateInstance(tx, ty);
-        affineTransform.concatenate(at);
-    }
+	/**
+	 * Implements {@link TransformListHandler#translate(float,float)}.
+	 */
+	@Override
+	public void translate(float tx, float ty) throws ParseException {
+		AffineTransform at = AffineTransform.getTranslateInstance(tx, ty);
+		affineTransform.concatenate(at);
+	}
 
-    /**
-     * Implements {@link TransformListHandler#scale(float)}.
-     */
-    @Override
-    public void scale(float sx) throws ParseException {
-        affineTransform.concatenate(AffineTransform.getScaleInstance(sx, sx));
-    }
+	/**
+	 * Implements {@link TransformListHandler#scale(float)}.
+	 */
+	@Override
+	public void scale(float sx) throws ParseException {
+		affineTransform.concatenate(AffineTransform.getScaleInstance(sx, sx));
+	}
 
-    /**
-     * Implements {@link TransformListHandler#scale(float,float)}.
-     */
-    @Override
-    public void scale(float sx, float sy) throws ParseException {
-        affineTransform.concatenate(AffineTransform.getScaleInstance(sx, sy));
-    }
+	/**
+	 * Implements {@link TransformListHandler#scale(float,float)}.
+	 */
+	@Override
+	public void scale(float sx, float sy) throws ParseException {
+		affineTransform.concatenate(AffineTransform.getScaleInstance(sx, sy));
+	}
 
-    /**
-     * Implements {@link TransformListHandler#skewX(float)}.
-     */
-    @Override
-    public void skewX(float skx) throws ParseException {
-        affineTransform.concatenate
-            (AffineTransform.getShearInstance(Math.tan( Math.toRadians( skx ) ), 0));
-    }
+	/**
+	 * Implements {@link TransformListHandler#skewX(float)}.
+	 */
+	@Override
+	public void skewX(float skx) throws ParseException {
+		affineTransform.concatenate(AffineTransform.getShearInstance(Math.tan(Math.toRadians(skx)), 0));
+	}
 
-    /**
-     * Implements {@link TransformListHandler#skewY(float)}.
-     */
-    @Override
-    public void skewY(float sky) throws ParseException {
-        affineTransform.concatenate
-            (AffineTransform.getShearInstance(0, Math.tan( Math.toRadians( sky ) )));
-    }
+	/**
+	 * Implements {@link TransformListHandler#skewY(float)}.
+	 */
+	@Override
+	public void skewY(float sky) throws ParseException {
+		affineTransform.concatenate(AffineTransform.getShearInstance(0, Math.tan(Math.toRadians(sky))));
+	}
 
-    /**
-     * Implements {@link TransformListHandler#endTransformList()}.
-     */
-    @Override
-    public void endTransformList() throws ParseException {
-    }
+	/**
+	 * Implements {@link TransformListHandler#endTransformList()}.
+	 */
+	@Override
+	public void endTransformList() throws ParseException {
+	}
 }

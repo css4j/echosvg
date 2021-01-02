@@ -35,91 +35,87 @@ import java.lang.ref.WeakReference;
  */
 public class CleanerThread extends Thread {
 
-    static volatile ReferenceQueue<Object> queue = null;
-    static CleanerThread  thread = null;
+	static volatile ReferenceQueue<Object> queue = null;
+	static CleanerThread thread = null;
 
-    public static ReferenceQueue<Object> getReferenceQueue() {
+	public static ReferenceQueue<Object> getReferenceQueue() {
 
-        if ( queue == null ) {
-            synchronized (CleanerThread.class) {
-                queue = new ReferenceQueue<>();
-                thread = new CleanerThread();
-            }
-        }
-        return queue;
-    }
+		if (queue == null) {
+			synchronized (CleanerThread.class) {
+				queue = new ReferenceQueue<>();
+				thread = new CleanerThread();
+			}
+		}
+		return queue;
+	}
 
-    /**
-     * If objects registered with the reference queue associated with
-     * this class implement this interface then the 'cleared' method
-     * will be called when the reference is queued.
-     */
-    public interface ReferenceCleared {
-        /* Called when the reference is cleared */
-        void cleared();
-    }
+	/**
+	 * If objects registered with the reference queue associated with this class
+	 * implement this interface then the 'cleared' method will be called when the
+	 * reference is queued.
+	 */
+	public interface ReferenceCleared {
+		/* Called when the reference is cleared */
+		void cleared();
+	}
 
-    /**
-     * A SoftReference subclass that automatically registers with
-     * the cleaner ReferenceQueue.
-     */
-    public abstract static class SoftReferenceCleared<T> extends SoftReference<T>
-      implements ReferenceCleared {
-        public SoftReferenceCleared(T o) {
-            super (o, CleanerThread.getReferenceQueue());
-        }
-    }
+	/**
+	 * A SoftReference subclass that automatically registers with the cleaner
+	 * ReferenceQueue.
+	 */
+	public abstract static class SoftReferenceCleared<T> extends SoftReference<T> implements ReferenceCleared {
+		public SoftReferenceCleared(T o) {
+			super(o, CleanerThread.getReferenceQueue());
+		}
+	}
 
-    /**
-     * A WeakReference subclass that automatically registers with
-     * the cleaner ReferenceQueue.
-     */
-    public abstract static class WeakReferenceCleared<T> extends WeakReference<T>
-      implements ReferenceCleared {
-        public WeakReferenceCleared(T o) {
-            super (o, CleanerThread.getReferenceQueue());
-        }
-    }
+	/**
+	 * A WeakReference subclass that automatically registers with the cleaner
+	 * ReferenceQueue.
+	 */
+	public abstract static class WeakReferenceCleared<T> extends WeakReference<T> implements ReferenceCleared {
+		public WeakReferenceCleared(T o) {
+			super(o, CleanerThread.getReferenceQueue());
+		}
+	}
 
-    /**
-     * A PhantomReference subclass that automatically registers with
-     * the cleaner ReferenceQueue.
-     */
-    public abstract static class PhantomReferenceCleared<T>
-        extends PhantomReference<T>
-        implements ReferenceCleared {
-        public PhantomReferenceCleared(T o) {
-            super (o, CleanerThread.getReferenceQueue());
-        }
-    }
+	/**
+	 * A PhantomReference subclass that automatically registers with the cleaner
+	 * ReferenceQueue.
+	 */
+	public abstract static class PhantomReferenceCleared<T> extends PhantomReference<T> implements ReferenceCleared {
+		public PhantomReferenceCleared(T o) {
+			super(o, CleanerThread.getReferenceQueue());
+		}
+	}
 
-    protected CleanerThread() {
-        super("EchoSVG CleanerThread");
-        setDaemon(true);
-        start();
-    }
+	protected CleanerThread() {
+		super("EchoSVG CleanerThread");
+		setDaemon(true);
+		start();
+	}
 
-    @Override
-    public void run() {
-        while(true) {
-            try {
-                Reference<?> ref;
-                try {
-                    ref = queue.remove();
-                    // System.err.println("Cleaned: " + ref);
-                } catch (InterruptedException ie) {
-                    continue;
-                }
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				Reference<?> ref;
+				try {
+					ref = queue.remove();
+					// System.err.println("Cleaned: " + ref);
+				} catch (InterruptedException ie) {
+					continue;
+				}
 
-                if (ref instanceof ReferenceCleared) {
-                    ReferenceCleared rc = (ReferenceCleared)ref;
-                    rc.cleared();
-                }
-            } catch (ThreadDeath td) {
-                throw td;
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-        }
-    }
+				if (ref instanceof ReferenceCleared) {
+					ReferenceCleared rc = (ReferenceCleared) ref;
+					rc.cleared();
+				}
+			} catch (ThreadDeath td) {
+				throw td;
+			} catch (Throwable t) {
+				t.printStackTrace();
+			}
+		}
+	}
 }

@@ -29,9 +29,9 @@ import java.awt.geom.AffineTransform;
  */
 public interface SVGMotionAnimatableElement {
 
-    /**
-     * Returns the {@link AffineTransform} representing the current motion
-     * animation for this element.
-     */
-    AffineTransform getMotionTransform();
+	/**
+	 * Returns the {@link AffineTransform} representing the current motion animation
+	 * for this element.
+	 */
+	AffineTransform getMotionTransform();
 }

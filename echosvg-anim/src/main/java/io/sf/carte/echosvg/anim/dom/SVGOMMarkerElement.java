@@ -40,345 +40,310 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMMarkerElement
-    extends    SVGStylableElement
-    implements SVGMarkerElement {
+public class SVGOMMarkerElement extends SVGStylableElement implements SVGMarkerElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
-        t.put(null, SVG_REF_X_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_REF_Y_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_MARKER_WIDTH_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_MARKER_HEIGHT_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_MARKER_UNITS_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        t.put(null, SVG_ORIENT_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        t.put(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_PRESERVE_ASPECT_RATIO_VALUE));
-        t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
+		t.put(null, SVG_REF_X_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_REF_Y_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_MARKER_WIDTH_ATTRIBUTE,
+				new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_MARKER_HEIGHT_ATTRIBUTE,
+				new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_MARKER_UNITS_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		t.put(null, SVG_ORIENT_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		t.put(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
+				new TraitInformation(true, SVGTypes.TYPE_PRESERVE_ASPECT_RATIO_VALUE));
+		t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The attribute initializer.
-     */
-    protected static final AttributeInitializer attributeInitializer;
-    static {
-        attributeInitializer = new AttributeInitializer(1);
-        attributeInitializer.addAttribute(null,
-                                          null,
-                                          SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
-                                          "xMidYMid meet");
-    }
+	/**
+	 * The attribute initializer.
+	 */
+	protected static final AttributeInitializer attributeInitializer;
+	static {
+		attributeInitializer = new AttributeInitializer(1);
+		attributeInitializer.addAttribute(null, null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE, "xMidYMid meet");
+	}
 
-    /**
-     * The units values.
-     */
-    protected static final String[] UNITS_VALUES = {
-        "",
-        SVG_USER_SPACE_ON_USE_VALUE,
-        SVG_STROKE_WIDTH_ATTRIBUTE
-    };
+	/**
+	 * The units values.
+	 */
+	protected static final String[] UNITS_VALUES = { "", SVG_USER_SPACE_ON_USE_VALUE, SVG_STROKE_WIDTH_ATTRIBUTE };
 
-    /**
-     * The orient type values.
-     */
-    protected static final String[] ORIENT_TYPE_VALUES = {
-        "",
-        SVG_AUTO_VALUE,
-        ""
-    };
+	/**
+	 * The orient type values.
+	 */
+	protected static final String[] ORIENT_TYPE_VALUES = { "", SVG_AUTO_VALUE, "" };
 
-    /**
-     * The 'refX' attribute value.
-     */
-    protected SVGOMAnimatedLength refX;
+	/**
+	 * The 'refX' attribute value.
+	 */
+	protected SVGOMAnimatedLength refX;
 
-    /**
-     * The 'refY' attribute value.
-     */
-    protected SVGOMAnimatedLength refY;
+	/**
+	 * The 'refY' attribute value.
+	 */
+	protected SVGOMAnimatedLength refY;
 
-    /**
-     * The 'markerWidth' attribute value.
-     */
-    protected SVGOMAnimatedLength markerWidth;
+	/**
+	 * The 'markerWidth' attribute value.
+	 */
+	protected SVGOMAnimatedLength markerWidth;
 
-    /**
-     * The 'markerHeight' attribute value.
-     */
-    protected SVGOMAnimatedLength markerHeight;
+	/**
+	 * The 'markerHeight' attribute value.
+	 */
+	protected SVGOMAnimatedLength markerHeight;
 
-    /**
-     * The 'orient' attribute value.
-     */
-    protected SVGOMAnimatedMarkerOrientValue orient;
+	/**
+	 * The 'orient' attribute value.
+	 */
+	protected SVGOMAnimatedMarkerOrientValue orient;
 
-    /**
-     * The 'markerUnits' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration markerUnits;
+	/**
+	 * The 'markerUnits' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration markerUnits;
 
-    /**
-     * The 'preserveAspectRatio' attribute value.
-     */
-    protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
+	/**
+	 * The 'preserveAspectRatio' attribute value.
+	 */
+	protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
 
-    /**
-     * The 'viewBox' attribute value.
-     */
-    protected SVGOMAnimatedRect viewBox;
+	/**
+	 * The 'viewBox' attribute value.
+	 */
+	protected SVGOMAnimatedRect viewBox;
 
-    /**
-     * The 'externalResourcesRequired' attribute value.
-     */
-    protected SVGOMAnimatedBoolean externalResourcesRequired;
+	/**
+	 * The 'externalResourcesRequired' attribute value.
+	 */
+	protected SVGOMAnimatedBoolean externalResourcesRequired;
 
-    /**
-     * Creates a new SVGOMMarkerElement object.
-     */
-    protected SVGOMMarkerElement() {
-    }
+	/**
+	 * Creates a new SVGOMMarkerElement object.
+	 */
+	protected SVGOMMarkerElement() {
+	}
 
-    /**
-     * Creates a new SVGOMMarkerElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMMarkerElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMMarkerElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMMarkerElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        refX =
-            createLiveAnimatedLength
-                (null, SVG_REF_X_ATTRIBUTE, SVG_MARKER_REF_X_DEFAULT_VALUE,
-                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-        refY =
-            createLiveAnimatedLength
-                (null, SVG_REF_Y_ATTRIBUTE, SVG_MARKER_REF_Y_DEFAULT_VALUE,
-                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-        markerWidth =
-            createLiveAnimatedLength
-                (null, SVG_MARKER_WIDTH_ATTRIBUTE,
-                 SVG_MARKER_MARKER_WIDTH_DEFAULT_VALUE,
-                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
-        markerHeight =
-            createLiveAnimatedLength
-                (null, SVG_MARKER_HEIGHT_ATTRIBUTE,
-                 SVG_MARKER_MARKER_WIDTH_DEFAULT_VALUE,
-                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
-        orient =
-            createLiveAnimatedMarkerOrientValue(null, SVG_ORIENT_ATTRIBUTE);
-        markerUnits =
-            createLiveAnimatedEnumeration
-                (null, SVG_MARKER_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 2);
-        preserveAspectRatio =
-            createLiveAnimatedPreserveAspectRatio();
-        viewBox = createLiveAnimatedRect(null, SVG_VIEW_BOX_ATTRIBUTE, null);
-        externalResourcesRequired =
-            createLiveAnimatedBoolean
-                (null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		refX = createLiveAnimatedLength(null, SVG_REF_X_ATTRIBUTE, SVG_MARKER_REF_X_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
+		refY = createLiveAnimatedLength(null, SVG_REF_Y_ATTRIBUTE, SVG_MARKER_REF_Y_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
+		markerWidth = createLiveAnimatedLength(null, SVG_MARKER_WIDTH_ATTRIBUTE, SVG_MARKER_MARKER_WIDTH_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
+		markerHeight = createLiveAnimatedLength(null, SVG_MARKER_HEIGHT_ATTRIBUTE,
+				SVG_MARKER_MARKER_WIDTH_DEFAULT_VALUE, AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
+		orient = createLiveAnimatedMarkerOrientValue(null, SVG_ORIENT_ATTRIBUTE);
+		markerUnits = createLiveAnimatedEnumeration(null, SVG_MARKER_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 2);
+		preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
+		viewBox = createLiveAnimatedRect(null, SVG_VIEW_BOX_ATTRIBUTE, null);
+		externalResourcesRequired = createLiveAnimatedBoolean(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_MARKER_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_MARKER_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGMarkerElement#getRefX()}.
-     */
-    @Override
-    public SVGAnimatedLength getRefX() {
-        return refX;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGMarkerElement#getRefX()}.
+	 */
+	@Override
+	public SVGAnimatedLength getRefX() {
+		return refX;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGMarkerElement#getRefY()}.
-     */
-    @Override
-    public SVGAnimatedLength getRefY() {
-        return refY;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGMarkerElement#getRefY()}.
+	 */
+	@Override
+	public SVGAnimatedLength getRefY() {
+		return refY;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGMarkerElement#getMarkerUnits()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getMarkerUnits() {
-        return markerUnits;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGMarkerElement#getMarkerUnits()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getMarkerUnits() {
+		return markerUnits;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGMarkerElement#getMarkerWidth()}.
-     */
-    @Override
-    public SVGAnimatedLength getMarkerWidth() {
-        return markerWidth;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGMarkerElement#getMarkerWidth()}.
+	 */
+	@Override
+	public SVGAnimatedLength getMarkerWidth() {
+		return markerWidth;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGMarkerElement#getMarkerHeight()}.
-     */
-    @Override
-    public SVGAnimatedLength getMarkerHeight() {
-        return markerHeight;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGMarkerElement#getMarkerHeight()}.
+	 */
+	@Override
+	public SVGAnimatedLength getMarkerHeight() {
+		return markerHeight;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGMarkerElement#getOrientType()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getOrientType() {
-        return orient.getAnimatedEnumeration();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGMarkerElement#getOrientType()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getOrientType() {
+		return orient.getAnimatedEnumeration();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGMarkerElement#getOrientAngle()}.
-     */
-    @Override
-    public SVGAnimatedAngle getOrientAngle() {
-        return orient.getAnimatedAngle();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGMarkerElement#getOrientAngle()}.
+	 */
+	@Override
+	public SVGAnimatedAngle getOrientAngle() {
+		return orient.getAnimatedAngle();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGMarkerElement#setOrientToAuto()}.
-     */
-    @Override
-    public void setOrientToAuto() {
-        setAttributeNS(null, SVG_ORIENT_ATTRIBUTE, SVG_AUTO_VALUE);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGMarkerElement#setOrientToAuto()}.
+	 */
+	@Override
+	public void setOrientToAuto() {
+		setAttributeNS(null, SVG_ORIENT_ATTRIBUTE, SVG_AUTO_VALUE);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGMarkerElement#setOrientToAngle(SVGAngle)}.
-     */
-    @Override
-    public void setOrientToAngle(SVGAngle angle) {
-        setAttributeNS(null, SVG_ORIENT_ATTRIBUTE, angle.getValueAsString());
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGMarkerElement#setOrientToAngle(SVGAngle)}.
+	 */
+	@Override
+	public void setOrientToAngle(SVGAngle angle) {
+		setAttributeNS(null, SVG_ORIENT_ATTRIBUTE, angle.getValueAsString());
+	}
 
-    // SVGFitToViewBox support ////////////////////////////////////////////
+	// SVGFitToViewBox support ////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFitToViewBox#getViewBox()}.
-     */
-    @Override
-    public SVGAnimatedRect getViewBox() {
-        return viewBox;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGFitToViewBox#getViewBox()}.
+	 */
+	@Override
+	public SVGAnimatedRect getViewBox() {
+		return viewBox;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFitToViewBox#getPreserveAspectRatio()}.
-     */
-    @Override
-    public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
-        return preserveAspectRatio;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFitToViewBox#getPreserveAspectRatio()}.
+	 */
+	@Override
+	public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
+		return preserveAspectRatio;
+	}
 
-    // SVGExternalResourcesRequired support /////////////////////////////
+	// SVGExternalResourcesRequired support /////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
-     */
-    @Override
-    public SVGAnimatedBoolean getExternalResourcesRequired() {
-        return externalResourcesRequired;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
+	 */
+	@Override
+	public SVGAnimatedBoolean getExternalResourcesRequired() {
+		return externalResourcesRequired;
+	}
 
-    // SVGLangSpace support //////////////////////////////////////////////////
+	// SVGLangSpace support //////////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Returns the xml:lang attribute value.
-     */
-    @Override
-    public String getXMLlang() {
-        return XMLSupport.getXMLLang(this);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:lang attribute value.
+	 */
+	@Override
+	public String getXMLlang() {
+		return XMLSupport.getXMLLang(this);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:lang attribute value.
-     */
-    @Override
-    public void setXMLlang(String lang) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
-    }
+	/**
+	 * <b>DOM</b>: Sets the xml:lang attribute value.
+	 */
+	@Override
+	public void setXMLlang(String lang) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
+	}
 
-    /**
-     * <b>DOM</b>: Returns the xml:space attribute value.
-     */
-    @Override
-    public String getXMLspace() {
-        return XMLSupport.getXMLSpace(this);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:space attribute value.
+	 */
+	@Override
+	public String getXMLspace() {
+		return XMLSupport.getXMLSpace(this);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:space attribute value.
-     */
-    @Override
-    public void setXMLspace(String space) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
-    }
+	/**
+	 * <b>DOM</b>: Sets the xml:space attribute value.
+	 */
+	@Override
+	public void setXMLspace(String space) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return attributeInitializer;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return attributeInitializer;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMMarkerElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMMarkerElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 
-    // AnimationTarget ///////////////////////////////////////////////////////
+	// AnimationTarget ///////////////////////////////////////////////////////
 
 // XXX TBD
 //     /**

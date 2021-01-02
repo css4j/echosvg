@@ -43,379 +43,337 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMPatternElement
-    extends    SVGStylableElement
-    implements SVGPatternElement {
+public class SVGOMPatternElement extends SVGStylableElement implements SVGPatternElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
-        t.put(null, SVG_X_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_Y_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_WIDTH_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_HEIGHT_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_PATTERN_UNITS_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        t.put(null, SVG_PATTERN_CONTENT_UNITS_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        t.put(null, SVG_PATTERN_TRANSFORM_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
-        t.put(null, SVG_VIEW_BOX_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER_LIST));
-        t.put(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_PRESERVE_ASPECT_RATIO_VALUE));
-        t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
+		t.put(null, SVG_X_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_Y_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_WIDTH_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_HEIGHT_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_PATTERN_UNITS_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		t.put(null, SVG_PATTERN_CONTENT_UNITS_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		t.put(null, SVG_PATTERN_TRANSFORM_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
+		t.put(null, SVG_VIEW_BOX_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER_LIST));
+		t.put(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
+				new TraitInformation(true, SVGTypes.TYPE_PRESERVE_ASPECT_RATIO_VALUE));
+		t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The attribute initializer.
-     */
-    protected static final AttributeInitializer attributeInitializer;
-    static {
-        attributeInitializer = new AttributeInitializer(5);
-        attributeInitializer.addAttribute(null, null,
-                                          SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
-                                          "xMidYMid meet");
-        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
-                                          null, "xmlns:xlink",
-                                          XMLConstants.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "show", "other");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "actuate", "onLoad");
-    }
+	/**
+	 * The attribute initializer.
+	 */
+	protected static final AttributeInitializer attributeInitializer;
+	static {
+		attributeInitializer = new AttributeInitializer(5);
+		attributeInitializer.addAttribute(null, null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE, "xMidYMid meet");
+		attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI, null, "xmlns:xlink",
+				XMLConstants.XLINK_NAMESPACE_URI);
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "type", "simple");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "show", "other");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "actuate", "onLoad");
+	}
 
-    /**
-     * The units values.
-     */
-    protected static final String[] UNITS_VALUES = {
-        "",
-        SVG_USER_SPACE_ON_USE_VALUE,
-        SVG_OBJECT_BOUNDING_BOX_VALUE
-    };
+	/**
+	 * The units values.
+	 */
+	protected static final String[] UNITS_VALUES = { "", SVG_USER_SPACE_ON_USE_VALUE, SVG_OBJECT_BOUNDING_BOX_VALUE };
 
-    /**
-     * The 'x' attribute value.
-     */
-    protected SVGOMAnimatedLength x;
+	/**
+	 * The 'x' attribute value.
+	 */
+	protected SVGOMAnimatedLength x;
 
-    /**
-     * The 'y' attribute value.
-     */
-    protected SVGOMAnimatedLength y;
+	/**
+	 * The 'y' attribute value.
+	 */
+	protected SVGOMAnimatedLength y;
 
-    /**
-     * The 'width' attribute value.
-     */
-    protected SVGOMAnimatedLength width;
+	/**
+	 * The 'width' attribute value.
+	 */
+	protected SVGOMAnimatedLength width;
 
-    /**
-     * The 'height' attribute value.
-     */
-    protected SVGOMAnimatedLength height;
+	/**
+	 * The 'height' attribute value.
+	 */
+	protected SVGOMAnimatedLength height;
 
-    /**
-     * The 'patternUnits' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration patternUnits;
+	/**
+	 * The 'patternUnits' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration patternUnits;
 
-    /**
-     * The 'patternContentUnits' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration patternContentUnits;
+	/**
+	 * The 'patternContentUnits' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration patternContentUnits;
 
-    /**
-     * The 'xlink:href' attribute value.
-     */
-    protected SVGOMAnimatedString href;
+	/**
+	 * The 'xlink:href' attribute value.
+	 */
+	protected SVGOMAnimatedString href;
 
-    /**
-     * The 'externalResourcesRequired' attribute value.
-     */
-    protected SVGOMAnimatedBoolean externalResourcesRequired;
+	/**
+	 * The 'externalResourcesRequired' attribute value.
+	 */
+	protected SVGOMAnimatedBoolean externalResourcesRequired;
 
-    /**
-     * The 'preserveAspectRatio' attribute value.
-     */
-    protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
+	/**
+	 * The 'preserveAspectRatio' attribute value.
+	 */
+	protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
 
-    /**
-     * Creates a new SVGOMPatternElement object.
-     */
-    protected SVGOMPatternElement() {
-    }
+	/**
+	 * Creates a new SVGOMPatternElement object.
+	 */
+	protected SVGOMPatternElement() {
+	}
 
-    /**
-     * Creates a new SVGOMPatternElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMPatternElement(String prefix,
-                               AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMPatternElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMPatternElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        x = createLiveAnimatedLength
-            (null, SVG_X_ATTRIBUTE, SVG_PATTERN_X_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-        y = createLiveAnimatedLength
-            (null, SVG_Y_ATTRIBUTE, SVG_PATTERN_Y_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-        width =
-            createLiveAnimatedLength
-                (null, SVG_WIDTH_ATTRIBUTE, SVG_PATTERN_WIDTH_DEFAULT_VALUE,
-                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
-        height =
-            createLiveAnimatedLength
-                (null, SVG_HEIGHT_ATTRIBUTE, SVG_PATTERN_WIDTH_DEFAULT_VALUE,
-                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
-        patternUnits =
-            createLiveAnimatedEnumeration
-                (null, SVG_PATTERN_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 2);
-        patternContentUnits =
-            createLiveAnimatedEnumeration
-                (null, SVG_PATTERN_CONTENT_UNITS_ATTRIBUTE, UNITS_VALUES,
-                 (short) 1);
-        href =
-            createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
-        externalResourcesRequired =
-            createLiveAnimatedBoolean
-                (null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
-        preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		x = createLiveAnimatedLength(null, SVG_X_ATTRIBUTE, SVG_PATTERN_X_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
+		y = createLiveAnimatedLength(null, SVG_Y_ATTRIBUTE, SVG_PATTERN_Y_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
+		width = createLiveAnimatedLength(null, SVG_WIDTH_ATTRIBUTE, SVG_PATTERN_WIDTH_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
+		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, SVG_PATTERN_WIDTH_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
+		patternUnits = createLiveAnimatedEnumeration(null, SVG_PATTERN_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 2);
+		patternContentUnits = createLiveAnimatedEnumeration(null, SVG_PATTERN_CONTENT_UNITS_ATTRIBUTE, UNITS_VALUES,
+				(short) 1);
+		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		externalResourcesRequired = createLiveAnimatedBoolean(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
+		preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_PATTERN_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_PATTERN_TAG;
+	}
 
-    /**
-     * To implement {@link SVGPatternElement#getPatternTransform()}.
-     */
-    @Override
-    public SVGAnimatedTransformList getPatternTransform() {
-        throw new UnsupportedOperationException
-            ("SVGPatternElement.getPatternTransform is not implemented"); // XXX
-    }
+	/**
+	 * To implement {@link SVGPatternElement#getPatternTransform()}.
+	 */
+	@Override
+	public SVGAnimatedTransformList getPatternTransform() {
+		throw new UnsupportedOperationException("SVGPatternElement.getPatternTransform is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPatternElement#getPatternUnits()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getPatternUnits() {
-        return patternUnits;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPatternElement#getPatternUnits()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getPatternUnits() {
+		return patternUnits;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGPatternElement#getPatternContentUnits()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getPatternContentUnits() {
-        return patternContentUnits;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPatternElement#getPatternContentUnits()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getPatternContentUnits() {
+		return patternContentUnits;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPatternElement#getX()}.
-     */
-    @Override
-    public SVGAnimatedLength getX() {
-        return x;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPatternElement#getX()}.
+	 */
+	@Override
+	public SVGAnimatedLength getX() {
+		return x;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPatternElement#getY()}.
-     */
-    @Override
-    public SVGAnimatedLength getY() {
-        return y;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPatternElement#getY()}.
+	 */
+	@Override
+	public SVGAnimatedLength getY() {
+		return y;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPatternElement#getWidth()}.
-     */
-    @Override
-    public SVGAnimatedLength getWidth() {
-        return width;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPatternElement#getWidth()}.
+	 */
+	@Override
+	public SVGAnimatedLength getWidth() {
+		return width;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGPatternElement#getHeight()}.
-     */
-    @Override
-    public SVGAnimatedLength getHeight() {
-        return height;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGPatternElement#getHeight()}.
+	 */
+	@Override
+	public SVGAnimatedLength getHeight() {
+		return height;
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 
-    // XLink support //////////////////////////////////////////////////////
+	// XLink support //////////////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGURIReference#getHref()}.
-     */
-    @Override
-    public SVGAnimatedString getHref() {
-        return href;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
+	 */
+	@Override
+	public SVGAnimatedString getHref() {
+		return href;
+	}
 
-    // SVGFitToViewBox support ////////////////////////////////////////////
+	// SVGFitToViewBox support ////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFitToViewBox#getViewBox()}.
-     */
-    @Override
-    public SVGAnimatedRect getViewBox() {
-        throw new UnsupportedOperationException
-            ("SVGFitToViewBox.getViewBox is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGFitToViewBox#getViewBox()}.
+	 */
+	@Override
+	public SVGAnimatedRect getViewBox() {
+		throw new UnsupportedOperationException("SVGFitToViewBox.getViewBox is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFitToViewBox#getPreserveAspectRatio()}.
-     */
-    @Override
-    public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
-        return preserveAspectRatio;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFitToViewBox#getPreserveAspectRatio()}.
+	 */
+	@Override
+	public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
+		return preserveAspectRatio;
+	}
 
-    // SVGExternalResourcesRequired support /////////////////////////////
+	// SVGExternalResourcesRequired support /////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
-     */
-    @Override
-    public SVGAnimatedBoolean getExternalResourcesRequired() {
-        return externalResourcesRequired;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
+	 */
+	@Override
+	public SVGAnimatedBoolean getExternalResourcesRequired() {
+		return externalResourcesRequired;
+	}
 
-    // SVGLangSpace support //////////////////////////////////////////////////
+	// SVGLangSpace support //////////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Returns the xml:lang attribute value.
-     */
-    @Override
-    public String getXMLlang() {
-        return XMLSupport.getXMLLang(this);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:lang attribute value.
+	 */
+	@Override
+	public String getXMLlang() {
+		return XMLSupport.getXMLLang(this);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:lang attribute value.
-     */
-    @Override
-    public void setXMLlang(String lang) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
-    }
+	/**
+	 * <b>DOM</b>: Sets the xml:lang attribute value.
+	 */
+	@Override
+	public void setXMLlang(String lang) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_LANG_QNAME, lang);
+	}
 
-    /**
-     * <b>DOM</b>: Returns the xml:space attribute value.
-     */
-    @Override
-    public String getXMLspace() {
-        return XMLSupport.getXMLSpace(this);
-    }
+	/**
+	 * <b>DOM</b>: Returns the xml:space attribute value.
+	 */
+	@Override
+	public String getXMLspace() {
+		return XMLSupport.getXMLSpace(this);
+	}
 
-    /**
-     * <b>DOM</b>: Sets the xml:space attribute value.
-     */
-    @Override
-    public void setXMLspace(String space) {
-        setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
-    }
+	/**
+	 * <b>DOM</b>: Sets the xml:space attribute value.
+	 */
+	@Override
+	public void setXMLspace(String space) {
+		setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
+	}
 
-    // SVGTests support ///////////////////////////////////////////////////
+	// SVGTests support ///////////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGTests#getRequiredFeatures()}.
-     */
-    @Override
-    public SVGStringList getRequiredFeatures() {
-        return SVGTestsSupport.getRequiredFeatures(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGTests#getRequiredFeatures()}.
+	 */
+	@Override
+	public SVGStringList getRequiredFeatures() {
+		return SVGTestsSupport.getRequiredFeatures(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGTests#getRequiredExtensions()}.
-     */
-    @Override
-    public SVGStringList getRequiredExtensions() {
-        return SVGTestsSupport.getRequiredExtensions(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGTests#getRequiredExtensions()}.
+	 */
+	@Override
+	public SVGStringList getRequiredExtensions() {
+		return SVGTestsSupport.getRequiredExtensions(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGTests#getSystemLanguage()}.
-     */
-    @Override
-    public SVGStringList getSystemLanguage() {
-        return SVGTestsSupport.getSystemLanguage(this);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGTests#getSystemLanguage()}.
+	 */
+	@Override
+	public SVGStringList getSystemLanguage() {
+		return SVGTestsSupport.getSystemLanguage(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGTests#hasExtension(String)}.
-     */
-    @Override
-    public boolean hasExtension(String extension) {
-        return SVGTestsSupport.hasExtension(this, extension);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGTests#hasExtension(String)}.
+	 */
+	@Override
+	public boolean hasExtension(String extension) {
+		return SVGTestsSupport.hasExtension(this, extension);
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return attributeInitializer;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return attributeInitializer;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMPatternElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMPatternElement();
+	}
 }

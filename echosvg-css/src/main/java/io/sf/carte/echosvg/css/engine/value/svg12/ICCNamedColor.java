@@ -31,66 +31,66 @@ import io.sf.carte.echosvg.css.engine.value.AbstractValue;
  */
 public class ICCNamedColor extends AbstractValue {
 
-    public static final String ICC_NAMED_COLOR_FUNCTION = "icc-named-color";
+	public static final String ICC_NAMED_COLOR_FUNCTION = "icc-named-color";
 
-    /**
-     * The color profile.
-     */
-    protected String colorProfile;
+	/**
+	 * The color profile.
+	 */
+	protected String colorProfile;
 
-    /**
-     * The color name.
-     */
-    protected String colorName;
+	/**
+	 * The color name.
+	 */
+	protected String colorName;
 
-    /**
-     * Creates a new ICCNamedColor.
-     */
-    public ICCNamedColor(String profileName, String colorName) {
-        this.colorProfile = profileName;
-        this.colorName = colorName;
-    }
+	/**
+	 * Creates a new ICCNamedColor.
+	 */
+	public ICCNamedColor(String profileName, String colorName) {
+		this.colorProfile = profileName;
+		this.colorName = colorName;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
-     */
-    @Override
-    public short getCssValueType() {
-        return CSSValue.CSS_CUSTOM;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
+	 */
+	@Override
+	public short getCssValueType() {
+		return CSSValue.CSS_CUSTOM;
+	}
 
-    /**
-     * Returns the color name.
-     */
-    public String getColorProfile() throws DOMException {
-        return colorProfile;
-    }
+	/**
+	 * Returns the color name.
+	 */
+	public String getColorProfile() throws DOMException {
+		return colorProfile;
+	}
 
-    /**
-     * Returns the color name
-     */
-    public String getColorName() throws DOMException {
-        return colorName;
-    }
+	/**
+	 * Returns the color name
+	 */
+	public String getColorName() throws DOMException {
+		return colorName;
+	}
 
-    /**
-     *  A string representation of the current value.
-     */
-    @Override
-    public String getCssText() {
-        StringBuffer sb = new StringBuffer(ICC_NAMED_COLOR_FUNCTION);
-        sb.append('(');
-        sb.append(colorProfile);
-        sb.append(", ");
-        sb.append(colorName);
-        sb.append( ')' );
-        return sb.toString();
-    }
+	/**
+	 * A string representation of the current value.
+	 */
+	@Override
+	public String getCssText() {
+		StringBuffer sb = new StringBuffer(ICC_NAMED_COLOR_FUNCTION);
+		sb.append('(');
+		sb.append(colorProfile);
+		sb.append(", ");
+		sb.append(colorName);
+		sb.append(')');
+		return sb.toString();
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return getCssText();
-    }
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return getCssText();
+	}
 }

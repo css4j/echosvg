@@ -30,40 +30,39 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFontFaceSrcElement
-    extends    SVGOMElement
-    implements SVGFontFaceSrcElement {
+public class SVGOMFontFaceSrcElement extends SVGOMElement implements SVGFontFaceSrcElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new SVGOMFontFaceSrcElement object.
-     */
-    protected SVGOMFontFaceSrcElement() {
-    }
+	/**
+	 * Creates a new SVGOMFontFaceSrcElement object.
+	 */
+	protected SVGOMFontFaceSrcElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFontFaceSrcElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFontFaceSrcElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new SVGOMFontFaceSrcElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFontFaceSrcElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FONT_FACE_SRC_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FONT_FACE_SRC_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFontFaceSrcElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFontFaceSrcElement();
+	}
 }

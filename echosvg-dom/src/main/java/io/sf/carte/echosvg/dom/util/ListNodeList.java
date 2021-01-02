@@ -26,35 +26,35 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * A simple class that implements the DOM NodeList interface by
- * wrapping an Java List instace.
+ * A simple class that implements the DOM NodeList interface by wrapping an Java
+ * List instace.
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ListNodeList implements NodeList {
-    protected List<Element> list;
+	protected List<Element> list;
 
-    public ListNodeList(List<Element> list) {
-        this.list = list;
-    }
+	public ListNodeList(List<Element> list) {
+		this.list = list;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link NodeList#item(int)}.
-     */
-    @Override
-    public Node item(int index) {
-        if ((index < 0) || (index > list.size()))
-            return null;
-        return list.get(index);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link NodeList#item(int)}.
+	 */
+	@Override
+	public Node item(int index) {
+		if ((index < 0) || (index > list.size()))
+			return null;
+		return list.get(index);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link NodeList#getLength()}.
-     */
-    @Override
-    public int getLength() {
-        return list.size();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link NodeList#getLength()}.
+	 */
+	@Override
+	public int getLength() {
+		return list.size();
+	}
 }

@@ -27,136 +27,145 @@ import io.sf.carte.echosvg.util.DoublyLinkedList;
  */
 public class LRUCache {
 
-    /**
-     * Interface for object participating in the LRU Cache.  These
-     * inform the object of key events in the status of the object in
-     * the LRU cache.
-     */
-        public interface LRUObj {
-        /**
-         * Called when the object first becomes active in the LRU cache.
-         * @param nde The LRU cache node associated with this object.
-         *            should be remembered so it can be returned by
-         *            <code>lruGet</code>.
-         */
-        void    lruSet(LRUNode nde);
-        /**
-         * Called to get the LRU node for this object.  Should return the
-         * node passed in to lruSet.
-         */
-        LRUNode lruGet();
-        /**
-         * Called to inform the object that it is no longer in the cache.
-         */
-        void    lruRemove();
-        }
+	/**
+	 * Interface for object participating in the LRU Cache. These inform the object
+	 * of key events in the status of the object in the LRU cache.
+	 */
+	public interface LRUObj {
+		/**
+		 * Called when the object first becomes active in the LRU cache.
+		 * 
+		 * @param nde The LRU cache node associated with this object. should be
+		 *            remembered so it can be returned by <code>lruGet</code>.
+		 */
+		void lruSet(LRUNode nde);
 
-    /**
-     * Interface for nodes in the LRU cache, basicly nodes in a doubly
-     * linked list.
-     */
-        public static class LRUNode extends DoublyLinkedList.Node {
-                private   LRUObj  obj  = null;
-                public    LRUObj  getObj ()               { return obj; }
-                protected void    setObj (LRUObj  newObj) {
-                        if (obj != null) obj.lruRemove();
+		/**
+		 * Called to get the LRU node for this object. Should return the node passed in
+		 * to lruSet.
+		 */
+		LRUNode lruGet();
 
-                        obj = newObj;
-                        if (obj != null) obj.lruSet(this);
-                }
-        }
+		/**
+		 * Called to inform the object that it is no longer in the cache.
+		 */
+		void lruRemove();
+	}
 
-        private DoublyLinkedList free    = null;
-        private DoublyLinkedList used    = null;
-        private int     maxSize = 0;
+	/**
+	 * Interface for nodes in the LRU cache, basicly nodes in a doubly linked list.
+	 */
+	public static class LRUNode extends DoublyLinkedList.Node {
+		private LRUObj obj = null;
 
-        public LRUCache(int size) {
-                if (size <= 0) size=1;
-                maxSize = size;
+		public LRUObj getObj() {
+			return obj;
+		}
 
-                free = new DoublyLinkedList();
-                used = new DoublyLinkedList();
+		protected void setObj(LRUObj newObj) {
+			if (obj != null)
+				obj.lruRemove();
 
-                while (size > 0) {
-                        free.add(new LRUNode());
-                        size--;
-                }
-        }
+			obj = newObj;
+			if (obj != null)
+				obj.lruSet(this);
+		}
+	}
 
-        public int getUsed() {
-                return used.getSize();
-        }
+	private DoublyLinkedList free = null;
+	private DoublyLinkedList used = null;
+	private int maxSize = 0;
 
-        public synchronized void setSize(int newSz) {
+	public LRUCache(int size) {
+		if (size <= 0)
+			size = 1;
+		maxSize = size;
 
-                if (maxSize < newSz) {  // list grew...
+		free = new DoublyLinkedList();
+		used = new DoublyLinkedList();
 
-                        for (int i=maxSize; i<newSz; i++)
-                                free.add(new LRUNode());
+		while (size > 0) {
+			free.add(new LRUNode());
+			size--;
+		}
+	}
 
-                } else if (maxSize > newSz) {
+	public int getUsed() {
+		return used.getSize();
+	}
 
-                        for (int i=used.getSize(); i>newSz; i--) {
-                                LRUNode nde = (LRUNode)used.getTail();
-                                used.remove(nde);
-                                nde.setObj(null);
-                        }
-                }
+	public synchronized void setSize(int newSz) {
 
-                maxSize = newSz;
-        }
+		if (maxSize < newSz) { // list grew...
 
-        public synchronized void flush() {
-                while (used.getSize() > 0) {
-                        LRUNode nde = (LRUNode)used.pop();
-                        nde.setObj(null);
-                        free.add(nde);
-                }
-        }
+			for (int i = maxSize; i < newSz; i++)
+				free.add(new LRUNode());
 
-        public synchronized void remove(LRUObj obj) {
-                LRUNode nde = obj.lruGet();
-                if (nde == null) return;
-                used.remove(nde);
-                nde.setObj(null);
-                free.add(nde);
-        }
+		} else if (maxSize > newSz) {
 
-        public synchronized void touch(LRUObj obj) {
-                LRUNode nde = obj.lruGet();
-                if (nde == null) return;
-                used.touch(nde);
-        }
+			for (int i = used.getSize(); i > newSz; i--) {
+				LRUNode nde = (LRUNode) used.getTail();
+				used.remove(nde);
+				nde.setObj(null);
+			}
+		}
 
-        public synchronized void add(LRUObj obj) {
-                LRUNode nde = obj.lruGet();
+		maxSize = newSz;
+	}
 
-                // already linked in...
-                if (nde != null) {
-                        used.touch(nde);
-                        return;
-                }
+	public synchronized void flush() {
+		while (used.getSize() > 0) {
+			LRUNode nde = (LRUNode) used.pop();
+			nde.setObj(null);
+			free.add(nde);
+		}
+	}
 
-                if (free.getSize() > 0) {
-                        nde = (LRUNode)free.pop();
-                        nde.setObj(obj);
-                        used.add(nde);
-                } else {
-                        nde = (LRUNode)used.getTail();
-                        nde.setObj(obj);
-                        used.touch(nde);
-                }
-        }
+	public synchronized void remove(LRUObj obj) {
+		LRUNode nde = obj.lruGet();
+		if (nde == null)
+			return;
+		used.remove(nde);
+		nde.setObj(null);
+		free.add(nde);
+	}
 
-        protected synchronized void print() {
-                System.out.println("In Use: " + used.getSize() +
-                                                   " Free: " + free.getSize());
-                LRUNode nde = (LRUNode)used.getHead();
-                if (nde == null) return;
-                do {
-                        System.out.println(nde.getObj());
-                        nde = (LRUNode)nde.getNext();
-                } while (nde != used.getHead());
-        }
+	public synchronized void touch(LRUObj obj) {
+		LRUNode nde = obj.lruGet();
+		if (nde == null)
+			return;
+		used.touch(nde);
+	}
+
+	public synchronized void add(LRUObj obj) {
+		LRUNode nde = obj.lruGet();
+
+		// already linked in...
+		if (nde != null) {
+			used.touch(nde);
+			return;
+		}
+
+		if (free.getSize() > 0) {
+			nde = (LRUNode) free.pop();
+			nde.setObj(obj);
+			used.add(nde);
+		} else {
+			nde = (LRUNode) used.getTail();
+			nde.setObj(obj);
+			used.touch(nde);
+		}
+	}
+
+	protected synchronized void print() {
+		System.out.println("In Use: " + used.getSize() + " Free: " + free.getSize());
+		LRUNode nde = (LRUNode) used.getHead();
+		if (nde == null)
+			return;
+		do {
+			System.out.println(nde.getObj());
+			nde = (LRUNode) nde.getNext();
+		} while (nde != used.getHead());
+	}
 
 }

@@ -24,8 +24,8 @@ import java.util.List;
 import io.sf.carte.echosvg.ext.awt.image.CompositeRule;
 
 /**
- * Composites a list of images according to a single composite rule.
- * the image are applied in the order they are in the List given.
+ * Composites a list of images according to a single composite rule. the image
+ * are applied in the order they are in the List given.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
@@ -33,21 +33,24 @@ import io.sf.carte.echosvg.ext.awt.image.CompositeRule;
  */
 public interface CompositeRable extends FilterColorInterpolation {
 
-    /**
-     * The sources to be composited togeather.
-     * @param srcs The list of images to be composited by the composite rule.
-     */
-    void setSources(List<? extends RenderableImage> srcs);
+	/**
+	 * The sources to be composited togeather.
+	 * 
+	 * @param srcs The list of images to be composited by the composite rule.
+	 */
+	void setSources(List<? extends RenderableImage> srcs);
 
-    /**
-     * Set the composite rule to use for combining the sources.
-     * @param cr Composite rule to use.
-     */
-    void setCompositeRule(CompositeRule cr);
+	/**
+	 * Set the composite rule to use for combining the sources.
+	 * 
+	 * @param cr Composite rule to use.
+	 */
+	void setCompositeRule(CompositeRule cr);
 
-    /**
-     * Get the composite rule in use for combining the sources.
-     * @return Composite rule currently in use.
-     */
-    CompositeRule getCompositeRule();
+	/**
+	 * Get the composite rule in use for combining the sources.
+	 * 
+	 * @return Composite rule currently in use.
+	 */
+	CompositeRule getCompositeRule();
 }

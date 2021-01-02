@@ -31,43 +31,44 @@ import io.sf.carte.echosvg.util.Service;
  */
 public final class ImageWriterRegistry {
 
-    private static ImageWriterRegistry instance;
+	private static ImageWriterRegistry instance;
 
-    private final Map<String, ImageWriter> imageWriterMap = new HashMap<>();
+	private final Map<String, ImageWriter> imageWriterMap = new HashMap<>();
 
-    private ImageWriterRegistry() {
-        setup();
-    }
+	private ImageWriterRegistry() {
+		setup();
+	}
 
-    public static ImageWriterRegistry getInstance() {
-      synchronized( ImageWriterRegistry.class ){
-        if ( instance == null ){
-          instance = new ImageWriterRegistry();
-        }
-        return instance;
-      }
-    }
+	public static ImageWriterRegistry getInstance() {
+		synchronized (ImageWriterRegistry.class) {
+			if (instance == null) {
+				instance = new ImageWriterRegistry();
+			}
+			return instance;
+		}
+	}
 
-    private void setup() {
-        Iterator<Object> iter = Service.providers(ImageWriter.class);
-        while (iter.hasNext()) {
-            ImageWriter writer = (ImageWriter)iter.next();
-            // System.out.println("RE: " + writer);
-            register(writer);
-        }
-    }
+	private void setup() {
+		Iterator<Object> iter = Service.providers(ImageWriter.class);
+		while (iter.hasNext()) {
+			ImageWriter writer = (ImageWriter) iter.next();
+			// System.out.println("RE: " + writer);
+			register(writer);
+		}
+	}
 
-    public void register(ImageWriter writer) {
-        imageWriterMap.put(writer.getMIMEType(), writer);
-    }
+	public void register(ImageWriter writer) {
+		imageWriterMap.put(writer.getMIMEType(), writer);
+	}
 
-    /**
-     * get the ImageWriter registered for mime, or null.
-     * @param mime used for lookup
-     * @return the registered ImageWriter (maybe null)
-     */
-    public ImageWriter getWriterFor(String mime) {
-        return imageWriterMap.get(mime);
-    }
+	/**
+	 * get the ImageWriter registered for mime, or null.
+	 * 
+	 * @param mime used for lookup
+	 * @return the registered ImageWriter (maybe null)
+	 */
+	public ImageWriter getWriterFor(String mime) {
+		return imageWriterMap.get(mime);
+	}
 
 }

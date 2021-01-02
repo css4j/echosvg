@@ -29,37 +29,44 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class GraphicsNodeChangeEvent extends GraphicsNodeEvent {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The first number in the range of ids used for change events.
-     */
-    static final int CHANGE_FIRST = 9800;
+	/**
+	 * The first number in the range of ids used for change events.
+	 */
+	static final int CHANGE_FIRST = 9800;
 
-    /**
-     * The id for the "changeStarted" event. This change event occurs
-     * when a change has started on a graphics node (but no changes have
-     * occured on the graphics node it's self).
-     */
-    public static final int CHANGE_STARTED = CHANGE_FIRST;
+	/**
+	 * The id for the "changeStarted" event. This change event occurs when a change
+	 * has started on a graphics node (but no changes have occured on the graphics
+	 * node it's self).
+	 */
+	public static final int CHANGE_STARTED = CHANGE_FIRST;
 
-    /**
-     * The id for the "changeCompleted" event. This change event
-     * occurs when a change has completed on a graphics node (all
-     * changes have completed on the graphics node it's self).  
-     */
-    public static final int CHANGE_COMPLETED = CHANGE_FIRST+1;
+	/**
+	 * The id for the "changeCompleted" event. This change event occurs when a
+	 * change has completed on a graphics node (all changes have completed on the
+	 * graphics node it's self).
+	 */
+	public static final int CHANGE_COMPLETED = CHANGE_FIRST + 1;
 
-    protected GraphicsNode changeSource;
+	protected GraphicsNode changeSource;
 
-    /**
-     * Constructs a new graphics node event with the specified source and ID.
-     * @param source the graphics node where the event originated
-     * @param id the id of this event
-     */
-    public GraphicsNodeChangeEvent(GraphicsNode source, int id) {
-        super(source, id);
-    }
-    public void setChangeSrc(GraphicsNode gn) { this.changeSource = gn; }
-    public GraphicsNode getChangeSrc() { return changeSource; }
+	/**
+	 * Constructs a new graphics node event with the specified source and ID.
+	 * 
+	 * @param source the graphics node where the event originated
+	 * @param id     the id of this event
+	 */
+	public GraphicsNodeChangeEvent(GraphicsNode source, int id) {
+		super(source, id);
+	}
+
+	public void setChangeSrc(GraphicsNode gn) {
+		this.changeSource = gn;
+	}
+
+	public GraphicsNode getChangeSrc() {
+		return changeSource;
+	}
 }

@@ -42,59 +42,55 @@ import io.sf.carte.echosvg.dom.svg.SVGOMUseShadowRoot;
  */
 public abstract class AnimationSupport {
 
-    /**
-     * Fires a {@link TimeEvent} on the given {@link EventTarget}.
-     */
-    public static void fireTimeEvent(EventTarget target, String eventType,
-                                     Calendar time, int detail) {
-        DocumentEvent de = (DocumentEvent) ((Node) target).getOwnerDocument();
-        DOMTimeEvent evt = (DOMTimeEvent) de.createEvent("TimeEvent");
-        evt.initTimeEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, eventType,
-                            null,
-                            detail);
-        evt.setTimestamp(time.getTime().getTime());
-        target.dispatchEvent(evt);
-    }
+	/**
+	 * Fires a {@link TimeEvent} on the given {@link EventTarget}.
+	 */
+	public static void fireTimeEvent(EventTarget target, String eventType, Calendar time, int detail) {
+		DocumentEvent de = (DocumentEvent) ((Node) target).getOwnerDocument();
+		DOMTimeEvent evt = (DOMTimeEvent) de.createEvent("TimeEvent");
+		evt.initTimeEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, eventType, null, detail);
+		evt.setTimestamp(time.getTime().getTime());
+		target.dispatchEvent(evt);
+	}
 
-    /**
-     * Returns the timed element with the given ID, using the given node
-     * as the context for the lookup.
-     */
-    public static TimedElement getTimedElementById(String id, Node n) {
-        Element e = getElementById(id, n);
-        if (e instanceof SVGOMAnimationElement) {
-            SVGAnimationElementBridge b = (SVGAnimationElementBridge)
-                ((SVGOMAnimationElement) e).getSVGContext();
-            return b.getTimedElement();
-        }
-        return null;
-    }
+	/**
+	 * Returns the timed element with the given ID, using the given node as the
+	 * context for the lookup.
+	 */
+	public static TimedElement getTimedElementById(String id, Node n) {
+		Element e = getElementById(id, n);
+		if (e instanceof SVGOMAnimationElement) {
+			SVGAnimationElementBridge b = (SVGAnimationElementBridge) ((SVGOMAnimationElement) e).getSVGContext();
+			return b.getTimedElement();
+		}
+		return null;
+	}
 
-    /**
-     * Returns the event target with the given ID, using the given
-     * node as the context for the lookup.
-     */
-    public static EventTarget getEventTargetById(String id, Node n) {
-        return (EventTarget) getElementById(id, n);
-    }
+	/**
+	 * Returns the event target with the given ID, using the given node as the
+	 * context for the lookup.
+	 */
+	public static EventTarget getEventTargetById(String id, Node n) {
+		return (EventTarget) getElementById(id, n);
+	}
 
-    /**
-     * Returns the element with the given ID, using the given node
-     * as the context for the lookup.
-     */
-    protected static Element getElementById(String id, Node n) {
-        Node p = n.getParentNode();
-        while (p != null) {
-            n = p;
-            if (n instanceof SVGOMUseShadowRoot) {
-                p = ((SVGOMUseShadowRoot) n).getCSSParentNode();
-            } else {
-                p = n.getParentNode();
-            }
-        }
-        if (n instanceof IdContainer) {
-            return ((IdContainer) n).getElementById(id);
-        }
-        return null;
-    }
+	/**
+	 * Returns the element with the given ID, using the given node as the context
+	 * for the lookup.
+	 */
+	protected static Element getElementById(String id, Node n) {
+		Node p = n.getParentNode();
+		while (p != null) {
+			n = p;
+			if (n instanceof SVGOMUseShadowRoot) {
+				p = ((SVGOMUseShadowRoot) n).getCSSParentNode();
+			} else {
+				p = n.getParentNode();
+			}
+		}
+		if (n instanceof IdContainer) {
+			return ((IdContainer) n).getElementById(id);
+		}
+		return null;
+	}
 }

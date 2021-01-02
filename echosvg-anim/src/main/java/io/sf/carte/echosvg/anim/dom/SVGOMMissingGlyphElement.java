@@ -30,9 +30,7 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMMissingGlyphElement
-    extends    SVGStylableElement
-    implements SVGMissingGlyphElement {
+public class SVGOMMissingGlyphElement extends SVGStylableElement implements SVGMissingGlyphElement {
 
 //     /**
 //      * Table mapping XML attribute names to TraitInformation objects.
@@ -55,38 +53,39 @@ public class SVGOMMissingGlyphElement
 //         xmlTraitInformation = t;
 //     }
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new SVGOMMissingGlyphElement object.
-     */
-    protected SVGOMMissingGlyphElement() {
-    }
+	/**
+	 * Creates a new SVGOMMissingGlyphElement object.
+	 */
+	protected SVGOMMissingGlyphElement() {
+	}
 
-    /**
-     * Creates a new SVGOMMissingGlyphElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMMissingGlyphElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new SVGOMMissingGlyphElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMMissingGlyphElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_MISSING_GLYPH_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_MISSING_GLYPH_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMMissingGlyphElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMMissingGlyphElement();
+	}
 
 //     /**
 //      * Returns the table of TraitInformation objects for this element.

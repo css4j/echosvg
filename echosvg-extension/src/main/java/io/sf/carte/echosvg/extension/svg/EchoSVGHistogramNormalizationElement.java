@@ -23,7 +23,6 @@ import org.w3c.dom.Node;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.extension.PrefixableStylableExtensionElement;
 
-
 /**
  * This class implements a histogram normalization extension to SVG.
  *
@@ -31,48 +30,48 @@ import io.sf.carte.echosvg.extension.PrefixableStylableExtensionElement;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class EchoSVGHistogramNormalizationElement
-    extends    PrefixableStylableExtensionElement 
-    implements EchoSVGExtConstants {
+public class EchoSVGHistogramNormalizationElement extends PrefixableStylableExtensionElement
+		implements EchoSVGExtConstants {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new EchoSVGHistogramNormalizationElement object.
-     */
-    protected EchoSVGHistogramNormalizationElement() {
-    }
+	/**
+	 * Creates a new EchoSVGHistogramNormalizationElement object.
+	 */
+	protected EchoSVGHistogramNormalizationElement() {
+	}
 
-    /**
-     * Creates a new EchoSVGHistogramNormalizationElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public EchoSVGHistogramNormalizationElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new EchoSVGHistogramNormalizationElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public EchoSVGHistogramNormalizationElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return BATIK_EXT_HISTOGRAM_NORMALIZATION_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return BATIK_EXT_HISTOGRAM_NORMALIZATION_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return BATIK_EXT_NAMESPACE_URI;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return BATIK_EXT_NAMESPACE_URI;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new EchoSVGHistogramNormalizationElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new EchoSVGHistogramNormalizationElement();
+	}
 }

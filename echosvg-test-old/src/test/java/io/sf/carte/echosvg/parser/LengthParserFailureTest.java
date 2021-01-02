@@ -33,28 +33,29 @@ import io.sf.carte.echosvg.test.TestReport;
  */
 public class LengthParserFailureTest extends AbstractTest {
 
-    protected String sourceLength;
+	protected String sourceLength;
 
-    /**
-     * Creates a new LengthParserFailureTest.
-     * @param slength The length to parse.
-     */
-    public LengthParserFailureTest(String slength) {
-        sourceLength = slength;
-    }
+	/**
+	 * Creates a new LengthParserFailureTest.
+	 * 
+	 * @param slength The length to parse.
+	 */
+	public LengthParserFailureTest(String slength) {
+		sourceLength = slength;
+	}
 
-    @Override
-    public TestReport runImpl() throws Exception {
-        LengthParser pp = new LengthParser();
-        try {
-            pp.parse(new StringReader(sourceLength));
-        } catch (ParseException e) {
-            return reportSuccess();
-        }
-        DefaultTestReport report = new DefaultTestReport(this);
-        report.setErrorCode("parse.without.error");
-        report.addDescriptionEntry("input.text", sourceLength);
-        report.setPassed(false);
-        return report;
-    }
+	@Override
+	public TestReport runImpl() throws Exception {
+		LengthParser pp = new LengthParser();
+		try {
+			pp.parse(new StringReader(sourceLength));
+		} catch (ParseException e) {
+			return reportSuccess();
+		}
+		DefaultTestReport report = new DefaultTestReport(this);
+		report.setErrorCode("parse.without.error");
+		report.addDescriptionEntry("input.text", sourceLength);
+		report.setPassed(false);
+		return report;
+	}
 }

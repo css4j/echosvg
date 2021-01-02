@@ -40,174 +40,177 @@ import io.sf.carte.echosvg.transcoder.image.resources.Messages;
  */
 public class JPEGTranscoder extends ImageTranscoder {
 
-    /**
-     * Constructs a new transcoder that produces jpeg images.
-     */
-    public JPEGTranscoder() {
-        hints.put(ImageTranscoder.KEY_BACKGROUND_COLOR, Color.white);
-    }
+	/**
+	 * Constructs a new transcoder that produces jpeg images.
+	 */
+	public JPEGTranscoder() {
+		hints.put(ImageTranscoder.KEY_BACKGROUND_COLOR, Color.white);
+	}
 
-    /**
-     * Creates a new ARGB image with the specified dimension.
-     * @param width the image width in pixels
-     * @param height the image height in pixels
-     */
-    @Override
-    public BufferedImage createImage(int width, int height) {
-        return new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    }
+	/**
+	 * Creates a new ARGB image with the specified dimension.
+	 * 
+	 * @param width  the image width in pixels
+	 * @param height the image height in pixels
+	 */
+	@Override
+	public BufferedImage createImage(int width, int height) {
+		return new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+	}
 
-    /**
-     * Writes the specified image to the specified output.
-     * @param img the image to write
-     * @param output the output where to store the image
-     * @throws TranscoderException if an error occured while storing the image
-     */
-    @Override
-    public void writeImage(BufferedImage img, TranscoderOutput output)
-            throws TranscoderException {
-        OutputStream ostream = output.getOutputStream();
-        // The outputstream wrapper protects the JPEG encoder from
-        // exceptions due to stream closings.  If it gets an exception
-        // it nulls out the stream and just ignores any future calls.
-        ostream = new OutputStreamWrapper(ostream);
+	/**
+	 * Writes the specified image to the specified output.
+	 * 
+	 * @param img    the image to write
+	 * @param output the output where to store the image
+	 * @throws TranscoderException if an error occured while storing the image
+	 */
+	@Override
+	public void writeImage(BufferedImage img, TranscoderOutput output) throws TranscoderException {
+		OutputStream ostream = output.getOutputStream();
+		// The outputstream wrapper protects the JPEG encoder from
+		// exceptions due to stream closings. If it gets an exception
+		// it nulls out the stream and just ignores any future calls.
+		ostream = new OutputStreamWrapper(ostream);
 
-        try {
-            float quality;
-            if (hints.containsKey(KEY_QUALITY)) {
-                quality = (Float) hints.get(KEY_QUALITY);
-            } else {
-                TranscoderException te;
-                te = new TranscoderException
-                    (Messages.formatMessage("jpeg.unspecifiedQuality", null));
-                handler.error(te);
-                quality = 0.75f;
-            }
+		try {
+			float quality;
+			if (hints.containsKey(KEY_QUALITY)) {
+				quality = (Float) hints.get(KEY_QUALITY);
+			} else {
+				TranscoderException te;
+				te = new TranscoderException(Messages.formatMessage("jpeg.unspecifiedQuality", null));
+				handler.error(te);
+				quality = 0.75f;
+			}
 
-            ImageWriter writer = ImageWriterRegistry.getInstance()
-                .getWriterFor("image/jpeg");
-            ImageWriterParams params = new ImageWriterParams();
-            params.setJPEGQuality(quality, true);
-            float PixSzMM = userAgent.getPixelUnitToMillimeter();
-            int PixSzInch = (int)(25.4 / PixSzMM + 0.5);
-            params.setResolution(PixSzInch);
-            writer.writeImage(img, ostream, params);
-            ostream.flush();
-        } catch (IOException ex) {
-            throw new TranscoderException(ex);
-        }
-    }
+			ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/jpeg");
+			ImageWriterParams params = new ImageWriterParams();
+			params.setJPEGQuality(quality, true);
+			float PixSzMM = userAgent.getPixelUnitToMillimeter();
+			int PixSzInch = (int) (25.4 / PixSzMM + 0.5);
+			params.setResolution(PixSzInch);
+			writer.writeImage(img, ostream, params);
+			ostream.flush();
+		} catch (IOException ex) {
+			throw new TranscoderException(ex);
+		}
+	}
 
-    // --------------------------------------------------------------------
-    // Keys definition
-    // --------------------------------------------------------------------
+	// --------------------------------------------------------------------
+	// Keys definition
+	// --------------------------------------------------------------------
 
-    /**
-     * The encoder quality factor key.
-     * <table summary="" border="0" cellspacing="0" cellpadding="1">
-     *   <tr>
-     *     <th valign="top" align="right">Key:</th>
-     *     <td valign="top">KEY_QUALITY</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Value:</th>
-     *     <td valign="top">Float (between 0 and 1)</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Default:</th>
-     *     <td valign="top">0.75 (lossy)</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Required:</th>
-     *     <td valign="top">Recommended</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Description:</th>
-     *     <td valign="top">Specify the JPEG image encoding quality.</td>
-     *   </tr>
-     * </table>
-     */
-    public static final TranscodingHints.Key KEY_QUALITY
-        = new QualityKey();
+	/**
+	 * The encoder quality factor key.
+	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <tr>
+	 * <th valign="top" align="right">Key:</th>
+	 * <td valign="top">KEY_QUALITY</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Value:</th>
+	 * <td valign="top">Float (between 0 and 1)</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Default:</th>
+	 * <td valign="top">0.75 (lossy)</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Required:</th>
+	 * <td valign="top">Recommended</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Description:</th>
+	 * <td valign="top">Specify the JPEG image encoding quality.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_QUALITY = new QualityKey();
 
-    /**
-     * A transcoding Key represented the JPEG image quality.
-     */
-    private static class QualityKey extends TranscodingHints.Key {
-        @Override
-        public boolean isCompatibleValue(Object v) {
-            if (v instanceof Float) {
-                float q = (Float) v;
-                return (q > 0 && q <= 1.0f);
-            } else {
-                return false;
-            }
-        }
-    }
+	/**
+	 * A transcoding Key represented the JPEG image quality.
+	 */
+	private static class QualityKey extends TranscodingHints.Key {
+		@Override
+		public boolean isCompatibleValue(Object v) {
+			if (v instanceof Float) {
+				float q = (Float) v;
+				return (q > 0 && q <= 1.0f);
+			} else {
+				return false;
+			}
+		}
+	}
 
-    /**
-     *  This class will never throw an IOException, instead it eats
-     * them and then ignores any future calls to it's interface.
-     */
-    private static class OutputStreamWrapper extends OutputStream {
-        OutputStream os;
-        /**
-         * Constructs a wrapper around <code>os</code> that will not throw
-         * IOExceptions.
-         * <@param os>The Stream to wrap.
-         */
-        OutputStreamWrapper(OutputStream os) {
-            this.os = os;
-        }
+	/**
+	 * This class will never throw an IOException, instead it eats them and then
+	 * ignores any future calls to it's interface.
+	 */
+	private static class OutputStreamWrapper extends OutputStream {
+		OutputStream os;
 
-        @Override
-        public void close() throws IOException {
-            if (os == null) return;
-            try {
-                os.close();
-            } catch (IOException ioe) {
-                os = null;
-            }
-        }
+		/**
+		 * Constructs a wrapper around <code>os</code> that will not throw IOExceptions.
+		 * <@param os>The Stream to wrap.
+		 */
+		OutputStreamWrapper(OutputStream os) {
+			this.os = os;
+		}
 
-        @Override
-        public void flush() throws IOException {
-            if (os == null) return;
-            try {
-                os.flush();
-            } catch (IOException ioe) {
-                os = null;
-            }
-        }
+		@Override
+		public void close() throws IOException {
+			if (os == null)
+				return;
+			try {
+				os.close();
+			} catch (IOException ioe) {
+				os = null;
+			}
+		}
 
-        @Override
-        public void write(byte[] b) throws IOException {
-            if (os == null) return;
-            try {
-                os.write(b);
-            } catch (IOException ioe) {
-                os = null;
-            }
-        }
+		@Override
+		public void flush() throws IOException {
+			if (os == null)
+				return;
+			try {
+				os.flush();
+			} catch (IOException ioe) {
+				os = null;
+			}
+		}
 
-        @Override
-        public void write(byte[] b, int off, int len) throws IOException {
-            if (os == null) return;
-            try {
-                os.write(b, off, len);
-            } catch (IOException ioe) {
-                os = null;
-            }
-        }
+		@Override
+		public void write(byte[] b) throws IOException {
+			if (os == null)
+				return;
+			try {
+				os.write(b);
+			} catch (IOException ioe) {
+				os = null;
+			}
+		}
 
-        @Override
-        public void write(int b)  throws IOException {
-            if (os == null) return;
-            try {
-                os.write(b);
-            } catch (IOException ioe) {
-                os = null;
-            }
-        }
-    }
+		@Override
+		public void write(byte[] b, int off, int len) throws IOException {
+			if (os == null)
+				return;
+			try {
+				os.write(b, off, len);
+			} catch (IOException ioe) {
+				os = null;
+			}
+		}
+
+		@Override
+		public void write(int b) throws IOException {
+			if (os == null)
+				return;
+			try {
+				os.write(b);
+			} catch (IOException ioe) {
+				os = null;
+			}
+		}
+	}
 }

@@ -39,88 +39,83 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @version $Id$
  */
 public class StrokeMiterlimitManager extends AbstractValueManager {
-    
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_NUMBER_OR_INHERIT;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_STROKE_MITERLIMIT_PROPERTY;
-    }
-    
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return SVGValueConstants.NUMBER_4;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_NUMBER_OR_INHERIT;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_STROKE_MITERLIMIT_PROPERTY;
+	}
 
-        case INTEGER:
-            return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                                  lu.getIntegerValue());
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return SVGValueConstants.NUMBER_4;
+	}
 
-        case REAL:
-            return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                                  lu.getFloatValue());
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-        default:
-            throw createInvalidLexicalUnitDOMException
-                (lu.getLexicalUnitType());
-        }
-    }
+		case INTEGER:
+			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getIntegerValue());
 
-    /**
-     * Implements {@link ValueManager#createFloatValue(short,float)}.
-     */
-    @Override
-    public Value createFloatValue(short unitType, float floatValue)
-        throws DOMException {
-        if (unitType == CSSPrimitiveValue.CSS_NUMBER) {
-            return new FloatValue(unitType, floatValue);
-        }
-        throw createInvalidFloatTypeDOMException(unitType);
-    }
+		case REAL:
+			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getFloatValue());
+
+		default:
+			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+		}
+	}
+
+	/**
+	 * Implements {@link ValueManager#createFloatValue(short,float)}.
+	 */
+	@Override
+	public Value createFloatValue(short unitType, float floatValue) throws DOMException {
+		if (unitType == CSSPrimitiveValue.CSS_NUMBER) {
+			return new FloatValue(unitType, floatValue);
+		}
+		throw createInvalidFloatTypeDOMException(unitType);
+	}
 }

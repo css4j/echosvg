@@ -30,135 +30,135 @@ import org.w3c.dom.ProcessingInstruction;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractProcessingInstruction
-    extends    AbstractChildNode
-    implements ProcessingInstruction {
+public abstract class AbstractProcessingInstruction extends AbstractChildNode implements ProcessingInstruction {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * The data.
-     */
-    protected String data;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The data.
+	 */
+	protected String data;
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
-     * @return {@link #getTarget()}.
-     */
-    @Override
-    public String getNodeName() {
-        return getTarget();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
+	 * 
+	 * @return {@link #getTarget()}.
+	 */
+	@Override
+	public String getNodeName() {
+		return getTarget();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
-     * @return {@link org.w3c.dom.Node#PROCESSING_INSTRUCTION_NODE}
-     */
-    @Override
-    public short getNodeType() {
-        return PROCESSING_INSTRUCTION_NODE;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
+	 * 
+	 * @return {@link org.w3c.dom.Node#PROCESSING_INSTRUCTION_NODE}
+	 */
+	@Override
+	public short getNodeType() {
+		return PROCESSING_INSTRUCTION_NODE;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeValue()}.
-     * @return {@link #getData()}.
-     */
-    @Override
-    public String getNodeValue() throws DOMException {
-        return getData();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeValue()}.
+	 * 
+	 * @return {@link #getData()}.
+	 */
+	@Override
+	public String getNodeValue() throws DOMException {
+		return getData();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setNodeValue(String)}.
-     */
-    @Override
-    public void setNodeValue(String nodeValue) throws DOMException {
-        setData(nodeValue);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setNodeValue(String)}.
+	 */
+	@Override
+	public void setNodeValue(String nodeValue) throws DOMException {
+		setData(nodeValue);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.ProcessingInstruction#getData()}.
-     * @return {@link #data}.
-     */
-    @Override
-    public String getData() {
-        return data;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.ProcessingInstruction#getData()}.
+	 * 
+	 * @return {@link #data}.
+	 */
+	@Override
+	public String getData() {
+		return data;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.ProcessingInstruction#setData(String)}.
-     */
-    @Override
-    public void setData(String data) throws DOMException {
-        if (isReadonly()) {
-            throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                                     "readonly.node",
-                                     new Object[] {(int) getNodeType(),
-                                                    getNodeName() });
-        }
-        String val = this.data;
-        this.data = data;
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.ProcessingInstruction#setData(String)}.
+	 */
+	@Override
+	public void setData(String data) throws DOMException {
+		if (isReadonly()) {
+			throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.node",
+					new Object[] { (int) getNodeType(), getNodeName() });
+		}
+		String val = this.data;
+		this.data = data;
 
-        // Mutation event
-        fireDOMCharacterDataModifiedEvent(val, this.data);
-        if (getParentNode() != null) {
-            ((AbstractParentNode)getParentNode()).
-                fireDOMSubtreeModifiedEvent();
-        }
-    }
+		// Mutation event
+		fireDOMCharacterDataModifiedEvent(val, this.data);
+		if (getParentNode() != null) {
+			((AbstractParentNode) getParentNode()).fireDOMSubtreeModifiedEvent();
+		}
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getTextContent()}.
-     */
-    @Override
-    public String getTextContent() {
-        return getNodeValue();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getTextContent()}.
+	 */
+	@Override
+	public String getTextContent() {
+		return getNodeValue();
+	}
 
-    /**
-     * Exports this node to the given document.
-     */
-    @Override
-    protected Node export(Node n, AbstractDocument d) {
-        AbstractProcessingInstruction p;
-        p = (AbstractProcessingInstruction)super.export(n, d);
-        p.data = data;
-        return p;
-    }
+	/**
+	 * Exports this node to the given document.
+	 */
+	@Override
+	protected Node export(Node n, AbstractDocument d) {
+		AbstractProcessingInstruction p;
+		p = (AbstractProcessingInstruction) super.export(n, d);
+		p.data = data;
+		return p;
+	}
 
-    /**
-     * Deeply exports this node to the given document.
-     */
-    @Override
-    protected Node deepExport(Node n, AbstractDocument d) {
-        AbstractProcessingInstruction p;
-        p = (AbstractProcessingInstruction)super.deepExport(n, d);
-        p.data = data;
-        return p;
-    }
+	/**
+	 * Deeply exports this node to the given document.
+	 */
+	@Override
+	protected Node deepExport(Node n, AbstractDocument d) {
+		AbstractProcessingInstruction p;
+		p = (AbstractProcessingInstruction) super.deepExport(n, d);
+		p.data = data;
+		return p;
+	}
 
-    /**
-     * Copy the fields of the current node into the given node.
-     * @param n a node of the type of this.
-     */
-    @Override
-    protected Node copyInto(Node n) {
-        AbstractProcessingInstruction p;
-        p = (AbstractProcessingInstruction)super.copyInto(n);
-        p.data = data;
-        return p;
-    }
+	/**
+	 * Copy the fields of the current node into the given node.
+	 * 
+	 * @param n a node of the type of this.
+	 */
+	@Override
+	protected Node copyInto(Node n) {
+		AbstractProcessingInstruction p;
+		p = (AbstractProcessingInstruction) super.copyInto(n);
+		p.data = data;
+		return p;
+	}
 
-    /**
-     * Deeply copy the fields of the current node into the given node.
-     * @param n a node of the type of this.
-     */
-    @Override
-    protected Node deepCopyInto(Node n) {
-        AbstractProcessingInstruction p;
-        p = (AbstractProcessingInstruction)super.deepCopyInto(n);
-        p.data = data;
-        return p;
-    }
+	/**
+	 * Deeply copy the fields of the current node into the given node.
+	 * 
+	 * @param n a node of the type of this.
+	 */
+	@Override
+	protected Node deepCopyInto(Node n) {
+		AbstractProcessingInstruction p;
+		p = (AbstractProcessingInstruction) super.deepCopyInto(n);
+		p.data = data;
+		return p;
+	}
 }

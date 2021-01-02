@@ -19,25 +19,24 @@
 package io.sf.carte.echosvg.test.xml;
 
 /**
- * Contains constants for elements and attributes used to
- * describe Java objects, constructor arguments and properties
- * in XML.
+ * Contains constants for elements and attributes used to describe Java objects,
+ * constructor arguments and properties in XML.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface XMLReflectConstants {
-    /////////////////////////////////////////////////////////////////////////
-    // Tags
-    /////////////////////////////////////////////////////////////////////////
-    String XR_ARG_TAG        = "arg";
-    String XR_PROPERTY_TAG   = "property";
+	/////////////////////////////////////////////////////////////////////////
+	// Tags
+	/////////////////////////////////////////////////////////////////////////
+	String XR_ARG_TAG = "arg";
+	String XR_PROPERTY_TAG = "property";
 
-    /////////////////////////////////////////////////////////////////////////
-    // XTS attributes
-    /////////////////////////////////////////////////////////////////////////
-    String XR_CLASS_ATTRIBUTE = "class";
-    String XR_NAME_ATTRIBUTE  = "name";
-    String XR_VALUE_ATTRIBUTE = "value";
+	/////////////////////////////////////////////////////////////////////////
+	// XTS attributes
+	/////////////////////////////////////////////////////////////////////////
+	String XR_CLASS_ATTRIBUTE = "class";
+	String XR_NAME_ATTRIBUTE = "name";
+	String XR_VALUE_ATTRIBUTE = "value";
 }

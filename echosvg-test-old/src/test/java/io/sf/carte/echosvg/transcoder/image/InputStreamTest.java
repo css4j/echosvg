@@ -33,44 +33,44 @@ import io.sf.carte.echosvg.transcoder.TranscoderInput;
  */
 public class InputStreamTest extends AbstractImageTranscoderTest {
 
-    /** The URI of the input image. */
-    protected String inputURI;
+	/** The URI of the input image. */
+	protected String inputURI;
 
-    /** The URI of the reference image. */
-    protected String refImageURI;
+	/** The URI of the reference image. */
+	protected String refImageURI;
 
-    /**
-     * Constructs a new <code>InputStreamTest</code>.
-     *
-     * @param inputURI the URI of the input image
-     * @param refImageURI the URI of the reference image
-     */
-    public InputStreamTest(String inputURI, String refImageURI) {
-        this.inputURI = inputURI;
-        this.refImageURI = refImageURI;
-    }
+	/**
+	 * Constructs a new <code>InputStreamTest</code>.
+	 *
+	 * @param inputURI    the URI of the input image
+	 * @param refImageURI the URI of the reference image
+	 */
+	public InputStreamTest(String inputURI, String refImageURI) {
+		this.inputURI = inputURI;
+		this.refImageURI = refImageURI;
+	}
 
-    /**
-     * Creates the <code>TranscoderInput</code>.
-     */
-    @Override
-    protected TranscoderInput createTranscoderInput() {
-        try {
-            URL url = resolveURL(inputURI);
-            InputStream istream = url.openStream();
-            TranscoderInput input = new TranscoderInput(istream);
-            input.setURI(url.toString()); // Needed for external resources
-            return input;
-        } catch (IOException ex) {
-            throw new IllegalArgumentException(inputURI);
-        }
-    }
+	/**
+	 * Creates the <code>TranscoderInput</code>.
+	 */
+	@Override
+	protected TranscoderInput createTranscoderInput() {
+		try {
+			URL url = resolveURL(inputURI);
+			InputStream istream = url.openStream();
+			TranscoderInput input = new TranscoderInput(istream);
+			input.setURI(url.toString()); // Needed for external resources
+			return input;
+		} catch (IOException ex) {
+			throw new IllegalArgumentException(inputURI);
+		}
+	}
 
-    /**
-     * Returns the reference image for this test.
-     */
-    @Override
-    protected byte [] getReferenceImageData() {
-        return createBufferedImageData(resolveURL(refImageURI));
-    }
+	/**
+	 * Returns the reference image for this test.
+	 */
+	@Override
+	protected byte[] getReferenceImageData() {
+		return createBufferedImageData(resolveURL(refImageURI));
+	}
 }

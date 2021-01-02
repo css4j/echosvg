@@ -28,99 +28,90 @@ import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.gvt.ShapePainter;
 
 /**
- * The base bridge class for decorated shapes. Decorated shapes can be
- * filled, stroked and can have markers.
+ * The base bridge class for decorated shapes. Decorated shapes can be filled,
+ * stroked and can have markers.
  *
  * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class SVGDecoratedShapeElementBridge
-        extends SVGShapeElementBridge {
+public abstract class SVGDecoratedShapeElementBridge extends SVGShapeElementBridge {
 
-    /**
-     * Constructs a new bridge for SVG decorated shapes.
-     */
-    protected SVGDecoratedShapeElementBridge() {}
+	/**
+	 * Constructs a new bridge for SVG decorated shapes.
+	 */
+	protected SVGDecoratedShapeElementBridge() {
+	}
 
+	ShapePainter createFillStrokePainter(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+		// 'fill'
+		// 'fill-opacity'
+		// 'stroke'
+		// 'stroke-opacity',
+		// 'stroke-width'
+		// 'stroke-linecap'
+		// 'stroke-linejoin'
+		// 'stroke-miterlimit'
+		// 'stroke-dasharray'
+		// 'stroke-dashoffset'
+		return super.createShapePainter(ctx, e, shapeNode);
+	}
 
-    ShapePainter createFillStrokePainter(BridgeContext ctx, 
-                                         Element e,
-                                         ShapeNode shapeNode) {
-        // 'fill'
-        // 'fill-opacity'
-        // 'stroke'
-        // 'stroke-opacity',
-        // 'stroke-width'
-        // 'stroke-linecap'
-        // 'stroke-linejoin'
-        // 'stroke-miterlimit'
-        // 'stroke-dasharray'
-        // 'stroke-dashoffset'
-        return super.createShapePainter(ctx, e, shapeNode);
-    }
+	ShapePainter createMarkerPainter(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+		// marker-start
+		// marker-mid
+		// marker-end
+		return PaintServer.convertMarkers(e, shapeNode, ctx);
+	}
 
-    ShapePainter createMarkerPainter(BridgeContext ctx, 
-                                     Element e,
-                                     ShapeNode shapeNode) {
-        // marker-start
-        // marker-mid
-        // marker-end
-        return PaintServer.convertMarkers(e, shapeNode, ctx);
-    }
+	/**
+	 * Creates the shape painter associated to the specified element. This
+	 * implementation creates a shape painter considering the various fill and
+	 * stroke properties in addition to the marker properties.
+	 *
+	 * @param ctx       the bridge context to use
+	 * @param e         the element that describes the shape painter to use
+	 * @param shapeNode the shape node that is interested in its shape painter
+	 */
+	@Override
+	protected ShapePainter createShapePainter(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+		ShapePainter fillAndStroke;
+		fillAndStroke = createFillStrokePainter(ctx, e, shapeNode);
 
-    /**
-     * Creates the shape painter associated to the specified element.
-     * This implementation creates a shape painter considering the
-     * various fill and stroke properties in addition to the marker
-     * properties.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the shape painter to use
-     * @param shapeNode the shape node that is interested in its shape painter
-     */
-    @Override
-    protected ShapePainter createShapePainter(BridgeContext ctx,
-                                              Element e,
-                                              ShapeNode shapeNode) {
-        ShapePainter fillAndStroke;
-        fillAndStroke = createFillStrokePainter(ctx, e, shapeNode);
+		ShapePainter markerPainter = createMarkerPainter(ctx, e, shapeNode);
 
-        ShapePainter markerPainter = createMarkerPainter(ctx, e, shapeNode);
+		Shape shape = shapeNode.getShape();
+		ShapePainter painter;
 
-        Shape shape = shapeNode.getShape();
-        ShapePainter painter;
+		if (markerPainter != null) {
+			if (fillAndStroke != null) {
+				CompositeShapePainter cp = new CompositeShapePainter(shape);
+				cp.addShapePainter(fillAndStroke);
+				cp.addShapePainter(markerPainter);
+				painter = cp;
+			} else {
+				painter = markerPainter;
+			}
+		} else {
+			painter = fillAndStroke;
+		}
+		return painter;
+	}
 
-        if (markerPainter != null) {
-            if (fillAndStroke != null) {
-                CompositeShapePainter cp = new CompositeShapePainter(shape);
-                cp.addShapePainter(fillAndStroke);
-                cp.addShapePainter(markerPainter);
-                painter = cp;
-            } else {
-                painter = markerPainter;
-            }
-        } else {
-            painter = fillAndStroke;
-        }
-        return painter;
-    }
-
-    @Override
-    protected void handleCSSPropertyChanged(int property) {
-        switch(property) {
-        case SVGCSSEngine.MARKER_START_INDEX:
-        case SVGCSSEngine.MARKER_MID_INDEX:
-        case SVGCSSEngine.MARKER_END_INDEX:
-            if (!hasNewShapePainter) {
-                hasNewShapePainter = true;
-                ShapeNode shapeNode = (ShapeNode)node;
-                shapeNode.setShapePainter(createShapePainter(ctx, e, shapeNode));
-            }
-            break;
-        default:
-            super.handleCSSPropertyChanged(property);
-        }
-    }
+	@Override
+	protected void handleCSSPropertyChanged(int property) {
+		switch (property) {
+		case SVGCSSEngine.MARKER_START_INDEX:
+		case SVGCSSEngine.MARKER_MID_INDEX:
+		case SVGCSSEngine.MARKER_END_INDEX:
+			if (!hasNewShapePainter) {
+				hasNewShapePainter = true;
+				ShapeNode shapeNode = (ShapeNode) node;
+				shapeNode.setShapePainter(createShapePainter(ctx, e, shapeNode));
+			}
+			break;
+		default:
+			super.handleCSSPropertyChanged(property);
+		}
+	}
 }
-

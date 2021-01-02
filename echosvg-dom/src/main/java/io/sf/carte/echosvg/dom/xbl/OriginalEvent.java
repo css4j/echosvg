@@ -20,8 +20,7 @@ package io.sf.carte.echosvg.dom.xbl;
 import org.w3c.dom.events.Event;
 
 /**
- * Interface implemented by Event objects usable in an XBL processing
- * document.
+ * Interface implemented by Event objects usable in an XBL processing document.
  * Eventually will move to org.w3c.dom.xbl (or some such package).
  *
  * @author For later modifications, see Git history.
@@ -29,8 +28,8 @@ import org.w3c.dom.events.Event;
  */
 public interface OriginalEvent {
 
-    /**
-     * Gets the event from which this event was cloned.
-     */
-    Event getOriginalEvent();
+	/**
+	 * Gets the event from which this event was cloned.
+	 */
+	Event getOriginalEvent();
 }

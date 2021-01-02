@@ -19,56 +19,54 @@
 package io.sf.carte.echosvg.ext.awt.image;
 
 /**
- * Defines the interface expected from a component
- * transfer function.
+ * Defines the interface expected from a component transfer function.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ComponentTransferFunction {
-    /**
-     * The various transfer types
-     */
-    int IDENTITY = 0;
-    int TABLE    = 1;
-    int DISCRETE = 2;
-    int LINEAR   = 3;
-    int GAMMA    = 4;
+	/**
+	 * The various transfer types
+	 */
+	int IDENTITY = 0;
+	int TABLE = 1;
+	int DISCRETE = 2;
+	int LINEAR = 3;
+	int GAMMA = 4;
 
-    /**
-     * Returns the type of this transfer function
-     */
-    int getType();
+	/**
+	 * Returns the type of this transfer function
+	 */
+	int getType();
 
-    /**
-     * Returns the slope value for this transfer function
-     */
-    float getSlope();
+	/**
+	 * Returns the slope value for this transfer function
+	 */
+	float getSlope();
 
-    /**
-     * Returns the table values for this transfer function
-     */
-    float[] getTableValues();
+	/**
+	 * Returns the table values for this transfer function
+	 */
+	float[] getTableValues();
 
-    /**
-     * Returns the intercept value for this transfer function
-     */
-    float getIntercept();
+	/**
+	 * Returns the intercept value for this transfer function
+	 */
+	float getIntercept();
 
-    /**
-     * Returns the amplitude value for this transfer function
-     */
-    float getAmplitude();
+	/**
+	 * Returns the amplitude value for this transfer function
+	 */
+	float getAmplitude();
 
-    /**
-     * Returns the exponent value for this transfer function
-     */
-    float getExponent();
+	/**
+	 * Returns the exponent value for this transfer function
+	 */
+	float getExponent();
 
-    /**
-     * Returns the offset value for this transfer function
-     */
-    float getOffset();
+	/**
+	 * Returns the offset value for this transfer function
+	 */
+	float getOffset();
 }
-

@@ -31,68 +31,65 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author For later modifications, see Git history.
- * @version $Id$ 
+ * @version $Id$
  */
 public class DimensionTest extends AbstractImageTranscoderTest {
 
-    /** The URI of the input image. */
-    protected String inputURI;
+	/** The URI of the input image. */
+	protected String inputURI;
 
-    /** The URI of the reference image. */
-    protected String refImageURI;
+	/** The URI of the reference image. */
+	protected String refImageURI;
 
-    /** The width of the image. */
-    protected Float width;
+	/** The width of the image. */
+	protected Float width;
 
-    /** The height of the image. */
-    protected Float height;
+	/** The height of the image. */
+	protected Float height;
 
-    /**
-     * Constructs a new <code>DimensionTest</code>.
-     *
-     * @param inputURI the URI of the input image
-     * @param refImageURI the URI of the reference image
-     * @param width the image width
-     * @param height the image height
-     */
-    public DimensionTest(String inputURI, 
-                         String refImageURI, 
-                         Float width,
-                         Float height) {
-        this.inputURI = inputURI;
-        this.refImageURI = refImageURI;
-        this.width = width;
-        this.height = height;
-    }
+	/**
+	 * Constructs a new <code>DimensionTest</code>.
+	 *
+	 * @param inputURI    the URI of the input image
+	 * @param refImageURI the URI of the reference image
+	 * @param width       the image width
+	 * @param height      the image height
+	 */
+	public DimensionTest(String inputURI, String refImageURI, Float width, Float height) {
+		this.inputURI = inputURI;
+		this.refImageURI = refImageURI;
+		this.width = width;
+		this.height = height;
+	}
 
-    /**
-     * Creates the <code>TranscoderInput</code>.
-     */
-    @Override
-    protected TranscoderInput createTranscoderInput() {
-        return new TranscoderInput(resolveURL(inputURI).toString());
-    }
-    
-    /**
-     * Creates a Map that contains additional transcoding hints.
-     */
-    @Override
-    protected Map<Key, Object> createTranscodingHints() {
-        Map<Key, Object> hints = new HashMap<>(7);
-        if (width > 0) {
-            hints.put(SVGAbstractTranscoder.KEY_WIDTH, width);
-        }
-        if (height > 0) {
-            hints.put(SVGAbstractTranscoder.KEY_HEIGHT, height);
-        }
-        return hints;
-    }
+	/**
+	 * Creates the <code>TranscoderInput</code>.
+	 */
+	@Override
+	protected TranscoderInput createTranscoderInput() {
+		return new TranscoderInput(resolveURL(inputURI).toString());
+	}
 
-    /**
-     * Returns the reference image for this test.
-     */
-    @Override
-    protected byte [] getReferenceImageData() {
-        return createBufferedImageData(resolveURL(refImageURI));
-    }
+	/**
+	 * Creates a Map that contains additional transcoding hints.
+	 */
+	@Override
+	protected Map<Key, Object> createTranscodingHints() {
+		Map<Key, Object> hints = new HashMap<>(7);
+		if (width > 0) {
+			hints.put(SVGAbstractTranscoder.KEY_WIDTH, width);
+		}
+		if (height > 0) {
+			hints.put(SVGAbstractTranscoder.KEY_HEIGHT, height);
+		}
+		return hints;
+	}
+
+	/**
+	 * Returns the reference image for this test.
+	 */
+	@Override
+	protected byte[] getReferenceImageData() {
+		return createBufferedImageData(resolveURL(refImageURI));
+	}
 }

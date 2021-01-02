@@ -36,357 +36,351 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  */
 public abstract class AbstractAttr extends AbstractParentNode implements Attr {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The name of this node.
-     */
-    protected String nodeName;
+	/**
+	 * The name of this node.
+	 */
+	protected String nodeName;
 
-    /**
-     * Whether this attribute was not specified in the original document.
-     */
-    protected boolean unspecified;
+	/**
+	 * Whether this attribute was not specified in the original document.
+	 */
+	protected boolean unspecified;
 
-    /**
-     * Whether this attribute is an ID attribute
-     */
-    protected boolean isIdAttr;
+	/**
+	 * Whether this attribute is an ID attribute
+	 */
+	protected boolean isIdAttr;
 
-    /**
-     * The owner element.
-     */
-    protected AbstractElement ownerElement;
+	/**
+	 * The owner element.
+	 */
+	protected AbstractElement ownerElement;
 
-    /**
-     * The attribute type information.
-     */
-    protected TypeInfo typeInfo;
+	/**
+	 * The attribute type information.
+	 */
+	protected TypeInfo typeInfo;
 
-    /**
-     * Creates a new Attr object.
-     */
-    protected AbstractAttr() {
-    }
+	/**
+	 * Creates a new Attr object.
+	 */
+	protected AbstractAttr() {
+	}
 
-    /**
-     * Creates a new Attr object.
-     * @param name  The attribute name for validation purposes.
-     * @param owner The owner document.
-     * @exception DOMException
-     *   INVALID_CHARACTER_ERR: if name contains invalid characters,
-     */
-    protected AbstractAttr(String name, AbstractDocument owner)
-        throws DOMException {
-        ownerDocument = owner;
-        if (owner.getStrictErrorChecking() && !DOMUtilities.isValidName(name)) {
-            throw createDOMException(DOMException.INVALID_CHARACTER_ERR,
-                                     "xml.name",
-                                     new Object[] { name });
-        }
-    }
+	/**
+	 * Creates a new Attr object.
+	 * 
+	 * @param name  The attribute name for validation purposes.
+	 * @param owner The owner document.
+	 * @exception DOMException INVALID_CHARACTER_ERR: if name contains invalid
+	 *                         characters,
+	 */
+	protected AbstractAttr(String name, AbstractDocument owner) throws DOMException {
+		ownerDocument = owner;
+		if (owner.getStrictErrorChecking() && !DOMUtilities.isValidName(name)) {
+			throw createDOMException(DOMException.INVALID_CHARACTER_ERR, "xml.name", new Object[] { name });
+		}
+	}
 
-    /**
-     * Sets the node name.
-     */
-    @Override
-    public void setNodeName(String v) {
-        nodeName = v;
-        isIdAttr = ownerDocument.isId(this);
-    }
+	/**
+	 * Sets the node name.
+	 */
+	@Override
+	public void setNodeName(String v) {
+		nodeName = v;
+		isIdAttr = ownerDocument.isId(this);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
-     * @return {@link #nodeName}.
-     */
-    @Override
-    public String getNodeName() {
-        return nodeName;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
+	 * 
+	 * @return {@link #nodeName}.
+	 */
+	@Override
+	public String getNodeName() {
+		return nodeName;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
-     * @return {@link org.w3c.dom.Node#ATTRIBUTE_NODE}
-     */
-    @Override
-    public short getNodeType() {
-        return ATTRIBUTE_NODE;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
+	 * 
+	 * @return {@link org.w3c.dom.Node#ATTRIBUTE_NODE}
+	 */
+	@Override
+	public short getNodeType() {
+		return ATTRIBUTE_NODE;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeValue()}.
-     * @return The content of the attribute.
-     */
-    @Override
-    public String getNodeValue() throws DOMException {
-        Node first = getFirstChild();
-        if (first == null) {
-            return "";
-        }
-        Node n = first.getNextSibling();
-        if (n == null) {
-            return first.getNodeValue();
-        }
-        StringBuffer result = new StringBuffer(first.getNodeValue());
-        do {
-            result.append(n.getNodeValue());
-            n = n.getNextSibling();
-        } while (n != null);
-        return result.toString();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeValue()}.
+	 * 
+	 * @return The content of the attribute.
+	 */
+	@Override
+	public String getNodeValue() throws DOMException {
+		Node first = getFirstChild();
+		if (first == null) {
+			return "";
+		}
+		Node n = first.getNextSibling();
+		if (n == null) {
+			return first.getNodeValue();
+		}
+		StringBuffer result = new StringBuffer(first.getNodeValue());
+		do {
+			result.append(n.getNodeValue());
+			n = n.getNextSibling();
+		} while (n != null);
+		return result.toString();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setNodeValue(String)}.
-     */
-    @Override
-    public void setNodeValue(String nodeValue) throws DOMException {
-        if (isReadonly()) {
-            throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                                     "readonly.node",
-                                     new Object[] {(int) getNodeType(),
-                                                    getNodeName() });
-        }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#setNodeValue(String)}.
+	 */
+	@Override
+	public void setNodeValue(String nodeValue) throws DOMException {
+		if (isReadonly()) {
+			throw createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.node",
+					new Object[] { (int) getNodeType(), getNodeName() });
+		}
 
-        String s = getNodeValue();
+		String s = getNodeValue();
 
-        // Remove all the children
-        Node n;
-        while ((n = getFirstChild()) != null) {
-            removeChild(n);
-        }
+		// Remove all the children
+		Node n;
+		while ((n = getFirstChild()) != null) {
+			removeChild(n);
+		}
 
-        String val = (nodeValue == null) ? "" : nodeValue;
+		String val = (nodeValue == null) ? "" : nodeValue;
 
-        // Create and append a new child.
-        n = getOwnerDocument().createTextNode(val);
-        appendChild(n);
+		// Create and append a new child.
+		n = getOwnerDocument().createTextNode(val);
+		appendChild(n);
 
-        if (ownerElement != null) {
-            ownerElement.fireDOMAttrModifiedEvent(nodeName,
-                                                  this,
-                                                  s,
-                                                  val,
-                                                  MutationEvent.MODIFICATION);
-        }
-    }
+		if (ownerElement != null) {
+			ownerElement.fireDOMAttrModifiedEvent(nodeName, this, s, val, MutationEvent.MODIFICATION);
+		}
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getName()}.
-     * @return {@link #getNodeName()}.
-     */
-    @Override
-    public String getName() {
-        return getNodeName();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getName()}.
+	 * 
+	 * @return {@link #getNodeName()}.
+	 */
+	@Override
+	public String getName() {
+		return getNodeName();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getSpecified()}.
-     * @return !{@link #unspecified}.
-     */
-    @Override
-    public boolean getSpecified() {
-        return !unspecified;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getSpecified()}.
+	 * 
+	 * @return !{@link #unspecified}.
+	 */
+	@Override
+	public boolean getSpecified() {
+		return !unspecified;
+	}
 
-    /**
-     * Sets the specified attribute.
-     */
-    @Override
-    public void setSpecified(boolean v) {
-        unspecified = !v;
-    }
+	/**
+	 * Sets the specified attribute.
+	 */
+	@Override
+	public void setSpecified(boolean v) {
+		unspecified = !v;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getValue()}.
-     * @return {@link #getNodeValue()}.
-     */
-    @Override
-    public String getValue() {
-        return getNodeValue();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getValue()}.
+	 * 
+	 * @return {@link #getNodeValue()}.
+	 */
+	@Override
+	public String getValue() {
+		return getNodeValue();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#setValue(String)}.
-     */
-    @Override
-    public void setValue(String value) throws DOMException {
-        setNodeValue(value);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#setValue(String)}.
+	 */
+	@Override
+	public void setValue(String value) throws DOMException {
+		setNodeValue(value);
+	}
 
-    /**
-     * Sets the owner element.
-     */
-    public void setOwnerElement(AbstractElement v) {
-        ownerElement = v;
-    }
-    
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getOwnerElement()}.
-     */
-    @Override
-    public Element getOwnerElement() {
-        return ownerElement;
-    }
+	/**
+	 * Sets the owner element.
+	 */
+	public void setOwnerElement(AbstractElement v) {
+		ownerElement = v;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getSchemaTypeInfo()}.
-     */
-    @Override
-    public TypeInfo getSchemaTypeInfo() {
-        if (typeInfo == null) {
-            typeInfo = new AttrTypeInfo();
-        }
-        return typeInfo;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getOwnerElement()}.
+	 */
+	@Override
+	public Element getOwnerElement() {
+		return ownerElement;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#isId()}.
-     */
-    @Override
-    public boolean isId() {
-        return isIdAttr;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#getSchemaTypeInfo()}.
+	 */
+	@Override
+	public TypeInfo getSchemaTypeInfo() {
+		if (typeInfo == null) {
+			typeInfo = new AttrTypeInfo();
+		}
+		return typeInfo;
+	}
 
-    /**
-     * Sets whether this attribute is an ID attribute.
-     */
-    public void setIsId(boolean isId) {
-        isIdAttr = isId;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Attr#isId()}.
+	 */
+	@Override
+	public boolean isId() {
+		return isIdAttr;
+	}
 
-    /**
-     * Called when a child node has been added.
-     */
-    @Override
-    protected void nodeAdded(Node n) {
-        setSpecified(true);
-    }
+	/**
+	 * Sets whether this attribute is an ID attribute.
+	 */
+	public void setIsId(boolean isId) {
+		isIdAttr = isId;
+	}
 
-    /**
-     * Called when a child node is going to be removed.
-     */
-    @Override
-    protected void nodeToBeRemoved(Node n) {
-        setSpecified(true);
-    }
+	/**
+	 * Called when a child node has been added.
+	 */
+	@Override
+	protected void nodeAdded(Node n) {
+		setSpecified(true);
+	}
 
-    /**
-     * Exports this node to the given document.
-     */
-    @Override
-    protected Node export(Node n, AbstractDocument d) {
-        super.export(n, d);
-        AbstractAttr aa = (AbstractAttr)n;
-        aa.nodeName     = nodeName;
-        aa.unspecified  = false;
-        aa.isIdAttr     = d.isId(aa);
-        return n;
-    }
+	/**
+	 * Called when a child node is going to be removed.
+	 */
+	@Override
+	protected void nodeToBeRemoved(Node n) {
+		setSpecified(true);
+	}
 
-    /**
-     * Deeply exports this node to the given document.
-     */
-    @Override
-    protected Node deepExport(Node n, AbstractDocument d) {
-        super.deepExport(n, d);
-        AbstractAttr aa = (AbstractAttr)n;
-        aa.nodeName     = nodeName;
-        aa.unspecified  = false;
-        aa.isIdAttr     = d.isId(aa);
-        return n;
-    }
+	/**
+	 * Exports this node to the given document.
+	 */
+	@Override
+	protected Node export(Node n, AbstractDocument d) {
+		super.export(n, d);
+		AbstractAttr aa = (AbstractAttr) n;
+		aa.nodeName = nodeName;
+		aa.unspecified = false;
+		aa.isIdAttr = d.isId(aa);
+		return n;
+	}
 
-    /**
-     * Copy the fields of the current node into the given node.
-     * @param n a node of the type of this.
-     */
-    @Override
-    protected Node copyInto(Node n) {
-        super.copyInto(n);
-        AbstractAttr aa = (AbstractAttr)n;
-        aa.nodeName     = nodeName;
-        aa.unspecified  = unspecified;
-        aa.isIdAttr     = isIdAttr;
-        return n;
-    }
+	/**
+	 * Deeply exports this node to the given document.
+	 */
+	@Override
+	protected Node deepExport(Node n, AbstractDocument d) {
+		super.deepExport(n, d);
+		AbstractAttr aa = (AbstractAttr) n;
+		aa.nodeName = nodeName;
+		aa.unspecified = false;
+		aa.isIdAttr = d.isId(aa);
+		return n;
+	}
 
-    /**
-     * Deeply copy the fields of the current node into the given node.
-     * @param n a node of the type of this.
-     */
-    @Override
-    protected Node deepCopyInto(Node n) {
-        super.deepCopyInto(n);
-        AbstractAttr aa = (AbstractAttr)n;
-        aa.nodeName     = nodeName;
-        aa.unspecified  = unspecified;
-        aa.isIdAttr     = isIdAttr;
-        return n;
-    }
+	/**
+	 * Copy the fields of the current node into the given node.
+	 * 
+	 * @param n a node of the type of this.
+	 */
+	@Override
+	protected Node copyInto(Node n) {
+		super.copyInto(n);
+		AbstractAttr aa = (AbstractAttr) n;
+		aa.nodeName = nodeName;
+		aa.unspecified = unspecified;
+		aa.isIdAttr = isIdAttr;
+		return n;
+	}
 
-    /**
-     * Checks the validity of a node to be inserted.
-     */
-    @Override
-    protected void checkChildType(Node n, boolean replace) {
-        switch (n.getNodeType()) {
-        case TEXT_NODE:
-        case ENTITY_REFERENCE_NODE:
-        case DOCUMENT_FRAGMENT_NODE:
-            break;
-        default:
-            throw createDOMException
-                (DOMException.HIERARCHY_REQUEST_ERR,
-                 "child.type",
-                 new Object[] {(int) getNodeType(),
-                                            getNodeName(),
-                         (int) n.getNodeType(),
-                                            n.getNodeName() });
-        }
-    }
+	/**
+	 * Deeply copy the fields of the current node into the given node.
+	 * 
+	 * @param n a node of the type of this.
+	 */
+	@Override
+	protected Node deepCopyInto(Node n) {
+		super.deepCopyInto(n);
+		AbstractAttr aa = (AbstractAttr) n;
+		aa.nodeName = nodeName;
+		aa.unspecified = unspecified;
+		aa.isIdAttr = isIdAttr;
+		return n;
+	}
 
-    /**
-     * Fires a DOMSubtreeModified event.
-     */
-    @Override
-    protected void fireDOMSubtreeModifiedEvent() {
-        AbstractDocument doc = getCurrentDocument();
-        if (doc.getEventsEnabled()) {
-            super.fireDOMSubtreeModifiedEvent();
-            if (getOwnerElement() != null) {
-                ((AbstractElement)getOwnerElement()).
-                    fireDOMSubtreeModifiedEvent();
-            }
-        }
-    }
+	/**
+	 * Checks the validity of a node to be inserted.
+	 */
+	@Override
+	protected void checkChildType(Node n, boolean replace) {
+		switch (n.getNodeType()) {
+		case TEXT_NODE:
+		case ENTITY_REFERENCE_NODE:
+		case DOCUMENT_FRAGMENT_NODE:
+			break;
+		default:
+			throw createDOMException(DOMException.HIERARCHY_REQUEST_ERR, "child.type",
+					new Object[] { (int) getNodeType(), getNodeName(), (int) n.getNodeType(), n.getNodeName() });
+		}
+	}
 
-    /**
-     * Inner class to hold type information about this attribute.
-     */
-    public static class AttrTypeInfo implements TypeInfo {
+	/**
+	 * Fires a DOMSubtreeModified event.
+	 */
+	@Override
+	protected void fireDOMSubtreeModifiedEvent() {
+		AbstractDocument doc = getCurrentDocument();
+		if (doc.getEventsEnabled()) {
+			super.fireDOMSubtreeModifiedEvent();
+			if (getOwnerElement() != null) {
+				((AbstractElement) getOwnerElement()).fireDOMSubtreeModifiedEvent();
+			}
+		}
+	}
 
-        /**
-         * Type namespace.
-         */
-        @Override
-        public String getTypeNamespace() {
-            return null;
-        }
+	/**
+	 * Inner class to hold type information about this attribute.
+	 */
+	public static class AttrTypeInfo implements TypeInfo {
 
-        /**
-         * Type name.
-         */
-        @Override
-        public String getTypeName() {
-            return null;
-        }
+		/**
+		 * Type namespace.
+		 */
+		@Override
+		public String getTypeNamespace() {
+			return null;
+		}
 
-        /**
-         * Returns whether this type derives from the given type.
-         */
-        @Override
-        public boolean isDerivedFrom(String ns, String name, int method) {
-            return false;
-        }
-    }
+		/**
+		 * Type name.
+		 */
+		@Override
+		public String getTypeName() {
+			return null;
+		}
+
+		/**
+		 * Returns whether this type derives from the given type.
+		 */
+		@Override
+		public boolean isDerivedFrom(String ns, String name, int method) {
+			return false;
+		}
+	}
 }

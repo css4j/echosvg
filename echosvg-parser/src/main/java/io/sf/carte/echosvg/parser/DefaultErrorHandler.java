@@ -28,12 +28,12 @@ package io.sf.carte.echosvg.parser;
 
 public class DefaultErrorHandler implements ErrorHandler {
 
-    /**
-     * Implements {@link ErrorHandler#error(ParseException)}.
-     * Throws the given exception.
-     */
-    @Override
-    public void error(ParseException e) throws ParseException {
-        throw e;
-    }
+	/**
+	 * Implements {@link ErrorHandler#error(ParseException)}. Throws the given
+	 * exception.
+	 */
+	@Override
+	public void error(ParseException e) throws ParseException {
+		throw e;
+	}
 }

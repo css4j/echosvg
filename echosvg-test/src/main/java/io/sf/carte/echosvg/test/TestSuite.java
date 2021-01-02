@@ -19,37 +19,35 @@
 package io.sf.carte.echosvg.test;
 
 /**
- * A <code>TestSuite</code> is a composite test, that is, a test
- * made of multiple children <code>Test</code> cases. Running a
- * <code>TestSuite</code> will simply run the children test cases.
+ * A <code>TestSuite</code> is a composite test, that is, a test made of
+ * multiple children <code>Test</code> cases. Running a <code>TestSuite</code>
+ * will simply run the children test cases.
  *
  * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TestSuite extends Test {
-    /**
-     * Adds a <code>Test</code> to the suite
-     */
-    void addTest(Test test);
+	/**
+	 * Adds a <code>Test</code> to the suite
+	 */
+	void addTest(Test test);
 
-    /**
-     * Removes a <code>Test</code> from the suite
-     */
-    void removeTest(Test test);
+	/**
+	 * Removes a <code>Test</code> from the suite
+	 */
+	void removeTest(Test test);
 
-    /**
-     * Returns this suite's <code>Test</code>. This should
-     * not return a reference to any internal structure
-     * held by the <code>TestSuite</code>. For example, if
-     * an internal array is used, this shoudl return
-     * a copy of that array.
-     */
-    Test[] getChildrenTests();
+	/**
+	 * Returns this suite's <code>Test</code>. This should not return a reference to
+	 * any internal structure held by the <code>TestSuite</code>. For example, if an
+	 * internal array is used, this shoudl return a copy of that array.
+	 */
+	Test[] getChildrenTests();
 
-    /**
-     * Returns the number of child tests
-     */
-    int getChildrenCount();
+	/**
+	 * Returns the number of child tests
+	 */
+	int getChildrenCount();
 
 }

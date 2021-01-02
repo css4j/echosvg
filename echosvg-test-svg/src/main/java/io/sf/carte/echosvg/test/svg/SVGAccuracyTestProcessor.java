@@ -22,13 +22,13 @@ import io.sf.carte.echosvg.test.xml.XMLTestReportProcessor;
 
 /**
  * This implementation of the <code>TestReportProcessor</code> interface
- * converts the <code>TestReports</code> it processes into an 
- * XML document that it outputs in a directory. The directory
- * used by the object can be configured at creation time.
+ * converts the <code>TestReports</code> it processes into an XML document that
+ * it outputs in a directory. The directory used by the object can be configured
+ * at creation time.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGAccuracyTestProcessor extends XMLTestReportProcessor{
+public class SVGAccuracyTestProcessor extends XMLTestReportProcessor {
 }

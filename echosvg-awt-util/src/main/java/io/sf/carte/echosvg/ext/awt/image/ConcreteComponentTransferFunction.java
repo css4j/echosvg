@@ -18,173 +18,158 @@
  */
 package io.sf.carte.echosvg.ext.awt.image;
 
-
-
 /**
- * This class implements the interface expected from a component
- * transfer function.
+ * This class implements the interface expected from a component transfer
+ * function.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public final class ConcreteComponentTransferFunction implements ComponentTransferFunction {
-    private int type;
-    private float slope;
-    private float[] tableValues;
-    private float intercept;
-    private float amplitude;
-    private float exponent;
-    private float offset;
+	private int type;
+	private float slope;
+	private float[] tableValues;
+	private float intercept;
+	private float amplitude;
+	private float exponent;
+	private float offset;
 
-    /**
-     * Instances should be created through the various
-     * factory methods.
-     */
-    private ConcreteComponentTransferFunction(){
-    }
+	/**
+	 * Instances should be created through the various factory methods.
+	 */
+	private ConcreteComponentTransferFunction() {
+	}
 
-    /**
-     * Returns an instance initialized as an identity
-     * transfer function
-     */
-    public static ComponentTransferFunction getIdentityTransfer(){
-        ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
-        f.type = IDENTITY;
-        return f;
-    }
+	/**
+	 * Returns an instance initialized as an identity transfer function
+	 */
+	public static ComponentTransferFunction getIdentityTransfer() {
+		ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
+		f.type = IDENTITY;
+		return f;
+	}
 
-    /**
-     * Returns a table transfer function
-     */
-    public static ComponentTransferFunction
-        getTableTransfer(float[] tableValues){
-        ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
-        f.type = TABLE;
+	/**
+	 * Returns a table transfer function
+	 */
+	public static ComponentTransferFunction getTableTransfer(float[] tableValues) {
+		ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
+		f.type = TABLE;
 
-        if(tableValues == null){
-            throw new IllegalArgumentException();
-        }
+		if (tableValues == null) {
+			throw new IllegalArgumentException();
+		}
 
-        if(tableValues.length < 2){
-            throw new IllegalArgumentException();
-        }
+		if (tableValues.length < 2) {
+			throw new IllegalArgumentException();
+		}
 
-        f.tableValues = new float[tableValues.length];
-        System.arraycopy(tableValues, 0,
-                         f.tableValues, 0,
-                         tableValues.length);
+		f.tableValues = new float[tableValues.length];
+		System.arraycopy(tableValues, 0, f.tableValues, 0, tableValues.length);
 
-        return f;
-    }
+		return f;
+	}
 
-    /**
-     * Returns a discrete transfer function
-     */
-    public static ComponentTransferFunction
-        getDiscreteTransfer(float[] tableValues){
-        ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
-        f.type = DISCRETE;
+	/**
+	 * Returns a discrete transfer function
+	 */
+	public static ComponentTransferFunction getDiscreteTransfer(float[] tableValues) {
+		ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
+		f.type = DISCRETE;
 
-        if(tableValues == null){
-            throw new IllegalArgumentException();
-        }
+		if (tableValues == null) {
+			throw new IllegalArgumentException();
+		}
 
-        if(tableValues.length < 2){
-            throw new IllegalArgumentException();
-        }
+		if (tableValues.length < 2) {
+			throw new IllegalArgumentException();
+		}
 
-        f.tableValues = new float[tableValues.length];
-        System.arraycopy(tableValues, 0,
-                         f.tableValues, 0,
-                         tableValues.length);
+		f.tableValues = new float[tableValues.length];
+		System.arraycopy(tableValues, 0, f.tableValues, 0, tableValues.length);
 
-        return f;
-    }
+		return f;
+	}
 
-    /**
-     * Returns a linear transfer function
-     */
-    public static ComponentTransferFunction
-        getLinearTransfer(float slope, float intercept){
-        ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
-        f.type = LINEAR;
-        f.slope = slope;
-        f.intercept = intercept;
+	/**
+	 * Returns a linear transfer function
+	 */
+	public static ComponentTransferFunction getLinearTransfer(float slope, float intercept) {
+		ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
+		f.type = LINEAR;
+		f.slope = slope;
+		f.intercept = intercept;
 
-        return f;
-    }
+		return f;
+	}
 
-    /**
-     * Returns a gamma function
-     */
-    public static ComponentTransferFunction
-        getGammaTransfer(float amplitude,
-                         float exponent,
-                         float offset){
-        ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
-        f.type = GAMMA;
-        f.amplitude = amplitude;
-        f.exponent = exponent;
-        f.offset = offset;
+	/**
+	 * Returns a gamma function
+	 */
+	public static ComponentTransferFunction getGammaTransfer(float amplitude, float exponent, float offset) {
+		ConcreteComponentTransferFunction f = new ConcreteComponentTransferFunction();
+		f.type = GAMMA;
+		f.amplitude = amplitude;
+		f.exponent = exponent;
+		f.offset = offset;
 
-        return f;
-    }
+		return f;
+	}
 
-    /**
-     * Returns the type of this transfer function
-     */
-    @Override
-    public int getType(){
-        return type;
-    }
+	/**
+	 * Returns the type of this transfer function
+	 */
+	@Override
+	public int getType() {
+		return type;
+	}
 
-    /**
-     * Returns the slope value for this transfer function
-     */
-    @Override
-    public float getSlope(){
-        return slope;
-    }
+	/**
+	 * Returns the slope value for this transfer function
+	 */
+	@Override
+	public float getSlope() {
+		return slope;
+	}
 
-    /**
-     * Returns the table values for this transfer function
-     */
-    @Override
-    public float[] getTableValues(){
-        return tableValues;
-    }
+	/**
+	 * Returns the table values for this transfer function
+	 */
+	@Override
+	public float[] getTableValues() {
+		return tableValues;
+	}
 
-    /**
-     * Returns the intercept value for this transfer function
-     */
-    @Override
-    public float getIntercept(){
-        return intercept;
-    }
+	/**
+	 * Returns the intercept value for this transfer function
+	 */
+	@Override
+	public float getIntercept() {
+		return intercept;
+	}
 
-    /**
-     * Returns the amplitude value for this transfer function
-     */
-    @Override
-    public float getAmplitude(){
-        return amplitude;
-    }
+	/**
+	 * Returns the amplitude value for this transfer function
+	 */
+	@Override
+	public float getAmplitude() {
+		return amplitude;
+	}
 
-    /**
-     * Returns the exponent value for this transfer function
-     */
-    @Override
-    public float getExponent(){
-        return exponent;
-    }
+	/**
+	 * Returns the exponent value for this transfer function
+	 */
+	@Override
+	public float getExponent() {
+		return exponent;
+	}
 
-    /**
-     * Returns the offset value for this transfer function
-     */
-    @Override
-    public float getOffset(){
-        return offset;
-    }
+	/**
+	 * Returns the offset value for this transfer function
+	 */
+	@Override
+	public float getOffset() {
+		return offset;
+	}
 }
-

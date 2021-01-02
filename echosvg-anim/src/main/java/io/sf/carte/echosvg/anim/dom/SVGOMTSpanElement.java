@@ -30,40 +30,39 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMTSpanElement
-    extends    SVGOMTextPositioningElement
-    implements SVGTSpanElement {
+public class SVGOMTSpanElement extends SVGOMTextPositioningElement implements SVGTSpanElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new SVGOMTSpanElement object.
-     */
-    protected SVGOMTSpanElement() {
-    }
+	/**
+	 * Creates a new SVGOMTSpanElement object.
+	 */
+	protected SVGOMTSpanElement() {
+	}
 
-    /**
-     * Creates a new SVGOMTSpanElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMTSpanElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new SVGOMTSpanElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMTSpanElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_TSPAN_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_TSPAN_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMTSpanElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMTSpanElement();
+	}
 }

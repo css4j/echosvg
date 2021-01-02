@@ -39,59 +39,46 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @version $Id$
  */
 public class NullNamespaceTest extends AbstractTest {
-    public static String ERROR_GET_ELEMENT_BY_ID_FAILED 
-        = "error.get.element.by.id.failed";
+	public static String ERROR_GET_ELEMENT_BY_ID_FAILED = "error.get.element.by.id.failed";
 
-    public static String ENTRY_KEY_ID 
-        = "entry.key.id";
+	public static String ENTRY_KEY_ID = "entry.key.id";
 
-    protected String testFileName;
-    protected String rootTag;
-    protected String targetId;
+	protected String testFileName;
+	protected String rootTag;
+	protected String targetId;
 
-    public NullNamespaceTest(String file,
-                             String root,
-                             String id) {
-        testFileName = file;
-        rootTag = root;
-        targetId = id;
-    }
+	public NullNamespaceTest(String file, String root, String id) {
+		testFileName = file;
+		rootTag = root;
+		targetId = id;
+	}
 
-    @Override
-    public TestReport runImpl() throws Exception {
-        String parser =
-            XMLResourceDescriptor.getXMLParserClassName();
+	@Override
+	public TestReport runImpl() throws Exception {
+		String parser = XMLResourceDescriptor.getXMLParserClassName();
 
-        DocumentFactory df 
-            = new SAXDocumentFactory
-            (GenericDOMImplementation.getDOMImplementation(), parser);
+		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
 
-        File f = (new File(testFileName));
-        URL url = f.toURI().toURL();
-        Document doc = df.createDocument(null,
-                                         rootTag,
-                                         url.toString(),
-                                         url.openStream());
+		File f = (new File(testFileName));
+		URL url = f.toURI().toURL();
+		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
-        
-        Element e = doc.getElementById(targetId);
+		Element e = doc.getElementById(targetId);
 
-        if (e == null){
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode(ERROR_GET_ELEMENT_BY_ID_FAILED);
-            report.addDescriptionEntry(ENTRY_KEY_ID,
-                                       targetId);
-            report.setPassed(false);
-            return report;
-        }
-            
-            
-        if (e.getNamespaceURI() == null) {
-            return reportSuccess();
-        }
-        DefaultTestReport report = new DefaultTestReport(this);
-        report.setErrorCode(TestReport.ERROR_TEST_FAILED);
-        report.setPassed(false);
-        return report;
-    }
+		if (e == null) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode(ERROR_GET_ELEMENT_BY_ID_FAILED);
+			report.addDescriptionEntry(ENTRY_KEY_ID, targetId);
+			report.setPassed(false);
+			return report;
+		}
+
+		if (e.getNamespaceURI() == null) {
+			return reportSuccess();
+		}
+		DefaultTestReport report = new DefaultTestReport(this);
+		report.setErrorCode(TestReport.ERROR_TEST_FAILED);
+		report.setPassed(false);
+		return report;
+	}
 }

@@ -19,36 +19,39 @@
 package io.sf.carte.echosvg.gvt.event;
 
 /**
- * An abstract adapter class for receiving graphics node change
- * events. The methods in this class are empty. This class exists as
- * convenience for creating listener objects.
+ * An abstract adapter class for receiving graphics node change events. The
+ * methods in this class are empty. This class exists as convenience for
+ * creating listener objects.
  *
- * <p>Extend this class to create a <code>GraphicsNodeChangeEvent</code>
- * listener and override the methods for the events of interest. (If
- * you implement the <code>GraphicsNodeChangeListener</code> interface, you
- * have to define all of the methods in it. This abstract class
- * defines null methods for them all, so you can only have to define
- * methods for events you care about.)
+ * <p>
+ * Extend this class to create a <code>GraphicsNodeChangeEvent</code> listener
+ * and override the methods for the events of interest. (If you implement the
+ * <code>GraphicsNodeChangeListener</code> interface, you have to define all of
+ * the methods in it. This abstract class defines null methods for them all, so
+ * you can only have to define methods for events you care about.)
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class GraphicsNodeChangeAdapter
-        implements GraphicsNodeChangeListener {
-    
-    /**
-     * Invoked when a change has started on a graphics node, but before
-     * any changes occure in the graphics node it's self.
-     * @param gnce the graphics node change event
-     */
-    @Override
-    public void changeStarted(GraphicsNodeChangeEvent gnce) { }
+public abstract class GraphicsNodeChangeAdapter implements GraphicsNodeChangeListener {
 
-    /**
-     * Invoked when a change on a graphics node has completed
-     * @param gnce the graphics node change event
-     */
-    @Override
-    public void changeCompleted(GraphicsNodeChangeEvent gnce) { }
+	/**
+	 * Invoked when a change has started on a graphics node, but before any changes
+	 * occure in the graphics node it's self.
+	 * 
+	 * @param gnce the graphics node change event
+	 */
+	@Override
+	public void changeStarted(GraphicsNodeChangeEvent gnce) {
+	}
+
+	/**
+	 * Invoked when a change on a graphics node has completed
+	 * 
+	 * @param gnce the graphics node change event
+	 */
+	@Override
+	public void changeCompleted(GraphicsNodeChangeEvent gnce) {
+	}
 }

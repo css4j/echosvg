@@ -26,51 +26,51 @@ import java.util.List;
  */
 public class ListBuilder implements ListHandler {
 
-    /**
-     * 
-     */
-    private final AbstractSVGList abstractSVGList;
+	/**
+	 * 
+	 */
+	private final AbstractSVGList abstractSVGList;
 
-    /**
-     * @param abstractSVGList
-     */
-    public ListBuilder(AbstractSVGList abstractSVGList) {
-        this.abstractSVGList = abstractSVGList;
-    }
+	/**
+	 * @param abstractSVGList
+	 */
+	public ListBuilder(AbstractSVGList abstractSVGList) {
+		this.abstractSVGList = abstractSVGList;
+	}
 
-    /**
-     * The list being built.
-     */
-    protected List<SVGItem> list;
+	/**
+	 * The list being built.
+	 */
+	protected List<SVGItem> list;
 
-    /**
-     * Returns the newly created list.
-     */
-    public List<SVGItem> getList() {
-        return list;
-    }
+	/**
+	 * Returns the newly created list.
+	 */
+	public List<SVGItem> getList() {
+		return list;
+	}
 
-    /**
-     * Begins the construction of the list.
-     */
-    @Override
-    public void startList(){
-        list = new ArrayList<>();
-    }
+	/**
+	 * Begins the construction of the list.
+	 */
+	@Override
+	public void startList() {
+		list = new ArrayList<>();
+	}
 
-    /**
-     * Adds an item to the list.
-     */
-    @Override
-    public void item(SVGItem item) {
-        item.setParent(this.abstractSVGList);
-        list.add(item);
-    }
+	/**
+	 * Adds an item to the list.
+	 */
+	@Override
+	public void item(SVGItem item) {
+		item.setParent(this.abstractSVGList);
+		list.add(item);
+	}
 
-    /**
-     * Ends the construction of the list.
-     */
-    @Override
-    public void endList() {
-    }
+	/**
+	 * Ends the construction of the list.
+	 */
+	@Override
+	public void endList() {
+	}
 }

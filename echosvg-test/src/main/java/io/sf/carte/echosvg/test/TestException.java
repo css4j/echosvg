@@ -19,55 +19,51 @@
 package io.sf.carte.echosvg.test;
 
 /**
- * Classes in the test package and subpackages should throw 
- * <code>TestException</code> to reflect internal failures in their
- * operation.
+ * Classes in the test package and subpackages should throw
+ * <code>TestException</code> to reflect internal failures in their operation.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TestException extends Exception {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Error code
-     */
-    protected String errorCode;
+	/**
+	 * Error code
+	 */
+	protected String errorCode;
 
-    /**
-     * Parameters for the error message
-     */
-    protected Object[] errorParams;
+	/**
+	 * Parameters for the error message
+	 */
+	protected Object[] errorParams;
 
-    /**
-     * Exception, if any, that caused the error
-     */
-    protected Exception sourceError;
+	/**
+	 * Exception, if any, that caused the error
+	 */
+	protected Exception sourceError;
 
-    public TestException(String errorCode,
-                         Object[] errorParams,
-                         Exception e){
-        this.errorCode = errorCode;
-        this.errorParams = errorParams;
-        this.sourceError = e;
-    }
+	public TestException(String errorCode, Object[] errorParams, Exception e) {
+		this.errorCode = errorCode;
+		this.errorParams = errorParams;
+		this.sourceError = e;
+	}
 
-    public String getErrorCode(){
-        return errorCode;
-    }
+	public String getErrorCode() {
+		return errorCode;
+	}
 
-    public Object[] getErrorParams(){
-        return errorParams;
-    }
+	public Object[] getErrorParams() {
+		return errorParams;
+	}
 
-    public Exception getSourceError(){
-        return sourceError;
-    }
+	public Exception getSourceError() {
+		return sourceError;
+	}
 
-    @Override
-    public String getMessage(){
-        return Messages.formatMessage(errorCode,
-                                      errorParams);
-    }
+	@Override
+	public String getMessage() {
+		return Messages.formatMessage(errorCode, errorParams);
+	}
 }

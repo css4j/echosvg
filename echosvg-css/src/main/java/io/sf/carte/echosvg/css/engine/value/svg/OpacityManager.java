@@ -38,106 +38,102 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @version $Id$
  */
 public class OpacityManager extends AbstractValueManager {
-    
-    /**
-     * Whether the managed property is inherited.
-     */
-    protected boolean inherited;
 
-    /**
-     * The managed property name.
-     */
-    protected String property;
+	/**
+	 * Whether the managed property is inherited.
+	 */
+	protected boolean inherited;
 
-    /**
-     * Creates a new OpacityManager.
-     */
-    public OpacityManager(String prop, boolean inherit) {
-        property = prop;
-        inherited = inherit;
-    }
+	/**
+	 * The managed property name.
+	 */
+	protected String property;
 
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return inherited;
-    }
+	/**
+	 * Creates a new OpacityManager.
+	 */
+	public OpacityManager(String prop, boolean inherit) {
+		property = prop;
+		inherited = inherit;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return inherited;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_NUMBER_OR_INHERIT;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return property;
-    }
-    
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return SVGValueConstants.NUMBER_1;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_NUMBER_OR_INHERIT;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return property;
+	}
 
-        case INTEGER:
-            return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                                  lu.getIntegerValue());
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return SVGValueConstants.NUMBER_1;
+	}
 
-        case REAL:
-            return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                                  lu.getFloatValue());
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-        default:
-            break;
-        }
-        throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-    }
+		case INTEGER:
+			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getIntegerValue());
 
-    /**
-     * Implements {@link ValueManager#createFloatValue(short,float)}.
-     */
-    @Override
-    public Value createFloatValue(short type, float floatValue)
-        throws DOMException {
-        if (type == CSSPrimitiveValue.CSS_NUMBER) {
-            return new FloatValue(type, floatValue);
-        }
-        throw createInvalidFloatTypeDOMException(type);
-    }
+		case REAL:
+			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getFloatValue());
+
+		default:
+			break;
+		}
+		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+	}
+
+	/**
+	 * Implements {@link ValueManager#createFloatValue(short,float)}.
+	 */
+	@Override
+	public Value createFloatValue(short type, float floatValue) throws DOMException {
+		if (type == CSSPrimitiveValue.CSS_NUMBER) {
+			return new FloatValue(type, floatValue);
+		}
+		throw createInvalidFloatTypeDOMException(type);
+	}
 }

@@ -31,152 +31,135 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @version $Id$
  */
 public class AnimatablePreserveAspectRatioValue extends AnimatableValue {
-    
-    /**
-     * Strings for the 'align' values.
-     */
-    protected static final String[] ALIGN_VALUES = {
-        null,
-        SVGConstants.SVG_NONE_VALUE,
-        SVGConstants.SVG_XMINYMIN_VALUE,
-        SVGConstants.SVG_XMIDYMIN_VALUE,
-        SVGConstants.SVG_XMAXYMIN_VALUE,
-        SVGConstants.SVG_XMINYMID_VALUE,
-        SVGConstants.SVG_XMIDYMID_VALUE,
-        SVGConstants.SVG_XMAXYMID_VALUE,
-        SVGConstants.SVG_XMINYMAX_VALUE,
-        SVGConstants.SVG_XMIDYMAX_VALUE,
-        SVGConstants.SVG_XMAXYMAX_VALUE
-    };
 
-    /**
-     * Strings for the 'meet-or-slice' values.
-     */
-    protected static final String[] MEET_OR_SLICE_VALUES = {
-        null,
-        SVGConstants.SVG_MEET_VALUE,
-        SVGConstants.SVG_SLICE_VALUE
-    };
+	/**
+	 * Strings for the 'align' values.
+	 */
+	protected static final String[] ALIGN_VALUES = { null, SVGConstants.SVG_NONE_VALUE, SVGConstants.SVG_XMINYMIN_VALUE,
+			SVGConstants.SVG_XMIDYMIN_VALUE, SVGConstants.SVG_XMAXYMIN_VALUE, SVGConstants.SVG_XMINYMID_VALUE,
+			SVGConstants.SVG_XMIDYMID_VALUE, SVGConstants.SVG_XMAXYMID_VALUE, SVGConstants.SVG_XMINYMAX_VALUE,
+			SVGConstants.SVG_XMIDYMAX_VALUE, SVGConstants.SVG_XMAXYMAX_VALUE };
 
-    /**
-     * The align value.
-     */
-    protected short align;
+	/**
+	 * Strings for the 'meet-or-slice' values.
+	 */
+	protected static final String[] MEET_OR_SLICE_VALUES = { null, SVGConstants.SVG_MEET_VALUE,
+			SVGConstants.SVG_SLICE_VALUE };
 
-    /**
-     * The meet-or-slice value.
-     */
-    protected short meetOrSlice;
+	/**
+	 * The align value.
+	 */
+	protected short align;
 
-    /**
-     * Creates a new, uninitialized AnimatablePreserveAspectRatioValue.
-     */
-    protected AnimatablePreserveAspectRatioValue(AnimationTarget target) {
-        super(target);
-    }
+	/**
+	 * The meet-or-slice value.
+	 */
+	protected short meetOrSlice;
 
-    /**
-     * Creates a new AnimatablePreserveAspectRatioValue.
-     */
-    public AnimatablePreserveAspectRatioValue(AnimationTarget target,
-                                              short align, short meetOrSlice) {
-        super(target);
-        this.align = align;
-        this.meetOrSlice = meetOrSlice;
-    }
-    
-    /**
-     * Performs interpolation to the given value.  Preserve aspect ratio values
-     * cannot be interpolated.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to, float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatablePreserveAspectRatioValue res;
-        if (result == null) {
-            res = new AnimatablePreserveAspectRatioValue(target);
-        } else {
-            res = (AnimatablePreserveAspectRatioValue) result;
-        }
+	/**
+	 * Creates a new, uninitialized AnimatablePreserveAspectRatioValue.
+	 */
+	protected AnimatablePreserveAspectRatioValue(AnimationTarget target) {
+		super(target);
+	}
 
-        short newAlign, newMeetOrSlice;
-        if (to != null && interpolation >= 0.5) {
-            AnimatablePreserveAspectRatioValue toValue =
-                (AnimatablePreserveAspectRatioValue) to;
-            newAlign = toValue.align;
-            newMeetOrSlice = toValue.meetOrSlice;
-        } else {
-            newAlign = align;
-            newMeetOrSlice = meetOrSlice;
-        }
+	/**
+	 * Creates a new AnimatablePreserveAspectRatioValue.
+	 */
+	public AnimatablePreserveAspectRatioValue(AnimationTarget target, short align, short meetOrSlice) {
+		super(target);
+		this.align = align;
+		this.meetOrSlice = meetOrSlice;
+	}
 
-        if (res.align != newAlign || res.meetOrSlice != newMeetOrSlice) {
-            res.align = align;
-            res.meetOrSlice = meetOrSlice;
-            res.hasChanged = true;
-        }
-        return res;
-    }
+	/**
+	 * Performs interpolation to the given value. Preserve aspect ratio values
+	 * cannot be interpolated.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatablePreserveAspectRatioValue res;
+		if (result == null) {
+			res = new AnimatablePreserveAspectRatioValue(target);
+		} else {
+			res = (AnimatablePreserveAspectRatioValue) result;
+		}
 
-    /**
-     * Returns the align value.
-     */
-    public short getAlign() {
-        return align;
-    }
+		short newAlign, newMeetOrSlice;
+		if (to != null && interpolation >= 0.5) {
+			AnimatablePreserveAspectRatioValue toValue = (AnimatablePreserveAspectRatioValue) to;
+			newAlign = toValue.align;
+			newMeetOrSlice = toValue.meetOrSlice;
+		} else {
+			newAlign = align;
+			newMeetOrSlice = meetOrSlice;
+		}
 
-    /**
-     * Returns the meet-or-slice value.
-     */
-    public short getMeetOrSlice() {
-        return meetOrSlice;
-    }
+		if (res.align != newAlign || res.meetOrSlice != newMeetOrSlice) {
+			res.align = align;
+			res.meetOrSlice = meetOrSlice;
+			res.hasChanged = true;
+		}
+		return res;
+	}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return false;
-    }
+	/**
+	 * Returns the align value.
+	 */
+	public short getAlign() {
+		return align;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        return 0f;
-    }
+	/**
+	 * Returns the meet-or-slice value.
+	 */
+	public short getMeetOrSlice() {
+		return meetOrSlice;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        return new AnimatablePreserveAspectRatioValue
-            (target, SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_NONE,
-             SVGPreserveAspectRatio.SVG_MEETORSLICE_MEET);
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return false;
+	}
 
-    /**
-     * Returns a string representation of this object.
-     */
-    @Override
-    public String toStringRep() {
-        if (align < 1 || align > 10) {
-            return null;
-        }
-        String value = ALIGN_VALUES[align];
-        if (align == SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_NONE) {
-            return value;
-        }
-        if (meetOrSlice < 1 || meetOrSlice > 2) {
-            return null;
-        }
-        return value + ' ' + MEET_OR_SLICE_VALUES[meetOrSlice];
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		return 0f;
+	}
+
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		return new AnimatablePreserveAspectRatioValue(target, SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_NONE,
+				SVGPreserveAspectRatio.SVG_MEETORSLICE_MEET);
+	}
+
+	/**
+	 * Returns a string representation of this object.
+	 */
+	@Override
+	public String toStringRep() {
+		if (align < 1 || align > 10) {
+			return null;
+		}
+		String value = ALIGN_VALUES[align];
+		if (align == SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_NONE) {
+			return value;
+		}
+		if (meetOrSlice < 1 || meetOrSlice > 2) {
+			return null;
+		}
+		return value + ' ' + MEET_OR_SLICE_VALUES[meetOrSlice];
+	}
 }

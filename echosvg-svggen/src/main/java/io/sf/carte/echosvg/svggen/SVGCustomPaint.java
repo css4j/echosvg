@@ -25,61 +25,57 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
- * Utility class that converts an custom Paint object into
- * a set of SVG properties and definitions.
+ * Utility class that converts an custom Paint object into a set of SVG
+ * properties and definitions.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see                io.sf.carte.echosvg.svggen.SVGPaint
+ * @see io.sf.carte.echosvg.svggen.SVGPaint
  */
 public class SVGCustomPaint extends AbstractSVGConverter {
-    /**
-     * @param generatorContext the context.
-     */
-    public SVGCustomPaint(SVGGeneratorContext generatorContext) {
-        super(generatorContext);
-    }
+	/**
+	 * @param generatorContext the context.
+	 */
+	public SVGCustomPaint(SVGGeneratorContext generatorContext) {
+		super(generatorContext);
+	}
 
-    /**
-     * Converts part or all of the input GraphicContext into
-     * a set of attribute/value pairs and related definitions
-     *
-     * @param gc GraphicContext to be converted
-     * @return descriptor of the attributes required to represent
-     *         some or all of the GraphicContext state, along
-     *         with the related definitions
-     * @see io.sf.carte.echosvg.svggen.SVGDescriptor
-     */
-    @Override
-    public SVGDescriptor toSVG(GraphicContext gc) {
-        return toSVG(gc.getPaint());
-    }
+	/**
+	 * Converts part or all of the input GraphicContext into a set of
+	 * attribute/value pairs and related definitions
+	 *
+	 * @param gc GraphicContext to be converted
+	 * @return descriptor of the attributes required to represent some or all of the
+	 *         GraphicContext state, along with the related definitions
+	 * @see io.sf.carte.echosvg.svggen.SVGDescriptor
+	 */
+	@Override
+	public SVGDescriptor toSVG(GraphicContext gc) {
+		return toSVG(gc.getPaint());
+	}
 
-    /**
-     * @param paint the Paint object to convert to SVG
-     * @return a description of the SVG paint and opacity corresponding
-     *         to the Paint. The definiton of the paint is put in the
-     *         linearGradientDefsMap
-     */
-    public SVGPaintDescriptor toSVG(Paint paint) {
-        SVGPaintDescriptor paintDesc = (SVGPaintDescriptor)descMap.get(paint);
+	/**
+	 * @param paint the Paint object to convert to SVG
+	 * @return a description of the SVG paint and opacity corresponding to the
+	 *         Paint. The definiton of the paint is put in the linearGradientDefsMap
+	 */
+	public SVGPaintDescriptor toSVG(Paint paint) {
+		SVGPaintDescriptor paintDesc = (SVGPaintDescriptor) descMap.get(paint);
 
-        if (paintDesc == null) {
-            // First time this paint is used. Request handler
-            // to do the convertion
-            paintDesc =
-                generatorContext.extensionHandler.
-                handlePaint(paint,
-                            generatorContext);
+		if (paintDesc == null) {
+			// First time this paint is used. Request handler
+			// to do the convertion
+			paintDesc = generatorContext.extensionHandler.handlePaint(paint, generatorContext);
 
-            if (paintDesc != null) {
-                Element def = paintDesc.getDef();
-                if(def != null) defSet.add(def);
-                descMap.put(paint, paintDesc);
-            }
-        }
+			if (paintDesc != null) {
+				Element def = paintDesc.getDef();
+				if (def != null)
+					defSet.add(def);
+				descMap.put(paint, paintDesc);
+			}
+		}
 
-        return paintDesc;
-    }
+		return paintDesc;
+	}
 }

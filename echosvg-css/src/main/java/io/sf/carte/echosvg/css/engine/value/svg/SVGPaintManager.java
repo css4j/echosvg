@@ -42,136 +42,130 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @version $Id$
  */
 public class SVGPaintManager extends SVGColorManager {
-    
-    /**
-     * Creates a new SVGPaintManager.
-     */
-    public SVGPaintManager(String prop) {
-        super(prop);
-    }
 
-    /**
-     * Creates a new SVGPaintManager.
-     * @param prop The property name.
-     * @param v The default value.
-     */
-    public SVGPaintManager(String prop, Value v) {
-        super(prop, v);
-    }
+	/**
+	 * Creates a new SVGPaintManager.
+	 */
+	public SVGPaintManager(String prop) {
+		super(prop);
+	}
 
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
+	/**
+	 * Creates a new SVGPaintManager.
+	 * 
+	 * @param prop The property name.
+	 * @param v    The default value.
+	 */
+	public SVGPaintManager(String prop, Value v) {
+		super(prop, v);
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_PAINT;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case IDENT:
-            if (lu.getStringValue().equalsIgnoreCase
-                (CSSConstants.CSS_NONE_VALUE)) {
-                return ValueConstants.NONE_VALUE;
-            }
-            // Fall through
-        default:
-            return super.createValue(lu, engine);
-        case URI:
-        }
-        String value = lu.getStringValue();
-        String uri = resolveURI(engine.getCSSBaseURI(), value);
-        lu = lu.getNextLexicalUnit();
-        if (lu == null) {
-            return new URIValue(value, uri);
-        }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_PAINT;
+	}
 
-        ListValue result = new ListValue(' ');
-        result.append(new URIValue(value, uri));
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case IDENT:
+			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+				return ValueConstants.NONE_VALUE;
+			}
+			// Fall through
+		default:
+			return super.createValue(lu, engine);
+		case URI:
+		}
+		String value = lu.getStringValue();
+		String uri = resolveURI(engine.getCSSBaseURI(), value);
+		lu = lu.getNextLexicalUnit();
+		if (lu == null) {
+			return new URIValue(value, uri);
+		}
 
-        if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
-            if (lu.getStringValue().equalsIgnoreCase
-                (CSSConstants.CSS_NONE_VALUE)) {
-                result.append(ValueConstants.NONE_VALUE);
-                return result;
-            }
-        }
-        Value v = super.createValue(lu, engine);
-        if (v.getCssValueType() == CSSValue.CSS_CUSTOM) {
-            ListValue lv = (ListValue)v;
-            for (int i = 0; i < lv.getLength(); i++) {
-                result.append(lv.item(i));
-            }
-        } else {
-            result.append(v);
-        }
-        return result;
-    }
+		ListValue result = new ListValue(' ');
+		result.append(new URIValue(value, uri));
 
-    /**
-     * Implements {@link
-     * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
-     */
-    @Override
-    public Value computeValue(CSSStylableElement elt,
-                              String pseudo,
-                              CSSEngine engine,
-                              int idx,
-                              StyleMap sm,
-                              Value value) {
-        if (value == ValueConstants.NONE_VALUE) {
-            return value;
-        }
-        if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
-            ListValue lv = (ListValue)value;
-            Value v = lv.item(0);
-            if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_URI) {
-                v = lv.item(1);
-                if (v == ValueConstants.NONE_VALUE) {
-                    return value;
-                }
-                Value t = super.computeValue(elt, pseudo, engine, idx, sm, v);
-                if (t != v) {
-                    ListValue result = new ListValue(' ');
-                    result.append(lv.item(0));
-                    result.append(t);
-                    if (lv.getLength() == 3) {
-                        result.append(lv.item(1));
-                    }
-                    return result;
-                }
-                return value;
-            }
-        }
-        return super.computeValue(elt, pseudo, engine, idx, sm, value);
-    }
+		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
+			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+				result.append(ValueConstants.NONE_VALUE);
+				return result;
+			}
+		}
+		Value v = super.createValue(lu, engine);
+		if (v.getCssValueType() == CSSValue.CSS_CUSTOM) {
+			ListValue lv = (ListValue) v;
+			for (int i = 0; i < lv.getLength(); i++) {
+				result.append(lv.item(i));
+			}
+		} else {
+			result.append(v);
+		}
+		return result;
+	}
+
+	/**
+	 * Implements
+	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
+	 */
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		if (value == ValueConstants.NONE_VALUE) {
+			return value;
+		}
+		if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
+			ListValue lv = (ListValue) value;
+			Value v = lv.item(0);
+			if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_URI) {
+				v = lv.item(1);
+				if (v == ValueConstants.NONE_VALUE) {
+					return value;
+				}
+				Value t = super.computeValue(elt, pseudo, engine, idx, sm, v);
+				if (t != v) {
+					ListValue result = new ListValue(' ');
+					result.append(lv.item(0));
+					result.append(t);
+					if (lv.getLength() == 3) {
+						result.append(lv.item(1));
+					}
+					return result;
+				}
+				return value;
+			}
+		}
+		return super.computeValue(elt, pseudo, engine, idx, sm, value);
+	}
 }

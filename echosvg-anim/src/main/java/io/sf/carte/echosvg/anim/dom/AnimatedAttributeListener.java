@@ -20,10 +20,9 @@ package io.sf.carte.echosvg.anim.dom;
 
 import org.w3c.dom.Element;
 
-
 /**
- * An interface to listen for changes on any animatable XML attribute in
- * an {@link SVGOMDocument}.
+ * An interface to listen for changes on any animatable XML attribute in an
+ * {@link SVGOMDocument}.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -31,19 +30,20 @@ import org.w3c.dom.Element;
  */
 public interface AnimatedAttributeListener {
 
-    /**
-     * Called to notify an object of a change to the animated value of
-     * an animatable XML attribute.
-     * @param e the owner element of the changed animatable attribute
-     * @param alav the AnimatedLiveAttributeValue that changed
-     */
-    void animatedAttributeChanged(Element e, AnimatedLiveAttributeValue alav);
+	/**
+	 * Called to notify an object of a change to the animated value of an animatable
+	 * XML attribute.
+	 * 
+	 * @param e    the owner element of the changed animatable attribute
+	 * @param alav the AnimatedLiveAttributeValue that changed
+	 */
+	void animatedAttributeChanged(Element e, AnimatedLiveAttributeValue alav);
 
-    /**
-     * Called to notify an object of a change to the value of an 'other'
-     * animation.
-     * @param e the element being animated
-     * @param type the type of animation whose value changed
-     */
-    void otherAnimationChanged(Element e, String type);
+	/**
+	 * Called to notify an object of a change to the value of an 'other' animation.
+	 * 
+	 * @param e    the element being animated
+	 * @param type the type of animation whose value changed
+	 */
+	void otherAnimationChanged(Element e, String type);
 }

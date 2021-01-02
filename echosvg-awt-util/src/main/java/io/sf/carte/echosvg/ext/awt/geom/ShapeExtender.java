@@ -28,104 +28,109 @@ import java.awt.geom.Rectangle2D;
 
 /**
  * This class wraps a normal path into an extended path.
+ * 
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ShapeExtender implements ExtendedShape {
-    Shape shape;
+	Shape shape;
 
-    public ShapeExtender(Shape shape) {
-        this.shape = shape;
-    }
+	public ShapeExtender(Shape shape) {
+		this.shape = shape;
+	}
 
-    @Override
-    public boolean contains(double x, double y) {
-        return shape.contains(x, y);
-    }
-    @Override
-    public boolean contains(double x, double y, double w, double h) {
-        return shape.contains(x, y, w, h);
-    }
+	@Override
+	public boolean contains(double x, double y) {
+		return shape.contains(x, y);
+	}
 
-    @Override
-    public boolean contains(Point2D p) {
-        return shape.contains(p);
-    }
+	@Override
+	public boolean contains(double x, double y, double w, double h) {
+		return shape.contains(x, y, w, h);
+	}
 
-    @Override
-    public boolean contains(Rectangle2D r) {
-        return shape.contains(r);
-    }
+	@Override
+	public boolean contains(Point2D p) {
+		return shape.contains(p);
+	}
 
-    @Override
-    public Rectangle getBounds() {
-        return shape.getBounds();
-    }
+	@Override
+	public boolean contains(Rectangle2D r) {
+		return shape.contains(r);
+	}
 
-    @Override
-    public Rectangle2D getBounds2D() {
-        return shape.getBounds2D();
-    }
+	@Override
+	public Rectangle getBounds() {
+		return shape.getBounds();
+	}
 
-    @Override
-    public PathIterator getPathIterator(AffineTransform at) {
-        return shape.getPathIterator(at);
-    }
+	@Override
+	public Rectangle2D getBounds2D() {
+		return shape.getBounds2D();
+	}
 
-    @Override
-    public PathIterator getPathIterator(AffineTransform at, double flatness) {
-        return shape.getPathIterator(at, flatness);
-    }
+	@Override
+	public PathIterator getPathIterator(AffineTransform at) {
+		return shape.getPathIterator(at);
+	}
 
-    @Override
-    public ExtendedPathIterator getExtendedPathIterator() {
-        return new EPIWrap(shape.getPathIterator(null));
-    }
+	@Override
+	public PathIterator getPathIterator(AffineTransform at, double flatness) {
+		return shape.getPathIterator(at, flatness);
+	}
 
-    @Override
-    public boolean intersects(double x, double y, double w, double h) {
-        return shape.intersects(x, y, w, h);
-    }
+	@Override
+	public ExtendedPathIterator getExtendedPathIterator() {
+		return new EPIWrap(shape.getPathIterator(null));
+	}
 
-    @Override
-    public boolean intersects(Rectangle2D r) {
-        return shape.intersects(r);
-    }
+	@Override
+	public boolean intersects(double x, double y, double w, double h) {
+		return shape.intersects(x, y, w, h);
+	}
 
+	@Override
+	public boolean intersects(Rectangle2D r) {
+		return shape.intersects(r);
+	}
 
-    public static class EPIWrap implements ExtendedPathIterator {
-        PathIterator pi = null;
-        public EPIWrap(PathIterator pi) {
-            this.pi = pi;
-        }
+	public static class EPIWrap implements ExtendedPathIterator {
+		PathIterator pi = null;
 
-        @Override
-        public int currentSegment() {
-            float[] coords = new float[6];
-            return pi.currentSegment(coords);
-        }
+		public EPIWrap(PathIterator pi) {
+			this.pi = pi;
+		}
 
-        @Override
-        public int currentSegment(double[] coords) { 
-            return pi.currentSegment(coords); }
+		@Override
+		public int currentSegment() {
+			float[] coords = new float[6];
+			return pi.currentSegment(coords);
+		}
 
-        @Override
-        public int currentSegment(float[] coords) {
-            return pi.currentSegment(coords); }
+		@Override
+		public int currentSegment(double[] coords) {
+			return pi.currentSegment(coords);
+		}
 
-        @Override
-        public int getWindingRule() {
-            return pi.getWindingRule();
-        }
+		@Override
+		public int currentSegment(float[] coords) {
+			return pi.currentSegment(coords);
+		}
 
-        @Override
-        public boolean isDone() {
-            return pi.isDone(); }
+		@Override
+		public int getWindingRule() {
+			return pi.getWindingRule();
+		}
 
-        @Override
-        public void next() {
-            pi.next();
-        }
-    }
+		@Override
+		public boolean isDone() {
+			return pi.isDone();
+		}
+
+		@Override
+		public void next() {
+			pi.next();
+		}
+	}
 }

@@ -36,122 +36,118 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class StyleSheetProcessingInstruction
-    extends AbstractProcessingInstruction
-    implements LinkStyle {
+public class StyleSheetProcessingInstruction extends AbstractProcessingInstruction implements LinkStyle {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Is this node immutable?
-     */
-    protected boolean readonly;
+	/**
+	 * Is this node immutable?
+	 */
+	protected boolean readonly;
 
-    /**
-     * The style sheet.
-     */
-    protected transient StyleSheet sheet;
+	/**
+	 * The style sheet.
+	 */
+	protected transient StyleSheet sheet;
 
-    /**
-     * The stylesheet factory.
-     */
-    protected StyleSheetFactory factory;
+	/**
+	 * The stylesheet factory.
+	 */
+	protected StyleSheetFactory factory;
 
-    /**
-     * The pseudo attributes.
-     */
-    protected transient HashMap<String, String> pseudoAttributes;
+	/**
+	 * The pseudo attributes.
+	 */
+	protected transient HashMap<String, String> pseudoAttributes;
 
-    /**
-     * Creates a new ProcessingInstruction object.
-     */
-    protected StyleSheetProcessingInstruction() {
-    }
+	/**
+	 * Creates a new ProcessingInstruction object.
+	 */
+	protected StyleSheetProcessingInstruction() {
+	}
 
-    /**
-     * Creates a new ProcessingInstruction object.
-     */
-    public StyleSheetProcessingInstruction(String            data,
-                                           AbstractDocument  owner,
-                                           StyleSheetFactory f) {
-        ownerDocument = owner;
-        setData(data);
-        factory = f;
-    }
+	/**
+	 * Creates a new ProcessingInstruction object.
+	 */
+	public StyleSheetProcessingInstruction(String data, AbstractDocument owner, StyleSheetFactory f) {
+		ownerDocument = owner;
+		setData(data);
+		factory = f;
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return readonly;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-        readonly = v;
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+		readonly = v;
+	}
 
-    /**
-     * Sets the node name.
-     */
-    @Override
-    public void setNodeName(String v) {
-    }
+	/**
+	 * Sets the node name.
+	 */
+	@Override
+	public void setNodeName(String v) {
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.ProcessingInstruction#getTarget()}.
-     * @return "xml-stylesheet".
-     */
-    @Override
-    public String getTarget() {
-        return "xml-stylesheet";
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.ProcessingInstruction#getTarget()}.
+	 * 
+	 * @return "xml-stylesheet".
+	 */
+	@Override
+	public String getTarget() {
+		return "xml-stylesheet";
+	}
 
-    /**
-     *  The style sheet. 
-     */
-    @Override
-    public StyleSheet getSheet() {
-        if (sheet == null) {
-            sheet = factory.createStyleSheet(this, getPseudoAttributes());
-        }
-        return sheet;
-    }
+	/**
+	 * The style sheet.
+	 */
+	@Override
+	public StyleSheet getSheet() {
+		if (sheet == null) {
+			sheet = factory.createStyleSheet(this, getPseudoAttributes());
+		}
+		return sheet;
+	}
 
-    /**
-     * Returns the pseudo attributes in a table.
-     */
-    public HashMap<String, String> getPseudoAttributes() {
-        if (pseudoAttributes == null) {
-            pseudoAttributes = new HashMap<>();
-            pseudoAttributes.put("alternate", "no");
-            pseudoAttributes.put("media",     "all");
-            DOMUtilities.parseStyleSheetPIData(data, pseudoAttributes);
-        }
-        return pseudoAttributes;
-    }
+	/**
+	 * Returns the pseudo attributes in a table.
+	 */
+	public HashMap<String, String> getPseudoAttributes() {
+		if (pseudoAttributes == null) {
+			pseudoAttributes = new HashMap<>();
+			pseudoAttributes.put("alternate", "no");
+			pseudoAttributes.put("media", "all");
+			DOMUtilities.parseStyleSheetPIData(data, pseudoAttributes);
+		}
+		return pseudoAttributes;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.ProcessingInstruction#setData(String)}.
-     */
-    @Override
-    public void setData(String data) throws DOMException {
-        super.setData(data);
-        sheet = null;
-        pseudoAttributes = null;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.ProcessingInstruction#setData(String)}.
+	 */
+	@Override
+	public void setData(String data) throws DOMException {
+		super.setData(data);
+		sheet = null;
+		pseudoAttributes = null;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new StyleSheetProcessingInstruction();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new StyleSheetProcessingInstruction();
+	}
 }

@@ -25,35 +25,35 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 
 /**
- * Simple component which displays the rendering created by
- * a <code>Painter</code>.
+ * Simple component which displays the rendering created by a
+ * <code>Painter</code>.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JPainterComponent extends JComponent {
-    /**
-     * <code>Painter</code>
-     */
-    protected Painter painter;
+	/**
+	 * <code>Painter</code>
+	 */
+	protected Painter painter;
 
-    /**
-     * Delegates to its <code>Painter</code>
-     */
-    @Override
-    public void paint(Graphics _g){
-        Graphics2D g = (Graphics2D)_g;
-        BufferedImage buf = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-        painter.paint(buf.createGraphics());
-        g.drawImage(buf, 0, 0, null);
-    }
+	/**
+	 * Delegates to its <code>Painter</code>
+	 */
+	@Override
+	public void paint(Graphics _g) {
+		Graphics2D g = (Graphics2D) _g;
+		BufferedImage buf = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+		painter.paint(buf.createGraphics());
+		g.drawImage(buf, 0, 0, null);
+	}
 
-    /**
-     * Constructor
-     */
-    public JPainterComponent(Painter painter){
-        this.painter = painter;
-    }
+	/**
+	 * Constructor
+	 */
+	public JPainterComponent(Painter painter) {
+		this.painter = painter;
+	}
 
 }

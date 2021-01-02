@@ -24,8 +24,8 @@ import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 
 /**
- * This test validates the convertion of Java 2D GradientPaints
- * into SVG linearGradient definition and reference.
+ * This test validates the convertion of Java 2D GradientPaints into SVG
+ * linearGradient definition and reference.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
@@ -33,93 +33,88 @@ import java.awt.geom.GeneralPath;
  * @version $Id$
  */
 public class Gradient implements Painter {
-    @Override
-    public void paint(Graphics2D g) {
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                           RenderingHints.VALUE_ANTIALIAS_ON);
+	@Override
+	public void paint(Graphics2D g) {
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        java.awt.geom.AffineTransform defaultTransform = g.getTransform();
-        Color labelColor = Color.black;
+		java.awt.geom.AffineTransform defaultTransform = g.getTransform();
+		Color labelColor = Color.black;
 
-        //
-        // First, define cross hair marker
-        //
-        GeneralPath crossHair = new GeneralPath();
-        crossHair.moveTo(-5, 0);
-        crossHair.lineTo(5, 0);
-        crossHair.moveTo(0, -5);
-        crossHair.lineTo(0, 5);
+		//
+		// First, define cross hair marker
+		//
+		GeneralPath crossHair = new GeneralPath();
+		crossHair.moveTo(-5, 0);
+		crossHair.lineTo(5, 0);
+		crossHair.moveTo(0, -5);
+		crossHair.lineTo(0, 5);
 
-        //
-        // Simple test checking color values and start
-        // and end points
-        //
-        java.awt.GradientPaint gradient = new java.awt.GradientPaint(30, 40, Color.red,
-                                                   30, 120, Color.yellow);
-        g.setPaint(labelColor);
-        g.drawString("Simple vertical gradient", 10, 20);
-        g.setPaint(gradient);
-        g.fillRect(10, 30, 100, 100);
-        g.setPaint(labelColor);
-        g.translate(30, 40);
-        g.draw(crossHair);
-        g.setTransform(defaultTransform);
-        g.translate(30, 120);
-        g.draw(crossHair);
+		//
+		// Simple test checking color values and start
+		// and end points
+		//
+		java.awt.GradientPaint gradient = new java.awt.GradientPaint(30, 40, Color.red, 30, 120, Color.yellow);
+		g.setPaint(labelColor);
+		g.drawString("Simple vertical gradient", 10, 20);
+		g.setPaint(gradient);
+		g.fillRect(10, 30, 100, 100);
+		g.setPaint(labelColor);
+		g.translate(30, 40);
+		g.draw(crossHair);
+		g.setTransform(defaultTransform);
+		g.translate(30, 120);
+		g.draw(crossHair);
 
-        g.setTransform(defaultTransform);
-        g.translate(0, 140);
+		g.setTransform(defaultTransform);
+		g.translate(0, 140);
 
-        //
-        // Now, test cycling behavior
-        //
-        java.awt.GradientPaint nonCyclicGradient = new java.awt.GradientPaint(0, 0, Color.red,
-                                                            20, 0, Color.yellow);
-        java.awt.GradientPaint cyclicGradient = new java.awt.GradientPaint(0, 0, Color.red,
-                                                         20, 0, Color.yellow, true);
+		//
+		// Now, test cycling behavior
+		//
+		java.awt.GradientPaint nonCyclicGradient = new java.awt.GradientPaint(0, 0, Color.red, 20, 0, Color.yellow);
+		java.awt.GradientPaint cyclicGradient = new java.awt.GradientPaint(0, 0, Color.red, 20, 0, Color.yellow, true);
 
-        g.setPaint(labelColor);
-        g.drawString("Non Cyclic / Cyclic Gradients", 10, 20);
+		g.setPaint(labelColor);
+		g.drawString("Non Cyclic / Cyclic Gradients", 10, 20);
 
-        g.translate(10, 30);
+		g.translate(10, 30);
 
-        g.setPaint(nonCyclicGradient);
-        g.fillRect(0, 0, 100, 30);
+		g.setPaint(nonCyclicGradient);
+		g.fillRect(0, 0, 100, 30);
 
-        g.translate(0, 30);
-        g.setPaint(cyclicGradient);
-        g.fillRect(0, 0, 100, 30);
+		g.translate(0, 30);
+		g.setPaint(cyclicGradient);
+		g.fillRect(0, 0, 100, 30);
 
-        g.setPaint(labelColor);
-        g.drawLine(0, 0, 100, 0);
+		g.setPaint(labelColor);
+		g.drawLine(0, 0, 100, 0);
 
-        g.setTransform(defaultTransform);
-        g.translate(0, 240);
+		g.setTransform(defaultTransform);
+		g.translate(0, 240);
 
-        //
-        // Now, test transformations
-        //
-        g.setPaint(labelColor);
-        g.drawString("Sheared GradientPaint", 10, 20);
-        g.translate(10, 25);
+		//
+		// Now, test transformations
+		//
+		g.setPaint(labelColor);
+		g.drawString("Sheared GradientPaint", 10, 20);
+		g.translate(10, 25);
 
-        java.awt.GradientPaint shearedGradient = new java.awt.GradientPaint(0, 0, Color.red,
-                                                          100, 0, Color.yellow);
-        g.setPaint(shearedGradient);
-        g.shear(0.5, 0);
+		java.awt.GradientPaint shearedGradient = new java.awt.GradientPaint(0, 0, Color.red, 100, 0, Color.yellow);
+		g.setPaint(shearedGradient);
+		g.shear(0.5, 0);
 
-        g.fillRect(0, 0, 100, 40);
+		g.fillRect(0, 0, 100, 40);
 
-        g.setTransform(defaultTransform);
-        g.translate(0, 320);
+		g.setTransform(defaultTransform);
+		g.translate(0, 320);
 
-        g.setPaint(labelColor);
-        g.drawString("Opacity in stop color", 10, 20);
+		g.setPaint(labelColor);
+		g.drawString("Opacity in stop color", 10, 20);
 
-        java.awt.GradientPaint transparentGradient = new java.awt.GradientPaint(10, 30, new Color(255, 0, 0, 0),
-                                                                                110, 30, Color.yellow);
+		java.awt.GradientPaint transparentGradient = new java.awt.GradientPaint(10, 30, new Color(255, 0, 0, 0), 110,
+				30, Color.yellow);
 
-        g.setPaint(transparentGradient);
-        g.fillRect(10, 30, 100, 30);
-    }
+		g.setPaint(transparentGradient);
+		g.fillRect(10, 30, 100, 30);
+	}
 }

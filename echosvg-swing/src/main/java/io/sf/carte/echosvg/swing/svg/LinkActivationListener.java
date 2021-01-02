@@ -27,9 +27,9 @@ package io.sf.carte.echosvg.swing.svg;
  */
 public interface LinkActivationListener {
 
-    /**
-     * Called when a link was activated.
-     */
-    void linkActivated(LinkActivationEvent e);
+	/**
+	 * Called when a link was activated.
+	 */
+	void linkActivated(LinkActivationEvent e);
 
 }

@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.dom.svg;
 import org.w3c.dom.Element;
 
 /**
- * An interface for DOM nodes that can look up elements with IDs.  This is
- * used to give common interface to {@link org.w3c.dom.Document} and
+ * An interface for DOM nodes that can look up elements with IDs. This is used
+ * to give common interface to {@link org.w3c.dom.Document} and
  * {@link io.sf.carte.echosvg.dom.xbl.XBLShadowTreeElement} objects.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
@@ -31,8 +31,8 @@ import org.w3c.dom.Element;
  */
 public interface IdContainer {
 
-    /**
-     * Returns the element with the given ID that exists in this subtree.
-     */
-    Element getElementById(String id);
+	/**
+	 * Returns the element with the given ID that exists in this subtree.
+	 */
+	Element getElementById(String id);
 }

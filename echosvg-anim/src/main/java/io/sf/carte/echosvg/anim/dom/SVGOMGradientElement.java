@@ -37,201 +37,173 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class SVGOMGradientElement
-    extends    SVGStylableElement
-    implements SVGGradientElement {
+public abstract class SVGOMGradientElement extends SVGStylableElement implements SVGGradientElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
-        t.put(null, SVG_GRADIENT_UNITS_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        t.put(null, SVG_SPREAD_METHOD_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        t.put(null, SVG_GRADIENT_TRANSFORM_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
-        t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
-        t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_URI));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
+		t.put(null, SVG_GRADIENT_UNITS_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		t.put(null, SVG_SPREAD_METHOD_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		t.put(null, SVG_GRADIENT_TRANSFORM_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
+		t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
+		t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The attribute initializer.
-     */
-    protected static final AttributeInitializer attributeInitializer;
-    static {
-        attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
-                                          null, "xmlns:xlink",
-                                          XMLConstants.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "show", "other");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "actuate", "onLoad");
-    }
+	/**
+	 * The attribute initializer.
+	 */
+	protected static final AttributeInitializer attributeInitializer;
+	static {
+		attributeInitializer = new AttributeInitializer(4);
+		attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI, null, "xmlns:xlink",
+				XMLConstants.XLINK_NAMESPACE_URI);
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "type", "simple");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "show", "other");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "actuate", "onLoad");
+	}
 
-    /**
-     * The units values.
-     */
-    protected static final String[] UNITS_VALUES = {
-        "",
-        SVG_USER_SPACE_ON_USE_VALUE,
-        SVG_OBJECT_BOUNDING_BOX_VALUE
-    };
+	/**
+	 * The units values.
+	 */
+	protected static final String[] UNITS_VALUES = { "", SVG_USER_SPACE_ON_USE_VALUE, SVG_OBJECT_BOUNDING_BOX_VALUE };
 
-    /**
-     * The 'spreadMethod' attribute values.
-     */
-    protected static final String[] SPREAD_METHOD_VALUES = {
-        "",
-        SVG_PAD_VALUE,
-        SVG_REFLECT_VALUE,
-        SVG_REPEAT_VALUE
-    };
+	/**
+	 * The 'spreadMethod' attribute values.
+	 */
+	protected static final String[] SPREAD_METHOD_VALUES = { "", SVG_PAD_VALUE, SVG_REFLECT_VALUE, SVG_REPEAT_VALUE };
 
-    /**
-     * The 'gradientUnits' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration gradientUnits;
+	/**
+	 * The 'gradientUnits' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration gradientUnits;
 
-    /**
-     * The 'spreadMethod' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration spreadMethod;
+	/**
+	 * The 'spreadMethod' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration spreadMethod;
 
-    /**
-     * The 'xlink:href' attribute value.
-     */
-    protected SVGOMAnimatedString href;
+	/**
+	 * The 'xlink:href' attribute value.
+	 */
+	protected SVGOMAnimatedString href;
 
-    /**
-     * The 'externalResourcesRequired' attribute value.
-     */
-    protected SVGOMAnimatedBoolean externalResourcesRequired;
+	/**
+	 * The 'externalResourcesRequired' attribute value.
+	 */
+	protected SVGOMAnimatedBoolean externalResourcesRequired;
 
-    /**
-     * Creates a new SVGOMGradientElement object.
-     */
-    protected SVGOMGradientElement() {
-    }
+	/**
+	 * Creates a new SVGOMGradientElement object.
+	 */
+	protected SVGOMGradientElement() {
+	}
 
-    /**
-     * Creates a new SVGOMGradientElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    protected SVGOMGradientElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMGradientElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	protected SVGOMGradientElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        gradientUnits =
-            createLiveAnimatedEnumeration
-                (null, SVG_GRADIENT_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 2);
-        spreadMethod =
-            createLiveAnimatedEnumeration
-                (null, SVG_SPREAD_METHOD_ATTRIBUTE, SPREAD_METHOD_VALUES,
-                 (short) 1);
-        href =
-            createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
-        externalResourcesRequired =
-            createLiveAnimatedBoolean
-                (null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		gradientUnits = createLiveAnimatedEnumeration(null, SVG_GRADIENT_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 2);
+		spreadMethod = createLiveAnimatedEnumeration(null, SVG_SPREAD_METHOD_ATTRIBUTE, SPREAD_METHOD_VALUES,
+				(short) 1);
+		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		externalResourcesRequired = createLiveAnimatedBoolean(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
+	}
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGGradientElement#getGradientTransform()}.
-     */
-    @Override
-    public SVGAnimatedTransformList getGradientTransform() {
-        throw new UnsupportedOperationException
-            ("SVGGradientElement.getGradientTransform is not implemented"); // XXX
-    }
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGGradientElement#getGradientTransform()}.
+	 */
+	@Override
+	public SVGAnimatedTransformList getGradientTransform() {
+		throw new UnsupportedOperationException("SVGGradientElement.getGradientTransform is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGGradientElement#getGradientUnits()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getGradientUnits() {
-        return gradientUnits;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGGradientElement#getGradientUnits()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getGradientUnits() {
+		return gradientUnits;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGGradientElement#getSpreadMethod()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getSpreadMethod() {
-        return spreadMethod;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGGradientElement#getSpreadMethod()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getSpreadMethod() {
+		return spreadMethod;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGURIReference#getHref()}.
-     */
-    @Override
-    public SVGAnimatedString getHref() {
-        return href;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
+	 */
+	@Override
+	public SVGAnimatedString getHref() {
+		return href;
+	}
 
-    // SVGExternalResourcesRequired support /////////////////////////////
+	// SVGExternalResourcesRequired support /////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
-     */
-    @Override
-    public SVGAnimatedBoolean getExternalResourcesRequired() {
-        return externalResourcesRequired;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGExternalResourcesRequired#getExternalResourcesRequired()}.
+	 */
+	@Override
+	public SVGAnimatedBoolean getExternalResourcesRequired() {
+		return externalResourcesRequired;
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return attributeInitializer;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return attributeInitializer;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMAElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMAElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

@@ -26,19 +26,19 @@ package io.sf.carte.echosvg.util;
  * @version $Id$
  */
 public interface ParsedURLProtocolHandler {
-    /**
-     * Returns the protocol to be handled by this class.
-     * The protocol must _always_ be the part of the URL before the
-     * first ':'.
-     */
-    String getProtocolHandled();
-    /**
-     * Parse an absolute url string.
-     */
-    ParsedURLData parseURL(String urlStr);
-    /**
-     * Parse a relative url string of this protocol.
-     */
-    ParsedURLData parseURL(ParsedURL basepurl, String urlStr);
-}
+	/**
+	 * Returns the protocol to be handled by this class. The protocol must _always_
+	 * be the part of the URL before the first ':'.
+	 */
+	String getProtocolHandled();
 
+	/**
+	 * Parse an absolute url string.
+	 */
+	ParsedURLData parseURL(String urlStr);
+
+	/**
+	 * Parse a relative url string of this protocol.
+	 */
+	ParsedURLData parseURL(ParsedURL basepurl, String urlStr);
+}

@@ -21,17 +21,17 @@ package io.sf.carte.echosvg.swing.gvt;
 import java.awt.Graphics;
 
 /**
- * This interface represents an object painted over the GVT rendering
- * in a JGVTComponent.
+ * This interface represents an object painted over the GVT rendering in a
+ * JGVTComponent.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Overlay {
-    
-    /**
-     * Paints this overlay.
-     */
-    void paint(Graphics g);
+
+	/**
+	 * Paints this overlay.
+	 */
+	void paint(Graphics g);
 }

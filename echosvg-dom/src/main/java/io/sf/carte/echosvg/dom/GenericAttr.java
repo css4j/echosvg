@@ -30,52 +30,52 @@ import org.w3c.dom.Node;
  */
 public class GenericAttr extends AbstractAttr {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * Is this attribute immutable?
-     */
-    protected boolean readonly;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Is this attribute immutable?
+	 */
+	protected boolean readonly;
 
-    /**
-     * Creates a new Attr object.
-     */
-    protected GenericAttr() {
-    }
+	/**
+	 * Creates a new Attr object.
+	 */
+	protected GenericAttr() {
+	}
 
-    /**
-     * Creates a new Attr object.
-     * @param name  The attribute name for validation purposes.
-     * @param owner The owner document.
-     * @exception DOMException
-     *   INVALID_CHARACTER_ERR: if name contains invalid characters,
-     */
-    public GenericAttr(String name, AbstractDocument owner)
-        throws DOMException {
-        super(name, owner);
-        setNodeName(name);
-    }
+	/**
+	 * Creates a new Attr object.
+	 * 
+	 * @param name  The attribute name for validation purposes.
+	 * @param owner The owner document.
+	 * @exception DOMException INVALID_CHARACTER_ERR: if name contains invalid
+	 *                         characters,
+	 */
+	public GenericAttr(String name, AbstractDocument owner) throws DOMException {
+		super(name, owner);
+		setNodeName(name);
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return readonly;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-        readonly = v;
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+		readonly = v;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new GenericAttr();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new GenericAttr();
+	}
 }

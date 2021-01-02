@@ -29,153 +29,155 @@ import java.util.LinkedList;
  */
 public class Interval {
 
-    /**
-     * The begin time for the interval.
-     */
-    protected float begin;
+	/**
+	 * The begin time for the interval.
+	 */
+	protected float begin;
 
-    /**
-     * The end time for the interval.
-     */
-    protected float end;
+	/**
+	 * The end time for the interval.
+	 */
+	protected float end;
 
-    /**
-     * The InstanceTime that defined the begin time of the current interval.
-     */
-    protected InstanceTime beginInstanceTime;
+	/**
+	 * The InstanceTime that defined the begin time of the current interval.
+	 */
+	protected InstanceTime beginInstanceTime;
 
-    /**
-     * The InstanceTime that defined the end time of the current interval.
-     */
-    protected InstanceTime endInstanceTime;
+	/**
+	 * The InstanceTime that defined the end time of the current interval.
+	 */
+	protected InstanceTime endInstanceTime;
 
-    /**
-     * The list of {@link InstanceTime} objects that are dependent
-     * on the begin time of this Interval.
-     */
-    protected LinkedList<InstanceTime> beginDependents = new LinkedList<>();
+	/**
+	 * The list of {@link InstanceTime} objects that are dependent on the begin time
+	 * of this Interval.
+	 */
+	protected LinkedList<InstanceTime> beginDependents = new LinkedList<>();
 
-    /**
-     * The list of {@link InstanceTime} objects that are dependent
-     * on the end time of this Interval.
-     */
-    protected LinkedList<InstanceTime> endDependents = new LinkedList<>();
+	/**
+	 * The list of {@link InstanceTime} objects that are dependent on the end time
+	 * of this Interval.
+	 */
+	protected LinkedList<InstanceTime> endDependents = new LinkedList<>();
 
-    /**
-     * Creates a new Interval.
-     * @param begin the begin time of the Interval
-     * @param end the end time of the Interval
-     * @param beginInstanceTime the {@link InstanceTime} object that defined
-     *        the begin time of the Interval
-     * @param endInstanceTime the {@link InstanceTime} object that defined
-     *        the end time of the Interval
-     */
-    public Interval(float begin, float end, InstanceTime beginInstanceTime,
-                    InstanceTime endInstanceTime) {
-        // Trace.enter(this, null, new Object[] { Float.valueOf(begin), Float.valueOf(end), beginInstanceTime, endInstanceTime } ); try {
-        this.begin = begin;
-        this.end = end;
-        this.beginInstanceTime = beginInstanceTime;
-        this.endInstanceTime = endInstanceTime;
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Creates a new Interval.
+	 * 
+	 * @param begin             the begin time of the Interval
+	 * @param end               the end time of the Interval
+	 * @param beginInstanceTime the {@link InstanceTime} object that defined the
+	 *                          begin time of the Interval
+	 * @param endInstanceTime   the {@link InstanceTime} object that defined the end
+	 *                          time of the Interval
+	 */
+	public Interval(float begin, float end, InstanceTime beginInstanceTime, InstanceTime endInstanceTime) {
+		// Trace.enter(this, null, new Object[] { Float.valueOf(begin),
+		// Float.valueOf(end), beginInstanceTime, endInstanceTime } ); try {
+		this.begin = begin;
+		this.end = end;
+		this.beginInstanceTime = beginInstanceTime;
+		this.endInstanceTime = endInstanceTime;
+		// } finally { Trace.exit(); }
+	}
 
-    /**
-     * Returns a string representation of this Interval.
-     */
-    @Override
-    public String toString() {
-        return TimedElement.toString(begin) + ".." + TimedElement.toString(end);
-    }
+	/**
+	 * Returns a string representation of this Interval.
+	 */
+	@Override
+	public String toString() {
+		return TimedElement.toString(begin) + ".." + TimedElement.toString(end);
+	}
 
-    /**
-     * Returns the begin time of this interval.
-     */
-    public float getBegin() {
-        return begin;
-    }
+	/**
+	 * Returns the begin time of this interval.
+	 */
+	public float getBegin() {
+		return begin;
+	}
 
-    /**
-     * Returns the end time of this interval.
-     */
-    public float getEnd() {
-        return end;
-    }
+	/**
+	 * Returns the end time of this interval.
+	 */
+	public float getEnd() {
+		return end;
+	}
 
-    /**
-     * Returns the {@link InstanceTime} that defined the begin time of this
-     * interval.
-     */
-    public InstanceTime getBeginInstanceTime() {
-        return beginInstanceTime;
-    }
+	/**
+	 * Returns the {@link InstanceTime} that defined the begin time of this
+	 * interval.
+	 */
+	public InstanceTime getBeginInstanceTime() {
+		return beginInstanceTime;
+	}
 
-    /**
-     * Returns the {@link InstanceTime} that defined the end time of this
-     * interval.
-     */
-    public InstanceTime getEndInstanceTime() {
-        return endInstanceTime;
-    }
+	/**
+	 * Returns the {@link InstanceTime} that defined the end time of this interval.
+	 */
+	public InstanceTime getEndInstanceTime() {
+		return endInstanceTime;
+	}
 
-    /**
-     * Adds a dependent InstanceTime for this Interval.
-     */
-    void addDependent(InstanceTime dependent, boolean forBegin) {
-        // Trace.enter(this, "addDependent", new Object[] { dependent, new Boolean(forBegin) } ); try {
-        if (forBegin) {
-            beginDependents.add(dependent);
-        } else {
-            endDependents.add(dependent);
-        }
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Adds a dependent InstanceTime for this Interval.
+	 */
+	void addDependent(InstanceTime dependent, boolean forBegin) {
+		// Trace.enter(this, "addDependent", new Object[] { dependent, new
+		// Boolean(forBegin) } ); try {
+		if (forBegin) {
+			beginDependents.add(dependent);
+		} else {
+			endDependents.add(dependent);
+		}
+		// } finally { Trace.exit(); }
+	}
 
-    /**
-     * Removes a dependent InstanceTime for this Interval.
-     */
-    void removeDependent(InstanceTime dependent, boolean forBegin) {
-        // Trace.enter(this, "removeDependent", new Object[] { dependent, new Boolean(forBegin) } ); try {
-        if (forBegin) {
-            beginDependents.remove(dependent);
-        } else {
-            endDependents.remove(dependent);
-        }
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Removes a dependent InstanceTime for this Interval.
+	 */
+	void removeDependent(InstanceTime dependent, boolean forBegin) {
+		// Trace.enter(this, "removeDependent", new Object[] { dependent, new
+		// Boolean(forBegin) } ); try {
+		if (forBegin) {
+			beginDependents.remove(dependent);
+		} else {
+			endDependents.remove(dependent);
+		}
+		// } finally { Trace.exit(); }
+	}
 
-    /**
-     * Updates the begin time for this interval.
-     */
-    float setBegin(float begin) {
-        // Trace.enter(this, "setBegin", new Object[] { Float.valueOf(begin) } ); try {
-        float minTime = Float.POSITIVE_INFINITY;
-        this.begin = begin;
-        for (InstanceTime it : beginDependents) {
-            float t = it.dependentUpdate(begin);
-            if (t < minTime) {
-                minTime = t;
-            }
-        }
-        return minTime;
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Updates the begin time for this interval.
+	 */
+	float setBegin(float begin) {
+		// Trace.enter(this, "setBegin", new Object[] { Float.valueOf(begin) } ); try {
+		float minTime = Float.POSITIVE_INFINITY;
+		this.begin = begin;
+		for (InstanceTime it : beginDependents) {
+			float t = it.dependentUpdate(begin);
+			if (t < minTime) {
+				minTime = t;
+			}
+		}
+		return minTime;
+		// } finally { Trace.exit(); }
+	}
 
-    /**
-     * Updates the end time for this interval.
-     */
-    float setEnd(float end, InstanceTime endInstanceTime) {
-        // Trace.enter(this, "setEnd", new Object[] { Float.valueOf(end) } ); try {
-        float minTime = Float.POSITIVE_INFINITY;
-        this.end = end;
-        this.endInstanceTime = endInstanceTime;
-        for (InstanceTime it : endDependents) {
-            float t = it.dependentUpdate(end);
-            if (t < minTime) {
-                minTime = t;
-            }
-        }
-        return minTime;
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Updates the end time for this interval.
+	 */
+	float setEnd(float end, InstanceTime endInstanceTime) {
+		// Trace.enter(this, "setEnd", new Object[] { Float.valueOf(end) } ); try {
+		float minTime = Float.POSITIVE_INFINITY;
+		this.end = end;
+		this.endInstanceTime = endInstanceTime;
+		for (InstanceTime it : endDependents) {
+			float t = it.dependentUpdate(end);
+			if (t < minTime) {
+				minTime = t;
+			}
+		}
+		return minTime;
+		// } finally { Trace.exit(); }
+	}
 }

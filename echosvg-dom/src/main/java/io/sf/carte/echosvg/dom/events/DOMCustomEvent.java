@@ -29,29 +29,26 @@ import io.sf.carte.echosvg.w3c.dom.events.CustomEvent;
  */
 public class DOMCustomEvent extends DOMEvent implements CustomEvent {
 
-    /**
-     * The custom detail associated with this event.
-     */
-    protected Object detail;
+	/**
+	 * The custom detail associated with this event.
+	 */
+	protected Object detail;
 
-    /**
-     * Returns the custom detail of this event.
-     */
-    @Override
-    public Object getDetail() {
-        return detail;
-    }
+	/**
+	 * Returns the custom detail of this event.
+	 */
+	@Override
+	public Object getDetail() {
+		return detail;
+	}
 
-    /**
-     * Initializes this custom event.
-     */
-    @Override
-    public void initCustomEventNS(String namespaceURIArg,
-                                  String typeArg,
-                                  boolean canBubbleArg,
-                                  boolean cancelableArg,
-                                  Object detailArg) {
-        initEventNS(namespaceURIArg, typeArg, canBubbleArg, cancelableArg);
-        detail = detailArg;
-    }
+	/**
+	 * Initializes this custom event.
+	 */
+	@Override
+	public void initCustomEventNS(String namespaceURIArg, String typeArg, boolean canBubbleArg, boolean cancelableArg,
+			Object detailArg) {
+		initEventNS(namespaceURIArg, typeArg, canBubbleArg, cancelableArg);
+		detail = detailArg;
+	}
 }

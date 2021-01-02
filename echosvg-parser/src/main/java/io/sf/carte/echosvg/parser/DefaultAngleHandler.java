@@ -26,57 +26,56 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public class DefaultAngleHandler implements AngleHandler {
-    /**
-     * The only instance of this class.
-     */
-    public static final AngleHandler INSTANCE
-        = new DefaultAngleHandler();
+	/**
+	 * The only instance of this class.
+	 */
+	public static final AngleHandler INSTANCE = new DefaultAngleHandler();
 
-    /**
-     * This class does not need to be instantiated.
-     */
-    protected DefaultAngleHandler() {
-    }
+	/**
+	 * This class does not need to be instantiated.
+	 */
+	protected DefaultAngleHandler() {
+	}
 
-    /**
-     * Implements {@link AngleHandler#startAngle()}.
-     */
-    @Override
-    public void startAngle() throws ParseException {
-    }
+	/**
+	 * Implements {@link AngleHandler#startAngle()}.
+	 */
+	@Override
+	public void startAngle() throws ParseException {
+	}
 
-    /**
-     * Implements {@link AngleHandler#angleValue(float)}.
-     */
-    @Override
-    public void angleValue(float v) throws ParseException {
-    }
+	/**
+	 * Implements {@link AngleHandler#angleValue(float)}.
+	 */
+	@Override
+	public void angleValue(float v) throws ParseException {
+	}
 
-    /**
-     * Implements {@link AngleHandler#deg()}.
-     */
-    @Override
-    public void deg() throws ParseException {
-    }
+	/**
+	 * Implements {@link AngleHandler#deg()}.
+	 */
+	@Override
+	public void deg() throws ParseException {
+	}
 
-    /**
-     * Implements {@link AngleHandler#grad()}.
-     */
-    @Override
-    public void grad() throws ParseException {
-    }
+	/**
+	 * Implements {@link AngleHandler#grad()}.
+	 */
+	@Override
+	public void grad() throws ParseException {
+	}
 
-    /**
-     * Implements {@link AngleHandler#rad()}.
-     */
-    @Override
-    public void rad() throws ParseException {
-    }
+	/**
+	 * Implements {@link AngleHandler#rad()}.
+	 */
+	@Override
+	public void rad() throws ParseException {
+	}
 
-    /**
-     * Implements {@link AngleHandler#endAngle()}.
-     */
-    @Override
-    public void endAngle() throws ParseException {
-    }
+	/**
+	 * Implements {@link AngleHandler#endAngle()}.
+	 */
+	@Override
+	public void endAngle() throws ParseException {
+	}
 }

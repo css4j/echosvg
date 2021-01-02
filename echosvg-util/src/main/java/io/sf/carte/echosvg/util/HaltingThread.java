@@ -20,84 +20,96 @@
 package io.sf.carte.echosvg.util;
 
 /**
- * This is a subclass of java.lang.Thread that includes a non-intrusive
- * 'halt' method.  The Halt method simply sets a boolean that can be
- * checked periodically during expensive processing.
+ * This is a subclass of java.lang.Thread that includes a non-intrusive 'halt'
+ * method. The Halt method simply sets a boolean that can be checked
+ * periodically during expensive processing.
  *
  * @author <a href="mailto:deweese@apache.org">deweese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class HaltingThread extends Thread {
-    /**
-     * Boolean indicating if this thread has ever been 'halted'.
-     */
-    protected boolean beenHalted = false;
+	/**
+	 * Boolean indicating if this thread has ever been 'halted'.
+	 */
+	protected boolean beenHalted = false;
 
-    public HaltingThread() { }
+	public HaltingThread() {
+	}
 
-    public HaltingThread(Runnable r) { super(r); }
+	public HaltingThread(Runnable r) {
+		super(r);
+	}
 
-    public HaltingThread(String name) { super(name); }
+	public HaltingThread(String name) {
+		super(name);
+	}
 
-    public HaltingThread(Runnable r, String name) { super(r, name); }
+	public HaltingThread(Runnable r, String name) {
+		super(r, name);
+	}
 
-    /**
-     * returns true if someone has halted the thread.
-     */
-    public boolean isHalted() {
-        synchronized (this) { return beenHalted; }
-    }
+	/**
+	 * returns true if someone has halted the thread.
+	 */
+	public boolean isHalted() {
+		synchronized (this) {
+			return beenHalted;
+		}
+	}
 
-    /**
-     * Set's beenHalted to true.
-     */
-    public void halt() {
-        synchronized (this) { beenHalted = true; }
-    }
+	/**
+	 * Set's beenHalted to true.
+	 */
+	public void halt() {
+		synchronized (this) {
+			beenHalted = true;
+		}
+	}
 
-    /**
-     * Set's beenHalted to false.
-     */
-    public void clearHalted() {
-        synchronized (this) { beenHalted = false; }
-    }
+	/**
+	 * Set's beenHalted to false.
+	 */
+	public void clearHalted() {
+		synchronized (this) {
+			beenHalted = false;
+		}
+	}
 
-    /**
-     * Calls 'halt' on <code>Thread.currentThread()</code> if it is an
-     * instance of HaltingThread otherwise it does nothing.
-     */
-    public static void haltThread() {
-        haltThread(Thread.currentThread());
-    }
+	/**
+	 * Calls 'halt' on <code>Thread.currentThread()</code> if it is an instance of
+	 * HaltingThread otherwise it does nothing.
+	 */
+	public static void haltThread() {
+		haltThread(Thread.currentThread());
+	}
 
-    /**
-     * Calls 'halt' on <code>t</code> if it is an instance of
-     * HaltingThread otherwise it does nothing.
-     */
-    public static void haltThread(Thread t) {
-        if (t instanceof HaltingThread)
-            ((HaltingThread)t).halt();
-    }
+	/**
+	 * Calls 'halt' on <code>t</code> if it is an instance of HaltingThread
+	 * otherwise it does nothing.
+	 */
+	public static void haltThread(Thread t) {
+		if (t instanceof HaltingThread)
+			((HaltingThread) t).halt();
+	}
 
-    /**
-     * Returns the result of calling hasBeenHalted on
-     * <code>Thread.currentThread()</code>, if it is an instance of
-     * HaltingThread otherwise it returns false.
-     */
-    public static boolean hasBeenHalted() {
-        return hasBeenHalted(Thread.currentThread());
-    }
+	/**
+	 * Returns the result of calling hasBeenHalted on
+	 * <code>Thread.currentThread()</code>, if it is an instance of HaltingThread
+	 * otherwise it returns false.
+	 */
+	public static boolean hasBeenHalted() {
+		return hasBeenHalted(Thread.currentThread());
+	}
 
-    /**
-     * Returns the result of calling hasBeenHalted on <code>t</code>,
-     * if it is an instance of HaltingThread otherwise it returns false.
-     */
-    public static boolean hasBeenHalted(Thread t) {
-        if (t instanceof HaltingThread)
-            return ((HaltingThread)t).isHalted();
-        return false;
-    }
-
+	/**
+	 * Returns the result of calling hasBeenHalted on <code>t</code>, if it is an
+	 * instance of HaltingThread otherwise it returns false.
+	 */
+	public static boolean hasBeenHalted(Thread t) {
+		if (t instanceof HaltingThread)
+			return ((HaltingThread) t).isHalted();
+		return false;
+	}
 
 }

@@ -29,62 +29,59 @@ import java.awt.geom.RoundRectangle2D;
 import org.w3c.dom.Element;
 
 /**
- * Utility class that converts a Shape object into the corresponding
- * SVG element. Note that this class analyzes the input Shape class
- * to generate the most appropriate corresponding SVG element:
- * + Polygon is mapped to polygon
- * + Rectangle2D and RoundRectangle2D are mapped to rect
- * + Ellipse2D is mapped to circle or ellipse
- * + Line2D is mapped to line
- * + Arc2D, CubicCurve2D, Area, GeneralPath and QuadCurve2D are mapped to
- *   path.
- * + Any custom Shape implementation is mapped to path as well.
+ * Utility class that converts a Shape object into the corresponding SVG
+ * element. Note that this class analyzes the input Shape class to generate the
+ * most appropriate corresponding SVG element: + Polygon is mapped to polygon +
+ * Rectangle2D and RoundRectangle2D are mapped to rect + Ellipse2D is mapped to
+ * circle or ellipse + Line2D is mapped to line + Arc2D, CubicCurve2D, Area,
+ * GeneralPath and QuadCurve2D are mapped to path. + Any custom Shape
+ * implementation is mapped to path as well.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGShape extends SVGGraphicObjectConverter {
-    /*
-     * Subconverts, for each type of Shape class
-     */
-    private SVGArc       svgArc;
-    private SVGEllipse   svgEllipse;
-    private SVGLine      svgLine;
-    private SVGPath      svgPath;
-    private SVGPolygon   svgPolygon;
-    private SVGRectangle svgRectangle;
+	/*
+	 * Subconverts, for each type of Shape class
+	 */
+	private SVGArc svgArc;
+	private SVGEllipse svgEllipse;
+	private SVGLine svgLine;
+	private SVGPath svgPath;
+	private SVGPolygon svgPolygon;
+	private SVGRectangle svgRectangle;
 
-    /**
-     * @param generatorContext used to build Elements
-     */
-    public SVGShape(SVGGeneratorContext generatorContext) {
-        super(generatorContext);
-        svgArc       = new SVGArc(generatorContext);
-        svgEllipse   = new SVGEllipse(generatorContext);
-        svgLine      = new SVGLine(generatorContext);
-        svgPath      = new SVGPath(generatorContext);
-        svgPolygon   = new SVGPolygon(generatorContext);
-        svgRectangle = new SVGRectangle(generatorContext);
-    }
+	/**
+	 * @param generatorContext used to build Elements
+	 */
+	public SVGShape(SVGGeneratorContext generatorContext) {
+		super(generatorContext);
+		svgArc = new SVGArc(generatorContext);
+		svgEllipse = new SVGEllipse(generatorContext);
+		svgLine = new SVGLine(generatorContext);
+		svgPath = new SVGPath(generatorContext);
+		svgPolygon = new SVGPolygon(generatorContext);
+		svgRectangle = new SVGRectangle(generatorContext);
+	}
 
-    /**
-     * @param shape Shape object to be converted
-     */
-    public Element toSVG(Shape shape){
-        if(shape instanceof Polygon)
-            return svgPolygon.toSVG((Polygon)shape);
-        else if(shape instanceof Rectangle2D)
-            return svgRectangle.toSVG((Rectangle2D)shape);
-        else if(shape instanceof RoundRectangle2D)
-            return svgRectangle.toSVG((RoundRectangle2D)shape);
-        else if(shape instanceof Ellipse2D)
-            return svgEllipse.toSVG((Ellipse2D)shape);
-        else if(shape instanceof Line2D)
-            return svgLine.toSVG((Line2D)shape);
-        else if(shape instanceof Arc2D)
-            return svgArc.toSVG((Arc2D)shape);
-        else
-            return svgPath.toSVG(shape);
-    }
+	/**
+	 * @param shape Shape object to be converted
+	 */
+	public Element toSVG(Shape shape) {
+		if (shape instanceof Polygon)
+			return svgPolygon.toSVG((Polygon) shape);
+		else if (shape instanceof Rectangle2D)
+			return svgRectangle.toSVG((Rectangle2D) shape);
+		else if (shape instanceof RoundRectangle2D)
+			return svgRectangle.toSVG((RoundRectangle2D) shape);
+		else if (shape instanceof Ellipse2D)
+			return svgEllipse.toSVG((Ellipse2D) shape);
+		else if (shape instanceof Line2D)
+			return svgLine.toSVG((Line2D) shape);
+		else if (shape instanceof Arc2D)
+			return svgArc.toSVG((Arc2D) shape);
+		else
+			return svgPath.toSVG(shape);
+	}
 }

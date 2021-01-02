@@ -22,9 +22,13 @@ import org.w3c.dom.Element;
 
 public interface ElementTraversal {
 
-    Element getFirstElementChild();
-    Element getLastElementChild();
-    Element getNextElementSibling();
-    Element getPreviousElementSibling();
-    int getChildElementCount();
+	Element getFirstElementChild();
+
+	Element getLastElementChild();
+
+	Element getNextElementSibling();
+
+	Element getPreviousElementSibling();
+
+	int getChildElementCount();
 }

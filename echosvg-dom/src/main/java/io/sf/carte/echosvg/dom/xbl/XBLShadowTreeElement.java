@@ -20,16 +20,16 @@ package io.sf.carte.echosvg.dom.xbl;
 import org.w3c.dom.Element;
 
 /**
- * The interface for xbl:shadowTree elements.
- * Eventually will move to org.w3c.dom.xbl (or some such package).
+ * The interface for xbl:shadowTree elements. Eventually will move to
+ * org.w3c.dom.xbl (or some such package).
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface XBLShadowTreeElement extends Element {
 
-    /**
-     * Returns the Element that has an ID attribute with the given value.
-     */
-    Element getElementById(String elementId);
+	/**
+	 * Returns the Element that has an ID attribute with the given value.
+	 */
+	Element getElementById(String elementId);
 }

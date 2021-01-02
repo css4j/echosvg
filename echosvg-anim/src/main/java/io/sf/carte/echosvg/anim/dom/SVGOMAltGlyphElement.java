@@ -32,27 +32,21 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMAltGlyphElement
-    extends    SVGURIReferenceTextPositioningElement
-    implements SVGAltGlyphElement {
+public class SVGOMAltGlyphElement extends SVGURIReferenceTextPositioningElement implements SVGAltGlyphElement {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * The attribute initializer.
-     */
-    protected static final AttributeInitializer attributeInitializer;
-    static {
-        attributeInitializer = new AttributeInitializer(4);
-        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
-                                          null, "xmlns:xlink",
-                                          XMLConstants.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "show", "other");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "actuate", "onLoad");
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The attribute initializer.
+	 */
+	protected static final AttributeInitializer attributeInitializer;
+	static {
+		attributeInitializer = new AttributeInitializer(4);
+		attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI, null, "xmlns:xlink",
+				XMLConstants.XLINK_NAMESPACE_URI);
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "type", "simple");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "show", "other");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "actuate", "onLoad");
+	}
 
 //     /**
 //      * Table mapping XML attribute names to TraitInformation objects.
@@ -68,77 +62,79 @@ public class SVGOMAltGlyphElement
 //         xmlTraitInformation = t;
 //     }
 
-    /**
-     * Creates a new SVGOMAltGlyphElement object.
-     */
-    protected SVGOMAltGlyphElement() {
-    }
+	/**
+	 * Creates a new SVGOMAltGlyphElement object.
+	 */
+	protected SVGOMAltGlyphElement() {
+	}
 
-    /**
-     * Creates a new SVGOMAltGlyphElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMAltGlyphElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new SVGOMAltGlyphElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMAltGlyphElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_ALT_GLYPH_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_ALT_GLYPH_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAltGlyphElement#getGlyphRef()}.
-     */
-    @Override
-    public String getGlyphRef() {
-        return getAttributeNS(null, SVG_GLYPH_REF_ATTRIBUTE);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAltGlyphElement#getGlyphRef()}.
+	 */
+	@Override
+	public String getGlyphRef() {
+		return getAttributeNS(null, SVG_GLYPH_REF_ATTRIBUTE);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAltGlyphElement#setGlyphRef(String)}.
-     */
-    @Override
-    public void setGlyphRef(String glyphRef) throws DOMException {
-        setAttributeNS(null, SVG_GLYPH_REF_ATTRIBUTE, glyphRef);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAltGlyphElement#setGlyphRef(String)}.
+	 */
+	@Override
+	public void setGlyphRef(String glyphRef) throws DOMException {
+		setAttributeNS(null, SVG_GLYPH_REF_ATTRIBUTE, glyphRef);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAltGlyphElement#getFormat()}.
-     */
-    @Override
-    public String getFormat() {
-        return getAttributeNS(null, SVG_FORMAT_ATTRIBUTE);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAltGlyphElement#getFormat()}.
+	 */
+	@Override
+	public String getFormat() {
+		return getAttributeNS(null, SVG_FORMAT_ATTRIBUTE);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAltGlyphElement#setFormat(String)}.
-     */
-    @Override
-    public void setFormat(String format) throws DOMException {
-        setAttributeNS(null, SVG_FORMAT_ATTRIBUTE, format);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAltGlyphElement#setFormat(String)}.
+	 */
+	@Override
+	public void setFormat(String format) throws DOMException {
+		setAttributeNS(null, SVG_FORMAT_ATTRIBUTE, format);
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return attributeInitializer;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return attributeInitializer;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMAltGlyphElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMAltGlyphElement();
+	}
 
 //     /**
 //      * Returns the table of TraitInformation objects for this element.

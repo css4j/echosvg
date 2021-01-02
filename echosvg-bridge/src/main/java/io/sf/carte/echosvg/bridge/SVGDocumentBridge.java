@@ -39,212 +39,226 @@ import io.sf.carte.echosvg.gvt.RootGraphicsNode;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler,
-                                          SVGContext {
+public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler, SVGContext {
 
-    /**
-     * The document node this bridge is associated with.
-     */
-    protected Document document;
+	/**
+	 * The document node this bridge is associated with.
+	 */
+	protected Document document;
 
-    /**
-     * The graphics node constructed by this bridge.
-     */
-    protected RootGraphicsNode node;
+	/**
+	 * The graphics node constructed by this bridge.
+	 */
+	protected RootGraphicsNode node;
 
-    /**
-     * The bridge context.
-     */
-    protected BridgeContext ctx;
+	/**
+	 * The bridge context.
+	 */
+	protected BridgeContext ctx;
 
-    /**
-     * Constructs a new bridge the SVG document.
-     */
-    public SVGDocumentBridge() {
-    }
+	/**
+	 * Constructs a new bridge the SVG document.
+	 */
+	public SVGDocumentBridge() {
+	}
 
-    // Bridge ////////////////////////////////////////////////////////////////
+	// Bridge ////////////////////////////////////////////////////////////////
 
-    /**
-     * Returns the namespace URI of the element this <code>Bridge</code> is
-     * dedicated to.  Returns <code>null</code>, as a Document node has no
-     * namespace URI.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return null;
-    }
+	/**
+	 * Returns the namespace URI of the element this <code>Bridge</code> is
+	 * dedicated to. Returns <code>null</code>, as a Document node has no namespace
+	 * URI.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return null;
+	}
 
-    /**
-     * Returns the local name of the element this <code>Bridge</code> is dedicated
-     * to.  Returns <code>null</code>, as a Document node has no local name.
-     */
-    @Override
-    public String getLocalName() {
-        return null;
-    }
+	/**
+	 * Returns the local name of the element this <code>Bridge</code> is dedicated
+	 * to. Returns <code>null</code>, as a Document node has no local name.
+	 */
+	@Override
+	public String getLocalName() {
+		return null;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new SVGDocumentBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGDocumentBridge();
+	}
 
-    // DocumentBridge ////////////////////////////////////////////////////////
+	// DocumentBridge ////////////////////////////////////////////////////////
 
-    /**
-     * Creates a <code>GraphicsNode</code> according to the specified parameters.
-     * This is called before children have been added to the
-     * returned GraphicsNode (obviously since you construct and return it).
-     *
-     * @param ctx the bridge context to use
-     * @param doc the document node that describes the graphics node to build
-     * @return a graphics node that represents the specified document node
-     */
-    @Override
-    public RootGraphicsNode createGraphicsNode(BridgeContext ctx,
-                                               Document doc) {
-        RootGraphicsNode gn = new RootGraphicsNode();
-        this.document = doc;
-        this.node = gn;
-        this.ctx = ctx;
-        ((SVGOMDocument) doc).setSVGContext(this);
-        return gn;
-    }
+	/**
+	 * Creates a <code>GraphicsNode</code> according to the specified parameters.
+	 * This is called before children have been added to the returned GraphicsNode
+	 * (obviously since you construct and return it).
+	 *
+	 * @param ctx the bridge context to use
+	 * @param doc the document node that describes the graphics node to build
+	 * @return a graphics node that represents the specified document node
+	 */
+	@Override
+	public RootGraphicsNode createGraphicsNode(BridgeContext ctx, Document doc) {
+		RootGraphicsNode gn = new RootGraphicsNode();
+		this.document = doc;
+		this.node = gn;
+		this.ctx = ctx;
+		((SVGOMDocument) doc).setSVGContext(this);
+		return gn;
+	}
 
-    /**
-     * Builds using the specified BridgeContext and element, the
-     * specified graphics node.  This is called after all the children
-     * of the node have been constructed and added, so it is safe to
-     * do work that depends on being able to see your children nodes
-     * in this method.
-     *
-     * @param ctx the bridge context to use
-     * @param doc the document node that describes the graphics node to build
-     * @param node the graphics node to build
-     */
-    @Override
-    public void buildGraphicsNode(BridgeContext ctx,
-                                  Document doc,
-                                  RootGraphicsNode node) {
-        if (ctx.isDynamic()) {
-            ctx.bind(doc, node);
-        }
-    }
+	/**
+	 * Builds using the specified BridgeContext and element, the specified graphics
+	 * node. This is called after all the children of the node have been constructed
+	 * and added, so it is safe to do work that depends on being able to see your
+	 * children nodes in this method.
+	 *
+	 * @param ctx  the bridge context to use
+	 * @param doc  the document node that describes the graphics node to build
+	 * @param node the graphics node to build
+	 */
+	@Override
+	public void buildGraphicsNode(BridgeContext ctx, Document doc, RootGraphicsNode node) {
+		if (ctx.isDynamic()) {
+			ctx.bind(doc, node);
+		}
+	}
 
-    // BridgeUpdateHandler ///////////////////////////////////////////////////
+	// BridgeUpdateHandler ///////////////////////////////////////////////////
 
-    /**
-     * Invoked when an MutationEvent of type 'DOMAttrModified' is fired.
-     */
-    @Override
-    public void handleDOMAttrModifiedEvent(MutationEvent evt) {
-    }
+	/**
+	 * Invoked when an MutationEvent of type 'DOMAttrModified' is fired.
+	 */
+	@Override
+	public void handleDOMAttrModifiedEvent(MutationEvent evt) {
+	}
 
-    /**
-     * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
-     */
-    @Override
-    public void handleDOMNodeInsertedEvent(MutationEvent evt) {
-        if (evt.getTarget() instanceof Element) {
-            Element childElt = (Element) evt.getTarget();
+	/**
+	 * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
+	 */
+	@Override
+	public void handleDOMNodeInsertedEvent(MutationEvent evt) {
+		if (evt.getTarget() instanceof Element) {
+			Element childElt = (Element) evt.getTarget();
 
-            GVTBuilder builder = ctx.getGVTBuilder();
-            GraphicsNode childNode = builder.build(ctx, childElt);
-            if (childNode == null) {
-                return;
-            }
+			GVTBuilder builder = ctx.getGVTBuilder();
+			GraphicsNode childNode = builder.build(ctx, childElt);
+			if (childNode == null) {
+				return;
+			}
 
-            // There can only be one document element.
-            node.add(childNode);
-        }
-    }
+			// There can only be one document element.
+			node.add(childNode);
+		}
+	}
 
-    /**
-     * Invoked when an MutationEvent of type 'DOMNodeRemoved' is fired.
-     */
-    @Override
-    public void handleDOMNodeRemovedEvent(MutationEvent evt) {
-    }
+	/**
+	 * Invoked when an MutationEvent of type 'DOMNodeRemoved' is fired.
+	 */
+	@Override
+	public void handleDOMNodeRemovedEvent(MutationEvent evt) {
+	}
 
-    /**
-     * Invoked when an MutationEvent of type 'DOMCharacterDataModified' 
-     * is fired.
-     */
-    @Override
-    public void handleDOMCharacterDataModified(MutationEvent evt) {
-    }
+	/**
+	 * Invoked when an MutationEvent of type 'DOMCharacterDataModified' is fired.
+	 */
+	@Override
+	public void handleDOMCharacterDataModified(MutationEvent evt) {
+	}
 
-    /**
-     * Invoked when an CSSEngineEvent is fired.
-     */
-    @Override
-    public void handleCSSEngineEvent(CSSEngineEvent evt) {
-    }
+	/**
+	 * Invoked when an CSSEngineEvent is fired.
+	 */
+	@Override
+	public void handleCSSEngineEvent(CSSEngineEvent evt) {
+	}
 
-    /**
-     * Invoked when the animated value of an animated attribute has changed.
-     */
-    @Override
-    public void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav) {
-    }
+	/**
+	 * Invoked when the animated value of an animated attribute has changed.
+	 */
+	@Override
+	public void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav) {
+	}
 
-    /**
-     * Invoked when an 'other' animation value has changed.
-     */
-    @Override
-    public void handleOtherAnimationChanged(String type) {
-    }
+	/**
+	 * Invoked when an 'other' animation value has changed.
+	 */
+	@Override
+	public void handleOtherAnimationChanged(String type) {
+	}
 
-    /**
-     * Disposes this BridgeUpdateHandler and releases all resources.
-     */
-    @Override
-    public void dispose() {
-        ((SVGOMDocument) document).setSVGContext(null);
-        ctx.unbind(document);
-    }
+	/**
+	 * Disposes this BridgeUpdateHandler and releases all resources.
+	 */
+	@Override
+	public void dispose() {
+		((SVGOMDocument) document).setSVGContext(null);
+		ctx.unbind(document);
+	}
 
-    // SVGContext //////////////////////////////////////////////////////////
+	// SVGContext //////////////////////////////////////////////////////////
 
-    /**
-     * Returns the size of a px CSS unit in millimeters.
-     */
-    @Override
-    public float getPixelUnitToMillimeter() {
-        return ctx.getUserAgent().getPixelUnitToMillimeter();
-    }
+	/**
+	 * Returns the size of a px CSS unit in millimeters.
+	 */
+	@Override
+	public float getPixelUnitToMillimeter() {
+		return ctx.getUserAgent().getPixelUnitToMillimeter();
+	}
 
-    /**
-     * Returns the size of a px CSS unit in millimeters.
-     * This will be removed after next release.
-     * @see #getPixelUnitToMillimeter()
-     */
-    @Override
-    public float getPixelToMM() {
-        return getPixelUnitToMillimeter();
-    }
+	/**
+	 * Returns the size of a px CSS unit in millimeters. This will be removed after
+	 * next release.
+	 * 
+	 * @see #getPixelUnitToMillimeter()
+	 */
+	@Override
+	public float getPixelToMM() {
+		return getPixelUnitToMillimeter();
+	}
 
-    @Override
-    public Rectangle2D getBBox() { return null; }
-    @Override
-    public AffineTransform getScreenTransform() {
-        return ctx.getUserAgent().getTransform();
-    }
-    @Override
-    public void setScreenTransform(AffineTransform at) {
-        ctx.getUserAgent().setTransform(at);
-    }
-    @Override
-    public AffineTransform getCTM() { return null; }
-    @Override
-    public AffineTransform getGlobalTransform() { return null; }
-    @Override
-    public float getViewportWidth() { return 0f; }
-    @Override
-    public float getViewportHeight() { return 0f; }
-    @Override
-    public float getFontSize() { return 0; }
+	@Override
+	public Rectangle2D getBBox() {
+		return null;
+	}
+
+	@Override
+	public AffineTransform getScreenTransform() {
+		return ctx.getUserAgent().getTransform();
+	}
+
+	@Override
+	public void setScreenTransform(AffineTransform at) {
+		ctx.getUserAgent().setTransform(at);
+	}
+
+	@Override
+	public AffineTransform getCTM() {
+		return null;
+	}
+
+	@Override
+	public AffineTransform getGlobalTransform() {
+		return null;
+	}
+
+	@Override
+	public float getViewportWidth() {
+		return 0f;
+	}
+
+	@Override
+	public float getViewportHeight() {
+		return 0f;
+	}
+
+	@Override
+	public float getFontSize() {
+		return 0;
+	}
 }

@@ -34,65 +34,66 @@ import org.xml.sax.XMLReader;
  */
 public interface DocumentFactory {
 
-    /**
-     * Sets whether or not the XML stream has to be validate, depending on the
-     * specified parameter.
-     *
-     * @param isValidating true implies the XML stream will be validated
-     */
-    void setValidating(boolean isValidating);
+	/**
+	 * Sets whether or not the XML stream has to be validate, depending on the
+	 * specified parameter.
+	 *
+	 * @param isValidating true implies the XML stream will be validated
+	 */
+	void setValidating(boolean isValidating);
 
-    /**
-     * Returns true if the XML stream has to be validated, false otherwise.
-     */
-    boolean isValidating();
+	/**
+	 * Returns true if the XML stream has to be validated, false otherwise.
+	 */
+	boolean isValidating();
 
-    /**
-     * Creates a Document instance.
-     * @param ns The namespace URI of the root element of the document.
-     * @param root The name of the root element of the document.
-     * @param uri The document URI.
-     * @exception IOException if an error occured while reading the document.
-     */
-    Document createDocument(String ns, String root, String uri) throws IOException;
+	/**
+	 * Creates a Document instance.
+	 * 
+	 * @param ns   The namespace URI of the root element of the document.
+	 * @param root The name of the root element of the document.
+	 * @param uri  The document URI.
+	 * @exception IOException if an error occured while reading the document.
+	 */
+	Document createDocument(String ns, String root, String uri) throws IOException;
 
-    /**
-     * Creates a Document instance.
-     * @param ns The namespace URI of the root element of the document.
-     * @param root The name of the root element of the document.
-     * @param uri The document URI.
-     * @param is The document input stream.
-     * @exception IOException if an error occured while reading the document.
-     */
-    Document createDocument(String ns, String root, String uri, InputStream is)
-        throws IOException;
+	/**
+	 * Creates a Document instance.
+	 * 
+	 * @param ns   The namespace URI of the root element of the document.
+	 * @param root The name of the root element of the document.
+	 * @param uri  The document URI.
+	 * @param is   The document input stream.
+	 * @exception IOException if an error occured while reading the document.
+	 */
+	Document createDocument(String ns, String root, String uri, InputStream is) throws IOException;
 
-    /**
-     * Creates a Document instance.
-     * @param ns The namespace URI of the root element of the document.
-     * @param root The name of the root element of the document.
-     * @param uri The document URI.
-     * @param r An XMLReader instance
-     * @exception IOException if an error occured while reading the document.
-     */
-    Document createDocument(String ns, String root, String uri, XMLReader r)
-        throws IOException;
+	/**
+	 * Creates a Document instance.
+	 * 
+	 * @param ns   The namespace URI of the root element of the document.
+	 * @param root The name of the root element of the document.
+	 * @param uri  The document URI.
+	 * @param r    An XMLReader instance
+	 * @exception IOException if an error occured while reading the document.
+	 */
+	Document createDocument(String ns, String root, String uri, XMLReader r) throws IOException;
 
-    /**
-     * Creates a Document instance.
-     * @param ns The namespace URI of the root element of the document.
-     * @param root The name of the root element of the document.
-     * @param uri The document URI.
-     * @param r The document reader.
-     * @exception IOException if an error occured while reading the document.
-     */
-    Document createDocument(String ns, String root, String uri, Reader r)
-        throws IOException;
+	/**
+	 * Creates a Document instance.
+	 * 
+	 * @param ns   The namespace URI of the root element of the document.
+	 * @param root The name of the root element of the document.
+	 * @param uri  The document URI.
+	 * @param r    The document reader.
+	 * @exception IOException if an error occured while reading the document.
+	 */
+	Document createDocument(String ns, String root, String uri, Reader r) throws IOException;
 
-    /**
-     * Returns the document descriptor associated with the latest created
-     * document.
-     * @return null if no document or descriptor was previously generated.
-     */
-    DocumentDescriptor getDocumentDescriptor();
+	/**
+	 * Returns the document descriptor associated with the latest created document.
+	 * 
+	 * @return null if no document or descriptor was previously generated.
+	 */
+	DocumentDescriptor getDocumentDescriptor();
 }

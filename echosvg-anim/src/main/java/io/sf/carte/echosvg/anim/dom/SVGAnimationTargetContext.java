@@ -21,9 +21,9 @@ package io.sf.carte.echosvg.anim.dom;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
 
 /**
- * Context interface for elements that can be the target of animations.
- * This exposes the ability to attach {@link AnimationTargetListener}s
- * to the element.
+ * Context interface for elements that can be the target of animations. This
+ * exposes the ability to attach {@link AnimationTargetListener}s to the
+ * element.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -31,13 +31,13 @@ import io.sf.carte.echosvg.dom.svg.SVGContext;
  */
 public interface SVGAnimationTargetContext extends SVGContext {
 
-    /**
-     * Adds a listener for changes to the given CSS property.
-     */
-    void addTargetListener(String pn, AnimationTargetListener l);
+	/**
+	 * Adds a listener for changes to the given CSS property.
+	 */
+	void addTargetListener(String pn, AnimationTargetListener l);
 
-    /**
-     * Removes a listener for changes to the given attribute value.
-     */
-    void removeTargetListener(String pn, AnimationTargetListener l);
+	/**
+	 * Removes a listener for changes to the given attribute value.
+	 */
+	void removeTargetListener(String pn, AnimationTargetListener l);
 }

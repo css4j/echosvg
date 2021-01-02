@@ -26,5 +26,5 @@ package io.sf.carte.echosvg.dom.events;
  * @version $Id$
  */
 public class DOMEvent extends AbstractEvent {
-    
+
 }

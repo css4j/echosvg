@@ -30,115 +30,113 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
- * Utility class that converts a Paint object into an
- * SVG element.
+ * Utility class that converts a Paint object into an SVG element.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see              io.sf.carte.echosvg.svggen.SVGLinearGradient
- * @see              io.sf.carte.echosvg.svggen.SVGTexturePaint
+ * @see io.sf.carte.echosvg.svggen.SVGLinearGradient
+ * @see io.sf.carte.echosvg.svggen.SVGTexturePaint
  */
 public class SVGPaint implements SVGConverter {
-    /**
-     * All GradientPaint convertions are handed to svgLinearGradient
-     */
-    private SVGLinearGradient svgLinearGradient;
+	/**
+	 * All GradientPaint convertions are handed to svgLinearGradient
+	 */
+	private SVGLinearGradient svgLinearGradient;
 
-    /**
-     * All TexturePaint convertions are handed to svgTextureGradient
-     */
-    private SVGTexturePaint svgTexturePaint;
+	/**
+	 * All TexturePaint convertions are handed to svgTextureGradient
+	 */
+	private SVGTexturePaint svgTexturePaint;
 
-    /**
-     * All Color convertions are handed to svgColor
-     */
-    private SVGColor svgColor;
+	/**
+	 * All Color convertions are handed to svgColor
+	 */
+	private SVGColor svgColor;
 
-    /**
-     * All custom Paint convetions are handed to svgCustomPaint
-     */
-    private SVGCustomPaint svgCustomPaint;
+	/**
+	 * All custom Paint convetions are handed to svgCustomPaint
+	 */
+	private SVGCustomPaint svgCustomPaint;
 
-    /**
-     * Used to generate DOM elements
-     */
-    private SVGGeneratorContext generatorContext;
+	/**
+	 * Used to generate DOM elements
+	 */
+	private SVGGeneratorContext generatorContext;
 
-    /**
-     * @param generatorContext the context.
-     */
-    public SVGPaint(SVGGeneratorContext generatorContext) {
-        this.svgLinearGradient = new SVGLinearGradient(generatorContext);
-        this.svgTexturePaint = new SVGTexturePaint(generatorContext);
-        this.svgCustomPaint = new SVGCustomPaint(generatorContext);
-        this.svgColor = new SVGColor(generatorContext);
-        this.generatorContext = generatorContext;
-    }
+	/**
+	 * @param generatorContext the context.
+	 */
+	public SVGPaint(SVGGeneratorContext generatorContext) {
+		this.svgLinearGradient = new SVGLinearGradient(generatorContext);
+		this.svgTexturePaint = new SVGTexturePaint(generatorContext);
+		this.svgCustomPaint = new SVGCustomPaint(generatorContext);
+		this.svgColor = new SVGColor(generatorContext);
+		this.generatorContext = generatorContext;
+	}
 
-    /**
-     * @return Set of Elements defining the Paints this
-     *         converter has processed since it was created
-     */
-    @Override
-    public List<Element> getDefinitionSet(){
-        List<Element> paintDefs = new LinkedList<>(svgLinearGradient.getDefinitionSet());
-        paintDefs.addAll(svgTexturePaint.getDefinitionSet());
-        paintDefs.addAll(svgCustomPaint.getDefinitionSet());
-        paintDefs.addAll(svgColor.getDefinitionSet());
-        return paintDefs;
-    }
+	/**
+	 * @return Set of Elements defining the Paints this converter has processed
+	 *         since it was created
+	 */
+	@Override
+	public List<Element> getDefinitionSet() {
+		List<Element> paintDefs = new LinkedList<>(svgLinearGradient.getDefinitionSet());
+		paintDefs.addAll(svgTexturePaint.getDefinitionSet());
+		paintDefs.addAll(svgCustomPaint.getDefinitionSet());
+		paintDefs.addAll(svgColor.getDefinitionSet());
+		return paintDefs;
+	}
 
-    public SVGTexturePaint getTexturePaintConverter(){
-        return svgTexturePaint;
-    }
+	public SVGTexturePaint getTexturePaintConverter() {
+		return svgTexturePaint;
+	}
 
-    public SVGLinearGradient getGradientPaintConverter(){
-        return svgLinearGradient;
-    }
+	public SVGLinearGradient getGradientPaintConverter() {
+		return svgLinearGradient;
+	}
 
-    public SVGCustomPaint getCustomPaintConverter(){
-        return svgCustomPaint;
-    }
+	public SVGCustomPaint getCustomPaintConverter() {
+		return svgCustomPaint;
+	}
 
-    public SVGColor getColorConverter(){
-        return svgColor;
-    }
+	public SVGColor getColorConverter() {
+		return svgColor;
+	}
 
-    /**
-     * Converts part or all of the input GraphicContext into
-     * a set of attribute/value pairs and related definitions
-     *
-     * @param gc GraphicContext to be converted
-     * @return descriptor of the attributes required to represent
-     *         some or all of the GraphicContext state, along
-     *         with the related definitions
-     * @see io.sf.carte.echosvg.svggen.SVGDescriptor
-     */
-    @Override
-    public SVGDescriptor toSVG(GraphicContext gc){
-        return toSVG(gc.getPaint());
-    }
+	/**
+	 * Converts part or all of the input GraphicContext into a set of
+	 * attribute/value pairs and related definitions
+	 *
+	 * @param gc GraphicContext to be converted
+	 * @return descriptor of the attributes required to represent some or all of the
+	 *         GraphicContext state, along with the related definitions
+	 * @see io.sf.carte.echosvg.svggen.SVGDescriptor
+	 */
+	@Override
+	public SVGDescriptor toSVG(GraphicContext gc) {
+		return toSVG(gc.getPaint());
+	}
 
-    /**
-     * @param paint Paint to be converted to SVG
-     * @return a descriptor of the corresponding SVG paint
-     */
-    public SVGPaintDescriptor toSVG(Paint paint){
-        // we first try the extension handler because we may
-        // want to override the way a Paint is managed!
-        SVGPaintDescriptor paintDesc = svgCustomPaint.toSVG(paint);
+	/**
+	 * @param paint Paint to be converted to SVG
+	 * @return a descriptor of the corresponding SVG paint
+	 */
+	public SVGPaintDescriptor toSVG(Paint paint) {
+		// we first try the extension handler because we may
+		// want to override the way a Paint is managed!
+		SVGPaintDescriptor paintDesc = svgCustomPaint.toSVG(paint);
 
-        if (paintDesc == null) {
-            if (paint instanceof Color)
-                paintDesc = SVGColor.toSVG((Color)paint, generatorContext);
-            else if (paint instanceof GradientPaint)
-                paintDesc = svgLinearGradient.toSVG((GradientPaint)paint);
-            else if (paint instanceof TexturePaint)
-                paintDesc = svgTexturePaint.toSVG((TexturePaint)paint);
-        }
+		if (paintDesc == null) {
+			if (paint instanceof Color)
+				paintDesc = SVGColor.toSVG((Color) paint, generatorContext);
+			else if (paint instanceof GradientPaint)
+				paintDesc = svgLinearGradient.toSVG((GradientPaint) paint);
+			else if (paint instanceof TexturePaint)
+				paintDesc = svgTexturePaint.toSVG((TexturePaint) paint);
+		}
 
-        return paintDesc;
-    }
+		return paintDesc;
+	}
 }

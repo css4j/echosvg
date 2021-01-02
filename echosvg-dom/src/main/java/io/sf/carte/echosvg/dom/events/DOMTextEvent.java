@@ -31,48 +31,36 @@ import io.sf.carte.echosvg.w3c.dom.events.TextEvent;
  */
 public class DOMTextEvent extends DOMUIEvent implements TextEvent {
 
-    /**
-     * The text data.
-     */
-    protected String data;
+	/**
+	 * The text data.
+	 */
+	protected String data;
 
-    /**
-     * Returns the text data.
-     */
-    @Override
-    public String getData() {
-        return data;
-    }
+	/**
+	 * Returns the text data.
+	 */
+	@Override
+	public String getData() {
+		return data;
+	}
 
-    /**
-     * <b>DOM</b>: Initializes this TextEvent.
-     */
-    @Override
-    public void initTextEvent(String typeArg, 
-                              boolean canBubbleArg, 
-                              boolean cancelableArg, 
-                              AbstractView viewArg, 
-                              String dataArg) {
-        initUIEvent(typeArg, canBubbleArg, cancelableArg, viewArg, 0);
-        data = dataArg;
-    }
+	/**
+	 * <b>DOM</b>: Initializes this TextEvent.
+	 */
+	@Override
+	public void initTextEvent(String typeArg, boolean canBubbleArg, boolean cancelableArg, AbstractView viewArg,
+			String dataArg) {
+		initUIEvent(typeArg, canBubbleArg, cancelableArg, viewArg, 0);
+		data = dataArg;
+	}
 
-    /**
-     * <b>DOM</b>: Initializes this TextEvent.
-     */
-    @Override
-    public void initTextEventNS(String namespaceURIArg,
-                                String typeArg, 
-                                boolean canBubbleArg, 
-                                boolean cancelableArg, 
-                                AbstractView viewArg, 
-                                String dataArg) {
-        initUIEventNS(namespaceURIArg,
-                      typeArg,
-                      canBubbleArg,
-                      cancelableArg,
-                      viewArg,
-                      0);
-        data = dataArg;
-    }
+	/**
+	 * <b>DOM</b>: Initializes this TextEvent.
+	 */
+	@Override
+	public void initTextEventNS(String namespaceURIArg, String typeArg, boolean canBubbleArg, boolean cancelableArg,
+			AbstractView viewArg, String dataArg) {
+		initUIEventNS(namespaceURIArg, typeArg, canBubbleArg, cancelableArg, viewArg, 0);
+		data = dataArg;
+	}
 }

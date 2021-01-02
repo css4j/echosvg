@@ -33,8 +33,8 @@ import io.sf.carte.echosvg.dom.events.DOMUIEvent;
 import io.sf.carte.echosvg.dom.events.EventSupport;
 
 /**
- * Focus manager for SVG 1.2 documents.  Ensures bubble limits of DOM
- * focus events are set appropriately for sXBL. support.
+ * Focus manager for SVG 1.2 documents. Ensures bubble limits of DOM focus
+ * events are set appropriately for sXBL. support.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -42,169 +42,135 @@ import io.sf.carte.echosvg.dom.events.EventSupport;
  */
 public class SVG12FocusManager extends FocusManager {
 
-    /**
-     * Constructs a new <code>SVG12FocusManager</code> for the specified document.
-     *
-     * @param doc the document
-     */
-    public SVG12FocusManager(Document doc) {
-        super(doc);
-    }
+	/**
+	 * Constructs a new <code>SVG12FocusManager</code> for the specified document.
+	 *
+	 * @param doc the document
+	 */
+	public SVG12FocusManager(Document doc) {
+		super(doc);
+	}
 
-    /**
-     * Adds the event listeners to the document.
-     */
-    @Override
-    protected void addEventListeners(Document doc) {
-        AbstractNode n = (AbstractNode) doc;
-        XBLEventSupport es = (XBLEventSupport) n.initializeEventSupport();
+	/**
+	 * Adds the event listeners to the document.
+	 */
+	@Override
+	protected void addEventListeners(Document doc) {
+		AbstractNode n = (AbstractNode) doc;
+		XBLEventSupport es = (XBLEventSupport) n.initializeEventSupport();
 
-        mouseclickListener = new MouseClickTracker();
-        es.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "click",
-             mouseclickListener, true);
+		mouseclickListener = new MouseClickTracker();
+		es.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "click", mouseclickListener, true);
 
-        mouseoverListener = new MouseOverTracker();
-        es.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "mouseover",
-             mouseoverListener, true);
+		mouseoverListener = new MouseOverTracker();
+		es.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "mouseover", mouseoverListener,
+				true);
 
-        mouseoutListener = new MouseOutTracker();
-        es.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "mouseout",
-             mouseoutListener, true);
+		mouseoutListener = new MouseOutTracker();
+		es.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "mouseout", mouseoutListener, true);
 
-        domFocusInListener = new DOMFocusInTracker();
-        es.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMFocusIn",
-             domFocusInListener, true);
+		domFocusInListener = new DOMFocusInTracker();
+		es.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMFocusIn", domFocusInListener,
+				true);
 
-        domFocusOutListener = new DOMFocusOutTracker();
-        es.addImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMFocusOut",
-             domFocusOutListener, true);
-    }
+		domFocusOutListener = new DOMFocusOutTracker();
+		es.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMFocusOut", domFocusOutListener,
+				true);
+	}
 
-    /**
-     * Removes the event listeners from the document.
-     */
-    @Override
-    protected void removeEventListeners(Document doc) {
-        AbstractNode n = (AbstractNode) doc;
-        XBLEventSupport es = (XBLEventSupport) n.getEventSupport();
+	/**
+	 * Removes the event listeners from the document.
+	 */
+	@Override
+	protected void removeEventListeners(Document doc) {
+		AbstractNode n = (AbstractNode) doc;
+		XBLEventSupport es = (XBLEventSupport) n.getEventSupport();
 
-        es.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "click",
-             mouseclickListener, true);
-        es.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "mouseover",
-             mouseoverListener, true);
-        es.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "mouseout",
-             mouseoutListener, true);
-        es.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMFocusIn",
-             domFocusInListener, true);
-        es.removeImplementationEventListenerNS
-            (XMLConstants.XML_EVENTS_NAMESPACE_URI,
-             "DOMFocusOut",
-             domFocusOutListener, true);
-    }
+		es.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "click", mouseclickListener,
+				true);
+		es.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "mouseover", mouseoverListener,
+				true);
+		es.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "mouseout", mouseoutListener,
+				true);
+		es.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMFocusIn", domFocusInListener,
+				true);
+		es.removeImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMFocusOut",
+				domFocusOutListener, true);
+	}
 
-    /**
-     * The class that is responsible for tracking 'mouseclick' changes.
-     */
-    protected class MouseClickTracker extends FocusManager.MouseClickTracker {
-        @Override
-        public void handleEvent(Event evt) {
-            super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
-        }
-    }
+	/**
+	 * The class that is responsible for tracking 'mouseclick' changes.
+	 */
+	protected class MouseClickTracker extends FocusManager.MouseClickTracker {
+		@Override
+		public void handleEvent(Event evt) {
+			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
+		}
+	}
 
-    /**
-     * The class that is responsible for tracking 'DOMFocusIn' changes.
-     */
-    protected class DOMFocusInTracker extends FocusManager.DOMFocusInTracker {
-        @Override
-        public void handleEvent(Event evt) {
-            super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
-        }
-    }
+	/**
+	 * The class that is responsible for tracking 'DOMFocusIn' changes.
+	 */
+	protected class DOMFocusInTracker extends FocusManager.DOMFocusInTracker {
+		@Override
+		public void handleEvent(Event evt) {
+			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
+		}
+	}
 
-    /**
-     * The class that is responsible for tracking 'mouseover' changes.
-     */
-    protected class MouseOverTracker extends FocusManager.MouseOverTracker {
-        @Override
-        public void handleEvent(Event evt) {
-            super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
-        }
-    }
+	/**
+	 * The class that is responsible for tracking 'mouseover' changes.
+	 */
+	protected class MouseOverTracker extends FocusManager.MouseOverTracker {
+		@Override
+		public void handleEvent(Event evt) {
+			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
+		}
+	}
 
-    /**
-     * The class that is responsible for tracking 'mouseout' changes.
-     */
-    protected class MouseOutTracker extends FocusManager.MouseOutTracker {
-        @Override
-        public void handleEvent(Event evt) {
-            super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
-        }
-    }
+	/**
+	 * The class that is responsible for tracking 'mouseout' changes.
+	 */
+	protected class MouseOutTracker extends FocusManager.MouseOutTracker {
+		@Override
+		public void handleEvent(Event evt) {
+			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
+		}
+	}
 
-    /**
-     * Fires a 'DOMFocusIn' event to the specified target.
-     *
-     * @param target the newly focussed event target
-     * @param relatedTarget the previously focussed event target
-     */
-    @Override
-    protected void fireDOMFocusInEvent(EventTarget target,
-                                       EventTarget relatedTarget) {
-        DocumentEvent docEvt = 
-            (DocumentEvent)((Element)target).getOwnerDocument();
-        DOMUIEvent uiEvt = (DOMUIEvent)docEvt.createEvent("UIEvents");
-        uiEvt.initUIEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI,
-                            "DOMFocusIn",
-                            true,
-                            false,  // canBubbleArg
-                            null,   // cancelableArg
-                            0);     // detailArg
-        int limit = DefaultXBLManager.computeBubbleLimit((Node) relatedTarget,
-                                                         (Node) target);
-        uiEvt.setBubbleLimit(limit);
-        target.dispatchEvent(uiEvt);
-    }
+	/**
+	 * Fires a 'DOMFocusIn' event to the specified target.
+	 *
+	 * @param target        the newly focussed event target
+	 * @param relatedTarget the previously focussed event target
+	 */
+	@Override
+	protected void fireDOMFocusInEvent(EventTarget target, EventTarget relatedTarget) {
+		DocumentEvent docEvt = (DocumentEvent) ((Element) target).getOwnerDocument();
+		DOMUIEvent uiEvt = (DOMUIEvent) docEvt.createEvent("UIEvents");
+		uiEvt.initUIEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMFocusIn", true, false, // canBubbleArg
+				null, // cancelableArg
+				0); // detailArg
+		int limit = DefaultXBLManager.computeBubbleLimit((Node) relatedTarget, (Node) target);
+		uiEvt.setBubbleLimit(limit);
+		target.dispatchEvent(uiEvt);
+	}
 
-    /**
-     * Fires a 'DOMFocusOut' event to the specified target.
-     *
-     * @param target the previously focussed event target
-     * @param relatedTarget the newly focussed event target
-     */
-    @Override
-    protected void fireDOMFocusOutEvent(EventTarget target,
-                                        EventTarget relatedTarget) {
-        DocumentEvent docEvt = 
-            (DocumentEvent)((Element)target).getOwnerDocument();
-        DOMUIEvent uiEvt = (DOMUIEvent)docEvt.createEvent("UIEvents");
-        uiEvt.initUIEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI,
-                            "DOMFocusOut",
-                            true,
-                            false,  // canBubbleArg
-                            null,   // cancelableArg
-                            0);     // detailArg
-        int limit = DefaultXBLManager.computeBubbleLimit((Node) target,
-                                                         (Node) relatedTarget);
-        uiEvt.setBubbleLimit(limit);
-        target.dispatchEvent(uiEvt);
-    }
+	/**
+	 * Fires a 'DOMFocusOut' event to the specified target.
+	 *
+	 * @param target        the previously focussed event target
+	 * @param relatedTarget the newly focussed event target
+	 */
+	@Override
+	protected void fireDOMFocusOutEvent(EventTarget target, EventTarget relatedTarget) {
+		DocumentEvent docEvt = (DocumentEvent) ((Element) target).getOwnerDocument();
+		DOMUIEvent uiEvt = (DOMUIEvent) docEvt.createEvent("UIEvents");
+		uiEvt.initUIEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMFocusOut", true, false, // canBubbleArg
+				null, // cancelableArg
+				0); // detailArg
+		int limit = DefaultXBLManager.computeBubbleLimit((Node) target, (Node) relatedTarget);
+		uiEvt.setBubbleLimit(limit);
+		target.dispatchEvent(uiEvt);
+	}
 }

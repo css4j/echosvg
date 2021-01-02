@@ -27,13 +27,13 @@ package io.sf.carte.echosvg.parser;
  */
 public interface TimingSpecifierListHandler extends TimingSpecifierHandler {
 
-    /**
-     * Invoked when parsing of a timing specifier list commences.
-     */
-    void startTimingSpecifierList();
+	/**
+	 * Invoked when parsing of a timing specifier list commences.
+	 */
+	void startTimingSpecifierList();
 
-    /**
-     * Invoked when parsing of a timing specifier list ends.
-     */
-    void endTimingSpecifierList();
+	/**
+	 * Invoked when parsing of a timing specifier list ends.
+	 */
+	void endTimingSpecifierList();
 }

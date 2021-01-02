@@ -33,19 +33,16 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public interface PaintBridge extends Bridge {
 
-    /**
-     * Creates a <code>Paint</code> according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param paintElement the element that defines a Paint
-     * @param paintedElement the element referencing the paint
-     * @param paintedNode the graphics node on which the Paint will be applied
-     * @param opacity the opacity of the Paint to create
-     */
-    Paint createPaint(BridgeContext ctx,
-                      Element paintElement,
-                      Element paintedElement,
-                      GraphicsNode paintedNode,
-                      float opacity);
+	/**
+	 * Creates a <code>Paint</code> according to the specified parameters.
+	 *
+	 * @param ctx            the bridge context to use
+	 * @param paintElement   the element that defines a Paint
+	 * @param paintedElement the element referencing the paint
+	 * @param paintedNode    the graphics node on which the Paint will be applied
+	 * @param opacity        the opacity of the Paint to create
+	 */
+	Paint createPaint(BridgeContext ctx, Element paintElement, Element paintedElement, GraphicsNode paintedNode,
+			float opacity);
 
 }

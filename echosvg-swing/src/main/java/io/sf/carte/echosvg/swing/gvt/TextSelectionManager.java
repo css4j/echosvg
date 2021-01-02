@@ -46,328 +46,331 @@ import io.sf.carte.echosvg.gvt.event.SelectionListener;
  */
 public class TextSelectionManager {
 
-    /**
-     * The cursor indicating that a text selection operation is under way.
-     */
-    public static final Cursor TEXT_CURSOR = new Cursor(Cursor.TEXT_CURSOR);
+	/**
+	 * The cursor indicating that a text selection operation is under way.
+	 */
+	public static final Cursor TEXT_CURSOR = new Cursor(Cursor.TEXT_CURSOR);
 
-    /**
-     * The text selector.
-     */
-    protected ConcreteTextSelector textSelector;
+	/**
+	 * The text selector.
+	 */
+	protected ConcreteTextSelector textSelector;
 
-    /**
-     * The associated JGVTComponent.
-     */
-    protected JGVTComponent component;
+	/**
+	 * The associated JGVTComponent.
+	 */
+	protected JGVTComponent component;
 
-    /**
-     * The selection overlay.
-     */
-    protected Overlay selectionOverlay = new SelectionOverlay();
+	/**
+	 * The selection overlay.
+	 */
+	protected Overlay selectionOverlay = new SelectionOverlay();
 
-    /**
-     * The mouse listener.
-     */
-    protected MouseListener mouseListener;
+	/**
+	 * The mouse listener.
+	 */
+	protected MouseListener mouseListener;
 
-    /**
-     * To store the previous cursor.
-     */
-    protected Cursor previousCursor;
+	/**
+	 * To store the previous cursor.
+	 */
+	protected Cursor previousCursor;
 
-    /**
-     * The selection highlight.
-     */
-    protected Shape selectionHighlight;
+	/**
+	 * The selection highlight.
+	 */
+	protected Shape selectionHighlight;
 
-    /**
-     * The text selection listener.
-     */
-    protected SelectionListener textSelectionListener;
+	/**
+	 * The text selection listener.
+	 */
+	protected SelectionListener textSelectionListener;
 
-    /**
-     * The color of the selection overlay.
-     */
-    protected Color selectionOverlayColor = new Color(100, 100, 255, 100);
+	/**
+	 * The color of the selection overlay.
+	 */
+	protected Color selectionOverlayColor = new Color(100, 100, 255, 100);
 
-    /**
-     * The color of the outline of the selection overlay.
-     */
-    protected Color selectionOverlayStrokeColor = Color.white;
+	/**
+	 * The color of the outline of the selection overlay.
+	 */
+	protected Color selectionOverlayStrokeColor = Color.white;
 
-    /**
-     * A flag bit that indicates whether or not the selection overlay is
-     * painted in XOR mode.
-     */
-    protected boolean xorMode = false;
+	/**
+	 * A flag bit that indicates whether or not the selection overlay is painted in
+	 * XOR mode.
+	 */
+	protected boolean xorMode = false;
 
-    /**
-     * The current selection or null if there is none.
-     */
-    Object selection = null;
+	/**
+	 * The current selection or null if there is none.
+	 */
+	Object selection = null;
 
-    /**
-     * Creates a new TextSelectionManager.
-     */
-    public TextSelectionManager(JGVTComponent comp,
-                                EventDispatcher ed) {
-        textSelector = new ConcreteTextSelector();
-        textSelectionListener = new TextSelectionListener();
-        textSelector.addSelectionListener(textSelectionListener);
-        mouseListener = new MouseListener();
+	/**
+	 * Creates a new TextSelectionManager.
+	 */
+	public TextSelectionManager(JGVTComponent comp, EventDispatcher ed) {
+		textSelector = new ConcreteTextSelector();
+		textSelectionListener = new TextSelectionListener();
+		textSelector.addSelectionListener(textSelectionListener);
+		mouseListener = new MouseListener();
 
-        component = comp;
-        component.getOverlays().add(selectionOverlay);
+		component = comp;
+		component.getOverlays().add(selectionOverlay);
 
-        ed.addGraphicsNodeMouseListener(mouseListener);
-    }
+		ed.addGraphicsNodeMouseListener(mouseListener);
+	}
 
-    /**
-     * Add a selection listener to be notified when the
-     * text selection changes in the document.
-     */
-    public void addSelectionListener(SelectionListener sl) {
-        textSelector.addSelectionListener(sl);
-    }
+	/**
+	 * Add a selection listener to be notified when the text selection changes in
+	 * the document.
+	 */
+	public void addSelectionListener(SelectionListener sl) {
+		textSelector.addSelectionListener(sl);
+	}
 
-    /**
-     * Remove a selection listener to be notified when the
-     * text selection changes in the document.
-     */
-    public void removeSelectionListener(SelectionListener sl) {
-        textSelector.removeSelectionListener(sl);
-    }
+	/**
+	 * Remove a selection listener to be notified when the text selection changes in
+	 * the document.
+	 */
+	public void removeSelectionListener(SelectionListener sl) {
+		textSelector.removeSelectionListener(sl);
+	}
 
-    /**
-     * Sets the color of the selection overlay to the specified color.
-     *
-     * @param color the new color of the selection overlay
-     */
-    public void setSelectionOverlayColor(Color color) {
-        selectionOverlayColor = color;
-    }
+	/**
+	 * Sets the color of the selection overlay to the specified color.
+	 *
+	 * @param color the new color of the selection overlay
+	 */
+	public void setSelectionOverlayColor(Color color) {
+		selectionOverlayColor = color;
+	}
 
-    /**
-     * Returns the color of the selection overlay.
-     */
-    public Color getSelectionOverlayColor() {
-        return selectionOverlayColor;
-    }
+	/**
+	 * Returns the color of the selection overlay.
+	 */
+	public Color getSelectionOverlayColor() {
+		return selectionOverlayColor;
+	}
 
-    /**
-     * Sets the color of the outline of the selection overlay to the specified
-     * color.
-     *
-     * @param color the new color of the outline of the selection overlay
-     */
-    public void setSelectionOverlayStrokeColor(Color color) {
-        selectionOverlayStrokeColor = color;
-    }
+	/**
+	 * Sets the color of the outline of the selection overlay to the specified
+	 * color.
+	 *
+	 * @param color the new color of the outline of the selection overlay
+	 */
+	public void setSelectionOverlayStrokeColor(Color color) {
+		selectionOverlayStrokeColor = color;
+	}
 
-    /**
-     * Returns the color of the outline of the selection overlay.
-     */
-    public Color getSelectionOverlayStrokeColor() {
-        return selectionOverlayStrokeColor;
-    }
+	/**
+	 * Returns the color of the outline of the selection overlay.
+	 */
+	public Color getSelectionOverlayStrokeColor() {
+		return selectionOverlayStrokeColor;
+	}
 
-    /**
-     * Sets whether or not the selection overlay will be painted in XOR mode,
-     * depending on the specified parameter.
-     *
-     * @param state true implies the selection overlay will be in XOR mode
-     */
-    public void setSelectionOverlayXORMode(boolean state) {
-        xorMode = state;
-    }
+	/**
+	 * Sets whether or not the selection overlay will be painted in XOR mode,
+	 * depending on the specified parameter.
+	 *
+	 * @param state true implies the selection overlay will be in XOR mode
+	 */
+	public void setSelectionOverlayXORMode(boolean state) {
+		xorMode = state;
+	}
 
-    /**
-     * Returns true if the selection overlay is painted in XOR mode, false
-     * otherwise.
-     */
-    public boolean isSelectionOverlayXORMode() {
-        return xorMode;
-    }
+	/**
+	 * Returns true if the selection overlay is painted in XOR mode, false
+	 * otherwise.
+	 */
+	public boolean isSelectionOverlayXORMode() {
+		return xorMode;
+	}
 
-    /**
-     * Returns the selection overlay.
-     */
-    public Overlay getSelectionOverlay() {
-        return selectionOverlay;
-    }
+	/**
+	 * Returns the selection overlay.
+	 */
+	public Overlay getSelectionOverlay() {
+		return selectionOverlay;
+	}
 
-    /**
-     * Returns the current text selection or null if there is none.
-     */
-    public Object getSelection() {
-        return selection;
-    }
+	/**
+	 * Returns the current text selection or null if there is none.
+	 */
+	public Object getSelection() {
+		return selection;
+	}
 
-    /**
-     * Sets the selected text
-     */
-    public void setSelection(Mark start, Mark end) {
-        textSelector.setSelection(start, end);
-    }
+	/**
+	 * Sets the selected text
+	 */
+	public void setSelection(Mark start, Mark end) {
+		textSelector.setSelection(start, end);
+	}
 
-    /**
-     * Clears the selection.
-     */
-    public void clearSelection() {
-        textSelector.clearSelection();
-    }
+	/**
+	 * Clears the selection.
+	 */
+	public void clearSelection() {
+		textSelector.clearSelection();
+	}
 
-    /**
-     * To implement a GraphicsNodeMouseListener.
-     */
-    protected class MouseListener implements GraphicsNodeMouseListener {
-        @Override
-        public void mouseClicked(GraphicsNodeMouseEvent evt) {
-            if (evt.getSource() instanceof Selectable) {
-                textSelector.mouseClicked(evt);
-            }
-        }
+	/**
+	 * To implement a GraphicsNodeMouseListener.
+	 */
+	protected class MouseListener implements GraphicsNodeMouseListener {
+		@Override
+		public void mouseClicked(GraphicsNodeMouseEvent evt) {
+			if (evt.getSource() instanceof Selectable) {
+				textSelector.mouseClicked(evt);
+			}
+		}
 
-        @Override
-        public void mousePressed(GraphicsNodeMouseEvent evt) {
-            if (evt.getSource() instanceof Selectable) {
-                textSelector.mousePressed(evt);
-            } else if (selectionHighlight != null) {
-                textSelector.clearSelection();
-            }
-        }
+		@Override
+		public void mousePressed(GraphicsNodeMouseEvent evt) {
+			if (evt.getSource() instanceof Selectable) {
+				textSelector.mousePressed(evt);
+			} else if (selectionHighlight != null) {
+				textSelector.clearSelection();
+			}
+		}
 
-        @Override
-        public void mouseReleased(GraphicsNodeMouseEvent evt) {
-            textSelector.mouseReleased(evt);
-        }
+		@Override
+		public void mouseReleased(GraphicsNodeMouseEvent evt) {
+			textSelector.mouseReleased(evt);
+		}
 
-        @Override
-        public void mouseEntered(GraphicsNodeMouseEvent evt) {
-            if (evt.getSource() instanceof Selectable) {
-                textSelector.mouseEntered(evt);
-                previousCursor = component.getCursor();
-                if (previousCursor.getType() == Cursor.DEFAULT_CURSOR) {
-                    component.setCursor(TEXT_CURSOR);
-                }
-            }
-        }
+		@Override
+		public void mouseEntered(GraphicsNodeMouseEvent evt) {
+			if (evt.getSource() instanceof Selectable) {
+				textSelector.mouseEntered(evt);
+				previousCursor = component.getCursor();
+				if (previousCursor.getType() == Cursor.DEFAULT_CURSOR) {
+					component.setCursor(TEXT_CURSOR);
+				}
+			}
+		}
 
-        @Override
-        public void mouseExited(GraphicsNodeMouseEvent evt) {
-            if (evt.getSource() instanceof Selectable) {
-                textSelector.mouseExited(evt);
-                if (component.getCursor() == TEXT_CURSOR) {
-                    component.setCursor(previousCursor);
-                }
-            }
-        }
+		@Override
+		public void mouseExited(GraphicsNodeMouseEvent evt) {
+			if (evt.getSource() instanceof Selectable) {
+				textSelector.mouseExited(evt);
+				if (component.getCursor() == TEXT_CURSOR) {
+					component.setCursor(previousCursor);
+				}
+			}
+		}
 
-        @Override
-        public void mouseDragged(GraphicsNodeMouseEvent evt) {
-            if (evt.getSource() instanceof Selectable) {
-                textSelector.mouseDragged(evt);
-            }
-        }
+		@Override
+		public void mouseDragged(GraphicsNodeMouseEvent evt) {
+			if (evt.getSource() instanceof Selectable) {
+				textSelector.mouseDragged(evt);
+			}
+		}
 
-        @Override
-        public void mouseMoved(GraphicsNodeMouseEvent evt) { }
-    }
+		@Override
+		public void mouseMoved(GraphicsNodeMouseEvent evt) {
+		}
+	}
 
-    /**
-     * To implements a selection listener.
-     */
-    protected class TextSelectionListener implements SelectionListener {
-        @Override
-        public void selectionDone(SelectionEvent e) {
-            selectionChanged(e);
-            selection = e.getSelection();
-        }
-        @Override
-        public void selectionCleared(SelectionEvent e) {
-            selectionStarted(e);
-        }
-        @Override
-        public void selectionStarted(SelectionEvent e) {
-            if (selectionHighlight != null) {
-                Rectangle r = getHighlightBounds();
-                selectionHighlight = null;
-                component.repaint(r);
-            }
-            selection = null;
-        }
-        @Override
-        public void selectionChanged(SelectionEvent e) {
-            Rectangle r = null;
-            AffineTransform at = component.getRenderingTransform();
-            if (selectionHighlight != null) {
-                r = at.createTransformedShape(selectionHighlight).getBounds();
-                outset(r, 1);
-            }
+	/**
+	 * To implements a selection listener.
+	 */
+	protected class TextSelectionListener implements SelectionListener {
+		@Override
+		public void selectionDone(SelectionEvent e) {
+			selectionChanged(e);
+			selection = e.getSelection();
+		}
 
-            selectionHighlight = e.getHighlightShape();
-            if (selectionHighlight != null) {
-                if (r != null) {
-                    Rectangle r2 = getHighlightBounds();
-                    r2.add( r );   // r2 = r2 union r
-                    component.repaint( r2 );
-                } else {
-                    component.repaint(getHighlightBounds());
-                }
-            } else if (r != null) {
-                component.repaint(r);
-            }
-        }
+		@Override
+		public void selectionCleared(SelectionEvent e) {
+			selectionStarted(e);
+		}
 
-    }
+		@Override
+		public void selectionStarted(SelectionEvent e) {
+			if (selectionHighlight != null) {
+				Rectangle r = getHighlightBounds();
+				selectionHighlight = null;
+				component.repaint(r);
+			}
+			selection = null;
+		}
 
-    protected Rectangle outset(Rectangle r, int amount) {
-        r.x -= amount;
-        r.y -= amount;
-        r.width  += 2*amount;
-        r.height += 2*amount;
-        return r;
-    }
+		@Override
+		public void selectionChanged(SelectionEvent e) {
+			Rectangle r = null;
+			AffineTransform at = component.getRenderingTransform();
+			if (selectionHighlight != null) {
+				r = at.createTransformedShape(selectionHighlight).getBounds();
+				outset(r, 1);
+			}
 
-    /**
-     * The highlight bounds.
-     */
-    protected Rectangle getHighlightBounds() {
-        AffineTransform at = component.getRenderingTransform();
-        Shape s = at.createTransformedShape(selectionHighlight);
-        return outset(s.getBounds(), 1);
-    }
+			selectionHighlight = e.getHighlightShape();
+			if (selectionHighlight != null) {
+				if (r != null) {
+					Rectangle r2 = getHighlightBounds();
+					r2.add(r); // r2 = r2 union r
+					component.repaint(r2);
+				} else {
+					component.repaint(getHighlightBounds());
+				}
+			} else if (r != null) {
+				component.repaint(r);
+			}
+		}
 
-    /**
-     * The selection overlay.
-     */
-    protected class SelectionOverlay implements Overlay {
+	}
 
-        /**
-         * Paints this overlay.
-         */
-        @Override
-        public void paint(Graphics g) {
-            if (selectionHighlight != null) {
-                AffineTransform at = component.getRenderingTransform();
-                Shape s = at.createTransformedShape(selectionHighlight);
+	protected Rectangle outset(Rectangle r, int amount) {
+		r.x -= amount;
+		r.y -= amount;
+		r.width += 2 * amount;
+		r.height += 2 * amount;
+		return r;
+	}
 
-                Graphics2D g2d = (Graphics2D)g;
-                if (xorMode) {
-                    g2d.setColor(Color.black);
-                    g2d.setXORMode(Color.white);
-                    g2d.fill(s);
-                } else {
-                    g2d.setColor(selectionOverlayColor);
-                    g2d.fill(s);
-                    if (selectionOverlayStrokeColor != null) {
-                        g2d.setStroke(new BasicStroke(1.0f));
-                        g2d.setColor(selectionOverlayStrokeColor);
-                        g2d.draw(s);
-                    }
-                }
-            }
-        }
-    }
+	/**
+	 * The highlight bounds.
+	 */
+	protected Rectangle getHighlightBounds() {
+		AffineTransform at = component.getRenderingTransform();
+		Shape s = at.createTransformedShape(selectionHighlight);
+		return outset(s.getBounds(), 1);
+	}
+
+	/**
+	 * The selection overlay.
+	 */
+	protected class SelectionOverlay implements Overlay {
+
+		/**
+		 * Paints this overlay.
+		 */
+		@Override
+		public void paint(Graphics g) {
+			if (selectionHighlight != null) {
+				AffineTransform at = component.getRenderingTransform();
+				Shape s = at.createTransformedShape(selectionHighlight);
+
+				Graphics2D g2d = (Graphics2D) g;
+				if (xorMode) {
+					g2d.setColor(Color.black);
+					g2d.setXORMode(Color.white);
+					g2d.fill(s);
+				} else {
+					g2d.setColor(selectionOverlayColor);
+					g2d.fill(s);
+					if (selectionOverlayStrokeColor != null) {
+						g2d.setStroke(new BasicStroke(1.0f));
+						g2d.setColor(selectionOverlayStrokeColor);
+						g2d.draw(s);
+					}
+				}
+			}
+		}
+	}
 }

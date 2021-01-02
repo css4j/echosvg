@@ -41,57 +41,49 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @version $Id$
  */
 public class GetElementsByTagNameNSTest extends AbstractTest {
-    protected String testFileName;
-    protected String rootTag;
-    protected String tagName;
+	protected String testFileName;
+	protected String rootTag;
+	protected String tagName;
 
-    public GetElementsByTagNameNSTest(String file,
-                                      String root,
-                                      String tag) {
-        testFileName = file;
-        rootTag = root;
-        tagName = tag;
-    }
+	public GetElementsByTagNameNSTest(String file, String root, String tag) {
+		testFileName = file;
+		rootTag = root;
+		tagName = tag;
+	}
 
-    @Override
-    public TestReport runImpl() throws Exception {
-        String parser =
-            XMLResourceDescriptor.getXMLParserClassName();
+	@Override
+	public TestReport runImpl() throws Exception {
+		String parser = XMLResourceDescriptor.getXMLParserClassName();
 
-        DocumentFactory df 
-            = new SAXDocumentFactory
-            (GenericDOMImplementation.getDOMImplementation(), parser);
+		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
 
-        File f = (new File(testFileName));
-        URL url = f.toURI().toURL();
-        Document doc = df.createDocument(null,
-                                         rootTag,
-                                         url.toString(),
-                                         url.openStream());
-        
-        Element root = doc.getDocumentElement();
-        NodeList lst = root.getElementsByTagNameNS(null, tagName);
+		File f = (new File(testFileName));
+		URL url = f.toURI().toURL();
+		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
-        if (lst.getLength() != 1) {
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode("error.getElementByTagNameNS.failed");
-            report.setPassed(false);
-            return report;
-        }
-        
-        Node n;
-        while ((n = root.getFirstChild()) != null) {
-            root.removeChild(n);
-        }
+		Element root = doc.getDocumentElement();
+		NodeList lst = root.getElementsByTagNameNS(null, tagName);
 
-        if (lst.getLength() != 0) {
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode("error.getElementByTagNameNS.failed");
-            report.setPassed(false);
-            return report;
-        }
+		if (lst.getLength() != 1) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode("error.getElementByTagNameNS.failed");
+			report.setPassed(false);
+			return report;
+		}
 
-        return reportSuccess();
-    }
-    
+		Node n;
+		while ((n = root.getFirstChild()) != null) {
+			root.removeChild(n);
+		}
+
+		if (lst.getLength() != 0) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode("error.getElementByTagNameNS.failed");
+			report.setPassed(false);
+			return report;
+		}
+
+		return reportSuccess();
+	}
+
 }

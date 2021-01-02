@@ -33,90 +33,86 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFEMergeNodeElement
-    extends    SVGOMElement
-    implements SVGFEMergeNodeElement {
+public class SVGOMFEMergeNodeElement extends SVGOMElement implements SVGFEMergeNodeElement {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
-        t.put(null, SVG_IN_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_CDATA));
-        xmlTraitInformation = t;
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
+		t.put(null, SVG_IN_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_CDATA));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'in' attribute value.
-     */
-    protected SVGOMAnimatedString in;
+	/**
+	 * The 'in' attribute value.
+	 */
+	protected SVGOMAnimatedString in;
 
-    /**
-     * Creates a new SVGOMFEMergeNodeElement object.
-     */
-    protected SVGOMFEMergeNodeElement() {
-    }
+	/**
+	 * Creates a new SVGOMFEMergeNodeElement object.
+	 */
+	protected SVGOMFEMergeNodeElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFEMergeNodeElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFEMergeNodeElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFEMergeNodeElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFEMergeNodeElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_MERGE_NODE_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_MERGE_NODE_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGFEMergeNodeElement#getIn1()}.
-     */
-    @Override
-    public SVGAnimatedString getIn1() {
-        return in;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEMergeNodeElement#getIn1()}.
+	 */
+	@Override
+	public SVGAnimatedString getIn1() {
+		return in;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFEMergeNodeElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFEMergeNodeElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

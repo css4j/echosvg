@@ -28,47 +28,47 @@ import java.awt.geom.Rectangle2D;
  * @version $Id$
  */
 public interface FilterChainRable extends Filter {
-    /**
-     * Returns the resolution along the X axis.
-     */
-    int getFilterResolutionX();
+	/**
+	 * Returns the resolution along the X axis.
+	 */
+	int getFilterResolutionX();
 
-    /**
-     * Sets the resolution along the X axis, i.e., the maximum
-     * size for intermediate images along that axis.
-     * The value should be greater than zero to have an effect.
-     */
-    void setFilterResolutionX(int filterResolutionX);
+	/**
+	 * Sets the resolution along the X axis, i.e., the maximum size for intermediate
+	 * images along that axis. The value should be greater than zero to have an
+	 * effect.
+	 */
+	void setFilterResolutionX(int filterResolutionX);
 
-    /**
-     * Returns the resolution along the Y axis.
-     */
-    int getFilterResolutionY();
+	/**
+	 * Returns the resolution along the Y axis.
+	 */
+	int getFilterResolutionY();
 
-    /**
-     * Sets the resolution along the Y axis, i.e., the maximum
-     * size for intermediate images along that axis.
-     * The value should be greater than zero to have an effect.
-     */
-    void setFilterResolutionY(int filterResolutionY);
+	/**
+	 * Sets the resolution along the Y axis, i.e., the maximum size for intermediate
+	 * images along that axis. The value should be greater than zero to have an
+	 * effect.
+	 */
+	void setFilterResolutionY(int filterResolutionY);
 
-    /**
-     * Sets the filter output area, in user space.
-     */
-    void setFilterRegion(Rectangle2D filterRegion);
+	/**
+	 * Sets the filter output area, in user space.
+	 */
+	void setFilterRegion(Rectangle2D filterRegion);
 
-    /**
-     * Returns the filter output area, in user space
-     */
-    Rectangle2D getFilterRegion();
+	/**
+	 * Returns the filter output area, in user space
+	 */
+	Rectangle2D getFilterRegion();
 
-    /**
-     * Sets the source for this chain. Should not be null
-     */
-    void setSource(Filter src);
+	/**
+	 * Sets the source for this chain. Should not be null
+	 */
+	void setSource(Filter src);
 
-    /**
-     * Returns this filter's source.
-     */
-    Filter getSource();
+	/**
+	 * Returns this filter's source.
+	 */
+	Filter getSource();
 }

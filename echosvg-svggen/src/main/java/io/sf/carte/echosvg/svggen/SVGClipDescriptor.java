@@ -31,62 +31,60 @@ import org.w3c.dom.Element;
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see           io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
- * @see           io.sf.carte.echosvg.svggen.SVGDescriptor
+ * @see io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
+ * @see io.sf.carte.echosvg.svggen.SVGDescriptor
  */
-public class SVGClipDescriptor implements SVGDescriptor, SVGSyntax{
-    private String clipPathValue;
-    private Element clipPathDef;
+public class SVGClipDescriptor implements SVGDescriptor, SVGSyntax {
+	private String clipPathValue;
+	private Element clipPathDef;
 
-    /**
-     * Creates a new SVGClipDescriptor.
-     * @param clipPathValue the clip path value
-     * @param clipPathDef definition of a clip path
-     */
-    public SVGClipDescriptor(String clipPathValue, Element clipPathDef){
-        if (clipPathValue == null)
-            throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_CLIP_NULL);
+	/**
+	 * Creates a new SVGClipDescriptor.
+	 * 
+	 * @param clipPathValue the clip path value
+	 * @param clipPathDef   definition of a clip path
+	 */
+	public SVGClipDescriptor(String clipPathValue, Element clipPathDef) {
+		if (clipPathValue == null)
+			throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_CLIP_NULL);
 
-        this.clipPathValue = clipPathValue;
-        this.clipPathDef = clipPathDef;
-    }
+		this.clipPathValue = clipPathValue;
+		this.clipPathDef = clipPathDef;
+	}
 
-    /**
-     * @param attrMap if not null, attribute name/value pairs
-     *        for this descriptor should be written in this Map.
-     *        Otherwise, a new Map will be created and attribute
-     *        name/value pairs will be written into it.
-     * @return a map containing the SVG attributes needed by the
-     *         descriptor.
-     */
-    @Override
-    public Map<String, String> getAttributeMap(Map<String, String> attrMap) {
-        if (attrMap == null)
-            attrMap = new HashMap<>();
+	/**
+	 * @param attrMap if not null, attribute name/value pairs for this descriptor
+	 *                should be written in this Map. Otherwise, a new Map will be
+	 *                created and attribute name/value pairs will be written into
+	 *                it.
+	 * @return a map containing the SVG attributes needed by the descriptor.
+	 */
+	@Override
+	public Map<String, String> getAttributeMap(Map<String, String> attrMap) {
+		if (attrMap == null)
+			attrMap = new HashMap<>();
 
-        attrMap.put(SVG_CLIP_PATH_ATTRIBUTE, clipPathValue);
+		attrMap.put(SVG_CLIP_PATH_ATTRIBUTE, clipPathValue);
 
-        return attrMap;
-    }
+		return attrMap;
+	}
 
+	/**
+	 * @param defSet if not null, definitions required to provide targets for the
+	 *               descriptor attribute values will be copied into defSet. If
+	 *               null, a new Set should be created and definitions copied into
+	 *               it. The set contains zero, one or more Elements.
+	 * @return a set containing Elements that represent the definition of the
+	 *         descriptor's attribute values
+	 */
+	@Override
+	public List<Element> getDefinitionSet(List<Element> defSet) {
+		if (defSet == null)
+			defSet = new LinkedList<>();
 
-    /**
-     * @param defSet if not null, definitions required to provide
-     *        targets for the descriptor attribute values will be
-     *        copied into defSet. If null, a new Set should be created
-     *        and definitions copied into it. The set contains
-     *        zero, one or more Elements.
-     * @return a set containing Elements that represent the definition
-     *         of the descriptor's attribute values
-     */
-    @Override
-    public List<Element> getDefinitionSet(List<Element> defSet) {
-        if (defSet == null)
-            defSet = new LinkedList<>();
+		if (clipPathDef != null)
+			defSet.add(clipPathDef);
 
-        if (clipPathDef != null)
-            defSet.add(clipPathDef);
-
-        return defSet;
-    }
+		return defSet;
+	}
 }

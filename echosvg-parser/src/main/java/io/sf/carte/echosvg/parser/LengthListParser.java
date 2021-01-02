@@ -21,8 +21,7 @@ package io.sf.carte.echosvg.parser;
 import java.io.IOException;
 
 /**
- * This class implements an event-based parser for the SVG length
- * list values.
+ * This class implements an event-based parser for the SVG length list values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -30,58 +29,61 @@ import java.io.IOException;
  */
 public class LengthListParser extends LengthParser {
 
-    /**
-     * Creates a new LengthListParser.
-     */
-    public LengthListParser() {
-        lengthHandler = DefaultLengthListHandler.INSTANCE;
-    }
+	/**
+	 * Creates a new LengthListParser.
+	 */
+	public LengthListParser() {
+		lengthHandler = DefaultLengthListHandler.INSTANCE;
+	}
 
-    /**
-     * Allows an application to register a length list handler.
-     *
-     * <p>If the application does not register a handler, all
-     * events reported by the parser will be silently ignored.
-     *
-     * <p>Applications may register a new or different handler in the
-     * middle of a parse, and the parser must begin using the new
-     * handler immediately.</p>
-     * @param handler The transform list handler.
-     */
-    public void setLengthListHandler(LengthListHandler handler) {
-        lengthHandler = handler;
-    }
+	/**
+	 * Allows an application to register a length list handler.
+	 *
+	 * <p>
+	 * If the application does not register a handler, all events reported by the
+	 * parser will be silently ignored.
+	 *
+	 * <p>
+	 * Applications may register a new or different handler in the middle of a
+	 * parse, and the parser must begin using the new handler immediately.
+	 * </p>
+	 * 
+	 * @param handler The transform list handler.
+	 */
+	public void setLengthListHandler(LengthListHandler handler) {
+		lengthHandler = handler;
+	}
 
-    /**
-     * Returns the length list handler in use.
-     */
-    public LengthListHandler getLengthListHandler() {
-        return (LengthListHandler)lengthHandler;
-    }
+	/**
+	 * Returns the length list handler in use.
+	 */
+	public LengthListHandler getLengthListHandler() {
+		return (LengthListHandler) lengthHandler;
+	}
 
-    /**
-     * Parses the given reader.
-     */
-    @Override
-    protected void doParse() throws ParseException, IOException {
-        ((LengthListHandler)lengthHandler).startLengthList();
+	/**
+	 * Parses the given reader.
+	 */
+	@Override
+	protected void doParse() throws ParseException, IOException {
+		((LengthListHandler) lengthHandler).startLengthList();
 
-        current = reader.read();
-        skipSpaces();
+		current = reader.read();
+		skipSpaces();
 
-        try {
-            for (;;) {
-                lengthHandler.startLength();
-                parseLength();
-                lengthHandler.endLength();
-                skipCommaSpaces();
-                if (current == -1) {
-                    break;
-                }
-            }
-        } catch (NumberFormatException e) {
-            reportUnexpectedCharacterError( current );
-        }
-        ((LengthListHandler)lengthHandler).endLengthList();
-    }
+		try {
+			for (;;) {
+				lengthHandler.startLength();
+				parseLength();
+				lengthHandler.endLength();
+				skipCommaSpaces();
+				if (current == -1) {
+					break;
+				}
+			}
+		} catch (NumberFormatException e) {
+			reportUnexpectedCharacterError(current);
+		}
+		((LengthListHandler) lengthHandler).endLengthList();
+	}
 }

@@ -30,15 +30,16 @@ import java.awt.RenderingHints;
  */
 final class TranscodingHintKey extends RenderingHints.Key {
 
-    TranscodingHintKey(int number) { super(number); }
+	TranscodingHintKey(int number) {
+		super(number);
+	}
 
-    @Override
-    public boolean isCompatibleValue(Object val) {
-        boolean isCompatible = true;
-        if ((val != null) && !(val instanceof String)) {
-            isCompatible = false;
-        }
-        return isCompatible;
-    }
+	@Override
+	public boolean isCompatibleValue(Object val) {
+		boolean isCompatible = true;
+		if ((val != null) && !(val instanceof String)) {
+			isCompatible = false;
+		}
+		return isCompatible;
+	}
 }
-

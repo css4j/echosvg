@@ -31,62 +31,52 @@ import io.sf.carte.echosvg.dom.events.DOMUIEvent;
  */
 public class SVGOMWheelEvent extends DOMUIEvent {
 
-    /**
-     * The number of clicks the mouse wheel has been moved.
-     */
-    protected int wheelDelta;
+	/**
+	 * The number of clicks the mouse wheel has been moved.
+	 */
+	protected int wheelDelta;
 
-    /**
-     * Returns the number of mouse wheel clicks.
-     */
-    public int getWheelDelta() {
-        return wheelDelta;
-    }
+	/**
+	 * Returns the number of mouse wheel clicks.
+	 */
+	public int getWheelDelta() {
+		return wheelDelta;
+	}
 
-    /**
-     * Initializes this SVGOMWheelEvent object.
-     * @param typeArg Specifies the event type.
-     * @param canBubbleArg Specifies whether or not the event can bubble.
-     * @param cancelableArg Specifies whether or not the event's default action 
-     *   can be prevented.
-     * @param viewArg Specifies the <code>Event</code>'s 
-     *   <code>AbstractView</code>.
-     * @param wheelDeltaArg Specifices the number of clicks the mouse wheel has
-     *   been moved.
-     */
-    public void initWheelEvent(String typeArg, 
-                               boolean canBubbleArg, 
-                               boolean cancelableArg, 
-                               AbstractView viewArg,
-                               int wheelDeltaArg) {
-        initUIEvent(typeArg, canBubbleArg, cancelableArg, viewArg, 0);
-        wheelDelta = wheelDeltaArg;
-    }
+	/**
+	 * Initializes this SVGOMWheelEvent object.
+	 * 
+	 * @param typeArg       Specifies the event type.
+	 * @param canBubbleArg  Specifies whether or not the event can bubble.
+	 * @param cancelableArg Specifies whether or not the event's default action can
+	 *                      be prevented.
+	 * @param viewArg       Specifies the <code>Event</code>'s
+	 *                      <code>AbstractView</code>.
+	 * @param wheelDeltaArg Specifices the number of clicks the mouse wheel has been
+	 *                      moved.
+	 */
+	public void initWheelEvent(String typeArg, boolean canBubbleArg, boolean cancelableArg, AbstractView viewArg,
+			int wheelDeltaArg) {
+		initUIEvent(typeArg, canBubbleArg, cancelableArg, viewArg, 0);
+		wheelDelta = wheelDeltaArg;
+	}
 
-    /**
-     * Initializes this KeyboardEvent object.
-     * @param namespaceURIArg Specifies the event namespace URI.
-     * @param typeArg Specifies the event type.
-     * @param canBubbleArg Specifies whether or not the event can bubble.
-     * @param cancelableArg Specifies whether or not the event's default action 
-     *   can be prevented.
-     * @param viewArg Specifies the <code>Event</code>'s 
-     *   <code>AbstractView</code>.
-     * @param wheelDeltaArg Specifices the number of clicks the mouse wheel has
-     *   been moved.
-     */
-    public void initWheelEventNS(String namespaceURIArg,
-                                 String typeArg,
-                                 boolean canBubbleArg, 
-                                 boolean cancelableArg, 
-                                 AbstractView viewArg,
-                                 int wheelDeltaArg) {
-        initUIEventNS(namespaceURIArg,
-                      typeArg,
-                      canBubbleArg,
-                      cancelableArg,
-                      viewArg,
-                      0);
-        wheelDelta = wheelDeltaArg;
-    }
+	/**
+	 * Initializes this KeyboardEvent object.
+	 * 
+	 * @param namespaceURIArg Specifies the event namespace URI.
+	 * @param typeArg         Specifies the event type.
+	 * @param canBubbleArg    Specifies whether or not the event can bubble.
+	 * @param cancelableArg   Specifies whether or not the event's default action
+	 *                        can be prevented.
+	 * @param viewArg         Specifies the <code>Event</code>'s
+	 *                        <code>AbstractView</code>.
+	 * @param wheelDeltaArg   Specifices the number of clicks the mouse wheel has
+	 *                        been moved.
+	 */
+	public void initWheelEventNS(String namespaceURIArg, String typeArg, boolean canBubbleArg, boolean cancelableArg,
+			AbstractView viewArg, int wheelDeltaArg) {
+		initUIEventNS(namespaceURIArg, typeArg, canBubbleArg, cancelableArg, viewArg, 0);
+		wheelDelta = wheelDeltaArg;
+	}
 }

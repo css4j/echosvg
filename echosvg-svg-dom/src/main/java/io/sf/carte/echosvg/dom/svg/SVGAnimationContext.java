@@ -30,37 +30,36 @@ import org.w3c.dom.svg.SVGElement;
  */
 public interface SVGAnimationContext extends SVGContext, ElementTimeControl {
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGAnimationElement#getTargetElement()}.
-     */
-    SVGElement getTargetElement();
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGAnimationElement#getTargetElement()}.
+	 */
+	SVGElement getTargetElement();
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGAnimationElement#getStartTime()}.
-     */
-    float getStartTime();
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGAnimationElement#getStartTime()}.
+	 */
+	float getStartTime();
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGAnimationElement#getCurrentTime()}.
-     */
-    float getCurrentTime();
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGAnimationElement#getCurrentTime()}.
+	 */
+	float getCurrentTime();
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGAnimationElement#getSimpleDuration()}.  With the
-     * difference that an indefinite simple duration is returned as
-     * io.sf.carte.echosvg.anim.timing.TimedElement#INDEFINITE, rather than
-     * throwing an exception.
-     */
-    float getSimpleDuration();
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGAnimationElement#getSimpleDuration()}. With the
+	 * difference that an indefinite simple duration is returned as
+	 * io.sf.carte.echosvg.anim.timing.TimedElement#INDEFINITE, rather than throwing
+	 * an exception.
+	 */
+	float getSimpleDuration();
 
-    /**
-     * Returns the time that the document would seek to if this animation
-     * element were hyperlinked to, or <code>NaN</code> if there is no
-     * such begin time.
-     */
-    float getHyperlinkBeginTime();
+	/**
+	 * Returns the time that the document would seek to if this animation element
+	 * were hyperlinked to, or <code>NaN</code> if there is no such begin time.
+	 */
+	float getHyperlinkBeginTime();
 }

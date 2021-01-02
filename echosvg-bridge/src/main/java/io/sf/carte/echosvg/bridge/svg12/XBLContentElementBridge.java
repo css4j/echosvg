@@ -40,185 +40,177 @@ import io.sf.carte.echosvg.util.XBLConstants;
  * @version $Id$
  */
 public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
-    
-    /**
-     * The event listener for content element selection changes.
-     */
-    protected ContentChangedListener contentChangedListener;
 
-    /**
-     * The ContentManager object used for the content element selection
-     * change events.
-     */
-    protected ContentManager contentManager;
+	/**
+	 * The event listener for content element selection changes.
+	 */
+	protected ContentChangedListener contentChangedListener;
 
-    /**
-     * Constructs a new bridge for the &lt;xbl:content&gt; element.
-     */
-    public XBLContentElementBridge() {
-    }
+	/**
+	 * The ContentManager object used for the content element selection change
+	 * events.
+	 */
+	protected ContentManager contentManager;
 
-    /**
-     * Returns 'content'.
-     */
-    @Override
-    public String getLocalName() {
-        return XBLConstants.XBL_CONTENT_TAG;
-    }
+	/**
+	 * Constructs a new bridge for the &lt;xbl:content&gt; element.
+	 */
+	public XBLContentElementBridge() {
+	}
 
-    /**
-     * Returns the XBL namespace.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return XBLConstants.XBL_NAMESPACE_URI;
-    }
+	/**
+	 * Returns 'content'.
+	 */
+	@Override
+	public String getLocalName() {
+		return XBLConstants.XBL_CONTENT_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new XBLContentElementBridge();
-    }
+	/**
+	 * Returns the XBL namespace.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return XBLConstants.XBL_NAMESPACE_URI;
+	}
 
-    /**
-     * Creates a <code>GraphicsNode</code> according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @return a graphics node that represents the specified element
-     */
-    @Override
-    public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
-        CompositeGraphicsNode gn = buildCompositeGraphicsNode(ctx, e, null);
-        return gn;
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new XBLContentElementBridge();
+	}
 
-    /**
-     * Creates a <code>GraphicsNode</code> from the input element and
-     * populates the input <code>CompositeGraphicsNode</code>
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @param cgn the CompositeGraphicsNode where the use graphical 
-     *        content will be appended. The composite node is emptied
-     *        before appending new content.
-     */
-    public CompositeGraphicsNode buildCompositeGraphicsNode
-        (BridgeContext ctx, Element e, CompositeGraphicsNode cgn) {
+	/**
+	 * Creates a <code>GraphicsNode</code> according to the specified parameters.
+	 *
+	 * @param ctx the bridge context to use
+	 * @param e   the element that describes the graphics node to build
+	 * @return a graphics node that represents the specified element
+	 */
+	@Override
+	public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
+		CompositeGraphicsNode gn = buildCompositeGraphicsNode(ctx, e, null);
+		return gn;
+	}
 
-        XBLOMContentElement content = (XBLOMContentElement) e;
-        AbstractDocument doc = (AbstractDocument) e.getOwnerDocument();
-        DefaultXBLManager xm = (DefaultXBLManager) doc.getXBLManager();
-        contentManager = xm.getContentManager(e);
+	/**
+	 * Creates a <code>GraphicsNode</code> from the input element and populates the
+	 * input <code>CompositeGraphicsNode</code>
+	 *
+	 * @param ctx the bridge context to use
+	 * @param e   the element that describes the graphics node to build
+	 * @param cgn the CompositeGraphicsNode where the use graphical content will be
+	 *            appended. The composite node is emptied before appending new
+	 *            content.
+	 */
+	public CompositeGraphicsNode buildCompositeGraphicsNode(BridgeContext ctx, Element e, CompositeGraphicsNode cgn) {
 
-        if (cgn == null) {
-            cgn = new CompositeGraphicsNode();
-            associateSVGContext(ctx, e, cgn);
-        } else {
-            int s = cgn.size();
-            for (int i = 0; i < s; i++) {
-                cgn.remove(0);
-            }
-        }
+		XBLOMContentElement content = (XBLOMContentElement) e;
+		AbstractDocument doc = (AbstractDocument) e.getOwnerDocument();
+		DefaultXBLManager xm = (DefaultXBLManager) doc.getXBLManager();
+		contentManager = xm.getContentManager(e);
 
-        GVTBuilder builder = ctx.getGVTBuilder();
-        NodeList nl = contentManager.getSelectedContent(content);
-        if (nl != null) {
-            for (int i = 0; i < nl.getLength(); i++) {
-                Node n = nl.item(i);
-                if (n.getNodeType() == Node.ELEMENT_NODE) {
-                    GraphicsNode gn = builder.build(ctx, (Element) n);
-                    if (gn != null) {
-                        cgn.add(gn);
-                    }
-                }
-            }
-        }
+		if (cgn == null) {
+			cgn = new CompositeGraphicsNode();
+			associateSVGContext(ctx, e, cgn);
+		} else {
+			int s = cgn.size();
+			for (int i = 0; i < s; i++) {
+				cgn.remove(0);
+			}
+		}
 
-        if (ctx.isDynamic()) {
-            if (contentChangedListener == null) {
-                // Should be the same ContentManager each build
-                contentChangedListener = new ContentChangedListener();
-                contentManager.addContentSelectionChangedListener
-                    (content, contentChangedListener);
-            }
-        }
+		GVTBuilder builder = ctx.getGVTBuilder();
+		NodeList nl = contentManager.getSelectedContent(content);
+		if (nl != null) {
+			for (int i = 0; i < nl.getLength(); i++) {
+				Node n = nl.item(i);
+				if (n.getNodeType() == Node.ELEMENT_NODE) {
+					GraphicsNode gn = builder.build(ctx, (Element) n);
+					if (gn != null) {
+						cgn.add(gn);
+					}
+				}
+			}
+		}
 
-        return cgn;
-    }
+		if (ctx.isDynamic()) {
+			if (contentChangedListener == null) {
+				// Should be the same ContentManager each build
+				contentChangedListener = new ContentChangedListener();
+				contentManager.addContentSelectionChangedListener(content, contentChangedListener);
+			}
+		}
 
-    /**
-     * Creates a <code>CompositeGraphicsNode</code>.
-     */
-    @Override
-    protected GraphicsNode instantiateGraphicsNode() {
-        // Not needed, since createGraphicsNode is overridden
-        return null;
-    }
+		return cgn;
+	}
 
-    /**
-     * Builds using the specified BridgeContext and element, the
-     * specified graphics node.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @param node the graphics node to build
-     */
-    @Override
-    public void buildGraphicsNode(BridgeContext ctx,
-                                  Element e,
-                                  GraphicsNode node) {
-        initializeDynamicSupport(ctx, e, node);
-    }
+	/**
+	 * Creates a <code>CompositeGraphicsNode</code>.
+	 */
+	@Override
+	protected GraphicsNode instantiateGraphicsNode() {
+		// Not needed, since createGraphicsNode is overridden
+		return null;
+	}
 
-    /**
-     * Returns true if the graphics node has to be displayed, false
-     * otherwise.
-     */
-    @Override
-    public boolean getDisplay(Element e) {
-        return true;
-    }
+	/**
+	 * Builds using the specified BridgeContext and element, the specified graphics
+	 * node.
+	 *
+	 * @param ctx  the bridge context to use
+	 * @param e    the element that describes the graphics node to build
+	 * @param node the graphics node to build
+	 */
+	@Override
+	public void buildGraphicsNode(BridgeContext ctx, Element e, GraphicsNode node) {
+		initializeDynamicSupport(ctx, e, node);
+	}
 
-    /**
-     * Returns false as the &lt;xbl:content&gt; element's selected nodes
-     * are built all in this class.
-     */
-    @Override
-    public boolean isComposite() {
-        return false;
-    }
+	/**
+	 * Returns true if the graphics node has to be displayed, false otherwise.
+	 */
+	@Override
+	public boolean getDisplay(Element e) {
+		return true;
+	}
 
-    /**
-     * Dispose this bridge by removing the ContentSelectionChangedListener
-     * object.
-     */
-    @Override
-    public void dispose() {
-        super.dispose();
+	/**
+	 * Returns false as the &lt;xbl:content&gt; element's selected nodes are built
+	 * all in this class.
+	 */
+	@Override
+	public boolean isComposite() {
+		return false;
+	}
 
-        if (contentChangedListener != null) {
-            contentManager.removeContentSelectionChangedListener
-                ((XBLOMContentElement) e, contentChangedListener);
-        }
-    }
+	/**
+	 * Dispose this bridge by removing the ContentSelectionChangedListener object.
+	 */
+	@Override
+	public void dispose() {
+		super.dispose();
 
-    /**
-     * Class to respond to content selection changes and cause GVT rebuilds.
-     */
-    protected class ContentChangedListener
-            implements ContentSelectionChangedListener {
+		if (contentChangedListener != null) {
+			contentManager.removeContentSelectionChangedListener((XBLOMContentElement) e, contentChangedListener);
+		}
+	}
 
-        /**
-         * Invoked after an xbl:content element has updated its selected
-         * nodes list.
-         * @param csce the ContentSelectionChangedEvent object
-         */
-        @Override
-        public void contentSelectionChanged(ContentSelectionChangedEvent csce) {
-            buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
-        }
-    }
+	/**
+	 * Class to respond to content selection changes and cause GVT rebuilds.
+	 */
+	protected class ContentChangedListener implements ContentSelectionChangedListener {
+
+		/**
+		 * Invoked after an xbl:content element has updated its selected nodes list.
+		 * 
+		 * @param csce the ContentSelectionChangedEvent object
+		 */
+		@Override
+		public void contentSelectionChanged(ContentSelectionChangedEvent csce) {
+			buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
+		}
+	}
 }

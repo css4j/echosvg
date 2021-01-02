@@ -33,104 +33,99 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public abstract class AnimatableValue {
 
-    /**
-     * A formatting object to get CSS compatible float strings.
-     */
-    protected static DecimalFormat decimalFormat = new DecimalFormat
-        ("0.0###########################################################",
-         new DecimalFormatSymbols(Locale.ENGLISH));
+	/**
+	 * A formatting object to get CSS compatible float strings.
+	 */
+	protected static DecimalFormat decimalFormat = new DecimalFormat(
+			"0.0###########################################################", new DecimalFormatSymbols(Locale.ENGLISH));
 
-    /**
-     * The target of the animation.
-     */
-    protected AnimationTarget target;
+	/**
+	 * The target of the animation.
+	 */
+	protected AnimationTarget target;
 
-    /**
-     * Whether this value has changed since the last call to
-     * {@link #hasChanged()}.  This must be updated within {@link #interpolate}
-     * in descendant classes.
-     */
-    protected boolean hasChanged = true;
+	/**
+	 * Whether this value has changed since the last call to {@link #hasChanged()}.
+	 * This must be updated within {@link #interpolate} in descendant classes.
+	 */
+	protected boolean hasChanged = true;
 
-    /**
-     * Creates a new AnimatableValue.
-     */
-    protected AnimatableValue(AnimationTarget target) {
-        this.target = target;
-    }
+	/**
+	 * Creates a new AnimatableValue.
+	 */
+	protected AnimatableValue(AnimationTarget target) {
+		this.target = target;
+	}
 
-    /**
-     * Returns a CSS compatible string version of the specified float.
-     */
-    public static String formatNumber(float f) {
-        return decimalFormat.format(f);
-    }
+	/**
+	 * Returns a CSS compatible string version of the specified float.
+	 */
+	public static String formatNumber(float f) {
+		return decimalFormat.format(f);
+	}
 
-    /**
-     * Performs interpolation to the given value.
-     * @param result the object in which to store the result of the
-     *               interpolation, or null if a new object should be created
-     * @param to the value this value should be interpolated towards, or null
-     *           if no actual interpolation should be performed
-     * @param interpolation the interpolation distance, 0 &lt;= interpolation
-     *                      &lt;= 1
-     * @param accumulation an accumulation to add to the interpolated value 
-     * @param multiplier an amount the accumulation values should be multiplied
-     *                   by before being added to the interpolated value
-     */
-    public abstract AnimatableValue interpolate(AnimatableValue result,
-                                                AnimatableValue to,
-                                                float interpolation,
-                                                AnimatableValue accumulation,
-                                                int multiplier);
+	/**
+	 * Performs interpolation to the given value.
+	 * 
+	 * @param result        the object in which to store the result of the
+	 *                      interpolation, or null if a new object should be created
+	 * @param to            the value this value should be interpolated towards, or
+	 *                      null if no actual interpolation should be performed
+	 * @param interpolation the interpolation distance, 0 &lt;= interpolation &lt;=
+	 *                      1
+	 * @param accumulation  an accumulation to add to the interpolated value
+	 * @param multiplier    an amount the accumulation values should be multiplied
+	 *                      by before being added to the interpolated value
+	 */
+	public abstract AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier);
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    public abstract boolean canPace();
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	public abstract boolean canPace();
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    public abstract float distanceTo(AnimatableValue other);
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	public abstract float distanceTo(AnimatableValue other);
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    public abstract AnimatableValue getZeroValue();
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	public abstract AnimatableValue getZeroValue();
 
-    /**
-     * Returns the CSS text representation of the value.
-     */
-    public String getCssText() {
-        return null;
-    }
-    
-    /**
-     * Returns whether the value in this AnimatableValue has been modified.
-     */
-    public boolean hasChanged() {
-        boolean ret = hasChanged;
-        hasChanged = false;
-        return ret;
-    }
+	/**
+	 * Returns the CSS text representation of the value.
+	 */
+	public String getCssText() {
+		return null;
+	}
 
-    /**
-     * Returns a string representation of this object.  This should be
-     * overridden in classes that do not have a CSS representation.
-     */
-    public String toStringRep() {
-        return getCssText();
-    }
+	/**
+	 * Returns whether the value in this AnimatableValue has been modified.
+	 */
+	public boolean hasChanged() {
+		boolean ret = hasChanged;
+		hasChanged = false;
+		return ret;
+	}
 
-    /**
-     * Returns a string representation of this object prefixed with its
-     * class name.
-     */
-    @Override
-    public String toString() {
-        return getClass().getName() + "[" + toStringRep() + "]";
-    }
+	/**
+	 * Returns a string representation of this object. This should be overridden in
+	 * classes that do not have a CSS representation.
+	 */
+	public String toStringRep() {
+		return getCssText();
+	}
+
+	/**
+	 * Returns a string representation of this object prefixed with its class name.
+	 */
+	@Override
+	public String toString() {
+		return getClass().getName() + "[" + toStringRep() + "]";
+	}
 }

@@ -38,8 +38,8 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.TileRable8Bit;
 import io.sf.carte.echosvg.ext.awt.image.rendered.TileCacheRed;
 
 /**
- * <code>PaintContext</code> for the <code>ConcretePatterPaint</code>
- * paint implementation.
+ * <code>PaintContext</code> for the <code>ConcretePatterPaint</code> paint
+ * implementation.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -47,139 +47,124 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.TileCacheRed;
  */
 public class PatternPaintContext implements PaintContext {
 
-    /**
-     * ColorModel for the Rasters created by this Paint
-     */
-    private ColorModel rasterCM;
+	/**
+	 * ColorModel for the Rasters created by this Paint
+	 */
+	private ColorModel rasterCM;
 
-    /**
-     * Working Raster
-     */
-    private WritableRaster raster;
+	/**
+	 * Working Raster
+	 */
+	private WritableRaster raster;
 
-    /**
-     * Tile
-     */
-    private RenderedImage tiled;
+	/**
+	 * Tile
+	 */
+	private RenderedImage tiled;
 
-    protected AffineTransform usr2dev;
+	protected AffineTransform usr2dev;
 
-    public AffineTransform getUsr2Dev() { return usr2dev; }
+	public AffineTransform getUsr2Dev() {
+		return usr2dev;
+	}
 
-    private static Rectangle EVERYTHING = 
-        new Rectangle(Integer.MIN_VALUE/4, Integer.MIN_VALUE/4, 
-                      Integer.MAX_VALUE/2, Integer.MAX_VALUE/2);
+	private static Rectangle EVERYTHING = new Rectangle(Integer.MIN_VALUE / 4, Integer.MIN_VALUE / 4,
+			Integer.MAX_VALUE / 2, Integer.MAX_VALUE / 2);
 
-    /**
-     * @param destCM     ColorModel that receives the paint data
-     * @param usr2dev    user space to device space transform
-     * @param hints      RenderingHints
-     * @param patternRegion region tiled by this paint. In user space.
-     * @param overflow   controls whether the pattern region clips the
-     *                   pattern tile
-     */
-    public PatternPaintContext(ColorModel      destCM,
-                               AffineTransform usr2dev,
-                               RenderingHints  hints,
-                               Filter          tile,
-                               Rectangle2D     patternRegion,
-                               boolean         overflow) {
+	/**
+	 * @param destCM        ColorModel that receives the paint data
+	 * @param usr2dev       user space to device space transform
+	 * @param hints         RenderingHints
+	 * @param patternRegion region tiled by this paint. In user space.
+	 * @param overflow      controls whether the pattern region clips the pattern
+	 *                      tile
+	 */
+	public PatternPaintContext(ColorModel destCM, AffineTransform usr2dev, RenderingHints hints, Filter tile,
+			Rectangle2D patternRegion, boolean overflow) {
 
-        if(usr2dev == null){
-            throw new IllegalArgumentException();
-        }
+		if (usr2dev == null) {
+			throw new IllegalArgumentException();
+		}
 
-        if(hints == null){
-            hints = new RenderingHints(null);
-        }
+		if (hints == null) {
+			hints = new RenderingHints(null);
+		}
 
-        if(tile == null){
-            throw new IllegalArgumentException();
-        }
+		if (tile == null) {
+			throw new IllegalArgumentException();
+		}
 
-        this.usr2dev    = usr2dev;
+		this.usr2dev = usr2dev;
 
-        // System.out.println("PatB: " + patternRegion);
-        // System.out.println("Tile: " + tile);
+		// System.out.println("PatB: " + patternRegion);
+		// System.out.println("Tile: " + tile);
 
-        TileRable tileRable = new TileRable8Bit(tile,
-                                                EVERYTHING,
-                                                patternRegion,
-                                                overflow);
-        ColorSpace destCS = destCM.getColorSpace();
-        if (destCS == ColorSpace.getInstance(ColorSpace.CS_sRGB))
-            tileRable.setColorSpaceLinear(false);
-        else if (destCS == ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB))
-            tileRable.setColorSpaceLinear(true);
+		TileRable tileRable = new TileRable8Bit(tile, EVERYTHING, patternRegion, overflow);
+		ColorSpace destCS = destCM.getColorSpace();
+		if (destCS == ColorSpace.getInstance(ColorSpace.CS_sRGB))
+			tileRable.setColorSpaceLinear(false);
+		else if (destCS == ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB))
+			tileRable.setColorSpaceLinear(true);
 
-        RenderContext rc = new RenderContext(usr2dev,  EVERYTHING, hints);
-        tiled = tileRable.createRendering(rc);
-        // System.out.println("tileRed: " + tiled);
-        // io.sf.carte.echosvg.test.gvt.ImageDisplay.showImage("Tiled: ", tiled);
+		RenderContext rc = new RenderContext(usr2dev, EVERYTHING, hints);
+		tiled = tileRable.createRendering(rc);
+		// System.out.println("tileRed: " + tiled);
+		// io.sf.carte.echosvg.test.gvt.ImageDisplay.showImage("Tiled: ", tiled);
 
-        //System.out.println("Created rendering");
-        if(tiled != null) {
-            Rectangle2D devRgn = usr2dev.createTransformedShape
-                (patternRegion).getBounds();
-            if ((devRgn.getWidth() > 128) ||
-                (devRgn.getHeight() > 128))
-                tiled = new TileCacheRed(GraphicsUtil.wrap(tiled), 256, 64);
-        } else {
-            //System.out.println("Tile was null");
-            rasterCM = ColorModel.getRGBdefault();
-            WritableRaster wr;
-            wr = rasterCM.createCompatibleWritableRaster(32, 32);
-            tiled = GraphicsUtil.wrap
-                (new BufferedImage(rasterCM, wr, false, null));
-            return;
-        }
+		// System.out.println("Created rendering");
+		if (tiled != null) {
+			Rectangle2D devRgn = usr2dev.createTransformedShape(patternRegion).getBounds();
+			if ((devRgn.getWidth() > 128) || (devRgn.getHeight() > 128))
+				tiled = new TileCacheRed(GraphicsUtil.wrap(tiled), 256, 64);
+		} else {
+			// System.out.println("Tile was null");
+			rasterCM = ColorModel.getRGBdefault();
+			WritableRaster wr;
+			wr = rasterCM.createCompatibleWritableRaster(32, 32);
+			tiled = GraphicsUtil.wrap(new BufferedImage(rasterCM, wr, false, null));
+			return;
+		}
 
-        rasterCM = tiled.getColorModel();
-        if (rasterCM.hasAlpha()) {
-            if (destCM.hasAlpha()) 
-                rasterCM = GraphicsUtil.coerceColorModel
-                    (rasterCM, destCM.isAlphaPremultiplied());
-            else 
-                rasterCM = GraphicsUtil.coerceColorModel(rasterCM, false);
-        }
-    }
+		rasterCM = tiled.getColorModel();
+		if (rasterCM.hasAlpha()) {
+			if (destCM.hasAlpha())
+				rasterCM = GraphicsUtil.coerceColorModel(rasterCM, destCM.isAlphaPremultiplied());
+			else
+				rasterCM = GraphicsUtil.coerceColorModel(rasterCM, false);
+		}
+	}
 
-    @Override
-    public void dispose(){
-        raster = null;
-    }
+	@Override
+	public void dispose() {
+		raster = null;
+	}
 
-    @Override
-    public ColorModel getColorModel(){
-        return rasterCM;
-    }
+	@Override
+	public ColorModel getColorModel() {
+		return rasterCM;
+	}
 
-    @Override
-    public Raster getRaster(int x, int y, int width, int height){
+	@Override
+	public Raster getRaster(int x, int y, int width, int height) {
 
-        // System.out.println("GetRaster: [" + x + ", " + y + ", " 
-        //                    + width + ", " + height + "]");
-        if ((raster == null)             ||
-            (raster.getWidth() < width)  ||
-            (raster.getHeight() < height)) {
-            raster = rasterCM.createCompatibleWritableRaster(width, height);
-        }
+		// System.out.println("GetRaster: [" + x + ", " + y + ", "
+		// + width + ", " + height + "]");
+		if ((raster == null) || (raster.getWidth() < width) || (raster.getHeight() < height)) {
+			raster = rasterCM.createCompatibleWritableRaster(width, height);
+		}
 
-        WritableRaster wr
-            = raster.createWritableChild(0, 0, width, height, x, y, null);
+		WritableRaster wr = raster.createWritableChild(0, 0, width, height, x, y, null);
 
-        tiled.copyData(wr);
-        GraphicsUtil.coerceData(wr, tiled.getColorModel(), 
-                                rasterCM.isAlphaPremultiplied());
+		tiled.copyData(wr);
+		GraphicsUtil.coerceData(wr, tiled.getColorModel(), rasterCM.isAlphaPremultiplied());
 
-        // On Mac OS X it always wants the raster at 0,0 if the
-        // requested width and height matches raster we can just
-        // return it.  Otherwise we create a translated child that
-        // lives at 0,0.
-        if ((raster.getWidth()  == width) &&
-            (raster.getHeight() == height))
-            return raster;
+		// On Mac OS X it always wants the raster at 0,0 if the
+		// requested width and height matches raster we can just
+		// return it. Otherwise we create a translated child that
+		// lives at 0,0.
+		if ((raster.getWidth() == width) && (raster.getHeight() == height))
+			return raster;
 
-        return wr.createTranslatedChild(0,0);
-    }
+		return wr.createTranslatedChild(0, 0);
+	}
 }

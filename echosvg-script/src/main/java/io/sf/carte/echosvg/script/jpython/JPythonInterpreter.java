@@ -28,90 +28,89 @@ import org.python.util.PythonInterpreter;
 import io.sf.carte.echosvg.script.InterpreterException;
 
 /**
- * A simple implementation of <code>Interpreter</code> interface to use
- * JPython python parser.
+ * A simple implementation of <code>Interpreter</code> interface to use JPython
+ * python parser.
+ * 
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class JPythonInterpreter implements io.sf.carte.echosvg.script.Interpreter {
-    private PythonInterpreter interpreter = null;
+	private PythonInterpreter interpreter = null;
 
-    public JPythonInterpreter() {
-        interpreter = new PythonInterpreter();
-    }
+	public JPythonInterpreter() {
+		interpreter = new PythonInterpreter();
+	}
 
-    // io.sf.carte.echosvg.script.Intepreter implementation
+	// io.sf.carte.echosvg.script.Intepreter implementation
 
-    /**
-     * Returns the content types of the scripting languages this interpreter
-     * handles.
-     */
-    @Override
-    public String[] getMimeTypes() {
-        return JPythonInterpreterFactory.JPYTHON_MIMETYPES;
-    }
+	/**
+	 * Returns the content types of the scripting languages this interpreter
+	 * handles.
+	 */
+	@Override
+	public String[] getMimeTypes() {
+		return JPythonInterpreterFactory.JPYTHON_MIMETYPES;
+	}
 
-    @Override
-    public Object evaluate(Reader scriptreader)
-        throws IOException {
-        return evaluate(scriptreader, "");
-    }
+	@Override
+	public Object evaluate(Reader scriptreader) throws IOException {
+		return evaluate(scriptreader, "");
+	}
 
-    @Override
-    public Object evaluate(Reader scriptreader, String description)
-        throws IOException {
+	@Override
+	public Object evaluate(Reader scriptreader, String description) throws IOException {
 
-        // oups jpython doesn't accept reader in its eval method :-(
-        StringBuffer sbuffer = new StringBuffer();
-        char[] buffer = new char[1024];
-        int val = 0;
-        while ((val = scriptreader.read(buffer)) != -1) {
-            sbuffer.append(buffer,0, val);
-        }
-        String str = sbuffer.toString();
-        return evaluate(str);
-    }
+		// oups jpython doesn't accept reader in its eval method :-(
+		StringBuffer sbuffer = new StringBuffer();
+		char[] buffer = new char[1024];
+		int val = 0;
+		while ((val = scriptreader.read(buffer)) != -1) {
+			sbuffer.append(buffer, 0, val);
+		}
+		String str = sbuffer.toString();
+		return evaluate(str);
+	}
 
-    @Override
-    public Object evaluate(String script) {
-        try {
-            interpreter.exec(script);
-        } catch (org.python.core.PyException e) {
-            throw new InterpreterException(e, e.getMessage(), -1, -1);
-        } catch (RuntimeException re) {
-            throw new InterpreterException(re, re.getMessage(), -1, -1);
-        }
-        return null;
-    }
+	@Override
+	public Object evaluate(String script) {
+		try {
+			interpreter.exec(script);
+		} catch (org.python.core.PyException e) {
+			throw new InterpreterException(e, e.getMessage(), -1, -1);
+		} catch (RuntimeException re) {
+			throw new InterpreterException(re, re.getMessage(), -1, -1);
+		}
+		return null;
+	}
 
-    @Override
-    public void dispose() {
-    }
+	@Override
+	public void dispose() {
+	}
 
-    @Override
-    public void bindObject(String name, Object object) {
-        interpreter.set(name, object);
-    }
+	@Override
+	public void bindObject(String name, Object object) {
+		interpreter.set(name, object);
+	}
 
-    @Override
-    public void setOut(Writer out) {
-        interpreter.setOut(out);
-    }
+	@Override
+	public void setOut(Writer out) {
+		interpreter.setOut(out);
+	}
 
-    // io.sf.carte.echosvg.i18n.Localizable implementation
+	// io.sf.carte.echosvg.i18n.Localizable implementation
 
-    @Override
-    public Locale getLocale() {
-        return null;
-    }
+	@Override
+	public Locale getLocale() {
+		return null;
+	}
 
-    @Override
-    public void setLocale(Locale locale) {
-    }
+	@Override
+	public void setLocale(Locale locale) {
+	}
 
-    @Override
-    public String formatMessage(String key, Object[] args) {
-        return null;
-    }
+	@Override
+	public String formatMessage(String key, Object[] args) {
+		return null;
+	}
 }

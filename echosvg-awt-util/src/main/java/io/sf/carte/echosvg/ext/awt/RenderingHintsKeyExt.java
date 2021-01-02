@@ -21,8 +21,7 @@ package io.sf.carte.echosvg.ext.awt;
 import java.awt.RenderingHints;
 
 /**
- * Contains additional RenderingHints Keys, such as
- * KEY_AREA_OF_INTEREST
+ * Contains additional RenderingHints Keys, such as KEY_AREA_OF_INTEREST
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -30,88 +29,87 @@ import java.awt.RenderingHints;
  */
 public final class RenderingHintsKeyExt {
 
-    public static final int KEY_BASE;
+	public static final int KEY_BASE;
 
-    /**
-     * Hint as to the transcoding destination.
-     */
-    public static final RenderingHints.Key KEY_TRANSCODING;
+	/**
+	 * Hint as to the transcoding destination.
+	 */
+	public static final RenderingHints.Key KEY_TRANSCODING;
 
-    public static final String VALUE_TRANSCODING_PRINTING = "Printing";
+	public static final String VALUE_TRANSCODING_PRINTING = "Printing";
 
-    public static final String VALUE_TRANSCODING_VECTOR = "Vector";
+	public static final String VALUE_TRANSCODING_VECTOR = "Vector";
 
-    /**
-     * Key for the AOI hint. This hint is used to propagate the AOI to Paint
-     * and PaintContext instances.
-     */
-    public static final RenderingHints.Key KEY_AREA_OF_INTEREST;
+	/**
+	 * Key for the AOI hint. This hint is used to propagate the AOI to Paint and
+	 * PaintContext instances.
+	 */
+	public static final RenderingHints.Key KEY_AREA_OF_INTEREST;
 
-    /**
-     * Hint for the destination of the rendering when it is a BufferedImage
-     * This works around the fact that Java 2D sometimes lies about the
-     * attributes of the Graphics2D device, when it is an image.
-     *
-     * It is strongly suggested that you use
-     * io.sf.carte.echosvg.ext.awt.image.GraphicsUtil.createGraphics to
-     * create a Graphics2D from a BufferedImage, this will ensure that
-     * the proper things are done in the processes of creating the
-     * Graphics.  */
-    public static final RenderingHints.Key KEY_BUFFERED_IMAGE;
+	/**
+	 * Hint for the destination of the rendering when it is a BufferedImage This
+	 * works around the fact that Java 2D sometimes lies about the attributes of the
+	 * Graphics2D device, when it is an image.
+	 *
+	 * It is strongly suggested that you use
+	 * io.sf.carte.echosvg.ext.awt.image.GraphicsUtil.createGraphics to create a
+	 * Graphics2D from a BufferedImage, this will ensure that the proper things are
+	 * done in the processes of creating the Graphics.
+	 */
+	public static final RenderingHints.Key KEY_BUFFERED_IMAGE;
 
-    /**
-     * Hint to source that we only want an alpha channel.
-     * The source should follow the SVG spec for how to
-     * convert ARGB, RGB, Grey and AGrey to just an Alpha channel.
-     */
-    public static final RenderingHints.Key KEY_COLORSPACE;
+	/**
+	 * Hint to source that we only want an alpha channel. The source should follow
+	 * the SVG spec for how to convert ARGB, RGB, Grey and AGrey to just an Alpha
+	 * channel.
+	 */
+	public static final RenderingHints.Key KEY_COLORSPACE;
 
-    /**
-     * Hint for the io.sf.carte.echosvg.ext.awt.image.GraphicsUtil class that
-     * tiling of a bitmap during rendering is undesired. This is primarily
-     * for the PDF and PostScript transcoders where tiling can lead to
-     * suboptimal results due to overlaps in transparency and filter effects.
-     */
-    public static final RenderingHints.Key KEY_AVOID_TILE_PAINTING;
+	/**
+	 * Hint for the io.sf.carte.echosvg.ext.awt.image.GraphicsUtil class that tiling
+	 * of a bitmap during rendering is undesired. This is primarily for the PDF and
+	 * PostScript transcoders where tiling can lead to suboptimal results due to
+	 * overlaps in transparency and filter effects.
+	 */
+	public static final RenderingHints.Key KEY_AVOID_TILE_PAINTING;
 
-    public static final Object VALUE_AVOID_TILE_PAINTING_ON = new Object();
-    public static final Object VALUE_AVOID_TILE_PAINTING_OFF = new Object();
-    public static final Object VALUE_AVOID_TILE_PAINTING_DEFAULT = new Object();
+	public static final Object VALUE_AVOID_TILE_PAINTING_ON = new Object();
+	public static final Object VALUE_AVOID_TILE_PAINTING_OFF = new Object();
+	public static final Object VALUE_AVOID_TILE_PAINTING_DEFAULT = new Object();
 
-    static {
-        int base = 10100;
-        RenderingHints.Key trans=null, aoi=null, bi=null, cs=null, atp=null;
-        while (true) {
-            int val = base;
+	static {
+		int base = 10100;
+		RenderingHints.Key trans = null, aoi = null, bi = null, cs = null, atp = null;
+		while (true) {
+			int val = base;
 
-            try {
-                trans = new TranscodingHintKey   (val++);
-                aoi   = new AreaOfInterestHintKey(val++);
-                bi    = new BufferedImageHintKey (val++);
-                cs    = new ColorSpaceHintKey    (val++);
-                atp   = new AvoidTilingHintKey   (val++);
-            } catch (Exception e) {
-                System.err.println
-                    ("You have loaded the EchoSVG jar files more than once\n" +
-                     "in the same JVM this is likely a problem with the\n" +
-                     "way you are loading the EchoSVG jar files.");
+			try {
+				trans = new TranscodingHintKey(val++);
+				aoi = new AreaOfInterestHintKey(val++);
+				bi = new BufferedImageHintKey(val++);
+				cs = new ColorSpaceHintKey(val++);
+				atp = new AvoidTilingHintKey(val++);
+			} catch (Exception e) {
+				System.err.println("You have loaded the EchoSVG jar files more than once\n"
+						+ "in the same JVM this is likely a problem with the\n"
+						+ "way you are loading the EchoSVG jar files.");
 
-                base = (int)(Math.random()*2000000);
-                continue;
-            }
-            break;
-        }
-        KEY_BASE                = base;
-        KEY_TRANSCODING         = trans;
-        KEY_AREA_OF_INTEREST    = aoi;
-        KEY_BUFFERED_IMAGE      = bi;
-        KEY_COLORSPACE          = cs;
-        KEY_AVOID_TILE_PAINTING = atp;
-    }
+				base = (int) (Math.random() * 2000000);
+				continue;
+			}
+			break;
+		}
+		KEY_BASE = base;
+		KEY_TRANSCODING = trans;
+		KEY_AREA_OF_INTEREST = aoi;
+		KEY_BUFFERED_IMAGE = bi;
+		KEY_COLORSPACE = cs;
+		KEY_AVOID_TILE_PAINTING = atp;
+	}
 
-    /**
-     * Do not authorize creation of instances of that class
-     */
-    private RenderingHintsKeyExt(){
-    }
+	/**
+	 * Do not authorize creation of instances of that class
+	 */
+	private RenderingHintsKeyExt() {
+	}
 }

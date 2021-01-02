@@ -35,207 +35,208 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.CachableRed;
 import io.sf.carte.echosvg.ext.awt.image.rendered.PadRed;
 
 /**
- * Concrete implementation of the PadRable interface.
- * This pads the image to a specified rectangle in user coord system.
+ * Concrete implementation of the PadRable interface. This pads the image to a
+ * specified rectangle in user coord system.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class PadRable8Bit extends AbstractRable
-    implements PadRable, PaintRable {
+public class PadRable8Bit extends AbstractRable implements PadRable, PaintRable {
 
-    PadMode           padMode;
-    Rectangle2D       padRect;
+	PadMode padMode;
+	Rectangle2D padRect;
 
-    public PadRable8Bit(Filter src,
-                        Rectangle2D padRect,
-                        PadMode     padMode) {
-        super.init(src, null);
-        this.padRect = padRect;
-        this.padMode = padMode;
-    }
+	public PadRable8Bit(Filter src, Rectangle2D padRect, PadMode padMode) {
+		super.init(src, null);
+		this.padRect = padRect;
+		this.padMode = padMode;
+	}
 
-    /**
-     * Returns the source to be affine.
-     */
-    @Override
-    public Filter getSource() {
-        return (Filter)srcs.get(0);
-    }
+	/**
+	 * Returns the source to be affine.
+	 */
+	@Override
+	public Filter getSource() {
+		return (Filter) srcs.get(0);
+	}
 
-    /**
-     * Sets the source to be affine.
-     * @param src image to affine.
-     */
-    @Override
-    public void setSource(Filter src) {
-        super.init(src, null);
-    }
+	/**
+	 * Sets the source to be affine.
+	 * 
+	 * @param src image to affine.
+	 */
+	@Override
+	public void setSource(Filter src) {
+		super.init(src, null);
+	}
 
-    @Override
-    public Rectangle2D getBounds2D() {
-        return (Rectangle2D)padRect.clone();
-    }
+	@Override
+	public Rectangle2D getBounds2D() {
+		return (Rectangle2D) padRect.clone();
+	}
 
-    /**
-     * Set the current rectangle for padding.
-     * @param rect the new rectangle to use for pad.
-     */
-    @Override
-    public void setPadRect(Rectangle2D rect) {
-        touch();
-        this.padRect = rect;
-    }
+	/**
+	 * Set the current rectangle for padding.
+	 * 
+	 * @param rect the new rectangle to use for pad.
+	 */
+	@Override
+	public void setPadRect(Rectangle2D rect) {
+		touch();
+		this.padRect = rect;
+	}
 
-    /**
-     * Get the current rectangle for padding
-     * @return Rectangle currently in use for pad.
-     */
-    @Override
-    public Rectangle2D getPadRect() {
-        return (Rectangle2D)padRect.clone();
-    }
+	/**
+	 * Get the current rectangle for padding
+	 * 
+	 * @return Rectangle currently in use for pad.
+	 */
+	@Override
+	public Rectangle2D getPadRect() {
+		return (Rectangle2D) padRect.clone();
+	}
 
-    /**
-     * Set the current extension mode for pad
-     * @param padMode the new pad mode
-     */
-    @Override
-    public void setPadMode(PadMode padMode) {
-        touch();
-        this.padMode = padMode;
-    }
+	/**
+	 * Set the current extension mode for pad
+	 * 
+	 * @param padMode the new pad mode
+	 */
+	@Override
+	public void setPadMode(PadMode padMode) {
+		touch();
+		this.padMode = padMode;
+	}
 
-    /**
-     * Get the current extension mode for pad
-     * @return Mode currently in use for pad
-     */
-    @Override
-    public PadMode getPadMode() {
-        return padMode;
-    }
+	/**
+	 * Get the current extension mode for pad
+	 * 
+	 * @return Mode currently in use for pad
+	 */
+	@Override
+	public PadMode getPadMode() {
+		return padMode;
+	}
 
-    /**
-     * Should perform the equivilent action as
-     * createRendering followed by drawing the RenderedImage to
-     * Graphics2D, or return false.
-     *
-     * @param g2d The Graphics2D to draw to.
-     * @return true if the paint call succeeded, false if
-     *         for some reason the paint failed (in which
-     *         case a createRendering should be used).
-     */
-    @Override
-    public boolean paintRable(Graphics2D g2d) {
-        // This optimization only apply if we are using
-        // SrcOver.  Otherwise things break...
-        Composite c = g2d.getComposite();
-        if (!SVGComposite.OVER.equals(c))
-            return false;
+	/**
+	 * Should perform the equivilent action as createRendering followed by drawing
+	 * the RenderedImage to Graphics2D, or return false.
+	 *
+	 * @param g2d The Graphics2D to draw to.
+	 * @return true if the paint call succeeded, false if for some reason the paint
+	 *         failed (in which case a createRendering should be used).
+	 */
+	@Override
+	public boolean paintRable(Graphics2D g2d) {
+		// This optimization only apply if we are using
+		// SrcOver. Otherwise things break...
+		Composite c = g2d.getComposite();
+		if (!SVGComposite.OVER.equals(c))
+			return false;
 
-        if (getPadMode() != PadMode.ZERO_PAD)
-            return false;
+		if (getPadMode() != PadMode.ZERO_PAD)
+			return false;
 
-        Rectangle2D padBounds = getPadRect();
+		Rectangle2D padBounds = getPadRect();
 
-        Shape clip = g2d.getClip();
-        g2d.clip(padBounds);
-        GraphicsUtil.drawImage(g2d, getSource());
-        g2d.setClip(clip);
-        return true;
-    }
+		Shape clip = g2d.getClip();
+		g2d.clip(padBounds);
+		GraphicsUtil.drawImage(g2d, getSource());
+		g2d.setClip(clip);
+		return true;
+	}
 
-    @Override
-    public RenderedImage createRendering(RenderContext rc) {
-        RenderingHints rh = rc.getRenderingHints();
-        if (rh == null) rh = new RenderingHints(null);
+	@Override
+	public RenderedImage createRendering(RenderContext rc) {
+		RenderingHints rh = rc.getRenderingHints();
+		if (rh == null)
+			rh = new RenderingHints(null);
 
-        Filter src = getSource();
-        Shape aoi = rc.getAreaOfInterest();
+		Filter src = getSource();
+		Shape aoi = rc.getAreaOfInterest();
 
-        if(aoi == null){
-            aoi = getBounds2D();
-        }
+		if (aoi == null) {
+			aoi = getBounds2D();
+		}
 
-        AffineTransform usr2dev = rc.getTransform();
+		AffineTransform usr2dev = rc.getTransform();
 
-        // We only depend on our source for stuff that is inside
-        // our bounds and his bounds (remember our bounds may be
-        // tighter than his in one or both directions).
-        Rectangle2D srect = src.getBounds2D();
-        Rectangle2D rect  = getBounds2D();
-        Rectangle2D arect = aoi.getBounds2D();
+		// We only depend on our source for stuff that is inside
+		// our bounds and his bounds (remember our bounds may be
+		// tighter than his in one or both directions).
+		Rectangle2D srect = src.getBounds2D();
+		Rectangle2D rect = getBounds2D();
+		Rectangle2D arect = aoi.getBounds2D();
 
-        // System.out.println("Rects Src:" + srect +
-        //                    "My: " + rect +
-        //                    "AOI: " + arect);
-        if ( ! arect.intersects(rect) )
-            return null;
-        Rectangle2D.intersect(arect, rect, arect);
+		// System.out.println("Rects Src:" + srect +
+		// "My: " + rect +
+		// "AOI: " + arect);
+		if (!arect.intersects(rect))
+			return null;
+		Rectangle2D.intersect(arect, rect, arect);
 
-        RenderedImage ri = null;
-        if ( arect.intersects(srect) ) {
-            srect = (Rectangle2D)srect.clone();
-            Rectangle2D.intersect(srect, arect, srect);
+		RenderedImage ri = null;
+		if (arect.intersects(srect)) {
+			srect = (Rectangle2D) srect.clone();
+			Rectangle2D.intersect(srect, arect, srect);
 
-            RenderContext srcRC = new RenderContext(usr2dev, srect, rh);
-            ri = src.createRendering(srcRC);
+			RenderContext srcRC = new RenderContext(usr2dev, srect, rh);
+			ri = src.createRendering(srcRC);
 
-            // System.out.println("Pad filt: " + src + " R: " +
-            //                    src.getBounds2D());
-        }
+			// System.out.println("Pad filt: " + src + " R: " +
+			// src.getBounds2D());
+		}
 
-        // No source image so create a 1,1 transparent one...
-        if (ri == null)
-            ri = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+		// No source image so create a 1,1 transparent one...
+		if (ri == null)
+			ri = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 
-        // io.sf.carte.echosvg.test.gvt.ImageDisplay.showImage("Paded: ", ri);
-        // System.out.println("RI: " + ri + " R: " + srect);
+		// io.sf.carte.echosvg.test.gvt.ImageDisplay.showImage("Paded: ", ri);
+		// System.out.println("RI: " + ri + " R: " + srect);
 
-        CachableRed cr = GraphicsUtil.wrap(ri);
+		CachableRed cr = GraphicsUtil.wrap(ri);
 
-        arect = usr2dev.createTransformedShape(arect).getBounds2D();
+		arect = usr2dev.createTransformedShape(arect).getBounds2D();
 
-        // System.out.println("Pad rect : " + arect);
-        // Use arect (my bounds intersect area of interest)
-        cr = new PadRed(cr, arect.getBounds(), padMode, rh);
-        return cr;
-    }
+		// System.out.println("Pad rect : " + arect);
+		// Use arect (my bounds intersect area of interest)
+		cr = new PadRed(cr, arect.getBounds(), padMode, rh);
+		return cr;
+	}
 
-    @Override
-    public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn) {
-        if (srcIndex != 0)
-            throw new IndexOutOfBoundsException("Affine only has one input");
+	@Override
+	public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn) {
+		if (srcIndex != 0)
+			throw new IndexOutOfBoundsException("Affine only has one input");
 
-        // We only depend on our source for stuff that is inside
-        // our bounds and his bounds (remember our bounds may be
-        // tighter than his in one or both directions).
-        Rectangle2D srect = getSource().getBounds2D();
-        if ( ! srect.intersects(outputRgn) )
-            return new Rectangle2D.Float();
-        Rectangle2D.intersect(srect, outputRgn, srect);
+		// We only depend on our source for stuff that is inside
+		// our bounds and his bounds (remember our bounds may be
+		// tighter than his in one or both directions).
+		Rectangle2D srect = getSource().getBounds2D();
+		if (!srect.intersects(outputRgn))
+			return new Rectangle2D.Float();
+		Rectangle2D.intersect(srect, outputRgn, srect);
 
-        Rectangle2D bounds = getBounds2D();
-        if ( ! srect.intersects(bounds) )
-            return new Rectangle2D.Float();
-        Rectangle2D.intersect(srect, bounds, srect);
-        return srect;
-    }
+		Rectangle2D bounds = getBounds2D();
+		if (!srect.intersects(bounds))
+			return new Rectangle2D.Float();
+		Rectangle2D.intersect(srect, bounds, srect);
+		return srect;
+	}
 
-    @Override
-    public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn) {
-        if (srcIndex != 0)
-            throw new IndexOutOfBoundsException("Affine only has one input");
+	@Override
+	public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn) {
+		if (srcIndex != 0)
+			throw new IndexOutOfBoundsException("Affine only has one input");
 
-        inputRgn = (Rectangle2D)inputRgn.clone();
-        Rectangle2D bounds = getBounds2D();
-        // Changes in the input region don't propogate outside our
-        // bounds.
-        if ( ! inputRgn.intersects(bounds) )
-            return new Rectangle2D.Float();
-        Rectangle2D.intersect(inputRgn, bounds, inputRgn);
-        return inputRgn;
-    }
+		inputRgn = (Rectangle2D) inputRgn.clone();
+		Rectangle2D bounds = getBounds2D();
+		// Changes in the input region don't propogate outside our
+		// bounds.
+		if (!inputRgn.intersects(bounds))
+			return new Rectangle2D.Float();
+		Rectangle2D.intersect(inputRgn, bounds, inputRgn);
+		return inputRgn;
+	}
 
 }

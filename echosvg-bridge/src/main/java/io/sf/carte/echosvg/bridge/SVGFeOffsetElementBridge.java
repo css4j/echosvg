@@ -38,90 +38,74 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGFeOffsetElementBridge
-    extends AbstractSVGFilterPrimitiveElementBridge {
+public class SVGFeOffsetElementBridge extends AbstractSVGFilterPrimitiveElementBridge {
 
-    /**
-     * Constructs a new bridge for the &lt;feOffset&gt; element.
-     */
-    public SVGFeOffsetElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;feOffset&gt; element.
+	 */
+	public SVGFeOffsetElementBridge() {
+	}
 
-    /**
-     * Returns 'feOffset'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_OFFSET_TAG;
-    }
+	/**
+	 * Returns 'feOffset'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_OFFSET_TAG;
+	}
 
-    /**
-     * Creates a <code>Filter</code> primitive according to the specified
-     * parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param filterElement the element that defines a filter
-     * @param filteredElement the element that references the filter
-     * @param filteredNode the graphics node to filter
-     *
-     * @param inputFilter the <code>Filter</code> that represents the current
-     *        filter input if the filter chain.
-     * @param filterRegion the filter area defined for the filter chain
-     *        the new node will be part of.
-     * @param filterMap a map where the mediator can map a name to the
-     *        <code>Filter</code> it creates. Other <code>FilterBridge</code>s
-     *        can then access a filter node from the filterMap if they
-     *        know its name.
-     */
-    @Override
-    public Filter createFilter(BridgeContext ctx,
-                               Element filterElement,
-                               Element filteredElement,
-                               GraphicsNode filteredNode,
-                               Filter inputFilter,
-                               Rectangle2D filterRegion,
-                               Map<String, Filter> filterMap) {
+	/**
+	 * Creates a <code>Filter</code> primitive according to the specified
+	 * parameters.
+	 *
+	 * @param ctx             the bridge context to use
+	 * @param filterElement   the element that defines a filter
+	 * @param filteredElement the element that references the filter
+	 * @param filteredNode    the graphics node to filter
+	 *
+	 * @param inputFilter     the <code>Filter</code> that represents the current
+	 *                        filter input if the filter chain.
+	 * @param filterRegion    the filter area defined for the filter chain the new
+	 *                        node will be part of.
+	 * @param filterMap       a map where the mediator can map a name to the
+	 *                        <code>Filter</code> it creates. Other
+	 *                        <code>FilterBridge</code>s can then access a filter
+	 *                        node from the filterMap if they know its name.
+	 */
+	@Override
+	public Filter createFilter(BridgeContext ctx, Element filterElement, Element filteredElement,
+			GraphicsNode filteredNode, Filter inputFilter, Rectangle2D filterRegion, Map<String, Filter> filterMap) {
 
+		// 'in' attribute
+		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
+		if (in == null) {
+			return null; // disable the filter
+		}
 
-        // 'in' attribute
-        Filter in = getIn(filterElement,
-                          filteredElement,
-                          filteredNode,
-                          inputFilter,
-                          filterMap,
-                          ctx);
-        if (in == null) {
-            return null; // disable the filter
-        }
+		// Default region is the size of in (if in is SourceGraphic or
+		// SourceAlpha it will already include a pad/crop to the
+		// proper filter region size).
+		Rectangle2D defaultRegion = in.getBounds2D();
+		Rectangle2D primitiveRegion = SVGUtilities.convertFilterPrimitiveRegion(filterElement, filteredElement,
+				filteredNode, defaultRegion, filterRegion, ctx);
 
-        // Default region is the size of in (if in is SourceGraphic or
-        // SourceAlpha it will already include a pad/crop to the
-        // proper filter region size).
-        Rectangle2D defaultRegion = in.getBounds2D();
-        Rectangle2D primitiveRegion
-            = SVGUtilities.convertFilterPrimitiveRegion(filterElement,
-                                                        filteredElement,
-                                                        filteredNode,
-                                                        defaultRegion,
-                                                        filterRegion,
-                                                        ctx);
+		float dx = convertNumber(filterElement, SVG_DX_ATTRIBUTE, 0, ctx);
+		float dy = convertNumber(filterElement, SVG_DY_ATTRIBUTE, 0, ctx);
+		AffineTransform at = AffineTransform.getTranslateInstance(dx, dy);
 
-        float dx = convertNumber(filterElement, SVG_DX_ATTRIBUTE, 0, ctx);
-        float dy = convertNumber(filterElement, SVG_DY_ATTRIBUTE, 0, ctx);
-        AffineTransform at = AffineTransform.getTranslateInstance(dx, dy);
+		// feOffset is a point operation. Therefore, to take the
+		// filter primitive region into account, only a pad operation
+		// on the input is required.
+		PadRable pad = new PadRable8Bit(in, primitiveRegion, PadMode.ZERO_PAD);
+		Filter filter = new AffineRable8Bit(pad, at);
+		filter = new PadRable8Bit(filter, primitiveRegion, PadMode.ZERO_PAD);
 
-        // feOffset is a point operation. Therefore, to take the
-        // filter primitive region into account, only a pad operation
-        // on the input is required.
-        PadRable pad = new PadRable8Bit(in, primitiveRegion, PadMode.ZERO_PAD);
-        Filter filter = new AffineRable8Bit(pad, at);
-        filter = new PadRable8Bit(filter, primitiveRegion, PadMode.ZERO_PAD);
+		// handle the 'color-interpolation-filters' property
+		handleColorInterpolationFilters(filter, filterElement);
 
-        // handle the 'color-interpolation-filters' property
-        handleColorInterpolationFilters(filter, filterElement);
+		// update the filter Map
+		updateFilterMap(filterElement, filter, filterMap);
 
-        // update the filter Map
-        updateFilterMap(filterElement, filter, filterMap);
-
-        return filter;
-    }
+		return filter;
+	}
 }

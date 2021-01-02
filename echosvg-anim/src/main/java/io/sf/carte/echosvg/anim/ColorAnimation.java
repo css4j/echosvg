@@ -31,21 +31,13 @@ import io.sf.carte.echosvg.anim.values.AnimatableValue;
  */
 public class ColorAnimation extends SimpleAnimation {
 
-    /**
-     * Creates a new ColorAnimation.
-     */
-    public ColorAnimation(TimedElement timedElement,
-                          AnimatableElement animatableElement,
-                          int calcMode,
-                          float[] keyTimes,
-                          float[] keySplines,
-                          boolean additive,
-                          boolean cumulative,
-                          AnimatableValue[] values,
-                          AnimatableValue from,
-                          AnimatableValue to,
-                          AnimatableValue by) {
-        super(timedElement, animatableElement, calcMode, keyTimes, keySplines,
-              additive, cumulative, values, from, to, by);
-    }
+	/**
+	 * Creates a new ColorAnimation.
+	 */
+	public ColorAnimation(TimedElement timedElement, AnimatableElement animatableElement, int calcMode,
+			float[] keyTimes, float[] keySplines, boolean additive, boolean cumulative, AnimatableValue[] values,
+			AnimatableValue from, AnimatableValue to, AnimatableValue by) {
+		super(timedElement, animatableElement, calcMode, keyTimes, keySplines, additive, cumulative, values, from, to,
+				by);
+	}
 }

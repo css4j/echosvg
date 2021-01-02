@@ -43,258 +43,266 @@ import io.sf.carte.echosvg.gvt.event.GraphicsNodeChangeEvent;
  */
 public class UpdateTracker extends GraphicsNodeChangeAdapter {
 
-    Map<WeakReference<AbstractGraphicsNode>, AffineTransform> dirtyNodes = null;
-    Map<WeakReference<AbstractGraphicsNode>, Rectangle2D> fromBounds = new HashMap<>();
-    protected static Rectangle2D NULL_RECT = new Rectangle();
+	Map<WeakReference<AbstractGraphicsNode>, AffineTransform> dirtyNodes = null;
+	Map<WeakReference<AbstractGraphicsNode>, Rectangle2D> fromBounds = new HashMap<>();
+	protected static Rectangle2D NULL_RECT = new Rectangle();
 
-    public UpdateTracker(){
-    }
+	public UpdateTracker() {
+	}
 
-    /**
-     * Tells whether the GVT tree has changed.
-     */
-    public boolean hasChanged() {
-        return (dirtyNodes != null);
-    }
+	/**
+	 * Tells whether the GVT tree has changed.
+	 */
+	public boolean hasChanged() {
+		return (dirtyNodes != null);
+	}
 
-    /**
-     * Returns the list of dirty areas on GVT.
-     */
-    public List<Shape> getDirtyAreas() {
-        if (dirtyNodes == null)
-            return null;
+	/**
+	 * Returns the list of dirty areas on GVT.
+	 */
+	public List<Shape> getDirtyAreas() {
+		if (dirtyNodes == null)
+			return null;
 
-        List<Shape> ret = new LinkedList<>();
-        Set<WeakReference<AbstractGraphicsNode>> keys = dirtyNodes.keySet();
-        for (WeakReference<AbstractGraphicsNode> gnWRef : keys) {
-            GraphicsNode gn = gnWRef.get();
-            // GraphicsNode  srcGN  = gn;
+		List<Shape> ret = new LinkedList<>();
+		Set<WeakReference<AbstractGraphicsNode>> keys = dirtyNodes.keySet();
+		for (WeakReference<AbstractGraphicsNode> gnWRef : keys) {
+			GraphicsNode gn = gnWRef.get();
+			// GraphicsNode srcGN = gn;
 
-            // if the weak ref has been cleared then this node is no
-            // longer part of the GVT tree (and the change should be
-            // reflected in some ancestor that should also be in the
-            // dirty list).
-            if (gn == null) continue;
+			// if the weak ref has been cleared then this node is no
+			// longer part of the GVT tree (and the change should be
+			// reflected in some ancestor that should also be in the
+			// dirty list).
+			if (gn == null)
+				continue;
 
-            AffineTransform oat;
-            oat = dirtyNodes.get(gnWRef);
-            if (oat != null) {
-                oat = new AffineTransform(oat);
-            }
+			AffineTransform oat;
+			oat = dirtyNodes.get(gnWRef);
+			if (oat != null) {
+				oat = new AffineTransform(oat);
+			}
 
-            Rectangle2D srcORgn = fromBounds.remove(gnWRef);
+			Rectangle2D srcORgn = fromBounds.remove(gnWRef);
 
-            Rectangle2D srcNRgn = null;
-            AffineTransform nat = null;
-            if (!(srcORgn instanceof ChngSrcRect)) {
-                // For change srcs don't use the new bounds of parent node.
-                srcNRgn = gn.getBounds();
-                nat = gn.getTransform();
-                if (nat != null)
-                    nat = new AffineTransform(nat);
-            }
+			Rectangle2D srcNRgn = null;
+			AffineTransform nat = null;
+			if (!(srcORgn instanceof ChngSrcRect)) {
+				// For change srcs don't use the new bounds of parent node.
+				srcNRgn = gn.getBounds();
+				nat = gn.getTransform();
+				if (nat != null)
+					nat = new AffineTransform(nat);
+			}
 
+			// System.out.println("Rgns: " + srcORgn + " - " + srcNRgn);
+			// System.out.println("ATs: " + oat + " - " + nat);
+			do {
+				// f.invalidateCache(oRng);
+				// f.invalidateCache(nRng);
 
-            // System.out.println("Rgns: " + srcORgn + " - " + srcNRgn);
-            // System.out.println("ATs: " + oat + " - " + nat);
-            do {
-                // f.invalidateCache(oRng);
-                // f.invalidateCache(nRng);
+				// f = gn.getEnableBackgroundGraphicsNodeRable(false);
+				// (need to push rgn through filter chain if any...)
+				// f.invalidateCache(oRng);
+				// f.invalidateCache(nRng);
 
-                // f = gn.getEnableBackgroundGraphicsNodeRable(false);
-                // (need to push rgn through filter chain if any...)
-                // f.invalidateCache(oRng);
-                // f.invalidateCache(nRng);
+				gn = gn.getParent();
+				if (gn == null)
+					break; // We reached the top of the tree
 
-                gn = gn.getParent();
-                if (gn == null)
-                    break; // We reached the top of the tree
+				Filter f = gn.getFilter();
+				if (f != null) {
+					srcNRgn = f.getBounds2D();
+					nat = null;
+				}
 
-                Filter f = gn.getFilter();
-                if (f != null) {
-                    srcNRgn = f.getBounds2D();
-                    nat = null;
-                }
+				// Get the parent's current Affine
+				AffineTransform at = gn.getTransform();
+				// Get the parent's Affine last time we rendered.
+				gnWRef = gn.getWeakReference();
+				AffineTransform poat = dirtyNodes.get(gnWRef);
+				if (poat == null)
+					poat = at;
+				if (poat != null) {
+					if (oat != null)
+						oat.preConcatenate(poat);
+					else
+						oat = new AffineTransform(poat);
+				}
 
-                // Get the parent's current Affine
-                AffineTransform at = gn.getTransform();
-                // Get the parent's Affine last time we rendered.
-                gnWRef = gn.getWeakReference();
-                AffineTransform poat = dirtyNodes.get(gnWRef);
-                if (poat == null) poat = at;
-                if (poat != null) {
-                    if (oat != null)
-                        oat.preConcatenate(poat);
-                    else
-                        oat = new AffineTransform(poat);
-                }
+				if (at != null) {
+					if (nat != null)
+						nat.preConcatenate(at);
+					else
+						nat = new AffineTransform(at);
+				}
+			} while (true);
 
-                if (at != null) {
-                    if (nat != null)
-                        nat.preConcatenate(at);
-                    else
-                        nat = new AffineTransform(at);
-                }
-            } while (true);
+			if (gn == null) {
+				// We made it to the root graphics node so add them.
+				// System.out.println
+				// ("Adding: " + oat + " - " + nat + "\n" +
+				// srcORgn + "\n" + srcNRgn + "\n");
+				// <!>
+				Shape oRgn = srcORgn;
+				if ((oRgn != null) && (oRgn != NULL_RECT)) {
+					if (oat != null)
+						oRgn = oat.createTransformedShape(srcORgn);
+					// System.err.println("GN: " + srcGN);
+					// System.err.println("Src: " + oRgn.getBounds2D());
+					ret.add(oRgn);
+				}
 
-            if (gn == null) {
-                // We made it to the root graphics node so add them.
-                // System.out.println
-                //      ("Adding: " + oat + " - " + nat + "\n" +
-                //       srcORgn + "\n" + srcNRgn + "\n");
-                // <!>
-                Shape oRgn = srcORgn;
-                if ((oRgn != null) && (oRgn != NULL_RECT)) {
-                    if (oat != null)
-                        oRgn = oat.createTransformedShape(srcORgn);
-                    // System.err.println("GN: " + srcGN);
-                    // System.err.println("Src: " + oRgn.getBounds2D());
-                    ret.add(oRgn);
-                }
+				if (srcNRgn != null) {
+					Shape nRgn = srcNRgn;
+					if (nat != null)
+						nRgn = nat.createTransformedShape(srcNRgn);
+					if (nRgn != null)
+						ret.add(nRgn);
+				}
+			}
+		}
 
-                if (srcNRgn != null) {
-                    Shape nRgn = srcNRgn;
-                    if (nat != null)
-                        nRgn = nat.createTransformedShape(srcNRgn);
-                    if (nRgn != null)
-                        ret.add(nRgn);
-                }
-            }
-        }
+		fromBounds.clear();
+		dirtyNodes.clear();
+		return ret;
+	}
 
-        fromBounds.clear();
-        dirtyNodes.clear();
-        return ret;
-    }
+	/**
+	 * This returns the dirty region for gn in the coordinate system given by
+	 * <code>at</code>.
+	 * 
+	 * @param gn Node tree to return dirty region for.
+	 * @param at Affine transform to coordinate space to accumulate dirty regions
+	 *           in.
+	 */
+	public Rectangle2D getNodeDirtyRegion(GraphicsNode gn, AffineTransform at) {
+		WeakReference<AbstractGraphicsNode> gnWRef = gn.getWeakReference();
+		AffineTransform nat = dirtyNodes.get(gnWRef);
+		if (nat == null)
+			nat = gn.getTransform();
+		if (nat != null) {
+			at = new AffineTransform(at);
+			at.concatenate(nat);
+		}
 
-    /**
-     * This returns the dirty region for gn in the coordinate system
-     * given by <code>at</code>.
-     * @param gn Node tree to return dirty region for.
-     * @param at Affine transform to coordinate space to accumulate
-     *           dirty regions in.
-     */
-    public Rectangle2D getNodeDirtyRegion(GraphicsNode gn,
-                                          AffineTransform at) {
-        WeakReference<AbstractGraphicsNode> gnWRef = gn.getWeakReference();
-        AffineTransform nat = dirtyNodes.get(gnWRef);
-        if (nat == null) nat = gn.getTransform();
-        if (nat != null) {
-            at = new AffineTransform(at);
-            at.concatenate(nat);
-        }
+		Filter f = gn.getFilter();
+		Rectangle2D ret = null;
+		if (gn instanceof CompositeGraphicsNode) {
+			CompositeGraphicsNode cgn = (CompositeGraphicsNode) gn;
 
-        Filter f= gn.getFilter();
-        Rectangle2D ret = null;
-        if (gn instanceof CompositeGraphicsNode) {
-            CompositeGraphicsNode cgn = (CompositeGraphicsNode)gn;
+			for (GraphicsNode childGN : cgn) {
+				Rectangle2D r2d = getNodeDirtyRegion(childGN, at);
+				if (r2d != null) {
+					if (f != null) {
+						// If we have a filter and a change region
+						// Update our full filter extents.
+						Shape s = at.createTransformedShape(f.getBounds2D());
+						ret = s.getBounds2D();
+						break;
+					}
+					if ((ret == null) || (ret == NULL_RECT))
+						ret = r2d;
+					// else ret = ret.createUnion(r2d);
+					else
+						ret.add(r2d);
+				}
+			}
+		} else {
+			ret = fromBounds.remove(gnWRef);
+			if (ret == null) {
+				if (f != null)
+					ret = f.getBounds2D();
+				else
+					ret = gn.getBounds();
+			} else if (ret == NULL_RECT)
+				ret = null;
+			if (ret != null)
+				ret = at.createTransformedShape(ret).getBounds2D();
+		}
+		return ret;
+	}
 
-            for (GraphicsNode childGN : cgn) {
-                Rectangle2D r2d = getNodeDirtyRegion(childGN, at);
-                if (r2d != null) {
-                    if (f != null) {
-                        // If we have a filter and a change region
-                        // Update our full filter extents.
-                        Shape s = at.createTransformedShape(f.getBounds2D());
-                        ret = s.getBounds2D();
-                        break;
-                    }
-                    if ((ret == null) || (ret == NULL_RECT)) ret = r2d;
-                        //else ret = ret.createUnion(r2d);
-                    else ret.add(r2d);
-                }
-            }
-        } else {
-            ret = fromBounds.remove(gnWRef);
-            if (ret == null) {
-                if (f != null) ret = f.getBounds2D();
-                else           ret = gn.getBounds();
-            } else if (ret == NULL_RECT)
-                ret = null;
-            if (ret != null)
-                ret = at.createTransformedShape(ret).getBounds2D();
-        }
-        return ret;
-    }
+	public Rectangle2D getNodeDirtyRegion(GraphicsNode gn) {
+		return getNodeDirtyRegion(gn, new AffineTransform());
+	}
 
-    public Rectangle2D getNodeDirtyRegion(GraphicsNode gn) {
-        return getNodeDirtyRegion(gn, new AffineTransform());
-    }
+	/**
+	 * Receives notification of a change to a GraphicsNode.
+	 * 
+	 * @param gnce The event object describing the GraphicsNode change.
+	 */
+	@Override
+	public void changeStarted(GraphicsNodeChangeEvent gnce) {
+		// System.out.println("A node has changed for: " + this);
+		GraphicsNode gn = gnce.getGraphicsNode();
+		WeakReference<AbstractGraphicsNode> gnWRef = gn.getWeakReference();
 
-    /**
-     * Receives notification of a change to a GraphicsNode.
-     * @param gnce The event object describing the GraphicsNode change.
-     */
-    @Override
-    public void changeStarted(GraphicsNodeChangeEvent gnce) {
-        // System.out.println("A node has changed for: " + this);
-        GraphicsNode gn = gnce.getGraphicsNode();
-        WeakReference<AbstractGraphicsNode> gnWRef = gn.getWeakReference();
+		boolean doPut = false;
+		if (dirtyNodes == null) {
+			dirtyNodes = new HashMap<>();
+			doPut = true;
+		} else if (!dirtyNodes.containsKey(gnWRef))
+			doPut = true;
 
-        boolean doPut = false;
-        if (dirtyNodes == null) {
-            dirtyNodes = new HashMap<>();
-            doPut = true;
-        } else if (!dirtyNodes.containsKey(gnWRef))
-            doPut = true;
+		if (doPut) {
+			AffineTransform at = gn.getTransform();
+			if (at != null)
+				at = (AffineTransform) at.clone();
+			else
+				at = new AffineTransform();
+			dirtyNodes.put(gnWRef, at);
+		}
 
-        if (doPut) {
-            AffineTransform at = gn.getTransform();
-            if (at != null) at = (AffineTransform)at.clone();
-            else            at = new AffineTransform();
-            dirtyNodes.put(gnWRef, at);
-        }
+		GraphicsNode chngSrc = gnce.getChangeSrc();
+		Rectangle2D rgn = null;
+		if (chngSrc != null) {
+			// A child node is moving in the tree so assign it's dirty
+			// regions to this node before it moves.
+			Rectangle2D drgn = getNodeDirtyRegion(chngSrc);
+			if (drgn != null)
+				rgn = new ChngSrcRect(drgn);
+		} else {
+			// Otherwise just use gn's current region.
+			rgn = gn.getBounds();
+		}
+		// Add this dirty region to any existing dirty region.
+		Rectangle2D r2d = fromBounds.remove(gnWRef);
+		if (rgn != null) {
+			if ((r2d != null) && (r2d != NULL_RECT)) {
+				// System.err.println("GN: " + gn);
+				// System.err.println("R2d: " + r2d);
+				// System.err.println("Rgn: " + rgn);
+				// r2d = r2d.createUnion(rgn);
+				r2d.add(rgn);
+				// System.err.println("Union: " + r2d);
+			} else
+				r2d = rgn;
+		}
 
-        GraphicsNode chngSrc = gnce.getChangeSrc();
-        Rectangle2D rgn = null;
-        if (chngSrc != null) {
-            // A child node is moving in the tree so assign it's dirty
-            // regions to this node before it moves.
-            Rectangle2D drgn = getNodeDirtyRegion(chngSrc);
-            if (drgn != null)
-                rgn = new ChngSrcRect(drgn);
-        } else {
-            // Otherwise just use gn's current region.
-            rgn = gn.getBounds();
-        }
-        // Add this dirty region to any existing dirty region.
-        Rectangle2D r2d = fromBounds.remove(gnWRef);
-        if (rgn != null) {
-            if ((r2d != null) && (r2d != NULL_RECT)) {
-                // System.err.println("GN: " + gn);
-                // System.err.println("R2d: " + r2d);
-                // System.err.println("Rgn: " + rgn);
-                //r2d = r2d.createUnion(rgn);
-                r2d.add(rgn);
-                // System.err.println("Union: " + r2d);
-            }
-            else             r2d = rgn;
-        }
+		// if ((gn instanceof CompositeGraphicsNode) &&
+		// (r2d.getWidth() > 200)) {
+		// new Exception("Adding Large: " + gn).printStackTrace();
+		// }
 
-        // if ((gn instanceof CompositeGraphicsNode) &&
-        //     (r2d.getWidth() > 200)) {
-        //     new Exception("Adding Large: " + gn).printStackTrace();
-        // }
+		// Store the bounds for the future.
+		if (r2d == null)
+			r2d = NULL_RECT;
+		fromBounds.put(gnWRef, r2d);
+	}
 
-        // Store the bounds for the future.
-        if (r2d == null)
-            r2d = NULL_RECT;
-        fromBounds.put(gnWRef, r2d);
-    }
+	static class ChngSrcRect extends Rectangle2D.Float {
+		private static final long serialVersionUID = 1L;
 
-    static class ChngSrcRect extends Rectangle2D.Float {
-        private static final long serialVersionUID = 1L;
+		ChngSrcRect(Rectangle2D r2d) {
+			super((float) r2d.getX(), (float) r2d.getY(), (float) r2d.getWidth(), (float) r2d.getHeight());
+		}
+	}
 
-        ChngSrcRect(Rectangle2D r2d) {
-            super((float)r2d.getX(), (float)r2d.getY(),
-                  (float)r2d.getWidth(), (float)r2d.getHeight());
-        }
-    }
-
-    /**
-     * Clears the tracker.
-     */
-    public void clear() {
-        dirtyNodes = null;
-    }
+	/**
+	 * Clears the tracker.
+	 */
+	public void clear() {
+		dirtyNodes = null;
+	}
 }

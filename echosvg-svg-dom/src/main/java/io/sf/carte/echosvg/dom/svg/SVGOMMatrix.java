@@ -21,32 +21,32 @@ package io.sf.carte.echosvg.dom.svg;
 import java.awt.geom.AffineTransform;
 
 /**
- * This class provides an implementation of the {@link
- * org.w3c.dom.svg.SVGMatrix} interface.
+ * This class provides an implementation of the
+ * {@link org.w3c.dom.svg.SVGMatrix} interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGOMMatrix extends AbstractSVGMatrix {
-    
-    /**
-     * The AffineTransform used to implement the matrix.
-     */
-    protected AffineTransform affineTransform;
 
-    /**
-     * Creates a new SVGMatrix.
-     */
-    public SVGOMMatrix(AffineTransform at) {
-        affineTransform = at;
-    }
+	/**
+	 * The AffineTransform used to implement the matrix.
+	 */
+	protected AffineTransform affineTransform;
 
-    /**
-     * Returns the associated AffineTransform.
-     */
-    @Override
-    protected AffineTransform getAffineTransform() {
-        return affineTransform;
-    }
+	/**
+	 * Creates a new SVGMatrix.
+	 */
+	public SVGOMMatrix(AffineTransform at) {
+		affineTransform = at;
+	}
+
+	/**
+	 * Returns the associated AffineTransform.
+	 */
+	@Override
+	protected AffineTransform getAffineTransform() {
+		return affineTransform;
+	}
 }

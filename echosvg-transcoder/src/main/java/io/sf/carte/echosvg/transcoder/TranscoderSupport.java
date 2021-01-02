@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.transcoder;
 import java.util.Map;
 
 /**
- * This is a utility class that can be used by transcoders that
- * support transcoding hints and/or error handler.
+ * This is a utility class that can be used by transcoders that support
+ * transcoding hints and/or error handler.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author For later modifications, see Git history.
@@ -30,77 +30,80 @@ import java.util.Map;
  */
 public class TranscoderSupport {
 
-    static final ErrorHandler defaultErrorHandler = new DefaultErrorHandler();
+	static final ErrorHandler defaultErrorHandler = new DefaultErrorHandler();
 
-    /** The transcoding hints. */
-    protected TranscodingHints hints = new TranscodingHints();
-    /** The error handler used to report warnings and errors. */
-    protected ErrorHandler handler = defaultErrorHandler;
+	/** The transcoding hints. */
+	protected TranscodingHints hints = new TranscodingHints();
+	/** The error handler used to report warnings and errors. */
+	protected ErrorHandler handler = defaultErrorHandler;
 
-    /**
-     * Constructs a new <code>TranscoderSupport</code>.
-     */
-    public TranscoderSupport() { }
+	/**
+	 * Constructs a new <code>TranscoderSupport</code>.
+	 */
+	public TranscoderSupport() {
+	}
 
-    /**
-     * Returns a copy of the transcoding hints of this transcoder.
-     */
-    public TranscodingHints getTranscodingHints() {
-        return new TranscodingHints(hints);
-    }
+	/**
+	 * Returns a copy of the transcoding hints of this transcoder.
+	 */
+	public TranscodingHints getTranscodingHints() {
+		return new TranscodingHints(hints);
+	}
 
-    /**
-     * Sets the value of a single preference for the transcoding process.
-     * @param key the key of the hint to be set
-     * @param value the value indicating preferences for the specified
-     * hint category.
-     */
-    public void addTranscodingHint(TranscodingHints.Key key, Object value) {
-        hints.put(key, value);
-    }
+	/**
+	 * Sets the value of a single preference for the transcoding process.
+	 * 
+	 * @param key   the key of the hint to be set
+	 * @param value the value indicating preferences for the specified hint
+	 *              category.
+	 */
+	public void addTranscodingHint(TranscodingHints.Key key, Object value) {
+		hints.put(key, value);
+	}
 
-    /**
-     * Removes the value of a single preference for the transcoding process.
-     * @param key the key of the hint to remove
-     */
-    public void removeTranscodingHint(TranscodingHints.Key key) {
-        hints.remove(key);
-    }
+	/**
+	 * Removes the value of a single preference for the transcoding process.
+	 * 
+	 * @param key the key of the hint to remove
+	 */
+	public void removeTranscodingHint(TranscodingHints.Key key) {
+		hints.remove(key);
+	}
 
-    /**
-     * Replaces the values of all preferences for the transcoding algorithms
-     * with the specified hints.
-     * @param hints the rendering hints to be set
-     */
-    public void setTranscodingHints(Map<TranscodingHints.Key, ?> hints) {
-        this.hints.putAll(hints);
-    }
+	/**
+	 * Replaces the values of all preferences for the transcoding algorithms with
+	 * the specified hints.
+	 * 
+	 * @param hints the rendering hints to be set
+	 */
+	public void setTranscodingHints(Map<TranscodingHints.Key, ?> hints) {
+		this.hints.putAll(hints);
+	}
 
-    /**
-     * Sets the values of all preferences for the transcoding algorithms
-     * with the specified hints.
-     * @param hints the rendering hints to be set
-     */
-    public void setTranscodingHints(TranscodingHints hints) {
-        this.hints = hints;
-    }
+	/**
+	 * Sets the values of all preferences for the transcoding algorithms with the
+	 * specified hints.
+	 * 
+	 * @param hints the rendering hints to be set
+	 */
+	public void setTranscodingHints(TranscodingHints hints) {
+		this.hints = hints;
+	}
 
-    /**
-     * Sets the error handler this transcoder may use to report
-     * warnings and errors.
-     * @param handler to ErrorHandler to use
-     */
-    public void setErrorHandler(ErrorHandler handler) {
-        this.handler = handler;
-    }
+	/**
+	 * Sets the error handler this transcoder may use to report warnings and errors.
+	 * 
+	 * @param handler to ErrorHandler to use
+	 */
+	public void setErrorHandler(ErrorHandler handler) {
+		this.handler = handler;
+	}
 
-    /**
-     * Returns the error handler this transcoder uses to report
-     * warnings and errors, or null if any.
-     */
-    public ErrorHandler getErrorHandler() {
-        return handler;
-    }
+	/**
+	 * Returns the error handler this transcoder uses to report warnings and errors,
+	 * or null if any.
+	 */
+	public ErrorHandler getErrorHandler() {
+		return handler;
+	}
 }
-
-

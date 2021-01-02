@@ -28,46 +28,46 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public class GenericEntityReference extends AbstractEntityReference {
-    private static final long serialVersionUID = 1L;
-    /**
-     * Is this node immutable?
-     */
-    protected boolean readonly;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Is this node immutable?
+	 */
+	protected boolean readonly;
 
-    /**
-     * Creates a new EntityReference object.
-     */
-    protected GenericEntityReference() {
-    }
+	/**
+	 * Creates a new EntityReference object.
+	 */
+	protected GenericEntityReference() {
+	}
 
-    /**
-     * Creates a new EntityReference object.
-     */
-    public GenericEntityReference(String name, AbstractDocument owner) {
-        super(name, owner);
-    }
+	/**
+	 * Creates a new EntityReference object.
+	 */
+	public GenericEntityReference(String name, AbstractDocument owner) {
+		super(name, owner);
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return readonly;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-        readonly = v;
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+		readonly = v;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new GenericEntityReference();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new GenericEntityReference();
+	}
 }

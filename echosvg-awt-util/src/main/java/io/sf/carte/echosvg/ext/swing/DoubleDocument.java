@@ -31,83 +31,79 @@ import javax.swing.text.PlainDocument;
  */
 public class DoubleDocument extends PlainDocument {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Strip all non digit characters.  The first character must be '-' or '+'.
-     * Only one '.' is allowed.
-     */
-    @Override
-    public void insertString(int offs, String str, AttributeSet a)
-            throws BadLocationException {
+	/**
+	 * Strip all non digit characters. The first character must be '-' or '+'. Only
+	 * one '.' is allowed.
+	 */
+	@Override
+	public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
 
-        if (str == null) {
-            return;
-        }
+		if (str == null) {
+			return;
+		}
 
-        // Get current value
-        String curVal = getText(0, getLength());
-        boolean hasDot = curVal.indexOf('.') != -1;
+		// Get current value
+		String curVal = getText(0, getLength());
+		boolean hasDot = curVal.indexOf('.') != -1;
 
-        // Strip non digit characters
-        char[] buffer = str.toCharArray();
-        char[] digit = new char[buffer.length];
-        int j = 0;
+		// Strip non digit characters
+		char[] buffer = str.toCharArray();
+		char[] digit = new char[buffer.length];
+		int j = 0;
 
-        if(offs==0 && buffer!=null && buffer.length>0 && buffer[0]=='-')
-            digit[j++] = buffer[0];
+		if (offs == 0 && buffer != null && buffer.length > 0 && buffer[0] == '-')
+			digit[j++] = buffer[0];
 
-        for (char aBuffer : buffer) {
-            if (Character.isDigit(aBuffer))
-                digit[j++] = aBuffer;
-            if (!hasDot && aBuffer == '.') {
-                digit[j++] = '.';
-                hasDot = true;
-            }
-        }
+		for (char aBuffer : buffer) {
+			if (Character.isDigit(aBuffer))
+				digit[j++] = aBuffer;
+			if (!hasDot && aBuffer == '.') {
+				digit[j++] = '.';
+				hasDot = true;
+			}
+		}
 
-        // Now, test that new value is within range.
-        String added = new String(digit, 0, j);
-        try{
-            StringBuffer val = new StringBuffer(curVal);
-            val.insert(offs, added);
-            String valStr = val.toString();
-            if( valStr.equals(".") || valStr.equals("-") || valStr.equals("-."))
-                super.insertString(offs, added, a);
-            else{
-                Double.valueOf( valStr );
-                super.insertString(offs, added, a);
-            }
-        }catch(NumberFormatException e){
-            // Ignore insertion, as it results in an out of range value
-        }
-    }
+		// Now, test that new value is within range.
+		String added = new String(digit, 0, j);
+		try {
+			StringBuffer val = new StringBuffer(curVal);
+			val.insert(offs, added);
+			String valStr = val.toString();
+			if (valStr.equals(".") || valStr.equals("-") || valStr.equals("-."))
+				super.insertString(offs, added, a);
+			else {
+				Double.valueOf(valStr);
+				super.insertString(offs, added, a);
+			}
+		} catch (NumberFormatException e) {
+			// Ignore insertion, as it results in an out of range value
+		}
+	}
 
-    public void setValue(double d){
-        try{
-            remove(0, getLength());
-            insertString(0, String.valueOf( d ), null);
-        }catch(BadLocationException e){
-            // Will not happen because we are sure
-            // we use the proper range
-        }
-    }
+	public void setValue(double d) {
+		try {
+			remove(0, getLength());
+			insertString(0, String.valueOf(d), null);
+		} catch (BadLocationException e) {
+			// Will not happen because we are sure
+			// we use the proper range
+		}
+	}
 
-    public double getValue(){
-        try{
-            String t = getText(0, getLength());
-            if(t != null && t.length() > 0){
-                return Double.parseDouble(t);
-            }
-            else{
-                return 0;
-            }
-        }catch(BadLocationException e){
-            // Will not happen because we are sure
-            // we use the proper range
-            throw new RuntimeException( e.getMessage() );
-        }
-    }
+	public double getValue() {
+		try {
+			String t = getText(0, getLength());
+			if (t != null && t.length() > 0) {
+				return Double.parseDouble(t);
+			} else {
+				return 0;
+			}
+		} catch (BadLocationException e) {
+			// Will not happen because we are sure
+			// we use the proper range
+			throw new RuntimeException(e.getMessage());
+		}
+	}
 }
-
-

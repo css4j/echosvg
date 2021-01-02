@@ -34,125 +34,118 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFEOffsetElement
-    extends    SVGOMFilterPrimitiveStandardAttributes
-    implements SVGFEOffsetElement {
+public class SVGOMFEOffsetElement extends SVGOMFilterPrimitiveStandardAttributes implements SVGFEOffsetElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
-        t.put(null, SVG_IN_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_CDATA));
-        t.put(null, SVG_DX_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_DY_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
+				SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
+		t.put(null, SVG_IN_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_CDATA));
+		t.put(null, SVG_DX_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_DY_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'in' attribute value.
-     */
-    protected SVGOMAnimatedString in;
+	/**
+	 * The 'in' attribute value.
+	 */
+	protected SVGOMAnimatedString in;
 
-    /**
-     * The 'dx' attribute value.
-     */
-    protected SVGOMAnimatedNumber dx;
+	/**
+	 * The 'dx' attribute value.
+	 */
+	protected SVGOMAnimatedNumber dx;
 
-    /**
-     * The 'dy' attribute value.
-     */
-    protected SVGOMAnimatedNumber dy;
+	/**
+	 * The 'dy' attribute value.
+	 */
+	protected SVGOMAnimatedNumber dy;
 
-    /**
-     * Creates a new SVGOMFEOffsetElement object.
-     */
-    protected SVGOMFEOffsetElement() {
-    }
+	/**
+	 * Creates a new SVGOMFEOffsetElement object.
+	 */
+	protected SVGOMFEOffsetElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFEOffsetElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFEOffsetElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFEOffsetElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFEOffsetElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
-        dx = createLiveAnimatedNumber(null, SVG_DX_ATTRIBUTE, 0f);
-        dy = createLiveAnimatedNumber(null, SVG_DY_ATTRIBUTE, 0f);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
+		dx = createLiveAnimatedNumber(null, SVG_DX_ATTRIBUTE, 0f);
+		dy = createLiveAnimatedNumber(null, SVG_DY_ATTRIBUTE, 0f);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_OFFSET_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_OFFSET_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGFEOffsetElement#getIn1()}.
-     */
-    @Override
-    public SVGAnimatedString getIn1() {
-        return in;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEOffsetElement#getIn1()}.
+	 */
+	@Override
+	public SVGAnimatedString getIn1() {
+		return in;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFEOffsetElement#getDx()}.
-     */
-    @Override
-    public SVGAnimatedNumber getDx() {
-        return dx;
-    } 
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGFEOffsetElement#getDx()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getDx() {
+		return dx;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFEOffsetElement#getDy()}.
-     */
-    @Override
-    public SVGAnimatedNumber getDy() {
-        return dy;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGFEOffsetElement#getDy()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getDy() {
+		return dy;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFEOffsetElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFEOffsetElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

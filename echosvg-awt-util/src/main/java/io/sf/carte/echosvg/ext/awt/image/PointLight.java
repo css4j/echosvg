@@ -28,77 +28,74 @@ import java.awt.Color;
  * @version $Id$
  */
 public class PointLight extends AbstractLight {
-    /**
-     * The light position, in user space
-     */
-    private double lightX, lightY, lightZ;
+	/**
+	 * The light position, in user space
+	 */
+	private double lightX, lightY, lightZ;
 
-    /**
-     * @return the light's x position
-     */
-    public double getLightX(){
-        return lightX;
-    }
+	/**
+	 * @return the light's x position
+	 */
+	public double getLightX() {
+		return lightX;
+	}
 
-    /**
-     * @return the light's y position
-     */
-    public double getLightY(){
-        return lightY;
-    }
+	/**
+	 * @return the light's y position
+	 */
+	public double getLightY() {
+		return lightY;
+	}
 
-    /**
-     * @return the light's z position
-     */
-    public double getLightZ(){
-        return lightZ;
-    }
+	/**
+	 * @return the light's z position
+	 */
+	public double getLightZ() {
+		return lightZ;
+	}
 
-    public PointLight(double lightX, double lightY, double lightZ,
-                      Color lightColor){
-        super(lightColor);
-        this.lightX = lightX;
-        this.lightY = lightY;
-        this.lightZ = lightZ;
-    }
+	public PointLight(double lightX, double lightY, double lightZ, Color lightColor) {
+		super(lightColor);
+		this.lightX = lightX;
+		this.lightY = lightY;
+		this.lightZ = lightZ;
+	}
 
-    /**
-     * @return true if the light is constant over the whole surface
-     */
-    @Override
-    public boolean isConstant(){
-        return false;
-    }
+	/**
+	 * @return true if the light is constant over the whole surface
+	 */
+	@Override
+	public boolean isConstant() {
+		return false;
+	}
 
-    /**
-     * Computes the light vector in (x, y, z)
-     *
-     * @param x x-axis coordinate where the light should be computed
-     * @param y y-axis coordinate where the light should be computed
-     * @param z z-axis coordinate where the light should be computed
-     * @param L array of length 3 where the result is stored
-     */
-    @Override
-    public final void getLight(final double x, final double y, final double z,
-                               final double[] L){
+	/**
+	 * Computes the light vector in (x, y, z)
+	 *
+	 * @param x x-axis coordinate where the light should be computed
+	 * @param y y-axis coordinate where the light should be computed
+	 * @param z z-axis coordinate where the light should be computed
+	 * @param L array of length 3 where the result is stored
+	 */
+	@Override
+	public final void getLight(final double x, final double y, final double z, final double[] L) {
 
-        double L0 = lightX - x;
-        double L1 = lightY - y;
-        double L2 = lightZ - z;
+		double L0 = lightX - x;
+		double L1 = lightY - y;
+		double L2 = lightZ - z;
 
-        final double norm = Math.sqrt( L0*L0 + L1*L1 + L2*L2 );
+		final double norm = Math.sqrt(L0 * L0 + L1 * L1 + L2 * L2);
 
-        if(norm > 0){
-            final double invNorm = 1.0/norm;
-            L0 *= invNorm;
-            L1 *= invNorm;
-            L2 *= invNorm;
-        }
+		if (norm > 0) {
+			final double invNorm = 1.0 / norm;
+			L0 *= invNorm;
+			L1 *= invNorm;
+			L2 *= invNorm;
+		}
 
-        // copy the work-variables into return-array
-        L[ 0 ] = L0;
-        L[ 1 ] = L1;
-        L[ 2 ] = L2;
-    }
+		// copy the work-variables into return-array
+		L[0] = L0;
+		L[1] = L1;
+		L[2] = L2;
+	}
 }
-

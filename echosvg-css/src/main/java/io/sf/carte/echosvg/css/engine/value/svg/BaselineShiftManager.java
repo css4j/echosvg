@@ -43,145 +43,133 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class BaselineShiftManager extends LengthManager {
 
-    /**
-     * The identifier values.
-     */
-    protected static final StringMap values = new StringMap();
-    static {
-        values.put(CSSConstants.CSS_BASELINE_VALUE,
-                   SVGValueConstants.BASELINE_VALUE);
-        values.put(CSSConstants.CSS_SUB_VALUE,
-                   SVGValueConstants.SUB_VALUE);
-        values.put(CSSConstants.CSS_SUPER_VALUE,
-                   SVGValueConstants.SUPER_VALUE);
-    }
+	/**
+	 * The identifier values.
+	 */
+	protected static final StringMap values = new StringMap();
+	static {
+		values.put(CSSConstants.CSS_BASELINE_VALUE, SVGValueConstants.BASELINE_VALUE);
+		values.put(CSSConstants.CSS_SUB_VALUE, SVGValueConstants.SUB_VALUE);
+		values.put(CSSConstants.CSS_SUPER_VALUE, SVGValueConstants.SUPER_VALUE);
+	}
 
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_BASELINE_SHIFT_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_BASELINE_SHIFT_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_BASELINE_SHIFT_PROPERTY;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_BASELINE_SHIFT_PROPERTY;
+	}
 
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return SVGValueConstants.BASELINE_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return SVGValueConstants.BASELINE_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-        case IDENT:
-            Object v = values.get(lu.getStringValue().toLowerCase().intern());
-            if (v == null) {
-                throw createInvalidIdentifierDOMException(lu.getStringValue());
-            }
-            return (Value)v;
-        default:
-            break;
-        }
-        return super.createValue(lu, engine);
-    }
+		case IDENT:
+			Object v = values.get(lu.getStringValue().toLowerCase().intern());
+			if (v == null) {
+				throw createInvalidIdentifierDOMException(lu.getStringValue());
+			}
+			return (Value) v;
+		default:
+			break;
+		}
+		return super.createValue(lu, engine);
+	}
 
-    /**
-     * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        if (type != CSSPrimitiveValue.CSS_IDENT) {
-            throw createInvalidIdentifierDOMException(value);
-        }
-        Object v = values.get(value.toLowerCase().intern());
-        if (v == null) {
-            throw createInvalidIdentifierDOMException(value);
-        }
-        return (Value)v;
-    }
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+		if (type != CSSPrimitiveValue.CSS_IDENT) {
+			throw createInvalidIdentifierDOMException(value);
+		}
+		Object v = values.get(value.toLowerCase().intern());
+		if (v == null) {
+			throw createInvalidIdentifierDOMException(value);
+		}
+		return (Value) v;
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
-     */
-    @Override
-    public Value computeValue(CSSStylableElement elt,
-                              String pseudo,
-                              CSSEngine engine,
-                              int idx,
-                              StyleMap sm,
-                              Value value) {
-        if (value.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
-            sm.putLineHeightRelative(idx, true);
+	/**
+	 * Implements
+	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
+	 */
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		if (value.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
+			sm.putLineHeightRelative(idx, true);
 
-            int fsi = engine.getLineHeightIndex();
-            CSSStylableElement parent;
-            parent = (CSSStylableElement)elt.getParentNode();
-            if (parent == null) {
-                // Hmmm somthing pretty odd - can't happen accordint to spec,
-                // should always have text parent.
-                // http://www.w3.org/TR/SVG11/text.html#BaselineShiftProperty
-                parent = elt;
-            }
-            Value fs = engine.getComputedStyle(parent, pseudo, fsi);
-            float fsv = fs.getFloatValue();
-            float v = value.getFloatValue();
-            return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                                  (fsv * v) / 100f);
-        }
-        return super.computeValue(elt, pseudo, engine, idx, sm, value);
-    }
+			int fsi = engine.getLineHeightIndex();
+			CSSStylableElement parent;
+			parent = (CSSStylableElement) elt.getParentNode();
+			if (parent == null) {
+				// Hmmm somthing pretty odd - can't happen accordint to spec,
+				// should always have text parent.
+				// http://www.w3.org/TR/SVG11/text.html#BaselineShiftProperty
+				parent = elt;
+			}
+			Value fs = engine.getComputedStyle(parent, pseudo, fsi);
+			float fsv = fs.getFloatValue();
+			float v = value.getFloatValue();
+			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, (fsv * v) / 100f);
+		}
+		return super.computeValue(elt, pseudo, engine, idx, sm, value);
+	}
 
-
-    /**
-     * Indicates the orientation of the property associated with
-     * this manager.
-     */
-    @Override
-    protected int getOrientation() {
-        return BOTH_ORIENTATION; // Not used
-    }
+	/**
+	 * Indicates the orientation of the property associated with this manager.
+	 */
+	@Override
+	protected int getOrientation() {
+		return BOTH_ORIENTATION; // Not used
+	}
 
 }

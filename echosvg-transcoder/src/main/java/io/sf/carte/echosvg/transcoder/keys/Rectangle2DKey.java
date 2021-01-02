@@ -31,8 +31,8 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  */
 public class Rectangle2DKey extends TranscodingHints.Key {
 
-    @Override
-    public boolean isCompatibleValue(Object v) {
-        return (v instanceof Rectangle2D);
-    }
+	@Override
+	public boolean isCompatibleValue(Object v) {
+		return (v instanceof Rectangle2D);
+	}
 }

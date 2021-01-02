@@ -34,75 +34,72 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class StrokeLinecapManager extends IdentifierManager {
 
-    /**
-     * The identifier values.
-     */
-    protected static final StringMap values = new StringMap();
-    static {
-        values.put(CSSConstants.CSS_BUTT_VALUE,
-                   SVGValueConstants.BUTT_VALUE);
-        values.put(CSSConstants.CSS_ROUND_VALUE,
-                   SVGValueConstants.ROUND_VALUE);
-        values.put(CSSConstants.CSS_SQUARE_VALUE,
-                   SVGValueConstants.SQUARE_VALUE);
-    }
+	/**
+	 * The identifier values.
+	 */
+	protected static final StringMap values = new StringMap();
+	static {
+		values.put(CSSConstants.CSS_BUTT_VALUE, SVGValueConstants.BUTT_VALUE);
+		values.put(CSSConstants.CSS_ROUND_VALUE, SVGValueConstants.ROUND_VALUE);
+		values.put(CSSConstants.CSS_SQUARE_VALUE, SVGValueConstants.SQUARE_VALUE);
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_IDENT;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_IDENT;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_STROKE_LINECAP_PROPERTY;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_STROKE_LINECAP_PROPERTY;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return SVGValueConstants.BUTT_VALUE;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return SVGValueConstants.BUTT_VALUE;
+	}
 
-    /**
-     * Implements {@link IdentifierManager#getIdentifiers()}.
-     */
-    @Override
-    public StringMap getIdentifiers() {
-        return values;
-    }
+	/**
+	 * Implements {@link IdentifierManager#getIdentifiers()}.
+	 */
+	@Override
+	public StringMap getIdentifiers() {
+		return values;
+	}
 }

@@ -29,9 +29,10 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 
 /**
- * Simple Text Component to edit xml document with integrated undo / redo behaviour.
- * If you looking for how to create editor component with syntax highlight,
- * just create any JEditorPane and supply it with XMLEditoKit eg:
+ * Simple Text Component to edit xml document with integrated undo / redo
+ * behaviour. If you looking for how to create editor component with syntax
+ * highlight, just create any JEditorPane and supply it with XMLEditoKit eg:
+ * 
  * <pre>
  * JEditorPane editor = new JEditorPane();
  * editor.setEditorKitForContentType(XMLEditorKit.XML_MIME_TYPE, new XMLEditorKit();
@@ -44,62 +45,64 @@ import javax.swing.undo.UndoManager;
  */
 public class XMLTextEditor extends JEditorPane {
 
-    private static final long serialVersionUID = 1L;
-    protected UndoManager undoManager;
-    
-    /** Creates a new instance of XMLEditorPane */
-    public XMLTextEditor() {
-        super();
-        XMLEditorKit kit = new XMLEditorKit();
-        setEditorKitForContentType(XMLEditorKit.XML_MIME_TYPE, kit);
-        setContentType(XMLEditorKit.XML_MIME_TYPE);
-        setBackground(Color.white);
-        //setFont(new Font("Monospaced", Font.PLAIN, 12));
-                
-        // add undoable edit
-        undoManager = new UndoManager();
-        UndoableEditListener undoableEditHandler = new UndoableEditListener() {
-            @Override
-            public void undoableEditHappened(UndoableEditEvent e) {
-                undoManager.addEdit(e.getEdit());
-            }
-        };
-        getDocument().addUndoableEditListener(undoableEditHandler);
-    }
-    
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setText(String t) {
-        super.setText(t);
-        
-        undoManager.discardAllEdits();
-    }
-    
-    /** Undo */
-    public void undo() {
-        try {
-            undoManager.undo();
-        } catch (CannotUndoException ex) { }
-    }
-    
-    /** Redo */
-    public void redo() {
-        try {
-            undoManager.redo();
-        } catch (CannotRedoException ex) { }
-    }
-    
-    
-    /** Move the cursor to the specified line
-     * if exception occur cursor not change
-     * @param line the specified line number
-     */
-    public void gotoLine(int line) {
-        Element element =
-            getDocument().getDefaultRootElement().getElement(line);
-        if (element == null) { return; }
-        int pos = element.getStartOffset();
-        setCaretPosition(pos);
-    }
+	private static final long serialVersionUID = 1L;
+	protected UndoManager undoManager;
+
+	/** Creates a new instance of XMLEditorPane */
+	public XMLTextEditor() {
+		super();
+		XMLEditorKit kit = new XMLEditorKit();
+		setEditorKitForContentType(XMLEditorKit.XML_MIME_TYPE, kit);
+		setContentType(XMLEditorKit.XML_MIME_TYPE);
+		setBackground(Color.white);
+		// setFont(new Font("Monospaced", Font.PLAIN, 12));
+
+		// add undoable edit
+		undoManager = new UndoManager();
+		UndoableEditListener undoableEditHandler = new UndoableEditListener() {
+			@Override
+			public void undoableEditHappened(UndoableEditEvent e) {
+				undoManager.addEdit(e.getEdit());
+			}
+		};
+		getDocument().addUndoableEditListener(undoableEditHandler);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void setText(String t) {
+		super.setText(t);
+
+		undoManager.discardAllEdits();
+	}
+
+	/** Undo */
+	public void undo() {
+		try {
+			undoManager.undo();
+		} catch (CannotUndoException ex) {
+		}
+	}
+
+	/** Redo */
+	public void redo() {
+		try {
+			undoManager.redo();
+		} catch (CannotRedoException ex) {
+		}
+	}
+
+	/**
+	 * Move the cursor to the specified line if exception occur cursor not change
+	 * 
+	 * @param line the specified line number
+	 */
+	public void gotoLine(int line) {
+		Element element = getDocument().getDefaultRootElement().getElement(line);
+		if (element == null) {
+			return;
+		}
+		int pos = element.getStartOffset();
+		setCaretPosition(pos);
+	}
 }

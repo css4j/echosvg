@@ -25,48 +25,47 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * An interface describing objects that transform a BufferedImage or
- * Raster into an OutputStream.
+ * An interface describing objects that transform a BufferedImage or Raster into
+ * an OutputStream.
  *
- * <p><b> This interface is not a committed part of the JAI API.  It may
- * be removed or changed in future releases of JAI.</b>
+ * <p>
+ * <b> This interface is not a committed part of the JAI API. It may be removed
+ * or changed in future releases of JAI.</b>
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ImageEncoder {
 
-    /**
-     * Returns the current parameters as an instance of the
-     * ImageEncodeParam interface.  Concrete implementations of this
-     * interface will return corresponding concrete implementations of
-     * the ImageEncodeParam interface.  For example, a JPEGImageEncoder
-     * will return an instance of JPEGEncodeParam.
-     */
-    ImageEncodeParam getParam();
+	/**
+	 * Returns the current parameters as an instance of the ImageEncodeParam
+	 * interface. Concrete implementations of this interface will return
+	 * corresponding concrete implementations of the ImageEncodeParam interface. For
+	 * example, a JPEGImageEncoder will return an instance of JPEGEncodeParam.
+	 */
+	ImageEncodeParam getParam();
 
-    /**
-     * Sets the current parameters to an instance of the
-     * ImageEncodeParam interface.  Concrete implementations
-     * of ImageEncoder may throw a RuntimeException if the
-     * params argument is not an instance of the appropriate
-     * subclass or subinterface.  For example, a JPEGImageEncoder
-     * will expect param to be an instance of JPEGEncodeParam.
-     */
-    void setParam(ImageEncodeParam param);
+	/**
+	 * Sets the current parameters to an instance of the ImageEncodeParam interface.
+	 * Concrete implementations of ImageEncoder may throw a RuntimeException if the
+	 * params argument is not an instance of the appropriate subclass or
+	 * subinterface. For example, a JPEGImageEncoder will expect param to be an
+	 * instance of JPEGEncodeParam.
+	 */
+	void setParam(ImageEncodeParam param);
 
-    /** Returns the OutputStream associated with this ImageEncoder. */
-    OutputStream getOutputStream();
+	/** Returns the OutputStream associated with this ImageEncoder. */
+	OutputStream getOutputStream();
 
-    /**
-     * Encodes a Raster with a given ColorModel and writes the output
-     * to the OutputStream associated with this ImageEncoder.
-     */
-    void encode(Raster ras, ColorModel cm) throws IOException;
+	/**
+	 * Encodes a Raster with a given ColorModel and writes the output to the
+	 * OutputStream associated with this ImageEncoder.
+	 */
+	void encode(Raster ras, ColorModel cm) throws IOException;
 
-    /**
-     * Encodes a RenderedImage and writes the output to the
-     * OutputStream associated with this ImageEncoder.
-     */
-    void encode(RenderedImage im) throws IOException;
+	/**
+	 * Encodes a RenderedImage and writes the output to the OutputStream associated
+	 * with this ImageEncoder.
+	 */
+	void encode(RenderedImage im) throws IOException;
 }

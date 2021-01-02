@@ -35,91 +35,80 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class PointerEventsManager extends IdentifierManager {
 
-    /**
-     * The identifier values.
-     */
-    protected static final StringMap values = new StringMap();
-    static {
-        values.put(CSSConstants.CSS_ALL_VALUE,
-                   ValueConstants.ALL_VALUE);
-        values.put(CSSConstants.CSS_FILL_VALUE,
-                   SVGValueConstants.FILL_VALUE);
-        values.put(CSSConstants.CSS_FILLSTROKE_VALUE,
-                   SVGValueConstants.FILLSTROKE_VALUE);
-        values.put(CSSConstants.CSS_NONE_VALUE,
-                   ValueConstants.NONE_VALUE);
-        values.put(CSSConstants.CSS_PAINTED_VALUE,
-                   ValueConstants.PAINTED_VALUE);
-        values.put(CSSConstants.CSS_STROKE_VALUE,
-                   ValueConstants.STROKE_VALUE);
-        values.put(CSSConstants.CSS_VISIBLE_VALUE,
-                   ValueConstants.VISIBLE_VALUE);
-        values.put(CSSConstants.CSS_VISIBLEFILL_VALUE,
-                   SVGValueConstants.VISIBLEFILL_VALUE);
-        values.put(CSSConstants.CSS_VISIBLEFILLSTROKE_VALUE,
-                   SVGValueConstants.VISIBLEFILLSTROKE_VALUE);
-        values.put(CSSConstants.CSS_VISIBLEPAINTED_VALUE,
-                   SVGValueConstants.VISIBLEPAINTED_VALUE);
-        values.put(CSSConstants.CSS_VISIBLESTROKE_VALUE,
-                   SVGValueConstants.VISIBLESTROKE_VALUE);
-    }
+	/**
+	 * The identifier values.
+	 */
+	protected static final StringMap values = new StringMap();
+	static {
+		values.put(CSSConstants.CSS_ALL_VALUE, ValueConstants.ALL_VALUE);
+		values.put(CSSConstants.CSS_FILL_VALUE, SVGValueConstants.FILL_VALUE);
+		values.put(CSSConstants.CSS_FILLSTROKE_VALUE, SVGValueConstants.FILLSTROKE_VALUE);
+		values.put(CSSConstants.CSS_NONE_VALUE, ValueConstants.NONE_VALUE);
+		values.put(CSSConstants.CSS_PAINTED_VALUE, ValueConstants.PAINTED_VALUE);
+		values.put(CSSConstants.CSS_STROKE_VALUE, ValueConstants.STROKE_VALUE);
+		values.put(CSSConstants.CSS_VISIBLE_VALUE, ValueConstants.VISIBLE_VALUE);
+		values.put(CSSConstants.CSS_VISIBLEFILL_VALUE, SVGValueConstants.VISIBLEFILL_VALUE);
+		values.put(CSSConstants.CSS_VISIBLEFILLSTROKE_VALUE, SVGValueConstants.VISIBLEFILLSTROKE_VALUE);
+		values.put(CSSConstants.CSS_VISIBLEPAINTED_VALUE, SVGValueConstants.VISIBLEPAINTED_VALUE);
+		values.put(CSSConstants.CSS_VISIBLESTROKE_VALUE, SVGValueConstants.VISIBLESTROKE_VALUE);
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_IDENT;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_IDENT;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_POINTER_EVENTS_PROPERTY;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_POINTER_EVENTS_PROPERTY;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return SVGValueConstants.VISIBLEPAINTED_VALUE;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return SVGValueConstants.VISIBLEPAINTED_VALUE;
+	}
 
-    /**
-     * Implements {@link IdentifierManager#getIdentifiers()}.
-     */
-    @Override
-    public StringMap getIdentifiers() {
-        return values;
-    }
+	/**
+	 * Implements {@link IdentifierManager#getIdentifiers()}.
+	 */
+	@Override
+	public StringMap getIdentifiers() {
+		return values;
+	}
 }

@@ -31,38 +31,38 @@ import org.w3c.dom.Element;
  */
 public class CSSEngineEvent extends EventObject {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The event target.
-     */
-    protected Element element;
+	/**
+	 * The event target.
+	 */
+	protected Element element;
 
-    /**
-     * The changed properties indexes.
-     */
-    protected int[] properties;
+	/**
+	 * The changed properties indexes.
+	 */
+	protected int[] properties;
 
-    /**
-     * Creates a new CSSEngineEvent.
-     */
-    public CSSEngineEvent(CSSEngine source, Element elt, int[] props) {
-        super(source);
-        element = elt;
-        properties = props;
-    }
+	/**
+	 * Creates a new CSSEngineEvent.
+	 */
+	public CSSEngineEvent(CSSEngine source, Element elt, int[] props) {
+		super(source);
+		element = elt;
+		properties = props;
+	}
 
-    /**
-     * Returns the target element.
-     */
-    public Element getElement() {
-        return element;
-    }
+	/**
+	 * Returns the target element.
+	 */
+	public Element getElement() {
+		return element;
+	}
 
-    /**
-     * Returns the changed properties.
-     */
-    public int[] getProperties() {
-        return properties;
-    }
+	/**
+	 * Returns the changed properties.
+	 */
+	public int[] getProperties() {
+		return properties;
+	}
 }

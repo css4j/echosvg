@@ -30,22 +30,17 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMAnimateMotionElement
-    extends    SVGOMAnimationElement
-    implements SVGAnimateMotionElement {
+public class SVGOMAnimateMotionElement extends SVGOMAnimationElement implements SVGAnimateMotionElement {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * The attribute initializer.
-     */
-    protected static final AttributeInitializer attributeInitializer;
-    static {
-        attributeInitializer = new AttributeInitializer(1);
-        attributeInitializer.addAttribute(null,
-                                          null,
-                                          SVG_CALC_MODE_ATTRIBUTE,
-                                          SVG_PACED_VALUE);
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The attribute initializer.
+	 */
+	protected static final AttributeInitializer attributeInitializer;
+	static {
+		attributeInitializer = new AttributeInitializer(1);
+		attributeInitializer.addAttribute(null, null, SVG_CALC_MODE_ATTRIBUTE, SVG_PACED_VALUE);
+	}
 
 //     /**
 //      * Table mapping XML attribute names to TraitInformation objects.
@@ -105,45 +100,47 @@ public class SVGOMAnimateMotionElement
 //         xmlTraitInformation = t;
 //     }
 
-    /**
-     * Creates a new SVGOMAnimateMotionElement object.
-     */
-    protected SVGOMAnimateMotionElement() {
-    }
+	/**
+	 * Creates a new SVGOMAnimateMotionElement object.
+	 */
+	protected SVGOMAnimateMotionElement() {
+	}
 
-    /**
-     * Creates a new SVGOMAnimateMotionElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMAnimateMotionElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new SVGOMAnimateMotionElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMAnimateMotionElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_ANIMATE_MOTION_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_ANIMATE_MOTION_TAG;
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return attributeInitializer;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return attributeInitializer;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMAnimateMotionElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMAnimateMotionElement();
+	}
 
 //     /**
 //      * Returns the table of TraitInformation objects for this element.

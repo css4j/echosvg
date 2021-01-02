@@ -29,43 +29,38 @@ import io.sf.carte.echosvg.ext.awt.ColorSpaceHintKey;
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
- * @version $Id$ */
+ * @version $Id$
+ */
 public class FilterAlphaRed extends AbstractRed {
 
-    /**
-     * Construct an alpah channel from the given src, according to
-     * the SVG masking rules.
-     *
-     * @param src The image to convert to an alpha channel (mask image)
-     */
-    public FilterAlphaRed(CachableRed src) {
-        super(src, src.getBounds(), 
-              src.getColorModel(),
-              src.getSampleModel(),
-              src.getTileGridXOffset(),
-              src.getTileGridYOffset(),
-              null);
+	/**
+	 * Construct an alpah channel from the given src, according to the SVG masking
+	 * rules.
+	 *
+	 * @param src The image to convert to an alpha channel (mask image)
+	 */
+	public FilterAlphaRed(CachableRed src) {
+		super(src, src.getBounds(), src.getColorModel(), src.getSampleModel(), src.getTileGridXOffset(),
+				src.getTileGridYOffset(), null);
 
-        props.put(ColorSpaceHintKey.PROPERTY_COLORSPACE,
-                  ColorSpaceHintKey.VALUE_COLORSPACE_ALPHA);
-    }
+		props.put(ColorSpaceHintKey.PROPERTY_COLORSPACE, ColorSpaceHintKey.VALUE_COLORSPACE_ALPHA);
+	}
 
-    @Override
-    public WritableRaster copyData(WritableRaster wr) {
-        // new Exception("FilterAlphaRed: ").printStackTrace();
-        // Get my source.
-        CachableRed srcRed = (CachableRed)getSources().get(0);
+	@Override
+	public WritableRaster copyData(WritableRaster wr) {
+		// new Exception("FilterAlphaRed: ").printStackTrace();
+		// Get my source.
+		CachableRed srcRed = (CachableRed) getSources().get(0);
 
-        SampleModel sm = srcRed.getSampleModel();
-        if (sm.getNumBands() == 1)
-            // Already one band of data so we just use it...
-            return srcRed.copyData(wr);
+		SampleModel sm = srcRed.getSampleModel();
+		if (sm.getNumBands() == 1)
+			// Already one band of data so we just use it...
+			return srcRed.copyData(wr);
 
-        PadRed.ZeroRecter.zeroRect(wr);
-        Raster srcRas = srcRed.getData(wr.getBounds());
-        AbstractRed.copyBand(srcRas, srcRas.getNumBands()-1, wr, 
-                             wr.getNumBands()-1);
-        return wr;
-    }
+		PadRed.ZeroRecter.zeroRect(wr);
+		Raster srcRas = srcRed.getData(wr.getBounds());
+		AbstractRed.copyBand(srcRas, srcRas.getNumBands() - 1, wr, wr.getNumBands() - 1);
+		return wr;
+	}
 
-}    
+}

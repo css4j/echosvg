@@ -44,157 +44,155 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.RenderedImageCachableRed;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class ClipRable8Bit
-    extends    AbstractRable
-    implements ClipRable {
+public class ClipRable8Bit extends AbstractRable implements ClipRable {
 
-    protected boolean useAA;
+	protected boolean useAA;
 
-    /**
-     * The node who's outline specifies our mask.
-     */
-    protected Shape clipPath;
+	/**
+	 * The node who's outline specifies our mask.
+	 */
+	protected Shape clipPath;
 
-    public ClipRable8Bit(Filter src, Shape clipPath) {
-        super(src, null);
-        setClipPath(clipPath);
-        setUseAntialiasedClip(false);
-    }
+	public ClipRable8Bit(Filter src, Shape clipPath) {
+		super(src, null);
+		setClipPath(clipPath);
+		setUseAntialiasedClip(false);
+	}
 
-    public ClipRable8Bit(Filter src, Shape clipPath, boolean useAA) {
-        super(src, null);
-        setClipPath(clipPath);
-        setUseAntialiasedClip(useAA);
-    }
+	public ClipRable8Bit(Filter src, Shape clipPath, boolean useAA) {
+		super(src, null);
+		setClipPath(clipPath);
+		setUseAntialiasedClip(useAA);
+	}
 
-    /**
-     * The source to be masked by the mask node.
-     * @param src The Image to be masked.
-     */
-    @Override
-    public void setSource(Filter src) {
-        init(src, null);
-    }
+	/**
+	 * The source to be masked by the mask node.
+	 * 
+	 * @param src The Image to be masked.
+	 */
+	@Override
+	public void setSource(Filter src) {
+		init(src, null);
+	}
 
-    /**
-     * This returns the current image being masked by the mask node.
-     * @return The image to mask
-     */
-    @Override
-    public Filter getSource() {
-        return (Filter)getSources().get(0);
-    }
+	/**
+	 * This returns the current image being masked by the mask node.
+	 * 
+	 * @return The image to mask
+	 */
+	@Override
+	public Filter getSource() {
+		return (Filter) getSources().get(0);
+	}
 
-    /**
-     * Set the default behaviour of anti-aliased clipping.
-     * for this clip object.
-     */
-    @Override
-    public void setUseAntialiasedClip(boolean useAA) {
-        touch();
-        this.useAA = useAA;
-    }
+	/**
+	 * Set the default behaviour of anti-aliased clipping. for this clip object.
+	 */
+	@Override
+	public void setUseAntialiasedClip(boolean useAA) {
+		touch();
+		this.useAA = useAA;
+	}
 
-    /**
-     * Resturns true if the default behaviour should be to use
-     * anti-aliased clipping.
-     */
-    @Override
-    public boolean getUseAntialiasedClip() {
-        return useAA;
-    }
+	/**
+	 * Resturns true if the default behaviour should be to use anti-aliased
+	 * clipping.
+	 */
+	@Override
+	public boolean getUseAntialiasedClip() {
+		return useAA;
+	}
 
+	/**
+	 * Set the clip path to use. The path will be filled with opaque white.
+	 * 
+	 * @param clipPath The clip path to use
+	 */
+	@Override
+	public void setClipPath(Shape clipPath) {
+		touch();
+		this.clipPath = clipPath;
+	}
 
-    /**
-     * Set the clip path to use.
-     * The path will be filled with opaque white.
-     * @param clipPath The clip path to use
-     */
-    @Override
-    public void setClipPath(Shape clipPath) {
-        touch();
-        this.clipPath = clipPath;
-    }
+	/**
+	 * Returns the Shape that the cliprable will use to define the clip path.
+	 * 
+	 * @return The shape that defines the clip path.
+	 */
+	@Override
+	public Shape getClipPath() {
+		return clipPath;
+	}
 
-      /**
-       * Returns the Shape that the cliprable will use to
-       * define the clip path.
-       * @return The shape that defines the clip path.
-       */
-    @Override
-    public Shape getClipPath() {
-        return clipPath;
-    }
+	/**
+	 * Pass-through: returns the source's bounds
+	 */
+	@Override
+	public Rectangle2D getBounds2D() {
+		return getSource().getBounds2D();
+	}
 
-    /**
-     * Pass-through: returns the source's bounds
-     */
-    @Override
-    public Rectangle2D getBounds2D(){
-        return getSource().getBounds2D();
-    }
+	@Override
+	public RenderedImage createRendering(RenderContext rc) {
 
-    @Override
-    public RenderedImage createRendering(RenderContext rc) {
+		AffineTransform usr2dev = rc.getTransform();
 
-        AffineTransform usr2dev = rc.getTransform();
+		// Just copy over the rendering hints.
+		RenderingHints rh = rc.getRenderingHints();
+		if (rh == null)
+			rh = new RenderingHints(null);
 
-        // Just copy over the rendering hints.
-        RenderingHints rh = rc.getRenderingHints();
-        if (rh == null)  rh = new RenderingHints(null);
+		Shape aoi = rc.getAreaOfInterest();
+		if (aoi == null)
+			aoi = getBounds2D();
 
-        Shape aoi = rc.getAreaOfInterest();
-        if (aoi == null) aoi = getBounds2D();
+		Rectangle2D rect = getBounds2D();
+		Rectangle2D clipRect = clipPath.getBounds2D();
+		Rectangle2D aoiRect = aoi.getBounds2D();
 
-        Rectangle2D rect     = getBounds2D();
-        Rectangle2D clipRect = clipPath.getBounds2D();
-        Rectangle2D aoiRect  = aoi.getBounds2D();
+		if (!rect.intersects(clipRect))
+			return null;
+		Rectangle2D.intersect(rect, clipRect, rect);
 
-        if ( ! rect.intersects(clipRect) )
-            return null;
-        Rectangle2D.intersect(rect, clipRect, rect);
+		if (!rect.intersects(aoiRect))
+			return null;
+		Rectangle2D.intersect(rect, aoi.getBounds2D(), rect);
 
+		Rectangle devR = usr2dev.createTransformedShape(rect).getBounds();
 
-        if ( ! rect.intersects(aoiRect) )
-            return null;
-        Rectangle2D.intersect(rect, aoi.getBounds2D(), rect);
+		if ((devR.width == 0) || (devR.height == 0))
+			return null;
 
-        Rectangle devR = usr2dev.createTransformedShape(rect).getBounds();
+		BufferedImage bi = new BufferedImage(devR.width, devR.height, BufferedImage.TYPE_BYTE_GRAY);
 
-        if ((devR.width == 0) || (devR.height == 0))
-            return null;
+		Shape devShape = usr2dev.createTransformedShape(getClipPath());
+		Rectangle devAOIR;
+		devAOIR = usr2dev.createTransformedShape(aoi).getBounds();
 
-        BufferedImage bi = new BufferedImage(devR.width, devR.height,
-                                             BufferedImage.TYPE_BYTE_GRAY);
+		Graphics2D g2d = GraphicsUtil.createGraphics(bi, rh);
 
-        Shape devShape = usr2dev.createTransformedShape(getClipPath());
-        Rectangle devAOIR;
-        devAOIR = usr2dev.createTransformedShape(aoi).getBounds();
+		if (false) {
+			java.util.Set s = rh.keySet();
+			for (Object o : s) {
+				System.out.println("XXX: " + o + " -> " + rh.get(o));
+			}
+		}
+		g2d.translate(-devR.x, -devR.y);
+		g2d.setPaint(Color.white);
+		g2d.fill(devShape);
+		g2d.dispose();
 
-        Graphics2D g2d = GraphicsUtil.createGraphics(bi, rh);
+		RenderedImage ri;
+		ri = getSource().createRendering(new RenderContext(usr2dev, rect, rh));
 
-        if (false) {
-            java.util.Set s = rh.keySet();
-            for (Object o : s) {
-                System.out.println("XXX: " + o + " -> " + rh.get(o));
-            }
-        }
-        g2d.translate(-devR.x, -devR.y);
-        g2d.setPaint(Color.white);
-        g2d.fill(devShape);
-        g2d.dispose();
+		CachableRed cr, clipCr;
+		cr = RenderedImageCachableRed.wrap(ri);
+		clipCr = new BufferedImageCachableRed(bi, devR.x, devR.y);
+		CachableRed ret = new MultiplyAlphaRed(cr, clipCr);
 
-        RenderedImage ri;
-        ri = getSource().createRendering(new RenderContext(usr2dev, rect, rh));
+		// Pad back out to the proper size...
+		ret = new PadRed(ret, devAOIR, PadMode.ZERO_PAD, rh);
 
-        CachableRed cr, clipCr;
-        cr = RenderedImageCachableRed.wrap(ri);
-        clipCr = new BufferedImageCachableRed(bi, devR.x, devR.y);
-        CachableRed ret = new MultiplyAlphaRed(cr, clipCr);
-
-          // Pad back out to the proper size...
-        ret = new PadRed(ret, devAOIR, PadMode.ZERO_PAD, rh);
-
-        return ret;
-    }
+		return ret;
+	}
 }

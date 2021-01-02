@@ -38,233 +38,203 @@ import io.sf.carte.echosvg.swing.svg.SVGDocumentLoaderEvent;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
- * Simple component which displays, side by side, the drawing
- * created by a <code>Painter</code>, rendered in a
- * <code>JPainterComponent</code> on the left, and in a
- * <code>JSVGCanvas</code> on the right, where the SVG
- * displayed is the one created by the <code>SVGGraphics2D</code>
+ * Simple component which displays, side by side, the drawing created by a
+ * <code>Painter</code>, rendered in a <code>JPainterComponent</code> on the
+ * left, and in a <code>JSVGCanvas</code> on the right, where the SVG displayed
+ * is the one created by the <code>SVGGraphics2D</code>
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class JPainterCompare extends JPanel implements SVGConstants{
-    /**
-     * Canvas size for all tests
-     */
-    public static final Dimension CANVAS_SIZE
-        = new Dimension(300, 400);
+public class JPainterCompare extends JPanel implements SVGConstants {
+	/**
+	 * Canvas size for all tests
+	 */
+	public static final Dimension CANVAS_SIZE = new Dimension(300, 400);
 
-    public static String MESSAGES_USAGE
-        = "JPainterCompare.messages.usage";
+	public static String MESSAGES_USAGE = "JPainterCompare.messages.usage";
 
-    public static String MESSAGES_LOADING_CLASS
-        = "JPainterCompare.messages.loading.class";
+	public static String MESSAGES_LOADING_CLASS = "JPainterCompare.messages.loading.class";
 
-    public static String MESSAGES_LOADED_CLASS
-        = "JPainterCompare.messages.loaded.class";
+	public static String MESSAGES_LOADED_CLASS = "JPainterCompare.messages.loaded.class";
 
-    public static String MESSAGES_INSTANCIATED_OBJECT
-        = "JPainterCompare.messages.instanciated.object";
+	public static String MESSAGES_INSTANCIATED_OBJECT = "JPainterCompare.messages.instanciated.object";
 
-    public static String ERROR_COULD_NOT_LOAD_CLASS
-        = "JPainterCompare.error.could.not.load.class";
+	public static String ERROR_COULD_NOT_LOAD_CLASS = "JPainterCompare.error.could.not.load.class";
 
-    public static String ERROR_COULD_NOT_INSTANCIATE_OBJECT
-        = "JPainterCompare.error.could.not.instanciate.object";
+	public static String ERROR_COULD_NOT_INSTANCIATE_OBJECT = "JPainterCompare.error.could.not.instanciate.object";
 
-    public static String ERROR_CLASS_NOT_PAINTER
-        = "JPainterCompare.error.class.not.painter";
+	public static String ERROR_CLASS_NOT_PAINTER = "JPainterCompare.error.class.not.painter";
 
-    public static String ERROR_COULD_NOT_TRANSCODE_TO_SVG
-        = "JPainterCompare.error.could.not.transcode.to.svg";
+	public static String ERROR_COULD_NOT_TRANSCODE_TO_SVG = "JPainterCompare.error.could.not.transcode.to.svg";
 
-    public static String ERROR_COULD_NOT_CONVERT_FILE_PATH_TO_URL
-        = "JPainterCompare.error.could.not.convert.file.path.to.url";
+	public static String ERROR_COULD_NOT_CONVERT_FILE_PATH_TO_URL = "JPainterCompare.error.could.not.convert.file.path.to.url";
 
-    public static String ERROR_COULD_NOT_RENDER_GENERATED_SVG
-        = "JPainterCompare.error.could.not.render.generated.svg";
+	public static String ERROR_COULD_NOT_RENDER_GENERATED_SVG = "JPainterCompare.error.could.not.render.generated.svg";
 
-    public static String CONFIG_TMP_FILE_PREFIX
-        = "JPainterCompare.config.tmp.file.prefix";
+	public static String CONFIG_TMP_FILE_PREFIX = "JPainterCompare.config.tmp.file.prefix";
 
-    /**
-     * Builds an <code>SVGGraphics2D</code> with a default
-     * configuration.
-     */
-    protected SVGGraphics2D buildSVGGraphics2D() {
-        DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-        String namespaceURI = SVGDOMImplementation.SVG_NAMESPACE_URI;
-        Document domFactory = impl.createDocument(namespaceURI, SVG_SVG_TAG, null);
+	/**
+	 * Builds an <code>SVGGraphics2D</code> with a default configuration.
+	 */
+	protected SVGGraphics2D buildSVGGraphics2D() {
+		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+		String namespaceURI = SVGDOMImplementation.SVG_NAMESPACE_URI;
+		Document domFactory = impl.createDocument(namespaceURI, SVG_SVG_TAG, null);
 
-        // Create a default context from our Document instance
-        SVGGeneratorContext ctx = SVGGeneratorContext.createDefault(domFactory);
+		// Create a default context from our Document instance
+		SVGGeneratorContext ctx = SVGGeneratorContext.createDefault(domFactory);
 
-        GenericImageHandler ihandler = new CachedImageHandlerBase64Encoder();
-        ctx.setGenericImageHandler(ihandler);
+		GenericImageHandler ihandler = new CachedImageHandlerBase64Encoder();
+		ctx.setGenericImageHandler(ihandler);
 
-        return new SVGGraphics2D(ctx, false);
-    }
+		return new SVGGraphics2D(ctx, false);
+	}
 
-    static class LoaderListener extends SVGDocumentLoaderAdapter{
-        public final String sem = "sem";
-        public boolean success = false;
-        @Override
-        public void documentLoadingFailed(SVGDocumentLoaderEvent e){
-            synchronized(sem){
-                sem.notifyAll();
-            }
-        }
+	static class LoaderListener extends SVGDocumentLoaderAdapter {
+		public final String sem = "sem";
+		public boolean success = false;
 
-        @Override
-        public void documentLoadingCompleted(SVGDocumentLoaderEvent e){
-            success = true;
-            synchronized(sem){
-                sem.notifyAll();
-            }
-        }
-    }
+		@Override
+		public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
+			synchronized (sem) {
+				sem.notifyAll();
+			}
+		}
 
-    /**
-     * Constructor
-     */
-    public JPainterCompare(Painter painter){
-        // First, create the AWT reference.
-        JPainterComponent ref = new JPainterComponent(painter);
+		@Override
+		public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
+			success = true;
+			synchronized (sem) {
+				sem.notifyAll();
+			}
+		}
+	}
 
-        // Now, generate the SVG from this Painter
-        SVGGraphics2D g2d = buildSVGGraphics2D();
+	/**
+	 * Constructor
+	 */
+	public JPainterCompare(Painter painter) {
+		// First, create the AWT reference.
+		JPainterComponent ref = new JPainterComponent(painter);
 
-        g2d.setSVGCanvasSize(CANVAS_SIZE);
+		// Now, generate the SVG from this Painter
+		SVGGraphics2D g2d = buildSVGGraphics2D();
 
-        //
-        // Generate SVG content
-        //
-        File tmpFile = null;
-        try{
-            tmpFile = File.createTempFile(CONFIG_TMP_FILE_PREFIX,
-                                          ".svg");
+		g2d.setSVGCanvasSize(CANVAS_SIZE);
 
-            OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(tmpFile), "UTF-8");
+		//
+		// Generate SVG content
+		//
+		File tmpFile = null;
+		try {
+			tmpFile = File.createTempFile(CONFIG_TMP_FILE_PREFIX, ".svg");
 
-            painter.paint(g2d);
-            g2d.stream(osw);
-            osw.flush();
-        }catch(Exception e){
-            e.printStackTrace();
-            throw new IllegalArgumentException
-                (Messages.formatMessage(ERROR_COULD_NOT_TRANSCODE_TO_SVG,
-                                        new Object[]{e.getClass().getName()}));
-        }
+			OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(tmpFile), "UTF-8");
 
-        //
-        // Now, transcode SVG to a BufferedImage
-        //
-        JSVGCanvas svgCanvas = new JSVGCanvas();
-        LoaderListener l = new LoaderListener();
-        svgCanvas.addSVGDocumentLoaderListener(l);
+			painter.paint(g2d);
+			g2d.stream(osw);
+			osw.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new IllegalArgumentException(
+					Messages.formatMessage(ERROR_COULD_NOT_TRANSCODE_TO_SVG, new Object[] { e.getClass().getName() }));
+		}
 
-        try{
-            svgCanvas.setURI(tmpFile.toURI().toURL().toString());
-            synchronized(l.sem){
-                l.sem.wait();
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-            new Error
-                (Messages.formatMessage(ERROR_COULD_NOT_CONVERT_FILE_PATH_TO_URL,
-                                        new Object[]{e.getMessage()}));
-        }
+		//
+		// Now, transcode SVG to a BufferedImage
+		//
+		JSVGCanvas svgCanvas = new JSVGCanvas();
+		LoaderListener l = new LoaderListener();
+		svgCanvas.addSVGDocumentLoaderListener(l);
 
-        if(l.success){
-            setLayout(new GridLayout(1,2));
-            add(ref);
-            add(svgCanvas);
-        }
+		try {
+			svgCanvas.setURI(tmpFile.toURI().toURL().toString());
+			synchronized (l.sem) {
+				l.sem.wait();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			new Error(
+					Messages.formatMessage(ERROR_COULD_NOT_CONVERT_FILE_PATH_TO_URL, new Object[] { e.getMessage() }));
+		}
 
-        else{
-            throw new RuntimeException
-                (Messages.formatMessage(ERROR_COULD_NOT_RENDER_GENERATED_SVG,null));
-        }
-    }
+		if (l.success) {
+			setLayout(new GridLayout(1, 2));
+			add(ref);
+			add(svgCanvas);
+		}
 
-    @Override
-    public Dimension getPreferredSize(){
-        return new Dimension(CANVAS_SIZE.width*2, CANVAS_SIZE.height);
-    }
+		else {
+			throw new RuntimeException(Messages.formatMessage(ERROR_COULD_NOT_RENDER_GENERATED_SVG, null));
+		}
+	}
 
-    /*
-     * Debug application: shows the image creatd by a <code>Painter</code>
-     * on the left and the image created by a <code>JSVGComponent</code>
-     * from the SVG generated by <code>SVGGraphics2D</code> from the same
-     * <code>Painter</code> on the right.
-     *
-     */
-    public static void main(String[] args){
-        if(args.length <= 0){
-            System.out.println(Messages.formatMessage
-                               (MESSAGES_USAGE, null));
-            System.exit(0);
-        }
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(CANVAS_SIZE.width * 2, CANVAS_SIZE.height);
+	}
 
-        // Load class.
-        String className = args[0];
-        System.out.println
-            (Messages.formatMessage(MESSAGES_LOADING_CLASS,
-                                    new Object[]{className}));
+	/*
+	 * Debug application: shows the image creatd by a <code>Painter</code> on the
+	 * left and the image created by a <code>JSVGComponent</code> from the SVG
+	 * generated by <code>SVGGraphics2D</code> from the same <code>Painter</code> on
+	 * the right.
+	 *
+	 */
+	public static void main(String[] args) {
+		if (args.length <= 0) {
+			System.out.println(Messages.formatMessage(MESSAGES_USAGE, null));
+			System.exit(0);
+		}
 
-        Class cl = null;
+		// Load class.
+		String className = args[0];
+		System.out.println(Messages.formatMessage(MESSAGES_LOADING_CLASS, new Object[] { className }));
 
-        try{
-            cl = Class.forName(className);
-            System.out.println
-                (Messages.formatMessage(MESSAGES_LOADED_CLASS,
-                                        new Object[]{className}));
-        }catch(Exception e){
-            System.out.println
-                (Messages.formatMessage(ERROR_COULD_NOT_LOAD_CLASS,
-                                        new Object[] {className,
-                                                      e.getClass().getName() }));
-            System.exit(0);
-        }
+		Class cl = null;
 
-        // Instanciate object
-        Object o = null;
+		try {
+			cl = Class.forName(className);
+			System.out.println(Messages.formatMessage(MESSAGES_LOADED_CLASS, new Object[] { className }));
+		} catch (Exception e) {
+			System.out.println(Messages.formatMessage(ERROR_COULD_NOT_LOAD_CLASS,
+					new Object[] { className, e.getClass().getName() }));
+			System.exit(0);
+		}
 
-        try{
-            o = cl.getDeclaredConstructor().newInstance();
-            System.out.println
-                (Messages.formatMessage(MESSAGES_INSTANCIATED_OBJECT,
-                                        null));
-        }catch(Exception e){
-            System.out.println
-                (Messages.formatMessage(ERROR_COULD_NOT_INSTANCIATE_OBJECT,
-                                        new Object[] {className,
-                                                      e.getClass().getName()}));
-            System.exit(0);
-        }
+		// Instanciate object
+		Object o = null;
 
-        // Cast to Painter
-        Painter p = null;
+		try {
+			o = cl.getDeclaredConstructor().newInstance();
+			System.out.println(Messages.formatMessage(MESSAGES_INSTANCIATED_OBJECT, null));
+		} catch (Exception e) {
+			System.out.println(Messages.formatMessage(ERROR_COULD_NOT_INSTANCIATE_OBJECT,
+					new Object[] { className, e.getClass().getName() }));
+			System.exit(0);
+		}
 
-        try{
-            p = (Painter)o;
-        }catch(ClassCastException e){
-            System.out.println
-                (Messages.formatMessage(ERROR_CLASS_NOT_PAINTER,
-                                        new Object[]{className}));
-            System.exit(0);
-        }
+		// Cast to Painter
+		Painter p = null;
 
-        // Build frame
-        JFrame f = new JFrame();
-        JPainterCompare c = new JPainterCompare(p);
-        c.setBackground(Color.white);
-        c.setPreferredSize(new Dimension(300, 400));
-        f.getContentPane().add(c);
-        f.getContentPane().setBackground(Color.white);
-        f.pack();
-        f.setVisible(true);
-    }
+		try {
+			p = (Painter) o;
+		} catch (ClassCastException e) {
+			System.out.println(Messages.formatMessage(ERROR_CLASS_NOT_PAINTER, new Object[] { className }));
+			System.exit(0);
+		}
+
+		// Build frame
+		JFrame f = new JFrame();
+		JPainterCompare c = new JPainterCompare(p);
+		c.setBackground(Color.white);
+		c.setPreferredSize(new Dimension(300, 400));
+		f.getContentPane().add(c);
+		f.getContentPane().setBackground(Color.white);
+		f.pack();
+		f.setVisible(true);
+	}
 
 }

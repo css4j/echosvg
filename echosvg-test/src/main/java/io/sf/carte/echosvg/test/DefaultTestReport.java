@@ -19,110 +19,104 @@
 package io.sf.carte.echosvg.test;
 
 /**
- * Simple, default implementation for the <code>TestReport</code>
- * interface.
+ * Simple, default implementation for the <code>TestReport</code> interface.
  * 
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultTestReport implements TestReport {
-    private boolean passed = true;
+	private boolean passed = true;
 
-    protected Entry[] description = null;
+	protected Entry[] description = null;
 
-    protected Test test;
+	protected Test test;
 
-    private String errorCode;
-    
-    /**
-     * Parent report, in case this report is part of a
-     * <code>TestSuiteReport</code>
-     */
-    protected TestSuiteReport parent;
+	private String errorCode;
 
-    public DefaultTestReport(Test test){
-        if(test == null){
-            throw new IllegalArgumentException();
-        }
+	/**
+	 * Parent report, in case this report is part of a <code>TestSuiteReport</code>
+	 */
+	protected TestSuiteReport parent;
 
-        this.test = test;
-    }
+	public DefaultTestReport(Test test) {
+		if (test == null) {
+			throw new IllegalArgumentException();
+		}
 
-    @Override
-    public TestSuiteReport getParentReport(){
-        return parent;
-    }
+		this.test = test;
+	}
 
-    @Override
-    public void setParentReport(TestSuiteReport parent){
-        this.parent = parent;
-    }
+	@Override
+	public TestSuiteReport getParentReport() {
+		return parent;
+	}
 
-    @Override
-    public Test getTest(){
-        return test;
-    }
+	@Override
+	public void setParentReport(TestSuiteReport parent) {
+		this.parent = parent;
+	}
 
-    @Override
-    public String getErrorCode(){
-        return errorCode;
-    }
+	@Override
+	public Test getTest() {
+		return test;
+	}
 
-    public void setErrorCode(String errorCode){
-        if( !passed && errorCode == null ){
-            /**
-             * Error code should be set first
-             */
-            throw new IllegalArgumentException();
-        }
+	@Override
+	public String getErrorCode() {
+		return errorCode;
+	}
 
-        this.errorCode = errorCode;
-    }
+	public void setErrorCode(String errorCode) {
+		if (!passed && errorCode == null) {
+			/**
+			 * Error code should be set first
+			 */
+			throw new IllegalArgumentException();
+		}
 
-    @Override
-    public boolean hasPassed(){
-        return passed;
-    }
-    
-    public void setPassed(boolean passed){
-        if( !passed && (errorCode == null) ){
-            /**
-             * Error Code should be set first
-             */
-            throw new IllegalArgumentException();
-        }
-        this.passed = passed;
-    }
-    
-    @Override
-    public Entry[] getDescription(){
-        return description;
-    }
-    
-    public void setDescription(Entry[] description){
-        this.description = description;
-    }
+		this.errorCode = errorCode;
+	}
 
-    @Override
-    public void addDescriptionEntry(String key,
-                                    Object value){
-        addDescriptionEntry(new Entry(key, value));
-    }
+	@Override
+	public boolean hasPassed() {
+		return passed;
+	}
 
-    protected void addDescriptionEntry(Entry entry){
-        if(description == null){
-            description = new Entry[1];
-            description[0] = entry;
-        }
-        else{
-            Entry[] oldDescription = description;
-            description = new Entry[description.length + 1];
-            System.arraycopy(oldDescription, 0, description, 0,
-                             oldDescription.length);
-            description[oldDescription.length] = entry;
-        }
-    }
+	public void setPassed(boolean passed) {
+		if (!passed && (errorCode == null)) {
+			/**
+			 * Error Code should be set first
+			 */
+			throw new IllegalArgumentException();
+		}
+		this.passed = passed;
+	}
+
+	@Override
+	public Entry[] getDescription() {
+		return description;
+	}
+
+	public void setDescription(Entry[] description) {
+		this.description = description;
+	}
+
+	@Override
+	public void addDescriptionEntry(String key, Object value) {
+		addDescriptionEntry(new Entry(key, value));
+	}
+
+	protected void addDescriptionEntry(Entry entry) {
+		if (description == null) {
+			description = new Entry[1];
+			description[0] = entry;
+		} else {
+			Entry[] oldDescription = description;
+			description = new Entry[description.length + 1];
+			System.arraycopy(oldDescription, 0, description, 0, oldDescription.length);
+			description[oldDescription.length] = entry;
+		}
+	}
 
 }
-

@@ -24,53 +24,49 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImageOp;
 
 /**
- * This implementation of the ExtensionHandler interface always
- * returns null Nodes. In other words, it does not support any
- * Java 2D API extensions.
+ * This implementation of the ExtensionHandler interface always returns null
+ * Nodes. In other words, it does not support any Java 2D API extensions.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see               io.sf.carte.echosvg.svggen.ExtensionHandler
+ * @see io.sf.carte.echosvg.svggen.ExtensionHandler
  */
 public class DefaultExtensionHandler implements ExtensionHandler {
-    /**
-     * @param paint Custom Paint to be converted to SVG
-     * @param generatorContext allows the handler to build DOM objects as needed.
-     * @return an SVGPaintDescriptor
-     */
-    @Override
-    public SVGPaintDescriptor handlePaint(Paint paint,
-                                          SVGGeneratorContext generatorContext) {
-        return null;
-    }
+	/**
+	 * @param paint            Custom Paint to be converted to SVG
+	 * @param generatorContext allows the handler to build DOM objects as needed.
+	 * @return an SVGPaintDescriptor
+	 */
+	@Override
+	public SVGPaintDescriptor handlePaint(Paint paint, SVGGeneratorContext generatorContext) {
+		return null;
+	}
 
-    /**
-     * @param composite Custom Composite to be converted to SVG.
-     * @param generatorContext allows the handler to build DOM objects as needed.
-     * @return an SVGCompositeDescriptor which contains a valid SVG filter,
-     * or null if the composite cannot be handled
-     *
-     */
-    @Override
-    public SVGCompositeDescriptor handleComposite(Composite composite,
-                                                  SVGGeneratorContext generatorContext) {
-        return null;
-    }
+	/**
+	 * @param composite        Custom Composite to be converted to SVG.
+	 * @param generatorContext allows the handler to build DOM objects as needed.
+	 * @return an SVGCompositeDescriptor which contains a valid SVG filter, or null
+	 *         if the composite cannot be handled
+	 *
+	 */
+	@Override
+	public SVGCompositeDescriptor handleComposite(Composite composite, SVGGeneratorContext generatorContext) {
+		return null;
+	}
 
-    /**
-     * @param filter Custom filter to be converted to SVG.
-     * @param filterRect Rectangle, in device space, that defines the area
-     *        to which filtering applies. May be null, meaning that the
-     *        area is undefined.
-     * @param generatorContext allows the handler to build DOM objects as needed.
-     * @return an SVGFilterDescriptor which contains a valid SVG filter,
-     * or null if the composite cannot be handled
-     */
-    @Override
-    public SVGFilterDescriptor handleFilter(BufferedImageOp filter,
-                                            Rectangle filterRect,
-                                            SVGGeneratorContext generatorContext) {
-        return null;
-    }
+	/**
+	 * @param filter           Custom filter to be converted to SVG.
+	 * @param filterRect       Rectangle, in device space, that defines the area to
+	 *                         which filtering applies. May be null, meaning that
+	 *                         the area is undefined.
+	 * @param generatorContext allows the handler to build DOM objects as needed.
+	 * @return an SVGFilterDescriptor which contains a valid SVG filter, or null if
+	 *         the composite cannot be handled
+	 */
+	@Override
+	public SVGFilterDescriptor handleFilter(BufferedImageOp filter, Rectangle filterRect,
+			SVGGeneratorContext generatorContext) {
+		return null;
+	}
 }

@@ -19,9 +19,8 @@
 package io.sf.carte.echosvg.parser;
 
 /**
- * This interface must be implemented and then registred as the
- * handler of a <code>PointsParser</code> instance in order to be
- * notified of parsing events.
+ * This interface must be implemented and then registred as the handler of a
+ * <code>PointsParser</code> instance in order to be notified of parsing events.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -29,26 +28,26 @@ package io.sf.carte.echosvg.parser;
  */
 public interface PointsHandler {
 
-    /**
-     * Invoked when the points attribute starts.
-     * @exception ParseException if an error occured while processing the
-     *                           points
-     */
-    void startPoints() throws ParseException;
+	/**
+	 * Invoked when the points attribute starts.
+	 * 
+	 * @exception ParseException if an error occured while processing the points
+	 */
+	void startPoints() throws ParseException;
 
-    /**
-     * Invoked when a point has been parsed.
-     * @param x the x coordinate of the point
-     * @param y the y coordinate of the point
-     * @exception ParseException if an error occured while processing the
-     *                           points
-     */
-    void point(float x, float y) throws ParseException;
+	/**
+	 * Invoked when a point has been parsed.
+	 * 
+	 * @param x the x coordinate of the point
+	 * @param y the y coordinate of the point
+	 * @exception ParseException if an error occured while processing the points
+	 */
+	void point(float x, float y) throws ParseException;
 
-    /**
-     * Invoked when the points attribute ends.
-     * @exception ParseException if an error occured while processing the
-     *                           points
-     */
-    void endPoints() throws ParseException;
+	/**
+	 * Invoked when the points attribute ends.
+	 * 
+	 * @exception ParseException if an error occured while processing the points
+	 */
+	void endPoints() throws ParseException;
 }

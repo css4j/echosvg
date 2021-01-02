@@ -19,56 +19,59 @@
 package io.sf.carte.echosvg.ext.awt.image.renderable;
 
 /**
- * Implements a Morphology operation, where the kernel size is
- * defined by radius along the x and y axis.
+ * Implements a Morphology operation, where the kernel size is defined by radius
+ * along the x and y axis.
  *
  * @author <a href="mailto:sheng.pei@eng.sun.com">Sheng Pei</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface MorphologyRable extends Filter {
-    /**
-     * Returns the source to be offset.
-     */
-    Filter getSource();
+	/**
+	 * Returns the source to be offset.
+	 */
+	Filter getSource();
 
-    /**
-     * Sets the source to be offset.
-     * @param src image to offset.
-     */
-    void setSource(Filter src);
+	/**
+	 * Sets the source to be offset.
+	 * 
+	 * @param src image to offset.
+	 */
+	void setSource(Filter src);
 
-    /**
-     * The radius along the x axis, in user space.
-     * @param radiusX should be greater than zero.
-     */
-    void setRadiusX(double radiusX);
+	/**
+	 * The radius along the x axis, in user space.
+	 * 
+	 * @param radiusX should be greater than zero.
+	 */
+	void setRadiusX(double radiusX);
 
-    /**
-     * The radius along the y axis, in user space.
-     * @param radiusY should be greater than zero.
-     */
-    void setRadiusY(double radiusY);
+	/**
+	 * The radius along the y axis, in user space.
+	 * 
+	 * @param radiusY should be greater than zero.
+	 */
+	void setRadiusY(double radiusY);
 
-    /**
-     * The switch that determines if the operation
-     * is to "dilate" or "erode".
-     * @param doDilation do "dilation" when true and "erosion" when false
-     */
-    void setDoDilation(boolean doDilation);
+	/**
+	 * The switch that determines if the operation is to "dilate" or "erode".
+	 * 
+	 * @param doDilation do "dilation" when true and "erosion" when false
+	 */
+	void setDoDilation(boolean doDilation);
 
-    /**
-     * Returns whether the operation is "dilation" or not("erosion")
-     */
-    boolean getDoDilation();
+	/**
+	 * Returns whether the operation is "dilation" or not("erosion")
+	 */
+	boolean getDoDilation();
 
-    /**
-     * Returns the radius along the x-axis, in user space.
-     */
-    double getRadiusX();
+	/**
+	 * Returns the radius along the x-axis, in user space.
+	 */
+	double getRadiusX();
 
-    /**
-     * Returns the radius along the y-axis, in user space.
-     */
-    double getRadiusY();
+	/**
+	 * Returns the radius along the y-axis, in user space.
+	 */
+	double getRadiusY();
 }

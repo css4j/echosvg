@@ -36,7 +36,6 @@ import java.util.Map;
 
 import io.sf.carte.echosvg.gvt.text.ArabicTextHandler;
 
-
 /**
  * This is a wrapper class for a java.awt.Font instance.
  *
@@ -46,311 +45,282 @@ import io.sf.carte.echosvg.gvt.text.ArabicTextHandler;
  */
 public class AWTGVTFont implements GVTFont {
 
-    protected Font   awtFont;
-    protected double size;
-    protected double scale;
+	protected Font awtFont;
+	protected double size;
+	protected double scale;
 
-    /**
-     * Creates a new AWTGVTFont that wraps the given Font.
-     *
-     * @param font The font object to wrap.
-     */
-    public AWTGVTFont(Font font) {
-        this.size = font.getSize2D();
-        this.awtFont = font.deriveFont(FONT_SIZE);
-        this.scale = size/awtFont.getSize2D();
-        initializeFontCache(awtFont);
-    }
+	/**
+	 * Creates a new AWTGVTFont that wraps the given Font.
+	 *
+	 * @param font The font object to wrap.
+	 */
+	public AWTGVTFont(Font font) {
+		this.size = font.getSize2D();
+		this.awtFont = font.deriveFont(FONT_SIZE);
+		this.scale = size / awtFont.getSize2D();
+		initializeFontCache(awtFont);
+	}
 
-    /**
-     * Creates a new AWTGVTFont that wraps the given Font.
-     *
-     * @param font The font object to wrap.
-     * @param scale The scale factor to apply to font...
-     */
-    public AWTGVTFont(Font font, double scale) {
-        this.size = font.getSize2D()*scale;
-        this.awtFont = font.deriveFont(FONT_SIZE);
-        this.scale = size/awtFont.getSize2D();
-        initializeFontCache(awtFont);
-    }
+	/**
+	 * Creates a new AWTGVTFont that wraps the given Font.
+	 *
+	 * @param font  The font object to wrap.
+	 * @param scale The scale factor to apply to font...
+	 */
+	public AWTGVTFont(Font font, double scale) {
+		this.size = font.getSize2D() * scale;
+		this.awtFont = font.deriveFont(FONT_SIZE);
+		this.scale = size / awtFont.getSize2D();
+		initializeFontCache(awtFont);
+	}
 
-    /**
-     * Creates a new AWTGVTFont with the specified attributes.
-     *
-     * @param attributes Contains attributes of the font to create.
-     */
-    public AWTGVTFont(Map<Attribute, Object> attributes) {
-        Float sz = (Float)attributes.get(TextAttribute.SIZE);
-        if (sz != null) {
-            this.size = sz;
-            attributes.put(TextAttribute.SIZE, FONT_SIZE);
-            this.awtFont = new Font(attributes);
-        } else {
-            this.awtFont = new Font(attributes);
-            this.size = awtFont.getSize2D();
-        }
-        this.scale = size/awtFont.getSize2D();
-        initializeFontCache(awtFont);
-    }
+	/**
+	 * Creates a new AWTGVTFont with the specified attributes.
+	 *
+	 * @param attributes Contains attributes of the font to create.
+	 */
+	public AWTGVTFont(Map<Attribute, Object> attributes) {
+		Float sz = (Float) attributes.get(TextAttribute.SIZE);
+		if (sz != null) {
+			this.size = sz;
+			attributes.put(TextAttribute.SIZE, FONT_SIZE);
+			this.awtFont = new Font(attributes);
+		} else {
+			this.awtFont = new Font(attributes);
+			this.size = awtFont.getSize2D();
+		}
+		this.scale = size / awtFont.getSize2D();
+		initializeFontCache(awtFont);
+	}
 
-    /**
-     * Creates a new AWTGVTFont from the specified name, style and point size.
-     *
-     * @param name The name of the new font.
-     * @param style The required font style.
-     * @param size The required font size.
-     */
-    public AWTGVTFont(String name, int style, int size) {
-        this.awtFont = new Font(name, style, (int)FONT_SIZE);
-        this.size  = size;
-        this.scale = size/awtFont.getSize2D();
-        initializeFontCache(awtFont);
-    }
+	/**
+	 * Creates a new AWTGVTFont from the specified name, style and point size.
+	 *
+	 * @param name  The name of the new font.
+	 * @param style The required font style.
+	 * @param size  The required font size.
+	 */
+	public AWTGVTFont(String name, int style, int size) {
+		this.awtFont = new Font(name, style, (int) FONT_SIZE);
+		this.size = size;
+		this.scale = size / awtFont.getSize2D();
+		initializeFontCache(awtFont);
+	}
 
-    /**
-     * Checks if this font can display the specified character.
-     *
-     * @param c The character to check.
-     * @return Whether or not the character can be displayed.
-     */
-    @Override
-    public boolean canDisplay(char c) {
-        return awtFont.canDisplay(c);
-    }
+	/**
+	 * Checks if this font can display the specified character.
+	 *
+	 * @param c The character to check.
+	 * @return Whether or not the character can be displayed.
+	 */
+	@Override
+	public boolean canDisplay(char c) {
+		return awtFont.canDisplay(c);
+	}
 
-    /**
-     * Indicates whether or not this font can display the characters in the
-     * specified text starting at start and ending at limit.
-     *
-     * @param text An array containing the characters to check.
-     * @param start The index of the first character to check.
-     * @param limit The index of the last character to check.
-     *
-     * @return The index of the first char this font cannot display. Will be
-     * -1 if it can display all characters in the specified range.
-     */
-    @Override
-    public int canDisplayUpTo(char[] text, int start, int limit) {
-        return awtFont.canDisplayUpTo(text, start, limit);
-    }
+	/**
+	 * Indicates whether or not this font can display the characters in the
+	 * specified text starting at start and ending at limit.
+	 *
+	 * @param text  An array containing the characters to check.
+	 * @param start The index of the first character to check.
+	 * @param limit The index of the last character to check.
+	 *
+	 * @return The index of the first char this font cannot display. Will be -1 if
+	 *         it can display all characters in the specified range.
+	 */
+	@Override
+	public int canDisplayUpTo(char[] text, int start, int limit) {
+		return awtFont.canDisplayUpTo(text, start, limit);
+	}
 
-    /**
-     *  Indicates whether or not this font can display the the characters in
-     *  the specified CharacterIterator starting at start and ending at limit.
-     */
-    @Override
-    public int canDisplayUpTo(CharacterIterator iter, int start, int limit) {
-        return awtFont.canDisplayUpTo(iter, start, limit);
-    }
+	/**
+	 * Indicates whether or not this font can display the the characters in the
+	 * specified CharacterIterator starting at start and ending at limit.
+	 */
+	@Override
+	public int canDisplayUpTo(CharacterIterator iter, int start, int limit) {
+		return awtFont.canDisplayUpTo(iter, start, limit);
+	}
 
-    /**
-     *  Indicates whether or not this font can display a specified String.
-     */
-    @Override
-    public int canDisplayUpTo(String str) {
-        return awtFont.canDisplayUpTo(str);
-    }
+	/**
+	 * Indicates whether or not this font can display a specified String.
+	 */
+	@Override
+	public int canDisplayUpTo(String str) {
+		return awtFont.canDisplayUpTo(str);
+	}
 
-    /**
-     *  Returns a new GlyphVector object created with the specified array of
-     *  characters and the specified FontRenderContext.
-     */
-    @Override
-    public GVTGlyphVector createGlyphVector(FontRenderContext frc,
-                                            char[] chars) {
+	/**
+	 * Returns a new GlyphVector object created with the specified array of
+	 * characters and the specified FontRenderContext.
+	 */
+	@Override
+	public GVTGlyphVector createGlyphVector(FontRenderContext frc, char[] chars) {
 
-        StringCharacterIterator sci =
-            new StringCharacterIterator(new String(chars));
-        GlyphVector gv = awtFont.createGlyphVector(frc, chars);
-        return new AWTGVTGlyphVector(gv, this, scale, sci);
-    }
+		StringCharacterIterator sci = new StringCharacterIterator(new String(chars));
+		GlyphVector gv = awtFont.createGlyphVector(frc, chars);
+		return new AWTGVTGlyphVector(gv, this, scale, sci);
+	}
 
-    /**
-     * Returns a new GlyphVector object created with the specified
-     * CharacterIterator and the specified FontRenderContext.
-     */
-    @Override
-    public GVTGlyphVector createGlyphVector(FontRenderContext frc,
-                                            CharacterIterator ci) {
+	/**
+	 * Returns a new GlyphVector object created with the specified CharacterIterator
+	 * and the specified FontRenderContext.
+	 */
+	@Override
+	public GVTGlyphVector createGlyphVector(FontRenderContext frc, CharacterIterator ci) {
 
-        if (ci instanceof AttributedCharacterIterator) {
-            AttributedCharacterIterator aci = (AttributedCharacterIterator)ci;
-            if (ArabicTextHandler.containsArabic(aci)) {
-                String str = ArabicTextHandler.createSubstituteString(aci);
+		if (ci instanceof AttributedCharacterIterator) {
+			AttributedCharacterIterator aci = (AttributedCharacterIterator) ci;
+			if (ArabicTextHandler.containsArabic(aci)) {
+				String str = ArabicTextHandler.createSubstituteString(aci);
 
-                return createGlyphVector(frc, str);
-            }
-        }
-        GlyphVector gv = awtFont.createGlyphVector(frc, ci);
-        return new AWTGVTGlyphVector(gv, this, scale, ci);
-    }
+				return createGlyphVector(frc, str);
+			}
+		}
+		GlyphVector gv = awtFont.createGlyphVector(frc, ci);
+		return new AWTGVTGlyphVector(gv, this, scale, ci);
+	}
 
-    /**
-     *  Returns a new GlyphVector object created with the specified integer
-     *  array and the specified FontRenderContext.
-     */
-    @Override
-    public GVTGlyphVector createGlyphVector(FontRenderContext frc,
-                                            int[] glyphCodes,
-                                            CharacterIterator ci) {
-        return new AWTGVTGlyphVector
-            (awtFont.createGlyphVector(frc, glyphCodes),
-             this, scale, ci);
-    }
+	/**
+	 * Returns a new GlyphVector object created with the specified integer array and
+	 * the specified FontRenderContext.
+	 */
+	@Override
+	public GVTGlyphVector createGlyphVector(FontRenderContext frc, int[] glyphCodes, CharacterIterator ci) {
+		return new AWTGVTGlyphVector(awtFont.createGlyphVector(frc, glyphCodes), this, scale, ci);
+	}
 
-    /**
-     * Returns a new GlyphVector object created with the specified String and
-     * the specified FontRenderContext.
-     */
-    @Override
-    public GVTGlyphVector createGlyphVector(FontRenderContext frc, String str)
-    {
+	/**
+	 * Returns a new GlyphVector object created with the specified String and the
+	 * specified FontRenderContext.
+	 */
+	@Override
+	public GVTGlyphVector createGlyphVector(FontRenderContext frc, String str) {
 
-        StringCharacterIterator sci = new StringCharacterIterator(str);
+		StringCharacterIterator sci = new StringCharacterIterator(str);
 
-        return new AWTGVTGlyphVector
-            (awtFont.createGlyphVector(frc, str), this, scale, sci);
-    }
+		return new AWTGVTGlyphVector(awtFont.createGlyphVector(frc, str), this, scale, sci);
+	}
 
-    /**
-     * Creates a new Font object by replicating the current Font object and
-     * applying a new size to it.
-     */
-    @Override
-    public GVTFont deriveFont(float size) {
-        return new AWTGVTFont(awtFont, size/this.size);
-    }
+	/**
+	 * Creates a new Font object by replicating the current Font object and applying
+	 * a new size to it.
+	 */
+	@Override
+	public GVTFont deriveFont(float size) {
+		return new AWTGVTFont(awtFont, size / this.size);
+	}
 
-    @Override
-    public String getFamilyName() {
-        return awtFont.getFamily();
-    }
+	@Override
+	public String getFamilyName() {
+		return awtFont.getFamily();
+	}
 
-    /**
-     *  Returns a LineMetrics object created with the specified arguments.
-     */
-    @Override
-    public GVTLineMetrics getLineMetrics(char[] chars,
-                                         int beginIndex,
-                                         int limit,
-                                         FontRenderContext frc) {
-        return new GVTLineMetrics
-            (awtFont.getLineMetrics(chars, beginIndex, limit, frc), (float)scale);
-    }
+	/**
+	 * Returns a LineMetrics object created with the specified arguments.
+	 */
+	@Override
+	public GVTLineMetrics getLineMetrics(char[] chars, int beginIndex, int limit, FontRenderContext frc) {
+		return new GVTLineMetrics(awtFont.getLineMetrics(chars, beginIndex, limit, frc), (float) scale);
+	}
 
-    /**
-     * Returns a GVTLineMetrics object created with the specified arguments.
-     */
-    @Override
-    public GVTLineMetrics getLineMetrics(CharacterIterator ci,
-                                         int beginIndex,
-                                         int limit,
-                                         FontRenderContext frc) {
-        return new GVTLineMetrics
-            (awtFont.getLineMetrics(ci, beginIndex, limit, frc), (float)scale);
-    }
+	/**
+	 * Returns a GVTLineMetrics object created with the specified arguments.
+	 */
+	@Override
+	public GVTLineMetrics getLineMetrics(CharacterIterator ci, int beginIndex, int limit, FontRenderContext frc) {
+		return new GVTLineMetrics(awtFont.getLineMetrics(ci, beginIndex, limit, frc), (float) scale);
+	}
 
-    /**
-     *  Returns a GVTLineMetrics object created with the specified String and
-     *  FontRenderContext.
-     */
-    @Override
-    public GVTLineMetrics getLineMetrics(String str, FontRenderContext frc) {
-        return new GVTLineMetrics(awtFont.getLineMetrics(str, frc), (float)scale);
-    }
+	/**
+	 * Returns a GVTLineMetrics object created with the specified String and
+	 * FontRenderContext.
+	 */
+	@Override
+	public GVTLineMetrics getLineMetrics(String str, FontRenderContext frc) {
+		return new GVTLineMetrics(awtFont.getLineMetrics(str, frc), (float) scale);
+	}
 
-    /**
-     * Returns a GVTLineMetrics object created with the specified arguments.
-     */
-    @Override
-    public GVTLineMetrics getLineMetrics(String str,
-                                         int beginIndex,
-                                         int limit,
-                                         FontRenderContext frc) {
-        return new GVTLineMetrics
-            (awtFont.getLineMetrics(str, beginIndex, limit, frc), (float)scale);
-    }
+	/**
+	 * Returns a GVTLineMetrics object created with the specified arguments.
+	 */
+	@Override
+	public GVTLineMetrics getLineMetrics(String str, int beginIndex, int limit, FontRenderContext frc) {
+		return new GVTLineMetrics(awtFont.getLineMetrics(str, beginIndex, limit, frc), (float) scale);
+	}
 
-    /**
-     * Returns the size of this font.
-     */
-    @Override
-    public float getSize() {
-        return (float)size;
-    }
+	/**
+	 * Returns the size of this font.
+	 */
+	@Override
+	public float getSize() {
+		return (float) size;
+	}
 
-    /**
-     * Returns the horizontal kerning value for this glyph pair.
-     */
-    @Override
-    public float getHKern(int glyphCode1, int glyphCode2) {
-        return 0.0f;
-    }
+	/**
+	 * Returns the horizontal kerning value for this glyph pair.
+	 */
+	@Override
+	public float getHKern(int glyphCode1, int glyphCode2) {
+		return 0.0f;
+	}
 
-    /**
-     * Returns the vertical kerning value for this glyph pair.
-     */
-    @Override
-    public float getVKern(int glyphCode1, int glyphCode2) {
-        return 0.0f;
-    }
+	/**
+	 * Returns the vertical kerning value for this glyph pair.
+	 */
+	@Override
+	public float getVKern(int glyphCode1, int glyphCode2) {
+		return 0.0f;
+	}
 
-    /////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////
 
-    public static final float FONT_SIZE = 48.0f;
+	public static final float FONT_SIZE = 48.0f;
 
-    /**
-     * Returns the geometry of the specified character. This method also put
-     * the in cache the geometry associated to the specified character if
-     * needed.
-     */
-    public static
-        AWTGlyphGeometryCache.Value getGlyphGeometry(AWTGVTFont font,
-                                                     char c,
-                                                     GlyphVector gv,
-                                                     int glyphIndex,
-                                                     Point2D glyphPos) {
+	/**
+	 * Returns the geometry of the specified character. This method also put the in
+	 * cache the geometry associated to the specified character if needed.
+	 */
+	public static AWTGlyphGeometryCache.Value getGlyphGeometry(AWTGVTFont font, char c, GlyphVector gv, int glyphIndex,
+			Point2D glyphPos) {
 
-        AWTGlyphGeometryCache glyphCache =
-            (AWTGlyphGeometryCache)fontCache.get(font.awtFont);
+		AWTGlyphGeometryCache glyphCache = (AWTGlyphGeometryCache) fontCache.get(font.awtFont);
 
-        AWTGlyphGeometryCache.Value v = glyphCache.get(c);
-        if (v == null) {
-            Shape outline = gv.getGlyphOutline(glyphIndex);
-            GlyphMetrics metrics = gv.getGlyphMetrics(glyphIndex);
-            Rectangle2D gmB = metrics.getBounds2D();
-            if (AWTGVTGlyphVector.outlinesPositioned()) {
-                AffineTransform tr = AffineTransform.getTranslateInstance
-                    (-glyphPos.getX(), -glyphPos.getY());
-                outline = tr.createTransformedShape(outline);
-            }
-            v = new AWTGlyphGeometryCache.Value(outline, gmB);
-            //System.out.println("put "+font.awtFont+" "+c);
-            glyphCache.put(c, v);
-        }
-        return v;
-    }
+		AWTGlyphGeometryCache.Value v = glyphCache.get(c);
+		if (v == null) {
+			Shape outline = gv.getGlyphOutline(glyphIndex);
+			GlyphMetrics metrics = gv.getGlyphMetrics(glyphIndex);
+			Rectangle2D gmB = metrics.getBounds2D();
+			if (AWTGVTGlyphVector.outlinesPositioned()) {
+				AffineTransform tr = AffineTransform.getTranslateInstance(-glyphPos.getX(), -glyphPos.getY());
+				outline = tr.createTransformedShape(outline);
+			}
+			v = new AWTGlyphGeometryCache.Value(outline, gmB);
+			// System.out.println("put "+font.awtFont+" "+c);
+			glyphCache.put(c, v);
+		}
+		return v;
+	}
 
-    //
-    // static cache for AWTGVTFont
-    //
+	//
+	// static cache for AWTGVTFont
+	//
 
-    static Map<Font, Object> fontCache = new HashMap<>(11);
+	static Map<Font, Object> fontCache = new HashMap<>(11);
 
-    static void initializeFontCache(Font awtFont) {
-        if (!fontCache.containsKey(awtFont)) {
-            fontCache.put(awtFont, new AWTGlyphGeometryCache());
-        }
-    }
+	static void initializeFontCache(Font awtFont) {
+		if (!fontCache.containsKey(awtFont)) {
+			fontCache.put(awtFont, new AWTGlyphGeometryCache());
+		}
+	}
 
-    static void putAWTGVTFont(AWTGVTFont font) {
-        fontCache.put(font.awtFont, font);
-    }
+	static void putAWTGVTFont(AWTGVTFont font) {
+		fontCache.put(font.awtFont, font);
+	}
 
-    static AWTGVTFont getAWTGVTFont(Font awtFont) {
-        return (AWTGVTFont)fontCache.get(awtFont);
-    }
+	static AWTGVTFont getAWTGVTFont(Font awtFont) {
+		return (AWTGVTFont) fontCache.get(awtFont);
+	}
 
 }
-

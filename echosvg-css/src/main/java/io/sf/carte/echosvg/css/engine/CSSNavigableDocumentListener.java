@@ -23,9 +23,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
- * An interface for listeners of CSSNavigableDocument events.  The
- * events parallel the DOM events, but apply to the CSS view of
- * the tree rather than the actual DOM tree.
+ * An interface for listeners of CSSNavigableDocument events. The events
+ * parallel the DOM events, but apply to the CSS view of the tree rather than
+ * the actual DOM tree.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -33,47 +33,44 @@ import org.w3c.dom.Node;
  */
 public interface CSSNavigableDocumentListener {
 
-    /**
-     * A node has been inserted into the CSSNavigableDocument tree.
-     */
-    void nodeInserted(Node newNode);
+	/**
+	 * A node has been inserted into the CSSNavigableDocument tree.
+	 */
+	void nodeInserted(Node newNode);
 
-    /**
-     * A node is about to be removed from the CSSNavigableDocument tree.
-     */
-    void nodeToBeRemoved(Node oldNode);
+	/**
+	 * A node is about to be removed from the CSSNavigableDocument tree.
+	 */
+	void nodeToBeRemoved(Node oldNode);
 
-    /**
-     * A subtree of the CSSNavigableDocument tree has been modified
-     * in some way.
-     */
-    void subtreeModified(Node rootOfModifications);
+	/**
+	 * A subtree of the CSSNavigableDocument tree has been modified in some way.
+	 */
+	void subtreeModified(Node rootOfModifications);
 
-    /**
-     * Character data in the CSSNavigableDocument tree has been modified.
-     */
-    void characterDataModified(Node text);
+	/**
+	 * Character data in the CSSNavigableDocument tree has been modified.
+	 */
+	void characterDataModified(Node text);
 
-    /**
-     * An attribute has changed in the CSSNavigableDocument.
-     */
-    void attrModified(Element e, Attr attr, short attrChange,
-                      String prevValue, String newValue);
+	/**
+	 * An attribute has changed in the CSSNavigableDocument.
+	 */
+	void attrModified(Element e, Attr attr, short attrChange, String prevValue, String newValue);
 
-    /**
-     * The text of the override style declaration for this element has been
-     * modified.
-     */
-    void overrideStyleTextChanged(CSSStylableElement e, String text);
+	/**
+	 * The text of the override style declaration for this element has been
+	 * modified.
+	 */
+	void overrideStyleTextChanged(CSSStylableElement e, String text);
 
-    /**
-     * A property in the override style declaration has been removed.
-     */
-    void overrideStylePropertyRemoved(CSSStylableElement e, String name);
+	/**
+	 * A property in the override style declaration has been removed.
+	 */
+	void overrideStylePropertyRemoved(CSSStylableElement e, String name);
 
-    /**
-     * A property in the override style declaration has been changed.
-     */
-    void overrideStylePropertyChanged(CSSStylableElement e, String name,
-                                      String val, String prio);
+	/**
+	 * A property in the override style declaration has been changed.
+	 */
+	void overrideStylePropertyChanged(CSSStylableElement e, String name, String val, String prio);
 }

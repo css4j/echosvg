@@ -28,47 +28,44 @@ import java.awt.geom.Rectangle2D;
  * @version $Id$
  */
 public interface TileRable extends FilterColorInterpolation {
-    /**
-     * Returns the tile region
-     */
-    Rectangle2D getTileRegion();
+	/**
+	 * Returns the tile region
+	 */
+	Rectangle2D getTileRegion();
 
-    /**
-     * Sets the tile region
-     */
-    void setTileRegion(Rectangle2D tileRegion);
+	/**
+	 * Sets the tile region
+	 */
+	void setTileRegion(Rectangle2D tileRegion);
 
-    /**
-     * Returns the tiled region
-     */
-    Rectangle2D getTiledRegion();
+	/**
+	 * Returns the tiled region
+	 */
+	Rectangle2D getTiledRegion();
 
-    /**
-     * Sets the tile region
-     */
-    void setTiledRegion(Rectangle2D tiledRegion);
+	/**
+	 * Sets the tile region
+	 */
+	void setTiledRegion(Rectangle2D tiledRegion);
 
-    /**
-     * Returns whether or not the source can overflow
-     * the tile region or if the tile region should clip
-     * the source
-     */
-    boolean isOverflow();
+	/**
+	 * Returns whether or not the source can overflow the tile region or if the tile
+	 * region should clip the source
+	 */
+	boolean isOverflow();
 
-    /**
-     * Sets the overflow strategy
-     */
-    void setOverflow(boolean overflow);
+	/**
+	 * Sets the overflow strategy
+	 */
+	void setOverflow(boolean overflow);
 
-    /**
-     * Sets the filter source (the tile content used to fill the
-     * tile region.
-     */
-    void setSource(Filter source);
+	/**
+	 * Sets the filter source (the tile content used to fill the tile region.
+	 */
+	void setSource(Filter source);
 
-    /**
-     * Return's the tile source (the tile content used to fill
-     * the tile region.
-     */
-    Filter getSource();
+	/**
+	 * Return's the tile source (the tile content used to fill the tile region.
+	 */
+	Filter getSource();
 }

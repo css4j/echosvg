@@ -31,73 +31,75 @@ import org.w3c.dom.Text;
  */
 
 public class GenericText extends AbstractText {
-    private static final long serialVersionUID = 1L;
-    /**
-     * Is this element immutable?
-     */
-    protected boolean readonly;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Is this element immutable?
+	 */
+	protected boolean readonly;
 
-    /**
-     * Creates a new uninitialized Text object.
-     */
-    protected GenericText() {
-    }
+	/**
+	 * Creates a new uninitialized Text object.
+	 */
+	protected GenericText() {
+	}
 
-    /**
-     * Creates a new Text object.
-     */
-    public GenericText(String value, AbstractDocument owner) {
-        ownerDocument = owner;
-        setNodeValue(value);
-    }
+	/**
+	 * Creates a new Text object.
+	 */
+	public GenericText(String value, AbstractDocument owner) {
+		ownerDocument = owner;
+		setNodeValue(value);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
-     * @return {@link #getNodeName()}.
-     */
-    @Override
-    public String getNodeName() {
-        return "#text";
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
+	 * 
+	 * @return {@link #getNodeName()}.
+	 */
+	@Override
+	public String getNodeName() {
+		return "#text";
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
-     * @return {@link org.w3c.dom.Node#TEXT_NODE}
-     */
-    @Override
-    public short getNodeType() {
-        return TEXT_NODE;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
+	 * 
+	 * @return {@link org.w3c.dom.Node#TEXT_NODE}
+	 */
+	@Override
+	public short getNodeType() {
+		return TEXT_NODE;
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return readonly;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-        readonly = v;
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+		readonly = v;
+	}
 
-    /**
-     * Creates a text node of the current type.
-     */
-    @Override
-    protected Text createTextNode(String text) {
-        return getOwnerDocument().createTextNode(text);
-    }
+	/**
+	 * Creates a text node of the current type.
+	 */
+	@Override
+	protected Text createTextNode(String text) {
+		return getOwnerDocument().createTextNode(text);
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new GenericText();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new GenericText();
+	}
 }

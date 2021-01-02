@@ -29,79 +29,75 @@ import java.util.Enumeration;
 
 /**
  * This <code>ClassLoader</code> implementation only grants permission to
- * connect back to the server from where the document referencing the
- * jar file was loaded. 
+ * connect back to the server from where the document referencing the jar file
+ * was loaded.
  * 
- * A <code>URLClassLoader</code> extension is needed in case the user
- * allows linked jar files to come from a different origin than
- * the document referencing them.
+ * A <code>URLClassLoader</code> extension is needed in case the user allows
+ * linked jar files to come from a different origin than the document
+ * referencing them.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DocumentJarClassLoader extends URLClassLoader {
-    /**
-     * CodeSource for the Document which referenced the Jar file
-     * @see #getPermissions
-     */
-    protected CodeSource documentCodeSource = null;
+	/**
+	 * CodeSource for the Document which referenced the Jar file
+	 * 
+	 * @see #getPermissions
+	 */
+	protected CodeSource documentCodeSource = null;
 
-    /**
-     * Constructor
-     */
-    public DocumentJarClassLoader(URL jarURL,
-                                  URL documentURL){
-        super(new URL[]{jarURL});
+	/**
+	 * Constructor
+	 */
+	public DocumentJarClassLoader(URL jarURL, URL documentURL) {
+		super(new URL[] { jarURL });
 
-        if (documentURL != null) {
-            documentCodeSource = new CodeSource
-                (documentURL, (Certificate[])null);
-        }
-    }
+		if (documentURL != null) {
+			documentCodeSource = new CodeSource(documentURL, (Certificate[]) null);
+		}
+	}
 
-    /**
-     * Returns the permissions for the given codesource object.
-     * The implementation of this method first gets the permissions
-     * granted by the policy, and then adds additional permissions
-     * based on the URL of the codesource.
-     * <p>
-     * Then, if the documentURL passed at construction time is
-     * not null, the permissions granted to that URL are added.
-     *
-     * As a result, the jar file code will only be able to 
-     * connect to the server which served the document.
-     *
-     * @param codesource the codesource
-     * @return the permissions granted to the codesource
-     */
-    @Override
-    protected PermissionCollection getPermissions(CodeSource codesource)
-    {
-        // First, get the permissions which may be granted 
-        // through the policy file(s)
-        Policy p = Policy.getPolicy();
+	/**
+	 * Returns the permissions for the given codesource object. The implementation
+	 * of this method first gets the permissions granted by the policy, and then
+	 * adds additional permissions based on the URL of the codesource.
+	 * <p>
+	 * Then, if the documentURL passed at construction time is not null, the
+	 * permissions granted to that URL are added.
+	 *
+	 * As a result, the jar file code will only be able to connect to the server
+	 * which served the document.
+	 *
+	 * @param codesource the codesource
+	 * @return the permissions granted to the codesource
+	 */
+	@Override
+	protected PermissionCollection getPermissions(CodeSource codesource) {
+		// First, get the permissions which may be granted
+		// through the policy file(s)
+		Policy p = Policy.getPolicy();
 
-        PermissionCollection pc = null;
-        if (p != null) {
-            pc = p.getPermissions(codesource);
-        }
+		PermissionCollection pc = null;
+		if (p != null) {
+			pc = p.getPermissions(codesource);
+		}
 
-        // Now, add permissions if the documentCodeSource is not null
-        if (documentCodeSource != null){
-            PermissionCollection urlPC 
-                = super.getPermissions(documentCodeSource);
+		// Now, add permissions if the documentCodeSource is not null
+		if (documentCodeSource != null) {
+			PermissionCollection urlPC = super.getPermissions(documentCodeSource);
 
-            if (pc != null) {
-                Enumeration<Permission> items = urlPC.elements();
-                while (items.hasMoreElements()) {
-                    pc.add(items.nextElement());
-                }
-            } else {
-                pc = urlPC;
-            }
-        }
+			if (pc != null) {
+				Enumeration<Permission> items = urlPC.elements();
+				while (items.hasMoreElements()) {
+					pc.add(items.nextElement());
+				}
+			} else {
+				pc = urlPC;
+			}
+		}
 
-        return pc;
-    }
+		return pc;
+	}
 }

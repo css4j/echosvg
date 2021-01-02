@@ -53,433 +53,373 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 
-    /**
-     * Used to handle mutation of the referenced content. This is
-     * only used in dynamic context and only for reference to local
-     * content.
-     */
-    protected ReferencedElementMutationListener l;
+	/**
+	 * Used to handle mutation of the referenced content. This is only used in
+	 * dynamic context and only for reference to local content.
+	 */
+	protected ReferencedElementMutationListener l;
 
-    /**
-     * The bridge context for the referenced document.
-     */
-    protected BridgeContext subCtx;
+	/**
+	 * The bridge context for the referenced document.
+	 */
+	protected BridgeContext subCtx;
 
-    /**
-     * Constructs a new bridge for the &lt;use&gt; element.
-     */
-    public SVGUseElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;use&gt; element.
+	 */
+	public SVGUseElementBridge() {
+	}
 
-    /**
-     * Returns 'use'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_USE_TAG;
-    }
+	/**
+	 * Returns 'use'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_USE_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance(){
-        return new SVGUseElementBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGUseElementBridge();
+	}
 
-    /**
-     * Creates a <code>GraphicsNode</code> according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @return a graphics node that represents the specified element
-     */
-    @Override
-    public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
-        // 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
-        if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent()))
-            return null;
+	/**
+	 * Creates a <code>GraphicsNode</code> according to the specified parameters.
+	 *
+	 * @param ctx the bridge context to use
+	 * @param e   the element that describes the graphics node to build
+	 * @return a graphics node that represents the specified element
+	 */
+	@Override
+	public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
+		// 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
+		if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent()))
+			return null;
 
-        CompositeGraphicsNode gn = buildCompositeGraphicsNode(ctx, e, null);
-        associateSVGContext(ctx, e, gn);
+		CompositeGraphicsNode gn = buildCompositeGraphicsNode(ctx, e, null);
+		associateSVGContext(ctx, e, gn);
 
-        return gn;
-    }
+		return gn;
+	}
 
-    /**
-     * Creates a <code>GraphicsNode</code> from the input element and
-     * populates the input <code>CompositeGraphicsNode</code>
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @param gn the CompositeGraphicsNode where the use graphical 
-     *        content will be appended. The composite node is emptied
-     *        before appending new content.
-     */
-    public CompositeGraphicsNode buildCompositeGraphicsNode
-            (BridgeContext ctx, Element e, CompositeGraphicsNode gn) {
-        // get the referenced element
-        SVGOMUseElement ue = (SVGOMUseElement) e;
-        String uri = ue.getHref().getAnimVal();
-        if (uri.length() == 0) {
-            throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING,
-                                      new Object[] {"xlink:href"});
-        }
+	/**
+	 * Creates a <code>GraphicsNode</code> from the input element and populates the
+	 * input <code>CompositeGraphicsNode</code>
+	 *
+	 * @param ctx the bridge context to use
+	 * @param e   the element that describes the graphics node to build
+	 * @param gn  the CompositeGraphicsNode where the use graphical content will be
+	 *            appended. The composite node is emptied before appending new
+	 *            content.
+	 */
+	public CompositeGraphicsNode buildCompositeGraphicsNode(BridgeContext ctx, Element e, CompositeGraphicsNode gn) {
+		// get the referenced element
+		SVGOMUseElement ue = (SVGOMUseElement) e;
+		String uri = ue.getHref().getAnimVal();
+		if (uri.length() == 0) {
+			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING, new Object[] { "xlink:href" });
+		}
 
-        Element refElement = ctx.getReferencedElement(e, uri);
+		Element refElement = ctx.getReferencedElement(e, uri);
 
-        SVGOMDocument document, refDocument;
-        document    = (SVGOMDocument)e.getOwnerDocument();
-        refDocument = (SVGOMDocument)refElement.getOwnerDocument();
-        boolean isLocal = (refDocument == document);
+		SVGOMDocument document, refDocument;
+		document = (SVGOMDocument) e.getOwnerDocument();
+		refDocument = (SVGOMDocument) refElement.getOwnerDocument();
+		boolean isLocal = (refDocument == document);
 
-        BridgeContext theCtx = ctx;
-        subCtx = null;
-        if (!isLocal) {
-            subCtx = (BridgeContext)refDocument.getCSSEngine().getCSSContext();
-            theCtx = subCtx;
-        }
-            
-        // import or clone the referenced element in current document
-        Element localRefElement;
-        localRefElement = (Element)document.importNode(refElement, true, true);
+		BridgeContext theCtx = ctx;
+		subCtx = null;
+		if (!isLocal) {
+			subCtx = (BridgeContext) refDocument.getCSSEngine().getCSSContext();
+			theCtx = subCtx;
+		}
 
-        if (SVG_SYMBOL_TAG.equals(localRefElement.getLocalName())) {
-            // The referenced 'symbol' and its contents are deep-cloned into
-            // the generated tree, with the exception that the 'symbol'  is
-            // replaced by an 'svg'.
-            Element svgElement = document.createElementNS(SVG_NAMESPACE_URI, 
-                                                          SVG_SVG_TAG);
+		// import or clone the referenced element in current document
+		Element localRefElement;
+		localRefElement = (Element) document.importNode(refElement, true, true);
 
-            // move the attributes from <symbol> to the <svg> element
-            NamedNodeMap attrs = localRefElement.getAttributes();
-            int len = attrs.getLength();
-            for (int i = 0; i < len; i++) {
-                Attr attr = (Attr)attrs.item(i);
-                svgElement.setAttributeNS(attr.getNamespaceURI(),
-                                          attr.getName(),
-                                          attr.getValue());
-            }
-            // move the children from <symbol> to the <svg> element
-            for (Node n = localRefElement.getFirstChild();
-                 n != null;
-                 n = localRefElement.getFirstChild()) {
-                svgElement.appendChild(n);
-            }
-            localRefElement = svgElement;
-        }
+		if (SVG_SYMBOL_TAG.equals(localRefElement.getLocalName())) {
+			// The referenced 'symbol' and its contents are deep-cloned into
+			// the generated tree, with the exception that the 'symbol' is
+			// replaced by an 'svg'.
+			Element svgElement = document.createElementNS(SVG_NAMESPACE_URI, SVG_SVG_TAG);
 
-        if (SVG_SVG_TAG.equals(localRefElement.getLocalName())) {
-            // The referenced 'svg' and its contents are deep-cloned into the
-            // generated tree. If attributes width and/or height are provided
-            // on the 'use' element, then these values will override the
-            // corresponding attributes on the 'svg' in the generated tree.
-            try {
-                SVGOMAnimatedLength al = (SVGOMAnimatedLength) ue.getWidth();
-                if (al.isSpecified()) {
-                    localRefElement.setAttributeNS
-                        (null, SVG_WIDTH_ATTRIBUTE,
-                         al.getAnimVal().getValueAsString());
-                }
-                al = (SVGOMAnimatedLength) ue.getHeight();
-                if (al.isSpecified()) {
-                    localRefElement.setAttributeNS
-                        (null, SVG_HEIGHT_ATTRIBUTE,
-                         al.getAnimVal().getValueAsString());
-                }
-            } catch (LiveAttributeException ex) {
-                throw new BridgeException(ctx, ex);
-            }
-        }
+			// move the attributes from <symbol> to the <svg> element
+			NamedNodeMap attrs = localRefElement.getAttributes();
+			int len = attrs.getLength();
+			for (int i = 0; i < len; i++) {
+				Attr attr = (Attr) attrs.item(i);
+				svgElement.setAttributeNS(attr.getNamespaceURI(), attr.getName(), attr.getValue());
+			}
+			// move the children from <symbol> to the <svg> element
+			for (Node n = localRefElement.getFirstChild(); n != null; n = localRefElement.getFirstChild()) {
+				svgElement.appendChild(n);
+			}
+			localRefElement = svgElement;
+		}
 
-        // attach the referenced element to the current document
-        SVGOMUseShadowRoot root;
-        root = new SVGOMUseShadowRoot(document, e, isLocal);
-        root.appendChild(localRefElement);
+		if (SVG_SVG_TAG.equals(localRefElement.getLocalName())) {
+			// The referenced 'svg' and its contents are deep-cloned into the
+			// generated tree. If attributes width and/or height are provided
+			// on the 'use' element, then these values will override the
+			// corresponding attributes on the 'svg' in the generated tree.
+			try {
+				SVGOMAnimatedLength al = (SVGOMAnimatedLength) ue.getWidth();
+				if (al.isSpecified()) {
+					localRefElement.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, al.getAnimVal().getValueAsString());
+				}
+				al = (SVGOMAnimatedLength) ue.getHeight();
+				if (al.isSpecified()) {
+					localRefElement.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, al.getAnimVal().getValueAsString());
+				}
+			} catch (LiveAttributeException ex) {
+				throw new BridgeException(ctx, ex);
+			}
+		}
 
-        if (gn == null) {
-            gn = new CompositeGraphicsNode();
-            associateSVGContext(ctx, e, node);
-        } else {
-            int s = gn.size();
-            for (int i=0; i<s; i++)
-                gn.remove(0);
-        }
+		// attach the referenced element to the current document
+		SVGOMUseShadowRoot root;
+		root = new SVGOMUseShadowRoot(document, e, isLocal);
+		root.appendChild(localRefElement);
 
-        Node oldRoot = ue.getCSSFirstChild();
-        if (oldRoot != null) {
-            disposeTree(oldRoot);
-        }
-        ue.setUseShadowTree(root);
+		if (gn == null) {
+			gn = new CompositeGraphicsNode();
+			associateSVGContext(ctx, e, node);
+		} else {
+			int s = gn.size();
+			for (int i = 0; i < s; i++)
+				gn.remove(0);
+		}
 
-        Element g = localRefElement;
+		Node oldRoot = ue.getCSSFirstChild();
+		if (oldRoot != null) {
+			disposeTree(oldRoot);
+		}
+		ue.setUseShadowTree(root);
 
-        // compute URIs and style sheets for the used element
-        CSSUtilities.computeStyleAndURIs(refElement, localRefElement, uri);
+		Element g = localRefElement;
 
-        GVTBuilder builder = ctx.getGVTBuilder();
-        GraphicsNode refNode = builder.build(ctx, g);
+		// compute URIs and style sheets for the used element
+		CSSUtilities.computeStyleAndURIs(refElement, localRefElement, uri);
 
-        ///////////////////////////////////////////////////////////////////////
+		GVTBuilder builder = ctx.getGVTBuilder();
+		GraphicsNode refNode = builder.build(ctx, g);
 
-        gn.getChildren().add(refNode);
+		///////////////////////////////////////////////////////////////////////
 
-        gn.setTransform(computeTransform((SVGTransformable) e, ctx));
+		gn.getChildren().add(refNode);
 
-        // set an affine transform to take into account the (x, y)
-        // coordinates of the <use> element
+		gn.setTransform(computeTransform((SVGTransformable) e, ctx));
 
-        // 'visibility'
-        gn.setVisible(CSSUtilities.convertVisibility(e));
+		// set an affine transform to take into account the (x, y)
+		// coordinates of the <use> element
 
-        RenderingHints hints = null;
-        hints = CSSUtilities.convertColorRendering(e, hints);
-        if (hints != null)
-            gn.setRenderingHints(hints);
+		// 'visibility'
+		gn.setVisible(CSSUtilities.convertVisibility(e));
 
-        // 'enable-background'
-        Rectangle2D r = CSSUtilities.convertEnableBackground(e);
-        if (r != null)
-            gn.setBackgroundEnable(r);
+		RenderingHints hints = null;
+		hints = CSSUtilities.convertColorRendering(e, hints);
+		if (hints != null)
+			gn.setRenderingHints(hints);
 
-        if (l != null) {
-            // Remove event listeners
-            NodeEventTarget target = l.target;
-            target.removeEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified",
-                 l, true);
-            target.removeEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted",
-                 l, true);
-            target.removeEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
-                 l, true);
-            target.removeEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified",
-                 l, true);
-            l = null;
-        }
+		// 'enable-background'
+		Rectangle2D r = CSSUtilities.convertEnableBackground(e);
+		if (r != null)
+			gn.setBackgroundEnable(r);
 
-        ///////////////////////////////////////////////////////////////////////
-        
-        // Handle mutations on content referenced in the same file if
-        // we are in a dynamic context.
-        if (isLocal && ctx.isDynamic()) {
-            l = new ReferencedElementMutationListener();
-        
-            NodeEventTarget target = (NodeEventTarget)refElement;
-            l.target = target;
-            
-            target.addEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified",
-                 l, true, null);
-            theCtx.storeEventListenerNS
-                (target, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified",
-                 l, true);
-            
-            target.addEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted",
-                 l, true, null);
-            theCtx.storeEventListenerNS
-                (target, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted",
-                 l, true);
-            
-            target.addEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
-                 l, true, null);
-            theCtx.storeEventListenerNS
-                (target, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
-                 l, true);
-            
-            target.addEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified",
-                 l, true, null);
-            theCtx.storeEventListenerNS
-                (target, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified",
-                 l, true);
-        }
-        
-        return gn;
-    }
+		if (l != null) {
+			// Remove event listeners
+			NodeEventTarget target = l.target;
+			target.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified", l, true);
+			target.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted", l, true);
+			target.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved", l, true);
+			target.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified", l, true);
+			l = null;
+		}
 
-    @Override
-    public void dispose() {
-        if (l != null) {
-            // Remove event listeners
-            NodeEventTarget target = l.target;
-            target.removeEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified",
-                 l, true);
-            target.removeEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted",
-                 l, true);
-            target.removeEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
-                 l, true);
-            target.removeEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified",
-                 l, true);
-            l = null;
-        }
+		///////////////////////////////////////////////////////////////////////
 
-        SVGOMUseElement ue = (SVGOMUseElement)e;
-        if (ue != null && ue.getCSSFirstChild() != null) {
-            disposeTree(ue.getCSSFirstChild());
-        }
+		// Handle mutations on content referenced in the same file if
+		// we are in a dynamic context.
+		if (isLocal && ctx.isDynamic()) {
+			l = new ReferencedElementMutationListener();
 
-        super.dispose();
+			NodeEventTarget target = (NodeEventTarget) refElement;
+			l.target = target;
 
-        subCtx = null;
-    }
+			target.addEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified", l, true, null);
+			theCtx.storeEventListenerNS(target, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified", l, true);
 
-    /**
-     * Returns an {@link AffineTransform} that is the transformation to
-     * be applied to the node.
-     */
-    @Override
-    protected AffineTransform computeTransform(SVGTransformable e,
-                                               BridgeContext ctx) {
-        AffineTransform at = super.computeTransform(e, ctx);
-        SVGUseElement ue = (SVGUseElement) e;
-        try {
-            // 'x' attribute - default is 0
-            AbstractSVGAnimatedLength _x =
-                (AbstractSVGAnimatedLength) ue.getX();
-            float x = _x.getCheckedValue();
+			target.addEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted", l, true, null);
+			theCtx.storeEventListenerNS(target, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted", l, true);
 
-            // 'y' attribute - default is 0
-            AbstractSVGAnimatedLength _y =
-                (AbstractSVGAnimatedLength) ue.getY();
-            float y = _y.getCheckedValue();
+			target.addEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved", l, true, null);
+			theCtx.storeEventListenerNS(target, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved", l, true);
 
-            AffineTransform xy = AffineTransform.getTranslateInstance(x, y);
-            xy.preConcatenate(at);
-            return xy;
-        } catch (LiveAttributeException ex) {
-            throw new BridgeException(ctx, ex);
-        }
-     }
+			target.addEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified", l, true, null);
+			theCtx.storeEventListenerNS(target, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified", l,
+					true);
+		}
 
-    /**
-     * Creates the GraphicsNode depending on the GraphicsNodeBridge
-     * implementation.
-     */
-    @Override
-    protected GraphicsNode instantiateGraphicsNode() {
-        return null; // nothing to do, createGraphicsNode is fully overridden
-    }
+		return gn;
+	}
 
-    /**
-     * Returns false as the &lt;use&gt; element is a not container.
-     */
-    @Override
-    public boolean isComposite() {
-        return false;
-    }
+	@Override
+	public void dispose() {
+		if (l != null) {
+			// Remove event listeners
+			NodeEventTarget target = l.target;
+			target.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified", l, true);
+			target.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInserted", l, true);
+			target.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved", l, true);
+			target.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified", l, true);
+			l = null;
+		}
 
-    /**
-     * Builds using the specified BridgeContext and element, the
-     * specified graphics node.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @param node the graphics node to build
-     */
-    @Override
-    public void buildGraphicsNode(BridgeContext ctx,
-                                  Element e,
-                                  GraphicsNode node) {
+		SVGOMUseElement ue = (SVGOMUseElement) e;
+		if (ue != null && ue.getCSSFirstChild() != null) {
+			disposeTree(ue.getCSSFirstChild());
+		}
 
-        super.buildGraphicsNode(ctx, e, node);
+		super.dispose();
 
-        if (ctx.isInteractive()) {
-            NodeEventTarget target = (NodeEventTarget)e;
-            EventListener l = new CursorMouseOverListener(ctx);
-            target.addEventListenerNS
-                (XMLConstants.XML_EVENTS_NAMESPACE_URI, SVG_EVENT_MOUSEOVER,
-                 l, false, null);
-            ctx.storeEventListenerNS
-                (target, XMLConstants.XML_EVENTS_NAMESPACE_URI, SVG_EVENT_MOUSEOVER,
-                 l, false);
-        }
-    }
+		subCtx = null;
+	}
 
-    /**
-     * To handle a mouseover on an anchor and set the cursor.
-     */
-    public static class CursorMouseOverListener implements EventListener {
+	/**
+	 * Returns an {@link AffineTransform} that is the transformation to be applied
+	 * to the node.
+	 */
+	@Override
+	protected AffineTransform computeTransform(SVGTransformable e, BridgeContext ctx) {
+		AffineTransform at = super.computeTransform(e, ctx);
+		SVGUseElement ue = (SVGUseElement) e;
+		try {
+			// 'x' attribute - default is 0
+			AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) ue.getX();
+			float x = _x.getCheckedValue();
 
-        protected BridgeContext ctx;
-        public CursorMouseOverListener(BridgeContext ctx) {
-            this.ctx = ctx;
-        }
+			// 'y' attribute - default is 0
+			AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) ue.getY();
+			float y = _y.getCheckedValue();
 
-        @Override
-        public void handleEvent(Event evt) {
-            //
-            // Only modify the cursor if the current target's (i.e., the <use>) cursor 
-            // property is *not* 'auto'.
-            //
-            Element currentTarget = (Element)evt.getCurrentTarget();
+			AffineTransform xy = AffineTransform.getTranslateInstance(x, y);
+			xy.preConcatenate(at);
+			return xy;
+		} catch (LiveAttributeException ex) {
+			throw new BridgeException(ctx, ex);
+		}
+	}
 
-            if (!CSSUtilities.isAutoCursor(currentTarget)) {
-                Cursor cursor;
-                cursor = CSSUtilities.convertCursor(currentTarget, ctx);
-                if (cursor != null) {
-                    ctx.getUserAgent().setSVGCursor(cursor);
-                }
-            }
-        }
-    }
+	/**
+	 * Creates the GraphicsNode depending on the GraphicsNodeBridge implementation.
+	 */
+	@Override
+	protected GraphicsNode instantiateGraphicsNode() {
+		return null; // nothing to do, createGraphicsNode is fully overridden
+	}
 
-    /**
-     * Used to handle modifications to the referenced content
-     */
-    protected class ReferencedElementMutationListener implements EventListener {
-        protected NodeEventTarget target;
+	/**
+	 * Returns false as the &lt;use&gt; element is a not container.
+	 */
+	@Override
+	public boolean isComposite() {
+		return false;
+	}
 
-        @Override
-        public void handleEvent(Event evt) {
-            // We got a mutation in the referenced content. We need to 
-            // build the content again, just in case.
-            // Note that this is way sub-optimal, because multiple changes
-            // to the referenced content will cause multiple updates to the
-            // referencing <use>. However, this provides the desired behavior
-            buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode)node);
-        }
-    }
+	/**
+	 * Builds using the specified BridgeContext and element, the specified graphics
+	 * node.
+	 *
+	 * @param ctx  the bridge context to use
+	 * @param e    the element that describes the graphics node to build
+	 * @param node the graphics node to build
+	 */
+	@Override
+	public void buildGraphicsNode(BridgeContext ctx, Element e, GraphicsNode node) {
 
-    // BridgeUpdateHandler implementation //////////////////////////////////
+		super.buildGraphicsNode(ctx, e, node);
 
-    /**
-     * Invoked when the animated value of an animatable attribute has changed.
-     */
-    @Override
-    public void handleAnimatedAttributeChanged
-            (AnimatedLiveAttributeValue alav) {
-        try {
-            String ns = alav.getNamespaceURI();
-            String ln = alav.getLocalName();
-            if (ns == null) {
-                if (ln.equals(SVG_X_ATTRIBUTE) ||
-                    ln.equals(SVG_Y_ATTRIBUTE) ||
-                    ln.equals(SVG_TRANSFORM_ATTRIBUTE)) {
-                    node.setTransform
-                        (computeTransform((SVGTransformable) e, ctx));
-                    handleGeometryChanged();
-                } 
-                else if (ln.equals(SVG_WIDTH_ATTRIBUTE) ||
-                         ln.equals(SVG_HEIGHT_ATTRIBUTE))
-                    buildCompositeGraphicsNode
-                        (ctx, e, (CompositeGraphicsNode)node);
-            } else {
-                if (ns.equals(XLINK_NAMESPACE_URI) &&
-                    ln.equals(XLINK_HREF_ATTRIBUTE)) 
-                    buildCompositeGraphicsNode
-                        (ctx, e, (CompositeGraphicsNode)node);
-            }
-        } catch (LiveAttributeException ex) {
-            throw new BridgeException(ctx, ex);
-        }
-        super.handleAnimatedAttributeChanged(alav);
-    }
+		if (ctx.isInteractive()) {
+			NodeEventTarget target = (NodeEventTarget) e;
+			EventListener l = new CursorMouseOverListener(ctx);
+			target.addEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, SVG_EVENT_MOUSEOVER, l, false, null);
+			ctx.storeEventListenerNS(target, XMLConstants.XML_EVENTS_NAMESPACE_URI, SVG_EVENT_MOUSEOVER, l, false);
+		}
+	}
+
+	/**
+	 * To handle a mouseover on an anchor and set the cursor.
+	 */
+	public static class CursorMouseOverListener implements EventListener {
+
+		protected BridgeContext ctx;
+
+		public CursorMouseOverListener(BridgeContext ctx) {
+			this.ctx = ctx;
+		}
+
+		@Override
+		public void handleEvent(Event evt) {
+			//
+			// Only modify the cursor if the current target's (i.e., the <use>) cursor
+			// property is *not* 'auto'.
+			//
+			Element currentTarget = (Element) evt.getCurrentTarget();
+
+			if (!CSSUtilities.isAutoCursor(currentTarget)) {
+				Cursor cursor;
+				cursor = CSSUtilities.convertCursor(currentTarget, ctx);
+				if (cursor != null) {
+					ctx.getUserAgent().setSVGCursor(cursor);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Used to handle modifications to the referenced content
+	 */
+	protected class ReferencedElementMutationListener implements EventListener {
+		protected NodeEventTarget target;
+
+		@Override
+		public void handleEvent(Event evt) {
+			// We got a mutation in the referenced content. We need to
+			// build the content again, just in case.
+			// Note that this is way sub-optimal, because multiple changes
+			// to the referenced content will cause multiple updates to the
+			// referencing <use>. However, this provides the desired behavior
+			buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
+		}
+	}
+
+	// BridgeUpdateHandler implementation //////////////////////////////////
+
+	/**
+	 * Invoked when the animated value of an animatable attribute has changed.
+	 */
+	@Override
+	public void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav) {
+		try {
+			String ns = alav.getNamespaceURI();
+			String ln = alav.getLocalName();
+			if (ns == null) {
+				if (ln.equals(SVG_X_ATTRIBUTE) || ln.equals(SVG_Y_ATTRIBUTE) || ln.equals(SVG_TRANSFORM_ATTRIBUTE)) {
+					node.setTransform(computeTransform((SVGTransformable) e, ctx));
+					handleGeometryChanged();
+				} else if (ln.equals(SVG_WIDTH_ATTRIBUTE) || ln.equals(SVG_HEIGHT_ATTRIBUTE))
+					buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
+			} else {
+				if (ns.equals(XLINK_NAMESPACE_URI) && ln.equals(XLINK_HREF_ATTRIBUTE))
+					buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
+			}
+		} catch (LiveAttributeException ex) {
+			throw new BridgeException(ctx, ex);
+		}
+		super.handleAnimatedAttributeChanged(alav);
+	}
 }

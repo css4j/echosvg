@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.renderable;
 
-
 /**
  * Interface for implementing filter resolution.
  *
@@ -27,39 +26,40 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
  * @version $Id$
  */
 public interface FilterResRable extends Filter {
-    /**
-     * Returns the source to be cropped.
-     */
-    Filter getSource();
+	/**
+	 * Returns the source to be cropped.
+	 */
+	Filter getSource();
 
-    /**
-     * Sets the source to be cropped
-     * @param src image to offset.
-     */
-    void setSource(Filter src);
+	/**
+	 * Sets the source to be cropped
+	 * 
+	 * @param src image to offset.
+	 */
+	void setSource(Filter src);
 
-    /**
-     * Returns the resolution along the X axis.
-     */
-    int getFilterResolutionX();
+	/**
+	 * Returns the resolution along the X axis.
+	 */
+	int getFilterResolutionX();
 
-    /**
-     * Sets the resolution along the X axis, i.e., the maximum
-     * size for intermediate images along that axis.
-     * The value should be greater than zero to have an effect.
-     */
-    void setFilterResolutionX(int filterResolutionX);
+	/**
+	 * Sets the resolution along the X axis, i.e., the maximum size for intermediate
+	 * images along that axis. The value should be greater than zero to have an
+	 * effect.
+	 */
+	void setFilterResolutionX(int filterResolutionX);
 
-    /**
-     * Returns the resolution along the Y axis.
-     */
-    int getFilterResolutionY();
+	/**
+	 * Returns the resolution along the Y axis.
+	 */
+	int getFilterResolutionY();
 
-    /**
-     * Sets the resolution along the Y axis, i.e., the maximum
-     * size for intermediate images along that axis.
-     * The value should be greater than zero to have an effect.
-     */
-    void setFilterResolutionY(int filterResolutionY);
+	/**
+	 * Sets the resolution along the Y axis, i.e., the maximum size for intermediate
+	 * images along that axis. The value should be greater than zero to have an
+	 * effect.
+	 */
+	void setFilterResolutionY(int filterResolutionY);
 
 }

@@ -24,33 +24,30 @@ import java.util.Map;
 import org.w3c.dom.Element;
 
 /**
- * Defines the interface for a set of SVG attributes and
- * related definitions.
+ * Defines the interface for a set of SVG attributes and related definitions.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see           io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
+ * @see io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
  */
-public interface SVGDescriptor{
-    /**
-     * @param attrMap if not null, attribute name/value pairs
-     *        for this descriptor should be written in this Map.
-     *        Otherwise, a new Map will be created and attribute
-     *        name/value pairs will be written into it.
-     * @return a map containing the SVG attributes needed by the
-     *         descriptor.
-     */
-    Map<String, String> getAttributeMap(Map<String, String> attrMap);
+public interface SVGDescriptor {
+	/**
+	 * @param attrMap if not null, attribute name/value pairs for this descriptor
+	 *                should be written in this Map. Otherwise, a new Map will be
+	 *                created and attribute name/value pairs will be written into
+	 *                it.
+	 * @return a map containing the SVG attributes needed by the descriptor.
+	 */
+	Map<String, String> getAttributeMap(Map<String, String> attrMap);
 
-    /**
-     * @param defSet if not null, definitions required to provide
-     *        targets for the descriptor attribute values will be
-     *        copied into defSet. If null, a new Set should be created
-     *        and definitions copied into it. The set contains
-     *        zero, one or more Elements.
-     * @return a set containing Elements that represent the definition
-     *         of the descriptor's attribute values
-     */
-    List<Element> getDefinitionSet(List<Element> defSet);
+	/**
+	 * @param defSet if not null, definitions required to provide targets for the
+	 *               descriptor attribute values will be copied into defSet. If
+	 *               null, a new Set should be created and definitions copied into
+	 *               it. The set contains zero, one or more Elements.
+	 * @return a set containing Elements that represent the definition of the
+	 *         descriptor's attribute values
+	 */
+	List<Element> getDefinitionSet(List<Element> defSet);
 }

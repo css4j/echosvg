@@ -31,161 +31,146 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatableLengthOrIdentValue extends AnimatableLengthValue {
 
-    /**
-     * Whether this value is an identifier.
-     */
-    protected boolean isIdent;
-    
-    /**
-     * The identifier.
-     */
-    protected String ident;
-    
-    /**
-     * Creates a new, uninitialized AnimatableLengthOrIdentValue.
-     */
-    protected AnimatableLengthOrIdentValue(AnimationTarget target) {
-        super(target);
-    }
-    
-    /**
-     * Creates a new AnimatableLengthOrIdentValue for a length value.
-     */
-    public AnimatableLengthOrIdentValue(AnimationTarget target, short type,
-                                        float v, short pcInterp) {
-        super(target, type, v, pcInterp);
-    }
+	/**
+	 * Whether this value is an identifier.
+	 */
+	protected boolean isIdent;
 
-    /**
-     * Creates a new AnimatableLengthOrIdentValue for an identifier value.
-     */
-    public AnimatableLengthOrIdentValue(AnimationTarget target, String ident) {
-        super(target);
-        this.ident = ident;
-        this.isIdent = true;
-    }
+	/**
+	 * The identifier.
+	 */
+	protected String ident;
 
-    /**
-     * Returns whether this value is an identifier or a length.
-     */
-    public boolean isIdent() {
-        return isIdent;
-    }
+	/**
+	 * Creates a new, uninitialized AnimatableLengthOrIdentValue.
+	 */
+	protected AnimatableLengthOrIdentValue(AnimationTarget target) {
+		super(target);
+	}
 
-    /**
-     * Returns the identifier.
-     */
-    public String getIdent() {
-        return ident;
-    }
+	/**
+	 * Creates a new AnimatableLengthOrIdentValue for a length value.
+	 */
+	public AnimatableLengthOrIdentValue(AnimationTarget target, short type, float v, short pcInterp) {
+		super(target, type, v, pcInterp);
+	}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return false;
-    }
+	/**
+	 * Creates a new AnimatableLengthOrIdentValue for an identifier value.
+	 */
+	public AnimatableLengthOrIdentValue(AnimationTarget target, String ident) {
+		super(target);
+		this.ident = ident;
+		this.isIdent = true;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        return 0f;
-    }
+	/**
+	 * Returns whether this value is an identifier or a length.
+	 */
+	public boolean isIdent() {
+		return isIdent;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        return new AnimatableLengthOrIdentValue
-            (target, SVGLength.SVG_LENGTHTYPE_NUMBER, 0f,
-             percentageInterpretation);
-    }
+	/**
+	 * Returns the identifier.
+	 */
+	public String getIdent() {
+		return ident;
+	}
 
-    /**
-     * Returns the CSS text representation of the value.
-     */
-    @Override
-    public String getCssText() {
-        if (isIdent) {
-            return ident;
-        }
-        return super.getCssText();
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return false;
+	}
 
-    /**
-     * Performs interpolation to the given value.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to, float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatableLengthOrIdentValue res;
-        if (result == null) {
-            res = new AnimatableLengthOrIdentValue(target);
-        } else {
-            res = (AnimatableLengthOrIdentValue) result;
-        }
-        
-        if (to == null) {
-            if (isIdent) {
-                res.hasChanged = !res.isIdent || !res.ident.equals(ident);
-                res.ident = ident;
-                res.isIdent = true;
-            } else {
-                short oldLengthType = res.lengthType;
-                float oldLengthValue = res.lengthValue;
-                short oldPercentageInterpretation = res.percentageInterpretation;
-                super.interpolate(res, to, interpolation, accumulation,
-                                  multiplier);
-                if (res.lengthType != oldLengthType
-                        || res.lengthValue != oldLengthValue
-                        || res.percentageInterpretation
-                            != oldPercentageInterpretation) {
-                    res.hasChanged = true;
-                }
-            }
-        } else {
-            AnimatableLengthOrIdentValue toValue
-                = (AnimatableLengthOrIdentValue) to;
-            if (isIdent || toValue.isIdent) {
-                if (interpolation >= 0.5) {
-                    if (res.isIdent != toValue.isIdent
-                            || res.lengthType != toValue.lengthType
-                            || res.lengthValue != toValue.lengthValue
-                            || res.isIdent && toValue.isIdent
-                                && !toValue.ident.equals(ident)) {
-                        res.isIdent = toValue.isIdent;
-                        res.ident = toValue.ident;
-                        res.lengthType = toValue.lengthType;
-                        res.lengthValue = toValue.lengthValue;
-                        res.hasChanged = true;
-                    }
-                } else {
-                    if (res.isIdent != isIdent
-                            || res.lengthType != lengthType
-                            || res.lengthValue != lengthValue
-                            || res.isIdent && isIdent
-                                && !res.ident.equals(ident)) {
-                        res.isIdent = isIdent;
-                        res.ident = ident;
-                        res.ident = ident;
-                        res.lengthType = lengthType;
-                        res.hasChanged = true;
-                    }
-                }
-            } else {
-                super.interpolate(res, to, interpolation, accumulation,
-                                  multiplier);
-            }
-        }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		return 0f;
+	}
 
-        return res;
-    }
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		return new AnimatableLengthOrIdentValue(target, SVGLength.SVG_LENGTHTYPE_NUMBER, 0f, percentageInterpretation);
+	}
+
+	/**
+	 * Returns the CSS text representation of the value.
+	 */
+	@Override
+	public String getCssText() {
+		if (isIdent) {
+			return ident;
+		}
+		return super.getCssText();
+	}
+
+	/**
+	 * Performs interpolation to the given value.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatableLengthOrIdentValue res;
+		if (result == null) {
+			res = new AnimatableLengthOrIdentValue(target);
+		} else {
+			res = (AnimatableLengthOrIdentValue) result;
+		}
+
+		if (to == null) {
+			if (isIdent) {
+				res.hasChanged = !res.isIdent || !res.ident.equals(ident);
+				res.ident = ident;
+				res.isIdent = true;
+			} else {
+				short oldLengthType = res.lengthType;
+				float oldLengthValue = res.lengthValue;
+				short oldPercentageInterpretation = res.percentageInterpretation;
+				super.interpolate(res, to, interpolation, accumulation, multiplier);
+				if (res.lengthType != oldLengthType || res.lengthValue != oldLengthValue
+						|| res.percentageInterpretation != oldPercentageInterpretation) {
+					res.hasChanged = true;
+				}
+			}
+		} else {
+			AnimatableLengthOrIdentValue toValue = (AnimatableLengthOrIdentValue) to;
+			if (isIdent || toValue.isIdent) {
+				if (interpolation >= 0.5) {
+					if (res.isIdent != toValue.isIdent || res.lengthType != toValue.lengthType
+							|| res.lengthValue != toValue.lengthValue
+							|| res.isIdent && toValue.isIdent && !toValue.ident.equals(ident)) {
+						res.isIdent = toValue.isIdent;
+						res.ident = toValue.ident;
+						res.lengthType = toValue.lengthType;
+						res.lengthValue = toValue.lengthValue;
+						res.hasChanged = true;
+					}
+				} else {
+					if (res.isIdent != isIdent || res.lengthType != lengthType || res.lengthValue != lengthValue
+							|| res.isIdent && isIdent && !res.ident.equals(ident)) {
+						res.isIdent = isIdent;
+						res.ident = ident;
+						res.ident = ident;
+						res.lengthType = lengthType;
+						res.hasChanged = true;
+					}
+				}
+			} else {
+				super.interpolate(res, to, interpolation, accumulation, multiplier);
+			}
+		}
+
+		return res;
+	}
 }

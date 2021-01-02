@@ -30,52 +30,47 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 
-public abstract class AbstractDocumentFragment
-    extends AbstractParentNode
-    implements DocumentFragment {
+public abstract class AbstractDocumentFragment extends AbstractParentNode implements DocumentFragment {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
-     * @return "#document-fragment".
-     */
-    @Override
-    public String getNodeName() {
-        return "#document-fragment";
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeName()}.
+	 * 
+	 * @return "#document-fragment".
+	 */
+	@Override
+	public String getNodeName() {
+		return "#document-fragment";
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
-     * @return {@link org.w3c.dom.Node#DOCUMENT_FRAGMENT_NODE}
-     */
-    @Override
-    public short getNodeType() {
-        return DOCUMENT_FRAGMENT_NODE;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNodeType()}.
+	 * 
+	 * @return {@link org.w3c.dom.Node#DOCUMENT_FRAGMENT_NODE}
+	 */
+	@Override
+	public short getNodeType() {
+		return DOCUMENT_FRAGMENT_NODE;
+	}
 
-    /**
-     * Checks the validity of a node to be inserted.
-     */
-    @Override
-    protected void checkChildType(Node n, boolean replace) {
-        switch (n.getNodeType()) {
-        case ELEMENT_NODE:
-        case PROCESSING_INSTRUCTION_NODE:
-        case COMMENT_NODE:
-        case TEXT_NODE:
-        case CDATA_SECTION_NODE:
-        case ENTITY_REFERENCE_NODE:
-        case DOCUMENT_FRAGMENT_NODE:
-            break;
-        default:
-            throw createDOMException
-                (DOMException.HIERARCHY_REQUEST_ERR,
-                 "child.type",
-                 new Object[] {(int) getNodeType(),
-                                getNodeName(),
-                         (int) n.getNodeType(),
-                                n.getNodeName() });
-        }
-    }
+	/**
+	 * Checks the validity of a node to be inserted.
+	 */
+	@Override
+	protected void checkChildType(Node n, boolean replace) {
+		switch (n.getNodeType()) {
+		case ELEMENT_NODE:
+		case PROCESSING_INSTRUCTION_NODE:
+		case COMMENT_NODE:
+		case TEXT_NODE:
+		case CDATA_SECTION_NODE:
+		case ENTITY_REFERENCE_NODE:
+		case DOCUMENT_FRAGMENT_NODE:
+			break;
+		default:
+			throw createDOMException(DOMException.HIERARCHY_REQUEST_ERR, "child.type",
+					new Object[] { (int) getNodeType(), getNodeName(), (int) n.getNodeType(), n.getNodeName() });
+		}
+	}
 }

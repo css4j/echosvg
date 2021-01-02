@@ -39,83 +39,80 @@ import io.sf.carte.echosvg.gvt.renderer.ImageRenderer;
  * @version $Id$
  */
 public class RepaintManager {
-    static final int COPY_OVERHEAD      = 10000;
-    static final int COPY_LINE_OVERHEAD = 10;
+	static final int COPY_OVERHEAD = 10000;
+	static final int COPY_LINE_OVERHEAD = 10;
 
-    /**
-     * The renderer used to repaint the buffer.
-     */
-    protected ImageRenderer renderer;
+	/**
+	 * The renderer used to repaint the buffer.
+	 */
+	protected ImageRenderer renderer;
 
-    /**
-     * Creates a new repaint manager.
-     */
-    public RepaintManager(ImageRenderer r) {
-        renderer = r;
-    }
+	/**
+	 * Creates a new repaint manager.
+	 */
+	public RepaintManager(ImageRenderer r) {
+		renderer = r;
+	}
 
-    /**
-     * Updates the rendering buffer.
-     * @param areas The areas of interest in renderer space units.
-     * @return the list of the rectangles to repaint.
-     */
-    public Collection<Rectangle> updateRendering(Collection<Shape> areas)
-        throws InterruptedException {
-        renderer.flush(areas);
-        List<Rectangle> rects = new ArrayList<>(areas.size());
-        AffineTransform at = renderer.getTransform();
+	/**
+	 * Updates the rendering buffer.
+	 * 
+	 * @param areas The areas of interest in renderer space units.
+	 * @return the list of the rectangles to repaint.
+	 */
+	public Collection<Rectangle> updateRendering(Collection<Shape> areas) throws InterruptedException {
+		renderer.flush(areas);
+		List<Rectangle> rects = new ArrayList<>(areas.size());
+		AffineTransform at = renderer.getTransform();
 
-        for (Shape s : areas) {
-            s = at.createTransformedShape(s);
-            Rectangle2D r2d = s.getBounds2D();
-            int x0 = (int) Math.floor(r2d.getX());
-            int y0 = (int) Math.floor(r2d.getY());
-            int x1 = (int) Math.ceil(r2d.getX() + r2d.getWidth());
-            int y1 = (int) Math.ceil(r2d.getY() + r2d.getHeight());
-            // This rectangle must be outset one pixel to ensure
-            // it includes the effects of anti-aliasing on objects.
-            Rectangle r = new Rectangle(x0 - 1, y0 - 1, x1 - x0 + 3, y1 - y0 + 3);
+		for (Shape s : areas) {
+			s = at.createTransformedShape(s);
+			Rectangle2D r2d = s.getBounds2D();
+			int x0 = (int) Math.floor(r2d.getX());
+			int y0 = (int) Math.floor(r2d.getY());
+			int x1 = (int) Math.ceil(r2d.getX() + r2d.getWidth());
+			int y1 = (int) Math.ceil(r2d.getY() + r2d.getHeight());
+			// This rectangle must be outset one pixel to ensure
+			// it includes the effects of anti-aliasing on objects.
+			Rectangle r = new Rectangle(x0 - 1, y0 - 1, x1 - x0 + 3, y1 - y0 + 3);
 
-            rects.add(r);
-        }
-        RectListManager devRLM = null;
-        try {
-            devRLM = new RectListManager(rects);
-            devRLM.mergeRects(COPY_OVERHEAD, COPY_LINE_OVERHEAD);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+			rects.add(r);
+		}
+		RectListManager devRLM = null;
+		try {
+			devRLM = new RectListManager(rects);
+			devRLM.mergeRects(COPY_OVERHEAD, COPY_LINE_OVERHEAD);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        renderer.repaint(devRLM);
-        return devRLM;
-    }
+		renderer.repaint(devRLM);
+		return devRLM;
+	}
 
-    /**
-     * Sets up the renderer so that it is ready to render for the new
-     * 'context' defined by the user to device transform, double buffering
-     * state, area of interest and width/height.
-     * @param u2d The user to device transform.
-     * @param dbr Whether the double buffering should be used.
-     * @param aoi The area of interest in the renderer space units.
-     * @param width The offscreen buffer width.
-     * @param height The offscreen buffer width.
-     */
-    public void setupRenderer(AffineTransform u2d,
-                              boolean dbr,
-                              Shape aoi,
-                              int width,
-                              int height) {
-        renderer.setTransform(u2d);
-        renderer.setDoubleBuffered(dbr);
-        renderer.updateOffScreen(width, height);
-        renderer.clearOffScreen();
-    }
+	/**
+	 * Sets up the renderer so that it is ready to render for the new 'context'
+	 * defined by the user to device transform, double buffering state, area of
+	 * interest and width/height.
+	 * 
+	 * @param u2d    The user to device transform.
+	 * @param dbr    Whether the double buffering should be used.
+	 * @param aoi    The area of interest in the renderer space units.
+	 * @param width  The offscreen buffer width.
+	 * @param height The offscreen buffer width.
+	 */
+	public void setupRenderer(AffineTransform u2d, boolean dbr, Shape aoi, int width, int height) {
+		renderer.setTransform(u2d);
+		renderer.setDoubleBuffered(dbr);
+		renderer.updateOffScreen(width, height);
+		renderer.clearOffScreen();
+	}
 
-    /**
-     * Returns the renderer's offscreen, i.e., the current state as rendered
-     * by the associated renderer.
-     */
-    public BufferedImage getOffScreen(){
-        return renderer.getOffScreen();
-    }
+	/**
+	 * Returns the renderer's offscreen, i.e., the current state as rendered by the
+	 * associated renderer.
+	 */
+	public BufferedImage getOffScreen() {
+		return renderer.getOffScreen();
+	}
 }

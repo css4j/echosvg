@@ -33,172 +33,170 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class BridgeException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /** The element on which the error occured. */
-    protected Element e;
+	/** The element on which the error occured. */
+	protected Element e;
 
-    /** The error code. */
-    protected String code;
+	/** The error code. */
+	protected String code;
 
-    /**
-     * The message.
-     */
-    protected String message;
+	/**
+	 * The message.
+	 */
+	protected String message;
 
-    /** The paramters to use for the error message. */
-    protected Object [] params;
+	/** The paramters to use for the error message. */
+	protected Object[] params;
 
-    /** The line number on which the error occured. */
-    protected int line;
+	/** The line number on which the error occured. */
+	protected int line;
 
-    /** The graphics node that represents the current state of the GVT tree. */
-    protected GraphicsNode node;
+	/** The graphics node that represents the current state of the GVT tree. */
+	protected GraphicsNode node;
 
-    /**
-     * Constructs a new <code>BridgeException</code> based on the specified
-     * <code>LiveAttributeException</code>.
-     *
-     * @param ctx the bridge context to use for determining the element's
-     *            source position
-     * @param ex the {@link LiveAttributeException}
-     */
-    public BridgeException(BridgeContext ctx, LiveAttributeException ex) {
-        switch (ex.getCode()) {
-            case LiveAttributeException.ERR_ATTRIBUTE_MISSING:
-                this.code = ErrorConstants.ERR_ATTRIBUTE_MISSING;
-                break;
-            case LiveAttributeException.ERR_ATTRIBUTE_MALFORMED:
-                this.code = ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED;
-                break;
-            case LiveAttributeException.ERR_ATTRIBUTE_NEGATIVE:
-                this.code = ErrorConstants.ERR_LENGTH_NEGATIVE;
-                break;
-            default:
-                throw new IllegalStateException
-                    ("Unknown LiveAttributeException error code "
-                     + ex.getCode());
-        }
-        this.e = ex.getElement();
-        this.params = new Object[] { ex.getAttributeName(), ex.getValue() };
-        if (e != null && ctx != null) {
-            this.line = ctx.getDocumentLoader().getLineNumber(e);
-        }
-    }
+	/**
+	 * Constructs a new <code>BridgeException</code> based on the specified
+	 * <code>LiveAttributeException</code>.
+	 *
+	 * @param ctx the bridge context to use for determining the element's source
+	 *            position
+	 * @param ex  the {@link LiveAttributeException}
+	 */
+	public BridgeException(BridgeContext ctx, LiveAttributeException ex) {
+		switch (ex.getCode()) {
+		case LiveAttributeException.ERR_ATTRIBUTE_MISSING:
+			this.code = ErrorConstants.ERR_ATTRIBUTE_MISSING;
+			break;
+		case LiveAttributeException.ERR_ATTRIBUTE_MALFORMED:
+			this.code = ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED;
+			break;
+		case LiveAttributeException.ERR_ATTRIBUTE_NEGATIVE:
+			this.code = ErrorConstants.ERR_LENGTH_NEGATIVE;
+			break;
+		default:
+			throw new IllegalStateException("Unknown LiveAttributeException error code " + ex.getCode());
+		}
+		this.e = ex.getElement();
+		this.params = new Object[] { ex.getAttributeName(), ex.getValue() };
+		if (e != null && ctx != null) {
+			this.line = ctx.getDocumentLoader().getLineNumber(e);
+		}
+	}
 
-     /**
-     * Constructs a new <code>BridgeException</code> with the specified parameters.
-     *
-     * @param ctx the bridge context to use for determining the element's
-     *            source position
-     * @param e the element on which the error occurred
-     * @param code the error code
-     * @param params the parameters to use for the error message
-     */
-    public BridgeException(BridgeContext ctx, Element e, String code,
-                           Object[] params) {
+	/**
+	 * Constructs a new <code>BridgeException</code> with the specified parameters.
+	 *
+	 * @param ctx    the bridge context to use for determining the element's source
+	 *               position
+	 * @param e      the element on which the error occurred
+	 * @param code   the error code
+	 * @param params the parameters to use for the error message
+	 */
+	public BridgeException(BridgeContext ctx, Element e, String code, Object[] params) {
 
-        this.e = e;
-        this.code = code;
-        this.params = params;
-        if (e != null && ctx != null) {
-            this.line = ctx.getDocumentLoader().getLineNumber(e);
-        }
-    }
+		this.e = e;
+		this.code = code;
+		this.params = params;
+		if (e != null && ctx != null) {
+			this.line = ctx.getDocumentLoader().getLineNumber(e);
+		}
+	}
 
-    /**
-     * Constructs a new <code>BridgeException</code> with the specified parameters.
-     *
-     * @param ctx the bridge context to use for determining the element's
-     *            source position
-     * @param e the element on which the error occurred
-     * @param ex the exception which was the root-cause for this exception
-     * @param code the error code
-     * @param params the parameters to use for the error message
-     */
-    public BridgeException(BridgeContext ctx, Element e, Exception ex, String code,
-                           Object[] params) {
+	/**
+	 * Constructs a new <code>BridgeException</code> with the specified parameters.
+	 *
+	 * @param ctx    the bridge context to use for determining the element's source
+	 *               position
+	 * @param e      the element on which the error occurred
+	 * @param ex     the exception which was the root-cause for this exception
+	 * @param code   the error code
+	 * @param params the parameters to use for the error message
+	 */
+	public BridgeException(BridgeContext ctx, Element e, Exception ex, String code, Object[] params) {
 
-        // todo ex can be chained in jdk >= 1.4
-        this.e = e;
+		// todo ex can be chained in jdk >= 1.4
+		this.e = e;
 
-        message = ex.getMessage();
-        this.code = code;
-        this.params = params;
-        if (e != null && ctx != null) {
-            this.line = ctx.getDocumentLoader().getLineNumber(e);
-        }
-    }
+		message = ex.getMessage();
+		this.code = code;
+		this.params = params;
+		if (e != null && ctx != null) {
+			this.line = ctx.getDocumentLoader().getLineNumber(e);
+		}
+	}
 
-    /**
-     * Constructs a new <code>BridgeException</code> with the specified parameters.
-     *
-     * @param ctx the bridge context to use for determining the element's
-     *            source position
-     * @param e the element on which the error occurred
-     * @param message the error message
-     */
-    public BridgeException(BridgeContext ctx, Element e, String message) {
-        this.e = e;
-        this.message = message;
-        if (e != null && ctx != null) {
-            this.line = ctx.getDocumentLoader().getLineNumber(e);
-        }
-    }
+	/**
+	 * Constructs a new <code>BridgeException</code> with the specified parameters.
+	 *
+	 * @param ctx     the bridge context to use for determining the element's source
+	 *                position
+	 * @param e       the element on which the error occurred
+	 * @param message the error message
+	 */
+	public BridgeException(BridgeContext ctx, Element e, String message) {
+		this.e = e;
+		this.message = message;
+		if (e != null && ctx != null) {
+			this.line = ctx.getDocumentLoader().getLineNumber(e);
+		}
+	}
 
-    /**
-     * Returns the element on which the error occurred.
-     */
-    public Element getElement() {
-        return e;
-    }
+	/**
+	 * Returns the element on which the error occurred.
+	 */
+	public Element getElement() {
+		return e;
+	}
 
-    /**
-     * Sets the graphics node that represents the current GVT tree built.
-     *
-     * @param node the graphics node
-     */
-    public void setGraphicsNode(GraphicsNode node) {
-        this.node = node;
-    }
+	/**
+	 * Sets the graphics node that represents the current GVT tree built.
+	 *
+	 * @param node the graphics node
+	 */
+	public void setGraphicsNode(GraphicsNode node) {
+		this.node = node;
+	}
 
-    /**
-     * Returns the graphics node that represents the current GVT tree built.
-     */
-    public GraphicsNode getGraphicsNode() {
-        return node;
-    }
+	/**
+	 * Returns the graphics node that represents the current GVT tree built.
+	 */
+	public GraphicsNode getGraphicsNode() {
+		return node;
+	}
 
-    /**
-     * Returns the error message according to the error code and parameters.
-     */
-    @Override
-    public String getMessage() {
-        if (message != null) {
-            return message;
-        }
+	/**
+	 * Returns the error message according to the error code and parameters.
+	 */
+	@Override
+	public String getMessage() {
+		if (message != null) {
+			return message;
+		}
 
-        String uri;
-        String lname = "<Unknown Element>";
-        SVGDocument doc = null;
-        if (e != null) {
-            doc = (SVGDocument)e.getOwnerDocument();
-            lname = e.getLocalName();
-        }
-        if (doc == null)  uri = "<Unknown Document>";
-        else              uri = doc.getURL();
-        Object [] fullparams = new Object[params.length+3];
-        fullparams[0] = uri;
-        fullparams[1] = line;
-        fullparams[2] = lname;
-        System.arraycopy( params, 0, fullparams, 3, params.length );
-        return Messages.formatMessage(code, fullparams);
-    }
+		String uri;
+		String lname = "<Unknown Element>";
+		SVGDocument doc = null;
+		if (e != null) {
+			doc = (SVGDocument) e.getOwnerDocument();
+			lname = e.getLocalName();
+		}
+		if (doc == null)
+			uri = "<Unknown Document>";
+		else
+			uri = doc.getURL();
+		Object[] fullparams = new Object[params.length + 3];
+		fullparams[0] = uri;
+		fullparams[1] = line;
+		fullparams[2] = lname;
+		System.arraycopy(params, 0, fullparams, 3, params.length);
+		return Messages.formatMessage(code, fullparams);
+	}
 
-    /**
-     * Returns the exception's error code
-     */
-    public String getCode() {
-        return code;
-    }
+	/**
+	 * Returns the exception's error code
+	 */
+	public String getCode() {
+		return code;
+	}
 }

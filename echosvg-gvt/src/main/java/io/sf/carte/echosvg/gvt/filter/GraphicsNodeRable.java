@@ -24,37 +24,36 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
 /**
  * This interface allows <code>GraphicsNode</code> to be seen as
  * <code>RenderableImages</code>, which can be used for operations such as
- * filtering, masking or compositing.
- * Given a <code>GraphicsNode</code>, a <code>GraphicsNodeRable</code> can be
- * created through a <code>GraphicsNodeRableFactory</code>.
+ * filtering, masking or compositing. Given a <code>GraphicsNode</code>, a
+ * <code>GraphicsNodeRable</code> can be created through a
+ * <code>GraphicsNodeRableFactory</code>.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface GraphicsNodeRable extends Filter {
-    /**
-     * Returns the <code>GraphicsNode</code> for which a rendering can be obtained
-     * @return the <code>GraphicsNode</code> associated with this image.
-     */
-    GraphicsNode getGraphicsNode();
+	/**
+	 * Returns the <code>GraphicsNode</code> for which a rendering can be obtained
+	 * 
+	 * @return the <code>GraphicsNode</code> associated with this image.
+	 */
+	GraphicsNode getGraphicsNode();
 
-    /**
-     * Sets the <code>GraphicsNode</code> associated with this image.
-     */
-    void setGraphicsNode(GraphicsNode node);
+	/**
+	 * Sets the <code>GraphicsNode</code> associated with this image.
+	 */
+	void setGraphicsNode(GraphicsNode node);
 
-    /**
-     * Returns true if this Rable get's it's contents by calling
-     * primitivePaint on the associated <code>GraphicsNode</code> or
-     * false if it uses paint.
-     */
-    boolean getUsePrimitivePaint();
+	/**
+	 * Returns true if this Rable get's it's contents by calling primitivePaint on
+	 * the associated <code>GraphicsNode</code> or false if it uses paint.
+	 */
+	boolean getUsePrimitivePaint();
 
-    /**
-     * Set to true if this Rable should get it's contents by calling
-     * primitivePaint on the associated <code>GraphicsNode</code> or false
-     * if it should use paint.
-     */
-    void setUsePrimitivePaint(boolean usePrimitivePaint);
+	/**
+	 * Set to true if this Rable should get it's contents by calling primitivePaint
+	 * on the associated <code>GraphicsNode</code> or false if it should use paint.
+	 */
+	void setUsePrimitivePaint(boolean usePrimitivePaint);
 }

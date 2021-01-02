@@ -19,17 +19,17 @@
 package io.sf.carte.echosvg.w3c.dom;
 
 public interface Location {
-    /**
-     * Invocation of this method causes the user agent to navigate to the
-     * supplied location.
-     *
-     * @param url A string containing the URL where the user agent should
-     *    navigate to.
-     */
-    void assign(String url);
+	/**
+	 * Invocation of this method causes the user agent to navigate to the supplied
+	 * location.
+	 *
+	 * @param url A string containing the URL where the user agent should navigate
+	 *            to.
+	 */
+	void assign(String url);
 
-    /**
-     * The user agent reloads the current document.
-     */
-    void reload();
+	/**
+	 * The user agent reloads the current document.
+	 */
+	void reload();
 }

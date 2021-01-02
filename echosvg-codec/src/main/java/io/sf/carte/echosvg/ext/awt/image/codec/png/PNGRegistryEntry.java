@@ -41,87 +41,78 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class PNGRegistryEntry
-    extends MagicNumberRegistryEntry {
+public class PNGRegistryEntry extends MagicNumberRegistryEntry {
 
+	static final byte[] signature = { (byte) 0x89, 80, 78, 71, 13, 10, 26, 10 };
 
-    static final byte [] signature = {(byte)0x89, 80, 78, 71, 13, 10, 26, 10};
+	public PNGRegistryEntry() {
+		super("PNG", "png", "image/png", 0, signature);
+	}
 
-    public PNGRegistryEntry() {
-        super("PNG", "png", "image/png", 0, signature);
-    }
+	/**
+	 * Decode the Stream into a RenderableImage
+	 *
+	 * @param inIS        The input stream that contains the image.
+	 * @param origURL     The original URL, if any, for documentation purposes only.
+	 *                    This may be null.
+	 * @param needRawData If true the image returned should not have any default
+	 *                    color correction the file may specify applied.
+	 */
+	@Override
+	public Filter handleStream(InputStream inIS, ParsedURL origURL, boolean needRawData) {
 
-    /**
-     * Decode the Stream into a RenderableImage
-     *
-     * @param inIS The input stream that contains the image.
-     * @param origURL The original URL, if any, for documentation
-     *                purposes only.  This may be null.
-     * @param needRawData If true the image returned should not have
-     *                    any default color correction the file may
-     *                    specify applied.  */
-    @Override
-    public Filter handleStream(InputStream inIS,
-                               ParsedURL   origURL,
-                               boolean needRawData) {
+		final DeferRable dr = new DeferRable();
+		final InputStream is = inIS;
+		final boolean raw = needRawData;
+		final String errCode;
+		final Object[] errParam;
+		if (origURL != null) {
+			errCode = ERR_URL_FORMAT_UNREADABLE;
+			errParam = new Object[] { "PNG", origURL };
+		} else {
+			errCode = ERR_STREAM_FORMAT_UNREADABLE;
+			errParam = new Object[] { "PNG" };
+		}
 
-        final DeferRable  dr  = new DeferRable();
-        final InputStream is  = inIS;
-        final boolean     raw = needRawData;
-        final String      errCode;
-        final Object []   errParam;
-        if (origURL != null) {
-            errCode  = ERR_URL_FORMAT_UNREADABLE;
-            errParam = new Object[] {"PNG", origURL};
-        } else {
-            errCode  = ERR_STREAM_FORMAT_UNREADABLE;
-            errParam = new Object[] {"PNG"};
-        }
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				Filter filt;
+				try {
+					PNGDecodeParam param = new PNGDecodeParam();
+					param.setExpandPalette(true);
 
-        Thread t = new Thread() {
-                @Override
-                public void run() {
-                    Filter filt;
-                    try {
-                        PNGDecodeParam param = new PNGDecodeParam();
-                        param.setExpandPalette(true);
+					if (raw)
+						param.setPerformGammaCorrection(false);
+					else {
+						param.setPerformGammaCorrection(true);
+						param.setDisplayExponent(2.2f); // sRGB gamma
+					}
+					CachableRed cr = new PNGRed(is, param);
+					dr.setBounds(new Rectangle2D.Double(0, 0, cr.getWidth(), cr.getHeight()));
 
-                        if (raw)
-                            param.setPerformGammaCorrection(false);
-                        else {
-                            param.setPerformGammaCorrection(true);
-                            param.setDisplayExponent(2.2f); // sRGB gamma
-                        }
-                        CachableRed cr = new PNGRed(is, param);
-                        dr.setBounds(new Rectangle2D.Double
-                                     (0, 0, cr.getWidth(), cr.getHeight()));
+					cr = new Any2sRGBRed(cr);
+					cr = new FormatRed(cr, GraphicsUtil.sRGB_Unpre);
+					WritableRaster wr = (WritableRaster) cr.getData();
+					ColorModel cm = cr.getColorModel();
+					BufferedImage image;
+					image = new BufferedImage(cm, wr, cm.isAlphaPremultiplied(), null);
+					cr = GraphicsUtil.wrap(image);
+					filt = new RedRable(cr);
+				} catch (IOException ioe) {
+					filt = ImageTagRegistry.getBrokenLinkImage(PNGRegistryEntry.this, errCode, errParam);
+				} catch (ThreadDeath td) {
+					filt = ImageTagRegistry.getBrokenLinkImage(PNGRegistryEntry.this, errCode, errParam);
+					dr.setSource(filt);
+					throw td;
+				} catch (Throwable t) {
+					filt = ImageTagRegistry.getBrokenLinkImage(PNGRegistryEntry.this, errCode, errParam);
+				}
 
-                        cr = new Any2sRGBRed(cr);
-                        cr = new FormatRed(cr, GraphicsUtil.sRGB_Unpre);
-                        WritableRaster wr = (WritableRaster)cr.getData();
-                        ColorModel cm = cr.getColorModel();
-                        BufferedImage image;
-                        image = new BufferedImage
-                            (cm, wr, cm.isAlphaPremultiplied(), null);
-                        cr = GraphicsUtil.wrap(image);
-                        filt = new RedRable(cr);
-                    } catch (IOException ioe) {
-                        filt = ImageTagRegistry.getBrokenLinkImage
-                            (PNGRegistryEntry.this, errCode, errParam);
-                    } catch (ThreadDeath td) {
-                        filt = ImageTagRegistry.getBrokenLinkImage
-                            (PNGRegistryEntry.this, errCode, errParam);
-                        dr.setSource(filt);
-                        throw td;
-                    } catch (Throwable t) {
-                        filt = ImageTagRegistry.getBrokenLinkImage
-                            (PNGRegistryEntry.this, errCode, errParam);
-                    }
-
-                    dr.setSource(filt);
-                }
-            };
-        t.start();
-        return dr;
-    }
+				dr.setSource(filt);
+			}
+		};
+		t.start();
+		return dr;
+	}
 }

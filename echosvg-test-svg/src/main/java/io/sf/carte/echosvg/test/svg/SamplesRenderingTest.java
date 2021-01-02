@@ -26,84 +26,75 @@ package io.sf.carte.echosvg.test.svg;
  * @version $Id$
  */
 public class SamplesRenderingTest extends PreconfiguredRenderingTest {
-    public static final String SVG_URL_PREFIX
-        = "";
+	public static final String SVG_URL_PREFIX = "";
 
-    public static final String REF_IMAGE_PREFIX
-        = "test-references/";
+	public static final String REF_IMAGE_PREFIX = "test-references/";
 
-    public static final String REF_IMAGE_SUFFIX
-        = "";
+	public static final String REF_IMAGE_SUFFIX = "";
 
-    public static final String VARIATION_PREFIX
-        = "test-references/";
+	public static final String VARIATION_PREFIX = "test-references/";
 
-    public static final String VARIATION_SUFFIX
-        = "accepted-variation/";
+	public static final String VARIATION_SUFFIX = "accepted-variation/";
 
-    public static final String SAVE_VARIATION_PREFIX
-        = "test-references/";
+	public static final String SAVE_VARIATION_PREFIX = "test-references/";
 
-    public static final String SAVE_VARIATION_SUFFIX
-        = "candidate-variation/";
+	public static final String SAVE_VARIATION_SUFFIX = "candidate-variation/";
 
-    public static final String SAVE_CANDIDATE_REFERENCE_PREFIX
-        = "test-references/";
+	public static final String SAVE_CANDIDATE_REFERENCE_PREFIX = "test-references/";
 
-    public static final String SAVE_CANDIDATE_REFERENCE_SUFFIX
-        = "candidate-reference/";
+	public static final String SAVE_CANDIDATE_REFERENCE_SUFFIX = "candidate-reference/";
 
-    public SamplesRenderingTest(){
-        setValidating( Boolean.TRUE );
-    }
+	public SamplesRenderingTest() {
+		setValidating(Boolean.TRUE);
+	}
 
-    @Override
-    protected String getSVGURLPrefix(){
-        return SVG_URL_PREFIX;
-    }
+	@Override
+	protected String getSVGURLPrefix() {
+		return SVG_URL_PREFIX;
+	}
 
-    @Override
-    protected String getRefImagePrefix(){
-        return REF_IMAGE_PREFIX;
-    }
+	@Override
+	protected String getRefImagePrefix() {
+		return REF_IMAGE_PREFIX;
+	}
 
-    @Override
-    protected String getRefImageSuffix(){
-        return REF_IMAGE_SUFFIX;
-    }
+	@Override
+	protected String getRefImageSuffix() {
+		return REF_IMAGE_SUFFIX;
+	}
 
-    @Override
-    protected String getVariationPrefix(){
-        return VARIATION_PREFIX;
-    }
+	@Override
+	protected String getVariationPrefix() {
+		return VARIATION_PREFIX;
+	}
 
-    @Override
-    protected String getVariationSuffix(){
-        return VARIATION_SUFFIX;
-    }
+	@Override
+	protected String getVariationSuffix() {
+		return VARIATION_SUFFIX;
+	}
 
-    @Override
-    protected String[] getVariationPlatforms() {
-        return DEFAULT_VARIATION_PLATFORMS;
-    }
+	@Override
+	protected String[] getVariationPlatforms() {
+		return DEFAULT_VARIATION_PLATFORMS;
+	}
 
-    @Override
-    protected String getSaveVariationPrefix(){
-        return SAVE_VARIATION_PREFIX;
-    }
+	@Override
+	protected String getSaveVariationPrefix() {
+		return SAVE_VARIATION_PREFIX;
+	}
 
-    @Override
-    protected String getSaveVariationSuffix(){
-        return SAVE_VARIATION_SUFFIX;
-    }
+	@Override
+	protected String getSaveVariationSuffix() {
+		return SAVE_VARIATION_SUFFIX;
+	}
 
-    @Override
-    protected String getCandidateReferencePrefix(){
-        return SAVE_CANDIDATE_REFERENCE_PREFIX;
-    }
+	@Override
+	protected String getCandidateReferencePrefix() {
+		return SAVE_CANDIDATE_REFERENCE_PREFIX;
+	}
 
-    @Override
-    protected String getCandidateReferenceSuffix(){
-        return SAVE_CANDIDATE_REFERENCE_SUFFIX;
-    }
+	@Override
+	protected String getCandidateReferenceSuffix() {
+		return SAVE_CANDIDATE_REFERENCE_SUFFIX;
+	}
 }

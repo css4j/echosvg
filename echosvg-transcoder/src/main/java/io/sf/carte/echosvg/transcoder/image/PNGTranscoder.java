@@ -40,192 +40,181 @@ import io.sf.carte.echosvg.transcoder.keys.IntegerKey;
  */
 public class PNGTranscoder extends ImageTranscoder {
 
-    /**
-     * Constructs a new transcoder that produces png images.
-     */
-    public PNGTranscoder() {
-        hints.put(KEY_FORCE_TRANSPARENT_WHITE, Boolean.FALSE);
-    }
+	/**
+	 * Constructs a new transcoder that produces png images.
+	 */
+	public PNGTranscoder() {
+		hints.put(KEY_FORCE_TRANSPARENT_WHITE, Boolean.FALSE);
+	}
 
-    /** @return the transcoder's user agent */
-    public UserAgent getUserAgent() {
-        return this.userAgent;
-    }
-    
-    /**
-     * Creates a new ARGB image with the specified dimension.
-     * @param width the image width in pixels
-     * @param height the image height in pixels
-     */
-    @Override
-    public BufferedImage createImage(int width, int height) {
-        return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-    }
+	/** @return the transcoder's user agent */
+	public UserAgent getUserAgent() {
+		return this.userAgent;
+	}
 
-    private WriteAdapter getWriteAdapter(String className) {
-        WriteAdapter adapter;
-        try {
-            Class<?> clazz = Class.forName(className);
-            adapter = (WriteAdapter)clazz.getDeclaredConstructor().newInstance();
-            return adapter;
-        } catch (ClassNotFoundException e) {
-            return null;
-        } catch (InstantiationException e) {
-            return null;
-        } catch (IllegalAccessException e) {
-            return null;
-        } catch (NoSuchMethodException e) {
-            return null;
-        } catch (InvocationTargetException e) {
-            return null;
-        }
-    }
-    
-    /**
-     * Writes the specified image to the specified output.
-     * @param img the image to write
-     * @param output the output where to store the image
-     * @throws TranscoderException if an error occured while storing the image
-     */
-    @Override
-    public void writeImage(BufferedImage img, TranscoderOutput output)
-            throws TranscoderException {
+	/**
+	 * Creates a new ARGB image with the specified dimension.
+	 * 
+	 * @param width  the image width in pixels
+	 * @param height the image height in pixels
+	 */
+	@Override
+	public BufferedImage createImage(int width, int height) {
+		return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+	}
 
-        OutputStream ostream = output.getOutputStream();
-        if (ostream == null) {
-            throw new TranscoderException(
-                Messages.formatMessage("png.badoutput", null));
-        }
+	private WriteAdapter getWriteAdapter(String className) {
+		WriteAdapter adapter;
+		try {
+			Class<?> clazz = Class.forName(className);
+			adapter = (WriteAdapter) clazz.getDeclaredConstructor().newInstance();
+			return adapter;
+		} catch (ClassNotFoundException e) {
+			return null;
+		} catch (InstantiationException e) {
+			return null;
+		} catch (IllegalAccessException e) {
+			return null;
+		} catch (NoSuchMethodException e) {
+			return null;
+		} catch (InvocationTargetException e) {
+			return null;
+		}
+	}
 
-        //
-        // This is a trick so that viewers which do not support the alpha
-        // channel will see a white background (and not a black one).
-        //
-        boolean forceTransparentWhite = false;
+	/**
+	 * Writes the specified image to the specified output.
+	 * 
+	 * @param img    the image to write
+	 * @param output the output where to store the image
+	 * @throws TranscoderException if an error occured while storing the image
+	 */
+	@Override
+	public void writeImage(BufferedImage img, TranscoderOutput output) throws TranscoderException {
 
-        if (hints.containsKey(ImageTranscoder.KEY_FORCE_TRANSPARENT_WHITE)) {
-            forceTransparentWhite =
-                    (Boolean) hints.get
-                            (ImageTranscoder.KEY_FORCE_TRANSPARENT_WHITE);
-        }
+		OutputStream ostream = output.getOutputStream();
+		if (ostream == null) {
+			throw new TranscoderException(Messages.formatMessage("png.badoutput", null));
+		}
 
-        if (forceTransparentWhite) {
-            SinglePixelPackedSampleModel sppsm;
-            sppsm = (SinglePixelPackedSampleModel)img.getSampleModel();
-            forceTransparentWhite(img, sppsm);
-        }
+		//
+		// This is a trick so that viewers which do not support the alpha
+		// channel will see a white background (and not a black one).
+		//
+		boolean forceTransparentWhite = false;
 
-        WriteAdapter adapter = getWriteAdapter(
-                "io.sf.carte.echosvg.ext.awt.image.codec.png.PNGTranscoderInternalCodecWriteAdapter");
-        if (adapter == null) {
-            adapter = getWriteAdapter(
-                "io.sf.carte.echosvg.transcoder.image.PNGTranscoderImageIOWriteAdapter");
-        }
-        if (adapter == null) {
-            throw new TranscoderException(
-                    "Could not write PNG file because no WriteAdapter is availble");
-        }
-        adapter.writeImage(this, img, output);
-    }
-    
-    // --------------------------------------------------------------------
-    // PNG specific interfaces
-    // --------------------------------------------------------------------
+		if (hints.containsKey(ImageTranscoder.KEY_FORCE_TRANSPARENT_WHITE)) {
+			forceTransparentWhite = (Boolean) hints.get(ImageTranscoder.KEY_FORCE_TRANSPARENT_WHITE);
+		}
 
-    /**
-     * This interface is used by <code>PNGTranscoder</code> to write PNG images 
-     * through different codecs.
-     *
-     * @version $Id$
-     */
-    public interface WriteAdapter {
-        
-        /**
-         * Writes the specified image to the specified output.
-         * @param transcoder the calling PNGTranscoder
-         * @param img the image to write
-         * @param output the output where to store the image
-         * @throws TranscoderException if an error occured while storing the image
-         */
-        void writeImage(PNGTranscoder transcoder, BufferedImage img, 
-                TranscoderOutput output) throws TranscoderException;
+		if (forceTransparentWhite) {
+			SinglePixelPackedSampleModel sppsm;
+			sppsm = (SinglePixelPackedSampleModel) img.getSampleModel();
+			forceTransparentWhite(img, sppsm);
+		}
 
-    }
-    
+		WriteAdapter adapter = getWriteAdapter(
+				"io.sf.carte.echosvg.ext.awt.image.codec.png.PNGTranscoderInternalCodecWriteAdapter");
+		if (adapter == null) {
+			adapter = getWriteAdapter("io.sf.carte.echosvg.transcoder.image.PNGTranscoderImageIOWriteAdapter");
+		}
+		if (adapter == null) {
+			throw new TranscoderException("Could not write PNG file because no WriteAdapter is availble");
+		}
+		adapter.writeImage(this, img, output);
+	}
 
-    // --------------------------------------------------------------------
-    // Keys definition
-    // --------------------------------------------------------------------
+	// --------------------------------------------------------------------
+	// PNG specific interfaces
+	// --------------------------------------------------------------------
 
-    /**
-     * The gamma correction key.
-     *
-     * <table summary="" border="0" cellspacing="0" cellpadding="1">
-     *   <tr>
-     *     <th valign="top" align="right">Key:</th>
-     *     <td valign="top">KEY_GAMMA</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Value:</th>
-     *     <td valign="top">Float</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Default:</th>
-     *     <td valign="top">PNGEncodeParam.INTENT_PERCEPTUAL</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Required:</th>
-     *     <td valign="top">No</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Description:</th>
-     *     <td valign="top">Controls the gamma correction of the PNG image. 
-     *       A value of zero for gamma disables the generation 
-     *       of a gamma chunk.  No value causes an sRGB chunk 
-     *       to be generated.</td>
-     *   </tr>
-     * </table>
-     */
-    public static final TranscodingHints.Key KEY_GAMMA
-        = new FloatKey();
+	/**
+	 * This interface is used by <code>PNGTranscoder</code> to write PNG images
+	 * through different codecs.
+	 *
+	 * @version $Id$
+	 */
+	public interface WriteAdapter {
 
-    /**
-     * The default Primary Chromaticities for sRGB imagery.
-     */
-    public static final float[] DEFAULT_CHROMA = {
-        0.31270F, 0.329F, 0.64F, 0.33F, 0.3F, 0.6F, 0.15F, 0.06F
-    };
+		/**
+		 * Writes the specified image to the specified output.
+		 * 
+		 * @param transcoder the calling PNGTranscoder
+		 * @param img        the image to write
+		 * @param output     the output where to store the image
+		 * @throws TranscoderException if an error occured while storing the image
+		 */
+		void writeImage(PNGTranscoder transcoder, BufferedImage img, TranscoderOutput output)
+				throws TranscoderException;
 
+	}
 
-    /**
-     * The color indexed image key to specify number of colors used in
-     * palette.
-     *
-     * <table summary="" border="0" cellspacing="0" cellpadding="1">
-     *   <tr>
-     *     <th valign="top" align="right">Key:</th>
-     *     <td valign="top">KEY_INDEXED</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Value:</th>
-     *     <td valign="top">Integer</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Default:</th>
-     *     <td valign="top">none/true color image</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Required:</th>
-     *     <td valign="top">No</td>
-     *   </tr>
-     *   <tr>
-     *     <th valign="top" align="right">Description:</th>
-     *     <td valign="top">Turns on the reduction of the image to index 
-     *       colors by specifying color bit depth, 1, 2, 4 or 8. The resultant 
-     *       PNG will be an indexed PNG with color bit depth specified.</td>
-     *   </tr>
-     * </table> 
-     */
-    public static final TranscodingHints.Key KEY_INDEXED
-        = new IntegerKey();
+	// --------------------------------------------------------------------
+	// Keys definition
+	// --------------------------------------------------------------------
+
+	/**
+	 * The gamma correction key.
+	 *
+	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <tr>
+	 * <th valign="top" align="right">Key:</th>
+	 * <td valign="top">KEY_GAMMA</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Value:</th>
+	 * <td valign="top">Float</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Default:</th>
+	 * <td valign="top">PNGEncodeParam.INTENT_PERCEPTUAL</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Required:</th>
+	 * <td valign="top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Description:</th>
+	 * <td valign="top">Controls the gamma correction of the PNG image. A value of
+	 * zero for gamma disables the generation of a gamma chunk. No value causes an
+	 * sRGB chunk to be generated.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_GAMMA = new FloatKey();
+
+	/**
+	 * The default Primary Chromaticities for sRGB imagery.
+	 */
+	public static final float[] DEFAULT_CHROMA = { 0.31270F, 0.329F, 0.64F, 0.33F, 0.3F, 0.6F, 0.15F, 0.06F };
+
+	/**
+	 * The color indexed image key to specify number of colors used in palette.
+	 *
+	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <tr>
+	 * <th valign="top" align="right">Key:</th>
+	 * <td valign="top">KEY_INDEXED</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Value:</th>
+	 * <td valign="top">Integer</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Default:</th>
+	 * <td valign="top">none/true color image</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Required:</th>
+	 * <td valign="top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th valign="top" align="right">Description:</th>
+	 * <td valign="top">Turns on the reduction of the image to index colors by
+	 * specifying color bit depth, 1, 2, 4 or 8. The resultant PNG will be an
+	 * indexed PNG with color bit depth specified.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_INDEXED = new IntegerKey();
 }

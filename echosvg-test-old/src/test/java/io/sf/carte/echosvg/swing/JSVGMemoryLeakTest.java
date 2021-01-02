@@ -46,189 +46,200 @@ import io.sf.carte.echosvg.test.TestReport;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class JSVGMemoryLeakTest extends MemoryLeakTest
-    implements JSVGCanvasHandler.Delegate {
-    public JSVGMemoryLeakTest() {
-    }
+public class JSVGMemoryLeakTest extends MemoryLeakTest implements JSVGCanvasHandler.Delegate {
+	public JSVGMemoryLeakTest() {
+	}
 
-    @Override
-    public String getName() { return "JSVGMemoryLeakTest."+getId(); }
+	@Override
+	public String getName() {
+		return "JSVGMemoryLeakTest." + getId();
+	}
 
-    TestReport failReport = null;
-    boolean done;
-    JSVGCanvasHandler handler;
-    JFrame theFrame;
+	TestReport failReport = null;
+	boolean done;
+	JSVGCanvasHandler handler;
+	JFrame theFrame;
 
-    /**
-     * A WeakReference to the JSVGCanvas.
-     */
-    WeakReference<JSVGCanvas> theCanvas;
+	/**
+	 * A WeakReference to the JSVGCanvas.
+	 */
+	WeakReference<JSVGCanvas> theCanvas;
 
-    protected void setTheCanvas(JSVGCanvas c) {
-        theCanvas = new WeakReference<>(c);
-    }
+	protected void setTheCanvas(JSVGCanvas c) {
+		theCanvas = new WeakReference<>(c);
+	}
 
-    protected JSVGCanvas getTheCanvas() {
-        return theCanvas.get();
-    }
+	protected JSVGCanvas getTheCanvas() {
+		return theCanvas.get();
+	}
 
-    public static String fmt(String key, Object []args) {
-        return TestMessages.formatMessage(key, args);
-    }
+	public static String fmt(String key, Object[] args) {
+		return TestMessages.formatMessage(key, args);
+	}
 
-    public JSVGCanvasHandler createHandler() {
-        return new JSVGCanvasHandler(this, this);
-    }
+	public JSVGCanvasHandler createHandler() {
+		return new JSVGCanvasHandler(this, this);
+	}
 
-    @Override
-    public TestReport doSomething() throws Exception {
-        handler = createHandler();
-        registerObjectDesc(handler, "Handler");
-        done = false;
-        handler.runCanvas(getId());
+	@Override
+	public TestReport doSomething() throws Exception {
+		handler = createHandler();
+		registerObjectDesc(handler, "Handler");
+		done = false;
+		handler.runCanvas(getId());
 
-        SwingUtilities.invokeAndWait( new Runnable() {
-                @Override
-                public void run() {
-                    // System.out.println("In Invoke");
-                    theFrame.remove(getTheCanvas());
-                    getTheCanvas().dispose();
+		SwingUtilities.invokeAndWait(new Runnable() {
+			@Override
+			public void run() {
+				// System.out.println("In Invoke");
+				theFrame.remove(getTheCanvas());
+				getTheCanvas().dispose();
 
-                    theFrame.dispose();
-                    theFrame=null;
-                    theCanvas=null;
-                }
-            });
+				theFrame.dispose();
+				theFrame = null;
+				theCanvas = null;
+			}
+		});
 
-        try  { Thread.sleep(100); } catch (InterruptedException ie) { }
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException ie) {
+		}
 
-        SwingUtilities.invokeAndWait( new Runnable() {
-                @Override
-                public void run() {
-                    // Create a new Frame to take focus for Swing so old one
-                    // can be GC'd.
-                    theFrame = new JFrame("FocusFrame"); 
-                    // registerObjectDesc(jframe, "FocusFrame");
-                    theFrame.setSize(new java.awt.Dimension(40, 50));
-                    theFrame.setVisible(true);
-                }});
+		SwingUtilities.invokeAndWait(new Runnable() {
+			@Override
+			public void run() {
+				// Create a new Frame to take focus for Swing so old one
+				// can be GC'd.
+				theFrame = new JFrame("FocusFrame");
+				// registerObjectDesc(jframe, "FocusFrame");
+				theFrame.setSize(new java.awt.Dimension(40, 50));
+				theFrame.setVisible(true);
+			}
+		});
 
-        try  { Thread.sleep(100); } catch (InterruptedException ie) { }
-        
-        SwingUtilities.invokeAndWait( new Runnable() {
-                @Override
-                public void run() {
-                    theFrame.setVisible(false);
-                    theFrame.dispose();
-                }});
-        
-        handler = null;
-        if (failReport != null) return failReport;
-        DefaultTestReport report = new DefaultTestReport(this);
-        report.setPassed(true);
-        return report;
-    }
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException ie) {
+		}
 
-    public void scriptDone() {
-        synchronized (this) {
-            done = true;
-            handler.scriptDone();
-        }
-    }
+		SwingUtilities.invokeAndWait(new Runnable() {
+			@Override
+			public void run() {
+				theFrame.setVisible(false);
+				theFrame.dispose();
+			}
+		});
 
-    public void registerElement(Element e, String desc) {
-        registerObjectDesc(e, desc);
-        UpdateManager um = getTheCanvas().getUpdateManager();
-        BridgeContext bc = um.getBridgeContext();
-        GraphicsNode gn = bc.getGraphicsNode(e);
-        if (gn != null)
-            registerObjectDesc(gn, desc+"_GN");
-        if (e instanceof SVGOMElement) {
-            SVGOMElement svge = (SVGOMElement)e;
-            SVGContext svgctx = svge.getSVGContext();
-            if (svgctx != null) {
-                registerObjectDesc(svgctx, desc+"_CTX");
-            }
-        }
-    }
+		handler = null;
+		if (failReport != null)
+			return failReport;
+		DefaultTestReport report = new DefaultTestReport(this);
+		report.setPassed(true);
+		return report;
+	}
 
-    public void registerResourceContext(String uriSubstring, String desc) {
-        UpdateManager um = getTheCanvas().getUpdateManager();
-        BridgeContext bc = um.getBridgeContext();
-        BridgeContext[] ctxs = bc.getChildContexts();
-        for (BridgeContext ctx : ctxs) {
-            bc = ctx;
-            if (bc == null) {
-                continue;
-            }
-            String url = ((SVGOMDocument) bc.getDocument()).getURL();
-            if (url.indexOf(uriSubstring) != -1) {
-                registerObjectDesc(ctx, desc);
-            }
-        }
-    }
+	public void scriptDone() {
+		synchronized (this) {
+			done = true;
+			handler.scriptDone();
+		}
+	}
 
-    /* JSVGCanvasHandler.Delegate Interface */
-    @Override
-    public boolean canvasInit(JSVGCanvas canvas) {
-        // System.err.println("In Init");
-        setTheCanvas(canvas);
-        theFrame  = handler.getFrame();
+	public void registerElement(Element e, String desc) {
+		registerObjectDesc(e, desc);
+		UpdateManager um = getTheCanvas().getUpdateManager();
+		BridgeContext bc = um.getBridgeContext();
+		GraphicsNode gn = bc.getGraphicsNode(e);
+		if (gn != null)
+			registerObjectDesc(gn, desc + "_GN");
+		if (e instanceof SVGOMElement) {
+			SVGOMElement svge = (SVGOMElement) e;
+			SVGContext svgctx = svge.getSVGContext();
+			if (svgctx != null) {
+				registerObjectDesc(svgctx, desc + "_CTX");
+			}
+		}
+	}
 
-        File f = new File(getId());
-        try {
-            canvas.setURI(f.toURI().toURL().toString());
-        } catch (MalformedURLException mue) {
-        }
-        registerObjectDesc(canvas, "JSVGCanvas");
-        registerObjectDesc(handler.getFrame(), "JFrame");
+	public void registerResourceContext(String uriSubstring, String desc) {
+		UpdateManager um = getTheCanvas().getUpdateManager();
+		BridgeContext bc = um.getBridgeContext();
+		BridgeContext[] ctxs = bc.getChildContexts();
+		for (BridgeContext ctx : ctxs) {
+			bc = ctx;
+			if (bc == null) {
+				continue;
+			}
+			String url = ((SVGOMDocument) bc.getDocument()).getURL();
+			if (url.indexOf(uriSubstring) != -1) {
+				registerObjectDesc(ctx, desc);
+			}
+		}
+	}
 
-        return true;
-    }
+	/* JSVGCanvasHandler.Delegate Interface */
+	@Override
+	public boolean canvasInit(JSVGCanvas canvas) {
+		// System.err.println("In Init");
+		setTheCanvas(canvas);
+		theFrame = handler.getFrame();
 
-    @Override
-    public void canvasLoaded(JSVGCanvas canvas) {
-        // System.err.println("Loaded");
-        registerObjectDesc(canvas.getSVGDocument(), "SVGDoc");
-    }
+		File f = new File(getId());
+		try {
+			canvas.setURI(f.toURI().toURL().toString());
+		} catch (MalformedURLException mue) {
+		}
+		registerObjectDesc(canvas, "JSVGCanvas");
+		registerObjectDesc(handler.getFrame(), "JFrame");
 
-    @Override
-    public void canvasRendered(JSVGCanvas canvas) {
-        // System.err.println("Rendered");
-        registerObjectDesc(canvas.getGraphicsNode(), "GVT");
-        UpdateManager um = canvas.getUpdateManager();
-        if (um == null) {
-            return;
-        }
-        BridgeContext bc = um.getBridgeContext();
-        registerObjectDesc(um, "updateManager");
-        registerObjectDesc(bc, "bridgeContext");
-        BridgeContext[] subCtxs = bc.getChildContexts();
-        for (BridgeContext subCtx : subCtxs) {
-            if (subCtx != null) {
-                SVGOMDocument doc = (SVGOMDocument) subCtx.getDocument();
-                registerObjectDesc(subCtx, "BridgeContext_" + doc.getURL());
-            }
-        }
-    }
+		return true;
+	}
 
-    @Override
-    public boolean canvasUpdated(JSVGCanvas canvas) {
-        // System.err.println("Updated");
-        synchronized (this) {
-            return done;
-        }
-    }
-    @Override
-    public void canvasDone(final JSVGCanvas canvas) {
-        // System.err.println("Done");
-    }
+	@Override
+	public void canvasLoaded(JSVGCanvas canvas) {
+		// System.err.println("Loaded");
+		registerObjectDesc(canvas.getSVGDocument(), "SVGDoc");
+	}
 
-    @Override
-    public void failure(TestReport report) {
-        synchronized (this) {
-            done = true;
-            failReport = report;
-        }
-    }
+	@Override
+	public void canvasRendered(JSVGCanvas canvas) {
+		// System.err.println("Rendered");
+		registerObjectDesc(canvas.getGraphicsNode(), "GVT");
+		UpdateManager um = canvas.getUpdateManager();
+		if (um == null) {
+			return;
+		}
+		BridgeContext bc = um.getBridgeContext();
+		registerObjectDesc(um, "updateManager");
+		registerObjectDesc(bc, "bridgeContext");
+		BridgeContext[] subCtxs = bc.getChildContexts();
+		for (BridgeContext subCtx : subCtxs) {
+			if (subCtx != null) {
+				SVGOMDocument doc = (SVGOMDocument) subCtx.getDocument();
+				registerObjectDesc(subCtx, "BridgeContext_" + doc.getURL());
+			}
+		}
+	}
+
+	@Override
+	public boolean canvasUpdated(JSVGCanvas canvas) {
+		// System.err.println("Updated");
+		synchronized (this) {
+			return done;
+		}
+	}
+
+	@Override
+	public void canvasDone(final JSVGCanvas canvas) {
+		// System.err.println("Done");
+	}
+
+	@Override
+	public void failure(TestReport report) {
+		synchronized (this) {
+			done = true;
+			failReport = report;
+		}
+	}
 }

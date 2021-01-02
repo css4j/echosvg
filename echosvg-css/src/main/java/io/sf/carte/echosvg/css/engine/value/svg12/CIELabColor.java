@@ -26,30 +26,31 @@ package io.sf.carte.echosvg.css.engine.value.svg12;
  */
 public class CIELabColor extends AbstractCIEColor {
 
-    public static final String CIE_LAB_COLOR_FUNCTION = "cielab";
+	public static final String CIE_LAB_COLOR_FUNCTION = "cielab";
 
-    /**
-     * Creates a new CIELabColor.
-     * @param l the L* value
-     * @param a the a* value
-     * @param b the b* value
-     * @param whitepoint the white point in CIE XYZ coordinates
-     */
-    public CIELabColor(float l, float a, float b, float[] whitepoint) {
-        super(new float[] {l, a, b}, whitepoint);
-    }
+	/**
+	 * Creates a new CIELabColor.
+	 * 
+	 * @param l          the L* value
+	 * @param a          the a* value
+	 * @param b          the b* value
+	 * @param whitepoint the white point in CIE XYZ coordinates
+	 */
+	public CIELabColor(float l, float a, float b, float[] whitepoint) {
+		super(new float[] { l, a, b }, whitepoint);
+	}
 
-    /**
-     * Creates a new CIELabColor with D50 as illuminant.
-     */
-    public CIELabColor(float l, float a, float b) {
-        this(l, a, b, null);
-    }
+	/**
+	 * Creates a new CIELabColor with D50 as illuminant.
+	 */
+	public CIELabColor(float l, float a, float b) {
+		this(l, a, b, null);
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public String getFunctionName() {
-        return CIE_LAB_COLOR_FUNCTION;
-    }
+	/** {@inheritDoc} */
+	@Override
+	public String getFunctionName() {
+		return CIE_LAB_COLOR_FUNCTION;
+	}
 
 }

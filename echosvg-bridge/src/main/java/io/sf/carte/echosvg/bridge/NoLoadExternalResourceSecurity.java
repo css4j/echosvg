@@ -18,50 +18,43 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-
 /**
- * This implementation does not allow any external resources to be 
- * referenced from an SVG document.
+ * This implementation does not allow any external resources to be referenced
+ * from an SVG document.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class NoLoadExternalResourceSecurity implements ExternalResourceSecurity {
-    /**
-     * Message when trying to load an external resource
-     */
-    public static final String ERROR_NO_EXTERNAL_RESOURCE_ALLOWED
-        = "NoLoadExternalResourceSecurity.error.no.external.resource.allowed";
+	/**
+	 * Message when trying to load an external resource
+	 */
+	public static final String ERROR_NO_EXTERNAL_RESOURCE_ALLOWED = "NoLoadExternalResourceSecurity.error.no.external.resource.allowed";
 
-    /**
-     * The exception is built in the constructor and thrown if 
-     * not null and the checkLoadExternalResource method is called.
-     */
-    protected SecurityException se;
+	/**
+	 * The exception is built in the constructor and thrown if not null and the
+	 * checkLoadExternalResource method is called.
+	 */
+	protected SecurityException se;
 
-    /**
-     * Controls whether the external resource should be loaded or not.
-     *
-     * @throws SecurityException if the externalResource should not be loaded.
-     */
-    @Override
-    public void checkLoadExternalResource(){
-        if (se != null) {
-            se.fillInStackTrace();
-            throw se;
-        }
-    }
+	/**
+	 * Controls whether the external resource should be loaded or not.
+	 *
+	 * @throws SecurityException if the externalResource should not be loaded.
+	 */
+	@Override
+	public void checkLoadExternalResource() {
+		if (se != null) {
+			se.fillInStackTrace();
+			throw se;
+		}
+	}
 
-    /**
-     */
-    public NoLoadExternalResourceSecurity(){
-        se = new SecurityException
-            (Messages.formatMessage(ERROR_NO_EXTERNAL_RESOURCE_ALLOWED,
-                                    null));
-        
-    }
+	/**
+	 */
+	public NoLoadExternalResourceSecurity() {
+		se = new SecurityException(Messages.formatMessage(ERROR_NO_EXTERNAL_RESOURCE_ALLOWED, null));
+
+	}
 }
-
-
-    

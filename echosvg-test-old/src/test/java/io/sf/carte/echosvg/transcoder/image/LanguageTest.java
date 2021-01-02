@@ -30,60 +30,58 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author For later modifications, see Git history.
- * @version $Id$ 
+ * @version $Id$
  */
 public class LanguageTest extends AbstractImageTranscoderTest {
 
-    /**
-     * Constructs a new <code>LanguageTest</code>.
-     */
-    /** The URI of the input image. */
-    protected String inputURI;
+	/**
+	 * Constructs a new <code>LanguageTest</code>.
+	 */
+	/** The URI of the input image. */
+	protected String inputURI;
 
-    /** The URI of the reference image. */
-    protected String refImageURI;
+	/** The URI of the reference image. */
+	protected String refImageURI;
 
-    /** The preferred language. */
-    protected String language;
+	/** The preferred language. */
+	protected String language;
 
-    /**
-     * Constructs a new <code>LanguageTest</code>.
-     *
-     * @param inputURI the URI of the input image
-     * @param refImageURI the URI of the reference image
-     * @param language the preferred language
-     */
-    public LanguageTest(String inputURI, 
-                        String refImageURI, 
-                        String language) {
-        this.inputURI = inputURI;
-        this.refImageURI = refImageURI;
-        this.language = language;
-    }
+	/**
+	 * Constructs a new <code>LanguageTest</code>.
+	 *
+	 * @param inputURI    the URI of the input image
+	 * @param refImageURI the URI of the reference image
+	 * @param language    the preferred language
+	 */
+	public LanguageTest(String inputURI, String refImageURI, String language) {
+		this.inputURI = inputURI;
+		this.refImageURI = refImageURI;
+		this.language = language;
+	}
 
-    /**
-     * Creates the <code>TranscoderInput</code>.
-     */
-    @Override
-    protected TranscoderInput createTranscoderInput() {
-        return new TranscoderInput(resolveURL(inputURI).toString());
-    }
-    
-    /**
-     * Creates a Map that contains additional transcoding hints.
-     */
-    @Override
-    protected Map<Key, Object> createTranscodingHints() {
-        Map<Key, Object> hints = new HashMap<>(7);
-        hints.put(SVGAbstractTranscoder.KEY_LANGUAGE, language);
-        return hints;
-    }
+	/**
+	 * Creates the <code>TranscoderInput</code>.
+	 */
+	@Override
+	protected TranscoderInput createTranscoderInput() {
+		return new TranscoderInput(resolveURL(inputURI).toString());
+	}
 
-    /**
-     * Returns the reference image for this test.
-     */
-    @Override
-    protected byte [] getReferenceImageData() {
-        return createBufferedImageData(resolveURL(refImageURI));
-    }
+	/**
+	 * Creates a Map that contains additional transcoding hints.
+	 */
+	@Override
+	protected Map<Key, Object> createTranscodingHints() {
+		Map<Key, Object> hints = new HashMap<>(7);
+		hints.put(SVGAbstractTranscoder.KEY_LANGUAGE, language);
+		return hints;
+	}
+
+	/**
+	 * Returns the reference image for this test.
+	 */
+	@Override
+	protected byte[] getReferenceImageData() {
+		return createBufferedImageData(resolveURL(refImageURI));
+	}
 }

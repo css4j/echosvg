@@ -29,25 +29,24 @@ import org.w3c.dom.events.Event;
  */
 public abstract class EventLikeTimingSpecifier extends OffsetTimingSpecifier {
 
-    /**
-     * Creates a new EventLikeTimingSpecifier object.
-     */
-    public EventLikeTimingSpecifier(TimedElement owner, boolean isBegin,
-                                    float offset) {
-        super(owner, isBegin, offset);
-    }
+	/**
+	 * Creates a new EventLikeTimingSpecifier object.
+	 */
+	public EventLikeTimingSpecifier(TimedElement owner, boolean isBegin, float offset) {
+		super(owner, isBegin, offset);
+	}
 
-    /**
-     * Returns whether this timing specifier is event-like (i.e., if it is
-     * an eventbase, accesskey or a repeat timing specifier).
-     */
-    @Override
-    public boolean isEventCondition() {
-        return true;
-    }
+	/**
+	 * Returns whether this timing specifier is event-like (i.e., if it is an
+	 * eventbase, accesskey or a repeat timing specifier).
+	 */
+	@Override
+	public boolean isEventCondition() {
+		return true;
+	}
 
-    /**
-     * Invoked to resolve an event-like timing specifier into an instance time.
-     */
-    public abstract void resolve(Event e);
+	/**
+	 * Invoked to resolve an event-like timing specifier into an instance time.
+	 */
+	public abstract void resolve(Event e);
 }

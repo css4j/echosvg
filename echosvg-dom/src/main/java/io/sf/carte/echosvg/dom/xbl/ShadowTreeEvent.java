@@ -20,21 +20,18 @@ package io.sf.carte.echosvg.dom.xbl;
 import org.w3c.dom.events.Event;
 
 /**
- * Interface for shadow tree related events.
- * Eventually will move to org.w3c.dom.xbl (or some such package).
+ * Interface for shadow tree related events. Eventually will move to
+ * org.w3c.dom.xbl (or some such package).
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ShadowTreeEvent extends Event {
-    XBLShadowTreeElement getXblShadowTree();
-    void initShadowTreeEvent(String typeArg,
-                             boolean canBubbleArg,
-                             boolean cancelableArg,
-                             XBLShadowTreeElement xblShadowTreeArg);
-    void initShadowTreeEventNS(String namespaceURIArg,
-                               String typeArg,
-                               boolean canBubbleArg,
-                               boolean cancelableArg,
-                               XBLShadowTreeElement xblShadowTreeArg);
+	XBLShadowTreeElement getXblShadowTree();
+
+	void initShadowTreeEvent(String typeArg, boolean canBubbleArg, boolean cancelableArg,
+			XBLShadowTreeElement xblShadowTreeArg);
+
+	void initShadowTreeEventNS(String namespaceURIArg, String typeArg, boolean canBubbleArg, boolean cancelableArg,
+			XBLShadowTreeElement xblShadowTreeArg);
 }

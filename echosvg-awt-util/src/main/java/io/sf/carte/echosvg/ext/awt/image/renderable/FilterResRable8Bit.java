@@ -47,363 +47,347 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.TileCacheRed;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class FilterResRable8Bit extends AbstractRable
-    implements FilterResRable, PaintRable {
+public class FilterResRable8Bit extends AbstractRable implements FilterResRable, PaintRable {
 
-    /**
-     * Filter resolution along the x-axis
-     */
-    private int filterResolutionX = -1;
+	/**
+	 * Filter resolution along the x-axis
+	 */
+	private int filterResolutionX = -1;
 
-    /**
-     * Filter resolution along the y-axis
-     */
-    private int filterResolutionY = -1;
+	/**
+	 * Filter resolution along the y-axis
+	 */
+	private int filterResolutionY = -1;
 
-    public FilterResRable8Bit() {
-        // System.out.println("Using FilterResRable8bit...");
-    }
+	public FilterResRable8Bit() {
+		// System.out.println("Using FilterResRable8bit...");
+	}
 
+	public FilterResRable8Bit(Filter src, int filterResX, int filterResY) {
+		init(src, null);
+		setFilterResolutionX(filterResX);
+		setFilterResolutionY(filterResY);
+	}
 
-    public FilterResRable8Bit(Filter src, int filterResX, int filterResY) {
-        init(src, null);
-        setFilterResolutionX(filterResX);
-        setFilterResolutionY(filterResY);
-    }
+	/**
+	 * Returns the source to be cropped.
+	 */
+	@Override
+	public Filter getSource() {
+		return (Filter) srcs.get(0);
+	}
 
-    /**
-     * Returns the source to be cropped.
-     */
-    @Override
-    public Filter getSource() {
-        return (Filter)srcs.get(0);
-    }
+	/**
+	 * Sets the source to be cropped
+	 * 
+	 * @param src image to offset.
+	 */
+	@Override
+	public void setSource(Filter src) {
+		init(src, null);
+	}
 
-    /**
-     * Sets the source to be cropped
-     * @param src image to offset.
-     */
-    @Override
-    public void setSource(Filter src){
-        init(src, null);
-    }
+	/**
+	 * Returns the resolution along the X axis.
+	 */
+	@Override
+	public int getFilterResolutionX() {
+		return filterResolutionX;
+	}
 
-    /**
-     * Returns the resolution along the X axis.
-     */
-    @Override
-    public int getFilterResolutionX(){
-        return filterResolutionX;
-    }
+	/**
+	 * Sets the resolution along the X axis, i.e., the maximum size for intermediate
+	 * images along that axis. The value should be greater than zero to have an
+	 * effect. Negative values are illegal.
+	 */
+	@Override
+	public void setFilterResolutionX(int filterResolutionX) {
+		if (filterResolutionX < 0) {
+			throw new IllegalArgumentException();
+		}
+		touch();
+		this.filterResolutionX = filterResolutionX;
+	}
 
-    /**
-     * Sets the resolution along the X axis, i.e., the maximum
-     * size for intermediate images along that axis.
-     * The value should be greater than zero to have an effect.
-     * Negative values are illegal.
-     */
-    @Override
-    public void setFilterResolutionX(int filterResolutionX){
-        if(filterResolutionX < 0){
-            throw new IllegalArgumentException();
-        }
-        touch();
-        this.filterResolutionX = filterResolutionX;
-    }
+	/**
+	 * Returns the resolution along the Y axis.
+	 */
+	@Override
+	public int getFilterResolutionY() {
+		return filterResolutionY;
+	}
 
-    /**
-     * Returns the resolution along the Y axis.
-     */
-    @Override
-    public int getFilterResolutionY(){
-        return filterResolutionY;
-    }
+	/**
+	 * Sets the resolution along the Y axis, i.e., the maximum size for intermediate
+	 * images along that axis. If the Y-value is less than zero, the scale applied
+	 * to the rendered images is computed to preserve the image's aspect ratio
+	 */
+	@Override
+	public void setFilterResolutionY(int filterResolutionY) {
+		touch();
+		this.filterResolutionY = filterResolutionY;
+	}
 
-    /**
-     * Sets the resolution along the Y axis, i.e., the maximum
-     * size for intermediate images along that axis.
-     * If the Y-value is less than zero, the scale applied to
-     * the rendered images is computed to preserve the image's aspect ratio
-     */
-    @Override
-    public void setFilterResolutionY(int filterResolutionY){
-        touch();
-        this.filterResolutionY = filterResolutionY;
-    }
+	/**
+	 * This returns true if <code>ri</code> and all of <code>ri</code>'s sources
+	 * implement the PaintRable interface. This is used to indicate that the chain
+	 * has a good potential for bypassing the filterRes operation entirely.
+	 *
+	 * Ideally there would be a checkPaintRable method in PaintRable that could be
+	 * used to get a definate answer about a filters ability to draw directly to a
+	 * Graphics2D (this can sometimes 'fail' because of the way the Graphics2D is
+	 * currently configured).
+	 */
+	public boolean allPaintRable(RenderableImage ri) {
+		if (!(ri instanceof PaintRable))
+			return false;
 
+		List<RenderableImage> v = ri.getSources();
+		// No sources and we are PaintRable so the chain is PaintRable.
+		if (v == null)
+			return true;
 
-    /**
-     * This returns true if <code>ri</code> and all of <code>ri</code>'s
-     * sources implement the PaintRable interface.  This is used to
-     * indicate that the chain has a good potential for bypassing the
-     * filterRes operation entirely.
-     *
-     * Ideally there would be a checkPaintRable method in PaintRable
-     * that could be used to get a definate answer about a filters
-     * ability to draw directly to a Graphics2D (this can sometimes
-     * 'fail' because of the way the Graphics2D is currently
-     * configured).
-     */
-    public boolean allPaintRable(RenderableImage ri) {
-        if (!(ri instanceof PaintRable))
-            return false;
+		for (RenderableImage nri : v) {
+			// A source is not paintRable so we are not 100% paintRable.
+			if (!allPaintRable(nri))
+				return false;
+		}
 
-        List<RenderableImage> v = ri.getSources();
-        // No sources and we are PaintRable so the chain is PaintRable.
-        if (v == null) return true;
+		return true;
+	}
 
-        for (RenderableImage nri : v) {
-            // A source is not paintRable so we are not 100% paintRable.
-            if (!allPaintRable(nri)) return false;
-        }
+	/**
+	 * This function attempts to distribute the filterRes operation across src.
+	 * Right now it knows about two operations, pad and composite. It's main target
+	 * is the composite but often pad operations are sprinked in the chain so it
+	 * needs to know about them. This list could be extended however if it gets much
+	 * longer it should probably be rolled into a new 'helper interface' like
+	 * PaintRable.
+	 *
+	 * NOTE: This is essentially a bad hack, but it is a hack that is recomended by
+	 * the SVG specification so I do it.
+	 */
+	public boolean distributeAcross(RenderableImage src, Graphics2D g2d) {
+		boolean ret;
+		if (src instanceof PadRable) {
+			PadRable pad = (PadRable) src;
+			Shape clip = g2d.getClip();
+			g2d.clip(pad.getPadRect());
+			ret = distributeAcross(pad.getSource(), g2d);
+			g2d.setClip(clip);
+			return ret;
+		}
 
-        return true;
-    }
+		if (src instanceof CompositeRable) {
+			CompositeRable comp = (CompositeRable) src;
+			if (comp.getCompositeRule() != CompositeRule.OVER)
+				return false;
 
-    /**
-     * This function attempts to distribute the filterRes operation
-     * across src.  Right now it knows about two operations, pad and
-     * composite.  It's main target is the composite but often pad
-     * operations are sprinked in the chain so it needs to know about
-     * them.  This list could be extended however if it gets much
-     * longer it should probably be rolled into a new 'helper interface'
-     * like PaintRable.
-     *
-     * NOTE: This is essentially a bad hack, but it is a hack that is
-     *       recomended by the SVG specification so I do it.
-     */
-    public boolean distributeAcross(RenderableImage src, Graphics2D g2d) {
-        boolean ret;
-        if (src instanceof PadRable) {
-            PadRable pad = (PadRable)src;
-            Shape clip = g2d.getClip();
-            g2d.clip(pad.getPadRect());
-            ret = distributeAcross(pad.getSource(), g2d);
-            g2d.setClip(clip);
-            return ret;
-        }
+			if (false) {
+				// To check colorspaces or to not check colorspaces
+				// _that_ is the question...
+				ColorSpace crCS = comp.getOperationColorSpace();
+				ColorSpace g2dCS = GraphicsUtil.getDestinationColorSpace(g2d);
+				if ((g2dCS == null) || (g2dCS != crCS))
+					return false;
+			}
 
-        if (src instanceof CompositeRable) {
-            CompositeRable comp = (CompositeRable)src;
-            if (comp.getCompositeRule() != CompositeRule.OVER)
-                return false;
+			List<RenderableImage> v = comp.getSources();
+			if (v == null)
+				return true;
+			ListIterator<RenderableImage> li = v.listIterator(v.size());
+			while (li.hasPrevious()) {
+				RenderableImage csrc = li.previous();
+				if (!allPaintRable(csrc)) {
+					li.next();
+					break;
+				}
+			}
 
-            if (false) {
-                // To check colorspaces or to not check colorspaces
-                // _that_ is the question...
-                ColorSpace crCS  = comp.getOperationColorSpace();
-                ColorSpace g2dCS = GraphicsUtil.getDestinationColorSpace(g2d);
-                if ((g2dCS == null) || (g2dCS != crCS))
-                    return false;
-            }
+			if (!li.hasPrevious()) {
+				// All inputs are PaintRable so just draw directly to
+				// the graphics ignore filter res all togeather...
+				GraphicsUtil.drawImage(g2d, comp);
+				return true;
+			}
 
-            List<RenderableImage> v = comp.getSources();
-            if (v == null) return true;
-            ListIterator<RenderableImage> li = v.listIterator(v.size());
-            while (li.hasPrevious()) {
-                RenderableImage csrc = li.previous();
-                if (!allPaintRable(csrc)) {
-                    li.next();
-                    break;
-                }
-            }
+			if (!li.hasNext())
+				// None of the trailing inputs are PaintRable so we don't
+				// distribute across this at all.
+				return false;
 
-            if (!li.hasPrevious()) {
-                // All inputs are PaintRable so just draw directly to
-                // the graphics ignore filter res all togeather...
-                GraphicsUtil.drawImage(g2d, comp);
-                return true;
-            }
+			// Now we are in the case where some are paintRable and
+			// some aren't. In this case we create a new
+			// CompositeRable with the first ones, to which we apply
+			// ourselves (limiting the resolution), and after that
+			// we simply draw the remainder...
+			int idx = li.nextIndex(); // index of first PaintRable...
+			Filter f = new CompositeRable8Bit(v.subList(0, idx), comp.getCompositeRule(), comp.isColorSpaceLinear());
+			f = new FilterResRable8Bit(f, getFilterResolutionX(), getFilterResolutionY());
+			GraphicsUtil.drawImage(g2d, f);
+			while (li.hasNext()) {
+				PaintRable pr = (PaintRable) li.next();
+				if (!pr.paintRable(g2d)) {
+					// Ugg it failed to paint so we need to filterRes it...
+					Filter prf = (Filter) pr;
+					prf = new FilterResRable8Bit(prf, getFilterResolutionX(), getFilterResolutionY());
+					GraphicsUtil.drawImage(g2d, prf);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 
-            if (!li.hasNext())
-                // None of the trailing inputs are PaintRable so we don't
-                // distribute across this at all.
-                return false;
+	/**
+	 * Should perform the equivilent action as createRendering followed by drawing
+	 * the RenderedImage.
+	 *
+	 * @param g2d The Graphics2D to draw to.
+	 * @return true if the paint call succeeded, false if for some reason the paint
+	 *         failed (in which case a createRendering should be used).
+	 */
+	@Override
+	public boolean paintRable(Graphics2D g2d) {
+		// This is a bit of a hack to implement the suggestion of SVG
+		// specification that if the last operation in a filter chain
+		// is a SRC_OVER composite and the source is SourceGraphic it
+		// should be rendered directly to the canvas (by passing
+		// filterRes). We are actually much more aggressive in
+		// implementing this suggestion since we will bypass filterRes
+		// for all the trailing elements in a SRC_OVER composite that
+		// can be drawn directly to the canvas.
 
-            // Now we are in the case where some are paintRable and
-            // some aren't.  In this case we create a new
-            // CompositeRable with the first ones, to which we apply
-            // ourselves (limiting the resolution), and after that
-            // we simply draw the remainder...
-            int idx = li.nextIndex();  // index of first PaintRable...
-            Filter f = new CompositeRable8Bit(v.subList(0, idx),
-                                              comp.getCompositeRule(),
-                                              comp.isColorSpaceLinear());
-            f = new FilterResRable8Bit(f, getFilterResolutionX(),
-                                       getFilterResolutionY());
-            GraphicsUtil.drawImage(g2d, f);
-            while (li.hasNext()) {
-                PaintRable pr = (PaintRable)li.next();
-                if (!pr.paintRable(g2d)) {
-                    // Ugg it failed to paint so we need to filterRes it...
-                    Filter     prf  = (Filter)pr;
-                    prf = new FilterResRable8Bit(prf, getFilterResolutionX(),
-                                                 getFilterResolutionY());
-                    GraphicsUtil.drawImage(g2d, prf);
-                }
-            }
-            return true;
-        }
-        return false;
-    }
+		// System.out.println("Calling FilterResRable paintRable");
 
-    /**
-     * Should perform the equivilent action as
-     * createRendering followed by drawing the RenderedImage.
-     *
-     * @param g2d The Graphics2D to draw to.
-     * @return true if the paint call succeeded, false if
-     *         for some reason the paint failed (in which
-     *         case a createRendering should be used).
-     */
-    @Override
-    public boolean paintRable(Graphics2D g2d) {
-        // This is a bit of a hack to implement the suggestion of SVG
-        // specification that if the last operation in a filter chain
-        // is a SRC_OVER composite and the source is SourceGraphic it
-        // should be rendered directly to the canvas (by passing
-        // filterRes).  We are actually much more aggressive in
-        // implementing this suggestion since we will bypass filterRes
-        // for all the trailing elements in a SRC_OVER composite that
-        // can be drawn directly to the canvas.
+		// This optimization only apply if we are using
+		// SrcOver. Otherwise things break...
+		Composite c = g2d.getComposite();
+		if (!SVGComposite.OVER.equals(c))
+			return false;
 
-        // System.out.println("Calling FilterResRable paintRable");
+		Filter src = getSource();
+		return distributeAcross(src, g2d);
+	}
 
-        // This optimization only apply if we are using
-        // SrcOver.  Otherwise things break...
-        Composite c = g2d.getComposite();
-        if (!SVGComposite.OVER.equals(c))
-            return false;
+	/**
+	 * Cached Rendered image at filterRes.
+	 */
+	Reference<RenderedImage> resRed = null;
+	float resScale = 0;
 
-        Filter src = getSource();
-        return distributeAcross(src, g2d);
-    }
+	private float getResScale() {
+		return resScale;
+	}
 
-    /**
-     * Cached Rendered image at filterRes.
-     */
-    Reference<RenderedImage> resRed = null;
-    float     resScale = 0;
+	private RenderedImage getResRed(RenderingHints hints) {
+		Rectangle2D imageRect = getBounds2D();
+		double resScaleX = getFilterResolutionX() / imageRect.getWidth();
+		double resScaleY = getFilterResolutionY() / imageRect.getHeight();
 
-    private float getResScale() {
-        return resScale;
-    }
+		// System.out.println("filterRes X " + filterResolutionX +
+		// " Y : " + filterResolutionY);
 
-    private RenderedImage getResRed(RenderingHints hints) {
-        Rectangle2D imageRect = getBounds2D();
-        double resScaleX = getFilterResolutionX()/imageRect.getWidth();
-        double resScaleY = getFilterResolutionY()/imageRect.getHeight();
+		float resScale = (float) Math.min(resScaleX, resScaleY);
 
+		RenderedImage ret;
+		if (resScale == this.resScale) {
+			// System.out.println("Matched");
+			ret = resRed.get();
+			if (ret != null)
+				return ret;
+		}
 
-        // System.out.println("filterRes X " + filterResolutionX +
-        //                    " Y : " + filterResolutionY);
+		AffineTransform resUsr2Dev;
+		resUsr2Dev = AffineTransform.getScaleInstance(resScale, resScale);
 
-        float resScale = (float)Math.min(resScaleX, resScaleY);
+		//
+		// Create a new RenderingContext
+		//
+		RenderContext newRC = new RenderContext(resUsr2Dev, null, hints);
 
-        RenderedImage ret;
-        if (resScale == this.resScale) {
-            // System.out.println("Matched");
-            ret = resRed.get();
-            if (ret != null)
-                return ret;
-        }
+		ret = getSource().createRendering(newRC);
 
-        AffineTransform resUsr2Dev;
-        resUsr2Dev = AffineTransform.getScaleInstance(resScale, resScale);
+		// This is probably justified since the whole reason to use
+		// The filterRes attribute is because the filter chain is
+		// expensive, otherwise you should let it evaluate at
+		// screen resolution always - right?
+		ret = new TileCacheRed(GraphicsUtil.wrap(ret));
+		this.resScale = resScale;
+		this.resRed = new SoftReference<>(ret);
 
-        //
-        // Create a new RenderingContext
-        //
-        RenderContext newRC = new RenderContext(resUsr2Dev, null, hints);
+		return ret;
+	}
 
-        ret = getSource().createRendering(newRC);
+	/**
+	 *
+	 */
+	@Override
+	public RenderedImage createRendering(RenderContext renderContext) {
+		// Get user space to device space transform
+		AffineTransform usr2dev = renderContext.getTransform();
+		if (usr2dev == null) {
+			usr2dev = new AffineTransform();
+		}
 
-        // This is probably justified since the whole reason to use
-        // The filterRes attribute is because the filter chain is
-        // expensive, otherwise you should let it evaluate at
-        // screen resolution always - right?
-        ret = new TileCacheRed(GraphicsUtil.wrap(ret));
-        this.resScale = resScale;
-        this.resRed   = new SoftReference<>(ret);
+		RenderingHints hints = renderContext.getRenderingHints();
 
-        return ret;
-    }
+		// As per specification, a value of zero for the
+		// x-axis or y-axis causes the filter to produce
+		// nothing.
+		// The processing is done as follows:
+		// + if the x resolution is zero, this is a no-op
+		// else compute the x scale.
+		// + if the y resolution is zero, this is a no-op
+		// else compute the y resolution from the x scale
+		// and compute the corresponding y scale.
+		// + if the y or x scale is less than one, insert
+		// an AffineRable.
+		// Else, return the source as is.
+		int filterResolutionX = getFilterResolutionX();
+		int filterResolutionY = getFilterResolutionY();
+		// System.out.println("FilterResRable: " + filterResolutionX + "x" +
+		// filterResolutionY);
 
+		if ((filterResolutionX <= 0) || (filterResolutionY == 0))
+			return null;
 
+		// Find out the renderable area
+		Rectangle2D imageRect = getBounds2D();
+		Rectangle devRect;
+		devRect = usr2dev.createTransformedShape(imageRect).getBounds();
 
-    /**
-     *
-     */
-    @Override
-    public RenderedImage createRendering(RenderContext renderContext) {
-        // Get user space to device space transform
-        AffineTransform usr2dev = renderContext.getTransform();
-        if(usr2dev == null){
-            usr2dev = new AffineTransform();
-        }
+		// Now, compare the devRect with the filter
+		// resolution hints
+		float scaleX = 1;
+		if (filterResolutionX < devRect.width)
+			scaleX = filterResolutionX / (float) devRect.width;
 
-        RenderingHints hints = renderContext.getRenderingHints();
+		float scaleY = 1;
+		if (filterResolutionY < 0)
+			scaleY = scaleX;
+		else if (filterResolutionY < devRect.height)
+			scaleY = filterResolutionY / (float) devRect.height;
 
-        // As per specification, a value of zero for the
-        // x-axis or y-axis causes the filter to produce
-        // nothing.
-        // The processing is done as follows:
-        // + if the x resolution is zero, this is a no-op
-        //   else compute the x scale.
-        // + if the y resolution is zero, this is a no-op
-        //   else compute the y resolution from the x scale
-        //   and compute the corresponding y scale.
-        // + if the y or x scale is less than one, insert
-        //   an AffineRable.
-        //   Else, return the source as is.
-        int filterResolutionX = getFilterResolutionX();
-        int filterResolutionY = getFilterResolutionY();
-        // System.out.println("FilterResRable: " + filterResolutionX + "x" +
-        //                    filterResolutionY);
+		// Only resample if either scaleX or scaleY is
+		// smaller than 1
+		if ((scaleX >= 1) && (scaleY >= 1))
+			return getSource().createRendering(renderContext);
 
-        if ((filterResolutionX <= 0) || (filterResolutionY == 0))
-            return null;
+		// System.out.println("Using Fixed Resolution...");
 
-        // Find out the renderable area
-        Rectangle2D imageRect = getBounds2D();
-        Rectangle   devRect;
-        devRect = usr2dev.createTransformedShape(imageRect).getBounds();
+		// Using fixed resolution image since we need an image larger
+		// than this.
+		RenderedImage resRed = getResRed(hints);
+		float resScale = getResScale();
 
-        // Now, compare the devRect with the filter
-        // resolution hints
-        float scaleX = 1;
-        if(filterResolutionX < devRect.width)
-            scaleX = filterResolutionX / (float)devRect.width;
+		AffineTransform residualAT;
+		residualAT = new AffineTransform(usr2dev.getScaleX() / resScale, usr2dev.getShearY() / resScale,
+				usr2dev.getShearX() / resScale, usr2dev.getScaleY() / resScale, usr2dev.getTranslateX(),
+				usr2dev.getTranslateY());
 
-        float scaleY = 1;
-        if(filterResolutionY < 0)
-            scaleY = scaleX;
-        else if(filterResolutionY < devRect.height)
-            scaleY = filterResolutionY / (float)devRect.height;
+		// org.ImageDisplay.showImage("AT: " + newUsr2Dev, result);
 
-        // Only resample if either scaleX or scaleY is
-        // smaller than 1
-        if ((scaleX >= 1) && (scaleY >= 1))
-            return getSource().createRendering(renderContext);
-
-        // System.out.println("Using Fixed Resolution...");
-
-        // Using fixed resolution image since we need an image larger
-        // than this.
-        RenderedImage resRed   = getResRed(hints);
-        float         resScale = getResScale();
-
-        AffineTransform residualAT;
-        residualAT = new AffineTransform(usr2dev.getScaleX()/resScale,
-                                         usr2dev.getShearY()/resScale,
-                                         usr2dev.getShearX()/resScale,
-                                         usr2dev.getScaleY()/resScale,
-                                         usr2dev.getTranslateX(),
-                                         usr2dev.getTranslateY());
-
-        // org.ImageDisplay.showImage("AT: " + newUsr2Dev, result);
-
-        return new AffineRed(GraphicsUtil.wrap(resRed), residualAT, hints);
-    }
+		return new AffineRed(GraphicsUtil.wrap(resRed), residualAT, hints);
+	}
 }
-

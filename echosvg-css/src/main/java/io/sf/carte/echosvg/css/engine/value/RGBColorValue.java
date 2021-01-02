@@ -30,78 +30,75 @@ import org.w3c.dom.css.CSSPrimitiveValue;
  */
 public class RGBColorValue extends AbstractValue {
 
-    /**
-     * The red component.
-     */
-    protected Value red;
+	/**
+	 * The red component.
+	 */
+	protected Value red;
 
-    /**
-     * The green component.
-     */
-    protected Value green;
+	/**
+	 * The green component.
+	 */
+	protected Value green;
 
-    /**
-     * The blue component.
-     */
-    protected Value blue;
+	/**
+	 * The blue component.
+	 */
+	protected Value blue;
 
-    /**
-     * Creates a new RGBColorValue.
-     */
-    public RGBColorValue(Value r, Value g, Value b) {
-        red = r;
-        green = g;
-        blue = b;
-    }
+	/**
+	 * Creates a new RGBColorValue.
+	 */
+	public RGBColorValue(Value r, Value g, Value b) {
+		red = r;
+		green = g;
+		blue = b;
+	}
 
-    /**
-     * The type of the value.
-     */
-    @Override
-    public short getPrimitiveType() {
-        return CSSPrimitiveValue.CSS_RGBCOLOR;
-    }
+	/**
+	 * The type of the value.
+	 */
+	@Override
+	public short getPrimitiveType() {
+		return CSSPrimitiveValue.CSS_RGBCOLOR;
+	}
 
-    /**
-     * A string representation of the current value.
-     */
-    @Override
-    public String getCssText() {
-        return "rgb(" +
-            red.getCssText() + ", " +
-            green.getCssText() + ", " +
-            blue.getCssText() + ')';
-    }
+	/**
+	 * A string representation of the current value.
+	 */
+	@Override
+	public String getCssText() {
+		return "rgb(" + red.getCssText() + ", " + green.getCssText() + ", " + blue.getCssText() + ')';
+	}
 
-    /**
-     * Implements {@link Value#getRed()}.
-     */
-    @Override
-    public Value getRed() throws DOMException {
-        return red;
-    }
+	/**
+	 * Implements {@link Value#getRed()}.
+	 */
+	@Override
+	public Value getRed() throws DOMException {
+		return red;
+	}
 
-    /**
-     * Implements {@link Value#getGreen()}.
-     */
-    @Override
-    public Value getGreen() throws DOMException {
-        return green;
-    }
+	/**
+	 * Implements {@link Value#getGreen()}.
+	 */
+	@Override
+	public Value getGreen() throws DOMException {
+		return green;
+	}
 
-    /**
-     * Implements {@link Value#getBlue()}.
-     */
-    @Override
-    public Value getBlue() throws DOMException {
-        return blue;
-    }
+	/**
+	 * Implements {@link Value#getBlue()}.
+	 */
+	@Override
+	public Value getBlue() throws DOMException {
+		return blue;
+	}
 
-    /**
-     * Returns a printable representation of the color.
-     */
-    @Override
-    public String toString() {
-        return getCssText();
-    }
+	/**
+	 * Returns a printable representation of the color.
+	 */
+	@Override
+	public String toString() {
+		return getCssText();
+	}
 }

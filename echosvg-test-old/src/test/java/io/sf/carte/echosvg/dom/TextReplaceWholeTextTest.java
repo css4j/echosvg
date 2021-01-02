@@ -29,18 +29,18 @@ import org.w3c.dom.Text;
  * @version $Id$
  */
 public class TextReplaceWholeTextTest extends DOM3Test {
-    @Override
-    public boolean runImplBasic() throws Exception {
-        Document doc = newSVGDoc();
-        Text n1 = doc.createTextNode("abc");
-        Text n2 = doc.createTextNode("def");
-        Text n3 = doc.createCDATASection("ghi");
-        doc.getDocumentElement().appendChild(n1);
-        doc.getDocumentElement().appendChild(n2);
-        doc.getDocumentElement().appendChild(n3);
-        n2.replaceWholeText("xyz");
+	@Override
+	public boolean runImplBasic() throws Exception {
+		Document doc = newSVGDoc();
+		Text n1 = doc.createTextNode("abc");
+		Text n2 = doc.createTextNode("def");
+		Text n3 = doc.createCDATASection("ghi");
+		doc.getDocumentElement().appendChild(n1);
+		doc.getDocumentElement().appendChild(n2);
+		doc.getDocumentElement().appendChild(n3);
+		n2.replaceWholeText("xyz");
 
-        return doc.getDocumentElement().getFirstChild().getNodeValue().equals("xyz")
-                && doc.getDocumentElement().getFirstChild().getNextSibling() == null;
-    }
+		return doc.getDocumentElement().getFirstChild().getNodeValue().equals("xyz")
+				&& doc.getDocumentElement().getFirstChild().getNextSibling() == null;
+	}
 }

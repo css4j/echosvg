@@ -41,124 +41,113 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class TextDecorationManager extends AbstractValueManager {
 
-    /**
-     * The identifier values.
-     */
-    protected static final StringMap values = new StringMap();
-    static {
-        values.put(CSSConstants.CSS_BLINK_VALUE,
-                   ValueConstants.BLINK_VALUE);
-        values.put(CSSConstants.CSS_LINE_THROUGH_VALUE,
-                   ValueConstants.LINE_THROUGH_VALUE);
-        values.put(CSSConstants.CSS_OVERLINE_VALUE,
-                   ValueConstants.OVERLINE_VALUE);
-        values.put(CSSConstants.CSS_UNDERLINE_VALUE,
-                   ValueConstants.UNDERLINE_VALUE);
-    }
+	/**
+	 * The identifier values.
+	 */
+	protected static final StringMap values = new StringMap();
+	static {
+		values.put(CSSConstants.CSS_BLINK_VALUE, ValueConstants.BLINK_VALUE);
+		values.put(CSSConstants.CSS_LINE_THROUGH_VALUE, ValueConstants.LINE_THROUGH_VALUE);
+		values.put(CSSConstants.CSS_OVERLINE_VALUE, ValueConstants.OVERLINE_VALUE);
+		values.put(CSSConstants.CSS_UNDERLINE_VALUE, ValueConstants.UNDERLINE_VALUE);
+	}
 
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_IDENT_LIST;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_IDENT_LIST;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_TEXT_DECORATION_PROPERTY;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_TEXT_DECORATION_PROPERTY;
+	}
 
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return ValueConstants.NONE_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return ValueConstants.NONE_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-        case IDENT:
-            if (lu.getStringValue().equalsIgnoreCase
-                (CSSConstants.CSS_NONE_VALUE)) {
-                return ValueConstants.NONE_VALUE;
-            }
-            ListValue lv = new ListValue(' ');
-            do {
-                if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
-                    String s = lu.getStringValue().toLowerCase().intern();
-                    Object obj = values.get(s);
-                    if (obj == null) {
-                        throw createInvalidIdentifierDOMException
-                            (lu.getStringValue());
-                    }
-                    lv.append((Value)obj);
-                    lu = lu.getNextLexicalUnit();
-                } else {
-                    throw createInvalidLexicalUnitDOMException
-                        (lu.getLexicalUnitType());
-                }
+		case IDENT:
+			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+				return ValueConstants.NONE_VALUE;
+			}
+			ListValue lv = new ListValue(' ');
+			do {
+				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
+					String s = lu.getStringValue().toLowerCase().intern();
+					Object obj = values.get(s);
+					if (obj == null) {
+						throw createInvalidIdentifierDOMException(lu.getStringValue());
+					}
+					lv.append((Value) obj);
+					lu = lu.getNextLexicalUnit();
+				} else {
+					throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+				}
 
-            } while (lu != null);
-            return lv;
+			} while (lu != null);
+			return lv;
 
-        default:
-            break;
-        }
-        throw createInvalidLexicalUnitDOMException
-            (lu.getLexicalUnitType());
-    }
+		default:
+			break;
+		}
+		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        if (type != CSSPrimitiveValue.CSS_IDENT) {
-            throw createInvalidStringTypeDOMException(type);
-        }
-        if (!value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-            throw createInvalidIdentifierDOMException(value);
-        }
-        return ValueConstants.NONE_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+		if (type != CSSPrimitiveValue.CSS_IDENT) {
+			throw createInvalidStringTypeDOMException(type);
+		}
+		if (!value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+			throw createInvalidIdentifierDOMException(value);
+		}
+		return ValueConstants.NONE_VALUE;
+	}
 
 }

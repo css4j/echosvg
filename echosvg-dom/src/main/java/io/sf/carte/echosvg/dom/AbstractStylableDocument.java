@@ -37,95 +37,90 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractStylableDocument extends AbstractDocument
-    implements DocumentCSS,
-               DocumentView {
+public abstract class AbstractStylableDocument extends AbstractDocument implements DocumentCSS, DocumentView {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The default view.
-     */
-    protected transient AbstractView defaultView;
+	/**
+	 * The default view.
+	 */
+	protected transient AbstractView defaultView;
 
-    /**
-     * The CSS engine.
-     */
-    protected transient CSSEngine cssEngine;
+	/**
+	 * The CSS engine.
+	 */
+	protected transient CSSEngine cssEngine;
 
+	protected AbstractStylableDocument() {
+	}
 
-    protected AbstractStylableDocument() {
-    }
+	/**
+	 * Creates a new document.
+	 */
+	protected AbstractStylableDocument(DocumentType dt, DOMImplementation impl) {
+		super(dt, impl);
+	}
 
-    /**
-     * Creates a new document.
-     */
-    protected AbstractStylableDocument(DocumentType dt,
-                                       DOMImplementation impl) {
-        super(dt, impl);
-    }
+	/**
+	 * Sets the CSS engine.
+	 */
+	public void setCSSEngine(CSSEngine ctx) {
+		cssEngine = ctx;
+	}
 
-    /**
-     * Sets the CSS engine.
-     */
-    public void setCSSEngine(CSSEngine ctx) {
-        cssEngine = ctx;
-    }
+	/**
+	 * Returns the CSS engine.
+	 */
+	public CSSEngine getCSSEngine() {
+		return cssEngine;
+	}
 
-    /**
-     * Returns the CSS engine.
-     */
-    public CSSEngine getCSSEngine() {
-        return cssEngine;
-    }
+	// DocumentStyle /////////////////////////////////////////////////////////
 
-    // DocumentStyle /////////////////////////////////////////////////////////
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.stylesheets.DocumentStyle#getStyleSheets()}.
+	 */
+	@Override
+	public StyleSheetList getStyleSheets() {
+		throw new RuntimeException(" !!! Not implemented");
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.stylesheets.DocumentStyle#getStyleSheets()}.
-     */
-    @Override
-    public StyleSheetList getStyleSheets() {
-        throw new RuntimeException(" !!! Not implemented");
-    }
+	// DocumentView ///////////////////////////////////////////////////////////
 
-    // DocumentView ///////////////////////////////////////////////////////////
+	/**
+	 * <b>DOM</b>: Implements {@link DocumentView#getDefaultView()}.
+	 * 
+	 * @return a ViewCSS object.
+	 */
+	@Override
+	public AbstractView getDefaultView() {
+		if (defaultView == null) {
+			ExtensibleDOMImplementation impl;
+			impl = (ExtensibleDOMImplementation) implementation;
+			defaultView = impl.createViewCSS(this);
+		}
+		return defaultView;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link DocumentView#getDefaultView()}.
-     * @return a ViewCSS object.
-     */
-    @Override
-    public AbstractView getDefaultView() {
-        if (defaultView == null) {
-            ExtensibleDOMImplementation impl;
-            impl = (ExtensibleDOMImplementation)implementation;
-            defaultView = impl.createViewCSS(this);
-        }
-        return defaultView;
-    }
+	/**
+	 * Clears the view CSS.
+	 */
+	public void clearViewCSS() {
+		defaultView = null;
+		if (cssEngine != null) {
+			cssEngine.dispose();
+		}
+		cssEngine = null;
+	}
 
-    /**
-     * Clears the view CSS.
-     */
-    public void clearViewCSS() {
-        defaultView = null;
-        if (cssEngine != null) {
-            cssEngine.dispose();
-        }
-        cssEngine = null;
-    }
+	// DocumentCSS ////////////////////////////////////////////////////////////
 
-    // DocumentCSS ////////////////////////////////////////////////////////////
-
-    /**
-     * <b>DOM</b>: Implements
-     * {@link DocumentCSS#getOverrideStyle(Element,String)}.
-     */
-    @Override
-    public CSSStyleDeclaration getOverrideStyle(Element elt,
-                                                String pseudoElt) {
-        throw new RuntimeException(" !!! Not implemented");
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link DocumentCSS#getOverrideStyle(Element,String)}.
+	 */
+	@Override
+	public CSSStyleDeclaration getOverrideStyle(Element elt, String pseudoElt) {
+		throw new RuntimeException(" !!! Not implemented");
+	}
 }

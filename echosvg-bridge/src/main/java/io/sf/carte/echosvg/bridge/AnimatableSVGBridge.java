@@ -34,65 +34,63 @@ import io.sf.carte.echosvg.anim.dom.SVGAnimationTargetContext;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AnimatableSVGBridge
-        extends AbstractSVGBridge
-        implements SVGAnimationTargetContext {
+public abstract class AnimatableSVGBridge extends AbstractSVGBridge implements SVGAnimationTargetContext {
 
-    /**
-     * The element that has been handled by this bridge.
-     */
-    protected Element e;
+	/**
+	 * The element that has been handled by this bridge.
+	 */
+	protected Element e;
 
-    /**
-     * The bridge context to use for dynamic updates.
-     */
-    protected BridgeContext ctx;
+	/**
+	 * The bridge context to use for dynamic updates.
+	 */
+	protected BridgeContext ctx;
 
-    /**
-     * Map of CSS property names to {@link LinkedList}s of
-     * {@link AnimationTargetListener}s.
-     */
-    protected HashMap<String, LinkedList<AnimationTargetListener>> targetListeners;
+	/**
+	 * Map of CSS property names to {@link LinkedList}s of
+	 * {@link AnimationTargetListener}s.
+	 */
+	protected HashMap<String, LinkedList<AnimationTargetListener>> targetListeners;
 
-    // SVGAnimationTargetContext /////////////////////////////////////////////
+	// SVGAnimationTargetContext /////////////////////////////////////////////
 
-    /**
-     * Adds a listener for changes to the given attribute value.
-     */
-    @Override
-    public void addTargetListener(String pn, AnimationTargetListener l) {
-        if (targetListeners == null) {
-            targetListeners = new HashMap<>();
-        }
-        LinkedList<AnimationTargetListener> ll = targetListeners.get(pn);
-        if (ll == null) {
-            ll = new LinkedList<>();
-            targetListeners.put(pn, ll);
-        }
-        ll.add(l);
-    }
+	/**
+	 * Adds a listener for changes to the given attribute value.
+	 */
+	@Override
+	public void addTargetListener(String pn, AnimationTargetListener l) {
+		if (targetListeners == null) {
+			targetListeners = new HashMap<>();
+		}
+		LinkedList<AnimationTargetListener> ll = targetListeners.get(pn);
+		if (ll == null) {
+			ll = new LinkedList<>();
+			targetListeners.put(pn, ll);
+		}
+		ll.add(l);
+	}
 
-    /**
-     * Removes a listener for changes to the given attribute value.
-     */
-    @Override
-    public void removeTargetListener(String pn, AnimationTargetListener l) {
-        LinkedList<AnimationTargetListener> ll = targetListeners.get(pn);
-        ll.remove(l);
-    }
+	/**
+	 * Removes a listener for changes to the given attribute value.
+	 */
+	@Override
+	public void removeTargetListener(String pn, AnimationTargetListener l) {
+		LinkedList<AnimationTargetListener> ll = targetListeners.get(pn);
+		ll.remove(l);
+	}
 
-    /**
-     * Fires the listeners registered for changes to the base value of the
-     * given CSS property.
-     */
-    protected void fireBaseAttributeListeners(String pn) {
-        if (targetListeners != null) {
-            LinkedList<AnimationTargetListener> ll = targetListeners.get(pn);
-            if (ll != null) {
-                for (AnimationTargetListener l : ll) {
-                    l.baseValueChanged((AnimationTarget) e, null, pn, true);
-                }
-            }
-        }
-    }
+	/**
+	 * Fires the listeners registered for changes to the base value of the given CSS
+	 * property.
+	 */
+	protected void fireBaseAttributeListeners(String pn) {
+		if (targetListeners != null) {
+			LinkedList<AnimationTargetListener> ll = targetListeners.get(pn);
+			if (ll != null) {
+				for (AnimationTargetListener l : ll) {
+					l.baseValueChanged((AnimationTarget) e, null, pn, true);
+				}
+			}
+		}
+	}
 }

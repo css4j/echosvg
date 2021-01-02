@@ -26,55 +26,51 @@ package io.sf.carte.echosvg.apps.rasterizer;
  * @version $Id$
  */
 public class SVGConverterException extends Exception {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Error code
-     */
-    protected String errorCode;
+	/**
+	 * Error code
+	 */
+	protected String errorCode;
 
-    /**
-     * Additional information about the error condition
-     */
-    protected Object[] errorInfo;
+	/**
+	 * Additional information about the error condition
+	 */
+	protected Object[] errorInfo;
 
-    /**
-     * Defines whether or not this is a fatal error condition
-     */
-    protected boolean isFatal;
+	/**
+	 * Defines whether or not this is a fatal error condition
+	 */
+	protected boolean isFatal;
 
-    public SVGConverterException(String errorCode){
-        this(errorCode, null, false);
-    }
+	public SVGConverterException(String errorCode) {
+		this(errorCode, null, false);
+	}
 
-    public SVGConverterException(String errorCode, 
-                                  Object[] errorInfo){
-        this(errorCode, errorInfo, false);
-    }
+	public SVGConverterException(String errorCode, Object[] errorInfo) {
+		this(errorCode, errorInfo, false);
+	}
 
-    public SVGConverterException(String errorCode,
-                                  Object[] errorInfo,
-                                  boolean isFatal){
-        this.errorCode = errorCode;
-        this.errorInfo = errorInfo;
-        this.isFatal = isFatal;
-    }
+	public SVGConverterException(String errorCode, Object[] errorInfo, boolean isFatal) {
+		this.errorCode = errorCode;
+		this.errorInfo = errorInfo;
+		this.isFatal = isFatal;
+	}
 
-    public SVGConverterException(String errorCode,
-                                  boolean isFatal){
-        this(errorCode, null, isFatal);
-    }
+	public SVGConverterException(String errorCode, boolean isFatal) {
+		this(errorCode, null, isFatal);
+	}
 
-    public boolean isFatal(){
-        return isFatal;
-    }
+	public boolean isFatal() {
+		return isFatal;
+	}
 
-    @Override
-    public String getMessage(){
-        return Messages.formatMessage(errorCode, errorInfo);
-    }
+	@Override
+	public String getMessage() {
+		return Messages.formatMessage(errorCode, errorInfo);
+	}
 
-    public String getErrorCode(){
-        return errorCode;
-    }
+	public String getErrorCode() {
+		return errorCode;
+	}
 }

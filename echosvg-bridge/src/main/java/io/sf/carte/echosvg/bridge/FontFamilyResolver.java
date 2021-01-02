@@ -27,23 +27,23 @@ import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
 
 public interface FontFamilyResolver {
 
-    /**
-     * Resolves a font family name into a GVTFontFamily. If the font
-     * family cannot be resolved then null will be returned.
-     *
-     * @param familyName The Font Family name to resolve
-     *
-     * @return A resolved GVTFontFamily or null if the font family could not
-     * be resolved.
-     */
-    GVTFontFamily resolve(String familyName);
+	/**
+	 * Resolves a font family name into a GVTFontFamily. If the font family cannot
+	 * be resolved then null will be returned.
+	 *
+	 * @param familyName The Font Family name to resolve
+	 *
+	 * @return A resolved GVTFontFamily or null if the font family could not be
+	 *         resolved.
+	 */
+	GVTFontFamily resolve(String familyName);
 
-    GVTFontFamily resolve(String familyName, FontFace fontFace);
+	GVTFontFamily resolve(String familyName, FontFace fontFace);
 
-    GVTFontFamily loadFont(InputStream in, FontFace fontFace) throws Exception;
+	GVTFontFamily loadFont(InputStream in, FontFace fontFace) throws Exception;
 
-    GVTFontFamily getDefault();
+	GVTFontFamily getDefault();
 
-    GVTFontFamily getFamilyThatCanDisplay(char c);
+	GVTFontFamily getFamilyThatCanDisplay(char c);
 
 }

@@ -31,41 +31,38 @@ import io.sf.carte.echosvg.anim.values.AnimatableValue;
  */
 public class SetAnimation extends AbstractAnimation {
 
-    /**
-     * The set animation value.
-     */
-    protected AnimatableValue to;
+	/**
+	 * The set animation value.
+	 */
+	protected AnimatableValue to;
 
-    /**
-     * Creates a new SetAnimation.
-     */
-    public SetAnimation(TimedElement timedElement,
-                        AnimatableElement animatableElement,
-                        AnimatableValue to) {
-        super(timedElement, animatableElement);
-        this.to = to;
-    }
+	/**
+	 * Creates a new SetAnimation.
+	 */
+	public SetAnimation(TimedElement timedElement, AnimatableElement animatableElement, AnimatableValue to) {
+		super(timedElement, animatableElement);
+		this.to = to;
+	}
 
-    /**
-     * Called when the element is sampled at the given time.
-     */
-    @Override
-    protected void sampledAt(float simpleTime, float simpleDur,
-                             int repeatIteration) {
-        if (value == null) {
-            value = to;
-            markDirty();
-        }
-    }
+	/**
+	 * Called when the element is sampled at the given time.
+	 */
+	@Override
+	protected void sampledAt(float simpleTime, float simpleDur, int repeatIteration) {
+		if (value == null) {
+			value = to;
+			markDirty();
+		}
+	}
 
-    /**
-     * Called when the element is sampled for its "last" value.
-     */
-    @Override
-    protected void sampledLastValue(int repeatIteration) {
-        if (value == null) {
-            value = to;
-            markDirty();
-        }
-    }
+	/**
+	 * Called when the element is sampled for its "last" value.
+	 */
+	@Override
+	protected void sampledLastValue(int repeatIteration) {
+		if (value == null) {
+			value = to;
+			markDirty();
+		}
+	}
 }

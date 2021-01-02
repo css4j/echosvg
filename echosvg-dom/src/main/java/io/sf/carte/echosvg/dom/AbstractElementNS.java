@@ -33,108 +33,105 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  */
 public abstract class AbstractElementNS extends AbstractElement {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * The namespace URI
-     */
-    protected String namespaceURI;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The namespace URI
+	 */
+	protected String namespaceURI;
 
-    /**
-     * Creates a new AbstractElementNS object.
-     */
-    protected AbstractElementNS() {
-    }
+	/**
+	 * Creates a new AbstractElementNS object.
+	 */
+	protected AbstractElementNS() {
+	}
 
-    /**
-     * Creates a new AbstractElementNS object.
-     * @param nsURI The element namespace URI.
-     * @param qname The element qualified name for validation purposes.
-     * @param owner The owner document.
-     * @exception DOMException
-     *    INVALID_CHARACTER_ERR: Raised if the specified qualified name 
-     *   contains an illegal character.
-     *   <br> NAMESPACE_ERR: Raised if the <code>qualifiedName</code> is 
-     *   malformed, if the <code>qualifiedName</code> has a prefix and the 
-     *   <code>namespaceURI</code> is <code>null</code> or an empty string, 
-     *   or if the <code>qualifiedName</code> has a prefix that is "xml" and 
-     *   the <code>namespaceURI</code> is different from 
-     *   "http://www.w3.org/XML/1998/namespace"  .
-     */
-    protected AbstractElementNS(String nsURI, String qname,
-                                AbstractDocument owner)
-        throws DOMException {
-        super(qname, owner);
-        if (nsURI != null && nsURI.length() == 0) {
-            nsURI = null;
-        }
-        namespaceURI = nsURI;
-        String prefix = DOMUtilities.getPrefix(qname);
-        if (prefix != null) {
-            if (nsURI == null ||
-                ("xml".equals(prefix) &&
-                 !XMLConstants.XML_NAMESPACE_URI.equals(nsURI))) {
-                throw createDOMException
-                    (DOMException.NAMESPACE_ERR,
-                     "namespace.uri",
-                     new Object[] {(int) getNodeType(),
-                                    getNodeName(),
-                                    nsURI });
-            }
-        }
-    }
+	/**
+	 * Creates a new AbstractElementNS object.
+	 * 
+	 * @param nsURI The element namespace URI.
+	 * @param qname The element qualified name for validation purposes.
+	 * @param owner The owner document.
+	 * @exception DOMException INVALID_CHARACTER_ERR: Raised if the specified
+	 *                         qualified name contains an illegal character. <br>
+	 *                         NAMESPACE_ERR: Raised if the
+	 *                         <code>qualifiedName</code> is malformed, if the
+	 *                         <code>qualifiedName</code> has a prefix and the
+	 *                         <code>namespaceURI</code> is <code>null</code> or an
+	 *                         empty string, or if the <code>qualifiedName</code>
+	 *                         has a prefix that is "xml" and the
+	 *                         <code>namespaceURI</code> is different from
+	 *                         "http://www.w3.org/XML/1998/namespace" .
+	 */
+	protected AbstractElementNS(String nsURI, String qname, AbstractDocument owner) throws DOMException {
+		super(qname, owner);
+		if (nsURI != null && nsURI.length() == 0) {
+			nsURI = null;
+		}
+		namespaceURI = nsURI;
+		String prefix = DOMUtilities.getPrefix(qname);
+		if (prefix != null) {
+			if (nsURI == null || ("xml".equals(prefix) && !XMLConstants.XML_NAMESPACE_URI.equals(nsURI))) {
+				throw createDOMException(DOMException.NAMESPACE_ERR, "namespace.uri",
+						new Object[] { (int) getNodeType(), getNodeName(), nsURI });
+			}
+		}
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
-     * @return {@link #namespaceURI}.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return namespaceURI;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
+	 * 
+	 * @return {@link #namespaceURI}.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return namespaceURI;
+	}
 
-    /**
-     * Exports this node to the given document.
-     */
-    @Override
-    protected Node export(Node n, AbstractDocument d) {
-        super.export(n, d);
-        AbstractElementNS ae = (AbstractElementNS)n;
-        ae.namespaceURI = namespaceURI;
-        return n;
-    }
+	/**
+	 * Exports this node to the given document.
+	 */
+	@Override
+	protected Node export(Node n, AbstractDocument d) {
+		super.export(n, d);
+		AbstractElementNS ae = (AbstractElementNS) n;
+		ae.namespaceURI = namespaceURI;
+		return n;
+	}
 
-    /**
-     * Deeply exports this node to the given document.
-     */
-    @Override
-    protected Node deepExport(Node n, AbstractDocument d) {
-        super.deepExport(n, d);
-        AbstractElementNS ae = (AbstractElementNS)n;
-        ae.namespaceURI = namespaceURI;
-        return n;
-    }
+	/**
+	 * Deeply exports this node to the given document.
+	 */
+	@Override
+	protected Node deepExport(Node n, AbstractDocument d) {
+		super.deepExport(n, d);
+		AbstractElementNS ae = (AbstractElementNS) n;
+		ae.namespaceURI = namespaceURI;
+		return n;
+	}
 
-    /**
-     * Copy the fields of the current node into the given node.
-     * @param n a node of the type of this.
-     */
-    @Override
-    protected Node copyInto(Node n) {
-        super.copyInto(n);
-        AbstractElementNS ae = (AbstractElementNS)n;
-        ae.namespaceURI = namespaceURI;
-        return n;
-    }
+	/**
+	 * Copy the fields of the current node into the given node.
+	 * 
+	 * @param n a node of the type of this.
+	 */
+	@Override
+	protected Node copyInto(Node n) {
+		super.copyInto(n);
+		AbstractElementNS ae = (AbstractElementNS) n;
+		ae.namespaceURI = namespaceURI;
+		return n;
+	}
 
-    /**
-     * Deeply copy the fields of the current node into the given node.
-     * @param n a node of the type of this.
-     */
-    @Override
-    protected Node deepCopyInto(Node n) {
-        super.deepCopyInto(n);
-        AbstractElementNS ae = (AbstractElementNS)n;
-        ae.namespaceURI = namespaceURI;
-        return n;
-    }
+	/**
+	 * Deeply copy the fields of the current node into the given node.
+	 * 
+	 * @param n a node of the type of this.
+	 */
+	@Override
+	protected Node deepCopyInto(Node n) {
+		super.deepCopyInto(n);
+		AbstractElementNS ae = (AbstractElementNS) n;
+		ae.namespaceURI = namespaceURI;
+		return n;
+	}
 }

@@ -22,38 +22,39 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * This class represents an object which decodes ASCII characters from
- * a stream of bytes.
+ * This class represents an object which decodes ASCII characters from a stream
+ * of bytes.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ASCIIDecoder extends AbstractCharDecoder {
-    
-    /**
-     * Creates a new ASCIIDecoder.
-     */
-    public ASCIIDecoder(InputStream is) {
-        super(is);
-    }
 
-    /**
-     * Reads the next character.
-     * @return a character or END_OF_STREAM.
-     */
-    @Override
-    public int readChar() throws IOException {
-        if (position == count) {
-            fillBuffer();
-        }
-        if (count == -1) {
-            return END_OF_STREAM;
-        }
-        int result = buffer[position++];
-        if (result < 0) {
-            charError("ASCII");
-        }
-        return result;
-    }
+	/**
+	 * Creates a new ASCIIDecoder.
+	 */
+	public ASCIIDecoder(InputStream is) {
+		super(is);
+	}
+
+	/**
+	 * Reads the next character.
+	 * 
+	 * @return a character or END_OF_STREAM.
+	 */
+	@Override
+	public int readChar() throws IOException {
+		if (position == count) {
+			fillBuffer();
+		}
+		if (count == -1) {
+			return END_OF_STREAM;
+		}
+		int result = buffer[position++];
+		if (result < 0) {
+			charError("ASCII");
+		}
+		return result;
+	}
 }

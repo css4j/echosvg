@@ -21,79 +21,82 @@ package io.sf.carte.echosvg.dom;
 import org.w3c.dom.Node;
 
 /**
- * This class implements the {@link org.w3c.dom.Node} interface with support
- * for parent and siblings.
+ * This class implements the {@link org.w3c.dom.Node} interface with support for
+ * parent and siblings.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractChildNode extends AbstractNode {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The parent node of this node.
-     */
-    protected Node parentNode;
+	/**
+	 * The parent node of this node.
+	 */
+	protected Node parentNode;
 
-    /**
-     * The previous sibling.
-     */
-    protected Node previousSibling;
+	/**
+	 * The previous sibling.
+	 */
+	protected Node previousSibling;
 
-    /**
-     * Returns the next sibling.
-     */
-    protected Node nextSibling;
+	/**
+	 * Returns the next sibling.
+	 */
+	protected Node nextSibling;
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getParentNode()}.
-     * @return {@link #parentNode}
-     */
-    @Override
-    public Node getParentNode() {
-        return parentNode;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getParentNode()}.
+	 * 
+	 * @return {@link #parentNode}
+	 */
+	@Override
+	public Node getParentNode() {
+		return parentNode;
+	}
 
-    /**
-     * Sets the parent node.
-     */
-    @Override
-    public void setParentNode(Node v) {
-        parentNode = v;
-    }
+	/**
+	 * Sets the parent node.
+	 */
+	@Override
+	public void setParentNode(Node v) {
+		parentNode = v;
+	}
 
-    /**
-     * Sets the node immediately preceding this node.
-     */
-    @Override
-    public void setPreviousSibling(Node v) {
-        previousSibling = v;
-    }
+	/**
+	 * Sets the node immediately preceding this node.
+	 */
+	@Override
+	public void setPreviousSibling(Node v) {
+		previousSibling = v;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getPreviousSibling()}.
-     * @return {@link #previousSibling}.
-     */
-    @Override
-    public Node getPreviousSibling() {
-        return previousSibling;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getPreviousSibling()}.
+	 * 
+	 * @return {@link #previousSibling}.
+	 */
+	@Override
+	public Node getPreviousSibling() {
+		return previousSibling;
+	}
 
-    /**
-     * Sets the node immediately following this node.
-     */
-    @Override
-    public void setNextSibling(Node v) {
-        nextSibling = v;
-    }
+	/**
+	 * Sets the node immediately following this node.
+	 */
+	@Override
+	public void setNextSibling(Node v) {
+		nextSibling = v;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNextSibling()}.
-     * @return {@link #nextSibling}.
-     */
-    @Override
-    public Node getNextSibling() {
-        return nextSibling;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNextSibling()}.
+	 * 
+	 * @return {@link #nextSibling}.
+	 */
+	@Override
+	public Node getNextSibling() {
+		return nextSibling;
+	}
 }

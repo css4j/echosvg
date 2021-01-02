@@ -36,95 +36,93 @@ import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
  */
 public class AWTFontFamily implements GVTFontFamily {
 
-    public static final 
-        AttributedCharacterIterator.Attribute TEXT_COMPOUND_DELIMITER =
-        GVTAttributedCharacterIterator.TextAttribute.TEXT_COMPOUND_DELIMITER;
+	public static final AttributedCharacterIterator.Attribute TEXT_COMPOUND_DELIMITER = GVTAttributedCharacterIterator.TextAttribute.TEXT_COMPOUND_DELIMITER;
 
-    protected GVTFontFace fontFace;
-    protected Font   font;
+	protected GVTFontFace fontFace;
+	protected Font font;
 
-    /**
-     * Constructs an AWTFontFamily with the specified familyName.
-     *
-     * @param fontFace The name of the font family.
-     */
-    public AWTFontFamily(GVTFontFace fontFace) {
-        this.fontFace = fontFace;
-    }
+	/**
+	 * Constructs an AWTFontFamily with the specified familyName.
+	 *
+	 * @param fontFace The name of the font family.
+	 */
+	public AWTFontFamily(GVTFontFace fontFace) {
+		this.fontFace = fontFace;
+	}
 
-    /**
-     * Constructs an AWTFontFamily with the specified familyName.
-     *
-     * @param familyName The name of the font family.
-     */
-    public AWTFontFamily(String familyName) {
-        this(new GVTFontFace(familyName));
-    }
+	/**
+	 * Constructs an AWTFontFamily with the specified familyName.
+	 *
+	 * @param familyName The name of the font family.
+	 */
+	public AWTFontFamily(String familyName) {
+		this(new GVTFontFace(familyName));
+	}
 
-    /**
-     * Constructs an AWTFontFamily with the specified familyName.
-     *
-     * @param fontFace The name of the font family.
-     */
-    public AWTFontFamily(GVTFontFace fontFace, Font font) {
-        this.fontFace = fontFace;
-        this.font     = font;
-    }
+	/**
+	 * Constructs an AWTFontFamily with the specified familyName.
+	 *
+	 * @param fontFace The name of the font family.
+	 */
+	public AWTFontFamily(GVTFontFace fontFace, Font font) {
+		this.fontFace = fontFace;
+		this.font = font;
+	}
 
-    /**
-     * Returns the font family name.
-     *
-     * @return The family name.
-     */
-    @Override
-    public String getFamilyName() {
-        return fontFace.getFamilyName();
-    }
+	/**
+	 * Returns the font family name.
+	 *
+	 * @return The family name.
+	 */
+	@Override
+	public String getFamilyName() {
+		return fontFace.getFamilyName();
+	}
 
-    /**
-     * Returns the font-face information for this font family.
-     */
-    @Override
-    public GVTFontFace getFontFace() {
-        return fontFace;
-    }
+	/**
+	 * Returns the font-face information for this font family.
+	 */
+	@Override
+	public GVTFontFace getFontFace() {
+		return fontFace;
+	}
 
-    /**
-     * Derives a GVTFont object of the correct size.
-     *
-     * @param size The required size of the derived font.
-     * @param aci  The character iterator that will be rendered using
-     *             the derived font.  
-     */
-    @Override
-    public GVTFont deriveFont(float size, AttributedCharacterIterator aci) {
-        if (font != null)
-            return new AWTGVTFont(font, size);
+	/**
+	 * Derives a GVTFont object of the correct size.
+	 *
+	 * @param size The required size of the derived font.
+	 * @param aci  The character iterator that will be rendered using the derived
+	 *             font.
+	 */
+	@Override
+	public GVTFont deriveFont(float size, AttributedCharacterIterator aci) {
+		if (font != null)
+			return new AWTGVTFont(font, size);
 
-        return deriveFont(size, aci.getAttributes());
-    }
+		return deriveFont(size, aci.getAttributes());
+	}
 
+	/**
+	 * Derives a GVTFont object of the correct size from an attribute Map.
+	 * 
+	 * @param size  The required size of the derived font.
+	 * @param attrs The Attribute Map to get Values from.
+	 */
+	@Override
+	public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) {
+		if (font != null)
+			return new AWTGVTFont(font, size);
 
-    /**
-     * Derives a GVTFont object of the correct size from an attribute Map.
-     * @param size  The required size of the derived font.
-     * @param attrs The Attribute Map to get Values from.
-     */
-    @Override
-    public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) {
-        if (font != null)
-            return new AWTGVTFont(font, size);
+		Map<Attribute, Object> fontAttributes = new HashMap<>(attrs);
+		fontAttributes.put(TextAttribute.SIZE, size);
+		fontAttributes.put(TextAttribute.FAMILY, fontFace.getFamilyName());
+		fontAttributes.remove(TEXT_COMPOUND_DELIMITER);
+		return new AWTGVTFont(fontAttributes);
+	}
 
-        Map<Attribute, Object> fontAttributes = new HashMap<>(attrs);
-        fontAttributes.put(TextAttribute.SIZE, size);
-        fontAttributes.put(TextAttribute.FAMILY, fontFace.getFamilyName());
-        fontAttributes.remove(TEXT_COMPOUND_DELIMITER);
-        return new AWTGVTFont(fontAttributes);
-    }
+	@Override
+	public boolean isComplex() {
+		return false;
+	}
 
-    @Override
-    public boolean isComplex() {
-        return false;
-    }
-     
 }

@@ -28,47 +28,47 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public class GenericComment extends AbstractComment {
-    private static final long serialVersionUID = 1L;
-    /**
-     * Is this element immutable?
-     */
-    protected boolean readonly;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Is this element immutable?
+	 */
+	protected boolean readonly;
 
-    /**
-     * Creates a new Comment object.
-     */
-    public GenericComment() {
-    }
+	/**
+	 * Creates a new Comment object.
+	 */
+	public GenericComment() {
+	}
 
-    /**
-     * Creates a new Comment object.
-     */
-    public GenericComment(String value, AbstractDocument owner) {
-        ownerDocument = owner;
-        setNodeValue(value);
-    }
+	/**
+	 * Creates a new Comment object.
+	 */
+	public GenericComment(String value, AbstractDocument owner) {
+		ownerDocument = owner;
+		setNodeValue(value);
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return readonly;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-        readonly = v;
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+		readonly = v;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new GenericComment();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new GenericComment();
+	}
 }

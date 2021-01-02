@@ -31,15 +31,12 @@ import io.sf.carte.echosvg.gvt.Marker;
  */
 public interface MarkerBridge extends Bridge {
 
-    /**
-     * Creates a <code>Marker</code> according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param markerElement the element that represents the marker
-     * @param paintedElement the element that references the marker element
-     */
-    Marker createMarker(BridgeContext ctx,
-                        Element markerElement,
-                        Element paintedElement);
+	/**
+	 * Creates a <code>Marker</code> according to the specified parameters.
+	 *
+	 * @param ctx            the bridge context to use
+	 * @param markerElement  the element that represents the marker
+	 * @param paintedElement the element that references the marker element
+	 */
+	Marker createMarker(BridgeContext ctx, Element markerElement, Element paintedElement);
 }
-

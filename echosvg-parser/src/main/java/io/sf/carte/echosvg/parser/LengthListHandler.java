@@ -19,9 +19,9 @@
 package io.sf.carte.echosvg.parser;
 
 /**
- * This interface must be implemented and then registred as the
- * handler of a <code>LengthListParser</code> instance in order to be
- * notified of parsing events.
+ * This interface must be implemented and then registred as the handler of a
+ * <code>LengthListParser</code> instance in order to be notified of parsing
+ * events.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -29,17 +29,19 @@ package io.sf.carte.echosvg.parser;
  */
 
 public interface LengthListHandler extends LengthHandler {
-    /**
-     * Invoked when the length list attribute starts.
-     * @exception ParseException if an error occures while processing the
-     *                           length list.
-     */
-    void startLengthList() throws ParseException;
+	/**
+	 * Invoked when the length list attribute starts.
+	 * 
+	 * @exception ParseException if an error occures while processing the length
+	 *                           list.
+	 */
+	void startLengthList() throws ParseException;
 
-    /**
-     * Invoked when the length attribute ends.
-     * @exception ParseException if an error occures while processing the
-     *                           length list.
-     */
-    void endLengthList() throws ParseException;
+	/**
+	 * Invoked when the length attribute ends.
+	 * 
+	 * @exception ParseException if an error occures while processing the length
+	 *                           list.
+	 */
+	void endLengthList() throws ParseException;
 }

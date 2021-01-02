@@ -28,207 +28,209 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * This class allows for the return of a proxy object quickly, while a
- * heavy weight object is constrcuted in a background Thread.  This
- * proxy object will then block if any methods are called on it that
- * require talking to the source object.
+ * This class allows for the return of a proxy object quickly, while a heavy
+ * weight object is constrcuted in a background Thread. This proxy object will
+ * then block if any methods are called on it that require talking to the source
+ * object.
  *
- * This is actually a particular instance of a very general pattern
- * this is probably best represented using the Proxy class in the
- * Reflection APIs.
+ * This is actually a particular instance of a very general pattern this is
+ * probably best represented using the Proxy class in the Reflection APIs.
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DeferRable implements Filter {
-    volatile Filter     src;
-    Rectangle2D         bounds;
-    Map<String, Object> props;
-    /**
-     * Constructor takes nothing
-     */
-    public DeferRable() {
-    }
+	volatile Filter src;
+	Rectangle2D bounds;
+	Map<String, Object> props;
 
-    /**
-     * Key method that blocks if the src has not yet been provided.
-     */
-    public synchronized Filter getSource() {
-        while (src == null) {
-            try {
-                // Wait for someone to set src.
-                wait();
-            } catch(InterruptedException ie) {
-                // Loop around again see if src is set now...
-            }
-        }
-        return src;
-    }
+	/**
+	 * Constructor takes nothing
+	 */
+	public DeferRable() {
+	}
 
-    /**
-     * Key method that sets the src.  The source can only
-     * be set once (this makes sense given the intent of the
-     * class is to stand in for a real object, so swaping that
-     * object isn't a good idea.
-     *
-     * This will wake all the threads that might be waiting for
-     * the source to be set.
-     */
-    public synchronized void setSource(Filter src) {
-        // Only let them set Source once.
-        if (this.src != null) return;
-        this.src    = src;
-        this.bounds = src.getBounds2D();
-        notifyAll();
-    }
+	/**
+	 * Key method that blocks if the src has not yet been provided.
+	 */
+	public synchronized Filter getSource() {
+		while (src == null) {
+			try {
+				// Wait for someone to set src.
+				wait();
+			} catch (InterruptedException ie) {
+				// Loop around again see if src is set now...
+			}
+		}
+		return src;
+	}
 
-    public synchronized void setBounds(Rectangle2D bounds) {
-        if (this.bounds != null) return;
-        this.bounds = bounds;
-        notifyAll();
-    }
+	/**
+	 * Key method that sets the src. The source can only be set once (this makes
+	 * sense given the intent of the class is to stand in for a real object, so
+	 * swaping that object isn't a good idea.
+	 *
+	 * This will wake all the threads that might be waiting for the source to be
+	 * set.
+	 */
+	public synchronized void setSource(Filter src) {
+		// Only let them set Source once.
+		if (this.src != null)
+			return;
+		this.src = src;
+		this.bounds = src.getBounds2D();
+		notifyAll();
+	}
 
-    public synchronized void setProperties(Map<String, Object> props) {
-        this.props = props;
-        notifyAll();
-    }
+	public synchronized void setBounds(Rectangle2D bounds) {
+		if (this.bounds != null)
+			return;
+		this.bounds = bounds;
+		notifyAll();
+	}
 
-    @Override
-    public long getTimeStamp() {
-        return getSource().getTimeStamp();
-    }
+	public synchronized void setProperties(Map<String, Object> props) {
+		this.props = props;
+		notifyAll();
+	}
 
-    @Override
-    public Vector<RenderableImage> getSources() {
-        return getSource().getSources();
-    }
+	@Override
+	public long getTimeStamp() {
+		return getSource().getTimeStamp();
+	}
 
-    /**
-     * Forward the call (blocking until source is set if need be).
-     */
-    @Override
-    public boolean isDynamic() {
-        return getSource().isDynamic();
-    }
+	@Override
+	public Vector<RenderableImage> getSources() {
+		return getSource().getSources();
+	}
 
-    /**
-     * Implement the baseclass method to call getSource() so
-     * it will block until we have a real source.
-     */
-    @Override
-    public Rectangle2D getBounds2D() {
-        synchronized(this) {
-            while ((src == null) && (bounds == null))  {
-                try {
-                    // Wait for someone to set bounds.
-                    wait();
-                }
-                catch(InterruptedException ie) {
-                    // Loop around again see if src is set now...
-                }
-            }
-        }
-        if (src != null)
-            return src.getBounds2D();
-        return bounds;
-    }
+	/**
+	 * Forward the call (blocking until source is set if need be).
+	 */
+	@Override
+	public boolean isDynamic() {
+		return getSource().isDynamic();
+	}
 
-    @Override
-    public float getMinX() {
-        return (float)getBounds2D().getX();
-    }
-    @Override
-    public float getMinY() {
-        return (float)getBounds2D().getY();
-    }
-    @Override
-    public float getWidth() {
-        return (float)getBounds2D().getWidth();
-    }
-    @Override
-    public float getHeight() {
-        return (float)getBounds2D().getHeight();
-    }
+	/**
+	 * Implement the baseclass method to call getSource() so it will block until we
+	 * have a real source.
+	 */
+	@Override
+	public Rectangle2D getBounds2D() {
+		synchronized (this) {
+			while ((src == null) && (bounds == null)) {
+				try {
+					// Wait for someone to set bounds.
+					wait();
+				} catch (InterruptedException ie) {
+					// Loop around again see if src is set now...
+				}
+			}
+		}
+		if (src != null)
+			return src.getBounds2D();
+		return bounds;
+	}
 
-    /**
-     * Forward the call (blocking until source is set if need be).
-     */
-    @Override
-    public Object getProperty(String name) {
-        synchronized (this) {
-            while ((src == null) && (props == null)) {
-                try {
-                    // Wait for someone to set src | props
-                    wait();
-                } catch(InterruptedException ie) { }
-            }
-        }
-        if (src != null)
-            return src.getProperty(name);
-        return props.get(name);
-    }
+	@Override
+	public float getMinX() {
+		return (float) getBounds2D().getX();
+	}
 
-    /**
-     * Forward the call (blocking until source is set if need be).
-     */
-    @Override
-    public String [] getPropertyNames() {
-        synchronized (this) {
-            while ((src == null) && (props == null)) {
-                try {
-                    // Wait for someone to set src | props
-                    wait();
-                } catch(InterruptedException ie) { }
-            }
-        }
-        if (src != null)
-            return src.getPropertyNames();
+	@Override
+	public float getMinY() {
+		return (float) getBounds2D().getY();
+	}
 
-        String [] ret = new String[props.size()];
-        props.keySet().toArray(ret);
-        return ret;
-    }
+	@Override
+	public float getWidth() {
+		return (float) getBounds2D().getWidth();
+	}
 
-    /**
-     * Forward the call (blocking until source is set if need be).
-     */
-    @Override
-    public RenderedImage createDefaultRendering() {
-        return getSource().createDefaultRendering();
-    }
+	@Override
+	public float getHeight() {
+		return (float) getBounds2D().getHeight();
+	}
 
-    /**
-     * Forward the call (blocking until source is set if need be).
-     */
-    @Override
-    public RenderedImage createScaledRendering(int w, int h,
-                                               RenderingHints hints) {
-        return getSource().createScaledRendering(w, h, hints);
-    }
+	/**
+	 * Forward the call (blocking until source is set if need be).
+	 */
+	@Override
+	public Object getProperty(String name) {
+		synchronized (this) {
+			while ((src == null) && (props == null)) {
+				try {
+					// Wait for someone to set src | props
+					wait();
+				} catch (InterruptedException ie) {
+				}
+			}
+		}
+		if (src != null)
+			return src.getProperty(name);
+		return props.get(name);
+	}
 
-    /**
-     * Forward the call (blocking until source is set if need be).
-     */
-    @Override
-    public RenderedImage createRendering(RenderContext rc) {
-        return getSource().createRendering(rc);
-    }
+	/**
+	 * Forward the call (blocking until source is set if need be).
+	 */
+	@Override
+	public String[] getPropertyNames() {
+		synchronized (this) {
+			while ((src == null) && (props == null)) {
+				try {
+					// Wait for someone to set src | props
+					wait();
+				} catch (InterruptedException ie) {
+				}
+			}
+		}
+		if (src != null)
+			return src.getPropertyNames();
 
-    /**
-     * Forward the call (blocking until source is set if need be).
-     */
-    @Override
-    public Shape getDependencyRegion(int srcIndex,
-                                     Rectangle2D outputRgn) {
-        return getSource().getDependencyRegion(srcIndex, outputRgn);
-    }
+		String[] ret = new String[props.size()];
+		props.keySet().toArray(ret);
+		return ret;
+	}
 
-    /**
-     * Forward the call (blocking until source is set if need be).
-     */
-    @Override
-    public Shape getDirtyRegion(int srcIndex,
-                                Rectangle2D inputRgn) {
-        return getSource().getDirtyRegion(srcIndex, inputRgn);
-    }
+	/**
+	 * Forward the call (blocking until source is set if need be).
+	 */
+	@Override
+	public RenderedImage createDefaultRendering() {
+		return getSource().createDefaultRendering();
+	}
+
+	/**
+	 * Forward the call (blocking until source is set if need be).
+	 */
+	@Override
+	public RenderedImage createScaledRendering(int w, int h, RenderingHints hints) {
+		return getSource().createScaledRendering(w, h, hints);
+	}
+
+	/**
+	 * Forward the call (blocking until source is set if need be).
+	 */
+	@Override
+	public RenderedImage createRendering(RenderContext rc) {
+		return getSource().createRendering(rc);
+	}
+
+	/**
+	 * Forward the call (blocking until source is set if need be).
+	 */
+	@Override
+	public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn) {
+		return getSource().getDependencyRegion(srcIndex, outputRgn);
+	}
+
+	/**
+	 * Forward the call (blocking until source is set if need be).
+	 */
+	@Override
+	public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn) {
+		return getSource().getDirtyRegion(srcIndex, inputRgn);
+	}
 }

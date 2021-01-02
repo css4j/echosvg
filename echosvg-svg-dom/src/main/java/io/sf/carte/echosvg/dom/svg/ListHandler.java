@@ -19,13 +19,11 @@
 package io.sf.carte.echosvg.dom.svg;
 
 /**
- * Interface that defines the functionnality
- * of a list handler for the parser of 
+ * Interface that defines the functionnality of a list handler for the parser of
  * attributes that are list.
  *
- * The attribute parser should use this interface 
- * in order to create the list representing
- * the values of the attribute.
+ * The attribute parser should use this interface in order to create the list
+ * representing the values of the attribute.
  *
  * @author <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>
  * @author For later modifications, see Git history.
@@ -33,23 +31,21 @@ package io.sf.carte.echosvg.dom.svg;
  */
 public interface ListHandler {
 
-    /**
-     * Indicates that the parser starts
-     * generating the list
-     */
-    void startList();
+	/**
+	 * Indicates that the parser starts generating the list
+	 */
+	void startList();
 
-    /**
-     * Indicates a new item to add to the list.
-     *
-     * @param item the new item to be added
-     */
-    void item(SVGItem item);
+	/**
+	 * Indicates a new item to add to the list.
+	 *
+	 * @param item the new item to be added
+	 */
+	void item(SVGItem item);
 
-    /**
-     * Indicates that the parser ends 
-     * generating the list
-     */
-    void endList();
+	/**
+	 * Indicates that the parser ends generating the list
+	 */
+	void endList();
 
 }

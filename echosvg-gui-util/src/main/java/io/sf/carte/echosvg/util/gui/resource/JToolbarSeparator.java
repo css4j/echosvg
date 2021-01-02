@@ -32,26 +32,26 @@ import javax.swing.JComponent;
  * @version $Id$
  */
 public class JToolbarSeparator extends JComponent {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new JToolbarSeparator object.
-     */
-    public JToolbarSeparator() {
-        setMaximumSize(new Dimension(15, Integer.MAX_VALUE));
-    }
+	/**
+	 * Creates a new JToolbarSeparator object.
+	 */
+	public JToolbarSeparator() {
+		setMaximumSize(new Dimension(15, Integer.MAX_VALUE));
+	}
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
 
-        Dimension size = getSize();
-        int pos = size.width / 2;
-        g.setColor(Color.gray);
-        g.drawLine(pos, 3, pos, size.height - 5);
-        g.drawLine(pos, 2, pos + 1, 2);
-        g.setColor(Color.white);
-        g.drawLine(pos + 1, 3, pos + 1, size.height - 5);
-        g.drawLine(pos, size.height - 4, pos + 1, size.height - 4);
-    }
+		Dimension size = getSize();
+		int pos = size.width / 2;
+		g.setColor(Color.gray);
+		g.drawLine(pos, 3, pos, size.height - 5);
+		g.drawLine(pos, 2, pos + 1, 2);
+		g.setColor(Color.white);
+		g.drawLine(pos + 1, 3, pos + 1, size.height - 5);
+		g.drawLine(pos, size.height - 4, pos + 1, size.height - 4);
+	}
 }

@@ -27,42 +27,39 @@ import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.filter.GraphicsNodeRable8Bit;
 
 /**
- * This interface is to be used to provide alternate ways of 
- * generating a placeholder image when the ImageTagRegistry
- * fails to handle a given reference.
+ * This interface is to be used to provide alternate ways of generating a
+ * placeholder image when the ImageTagRegistry fails to handle a given
+ * reference.
  *
  * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGBrokenLinkProvider 
-    extends    DefaultBrokenLinkProvider 
-    implements ErrorConstants {
+public class SVGBrokenLinkProvider extends DefaultBrokenLinkProvider implements ErrorConstants {
 
-    public SVGBrokenLinkProvider() {
-    }
+	public SVGBrokenLinkProvider() {
+	}
 
-    /**
-     * This method is responsible for constructing an image that will
-     * represent the missing image in the document.  This method
-     * recives information about the reason a broken link image is
-     * being requested in the <code>code</code> and <code>params</code>
-     * parameters. These parameters may be used to generate nicely
-     * localized messages for insertion into the broken link image, or
-     * for selecting the broken link image returned.
-     *
-     * @param code This is the reason the image is unavailable should
-     *             be taken from ErrorConstants.
-     * @param params This is more detailed information about
-     *        the circumstances of the failure.  */
-    @Override
-    public Filter getBrokenLinkImage(Object base, String code, 
-                                     Object[] params) {
-        String message = formatMessage(base, code, params);
-        Map<String, Object> props = new HashMap<>();
-        props.put(BROKEN_LINK_PROPERTY, message);
+	/**
+	 * This method is responsible for constructing an image that will represent the
+	 * missing image in the document. This method recives information about the
+	 * reason a broken link image is being requested in the <code>code</code> and
+	 * <code>params</code> parameters. These parameters may be used to generate
+	 * nicely localized messages for insertion into the broken link image, or for
+	 * selecting the broken link image returned.
+	 *
+	 * @param code   This is the reason the image is unavailable should be taken
+	 *               from ErrorConstants.
+	 * @param params This is more detailed information about the circumstances of
+	 *               the failure.
+	 */
+	@Override
+	public Filter getBrokenLinkImage(Object base, String code, Object[] params) {
+		String message = formatMessage(base, code, params);
+		Map<String, Object> props = new HashMap<>();
+		props.put(BROKEN_LINK_PROPERTY, message);
 
-        CompositeGraphicsNode cgn = new CompositeGraphicsNode();
-        return new GraphicsNodeRable8Bit(cgn, props);
-    }
+		CompositeGraphicsNode cgn = new CompositeGraphicsNode();
+		return new GraphicsNodeRable8Bit(cgn, props);
+	}
 }

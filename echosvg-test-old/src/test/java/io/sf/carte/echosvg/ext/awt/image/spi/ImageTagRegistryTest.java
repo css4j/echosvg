@@ -21,23 +21,23 @@ package io.sf.carte.echosvg.ext.awt.image.spi;
 import io.sf.carte.echosvg.test.AbstractTest;
 
 public class ImageTagRegistryTest extends AbstractTest {
-    @Override
-    public boolean runImplBasic() throws Exception {
-        ImageTagRegistry ir = new ImageTagRegistry();
-        // Add a new registry entry with a HIGHER priority first
-        ir.register(new AbstractRegistryEntry("Unit test", 100, "working", "application/working") {
-        });
-        // Ensure the first one is present:
-        assertTrue(ir.getRegisteredMimeTypes().contains("application/working"));
-        // Ensure the second is NOT YET present:
-        assertTrue(!ir.getRegisteredMimeTypes().contains("application/missing"));
-        // Add a new registry entry with a LOW priority later
-        ir.register(new AbstractRegistryEntry("Unit test", 1, "missing", "application/missing") {
-        });
-        // This one still works - this is expected:
-        assertTrue(ir.getRegisteredMimeTypes().contains("application/working"));
-        // The second was not added because of BATIK-1203.
-        assertTrue(ir.getRegisteredMimeTypes().contains("application/missing"));
-        return true;
-    }
+	@Override
+	public boolean runImplBasic() throws Exception {
+		ImageTagRegistry ir = new ImageTagRegistry();
+		// Add a new registry entry with a HIGHER priority first
+		ir.register(new AbstractRegistryEntry("Unit test", 100, "working", "application/working") {
+		});
+		// Ensure the first one is present:
+		assertTrue(ir.getRegisteredMimeTypes().contains("application/working"));
+		// Ensure the second is NOT YET present:
+		assertTrue(!ir.getRegisteredMimeTypes().contains("application/missing"));
+		// Add a new registry entry with a LOW priority later
+		ir.register(new AbstractRegistryEntry("Unit test", 1, "missing", "application/missing") {
+		});
+		// This one still works - this is expected:
+		assertTrue(ir.getRegisteredMimeTypes().contains("application/working"));
+		// The second was not added because of BATIK-1203.
+		assertTrue(ir.getRegisteredMimeTypes().contains("application/missing"));
+		return true;
+	}
 }

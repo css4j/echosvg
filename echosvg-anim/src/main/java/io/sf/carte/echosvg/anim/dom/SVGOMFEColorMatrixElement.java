@@ -35,136 +35,125 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFEColorMatrixElement
-    extends    SVGOMFilterPrimitiveStandardAttributes
-    implements SVGFEColorMatrixElement {
+public class SVGOMFEColorMatrixElement extends SVGOMFilterPrimitiveStandardAttributes
+		implements SVGFEColorMatrixElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
-        t.put(null, SVG_IN_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_CDATA));
-        t.put(null, SVG_TYPE_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        t.put(null, SVG_VALUES_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER_LIST));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
+				SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
+		t.put(null, SVG_IN_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_CDATA));
+		t.put(null, SVG_TYPE_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		t.put(null, SVG_VALUES_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER_LIST));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'type' attribute values.
-     */
-    protected static final String[] TYPE_VALUES = {
-        "",
-        SVG_MATRIX_VALUE,
-        SVG_SATURATE_VALUE,
-        SVG_HUE_ROTATE_VALUE,
-        SVG_LUMINANCE_TO_ALPHA_VALUE
-    };
+	/**
+	 * The 'type' attribute values.
+	 */
+	protected static final String[] TYPE_VALUES = { "", SVG_MATRIX_VALUE, SVG_SATURATE_VALUE, SVG_HUE_ROTATE_VALUE,
+			SVG_LUMINANCE_TO_ALPHA_VALUE };
 
-    /**
-     * The 'in' attribute value.
-     */
-    protected SVGOMAnimatedString in;
+	/**
+	 * The 'in' attribute value.
+	 */
+	protected SVGOMAnimatedString in;
 
-    /**
-     * The 'type' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration type;
+	/**
+	 * The 'type' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration type;
 
 //     /**
 //      * The 'values' attribute value.
 //      */
 //     protected SVGOMAnimatedNumberList values;
 
-    /**
-     * Creates a new SVGOMFEColorMatrixElement object.
-     */
-    protected SVGOMFEColorMatrixElement() {
-    }
+	/**
+	 * Creates a new SVGOMFEColorMatrixElement object.
+	 */
+	protected SVGOMFEColorMatrixElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFEColorMatrixElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFEColorMatrixElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFEColorMatrixElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFEColorMatrixElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
-        type =
-            createLiveAnimatedEnumeration
-                (null, SVG_TYPE_ATTRIBUTE, TYPE_VALUES, (short) 1);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		in = createLiveAnimatedString(null, SVG_IN_ATTRIBUTE);
+		type = createLiveAnimatedEnumeration(null, SVG_TYPE_ATTRIBUTE, TYPE_VALUES, (short) 1);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_COLOR_MATRIX_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_COLOR_MATRIX_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEColorMatrixElement#getIn1()}.
-     */
-    @Override
-    public SVGAnimatedString getIn1() {
-        return in;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEColorMatrixElement#getIn1()}.
+	 */
+	@Override
+	public SVGAnimatedString getIn1() {
+		return in;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEColorMatrixElement#getType()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getType() {
-        return type;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEColorMatrixElement#getType()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getType() {
+		return type;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEColorMatrixElement#getValues()}.
-     */
-    @Override
-    public SVGAnimatedNumberList getValues() {
-        throw new UnsupportedOperationException
-            ("SVGFEColorMatrixElement.getValues is not implemented"); // XXX
-        // return values;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEColorMatrixElement#getValues()}.
+	 */
+	@Override
+	public SVGAnimatedNumberList getValues() {
+		throw new UnsupportedOperationException("SVGFEColorMatrixElement.getValues is not implemented"); // XXX
+		// return values;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFEColorMatrixElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFEColorMatrixElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

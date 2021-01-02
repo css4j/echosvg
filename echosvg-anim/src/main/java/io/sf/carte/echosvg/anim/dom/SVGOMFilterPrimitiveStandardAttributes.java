@@ -34,156 +34,141 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class SVGOMFilterPrimitiveStandardAttributes
-    extends SVGStylableElement
-    implements SVGFilterPrimitiveStandardAttributes {
+public abstract class SVGOMFilterPrimitiveStandardAttributes extends SVGStylableElement
+		implements SVGFilterPrimitiveStandardAttributes {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
-        t.put(null, SVG_X_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_Y_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_WIDTH_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_HEIGHT_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_RESULT_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_CDATA));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
+		t.put(null, SVG_X_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_Y_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_WIDTH_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_HEIGHT_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_RESULT_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_CDATA));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'x' attribute value.
-     */
-    protected SVGOMAnimatedLength x;
+	/**
+	 * The 'x' attribute value.
+	 */
+	protected SVGOMAnimatedLength x;
 
-    /**
-     * The 'y' attribute value.
-     */
-    protected SVGOMAnimatedLength y;
+	/**
+	 * The 'y' attribute value.
+	 */
+	protected SVGOMAnimatedLength y;
 
-    /**
-     * The 'width' attribute value.
-     */
-    protected SVGOMAnimatedLength width;
+	/**
+	 * The 'width' attribute value.
+	 */
+	protected SVGOMAnimatedLength width;
 
-    /**
-     * The 'height' attribute value.
-     */
-    protected SVGOMAnimatedLength height;
+	/**
+	 * The 'height' attribute value.
+	 */
+	protected SVGOMAnimatedLength height;
 
-    /**
-     * The 'result' attribute value.
-     */
-    protected SVGOMAnimatedString result;
+	/**
+	 * The 'result' attribute value.
+	 */
+	protected SVGOMAnimatedString result;
 
-    /**
-     * Creates a new SVGOMFilterPrimitiveStandardAttributes object.
-     */
-    protected SVGOMFilterPrimitiveStandardAttributes() {
-    }
+	/**
+	 * Creates a new SVGOMFilterPrimitiveStandardAttributes object.
+	 */
+	protected SVGOMFilterPrimitiveStandardAttributes() {
+	}
 
-    /**
-     * Creates a new SVGOMFilterPrimitiveStandardAttributes object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    protected SVGOMFilterPrimitiveStandardAttributes(String prefix,
-                                                     AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFilterPrimitiveStandardAttributes object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	protected SVGOMFilterPrimitiveStandardAttributes(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        x = createLiveAnimatedLength
-            (null, SVG_X_ATTRIBUTE, SVG_FILTER_PRIMITIVE_X_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-        y = createLiveAnimatedLength
-            (null, SVG_Y_ATTRIBUTE, SVG_FILTER_PRIMITIVE_Y_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-        width =
-            createLiveAnimatedLength
-                (null, SVG_WIDTH_ATTRIBUTE,
-                 SVG_FILTER_PRIMITIVE_WIDTH_DEFAULT_VALUE,
-                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
-        height =
-            createLiveAnimatedLength
-                (null, SVG_HEIGHT_ATTRIBUTE,
-                 SVG_FILTER_PRIMITIVE_HEIGHT_DEFAULT_VALUE,
-                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
-        result = createLiveAnimatedString(null, SVG_RESULT_ATTRIBUTE);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		x = createLiveAnimatedLength(null, SVG_X_ATTRIBUTE, SVG_FILTER_PRIMITIVE_X_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
+		y = createLiveAnimatedLength(null, SVG_Y_ATTRIBUTE, SVG_FILTER_PRIMITIVE_Y_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
+		width = createLiveAnimatedLength(null, SVG_WIDTH_ATTRIBUTE, SVG_FILTER_PRIMITIVE_WIDTH_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
+		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, SVG_FILTER_PRIMITIVE_HEIGHT_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
+		result = createLiveAnimatedString(null, SVG_RESULT_ATTRIBUTE);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getX()}.
-     */
-    @Override
-    public SVGAnimatedLength getX() {
-        return x;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getX()}.
+	 */
+	@Override
+	public SVGAnimatedLength getX() {
+		return x;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getY()}.
-     */
-    @Override
-    public SVGAnimatedLength getY() {
-        return y;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getY()}.
+	 */
+	@Override
+	public SVGAnimatedLength getY() {
+		return y;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getWidth()}.
-     */
-    @Override
-    public SVGAnimatedLength getWidth() {
-        return width;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getWidth()}.
+	 */
+	@Override
+	public SVGAnimatedLength getWidth() {
+		return width;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getHeight()}.
-     */
-    @Override
-    public SVGAnimatedLength getHeight() {
-        return height;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getHeight()}.
+	 */
+	@Override
+	public SVGAnimatedLength getHeight() {
+		return height;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getResult()}.
-     */
-    @Override
-    public SVGAnimatedString getResult() {
-        return result;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes#getResult()}.
+	 */
+	@Override
+	public SVGAnimatedString getResult() {
+		return result;
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

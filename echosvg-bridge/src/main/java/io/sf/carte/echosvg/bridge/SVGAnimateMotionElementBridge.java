@@ -53,301 +53,275 @@ import io.sf.carte.echosvg.parser.PathParser;
  */
 public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 
-    /**
-     * Returns 'animateMotion'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_ANIMATE_MOTION_TAG;
-    }
+	/**
+	 * Returns 'animateMotion'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_ANIMATE_MOTION_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new SVGAnimateMotionElementBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGAnimateMotionElementBridge();
+	}
 
-    /**
-     * Creates the animation object for the animation element.
-     */
-    @Override
-    protected AbstractAnimation createAnimation(AnimationTarget target) {
-        animationType = AnimationEngine.ANIM_TYPE_OTHER;
-        attributeLocalName = "motion";
+	/**
+	 * Creates the animation object for the animation element.
+	 */
+	@Override
+	protected AbstractAnimation createAnimation(AnimationTarget target) {
+		animationType = AnimationEngine.ANIM_TYPE_OTHER;
+		attributeLocalName = "motion";
 
-        AnimatableValue from = parseLengthPair(SVG_FROM_ATTRIBUTE);
-        AnimatableValue to = parseLengthPair(SVG_TO_ATTRIBUTE);
-        AnimatableValue by = parseLengthPair(SVG_BY_ATTRIBUTE);
+		AnimatableValue from = parseLengthPair(SVG_FROM_ATTRIBUTE);
+		AnimatableValue to = parseLengthPair(SVG_TO_ATTRIBUTE);
+		AnimatableValue by = parseLengthPair(SVG_BY_ATTRIBUTE);
 
-        boolean rotateAuto = false, rotateAutoReverse = false;
-        float rotateAngle = 0;
-        short rotateAngleUnit = SVGAngle.SVG_ANGLETYPE_UNKNOWN;
-        String rotateString = element.getAttributeNS(null,
-                                                     SVG_ROTATE_ATTRIBUTE);
-        if (rotateString.length() != 0) {
-            if (rotateString.equals("auto")) {
-                rotateAuto = true;
-            } else if (rotateString.equals("auto-reverse")) {
-                rotateAuto = true;
-                rotateAutoReverse = true;
-            } else {
-                class Handler implements AngleHandler {
-                    float theAngle;
-                    short theUnit = SVGAngle.SVG_ANGLETYPE_UNSPECIFIED;
-                    @Override
-                    public void startAngle() throws ParseException {
-                    }
-                    @Override
-                    public void angleValue(float v) throws ParseException {
-                        theAngle = v;
-                    }
-                    @Override
-                    public void deg() throws ParseException {
-                        theUnit = SVGAngle.SVG_ANGLETYPE_DEG;
-                    }
-                    @Override
-                    public void grad() throws ParseException {
-                        theUnit = SVGAngle.SVG_ANGLETYPE_GRAD;
-                    }
-                    @Override
-                    public void rad() throws ParseException {
-                        theUnit = SVGAngle.SVG_ANGLETYPE_RAD;
-                    }
-                    @Override
-                    public void endAngle() throws ParseException {
-                    }
-                }
-                AngleParser ap = new AngleParser();
-                Handler h = new Handler();
-                ap.setAngleHandler(h);
-                try {
-                    ap.parse(rotateString);
-                } catch (ParseException pEx ) {
-                    throw new BridgeException
-                        (ctx, element,
-                         pEx, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
-                         new Object[] { SVG_ROTATE_ATTRIBUTE, rotateString });
-                }
-                rotateAngle = h.theAngle;
-                rotateAngleUnit = h.theUnit;
-            }
-        }
-        return new MotionAnimation(timedElement,
-                                   this,
-                                   parseCalcMode(),
-                                   parseKeyTimes(),
-                                   parseKeySplines(),
-                                   parseAdditive(),
-                                   parseAccumulate(),
-                                   parseValues(),
-                                   from,
-                                   to,
-                                   by,
-                                   parsePath(),
-                                   parseKeyPoints(),
-                                   rotateAuto,
-                                   rotateAutoReverse,
-                                   rotateAngle,
-                                   rotateAngleUnit);
-    }
+		boolean rotateAuto = false, rotateAutoReverse = false;
+		float rotateAngle = 0;
+		short rotateAngleUnit = SVGAngle.SVG_ANGLETYPE_UNKNOWN;
+		String rotateString = element.getAttributeNS(null, SVG_ROTATE_ATTRIBUTE);
+		if (rotateString.length() != 0) {
+			if (rotateString.equals("auto")) {
+				rotateAuto = true;
+			} else if (rotateString.equals("auto-reverse")) {
+				rotateAuto = true;
+				rotateAutoReverse = true;
+			} else {
+				class Handler implements AngleHandler {
+					float theAngle;
+					short theUnit = SVGAngle.SVG_ANGLETYPE_UNSPECIFIED;
 
-    /**
-     * Returns the parsed 'path' attribute (or the path from a referencing
-     * 'mpath') from the animation element.
-     */
-    protected ExtendedGeneralPath parsePath() {
-        Node n = element.getFirstChild();
-        while (n != null) {
-            if (n.getNodeType() == Node.ELEMENT_NODE
-                    && SVG_NAMESPACE_URI.equals(n.getNamespaceURI())
-                    && SVG_MPATH_TAG.equals(n.getLocalName())) {
-                String uri = XLinkSupport.getXLinkHref((Element) n);
-                Element path = ctx.getReferencedElement(element, uri);
-                if (!SVG_NAMESPACE_URI.equals(path.getNamespaceURI())
-                        || !SVG_PATH_TAG.equals(path.getLocalName())) {
-                    throw new BridgeException
-                        (ctx, element, ErrorConstants.ERR_URI_BAD_TARGET,
-                         new Object[] { uri });
-                }
-                SVGOMPathElement pathElt = (SVGOMPathElement) path;
-                AWTPathProducer app = new AWTPathProducer();
-                SVGAnimatedPathDataSupport.handlePathSegList
-                    (pathElt.getPathSegList(), app);
-                return (ExtendedGeneralPath) app.getShape();
-            }
-            n = n.getNextSibling();
-        }
-        String pathString = element.getAttributeNS(null, SVG_PATH_ATTRIBUTE);
-        if (pathString.length() == 0) {
-            return null;
-        }
-        try {
-            AWTPathProducer app = new AWTPathProducer();
-            PathParser pp = new PathParser();
-            pp.setPathHandler(app);
-            pp.parse(pathString);
-            return (ExtendedGeneralPath) app.getShape();
-        } catch (ParseException pEx ) {
-            throw new BridgeException
-                (ctx, element, pEx, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
-                 new Object[] { SVG_PATH_ATTRIBUTE, pathString });
-        }
-    }
+					@Override
+					public void startAngle() throws ParseException {
+					}
 
-    /**
-     * Returns the parsed 'keyPoints' attribute from the animation element.
-     */
-    protected float[] parseKeyPoints() {
-        String keyPointsString =
-            element.getAttributeNS(null, SVG_KEY_POINTS_ATTRIBUTE);
-        int len = keyPointsString.length();
-        if (len == 0) {
-            return null;
-        }
-        List<Float> keyPoints = new ArrayList<>(7);
-        int i = 0, start = 0, end;
-        char c;
-outer:  while (i < len) {
-            while (keyPointsString.charAt(i) == ' ') {
-                i++;
-                if (i == len) {
-                    break outer;
-                }
-            }
-            start = i++;
-            if (i != len) {
-                c = keyPointsString.charAt(i);
-                while (c != ' ' && c != ';' && c != ',') {
-                    i++;
-                    if (i == len) {
-                        break;
-                    }
-                    c = keyPointsString.charAt(i);
-                }
-            }
-            end = i++;
-            try {
-                float keyPointCoord =
-                    Float.parseFloat(keyPointsString.substring(start, end));
-                keyPoints.add(keyPointCoord);
-            } catch (NumberFormatException nfEx ) {
-                throw new BridgeException
-                    (ctx, element, nfEx, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
-                     new Object[] { SVG_KEY_POINTS_ATTRIBUTE, keyPointsString });
-            }
-        }
-        len = keyPoints.size();
-        float[] ret = new float[len];
-        for (int j = 0; j < len; j++) {
-            ret[j] = keyPoints.get(j);
-        }
-        return ret;
-    }
+					@Override
+					public void angleValue(float v) throws ParseException {
+						theAngle = v;
+					}
 
-    /**
-     * Returns the calcMode that the animation defaults to if none is specified.
-     */
-    @Override
-    protected int getDefaultCalcMode() {
-        return AbstractAnimation.CALC_MODE_PACED;
-    }
+					@Override
+					public void deg() throws ParseException {
+						theUnit = SVGAngle.SVG_ANGLETYPE_DEG;
+					}
 
-    /**
-     * Returns the parsed 'values' attribute from the animation element.
-     */
-    @Override
-    protected AnimatableValue[] parseValues() {
-        String valuesString = element.getAttributeNS(null,
-                                                     SVG_VALUES_ATTRIBUTE);
-        int len = valuesString.length();
-        if (len == 0) {
-            return null;
-        }
-        return parseValues(valuesString);
-    }
+					@Override
+					public void grad() throws ParseException {
+						theUnit = SVGAngle.SVG_ANGLETYPE_GRAD;
+					}
 
-    protected AnimatableValue[] parseValues(String s) {
-        try {
-            LengthPairListParser lplp = new LengthPairListParser();
-            LengthArrayProducer lap = new LengthArrayProducer();
-            lplp.setLengthListHandler(lap);
-            lplp.parse(s);
-            short[] types = lap.getLengthTypeArray();
-            float[] values = lap.getLengthValueArray();
-            AnimatableValue[] ret = new AnimatableValue[types.length / 2];
-            for (int i = 0; i < types.length; i += 2) {
-                float x = animationTarget.svgToUserSpace
-                    (values[i], types[i], AnimationTarget.PERCENTAGE_VIEWPORT_WIDTH);
-                float y = animationTarget.svgToUserSpace
-                    (values[i + 1], types[i + 1], AnimationTarget.PERCENTAGE_VIEWPORT_HEIGHT);
-                ret[i / 2] = new AnimatableMotionPointValue(animationTarget, x, y, 0);
-            }
-            return ret;
-        } catch (ParseException pEx ) {
-            throw new BridgeException
-                (ctx, element, pEx, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
-                 new Object[] { SVG_VALUES_ATTRIBUTE, s });
-        }
-    }
+					@Override
+					public void rad() throws ParseException {
+						theUnit = SVGAngle.SVG_ANGLETYPE_RAD;
+					}
 
-    /**
-     * Parses a single comma-separated length pair.
-     */
-    protected AnimatableValue parseLengthPair(String ln) {
-        String s = element.getAttributeNS(null, ln);
-        if (s.length() == 0) {
-            return null;
-        }
-        return parseValues(s)[0];
-    }
+					@Override
+					public void endAngle() throws ParseException {
+					}
+				}
+				AngleParser ap = new AngleParser();
+				Handler h = new Handler();
+				ap.setAngleHandler(h);
+				try {
+					ap.parse(rotateString);
+				} catch (ParseException pEx) {
+					throw new BridgeException(ctx, element, pEx, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
+							new Object[] { SVG_ROTATE_ATTRIBUTE, rotateString });
+				}
+				rotateAngle = h.theAngle;
+				rotateAngleUnit = h.theUnit;
+			}
+		}
+		return new MotionAnimation(timedElement, this, parseCalcMode(), parseKeyTimes(), parseKeySplines(),
+				parseAdditive(), parseAccumulate(), parseValues(), from, to, by, parsePath(), parseKeyPoints(),
+				rotateAuto, rotateAutoReverse, rotateAngle, rotateAngleUnit);
+	}
 
-    // AnimatableElement /////////////////////////////////////////////////////
+	/**
+	 * Returns the parsed 'path' attribute (or the path from a referencing 'mpath')
+	 * from the animation element.
+	 */
+	protected ExtendedGeneralPath parsePath() {
+		Node n = element.getFirstChild();
+		while (n != null) {
+			if (n.getNodeType() == Node.ELEMENT_NODE && SVG_NAMESPACE_URI.equals(n.getNamespaceURI())
+					&& SVG_MPATH_TAG.equals(n.getLocalName())) {
+				String uri = XLinkSupport.getXLinkHref((Element) n);
+				Element path = ctx.getReferencedElement(element, uri);
+				if (!SVG_NAMESPACE_URI.equals(path.getNamespaceURI()) || !SVG_PATH_TAG.equals(path.getLocalName())) {
+					throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+				}
+				SVGOMPathElement pathElt = (SVGOMPathElement) path;
+				AWTPathProducer app = new AWTPathProducer();
+				SVGAnimatedPathDataSupport.handlePathSegList(pathElt.getPathSegList(), app);
+				return (ExtendedGeneralPath) app.getShape();
+			}
+			n = n.getNextSibling();
+		}
+		String pathString = element.getAttributeNS(null, SVG_PATH_ATTRIBUTE);
+		if (pathString.length() == 0) {
+			return null;
+		}
+		try {
+			AWTPathProducer app = new AWTPathProducer();
+			PathParser pp = new PathParser();
+			pp.setPathHandler(app);
+			pp.parse(pathString);
+			return (ExtendedGeneralPath) app.getShape();
+		} catch (ParseException pEx) {
+			throw new BridgeException(ctx, element, pEx, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { SVG_PATH_ATTRIBUTE, pathString });
+		}
+	}
 
-    /**
-     * Returns the underlying value of the animated attribute.  Used for
-     * composition of additive animations.
-     */
-    @Override
-    public AnimatableValue getUnderlyingValue() {
-        return new AnimatableMotionPointValue(animationTarget, 0f, 0f, 0f);
-    }
+	/**
+	 * Returns the parsed 'keyPoints' attribute from the animation element.
+	 */
+	protected float[] parseKeyPoints() {
+		String keyPointsString = element.getAttributeNS(null, SVG_KEY_POINTS_ATTRIBUTE);
+		int len = keyPointsString.length();
+		if (len == 0) {
+			return null;
+		}
+		List<Float> keyPoints = new ArrayList<>(7);
+		int i = 0, start = 0, end;
+		char c;
+		outer: while (i < len) {
+			while (keyPointsString.charAt(i) == ' ') {
+				i++;
+				if (i == len) {
+					break outer;
+				}
+			}
+			start = i++;
+			if (i != len) {
+				c = keyPointsString.charAt(i);
+				while (c != ' ' && c != ';' && c != ',') {
+					i++;
+					if (i == len) {
+						break;
+					}
+					c = keyPointsString.charAt(i);
+				}
+			}
+			end = i++;
+			try {
+				float keyPointCoord = Float.parseFloat(keyPointsString.substring(start, end));
+				keyPoints.add(keyPointCoord);
+			} catch (NumberFormatException nfEx) {
+				throw new BridgeException(ctx, element, nfEx, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
+						new Object[] { SVG_KEY_POINTS_ATTRIBUTE, keyPointsString });
+			}
+		}
+		len = keyPoints.size();
+		float[] ret = new float[len];
+		for (int j = 0; j < len; j++) {
+			ret[j] = keyPoints.get(j);
+		}
+		return ret;
+	}
 
-    /**
-     * Parses the animation element's target attributes and adds it to the
-     * document's AnimationEngine.
-     */
-    @Override
-    protected void initializeAnimation() {
-        // Determine the target element.
-        String uri = XLinkSupport.getXLinkHref(element);
-        Node t;
-        if (uri.length() == 0) {
-            t = element.getParentNode();
-        } else {
-            t = ctx.getReferencedElement(element, uri);
-            if (t.getOwnerDocument() != element.getOwnerDocument()) {
-                throw new BridgeException
-                    (ctx, element, ErrorConstants.ERR_URI_BAD_TARGET,
-                     new Object[] { uri });
-            }
-        }
-        animationTarget = null;
-        if (t instanceof SVGOMElement) {
-            targetElement = (SVGOMElement) t;
-            animationTarget = targetElement;
-        }
-        if (animationTarget == null) {
-            throw new BridgeException
-                (ctx, element, ErrorConstants.ERR_URI_BAD_TARGET,
-                 new Object[] { uri });
-        }
+	/**
+	 * Returns the calcMode that the animation defaults to if none is specified.
+	 */
+	@Override
+	protected int getDefaultCalcMode() {
+		return AbstractAnimation.CALC_MODE_PACED;
+	}
 
-        // Add the animation.
-        timedElement = createTimedElement();
-        animation = createAnimation(animationTarget);
-        eng.addAnimation(animationTarget, AnimationEngine.ANIM_TYPE_OTHER,
-                         attributeNamespaceURI, attributeLocalName, animation);
-    }
+	/**
+	 * Returns the parsed 'values' attribute from the animation element.
+	 */
+	@Override
+	protected AnimatableValue[] parseValues() {
+		String valuesString = element.getAttributeNS(null, SVG_VALUES_ATTRIBUTE);
+		int len = valuesString.length();
+		if (len == 0) {
+			return null;
+		}
+		return parseValues(valuesString);
+	}
+
+	protected AnimatableValue[] parseValues(String s) {
+		try {
+			LengthPairListParser lplp = new LengthPairListParser();
+			LengthArrayProducer lap = new LengthArrayProducer();
+			lplp.setLengthListHandler(lap);
+			lplp.parse(s);
+			short[] types = lap.getLengthTypeArray();
+			float[] values = lap.getLengthValueArray();
+			AnimatableValue[] ret = new AnimatableValue[types.length / 2];
+			for (int i = 0; i < types.length; i += 2) {
+				float x = animationTarget.svgToUserSpace(values[i], types[i],
+						AnimationTarget.PERCENTAGE_VIEWPORT_WIDTH);
+				float y = animationTarget.svgToUserSpace(values[i + 1], types[i + 1],
+						AnimationTarget.PERCENTAGE_VIEWPORT_HEIGHT);
+				ret[i / 2] = new AnimatableMotionPointValue(animationTarget, x, y, 0);
+			}
+			return ret;
+		} catch (ParseException pEx) {
+			throw new BridgeException(ctx, element, pEx, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { SVG_VALUES_ATTRIBUTE, s });
+		}
+	}
+
+	/**
+	 * Parses a single comma-separated length pair.
+	 */
+	protected AnimatableValue parseLengthPair(String ln) {
+		String s = element.getAttributeNS(null, ln);
+		if (s.length() == 0) {
+			return null;
+		}
+		return parseValues(s)[0];
+	}
+
+	// AnimatableElement /////////////////////////////////////////////////////
+
+	/**
+	 * Returns the underlying value of the animated attribute. Used for composition
+	 * of additive animations.
+	 */
+	@Override
+	public AnimatableValue getUnderlyingValue() {
+		return new AnimatableMotionPointValue(animationTarget, 0f, 0f, 0f);
+	}
+
+	/**
+	 * Parses the animation element's target attributes and adds it to the
+	 * document's AnimationEngine.
+	 */
+	@Override
+	protected void initializeAnimation() {
+		// Determine the target element.
+		String uri = XLinkSupport.getXLinkHref(element);
+		Node t;
+		if (uri.length() == 0) {
+			t = element.getParentNode();
+		} else {
+			t = ctx.getReferencedElement(element, uri);
+			if (t.getOwnerDocument() != element.getOwnerDocument()) {
+				throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+			}
+		}
+		animationTarget = null;
+		if (t instanceof SVGOMElement) {
+			targetElement = (SVGOMElement) t;
+			animationTarget = targetElement;
+		}
+		if (animationTarget == null) {
+			throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+		}
+
+		// Add the animation.
+		timedElement = createTimedElement();
+		animation = createAnimation(animationTarget);
+		eng.addAnimation(animationTarget, AnimationEngine.ANIM_TYPE_OTHER, attributeNamespaceURI, attributeLocalName,
+				animation);
+	}
 }

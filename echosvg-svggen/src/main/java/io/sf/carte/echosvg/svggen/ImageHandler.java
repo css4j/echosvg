@@ -25,37 +25,33 @@ import java.awt.image.renderable.RenderableImage;
 import org.w3c.dom.Element;
 
 /**
- * This interface allows the user of the Graphics2D SVG generator
- * to decide how to handle images that it renders. For example,
- * an implementation could decide to embed JPEG/PNG encoded images
- * into SVG source document using the data protocol (RFC 1521, paragraph 5.2)
- * Another option is to save images into JPEG/PNG files and store URI
- * in SVG source. <br>
+ * This interface allows the user of the Graphics2D SVG generator to decide how
+ * to handle images that it renders. For example, an implementation could decide
+ * to embed JPEG/PNG encoded images into SVG source document using the data
+ * protocol (RFC 1521, paragraph 5.2) Another option is to save images into
+ * JPEG/PNG files and store URI in SVG source. <br>
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see             io.sf.carte.echosvg.svggen.SVGGraphics2D
+ * @see io.sf.carte.echosvg.svggen.SVGGraphics2D
  */
 public interface ImageHandler extends SVGSyntax {
-    /**
-     * The handler should set the xlink:href tag and the width and
-     * height attributes.
-     */
-    void handleImage(Image image, Element imageElement,
-                            SVGGeneratorContext generatorContext);
+	/**
+	 * The handler should set the xlink:href tag and the width and height
+	 * attributes.
+	 */
+	void handleImage(Image image, Element imageElement, SVGGeneratorContext generatorContext);
 
-    /**
-     * The handler should set the xlink:href tag and the width and
-     * height attributes.
-     */
-    void handleImage(RenderedImage image, Element imageElement,
-                            SVGGeneratorContext generatorContext);
+	/**
+	 * The handler should set the xlink:href tag and the width and height
+	 * attributes.
+	 */
+	void handleImage(RenderedImage image, Element imageElement, SVGGeneratorContext generatorContext);
 
-    /**
-     * The handler should set the xlink:href tag and the width and
-     * height attributes.
-     */
-    void handleImage(RenderableImage image, Element imageElement,
-                            SVGGeneratorContext generatorContext);
+	/**
+	 * The handler should set the xlink:href tag and the width and height
+	 * attributes.
+	 */
+	void handleImage(RenderableImage image, Element imageElement, SVGGeneratorContext generatorContext);
 }

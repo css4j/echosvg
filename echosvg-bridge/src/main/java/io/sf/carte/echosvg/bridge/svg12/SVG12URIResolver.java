@@ -30,8 +30,8 @@ import io.sf.carte.echosvg.dom.xbl.NodeXBL;
 import io.sf.carte.echosvg.dom.xbl.XBLShadowTreeElement;
 
 /**
- * A URIResolver for SVG 1.2 documents.  This is to allow resolution of
- * fragment IDs within shadow trees to work properly.
+ * A URIResolver for SVG 1.2 documents. This is to allow resolution of fragment
+ * IDs within shadow trees to work properly.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -39,51 +39,51 @@ import io.sf.carte.echosvg.dom.xbl.XBLShadowTreeElement;
  */
 public class SVG12URIResolver extends URIResolver {
 
-    /**
-     * Creates a new SVG12URIResolver object.
-     */
-    public SVG12URIResolver(SVGDocument doc, DocumentLoader dl) {
-        super(doc, dl);
-    }
+	/**
+	 * Creates a new SVG12URIResolver object.
+	 */
+	public SVG12URIResolver(SVGDocument doc, DocumentLoader dl) {
+		super(doc, dl);
+	}
 
-    /**
-     * Returns the base URI of the referer element.
-     */
-    @Override
-    protected String getRefererBaseURI(Element ref) {
-        AbstractNode aref = (AbstractNode) ref;
-        if (aref.getXblBoundElement() != null) {
-            return null;
-        }
-        return aref.getBaseURI();
-    }
+	/**
+	 * Returns the base URI of the referer element.
+	 */
+	@Override
+	protected String getRefererBaseURI(Element ref) {
+		AbstractNode aref = (AbstractNode) ref;
+		if (aref.getXblBoundElement() != null) {
+			return null;
+		}
+		return aref.getBaseURI();
+	}
 
-    /**
-     * Returns the node referenced by the given fragment identifier.
-     * This is called when the whole URI just contains a fragment identifier
-     * and there is no XML Base URI in effect.
-     * @param frag the URI fragment
-     * @param ref  the context element from which to resolve the URI fragment
-     */
-    @Override
-    protected Node getNodeByFragment(String frag, Element ref) {
-        NodeXBL refx = (NodeXBL) ref;
-        NodeXBL boundElt = (NodeXBL) refx.getXblBoundElement();
-        if (boundElt != null) {
-            XBLShadowTreeElement shadow
-                = (XBLShadowTreeElement) boundElt.getXblShadowTree();
-            Node n = shadow.getElementById(frag);
-            if (n != null) {
-                return n;
-            }
-            NodeList nl = refx.getXblDefinitions();
-            for (int i = 0; i < nl.getLength(); i++) {
-                n = nl.item(i).getOwnerDocument().getElementById(frag);
-                if (n != null) {
-                    return n;
-                }
-            }
-        }
-        return super.getNodeByFragment(frag, ref);
-    }
+	/**
+	 * Returns the node referenced by the given fragment identifier. This is called
+	 * when the whole URI just contains a fragment identifier and there is no XML
+	 * Base URI in effect.
+	 * 
+	 * @param frag the URI fragment
+	 * @param ref  the context element from which to resolve the URI fragment
+	 */
+	@Override
+	protected Node getNodeByFragment(String frag, Element ref) {
+		NodeXBL refx = (NodeXBL) ref;
+		NodeXBL boundElt = (NodeXBL) refx.getXblBoundElement();
+		if (boundElt != null) {
+			XBLShadowTreeElement shadow = (XBLShadowTreeElement) boundElt.getXblShadowTree();
+			Node n = shadow.getElementById(frag);
+			if (n != null) {
+				return n;
+			}
+			NodeList nl = refx.getXblDefinitions();
+			for (int i = 0; i < nl.getLength(); i++) {
+				n = nl.item(i).getOwnerDocument().getElementById(frag);
+				if (n != null) {
+					return n;
+				}
+			}
+		}
+		return super.getNodeByFragment(frag, ref);
+	}
 }

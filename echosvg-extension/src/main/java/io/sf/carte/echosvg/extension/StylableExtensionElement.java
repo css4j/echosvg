@@ -31,147 +31,142 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
- * This class implements the basic features an element must have in
- * order to be usable as a foreign element within an SVGOMDocument,
- * and the support for both the 'style' attribute and the style
- * attributes (ie: fill="red", ...).
+ * This class implements the basic features an element must have in order to be
+ * usable as a foreign element within an SVGOMDocument, and the support for both
+ * the 'style' attribute and the style attributes (ie: fill="red", ...).
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class StylableExtensionElement
-    extends ExtensionElement
-    implements CSSStylableElement,
-               SVGStylable {
+public abstract class StylableExtensionElement extends ExtensionElement implements CSSStylableElement, SVGStylable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The base URL.
-     */
-    protected ParsedURL cssBase;
+	/**
+	 * The base URL.
+	 */
+	protected ParsedURL cssBase;
 
-    /**
-     * The computed style map.
-     */
-    protected StyleMap computedStyleMap;
+	/**
+	 * The computed style map.
+	 */
+	protected StyleMap computedStyleMap;
 
-    /**
-     * Creates a new Element object.
-     */
-    protected StylableExtensionElement() {
-    }
+	/**
+	 * Creates a new Element object.
+	 */
+	protected StylableExtensionElement() {
+	}
 
-    /**
-     * Creates a new Element object.
-     * @param name The element name, for validation purposes.
-     * @param owner The owner document.
-     */
-    protected StylableExtensionElement(String name, AbstractDocument owner) {
-        super(name, owner);
-    }
+	/**
+	 * Creates a new Element object.
+	 * 
+	 * @param name  The element name, for validation purposes.
+	 * @param owner The owner document.
+	 */
+	protected StylableExtensionElement(String name, AbstractDocument owner) {
+		super(name, owner);
+	}
 
-    // CSSStylableElement //////////////////////////////////////////
+	// CSSStylableElement //////////////////////////////////////////
 
-    /**
-     * Returns the computed style of this element/pseudo-element.
-     */
-    @Override
-    public StyleMap getComputedStyleMap(String pseudoElement) {
-        return computedStyleMap;
-    }
+	/**
+	 * Returns the computed style of this element/pseudo-element.
+	 */
+	@Override
+	public StyleMap getComputedStyleMap(String pseudoElement) {
+		return computedStyleMap;
+	}
 
-    /**
-     * Sets the computed style of this element/pseudo-element.
-     */
-    @Override
-    public void setComputedStyleMap(String pseudoElement, StyleMap sm) {
-        computedStyleMap = sm;
-    }
+	/**
+	 * Sets the computed style of this element/pseudo-element.
+	 */
+	@Override
+	public void setComputedStyleMap(String pseudoElement, StyleMap sm) {
+		computedStyleMap = sm;
+	}
 
-    /**
-     * Returns the ID of this element.
-     */
-    @Override
-    public String getXMLId() {
-        return getAttributeNS(null, "id");
-    }
+	/**
+	 * Returns the ID of this element.
+	 */
+	@Override
+	public String getXMLId() {
+		return getAttributeNS(null, "id");
+	}
 
-    /**
-     * Returns the class of this element.
-     */
-    @Override
-    public String getCSSClass() {
-        return getAttributeNS(null, "class");
-    }
+	/**
+	 * Returns the class of this element.
+	 */
+	@Override
+	public String getCSSClass() {
+		return getAttributeNS(null, "class");
+	}
 
-    /**
-     * Returns the CSS base URL of this element.
-     */
-    @Override
-    public ParsedURL getCSSBase() {
-        if (cssBase == null) {
-            String bu = getBaseURI();
-            if (bu == null) {
-                return null;
-            }
-            cssBase = new ParsedURL(bu);
-        }
-        return cssBase;
-    }
+	/**
+	 * Returns the CSS base URL of this element.
+	 */
+	@Override
+	public ParsedURL getCSSBase() {
+		if (cssBase == null) {
+			String bu = getBaseURI();
+			if (bu == null) {
+				return null;
+			}
+			cssBase = new ParsedURL(bu);
+		}
+		return cssBase;
+	}
 
-    /**
-     * Tells whether this element is an instance of the given pseudo
-     * class.
-     */
-    @Override
-    public boolean isPseudoInstanceOf(String pseudoClass) {
-        if (pseudoClass.equals("first-child")) {
-            Node n = getPreviousSibling();
-            while (n != null && n.getNodeType() != ELEMENT_NODE) {
-                n = n.getPreviousSibling();
-            }
-            return n == null;
-        }
-        return false;
-    }
+	/**
+	 * Tells whether this element is an instance of the given pseudo class.
+	 */
+	@Override
+	public boolean isPseudoInstanceOf(String pseudoClass) {
+		if (pseudoClass.equals("first-child")) {
+			Node n = getPreviousSibling();
+			while (n != null && n.getNodeType() != ELEMENT_NODE) {
+				n = n.getPreviousSibling();
+			}
+			return n == null;
+		}
+		return false;
+	}
 
-    /**
-     * Returns the object that gives access to the underlying
-     * {@link io.sf.carte.echosvg.css.engine.StyleDeclaration} for the override
-     * style of this element.
-     */
-    @Override
-    public StyleDeclarationProvider getOverrideStyleDeclarationProvider() {
-        return null;
-    }
+	/**
+	 * Returns the object that gives access to the underlying
+	 * {@link io.sf.carte.echosvg.css.engine.StyleDeclaration} for the override
+	 * style of this element.
+	 */
+	@Override
+	public StyleDeclarationProvider getOverrideStyleDeclarationProvider() {
+		return null;
+	}
 
-    // SVGStylable //////////////////////////////////////////////////
+	// SVGStylable //////////////////////////////////////////////////
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGStylable#getStyle()}.
-     */
-    @Override
-    public CSSStyleDeclaration getStyle() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGStylable#getStyle()}.
+	 */
+	@Override
+	public CSSStyleDeclaration getStyle() {
+		throw new UnsupportedOperationException("Not implemented");
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGStylable#getPresentationAttribute(String)}.
-     */
-    @Override
-    public CSSValue getPresentationAttribute(String name) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.svg.SVGStylable#getPresentationAttribute(String)}.
+	 */
+	@Override
+	public CSSValue getPresentationAttribute(String name) {
+		throw new UnsupportedOperationException("Not implemented");
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGStylable#getClassName()}.
-     */
-    @Override
-    public SVGAnimatedString getClassName() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGStylable#getClassName()}.
+	 */
+	@Override
+	public SVGAnimatedString getClassName() {
+		throw new UnsupportedOperationException("Not implemented");
+	}
 }

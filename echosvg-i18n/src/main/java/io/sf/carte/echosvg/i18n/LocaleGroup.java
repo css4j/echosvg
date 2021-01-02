@@ -21,36 +21,36 @@ package io.sf.carte.echosvg.i18n;
 import java.util.Locale;
 
 /**
- * This class represents a group of ExtendedLocalizable objects which
- * have a shared default locale.
+ * This class represents a group of ExtendedLocalizable objects which have a
+ * shared default locale.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class LocaleGroup {
-    /**
-     * The default group.
-     */
-    public static final LocaleGroup DEFAULT = new LocaleGroup();
+	/**
+	 * The default group.
+	 */
+	public static final LocaleGroup DEFAULT = new LocaleGroup();
 
-    /**
-     * The shared Locale.
-     */
-    protected Locale locale;
+	/**
+	 * The shared Locale.
+	 */
+	protected Locale locale;
 
-    /**
-     * Sets the default locale for all the instances of ExtendedLocalizable
-     * in this group.
-     */
-    public void setLocale(Locale l) {
-        locale = l;
-    }
+	/**
+	 * Sets the default locale for all the instances of ExtendedLocalizable in this
+	 * group.
+	 */
+	public void setLocale(Locale l) {
+		locale = l;
+	}
 
-    /**
-     * Gets the current default locale in this group, or null.
-     */
-    public Locale getLocale() {
-        return locale;
-    }
+	/**
+	 * Gets the current default locale in this group, or null.
+	 */
+	public Locale getLocale() {
+		return locale;
+	}
 }

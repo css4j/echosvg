@@ -27,66 +27,65 @@ package io.sf.carte.echosvg.ext.awt.image;
  *
  * @author <a href="mailto:sheng.pei@sun.com">Sheng Pei</a>
  * @author For later modifications, see Git history.
- * @version $Id$ 
+ * @version $Id$
  */
 public class LinearTransfer implements TransferFunction {
-    /**
-     * This byte array stores the lookuptable data
-     */
-    public byte [] lutData;
+	/**
+	 * This byte array stores the lookuptable data
+	 */
+	public byte[] lutData;
 
-    /**
-     * The slope of the linear function
-     */
-    public float slope;
+	/**
+	 * The slope of the linear function
+	 */
+	public float slope;
 
-    /**
-     * The intercept of the linear function
-     */
-    public float intercept;
+	/**
+	 * The intercept of the linear function
+	 */
+	public float intercept;
 
-    /**
-     * Two floats as the input for the function
-     */
-    public LinearTransfer(float slope, float intercept){
-        this.slope = slope;
-        this.intercept = intercept;
-    }
+	/**
+	 * Two floats as the input for the function
+	 */
+	public LinearTransfer(float slope, float intercept) {
+		this.slope = slope;
+		this.intercept = intercept;
+	}
 
-    /*
-     * This method will build the lut data. Each entry's
-     * value is in form of "slope*C+intercept"
-     */
-    private void buildLutData(){
-        lutData = new byte [256];
-        int j, value;
-        float scaledInt = (intercept*255f)+0.5f;
-        for (j=0; j<=255; j++){
-            value = (int)(slope*j+scaledInt);
-            if(value < 0){
-                value = 0;
-            }
-            else if(value > 255){
-                value = 255;
-            }
-            lutData[j] = (byte)(0xff & value);
-        }
+	/*
+	 * This method will build the lut data. Each entry's value is in form of
+	 * "slope*C+intercept"
+	 */
+	private void buildLutData() {
+		lutData = new byte[256];
+		int j, value;
+		float scaledInt = (intercept * 255f) + 0.5f;
+		for (j = 0; j <= 255; j++) {
+			value = (int) (slope * j + scaledInt);
+			if (value < 0) {
+				value = 0;
+			} else if (value > 255) {
+				value = 255;
+			}
+			lutData[j] = (byte) (0xff & value);
+		}
 
-        /*System.out.println("Linear : " + slope + " / " + intercept);
-        for(j=0; j<=255; j++){
-            System.out.print("[" + j + "] = " + (0xff & lutData[j]) + " ");
-        }
+		/*
+		 * System.out.println("Linear : " + slope + " / " + intercept); for(j=0; j<=255;
+		 * j++){ System.out.print("[" + j + "] = " + (0xff & lutData[j]) + " "); }
+		 * 
+		 * System.out.println();
+		 */
+	}
 
-        System.out.println();*/
-    }
-
-    /**
-     * This method will return the lut data in order
-     * to construct a LookUpTable object
-     */
-    @Override
-    public byte [] getLookupTable(){
-        buildLutData();
-        return lutData;
-    }
+	/**
+	 * This method will return the lut data in order to construct a LookUpTable
+	 * object
+	 */
+	@Override
+	public byte[] getLookupTable() {
+		buildLutData();
+		return lutData;
+	}
 }

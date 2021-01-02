@@ -22,7 +22,6 @@ package io.sf.carte.echosvg.extension.svg;
 import io.sf.carte.echosvg.bridge.TextNode;
 import io.sf.carte.echosvg.bridge.TextPainter;
 
-
 /**
  * One line Class Desc
  *
@@ -32,18 +31,18 @@ import io.sf.carte.echosvg.bridge.TextPainter;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class FlowExtTextNode extends TextNode{
+public class FlowExtTextNode extends TextNode {
 
-    public FlowExtTextNode() {
-        textPainter = FlowExtTextPainter.getInstance();
-    }
+	public FlowExtTextNode() {
+		textPainter = FlowExtTextPainter.getInstance();
+	}
 
-    @Override
-    public void setTextPainter(TextPainter textPainter) {
-        if (textPainter == null)
-            this.textPainter = FlowExtTextPainter.getInstance();
-        else
-            this.textPainter = textPainter;
-    }
+	@Override
+	public void setTextPainter(TextPainter textPainter) {
+		if (textPainter == null)
+			this.textPainter = FlowExtTextPainter.getInstance();
+		else
+			this.textPainter = textPainter;
+	}
 
 }

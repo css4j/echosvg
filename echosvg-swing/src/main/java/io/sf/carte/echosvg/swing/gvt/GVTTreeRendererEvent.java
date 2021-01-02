@@ -22,8 +22,8 @@ import java.awt.image.BufferedImage;
 import java.util.EventObject;
 
 /**
- * This class represents an event which indicate an event originated
- * from a GVTTreeRenderer instance.
+ * This class represents an event which indicate an event originated from a
+ * GVTTreeRenderer instance.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -31,27 +31,27 @@ import java.util.EventObject;
  */
 public class GVTTreeRendererEvent extends EventObject {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * The buffered image.
-     */
-    protected BufferedImage image;
-    
-    /**
-     * Creates a new GVTTreeRendererEvent.
-     * @param source the object that originated the event, ie. the
-     *               GVTTreeRenderer.
-     * @param bi the image to paint.
-     */
-    public GVTTreeRendererEvent(Object source, BufferedImage bi) {
-        super(source);
-        image = bi;
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The buffered image.
+	 */
+	protected BufferedImage image;
 
-    /**
-     * Returns the image to display, or null if the rendering failed.
-     */
-    public BufferedImage getImage() {
-        return image;
-    }
+	/**
+	 * Creates a new GVTTreeRendererEvent.
+	 * 
+	 * @param source the object that originated the event, ie. the GVTTreeRenderer.
+	 * @param bi     the image to paint.
+	 */
+	public GVTTreeRendererEvent(Object source, BufferedImage bi) {
+		super(source);
+		image = bi;
+	}
+
+	/**
+	 * Returns the image to display, or null if the rendering failed.
+	 */
+	public BufferedImage getImage() {
+		return image;
+	}
 }

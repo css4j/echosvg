@@ -31,50 +31,51 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class GraphicsNodeEvent extends EventObject {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /** Indicates whether or not this event is consumed. */
-    private boolean consumed = false;
+	/** Indicates whether or not this event is consumed. */
+	private boolean consumed = false;
 
-    /** The ID of this event. */
-    protected int id;
+	/** The ID of this event. */
+	protected int id;
 
-    /**
-     * Constructs a new graphics node event with the specified source and ID.
-     * @param source the graphics node where the event originated
-     * @param id the id of this event
-     */
-    public GraphicsNodeEvent(GraphicsNode source, int id) {
-        super(source);
-        this.id = id;
-    }
+	/**
+	 * Constructs a new graphics node event with the specified source and ID.
+	 * 
+	 * @param source the graphics node where the event originated
+	 * @param id     the id of this event
+	 */
+	public GraphicsNodeEvent(GraphicsNode source, int id) {
+		super(source);
+		this.id = id;
+	}
 
-    /**
-     * Returns the ID of this event.
-     */
-    public int getID() {
-        return id;
-    }
+	/**
+	 * Returns the ID of this event.
+	 */
+	public int getID() {
+		return id;
+	}
 
-    /**
-     * Returns the graphics node where the event is originated.
-     */
-    public GraphicsNode getGraphicsNode() {
-        return (GraphicsNode) source;
-    }
+	/**
+	 * Returns the graphics node where the event is originated.
+	 */
+	public GraphicsNode getGraphicsNode() {
+		return (GraphicsNode) source;
+	}
 
-    /**
-     * Consumes this event so that it will not be processed
-     * in the default manner by the source which originated it.
-     */
-    public void consume() {
-        consumed = true;
-    }
+	/**
+	 * Consumes this event so that it will not be processed in the default manner by
+	 * the source which originated it.
+	 */
+	public void consume() {
+		consumed = true;
+	}
 
-    /**
-     * Returns whether or not this event has been consumed.
-     */
-    public boolean isConsumed() {
-        return consumed;
-    }
+	/**
+	 * Returns whether or not this event has been consumed.
+	 */
+	public boolean isConsumed() {
+		return consumed;
+	}
 }

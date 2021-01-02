@@ -27,29 +27,29 @@ package io.sf.carte.echosvg.swing.gvt;
  */
 public interface GVTTreeRendererListener {
 
-    /**
-     * Called when a rendering is in its preparing phase.
-     */
-    void gvtRenderingPrepare(GVTTreeRendererEvent e);
+	/**
+	 * Called when a rendering is in its preparing phase.
+	 */
+	void gvtRenderingPrepare(GVTTreeRendererEvent e);
 
-    /**
-     * Called when a rendering started.
-     */
-    void gvtRenderingStarted(GVTTreeRendererEvent e);
+	/**
+	 * Called when a rendering started.
+	 */
+	void gvtRenderingStarted(GVTTreeRendererEvent e);
 
-    /**
-     * Called when a rendering was completed.
-     */
-    void gvtRenderingCompleted(GVTTreeRendererEvent e);
+	/**
+	 * Called when a rendering was completed.
+	 */
+	void gvtRenderingCompleted(GVTTreeRendererEvent e);
 
-    /**
-     * Called when a rendering was cancelled.
-     */
-    void gvtRenderingCancelled(GVTTreeRendererEvent e);
+	/**
+	 * Called when a rendering was cancelled.
+	 */
+	void gvtRenderingCancelled(GVTTreeRendererEvent e);
 
-    /**
-     * Called when a rendering failed.
-     */
-    void gvtRenderingFailed(GVTTreeRendererEvent e);
+	/**
+	 * Called when a rendering failed.
+	 */
+	void gvtRenderingFailed(GVTTreeRendererEvent e);
 
 }

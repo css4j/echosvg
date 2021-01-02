@@ -35,189 +35,164 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFETurbulenceElement
-    extends    SVGOMFilterPrimitiveStandardAttributes
-    implements SVGFETurbulenceElement {
+public class SVGOMFETurbulenceElement extends SVGOMFilterPrimitiveStandardAttributes implements SVGFETurbulenceElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
-        t.put(null, SVG_BASE_FREQUENCY_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
-        t.put(null, SVG_NUM_OCTAVES_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_INTEGER));
-        t.put(null, SVG_SEED_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_STITCH_TILES_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        t.put(null, SVG_TYPE_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
+				SVGOMFilterPrimitiveStandardAttributes.xmlTraitInformation);
+		t.put(null, SVG_BASE_FREQUENCY_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER_OPTIONAL_NUMBER));
+		t.put(null, SVG_NUM_OCTAVES_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_INTEGER));
+		t.put(null, SVG_SEED_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_STITCH_TILES_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		t.put(null, SVG_TYPE_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'stitchTiles' attribute values.
-     */
-    protected static final String[] STITCH_TILES_VALUES = {
-        "",
-        SVG_STITCH_VALUE,
-        SVG_NO_STITCH_VALUE
-    };
+	/**
+	 * The 'stitchTiles' attribute values.
+	 */
+	protected static final String[] STITCH_TILES_VALUES = { "", SVG_STITCH_VALUE, SVG_NO_STITCH_VALUE };
 
-    /**
-     * The 'type' attribute values.
-     */
-    protected static final String[] TYPE_VALUES = {
-        "",
-        SVG_FRACTAL_NOISE_VALUE,
-        SVG_TURBULENCE_VALUE
-    };
+	/**
+	 * The 'type' attribute values.
+	 */
+	protected static final String[] TYPE_VALUES = { "", SVG_FRACTAL_NOISE_VALUE, SVG_TURBULENCE_VALUE };
 
-    /**
-     * The 'numOctaves' attribute value.
-     */
-    protected SVGOMAnimatedInteger numOctaves;
+	/**
+	 * The 'numOctaves' attribute value.
+	 */
+	protected SVGOMAnimatedInteger numOctaves;
 
-    /**
-     * The 'seed' attribute value.
-     */
-    protected SVGOMAnimatedNumber seed;
+	/**
+	 * The 'seed' attribute value.
+	 */
+	protected SVGOMAnimatedNumber seed;
 
-    /**
-     * The 'stitchTiles' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration stitchTiles;
+	/**
+	 * The 'stitchTiles' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration stitchTiles;
 
-    /**
-     * The 'type' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration type;
+	/**
+	 * The 'type' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration type;
 
-    /**
-     * Creates a new SVGOMFETurbulence object.
-     */
-    protected SVGOMFETurbulenceElement() {
-    }
+	/**
+	 * Creates a new SVGOMFETurbulence object.
+	 */
+	protected SVGOMFETurbulenceElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFETurbulenceElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFETurbulenceElement(String prefix,
-                                    AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFETurbulenceElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFETurbulenceElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        numOctaves =
-            createLiveAnimatedInteger(null, SVG_NUM_OCTAVES_ATTRIBUTE, 1);
-        seed = createLiveAnimatedNumber(null, SVG_SEED_ATTRIBUTE, 0f);
-        stitchTiles =
-            createLiveAnimatedEnumeration
-                (null, SVG_STITCH_TILES_ATTRIBUTE, STITCH_TILES_VALUES,
-                 (short) 2);
-        type =
-            createLiveAnimatedEnumeration
-                (null, SVG_TYPE_ATTRIBUTE, TYPE_VALUES, (short) 2);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		numOctaves = createLiveAnimatedInteger(null, SVG_NUM_OCTAVES_ATTRIBUTE, 1);
+		seed = createLiveAnimatedNumber(null, SVG_SEED_ATTRIBUTE, 0f);
+		stitchTiles = createLiveAnimatedEnumeration(null, SVG_STITCH_TILES_ATTRIBUTE, STITCH_TILES_VALUES, (short) 2);
+		type = createLiveAnimatedEnumeration(null, SVG_TYPE_ATTRIBUTE, TYPE_VALUES, (short) 2);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_TURBULENCE_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_TURBULENCE_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGFETurbulenceElement#getBaseFrequencyX()}.
-     */
-    @Override
-    public SVGAnimatedNumber getBaseFrequencyX() {
-        throw new UnsupportedOperationException
-            ("SVGFETurbulenceElement.getBaseFrequencyX is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getBaseFrequencyX()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getBaseFrequencyX() {
+		throw new UnsupportedOperationException("SVGFETurbulenceElement.getBaseFrequencyX is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGFETurbulenceElement#getBaseFrequencyY()}.
-     */
-    @Override
-    public SVGAnimatedNumber getBaseFrequencyY() {
-        throw new UnsupportedOperationException
-            ("SVGFETurbulenceElement.getBaseFrequencyY is not implemented"); // XXX
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getBaseFrequencyY()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getBaseFrequencyY() {
+		throw new UnsupportedOperationException("SVGFETurbulenceElement.getBaseFrequencyY is not implemented"); // XXX
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getNumOctaves()}.
-     */
-    @Override
-    public SVGAnimatedInteger getNumOctaves() {
-        return numOctaves;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getNumOctaves()}.
+	 */
+	@Override
+	public SVGAnimatedInteger getNumOctaves() {
+		return numOctaves;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getSeed()}.
-     */
-    @Override
-    public SVGAnimatedNumber getSeed() {
-        return seed;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getSeed()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getSeed() {
+		return seed;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getStitchTiles()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getStitchTiles() {
-        return stitchTiles;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getStitchTiles()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getStitchTiles() {
+		return stitchTiles;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getType()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getType() {
-        return type;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFETurbulenceElement#getType()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getType() {
+		return type;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFETurbulenceElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFETurbulenceElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 
-    // AnimationTarget ///////////////////////////////////////////////////////
+	// AnimationTarget ///////////////////////////////////////////////////////
 
 // XXX TBD
 //     /**

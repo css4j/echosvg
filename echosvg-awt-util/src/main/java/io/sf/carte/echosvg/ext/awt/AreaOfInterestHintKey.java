@@ -31,15 +31,16 @@ import java.awt.Shape;
  */
 final class AreaOfInterestHintKey extends RenderingHints.Key {
 
-    AreaOfInterestHintKey(int number) { super(number); }
+	AreaOfInterestHintKey(int number) {
+		super(number);
+	}
 
-    @Override
-    public boolean isCompatibleValue(Object val) {
-        boolean isCompatible = true;
-        if ((val != null) && !(val instanceof Shape)) {
-            isCompatible = false;
-        }
-        return isCompatible;
-    }
+	@Override
+	public boolean isCompatibleValue(Object val) {
+		boolean isCompatible = true;
+		if ((val != null) && !(val instanceof Shape)) {
+			isCompatible = false;
+		}
+		return isCompatible;
+	}
 }
-

@@ -31,50 +31,56 @@ import org.w3c.dom.events.EventListener;
  * @version $Id$
  */
 public class EventTargetAddEventListenerNSTest extends DOM3Test {
-    static class Listener1 implements EventListener {
-        int count = 0;
-        @Override
-        public void handleEvent(Event e) {
-            count++;
-        }
-        int getCount() {
-            int c = count;
-            count = 0;
-            return c;
-        }
-    }
-    static class Listener2 implements EventListener {
-        int count = 0;
-        @Override
-        public void handleEvent(Event e) {
-            count++;
-            e.stopPropagation();
-        }
-        int getCount() {
-            int c = count;
-            count = 0;
-            return c;
-        }
-    }
-    @Override
-    public boolean runImplBasic() throws Exception {
-        Listener1 l1 = new Listener1();
-        Listener2 l2 = new Listener2();
+	static class Listener1 implements EventListener {
+		int count = 0;
 
-        Document doc = newDoc();
-        Element e = doc.createElementNS(null, "test");
-        AbstractNode et = (AbstractNode) e;
-        doc.appendChild(e);
-        et.addEventListenerNS(XML_EVENTS_NAMESPACE_URI, "DOMAttrModified", l1, false, null);
-        et.addEventListenerNS(null, "DOMAttrModified", l1, false, null);
-        e.setAttributeNS(null, "test", "abc");
-        boolean pass = l1.getCount() == 2;
-        et.addEventListenerNS(XML_EVENTS_NAMESPACE_URI, "DOMAttrModified", l2, false, "g1");
-        et.addEventListenerNS(null, "DOMAttrModified", l2, false, "g1");
-        e.setAttributeNS(null, "test", "def");
+		@Override
+		public void handleEvent(Event e) {
+			count++;
+		}
 
-        pass = pass && l2.getCount() == 2;
+		int getCount() {
+			int c = count;
+			count = 0;
+			return c;
+		}
+	}
 
-        return pass;
-    }
+	static class Listener2 implements EventListener {
+		int count = 0;
+
+		@Override
+		public void handleEvent(Event e) {
+			count++;
+			e.stopPropagation();
+		}
+
+		int getCount() {
+			int c = count;
+			count = 0;
+			return c;
+		}
+	}
+
+	@Override
+	public boolean runImplBasic() throws Exception {
+		Listener1 l1 = new Listener1();
+		Listener2 l2 = new Listener2();
+
+		Document doc = newDoc();
+		Element e = doc.createElementNS(null, "test");
+		AbstractNode et = (AbstractNode) e;
+		doc.appendChild(e);
+		et.addEventListenerNS(XML_EVENTS_NAMESPACE_URI, "DOMAttrModified", l1, false, null);
+		et.addEventListenerNS(null, "DOMAttrModified", l1, false, null);
+		e.setAttributeNS(null, "test", "abc");
+		boolean pass = l1.getCount() == 2;
+		et.addEventListenerNS(XML_EVENTS_NAMESPACE_URI, "DOMAttrModified", l2, false, "g1");
+		et.addEventListenerNS(null, "DOMAttrModified", l2, false, "g1");
+		e.setAttributeNS(null, "test", "def");
+
+		pass = pass && l2.getCount() == 2;
+
+		return pass;
+	}
 }

@@ -22,8 +22,7 @@ package io.sf.carte.echosvg.css.dom;
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 
 /**
- * Helper class to simplify writing the unitTesting.xml file for 
- * CSS DOM Tests.
+ * Helper class to simplify writing the unitTesting.xml file for CSS DOM Tests.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -31,9 +30,9 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
  */
 
 public class EcmaScriptCSSDOMTest extends SelfContainedSVGOnLoadTest {
-    @Override
-    public void setId(String id){
-        super.setId(id);
-        svgURL = resolveURL("test-resources/io/sf/carte/echosvg/css/dom/" + id + ".svg");
-    }
+	@Override
+	public void setId(String id) {
+		super.setId(id);
+		svgURL = resolveURL("test-resources/io/sf/carte/echosvg/css/dom/" + id + ".svg");
+	}
 }

@@ -27,14 +27,13 @@ package io.sf.carte.echosvg.css.engine;
  */
 public interface Rule {
 
-    /**
-     * Returns a constant identifying the rule type.
-     */
-    short getType();
+	/**
+	 * Returns a constant identifying the rule type.
+	 */
+	short getType();
 
-
-    /**
-     * Returns a printable representation of this rule.
-     */
-    String toString(CSSEngine eng);
+	/**
+	 * Returns a printable representation of this rule.
+	 */
+	String toString(CSSEngine eng);
 }

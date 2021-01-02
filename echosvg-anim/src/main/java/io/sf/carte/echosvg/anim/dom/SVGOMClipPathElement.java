@@ -33,102 +33,94 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMClipPathElement
-    extends    SVGGraphicsElement
-    implements SVGClipPathElement {
+public class SVGOMClipPathElement extends SVGGraphicsElement implements SVGClipPathElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGGraphicsElement.xmlTraitInformation);
-        t.put(null, SVG_CLIP_PATH_UNITS_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_IDENT));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGGraphicsElement.xmlTraitInformation);
+		t.put(null, SVG_CLIP_PATH_UNITS_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The clipPathUnits values.
-     */
-    protected static final String[] CLIP_PATH_UNITS_VALUES = {
-        "",
-        SVG_USER_SPACE_ON_USE_VALUE,
-        SVG_OBJECT_BOUNDING_BOX_VALUE
-    };
+	/**
+	 * The clipPathUnits values.
+	 */
+	protected static final String[] CLIP_PATH_UNITS_VALUES = { "", SVG_USER_SPACE_ON_USE_VALUE,
+			SVG_OBJECT_BOUNDING_BOX_VALUE };
 
-    /**
-     * The 'clipPathUnits' attribute value.
-     */
-    protected SVGOMAnimatedEnumeration clipPathUnits;
+	/**
+	 * The 'clipPathUnits' attribute value.
+	 */
+	protected SVGOMAnimatedEnumeration clipPathUnits;
 
-    /**
-     * Creates a new SVGOMClipPathElement object.
-     */
-    protected SVGOMClipPathElement() {
-    }
+	/**
+	 * Creates a new SVGOMClipPathElement object.
+	 */
+	protected SVGOMClipPathElement() {
+	}
 
-    /**
-     * Creates a new SVGOMClipPathElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMClipPathElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMClipPathElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMClipPathElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        clipPathUnits =
-            createLiveAnimatedEnumeration
-                (null, SVG_CLIP_PATH_UNITS_ATTRIBUTE, CLIP_PATH_UNITS_VALUES,
-                 (short) 1);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		clipPathUnits = createLiveAnimatedEnumeration(null, SVG_CLIP_PATH_UNITS_ATTRIBUTE, CLIP_PATH_UNITS_VALUES,
+				(short) 1);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_CLIP_PATH_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_CLIP_PATH_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGClipPathElement#getClipPathUnits()}.
-     */
-    @Override
-    public SVGAnimatedEnumeration getClipPathUnits() {
-        return clipPathUnits;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGClipPathElement#getClipPathUnits()}.
+	 */
+	@Override
+	public SVGAnimatedEnumeration getClipPathUnits() {
+		return clipPathUnits;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMClipPathElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMClipPathElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

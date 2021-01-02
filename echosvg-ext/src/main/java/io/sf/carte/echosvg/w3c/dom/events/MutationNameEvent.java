@@ -16,92 +16,86 @@ import org.w3c.dom.Node;
 import org.w3c.dom.events.MutationEvent;
 
 /**
- *  The <code>MutationNameEvent</code> interface provides specific contextual 
- * information associated with Mutation name event types. 
- * <p> To create an instance of the <code>MutationNameEvent</code> interface, 
- * use the <code>Document.createEvent("MutationNameEvent")</code> method 
- * call. 
- * <p>See also the <a href='http://www.w3.org/TR/2006/WD-DOM-Level-3-Events-20060413'>
-   Document Object Model (DOM) Level 3 Events Specification
-  </a>.
+ * The <code>MutationNameEvent</code> interface provides specific contextual
+ * information associated with Mutation name event types.
+ * <p>
+ * To create an instance of the <code>MutationNameEvent</code> interface, use
+ * the <code>Document.createEvent("MutationNameEvent")</code> method call.
+ * <p>
+ * See also the
+ * <a href='http://www.w3.org/TR/2006/WD-DOM-Level-3-Events-20060413'> Document
+ * Object Model (DOM) Level 3 Events Specification </a>.
+ * 
  * @since DOM Level 3
  */
 public interface MutationNameEvent extends MutationEvent {
-    /**
-     *  The previous value of the <code>relatedNode</code>'s 
-     * <code>namespaceURI</code>. 
-     */
-    String getPrevNamespaceURI();
+	/**
+	 * The previous value of the <code>relatedNode</code>'s
+	 * <code>namespaceURI</code>.
+	 */
+	String getPrevNamespaceURI();
 
-    /**
-     *  The previous value of the <code>relatedNode</code>'s 
-     * <code>nodeName</code>. 
-     */
-    String getPrevNodeName();
+	/**
+	 * The previous value of the <code>relatedNode</code>'s <code>nodeName</code>.
+	 */
+	String getPrevNodeName();
 
-    /**
-     *  The <code>initMutationNameEvent</code> method is used to initialize 
-     * the value of a <code>MutationNameEvent</code> object and has the same 
-     * behavior as <code>MutationEvent.initMutationEvent()</code>. 
-     * @param typeArg  Refer to the 
-     *   <code>MutationEvent.initMutationEvent()</code> method for a 
-     *   description of this parameter. 
-     * @param canBubbleArg  Refer to the 
-     *   <code>MutationEvent.initMutationEvent()</code> method for a 
-     *   description of this parameter. 
-     * @param cancelableArg  Refer to the 
-     *   <code>MutationEvent.initMutationEvent()</code> method for a 
-     *   description of this parameter. 
-     * @param relatedNodeArg  Refer to the 
-     *   <code>MutationEvent.initMutationEvent()</code> method for a 
-     *   description of this parameter. 
-     * @param prevNamespaceURIArg  Specifies 
-     *   <code>MutationNameEvent.prevNamespaceURI</code>. This value may be 
-     *   <code>null</code>. 
-     * @param prevNodeNameArg  Specifies 
-     *   <code>MutationNameEvent.prevNodeName</code>.   
-     * @since DOM Level 3
-     */
-    void initMutationNameEvent(String typeArg,
-                               boolean canBubbleArg,
-                               boolean cancelableArg,
-                               Node relatedNodeArg,
-                               String prevNamespaceURIArg,
-                               String prevNodeNameArg);
+	/**
+	 * The <code>initMutationNameEvent</code> method is used to initialize the value
+	 * of a <code>MutationNameEvent</code> object and has the same behavior as
+	 * <code>MutationEvent.initMutationEvent()</code>.
+	 * 
+	 * @param typeArg             Refer to the
+	 *                            <code>MutationEvent.initMutationEvent()</code>
+	 *                            method for a description of this parameter.
+	 * @param canBubbleArg        Refer to the
+	 *                            <code>MutationEvent.initMutationEvent()</code>
+	 *                            method for a description of this parameter.
+	 * @param cancelableArg       Refer to the
+	 *                            <code>MutationEvent.initMutationEvent()</code>
+	 *                            method for a description of this parameter.
+	 * @param relatedNodeArg      Refer to the
+	 *                            <code>MutationEvent.initMutationEvent()</code>
+	 *                            method for a description of this parameter.
+	 * @param prevNamespaceURIArg Specifies
+	 *                            <code>MutationNameEvent.prevNamespaceURI</code>.
+	 *                            This value may be <code>null</code>.
+	 * @param prevNodeNameArg     Specifies
+	 *                            <code>MutationNameEvent.prevNodeName</code>.
+	 * @since DOM Level 3
+	 */
+	void initMutationNameEvent(String typeArg, boolean canBubbleArg, boolean cancelableArg, Node relatedNodeArg,
+			String prevNamespaceURIArg, String prevNodeNameArg);
 
-    /**
-     *  The <code>initMutationNameEventNS</code> method is used to initialize 
-     * the value of a <code>MutationNameEvent</code> object and has the same 
-     * behavior as <code>MutationEvent.initMutationEventNS()</code>. 
-     * @param namespaceURI  Refer to the 
-     *   <code>MutationEvent.initMutationEventNS()</code> method for a 
-     *   description of this parameter. 
-     * @param typeArg  Refer to the 
-     *   <code>MutationEvent.initMutationEventNS()</code> method for a 
-     *   description of this parameter. 
-     * @param canBubbleArg  Refer to the 
-     *   <code>MutationEvent.initMutationEventNS()</code> method for a 
-     *   description of this parameter. 
-     * @param cancelableArg  Refer to the 
-     *   <code>MutationEvent.initMutationEventNS()</code> method for a 
-     *   description of this parameter. 
-     * @param relatedNodeArg  Refer to the 
-     *   <code>MutationEvent.initMutationEventNS()</code> method for a 
-     *   description of this parameter. 
-     * @param prevNamespaceURIArg  Refer to the 
-     *   <code>MutationEvent.initMutationEvent()</code> method for a 
-     *   description of this parameter. 
-     * @param prevNodeNameArg  Refer to the 
-     *   <code>MutationEvent.initMutationEvent()</code> method for a 
-     *   description of this parameter.   
-     * @since DOM Level 3
-     */
-    void initMutationNameEventNS(String namespaceURI,
-                                 String typeArg,
-                                 boolean canBubbleArg,
-                                 boolean cancelableArg,
-                                 Node relatedNodeArg,
-                                 String prevNamespaceURIArg,
-                                 String prevNodeNameArg);
+	/**
+	 * The <code>initMutationNameEventNS</code> method is used to initialize the
+	 * value of a <code>MutationNameEvent</code> object and has the same behavior as
+	 * <code>MutationEvent.initMutationEventNS()</code>.
+	 * 
+	 * @param namespaceURI        Refer to the
+	 *                            <code>MutationEvent.initMutationEventNS()</code>
+	 *                            method for a description of this parameter.
+	 * @param typeArg             Refer to the
+	 *                            <code>MutationEvent.initMutationEventNS()</code>
+	 *                            method for a description of this parameter.
+	 * @param canBubbleArg        Refer to the
+	 *                            <code>MutationEvent.initMutationEventNS()</code>
+	 *                            method for a description of this parameter.
+	 * @param cancelableArg       Refer to the
+	 *                            <code>MutationEvent.initMutationEventNS()</code>
+	 *                            method for a description of this parameter.
+	 * @param relatedNodeArg      Refer to the
+	 *                            <code>MutationEvent.initMutationEventNS()</code>
+	 *                            method for a description of this parameter.
+	 * @param prevNamespaceURIArg Refer to the
+	 *                            <code>MutationEvent.initMutationEvent()</code>
+	 *                            method for a description of this parameter.
+	 * @param prevNodeNameArg     Refer to the
+	 *                            <code>MutationEvent.initMutationEvent()</code>
+	 *                            method for a description of this parameter.
+	 * @since DOM Level 3
+	 */
+	void initMutationNameEventNS(String namespaceURI, String typeArg, boolean canBubbleArg, boolean cancelableArg,
+			Node relatedNodeArg, String prevNamespaceURIArg, String prevNodeNameArg);
 
 }

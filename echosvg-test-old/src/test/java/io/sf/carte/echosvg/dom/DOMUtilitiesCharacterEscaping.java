@@ -36,52 +36,48 @@ import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
- * Checks that Text nodes can be properly written and read.
- * This test creates a Document with a CDATA section and checks
- * that the CDATA section content can be written out and then read
- * without being altered.
+ * Checks that Text nodes can be properly written and read. This test creates a
+ * Document with a CDATA section and checks that the CDATA section content can
+ * be written out and then read without being altered.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  */
 public class DOMUtilitiesCharacterEscaping extends AbstractTest {
-    @Override
-    public TestReport runImpl() throws Exception {
-        DOMImplementation impl = new SVGDOMImplementation();
-        Document doc = impl.createDocument(SVGConstants.SVG_NAMESPACE_URI,
-                                           "svg", null);
+	@Override
+	public TestReport runImpl() throws Exception {
+		DOMImplementation impl = new SVGDOMImplementation();
+		Document doc = impl.createDocument(SVGConstants.SVG_NAMESPACE_URI, "svg", null);
 
-        Element svg = doc.getDocumentElement();
-        Element text = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI,
-                                           "text");
-        svg.appendChild(text);
+		Element svg = doc.getDocumentElement();
+		Element text = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "text");
+		svg.appendChild(text);
 
-        text.setAttributeNS(null, "id", "myText");
-        String unescapedContent = "You should not escape: & # \" ...";
-        CDATASection cdata = doc.createCDATASection(unescapedContent);
+		text.setAttributeNS(null, "id", "myText");
+		String unescapedContent = "You should not escape: & # \" ...";
+		CDATASection cdata = doc.createCDATASection(unescapedContent);
 
-        text.appendChild(cdata);
+		text.appendChild(cdata);
 
-        Writer stringWriter = new StringWriter();
+		Writer stringWriter = new StringWriter();
 
-        DOMUtilities.writeDocument(doc, stringWriter);
-        
-        String docString = stringWriter.toString();
-        System.err.println(">>>>>>>>>>> Document content \n\n" + docString + "\n\n<<<<<<<<<<<<<<<<");
+		DOMUtilities.writeDocument(doc, stringWriter);
 
-        String parser = XMLResourceDescriptor.getXMLParserClassName();
-        SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-        doc = f.createDocument("http://xml.apache.org/batik/foo.svg", 
-                               new StringReader(stringWriter.toString()));
+		String docString = stringWriter.toString();
+		System.err.println(">>>>>>>>>>> Document content \n\n" + docString + "\n\n<<<<<<<<<<<<<<<<");
 
-        text = doc.getElementById("myText");
-        cdata = (CDATASection)text.getFirstChild();
-        if (cdata.getData().equals(unescapedContent)) {
-            return reportSuccess();
-        } 
+		String parser = XMLResourceDescriptor.getXMLParserClassName();
+		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
+		doc = f.createDocument("http://xml.apache.org/batik/foo.svg", new StringReader(stringWriter.toString()));
 
-        TestReport report = reportError("Unexpected CDATA read-back");
-        report.addDescriptionEntry("expected cdata", unescapedContent);
-        report.addDescriptionEntry("actual cdata", cdata.getData());
-        return report;
-    }
+		text = doc.getElementById("myText");
+		cdata = (CDATASection) text.getFirstChild();
+		if (cdata.getData().equals(unescapedContent)) {
+			return reportSuccess();
+		}
+
+		TestReport report = reportError("Unexpected CDATA read-back");
+		report.addDescriptionEntry("expected cdata", unescapedContent);
+		report.addDescriptionEntry("actual cdata", cdata.getData());
+		return report;
+	}
 }

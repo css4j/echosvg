@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
 import java.awt.color.ColorSpace;
 
 /**
- * This is an extension of our Filter interface that adds support for
- * a color-interpolation specification which indicates what colorspace the
+ * This is an extension of our Filter interface that adds support for a
+ * color-interpolation specification which indicates what colorspace the
  * operation should take place in.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
@@ -31,24 +31,24 @@ import java.awt.color.ColorSpace;
  */
 public interface FilterColorInterpolation extends Filter {
 
-    /**
-     * Returns true if this operation is to be performed in
-     * the linear sRGB colorspace, returns false if the
-     * operation is performed in gamma corrected sRGB.
-     */
-    boolean isColorSpaceLinear();
+	/**
+	 * Returns true if this operation is to be performed in the linear sRGB
+	 * colorspace, returns false if the operation is performed in gamma corrected
+	 * sRGB.
+	 */
+	boolean isColorSpaceLinear();
 
-    /**
-     * Sets the colorspace the operation will be performed in.
-     * @param csLinear if true this operation will be performed in the
-     * linear sRGB colorspace, if false the operation will be performed in
-     * gamma corrected sRGB.
-     */
-    void setColorSpaceLinear(boolean csLinear);
+	/**
+	 * Sets the colorspace the operation will be performed in.
+	 * 
+	 * @param csLinear if true this operation will be performed in the linear sRGB
+	 *                 colorspace, if false the operation will be performed in gamma
+	 *                 corrected sRGB.
+	 */
+	void setColorSpaceLinear(boolean csLinear);
 
-    /**
-     * Returns the ColorSpace that the object will perform
-     * it's work in.
-     */
-    ColorSpace getOperationColorSpace();
+	/**
+	 * Returns the ColorSpace that the object will perform it's work in.
+	 */
+	ColorSpace getOperationColorSpace();
 }

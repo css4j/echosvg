@@ -21,28 +21,29 @@ package io.sf.carte.echosvg.util.io;
 import java.io.IOException;
 
 /**
- * This interface represents an object which decodes characters from a
- * stream of bytes.
+ * This interface represents an object which decodes characters from a stream of
+ * bytes.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface CharDecoder {
-    
-    /**
-     * This constant represents the end of stream character.
-     */
-    int END_OF_STREAM = -1;
 
-    /**
-     * Reads the next character.
-     * @return a character or END_OF_STREAM.
-     */
-    int readChar() throws IOException;
+	/**
+	 * This constant represents the end of stream character.
+	 */
+	int END_OF_STREAM = -1;
 
-    /**
-     * Disposes the associated resources.
-     */
-    void dispose() throws IOException;
+	/**
+	 * Reads the next character.
+	 * 
+	 * @return a character or END_OF_STREAM.
+	 */
+	int readChar() throws IOException;
+
+	/**
+	 * Disposes the associated resources.
+	 */
+	void dispose() throws IOException;
 }

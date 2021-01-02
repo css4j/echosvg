@@ -32,46 +32,48 @@ import io.sf.carte.echosvg.anim.values.AnimatableValue;
  */
 public class SVGSetElementBridge extends SVGAnimationElementBridge {
 
-    /**
-     * Returns 'set'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_SET_TAG;
-    }
+	/**
+	 * Returns 'set'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_SET_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new SVGSetElementBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGSetElementBridge();
+	}
 
-    /**
-     * Creates the animation object for the animation element.
-     */
-    @Override
-    protected AbstractAnimation createAnimation(AnimationTarget target) {
-        AnimatableValue to = parseAnimatableValue(SVG_TO_ATTRIBUTE);
-        return new SetAnimation(timedElement, this, to);
-    }
+	/**
+	 * Creates the animation object for the animation element.
+	 */
+	@Override
+	protected AbstractAnimation createAnimation(AnimationTarget target) {
+		AnimatableValue to = parseAnimatableValue(SVG_TO_ATTRIBUTE);
+		return new SetAnimation(timedElement, this, to);
+	}
 
-    /**
-     * Returns whether the animation element being handled by this bridge can
-     * animate attributes of the specified type.
-     * @param type one of the TYPE_ constants defined in {@link io.sf.carte.echosvg.util.SVGTypes}.
-     */
-    @Override
-    protected boolean canAnimateType(int type) {
-        return true;
-    }
+	/**
+	 * Returns whether the animation element being handled by this bridge can
+	 * animate attributes of the specified type.
+	 * 
+	 * @param type one of the TYPE_ constants defined in
+	 *             {@link io.sf.carte.echosvg.util.SVGTypes}.
+	 */
+	@Override
+	protected boolean canAnimateType(int type) {
+		return true;
+	}
 
-    /**
-     * Returns whether this is a constant animation (i.e., a 'set' animation).
-     */
-    @Override
-    protected boolean isConstantAnimation() {
-        return true;
-    }
+	/**
+	 * Returns whether this is a constant animation (i.e., a 'set' animation).
+	 */
+	@Override
+	protected boolean isConstantAnimation() {
+		return true;
+	}
 }

@@ -21,9 +21,9 @@ package io.sf.carte.echosvg.parser;
 import java.util.Calendar;
 
 /**
- * This interface must be implemented and then registered as the
- * handler of a {@link TimingSpecifierParser} instance in order
- * to be notified of parsing events.
+ * This interface must be implemented and then registered as the handler of a
+ * {@link TimingSpecifierParser} instance in order to be notified of parsing
+ * events.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -31,55 +31,53 @@ import java.util.Calendar;
  */
 public interface TimingSpecifierHandler {
 
-    /**
-     * Invoked when an offset value timing specifier is parsed.
-     */
-    void offset(float offset);
+	/**
+	 * Invoked when an offset value timing specifier is parsed.
+	 */
+	void offset(float offset);
 
-    /**
-     * Invoked when a syncbase value timing specifier is parsed.
-     */
-    void syncbase(float offset, String syncbaseID, String timeSymbol);
+	/**
+	 * Invoked when a syncbase value timing specifier is parsed.
+	 */
+	void syncbase(float offset, String syncbaseID, String timeSymbol);
 
-    /**
-     * Invoked when an eventbase value timing specifier is parsed.
-     */
-    void eventbase(float offset, String eventbaseID, String eventType);
+	/**
+	 * Invoked when an eventbase value timing specifier is parsed.
+	 */
+	void eventbase(float offset, String eventbaseID, String eventType);
 
-    /**
-     * Invoked when a repeat value timing specifier with no iteration
-     * is parsed.
-     */
-    void repeat(float offset, String syncbaseID);
+	/**
+	 * Invoked when a repeat value timing specifier with no iteration is parsed.
+	 */
+	void repeat(float offset, String syncbaseID);
 
-    /**
-     * Invoked when a repeat value timing specifier with an iteration
-     * is parsed.
-     */
-    void repeat(float offset, String syncbaseID, int repeatIteration);
+	/**
+	 * Invoked when a repeat value timing specifier with an iteration is parsed.
+	 */
+	void repeat(float offset, String syncbaseID, int repeatIteration);
 
-    /**
-     * Invoked when an accesskey value timing specifier is parsed.
-     */
-    void accesskey(float offset, char key);
+	/**
+	 * Invoked when an accesskey value timing specifier is parsed.
+	 */
+	void accesskey(float offset, char key);
 
-    /**
-     * Invoked when an SVG 1.2 accessKey value timing specifier is parsed.
-     */
-    void accessKeySVG12(float offset, String keyName);
+	/**
+	 * Invoked when an SVG 1.2 accessKey value timing specifier is parsed.
+	 */
+	void accessKeySVG12(float offset, String keyName);
 
-    /**
-     * Invoked when a media marker value timing specifier is parsed.
-     */
-    void mediaMarker(String syncbaseID, String markerName);
+	/**
+	 * Invoked when a media marker value timing specifier is parsed.
+	 */
+	void mediaMarker(String syncbaseID, String markerName);
 
-    /**
-     * Invoked when a wallclock value timing specifier is parsed.
-     */
-    void wallclock(Calendar time);
+	/**
+	 * Invoked when a wallclock value timing specifier is parsed.
+	 */
+	void wallclock(Calendar time);
 
-    /**
-     * Invoked when an indefinite value timing specifier is parsed.
-     */
-    void indefinite();
+	/**
+	 * Invoked when an indefinite value timing specifier is parsed.
+	 */
+	void indefinite();
 }

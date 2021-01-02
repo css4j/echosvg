@@ -28,93 +28,102 @@ import java.awt.GridBagConstraints;
  * @version $Id$
  */
 public interface GridBagConstants {
-    /**
-     * Specify that this component is the
-     * last component in its column or row.
-     * @since   JDK1.0
-     */
-    int REMAINDER = GridBagConstraints.REMAINDER;
+	/**
+	 * Specify that this component is the last component in its column or row.
+	 * 
+	 * @since JDK1.0
+	 */
+	int REMAINDER = GridBagConstraints.REMAINDER;
 
-    /**
-     * Do not resize the component.
-     * @since   JDK1.0
-     */
-    int NONE = GridBagConstraints.NONE;
+	/**
+	 * Do not resize the component.
+	 * 
+	 * @since JDK1.0
+	 */
+	int NONE = GridBagConstraints.NONE;
 
-    /**
-     * Resize the component both horizontally and vertically.
-     * @since   JDK1.0
-     */
-    int BOTH = GridBagConstraints.BOTH;
+	/**
+	 * Resize the component both horizontally and vertically.
+	 * 
+	 * @since JDK1.0
+	 */
+	int BOTH = GridBagConstraints.BOTH;
 
-    /**
-     * Resize the component horizontally but not vertically.
-     * @since   JDK1.0
-     */
-    int HORIZONTAL = GridBagConstraints.HORIZONTAL;
+	/**
+	 * Resize the component horizontally but not vertically.
+	 * 
+	 * @since JDK1.0
+	 */
+	int HORIZONTAL = GridBagConstraints.HORIZONTAL;
 
-    /**
-     * Resize the component vertically but not horizontally.
-     * @since   JDK1.0
-     */
-    int VERTICAL = GridBagConstraints.VERTICAL;
+	/**
+	 * Resize the component vertically but not horizontally.
+	 * 
+	 * @since JDK1.0
+	 */
+	int VERTICAL = GridBagConstraints.VERTICAL;
 
-    /**
-     * Put the component in the center of its display area.
-     * @since    JDK1.0
-     */
-    int CENTER = GridBagConstraints.CENTER;
+	/**
+	 * Put the component in the center of its display area.
+	 * 
+	 * @since JDK1.0
+	 */
+	int CENTER = GridBagConstraints.CENTER;
 
-    /**
-     * Put the component at the top of its display area,
-     * centered horizontally.
-     * @since   JDK1.0
-     */
-    int NORTH = GridBagConstraints.NORTH;
+	/**
+	 * Put the component at the top of its display area, centered horizontally.
+	 * 
+	 * @since JDK1.0
+	 */
+	int NORTH = GridBagConstraints.NORTH;
 
-    /**
-     * Put the component at the top-right corner of its display area.
-     * @since   JDK1.0
-     */
-    int NORTHEAST = GridBagConstraints.NORTHEAST;
+	/**
+	 * Put the component at the top-right corner of its display area.
+	 * 
+	 * @since JDK1.0
+	 */
+	int NORTHEAST = GridBagConstraints.NORTHEAST;
 
-    /**
-     * Put the component on the left side of its display area,
-     * centered vertically.
-     * @since    JDK1.0
-     */
-    int EAST = GridBagConstraints.EAST;
+	/**
+	 * Put the component on the left side of its display area, centered vertically.
+	 * 
+	 * @since JDK1.0
+	 */
+	int EAST = GridBagConstraints.EAST;
 
-    /**
-     * Put the component at the bottom-right corner of its display area.
-     * @since   JDK1.0
-     */
-    int SOUTHEAST = GridBagConstraints.SOUTHEAST;
+	/**
+	 * Put the component at the bottom-right corner of its display area.
+	 * 
+	 * @since JDK1.0
+	 */
+	int SOUTHEAST = GridBagConstraints.SOUTHEAST;
 
-    /**
-     * Put the component at the bottom of its display area, centered
-     * horizontally.
-     * @since   JDK1.0
-     */
-    int SOUTH = GridBagConstraints.SOUTH;
+	/**
+	 * Put the component at the bottom of its display area, centered horizontally.
+	 * 
+	 * @since JDK1.0
+	 */
+	int SOUTH = GridBagConstraints.SOUTH;
 
-    /**
-     * Put the component at the bottom-left corner of its display area.
-     * @since   JDK1.0
-     */
-    int SOUTHWEST = GridBagConstraints.SOUTHWEST;
+	/**
+	 * Put the component at the bottom-left corner of its display area.
+	 * 
+	 * @since JDK1.0
+	 */
+	int SOUTHWEST = GridBagConstraints.SOUTHWEST;
 
-    /**
-     * Put the component on the left side of its display area,
-     * centered vertically.
-     * @since    JDK1.0
-     */
-    int WEST = GridBagConstraints.WEST;
+	/**
+	 * Put the component on the left side of its display area, centered vertically.
+	 * 
+	 * @since JDK1.0
+	 */
+	int WEST = GridBagConstraints.WEST;
 
-    /**
-     * Put the component at the top-left corner of its display area.
-     * @since   JDK1.0
-     */
-    int NORTHWEST = GridBagConstraints.NORTHWEST;
+	/**
+	 * Put the component at the top-left corner of its display area.
+	 * 
+	 * @since JDK1.0
+	 */
+	int NORTHWEST = GridBagConstraints.NORTHWEST;
 
 }

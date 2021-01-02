@@ -35,191 +35,175 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMImageElement
-    extends    SVGURIReferenceGraphicsElement
-    implements SVGImageElement {
+public class SVGOMImageElement extends SVGURIReferenceGraphicsElement implements SVGImageElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGURIReferenceGraphicsElement.xmlTraitInformation);
-        t.put(null, SVG_X_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_Y_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        t.put(null, SVG_WIDTH_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
-        t.put(null, SVG_HEIGHT_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
+				SVGURIReferenceGraphicsElement.xmlTraitInformation);
+		t.put(null, SVG_X_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_Y_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		t.put(null, SVG_WIDTH_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_WIDTH));
+		t.put(null, SVG_HEIGHT_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH, PERCENTAGE_VIEWPORT_HEIGHT));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The attribute initializer.
-     */
-    protected static final AttributeInitializer attributeInitializer;
-    static {
-        attributeInitializer = new AttributeInitializer(5);
-        attributeInitializer.addAttribute(null, null,
-                                          SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
-                                          "xMidYMid meet");
-        attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI,
-                                          null, "xmlns:xlink",
-                                          XMLConstants.XLINK_NAMESPACE_URI);
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "type", "simple");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "show", "embed");
-        attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI,
-                                          "xlink", "actuate", "onLoad");
-    }
+	/**
+	 * The attribute initializer.
+	 */
+	protected static final AttributeInitializer attributeInitializer;
+	static {
+		attributeInitializer = new AttributeInitializer(5);
+		attributeInitializer.addAttribute(null, null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE, "xMidYMid meet");
+		attributeInitializer.addAttribute(XMLConstants.XMLNS_NAMESPACE_URI, null, "xmlns:xlink",
+				XMLConstants.XLINK_NAMESPACE_URI);
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "type", "simple");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "show", "embed");
+		attributeInitializer.addAttribute(XMLConstants.XLINK_NAMESPACE_URI, "xlink", "actuate", "onLoad");
+	}
 
-    /**
-     * The 'x' attribute value.
-     */
-    protected SVGOMAnimatedLength x;
+	/**
+	 * The 'x' attribute value.
+	 */
+	protected SVGOMAnimatedLength x;
 
-    /**
-     * The 'y' attribute value.
-     */
-    protected SVGOMAnimatedLength y;
+	/**
+	 * The 'y' attribute value.
+	 */
+	protected SVGOMAnimatedLength y;
 
-    /**
-     * The 'width' attribute value.
-     */
-    protected SVGOMAnimatedLength width;
+	/**
+	 * The 'width' attribute value.
+	 */
+	protected SVGOMAnimatedLength width;
 
-    /**
-     * The 'height' attribute value.
-     */
-    protected SVGOMAnimatedLength height;
+	/**
+	 * The 'height' attribute value.
+	 */
+	protected SVGOMAnimatedLength height;
 
-    /**
-     * The 'preserveAspectRatio' attribute value.
-     */
-    protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
+	/**
+	 * The 'preserveAspectRatio' attribute value.
+	 */
+	protected SVGOMAnimatedPreserveAspectRatio preserveAspectRatio;
 
-    /**
-     * Creates a new SVGOMImageElement object.
-     */
-    protected SVGOMImageElement() {
-    }
+	/**
+	 * Creates a new SVGOMImageElement object.
+	 */
+	protected SVGOMImageElement() {
+	}
 
-    /**
-     * Creates a new SVGOMImageElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMImageElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMImageElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMImageElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        x = createLiveAnimatedLength
-            (null, SVG_X_ATTRIBUTE, SVG_IMAGE_X_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
-        y = createLiveAnimatedLength
-            (null, SVG_Y_ATTRIBUTE, SVG_IMAGE_Y_DEFAULT_VALUE,
-             AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-        width =
-            createLiveAnimatedLength
-                (null, SVG_WIDTH_ATTRIBUTE, null,
-                 AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
-        height =
-            createLiveAnimatedLength
-                (null, SVG_HEIGHT_ATTRIBUTE, null,
-                 AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
-        preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		x = createLiveAnimatedLength(null, SVG_X_ATTRIBUTE, SVG_IMAGE_X_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
+		y = createLiveAnimatedLength(null, SVG_Y_ATTRIBUTE, SVG_IMAGE_Y_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
+		width = createLiveAnimatedLength(null, SVG_WIDTH_ATTRIBUTE, null, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
+				true);
+		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, null, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
+				true);
+		preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_IMAGE_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_IMAGE_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGImageElement#getX()}.
-     */
-    @Override
-    public SVGAnimatedLength getX() {
-        return x;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGImageElement#getX()}.
+	 */
+	@Override
+	public SVGAnimatedLength getX() {
+		return x;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGImageElement#getY()}.
-     */
-    @Override
-    public SVGAnimatedLength getY() {
-        return y;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGImageElement#getY()}.
+	 */
+	@Override
+	public SVGAnimatedLength getY() {
+		return y;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGImageElement#getWidth()}.
-     */
-    @Override
-    public SVGAnimatedLength getWidth() {
-        return width;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGImageElement#getWidth()}.
+	 */
+	@Override
+	public SVGAnimatedLength getWidth() {
+		return width;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGImageElement#getHeight()}.
-     */
-    @Override
-    public SVGAnimatedLength getHeight() {
-        return height;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGImageElement#getHeight()}.
+	 */
+	@Override
+	public SVGAnimatedLength getHeight() {
+		return height;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGImageElement#getPreserveAspectRatio()}.
-     */
-    @Override
-    public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
-        return preserveAspectRatio;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGImageElement#getPreserveAspectRatio()}.
+	 */
+	@Override
+	public SVGAnimatedPreserveAspectRatio getPreserveAspectRatio() {
+		return preserveAspectRatio;
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return attributeInitializer;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return attributeInitializer;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMImageElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMImageElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

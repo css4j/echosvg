@@ -27,24 +27,24 @@ package io.sf.carte.echosvg.swing.svg;
  */
 public interface GVTTreeBuilderListener {
 
-    /**
-     * Called when a build started.
-     */
-    void gvtBuildStarted(GVTTreeBuilderEvent e);
+	/**
+	 * Called when a build started.
+	 */
+	void gvtBuildStarted(GVTTreeBuilderEvent e);
 
-    /**
-     * Called when a build was completed.
-     */
-    void gvtBuildCompleted(GVTTreeBuilderEvent e);
+	/**
+	 * Called when a build was completed.
+	 */
+	void gvtBuildCompleted(GVTTreeBuilderEvent e);
 
-    /**
-     * Called when a build was cancelled.
-     */
-    void gvtBuildCancelled(GVTTreeBuilderEvent e);
+	/**
+	 * Called when a build was cancelled.
+	 */
+	void gvtBuildCancelled(GVTTreeBuilderEvent e);
 
-    /**
-     * Called when a build failed.
-     */
-    void gvtBuildFailed(GVTTreeBuilderEvent e);
+	/**
+	 * Called when a build failed.
+	 */
+	void gvtBuildFailed(GVTTreeBuilderEvent e);
 
 }

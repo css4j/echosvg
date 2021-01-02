@@ -30,48 +30,47 @@ import io.sf.carte.echosvg.extension.PrefixableStylableExtensionElement;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class FlowDivElement
-    extends    PrefixableStylableExtensionElement 
-    implements EchoSVGExtConstants {
+public class FlowDivElement extends PrefixableStylableExtensionElement implements EchoSVGExtConstants {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new EchoSVGRegularPolygonElement object.
-     */
-    protected FlowDivElement() {
-    }
+	/**
+	 * Creates a new EchoSVGRegularPolygonElement object.
+	 */
+	protected FlowDivElement() {
+	}
 
-    /**
-     * Creates a new EchoSVGRegularPolygonElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public FlowDivElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new EchoSVGRegularPolygonElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public FlowDivElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return BATIK_EXT_FLOW_DIV_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return BATIK_EXT_FLOW_DIV_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return BATIK_12_NAMESPACE_URI;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return BATIK_12_NAMESPACE_URI;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new FlowDivElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new FlowDivElement();
+	}
 }

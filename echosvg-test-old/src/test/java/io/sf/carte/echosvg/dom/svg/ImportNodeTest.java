@@ -42,64 +42,58 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @version $Id$
  */
 public class ImportNodeTest extends AbstractTest {
-    protected String testFileName;
-    protected String targetId;
+	protected String testFileName;
+	protected String targetId;
 
-    public ImportNodeTest(String file, String id) {
-        testFileName = file;
-        targetId = id;
-    }
-    
-    @Override
-    public TestReport runImpl() throws Exception {
-        String parser =
-            XMLResourceDescriptor.getXMLParserClassName();
+	public ImportNodeTest(String file, String id) {
+		testFileName = file;
+		targetId = id;
+	}
 
-        SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(parser);
+	@Override
+	public TestReport runImpl() throws Exception {
+		String parser = XMLResourceDescriptor.getXMLParserClassName();
 
-        File f = (new File(testFileName));
-        URL url = f.toURI().toURL();
-        Document doc = df.createDocument(url.toString(),
-                                         url.openStream());
-        
-        Element e = doc.getElementById(targetId);
+		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(parser);
 
-        if (e == null){
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode("error.get.element.by.id.failed");
-            report.addDescriptionEntry("entry.key.id", targetId);
-            report.setPassed(false);
-            return report;
-        }
+		File f = (new File(testFileName));
+		URL url = f.toURI().toURL();
+		Document doc = df.createDocument(url.toString(), url.openStream());
 
-        DOMImplementation di = SVGDOMImplementation.getDOMImplementation();
-        Document d = di.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI,
-                                       "svg", null);
-        
+		Element e = doc.getElementById(targetId);
 
-        Element celt = (Element)d.importNode(e, true);
+		if (e == null) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode("error.get.element.by.id.failed");
+			report.addDescriptionEntry("entry.key.id", targetId);
+			report.setPassed(false);
+			return report;
+		}
 
-        NamedNodeMap attrs = e.getAttributes();
+		DOMImplementation di = SVGDOMImplementation.getDOMImplementation();
+		Document d = di.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", null);
 
-        for (int i = 0; i < attrs.getLength(); i++) {
-            Node attr = attrs.item(i);
-            String ns = attr.getNamespaceURI();
-            String name = (ns == null)
-                ? attr.getNodeName()
-                : attr.getLocalName();
-            String val = attr.getNodeValue();
-            String val2 = celt.getAttributeNS(ns, name);
-            if (!val.equals(val2)) {
-                DefaultTestReport report = new DefaultTestReport(this);
-                report.setErrorCode("error.attr.comparison.failed");
-                report.addDescriptionEntry("entry.attr.name", name);
-                report.addDescriptionEntry("entry.attr.value1", val);
-                report.addDescriptionEntry("entry.attr.value2", val2);
-                report.setPassed(false);
-                return report;
-            }
-        }
+		Element celt = (Element) d.importNode(e, true);
 
-        return reportSuccess();
-    }
+		NamedNodeMap attrs = e.getAttributes();
+
+		for (int i = 0; i < attrs.getLength(); i++) {
+			Node attr = attrs.item(i);
+			String ns = attr.getNamespaceURI();
+			String name = (ns == null) ? attr.getNodeName() : attr.getLocalName();
+			String val = attr.getNodeValue();
+			String val2 = celt.getAttributeNS(ns, name);
+			if (!val.equals(val2)) {
+				DefaultTestReport report = new DefaultTestReport(this);
+				report.setErrorCode("error.attr.comparison.failed");
+				report.addDescriptionEntry("entry.attr.name", name);
+				report.addDescriptionEntry("entry.attr.value1", val);
+				report.addDescriptionEntry("entry.attr.value2", val2);
+				report.setPassed(false);
+				return report;
+			}
+		}
+
+		return reportSuccess();
+	}
 }

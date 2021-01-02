@@ -38,17 +38,14 @@ import java.util.Vector;
 
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 
-
 // import io.sf.carte.echosvg.ext.awt.image.DataBufferReclaimer;
 // import java.awt.image.DataBufferInt;
 // import java.awt.image.SinglePixelPackedSampleModel;
 
-
 /**
- * This is an abstract base class that takes care of most of the
- * normal issues surrounding the implementation of the CachableRed
- * (RenderedImage) interface.  It tries to make no assumptions about
- * the subclass implementation.
+ * This is an abstract base class that takes care of most of the normal issues
+ * surrounding the implementation of the CachableRed (RenderedImage) interface.
+ * It tries to make no assumptions about the subclass implementation.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
@@ -56,413 +53,398 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  */
 public abstract class AbstractRed implements CachableRed {
 
-    protected Rectangle   bounds;
-    protected Vector<RenderedImage>     srcs;
-    protected Map<String, Object>       props;
-    protected SampleModel sm;
-    protected ColorModel  cm;
-    protected int         tileGridXOff, tileGridYOff;
-    protected int         tileWidth,    tileHeight;
-    protected int         minTileX,     minTileY;
-    protected int         numXTiles,    numYTiles;
+	protected Rectangle bounds;
+	protected Vector<RenderedImage> srcs;
+	protected Map<String, Object> props;
+	protected SampleModel sm;
+	protected ColorModel cm;
+	protected int tileGridXOff, tileGridYOff;
+	protected int tileWidth, tileHeight;
+	protected int minTileX, minTileY;
+	protected int numXTiles, numYTiles;
 
-    /**
-     * void constructor. The subclass must call one of the
-     * flavors of init before the object becomes usable.
-     * This is useful when the proper parameters to the init
-     * method need to be computed in the subclasses constructor.
-     */
-    protected AbstractRed() {
-    }
+	/**
+	 * void constructor. The subclass must call one of the flavors of init before
+	 * the object becomes usable. This is useful when the proper parameters to the
+	 * init method need to be computed in the subclasses constructor.
+	 */
+	protected AbstractRed() {
+	}
 
+	/**
+	 * Construct an Abstract RenderedImage from a bounds rect and props (may be
+	 * null). The srcs Vector will be empty.
+	 * 
+	 * @param bounds this defines the extent of the rable in the user coordinate
+	 *               system.
+	 * @param props  this initializes the props Map (may be null)
+	 */
+	protected AbstractRed(Rectangle bounds, Map<String, ?> props) {
+		init((CachableRed) null, bounds, null, null, bounds.x, bounds.y, props);
+	}
 
-    /**
-     * Construct an Abstract RenderedImage from a bounds rect and props
-     * (may be null).  The srcs Vector will be empty.
-     * @param bounds this defines the extent of the rable in the
-     * user coordinate system.
-     * @param props this initializes the props Map (may be null)
-     */
-    protected AbstractRed(Rectangle bounds, Map<String, ?> props) {
-        init((CachableRed)null, bounds, null, null,
-             bounds.x, bounds.y, props);
-    }
+	/**
+	 * Construct an Abstract RenderedImage from a source image and props (may be
+	 * null).
+	 * 
+	 * @param src   will be the first (and only) member of the srcs Vector. Src is
+	 *              also used to set the bounds, ColorModel, SampleModel, and tile
+	 *              grid offsets.
+	 * @param props this initializes the props Map.
+	 */
+	protected AbstractRed(CachableRed src, Map<String, ?> props) {
+		init(src, src.getBounds(), src.getColorModel(), src.getSampleModel(), src.getTileGridXOffset(),
+				src.getTileGridYOffset(), props);
+	}
 
-    /**
-     * Construct an Abstract RenderedImage from a source image and
-     * props (may be null).
-     * @param src will be the first (and only) member of the srcs
-     * Vector. Src is also used to set the bounds, ColorModel,
-     * SampleModel, and tile grid offsets.
-     * @param props this initializes the props Map.  */
-    protected AbstractRed(CachableRed src, Map<String, ?> props) {
-        init(src, src.getBounds(), src.getColorModel(), src.getSampleModel(),
-             src.getTileGridXOffset(),
-             src.getTileGridYOffset(),
-             props);
-    }
+	/**
+	 * Construct an Abstract RenderedImage from a source image, bounds rect and
+	 * props (may be null).
+	 * 
+	 * @param src    will be the first (and only) member of the srcs Vector. Src is
+	 *               also used to set the ColorModel, SampleModel, and tile grid
+	 *               offsets.
+	 * @param bounds The bounds of this image.
+	 * @param props  this initializes the props Map.
+	 */
+	protected AbstractRed(CachableRed src, Rectangle bounds, Map<String, ?> props) {
+		init(src, bounds, src.getColorModel(), src.getSampleModel(), src.getTileGridXOffset(), src.getTileGridYOffset(),
+				props);
+	}
 
-    /**
-     * Construct an Abstract RenderedImage from a source image, bounds
-     * rect and props (may be null).
-     * @param src will be the first (and only) member of the srcs
-     * Vector. Src is also used to set the ColorModel, SampleModel,
-     * and tile grid offsets.
-     * @param bounds The bounds of this image.
-     * @param props this initializes the props Map.  */
-    protected AbstractRed(CachableRed src, Rectangle bounds, Map<String, ?> props) {
-        init(src, bounds, src.getColorModel(), src.getSampleModel(),
-             src.getTileGridXOffset(),
-             src.getTileGridYOffset(),
-             props);
-    }
+	/**
+	 * Construct an Abstract RenderedImage from a source image, bounds rect and
+	 * props (may be null).
+	 * 
+	 * @param src    if not null, will be the first (and only) member of the srcs
+	 *               Vector. Also if it is not null it provides the tile grid
+	 *               offsets, otherwise they are zero.
+	 * @param bounds The bounds of this image.
+	 * @param cm     The ColorModel to use. If null it will default to
+	 *               ComponentColorModel.
+	 * @param sm     The sample model to use. If null it will construct a sample
+	 *               model the matches the given/generated ColorModel and is the
+	 *               size of bounds.
+	 * @param props  this initializes the props Map.
+	 */
+	protected AbstractRed(CachableRed src, Rectangle bounds, ColorModel cm, SampleModel sm, Map<String, ?> props) {
+		init(src, bounds, cm, sm, (src == null) ? 0 : src.getTileGridXOffset(),
+				(src == null) ? 0 : src.getTileGridYOffset(), props);
+	}
 
-    /**
-     * Construct an Abstract RenderedImage from a source image, bounds
-     * rect and props (may be null).
-     * @param src if not null, will be the first (and only) member
-     * of the srcs Vector. Also if it is not null it provides the
-     * tile grid offsets, otherwise they are zero.
-     * @param bounds The bounds of this image.
-     * @param cm The ColorModel to use. If null it will default to
-     * ComponentColorModel.
-     * @param sm The sample model to use. If null it will construct
-     * a sample model the matches the given/generated ColorModel and is
-     * the size of bounds.
-     * @param props this initializes the props Map.  */
-    protected AbstractRed(CachableRed src, Rectangle bounds,
-                          ColorModel cm, SampleModel sm,
-                          Map<String, ?> props) {
-        init(src, bounds, cm, sm,
-             (src==null)?0:src.getTileGridXOffset(),
-             (src==null)?0:src.getTileGridYOffset(),
-             props);
-    }
+	/**
+	 * Construct an Abstract Rable from a bounds rect and props (may be null). The
+	 * srcs Vector will be empty.
+	 * 
+	 * @param src          will be the first (and only) member of the srcs Vector.
+	 *                     Src is also used to set the ColorModel, SampleModel, and
+	 *                     tile grid offsets.
+	 * @param bounds       this defines the extent of the rable in the user
+	 *                     coordinate system.
+	 * @param cm           The ColorModel to use. If null it will default to
+	 *                     ComponentColorModel.
+	 * @param sm           The sample model to use. If null it will construct a
+	 *                     sample model the matches the given/generated ColorModel
+	 *                     and is the size of bounds.
+	 * @param tileGridXOff The x location of tile 0,0.
+	 * @param tileGridYOff The y location of tile 0,0.
+	 * @param props        this initializes the props Map.
+	 */
+	protected AbstractRed(CachableRed src, Rectangle bounds, ColorModel cm, SampleModel sm, int tileGridXOff,
+			int tileGridYOff, Map<String, ?> props) {
+		init(src, bounds, cm, sm, tileGridXOff, tileGridYOff, props);
+	}
 
-    /**
-     * Construct an Abstract Rable from a bounds rect and props
-     * (may be null).  The srcs Vector will be empty.
-     * @param src will be the first (and only) member of the srcs
-     * Vector. Src is also used to set the ColorModel, SampleModel,
-     * and tile grid offsets.
-     * @param bounds this defines the extent of the rable in the
-     * user coordinate system.
-     * @param cm The ColorModel to use. If null it will default to
-     * ComponentColorModel.
-     * @param sm The sample model to use. If null it will construct
-     * a sample model the matches the given/generated ColorModel and is
-     * the size of bounds.
-     * @param tileGridXOff The x location of tile 0,0.
-     * @param tileGridYOff The y location of tile 0,0.
-     * @param props this initializes the props Map.
-     */
-    protected AbstractRed(CachableRed src, Rectangle bounds,
-                          ColorModel cm, SampleModel sm,
-                          int tileGridXOff, int tileGridYOff,
-                          Map<String, ?> props) {
-        init(src, bounds, cm, sm, tileGridXOff, tileGridYOff, props);
-    }
+	/**
+	 * This is one of two basic init function (this is for single source rendereds).
+	 * It is provided so subclasses can compute various values before initializing
+	 * all the state in the base class. You really should call this method before
+	 * returning from your subclass constructor.
+	 *
+	 * @param src          The source for the filter
+	 * @param bounds       The bounds of the image
+	 * @param cm           The ColorModel to use. If null it defaults to
+	 *                     ComponentColorModel/ src's ColorModel.
+	 * @param sm           The Sample modle to use. If this is null it will use the
+	 *                     src's sample model if that is null it will construct a
+	 *                     sample model that matches the ColorModel and is the size
+	 *                     of the whole image.
+	 * @param tileGridXOff The x location of tile 0,0.
+	 * @param tileGridYOff The y location of tile 0,0.
+	 * @param props        Any properties you want to associate with the image.
+	 */
+	protected void init(CachableRed src, Rectangle bounds, ColorModel cm, SampleModel sm, int tileGridXOff,
+			int tileGridYOff, Map<String, ?> props) {
+		this.srcs = new Vector<>(1);
+		if (src != null) {
+			this.srcs.add(src);
+			if (bounds == null)
+				bounds = src.getBounds();
+			if (cm == null)
+				cm = src.getColorModel();
+			if (sm == null)
+				sm = src.getSampleModel();
+		}
 
-    /**
-     * This is one of two basic init function (this is for single
-     * source rendereds).
-     * It is provided so subclasses can compute various values
-     * before initializing all the state in the base class.
-     * You really should call this method before returning from
-     * your subclass constructor.
-     *
-     * @param src    The source for the filter
-     * @param bounds The bounds of the image
-     * @param cm     The ColorModel to use. If null it defaults to
-     *               ComponentColorModel/ src's ColorModel.
-     * @param sm     The Sample modle to use. If this is null it will
-     *               use the src's sample model if that is null it will
-     *               construct a sample model that matches the ColorModel
-     *               and is the size of the whole image.
-     * @param tileGridXOff The x location of tile 0,0.
-     * @param tileGridYOff The y location of tile 0,0.
-     * @param props  Any properties you want to associate with the image.
-     */
-    protected void init(CachableRed src, Rectangle   bounds,
-                        ColorModel  cm,   SampleModel sm,
-                        int tileGridXOff, int tileGridYOff,
-                        Map<String, ?> props) {
-        this.srcs         = new Vector<>(1);
-        if (src != null) {
-            this.srcs.add(src);
-            if (bounds == null) bounds = src.getBounds();
-            if (cm     == null) cm     = src.getColorModel();
-            if (sm     == null) sm     = src.getSampleModel();
-        }
+		this.bounds = bounds;
+		this.tileGridXOff = tileGridXOff;
+		this.tileGridYOff = tileGridYOff;
 
-        this.bounds       = bounds;
-        this.tileGridXOff = tileGridXOff;
-        this.tileGridYOff = tileGridYOff;
+		this.props = new HashMap<>();
+		if (props != null) {
+			this.props.putAll(props);
+		}
 
-        this.props        = new HashMap<>();
-        if(props != null){
-            this.props.putAll(props);
-        }
+		if (cm == null)
+			cm = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_GRAY), new int[] { 8 }, false, false,
+					Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
 
-        if (cm == null)
-            cm = new ComponentColorModel
-                (ColorSpace.getInstance(ColorSpace.CS_GRAY),
-                 new int [] { 8 }, false, false, Transparency.OPAQUE,
-                 DataBuffer.TYPE_BYTE);
+		this.cm = cm;
 
-        this.cm = cm;
+		if (sm == null)
+			sm = cm.createCompatibleSampleModel(bounds.width, bounds.height);
+		this.sm = sm;
 
-        if (sm == null)
-            sm = cm.createCompatibleSampleModel(bounds.width, bounds.height);
-        this.sm = sm;
+		// Recompute tileWidth/Height, minTileX/Y, numX/YTiles.
+		updateTileGridInfo();
+	}
 
-        // Recompute tileWidth/Height, minTileX/Y, numX/YTiles.
-        updateTileGridInfo();
-    }
+	/**
+	 * Construct an Abstract Rable from a List of sources a bounds rect and props
+	 * (may be null).
+	 * 
+	 * @param srcs   This is used to initialize the srcs Vector. All the members of
+	 *               srcs must be CachableRed otherwise an error will be thrown.
+	 * @param bounds this defines the extent of the rendered in pixels
+	 * @param props  this initializes the props Map.
+	 */
+	protected AbstractRed(List<CachableRed> srcs, Rectangle bounds, Map<String, ?> props) {
+		init(srcs, bounds, null, null, bounds.x, bounds.y, props);
+	}
 
-    /**
-     * Construct an Abstract Rable from a List of sources a bounds rect
-     * and props (may be null).
-     * @param srcs This is used to initialize the srcs Vector.  All
-     * the members of srcs must be CachableRed otherwise an error
-     * will be thrown.
-     * @param bounds this defines the extent of the rendered in pixels
-     * @param props this initializes the props Map.
-     */
-    protected AbstractRed(List<CachableRed> srcs, Rectangle bounds, Map<String, ?> props) {
-        init(srcs, bounds, null, null, bounds.x, bounds.y, props);
-    }
+	/**
+	 * Construct an Abstract RenderedImage from a bounds rect, ColorModel (may be
+	 * null), SampleModel (may be null) and props (may be null). The srcs Vector
+	 * will be empty.
+	 * 
+	 * @param srcs   This is used to initialize the srcs Vector. All the members of
+	 *               srcs must be CachableRed otherwise an error will be thrown.
+	 * @param bounds this defines the extent of the rendered in pixels
+	 * @param cm     The ColorModel to use. If null it will default to
+	 *               ComponentColorModel.
+	 * @param sm     The sample model to use. If null it will construct a sample
+	 *               model the matches the given/generated ColorModel and is the
+	 *               size of bounds.
+	 * @param props  this initializes the props Map.
+	 */
+	protected AbstractRed(List<CachableRed> srcs, Rectangle bounds, ColorModel cm, SampleModel sm,
+			Map<String, ?> props) {
+		init(srcs, bounds, cm, sm, bounds.x, bounds.y, props);
+	}
 
-    /**
-     * Construct an Abstract RenderedImage from a bounds rect,
-     * ColorModel (may be null), SampleModel (may be null) and props
-     * (may be null).  The srcs Vector will be empty.
-     * @param srcs This is used to initialize the srcs Vector.  All
-     * the members of srcs must be CachableRed otherwise an error
-     * will be thrown.
-     * @param bounds this defines the extent of the rendered in pixels
-     * @param cm The ColorModel to use. If null it will default to
-     * ComponentColorModel.
-     * @param sm The sample model to use. If null it will construct
-     * a sample model the matches the given/generated ColorModel and is
-     * the size of bounds.
-     * @param props this initializes the props Map.
-     */
-    protected AbstractRed(List<CachableRed> srcs, Rectangle bounds,
-                          ColorModel cm, SampleModel sm,
-                          Map<String, ?> props) {
-        init(srcs, bounds, cm, sm, bounds.x, bounds.y, props);
-    }
+	/**
+	 * Construct an Abstract RenderedImage from a bounds rect, ColorModel (may be
+	 * null), SampleModel (may be null), tile grid offsets and props (may be null).
+	 * The srcs Vector will be empty.
+	 * 
+	 * @param srcs         This is used to initialize the srcs Vector. All the
+	 *                     members of srcs must be CachableRed otherwise an error
+	 *                     will be thrown.
+	 * @param bounds       this defines the extent of the rable in the user
+	 *                     coordinate system.
+	 * @param cm           The ColorModel to use. If null it will default to
+	 *                     ComponentColorModel.
+	 * @param sm           The sample model to use. If null it will construct a
+	 *                     sample model the matches the given/generated ColorModel
+	 *                     and is the size of bounds.
+	 * @param tileGridXOff The x location of tile 0,0.
+	 * @param tileGridYOff The y location of tile 0,0.
+	 * @param props        this initializes the props Map.
+	 */
+	protected AbstractRed(List<CachableRed> srcs, Rectangle bounds, ColorModel cm, SampleModel sm, int tileGridXOff,
+			int tileGridYOff, Map<String, ?> props) {
+		init(srcs, bounds, cm, sm, tileGridXOff, tileGridYOff, props);
+	}
 
-    /**
-     * Construct an Abstract RenderedImage from a bounds rect,
-     * ColorModel (may be null), SampleModel (may be null), tile grid
-     * offsets and props (may be null).  The srcs Vector will be
-     * empty.
-     * @param srcs This is used to initialize the srcs Vector.  All
-     * the members of srcs must be CachableRed otherwise an error
-     * will be thrown.
-     * @param bounds this defines the extent of the rable in the
-     * user coordinate system.
-     * @param cm The ColorModel to use. If null it will default to
-     * ComponentColorModel.
-     * @param sm The sample model to use. If null it will construct
-     * a sample model the matches the given/generated ColorModel and is
-     * the size of bounds.
-     * @param tileGridXOff The x location of tile 0,0.
-     * @param tileGridYOff The y location of tile 0,0.
-     * @param props this initializes the props Map.
-     */
-    protected AbstractRed(List<CachableRed> srcs, Rectangle bounds,
-                          ColorModel cm, SampleModel sm,
-                          int tileGridXOff, int tileGridYOff,
-                          Map<String, ?> props) {
-        init(srcs, bounds, cm, sm, tileGridXOff, tileGridYOff, props);
-    }
+	/**
+	 * This is the basic init function. It is provided so subclasses can compute
+	 * various values before initializing all the state in the base class. You
+	 * really should call this method before returning from your subclass
+	 * constructor.
+	 *
+	 * @param srcs         The list of sources
+	 * @param bounds       The bounds of the image
+	 * @param cm           The ColorModel to use. If null it defaults to
+	 *                     ComponentColorModel.
+	 * @param sm           The Sample modle to use. If this is null it will
+	 *                     construct a sample model that matches the ColorModel and
+	 *                     is the size of the whole image.
+	 * @param tileGridXOff The x location of tile 0,0.
+	 * @param tileGridYOff The y location of tile 0,0.
+	 * @param props        Any properties you want to associate with the image.
+	 */
+	protected void init(List<CachableRed> srcs, Rectangle bounds, ColorModel cm, SampleModel sm, int tileGridXOff,
+			int tileGridYOff, Map<String, ?> props) {
+		this.srcs = new Vector<>();
+		if (srcs != null) {
+			this.srcs.addAll(srcs);
+		}
 
-    /**
-     * This is the basic init function.
-     * It is provided so subclasses can compute various values
-     * before initializing all the state in the base class.
-     * You really should call this method before returning from
-     * your subclass constructor.
-     *
-     * @param srcs   The list of sources
-     * @param bounds The bounds of the image
-     * @param cm     The ColorModel to use. If null it defaults to
-     *               ComponentColorModel.
-     * @param sm     The Sample modle to use. If this is null it will
-     *               construct a sample model that matches the ColorModel
-     *               and is the size of the whole image.
-     * @param tileGridXOff The x location of tile 0,0.
-     * @param tileGridYOff The y location of tile 0,0.
-     * @param props  Any properties you want to associate with the image.
-     */
-    protected void init(List<CachableRed> srcs, Rectangle bounds,
-                        ColorModel cm, SampleModel sm,
-                        int tileGridXOff, int tileGridYOff,
-                        Map<String, ?> props) {
-        this.srcs = new Vector<>();
-        if(srcs != null){
-            this.srcs.addAll(srcs);
-        }
+		if (srcs.size() != 0) {
+			CachableRed src = srcs.get(0);
+			if (bounds == null)
+				bounds = src.getBounds();
+			if (cm == null)
+				cm = src.getColorModel();
+			if (sm == null)
+				sm = src.getSampleModel();
+		}
 
-        if (srcs.size() != 0) {
-            CachableRed src = srcs.get(0);
-            if (bounds == null) bounds = src.getBounds();
-            if (cm     == null) cm     = src.getColorModel();
-            if (sm     == null) sm     = src.getSampleModel();
-        }
+		this.bounds = bounds;
+		this.tileGridXOff = tileGridXOff;
+		this.tileGridYOff = tileGridYOff;
+		this.props = new HashMap<>();
+		if (props != null) {
+			this.props.putAll(props);
+		}
 
-        this.bounds       = bounds;
-        this.tileGridXOff = tileGridXOff;
-        this.tileGridYOff = tileGridYOff;
-        this.props        = new HashMap<>();
-        if(props != null){
-            this.props.putAll(props);
-        }
+		if (cm == null)
+			cm = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_GRAY), new int[] { 8 }, false, false,
+					Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
 
-        if (cm == null)
-            cm = new ComponentColorModel
-                (ColorSpace.getInstance(ColorSpace.CS_GRAY),
-                 new int [] { 8 }, false, false, Transparency.OPAQUE,
-                 DataBuffer.TYPE_BYTE);
+		this.cm = cm;
 
-        this.cm = cm;
+		if (sm == null)
+			sm = cm.createCompatibleSampleModel(bounds.width, bounds.height);
+		this.sm = sm;
 
-        if (sm == null)
-            sm = cm.createCompatibleSampleModel(bounds.width, bounds.height);
-        this.sm = sm;
+		// Recompute tileWidth/Height, minTileX/Y, numX/YTiles.
+		updateTileGridInfo();
+	}
 
-        // Recompute tileWidth/Height, minTileX/Y, numX/YTiles.
-        updateTileGridInfo();
-    }
+	/**
+	 * This function computes all the basic information about the tile grid based on
+	 * the data stored in sm, and tileGridX/YOff. It is responsible for updating
+	 * tileWidth, tileHeight, minTileX/Y, and numX/YTiles.
+	 */
+	protected void updateTileGridInfo() {
+		this.tileWidth = sm.getWidth();
+		this.tileHeight = sm.getHeight();
 
-    /**
-     * This function computes all the basic information about the tile
-     * grid based on the data stored in sm, and tileGridX/YOff.
-     * It is responsible for updating tileWidth, tileHeight,
-     * minTileX/Y, and numX/YTiles.
-     */
-    protected void updateTileGridInfo() {
-        this.tileWidth  = sm.getWidth();
-        this.tileHeight = sm.getHeight();
+		int x1, y1, maxTileX, maxTileY;
 
-        int x1, y1, maxTileX, maxTileY;
+		// This computes and caches important information about the
+		// structure of the tile grid in general.
+		minTileX = getXTile(bounds.x);
+		minTileY = getYTile(bounds.y);
 
-        // This computes and caches important information about the
-        // structure of the tile grid in general.
-        minTileX = getXTile(bounds.x);
-        minTileY = getYTile(bounds.y);
+		x1 = bounds.x + bounds.width - 1; // Xloc of right edge
+		maxTileX = getXTile(x1);
+		numXTiles = maxTileX - minTileX + 1;
 
-        x1       = bounds.x + bounds.width-1;     // Xloc of right edge
-        maxTileX = getXTile(x1);
-        numXTiles = maxTileX-minTileX+1;
+		y1 = bounds.y + bounds.height - 1; // Yloc of right edge
+		maxTileY = getYTile(y1);
+		numYTiles = maxTileY - minTileY + 1;
+	}
 
-        y1       = bounds.y + bounds.height-1;     // Yloc of right edge
-        maxTileY = getYTile(y1);
-        numYTiles = maxTileY-minTileY+1;
-    }
+	@Override
+	public Rectangle getBounds() {
+		return new Rectangle(getMinX(), getMinY(), getWidth(), getHeight());
+	}
 
+	@Override
+	public Vector<RenderedImage> getSources() {
+		return srcs;
+	}
 
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle(getMinX(),
-                             getMinY(),
-                             getWidth(),
-                             getHeight());
-    }
+	@Override
+	public ColorModel getColorModel() {
+		return cm;
+	}
 
-    @Override
-    public Vector<RenderedImage> getSources() {
-        return srcs;
-    }
+	@Override
+	public SampleModel getSampleModel() {
+		return sm;
+	}
 
-    @Override
-    public ColorModel getColorModel() {
-        return cm;
-    }
+	@Override
+	public int getMinX() {
+		return bounds.x;
+	}
 
-    @Override
-    public SampleModel getSampleModel() {
-        return sm;
-    }
+	@Override
+	public int getMinY() {
+		return bounds.y;
+	}
 
-    @Override
-    public int getMinX() {
-        return bounds.x;
-    }
-    @Override
-    public int getMinY() {
-        return bounds.y;
-    }
+	@Override
+	public int getWidth() {
+		return bounds.width;
+	}
 
-    @Override
-    public int getWidth() {
-        return bounds.width;
-    }
+	@Override
+	public int getHeight() {
+		return bounds.height;
+	}
 
-    @Override
-    public int getHeight() {
-        return bounds.height;
-    }
+	@Override
+	public int getTileWidth() {
+		return tileWidth;
+	}
 
-    @Override
-    public int getTileWidth() {
-        return tileWidth;
-    }
+	@Override
+	public int getTileHeight() {
+		return tileHeight;
+	}
 
-    @Override
-    public int getTileHeight() {
-        return tileHeight;
-    }
+	@Override
+	public int getTileGridXOffset() {
+		return tileGridXOff;
+	}
 
-    @Override
-    public int getTileGridXOffset() {
-        return tileGridXOff;
-    }
+	@Override
+	public int getTileGridYOffset() {
+		return tileGridYOff;
+	}
 
-    @Override
-    public int getTileGridYOffset() {
-        return tileGridYOff;
-    }
+	@Override
+	public int getMinTileX() {
+		return minTileX;
+	}
 
-    @Override
-    public int getMinTileX() {
-        return minTileX;
-    }
+	@Override
+	public int getMinTileY() {
+		return minTileY;
+	}
 
-    @Override
-    public int getMinTileY() {
-        return minTileY;
-    }
+	@Override
+	public int getNumXTiles() {
+		return numXTiles;
+	}
 
-    @Override
-    public int getNumXTiles() {
-        return numXTiles;
-    }
+	@Override
+	public int getNumYTiles() {
+		return numYTiles;
+	}
 
-    @Override
-    public int getNumYTiles() {
-        return numYTiles;
-    }
+	@Override
+	public Object getProperty(String name) {
+		Object ret = props.get(name);
+		if (ret != null)
+			return ret;
+		for (RenderedImage ri : srcs) {
+			ret = ri.getProperty(name);
+			if (ret != null)
+				return ret;
+		}
+		return null;
+	}
 
-    @Override
-    public Object getProperty(String name) {
-        Object ret = props.get(name);
-        if (ret != null) return ret;
-        for (RenderedImage ri : srcs) {
-            ret = ri.getProperty(name);
-            if (ret != null) return ret;
-        }
-        return null;
-    }
-
-    @Override
-    public String [] getPropertyNames() {
-        Set<String> keys = props.keySet();
-        String[] ret  = new String[keys.size()];
-        keys.toArray( ret );
+	@Override
+	public String[] getPropertyNames() {
+		Set<String> keys = props.keySet();
+		String[] ret = new String[keys.size()];
+		keys.toArray(ret);
 
 //        Iterator iter = keys.iterator();
 //        int i=0;
@@ -470,217 +452,217 @@ public abstract class AbstractRed implements CachableRed {
 //            ret[i++] = (String)iter.next();
 //        }
 
-        for (RenderedImage ri : srcs) {
-            String[] srcProps = ri.getPropertyNames();
-            if (srcProps.length != 0) {
-                String[] tmp = new String[ret.length + srcProps.length];
-                System.arraycopy(ret, 0, tmp, 0, ret.length);
-                /// ??? System.arraycopy((tmp,ret.length,srcProps,0,srcProps.length);
-                System.arraycopy(srcProps, 0, tmp, ret.length, srcProps.length);
-                ret = tmp;
-            }
-        }
+		for (RenderedImage ri : srcs) {
+			String[] srcProps = ri.getPropertyNames();
+			if (srcProps.length != 0) {
+				String[] tmp = new String[ret.length + srcProps.length];
+				System.arraycopy(ret, 0, tmp, 0, ret.length);
+				/// ??? System.arraycopy((tmp,ret.length,srcProps,0,srcProps.length);
+				System.arraycopy(srcProps, 0, tmp, ret.length, srcProps.length);
+				ret = tmp;
+			}
+		}
 
-        return ret;
-    }
+		return ret;
+	}
 
-    @Override
-    public Shape getDependencyRegion(int srcIndex, Rectangle outputRgn) {
-        if ((srcIndex < 0) || (srcIndex > srcs.size()))
-            throw new IndexOutOfBoundsException
-                ("Nonexistant source requested.");
+	@Override
+	public Shape getDependencyRegion(int srcIndex, Rectangle outputRgn) {
+		if ((srcIndex < 0) || (srcIndex > srcs.size()))
+			throw new IndexOutOfBoundsException("Nonexistant source requested.");
 
-        // Return empty rect if they don't intersect.
-        if ( ! outputRgn.intersects(bounds) )
-            return new Rectangle();
+		// Return empty rect if they don't intersect.
+		if (!outputRgn.intersects(bounds))
+			return new Rectangle();
 
-        // We only depend on our source for stuff that is inside
-        // our bounds...
-        return outputRgn.intersection(bounds);
-    }
+		// We only depend on our source for stuff that is inside
+		// our bounds...
+		return outputRgn.intersection(bounds);
+	}
 
-    @Override
-    public Shape getDirtyRegion(int srcIndex, Rectangle inputRgn) {
-        if (srcIndex != 0)
-            throw new IndexOutOfBoundsException
-                ("Nonexistant source requested.");
+	@Override
+	public Shape getDirtyRegion(int srcIndex, Rectangle inputRgn) {
+		if (srcIndex != 0)
+			throw new IndexOutOfBoundsException("Nonexistant source requested.");
 
-        // Return empty rect if they don't intersect.
-        if ( ! inputRgn.intersects(bounds) )
-            return new Rectangle();
+		// Return empty rect if they don't intersect.
+		if (!inputRgn.intersects(bounds))
+			return new Rectangle();
 
-        // Changes in the input region don't propogate outside our
-        // bounds.
-        return inputRgn.intersection(bounds);
-    }
+		// Changes in the input region don't propogate outside our
+		// bounds.
+		return inputRgn.intersection(bounds);
+	}
 
+	// This is not included but can be implemented by the following.
+	// In which case you _must_ reimplement getTile.
+	// public WritableRaster copyData(WritableRaster wr) {
+	// copyToRaster(wr);
+	// return wr;
+	// }
 
-    // This is not included but can be implemented by the following.
-    // In which case you _must_ reimplement getTile.
-    // public WritableRaster copyData(WritableRaster wr) {
-    //     copyToRaster(wr);
-    //     return wr;
-    // }
+	@Override
+	public Raster getTile(int tileX, int tileY) {
+		WritableRaster wr = makeTile(tileX, tileY);
+		return copyData(wr);
+	}
 
-    @Override
-    public Raster getTile(int tileX, int tileY) {
-        WritableRaster wr = makeTile(tileX, tileY);
-        return copyData(wr);
-    }
+	@Override
+	public Raster getData() {
+		return getData(bounds);
+	}
 
-    @Override
-    public Raster getData() {
-        return getData(bounds);
-    }
+	@Override
+	public Raster getData(Rectangle rect) {
+		SampleModel smRet = sm.createCompatibleSampleModel(rect.width, rect.height);
 
-    @Override
-    public Raster getData(Rectangle rect) {
-        SampleModel smRet = sm.createCompatibleSampleModel
-            (rect.width, rect.height);
+		Point pt = new Point(rect.x, rect.y);
+		WritableRaster wr = Raster.createWritableRaster(smRet, pt);
 
-        Point pt = new Point(rect.x, rect.y);
-        WritableRaster wr = Raster.createWritableRaster(smRet, pt);
+		// System.out.println("GD DB: " + wr.getDataBuffer().getSize());
+		return copyData(wr);
+	}
 
-        // System.out.println("GD DB: " + wr.getDataBuffer().getSize());
-        return copyData(wr);
-    }
+	/**
+	 * Returns the x index of tile under xloc.
+	 * 
+	 * @param xloc the x location (in pixels) to get tile for.
+	 * @return The tile index under xloc (may be outside tile grid).
+	 */
+	public final int getXTile(int xloc) {
+		int tgx = xloc - tileGridXOff;
+		// We need to round to -infinity...
+		if (tgx >= 0)
+			return tgx / tileWidth;
+		else
+			return (tgx - tileWidth + 1) / tileWidth;
+	}
 
-    /**
-     * Returns the x index of tile under xloc.
-     * @param  xloc the x location (in pixels) to get tile for.
-     * @return The tile index under xloc (may be outside tile grid).
-     */
-    public final int getXTile(int xloc) {
-        int tgx = xloc-tileGridXOff;
-        // We need to round to -infinity...
-        if (tgx>=0)
-            return tgx/tileWidth;
-        else
-            return (tgx-tileWidth+1)/tileWidth;
-    }
+	/**
+	 * Returns the y index of tile under yloc.
+	 * 
+	 * @param yloc the y location (in pixels) to get tile for.
+	 * @return The tile index under yloc (may be outside tile grid).
+	 */
+	public final int getYTile(int yloc) {
+		int tgy = yloc - tileGridYOff;
+		// We need to round to -infinity...
+		if (tgy >= 0)
+			return tgy / tileHeight;
+		else
+			return (tgy - tileHeight + 1) / tileHeight;
+	}
 
-    /**
-     * Returns the y index of tile under yloc.
-     * @param  yloc the y location (in pixels) to get tile for.
-     * @return The tile index under yloc (may be outside tile grid).
-     */
-    public final int getYTile(int yloc) {
-        int tgy = yloc-tileGridYOff;
-        // We need to round to -infinity...
-        if (tgy>=0)
-            return tgy/tileHeight;
-        else
-            return (tgy-tileHeight+1)/tileHeight;
-    }
+	/**
+	 * Copies data from this images tile grid into wr. wr may extend outside the
+	 * bounds of this image in which case the data in wr outside the bounds will not
+	 * be touched.
+	 * 
+	 * @param wr Raster to fill with image data.
+	 */
+	public void copyToRaster(WritableRaster wr) {
+		int tx0 = getXTile(wr.getMinX());
+		int ty0 = getYTile(wr.getMinY());
+		int tx1 = getXTile(wr.getMinX() + wr.getWidth() - 1);
+		int ty1 = getYTile(wr.getMinY() + wr.getHeight() - 1);
 
-    /**
-     * Copies data from this images tile grid into wr.  wr may
-     * extend outside the bounds of this image in which case the
-     * data in wr outside the bounds will not be touched.
-     * @param wr Raster to fill with image data.
-     */
-    public void copyToRaster(WritableRaster wr) {
-        int tx0 = getXTile(wr.getMinX());
-        int ty0 = getYTile(wr.getMinY());
-        int tx1 = getXTile(wr.getMinX()+wr.getWidth() -1);
-        int ty1 = getYTile(wr.getMinY()+wr.getHeight()-1);
+		if (tx0 < minTileX)
+			tx0 = minTileX;
+		if (ty0 < minTileY)
+			ty0 = minTileY;
 
-        if (tx0 < minTileX) tx0 = minTileX;
-        if (ty0 < minTileY) ty0 = minTileY;
+		if (tx1 >= minTileX + numXTiles)
+			tx1 = minTileX + numXTiles - 1;
+		if (ty1 >= minTileY + numYTiles)
+			ty1 = minTileY + numYTiles - 1;
 
-        if (tx1 >= minTileX+numXTiles) tx1 = minTileX+numXTiles-1;
-        if (ty1 >= minTileY+numYTiles) ty1 = minTileY+numYTiles-1;
+		final boolean is_INT_PACK = GraphicsUtil.is_INT_PACK_Data(getSampleModel(), false);
 
-        final boolean is_INT_PACK =
-            GraphicsUtil.is_INT_PACK_Data(getSampleModel(), false);
+		for (int y = ty0; y <= ty1; y++)
+			for (int x = tx0; x <= tx1; x++) {
+				Raster r = getTile(x, y);
+				if (is_INT_PACK)
+					GraphicsUtil.copyData_INT_PACK(r, wr);
+				else
+					GraphicsUtil.copyData_FALLBACK(r, wr);
+			}
+	}
 
-        for (int y=ty0; y<=ty1; y++)
-            for (int x=tx0; x<=tx1; x++) {
-                Raster r = getTile(x, y);
-                if (is_INT_PACK)
-                    GraphicsUtil.copyData_INT_PACK(r, wr);
-                else
-                    GraphicsUtil.copyData_FALLBACK(r, wr);
-            }
-    }
+	// static DataBufferReclaimer reclaim = new DataBufferReclaimer();
 
+	/**
+	 * This is a helper function that will create the tile requested Including
+	 * properly subsetting the bounds of the tile to the bounds of the current
+	 * image.
+	 * 
+	 * @param tileX The x index of the tile to be built
+	 * @param tileY The y index of the tile to be built
+	 * @return The tile requested
+	 * @exception IndexOutOfBoundsException if the requested tile index falles
+	 *                                      outside of the bounds of the tile grid
+	 *                                      for the image.
+	 */
+	public WritableRaster makeTile(int tileX, int tileY) {
+		if ((tileX < minTileX) || (tileX >= minTileX + numXTiles) || (tileY < minTileY)
+				|| (tileY >= minTileY + numYTiles))
+			throw new IndexOutOfBoundsException(
+					"Requested Tile (" + tileX + ',' + tileY + ") lies outside the bounds of image");
 
-    // static DataBufferReclaimer reclaim = new DataBufferReclaimer();
+		Point pt = new Point(tileGridXOff + tileX * tileWidth, tileGridYOff + tileY * tileHeight);
 
-    /**
-     * This is a helper function that will create the tile requested
-     * Including properly subsetting the bounds of the tile to the
-     * bounds of the current image.
-     * @param tileX The x index of the tile to be built
-     * @param tileY The y index of the tile to be built
-     * @return The tile requested
-     * @exception IndexOutOfBoundsException if the requested tile index
-     *   falles outside of the bounds of the tile grid for the image.
-     */
-    public WritableRaster makeTile(int tileX, int tileY) {
-        if ((tileX < minTileX) || (tileX >= minTileX+numXTiles) ||
-            (tileY < minTileY) || (tileY >= minTileY+numYTiles))
-            throw new IndexOutOfBoundsException
-                ("Requested Tile (" + tileX + ',' + tileY +
-                 ") lies outside the bounds of image");
+		WritableRaster wr;
+		wr = Raster.createWritableRaster(sm, pt);
+		// if (!(sm instanceof SinglePixelPackedSampleModel))
+		// wr = Raster.createWritableRaster(sm, pt);
+		// else {
+		// SinglePixelPackedSampleModel sppsm;
+		// sppsm = (SinglePixelPackedSampleModel)sm;
+		// int stride = sppsm.getScanlineStride();
+		// int sz = stride*sppsm.getHeight();
+		//
+		// int [] data = reclaim.request(sz);
+		// DataBuffer db = new DataBufferInt(data, sz);
+		//
+		// reclaim.register(db);
+		//
+		// wr = Raster.createWritableRaster(sm, db, pt);
+		// }
 
-        Point pt = new Point(tileGridXOff+tileX*tileWidth,
-                             tileGridYOff+tileY*tileHeight);
+		// System.out.println("MT DB: " + wr.getDataBuffer().getSize());
 
-        WritableRaster wr;
-        wr = Raster.createWritableRaster(sm, pt);
-        // if (!(sm instanceof SinglePixelPackedSampleModel))
-        //     wr = Raster.createWritableRaster(sm, pt);
-        // else {
-        //     SinglePixelPackedSampleModel sppsm;
-        //     sppsm = (SinglePixelPackedSampleModel)sm;
-        //     int stride = sppsm.getScanlineStride();
-        //     int sz = stride*sppsm.getHeight();
-        //
-        //     int [] data = reclaim.request(sz);
-        //     DataBuffer db = new DataBufferInt(data, sz);
-        //
-        //     reclaim.register(db);
-        //
-        //     wr = Raster.createWritableRaster(sm, db, pt);
-        // }
+		int x0 = wr.getMinX();
+		int y0 = wr.getMinY();
+		int x1 = x0 + wr.getWidth() - 1;
+		int y1 = y0 + wr.getHeight() - 1;
 
-        // System.out.println("MT DB: " + wr.getDataBuffer().getSize());
+		if ((x0 < bounds.x) || (x1 >= (bounds.x + bounds.width)) || (y0 < bounds.y)
+				|| (y1 >= (bounds.y + bounds.height))) {
+			// Part of this raster lies outside our bounds so subset
+			// it so it only advertises the stuff inside our bounds.
+			if (x0 < bounds.x)
+				x0 = bounds.x;
+			if (y0 < bounds.y)
+				y0 = bounds.y;
+			if (x1 >= (bounds.x + bounds.width))
+				x1 = bounds.x + bounds.width - 1;
+			if (y1 >= (bounds.y + bounds.height))
+				y1 = bounds.y + bounds.height - 1;
 
-        int x0 = wr.getMinX();
-        int y0 = wr.getMinY();
-        int x1 = x0+wr.getWidth() -1;
-        int y1 = y0+wr.getHeight()-1;
+			wr = wr.createWritableChild(x0, y0, x1 - x0 + 1, y1 - y0 + 1, x0, y0, null);
+		}
+		return wr;
+	}
 
-        if ((x0 < bounds.x) || (x1 >= (bounds.x+bounds.width)) ||
-            (y0 < bounds.y) || (y1 >= (bounds.y+bounds.height))) {
-            // Part of this raster lies outside our bounds so subset
-            // it so it only advertises the stuff inside our bounds.
-            if (x0 < bounds.x) x0 = bounds.x;
-            if (y0 < bounds.y) y0 = bounds.y;
-            if (x1 >= (bounds.x+bounds.width))  x1 = bounds.x+bounds.width-1;
-            if (y1 >= (bounds.y+bounds.height)) y1 = bounds.y+bounds.height-1;
+	public static void copyBand(Raster src, int srcBand, WritableRaster dst, int dstBand) {
+		Rectangle srcR = new Rectangle(src.getMinX(), src.getMinY(), src.getWidth(), src.getHeight());
+		Rectangle dstR = new Rectangle(dst.getMinX(), dst.getMinY(), dst.getWidth(), dst.getHeight());
 
-            wr = wr.createWritableChild(x0, y0, x1-x0+1, y1-y0+1,
-                                        x0, y0, null);
-        }
-        return wr;
-    }
+		Rectangle cpR = srcR.intersection(dstR);
 
-    public static void copyBand(Raster         src, int srcBand,
-                                WritableRaster dst, int dstBand) {
-        Rectangle srcR = new Rectangle(src.getMinX(),  src.getMinY(),
-                                       src.getWidth(), src.getHeight());
-        Rectangle dstR = new Rectangle(dst.getMinX(),  dst.getMinY(),
-                                       dst.getWidth(), dst.getHeight());
-
-        Rectangle cpR  = srcR.intersection(dstR);
-
-        int [] samples = null;
-        for (int y=cpR.y; y< cpR.y+cpR.height; y++) {
-            samples = src.getSamples(cpR.x, y, cpR.width, 1, srcBand, samples);
-            dst.setSamples(cpR.x, y, cpR.width, 1, dstBand, samples);
-        }
-    }
+		int[] samples = null;
+		for (int y = cpR.y; y < cpR.y + cpR.height; y++) {
+			samples = src.getSamples(cpR.x, y, cpR.width, 1, srcBand, samples);
+			dst.setSamples(cpR.x, y, cpR.width, 1, dstBand, samples);
+		}
+	}
 }
-

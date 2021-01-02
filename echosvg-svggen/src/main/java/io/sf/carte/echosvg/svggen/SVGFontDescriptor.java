@@ -31,61 +31,54 @@ import org.w3c.dom.Element;
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see             io.sf.carte.echosvg.svggen.SVGFont
+ * @see io.sf.carte.echosvg.svggen.SVGFont
  */
 public class SVGFontDescriptor implements SVGDescriptor, SVGSyntax {
-    private Element def;
-    private String fontSize;
-    private String fontWeight;
-    private String fontStyle;
-    private String fontFamily;
+	private Element def;
+	private String fontSize;
+	private String fontWeight;
+	private String fontStyle;
+	private String fontFamily;
 
-    /**
-     * Constructor
-     */
-    public SVGFontDescriptor(String fontSize,
-                             String fontWeight,
-                             String fontStyle,
-                             String fontFamily,
-                             Element def){
-        if (fontSize == null ||
-            fontWeight == null ||
-            fontStyle == null ||
-            fontFamily == null)
-            throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_FONT_NULL);
+	/**
+	 * Constructor
+	 */
+	public SVGFontDescriptor(String fontSize, String fontWeight, String fontStyle, String fontFamily, Element def) {
+		if (fontSize == null || fontWeight == null || fontStyle == null || fontFamily == null)
+			throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_FONT_NULL);
 
-        this.fontSize = fontSize;
-        this.fontWeight = fontWeight;
-        this.fontStyle = fontStyle;
-        this.fontFamily = fontFamily;
-        this.def = def;
-    }
+		this.fontSize = fontSize;
+		this.fontWeight = fontWeight;
+		this.fontStyle = fontStyle;
+		this.fontFamily = fontFamily;
+		this.def = def;
+	}
 
-    @Override
-    public Map<String, String> getAttributeMap(Map<String, String> attrMap){
-        if(attrMap == null)
-            attrMap = new HashMap<>();
+	@Override
+	public Map<String, String> getAttributeMap(Map<String, String> attrMap) {
+		if (attrMap == null)
+			attrMap = new HashMap<>();
 
-        attrMap.put(SVG_FONT_SIZE_ATTRIBUTE, fontSize);
-        attrMap.put(SVG_FONT_WEIGHT_ATTRIBUTE, fontWeight);
-        attrMap.put(SVG_FONT_STYLE_ATTRIBUTE, fontStyle);
-        attrMap.put(SVG_FONT_FAMILY_ATTRIBUTE, fontFamily);
+		attrMap.put(SVG_FONT_SIZE_ATTRIBUTE, fontSize);
+		attrMap.put(SVG_FONT_WEIGHT_ATTRIBUTE, fontWeight);
+		attrMap.put(SVG_FONT_STYLE_ATTRIBUTE, fontStyle);
+		attrMap.put(SVG_FONT_FAMILY_ATTRIBUTE, fontFamily);
 
-        return attrMap;
-    }
+		return attrMap;
+	}
 
-    public Element getDef(){
-        return def;
-    }
+	public Element getDef() {
+		return def;
+	}
 
-    @Override
-    public List<Element> getDefinitionSet(List<Element> defSet){
-        if (defSet == null)
-            defSet = new LinkedList<>();
+	@Override
+	public List<Element> getDefinitionSet(List<Element> defSet) {
+		if (defSet == null)
+			defSet = new LinkedList<>();
 
-        if(def != null && !defSet.contains(def))
-            defSet.add(def);
+		if (def != null && !defSet.contains(def))
+			defSet.add(def);
 
-        return defSet;
-    }
+		return defSet;
+	}
 }

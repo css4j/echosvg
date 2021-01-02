@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.util.gui;
 import java.awt.GridBagConstraints;
 
 /**
- * This class extends the java.awt.GridBagConstraints in order to
- * provide some utility methods.
+ * This class extends the java.awt.GridBagConstraints in order to provide some
+ * utility methods.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -30,31 +30,31 @@ import java.awt.GridBagConstraints;
  */
 public class ExtendedGridBagConstraints extends GridBagConstraints {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Modifies gridx, gridy, gridwidth, gridheight.
-     *
-     * @param x The value for gridx.
-     * @param y The value for gridy.
-     * @param width The value for gridwidth.
-     * @param height The value for gridheight.
-     */
-    public void setGridBounds(int x, int y, int width, int height) {
-        gridx = x;
-        gridy = y;
-        gridwidth = width;
-        gridheight = height;
-    }
+	/**
+	 * Modifies gridx, gridy, gridwidth, gridheight.
+	 *
+	 * @param x      The value for gridx.
+	 * @param y      The value for gridy.
+	 * @param width  The value for gridwidth.
+	 * @param height The value for gridheight.
+	 */
+	public void setGridBounds(int x, int y, int width, int height) {
+		gridx = x;
+		gridy = y;
+		gridwidth = width;
+		gridheight = height;
+	}
 
-    /**
-     * Modifies the weightx and weighty.
-     *
-     * @param weightx The value for weightx
-     * @param weighty The value for weighty
-     */
-    public void setWeight(double weightx, double weighty) {
-        this.weightx = weightx;
-        this.weighty = weighty;
-    }
+	/**
+	 * Modifies the weightx and weighty.
+	 *
+	 * @param weightx The value for weightx
+	 * @param weighty The value for weighty
+	 */
+	public void setWeight(double weightx, double weighty) {
+		this.weightx = weightx;
+		this.weighty = weighty;
+	}
 }

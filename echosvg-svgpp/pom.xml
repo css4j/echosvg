@@ -2,11 +2,11 @@
 <!--
 
    Licensed to the Apache Software Foundation (ASF) under one or more
-   contributor license agreements.  See the NOTICE file distributed with
+   contributor license agreements. See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
    The ASF licenses this file to You under the Apache License, Version 2.0
    (the "License"); you may not use this file except in compliance with
-   the License.  You may obtain a copy of the License at
+   the License. You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
@@ -19,8 +19,8 @@
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -29,67 +29,67 @@
   <description>EchoSVG SVG Pretty Printer Application</description>
 
   <parent>
-    <groupId>io.sf.carte</groupId>
-    <artifactId>echosvg</artifactId>
-    <version>0.1</version>
+	<groupId>io.sf.carte</groupId>
+	<artifactId>echosvg</artifactId>
+	<version>0.1</version>
   </parent>
 
   <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>echosvg-shared-resources</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>echosvg-transcoder</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>echosvg-util</artifactId>
-      <version>${project.version}</version>
-    </dependency>
+	<dependency>
+	  <groupId>${project.groupId}</groupId>
+	  <artifactId>echosvg-shared-resources</artifactId>
+	  <version>${project.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>${project.groupId}</groupId>
+	  <artifactId>echosvg-transcoder</artifactId>
+	  <version>${project.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>${project.groupId}</groupId>
+	  <artifactId>echosvg-util</artifactId>
+	  <version>${project.version}</version>
+	</dependency>
   </dependencies>
 
   <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>${jar.version}</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>org.apache.echosvg.apps.svgpp.Main</mainClass>
-              <addClasspath>true</addClasspath>
-              <classpathPrefix>lib/</classpathPrefix>
-            </manifest>
+	<plugins>
+	  <plugin>
+		<artifactId>maven-jar-plugin</artifactId>
+		<version>${jar.version}</version>
+		<configuration>
+		  <archive>
+			<manifest>
+			  <mainClass>org.apache.echosvg.apps.svgpp.Main</mainClass>
+			  <addClasspath>true</addClasspath>
+			  <classpathPrefix>lib/</classpathPrefix>
+			</manifest>
 				<manifestEntries>
 					<Automatic-Module-Name>io.sf.carte.echosvg.svgpp</Automatic-Module-Name>
 				</manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>${dependency.version}</version><!--$NO-MVN-MAN-VER$-->
-        <executions>
-          <execution>
-            <id>unpack-shared-resources</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>unpack-dependencies</goal>
-            </goals>
-            <configuration>
-              <includeGroupIds>${project.groupId}</includeGroupIds>
-              <includeArtifactIds>echosvg-shared-resources</includeArtifactIds>
-              <includes>**/LICENSE,**/NOTICE</includes>
-              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
+		  </archive>
+		</configuration>
+	  </plugin>
+	  <plugin>
+		<artifactId>maven-dependency-plugin</artifactId>
+		<version>${dependency.version}</version><!--$NO-MVN-MAN-VER$-->
+		<executions>
+		  <execution>
+			<id>unpack-shared-resources</id>
+			<phase>prepare-package</phase>
+			<goals>
+			  <goal>unpack-dependencies</goal>
+			</goals>
+			<configuration>
+			  <includeGroupIds>${project.groupId}</includeGroupIds>
+			  <includeArtifactIds>echosvg-shared-resources</includeArtifactIds>
+			  <includes>**/LICENSE,**/NOTICE</includes>
+			  <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+			</configuration>
+		  </execution>
+		</executions>
+	  </plugin>
+	</plugins>
   </build>
 
 </project>

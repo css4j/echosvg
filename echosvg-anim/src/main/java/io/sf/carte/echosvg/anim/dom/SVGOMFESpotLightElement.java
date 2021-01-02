@@ -33,211 +33,192 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFESpotLightElement
-    extends    SVGOMElement
-    implements SVGFESpotLightElement {
+public class SVGOMFESpotLightElement extends SVGOMElement implements SVGFESpotLightElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
-        t.put(null, SVG_X_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_Y_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_Z_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_POINTS_AT_X_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_POINTS_AT_Y_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_POINTS_AT_Z_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_SPECULAR_EXPONENT_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_LIMITING_CONE_ANGLE_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
+		t.put(null, SVG_X_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_Y_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_Z_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_POINTS_AT_X_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_POINTS_AT_Y_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_POINTS_AT_Z_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_SPECULAR_EXPONENT_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_LIMITING_CONE_ANGLE_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'x' attribute value.
-     */
-    protected SVGOMAnimatedNumber x;
+	/**
+	 * The 'x' attribute value.
+	 */
+	protected SVGOMAnimatedNumber x;
 
-    /**
-     * The 'y' attribute value.
-     */
-    protected SVGOMAnimatedNumber y;
+	/**
+	 * The 'y' attribute value.
+	 */
+	protected SVGOMAnimatedNumber y;
 
-    /**
-     * The 'z' attribute value.
-     */
-    protected SVGOMAnimatedNumber z;
+	/**
+	 * The 'z' attribute value.
+	 */
+	protected SVGOMAnimatedNumber z;
 
-    /**
-     * The 'pointsAtX' attribute value.
-     */
-    protected SVGOMAnimatedNumber pointsAtX;
+	/**
+	 * The 'pointsAtX' attribute value.
+	 */
+	protected SVGOMAnimatedNumber pointsAtX;
 
-    /**
-     * The 'pointsAtY' attribute value.
-     */
-    protected SVGOMAnimatedNumber pointsAtY;
+	/**
+	 * The 'pointsAtY' attribute value.
+	 */
+	protected SVGOMAnimatedNumber pointsAtY;
 
-    /**
-     * The 'pointsAtZ' attribute value.
-     */
-    protected SVGOMAnimatedNumber pointsAtZ;
+	/**
+	 * The 'pointsAtZ' attribute value.
+	 */
+	protected SVGOMAnimatedNumber pointsAtZ;
 
-    /**
-     * The 'specularExponent' attribute value.
-     */
-    protected SVGOMAnimatedNumber specularExponent;
+	/**
+	 * The 'specularExponent' attribute value.
+	 */
+	protected SVGOMAnimatedNumber specularExponent;
 
-    /**
-     * The 'limitingConeAngle' attribute value.
-     */
-    protected SVGOMAnimatedNumber limitingConeAngle;
+	/**
+	 * The 'limitingConeAngle' attribute value.
+	 */
+	protected SVGOMAnimatedNumber limitingConeAngle;
 
-    /**
-     * Creates a new SVGOMFESpotLightElement object.
-     */
-    protected SVGOMFESpotLightElement() {
-    }
+	/**
+	 * Creates a new SVGOMFESpotLightElement object.
+	 */
+	protected SVGOMFESpotLightElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFESpotLightElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFESpotLightElement(String prefix,
-                                   AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFESpotLightElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFESpotLightElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        x = createLiveAnimatedNumber(null, SVG_X_ATTRIBUTE, 0f);
-        y = createLiveAnimatedNumber(null, SVG_Y_ATTRIBUTE, 0f);
-        z = createLiveAnimatedNumber(null, SVG_Z_ATTRIBUTE, 0f);
-        pointsAtX =
-            createLiveAnimatedNumber(null, SVG_POINTS_AT_X_ATTRIBUTE, 0f);
-        pointsAtY =
-            createLiveAnimatedNumber(null, SVG_POINTS_AT_Y_ATTRIBUTE, 0f);
-        pointsAtZ =
-            createLiveAnimatedNumber(null, SVG_POINTS_AT_Z_ATTRIBUTE, 0f);
-        specularExponent =
-            createLiveAnimatedNumber(null, SVG_SPECULAR_EXPONENT_ATTRIBUTE, 1f);
-        limitingConeAngle =
-            createLiveAnimatedNumber
-                (null, SVG_LIMITING_CONE_ANGLE_ATTRIBUTE, 0f);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		x = createLiveAnimatedNumber(null, SVG_X_ATTRIBUTE, 0f);
+		y = createLiveAnimatedNumber(null, SVG_Y_ATTRIBUTE, 0f);
+		z = createLiveAnimatedNumber(null, SVG_Z_ATTRIBUTE, 0f);
+		pointsAtX = createLiveAnimatedNumber(null, SVG_POINTS_AT_X_ATTRIBUTE, 0f);
+		pointsAtY = createLiveAnimatedNumber(null, SVG_POINTS_AT_Y_ATTRIBUTE, 0f);
+		pointsAtZ = createLiveAnimatedNumber(null, SVG_POINTS_AT_Z_ATTRIBUTE, 0f);
+		specularExponent = createLiveAnimatedNumber(null, SVG_SPECULAR_EXPONENT_ATTRIBUTE, 1f);
+		limitingConeAngle = createLiveAnimatedNumber(null, SVG_LIMITING_CONE_ANGLE_ATTRIBUTE, 0f);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_SPOT_LIGHT_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_SPOT_LIGHT_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getX()}.
-     */
-    @Override
-    public SVGAnimatedNumber getX() {
-        return x;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getX()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getX() {
+		return x;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getY()}.
-     */
-    @Override
-    public SVGAnimatedNumber getY() {
-        return y;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getY()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getY() {
+		return y;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getZ()}.
-     */
-    @Override
-    public SVGAnimatedNumber getZ() {
-        return z;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getZ()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getZ() {
+		return z;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getPointsAtX()}.
-     */
-    @Override
-    public SVGAnimatedNumber getPointsAtX() {
-        return pointsAtX;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getPointsAtX()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getPointsAtX() {
+		return pointsAtX;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getPointsAtY()}.
-     */
-    @Override
-    public SVGAnimatedNumber getPointsAtY() {
-        return pointsAtY;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getPointsAtY()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getPointsAtY() {
+		return pointsAtY;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getPointsAtZ()}.
-     */
-    @Override
-    public SVGAnimatedNumber getPointsAtZ() {
-        return pointsAtZ;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getPointsAtZ()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getPointsAtZ() {
+		return pointsAtZ;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGFESpotLightElement#getSpecularExponent()}.
-     */
-    @Override
-    public SVGAnimatedNumber getSpecularExponent() {
-        return specularExponent;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getSpecularExponent()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getSpecularExponent() {
+		return specularExponent;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGFESpotLightElement#getLimitingConeAngle()}.
-     */
-    @Override
-    public SVGAnimatedNumber getLimitingConeAngle() {
-        return limitingConeAngle;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFESpotLightElement#getLimitingConeAngle()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getLimitingConeAngle() {
+		return limitingConeAngle;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFESpotLightElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFESpotLightElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

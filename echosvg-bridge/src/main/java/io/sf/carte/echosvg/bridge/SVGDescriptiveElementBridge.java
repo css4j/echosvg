@@ -38,120 +38,142 @@ import io.sf.carte.echosvg.dom.svg.SVGContext;
  * @version $Id$
  */
 public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge
-    implements GenericBridge,  BridgeUpdateHandler, SVGContext {
+		implements GenericBridge, BridgeUpdateHandler, SVGContext {
 
-    Element theElt;
-    Element parent;
-    BridgeContext theCtx;
+	Element theElt;
+	Element parent;
+	BridgeContext theCtx;
 
-    public SVGDescriptiveElementBridge() {
-    }
+	public SVGDescriptiveElementBridge() {
+	}
 
+	/**
+	 * Invoked to handle an <code>Element</code> for a given
+	 * <code>BridgeContext</code>. For example, see the
+	 * <code>SVGDescElementBridge</code>.
+	 *
+	 * @param ctx the bridge context to use
+	 * @param e   the element to be handled
+	 */
+	@Override
+	public void handleElement(BridgeContext ctx, Element e) {
+		UserAgent ua = ctx.getUserAgent();
+		ua.handleElement(e, Boolean.TRUE);
 
-    /**
-     * Invoked to handle an <code>Element</code> for a given
-     * <code>BridgeContext</code>.  For example, see the
-     * <code>SVGDescElementBridge</code>.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element to be handled
-     */
-    @Override
-    public void handleElement(BridgeContext ctx, Element e){
-        UserAgent ua = ctx.getUserAgent();
-        ua.handleElement(e, Boolean.TRUE);
+		if (ctx.isDynamic()) {
+			SVGDescriptiveElementBridge b;
+			b = (SVGDescriptiveElementBridge) getInstance();
+			b.theElt = e;
+			b.parent = (Element) e.getParentNode();
+			b.theCtx = ctx;
+			((SVGOMElement) e).setSVGContext(b);
+		}
 
-        if (ctx.isDynamic()) {
-            SVGDescriptiveElementBridge b;
-            b = (SVGDescriptiveElementBridge)getInstance();
-            b.theElt = e;
-            b.parent = (Element)e.getParentNode();
-            b.theCtx = ctx;
-            ((SVGOMElement)e).setSVGContext(b);
-        }
+	}
 
-    }
+	// BridgeUpdateHandler implementation ////////////////////////////////////
 
-    // BridgeUpdateHandler implementation ////////////////////////////////////
+	@Override
+	public void dispose() {
+		UserAgent ua = theCtx.getUserAgent();
+		((SVGOMElement) theElt).setSVGContext(null);
+		ua.handleElement(theElt, parent);
+		theElt = null;
+		parent = null;
+	}
 
-    @Override
-    public void dispose() {
-        UserAgent ua = theCtx.getUserAgent();
-        ((SVGOMElement)theElt).setSVGContext(null);
-        ua.handleElement(theElt, parent);
-        theElt = null;
-        parent = null;
-    }
-    @Override
-    public void handleDOMNodeInsertedEvent(MutationEvent evt) {
-        UserAgent ua = theCtx.getUserAgent();
-        ua.handleElement(theElt, Boolean.TRUE);
-    }
-    @Override
-    public void handleDOMCharacterDataModified(MutationEvent evt) {
-        UserAgent ua = theCtx.getUserAgent();
-        ua.handleElement(theElt, Boolean.TRUE);
-    }
+	@Override
+	public void handleDOMNodeInsertedEvent(MutationEvent evt) {
+		UserAgent ua = theCtx.getUserAgent();
+		ua.handleElement(theElt, Boolean.TRUE);
+	}
 
-    @Override
-    public void handleDOMNodeRemovedEvent (MutationEvent evt) {
-        dispose();
-    }
+	@Override
+	public void handleDOMCharacterDataModified(MutationEvent evt) {
+		UserAgent ua = theCtx.getUserAgent();
+		ua.handleElement(theElt, Boolean.TRUE);
+	}
 
-    @Override
-    public void handleDOMAttrModifiedEvent(MutationEvent evt) { }
-    @Override
-    public void handleCSSEngineEvent(CSSEngineEvent evt) { }
-    @Override
-    public void handleAnimatedAttributeChanged
-        (AnimatedLiveAttributeValue alav) { }
-    @Override
-    public void handleOtherAnimationChanged(String type) { }
+	@Override
+	public void handleDOMNodeRemovedEvent(MutationEvent evt) {
+		dispose();
+	}
 
+	@Override
+	public void handleDOMAttrModifiedEvent(MutationEvent evt) {
+	}
 
-    // SVGContext implementation ///////////////////////////////////////////
+	@Override
+	public void handleCSSEngineEvent(CSSEngineEvent evt) {
+	}
 
-    /**
-     * Returns the size of a px CSS unit in millimeters.
-     */
-    @Override
-    public float getPixelUnitToMillimeter() {
-        return theCtx.getUserAgent().getPixelUnitToMillimeter();
-    }
+	@Override
+	public void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav) {
+	}
 
-    /**
-     * Returns the size of a px CSS unit in millimeters.
-     * This will be removed after next release.
-     * @see #getPixelUnitToMillimeter()
-     */
-    @Override
-    public float getPixelToMM() {
-        return getPixelUnitToMillimeter();
+	@Override
+	public void handleOtherAnimationChanged(String type) {
+	}
 
-    }
+	// SVGContext implementation ///////////////////////////////////////////
 
-    @Override
-    public Rectangle2D getBBox() { return null; }
-    @Override
-    public AffineTransform getScreenTransform() {
-        return theCtx.getUserAgent().getTransform();
-    }
-    @Override
-    public void setScreenTransform(AffineTransform at) {
-        theCtx.getUserAgent().setTransform(at);
-    }
-    @Override
-    public AffineTransform getCTM() { return null; }
-    @Override
-    public AffineTransform getGlobalTransform() { return null; }
-    @Override
-    public float getViewportWidth() {
-        return theCtx.getBlockWidth(theElt);
-    }
-    @Override
-    public float getViewportHeight() {
-        return theCtx.getBlockHeight(theElt);
-    }
-    @Override
-    public float getFontSize() { return 0; }
+	/**
+	 * Returns the size of a px CSS unit in millimeters.
+	 */
+	@Override
+	public float getPixelUnitToMillimeter() {
+		return theCtx.getUserAgent().getPixelUnitToMillimeter();
+	}
+
+	/**
+	 * Returns the size of a px CSS unit in millimeters. This will be removed after
+	 * next release.
+	 * 
+	 * @see #getPixelUnitToMillimeter()
+	 */
+	@Override
+	public float getPixelToMM() {
+		return getPixelUnitToMillimeter();
+
+	}
+
+	@Override
+	public Rectangle2D getBBox() {
+		return null;
+	}
+
+	@Override
+	public AffineTransform getScreenTransform() {
+		return theCtx.getUserAgent().getTransform();
+	}
+
+	@Override
+	public void setScreenTransform(AffineTransform at) {
+		theCtx.getUserAgent().setTransform(at);
+	}
+
+	@Override
+	public AffineTransform getCTM() {
+		return null;
+	}
+
+	@Override
+	public AffineTransform getGlobalTransform() {
+		return null;
+	}
+
+	@Override
+	public float getViewportWidth() {
+		return theCtx.getBlockWidth(theElt);
+	}
+
+	@Override
+	public float getViewportHeight() {
+		return theCtx.getBlockHeight(theElt);
+	}
+
+	@Override
+	public float getFontSize() {
+		return 0;
+	}
 }

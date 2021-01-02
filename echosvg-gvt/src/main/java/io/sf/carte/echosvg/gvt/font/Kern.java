@@ -21,9 +21,9 @@ package io.sf.carte.echosvg.gvt.font;
 import java.util.Arrays;
 
 /**
- * The Kern class describes an entry in the "kerning table". It provides
- * a kerning value to be used when laying out characters side
- * by side. It may be used for either horizontal or vertical kerning.
+ * The Kern class describes an entry in the "kerning table". It provides a
+ * kerning value to be used when laying out characters side by side. It may be
+ * used for either horizontal or vertical kerning.
  *
  * @author <a href="mailto:dean.jackson@cmis.csiro.au">Dean Jackson</a>
  * @author For later modifications, see Git history.
@@ -31,144 +31,146 @@ import java.util.Arrays;
  */
 public class Kern {
 
-    private int[] firstGlyphCodes;
-    private int[] secondGlyphCodes;
-    private UnicodeRange[] firstUnicodeRanges;
-    private UnicodeRange[] secondUnicodeRanges;
-    private float kerningAdjust;
+	private int[] firstGlyphCodes;
+	private int[] secondGlyphCodes;
+	private UnicodeRange[] firstUnicodeRanges;
+	private UnicodeRange[] secondUnicodeRanges;
+	private float kerningAdjust;
 
-    /**
-     * Creates a Kern object with the given glyph arrays
-     * and kerning value. The first and second sets of glyphs for this kerning
-     * entry consist of the union of glyphs in the glyph code arrays and the
-     * unicode ranges.
-     *
-     * @param firstGlyphCodes An array of glyph codes that are part of the first
-     * set of glyphs in this kerning entry.
-     * @param secondGlyphCodes An array of glyph codes that are part of the
-     * second set of glyphs in this kerning entry.
-     * @param firstUnicodeRanges An array of unicode ranges that are part of the
-     * first set of glyphs in this kerning entry.
-     * @param secondUnicodeRanges An array of unicode ranges that are part of
-     * the second set of glyphs in this kerning entry.
-     * @param adjustValue The kerning adjustment (positive value means the space
-     * between glyphs should decrease).  
-     */
-    public Kern(int[] firstGlyphCodes, 
-                int[] secondGlyphCodes,
-                UnicodeRange[] firstUnicodeRanges,
-                UnicodeRange[] secondUnicodeRanges,
-                float adjustValue) {
-        this.firstGlyphCodes = firstGlyphCodes;
-        this.secondGlyphCodes = secondGlyphCodes;
-        this.firstUnicodeRanges = firstUnicodeRanges;
-        this.secondUnicodeRanges = secondUnicodeRanges;
-        this.kerningAdjust = adjustValue;
+	/**
+	 * Creates a Kern object with the given glyph arrays and kerning value. The
+	 * first and second sets of glyphs for this kerning entry consist of the union
+	 * of glyphs in the glyph code arrays and the unicode ranges.
+	 *
+	 * @param firstGlyphCodes     An array of glyph codes that are part of the first
+	 *                            set of glyphs in this kerning entry.
+	 * @param secondGlyphCodes    An array of glyph codes that are part of the
+	 *                            second set of glyphs in this kerning entry.
+	 * @param firstUnicodeRanges  An array of unicode ranges that are part of the
+	 *                            first set of glyphs in this kerning entry.
+	 * @param secondUnicodeRanges An array of unicode ranges that are part of the
+	 *                            second set of glyphs in this kerning entry.
+	 * @param adjustValue         The kerning adjustment (positive value means the
+	 *                            space between glyphs should decrease).
+	 */
+	public Kern(int[] firstGlyphCodes, int[] secondGlyphCodes, UnicodeRange[] firstUnicodeRanges,
+			UnicodeRange[] secondUnicodeRanges, float adjustValue) {
+		this.firstGlyphCodes = firstGlyphCodes;
+		this.secondGlyphCodes = secondGlyphCodes;
+		this.firstUnicodeRanges = firstUnicodeRanges;
+		this.secondUnicodeRanges = secondUnicodeRanges;
+		this.kerningAdjust = adjustValue;
 
-        if (firstGlyphCodes != null) 
-            Arrays.sort(this.firstGlyphCodes);
-        if (secondGlyphCodes != null) 
-            Arrays.sort(this.secondGlyphCodes);
-    }
+		if (firstGlyphCodes != null)
+			Arrays.sort(this.firstGlyphCodes);
+		if (secondGlyphCodes != null)
+			Arrays.sort(this.secondGlyphCodes);
+	}
 
-    /**
-     * Returns true if the specified glyph is one of the glyphs considered
-     * as first by this kerning entry. Returns false otherwise.
-     *
-     * @param glyphCode The id of the glyph to test.
-     * @param glyphUnicode The unicode value of the glyph to test.
-     * @return True if this glyph is in the list of first glyphs for
-     * the kerning entry
-     */
-    public boolean matchesFirstGlyph(int glyphCode, String glyphUnicode) {
-        if (firstGlyphCodes != null) {
-            int pt = Arrays.binarySearch(firstGlyphCodes, glyphCode);
-            if (pt >= 0) return true;
-        }
-        if (glyphUnicode.length() < 1) return false;
-        char glyphChar = glyphUnicode.charAt(0);
-        for (UnicodeRange firstUnicodeRange : firstUnicodeRanges) {
-            if (firstUnicodeRange.contains(glyphChar))
-                return true;
-        }
-        return false;
-    }
+	/**
+	 * Returns true if the specified glyph is one of the glyphs considered as first
+	 * by this kerning entry. Returns false otherwise.
+	 *
+	 * @param glyphCode    The id of the glyph to test.
+	 * @param glyphUnicode The unicode value of the glyph to test.
+	 * @return True if this glyph is in the list of first glyphs for the kerning
+	 *         entry
+	 */
+	public boolean matchesFirstGlyph(int glyphCode, String glyphUnicode) {
+		if (firstGlyphCodes != null) {
+			int pt = Arrays.binarySearch(firstGlyphCodes, glyphCode);
+			if (pt >= 0)
+				return true;
+		}
+		if (glyphUnicode.length() < 1)
+			return false;
+		char glyphChar = glyphUnicode.charAt(0);
+		for (UnicodeRange firstUnicodeRange : firstUnicodeRanges) {
+			if (firstUnicodeRange.contains(glyphChar))
+				return true;
+		}
+		return false;
+	}
 
-    /**
-     * Returns true if the specified glyph is one of the glyphs considered
-     * as first by this kerning entry. Returns false otherwise.
-     *
-     * @param glyphCode The id of the glyph to test.
-     * @param glyphUnicode The unicode value of the glyph to test.
-     * @return True if this glyph is in the list of first glyphs for
-     *         the kerning entry
-     */
-    public boolean matchesFirstGlyph(int glyphCode, char glyphUnicode) {
-        if (firstGlyphCodes != null) {
-            int pt = Arrays.binarySearch(firstGlyphCodes, glyphCode);
-            if (pt >= 0) return true;
-        }
-        for (UnicodeRange firstUnicodeRange : firstUnicodeRanges) {
-            if (firstUnicodeRange.contains(glyphUnicode))
-                return true;
-        }
-        return false;
-    }
+	/**
+	 * Returns true if the specified glyph is one of the glyphs considered as first
+	 * by this kerning entry. Returns false otherwise.
+	 *
+	 * @param glyphCode    The id of the glyph to test.
+	 * @param glyphUnicode The unicode value of the glyph to test.
+	 * @return True if this glyph is in the list of first glyphs for the kerning
+	 *         entry
+	 */
+	public boolean matchesFirstGlyph(int glyphCode, char glyphUnicode) {
+		if (firstGlyphCodes != null) {
+			int pt = Arrays.binarySearch(firstGlyphCodes, glyphCode);
+			if (pt >= 0)
+				return true;
+		}
+		for (UnicodeRange firstUnicodeRange : firstUnicodeRanges) {
+			if (firstUnicodeRange.contains(glyphUnicode))
+				return true;
+		}
+		return false;
+	}
 
-    /**
-     * Returns true if the specified glyph is one of the glyphs considered
-     * as second by this kerning entry. Returns false otherwise.
-     *
-     * @param glyphCode The id of the glyph to test.
-     * @param glyphUnicode The unicode value of the glyph to test.
+	/**
+	 * Returns true if the specified glyph is one of the glyphs considered as second
+	 * by this kerning entry. Returns false otherwise.
+	 *
+	 * @param glyphCode    The id of the glyph to test.
+	 * @param glyphUnicode The unicode value of the glyph to test.
+	 * 
+	 * @return True if this glyph is in the list of second glyphs for the kerning
+	 *         entry
+	 */
+	public boolean matchesSecondGlyph(int glyphCode, String glyphUnicode) {
+		if (secondGlyphCodes != null) {
+			int pt = Arrays.binarySearch(secondGlyphCodes, glyphCode);
+			if (pt >= 0)
+				return true;
+		}
+		if (glyphUnicode.length() < 1)
+			return false;
+		char glyphChar = glyphUnicode.charAt(0);
+		for (UnicodeRange secondUnicodeRange : secondUnicodeRanges) {
+			if (secondUnicodeRange.contains(glyphChar))
+				return true;
+		}
+		return false;
+	}
 
-     * @return True if this glyph is in the list of second glyphs for the
-     * kerning entry 
-     */
-    public boolean matchesSecondGlyph(int glyphCode, String glyphUnicode) {
-        if (secondGlyphCodes != null) {
-            int pt = Arrays.binarySearch(secondGlyphCodes, glyphCode);
-            if (pt >= 0) return true;
-        }
-        if (glyphUnicode.length() < 1) return false;
-        char glyphChar = glyphUnicode.charAt(0);
-        for (UnicodeRange secondUnicodeRange : secondUnicodeRanges) {
-            if (secondUnicodeRange.contains(glyphChar))
-                return true;
-        }
-        return false;
-    }
+	/**
+	 * Returns true if the specified glyph is one of the glyphs considered as second
+	 * by this kerning entry. Returns false otherwise.
+	 *
+	 * @param glyphCode    The id of the glyph to test.
+	 * @param glyphUnicode The unicode value of the glyph to test.
+	 * 
+	 * @return True if this glyph is in the list of second glyphs for the kerning
+	 *         entry
+	 */
+	public boolean matchesSecondGlyph(int glyphCode, char glyphUnicode) {
+		if (secondGlyphCodes != null) {
+			int pt = Arrays.binarySearch(secondGlyphCodes, glyphCode);
+			if (pt >= 0)
+				return true;
+		}
+		for (UnicodeRange secondUnicodeRange : secondUnicodeRanges) {
+			if (secondUnicodeRange.contains(glyphUnicode))
+				return true;
+		}
+		return false;
+	}
 
-    /**
-     * Returns true if the specified glyph is one of the glyphs considered
-     * as second by this kerning entry. Returns false otherwise.
-     *
-     * @param glyphCode The id of the glyph to test.
-     * @param glyphUnicode The unicode value of the glyph to test.
-
-     * @return True if this glyph is in the list of second glyphs for the
-     * kerning entry 
-     */
-    public boolean matchesSecondGlyph(int glyphCode, char glyphUnicode) {
-        if (secondGlyphCodes != null) {
-            int pt = Arrays.binarySearch(secondGlyphCodes, glyphCode);
-            if (pt >= 0) return true;
-        }
-        for (UnicodeRange secondUnicodeRange : secondUnicodeRanges) {
-            if (secondUnicodeRange.contains(glyphUnicode))
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * Returns the kerning adjustment value for this kerning entry (a positive
-     * value means the space between characters should decrease).
-     *
-     * @return The kerning adjustment for this kerning entry.
-     */
-    public float getAdjustValue() {
-        return kerningAdjust;
-    }
+	/**
+	 * Returns the kerning adjustment value for this kerning entry (a positive value
+	 * means the space between characters should decrease).
+	 *
+	 * @return The kerning adjustment for this kerning entry.
+	 */
+	public float getAdjustValue() {
+		return kerningAdjust;
+	}
 
 }

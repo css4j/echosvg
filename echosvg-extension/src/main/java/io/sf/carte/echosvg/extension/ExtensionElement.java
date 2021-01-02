@@ -22,45 +22,45 @@ import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 
 /**
- * This class implements the basic features an element must have in order
- * to be usable as a foreign element within an SVGOMDocument.
+ * This class implements the basic features an element must have in order to be
+ * usable as a foreign element within an SVGOMDocument.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class ExtensionElement 
-    extends SVGOMElement {
+public abstract class ExtensionElement extends SVGOMElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new Element object.
-     */
-    protected ExtensionElement() {
-    }
+	/**
+	 * Creates a new Element object.
+	 */
+	protected ExtensionElement() {
+	}
 
-    /**
-     * Creates a new Element object.
-     * @param name The element name, for validation purposes.
-     * @param owner The owner document.
-     */
-    protected ExtensionElement(String name, AbstractDocument owner) {
-        super(name, owner);
-    }
+	/**
+	 * Creates a new Element object.
+	 * 
+	 * @param name  The element name, for validation purposes.
+	 * @param owner The owner document.
+	 */
+	protected ExtensionElement(String name, AbstractDocument owner) {
+		super(name, owner);
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return false;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return false;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+	}
 }

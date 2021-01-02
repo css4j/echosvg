@@ -32,147 +32,154 @@ import javax.swing.text.PlainDocument;
  */
 public class XMLDocument extends PlainDocument {
 
-    private static final long serialVersionUID = 1L;
-    protected XMLScanner lexer;
-    protected XMLContext context;
-    
-    protected XMLToken cacheToken = null;
-    
-    public XMLDocument() {
-        this(new XMLContext());
-    }
+	private static final long serialVersionUID = 1L;
+	protected XMLScanner lexer;
+	protected XMLContext context;
 
-    /** Creates a new instance of XMLDocument 
-     * @param context XMLContext
-     */
-    public XMLDocument(XMLContext context) {
-        //super(context);
-        this.context = context;
-        lexer = new XMLScanner();
-    }
-    
-    /** Return XMLToken
-     * @param pos position
-     * @return XMLToken
-     */
-    public XMLToken getScannerStart(int pos) throws BadLocationException {
-        int ctx = XMLScanner.CHARACTER_DATA_CONTEXT;
-        int offset = 0;
-        int tokenOffset = 0;
-        
-        if (cacheToken != null) {
-            if (cacheToken.getStartOffset() > pos) {
-                cacheToken = null;
-            } else {
-                ctx = cacheToken.getContext();
-                offset = cacheToken.getStartOffset();
-                tokenOffset = offset;
-                
-                Element element = getDefaultRootElement();
-                int line1 = element.getElementIndex(pos);
-                int line2 = element.getElementIndex(offset);
-                
-                //if (pos - offset <= 1800 ) {
-                if (line1 - line2 < 50) {
-                    return cacheToken;
-                }
-            }
-        }
-        
-        String str = getText(offset, pos - offset);
-        lexer.setString(str);
-        lexer.reset();
-        
-        // read until pos
-        int lastCtx = ctx;
-        int lastOffset = offset;
-        while (offset < pos) {
-            lastOffset = offset;
-            lastCtx = ctx;
-            
-            offset = lexer.scan(ctx) + tokenOffset;
-            ctx = lexer.getScanValue();
-        }
-        cacheToken = new XMLToken(lastCtx, lastOffset, offset);
-        return cacheToken;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void insertString(int offset, String str, AttributeSet a)
-            throws BadLocationException {
+	protected XMLToken cacheToken = null;
 
-        super.insertString(offset, str, a);
-        
-        if (cacheToken != null) {
-            if (cacheToken.getStartOffset() >= offset) {
-                cacheToken = null;
-            }
-        }
-        
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void remove(int offs, int len) throws BadLocationException {
-        super.remove(offs, len);
-        
-        if (cacheToken != null) {
-            if (cacheToken.getStartOffset() >= offs) {
-                cacheToken = null;
-            }
-        }
-    }
-    
-    /**
-     * Find the first occurrence of the specified String starting at the specified index.
-     * @param str String to find
-     * @param fromIndex
-     * @param caseSensitive true or false
-     * @return the offset if the string argument occurs as a substring, otherwise return -1
-     * @throws BadLocationException if fromIndex was not a valid part of the document
-     */
-    public int find(String str, int fromIndex, boolean caseSensitive)
-            throws BadLocationException {
+	public XMLDocument() {
+		this(new XMLContext());
+	}
 
-        int offset = -1;
-        int startOffset = -1;
-        int len = 0;
-        int charIndex = 0;
-        
-        Element rootElement = getDefaultRootElement();
-        
-        int elementIndex = rootElement.getElementIndex(fromIndex);
-        if (elementIndex < 0) { return offset; }
-        
-        // set the initial charIndex
-        charIndex = fromIndex -
-            rootElement.getElement(elementIndex).getStartOffset();
-        
-        for (int i = elementIndex; i < rootElement.getElementCount(); i++) {
-            Element element = rootElement.getElement(i);
-            startOffset = element.getStartOffset();
-            if (element.getEndOffset() > getLength()) {
-               len = getLength() - startOffset;
-            } else {
-                len = element.getEndOffset() - startOffset;
-            }
-            
-            String text = getText(startOffset, len);
-            
-            if (!caseSensitive) {
-                text = text.toLowerCase();
-                str = str.toLowerCase();
-            }
-            
-            charIndex = text.indexOf(str, charIndex);
-            if (charIndex != -1) {
-                offset = startOffset + charIndex;
-                break;
-            }
-            charIndex = 0;  // reset the charIndex
-        }
-        
-        return offset;
-    }
+	/**
+	 * Creates a new instance of XMLDocument
+	 * 
+	 * @param context XMLContext
+	 */
+	public XMLDocument(XMLContext context) {
+		// super(context);
+		this.context = context;
+		lexer = new XMLScanner();
+	}
+
+	/**
+	 * Return XMLToken
+	 * 
+	 * @param pos position
+	 * @return XMLToken
+	 */
+	public XMLToken getScannerStart(int pos) throws BadLocationException {
+		int ctx = XMLScanner.CHARACTER_DATA_CONTEXT;
+		int offset = 0;
+		int tokenOffset = 0;
+
+		if (cacheToken != null) {
+			if (cacheToken.getStartOffset() > pos) {
+				cacheToken = null;
+			} else {
+				ctx = cacheToken.getContext();
+				offset = cacheToken.getStartOffset();
+				tokenOffset = offset;
+
+				Element element = getDefaultRootElement();
+				int line1 = element.getElementIndex(pos);
+				int line2 = element.getElementIndex(offset);
+
+				// if (pos - offset <= 1800 ) {
+				if (line1 - line2 < 50) {
+					return cacheToken;
+				}
+			}
+		}
+
+		String str = getText(offset, pos - offset);
+		lexer.setString(str);
+		lexer.reset();
+
+		// read until pos
+		int lastCtx = ctx;
+		int lastOffset = offset;
+		while (offset < pos) {
+			lastOffset = offset;
+			lastCtx = ctx;
+
+			offset = lexer.scan(ctx) + tokenOffset;
+			ctx = lexer.getScanValue();
+		}
+		cacheToken = new XMLToken(lastCtx, lastOffset, offset);
+		return cacheToken;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void insertString(int offset, String str, AttributeSet a) throws BadLocationException {
+
+		super.insertString(offset, str, a);
+
+		if (cacheToken != null) {
+			if (cacheToken.getStartOffset() >= offset) {
+				cacheToken = null;
+			}
+		}
+
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void remove(int offs, int len) throws BadLocationException {
+		super.remove(offs, len);
+
+		if (cacheToken != null) {
+			if (cacheToken.getStartOffset() >= offs) {
+				cacheToken = null;
+			}
+		}
+	}
+
+	/**
+	 * Find the first occurrence of the specified String starting at the specified
+	 * index.
+	 * 
+	 * @param str           String to find
+	 * @param fromIndex
+	 * @param caseSensitive true or false
+	 * @return the offset if the string argument occurs as a substring, otherwise
+	 *         return -1
+	 * @throws BadLocationException if fromIndex was not a valid part of the
+	 *                              document
+	 */
+	public int find(String str, int fromIndex, boolean caseSensitive) throws BadLocationException {
+
+		int offset = -1;
+		int startOffset = -1;
+		int len = 0;
+		int charIndex = 0;
+
+		Element rootElement = getDefaultRootElement();
+
+		int elementIndex = rootElement.getElementIndex(fromIndex);
+		if (elementIndex < 0) {
+			return offset;
+		}
+
+		// set the initial charIndex
+		charIndex = fromIndex - rootElement.getElement(elementIndex).getStartOffset();
+
+		for (int i = elementIndex; i < rootElement.getElementCount(); i++) {
+			Element element = rootElement.getElement(i);
+			startOffset = element.getStartOffset();
+			if (element.getEndOffset() > getLength()) {
+				len = getLength() - startOffset;
+			} else {
+				len = element.getEndOffset() - startOffset;
+			}
+
+			String text = getText(startOffset, len);
+
+			if (!caseSensitive) {
+				text = text.toLowerCase();
+				str = str.toLowerCase();
+			}
+
+			charIndex = text.indexOf(str, charIndex);
+			if (charIndex != -1) {
+				offset = startOffset + charIndex;
+				break;
+			}
+			charIndex = 0; // reset the charIndex
+		}
+
+		return offset;
+	}
 }

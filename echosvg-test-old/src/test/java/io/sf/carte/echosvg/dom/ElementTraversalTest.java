@@ -37,84 +37,85 @@ import io.sf.carte.echosvg.w3c.dom.ElementTraversal;
  */
 public class ElementTraversalTest extends AbstractTest {
 
-    private String DOC = "<a><b/><c>.<?x?>.</c><d>.<?x?><e/><f/><?x?>.</d><g><h/>.<i/></g></a>";
+	private String DOC = "<a><b/><c>.<?x?>.</c><d>.<?x?><e/><f/><?x?>.</d><g><h/>.<i/></g></a>";
 
-    @Override
-    public boolean runImplBasic() throws Exception {
-        String parser = XMLResourceDescriptor.getXMLParserClassName();
-        SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
-        Document doc = df.createDocument("http://example.org/", new StringReader(DOC));
+	@Override
+	public boolean runImplBasic() throws Exception {
+		String parser = XMLResourceDescriptor.getXMLParserClassName();
+		SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
+		Document doc = df.createDocument("http://example.org/", new StringReader(DOC));
 
-        AbstractElement a = (AbstractElement) doc.getDocumentElement();
-        AbstractElement b = (AbstractElement) a.getFirstChild();
-        AbstractElement c = (AbstractElement) b.getNextSibling();
-        AbstractElement d = (AbstractElement) c.getNextSibling();
-        AbstractElement g = (AbstractElement) d.getNextSibling();
+		AbstractElement a = (AbstractElement) doc.getDocumentElement();
+		AbstractElement b = (AbstractElement) a.getFirstChild();
+		AbstractElement c = (AbstractElement) b.getNextSibling();
+		AbstractElement d = (AbstractElement) c.getNextSibling();
+		AbstractElement g = (AbstractElement) d.getNextSibling();
 
-        // (1) Test firstElementChild with no children
-        ensure(1, b.getFirstElementChild() == null);
+		// (1) Test firstElementChild with no children
+		ensure(1, b.getFirstElementChild() == null);
 
-        // (2) Test firstElementChild with children but no element children
-        ensure(2, c.getFirstElementChild() == null);
+		// (2) Test firstElementChild with children but no element children
+		ensure(2, c.getFirstElementChild() == null);
 
-        // (3) Test firstElementChild with children but element child is not first
-        AbstractElement e = (AbstractElement) d.getFirstElementChild();
-        ensure(3, e != null && e.getNodeName().equals("e"));
+		// (3) Test firstElementChild with children but element child is not first
+		AbstractElement e = (AbstractElement) d.getFirstElementChild();
+		ensure(3, e != null && e.getNodeName().equals("e"));
 
-        // (4) Test firstElementChild with children and element child is first
-        AbstractElement h = (AbstractElement) g.getFirstElementChild();
-        ensure(4, h != null && h.getNodeName().equals("h"));
+		// (4) Test firstElementChild with children and element child is first
+		AbstractElement h = (AbstractElement) g.getFirstElementChild();
+		ensure(4, h != null && h.getNodeName().equals("h"));
 
-        // (5) Test lastElementChild with no children
-        ensure(5, b.getLastElementChild() == null);
+		// (5) Test lastElementChild with no children
+		ensure(5, b.getLastElementChild() == null);
 
-        // (6) Test lastElementChild with children but no element children
-        ensure(6, c.getLastElementChild() == null);
+		// (6) Test lastElementChild with children but no element children
+		ensure(6, c.getLastElementChild() == null);
 
-        // (7) Test lastElementChild with children but element child is not last
-        AbstractElement f = (AbstractElement) d.getLastElementChild();
-        ensure(7, f != null && f.getNodeName().equals("f"));
+		// (7) Test lastElementChild with children but element child is not last
+		AbstractElement f = (AbstractElement) d.getLastElementChild();
+		ensure(7, f != null && f.getNodeName().equals("f"));
 
-        // (8) Test lastElementChild with children and element child is last
-        AbstractElement i = (AbstractElement) g.getLastElementChild();
-        ensure(8, i != null && i.getNodeName().equals("i"));
+		// (8) Test lastElementChild with children and element child is last
+		AbstractElement i = (AbstractElement) g.getLastElementChild();
+		ensure(8, i != null && i.getNodeName().equals("i"));
 
-        // (9) Test nextElementSibling with no next sibling
-        ensure(9, a.getNextElementSibling() == null);
+		// (9) Test nextElementSibling with no next sibling
+		ensure(9, a.getNextElementSibling() == null);
 
-        // (10) Test nextElementSibling with next siblings but no element next sibling
-        ensure(10, f.getNextElementSibling() == null);
+		// (10) Test nextElementSibling with next siblings but no element next sibling
+		ensure(10, f.getNextElementSibling() == null);
 
-        // (11) Test nextElementSibling with next element sibling but not first
-        ensure(11, h.getNextElementSibling() == i);
+		// (11) Test nextElementSibling with next element sibling but not first
+		ensure(11, h.getNextElementSibling() == i);
 
-        // (12) Test nextElementSibling with next element sibling which is first
-        ensure(12, e.getNextElementSibling() == f);
+		// (12) Test nextElementSibling with next element sibling which is first
+		ensure(12, e.getNextElementSibling() == f);
 
-        // (13) Test previousElementSibling with no previous sibling
-        ensure(13, a.getPreviousElementSibling() == null);
+		// (13) Test previousElementSibling with no previous sibling
+		ensure(13, a.getPreviousElementSibling() == null);
 
-        // (14) Test previousElementSibling with previous siblings but no element previous sibling
-        ensure(14, e.getPreviousElementSibling() == null);
+		// (14) Test previousElementSibling with previous siblings but no element
+		// previous sibling
+		ensure(14, e.getPreviousElementSibling() == null);
 
-        // (15) Test previousElementSibling with previous element sibling but not first
-        ensure(15, i.getPreviousElementSibling() == h);
+		// (15) Test previousElementSibling with previous element sibling but not first
+		ensure(15, i.getPreviousElementSibling() == h);
 
-        // (16) Test previousElementSibling with previous element sibling which is first
-        ensure(16, f.getPreviousElementSibling() == e);
+		// (16) Test previousElementSibling with previous element sibling which is first
+		ensure(16, f.getPreviousElementSibling() == e);
 
-        // (17-20) Test childElementCount for a few cases
-        ensure(17, a.getChildElementCount() == 4);
-        ensure(18, b.getChildElementCount() == 0);
-        ensure(19, c.getChildElementCount() == 0);
-        ensure(20, d.getChildElementCount() == 2);
+		// (17-20) Test childElementCount for a few cases
+		ensure(17, a.getChildElementCount() == 4);
+		ensure(18, b.getChildElementCount() == 0);
+		ensure(19, c.getChildElementCount() == 0);
+		ensure(20, d.getChildElementCount() == 2);
 
-        return true;
-    }
+		return true;
+	}
 
-    protected void ensure(int subTestNumber, boolean b) {
-        if (!b) {
-            throw new RuntimeException("Assertion failure in sub-test " + subTestNumber);
-        }
-    }
+	protected void ensure(int subTestNumber, boolean b) {
+		if (!b) {
+			throw new RuntimeException("Assertion failure in sub-test " + subTestNumber);
+		}
+	}
 }

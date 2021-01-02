@@ -34,82 +34,64 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGFeTileElementBridge
-    extends AbstractSVGFilterPrimitiveElementBridge {
+public class SVGFeTileElementBridge extends AbstractSVGFilterPrimitiveElementBridge {
 
+	/**
+	 * Constructs a new bridge for the &lt;feTile&gt; element.
+	 */
+	public SVGFeTileElementBridge() {
+	}
 
-    /**
-     * Constructs a new bridge for the &lt;feTile&gt; element.
-     */
-    public SVGFeTileElementBridge() {}
+	/**
+	 * Returns 'feTile'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_TILE_TAG;
+	}
 
-    /**
-     * Returns 'feTile'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_TILE_TAG;
-    }
+	/**
+	 * Creates a <code>Filter</code> primitive according to the specified
+	 * parameters.
+	 *
+	 * @param ctx             the bridge context to use
+	 * @param filterElement   the element that defines a filter
+	 * @param filteredElement the element that references the filter
+	 * @param filteredNode    the graphics node to filter
+	 *
+	 * @param inputFilter     the <code>Filter</code> that represents the current
+	 *                        filter input if the filter chain.
+	 * @param filterRegion    the filter area defined for the filter chain the new
+	 *                        node will be part of.
+	 * @param filterMap       a map where the mediator can map a name to the
+	 *                        <code>Filter</code> it creates. Other
+	 *                        <code>FilterBridge</code>s can then access a filter
+	 *                        node from the filterMap if they know its name.
+	 */
+	@Override
+	public Filter createFilter(BridgeContext ctx, Element filterElement, Element filteredElement,
+			GraphicsNode filteredNode, Filter inputFilter, Rectangle2D filterRegion, Map<String, Filter> filterMap) {
 
-    /**
-     * Creates a <code>Filter</code> primitive according to the specified
-     * parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param filterElement the element that defines a filter
-     * @param filteredElement the element that references the filter
-     * @param filteredNode the graphics node to filter
-     *
-     * @param inputFilter the <code>Filter</code> that represents the current
-     *        filter input if the filter chain.
-     * @param filterRegion the filter area defined for the filter chain
-     *        the new node will be part of.
-     * @param filterMap a map where the mediator can map a name to the
-     *        <code>Filter</code> it creates. Other <code>FilterBridge</code>s
-     *        can then access a filter node from the filterMap if they
-     *        know its name.
-     */
-    @Override
-    public Filter createFilter(BridgeContext ctx,
-                               Element filterElement,
-                               Element filteredElement,
-                               GraphicsNode filteredNode,
-                               Filter inputFilter,
-                               Rectangle2D filterRegion,
-                               Map<String, Filter> filterMap) {
+		// Get the tiled region. For feTile, the default for the
+		// filter primitive subregion is the parent filter region.
+		Rectangle2D defaultRegion = filterRegion;
+		Rectangle2D primitiveRegion = SVGUtilities.convertFilterPrimitiveRegion(filterElement, filteredElement,
+				filteredNode, defaultRegion, filterRegion, ctx);
 
+		// 'in' attribute
+		Filter in = getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
+		if (in == null) {
+			return null; // disable the filter
+		}
 
-        // Get the tiled region. For feTile, the default for the
-        // filter primitive subregion is the parent filter region.
-        Rectangle2D defaultRegion = filterRegion;
-        Rectangle2D primitiveRegion
-            = SVGUtilities.convertFilterPrimitiveRegion(filterElement,
-                                                        filteredElement,
-                                                        filteredNode,
-                                                        defaultRegion,
-                                                        filterRegion,
-                                                        ctx);
+		Filter filter = new TileRable8Bit(in, primitiveRegion, in.getBounds2D(), false);
 
-        // 'in' attribute
-        Filter in = getIn(filterElement,
-                          filteredElement,
-                          filteredNode,
-                          inputFilter,
-                          filterMap,
-                          ctx);
-        if (in == null) {
-            return null; // disable the filter
-        }
+		// handle the 'color-interpolation-filters' property
+		handleColorInterpolationFilters(filter, filterElement);
 
-        Filter filter
-            = new TileRable8Bit(in, primitiveRegion, in.getBounds2D(), false);
+		// update the filter Map
+		updateFilterMap(filterElement, filter, filterMap);
 
-        // handle the 'color-interpolation-filters' property
-        handleColorInterpolationFilters(filter, filterElement);
-
-        // update the filter Map
-        updateFilterMap(filterElement, filter, filterMap);
-
-        return filter;
-    }
+		return filter;
+	}
 }

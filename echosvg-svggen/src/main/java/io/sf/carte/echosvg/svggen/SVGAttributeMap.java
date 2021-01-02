@@ -22,24 +22,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Repository of SVG attribute descriptions, accessible by
- * name.
+ * Repository of SVG attribute descriptions, accessible by name.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGAttributeMap{
-    /**
-     * Map of attribute name to SVGAttribute objects
-     */
-    private static Map<String, SVGAttribute> attrMap = new HashMap<>();
+public class SVGAttributeMap {
+	/**
+	 * Map of attribute name to SVGAttribute objects
+	 */
+	private static Map<String, SVGAttribute> attrMap = new HashMap<>();
 
-    /**
-     * @param attrName SVG name of the requested attribute
-     * @return attribute with requested name
-     */
-    public static SVGAttribute get(String attrName) {
-        return attrMap.get(attrName);
-    }
+	/**
+	 * @param attrName SVG name of the requested attribute
+	 * @return attribute with requested name
+	 */
+	public static SVGAttribute get(String attrName) {
+		return attrMap.get(attrName);
+	}
 }

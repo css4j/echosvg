@@ -29,96 +29,93 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatableStringValue extends AnimatableValue {
 
-    /**
-     * The string value.
-     */
-    protected String string;
-    
-    /**
-     * Creates a new, uninitialized AnimatableStringValue.
-     */
-    protected AnimatableStringValue(AnimationTarget target) {
-        super(target);
-    }
+	/**
+	 * The string value.
+	 */
+	protected String string;
 
-    /**
-     * Creates a new AnimatableStringValue.
-     */
-    public AnimatableStringValue(AnimationTarget target, String s) {
-        super(target);
-        string = s;
-    }
-    
-    /**
-     * Performs interpolation to the given value.  String values cannot be
-     * interpolated.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to, float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatableStringValue res;
-        if (result == null) {
-            res = new AnimatableStringValue(target);
-        } else {
-            res = (AnimatableStringValue) result;
-        }
+	/**
+	 * Creates a new, uninitialized AnimatableStringValue.
+	 */
+	protected AnimatableStringValue(AnimationTarget target) {
+		super(target);
+	}
 
-        String newString;
-        if (to != null && interpolation >= 0.5) {
-            AnimatableStringValue toValue =
-                (AnimatableStringValue) to;
-            newString = toValue.string;
-        } else {
-            newString = string;
-        }
+	/**
+	 * Creates a new AnimatableStringValue.
+	 */
+	public AnimatableStringValue(AnimationTarget target, String s) {
+		super(target);
+		string = s;
+	}
 
-        if (res.string == null || !res.string.equals(newString)) {
-            res.string = newString;
-            res.hasChanged = true;
-        }
-        return res;
-    }
+	/**
+	 * Performs interpolation to the given value. String values cannot be
+	 * interpolated.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatableStringValue res;
+		if (result == null) {
+			res = new AnimatableStringValue(target);
+		} else {
+			res = (AnimatableStringValue) result;
+		}
 
-    /**
-     * Returns the string.
-     */
-    public String getString() {
-        return string;
-    }
+		String newString;
+		if (to != null && interpolation >= 0.5) {
+			AnimatableStringValue toValue = (AnimatableStringValue) to;
+			newString = toValue.string;
+		} else {
+			newString = string;
+		}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return false;
-    }
+		if (res.string == null || !res.string.equals(newString)) {
+			res.string = newString;
+			res.hasChanged = true;
+		}
+		return res;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        return 0f;
-    }
+	/**
+	 * Returns the string.
+	 */
+	public String getString() {
+		return string;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        return new AnimatableStringValue(target, "");
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return false;
+	}
 
-    /**
-     * Returns the CSS text representation of the value.
-     */
-    @Override
-    public String getCssText() {
-        return string;
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		return 0f;
+	}
+
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		return new AnimatableStringValue(target, "");
+	}
+
+	/**
+	 * Returns the CSS text representation of the value.
+	 */
+	@Override
+	public String getCssText() {
+		return string;
+	}
 }

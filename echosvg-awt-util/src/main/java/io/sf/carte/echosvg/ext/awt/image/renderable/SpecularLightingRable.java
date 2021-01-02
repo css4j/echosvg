@@ -23,84 +23,83 @@ import java.awt.geom.Rectangle2D;
 import io.sf.carte.echosvg.ext.awt.image.Light;
 
 /**
- * This filter follows the specification of the feSpecularLighting filter in
- * the SVG 1.0 specification.
+ * This filter follows the specification of the feSpecularLighting filter in the
+ * SVG 1.0 specification.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SpecularLightingRable extends FilterColorInterpolation {
-    /**
-     * Returns the source to be filtered
-     */
-    Filter getSource();
+	/**
+	 * Returns the source to be filtered
+	 */
+	Filter getSource();
 
-    /**
-     * Sets the source to be filtered
-     */
-    void setSource(Filter src);
+	/**
+	 * Sets the source to be filtered
+	 */
+	void setSource(Filter src);
 
-    /**
-     * @return Light object used for the diffuse lighting
-     */
-    Light getLight();
+	/**
+	 * @return Light object used for the diffuse lighting
+	 */
+	Light getLight();
 
-    /**
-     * @param light New Light object
-     */
-    void setLight(Light light);
+	/**
+	 * @param light New Light object
+	 */
+	void setLight(Light light);
 
-    /**
-     * @return surfaceScale
-     */
-    double getSurfaceScale();
+	/**
+	 * @return surfaceScale
+	 */
+	double getSurfaceScale();
 
-    /**
-     * Sets the surface scale
-     */
-    void setSurfaceScale(double surfaceScale);
+	/**
+	 * Sets the surface scale
+	 */
+	void setSurfaceScale(double surfaceScale);
 
-    /**
-     * @return specular constant, or ks.
-     */
-    double getKs();
+	/**
+	 * @return specular constant, or ks.
+	 */
+	double getKs();
 
-    /**
-     * Sets the specular constant, or ks
-     */
-    void setKs(double ks);
+	/**
+	 * Sets the specular constant, or ks
+	 */
+	void setKs(double ks);
 
-    /**
-     * @return specular exponent, or kd
-     */
-    double getSpecularExponent();
+	/**
+	 * @return specular exponent, or kd
+	 */
+	double getSpecularExponent();
 
-    /**
-     * Sets the specular exponent
-     */
-    void setSpecularExponent(double specularExponent);
+	/**
+	 * Sets the specular exponent
+	 */
+	void setSpecularExponent(double specularExponent);
 
-    /**
-     * @return the litRegion for this filter
-     */
-    Rectangle2D getLitRegion();
+	/**
+	 * @return the litRegion for this filter
+	 */
+	Rectangle2D getLitRegion();
 
-    /**
-     * Sets the litRegion for this filter
-     */
-    void setLitRegion(Rectangle2D litRegion);
+	/**
+	 * Sets the litRegion for this filter
+	 */
+	void setLitRegion(Rectangle2D litRegion);
 
-    /**
-     * Returns the min [dx,dy] distance in user space for evalutation of
-     * the sobel gradient.
-     */
-    double [] getKernelUnitLength();
+	/**
+	 * Returns the min [dx,dy] distance in user space for evalutation of the sobel
+	 * gradient.
+	 */
+	double[] getKernelUnitLength();
 
-    /**
-     * Sets the min [dx,dy] distance in user space for evaluation of the
-     * sobel gradient. If set to zero or null then device space will be used.
-     */
-    void setKernelUnitLength(double [] kernelUnitLength);
+	/**
+	 * Sets the min [dx,dy] distance in user space for evaluation of the sobel
+	 * gradient. If set to zero or null then device space will be used.
+	 */
+	void setKernelUnitLength(double[] kernelUnitLength);
 }
-

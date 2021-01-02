@@ -36,168 +36,186 @@ import io.sf.carte.echosvg.ext.awt.geom.SegmentList;
  * @version $Id$
  */
 public class FlowRegions {
-    Shape flowShape;
-    SegmentList sl;
-    SegmentList.SplitResults sr;
-    List<double[]> validRanges;
-    int currentRange;
-    double currentY, lineHeight;
+	Shape flowShape;
+	SegmentList sl;
+	SegmentList.SplitResults sr;
+	List<double[]> validRanges;
+	int currentRange;
+	double currentY, lineHeight;
 
-    public FlowRegions(Shape s) {
-        this(s, s.getBounds2D().getY());
-    }
+	public FlowRegions(Shape s) {
+		this(s, s.getBounds2D().getY());
+	}
 
-    public FlowRegions(Shape s, double startY) {
-        this.flowShape = s;
-        sl = new SegmentList(s);
-        currentY = startY-1;
-        gotoY(startY);
-    }
+	public FlowRegions(Shape s, double startY) {
+		this.flowShape = s;
+		sl = new SegmentList(s);
+		currentY = startY - 1;
+		gotoY(startY);
+	}
 
-    public double getCurrentY() { return currentY; }
-    public double getLineHeight() { return lineHeight; }
+	public double getCurrentY() {
+		return currentY;
+	}
 
-    public boolean gotoY(double y) {
-        if (y < currentY)
-            throw new IllegalArgumentException
-                ("New Y can not be lower than old Y\n" +
-                 "Old Y: " + currentY + " New Y: " + y);
-        if (y == currentY) return false;
-        sr = sl.split(y);
-        sl = sr.getBelow();
-        sr = null;
-        currentY = y;
-        if (sl == null) return true;
+	public double getLineHeight() {
+		return lineHeight;
+	}
 
-        newLineHeight(lineHeight);
-        return false;
-    }
+	public boolean gotoY(double y) {
+		if (y < currentY)
+			throw new IllegalArgumentException(
+					"New Y can not be lower than old Y\n" + "Old Y: " + currentY + " New Y: " + y);
+		if (y == currentY)
+			return false;
+		sr = sl.split(y);
+		sl = sr.getBelow();
+		sr = null;
+		currentY = y;
+		if (sl == null)
+			return true;
 
-    public void newLineHeight(double lineHeight) {
-        this.lineHeight = lineHeight;
-        sr = sl.split(currentY+lineHeight);
+		newLineHeight(lineHeight);
+		return false;
+	}
 
-        if (sr.getAbove() != null) {
-            sortRow(sr.getAbove());
-        }
-        currentRange = 0;
-    }
+	public void newLineHeight(double lineHeight) {
+		this.lineHeight = lineHeight;
+		sr = sl.split(currentY + lineHeight);
 
-    public int getNumRangeOnLine() {
-        if (validRanges == null) return 0;
-        return validRanges.size();
-    }
-    public void resetRange() {
-        currentRange = 0;
-    }
+		if (sr.getAbove() != null) {
+			sortRow(sr.getAbove());
+		}
+		currentRange = 0;
+	}
 
-    public double [] nextRange() {
-        if (currentRange >= validRanges.size())
-            return null;
-        return validRanges.get(currentRange++);
-    }
-    public void endLine() {
-        sl = sr.getBelow();
-        sr = null;
-        currentY += lineHeight;
-    }
+	public int getNumRangeOnLine() {
+		if (validRanges == null)
+			return 0;
+		return validRanges.size();
+	}
 
-    public boolean newLine() {
-        return newLine(lineHeight);
-    }
+	public void resetRange() {
+		currentRange = 0;
+	}
 
-    public boolean newLine(double lineHeight) {
-        if (sr != null) {
-            sl = sr.getBelow();
-        }
-        sr = null;
-        if (sl == null) return false;
-        currentY += this.lineHeight;
-        newLineHeight(lineHeight);
-        return true;
-    }
+	public double[] nextRange() {
+		if (currentRange >= validRanges.size())
+			return null;
+		return validRanges.get(currentRange++);
+	}
 
-    public boolean newLineAt(double y, double lineHeight) {
-        if (sr != null) {
-            sl = sr.getBelow();
-        }
-        sr = null;
-        if (sl == null) return false;
-        currentY = y;
-        newLineHeight(lineHeight);
-        return true;
-    }
+	public void endLine() {
+		sl = sr.getBelow();
+		sr = null;
+		currentY += lineHeight;
+	}
 
+	public boolean newLine() {
+		return newLine(lineHeight);
+	}
 
-    public boolean done() {
-        return (sl == null);
-    }
+	public boolean newLine(double lineHeight) {
+		if (sr != null) {
+			sl = sr.getBelow();
+		}
+		sr = null;
+		if (sl == null)
+			return false;
+		currentY += this.lineHeight;
+		newLineHeight(lineHeight);
+		return true;
+	}
 
-    public void sortRow(SegmentList sl) {
-        // System.err.println("sorting: " + sl.size());
-        Transition [] segs = new Transition[sl.size()*2];
-        Iterator<Segment> iter = sl.iterator();
-        int i=0;
-        while (iter.hasNext()) {
-            Segment seg = iter.next();
-            segs[i++] = new Transition(seg.minX(), true);
-            segs[i++] = new Transition(seg.maxX(), false);
-            // System.err.println("Seg: " + seg.minX() + ", " + seg.maxX());
-        }
+	public boolean newLineAt(double y, double lineHeight) {
+		if (sr != null) {
+			sl = sr.getBelow();
+		}
+		sr = null;
+		if (sl == null)
+			return false;
+		currentY = y;
+		newLineHeight(lineHeight);
+		return true;
+	}
 
-        Arrays.sort(segs, TransitionComp.COMP);
-        validRanges = new ArrayList<>();
-        int count = 1;
-        double openStart =0;
-        // Skip the first one as it always starts a geometry block.
-        for (i=1; i<segs.length; i++) {
-            Transition t = segs[i];
-            if (t.up) {
-                if (count == 0) {
-                    double cx = (openStart + t.loc)/2;
-                    double cy = currentY + lineHeight/2;
-                    // System.err.println("PT: " + cx+", "+cy);
-                    if (flowShape.contains( cx, cy )) {
-                        validRanges.add(new double[]{openStart, t.loc});
-                    }
-                }
-                count++;
-            } else {
-                count--;
-                if (count == 0)
-                    openStart = t.loc;
-            }
-        }
-    }
+	public boolean done() {
+		return (sl == null);
+	}
 
-    static class Transition {
-        public double loc;
-        public boolean up;
-        public Transition(double loc, boolean up) {
-            this.loc = loc;
-            this.up  = up;
-        }
-    }
+	public void sortRow(SegmentList sl) {
+		// System.err.println("sorting: " + sl.size());
+		Transition[] segs = new Transition[sl.size() * 2];
+		Iterator<Segment> iter = sl.iterator();
+		int i = 0;
+		while (iter.hasNext()) {
+			Segment seg = iter.next();
+			segs[i++] = new Transition(seg.minX(), true);
+			segs[i++] = new Transition(seg.maxX(), false);
+			// System.err.println("Seg: " + seg.minX() + ", " + seg.maxX());
+		}
 
-    static class TransitionComp implements Comparator<Transition> {
-        public static Comparator<Transition> COMP = new TransitionComp();
-        TransitionComp() { }
-        @Override
-        public int compare(Transition t1, Transition t2) {
-            if (t1.loc < t2.loc) return -1;
-            if (t1.loc > t2.loc) return 1;
-            // Locs are equal.
-            if (t1.up) {
-                if (t2.up) return 0;  // everything equal.
-                return -1;            // always list ups first
-            }
-            if (t2.up) return 1;
-            return 0;
-        }
-        @Override
-        public boolean equals(Object comp) {
-            return (this == comp);
-        }
-    }
+		Arrays.sort(segs, TransitionComp.COMP);
+		validRanges = new ArrayList<>();
+		int count = 1;
+		double openStart = 0;
+		// Skip the first one as it always starts a geometry block.
+		for (i = 1; i < segs.length; i++) {
+			Transition t = segs[i];
+			if (t.up) {
+				if (count == 0) {
+					double cx = (openStart + t.loc) / 2;
+					double cy = currentY + lineHeight / 2;
+					// System.err.println("PT: " + cx+", "+cy);
+					if (flowShape.contains(cx, cy)) {
+						validRanges.add(new double[] { openStart, t.loc });
+					}
+				}
+				count++;
+			} else {
+				count--;
+				if (count == 0)
+					openStart = t.loc;
+			}
+		}
+	}
+
+	static class Transition {
+		public double loc;
+		public boolean up;
+
+		public Transition(double loc, boolean up) {
+			this.loc = loc;
+			this.up = up;
+		}
+	}
+
+	static class TransitionComp implements Comparator<Transition> {
+		public static Comparator<Transition> COMP = new TransitionComp();
+
+		TransitionComp() {
+		}
+
+		@Override
+		public int compare(Transition t1, Transition t2) {
+			if (t1.loc < t2.loc)
+				return -1;
+			if (t1.loc > t2.loc)
+				return 1;
+			// Locs are equal.
+			if (t1.up) {
+				if (t2.up)
+					return 0; // everything equal.
+				return -1; // always list ups first
+			}
+			if (t2.up)
+				return 1;
+			return 0;
+		}
+
+		@Override
+		public boolean equals(Object comp) {
+			return (this == comp);
+		}
+	}
 }
-

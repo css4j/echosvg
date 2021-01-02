@@ -30,39 +30,38 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMMetadataElement
-    extends    SVGOMElement
-    implements SVGMetadataElement {
-    private static final long serialVersionUID = 1L;
+public class SVGOMMetadataElement extends SVGOMElement implements SVGMetadataElement {
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new SVGOMMetadataElement object.
-     */
-    protected SVGOMMetadataElement() {
-    }
+	/**
+	 * Creates a new SVGOMMetadataElement object.
+	 */
+	protected SVGOMMetadataElement() {
+	}
 
-    /**
-     * Creates a new SVGOMMetadataElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMMetadataElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new SVGOMMetadataElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMMetadataElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_METADATA_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_METADATA_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMMetadataElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMMetadataElement();
+	}
 }

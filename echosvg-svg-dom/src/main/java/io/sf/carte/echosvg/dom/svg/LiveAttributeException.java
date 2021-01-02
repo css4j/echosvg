@@ -29,75 +29,74 @@ import org.w3c.dom.Element;
  */
 public class LiveAttributeException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
-    // Constants for the error code.
-    public static final short ERR_ATTRIBUTE_MISSING   = 0;
-    public static final short ERR_ATTRIBUTE_MALFORMED = 1;
-    public static final short ERR_ATTRIBUTE_NEGATIVE  = 2;
+	private static final long serialVersionUID = 1L;
+	// Constants for the error code.
+	public static final short ERR_ATTRIBUTE_MISSING = 0;
+	public static final short ERR_ATTRIBUTE_MALFORMED = 1;
+	public static final short ERR_ATTRIBUTE_NEGATIVE = 2;
 
-    /**
-     * The element on which the error occured.
-     */
-    protected Element e;
+	/**
+	 * The element on which the error occured.
+	 */
+	protected Element e;
 
-    /**
-     * The attribute name.
-     */
-    protected String attributeName;
+	/**
+	 * The attribute name.
+	 */
+	protected String attributeName;
 
-    /**
-     * The reason for the exception.  This must be one of the ERR_* constants
-     * defined in this class.
-     */
-    protected short code;
+	/**
+	 * The reason for the exception. This must be one of the ERR_* constants defined
+	 * in this class.
+	 */
+	protected short code;
 
-    /**
-     * The malformed attribute value.
-     */
-    protected String value;
+	/**
+	 * The malformed attribute value.
+	 */
+	protected String value;
 
-    /**
-     * Constructs a new <code>LiveAttributeException</code> with the specified
-     * parameters.
-     *
-     * @param e the element on which the error occured
-     * @param an the attribute name
-     * @param code the error code
-     * @param val the malformed attribute value
-     */
-    public LiveAttributeException(Element e, String an, short code,
-                                  String val) {
-        this.e = e;
-        this.attributeName = an;
-        this.code = code;
-        this.value = val;
-    }
+	/**
+	 * Constructs a new <code>LiveAttributeException</code> with the specified
+	 * parameters.
+	 *
+	 * @param e    the element on which the error occured
+	 * @param an   the attribute name
+	 * @param code the error code
+	 * @param val  the malformed attribute value
+	 */
+	public LiveAttributeException(Element e, String an, short code, String val) {
+		this.e = e;
+		this.attributeName = an;
+		this.code = code;
+		this.value = val;
+	}
 
-    /**
-     * Returns the element on which the error occurred.
-     */
-    public Element getElement() {
-        return e;
-    }
+	/**
+	 * Returns the element on which the error occurred.
+	 */
+	public Element getElement() {
+		return e;
+	}
 
-    /**
-     * Returns the attribute name.
-     */
-    public String getAttributeName() {
-        return attributeName;
-    }
+	/**
+	 * Returns the attribute name.
+	 */
+	public String getAttributeName() {
+		return attributeName;
+	}
 
-    /**
-     * Returns the error code.
-     */
-    public short getCode() {
-        return code;
-    }
+	/**
+	 * Returns the error code.
+	 */
+	public short getCode() {
+		return code;
+	}
 
-    /**
-     * Returns the problematic attribute value.
-     */
-    public String getValue() {
-        return value;
-    }
+	/**
+	 * Returns the problematic attribute value.
+	 */
+	public String getValue() {
+		return value;
+	}
 }

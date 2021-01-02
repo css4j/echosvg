@@ -47,242 +47,239 @@ import io.sf.carte.echosvg.transcoder.keys.StringKey;
  */
 public class SVGTranscoder extends AbstractTranscoder {
 
-    /**
-     * The default error handler.
-     */
-    public static final ErrorHandler DEFAULT_ERROR_HANDLER = new ErrorHandler() {
-        @Override
-        public void error(TranscoderException ex) throws TranscoderException {
-            throw ex;
-        }
-        @Override
-        public void fatalError(TranscoderException ex) throws TranscoderException {
-            throw ex;
-        }
-        @Override
-        public void warning(TranscoderException ex) throws TranscoderException {
-            // Do nothing
-        }
-    };
+	/**
+	 * The default error handler.
+	 */
+	public static final ErrorHandler DEFAULT_ERROR_HANDLER = new ErrorHandler() {
+		@Override
+		public void error(TranscoderException ex) throws TranscoderException {
+			throw ex;
+		}
 
-    /**
-     * The key to specify the newline character sequence.
-     */
-    public static final TranscodingHints.Key KEY_NEWLINE = new NewlineKey();
+		@Override
+		public void fatalError(TranscoderException ex) throws TranscoderException {
+			throw ex;
+		}
 
-    /**
-     * The "\r" newline value.
-     */
-    public static final NewlineValue VALUE_NEWLINE_CR = new NewlineValue("\r");
+		@Override
+		public void warning(TranscoderException ex) throws TranscoderException {
+			// Do nothing
+		}
+	};
 
-    /**
-     * The "\r\n" newline value.
-     */
-    public static final NewlineValue VALUE_NEWLINE_CR_LF = new NewlineValue("\r\n");
+	/**
+	 * The key to specify the newline character sequence.
+	 */
+	public static final TranscodingHints.Key KEY_NEWLINE = new NewlineKey();
 
-    /**
-     * The "\n" newline value.
-     */
-    public static final NewlineValue VALUE_NEWLINE_LF = new NewlineValue("\n");
+	/**
+	 * The "\r" newline value.
+	 */
+	public static final NewlineValue VALUE_NEWLINE_CR = new NewlineValue("\r");
 
-    /**
-     * The key to specify whether to format the input.
-     */
-    public static final TranscodingHints.Key KEY_FORMAT = new BooleanKey();
+	/**
+	 * The "\r\n" newline value.
+	 */
+	public static final NewlineValue VALUE_NEWLINE_CR_LF = new NewlineValue("\r\n");
 
-    /**
-     * The value to turn on formatting.
-     */
-    public static final Boolean VALUE_FORMAT_ON = Boolean.TRUE;
+	/**
+	 * The "\n" newline value.
+	 */
+	public static final NewlineValue VALUE_NEWLINE_LF = new NewlineValue("\n");
 
-    /**
-     * The value to turn off formatting.
-     */
-    public static final Boolean VALUE_FORMAT_OFF = Boolean.FALSE;
+	/**
+	 * The key to specify whether to format the input.
+	 */
+	public static final TranscodingHints.Key KEY_FORMAT = new BooleanKey();
 
-    /**
-     * The key to specify the tabulation width.
-     */
-    public static final TranscodingHints.Key KEY_TABULATION_WIDTH
-        = new IntegerKey();
+	/**
+	 * The value to turn on formatting.
+	 */
+	public static final Boolean VALUE_FORMAT_ON = Boolean.TRUE;
 
-    /**
-     * The key to specify the document width.
-     */
-    public static final TranscodingHints.Key KEY_DOCUMENT_WIDTH
-        = new IntegerKey();
+	/**
+	 * The value to turn off formatting.
+	 */
+	public static final Boolean VALUE_FORMAT_OFF = Boolean.FALSE;
 
-    /**
-     * The key to specify the doctype option.
-     */
-    public static final TranscodingHints.Key KEY_DOCTYPE
-        = new DoctypeKey();
+	/**
+	 * The key to specify the tabulation width.
+	 */
+	public static final TranscodingHints.Key KEY_TABULATION_WIDTH = new IntegerKey();
 
-    /**
-     * The doctype value to change the declaration.
-     */
-    public static final DoctypeValue VALUE_DOCTYPE_CHANGE =
-        new DoctypeValue(PrettyPrinter.DOCTYPE_CHANGE);
+	/**
+	 * The key to specify the document width.
+	 */
+	public static final TranscodingHints.Key KEY_DOCUMENT_WIDTH = new IntegerKey();
 
-    /**
-     * The doctype value to remove the declaration.
-     */
-    public static final DoctypeValue VALUE_DOCTYPE_REMOVE =
-        new DoctypeValue(PrettyPrinter.DOCTYPE_REMOVE);
+	/**
+	 * The key to specify the doctype option.
+	 */
+	public static final TranscodingHints.Key KEY_DOCTYPE = new DoctypeKey();
 
-    /**
-     * The doctype value to keep unchanged the declaration.
-     */
-    public static final DoctypeValue VALUE_DOCTYPE_KEEP_UNCHANGED =
-        new DoctypeValue(PrettyPrinter.DOCTYPE_KEEP_UNCHANGED);
+	/**
+	 * The doctype value to change the declaration.
+	 */
+	public static final DoctypeValue VALUE_DOCTYPE_CHANGE = new DoctypeValue(PrettyPrinter.DOCTYPE_CHANGE);
 
-    /**
-     * The key to specify the public id.
-     */
-    public static final TranscodingHints.Key KEY_PUBLIC_ID
-        = new StringKey();
+	/**
+	 * The doctype value to remove the declaration.
+	 */
+	public static final DoctypeValue VALUE_DOCTYPE_REMOVE = new DoctypeValue(PrettyPrinter.DOCTYPE_REMOVE);
 
-    /**
-     * The key to specify the system id.
-     */
-    public static final TranscodingHints.Key KEY_SYSTEM_ID
-        = new StringKey();
+	/**
+	 * The doctype value to keep unchanged the declaration.
+	 */
+	public static final DoctypeValue VALUE_DOCTYPE_KEEP_UNCHANGED = new DoctypeValue(
+			PrettyPrinter.DOCTYPE_KEEP_UNCHANGED);
 
-    /**
-     * The key to specify the XML declaration option.
-     */
-    public static final TranscodingHints.Key KEY_XML_DECLARATION
-        = new StringKey();
+	/**
+	 * The key to specify the public id.
+	 */
+	public static final TranscodingHints.Key KEY_PUBLIC_ID = new StringKey();
 
-    /**
-     * Creates a new SVGTranscoder.
-     */
-    public SVGTranscoder() {
-        setErrorHandler(DEFAULT_ERROR_HANDLER);
-    }
+	/**
+	 * The key to specify the system id.
+	 */
+	public static final TranscodingHints.Key KEY_SYSTEM_ID = new StringKey();
 
-    /**
-     * Transcodes the specified input in the specified output.
-     * @param input the input to transcode
-     * @param output the ouput where to transcode
-     * @exception TranscoderException if an error occured while transcoding
-     */
-    @Override
-    public void transcode(TranscoderInput input, TranscoderOutput output)
-        throws TranscoderException {
-        Reader r = input.getReader();
-        Writer w = output.getWriter();
+	/**
+	 * The key to specify the XML declaration option.
+	 */
+	public static final TranscodingHints.Key KEY_XML_DECLARATION = new StringKey();
 
-        if (r == null) {
-            Document d = input.getDocument();
-            if (d == null) {
-                throw new RuntimeException("Reader or Document expected");
-            }
-            StringWriter sw = new StringWriter( 1024 );
-            try {
-                DOMUtilities.writeDocument(d, sw);
-            } catch ( IOException ioEx ) {
-                throw new RuntimeException("IO:" + ioEx.getMessage() );
-            }
-            r = new StringReader(sw.toString());
-        }
-        if (w == null) {
-            throw new RuntimeException("Writer expected");
-        }
-        prettyPrint(r, w);
-    }
+	/**
+	 * Creates a new SVGTranscoder.
+	 */
+	public SVGTranscoder() {
+		setErrorHandler(DEFAULT_ERROR_HANDLER);
+	}
 
+	/**
+	 * Transcodes the specified input in the specified output.
+	 * 
+	 * @param input  the input to transcode
+	 * @param output the ouput where to transcode
+	 * @exception TranscoderException if an error occured while transcoding
+	 */
+	@Override
+	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
+		Reader r = input.getReader();
+		Writer w = output.getWriter();
 
-    /**
-     * Pretty print the given reader.
-     */
-    protected void prettyPrint(Reader in, Writer out) throws TranscoderException {
-        try {
-            PrettyPrinter pp = new PrettyPrinter();
-            NewlineValue nlv = (NewlineValue)hints.get(KEY_NEWLINE);
-            if (nlv != null) {
-                pp.setNewline(nlv.getValue());
-            }
-            Boolean b = (Boolean)hints.get(KEY_FORMAT);
-            if (b != null) {
-                pp.setFormat(b);
-            }
-            Integer i = (Integer)hints.get(KEY_TABULATION_WIDTH);
-            if (i != null) {
-                pp.setTabulationWidth(i);
-            }
-            i = (Integer)hints.get(KEY_DOCUMENT_WIDTH);
-            if (i != null) {
-                pp.setDocumentWidth(i);
-            }
-            DoctypeValue dtv = (DoctypeValue)hints.get(KEY_DOCTYPE);
-            if (dtv != null) {
-                pp.setDoctypeOption(dtv.getValue());
-            }
-            String s = (String)hints.get(KEY_PUBLIC_ID);
-            if (s != null) {
-                pp.setPublicId(s);
-            }
-            s = (String)hints.get(KEY_SYSTEM_ID);
-            if (s != null) {
-                pp.setSystemId(s);
-            }
+		if (r == null) {
+			Document d = input.getDocument();
+			if (d == null) {
+				throw new RuntimeException("Reader or Document expected");
+			}
+			StringWriter sw = new StringWriter(1024);
+			try {
+				DOMUtilities.writeDocument(d, sw);
+			} catch (IOException ioEx) {
+				throw new RuntimeException("IO:" + ioEx.getMessage());
+			}
+			r = new StringReader(sw.toString());
+		}
+		if (w == null) {
+			throw new RuntimeException("Writer expected");
+		}
+		prettyPrint(r, w);
+	}
 
-            s = (String)hints.get(KEY_XML_DECLARATION);
-            if (s != null) {
-                pp.setXMLDeclaration(s);
-            }
+	/**
+	 * Pretty print the given reader.
+	 */
+	protected void prettyPrint(Reader in, Writer out) throws TranscoderException {
+		try {
+			PrettyPrinter pp = new PrettyPrinter();
+			NewlineValue nlv = (NewlineValue) hints.get(KEY_NEWLINE);
+			if (nlv != null) {
+				pp.setNewline(nlv.getValue());
+			}
+			Boolean b = (Boolean) hints.get(KEY_FORMAT);
+			if (b != null) {
+				pp.setFormat(b);
+			}
+			Integer i = (Integer) hints.get(KEY_TABULATION_WIDTH);
+			if (i != null) {
+				pp.setTabulationWidth(i);
+			}
+			i = (Integer) hints.get(KEY_DOCUMENT_WIDTH);
+			if (i != null) {
+				pp.setDocumentWidth(i);
+			}
+			DoctypeValue dtv = (DoctypeValue) hints.get(KEY_DOCTYPE);
+			if (dtv != null) {
+				pp.setDoctypeOption(dtv.getValue());
+			}
+			String s = (String) hints.get(KEY_PUBLIC_ID);
+			if (s != null) {
+				pp.setPublicId(s);
+			}
+			s = (String) hints.get(KEY_SYSTEM_ID);
+			if (s != null) {
+				pp.setSystemId(s);
+			}
 
-            pp.print(in, out);
-            out.flush();
-        } catch (IOException e) {
-            getErrorHandler().fatalError(new TranscoderException(e.getMessage()));
-        }
-    }
+			s = (String) hints.get(KEY_XML_DECLARATION);
+			if (s != null) {
+				pp.setXMLDeclaration(s);
+			}
 
-    /**
-     * To represent a newline key.
-     */
-    protected static class NewlineKey extends TranscodingHints.Key {
-        @Override
-        public boolean isCompatibleValue(Object v) {
-            return v instanceof NewlineValue;
-        }
-    }
+			pp.print(in, out);
+			out.flush();
+		} catch (IOException e) {
+			getErrorHandler().fatalError(new TranscoderException(e.getMessage()));
+		}
+	}
 
-    /**
-     * To represent a newline value.
-     */
-    protected static class NewlineValue {
-        protected final String value;
-        protected NewlineValue(String val) {
-            value = val;
-        }
-        public String getValue() {
-            return value;
-        }
-    }
+	/**
+	 * To represent a newline key.
+	 */
+	protected static class NewlineKey extends TranscodingHints.Key {
+		@Override
+		public boolean isCompatibleValue(Object v) {
+			return v instanceof NewlineValue;
+		}
+	}
 
-    /**
-     * To represent a doctype key.
-     */
-    protected static class DoctypeKey extends TranscodingHints.Key {
-        @Override
-        public boolean isCompatibleValue(Object v) {
-            return v instanceof DoctypeValue;
-        }
-    }
+	/**
+	 * To represent a newline value.
+	 */
+	protected static class NewlineValue {
+		protected final String value;
 
-    /**
-     * To represent a doctype value.
-     */
-    protected static class DoctypeValue {
-        final int value;
-        protected DoctypeValue(int value) {
-            this.value = value;
-        }
-        public int getValue() {
-            return value;
-        }
-    }
+		protected NewlineValue(String val) {
+			value = val;
+		}
+
+		public String getValue() {
+			return value;
+		}
+	}
+
+	/**
+	 * To represent a doctype key.
+	 */
+	protected static class DoctypeKey extends TranscodingHints.Key {
+		@Override
+		public boolean isCompatibleValue(Object v) {
+			return v instanceof DoctypeValue;
+		}
+	}
+
+	/**
+	 * To represent a doctype value.
+	 */
+	protected static class DoctypeValue {
+		final int value;
+
+		protected DoctypeValue(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	}
 }

@@ -23,8 +23,8 @@ import java.util.List;
 import io.sf.carte.echosvg.ext.awt.image.ARGBChannel;
 
 /**
- * Implements a DisplacementMap operation, which takes pixel values from
- * another image to spatially displace the input image
+ * Implements a DisplacementMap operation, which takes pixel values from another
+ * image to spatially displace the input image
  *
  * @author <a href="mailto:sheng.pei@eng.sun.com">Sheng Pei</a>
  * @author For later modifications, see Git history.
@@ -32,57 +32,55 @@ import io.sf.carte.echosvg.ext.awt.image.ARGBChannel;
  */
 public interface DisplacementMapRable extends FilterColorInterpolation {
 
-    int CHANNEL_R = 1;
-    int CHANNEL_G = 2;
-    int CHANNEL_B = 3;
-    int CHANNEL_A = 4;
+	int CHANNEL_R = 1;
+	int CHANNEL_G = 2;
+	int CHANNEL_B = 3;
+	int CHANNEL_A = 4;
 
-    /**
-     * The sources to be used in the displacement operation
-     * The source at index 0 is displacement by the channels
-     * in source at index 1 defined by the xChannelSelector
-     * and the yChannelSelector. The displacement amount is
-     * defined by the scale attribute.
-     *
-     * @param srcs The list of images used in the operation.
-     */
-    void setSources(List<Filter> srcs);
+	/**
+	 * The sources to be used in the displacement operation The source at index 0 is
+	 * displacement by the channels in source at index 1 defined by the
+	 * xChannelSelector and the yChannelSelector. The displacement amount is defined
+	 * by the scale attribute.
+	 *
+	 * @param srcs The list of images used in the operation.
+	 */
+	void setSources(List<Filter> srcs);
 
-    /**
-     * The displacement scale factor
-     * @param scale can be any number.
-     */
-    void setScale(double scale);
+	/**
+	 * The displacement scale factor
+	 * 
+	 * @param scale can be any number.
+	 */
+	void setScale(double scale);
 
-    /**
-     * Returns the displacement scale factor
-     */
-    double getScale();
+	/**
+	 * Returns the displacement scale factor
+	 */
+	double getScale();
 
-    /**
-     * Select which component values will be used
-     * for displacement along the X axis
-     * @param xChannelSelector value is among R,
-     * G, B and A.
-     */
-    void setXChannelSelector(ARGBChannel xChannelSelector);
+	/**
+	 * Select which component values will be used for displacement along the X axis
+	 * 
+	 * @param xChannelSelector value is among R, G, B and A.
+	 */
+	void setXChannelSelector(ARGBChannel xChannelSelector);
 
-    /**
-     * Returns the xChannelSelector
-     */
-    ARGBChannel getXChannelSelector();
+	/**
+	 * Returns the xChannelSelector
+	 */
+	ARGBChannel getXChannelSelector();
 
-    /**
-     * Select which component values will be used
-     * for displacement along the Y axis
-     * @param yChannelSelector value is among R,
-     * G, B and A.
-     */
-    void setYChannelSelector(ARGBChannel yChannelSelector);
+	/**
+	 * Select which component values will be used for displacement along the Y axis
+	 * 
+	 * @param yChannelSelector value is among R, G, B and A.
+	 */
+	void setYChannelSelector(ARGBChannel yChannelSelector);
 
-    /**
-     * Returns the yChannelSelector
-     */
-    ARGBChannel getYChannelSelector();
+	/**
+	 * Returns the yChannelSelector
+	 */
+	ARGBChannel getYChannelSelector();
 
 }

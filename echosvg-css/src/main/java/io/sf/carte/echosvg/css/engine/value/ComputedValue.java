@@ -29,178 +29,179 @@ import org.w3c.dom.DOMException;
  */
 public class ComputedValue implements Value {
 
-    /**
-     * The cascaded value.
-     */
-    protected Value cascadedValue;
+	/**
+	 * The cascaded value.
+	 */
+	protected Value cascadedValue;
 
-    /**
-     * The computed value.
-     */
-    protected Value computedValue;
-    
-    /**
-     * Creates a new ComputedValue object.
-     * @param cv The cascaded value.
-     */
-    public ComputedValue(Value cv) {
-        cascadedValue = cv;
-    }
+	/**
+	 * The computed value.
+	 */
+	protected Value computedValue;
 
-    /**
-     * Returns the computed value.
-     */
-    public Value getComputedValue() {
-        return computedValue;
-    }
+	/**
+	 * Creates a new ComputedValue object.
+	 * 
+	 * @param cv The cascaded value.
+	 */
+	public ComputedValue(Value cv) {
+		cascadedValue = cv;
+	}
 
-    /**
-     * Returns the cascaded value.
-     */
-    public Value getCascadedValue() {
-        return cascadedValue;
-    }
+	/**
+	 * Returns the computed value.
+	 */
+	public Value getComputedValue() {
+		return computedValue;
+	}
 
-    /**
-     * Sets the computed value.
-     */
-    public void setComputedValue(Value v) {
-        computedValue = v;
-    }
+	/**
+	 * Returns the cascaded value.
+	 */
+	public Value getCascadedValue() {
+		return cascadedValue;
+	}
 
-    /**
-     * Implements {@link Value#getCssText()}.
-     */
-    @Override
-    public String getCssText() {
-        return computedValue.getCssText();
-    }
+	/**
+	 * Sets the computed value.
+	 */
+	public void setComputedValue(Value v) {
+		computedValue = v;
+	}
 
-    /**
-     * Implements {@link Value#getCssValueType()}.
-     */
-    @Override
-    public short getCssValueType() {
-        return computedValue.getCssValueType();
-    }
+	/**
+	 * Implements {@link Value#getCssText()}.
+	 */
+	@Override
+	public String getCssText() {
+		return computedValue.getCssText();
+	}
 
-    /**
-     * Implements {@link Value#getPrimitiveType()}.
-     */
-    @Override
-    public short getPrimitiveType() {
-        return computedValue.getPrimitiveType();
-    }
+	/**
+	 * Implements {@link Value#getCssValueType()}.
+	 */
+	@Override
+	public short getCssValueType() {
+		return computedValue.getCssValueType();
+	}
 
-    /**
-     * Implements {@link Value#getFloatValue()}.
-     */
-    @Override
-    public float getFloatValue() throws DOMException {
-        return computedValue.getFloatValue();
-    }
+	/**
+	 * Implements {@link Value#getPrimitiveType()}.
+	 */
+	@Override
+	public short getPrimitiveType() {
+		return computedValue.getPrimitiveType();
+	}
 
-    /**
-     * Implements {@link Value#getStringValue()}.
-     */
-    @Override
-    public String getStringValue() throws DOMException {
-        return computedValue.getStringValue();
-    }
+	/**
+	 * Implements {@link Value#getFloatValue()}.
+	 */
+	@Override
+	public float getFloatValue() throws DOMException {
+		return computedValue.getFloatValue();
+	}
 
-    /**
-     * Implements {@link Value#getRed()}.
-     */
-    @Override
-    public Value getRed() throws DOMException {
-        return computedValue.getRed();
-    }
+	/**
+	 * Implements {@link Value#getStringValue()}.
+	 */
+	@Override
+	public String getStringValue() throws DOMException {
+		return computedValue.getStringValue();
+	}
 
-    /**
-     * Implements {@link Value#getGreen()}.
-     */
-    @Override
-    public Value getGreen() throws DOMException {
-        return computedValue.getGreen();
-    }
+	/**
+	 * Implements {@link Value#getRed()}.
+	 */
+	@Override
+	public Value getRed() throws DOMException {
+		return computedValue.getRed();
+	}
 
-    /**
-     * Implements {@link Value#getBlue()}.
-     */
-    @Override
-    public Value getBlue() throws DOMException {
-        return computedValue.getBlue();
-    }
+	/**
+	 * Implements {@link Value#getGreen()}.
+	 */
+	@Override
+	public Value getGreen() throws DOMException {
+		return computedValue.getGreen();
+	}
 
-    /**
-     * Implements {@link Value#getLength()}.
-     */
-    @Override
-    public int getLength() throws DOMException {
-        return computedValue.getLength();
-    }
+	/**
+	 * Implements {@link Value#getBlue()}.
+	 */
+	@Override
+	public Value getBlue() throws DOMException {
+		return computedValue.getBlue();
+	}
 
-    /**
-     * Implements {@link Value#item(int)}.
-     */
-    @Override
-    public Value item(int index) throws DOMException {
-        return computedValue.item(index);
-    }
+	/**
+	 * Implements {@link Value#getLength()}.
+	 */
+	@Override
+	public int getLength() throws DOMException {
+		return computedValue.getLength();
+	}
 
-    /**
-     * Implements {@link Value#getTop()}.
-     */
-    @Override
-    public Value getTop() throws DOMException {
-        return computedValue.getTop();
-    }
+	/**
+	 * Implements {@link Value#item(int)}.
+	 */
+	@Override
+	public Value item(int index) throws DOMException {
+		return computedValue.item(index);
+	}
 
-    /**
-     * Implements {@link Value#getRight()}.
-     */
-    @Override
-    public Value getRight() throws DOMException {
-        return computedValue.getRight();
-    }
+	/**
+	 * Implements {@link Value#getTop()}.
+	 */
+	@Override
+	public Value getTop() throws DOMException {
+		return computedValue.getTop();
+	}
 
-    /**
-     * Implements {@link Value#getBottom()}.
-     */
-    @Override
-    public Value getBottom() throws DOMException {
-        return computedValue.getBottom();
-    }
+	/**
+	 * Implements {@link Value#getRight()}.
+	 */
+	@Override
+	public Value getRight() throws DOMException {
+		return computedValue.getRight();
+	}
 
-    /**
-     * Implements {@link Value#getLeft()}.
-     */
-    @Override
-    public Value getLeft() throws DOMException {
-        return computedValue.getLeft();
-    }
+	/**
+	 * Implements {@link Value#getBottom()}.
+	 */
+	@Override
+	public Value getBottom() throws DOMException {
+		return computedValue.getBottom();
+	}
 
-    /**
-     * Implements {@link Value#getIdentifier()}.
-     */
-    @Override
-    public String getIdentifier() throws DOMException {
-        return computedValue.getIdentifier();
-    }
+	/**
+	 * Implements {@link Value#getLeft()}.
+	 */
+	@Override
+	public Value getLeft() throws DOMException {
+		return computedValue.getLeft();
+	}
 
-    /**
-     * Implements {@link Value#getListStyle()}.
-     */
-    @Override
-    public String getListStyle() throws DOMException {
-        return computedValue.getListStyle();
-    }
+	/**
+	 * Implements {@link Value#getIdentifier()}.
+	 */
+	@Override
+	public String getIdentifier() throws DOMException {
+		return computedValue.getIdentifier();
+	}
 
-    /**
-     * Implements {@link Value#getSeparator()}.
-     */
-    @Override
-    public String getSeparator() throws DOMException {
-        return computedValue.getSeparator();
-    }
+	/**
+	 * Implements {@link Value#getListStyle()}.
+	 */
+	@Override
+	public String getListStyle() throws DOMException {
+		return computedValue.getListStyle();
+	}
+
+	/**
+	 * Implements {@link Value#getSeparator()}.
+	 */
+	@Override
+	public String getSeparator() throws DOMException {
+		return computedValue.getSeparator();
+	}
 }

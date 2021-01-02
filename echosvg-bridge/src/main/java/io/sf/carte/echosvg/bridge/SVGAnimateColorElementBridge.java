@@ -35,63 +35,54 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class SVGAnimateColorElementBridge extends SVGAnimateElementBridge {
 
-    /**
-     * Returns 'animateColor'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_ANIMATE_COLOR_TAG;
-    }
+	/**
+	 * Returns 'animateColor'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_ANIMATE_COLOR_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new SVGAnimateColorElementBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGAnimateColorElementBridge();
+	}
 
-    /**
-     * Creates the animation object for the animation element.
-     */
-    @Override
-    protected AbstractAnimation createAnimation(AnimationTarget target) {
-        AnimatableValue from = parseAnimatableValue(SVG_FROM_ATTRIBUTE);
-        AnimatableValue to = parseAnimatableValue(SVG_TO_ATTRIBUTE);
-        AnimatableValue by = parseAnimatableValue(SVG_BY_ATTRIBUTE);
-        return new ColorAnimation(timedElement,
-                                  this,
-                                  parseCalcMode(),
-                                  parseKeyTimes(),
-                                  parseKeySplines(),
-                                  parseAdditive(),
-                                  parseAccumulate(),
-                                  parseValues(),
-                                  from,
-                                  to,
-                                  by);
-    }
+	/**
+	 * Creates the animation object for the animation element.
+	 */
+	@Override
+	protected AbstractAnimation createAnimation(AnimationTarget target) {
+		AnimatableValue from = parseAnimatableValue(SVG_FROM_ATTRIBUTE);
+		AnimatableValue to = parseAnimatableValue(SVG_TO_ATTRIBUTE);
+		AnimatableValue by = parseAnimatableValue(SVG_BY_ATTRIBUTE);
+		return new ColorAnimation(timedElement, this, parseCalcMode(), parseKeyTimes(), parseKeySplines(),
+				parseAdditive(), parseAccumulate(), parseValues(), from, to, by);
+	}
 
-    /**
-     * Returns whether the animation element being handled by this bridge can
-     * animate attributes of the specified type.
-     * @param type one of the TYPE_ constants defined in {@link SVGTypes}.
-     */
-    @Override
-    protected boolean canAnimateType(int type) {
-        return type == SVGTypes.TYPE_COLOR || type == SVGTypes.TYPE_PAINT;
-    }
+	/**
+	 * Returns whether the animation element being handled by this bridge can
+	 * animate attributes of the specified type.
+	 * 
+	 * @param type one of the TYPE_ constants defined in {@link SVGTypes}.
+	 */
+	@Override
+	protected boolean canAnimateType(int type) {
+		return type == SVGTypes.TYPE_COLOR || type == SVGTypes.TYPE_PAINT;
+	}
 
-    /**
-     * Returns whether the specified {@link AnimatableValue} is of a type allowed
-     * by this animation.
-     */
-    @Override
-    protected boolean checkValueType(AnimatableValue v) {
-        if (v instanceof AnimatablePaintValue) {
-            return ((AnimatablePaintValue) v).getPaintType()
-                == AnimatablePaintValue.PAINT_COLOR;
-        }
-        return v instanceof AnimatableColorValue;
-    }
+	/**
+	 * Returns whether the specified {@link AnimatableValue} is of a type allowed by
+	 * this animation.
+	 */
+	@Override
+	protected boolean checkValueType(AnimatableValue v) {
+		if (v instanceof AnimatablePaintValue) {
+			return ((AnimatablePaintValue) v).getPaintType() == AnimatablePaintValue.PAINT_COLOR;
+		}
+		return v instanceof AnimatableColorValue;
+	}
 }

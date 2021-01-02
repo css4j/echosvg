@@ -26,66 +26,55 @@ import io.sf.carte.echosvg.transcoder.Transcoder;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
- * Default controller for the
- * <code>SVGConverter</code> operation.
+ * Default controller for the <code>SVGConverter</code> operation.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class DefaultSVGConverterController implements SVGConverterController {
-    /**
-     * Invoked when the rasterizer has computed the
-     * exact description of what it should do. The controller
-     * should return true if the transcoding process should
-     * proceed or false otherwise.
-     *
-     * @param transcoder Transcoder which will be used for the conversion
-     * @param hints set of hints that were set on the transcoder
-     * @param sources list of SVG sources it will convert.
-     * @param dest list of destination file it will use
-     */
-    @Override
-    public boolean proceedWithComputedTask(Transcoder transcoder,
-                                           Map<Key, ?> hints,
-                                           List<SVGConverterSource> sources,
-                                           List<File> dest){
-        return true;
-    }
+	/**
+	 * Invoked when the rasterizer has computed the exact description of what it
+	 * should do. The controller should return true if the transcoding process
+	 * should proceed or false otherwise.
+	 *
+	 * @param transcoder Transcoder which will be used for the conversion
+	 * @param hints      set of hints that were set on the transcoder
+	 * @param sources    list of SVG sources it will convert.
+	 * @param dest       list of destination file it will use
+	 */
+	@Override
+	public boolean proceedWithComputedTask(Transcoder transcoder, Map<Key, ?> hints, List<SVGConverterSource> sources,
+			List<File> dest) {
+		return true;
+	}
 
-    /**
-     * Invoked when the rasterizer is about to start transcoding
-     * of a given source.
-     * The controller should return true if the source should be
-     * transcoded and false otherwise.
-     */
-    @Override
-    public boolean proceedWithSourceTranscoding(SVGConverterSource source, File dest) {
-        return true;
-    }
+	/**
+	 * Invoked when the rasterizer is about to start transcoding of a given source.
+	 * The controller should return true if the source should be transcoded and
+	 * false otherwise.
+	 */
+	@Override
+	public boolean proceedWithSourceTranscoding(SVGConverterSource source, File dest) {
+		return true;
+	}
 
-    /**
-     * Invoked when the rasterizer got an error while
-     * transcoding the input source.
-     * The controller should return true if the transcoding process
-     * should continue on other sources and it should return false
-     * if it should not.
-     *
-     * @param errorCode see the {@link SVGConverter} error code descriptions.
-     */
-    @Override
-    public boolean proceedOnSourceTranscodingFailure(SVGConverterSource source,
-                                                     File dest,
-                                                     String errorCode){
-        return true;
-    }
+	/**
+	 * Invoked when the rasterizer got an error while transcoding the input source.
+	 * The controller should return true if the transcoding process should continue
+	 * on other sources and it should return false if it should not.
+	 *
+	 * @param errorCode see the {@link SVGConverter} error code descriptions.
+	 */
+	@Override
+	public boolean proceedOnSourceTranscodingFailure(SVGConverterSource source, File dest, String errorCode) {
+		return true;
+	}
 
-    /**
-     * Invoked when the rasterizer successfully transcoded
-     * the input source.
-     */
-    @Override
-    public void onSourceTranscodingSuccess(SVGConverterSource source,
-                                           File dest){
-    }
+	/**
+	 * Invoked when the rasterizer successfully transcoded the input source.
+	 */
+	@Override
+	public void onSourceTranscodingSuccess(SVGConverterSource source, File dest) {
+	}
 }

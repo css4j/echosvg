@@ -42,135 +42,123 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @version $Id$
  */
 public class StrokeDasharrayManager extends LengthManager {
-    
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_LENGTH_LIST_OR_IDENT;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_STROKE_DASHARRAY_PROPERTY;
-    }
-    
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return ValueConstants.NONE_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_LENGTH_LIST_OR_IDENT;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_STROKE_DASHARRAY_PROPERTY;
+	}
 
-        case IDENT:
-            if (lu.getStringValue().equalsIgnoreCase
-                (CSSConstants.CSS_NONE_VALUE)) {
-                return ValueConstants.NONE_VALUE;
-            }
-            throw createInvalidIdentifierDOMException(lu.getStringValue());
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return ValueConstants.NONE_VALUE;
+	}
 
-        default:
-            ListValue lv = new ListValue(' ');
-            do {
-                Value v = super.createValue(lu, engine);
-                lv.append(v);
-                lu = lu.getNextLexicalUnit();
-                if (lu != null &&
-                    lu.getLexicalUnitType() ==
-                    LexicalUnit.LexicalType.OPERATOR_COMMA) {
-                    lu = lu.getNextLexicalUnit();
-                }
-            } while (lu != null);
-            return lv;
-        }
-    }
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        if (type != CSSPrimitiveValue.CSS_IDENT) {
-            throw createInvalidStringTypeDOMException(type);
-        }
-        if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-            return ValueConstants.NONE_VALUE;
-        }
-        throw createInvalidIdentifierDOMException(value);
-    }
+		case IDENT:
+			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+				return ValueConstants.NONE_VALUE;
+			}
+			throw createInvalidIdentifierDOMException(lu.getStringValue());
 
-    /**
-     * Implements {@link
-     * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
-     */
-    @Override
-    public Value computeValue(CSSStylableElement elt,
-                              String pseudo,
-                              CSSEngine engine,
-                              int idx,
-                              StyleMap sm,
-                              Value value) {
-        switch (value.getCssValueType()) {
-        case CSSValue.CSS_PRIMITIVE_VALUE:
-            return value;
-        }
-        
-        ListValue lv = (ListValue)value;
-        ListValue result = new ListValue(' ');
-        for (int i = 0; i < lv.getLength(); i++) {
-            result.append(super.computeValue(elt, pseudo, engine, idx, sm,
-                                             lv.item(i)));
-        }
-        return result;
-    }
+		default:
+			ListValue lv = new ListValue(' ');
+			do {
+				Value v = super.createValue(lu, engine);
+				lv.append(v);
+				lu = lu.getNextLexicalUnit();
+				if (lu != null && lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
+					lu = lu.getNextLexicalUnit();
+				}
+			} while (lu != null);
+			return lv;
+		}
+	}
 
-    /**
-     * Indicates the orientation of the property associated with
-     * this manager.
-     */
-    @Override
-    protected int getOrientation() {
-        return BOTH_ORIENTATION;
-    }
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+		if (type != CSSPrimitiveValue.CSS_IDENT) {
+			throw createInvalidStringTypeDOMException(type);
+		}
+		if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+			return ValueConstants.NONE_VALUE;
+		}
+		throw createInvalidIdentifierDOMException(value);
+	}
+
+	/**
+	 * Implements
+	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
+	 */
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		switch (value.getCssValueType()) {
+		case CSSValue.CSS_PRIMITIVE_VALUE:
+			return value;
+		}
+
+		ListValue lv = (ListValue) value;
+		ListValue result = new ListValue(' ');
+		for (int i = 0; i < lv.getLength(); i++) {
+			result.append(super.computeValue(elt, pseudo, engine, idx, sm, lv.item(i)));
+		}
+		return result;
+	}
+
+	/**
+	 * Indicates the orientation of the property associated with this manager.
+	 */
+	@Override
+	protected int getOrientation() {
+		return BOTH_ORIENTATION;
+	}
 }

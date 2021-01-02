@@ -33,75 +33,72 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class SVGURIReferenceTextPositioningElement
-    extends    SVGOMTextPositioningElement
-    implements SVGURIReference {
+public abstract class SVGURIReferenceTextPositioningElement extends SVGOMTextPositioningElement
+		implements SVGURIReference {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMTextPositioningElement.xmlTraitInformation);
-        t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_URI));
-        xmlTraitInformation = t;
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
+				SVGOMTextPositioningElement.xmlTraitInformation);
+		t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'xlink:href' attribute value.
-     */
-    protected SVGOMAnimatedString href;
+	/**
+	 * The 'xlink:href' attribute value.
+	 */
+	protected SVGOMAnimatedString href;
 
-    /**
-     * Creates a new SVGURIReferenceTextPositioningElement object.
-     */
-    protected SVGURIReferenceTextPositioningElement() {
-    }
+	/**
+	 * Creates a new SVGURIReferenceTextPositioningElement object.
+	 */
+	protected SVGURIReferenceTextPositioningElement() {
+	}
 
-    /**
-     * Creates a new SVGURIReferenceTextPositioningElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    protected SVGURIReferenceTextPositioningElement(String prefix,
-                                                    AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGURIReferenceTextPositioningElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	protected SVGURIReferenceTextPositioningElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        href =
-            createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
-     */
-    @Override
-    public SVGAnimatedString getHref() {
-        return href;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
+	 */
+	@Override
+	public SVGAnimatedString getHref() {
+		return href;
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

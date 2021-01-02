@@ -41,237 +41,205 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGFeImageElementBridge
-    extends AbstractSVGFilterPrimitiveElementBridge {
+public class SVGFeImageElementBridge extends AbstractSVGFilterPrimitiveElementBridge {
 
-    /**
-     * Constructs a new bridge for the &lt;feImage&gt; element.
-     */
-    public SVGFeImageElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;feImage&gt; element.
+	 */
+	public SVGFeImageElementBridge() {
+	}
 
-    /**
-     * Returns 'feImage'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_IMAGE_TAG;
-    }
+	/**
+	 * Returns 'feImage'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_IMAGE_TAG;
+	}
 
-    /**
-     * Creates a <code>Filter</code> primitive according to the specified
-     * parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param filterElement the element that defines a filter
-     * @param filteredElement the element that references the filter
-     * @param filteredNode the graphics node to filter
-     *
-     * @param inputFilter the <code>Filter</code> that represents the current
-     *        filter input if the filter chain.
-     * @param filterRegion the filter area defined for the filter chain
-     *        the new node will be part of.
-     * @param filterMap a map where the mediator can map a name to the
-     *        <code>Filter</code> it creates. Other <code>FilterBridge</code>s
-     *        can then access a filter node from the filterMap if they
-     *        know its name.
-     */
-    @Override
-    public Filter createFilter(BridgeContext ctx,
-                               Element filterElement,
-                               Element filteredElement,
-                               GraphicsNode filteredNode,
-                               Filter inputFilter,
-                               Rectangle2D filterRegion,
-                               Map<String, Filter> filterMap) {
+	/**
+	 * Creates a <code>Filter</code> primitive according to the specified
+	 * parameters.
+	 *
+	 * @param ctx             the bridge context to use
+	 * @param filterElement   the element that defines a filter
+	 * @param filteredElement the element that references the filter
+	 * @param filteredNode    the graphics node to filter
+	 *
+	 * @param inputFilter     the <code>Filter</code> that represents the current
+	 *                        filter input if the filter chain.
+	 * @param filterRegion    the filter area defined for the filter chain the new
+	 *                        node will be part of.
+	 * @param filterMap       a map where the mediator can map a name to the
+	 *                        <code>Filter</code> it creates. Other
+	 *                        <code>FilterBridge</code>s can then access a filter
+	 *                        node from the filterMap if they know its name.
+	 */
+	@Override
+	public Filter createFilter(BridgeContext ctx, Element filterElement, Element filteredElement,
+			GraphicsNode filteredNode, Filter inputFilter, Rectangle2D filterRegion, Map<String, Filter> filterMap) {
 
-        // 'xlink:href' attribute
-        String uriStr = XLinkSupport.getXLinkHref(filterElement);
-        if (uriStr.length() == 0) {
-            throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_MISSING,
-                                      new Object[] {"xlink:href"});
-        }
+		// 'xlink:href' attribute
+		String uriStr = XLinkSupport.getXLinkHref(filterElement);
+		if (uriStr.length() == 0) {
+			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_MISSING, new Object[] { "xlink:href" });
+		}
 
-        //
-        // According the the SVG specification, feImage behaves like
-        // <image> if it references an SVG document or a raster image
-        // and it behaves like a <use> if it references a document
-        // fragment.
-        //
-        // To provide this behavior, depending on whether the uri
-        // contains a fragment identifier, we create either an
-        // <image> or a <use> element and request the corresponding
-        // bridges to build the corresponding GraphicsNode for us.
-        //
-        // Then, we take care of the possible transformation needed
-        // from objectBoundingBox space to user space.
-        //
+		//
+		// According the the SVG specification, feImage behaves like
+		// <image> if it references an SVG document or a raster image
+		// and it behaves like a <use> if it references a document
+		// fragment.
+		//
+		// To provide this behavior, depending on whether the uri
+		// contains a fragment identifier, we create either an
+		// <image> or a <use> element and request the corresponding
+		// bridges to build the corresponding GraphicsNode for us.
+		//
+		// Then, we take care of the possible transformation needed
+		// from objectBoundingBox space to user space.
+		//
 
-        Document document = filterElement.getOwnerDocument();
-        boolean isUse = uriStr.indexOf('#') != -1;
-        Element contentElement = null;
-        if (isUse) {
-            contentElement = document.createElementNS(SVG_NAMESPACE_URI,
-                                                      SVG_USE_TAG);
-        } else {
-            contentElement = document.createElementNS(SVG_NAMESPACE_URI,
-                                                      SVG_IMAGE_TAG);
-        }
+		Document document = filterElement.getOwnerDocument();
+		boolean isUse = uriStr.indexOf('#') != -1;
+		Element contentElement = null;
+		if (isUse) {
+			contentElement = document.createElementNS(SVG_NAMESPACE_URI, SVG_USE_TAG);
+		} else {
+			contentElement = document.createElementNS(SVG_NAMESPACE_URI, SVG_IMAGE_TAG);
+		}
 
+		contentElement.setAttributeNS(XLINK_NAMESPACE_URI, XLINK_HREF_QNAME, uriStr);
 
-        contentElement.setAttributeNS(XLINK_NAMESPACE_URI,
-                                      XLINK_HREF_QNAME,
-                                      uriStr);
+		Element proxyElement = document.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
+		proxyElement.appendChild(contentElement);
 
-        Element proxyElement = document.createElementNS(SVG_NAMESPACE_URI,
-                                                        SVG_G_TAG);
-        proxyElement.appendChild(contentElement);
+		// feImage's default region is that of the filter chain.
+		Rectangle2D defaultRegion = filterRegion;
+		Element filterDefElement = (Element) (filterElement.getParentNode());
 
-        // feImage's default region is that of the filter chain.
-        Rectangle2D defaultRegion = filterRegion;
-        Element filterDefElement = (Element)(filterElement.getParentNode());
+		Rectangle2D primitiveRegion = SVGUtilities.getBaseFilterPrimitiveRegion(filterElement, filteredElement,
+				filteredNode, defaultRegion, ctx);
 
-        Rectangle2D primitiveRegion =
-            SVGUtilities.getBaseFilterPrimitiveRegion(filterElement,
-                                                      filteredElement,
-                                                      filteredNode,
-                                                      defaultRegion,
-                                                      ctx);
+		// System.err.println(">>>>>>>> primitiveRegion : " + primitiveRegion);
 
-        // System.err.println(">>>>>>>> primitiveRegion : " + primitiveRegion);
+		contentElement.setAttributeNS(null, SVG_X_ATTRIBUTE, String.valueOf(primitiveRegion.getX()));
+		contentElement.setAttributeNS(null, SVG_Y_ATTRIBUTE, String.valueOf(primitiveRegion.getY()));
+		contentElement.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, String.valueOf(primitiveRegion.getWidth()));
+		contentElement.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, String.valueOf(primitiveRegion.getHeight()));
 
-        contentElement.setAttributeNS(null, SVG_X_ATTRIBUTE,      String.valueOf( primitiveRegion.getX() ) );
-        contentElement.setAttributeNS(null, SVG_Y_ATTRIBUTE,      String.valueOf( primitiveRegion.getY() ) );
-        contentElement.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE,  String.valueOf( primitiveRegion.getWidth() ) );
-        contentElement.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, String.valueOf( primitiveRegion.getHeight() ) );
+		GraphicsNode node = ctx.getGVTBuilder().build(ctx, proxyElement);
+		Filter filter = node.getGraphicsNodeRable(true);
 
+		// 'primitiveUnits' attribute - default is userSpaceOnUse
+		short coordSystemType;
+		String s = SVGUtilities.getChainableAttributeNS(filterDefElement, null, SVG_PRIMITIVE_UNITS_ATTRIBUTE, ctx);
+		if (s.length() == 0) {
+			coordSystemType = SVGUtilities.USER_SPACE_ON_USE;
+		} else {
+			coordSystemType = SVGUtilities.parseCoordinateSystem(filterDefElement, SVG_PRIMITIVE_UNITS_ATTRIBUTE, s,
+					ctx);
+		}
 
-        GraphicsNode node = ctx.getGVTBuilder().build(ctx, proxyElement);
-        Filter filter = node.getGraphicsNodeRable(true);
+		// Compute the transform from object bounding box to user
+		// space if needed.
+		AffineTransform at = new AffineTransform();
+		if (coordSystemType == SVGUtilities.OBJECT_BOUNDING_BOX) {
+			at = SVGUtilities.toObjectBBox(at, filteredNode);
+		}
+		filter = new AffineRable8Bit(filter, at);
 
-        // 'primitiveUnits' attribute - default is userSpaceOnUse
-        short coordSystemType;
-        String s = SVGUtilities.getChainableAttributeNS
-            (filterDefElement, null, SVG_PRIMITIVE_UNITS_ATTRIBUTE, ctx);
-        if (s.length() == 0) {
-            coordSystemType = SVGUtilities.USER_SPACE_ON_USE;
-        } else {
-            coordSystemType = SVGUtilities.parseCoordinateSystem
-                (filterDefElement, SVG_PRIMITIVE_UNITS_ATTRIBUTE, s, ctx);
-        }
+		// handle the 'color-interpolation-filters' property
+		handleColorInterpolationFilters(filter, filterElement);
 
-        // Compute the transform from object bounding box to user
-        // space if needed.
-        AffineTransform at = new AffineTransform();
-        if (coordSystemType == SVGUtilities.OBJECT_BOUNDING_BOX) {
-            at = SVGUtilities.toObjectBBox(at, filteredNode);
-        }
-        filter = new AffineRable8Bit(filter, at);
+		// get filter primitive chain region
+		Rectangle2D primitiveRegionUserSpace = SVGUtilities.convertFilterPrimitiveRegion(filterElement, filteredElement,
+				filteredNode, defaultRegion, filterRegion, ctx);
+		filter = new PadRable8Bit(filter, primitiveRegionUserSpace, PadMode.ZERO_PAD);
 
-        // handle the 'color-interpolation-filters' property
-        handleColorInterpolationFilters(filter, filterElement);
+		// update the filter Map
+		updateFilterMap(filterElement, filter, filterMap);
 
-        // get filter primitive chain region
-        Rectangle2D primitiveRegionUserSpace
-            = SVGUtilities.convertFilterPrimitiveRegion(filterElement,
-                                                        filteredElement,
-                                                        filteredNode,
-                                                        defaultRegion,
-                                                        filterRegion,
-                                                        ctx);
-        filter = new PadRable8Bit(filter, primitiveRegionUserSpace,
-                                  PadMode.ZERO_PAD);
+		return filter;
+	}
 
-        // update the filter Map
-        updateFilterMap(filterElement, filter, filterMap);
+	/**
+	 * Returns a Filter that represents a svg document or element as an image.
+	 *
+	 * @param ctx             the bridge context
+	 * @param primitiveRegion the primitive region
+	 * @param refElement      the referenced element
+	 * @param toBBoxNeeded    true if there is a need to transform to
+	 *                        ObjectBoundingBox space
+	 * @param filterElement   parent filter element
+	 * @param filteredNode    node to which the filter applies
+	 */
+	protected static Filter createSVGFeImage(BridgeContext ctx, Rectangle2D primitiveRegion, Element refElement,
+			boolean toBBoxNeeded, Element filterElement, GraphicsNode filteredNode) {
 
-        return filter;
-    }
+		//
+		// <!> FIX ME
+		// Unresolved issue on the feImage behavior when referencing an
+		// image (PNG, JPEG or SVG image).
+		// VH & TK, 03/08/2002
+		// Furthermore, for feImage referencing doc fragment, should act
+		// like a <use>, i.e., CSS cascading and the whole zing bang.
+		//
+		GraphicsNode node = ctx.getGVTBuilder().build(ctx, refElement);
+		Filter filter = node.getGraphicsNodeRable(true);
 
-    /**
-     * Returns a Filter that represents a svg document or element as an image.
-     *
-     * @param ctx the bridge context
-     * @param primitiveRegion the primitive region
-     * @param refElement the referenced element
-     * @param toBBoxNeeded true if there is a need to transform to ObjectBoundingBox
-     *        space
-     * @param filterElement parent filter element
-     * @param filteredNode node to which the filter applies
-     */
-    protected static Filter createSVGFeImage(BridgeContext ctx,
-                                             Rectangle2D primitiveRegion,
-                                             Element refElement,
-                                             boolean toBBoxNeeded,
-                                             Element filterElement,
-                                             GraphicsNode filteredNode) {
+		AffineTransform at = new AffineTransform();
 
-        //
-        // <!> FIX ME
-        // Unresolved issue on the feImage behavior when referencing an
-        // image (PNG, JPEG or SVG image).
-        // VH & TK, 03/08/2002
-        // Furthermore, for feImage referencing doc fragment, should act
-        // like a <use>, i.e., CSS cascading and the whole zing bang.
-        //
-        GraphicsNode node = ctx.getGVTBuilder().build(ctx, refElement);
-        Filter filter = node.getGraphicsNodeRable(true);
+		if (toBBoxNeeded) {
+			// 'primitiveUnits' attribute - default is userSpaceOnUse
+			short coordSystemType;
+			Element filterDefElement = (Element) (filterElement.getParentNode());
+			String s = SVGUtilities.getChainableAttributeNS(filterDefElement, null, SVG_PRIMITIVE_UNITS_ATTRIBUTE, ctx);
+			if (s.length() == 0) {
+				coordSystemType = SVGUtilities.USER_SPACE_ON_USE;
+			} else {
+				coordSystemType = SVGUtilities.parseCoordinateSystem(filterDefElement, SVG_PRIMITIVE_UNITS_ATTRIBUTE, s,
+						ctx);
+			}
 
-        AffineTransform at = new AffineTransform();
+			if (coordSystemType == SVGUtilities.OBJECT_BOUNDING_BOX) {
+				at = SVGUtilities.toObjectBBox(at, filteredNode);
+			}
 
-        if (toBBoxNeeded){
-            // 'primitiveUnits' attribute - default is userSpaceOnUse
-            short coordSystemType;
-            Element filterDefElement = (Element)(filterElement.getParentNode());
-            String s = SVGUtilities.getChainableAttributeNS
-                (filterDefElement, null, SVG_PRIMITIVE_UNITS_ATTRIBUTE, ctx);
-            if (s.length() == 0) {
-                coordSystemType = SVGUtilities.USER_SPACE_ON_USE;
-            } else {
-                coordSystemType = SVGUtilities.parseCoordinateSystem
-                    (filterDefElement, SVG_PRIMITIVE_UNITS_ATTRIBUTE, s, ctx);
-            }
+			Rectangle2D bounds = filteredNode.getGeometryBounds();
+			at.preConcatenate(AffineTransform.getTranslateInstance(primitiveRegion.getX() - bounds.getX(),
+					primitiveRegion.getY() - bounds.getY()));
 
-            if (coordSystemType == SVGUtilities.OBJECT_BOUNDING_BOX) {
-                at = SVGUtilities.toObjectBBox(at, filteredNode);
-            }
+		} else {
 
-            Rectangle2D bounds = filteredNode.getGeometryBounds();
-            at.preConcatenate(AffineTransform.getTranslateInstance
-                              (primitiveRegion.getX() - bounds.getX(),
-                               primitiveRegion.getY() - bounds.getY()));
+			// Need to translate the image to the x, y coordinate to
+			// have the same behavior as the <use> element
+			at.translate(primitiveRegion.getX(), primitiveRegion.getY());
+		}
 
-        } else {
+		return new AffineRable8Bit(filter, at);
+	}
 
-            // Need to translate the image to the x, y coordinate to
-            // have the same behavior as the <use> element
-            at.translate(primitiveRegion.getX(), primitiveRegion.getY());
-        }
+	/**
+	 * Returns a Filter that represents an raster image (JPG or PNG).
+	 *
+	 * @param ctx             the bridge context
+	 * @param primitiveRegion the primitive region
+	 * @param purl            the url of the image
+	 */
+	protected static Filter createRasterFeImage(BridgeContext ctx, Rectangle2D primitiveRegion, ParsedURL purl) {
 
-        return new AffineRable8Bit(filter, at);
-    }
+		// Need to fit the raster image to the filter region so that
+		// we have the same behavior as raster images in the <image> element.
+		Filter filter = ImageTagRegistry.getRegistry().readURL(purl);
 
-    /**
-     * Returns a Filter that represents an raster image (JPG or PNG).
-     *
-     * @param ctx the bridge context
-     * @param primitiveRegion the primitive region
-     * @param purl the url of the image
-     */
-    protected static Filter createRasterFeImage(BridgeContext ctx,
-                                                Rectangle2D   primitiveRegion,
-                                                ParsedURL     purl) {
+		Rectangle2D bounds = filter.getBounds2D();
+		AffineTransform scale = new AffineTransform();
+		scale.translate(primitiveRegion.getX(), primitiveRegion.getY());
+		scale.scale(primitiveRegion.getWidth() / (bounds.getWidth() - 1),
+				primitiveRegion.getHeight() / (bounds.getHeight() - 1));
+		scale.translate(-bounds.getX(), -bounds.getY());
 
-        // Need to fit the raster image to the filter region so that
-        // we have the same behavior as raster images in the <image> element.
-        Filter filter = ImageTagRegistry.getRegistry().readURL(purl);
-
-        Rectangle2D bounds = filter.getBounds2D();
-        AffineTransform scale = new AffineTransform();
-        scale.translate(primitiveRegion.getX(), primitiveRegion.getY());
-        scale.scale(primitiveRegion.getWidth()/(bounds.getWidth()-1),
-                    primitiveRegion.getHeight()/(bounds.getHeight()-1));
-        scale.translate(-bounds.getX(), -bounds.getY());
-
-        return new AffineRable8Bit(filter, scale);
-    }
+		return new AffineRable8Bit(filter, scale);
+	}
 }

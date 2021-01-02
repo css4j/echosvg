@@ -30,141 +30,113 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
 /**
- * Utility class that converts a TexturePaint object into an
- * SVG pattern element
+ * Utility class that converts a TexturePaint object into an SVG pattern element
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGTexturePaint extends AbstractSVGConverter {
-    /**
-     * @param generatorContext used to build Elements
-     */
-    public SVGTexturePaint(SVGGeneratorContext generatorContext) {
-        super(generatorContext);
-    }
+	/**
+	 * @param generatorContext used to build Elements
+	 */
+	public SVGTexturePaint(SVGGeneratorContext generatorContext) {
+		super(generatorContext);
+	}
 
-    /**
-     * Converts part or all of the input GraphicContext into
-     * a set of attribute/value pairs and related definitions
-     *
-     * @param gc GraphicContext to be converted
-     * @return descriptor of the attributes required to represent
-     *         some or all of the GraphicContext state, along
-     *         with the related definitions
-     * @see io.sf.carte.echosvg.svggen.SVGDescriptor
-     */
-    @Override
-    public SVGDescriptor toSVG(GraphicContext gc) {
-        return toSVG((TexturePaint)gc.getPaint());
-    }
+	/**
+	 * Converts part or all of the input GraphicContext into a set of
+	 * attribute/value pairs and related definitions
+	 *
+	 * @param gc GraphicContext to be converted
+	 * @return descriptor of the attributes required to represent some or all of the
+	 *         GraphicContext state, along with the related definitions
+	 * @see io.sf.carte.echosvg.svggen.SVGDescriptor
+	 */
+	@Override
+	public SVGDescriptor toSVG(GraphicContext gc) {
+		return toSVG((TexturePaint) gc.getPaint());
+	}
 
-    /**
-     * @param texture the TexturePaint to be converted
-     * @return a descriptor whose paint value references
-     *         a pattern. The definition of the
-     *         pattern in put in the patternDefsMap
-     */
-    public SVGPaintDescriptor toSVG(TexturePaint texture) {
-        // Reuse definition if pattern has already been converted
-        SVGPaintDescriptor patternDesc = (SVGPaintDescriptor)descMap.get(texture);
-        Document domFactory = generatorContext.domFactory;
+	/**
+	 * @param texture the TexturePaint to be converted
+	 * @return a descriptor whose paint value references a pattern. The definition
+	 *         of the pattern in put in the patternDefsMap
+	 */
+	public SVGPaintDescriptor toSVG(TexturePaint texture) {
+		// Reuse definition if pattern has already been converted
+		SVGPaintDescriptor patternDesc = (SVGPaintDescriptor) descMap.get(texture);
+		Document domFactory = generatorContext.domFactory;
 
-        if (patternDesc == null) {
-            Rectangle2D anchorRect = texture.getAnchorRect();
-            Element patternDef = domFactory.createElementNS(SVG_NAMESPACE_URI,
-                                                            SVG_PATTERN_TAG);
-            patternDef.setAttributeNS(null, SVG_PATTERN_UNITS_ATTRIBUTE,
-                                      SVG_USER_SPACE_ON_USE_VALUE);
+		if (patternDesc == null) {
+			Rectangle2D anchorRect = texture.getAnchorRect();
+			Element patternDef = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_PATTERN_TAG);
+			patternDef.setAttributeNS(null, SVG_PATTERN_UNITS_ATTRIBUTE, SVG_USER_SPACE_ON_USE_VALUE);
 
-            //
-            // First, set the pattern anchor
-            //
-            patternDef.setAttributeNS(null, SVG_X_ATTRIBUTE,
-                                    doubleString(anchorRect.getX()));
-            patternDef.setAttributeNS(null, SVG_Y_ATTRIBUTE,
-                                    doubleString(anchorRect.getY()));
-            patternDef.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE,
-                                    doubleString(anchorRect.getWidth()));
-            patternDef.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE,
-                                    doubleString(anchorRect.getHeight()));
+			//
+			// First, set the pattern anchor
+			//
+			patternDef.setAttributeNS(null, SVG_X_ATTRIBUTE, doubleString(anchorRect.getX()));
+			patternDef.setAttributeNS(null, SVG_Y_ATTRIBUTE, doubleString(anchorRect.getY()));
+			patternDef.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, doubleString(anchorRect.getWidth()));
+			patternDef.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, doubleString(anchorRect.getHeight()));
 
-            //
-            // Now, add an image element for the image.
-            //
-            BufferedImage textureImage = texture.getImage();
-            //
-            // Rescale the image to fit the anchor rectangle
-            //
-            if (textureImage.getWidth() > 0 &&
-                textureImage.getHeight() > 0){
+			//
+			// Now, add an image element for the image.
+			//
+			BufferedImage textureImage = texture.getImage();
+			//
+			// Rescale the image to fit the anchor rectangle
+			//
+			if (textureImage.getWidth() > 0 && textureImage.getHeight() > 0) {
 
-                // Rescale only if necessary
-                if(textureImage.getWidth() != anchorRect.getWidth() ||
-                   textureImage.getHeight() != anchorRect.getHeight()){
+				// Rescale only if necessary
+				if (textureImage.getWidth() != anchorRect.getWidth()
+						|| textureImage.getHeight() != anchorRect.getHeight()) {
 
-                    // Rescale only if anchor area is not a point or a line
-                    if(anchorRect.getWidth() > 0 &&
-                       anchorRect.getHeight() > 0){
-                        double scaleX =
-                            anchorRect.getWidth()/textureImage.getWidth();
-                        double scaleY =
-                            anchorRect.getHeight()/textureImage.getHeight();
-                        BufferedImage newImage
-                            = new BufferedImage((int)(scaleX*
-                                                      textureImage.getWidth()),
-                                                (int)(scaleY*
-                                                      textureImage.getHeight()),
-                                                BufferedImage.TYPE_INT_ARGB);
+					// Rescale only if anchor area is not a point or a line
+					if (anchorRect.getWidth() > 0 && anchorRect.getHeight() > 0) {
+						double scaleX = anchorRect.getWidth() / textureImage.getWidth();
+						double scaleY = anchorRect.getHeight() / textureImage.getHeight();
+						BufferedImage newImage = new BufferedImage((int) (scaleX * textureImage.getWidth()),
+								(int) (scaleY * textureImage.getHeight()), BufferedImage.TYPE_INT_ARGB);
 
-                        Graphics2D g = newImage.createGraphics();
-                        g.scale(scaleX, scaleY);
-                        g.drawImage(textureImage, 0, 0, null);
-                        g.dispose();
+						Graphics2D g = newImage.createGraphics();
+						g.scale(scaleX, scaleY);
+						g.drawImage(textureImage, 0, 0, null);
+						g.dispose();
 
-                        textureImage = newImage;
-                    }
-                }
-            }
+						textureImage = newImage;
+					}
+				}
+			}
 
-            // generatorContext.imageHandler.
-            // handleImage((RenderedImage)textureImage, imageElement,
-            // generatorContext);
+			// generatorContext.imageHandler.
+			// handleImage((RenderedImage)textureImage, imageElement,
+			// generatorContext);
 
-            Element patternContent
-                = generatorContext.genericImageHandler.createElement
-                (generatorContext);
+			Element patternContent = generatorContext.genericImageHandler.createElement(generatorContext);
 
-            generatorContext.genericImageHandler.handleImage
-                ((RenderedImage)textureImage,
-                 patternContent,
-                 0,
-                 0,
-                 textureImage.getWidth(),
-                 textureImage.getHeight(),
-                 generatorContext);
+			generatorContext.genericImageHandler.handleImage((RenderedImage) textureImage, patternContent, 0, 0,
+					textureImage.getWidth(), textureImage.getHeight(), generatorContext);
 
-            patternDef.appendChild(patternContent);
+			patternDef.appendChild(patternContent);
 
-            patternDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
-                                      generatorContext.idGenerator.
-                                      generateID(ID_PREFIX_PATTERN));
+			patternDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
+					generatorContext.idGenerator.generateID(ID_PREFIX_PATTERN));
 
 //            StringBuffer patternAttrBuf = new StringBuffer(URL_PREFIX);
 //            patternAttrBuf.append(SIGN_POUND);
 //            patternAttrBuf.append(patternDef.getAttributeNS(null, SVG_ID_ATTRIBUTE));
 //            patternAttrBuf.append(URL_SUFFIX);
-            String patternAttrBuf = URL_PREFIX
-                    + SIGN_POUND
-                    + patternDef.getAttributeNS(null, SVG_ID_ATTRIBUTE)
-                    + URL_SUFFIX;
-            patternDesc = new SVGPaintDescriptor(patternAttrBuf, SVG_OPAQUE_VALUE, patternDef);
+			String patternAttrBuf = URL_PREFIX + SIGN_POUND + patternDef.getAttributeNS(null, SVG_ID_ATTRIBUTE)
+					+ URL_SUFFIX;
+			patternDesc = new SVGPaintDescriptor(patternAttrBuf, SVG_OPAQUE_VALUE, patternDef);
 
-            descMap.put(texture, patternDesc);
-            defSet.add(patternDef);
-        }
+			descMap.put(texture, patternDesc);
+			defSet.add(patternDef);
+		}
 
-        return patternDesc;
-    }
+		return patternDesc;
+	}
 }

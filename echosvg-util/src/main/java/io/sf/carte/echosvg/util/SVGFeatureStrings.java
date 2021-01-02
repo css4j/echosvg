@@ -29,75 +29,75 @@ import java.util.Set;
  */
 public class SVGFeatureStrings {
 
-    /**
-     * Adds a <code>String</code> to the specified {@link Set} corresponding
-     * to each SVG feature string that EchoSVG supports.
-     *
-     * @param features The set to add feature strings to.
-     */
-    public static void addSupportedFeatureStrings(Set<String> features) {
-        // SVG 1.0 feature strings
-        features.add(SVGConstants.SVG_ORG_W3C_SVG_FEATURE);
-        features.add(SVGConstants.SVG_ORG_W3C_SVG_STATIC_FEATURE);
-        features.add(SVGConstants.SVG_ORG_W3C_SVG_ANIMATION_FEATURE);
-        features.add(SVGConstants.SVG_ORG_W3C_SVG_DYNAMIC_FEATURE);
-        features.add(SVGConstants.SVG_ORG_W3C_SVG_ALL_FEATURE);
-        features.add(SVGConstants.SVG_ORG_W3C_DOM_SVG_FEATURE);
-        features.add(SVGConstants.SVG_ORG_W3C_DOM_SVG_STATIC_FEATURE);
-        features.add(SVGConstants.SVG_ORG_W3C_DOM_SVG_ANIMATION_FEATURE);
-        features.add(SVGConstants.SVG_ORG_W3C_DOM_SVG_DYNAMIC_FEATURE);
-        features.add(SVGConstants.SVG_ORG_W3C_DOM_SVG_ALL_FEATURE);
+	/**
+	 * Adds a <code>String</code> to the specified {@link Set} corresponding to each
+	 * SVG feature string that EchoSVG supports.
+	 *
+	 * @param features The set to add feature strings to.
+	 */
+	public static void addSupportedFeatureStrings(Set<String> features) {
+		// SVG 1.0 feature strings
+		features.add(SVGConstants.SVG_ORG_W3C_SVG_FEATURE);
+		features.add(SVGConstants.SVG_ORG_W3C_SVG_STATIC_FEATURE);
+		features.add(SVGConstants.SVG_ORG_W3C_SVG_ANIMATION_FEATURE);
+		features.add(SVGConstants.SVG_ORG_W3C_SVG_DYNAMIC_FEATURE);
+		features.add(SVGConstants.SVG_ORG_W3C_SVG_ALL_FEATURE);
+		features.add(SVGConstants.SVG_ORG_W3C_DOM_SVG_FEATURE);
+		features.add(SVGConstants.SVG_ORG_W3C_DOM_SVG_STATIC_FEATURE);
+		features.add(SVGConstants.SVG_ORG_W3C_DOM_SVG_ANIMATION_FEATURE);
+		features.add(SVGConstants.SVG_ORG_W3C_DOM_SVG_DYNAMIC_FEATURE);
+		features.add(SVGConstants.SVG_ORG_W3C_DOM_SVG_ALL_FEATURE);
 
-        // SVG 1.1 feature strings
-        // Due to SVG_SVG11_VIEWPORT_ATTRIBUTE_FEATURE not being supported
-        // features.add(SVGConstants.SVG_SVG11_SVG_FEATURE);
-        // features.add(SVGConstants.SVG_SVG11_SVG_STATIC_FEATURE);
-        // features.add(SVGConstants.SVG_SVG11_SVG_ANIMATION_FEATURE);
-        // features.add(SVGConstants.SVG_SVG11_SVG_DYNAMIC_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_SVG_DOM_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_SVG_DOM_STATIC_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_SVG_DOM_ANIMATION_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_SVG_DOM_DYNAMIC_FEATURE);
+		// SVG 1.1 feature strings
+		// Due to SVG_SVG11_VIEWPORT_ATTRIBUTE_FEATURE not being supported
+		// features.add(SVGConstants.SVG_SVG11_SVG_FEATURE);
+		// features.add(SVGConstants.SVG_SVG11_SVG_STATIC_FEATURE);
+		// features.add(SVGConstants.SVG_SVG11_SVG_ANIMATION_FEATURE);
+		// features.add(SVGConstants.SVG_SVG11_SVG_DYNAMIC_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_SVG_DOM_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_SVG_DOM_STATIC_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_SVG_DOM_ANIMATION_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_SVG_DOM_DYNAMIC_FEATURE);
 
-        features.add(SVGConstants.SVG_SVG11_CORE_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_STRUCTURE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_BASIC_STRUCTURE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_CONTAINER_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_CONDITIONAL_PROCESSING_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_IMAGE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_STYLE_FEATURE);
-        // 'clip' on various elements not supported
-        // features.add(SVGConstants.SVG_SVG11_VIEWPORT_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_SHAPE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_TEXT_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_BASIC_TEXT_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_PAINT_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_BASIC_PAINT_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_OPACITY_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_GRAPHICS_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_BASIC_GRAPHICS_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_MARKER_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_COLOR_PROFILE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_GRADIENT_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_PATTERN_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_CLIP_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_BASIC_CLIP_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_MASK_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_FILTER_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_BASIC_FILTER_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_DOCUMENT_EVENTS_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_GRAPHICAL_EVENTS_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_ANIMATION_EVENTS_ATTRIBUTE_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_CURSOR_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_HYPERLINKING_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_XLINK_FEATURE);
-        // externalResourcesRequired="" not supported
-        // features.add(SVGConstants.SVG_SVG11_EXTERNAL_RESOURCES_REQUIRED_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_VIEW_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_SCRIPT_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_ANIMATION_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_FONT_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_BASIC_FONT_FEATURE);
-        features.add(SVGConstants.SVG_SVG11_EXTENSIBILITY_FEATURE);
-    }
+		features.add(SVGConstants.SVG_SVG11_CORE_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_STRUCTURE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_BASIC_STRUCTURE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_CONTAINER_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_CONDITIONAL_PROCESSING_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_IMAGE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_STYLE_FEATURE);
+		// 'clip' on various elements not supported
+		// features.add(SVGConstants.SVG_SVG11_VIEWPORT_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_SHAPE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_TEXT_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_BASIC_TEXT_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_PAINT_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_BASIC_PAINT_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_OPACITY_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_GRAPHICS_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_BASIC_GRAPHICS_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_MARKER_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_COLOR_PROFILE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_GRADIENT_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_PATTERN_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_CLIP_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_BASIC_CLIP_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_MASK_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_FILTER_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_BASIC_FILTER_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_DOCUMENT_EVENTS_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_GRAPHICAL_EVENTS_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_ANIMATION_EVENTS_ATTRIBUTE_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_CURSOR_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_HYPERLINKING_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_XLINK_FEATURE);
+		// externalResourcesRequired="" not supported
+		// features.add(SVGConstants.SVG_SVG11_EXTERNAL_RESOURCES_REQUIRED_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_VIEW_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_SCRIPT_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_ANIMATION_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_FONT_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_BASIC_FONT_FEATURE);
+		features.add(SVGConstants.SVG_SVG11_EXTENSIBILITY_FEATURE);
+	}
 }

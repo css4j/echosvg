@@ -29,46 +29,52 @@ import java.util.EventListener;
  */
 public interface GraphicsNodeMouseListener extends EventListener {
 
-    /**
-     * Invoked when the mouse has been clicked on a graphics node.
-     * @param evt the graphics node mouse event
-     */
-    void mouseClicked(GraphicsNodeMouseEvent evt);
+	/**
+	 * Invoked when the mouse has been clicked on a graphics node.
+	 * 
+	 * @param evt the graphics node mouse event
+	 */
+	void mouseClicked(GraphicsNodeMouseEvent evt);
 
-    /**
-     * Invoked when a mouse button has been pressed on a graphics node.
-     * @param evt the graphics node mouse event
-     */
-    void mousePressed(GraphicsNodeMouseEvent evt);
+	/**
+	 * Invoked when a mouse button has been pressed on a graphics node.
+	 * 
+	 * @param evt the graphics node mouse event
+	 */
+	void mousePressed(GraphicsNodeMouseEvent evt);
 
-    /**
-     * Invoked when a mouse button has been released on a graphics node.
-     * @param evt the graphics node mouse event
-     */
-    void mouseReleased(GraphicsNodeMouseEvent evt);
+	/**
+	 * Invoked when a mouse button has been released on a graphics node.
+	 * 
+	 * @param evt the graphics node mouse event
+	 */
+	void mouseReleased(GraphicsNodeMouseEvent evt);
 
-    /**
-     * Invoked when the mouse enters a graphics node.
-     * @param evt the graphics node mouse event
-     */
-    void mouseEntered(GraphicsNodeMouseEvent evt);
+	/**
+	 * Invoked when the mouse enters a graphics node.
+	 * 
+	 * @param evt the graphics node mouse event
+	 */
+	void mouseEntered(GraphicsNodeMouseEvent evt);
 
-    /**
-     * Invoked when the mouse exits a graphics node.
-     * @param evt the graphics node mouse event
-     */
-    void mouseExited(GraphicsNodeMouseEvent evt);
+	/**
+	 * Invoked when the mouse exits a graphics node.
+	 * 
+	 * @param evt the graphics node mouse event
+	 */
+	void mouseExited(GraphicsNodeMouseEvent evt);
 
-    /**
-     * Invoked when a mouse button is pressed on a graphics node and then
-     * dragged.
-     * @param evt the graphics node mouse event
-     */
-    void mouseDragged(GraphicsNodeMouseEvent evt);
+	/**
+	 * Invoked when a mouse button is pressed on a graphics node and then dragged.
+	 * 
+	 * @param evt the graphics node mouse event
+	 */
+	void mouseDragged(GraphicsNodeMouseEvent evt);
 
-    /**
-     * Invoked when the mouse button has been moved on a node.
-     * @param evt the graphics node mouse event
-     */
-    void mouseMoved(GraphicsNodeMouseEvent evt);
+	/**
+	 * Invoked when the mouse button has been moved on a node.
+	 * 
+	 * @param evt the graphics node mouse event
+	 */
+	void mouseMoved(GraphicsNodeMouseEvent evt);
 }

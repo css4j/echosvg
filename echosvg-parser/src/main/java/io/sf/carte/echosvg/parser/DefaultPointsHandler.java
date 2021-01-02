@@ -26,36 +26,35 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public class DefaultPointsHandler implements PointsHandler {
-    /**
-     * The only instance of this class.
-     */
-    public static final DefaultPointsHandler INSTANCE
-        = new DefaultPointsHandler();
+	/**
+	 * The only instance of this class.
+	 */
+	public static final DefaultPointsHandler INSTANCE = new DefaultPointsHandler();
 
-    /**
-     * This class does not need to be instantiated.
-     */
-    protected DefaultPointsHandler() {
-    }
+	/**
+	 * This class does not need to be instantiated.
+	 */
+	protected DefaultPointsHandler() {
+	}
 
-    /**
-     * Implements {@link PointsHandler#startPoints()}.
-     */
-    @Override
-    public void startPoints() throws ParseException {
-    }
+	/**
+	 * Implements {@link PointsHandler#startPoints()}.
+	 */
+	@Override
+	public void startPoints() throws ParseException {
+	}
 
-    /**
-     * Implements {@link PointsHandler#point(float,float)}.
-     */
-    @Override
-    public void point(float x, float y) throws ParseException {
-    }
+	/**
+	 * Implements {@link PointsHandler#point(float,float)}.
+	 */
+	@Override
+	public void point(float x, float y) throws ParseException {
+	}
 
-    /**
-     * Implements {@link PointsHandler#endPoints()}.
-     */
-    @Override
-    public void endPoints() throws ParseException {
-    }
+	/**
+	 * Implements {@link PointsHandler#endPoints()}.
+	 */
+	@Override
+	public void endPoints() throws ParseException {
+	}
 }

@@ -23,30 +23,28 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 /**
- * This test validates that spaces are preserved correctly in drawString
- * calls. Validates bug #2657 fix.
+ * This test validates that spaces are preserved correctly in drawString calls.
+ * Validates bug #2657 fix.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class TextSpacePreserve implements Painter {
-    @Override
-    public void paint(Graphics2D g) {
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                           RenderingHints.VALUE_ANTIALIAS_ON);
+	@Override
+	public void paint(Graphics2D g) {
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g.setPaint(Color.black); // new Color(102, 102, 144));
+		g.setPaint(Color.black); // new Color(102, 102, 144));
 
-        int legendX = 10, legendY = 12;
-        g.translate(0, 30);
+		int legendX = 10, legendY = 12;
+		g.translate(0, 30);
 
-
-        // Print text with spaces.
-        g.drawString("     space before.", legendX, legendY);
-        g.drawString("Multiple spaces between A and B: A    B", legendX, legendY + 20);
-        g.drawString("This is a first line\n     and this is a second line starting with spaces", 
-                     legendX, legendY + 40);
-        g.drawString("Should have no trailing spaces", legendX, legendY + 60);
-    }
+		// Print text with spaces.
+		g.drawString("     space before.", legendX, legendY);
+		g.drawString("Multiple spaces between A and B: A    B", legendX, legendY + 20);
+		g.drawString("This is a first line\n     and this is a second line starting with spaces", legendX,
+				legendY + 40);
+		g.drawString("Should have no trailing spaces", legendX, legendY + 60);
+	}
 }

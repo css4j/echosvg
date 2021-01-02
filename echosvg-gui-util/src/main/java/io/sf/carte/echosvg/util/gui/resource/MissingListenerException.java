@@ -26,52 +26,55 @@ package io.sf.carte.echosvg.util.gui.resource;
  * @version $Id$
  */
 public class MissingListenerException extends RuntimeException {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The class name of the listener bundle requested
-     * @serial
-     */
-    private String className;
+	/**
+	 * The class name of the listener bundle requested
+	 * 
+	 * @serial
+	 */
+	private String className;
 
-    /**
-     * The name of the specific listener requested by the user
-     * @serial
-     */
-    private String key;
+	/**
+	 * The name of the specific listener requested by the user
+	 * 
+	 * @serial
+	 */
+	private String key;
 
-    /**
-     * Constructs a MissingListenerException with the specified information.
-     * A detail message is a String that describes this particular exception.
-     * @param s the detail message
-     * @param className the name of the listener class
-     * @param key the key for the missing listener.
-     */
-    public MissingListenerException(String s, String className, String key) {
-        super(s);
-        this.className = className;
-        this.key = key;
-    }
+	/**
+	 * Constructs a MissingListenerException with the specified information. A
+	 * detail message is a String that describes this particular exception.
+	 * 
+	 * @param s         the detail message
+	 * @param className the name of the listener class
+	 * @param key       the key for the missing listener.
+	 */
+	public MissingListenerException(String s, String className, String key) {
+		super(s);
+		this.className = className;
+		this.key = key;
+	}
 
-    /**
-     * Gets parameter passed by constructor.
-     */
-    public String getClassName() {
-        return className;
-    }
+	/**
+	 * Gets parameter passed by constructor.
+	 */
+	public String getClassName() {
+		return className;
+	}
 
-    /**
-     * Gets parameter passed by constructor.
-     */
-    public String getKey() {
-        return key;
-    }
+	/**
+	 * Gets parameter passed by constructor.
+	 */
+	public String getKey() {
+		return key;
+	}
 
-    /**
-     * Returns a printable representation of this object
-     */
-    @Override
-    public String toString() {
-        return super.toString()+" ("+getKey()+", bundle: "+getClassName()+")";
-    }
+	/**
+	 * Returns a printable representation of this object
+	 */
+	@Override
+	public String toString() {
+		return super.toString() + " (" + getKey() + ", bundle: " + getClassName() + ")";
+	}
 }

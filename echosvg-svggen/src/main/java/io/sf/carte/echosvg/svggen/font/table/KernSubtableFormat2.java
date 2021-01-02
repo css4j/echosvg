@@ -29,27 +29,27 @@ import java.io.RandomAccessFile;
  */
 public class KernSubtableFormat2 extends KernSubtable {
 
-    private int rowWidth;
-    private int leftClassTable;
-    private int rightClassTable;
-    private int array;
+	private int rowWidth;
+	private int leftClassTable;
+	private int rightClassTable;
+	private int array;
 
-    /** Creates new KernSubtableFormat2 */
-    protected KernSubtableFormat2(RandomAccessFile raf) throws IOException {
-        rowWidth = raf.readUnsignedShort();
-        leftClassTable = raf.readUnsignedShort();
-        rightClassTable = raf.readUnsignedShort();
-        array = raf.readUnsignedShort();
-    }
+	/** Creates new KernSubtableFormat2 */
+	protected KernSubtableFormat2(RandomAccessFile raf) throws IOException {
+		rowWidth = raf.readUnsignedShort();
+		leftClassTable = raf.readUnsignedShort();
+		rightClassTable = raf.readUnsignedShort();
+		array = raf.readUnsignedShort();
+	}
 
-    @Override
-    public int getKerningPairCount() {
-        return 0;
-    }
+	@Override
+	public int getKerningPairCount() {
+		return 0;
+	}
 
-    @Override
-    public KerningPair getKerningPair(int i) {
-        return null;
-    }
+	@Override
+	public KerningPair getKerningPair(int i) {
+		return null;
+	}
 
 }

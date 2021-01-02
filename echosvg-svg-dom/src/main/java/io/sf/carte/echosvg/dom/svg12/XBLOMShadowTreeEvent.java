@@ -29,44 +29,38 @@ import io.sf.carte.echosvg.dom.xbl.XBLShadowTreeElement;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class XBLOMShadowTreeEvent extends AbstractEvent
-                                  implements ShadowTreeEvent {
-    
-    /**
-     * The shadow tree that is the object of this event.
-     */
-    protected XBLShadowTreeElement xblShadowTree;
+public class XBLOMShadowTreeEvent extends AbstractEvent implements ShadowTreeEvent {
 
-    /**
-     * Returns the shadow tree that is the object of this event.
-     */
-    @Override
-    public XBLShadowTreeElement getXblShadowTree() {
-        return xblShadowTree;
-    }
+	/**
+	 * The shadow tree that is the object of this event.
+	 */
+	protected XBLShadowTreeElement xblShadowTree;
 
-    /**
-     * Initializes this event object.
-     */
-    @Override
-    public void initShadowTreeEvent(String typeArg,
-                                    boolean canBubbleArg,
-                                    boolean cancelableArg,
-                                    XBLShadowTreeElement xblShadowTreeArg) {
-        initEvent(typeArg, canBubbleArg, cancelableArg);
-        xblShadowTree = xblShadowTreeArg;
-    }
+	/**
+	 * Returns the shadow tree that is the object of this event.
+	 */
+	@Override
+	public XBLShadowTreeElement getXblShadowTree() {
+		return xblShadowTree;
+	}
 
-    /**
-     * Initializes this event object with a namespaced event type.
-     */
-    @Override
-    public void initShadowTreeEventNS(String namespaceURIArg,
-                                      String typeArg,
-                                      boolean canBubbleArg,
-                                      boolean cancelableArg,
-                                      XBLShadowTreeElement xblShadowTreeArg) {
-        initEventNS(namespaceURIArg, typeArg, canBubbleArg, cancelableArg);
-        xblShadowTree = xblShadowTreeArg;
-    }
+	/**
+	 * Initializes this event object.
+	 */
+	@Override
+	public void initShadowTreeEvent(String typeArg, boolean canBubbleArg, boolean cancelableArg,
+			XBLShadowTreeElement xblShadowTreeArg) {
+		initEvent(typeArg, canBubbleArg, cancelableArg);
+		xblShadowTree = xblShadowTreeArg;
+	}
+
+	/**
+	 * Initializes this event object with a namespaced event type.
+	 */
+	@Override
+	public void initShadowTreeEventNS(String namespaceURIArg, String typeArg, boolean canBubbleArg,
+			boolean cancelableArg, XBLShadowTreeElement xblShadowTreeArg) {
+		initEventNS(namespaceURIArg, typeArg, canBubbleArg, cancelableArg);
+		xblShadowTree = xblShadowTreeArg;
+	}
 }

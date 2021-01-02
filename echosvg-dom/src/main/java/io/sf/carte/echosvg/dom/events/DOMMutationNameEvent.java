@@ -29,79 +29,54 @@ import io.sf.carte.echosvg.w3c.dom.events.MutationNameEvent;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DOMMutationNameEvent
-        extends DOMMutationEvent
-        implements MutationNameEvent {
+public class DOMMutationNameEvent extends DOMMutationEvent implements MutationNameEvent {
 
-    /**
-     * The node's previous namespace URI.
-     */
-    protected String prevNamespaceURI;
+	/**
+	 * The node's previous namespace URI.
+	 */
+	protected String prevNamespaceURI;
 
-    /**
-     * The node's previous name.
-     */
-    protected String prevNodeName;
+	/**
+	 * The node's previous name.
+	 */
+	protected String prevNodeName;
 
-    /**
-     * Initializes this MutationNameEvent.
-     */
-    @Override
-    public void initMutationNameEvent(String typeArg,
-                                      boolean canBubbleArg,
-                                      boolean cancelableArg,
-                                      Node relatedNodeArg,
-                                      String prevNamespaceURIArg,
-                                      String prevNodeNameArg) {
-        initMutationEvent(typeArg,
-                          canBubbleArg,
-                          cancelableArg,
-                          relatedNodeArg,
-                          null,
-                          null,
-                          null,
-                          (short) 0);
-        this.prevNamespaceURI = prevNamespaceURIArg;
-        this.prevNodeName     = prevNodeNameArg;
-    }
+	/**
+	 * Initializes this MutationNameEvent.
+	 */
+	@Override
+	public void initMutationNameEvent(String typeArg, boolean canBubbleArg, boolean cancelableArg, Node relatedNodeArg,
+			String prevNamespaceURIArg, String prevNodeNameArg) {
+		initMutationEvent(typeArg, canBubbleArg, cancelableArg, relatedNodeArg, null, null, null, (short) 0);
+		this.prevNamespaceURI = prevNamespaceURIArg;
+		this.prevNodeName = prevNodeNameArg;
+	}
 
-    /**
-     * Initializes this MutationNameEvent.
-     */
-    @Override
-    public void initMutationNameEventNS(String namespaceURI,
-                                        String typeArg,
-                                        boolean canBubbleArg,
-                                        boolean cancelableArg,
-                                        Node relatedNodeArg,
-                                        String prevNamespaceURIArg,
-                                        String prevNodeNameArg) {
-        initMutationEventNS(namespaceURI,
-                            typeArg,
-                            canBubbleArg,
-                            cancelableArg,
-                            relatedNodeArg,
-                            null,
-                            null,
-                            null,
-                            (short) 0);
-        this.prevNamespaceURI = prevNamespaceURIArg;
-        this.prevNodeName     = prevNodeNameArg;
-    }
+	/**
+	 * Initializes this MutationNameEvent.
+	 */
+	@Override
+	public void initMutationNameEventNS(String namespaceURI, String typeArg, boolean canBubbleArg,
+			boolean cancelableArg, Node relatedNodeArg, String prevNamespaceURIArg, String prevNodeNameArg) {
+		initMutationEventNS(namespaceURI, typeArg, canBubbleArg, cancelableArg, relatedNodeArg, null, null, null,
+				(short) 0);
+		this.prevNamespaceURI = prevNamespaceURIArg;
+		this.prevNodeName = prevNodeNameArg;
+	}
 
-    /**
-     * Gets the node's previous namespace URI.
-     */
-    @Override
-    public String getPrevNamespaceURI() {
-        return prevNamespaceURI;
-    }
+	/**
+	 * Gets the node's previous namespace URI.
+	 */
+	@Override
+	public String getPrevNamespaceURI() {
+		return prevNamespaceURI;
+	}
 
-    /**
-     * Gets the node's previous node name.
-     */
-    @Override
-    public String getPrevNodeName() {
-        return prevNodeName;
-    }
+	/**
+	 * Gets the node's previous node name.
+	 */
+	@Override
+	public String getPrevNodeName() {
+		return prevNodeName;
+	}
 }

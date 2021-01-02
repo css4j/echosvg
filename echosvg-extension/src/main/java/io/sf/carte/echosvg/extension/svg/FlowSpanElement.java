@@ -30,49 +30,47 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class FlowSpanElement
-    extends    SVGOMTextPositioningElement
-    implements EchoSVGExtConstants
- {
+public class FlowSpanElement extends SVGOMTextPositioningElement implements EchoSVGExtConstants {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new EchoSVG Flow Span element.
-     */
-    protected FlowSpanElement() {
-    }
+	/**
+	 * Creates a new EchoSVG Flow Span element.
+	 */
+	protected FlowSpanElement() {
+	}
 
-    /**
-     * Creates a new EchoSVG Flow Span Element.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public FlowSpanElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new EchoSVG Flow Span Element.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public FlowSpanElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return BATIK_EXT_FLOW_SPAN_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return BATIK_EXT_FLOW_SPAN_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return BATIK_12_NAMESPACE_URI;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.Node#getNamespaceURI()}.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return BATIK_12_NAMESPACE_URI;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new FlowSpanElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new FlowSpanElement();
+	}
 }

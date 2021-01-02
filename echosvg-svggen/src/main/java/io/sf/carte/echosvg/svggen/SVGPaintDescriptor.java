@@ -26,64 +26,61 @@ import java.util.Map;
 import org.w3c.dom.Element;
 
 /**
- * Used to represent an SVG Paint. This can be achieved with
- * to values: an SVG paint value and an SVG opacity value
+ * Used to represent an SVG Paint. This can be achieved with to values: an SVG
+ * paint value and an SVG opacity value
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGPaintDescriptor implements SVGDescriptor, SVGSyntax{
-    private Element def;
-    private String paintValue;
-    private String opacityValue;
+public class SVGPaintDescriptor implements SVGDescriptor, SVGSyntax {
+	private Element def;
+	private String paintValue;
+	private String opacityValue;
 
-    public SVGPaintDescriptor(String paintValue,
-                              String opacityValue){
-        this.paintValue = paintValue;
-        this.opacityValue = opacityValue;
-    }
+	public SVGPaintDescriptor(String paintValue, String opacityValue) {
+		this.paintValue = paintValue;
+		this.opacityValue = opacityValue;
+	}
 
-    public SVGPaintDescriptor(String paintValue,
-                              String opacityValue,
-                              Element def){
-        this(paintValue, opacityValue);
-        this.def = def;
-    }
+	public SVGPaintDescriptor(String paintValue, String opacityValue, Element def) {
+		this(paintValue, opacityValue);
+		this.def = def;
+	}
 
-    public String getPaintValue(){
-        return paintValue;
-    }
+	public String getPaintValue() {
+		return paintValue;
+	}
 
-    public String getOpacityValue(){
-        return opacityValue;
-    }
+	public String getOpacityValue() {
+		return opacityValue;
+	}
 
-    public Element getDef(){
-        return def;
-    }
+	public Element getDef() {
+		return def;
+	}
 
-    @Override
-    public Map<String, String> getAttributeMap(Map<String, String> attrMap){
-        if(attrMap == null)
-            attrMap = new HashMap<>();
+	@Override
+	public Map<String, String> getAttributeMap(Map<String, String> attrMap) {
+		if (attrMap == null)
+			attrMap = new HashMap<>();
 
-        attrMap.put(SVG_FILL_ATTRIBUTE, paintValue);
-        attrMap.put(SVG_STROKE_ATTRIBUTE, paintValue);
-        attrMap.put(SVG_FILL_OPACITY_ATTRIBUTE, opacityValue);
-        attrMap.put(SVG_STROKE_OPACITY_ATTRIBUTE, opacityValue);
+		attrMap.put(SVG_FILL_ATTRIBUTE, paintValue);
+		attrMap.put(SVG_STROKE_ATTRIBUTE, paintValue);
+		attrMap.put(SVG_FILL_OPACITY_ATTRIBUTE, opacityValue);
+		attrMap.put(SVG_STROKE_OPACITY_ATTRIBUTE, opacityValue);
 
-        return attrMap;
-    }
+		return attrMap;
+	}
 
-    @Override
-    public List<Element> getDefinitionSet(List<Element> defSet){
-        if(defSet == null)
-            defSet = new LinkedList<>();
+	@Override
+	public List<Element> getDefinitionSet(List<Element> defSet) {
+		if (defSet == null)
+			defSet = new LinkedList<>();
 
-        if(def != null)
-            defSet.add(def);
+		if (def != null)
+			defSet.add(def);
 
-        return defSet;
-    }
+		return defSet;
+	}
 }

@@ -20,20 +20,20 @@ import io.sf.carte.doc.style.css.om.BaseSelectorMatcher;
 
 class SVGSelectorMatcher extends BaseSelectorMatcher<CSSStylableElement> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    SVGSelectorMatcher(CSSStylableElement elt) {
-        super(elt);
-    }
+	SVGSelectorMatcher(CSSStylableElement elt) {
+		super(elt);
+	}
 
-    @Override
-    protected SelectorMatcher obtainSelectorMatcher(CSSStylableElement element) {
-        return new SVGSelectorMatcher(element);
-    }
+	@Override
+	protected SelectorMatcher obtainSelectorMatcher(CSSStylableElement element) {
+		return new SVGSelectorMatcher(element);
+	}
 
-    @Override
-    protected boolean isVisitedURI(String href) {
-        return false;
-    }
+	@Override
+	protected boolean isVisitedURI(String href) {
+		return false;
+	}
 
 }

@@ -30,27 +30,27 @@ import org.w3c.dom.Element;
  */
 public class ElementSetIdAttributeNSTest extends DOM3Test {
 
-    private static final String ATTR_NAME = "blah";
+	private static final String ATTR_NAME = "blah";
 
-    private static final String ATTR_VALUE = "abc";
+	private static final String ATTR_VALUE = "abc";
 
-    @Override
-    public boolean runImplBasic() throws Exception {
-        Document doc = newSVGDoc();
-        doc.getDocumentElement().setAttributeNS(null, ATTR_NAME, ATTR_VALUE);
-        if (!setIdAttributeWorks(doc, true)) {
-            return false;
-        }
-        return setIdAttributeWorks(doc, false);
-    }
+	@Override
+	public boolean runImplBasic() throws Exception {
+		Document doc = newSVGDoc();
+		doc.getDocumentElement().setAttributeNS(null, ATTR_NAME, ATTR_VALUE);
+		if (!setIdAttributeWorks(doc, true)) {
+			return false;
+		}
+		return setIdAttributeWorks(doc, false);
+	}
 
-    private boolean setIdAttributeWorks(Document doc, boolean isId) {
-        doc.getDocumentElement().setIdAttributeNS(null, ATTR_NAME, isId);
-        Element e = doc.getElementById(ATTR_VALUE);
-        if (isId) {
-            return e == doc.getDocumentElement();
-        } else {
-            return e == null;
-        }
-    }
+	private boolean setIdAttributeWorks(Document doc, boolean isId) {
+		doc.getDocumentElement().setIdAttributeNS(null, ATTR_NAME, isId);
+		Element e = doc.getElementById(ATTR_VALUE);
+		if (isId) {
+			return e == doc.getDocumentElement();
+		} else {
+			return e == null;
+		}
+	}
 }

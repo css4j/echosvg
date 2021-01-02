@@ -40,110 +40,103 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class FontSizeAdjustManager extends AbstractValueManager {
 
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_FONT_SIZE_ADJUST_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_FONT_SIZE_ADJUST_VALUE;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_FONT_SIZE_ADJUST_PROPERTY;
-    }
-    
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return ValueConstants.NONE_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_FONT_SIZE_ADJUST_PROPERTY;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return ValueConstants.NONE_VALUE;
+	}
 
-        case INTEGER:
-            return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                                  lu.getIntegerValue());
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-        case REAL:
-            return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                                  lu.getFloatValue());
+		case INTEGER:
+			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getIntegerValue());
 
-        case IDENT:
-            if (lu.getStringValue().equalsIgnoreCase
-                (CSSConstants.CSS_NONE_VALUE)) {
-                return ValueConstants.NONE_VALUE;
-            }
-            throw createInvalidIdentifierDOMException(lu.getStringValue());
+		case REAL:
+			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getFloatValue());
 
-        default:
-            break;
-        }
-        throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-    }
+		case IDENT:
+			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+				return ValueConstants.NONE_VALUE;
+			}
+			throw createInvalidIdentifierDOMException(lu.getStringValue());
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        if (type != CSSPrimitiveValue.CSS_IDENT) {
-            throw createInvalidStringTypeDOMException(type);
-        }
-        if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-            return ValueConstants.NONE_VALUE;
-        }
-        throw createInvalidIdentifierDOMException(value);
-    }
+		default:
+			break;
+		}
+		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+	}
 
-    /**
-     * Implements {@link ValueManager#createFloatValue(short,float)}.
-     */
-    @Override
-    public Value createFloatValue(short type, float floatValue)
-        throws DOMException {
-        if (type == CSSPrimitiveValue.CSS_NUMBER) {
-            return new FloatValue(type, floatValue);
-        }
-        throw createInvalidFloatTypeDOMException(type);
-    }
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+		if (type != CSSPrimitiveValue.CSS_IDENT) {
+			throw createInvalidStringTypeDOMException(type);
+		}
+		if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+			return ValueConstants.NONE_VALUE;
+		}
+		throw createInvalidIdentifierDOMException(value);
+	}
+
+	/**
+	 * Implements {@link ValueManager#createFloatValue(short,float)}.
+	 */
+	@Override
+	public Value createFloatValue(short type, float floatValue) throws DOMException {
+		if (type == CSSPrimitiveValue.CSS_NUMBER) {
+			return new FloatValue(type, floatValue);
+		}
+		throw createInvalidFloatTypeDOMException(type);
+	}
 }

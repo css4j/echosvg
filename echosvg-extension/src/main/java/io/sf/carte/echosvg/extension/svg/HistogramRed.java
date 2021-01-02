@@ -32,86 +32,86 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.CachableRed;
  */
 public class HistogramRed extends AbstractRed {
 
-    // This is used to track which tiles we have computed
-    // a histogram for.
-    boolean [] computed;
-    int tallied = 0;
+	// This is used to track which tiles we have computed
+	// a histogram for.
+	boolean[] computed;
+	int tallied = 0;
 
-    int [] bins = new int[256];
+	int[] bins = new int[256];
 
-    public HistogramRed(CachableRed src){
-        super(src, null);
+	public HistogramRed(CachableRed src) {
+		super(src, null);
 
-        int tiles = getNumXTiles()*getNumYTiles();
-        computed = new boolean[tiles];
-    }
+		int tiles = getNumXTiles() * getNumYTiles();
+		computed = new boolean[tiles];
+	}
 
-    public void tallyTile(Raster r) {
-        final int minX = r.getMinX();
-        final int minY = r.getMinY();
-        final int w = r.getWidth();
-        final int h = r.getHeight();
+	public void tallyTile(Raster r) {
+		final int minX = r.getMinX();
+		final int minY = r.getMinY();
+		final int w = r.getWidth();
+		final int h = r.getHeight();
 
-        int [] samples = null;
-        int val;
-        for (int y=minY; y<minY+h; y++) {
-            samples = r.getPixels(minX, y, w, 1, samples);
-            for (int x=0; x<3*w; x++) {
-                // Simple fixed point conversion to lumincence.
-                val  = samples[x++]*5; // Red
-                val += samples[x++]*9; // Green
-                val += samples[x++]*2; // blue
-                bins[val>>4]++;
-            }
-        }
-        tallied++;
-    }
+		int[] samples = null;
+		int val;
+		for (int y = minY; y < minY + h; y++) {
+			samples = r.getPixels(minX, y, w, 1, samples);
+			for (int x = 0; x < 3 * w; x++) {
+				// Simple fixed point conversion to lumincence.
+				val = samples[x++] * 5; // Red
+				val += samples[x++] * 9; // Green
+				val += samples[x++] * 2; // blue
+				bins[val >> 4]++;
+			}
+		}
+		tallied++;
+	}
 
-    public int [] getHistogram() {
-        if (tallied == computed.length)
-            return bins;
+	public int[] getHistogram() {
+		if (tallied == computed.length)
+			return bins;
 
-        CachableRed src = (CachableRed)getSources().get( 0 );
-        int yt0 = src.getMinTileY();
+		CachableRed src = (CachableRed) getSources().get(0);
+		int yt0 = src.getMinTileY();
 
-        int xtiles = src.getNumXTiles();
-        int xt0 = src.getMinTileX();
+		int xtiles = src.getNumXTiles();
+		int xt0 = src.getMinTileX();
 
-        for (int y=0; y<src.getNumYTiles(); y++) {
-            for (int x=0; x<xtiles; x++) {
-                int idx = (x+xt0)+y*xtiles;
-                if (computed[idx]) continue;
+		for (int y = 0; y < src.getNumYTiles(); y++) {
+			for (int x = 0; x < xtiles; x++) {
+				int idx = (x + xt0) + y * xtiles;
+				if (computed[idx])
+					continue;
 
-                Raster r = src.getTile(x+xt0, y+yt0);
-                tallyTile(r);
-                computed[idx]=true;
-            }
-        }
-        return bins;
-    }
+				Raster r = src.getTile(x + xt0, y + yt0);
+				tallyTile(r);
+				computed[idx] = true;
+			}
+		}
+		return bins;
+	}
 
-    @Override
-    public WritableRaster copyData(WritableRaster wr) {
-        copyToRaster(wr);
-        return wr;
-    }
+	@Override
+	public WritableRaster copyData(WritableRaster wr) {
+		copyToRaster(wr);
+		return wr;
+	}
 
-    @Override
-    public Raster getTile(int tileX, int tileY) {
-        int yt = tileY-getMinTileY();
-        int xt = tileX-getMinTileX();
+	@Override
+	public Raster getTile(int tileX, int tileY) {
+		int yt = tileY - getMinTileY();
+		int xt = tileX - getMinTileX();
 
-        CachableRed src = (CachableRed)getSources().get(0);
-        Raster r = src.getTile(tileX, tileY);
+		CachableRed src = (CachableRed) getSources().get(0);
+		Raster r = src.getTile(tileX, tileY);
 
-        int idx = xt+yt*getNumXTiles();
+		int idx = xt + yt * getNumXTiles();
 
-        if (computed[idx])
-            return r;
+		if (computed[idx])
+			return r;
 
-        tallyTile(r);
-        computed[idx] = true;
-        return r;
-    }
+		tallyTile(r);
+		computed[idx] = true;
+		return r;
+	}
 }
-

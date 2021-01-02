@@ -32,165 +32,160 @@ import io.sf.carte.echosvg.anim.values.AnimatableValue;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMAnimatedInteger
-        extends AbstractSVGAnimatedValue
-        implements SVGAnimatedInteger {
+public class SVGOMAnimatedInteger extends AbstractSVGAnimatedValue implements SVGAnimatedInteger {
 
-    /**
-     * The default value.
-     */
-    protected int defaultValue;
+	/**
+	 * The default value.
+	 */
+	protected int defaultValue;
 
-    /**
-     * Whether the base value is valid.
-     */
-    protected boolean valid;
+	/**
+	 * Whether the base value is valid.
+	 */
+	protected boolean valid;
 
-    /**
-     * The current base value.
-     */
-    protected int baseVal;
+	/**
+	 * The current base value.
+	 */
+	protected int baseVal;
 
-    /**
-     * The current animated value.
-     */
-    protected int animVal;
+	/**
+	 * The current animated value.
+	 */
+	protected int animVal;
 
-    /**
-     * Whether the value is changing.
-     */
-    protected boolean changing;
+	/**
+	 * Whether the value is changing.
+	 */
+	protected boolean changing;
 
-    /**
-     * Creates a new SVGOMAnimatedInteger.
-     * @param elt The associated element.
-     * @param ns The attribute's namespace URI.
-     * @param ln The attribute's local name.
-     * @param val The default value, if the attribute is not specified.
-     */
-    public SVGOMAnimatedInteger(AbstractElement elt,
-                               String ns,
-                               String ln,
-                               int    val) {
-        super(elt, ns, ln);
-        defaultValue = val;
-    }
+	/**
+	 * Creates a new SVGOMAnimatedInteger.
+	 * 
+	 * @param elt The associated element.
+	 * @param ns  The attribute's namespace URI.
+	 * @param ln  The attribute's local name.
+	 * @param val The default value, if the attribute is not specified.
+	 */
+	public SVGOMAnimatedInteger(AbstractElement elt, String ns, String ln, int val) {
+		super(elt, ns, ln);
+		defaultValue = val;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAnimatedInteger#getBaseVal()}.
-     */
-    @Override
-    public int getBaseVal() {
-        if (!valid) {
-            update();
-        }
-        return baseVal;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAnimatedInteger#getBaseVal()}.
+	 */
+	@Override
+	public int getBaseVal() {
+		if (!valid) {
+			update();
+		}
+		return baseVal;
+	}
 
-    /**
-     * Updates the base value from the attribute.
-     */
-    protected void update() {
-        Attr attr = element.getAttributeNodeNS(namespaceURI, localName);
-        if (attr == null) {
-            baseVal = defaultValue;
-        } else {
-            baseVal = Integer.parseInt(attr.getValue());
-        }
-        valid = true;
-    }
+	/**
+	 * Updates the base value from the attribute.
+	 */
+	protected void update() {
+		Attr attr = element.getAttributeNodeNS(namespaceURI, localName);
+		if (attr == null) {
+			baseVal = defaultValue;
+		} else {
+			baseVal = Integer.parseInt(attr.getValue());
+		}
+		valid = true;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAnimatedInteger#setBaseVal(int)}.
-     */
-    @Override
-    public void setBaseVal(int baseVal) throws DOMException {
-        try {
-            this.baseVal = baseVal;
-            valid = true;
-            changing = true;
-            element.setAttributeNS(namespaceURI, localName,
-                                   String.valueOf(baseVal));
-        } finally {
-            changing = false;
-        }
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAnimatedInteger#setBaseVal(int)}.
+	 */
+	@Override
+	public void setBaseVal(int baseVal) throws DOMException {
+		try {
+			this.baseVal = baseVal;
+			valid = true;
+			changing = true;
+			element.setAttributeNS(namespaceURI, localName, String.valueOf(baseVal));
+		} finally {
+			changing = false;
+		}
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAnimatedInteger#getAnimVal()}.
-     */
-    @Override
-    public int getAnimVal() {
-        if (hasAnimVal) {
-            return animVal;
-        }
-        if (!valid) {
-            update();
-        }
-        return baseVal;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAnimatedInteger#getAnimVal()}.
+	 */
+	@Override
+	public int getAnimVal() {
+		if (hasAnimVal) {
+			return animVal;
+		}
+		if (!valid) {
+			update();
+		}
+		return baseVal;
+	}
 
-    /**
-     * Returns the base value of the attribute as an {@link AnimatableValue}.
-     */
-    @Override
-    public AnimatableValue getUnderlyingValue(AnimationTarget target) {
-        return new AnimatableIntegerValue(target, getBaseVal());
-    }
+	/**
+	 * Returns the base value of the attribute as an {@link AnimatableValue}.
+	 */
+	@Override
+	public AnimatableValue getUnderlyingValue(AnimationTarget target) {
+		return new AnimatableIntegerValue(target, getBaseVal());
+	}
 
-    /**
-     * Updates the animated value with the given {@link AnimatableValue}.
-     */
-    @Override
-    protected void updateAnimatedValue(AnimatableValue val) {
-        if (val == null) {
-            hasAnimVal = false;
-        } else {
-            hasAnimVal = true;
-            this.animVal = ((AnimatableIntegerValue) val).getValue();
-        }
-        fireAnimatedAttributeListeners();
-    }
+	/**
+	 * Updates the animated value with the given {@link AnimatableValue}.
+	 */
+	@Override
+	protected void updateAnimatedValue(AnimatableValue val) {
+		if (val == null) {
+			hasAnimVal = false;
+		} else {
+			hasAnimVal = true;
+			this.animVal = ((AnimatableIntegerValue) val).getValue();
+		}
+		fireAnimatedAttributeListeners();
+	}
 
-    /**
-     * Called when an Attr node has been added.
-     */
-    @Override
-    public void attrAdded(Attr node, String newv) {
-        if (!changing) {
-            valid = false;
-        }
-        fireBaseAttributeListeners();
-        if (!hasAnimVal) {
-            fireAnimatedAttributeListeners();
-        }
-    }
+	/**
+	 * Called when an Attr node has been added.
+	 */
+	@Override
+	public void attrAdded(Attr node, String newv) {
+		if (!changing) {
+			valid = false;
+		}
+		fireBaseAttributeListeners();
+		if (!hasAnimVal) {
+			fireAnimatedAttributeListeners();
+		}
+	}
 
-    /**
-     * Called when an Attr node has been modified.
-     */
-    @Override
-    public void attrModified(Attr node, String oldv, String newv) {
-        if (!changing) {
-            valid = false;
-        }
-        fireBaseAttributeListeners();
-        if (!hasAnimVal) {
-            fireAnimatedAttributeListeners();
-        }
-    }
+	/**
+	 * Called when an Attr node has been modified.
+	 */
+	@Override
+	public void attrModified(Attr node, String oldv, String newv) {
+		if (!changing) {
+			valid = false;
+		}
+		fireBaseAttributeListeners();
+		if (!hasAnimVal) {
+			fireAnimatedAttributeListeners();
+		}
+	}
 
-    /**
-     * Called when an Attr node has been removed.
-     */
-    @Override
-    public void attrRemoved(Attr node, String oldv) {
-        if (!changing) {
-            valid = false;
-        }
-        fireBaseAttributeListeners();
-        if (!hasAnimVal) {
-            fireAnimatedAttributeListeners();
-        }
-    }
+	/**
+	 * Called when an Attr node has been removed.
+	 */
+	@Override
+	public void attrRemoved(Attr node, String oldv) {
+		if (!changing) {
+			valid = false;
+		}
+		fireBaseAttributeListeners();
+		if (!hasAnimVal) {
+			fireAnimatedAttributeListeners();
+		}
+	}
 }

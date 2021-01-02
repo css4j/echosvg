@@ -30,27 +30,29 @@ import io.sf.carte.echosvg.i18n.Localizable;
  * @version $Id$
  */
 public interface Parser extends Localizable {
-    /**
-     * Parses the given reader
-     */
-    void parse(Reader r) throws ParseException;
+	/**
+	 * Parses the given reader
+	 */
+	void parse(Reader r) throws ParseException;
 
-    /**
-     * Parses the given string
-     */
-    void parse(String s) throws ParseException;
+	/**
+	 * Parses the given string
+	 */
+	void parse(String s) throws ParseException;
 
-    /**
-     * Allows an application to register an error event handler.
-     *
-     * <p>If the application does not register an error event handler,
-     * all error events reported by the parser will cause an exception
-     * to be thrown.
-     *
-     * <p>Applications may register a new or different handler in the
-     * middle of a parse, and the parser must begin using the new
-     * handler immediately.</p>
-     * @param handler The error handler.
-     */
-    void setErrorHandler(ErrorHandler handler);
+	/**
+	 * Allows an application to register an error event handler.
+	 *
+	 * <p>
+	 * If the application does not register an error event handler, all error events
+	 * reported by the parser will cause an exception to be thrown.
+	 *
+	 * <p>
+	 * Applications may register a new or different handler in the middle of a
+	 * parse, and the parser must begin using the new handler immediately.
+	 * </p>
+	 * 
+	 * @param handler The error handler.
+	 */
+	void setErrorHandler(ErrorHandler handler);
 }

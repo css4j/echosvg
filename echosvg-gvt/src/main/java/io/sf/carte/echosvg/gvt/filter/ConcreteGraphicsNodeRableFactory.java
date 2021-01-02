@@ -30,12 +30,12 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * @version $Id$
  */
 public class ConcreteGraphicsNodeRableFactory implements GraphicsNodeRableFactory {
-    /**
-     * Returns a <code>GraphicsNodeRable</code> initialized with the
-     * input <code>GraphicsNode</code>.
-     */
-    @Override
-    public GraphicsNodeRable createGraphicsNodeRable(GraphicsNode node){
-        return (GraphicsNodeRable)node.getGraphicsNodeRable(true);
-    }
+	/**
+	 * Returns a <code>GraphicsNodeRable</code> initialized with the input
+	 * <code>GraphicsNode</code>.
+	 */
+	@Override
+	public GraphicsNodeRable createGraphicsNodeRable(GraphicsNode node) {
+		return (GraphicsNodeRable) node.getGraphicsNodeRable(true);
+	}
 }

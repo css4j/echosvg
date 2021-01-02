@@ -27,85 +27,81 @@ import java.io.Serializable;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public final class ARGBChannel implements Serializable{
-    private static final long serialVersionUID = 1L;
-    /**
-     * Types.
-     * 
-     */
-    public static final int CHANNEL_A = 3;
-    public static final int CHANNEL_R = 2;
-    public static final int CHANNEL_G = 1;
-    public static final int CHANNEL_B = 0;
+public final class ARGBChannel implements Serializable {
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Types.
+	 * 
+	 */
+	public static final int CHANNEL_A = 3;
+	public static final int CHANNEL_R = 2;
+	public static final int CHANNEL_G = 1;
+	public static final int CHANNEL_B = 0;
 
-    /**
-     * Strings used to get a more readable output when
-     * a value is displayed.
-     */
-    public static final String RED = "Red";
-    public static final String GREEN = "Green";
-    public static final String BLUE = "Blue";
-    public static final String ALPHA = "Alpha";
+	/**
+	 * Strings used to get a more readable output when a value is displayed.
+	 */
+	public static final String RED = "Red";
+	public static final String GREEN = "Green";
+	public static final String BLUE = "Blue";
+	public static final String ALPHA = "Alpha";
 
-    /**
-     * Channel values
-     */
-    public static final ARGBChannel R 
-        = new ARGBChannel(CHANNEL_R, RED);
-    public static final ARGBChannel G 
-        = new ARGBChannel(CHANNEL_G, GREEN);
-    public static final ARGBChannel B 
-        = new ARGBChannel(CHANNEL_B, BLUE);
-    public static final ARGBChannel A 
-        = new ARGBChannel(CHANNEL_A, ALPHA);
+	/**
+	 * Channel values
+	 */
+	public static final ARGBChannel R = new ARGBChannel(CHANNEL_R, RED);
+	public static final ARGBChannel G = new ARGBChannel(CHANNEL_G, GREEN);
+	public static final ARGBChannel B = new ARGBChannel(CHANNEL_B, BLUE);
+	public static final ARGBChannel A = new ARGBChannel(CHANNEL_A, ALPHA);
 
-    private String desc;
-    private int val;
+	private String desc;
+	private int val;
 
-    /** 
-     * Constructor is private so that no instances other than
-     * the ones in the enumeration can be created.
-     * @see #readResolve
-     */
-    private ARGBChannel(int val, String desc){
-        this.desc = desc;
-        this.val = val;
-    }
-    
-    /**
-     * @return description
-     */
-    @Override
-    public String toString(){
-        return desc;
-    }
+	/**
+	 * Constructor is private so that no instances other than the ones in the
+	 * enumeration can be created.
+	 * 
+	 * @see #readResolve
+	 */
+	private ARGBChannel(int val, String desc) {
+		this.desc = desc;
+		this.val = val;
+	}
 
-    /**
-     * Convenience for enumeration switching
-     * @return value
-     */
-    public int toInt(){
-        return val;
-    }
+	/**
+	 * @return description
+	 */
+	@Override
+	public String toString() {
+		return desc;
+	}
 
+	/**
+	 * Convenience for enumeration switching
+	 * 
+	 * @return value
+	 */
+	public int toInt() {
+		return val;
+	}
 
-    /**
-     * This is called by the serialization code before it returns an unserialized
-     * object. To provide for unicity of instances, the instance that was read
-     * is replaced by its static equivalent
-     */
-    public Object readResolve() {
-        switch(val){
-        case CHANNEL_R:
-            return R;
-        case CHANNEL_G:
-            return G;
-        case CHANNEL_B:
-            return B;
-        case CHANNEL_A:
-            return A;
-        default:
-            throw new RuntimeException("Unknown ARGBChannel value");
-        }
-    }
+	/**
+	 * This is called by the serialization code before it returns an unserialized
+	 * object. To provide for unicity of instances, the instance that was read is
+	 * replaced by its static equivalent
+	 */
+	public Object readResolve() {
+		switch (val) {
+		case CHANNEL_R:
+			return R;
+		case CHANNEL_G:
+			return G;
+		case CHANNEL_B:
+			return B;
+		case CHANNEL_A:
+			return A;
+		default:
+			throw new RuntimeException("Unknown ARGBChannel value");
+		}
+	}
 }

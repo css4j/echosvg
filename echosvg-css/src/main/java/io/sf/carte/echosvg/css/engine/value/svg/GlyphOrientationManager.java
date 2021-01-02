@@ -39,96 +39,88 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @version $Id$
  */
 public abstract class GlyphOrientationManager extends AbstractValueManager {
-    
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return false;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_ANGLE;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_ANGLE;
+	}
 
-        case DIMENSION:
-            switch (lu.getCssUnit()) {
-            case CSSUnit.CSS_DEG:
-                return new FloatValue(CSSPrimitiveValue.CSS_DEG,
-                        lu.getFloatValue());
-            case CSSUnit.CSS_RAD:
-                return new FloatValue(CSSPrimitiveValue.CSS_RAD,
-                        lu.getFloatValue());
-            case CSSUnit.CSS_GRAD:
-                return new FloatValue(CSSPrimitiveValue.CSS_GRAD,
-                        lu.getFloatValue());
-            case CSSUnit.CSS_TURN:
-                return new FloatValue(CSSPrimitiveValue.CSS_DEG,
-                        lu.getFloatValue() * 360f);
-            }
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-            // For SVG angle properties unit defaults to 'deg'.
-        case INTEGER:
-            { 
-                int n = lu.getIntegerValue();
-                return new FloatValue(CSSPrimitiveValue.CSS_DEG, n);
-            }
-        case REAL:
-            { 
-                float n = lu.getFloatValue();
-                return new FloatValue(CSSPrimitiveValue.CSS_DEG, n);
-            }
-        default:
-            break;
-        }
-    
-        throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-    }
+		case DIMENSION:
+			switch (lu.getCssUnit()) {
+			case CSSUnit.CSS_DEG:
+				return new FloatValue(CSSPrimitiveValue.CSS_DEG, lu.getFloatValue());
+			case CSSUnit.CSS_RAD:
+				return new FloatValue(CSSPrimitiveValue.CSS_RAD, lu.getFloatValue());
+			case CSSUnit.CSS_GRAD:
+				return new FloatValue(CSSPrimitiveValue.CSS_GRAD, lu.getFloatValue());
+			case CSSUnit.CSS_TURN:
+				return new FloatValue(CSSPrimitiveValue.CSS_DEG, lu.getFloatValue() * 360f);
+			}
 
-    /**
-     * Implements {@link ValueManager#createFloatValue(short,float)}.
-     */
-    @Override
-    public Value createFloatValue(short type, float floatValue)
-        throws DOMException {
-        switch (type) {
-        case CSSPrimitiveValue.CSS_DEG:
-        case CSSPrimitiveValue.CSS_GRAD:
-        case CSSPrimitiveValue.CSS_RAD:
-            return new FloatValue(type, floatValue);
-        }
-        throw createInvalidFloatValueDOMException(floatValue);
-    }
+			// For SVG angle properties unit defaults to 'deg'.
+		case INTEGER: {
+			int n = lu.getIntegerValue();
+			return new FloatValue(CSSPrimitiveValue.CSS_DEG, n);
+		}
+		case REAL: {
+			float n = lu.getFloatValue();
+			return new FloatValue(CSSPrimitiveValue.CSS_DEG, n);
+		}
+		default:
+			break;
+		}
+
+		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+	}
+
+	/**
+	 * Implements {@link ValueManager#createFloatValue(short,float)}.
+	 */
+	@Override
+	public Value createFloatValue(short type, float floatValue) throws DOMException {
+		switch (type) {
+		case CSSPrimitiveValue.CSS_DEG:
+		case CSSPrimitiveValue.CSS_GRAD:
+		case CSSPrimitiveValue.CSS_RAD:
+			return new FloatValue(type, floatValue);
+		}
+		throw createInvalidFloatValueDOMException(floatValue);
+	}
 }

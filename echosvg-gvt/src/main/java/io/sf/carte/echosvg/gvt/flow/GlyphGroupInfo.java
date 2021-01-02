@@ -31,93 +31,116 @@ import io.sf.carte.echosvg.gvt.font.GVTGlyphVector;
  * @version $Id$
  */
 public class GlyphGroupInfo {
-    int start, end;
-    int glyphCount, lastGlyphCount;
-    boolean hideLast;
-    float advance, lastAdvance;
-    int range;
-    GVTGlyphVector gv;
-    boolean [] hide;
+	int start, end;
+	int glyphCount, lastGlyphCount;
+	boolean hideLast;
+	float advance, lastAdvance;
+	int range;
+	GVTGlyphVector gv;
+	boolean[] hide;
 
-    public GlyphGroupInfo(GVTGlyphVector gv, 
-                          int start,
-                          int end,
-                          boolean  [] glyphHide,
-                          boolean glyphGroupHideLast,
-                          float   [] glyphPos,
-                          float   [] advAdj,
-                          float   [] lastAdvAdj,
-                          boolean [] space) {
-        this.gv             = gv;
-        this.start          = start;
-        this.end            = end;
-        this.hide           = new boolean[this.end-this.start+1];
-        this.hideLast       = glyphGroupHideLast;
-        System.arraycopy(glyphHide, this.start, this.hide, 0, 
-                         this.hide.length);
+	public GlyphGroupInfo(GVTGlyphVector gv, int start, int end, boolean[] glyphHide, boolean glyphGroupHideLast,
+			float[] glyphPos, float[] advAdj, float[] lastAdvAdj, boolean[] space) {
+		this.gv = gv;
+		this.start = start;
+		this.end = end;
+		this.hide = new boolean[this.end - this.start + 1];
+		this.hideLast = glyphGroupHideLast;
+		System.arraycopy(glyphHide, this.start, this.hide, 0, this.hide.length);
 
-        float adv  = glyphPos[2*end+2]-glyphPos[2*start];
-        float ladv = adv;
-        adv += advAdj[end];
-        int glyphCount = end-start+1;
-        for (int g=start; g<end; g++) {
-            if (glyphHide[g]) glyphCount--;
-        }
-        int lastGlyphCount = glyphCount;
-        for (int g=end; g>=start; g--) {
-            ladv += lastAdvAdj[g];
-            if (!space[g]) break;
-            lastGlyphCount--;
-        }
-        if (hideLast) lastGlyphCount--;
+		float adv = glyphPos[2 * end + 2] - glyphPos[2 * start];
+		float ladv = adv;
+		adv += advAdj[end];
+		int glyphCount = end - start + 1;
+		for (int g = start; g < end; g++) {
+			if (glyphHide[g])
+				glyphCount--;
+		}
+		int lastGlyphCount = glyphCount;
+		for (int g = end; g >= start; g--) {
+			ladv += lastAdvAdj[g];
+			if (!space[g])
+				break;
+			lastGlyphCount--;
+		}
+		if (hideLast)
+			lastGlyphCount--;
 
-        this.glyphCount     = glyphCount;
-        this.lastGlyphCount = lastGlyphCount;
-        this.advance        = adv;
-        this.lastAdvance    = ladv;
-    }
+		this.glyphCount = glyphCount;
+		this.lastGlyphCount = lastGlyphCount;
+		this.advance = adv;
+		this.lastAdvance = ladv;
+	}
 
-    /**
-     * Get the GlyphVector for this GlyphGroup.
-     */
-    public GVTGlyphVector getGlyphVector() { return gv; }
+	/**
+	 * Get the GlyphVector for this GlyphGroup.
+	 */
+	public GVTGlyphVector getGlyphVector() {
+		return gv;
+	}
 
-    /** get the start glyph index for this glyph group. */
-    public int     getStart() { return start; }
-    /** get the end glyph index for this glyph group. */
-    public int     getEnd() { return end; }
+	/** get the start glyph index for this glyph group. */
+	public int getStart() {
+		return start;
+	}
 
-    /** get the number of glyphs that count when it's not the
-     *   last in the line (basically end-start+1-sum(hide) ). 
-     */
-    public int     getGlyphCount() { return glyphCount; }
-    /** get the number of glyphs that 'cout' when it is the
-     *  last in the line. This is glyphCount minus any
-     * trailing spaces, and minus the last glyph if hideLast
-     * is true.
-     */
-    public int     getLastGlyphCount() { return lastGlyphCount; }
+	/** get the end glyph index for this glyph group. */
+	public int getEnd() {
+		return end;
+	}
 
-    public boolean [] getHide() { return hide; }
+	/**
+	 * get the number of glyphs that count when it's not the last in the line
+	 * (basically end-start+1-sum(hide) ).
+	 */
+	public int getGlyphCount() {
+		return glyphCount;
+	}
 
-    /** return true if 'end' glyph should be hidden in cases
-     *  where this is not the last glyph group in a span */
-    public boolean getHideLast() { return hideLast; }
-    /**
-     * returns the advance to use when this glyphGroup is
-     * not the last glyph group in a span.
-     */
-    public float   getAdvance() { return advance; }
-    /**
-     * returns the advance to use when this glyphGroup is
-     * the last glyph group in a span.  This generally includes
-     * the width of the last glyph if 'HideLast' is true.  Also
-     * in Japanese some glyphs should not be counted for line
-     * width (they may go outside the flow area).
-     */
-    public float   getLastAdvance() { return lastAdvance; }
+	/**
+	 * get the number of glyphs that 'cout' when it is the last in the line. This is
+	 * glyphCount minus any trailing spaces, and minus the last glyph if hideLast is
+	 * true.
+	 */
+	public int getLastGlyphCount() {
+		return lastGlyphCount;
+	}
 
-    public void setRange(int range) { this.range = range; }
-    public int getRange() { return this.range; }
+	public boolean[] getHide() {
+		return hide;
+	}
+
+	/**
+	 * return true if 'end' glyph should be hidden in cases where this is not the
+	 * last glyph group in a span
+	 */
+	public boolean getHideLast() {
+		return hideLast;
+	}
+
+	/**
+	 * returns the advance to use when this glyphGroup is not the last glyph group
+	 * in a span.
+	 */
+	public float getAdvance() {
+		return advance;
+	}
+
+	/**
+	 * returns the advance to use when this glyphGroup is the last glyph group in a
+	 * span. This generally includes the width of the last glyph if 'HideLast' is
+	 * true. Also in Japanese some glyphs should not be counted for line width (they
+	 * may go outside the flow area).
+	 */
+	public float getLastAdvance() {
+		return lastAdvance;
+	}
+
+	public void setRange(int range) {
+		this.range = range;
+	}
+
+	public int getRange() {
+		return this.range;
+	}
 }
-

@@ -29,24 +29,24 @@ import org.w3c.dom.svg.SVGNumber;
  */
 public abstract class AbstractSVGNumber implements SVGNumber {
 
-    /**
-     * The number.
-     */
-    protected float value;
-    
-    /**
-     * <b>DOM</b>: Implements {@link SVGNumber#getValue()}.
-     */
-    @Override
-    public float getValue() {
-        return value;
-    }
+	/**
+	 * The number.
+	 */
+	protected float value;
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGNumber#setValue(float)}.
-     */
-    @Override
-    public void setValue(float f) {
-        value = f;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGNumber#getValue()}.
+	 */
+	@Override
+	public float getValue() {
+		return value;
+	}
+
+	/**
+	 * <b>DOM</b>: Implements {@link SVGNumber#setValue(float)}.
+	 */
+	@Override
+	public void setValue(float f) {
+		value = f;
+	}
 }

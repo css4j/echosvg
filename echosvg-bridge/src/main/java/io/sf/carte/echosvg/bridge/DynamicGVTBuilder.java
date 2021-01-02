@@ -27,11 +27,10 @@ package io.sf.carte.echosvg.bridge;
  */
 public class DynamicGVTBuilder extends GVTBuilder {
 
-    /**
-     * Constructs a new builder.
-     */
-    public DynamicGVTBuilder() { }
-
+	/**
+	 * Constructs a new builder.
+	 */
+	public DynamicGVTBuilder() {
+	}
 
 }
-

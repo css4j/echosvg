@@ -19,16 +19,16 @@
 package io.sf.carte.echosvg.parser;
 
 /**
- * This interface must be implemented and then registred as the error handler
- * in order to be notified of parsing errors. 
+ * This interface must be implemented and then registred as the error handler in
+ * order to be notified of parsing errors.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface ErrorHandler {
-    /**
-     * Called when a parse error occurs.
-     */
-    void error(ParseException e) throws ParseException;
+	/**
+	 * Called when a parse error occurs.
+	 */
+	void error(ParseException e) throws ParseException;
 }

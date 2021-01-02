@@ -35,64 +35,62 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class PNGTranscoderInternalCodecWriteAdapter implements
-        PNGTranscoder.WriteAdapter {
+public class PNGTranscoderInternalCodecWriteAdapter implements PNGTranscoder.WriteAdapter {
 
-    /**
-     * @throws TranscoderException
-     * @see io.sf.carte.echosvg.transcoder.image.PNGTranscoder.WriteAdapter#writeImage(
-     * io.sf.carte.echosvg.transcoder.image.PNGTranscoder, java.awt.image.BufferedImage,
-     * io.sf.carte.echosvg.transcoder.TranscoderOutput)
-     */
-    @Override
-    public void writeImage(PNGTranscoder transcoder, BufferedImage img,
-            TranscoderOutput output) throws TranscoderException {
-        TranscodingHints hints = transcoder.getTranscodingHints();
+	/**
+	 * @throws TranscoderException
+	 * @see io.sf.carte.echosvg.transcoder.image.PNGTranscoder.WriteAdapter#writeImage(
+	 *      io.sf.carte.echosvg.transcoder.image.PNGTranscoder,
+	 *      java.awt.image.BufferedImage,
+	 *      io.sf.carte.echosvg.transcoder.TranscoderOutput)
+	 */
+	@Override
+	public void writeImage(PNGTranscoder transcoder, BufferedImage img, TranscoderOutput output)
+			throws TranscoderException {
+		TranscodingHints hints = transcoder.getTranscodingHints();
 
-        int n=-1;
-        if (hints.containsKey(PNGTranscoder.KEY_INDEXED)) {
-            n= (Integer) hints.get(PNGTranscoder.KEY_INDEXED);
-            if (n==1||n==2||n==4||n==8)
-                //PNGEncodeParam.Palette can handle these numbers only.
-                img = IndexImage.getIndexedImage(img,1<<n);
-        }
+		int n = -1;
+		if (hints.containsKey(PNGTranscoder.KEY_INDEXED)) {
+			n = (Integer) hints.get(PNGTranscoder.KEY_INDEXED);
+			if (n == 1 || n == 2 || n == 4 || n == 8)
+				// PNGEncodeParam.Palette can handle these numbers only.
+				img = IndexImage.getIndexedImage(img, 1 << n);
+		}
 
-        PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(img);
-        if (params instanceof PNGEncodeParam.RGB) {
-            ((PNGEncodeParam.RGB)params).setBackgroundRGB
-                (new int [] { 255, 255, 255 });
-        }
+		PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(img);
+		if (params instanceof PNGEncodeParam.RGB) {
+			((PNGEncodeParam.RGB) params).setBackgroundRGB(new int[] { 255, 255, 255 });
+		}
 
-        // If they specify GAMMA key with a value of '0' then omit
-        // gamma chunk.  If they do not provide a GAMMA then just
-        // generate an sRGB chunk. Otherwise supress the sRGB chunk
-        // and just generate gamma and chroma chunks.
-        if (hints.containsKey(PNGTranscoder.KEY_GAMMA)) {
-            float gamma = (Float) hints.get(PNGTranscoder.KEY_GAMMA);
-            if (gamma > 0) {
-                params.setGamma(gamma);
-            }
-            params.setChromaticity(PNGTranscoder.DEFAULT_CHROMA);
-        }  else {
-            // We generally want an sRGB chunk and our encoding intent
-            // is perceptual
-            params.setSRGBIntent(PNGEncodeParam.INTENT_PERCEPTUAL);
-        }
+		// If they specify GAMMA key with a value of '0' then omit
+		// gamma chunk. If they do not provide a GAMMA then just
+		// generate an sRGB chunk. Otherwise supress the sRGB chunk
+		// and just generate gamma and chroma chunks.
+		if (hints.containsKey(PNGTranscoder.KEY_GAMMA)) {
+			float gamma = (Float) hints.get(PNGTranscoder.KEY_GAMMA);
+			if (gamma > 0) {
+				params.setGamma(gamma);
+			}
+			params.setChromaticity(PNGTranscoder.DEFAULT_CHROMA);
+		} else {
+			// We generally want an sRGB chunk and our encoding intent
+			// is perceptual
+			params.setSRGBIntent(PNGEncodeParam.INTENT_PERCEPTUAL);
+		}
 
+		float PixSzMM = transcoder.getUserAgent().getPixelUnitToMillimeter();
+		// num Pixs in 1 Meter
+		int numPix = (int) ((1000 / PixSzMM) + 0.5);
+		params.setPhysicalDimension(numPix, numPix, 1); // 1 means 'pix/meter'
 
-        float PixSzMM = transcoder.getUserAgent().getPixelUnitToMillimeter();
-        // num Pixs in 1 Meter
-        int numPix      = (int)((1000/PixSzMM)+0.5);
-        params.setPhysicalDimension(numPix, numPix, 1); // 1 means 'pix/meter'
-
-        try {
-            OutputStream ostream = output.getOutputStream();
-            PNGImageEncoder pngEncoder = new PNGImageEncoder(ostream, params);
-            pngEncoder.encode(img);
-            ostream.flush();
-        } catch (IOException ex) {
-            throw new TranscoderException(ex);
-        }
-    }
+		try {
+			OutputStream ostream = output.getOutputStream();
+			PNGImageEncoder pngEncoder = new PNGImageEncoder(ostream, params);
+			pngEncoder.encode(img);
+			ostream.flush();
+		} catch (IOException ex) {
+			throw new TranscoderException(ex);
+		}
+	}
 
 }

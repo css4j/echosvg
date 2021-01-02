@@ -39,54 +39,49 @@ import io.sf.carte.echosvg.util.SVGConstants;
  */
 public class SVGAltGlyphHandler implements AltGlyphHandler, SVGConstants {
 
-    private BridgeContext ctx;
-    private Element textElement;
+	private BridgeContext ctx;
+	private Element textElement;
 
-    /**
-     * Constructs an SVGAltGlyphHandler.
-     *
-     * @param ctx The bridge context, this is needed during rendering to find
-     * any referenced glyph elements.
-     * @param textElement The element that contains text to be replaced by the
-     * alternate glyphs. This should be an altGlyph element.
-     */
-    public SVGAltGlyphHandler(BridgeContext ctx, Element textElement) {
-        this.ctx = ctx;
-        this.textElement = textElement;
-    }
+	/**
+	 * Constructs an SVGAltGlyphHandler.
+	 *
+	 * @param ctx         The bridge context, this is needed during rendering to
+	 *                    find any referenced glyph elements.
+	 * @param textElement The element that contains text to be replaced by the
+	 *                    alternate glyphs. This should be an altGlyph element.
+	 */
+	public SVGAltGlyphHandler(BridgeContext ctx, Element textElement) {
+		this.ctx = ctx;
+		this.textElement = textElement;
+	}
 
-    /**
-     * Creates a glyph vector containing the alternate glyphs.
-     *
-     * @param frc The current font render context.
-     * @param fontSize The required font size.
-     * @return The GVTGlyphVector containing the alternate glyphs, or null if
-     * the alternate glyphs could not be found.
-     */
-    @Override
-    public GVTGlyphVector createGlyphVector
-        (FontRenderContext frc, float fontSize,
-         AttributedCharacterIterator aci) {
-        try {
-            if (SVG_NAMESPACE_URI.equals(textElement.getNamespaceURI()) &&
-                SVG_ALT_GLYPH_TAG.equals(textElement.getLocalName())) {
-                SVGAltGlyphElementBridge altGlyphBridge
-                    = (SVGAltGlyphElementBridge)ctx.getBridge(textElement);
-                Glyph[] glyphArray = altGlyphBridge.createAltGlyphArray
-                    (ctx, textElement, fontSize, aci);
-                if (glyphArray != null) {
-                    return new SVGGVTGlyphVector(null, glyphArray, frc);
-                }
-            }
-        } catch (SecurityException e) {
-            ctx.getUserAgent().displayError(e);
-            // Throw exception because we do not want to continue
-            // processing. In the case of a SecurityException, the 
-            // end user would get a lot of exception like this one.
-            throw e;
-        }
+	/**
+	 * Creates a glyph vector containing the alternate glyphs.
+	 *
+	 * @param frc      The current font render context.
+	 * @param fontSize The required font size.
+	 * @return The GVTGlyphVector containing the alternate glyphs, or null if the
+	 *         alternate glyphs could not be found.
+	 */
+	@Override
+	public GVTGlyphVector createGlyphVector(FontRenderContext frc, float fontSize, AttributedCharacterIterator aci) {
+		try {
+			if (SVG_NAMESPACE_URI.equals(textElement.getNamespaceURI())
+					&& SVG_ALT_GLYPH_TAG.equals(textElement.getLocalName())) {
+				SVGAltGlyphElementBridge altGlyphBridge = (SVGAltGlyphElementBridge) ctx.getBridge(textElement);
+				Glyph[] glyphArray = altGlyphBridge.createAltGlyphArray(ctx, textElement, fontSize, aci);
+				if (glyphArray != null) {
+					return new SVGGVTGlyphVector(null, glyphArray, frc);
+				}
+			}
+		} catch (SecurityException e) {
+			ctx.getUserAgent().displayError(e);
+			// Throw exception because we do not want to continue
+			// processing. In the case of a SecurityException, the
+			// end user would get a lot of exception like this one.
+			throw e;
+		}
 
-        return null;
-    }
+		return null;
+	}
 }
-

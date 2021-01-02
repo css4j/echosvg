@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.bridge;
 
 /**
- * This class represents the exception thrown by the bridge when the
- * current thread was interrupted.
+ * This class represents the exception thrown by the bridge when the current
+ * thread was interrupted.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -28,10 +28,11 @@ package io.sf.carte.echosvg.bridge;
  */
 public class InterruptedBridgeException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Constructs a new InterruptedBridgeException.
-     */
-    public InterruptedBridgeException() { }
+	/**
+	 * Constructs a new InterruptedBridgeException.
+	 */
+	public InterruptedBridgeException() {
+	}
 }

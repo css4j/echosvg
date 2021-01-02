@@ -32,75 +32,69 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 
 /**
- * This class is a helper to <code>PNGTranscoder</code> that writes PNG images 
+ * This class is a helper to <code>PNGTranscoder</code> that writes PNG images
  * through the Image I/O API.
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class PNGTranscoderImageIOWriteAdapter implements
-        PNGTranscoder.WriteAdapter {
+public class PNGTranscoderImageIOWriteAdapter implements PNGTranscoder.WriteAdapter {
 
-    /**
-     * @throws TranscoderException 
-     * @see io.sf.carte.echosvg.transcoder.image.PNGTranscoder.WriteAdapter#writeImage(
-     * io.sf.carte.echosvg.transcoder.image.PNGTranscoder, java.awt.image.BufferedImage,
-     * io.sf.carte.echosvg.transcoder.TranscoderOutput)
-     */
-    @Override
-    public void writeImage(PNGTranscoder transcoder, BufferedImage img,
-            TranscoderOutput output) throws TranscoderException {
+	/**
+	 * @throws TranscoderException
+	 * @see io.sf.carte.echosvg.transcoder.image.PNGTranscoder.WriteAdapter#writeImage(
+	 *      io.sf.carte.echosvg.transcoder.image.PNGTranscoder,
+	 *      java.awt.image.BufferedImage,
+	 *      io.sf.carte.echosvg.transcoder.TranscoderOutput)
+	 */
+	@Override
+	public void writeImage(PNGTranscoder transcoder, BufferedImage img, TranscoderOutput output)
+			throws TranscoderException {
 
-        TranscodingHints hints = transcoder.getTranscodingHints();
+		TranscodingHints hints = transcoder.getTranscodingHints();
 
-        int n = -1;
-        if (hints.containsKey(PNGTranscoder.KEY_INDEXED)) {
-            n= (Integer) hints.get(PNGTranscoder.KEY_INDEXED);
-            if (n==1||n==2||n==4||n==8) 
-                //PNGEncodeParam.Palette can handle these numbers only.
-                img = IndexImage.getIndexedImage(img, 1<<n);
-        }
+		int n = -1;
+		if (hints.containsKey(PNGTranscoder.KEY_INDEXED)) {
+			n = (Integer) hints.get(PNGTranscoder.KEY_INDEXED);
+			if (n == 1 || n == 2 || n == 4 || n == 8)
+				// PNGEncodeParam.Palette can handle these numbers only.
+				img = IndexImage.getIndexedImage(img, 1 << n);
+		}
 
-        ImageWriter writer = ImageWriterRegistry.getInstance()
-            .getWriterFor("image/png");
-        ImageWriterParams params = new ImageWriterParams();
+		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
+		ImageWriterParams params = new ImageWriterParams();
 
-        /* NYI!!!!!
-        PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(img);
-        if (params instanceof PNGEncodeParam.RGB) {
-            ((PNGEncodeParam.RGB)params).setBackgroundRGB
-                (new int [] { 255, 255, 255 });
-        }*/
+		/*
+		 * NYI!!!!! PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(img);
+		 * if (params instanceof PNGEncodeParam.RGB) {
+		 * ((PNGEncodeParam.RGB)params).setBackgroundRGB (new int [] { 255, 255, 255 });
+		 * }
+		 */
 
-        // If they specify GAMMA key with a value of '0' then omit
-        // gamma chunk.  If they do not provide a GAMMA then just
-        // generate an sRGB chunk. Otherwise supress the sRGB chunk
-        // and just generate gamma and chroma chunks.
-        /* NYI!!!!!!
-        if (hints.containsKey(PNGTranscoder.KEY_GAMMA)) {
-            float gamma = ((Float)hints.get(PNGTranscoder.KEY_GAMMA)).floatValue();
-            if (gamma > 0) {
-                params.setGamma(gamma);
-            }
-            params.setChromaticity(PNGTranscoder.DEFAULT_CHROMA);
-        }  else {
-            // We generally want an sRGB chunk and our encoding intent
-            // is perceptual
-            params.setSRGBIntent(PNGEncodeParam.INTENT_PERCEPTUAL);
-        }*/
+		// If they specify GAMMA key with a value of '0' then omit
+		// gamma chunk. If they do not provide a GAMMA then just
+		// generate an sRGB chunk. Otherwise supress the sRGB chunk
+		// and just generate gamma and chroma chunks.
+		/*
+		 * NYI!!!!!! if (hints.containsKey(PNGTranscoder.KEY_GAMMA)) { float gamma =
+		 * ((Float)hints.get(PNGTranscoder.KEY_GAMMA)).floatValue(); if (gamma > 0) {
+		 * params.setGamma(gamma); }
+		 * params.setChromaticity(PNGTranscoder.DEFAULT_CHROMA); } else { // We
+		 * generally want an sRGB chunk and our encoding intent // is perceptual
+		 * params.setSRGBIntent(PNGEncodeParam.INTENT_PERCEPTUAL); }
+		 */
 
+		float PixSzMM = transcoder.getUserAgent().getPixelUnitToMillimeter();
+		int PixSzInch = (int) (25.4 / PixSzMM + 0.5);
+		params.setResolution(PixSzInch);
 
-        float PixSzMM = transcoder.getUserAgent().getPixelUnitToMillimeter();
-        int PixSzInch = (int)(25.4 / PixSzMM + 0.5);
-        params.setResolution(PixSzInch);
-
-        try {
-            OutputStream ostream = output.getOutputStream();
-            writer.writeImage(img, ostream, params);
-            ostream.flush();
-        } catch (IOException ex) {
-            throw new TranscoderException(ex);
-        }
-    }
+		try {
+			OutputStream ostream = output.getOutputStream();
+			writer.writeImage(img, ostream, params);
+			ostream.flush();
+		} catch (IOException ex) {
+			throw new TranscoderException(ex);
+		}
+	}
 
 }

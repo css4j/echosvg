@@ -30,114 +30,112 @@ import java.util.HashMap;
  */
 public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
 
-    /**
-     * The ID of the syncbase element.
-     */
-    protected String syncbaseID;
+	/**
+	 * The ID of the syncbase element.
+	 */
+	protected String syncbaseID;
 
-    /**
-     * The syncbase element.
-     */
-    protected TimedElement syncbaseElement;
+	/**
+	 * The syncbase element.
+	 */
+	protected TimedElement syncbaseElement;
 
-    /**
-     * Whether this specifier specifies a sync to the begin or the end
-     * of the syncbase element.
-     */
-    protected boolean syncBegin;
+	/**
+	 * Whether this specifier specifies a sync to the begin or the end of the
+	 * syncbase element.
+	 */
+	protected boolean syncBegin;
 
-    /**
-     * Map of {@link Interval}s to <!--a {@link WeakReference} to -->an
-     * {@link InstanceTime}.
-     */
-    protected HashMap<Interval, InstanceTime> instances = new HashMap<>();
+	/**
+	 * Map of {@link Interval}s to <!--a {@link WeakReference} to -->an
+	 * {@link InstanceTime}.
+	 */
+	protected HashMap<Interval, InstanceTime> instances = new HashMap<>();
 
-    /**
-     * Creates a new SyncbaseTimingSpecifier object.
-     */
-    public SyncbaseTimingSpecifier(TimedElement owner, boolean isBegin,
-                                   float offset, String syncbaseID,
-                                   boolean syncBegin) {
-        super(owner, isBegin, offset);
-        // Trace.enter(this, null, new Object[] { owner, new Boolean(isBegin), Float.valueOf(offset), syncbaseID, new Boolean(syncBegin) } ); try {
-        this.syncbaseID = syncbaseID;
-        this.syncBegin = syncBegin;
-        this.syncbaseElement = owner.getTimedElementById(syncbaseID);
-        syncbaseElement.addDependent(this, syncBegin);
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Creates a new SyncbaseTimingSpecifier object.
+	 */
+	public SyncbaseTimingSpecifier(TimedElement owner, boolean isBegin, float offset, String syncbaseID,
+			boolean syncBegin) {
+		super(owner, isBegin, offset);
+		// Trace.enter(this, null, new Object[] { owner, new Boolean(isBegin),
+		// Float.valueOf(offset), syncbaseID, new Boolean(syncBegin) } ); try {
+		this.syncbaseID = syncbaseID;
+		this.syncBegin = syncBegin;
+		this.syncbaseElement = owner.getTimedElementById(syncbaseID);
+		syncbaseElement.addDependent(this, syncBegin);
+		// } finally { Trace.exit(); }
+	}
 
-    /**
-     * Returns a string representation of this timing specifier.
-     */
-    @Override
-    public String toString() {
-        return syncbaseID + "." + (syncBegin ? "begin" : "end")
-            + (offset != 0 ? super.toString() : "");
-    }
+	/**
+	 * Returns a string representation of this timing specifier.
+	 */
+	@Override
+	public String toString() {
+		return syncbaseID + "." + (syncBegin ? "begin" : "end") + (offset != 0 ? super.toString() : "");
+	}
 
-    /**
-     * Initializes this timing specifier by adding the initial instance time
-     * to the owner's instance time list or setting up any event listeners.
-     */
-    @Override
-    public void initialize() {
-    }
+	/**
+	 * Initializes this timing specifier by adding the initial instance time to the
+	 * owner's instance time list or setting up any event listeners.
+	 */
+	@Override
+	public void initialize() {
+	}
 
-    /**
-     * Returns whether this timing specifier is event-like (i.e., if it is
-     * an eventbase, accesskey or a repeat timing specifier).
-     */
-    @Override
-    public boolean isEventCondition() {
-        return false;
-    }
+	/**
+	 * Returns whether this timing specifier is event-like (i.e., if it is an
+	 * eventbase, accesskey or a repeat timing specifier).
+	 */
+	@Override
+	public boolean isEventCondition() {
+		return false;
+	}
 
-    /**
-     * Called by the timebase element when it creates a new Interval.
-     */
-    @Override
-    float newInterval(Interval interval) {
-        // Trace.enter(this, "newInterval", new Object[] { interval } ); try {
-        if (owner.hasPropagated) {
-            return Float.POSITIVE_INFINITY;
-        }
-        InstanceTime instance =
-            new InstanceTime(this, (syncBegin ? interval.getBegin()
-                                              : interval.getEnd()) + offset,
-                             true);
-        instances.put(interval, instance);
-        interval.addDependent(instance, syncBegin);
-        return owner.addInstanceTime(instance, isBegin);
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Called by the timebase element when it creates a new Interval.
+	 */
+	@Override
+	float newInterval(Interval interval) {
+		// Trace.enter(this, "newInterval", new Object[] { interval } ); try {
+		if (owner.hasPropagated) {
+			return Float.POSITIVE_INFINITY;
+		}
+		InstanceTime instance = new InstanceTime(this, (syncBegin ? interval.getBegin() : interval.getEnd()) + offset,
+				true);
+		instances.put(interval, instance);
+		interval.addDependent(instance, syncBegin);
+		return owner.addInstanceTime(instance, isBegin);
+		// } finally { Trace.exit(); }
+	}
 
-    /**
-     * Called by the timebase element when it deletes an Interval.
-     */
-    @Override
-    float removeInterval(Interval interval) {
-        // Trace.enter(this, "removeInterval", new Object[] { interval } ); try {
-        if (owner.hasPropagated) {
-            return Float.POSITIVE_INFINITY;
-        }
-        InstanceTime instance = instances.get(interval);
-        interval.removeDependent(instance, syncBegin);
-        return owner.removeInstanceTime(instance, isBegin);
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Called by the timebase element when it deletes an Interval.
+	 */
+	@Override
+	float removeInterval(Interval interval) {
+		// Trace.enter(this, "removeInterval", new Object[] { interval } ); try {
+		if (owner.hasPropagated) {
+			return Float.POSITIVE_INFINITY;
+		}
+		InstanceTime instance = instances.get(interval);
+		interval.removeDependent(instance, syncBegin);
+		return owner.removeInstanceTime(instance, isBegin);
+		// } finally { Trace.exit(); }
+	}
 
-    /**
-     * Called by an {@link InstanceTime} created by this TimingSpecifier
-     * to indicate that its value has changed.
-     */
-    @Override
-    float handleTimebaseUpdate(InstanceTime instanceTime, float newTime) {
-        // Trace.enter(this, "handleTimebaseUpdate", new Object[] { instanceTime, Float.valueOf(newTime) } ); try {
-        if (owner.hasPropagated) {
-            return Float.POSITIVE_INFINITY;
-        }
-        return owner.instanceTimeChanged(instanceTime, isBegin);
-        // } finally { Trace.exit(); }
-    }
+	/**
+	 * Called by an {@link InstanceTime} created by this TimingSpecifier to indicate
+	 * that its value has changed.
+	 */
+	@Override
+	float handleTimebaseUpdate(InstanceTime instanceTime, float newTime) {
+		// Trace.enter(this, "handleTimebaseUpdate", new Object[] { instanceTime,
+		// Float.valueOf(newTime) } ); try {
+		if (owner.hasPropagated) {
+			return Float.POSITIVE_INFINITY;
+		}
+		return owner.instanceTimeChanged(instanceTime, isBegin);
+		// } finally { Trace.exit(); }
+	}
 }

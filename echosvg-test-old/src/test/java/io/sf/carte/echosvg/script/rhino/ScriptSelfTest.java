@@ -31,10 +31,9 @@ import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
- * Helper class to simplify writing the unitTesting.xml file for
- * scripting. The "id" for the test needs to be the path of the
- * selft contained SVG test, starting from:
- * <xml-batik-dir>/test-resources/io/sf/carte/echosvg/
+ * Helper class to simplify writing the unitTesting.xml file for scripting. The
+ * "id" for the test needs to be the path of the selft contained SVG test,
+ * starting from: <xml-batik-dir>/test-resources/io/sf/carte/echosvg/
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -42,80 +41,75 @@ import io.sf.carte.echosvg.util.ParsedURL;
  */
 
 public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
-    boolean secure = true;
-    boolean constrain = true;
-    String scripts = "text/ecmascript, application/java-archive";
-    TestUserAgent userAgent = new TestUserAgent();
+	boolean secure = true;
+	boolean constrain = true;
+	String scripts = "text/ecmascript, application/java-archive";
+	TestUserAgent userAgent = new TestUserAgent();
 
-    @Override
-    public void setId(String id){
-        super.setId(id);
-        svgURL = resolveURL("test-resources/io/sf/carte/echosvg/" + id + ".svg");
-    }
+	@Override
+	public void setId(String id) {
+		super.setId(id);
+		svgURL = resolveURL("test-resources/io/sf/carte/echosvg/" + id + ".svg");
+	}
 
-    public void setSecure(Boolean secure){
-        this.secure = secure;
-    }
+	public void setSecure(Boolean secure) {
+		this.secure = secure;
+	}
 
-    public Boolean getSecure(){
-        return secure ? Boolean.TRUE : Boolean.FALSE;
-    }
+	public Boolean getSecure() {
+		return secure ? Boolean.TRUE : Boolean.FALSE;
+	}
 
-    public void setConstrain(Boolean constrain){
-        this.constrain = constrain;
-    }
+	public void setConstrain(Boolean constrain) {
+		this.constrain = constrain;
+	}
 
-    public Boolean getConstrain(){
-        return constrain ? Boolean.TRUE : Boolean.FALSE;
-    }
+	public Boolean getConstrain() {
+		return constrain ? Boolean.TRUE : Boolean.FALSE;
+	}
 
-    public void setScripts(String scripts){
-        this.scripts = scripts;
-    }
+	public void setScripts(String scripts) {
+		this.scripts = scripts;
+	}
 
-    public String getScripts(){
-        return scripts;
-    }
+	public String getScripts() {
+		return scripts;
+	}
 
-    @Override
-    public TestReport runImpl() throws Exception{
-        ApplicationSecurityEnforcer ase
-            = new ApplicationSecurityEnforcer(this.getClass(),
-                                              "io/sf/carte/echosvg/apps/svgbrowser/resources/svgbrowser.policy");
+	@Override
+	public TestReport runImpl() throws Exception {
+		ApplicationSecurityEnforcer ase = new ApplicationSecurityEnforcer(this.getClass(),
+				"io/sf/carte/echosvg/apps/svgbrowser/resources/svgbrowser.policy");
 
-        if (secure) {
-            ase.enforceSecurity(true);
-        }
+		if (secure) {
+			ase.enforceSecurity(true);
+		}
 
-        try {
-            return super.runImpl();
-        } finally {
-            ase.enforceSecurity(false);
-        }
-    }
+		try {
+			return super.runImpl();
+		} finally {
+			ase.enforceSecurity(false);
+		}
+	}
 
-    @Override
-    protected UserAgent buildUserAgent(){
-        return userAgent;
-    }
+	@Override
+	protected UserAgent buildUserAgent() {
+		return userAgent;
+	}
 
-    class TestUserAgent extends UserAgentAdapter {
-        @Override
-        public ScriptSecurity getScriptSecurity(String scriptType,
-                                                ParsedURL scriptPURL,
-                                                ParsedURL docPURL){
-            if (scripts.indexOf(scriptType) == -1){
-                return new NoLoadScriptSecurity(scriptType);
-            } else {
-                if (constrain){
-                    return new DefaultScriptSecurity
-                        (scriptType, scriptPURL, docPURL);
-                } else {
-                    return new RelaxedScriptSecurity
-                        (scriptType, scriptPURL, docPURL);
-                }
-            }
-        }
-    }
+	class TestUserAgent extends UserAgentAdapter {
+		@Override
+		public ScriptSecurity getScriptSecurity(String scriptType, ParsedURL scriptPURL, ParsedURL docPURL) {
+			if (scripts.indexOf(scriptType) == -1) {
+				return new NoLoadScriptSecurity(scriptType);
+			} else {
+				if (constrain) {
+					return new DefaultScriptSecurity(scriptType, scriptPURL, docPURL);
+				} else {
+					return new RelaxedScriptSecurity(scriptType, scriptPURL, docPURL);
+				}
+			}
+		}
+	}
 
 }

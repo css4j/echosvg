@@ -54,19 +54,18 @@ import io.sf.carte.echosvg.util.SVGConstants;
 /**
  * Bridge class for the &lt;multiImage&gt; element.
  *
- * The 'multiImage' element is similar to the 'image' element (supports
- * all the same attributes and properties) except.
+ * The 'multiImage' element is similar to the 'image' element (supports all the
+ * same attributes and properties) except.
  * <ol>
- *    <li>It can only be used to reference raster content (this is an
- *        implementation thing really)</li>
- *    <li>It has two addtional attributes: 'pixel-width' and
- *        'pixel-height' which are the maximum width and height of the
- *        image referenced by the xlink:href attribute.</li>
- *    <li>It can contain a child element 'subImage' which has only
- *        three attributes, pixel-width, pixel-height and xlink:href.
- *        The image displayed is the smallest image such that
- *        pixel-width and pixel-height are greater than or equal to the
- *        required image size for display.</li>
+ * <li>It can only be used to reference raster content (this is an
+ * implementation thing really)</li>
+ * <li>It has two addtional attributes: 'pixel-width' and 'pixel-height' which
+ * are the maximum width and height of the image referenced by the xlink:href
+ * attribute.</li>
+ * <li>It can contain a child element 'subImage' which has only three
+ * attributes, pixel-width, pixel-height and xlink:href. The image displayed is
+ * the smallest image such that pixel-width and pixel-height are greater than or
+ * equal to the required image size for display.</li>
  * </ol>
  *
  *
@@ -76,371 +75,347 @@ import io.sf.carte.echosvg.util.SVGConstants;
  */
 public class SVGMultiImageElementBridge extends SVGImageElementBridge {
 
-    public SVGMultiImageElementBridge() { }
+	public SVGMultiImageElementBridge() {
+	}
 
-    /**
-     * Returns the EchoSVG Extension namespace URI.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return SVGConstants.SVG_NAMESPACE_URI;
-    }
+	/**
+	 * Returns the EchoSVG Extension namespace URI.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return SVGConstants.SVG_NAMESPACE_URI;
+	}
 
-    /**
-     * Returns 'multiImage'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG12Constants.SVG_MULTI_IMAGE_TAG;
-    }
+	/**
+	 * Returns 'multiImage'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG12Constants.SVG_MULTI_IMAGE_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new SVGMultiImageElementBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGMultiImageElementBridge();
+	}
 
-     /**
-      * Creates a graphics node using the specified BridgeContext and for the
-      * specified element.
-      *  
-      * @param  ctx the bridge context to use
-      * @param  e   the element that describes the graphics node to build
-      * @return a graphics node that represents the specified element
-      */
-    @Override
-    public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
-        // 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
-        if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
-            return null;
-        }
+	/**
+	 * Creates a graphics node using the specified BridgeContext and for the
+	 * specified element.
+	 * 
+	 * @param ctx the bridge context to use
+	 * @param e   the element that describes the graphics node to build
+	 * @return a graphics node that represents the specified element
+	 */
+	@Override
+	public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
+		// 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
+		if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
+			return null;
+		}
 
-        ImageNode imgNode = (ImageNode)instantiateGraphicsNode();
-        if (imgNode == null) {
-            return null;
-        }
+		ImageNode imgNode = (ImageNode) instantiateGraphicsNode();
+		if (imgNode == null) {
+			return null;
+		}
 
-        associateSVGContext(ctx, e, imgNode);
+		associateSVGContext(ctx, e, imgNode);
 
-        Rectangle2D b = getImageBounds(ctx, e);
+		Rectangle2D b = getImageBounds(ctx, e);
 
-        // 'transform'
-        AffineTransform at = null;
-        String s = e.getAttribute(SVG_TRANSFORM_ATTRIBUTE);
-        if (s.length() != 0) {
-            at = SVGUtilities.convertTransform(e, SVG_TRANSFORM_ATTRIBUTE, s,
-                                               ctx);
-        } else {
-            at = new AffineTransform();
-        }
+		// 'transform'
+		AffineTransform at = null;
+		String s = e.getAttribute(SVG_TRANSFORM_ATTRIBUTE);
+		if (s.length() != 0) {
+			at = SVGUtilities.convertTransform(e, SVG_TRANSFORM_ATTRIBUTE, s, ctx);
+		} else {
+			at = new AffineTransform();
+		}
 
-        at.translate(b.getX(), b.getY());
-        imgNode.setTransform(at);
-        
-        // 'visibility'
-        imgNode.setVisible(CSSUtilities.convertVisibility(e));
+		at.translate(b.getX(), b.getY());
+		imgNode.setTransform(at);
 
-        Rectangle2D clip;
-        clip = new Rectangle2D.Double(0,0,b.getWidth(), b.getHeight());
-        Filter filter = imgNode.getGraphicsNodeRable(true);
-        imgNode.setClip(new ClipRable8Bit(filter, clip));
+		// 'visibility'
+		imgNode.setVisible(CSSUtilities.convertVisibility(e));
 
-        // 'enable-background'
-        Rectangle2D r = CSSUtilities.convertEnableBackground(e);
-        if (r != null) {
-            imgNode.setBackgroundEnable(r);
-        }
-        ctx.openViewport(e, new MultiImageElementViewport
-                         ((float)b.getWidth(), (float)b.getHeight()));
+		Rectangle2D clip;
+		clip = new Rectangle2D.Double(0, 0, b.getWidth(), b.getHeight());
+		Filter filter = imgNode.getGraphicsNodeRable(true);
+		imgNode.setClip(new ClipRable8Bit(filter, clip));
 
+		// 'enable-background'
+		Rectangle2D r = CSSUtilities.convertEnableBackground(e);
+		if (r != null) {
+			imgNode.setBackgroundEnable(r);
+		}
+		ctx.openViewport(e, new MultiImageElementViewport((float) b.getWidth(), (float) b.getHeight()));
 
-        List<Element> elems  = new LinkedList<>();
-        List<Dimension> minDim = new LinkedList<>();
-        List<Dimension> maxDim = new LinkedList<>();
+		List<Element> elems = new LinkedList<>();
+		List<Dimension> minDim = new LinkedList<>();
+		List<Dimension> maxDim = new LinkedList<>();
 
-        for (Node n = e.getFirstChild(); n != null; n = n.getNextSibling()) {
-            if (n.getNodeType() != Node.ELEMENT_NODE)
-                continue;
-            
-            Element se = (Element)n;
-            if (!getNamespaceURI().equals(se.getNamespaceURI()))
-                continue;
-            if (se.getLocalName().equals(SVG12Constants.SVG_SUB_IMAGE_TAG)) {
-                addInfo(se, elems, minDim, maxDim, b);
-            }
-            if (se.getLocalName().equals(SVG12Constants.SVG_SUB_IMAGE_REF_TAG)) {
-                addRefInfo(se, elems, minDim, maxDim, b);
-            }
-        }
+		for (Node n = e.getFirstChild(); n != null; n = n.getNextSibling()) {
+			if (n.getNodeType() != Node.ELEMENT_NODE)
+				continue;
 
-        Dimension [] mindary = new Dimension[elems.size()];
-        Dimension [] maxdary = new Dimension[elems.size()];
-        Element   [] elemary = new Element  [elems.size()];
-        Iterator<Dimension> mindi = minDim.iterator();
-        Iterator<Dimension> maxdi = maxDim.iterator();
-        Iterator<Element> ei = elems.iterator();
-        int n=0;
-        while (mindi.hasNext()) {
-            Dimension minD = mindi.next();
-            Dimension maxD = maxdi.next();
-            int i =0;
-            if (minD != null) {
-                for (; i<n; i++) {
-                    if ((mindary[i] != null) &&
-                        (minD.width < mindary[i].width)) {
-                        break;
-                    }
-                }
-            }
-            for (int j=n; j>i; j--) {
-                elemary[j] = elemary[j-1];
-                mindary[j] = mindary[j-1];
-                maxdary[j] = maxdary[j-1];
-            }
-            
-            elemary[i] = ei.next();
-            mindary[i] = minD;
-            maxdary[i] = maxD;
-            n++;
-        }
+			Element se = (Element) n;
+			if (!getNamespaceURI().equals(se.getNamespaceURI()))
+				continue;
+			if (se.getLocalName().equals(SVG12Constants.SVG_SUB_IMAGE_TAG)) {
+				addInfo(se, elems, minDim, maxDim, b);
+			}
+			if (se.getLocalName().equals(SVG12Constants.SVG_SUB_IMAGE_REF_TAG)) {
+				addRefInfo(se, elems, minDim, maxDim, b);
+			}
+		}
 
-        GraphicsNode node = new MultiResGraphicsNode(e, clip, elemary, 
-                                                     mindary, maxdary,
-                                                     ctx);
-        imgNode.setImage(node);
+		Dimension[] mindary = new Dimension[elems.size()];
+		Dimension[] maxdary = new Dimension[elems.size()];
+		Element[] elemary = new Element[elems.size()];
+		Iterator<Dimension> mindi = minDim.iterator();
+		Iterator<Dimension> maxdi = maxDim.iterator();
+		Iterator<Element> ei = elems.iterator();
+		int n = 0;
+		while (mindi.hasNext()) {
+			Dimension minD = mindi.next();
+			Dimension maxD = maxdi.next();
+			int i = 0;
+			if (minD != null) {
+				for (; i < n; i++) {
+					if ((mindary[i] != null) && (minD.width < mindary[i].width)) {
+						break;
+					}
+				}
+			}
+			for (int j = n; j > i; j--) {
+				elemary[j] = elemary[j - 1];
+				mindary[j] = mindary[j - 1];
+				maxdary[j] = maxdary[j - 1];
+			}
 
-        return imgNode;
-    }
+			elemary[i] = ei.next();
+			mindary[i] = minD;
+			maxdary[i] = maxD;
+			n++;
+		}
 
-    /**
-     * Returns false as shapes are not a container.
-     */
-    @Override
-    public boolean isComposite() {
-        return false;
-    }
+		GraphicsNode node = new MultiResGraphicsNode(e, clip, elemary, mindary, maxdary, ctx);
+		imgNode.setImage(node);
 
-    @Override
-    public void buildGraphicsNode(BridgeContext ctx,
-                                  Element e,
-                                  GraphicsNode node) {
-        initializeDynamicSupport(ctx, e, node);
+		return imgNode;
+	}
 
-        // Handle children elements such as <title>
-        //SVGUtilities.bridgeChildren(ctx, e);
-        //super.buildGraphicsNode(ctx, e, node);
-        ctx.closeViewport(e);
-    }
+	/**
+	 * Returns false as shapes are not a container.
+	 */
+	@Override
+	public boolean isComposite() {
+		return false;
+	}
 
-    /**
-     * This method is invoked during the build phase if the document
-     * is dynamic. The responsability of this method is to ensure that
-     * any dynamic modifications of the element this bridge is
-     * dedicated to, happen on its associated GVT product.
-     */
-    @Override
-    protected void initializeDynamicSupport(BridgeContext ctx,
-                                            Element e,
-                                            GraphicsNode node) {
-        if (ctx.isInteractive()) {
-            // HACK due to the way images are represented in GVT
-            ImageNode imgNode = (ImageNode)node;
-            ctx.bind(e, imgNode.getImage());
-        }
-    }
+	@Override
+	public void buildGraphicsNode(BridgeContext ctx, Element e, GraphicsNode node) {
+		initializeDynamicSupport(ctx, e, node);
 
-    /**
-     * Disposes this BridgeUpdateHandler and releases all resources.
-     */
-    @Override
-    public void dispose() {
-        ctx.removeViewport(e);
-        super.dispose();
-    }
+		// Handle children elements such as <title>
+		// SVGUtilities.bridgeChildren(ctx, e);
+		// super.buildGraphicsNode(ctx, e, node);
+		ctx.closeViewport(e);
+	}
 
-    /**
-     * Returns the bounds of the specified image element.
-     *
-     * @param ctx the bridge context
-     * @param element the image element
-     */
-    protected static
-        Rectangle2D getImageBounds(BridgeContext ctx, Element element) {
+	/**
+	 * This method is invoked during the build phase if the document is dynamic. The
+	 * responsability of this method is to ensure that any dynamic modifications of
+	 * the element this bridge is dedicated to, happen on its associated GVT
+	 * product.
+	 */
+	@Override
+	protected void initializeDynamicSupport(BridgeContext ctx, Element e, GraphicsNode node) {
+		if (ctx.isInteractive()) {
+			// HACK due to the way images are represented in GVT
+			ImageNode imgNode = (ImageNode) node;
+			ctx.bind(e, imgNode.getImage());
+		}
+	}
 
-        UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, element);
+	/**
+	 * Disposes this BridgeUpdateHandler and releases all resources.
+	 */
+	@Override
+	public void dispose() {
+		ctx.removeViewport(e);
+		super.dispose();
+	}
 
-        // 'x' attribute - default is 0
-        String s = element.getAttributeNS(null, SVG_X_ATTRIBUTE);
-        float x = 0;
-        if (s.length() != 0) {
-            x = UnitProcessor.svgHorizontalCoordinateToUserSpace
-                (s, SVG_X_ATTRIBUTE, uctx);
-        }
+	/**
+	 * Returns the bounds of the specified image element.
+	 *
+	 * @param ctx     the bridge context
+	 * @param element the image element
+	 */
+	protected static Rectangle2D getImageBounds(BridgeContext ctx, Element element) {
 
-        // 'y' attribute - default is 0
-        s = element.getAttributeNS(null, SVG_Y_ATTRIBUTE);
-        float y = 0;
-        if (s.length() != 0) {
-            y = UnitProcessor.svgVerticalCoordinateToUserSpace
-                (s, SVG_Y_ATTRIBUTE, uctx);
-        }
+		UnitProcessor.Context uctx = UnitProcessor.createContext(ctx, element);
 
-        // 'width' attribute - required
-        s = element.getAttributeNS(null, SVG_WIDTH_ATTRIBUTE);
-        float w;
-        if (s.length() == 0) {
-            throw new BridgeException(ctx, element, ERR_ATTRIBUTE_MISSING,
-                                      new Object[] {SVG_WIDTH_ATTRIBUTE});
-        } else {
-            w = UnitProcessor.svgHorizontalLengthToUserSpace
-                (s, SVG_WIDTH_ATTRIBUTE, uctx);
-        }
+		// 'x' attribute - default is 0
+		String s = element.getAttributeNS(null, SVG_X_ATTRIBUTE);
+		float x = 0;
+		if (s.length() != 0) {
+			x = UnitProcessor.svgHorizontalCoordinateToUserSpace(s, SVG_X_ATTRIBUTE, uctx);
+		}
 
-        // 'height' attribute - required
-        s = element.getAttributeNS(null, SVG_HEIGHT_ATTRIBUTE);
-        float h;
-        if (s.length() == 0) {
-            throw new BridgeException(ctx, element, ERR_ATTRIBUTE_MISSING,
-                                      new Object[] {SVG_HEIGHT_ATTRIBUTE});
-        } else {
-            h = UnitProcessor.svgVerticalLengthToUserSpace
-                (s, SVG_HEIGHT_ATTRIBUTE, uctx);
-        }
+		// 'y' attribute - default is 0
+		s = element.getAttributeNS(null, SVG_Y_ATTRIBUTE);
+		float y = 0;
+		if (s.length() != 0) {
+			y = UnitProcessor.svgVerticalCoordinateToUserSpace(s, SVG_Y_ATTRIBUTE, uctx);
+		}
 
-        return new Rectangle2D.Float(x, y, w, h);
-    }
+		// 'width' attribute - required
+		s = element.getAttributeNS(null, SVG_WIDTH_ATTRIBUTE);
+		float w;
+		if (s.length() == 0) {
+			throw new BridgeException(ctx, element, ERR_ATTRIBUTE_MISSING, new Object[] { SVG_WIDTH_ATTRIBUTE });
+		} else {
+			w = UnitProcessor.svgHorizontalLengthToUserSpace(s, SVG_WIDTH_ATTRIBUTE, uctx);
+		}
 
-    protected void addInfo(Element e, Collection<Element> elems, 
-                           Collection<Dimension> minDim, Collection<Dimension> maxDim,
-                           Rectangle2D bounds) {
-        Document doc   = e.getOwnerDocument();
-        Element  gElem = doc.createElementNS(SVG_NAMESPACE_URI, 
-                                              SVG_G_TAG);
-        NamedNodeMap attrs = e.getAttributes();
-        int len = attrs.getLength();
-        for (int i = 0; i < len; i++) {
-            Attr attr = (Attr)attrs.item(i);
-            gElem.setAttributeNS(attr.getNamespaceURI(),
-                                 attr.getName(),
-                                 attr.getValue());
-        }
-        // move the children from <subImage> to the <g> element
-        for (Node n = e.getFirstChild();
-             n != null;
-             n = e.getFirstChild()) {
-            gElem.appendChild(n);
-        }
-        e.appendChild(gElem);
-        elems.add(gElem);
-        minDim.add(getElementMinPixel(e, bounds));
-        maxDim.add(getElementMaxPixel(e, bounds));
-    }
+		// 'height' attribute - required
+		s = element.getAttributeNS(null, SVG_HEIGHT_ATTRIBUTE);
+		float h;
+		if (s.length() == 0) {
+			throw new BridgeException(ctx, element, ERR_ATTRIBUTE_MISSING, new Object[] { SVG_HEIGHT_ATTRIBUTE });
+		} else {
+			h = UnitProcessor.svgVerticalLengthToUserSpace(s, SVG_HEIGHT_ATTRIBUTE, uctx);
+		}
 
-    protected void addRefInfo(Element e, Collection<Element> elems, 
-                              Collection<Dimension> minDim, Collection<Dimension> maxDim,
-                              Rectangle2D bounds) {
-        String uriStr = XLinkSupport.getXLinkHref(e);
-        if (uriStr.length() == 0) {
-            throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING,
-                                      new Object[] {"xlink:href"});
-        }
-        String baseURI = AbstractNode.getBaseURI(e);
-        ParsedURL purl;
-        if (baseURI == null) purl = new ParsedURL(uriStr);
-        else                 purl = new ParsedURL(baseURI, uriStr);
-        Document doc = e.getOwnerDocument();
-        Element imgElem = doc.createElementNS(SVG_NAMESPACE_URI, 
-                                              SVG_IMAGE_TAG);
-        imgElem.setAttributeNS(XLINK_NAMESPACE_URI, 
-                               XLINK_HREF_ATTRIBUTE, purl.toString());
-        // move the attributes from <subImageRef> to the <image> element
-        NamedNodeMap attrs = e.getAttributes();
-        int len = attrs.getLength();
-        for (int i = 0; i < len; i++) {
-            Attr attr = (Attr)attrs.item(i);
-            imgElem.setAttributeNS(attr.getNamespaceURI(),
-                                   attr.getName(),
-                                   attr.getValue());
-        }
-        String s;
-        s = e.getAttribute("x");
-        if (s.length() == 0) imgElem.setAttribute("x", "0");
-        s = e.getAttribute("y");
-        if (s.length() == 0) imgElem.setAttribute("y", "0");
-        s = e.getAttribute("width");
-        if (s.length() == 0) imgElem.setAttribute("width", "100%");
-        s = e.getAttribute("height");
-        if (s.length() == 0) imgElem.setAttribute("height", "100%");
-        e.appendChild(imgElem);
-        elems.add(imgElem);
+		return new Rectangle2D.Float(x, y, w, h);
+	}
 
-        minDim.add(getElementMinPixel(e, bounds));
-        maxDim.add(getElementMaxPixel(e, bounds));
-    }
+	protected void addInfo(Element e, Collection<Element> elems, Collection<Dimension> minDim,
+			Collection<Dimension> maxDim, Rectangle2D bounds) {
+		Document doc = e.getOwnerDocument();
+		Element gElem = doc.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
+		NamedNodeMap attrs = e.getAttributes();
+		int len = attrs.getLength();
+		for (int i = 0; i < len; i++) {
+			Attr attr = (Attr) attrs.item(i);
+			gElem.setAttributeNS(attr.getNamespaceURI(), attr.getName(), attr.getValue());
+		}
+		// move the children from <subImage> to the <g> element
+		for (Node n = e.getFirstChild(); n != null; n = e.getFirstChild()) {
+			gElem.appendChild(n);
+		}
+		e.appendChild(gElem);
+		elems.add(gElem);
+		minDim.add(getElementMinPixel(e, bounds));
+		maxDim.add(getElementMaxPixel(e, bounds));
+	}
 
-    protected Dimension getElementMinPixel(Element e, Rectangle2D bounds) {
-        return getElementPixelSize
-            (e, SVG12Constants.SVG_MAX_PIXEL_SIZE_ATTRIBUTE, bounds);
-    }
-    protected Dimension getElementMaxPixel(Element e, Rectangle2D bounds) {
-        return getElementPixelSize
-            (e, SVG12Constants.SVG_MIN_PIXEL_SIZE_ATTRIBUTE, bounds);
-    }
+	protected void addRefInfo(Element e, Collection<Element> elems, Collection<Dimension> minDim,
+			Collection<Dimension> maxDim, Rectangle2D bounds) {
+		String uriStr = XLinkSupport.getXLinkHref(e);
+		if (uriStr.length() == 0) {
+			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING, new Object[] { "xlink:href" });
+		}
+		String baseURI = AbstractNode.getBaseURI(e);
+		ParsedURL purl;
+		if (baseURI == null)
+			purl = new ParsedURL(uriStr);
+		else
+			purl = new ParsedURL(baseURI, uriStr);
+		Document doc = e.getOwnerDocument();
+		Element imgElem = doc.createElementNS(SVG_NAMESPACE_URI, SVG_IMAGE_TAG);
+		imgElem.setAttributeNS(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE, purl.toString());
+		// move the attributes from <subImageRef> to the <image> element
+		NamedNodeMap attrs = e.getAttributes();
+		int len = attrs.getLength();
+		for (int i = 0; i < len; i++) {
+			Attr attr = (Attr) attrs.item(i);
+			imgElem.setAttributeNS(attr.getNamespaceURI(), attr.getName(), attr.getValue());
+		}
+		String s;
+		s = e.getAttribute("x");
+		if (s.length() == 0)
+			imgElem.setAttribute("x", "0");
+		s = e.getAttribute("y");
+		if (s.length() == 0)
+			imgElem.setAttribute("y", "0");
+		s = e.getAttribute("width");
+		if (s.length() == 0)
+			imgElem.setAttribute("width", "100%");
+		s = e.getAttribute("height");
+		if (s.length() == 0)
+			imgElem.setAttribute("height", "100%");
+		e.appendChild(imgElem);
+		elems.add(imgElem);
 
-    protected Dimension getElementPixelSize(Element e, 
-                                            String attr,
-                                            Rectangle2D bounds) {
-        String s;
-        s = e.getAttribute(attr);
-        if (s.length() == 0) return null;
+		minDim.add(getElementMinPixel(e, bounds));
+		maxDim.add(getElementMaxPixel(e, bounds));
+	}
 
-        Float[] vals = SVGUtilities.convertSVGNumberOptionalNumber
-            (e, attr, s, ctx);
+	protected Dimension getElementMinPixel(Element e, Rectangle2D bounds) {
+		return getElementPixelSize(e, SVG12Constants.SVG_MAX_PIXEL_SIZE_ATTRIBUTE, bounds);
+	}
 
-        if (vals[0] == null) return null;
+	protected Dimension getElementMaxPixel(Element e, Rectangle2D bounds) {
+		return getElementPixelSize(e, SVG12Constants.SVG_MIN_PIXEL_SIZE_ATTRIBUTE, bounds);
+	}
 
-        float xPixSz = vals[0];
-        float yPixSz = xPixSz;
-        if (vals[1] != null)
-            yPixSz = vals[1];
-        
-        return new Dimension((int)(bounds.getWidth()/xPixSz+0.5), 
-                             (int)(bounds.getHeight()/yPixSz+0.5)); 
-    }
+	protected Dimension getElementPixelSize(Element e, String attr, Rectangle2D bounds) {
+		String s;
+		s = e.getAttribute(attr);
+		if (s.length() == 0)
+			return null;
 
-    /**
-     * A viewport defined an &lt;svg&gt; element.
-     */
-    public static class MultiImageElementViewport implements Viewport {
-        private float width;
-        private float height;
+		Float[] vals = SVGUtilities.convertSVGNumberOptionalNumber(e, attr, s, ctx);
 
-        /**
-         * Constructs a new viewport with the specified <code>SVGSVGElement</code>.
-         * @param w the width of the viewport
-         * @param h the height of the viewport
-         */
-        public MultiImageElementViewport(float w, float h) {
-            this.width = w;
-            this.height = h;
-        }
+		if (vals[0] == null)
+			return null;
 
-        /**
-         * Returns the width of this viewport.
-         */
-        @Override
-        public float getWidth(){
-            return width;
-        }
+		float xPixSz = vals[0];
+		float yPixSz = xPixSz;
+		if (vals[1] != null)
+			yPixSz = vals[1];
 
-        /**
-         * Returns the height of this viewport.
-         */
-        @Override
-        public float getHeight(){
-            return height;
-        }
-    }
+		return new Dimension((int) (bounds.getWidth() / xPixSz + 0.5), (int) (bounds.getHeight() / yPixSz + 0.5));
+	}
+
+	/**
+	 * A viewport defined an &lt;svg&gt; element.
+	 */
+	public static class MultiImageElementViewport implements Viewport {
+		private float width;
+		private float height;
+
+		/**
+		 * Constructs a new viewport with the specified <code>SVGSVGElement</code>.
+		 * 
+		 * @param w the width of the viewport
+		 * @param h the height of the viewport
+		 */
+		public MultiImageElementViewport(float w, float h) {
+			this.width = w;
+			this.height = h;
+		}
+
+		/**
+		 * Returns the width of this viewport.
+		 */
+		@Override
+		public float getWidth() {
+			return width;
+		}
+
+		/**
+		 * Returns the height of this viewport.
+		 */
+		@Override
+		public float getHeight() {
+			return height;
+		}
+	}
 }

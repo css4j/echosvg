@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.script;
 
 /**
- * Interface for objects that act as a Java wrapper for a javascript
- * event object.
+ * Interface for objects that act as a Java wrapper for a javascript event
+ * object.
  * 
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -28,8 +28,8 @@ package io.sf.carte.echosvg.script;
  */
 public interface ScriptEventWrapper {
 
-    /**
-     * Returns the event object this object is wrapping. 
-     */
-    Object getEventObject();
+	/**
+	 * Returns the event object this object is wrapping.
+	 */
+	Object getEventObject();
 }

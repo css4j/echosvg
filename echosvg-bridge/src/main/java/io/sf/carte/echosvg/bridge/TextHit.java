@@ -18,10 +18,10 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-
 /**
- * Class that encapsulates information returned from hit testing
- * a <code>TextSpanLayout</code> instance.
+ * Class that encapsulates information returned from hit testing a
+ * <code>TextSpanLayout</code> instance.
+ * 
  * @see io.sf.carte.echosvg.bridge.TextSpanLayout
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
@@ -30,40 +30,38 @@ package io.sf.carte.echosvg.bridge;
  */
 public class TextHit {
 
-    private int charIndex;
-    private boolean leadingEdge;
+	private int charIndex;
+	private boolean leadingEdge;
 
-    /**
-     * Constructs a TextHit with the specified values.
-     *
-     * @param charIndex The index of the character that has been
-     * hit. In the case of bidirectional text this will be the logical
-     * character index not the visual index. The index is relative to
-     * whole text within the selected TextNode.
-     * @param leadingEdge Indicates which side of the character has
-     * been hit.  
-     */
-    public TextHit(int charIndex, boolean leadingEdge) {
-        this.charIndex = charIndex;
-        this.leadingEdge = leadingEdge;
-    }
+	/**
+	 * Constructs a TextHit with the specified values.
+	 *
+	 * @param charIndex   The index of the character that has been hit. In the case
+	 *                    of bidirectional text this will be the logical character
+	 *                    index not the visual index. The index is relative to whole
+	 *                    text within the selected TextNode.
+	 * @param leadingEdge Indicates which side of the character has been hit.
+	 */
+	public TextHit(int charIndex, boolean leadingEdge) {
+		this.charIndex = charIndex;
+		this.leadingEdge = leadingEdge;
+	}
 
-    /**
-     * Returns the index of the character that has been hit.
-     *
-     * @return The character index.
-     */
-    public int getCharIndex() {
-        return charIndex;
-    }
+	/**
+	 * Returns the index of the character that has been hit.
+	 *
+	 * @return The character index.
+	 */
+	public int getCharIndex() {
+		return charIndex;
+	}
 
-    /**
-     * Returns whether on not the character has been hit on its leading edge.
-     *
-     * @return Whether on not the character has been hit on its leading edge.
-     */
-    public boolean isLeadingEdge() {
-        return leadingEdge;
-    }
+	/**
+	 * Returns whether on not the character has been hit on its leading edge.
+	 *
+	 * @return Whether on not the character has been hit on its leading edge.
+	 */
+	public boolean isLeadingEdge() {
+		return leadingEdge;
+	}
 }
-

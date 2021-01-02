@@ -31,35 +31,34 @@ import io.sf.carte.echosvg.css.engine.value.Value;
  * @version $Id$
  */
 public interface SVGValue extends Value {
-    
-    /**
-     * Returns the paint type, if this object represents a SVGPaint.
-     */
-    short getPaintType() throws DOMException;
 
-    /**
-     * Returns the URI of the paint, if this object represents a SVGPaint.
-     */
-    String getUri() throws DOMException;
+	/**
+	 * Returns the paint type, if this object represents a SVGPaint.
+	 */
+	short getPaintType() throws DOMException;
 
-    /**
-     * Returns the color type, if this object represents a SVGColor.
-     */
-    short getColorType() throws DOMException;
+	/**
+	 * Returns the URI of the paint, if this object represents a SVGPaint.
+	 */
+	String getUri() throws DOMException;
 
-    /**
-     * Returns the color profile, if this object represents a SVGColor.
-     */
-    String getColorProfile() throws DOMException;
+	/**
+	 * Returns the color type, if this object represents a SVGColor.
+	 */
+	short getColorType() throws DOMException;
 
-    /**
-     * Returns the number of colors, if this object represents a SVGColor.
-     */
-    int getNumberOfColors() throws DOMException;
+	/**
+	 * Returns the color profile, if this object represents a SVGColor.
+	 */
+	String getColorProfile() throws DOMException;
 
-    /**
-     * Returns the color at the given index, if this object represents
-     * a SVGColor.
-     */
-    float getColor(int i) throws DOMException;
+	/**
+	 * Returns the number of colors, if this object represents a SVGColor.
+	 */
+	int getNumberOfColors() throws DOMException;
+
+	/**
+	 * Returns the color at the given index, if this object represents a SVGColor.
+	 */
+	float getColor(int i) throws DOMException;
 }

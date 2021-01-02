@@ -21,32 +21,31 @@ package io.sf.carte.echosvg.svggen;
 import org.w3c.dom.Element;
 
 /**
- * Used to represent an SVG Composite. This can be achieved with
- * to values: an SVG opacity and a filter
+ * Used to represent an SVG Composite. This can be achieved with to values: an
+ * SVG opacity and a filter
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGFilterDescriptor {
-    private Element def;
-    private String filterValue;
+	private Element def;
+	private String filterValue;
 
-    public SVGFilterDescriptor(String filterValue){
-        this.filterValue = filterValue;
-    }
+	public SVGFilterDescriptor(String filterValue) {
+		this.filterValue = filterValue;
+	}
 
-    public SVGFilterDescriptor(String filterValue,
-                               Element def){
-        this(filterValue);
-        this.def = def;
-    }
+	public SVGFilterDescriptor(String filterValue, Element def) {
+		this(filterValue);
+		this.def = def;
+	}
 
-    public String getFilterValue(){
-        return filterValue;
-    }
+	public String getFilterValue() {
+		return filterValue;
+	}
 
-    public Element getDef(){
-        return def;
-    }
+	public Element getDef() {
+		return def;
+	}
 }

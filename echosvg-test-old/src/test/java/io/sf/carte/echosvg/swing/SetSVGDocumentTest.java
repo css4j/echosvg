@@ -29,60 +29,57 @@ import io.sf.carte.echosvg.util.SVGConstants;
 /**
  * Test setDocument on JSVGComponent with non-EchoSVG SVGOMDocument.
  *
- * This test constructs a generic Document with SVG content then it
- * ensures that when this is passed to JSVGComponet.setDocument it is
- * properly imported to an SVGOMDocument and rendered from there.
+ * This test constructs a generic Document with SVG content then it ensures that
+ * when this is passed to JSVGComponet.setDocument it is properly imported to an
+ * SVGOMDocument and rendered from there.
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SetSVGDocumentTest extends JSVGRenderingAccuracyTest {
-    public SetSVGDocumentTest() {
-    }
-    @Override
-    protected String[] breakSVGFile(String svgFile){
-        if(svgFile == null) {
-            throw new IllegalArgumentException(svgFile);
-        }
+	public SetSVGDocumentTest() {
+	}
 
-        String [] ret = new String[3];
-        ret[0] = "test-resources/io/sf/carte/echosvg/test/svg/";
-        ret[1] = "SetSVGDocumentTest";
-        ret[2] = ".svg";
-        return ret;
-    }
+	@Override
+	protected String[] breakSVGFile(String svgFile) {
+		if (svgFile == null) {
+			throw new IllegalArgumentException(svgFile);
+		}
 
-    /* JSVGCanvasHandler.Delegate Interface */
-    @Override
-    public boolean canvasInit(JSVGCanvas canvas) {
-        DOMImplementation impl = 
-            GenericDOMImplementation.getDOMImplementation();
-        Document doc = impl.createDocument(SVGConstants.SVG_NAMESPACE_URI, 
-                                           SVGConstants.SVG_SVG_TAG, null);
-        Element e = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, 
-                                        SVGConstants.SVG_RECT_TAG);
-        e.setAttribute("x", "10");
-        e.setAttribute("y", "10");
-        e.setAttribute("width", "100");
-        e.setAttribute("height", "50");
-        e.setAttribute("fill", "crimson");
-        doc.getDocumentElement().appendChild(e);
+		String[] ret = new String[3];
+		ret[0] = "test-resources/io/sf/carte/echosvg/test/svg/";
+		ret[1] = "SetSVGDocumentTest";
+		ret[2] = ".svg";
+		return ret;
+	}
 
-        e = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, 
-                                SVGConstants.SVG_CIRCLE_TAG);
-        e.setAttribute("cx", "55");
-        e.setAttribute("cy", "35");
-        e.setAttribute("r", "30");
-        e.setAttribute("fill", "gold");
-        doc.getDocumentElement().appendChild(e);
-        
-        canvas.setDocument(doc);
-        return false; // We didn't trigger a load event.
-    }
+	/* JSVGCanvasHandler.Delegate Interface */
+	@Override
+	public boolean canvasInit(JSVGCanvas canvas) {
+		DOMImplementation impl = GenericDOMImplementation.getDOMImplementation();
+		Document doc = impl.createDocument(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_SVG_TAG, null);
+		Element e = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_RECT_TAG);
+		e.setAttribute("x", "10");
+		e.setAttribute("y", "10");
+		e.setAttribute("width", "100");
+		e.setAttribute("height", "50");
+		e.setAttribute("fill", "crimson");
+		doc.getDocumentElement().appendChild(e);
 
-    @Override
-    public boolean canvasUpdated(JSVGCanvas canvas) {
-        return true;
-    }
+		e = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_CIRCLE_TAG);
+		e.setAttribute("cx", "55");
+		e.setAttribute("cy", "35");
+		e.setAttribute("r", "30");
+		e.setAttribute("fill", "gold");
+		doc.getDocumentElement().appendChild(e);
+
+		canvas.setDocument(doc);
+		return false; // We didn't trigger a load event.
+	}
+
+	@Override
+	public boolean canvasUpdated(JSVGCanvas canvas) {
+		return true;
+	}
 }

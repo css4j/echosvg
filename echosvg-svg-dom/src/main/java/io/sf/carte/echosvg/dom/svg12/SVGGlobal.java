@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.dom.svg12;
 import org.w3c.dom.events.EventTarget;
 
 /**
- * Interface for a global scripting object for an SVG document.
- * Eventually will move to org.w3c.dom.svg (or some such package).
+ * Interface for a global scripting object for an SVG document. Eventually will
+ * move to org.w3c.dom.svg (or some such package).
  *
  * @author For later modifications, see Git history.
  * @version $Id$
@@ -74,16 +74,15 @@ public interface SVGGlobal extends Global {
 //      */
 //     Connection createConnection();
 
-    /**
-     * Starts mouse capture.
-     */
-    void startMouseCapture(EventTarget target, boolean sendAll,
-                           boolean autoRelease);
+	/**
+	 * Starts mouse capture.
+	 */
+	void startMouseCapture(EventTarget target, boolean sendAll, boolean autoRelease);
 
-    /**
-     * Stops mouse capture.
-     */
-    void stopMouseCapture();
+	/**
+	 * Stops mouse capture.
+	 */
+	void stopMouseCapture();
 
 //     /**
 //      * Creates a FileDialog object.

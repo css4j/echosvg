@@ -26,73 +26,71 @@ import org.w3c.dom.svg.SVGPoint;
  */
 public class SVGPointItem extends AbstractSVGItem implements SVGPoint {
 
-    /**
-     * The x value.
-     */
-    protected float x;
+	/**
+	 * The x value.
+	 */
+	protected float x;
 
-    /**
-     * The y value.
-     */
-    protected float y;
+	/**
+	 * The y value.
+	 */
+	protected float y;
 
-    /**
-     * Creates a new SVGPointItem.
-     */
-    public SVGPointItem(float x, float y) {
-        this.x = x;
-        this.y = y;
-    }
+	/**
+	 * Creates a new SVGPointItem.
+	 */
+	public SVGPointItem(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
 
-    /**
-     * Return a String representation of this SVGPoint.
-     */
-    @Override
-    protected String getStringValue() {
-        return Float.toString( x )
-                + ','
-                + Float.toString( y );
-    }
+	/**
+	 * Return a String representation of this SVGPoint.
+	 */
+	@Override
+	protected String getStringValue() {
+		return Float.toString(x) + ',' + Float.toString(y);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPoint#getX()}.
-     */
-    @Override
-    public float getX() {
-        return x;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPoint#getX()}.
+	 */
+	@Override
+	public float getX() {
+		return x;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPoint#getY()}.
-     */
-    @Override
-    public float getY() {
-        return y;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPoint#getY()}.
+	 */
+	@Override
+	public float getY() {
+		return y;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPoint#setX(float)}.
-     */
-    @Override
-    public void setX(float x) {
-        this.x = x;
-        resetAttribute();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPoint#setX(float)}.
+	 */
+	@Override
+	public void setX(float x) {
+		this.x = x;
+		resetAttribute();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPoint#setY(float)}.
-     */
-    @Override
-    public void setY(float y) {
-        this.y = y;
-        resetAttribute();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPoint#setY(float)}.
+	 */
+	@Override
+	public void setY(float y) {
+		this.y = y;
+		resetAttribute();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPoint#matrixTransform(SVGMatrix)}.
-     */
-    @Override
-    public SVGPoint matrixTransform(SVGMatrix matrix) {
-        return SVGOMPoint.matrixTransform(this, matrix);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPoint#matrixTransform(SVGMatrix)}.
+	 */
+	@Override
+	public SVGPoint matrixTransform(SVGMatrix matrix) {
+		return SVGOMPoint.matrixTransform(this, matrix);
+	}
 }

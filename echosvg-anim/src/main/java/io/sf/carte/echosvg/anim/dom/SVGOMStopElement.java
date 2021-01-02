@@ -33,90 +33,86 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMStopElement
-    extends    SVGStylableElement
-    implements SVGStopElement {
+public class SVGOMStopElement extends SVGStylableElement implements SVGStopElement {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
-        t.put(null, SVG_OFFSET_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER_OR_PERCENTAGE));
-        xmlTraitInformation = t;
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGStylableElement.xmlTraitInformation);
+		t.put(null, SVG_OFFSET_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER_OR_PERCENTAGE));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'offset' attribute value.
-     */
-    protected SVGOMAnimatedNumber offset;
+	/**
+	 * The 'offset' attribute value.
+	 */
+	protected SVGOMAnimatedNumber offset;
 
-    /**
-     * Creates a new SVGOMStopElement object.
-     */
-    protected SVGOMStopElement() {
-    }
+	/**
+	 * Creates a new SVGOMStopElement object.
+	 */
+	protected SVGOMStopElement() {
+	}
 
-    /**
-     * Creates a new SVGOMStopElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMStopElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMStopElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMStopElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        offset = createLiveAnimatedNumber(null, SVG_OFFSET_ATTRIBUTE, 0f, true);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		offset = createLiveAnimatedNumber(null, SVG_OFFSET_ATTRIBUTE, 0f, true);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_STOP_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_STOP_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.svg.SVGStopElement#getOffset()}.
-     */
-    @Override
-    public SVGAnimatedNumber getOffset() {
-        return offset;
-    }
-    
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMStopElement();
-    }    
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGStopElement#getOffset()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getOffset() {
+		return offset;
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMStopElement();
+	}
+
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

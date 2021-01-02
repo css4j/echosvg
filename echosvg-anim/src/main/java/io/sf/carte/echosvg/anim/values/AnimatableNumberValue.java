@@ -29,98 +29,95 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatableNumberValue extends AnimatableValue {
 
-    /**
-     * The value.
-     */
-    protected float value;
+	/**
+	 * The value.
+	 */
+	protected float value;
 
-    /**
-     * Creates a new, uninitialized AnimatableNumberValue.
-     */
-    protected AnimatableNumberValue(AnimationTarget target) {
-        super(target);
-    }
-    
-    /**
-     * Creates a new AnimatableNumberValue.
-     */
-    public AnimatableNumberValue(AnimationTarget target, float v) {
-        super(target);
-        value = v;
-    }
+	/**
+	 * Creates a new, uninitialized AnimatableNumberValue.
+	 */
+	protected AnimatableNumberValue(AnimationTarget target) {
+		super(target);
+	}
 
-    /**
-     * Performs interpolation to the given value.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to,
-                                       float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatableNumberValue res;
-        if (result == null) {
-            res = new AnimatableNumberValue(target);
-        } else {
-            res = (AnimatableNumberValue) result;
-        }
+	/**
+	 * Creates a new AnimatableNumberValue.
+	 */
+	public AnimatableNumberValue(AnimationTarget target, float v) {
+		super(target);
+		value = v;
+	}
 
-        float v = value;
-        if (to != null) {
-            AnimatableNumberValue toNumber = (AnimatableNumberValue) to;
-            v += interpolation * (toNumber.value - value);
-        }
-        if (accumulation != null) {
-            AnimatableNumberValue accNumber = (AnimatableNumberValue) accumulation;
-            v += multiplier * accNumber.value;
-        }
+	/**
+	 * Performs interpolation to the given value.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatableNumberValue res;
+		if (result == null) {
+			res = new AnimatableNumberValue(target);
+		} else {
+			res = (AnimatableNumberValue) result;
+		}
 
-        if (res.value != v) {
-            res.value = v;
-            res.hasChanged = true;
-        }
-        return res;
-    }
+		float v = value;
+		if (to != null) {
+			AnimatableNumberValue toNumber = (AnimatableNumberValue) to;
+			v += interpolation * (toNumber.value - value);
+		}
+		if (accumulation != null) {
+			AnimatableNumberValue accNumber = (AnimatableNumberValue) accumulation;
+			v += multiplier * accNumber.value;
+		}
 
-    /**
-     * Returns the number value.
-     */
-    public float getValue() {
-        return value;
-    }
+		if (res.value != v) {
+			res.value = v;
+			res.hasChanged = true;
+		}
+		return res;
+	}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return true;
-    }
+	/**
+	 * Returns the number value.
+	 */
+	public float getValue() {
+		return value;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        AnimatableNumberValue o = (AnimatableNumberValue) other;
-        return Math.abs(value - o.value);
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return true;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        return new AnimatableNumberValue(target, 0);
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		AnimatableNumberValue o = (AnimatableNumberValue) other;
+		return Math.abs(value - o.value);
+	}
 
-    /**
-     * Returns the CSS text representation of the value.
-     */
-    @Override
-    public String getCssText() {
-        return formatNumber(value);
-    }
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		return new AnimatableNumberValue(target, 0);
+	}
+
+	/**
+	 * Returns the CSS text representation of the value.
+	 */
+	@Override
+	public String getCssText() {
+		return formatNumber(value);
+	}
 }

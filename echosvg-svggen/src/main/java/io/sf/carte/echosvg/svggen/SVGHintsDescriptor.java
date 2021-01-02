@@ -31,56 +31,50 @@ import org.w3c.dom.Element;
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
- * @see             io.sf.carte.echosvg.svggen.SVGRenderingHints
+ * @see io.sf.carte.echosvg.svggen.SVGRenderingHints
  */
 public class SVGHintsDescriptor implements SVGDescriptor, SVGSyntax {
-    private String colorInterpolation;
-    private String colorRendering;
-    private String textRendering;
-    private String shapeRendering;
-    private String imageRendering;
+	private String colorInterpolation;
+	private String colorRendering;
+	private String textRendering;
+	private String shapeRendering;
+	private String imageRendering;
 
-    /**
-     * Constructor
-     */
-    public SVGHintsDescriptor(String colorInterpolation,
-                              String colorRendering,
-                              String textRendering,
-                              String shapeRendering,
-                              String imageRendering){
-        if(colorInterpolation == null ||
-           colorRendering == null ||
-           textRendering == null ||
-           shapeRendering == null ||
-           imageRendering == null)
-            throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_HINT_NULL);
+	/**
+	 * Constructor
+	 */
+	public SVGHintsDescriptor(String colorInterpolation, String colorRendering, String textRendering,
+			String shapeRendering, String imageRendering) {
+		if (colorInterpolation == null || colorRendering == null || textRendering == null || shapeRendering == null
+				|| imageRendering == null)
+			throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_HINT_NULL);
 
-        this.colorInterpolation = colorInterpolation;
-        this.colorRendering = colorRendering;
-        this.textRendering = textRendering;
-        this.shapeRendering = shapeRendering;
-        this.imageRendering = imageRendering;
-    }
+		this.colorInterpolation = colorInterpolation;
+		this.colorRendering = colorRendering;
+		this.textRendering = textRendering;
+		this.shapeRendering = shapeRendering;
+		this.imageRendering = imageRendering;
+	}
 
-    @Override
-    public Map<String, String> getAttributeMap(Map<String, String> attrMap) {
-        if (attrMap == null)
-            attrMap = new HashMap<>();
+	@Override
+	public Map<String, String> getAttributeMap(Map<String, String> attrMap) {
+		if (attrMap == null)
+			attrMap = new HashMap<>();
 
-        attrMap.put(SVG_COLOR_INTERPOLATION_ATTRIBUTE, colorInterpolation);
-        attrMap.put(SVG_COLOR_RENDERING_ATTRIBUTE, colorRendering);
-        attrMap.put(SVG_TEXT_RENDERING_ATTRIBUTE, textRendering);
-        attrMap.put(SVG_SHAPE_RENDERING_ATTRIBUTE, shapeRendering);
-        attrMap.put(SVG_IMAGE_RENDERING_ATTRIBUTE, imageRendering);
+		attrMap.put(SVG_COLOR_INTERPOLATION_ATTRIBUTE, colorInterpolation);
+		attrMap.put(SVG_COLOR_RENDERING_ATTRIBUTE, colorRendering);
+		attrMap.put(SVG_TEXT_RENDERING_ATTRIBUTE, textRendering);
+		attrMap.put(SVG_SHAPE_RENDERING_ATTRIBUTE, shapeRendering);
+		attrMap.put(SVG_IMAGE_RENDERING_ATTRIBUTE, imageRendering);
 
-        return attrMap;
-    }
+		return attrMap;
+	}
 
-    @Override
-    public List<Element> getDefinitionSet(List<Element> defSet) {
-        if (defSet == null)
-            defSet = new LinkedList<>();
+	@Override
+	public List<Element> getDefinitionSet(List<Element> defSet) {
+		if (defSet == null)
+			defSet = new LinkedList<>();
 
-        return defSet;
-    }
+		return defSet;
+	}
 }

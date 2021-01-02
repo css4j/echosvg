@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.parser;
 import java.io.IOException;
 
 /**
- * This class implements an event-based parser for SMIL timing specifier
- * list values.
+ * This class implements an event-based parser for SMIL timing specifier list
+ * values.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -30,69 +30,65 @@ import java.io.IOException;
  */
 public class TimingSpecifierListParser extends TimingSpecifierParser {
 
-    /**
-     * Creates a new TimingSpecifierListParser.
-     * @param useSVG11AccessKeys allows the use of accessKey() timing
-     *                           specifiers with a single character
-     * @param useSVG12AccessKeys allows the use of accessKey() with a
-     *                           DOM 3 key name
-     */
-    public TimingSpecifierListParser(boolean useSVG11AccessKeys,
-                                     boolean useSVG12AccessKeys) {
-        super(useSVG11AccessKeys, useSVG12AccessKeys);
-        timingSpecifierHandler = DefaultTimingSpecifierListHandler.INSTANCE;
-    }
+	/**
+	 * Creates a new TimingSpecifierListParser.
+	 * 
+	 * @param useSVG11AccessKeys allows the use of accessKey() timing specifiers
+	 *                           with a single character
+	 * @param useSVG12AccessKeys allows the use of accessKey() with a DOM 3 key name
+	 */
+	public TimingSpecifierListParser(boolean useSVG11AccessKeys, boolean useSVG12AccessKeys) {
+		super(useSVG11AccessKeys, useSVG12AccessKeys);
+		timingSpecifierHandler = DefaultTimingSpecifierListHandler.INSTANCE;
+	}
 
-    /**
-     * Registers a parse event handler.
-     */
-    public void setTimingSpecifierListHandler
-            (TimingSpecifierListHandler handler) {
-        timingSpecifierHandler = handler;
-    }
+	/**
+	 * Registers a parse event handler.
+	 */
+	public void setTimingSpecifierListHandler(TimingSpecifierListHandler handler) {
+		timingSpecifierHandler = handler;
+	}
 
-    /**
-     * Returns the parse event handler in use.
-     */
-    public TimingSpecifierListHandler getTimingSpecifierListHandler() {
-        return (TimingSpecifierListHandler) timingSpecifierHandler;
-    }
+	/**
+	 * Returns the parse event handler in use.
+	 */
+	public TimingSpecifierListHandler getTimingSpecifierListHandler() {
+		return (TimingSpecifierListHandler) timingSpecifierHandler;
+	}
 
-    /**
-     * Parses a timing specifier list.
-     */
-    @Override
-    protected void doParse() throws ParseException, IOException {
-        current = reader.read();
+	/**
+	 * Parses a timing specifier list.
+	 */
+	@Override
+	protected void doParse() throws ParseException, IOException {
+		current = reader.read();
 
-        ((TimingSpecifierListHandler) timingSpecifierHandler)
-            .startTimingSpecifierList();
+		((TimingSpecifierListHandler) timingSpecifierHandler).startTimingSpecifierList();
 
-        skipSpaces();
+		skipSpaces();
 
-        if (current != -1) {
-            for (;;) {
-                Object[] spec = parseTimingSpecifier();
-                handleTimingSpecifier(spec);
-                skipSpaces();
-                if (current == -1) {
-                    break;
-                }
-                if (current == ';') {
-                    current = reader.read();
-                    continue;
-                }
-                reportUnexpectedCharacterError( current );
-            }
-        }
+		if (current != -1) {
+			for (;;) {
+				Object[] spec = parseTimingSpecifier();
+				handleTimingSpecifier(spec);
+				skipSpaces();
+				if (current == -1) {
+					break;
+				}
+				if (current == ';') {
+					current = reader.read();
+					continue;
+				}
+				reportUnexpectedCharacterError(current);
+			}
+		}
 
-        skipSpaces();
+		skipSpaces();
 
-        if (current != -1) {
-            reportUnexpectedCharacterError( current );
-        }
+		if (current != -1) {
+			reportUnexpectedCharacterError(current);
+		}
 
-        ((TimingSpecifierListHandler) timingSpecifierHandler)
-            .endTimingSpecifierList();
-    }
+		((TimingSpecifierListHandler) timingSpecifierHandler).endTimingSpecifierList();
+	}
 }

@@ -30,18 +30,15 @@ import java.awt.event.MouseMotionListener;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public interface Interactor
-    extends KeyListener,
-            MouseListener,
-            MouseMotionListener {
+public interface Interactor extends KeyListener, MouseListener, MouseMotionListener {
 
-    /**
-     * Tells whether the given event will start the interactor.
-     */
-    boolean startInteraction(InputEvent ie);
+	/**
+	 * Tells whether the given event will start the interactor.
+	 */
+	boolean startInteraction(InputEvent ie);
 
-    /**
-     * Tells whether the interaction has finished.
-     */
-    boolean endInteraction();
+	/**
+	 * Tells whether the interaction has finished.
+	 */
+	boolean endInteraction();
 }

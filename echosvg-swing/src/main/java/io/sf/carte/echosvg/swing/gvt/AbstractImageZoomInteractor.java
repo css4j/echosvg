@@ -22,9 +22,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 
 /**
- * This class represents a zoom interactor.
- * To use it, just redefine the {@link
- * InteractorAdapter#startInteraction(java.awt.event.InputEvent)} method.
+ * This class represents a zoom interactor. To use it, just redefine the
+ * {@link InteractorAdapter#startInteraction(java.awt.event.InputEvent)} method.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -32,105 +31,104 @@ import java.awt.geom.AffineTransform;
  */
 public class AbstractImageZoomInteractor extends InteractorAdapter {
 
-    /**
-     * Whether the interactor has finished.
-     */
-    protected boolean finished = true;
+	/**
+	 * Whether the interactor has finished.
+	 */
+	protected boolean finished = true;
 
-    /**
-     * The mouse x start position.
-     */
-    protected int xStart;
+	/**
+	 * The mouse x start position.
+	 */
+	protected int xStart;
 
-    /**
-     * The mouse y start position.
-     */
-    protected int yStart;
+	/**
+	 * The mouse y start position.
+	 */
+	protected int yStart;
 
-    /**
-     * The mouse x current position.
-     */
-    protected int xCurrent;
+	/**
+	 * The mouse x current position.
+	 */
+	protected int xCurrent;
 
-    /**
-     * The mouse y current position.
-     */
-    protected int yCurrent;
+	/**
+	 * The mouse y current position.
+	 */
+	protected int yCurrent;
 
-    /**
-     * Tells whether the interactor has finished.
-     */
-    @Override
-    public boolean endInteraction() {
-        return finished;
-    }
+	/**
+	 * Tells whether the interactor has finished.
+	 */
+	@Override
+	public boolean endInteraction() {
+		return finished;
+	}
 
-    // MouseListener ///////////////////////////////////////////////////////
-        
-    /**
-     * Invoked when a mouse button has been pressed on a component.
-     */
-    @Override
-    public void mousePressed(MouseEvent e) {
-        if (!finished) {
-            JGVTComponent c = (JGVTComponent)e.getSource();
-            c.setPaintingTransform(null);
-            return;
-        }
-        
-        finished = false;
+	// MouseListener ///////////////////////////////////////////////////////
 
-        xStart = e.getX();
-        yStart = e.getY();
-    }
+	/**
+	 * Invoked when a mouse button has been pressed on a component.
+	 */
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if (!finished) {
+			JGVTComponent c = (JGVTComponent) e.getSource();
+			c.setPaintingTransform(null);
+			return;
+		}
 
-    /**
-     * Invoked when a mouse button has been released on a component.
-     */
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        finished = true;
+		finished = false;
 
-        JGVTComponent c = (JGVTComponent)e.getSource();
+		xStart = e.getX();
+		yStart = e.getY();
+	}
 
-        AffineTransform pt = c.getPaintingTransform();
-        if (pt != null) {
-            AffineTransform rt = (AffineTransform)c.getRenderingTransform().clone();
-            rt.preConcatenate(pt);
-            c.setRenderingTransform(rt);
-        }
-    }
+	/**
+	 * Invoked when a mouse button has been released on a component.
+	 */
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		finished = true;
 
-    // MouseMotionListener /////////////////////////////////////////////////
+		JGVTComponent c = (JGVTComponent) e.getSource();
 
-    /**
-     * Invoked when a mouse button is pressed on a component and then 
-     * dragged.  Mouse drag events will continue to be delivered to
-     * the component where the first originated until the mouse button is
-     * released (regardless of whether the mouse position is within the
-     * bounds of the component).
-     */
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        AffineTransform at;
-        JGVTComponent c = (JGVTComponent)e.getSource();
+		AffineTransform pt = c.getPaintingTransform();
+		if (pt != null) {
+			AffineTransform rt = (AffineTransform) c.getRenderingTransform().clone();
+			rt.preConcatenate(pt);
+			c.setRenderingTransform(rt);
+		}
+	}
 
-        xCurrent = e.getX();
-        yCurrent = e.getY();
+	// MouseMotionListener /////////////////////////////////////////////////
 
-        at = AffineTransform.getTranslateInstance(xStart, yStart);
-        int dy = yCurrent - yStart;
-        double s;
-        if (dy < 0) {
-            dy -= 10;
-            s = (dy > -15) ? 1.0 : -15.0/dy;
-        } else {
-            dy += 10;
-            s = (dy <  15) ? 1.0 : dy/15.0;
-        }
+	/**
+	 * Invoked when a mouse button is pressed on a component and then dragged. Mouse
+	 * drag events will continue to be delivered to the component where the first
+	 * originated until the mouse button is released (regardless of whether the
+	 * mouse position is within the bounds of the component).
+	 */
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		AffineTransform at;
+		JGVTComponent c = (JGVTComponent) e.getSource();
 
-        at.scale(s, s);
-        at.translate(-xStart, -yStart);
-        c.setPaintingTransform(at);
-    }
+		xCurrent = e.getX();
+		yCurrent = e.getY();
+
+		at = AffineTransform.getTranslateInstance(xStart, yStart);
+		int dy = yCurrent - yStart;
+		double s;
+		if (dy < 0) {
+			dy -= 10;
+			s = (dy > -15) ? 1.0 : -15.0 / dy;
+		} else {
+			dy += 10;
+			s = (dy < 15) ? 1.0 : dy / 15.0;
+		}
+
+		at.scale(s, s);
+		at.translate(-xStart, -yStart);
+		c.setPaintingTransform(at);
+	}
 }

@@ -39,188 +39,182 @@ import io.sf.carte.echosvg.css.engine.value.Value;
  */
 public class CSSOMComputedStyle implements CSSStyleDeclaration {
 
-    /**
-     * The CSS engine used to compute the values.
-     */
-    protected CSSEngine cssEngine;
+	/**
+	 * The CSS engine used to compute the values.
+	 */
+	protected CSSEngine cssEngine;
 
-    /**
-     * The associated element.
-     */
-    protected CSSStylableElement element;
+	/**
+	 * The associated element.
+	 */
+	protected CSSStylableElement element;
 
-    /**
-     * The optional pseudo-element.
-     */
-    protected String pseudoElement;
+	/**
+	 * The optional pseudo-element.
+	 */
+	protected String pseudoElement;
 
-    /**
-     * The CSS values.
-     */
-    protected Map<String, CSSValue> values = new HashMap<>();
+	/**
+	 * The CSS values.
+	 */
+	protected Map<String, CSSValue> values = new HashMap<>();
 
-    /**
-     * Creates a new computed style.
-     */
-    public CSSOMComputedStyle(CSSEngine e,
-                              CSSStylableElement elt,
-                              String pseudoElt) {
-        cssEngine = e;
-        element = elt;
-        pseudoElement = pseudoElt;
-    }
+	/**
+	 * Creates a new computed style.
+	 */
+	public CSSOMComputedStyle(CSSEngine e, CSSStylableElement elt, String pseudoElt) {
+		cssEngine = e;
+		element = elt;
+		pseudoElement = pseudoElt;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.CSSStyleDeclaration#getCssText()}.
-     */
-    @Override
-    public String getCssText() {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < cssEngine.getNumberOfProperties(); i++) {
-            sb.append(cssEngine.getPropertyName(i));
-            sb.append(": ");
-            sb.append(cssEngine.getComputedStyle(element, pseudoElement,
-                                                 i).getCssText());
-            sb.append(";\n");
-        }
-        return sb.toString();
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.css.CSSStyleDeclaration#getCssText()}.
+	 */
+	@Override
+	public String getCssText() {
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < cssEngine.getNumberOfProperties(); i++) {
+			sb.append(cssEngine.getPropertyName(i));
+			sb.append(": ");
+			sb.append(cssEngine.getComputedStyle(element, pseudoElement, i).getCssText());
+			sb.append(";\n");
+		}
+		return sb.toString();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.CSSStyleDeclaration#setCssText(String)}.
-     * Throws a NO_MODIFICATION_ALLOWED_ERR {@link org.w3c.dom.DOMException}.
-     */
-    @Override
-    public void setCssText(String cssText) throws DOMException {
-        throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.css.CSSStyleDeclaration#setCssText(String)}. Throws a
+	 * NO_MODIFICATION_ALLOWED_ERR {@link org.w3c.dom.DOMException}.
+	 */
+	@Override
+	public void setCssText(String cssText) throws DOMException {
+		throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.CSSStyleDeclaration#getPropertyValue(String)}.
-     */
-    @Override
-    public String getPropertyValue(String propertyName) {
-        int idx = cssEngine.getPropertyIndex(propertyName);
-        if (idx == -1) {
-            return "";
-        }
-        Value v = cssEngine.getComputedStyle(element, pseudoElement, idx);
-        return v.getCssText();
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.css.CSSStyleDeclaration#getPropertyValue(String)}.
+	 */
+	@Override
+	public String getPropertyValue(String propertyName) {
+		int idx = cssEngine.getPropertyIndex(propertyName);
+		if (idx == -1) {
+			return "";
+		}
+		Value v = cssEngine.getComputedStyle(element, pseudoElement, idx);
+		return v.getCssText();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.CSSStyleDeclaration#getPropertyCSSValue(String)}.
-     */
-    @Override
-    public CSSValue getPropertyCSSValue(String propertyName) {
-        CSSValue result = values.get(propertyName);
-        if (result == null) {
-            int idx = cssEngine.getPropertyIndex(propertyName);
-            if (idx != -1) {
-                result = createCSSValue(idx);
-                values.put(propertyName, result);
-            }
-        }
-        return result;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.css.CSSStyleDeclaration#getPropertyCSSValue(String)}.
+	 */
+	@Override
+	public CSSValue getPropertyCSSValue(String propertyName) {
+		CSSValue result = values.get(propertyName);
+		if (result == null) {
+			int idx = cssEngine.getPropertyIndex(propertyName);
+			if (idx != -1) {
+				result = createCSSValue(idx);
+				values.put(propertyName, result);
+			}
+		}
+		return result;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.CSSStyleDeclaration#removeProperty(String)}.
-     */
-    @Override
-    public String removeProperty(String propertyName) throws DOMException {
-        throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.css.CSSStyleDeclaration#removeProperty(String)}.
+	 */
+	@Override
+	public String removeProperty(String propertyName) throws DOMException {
+		throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.CSSStyleDeclaration#getPropertyPriority(String)}.
-     */
-    @Override
-    public String getPropertyPriority(String propertyName) {
-        return "";
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.css.CSSStyleDeclaration#getPropertyPriority(String)}.
+	 */
+	@Override
+	public String getPropertyPriority(String propertyName) {
+		return "";
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.CSSStyleDeclaration#setProperty(String,String,String)}.
-     */
-    @Override
-    public void setProperty(String propertyName, String value, String prio)
-        throws DOMException {
-        throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.css.CSSStyleDeclaration#setProperty(String,String,String)}.
+	 */
+	@Override
+	public void setProperty(String propertyName, String value, String prio) throws DOMException {
+		throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.CSSStyleDeclaration#getLength()}.
-     */
-    @Override
-    public int getLength() {
-        return cssEngine.getNumberOfProperties();
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.css.CSSStyleDeclaration#getLength()}.
+	 */
+	@Override
+	public int getLength() {
+		return cssEngine.getNumberOfProperties();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.CSSStyleDeclaration#item(int)}.
-     */
-    @Override
-    public String item(int index) {
-        if (index < 0 || index >= cssEngine.getNumberOfProperties()) {
-            return "";
-        }
-        return cssEngine.getPropertyName(index);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link org.w3c.dom.css.CSSStyleDeclaration#item(int)}.
+	 */
+	@Override
+	public String item(int index) {
+		if (index < 0 || index >= cssEngine.getNumberOfProperties()) {
+			return "";
+		}
+		return cssEngine.getPropertyName(index);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.css.CSSStyleDeclaration#getParentRule()}.
-     * @return null.
-     */
-    @Override
-    public CSSRule getParentRule() {
-        return null;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.css.CSSStyleDeclaration#getParentRule()}.
+	 * 
+	 * @return null.
+	 */
+	@Override
+	public CSSRule getParentRule() {
+		return null;
+	}
 
-    /**
-     * Creates a CSSValue to manage the value at the given index.
-     */
-    protected CSSValue createCSSValue(int idx) {
-        return new ComputedCSSValue(idx);
-    }
+	/**
+	 * Creates a CSSValue to manage the value at the given index.
+	 */
+	protected CSSValue createCSSValue(int idx) {
+		return new ComputedCSSValue(idx);
+	}
 
-    /**
-     * To manage a computed CSSValue.
-     */
-    public class ComputedCSSValue
-        extends CSSOMValue
-        implements CSSOMValue.ValueProvider {
-        
-        /**
-         * The index of the associated value.
-         */
-        protected int index;
+	/**
+	 * To manage a computed CSSValue.
+	 */
+	public class ComputedCSSValue extends CSSOMValue implements CSSOMValue.ValueProvider {
 
-        /**
-         * Creates a new ComputedCSSValue.
-         */
-        public ComputedCSSValue(int idx) {
-            super(null);
-            valueProvider = this;
-            index = idx;
-        }
+		/**
+		 * The index of the associated value.
+		 */
+		protected int index;
 
-        /**
-         * Returns the Value associated with this object.
-         */
-        @Override
-        public Value getValue() {
-            return cssEngine.getComputedStyle(element, pseudoElement, index);
-        }
-    }
+		/**
+		 * Creates a new ComputedCSSValue.
+		 */
+		public ComputedCSSValue(int idx) {
+			super(null);
+			valueProvider = this;
+			index = idx;
+		}
+
+		/**
+		 * Returns the Value associated with this object.
+		 */
+		@Override
+		public Value getValue() {
+			return cssEngine.getComputedStyle(element, pseudoElement, index);
+		}
+	}
 }

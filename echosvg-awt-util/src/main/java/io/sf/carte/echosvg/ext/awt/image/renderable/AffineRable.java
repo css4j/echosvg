@@ -28,28 +28,29 @@ import java.awt.geom.AffineTransform;
  * @version $Id$
  */
 public interface AffineRable extends Filter {
-      /**
-       * Returns the source to be offset.
-       */
-      Filter getSource();
+	/**
+	 * Returns the source to be offset.
+	 */
+	Filter getSource();
 
-      /**
-       * Sets the source to be offset.
-       * @param src image to offset.
-       */
-      void setSource(Filter src);
+	/**
+	 * Sets the source to be offset.
+	 * 
+	 * @param src image to offset.
+	 */
+	void setSource(Filter src);
 
-      /**
-       * Set the affine.
-       * @param affine the new Affine transform for the filter.
-       */
-      void setAffine(AffineTransform affine);
+	/**
+	 * Set the affine.
+	 * 
+	 * @param affine the new Affine transform for the filter.
+	 */
+	void setAffine(AffineTransform affine);
 
-      /**
-       * Get the current affine.
-       * @return The current affine transform for the filter.
-       */
-      AffineTransform getAffine();
+	/**
+	 * Get the current affine.
+	 * 
+	 * @return The current affine transform for the filter.
+	 */
+	AffineTransform getAffine();
 }
-
-

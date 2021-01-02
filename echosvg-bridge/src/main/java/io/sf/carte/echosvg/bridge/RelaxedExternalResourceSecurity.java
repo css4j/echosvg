@@ -21,7 +21,7 @@ package io.sf.carte.echosvg.bridge;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
- * This implementation of <code>ExternalResourceSecurity</code> allows any 
+ * This implementation of <code>ExternalResourceSecurity</code> allows any
  * external references.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
@@ -29,28 +29,24 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class RelaxedExternalResourceSecurity implements ExternalResourceSecurity {
-     /**
-     * Controls whether the externalResource should be loaded or not.
-     *
-     * @throws SecurityException if the externalResource should not be loaded.
-     */
-    @Override
-    public void checkLoadExternalResource(){
-    }
+	/**
+	 * Controls whether the externalResource should be loaded or not.
+	 *
+	 * @throws SecurityException if the externalResource should not be loaded.
+	 */
+	@Override
+	public void checkLoadExternalResource() {
+	}
 
-    /**
-     * @param externalResourceURL url for the externalResource, as defined in
-     *        the externalResource's xlink:href attribute. If that
-     *        attribute was empty, then this parameter should
-     *        be null
-     * @param docURL url for the document into which the 
-     *        externalResource was found.
-     */
-    public RelaxedExternalResourceSecurity(ParsedURL externalResourceURL,
-                                           ParsedURL docURL){
-        /* do nothing */
-    }
+	/**
+	 * @param externalResourceURL url for the externalResource, as defined in the
+	 *                            externalResource's xlink:href attribute. If that
+	 *                            attribute was empty, then this parameter should be
+	 *                            null
+	 * @param docURL              url for the document into which the
+	 *                            externalResource was found.
+	 */
+	public RelaxedExternalResourceSecurity(ParsedURL externalResourceURL, ParsedURL docURL) {
+		/* do nothing */
+	}
 }
-
-
-    

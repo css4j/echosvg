@@ -18,24 +18,23 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.rendered;
 
-import  java.awt.image.Raster;
-
+import java.awt.image.Raster;
 
 /**
- * This the generic interface for a TileStore.  This is used to
- * store and retrieve tiles from the cache.
+ * This the generic interface for a TileStore. This is used to store and
+ * retrieve tiles from the cache.
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TileStore {
 
-    void setTile(int x, int y, Raster ras);
+	void setTile(int x, int y, Raster ras);
 
-    Raster getTile(int x, int y);
+	Raster getTile(int x, int y);
 
-    // This is return the tile if it is available otherwise
-    // returns null.  It will not compute the tile if it is
-    // not present.
-    Raster getTileNoCompute(int x, int y);
+	// This is return the tile if it is available otherwise
+	// returns null. It will not compute the tile if it is
+	// not present.
+	Raster getTileNoCompute(int x, int y);
 }

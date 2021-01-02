@@ -30,9 +30,7 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFontFaceFormatElement
-    extends    SVGOMElement
-    implements SVGFontFaceFormatElement {
+public class SVGOMFontFaceFormatElement extends SVGOMElement implements SVGFontFaceFormatElement {
 
 //     /**
 //      * Table mapping XML attribute names to TraitInformation objects.
@@ -46,38 +44,39 @@ public class SVGOMFontFaceFormatElement
 //         xmlTraitInformation = t;
 //     }
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new SVGOMFontFaceFormatElement object.
-     */
-    protected SVGOMFontFaceFormatElement() {
-    }
+	/**
+	 * Creates a new SVGOMFontFaceFormatElement object.
+	 */
+	protected SVGOMFontFaceFormatElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFontFaceFormatElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFontFaceFormatElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new SVGOMFontFaceFormatElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFontFaceFormatElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FONT_FACE_FORMAT_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FONT_FACE_FORMAT_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFontFaceFormatElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFontFaceFormatElement();
+	}
 
 //     /**
 //      * Returns the table of TraitInformation objects for this element.

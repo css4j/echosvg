@@ -39,146 +39,139 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
  * @version $Id$
  */
 
-public abstract class AbstractDOMImplementation
-        implements DOMImplementation,
-                   Localizable,
-                   Serializable {
+public abstract class AbstractDOMImplementation implements DOMImplementation, Localizable, Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The error messages bundle class name.
-     */
-    protected static final String RESOURCES =
-        "io.sf.carte.echosvg.dom.resources.Messages";
+	/**
+	 * The error messages bundle class name.
+	 */
+	protected static final String RESOURCES = "io.sf.carte.echosvg.dom.resources.Messages";
 
-    /**
-     * The localizable support for the error messages.
-     */
-    protected LocalizableSupport localizableSupport =
-        new LocalizableSupport(RESOURCES, getClass().getClassLoader());
+	/**
+	 * The localizable support for the error messages.
+	 */
+	protected LocalizableSupport localizableSupport = new LocalizableSupport(RESOURCES, getClass().getClassLoader());
 
-    /**
-     * The supported features.
-     */
-    protected final HashMap<String, Object> features = new HashMap<>();
-    {
-        // registerFeature("BasicEvents",        "3.0");
-        registerFeature("Core",               new String[] { "2.0", "3.0" });
-        registerFeature("XML",                new String[] { "1.0", "2.0",
-                                                             "3.0" });
-        registerFeature("Events",             new String[] { "2.0", "3.0" });
-        registerFeature("UIEvents",           new String[] { "2.0", "3.0" });
-        registerFeature("MouseEvents",        new String[] { "2.0", "3.0" });
-        registerFeature("TextEvents",         "3.0");
-        registerFeature("KeyboardEvents",     "3.0");
-        registerFeature("MutationEvents",     new String[] { "2.0", "3.0" });
-        registerFeature("MutationNameEvents", "3.0");
-        registerFeature("Traversal",          "2.0");
-        registerFeature("XPath",              "3.0");
-    }
-    
-    /**
-     * Registers a DOM feature.
-     */
-    protected void registerFeature(String name, Object value) {
-        features.put(name.toLowerCase(), value);
-    }
+	/**
+	 * The supported features.
+	 */
+	protected final HashMap<String, Object> features = new HashMap<>();
+	{
+		// registerFeature("BasicEvents", "3.0");
+		registerFeature("Core", new String[] { "2.0", "3.0" });
+		registerFeature("XML", new String[] { "1.0", "2.0", "3.0" });
+		registerFeature("Events", new String[] { "2.0", "3.0" });
+		registerFeature("UIEvents", new String[] { "2.0", "3.0" });
+		registerFeature("MouseEvents", new String[] { "2.0", "3.0" });
+		registerFeature("TextEvents", "3.0");
+		registerFeature("KeyboardEvents", "3.0");
+		registerFeature("MutationEvents", new String[] { "2.0", "3.0" });
+		registerFeature("MutationNameEvents", "3.0");
+		registerFeature("Traversal", "2.0");
+		registerFeature("XPath", "3.0");
+	}
 
-    /**
-     * Creates a new AbstractDOMImplementation object.
-     */
-    protected AbstractDOMImplementation() {
-    }
+	/**
+	 * Registers a DOM feature.
+	 */
+	protected void registerFeature(String name, Object value) {
+		features.put(name.toLowerCase(), value);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * org.w3c.dom.DOMImplementation#hasFeature(String,String)}.
-     */
-    @Override
-    public boolean hasFeature(String feature, String version) {
-        if (feature == null || feature.length() == 0) {
-            return false;
-        }
-        if (feature.charAt(0) == '+') {
-            // All features are directly castable.
-            feature = feature.substring(1);
-        }
-        Object v = features.get(feature.toLowerCase());
-        if (v == null) {
-            return false;
-        }
-        if (version == null || version.length() == 0) {
-            return true;
-        }
-        if (v instanceof String) {
-            return version.equals(v);
-        } else {
-            String[] va = (String[])v;
-            for (String aVa : va) {
-                if (version.equals(aVa)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
+	/**
+	 * Creates a new AbstractDOMImplementation object.
+	 */
+	protected AbstractDOMImplementation() {
+	}
 
-    /**
-     * <b>DOM</b>: Implements
-     * {@link org.w3c.dom.DOMImplementation#getFeature(String,String)}.
-     * No compound document support, so just return this DOMImlpementation
-     * where appropriate.
-     */
-    @Override
-    public Object getFeature(String feature, String version) {
-        if (hasFeature(feature, version)) {
-            return this;
-        }
-        return null;
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.DOMImplementation#hasFeature(String,String)}.
+	 */
+	@Override
+	public boolean hasFeature(String feature, String version) {
+		if (feature == null || feature.length() == 0) {
+			return false;
+		}
+		if (feature.charAt(0) == '+') {
+			// All features are directly castable.
+			feature = feature.substring(1);
+		}
+		Object v = features.get(feature.toLowerCase());
+		if (v == null) {
+			return false;
+		}
+		if (version == null || version.length() == 0) {
+			return true;
+		}
+		if (v instanceof String) {
+			return version.equals(v);
+		} else {
+			String[] va = (String[]) v;
+			for (String aVa : va) {
+				if (version.equals(aVa)) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}
 
-    /**
-     * Creates an DocumentEventSupport object suitable for use with this implementation.
-     */
-    public DocumentEventSupport createDocumentEventSupport() {
-        return new DocumentEventSupport();
-    }
+	/**
+	 * <b>DOM</b>: Implements
+	 * {@link org.w3c.dom.DOMImplementation#getFeature(String,String)}. No compound
+	 * document support, so just return this DOMImlpementation where appropriate.
+	 */
+	@Override
+	public Object getFeature(String feature, String version) {
+		if (hasFeature(feature, version)) {
+			return this;
+		}
+		return null;
+	}
 
-    /**
-     * Creates an EventSupport object for a given node.
-     */
-    public EventSupport createEventSupport(AbstractNode n) {
-        return new EventSupport(n);
-    }
+	/**
+	 * Creates an DocumentEventSupport object suitable for use with this
+	 * implementation.
+	 */
+	public DocumentEventSupport createDocumentEventSupport() {
+		return new DocumentEventSupport();
+	}
 
-    // Localizable //////////////////////////////////////////////////////
+	/**
+	 * Creates an EventSupport object for a given node.
+	 */
+	public EventSupport createEventSupport(AbstractNode n) {
+		return new EventSupport(n);
+	}
 
-    /**
-     * Implements {@link Localizable#setLocale(Locale)}.
-     */
-    @Override
-    public void setLocale(Locale l) {
-        localizableSupport.setLocale(l);
-    }
+	// Localizable //////////////////////////////////////////////////////
 
-    /**
-     * Implements {@link Localizable#getLocale()}.
-     */
-    @Override
-    public Locale getLocale() {
-        return localizableSupport.getLocale();
-    }
+	/**
+	 * Implements {@link Localizable#setLocale(Locale)}.
+	 */
+	@Override
+	public void setLocale(Locale l) {
+		localizableSupport.setLocale(l);
+	}
 
-    protected void initLocalizable() {
-    }
+	/**
+	 * Implements {@link Localizable#getLocale()}.
+	 */
+	@Override
+	public Locale getLocale() {
+		return localizableSupport.getLocale();
+	}
 
-    /**
-     * Implements {@link Localizable#formatMessage(String,Object[])}.
-     */
-    @Override
-    public String formatMessage(String key, Object[] args)
-        throws MissingResourceException {
-        return localizableSupport.formatMessage(key, args);
-    }
+	protected void initLocalizable() {
+	}
+
+	/**
+	 * Implements {@link Localizable#formatMessage(String,Object[])}.
+	 */
+	@Override
+	public String formatMessage(String key, Object[] args) throws MissingResourceException {
+		return localizableSupport.formatMessage(key, args);
+	}
 }

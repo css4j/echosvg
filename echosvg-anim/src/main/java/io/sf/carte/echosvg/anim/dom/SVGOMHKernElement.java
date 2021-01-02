@@ -30,9 +30,7 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMHKernElement
-    extends    SVGOMElement
-    implements SVGHKernElement {
+public class SVGOMHKernElement extends SVGOMElement implements SVGHKernElement {
 
 //     /**
 //      * Table mapping XML attribute names to TraitInformation objects.
@@ -54,38 +52,39 @@ public class SVGOMHKernElement
 //         xmlTraitInformation = t;
 //     }
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new SVGOMHKernElement object.
-     */
-    protected SVGOMHKernElement() {
-    }
+	/**
+	 * Creates a new SVGOMHKernElement object.
+	 */
+	protected SVGOMHKernElement() {
+	}
 
-    /**
-     * Creates a new SVGOMHKernElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMHKernElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new SVGOMHKernElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMHKernElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_HKERN_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_HKERN_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMHKernElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMHKernElement();
+	}
 
 //     /**
 //      * Returns the table of TraitInformation objects for this element.

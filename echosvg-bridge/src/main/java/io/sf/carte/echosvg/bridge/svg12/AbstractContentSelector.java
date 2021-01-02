@@ -27,8 +27,8 @@ import org.w3c.dom.NodeList;
 import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
 
 /**
- * A base class for handlers of different XBL content element includes
- * attribute syntaxes.
+ * A base class for handlers of different XBL content element includes attribute
+ * syntaxes.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -36,137 +36,119 @@ import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
  */
 public abstract class AbstractContentSelector {
 
-    /**
-     * The ContentManager object that owns this selector.
-     */
-    protected ContentManager contentManager;
+	/**
+	 * The ContentManager object that owns this selector.
+	 */
+	protected ContentManager contentManager;
 
-    /**
-     * The XBL content element.
-     */
-    protected XBLOMContentElement contentElement;
+	/**
+	 * The XBL content element.
+	 */
+	protected XBLOMContentElement contentElement;
 
-    /**
-     * The bound element.
-     */
-    protected Element boundElement;
+	/**
+	 * The bound element.
+	 */
+	protected Element boundElement;
 
-    /**
-     * Creates a new AbstractContentSelector object.
-     */
-    public AbstractContentSelector(ContentManager cm,
-                                   XBLOMContentElement content,
-                                   Element bound) {
-        contentManager = cm;
-        contentElement = content;
-        boundElement = bound;
-    }
+	/**
+	 * Creates a new AbstractContentSelector object.
+	 */
+	public AbstractContentSelector(ContentManager cm, XBLOMContentElement content, Element bound) {
+		contentManager = cm;
+		contentElement = content;
+		boundElement = bound;
+	}
 
-    /**
-     * Returns a list of nodes that were matched by this selector.
-     */
-    public abstract NodeList getSelectedContent();
+	/**
+	 * Returns a list of nodes that were matched by this selector.
+	 */
+	public abstract NodeList getSelectedContent();
 
-    /**
-     * Forces this selector to update its selected nodes list.
-     * Returns true if the selected node list needed updating.
-     * This assumes that the previous content elements in this
-     * shadow tree (in document order) have up-to-date selectedContent
-     * lists.
-     */
-    abstract boolean update();
+	/**
+	 * Forces this selector to update its selected nodes list. Returns true if the
+	 * selected node list needed updating. This assumes that the previous content
+	 * elements in this shadow tree (in document order) have up-to-date
+	 * selectedContent lists.
+	 */
+	abstract boolean update();
 
-    /**
-     * Returns true if the given node has already been selected
-     * by a content element.
-     */
-    protected boolean isSelected(Node n) {
-        return contentManager.getContentElement(n) != null;
-    }
+	/**
+	 * Returns true if the given node has already been selected by a content
+	 * element.
+	 */
+	protected boolean isSelected(Node n) {
+		return contentManager.getContentElement(n) != null;
+	}
 
-    /**
-     * Map of selector languages to factories.
-     */
-    protected static HashMap<String, ContentSelectorFactory> selectorFactories = new HashMap<>();
-    static {
-        ContentSelectorFactory f1 = new XPathPatternContentSelectorFactory();
-        ContentSelectorFactory f2 = new XPathSubsetContentSelectorFactory();
-        selectorFactories.put(null, f1);
-        selectorFactories.put("XPathPattern", f1);
-        selectorFactories.put("XPathSubset", f2);
-    }
+	/**
+	 * Map of selector languages to factories.
+	 */
+	protected static HashMap<String, ContentSelectorFactory> selectorFactories = new HashMap<>();
+	static {
+		ContentSelectorFactory f1 = new XPathPatternContentSelectorFactory();
+		ContentSelectorFactory f2 = new XPathSubsetContentSelectorFactory();
+		selectorFactories.put(null, f1);
+		selectorFactories.put("XPathPattern", f1);
+		selectorFactories.put("XPathSubset", f2);
+	}
 
-    /**
-     * Creates a new selector object.
-     * @param content The content element using this selector.
-     * @param bound The bound element whose children will be selected.
-     * @param selector The selector string.
-     */
-    public static AbstractContentSelector createSelector
-            (String selectorLanguage,
-             ContentManager cm,
-             XBLOMContentElement content,
-             Element bound,
-             String selector) {
+	/**
+	 * Creates a new selector object.
+	 * 
+	 * @param content  The content element using this selector.
+	 * @param bound    The bound element whose children will be selected.
+	 * @param selector The selector string.
+	 */
+	public static AbstractContentSelector createSelector(String selectorLanguage, ContentManager cm,
+			XBLOMContentElement content, Element bound, String selector) {
 
-        ContentSelectorFactory f =
-            selectorFactories.get(selectorLanguage);
-        if (f == null) {
-            throw new RuntimeException
-                ("Invalid XBL content selector language '"
-                 + selectorLanguage
-                 + "'");
-        }
-        return f.createSelector(cm, content, bound, selector);
-    }
+		ContentSelectorFactory f = selectorFactories.get(selectorLanguage);
+		if (f == null) {
+			throw new RuntimeException("Invalid XBL content selector language '" + selectorLanguage + "'");
+		}
+		return f.createSelector(cm, content, bound, selector);
+	}
 
-    /**
-     * An interface for content selector factories.
-     */
-    protected interface ContentSelectorFactory {
+	/**
+	 * An interface for content selector factories.
+	 */
+	protected interface ContentSelectorFactory {
 
-        /**
-         * Creates a new selector object.
-         */
-        AbstractContentSelector createSelector(ContentManager cm,
-                                               XBLOMContentElement content,
-                                               Element bound,
-                                               String selector);
-    }
+		/**
+		 * Creates a new selector object.
+		 */
+		AbstractContentSelector createSelector(ContentManager cm, XBLOMContentElement content, Element bound,
+				String selector);
+	}
 
-    /**
-     * A factory for XPathSubsetContentSelector objects.
-     */
-    protected static class XPathSubsetContentSelectorFactory
-            implements ContentSelectorFactory {
+	/**
+	 * A factory for XPathSubsetContentSelector objects.
+	 */
+	protected static class XPathSubsetContentSelectorFactory implements ContentSelectorFactory {
 
-        /**
-         * Creates a new XPathSubsetContentSelector object.
-         */
-        @Override
-        public AbstractContentSelector createSelector(ContentManager cm,
-                                                      XBLOMContentElement content,
-                                                      Element bound,
-                                                      String selector) {
-            return new XPathSubsetContentSelector(cm, content, bound, selector);
-        }
-    }
+		/**
+		 * Creates a new XPathSubsetContentSelector object.
+		 */
+		@Override
+		public AbstractContentSelector createSelector(ContentManager cm, XBLOMContentElement content, Element bound,
+				String selector) {
+			return new XPathSubsetContentSelector(cm, content, bound, selector);
+		}
+	}
 
-    /**
-     * A factory for XPathPatternContentSelector objects.
-     */
-    protected static class XPathPatternContentSelectorFactory
-            implements ContentSelectorFactory {
+	/**
+	 * A factory for XPathPatternContentSelector objects.
+	 */
+	protected static class XPathPatternContentSelectorFactory implements ContentSelectorFactory {
 
-        /**
-         * Creates a new XPathPatternContentSelector object.
-         */
-        @Override
-        public AbstractContentSelector createSelector(ContentManager cm,
-                                                      XBLOMContentElement content,
-                                                      Element bound,
-                                                      String selector) {
-            return new XPathPatternContentSelector(cm, content, bound, selector);
-        }
-    }
+		/**
+		 * Creates a new XPathPatternContentSelector object.
+		 */
+		@Override
+		public AbstractContentSelector createSelector(ContentManager cm, XBLOMContentElement content, Element bound,
+				String selector) {
+			return new XPathPatternContentSelector(cm, content, bound, selector);
+		}
+	}
 }

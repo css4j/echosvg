@@ -30,55 +30,55 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author For later modifications, see Git history.
- * @version $Id$ 
+ * @version $Id$
  */
 public class MediaTest extends AbstractImageTranscoderTest {
 
-    /** The URI of the input image. */
-    protected String inputURI;
+	/** The URI of the input image. */
+	protected String inputURI;
 
-    /** The URI of the reference image. */
-    protected String refImageURI;
+	/** The URI of the reference image. */
+	protected String refImageURI;
 
-    /** The CSS media to use. */
-    protected String media;
+	/** The CSS media to use. */
+	protected String media;
 
-    /**
-     * Constructs a new <code>MediaTest</code>.
-     *
-     * @param inputURI the URI of the input image
-     * @param refImageURI the URI of the reference image
-     * @param media the CSS media
-     */
-    public MediaTest(String inputURI, String refImageURI, String media) {
-        this.inputURI = inputURI;
-        this.refImageURI = refImageURI;
-        this.media = media;
-    }
+	/**
+	 * Constructs a new <code>MediaTest</code>.
+	 *
+	 * @param inputURI    the URI of the input image
+	 * @param refImageURI the URI of the reference image
+	 * @param media       the CSS media
+	 */
+	public MediaTest(String inputURI, String refImageURI, String media) {
+		this.inputURI = inputURI;
+		this.refImageURI = refImageURI;
+		this.media = media;
+	}
 
-    /**
-     * Creates the <code>TranscoderInput</code>.
-     */
-    @Override
-    protected TranscoderInput createTranscoderInput() {
-        return new TranscoderInput(resolveURL(inputURI).toString());
-    }
-    
-    /**
-     * Creates a Map that contains additional transcoding hints.
-     */
-    @Override
-    protected Map<Key, Object> createTranscodingHints() {
-        Map<Key, Object> hints = new HashMap<>(3);
-        hints.put(SVGAbstractTranscoder.KEY_MEDIA, media);
-        return hints;
-    }
+	/**
+	 * Creates the <code>TranscoderInput</code>.
+	 */
+	@Override
+	protected TranscoderInput createTranscoderInput() {
+		return new TranscoderInput(resolveURL(inputURI).toString());
+	}
 
-    /**
-     * Returns the reference image for this test.
-     */
-    @Override
-    protected byte [] getReferenceImageData() {
-        return createBufferedImageData(resolveURL(refImageURI));
-    }
+	/**
+	 * Creates a Map that contains additional transcoding hints.
+	 */
+	@Override
+	protected Map<Key, Object> createTranscodingHints() {
+		Map<Key, Object> hints = new HashMap<>(3);
+		hints.put(SVGAbstractTranscoder.KEY_MEDIA, media);
+		return hints;
+	}
+
+	/**
+	 * Returns the reference image for this test.
+	 */
+	@Override
+	protected byte[] getReferenceImageData() {
+		return createBufferedImageData(resolveURL(refImageURI));
+	}
 }

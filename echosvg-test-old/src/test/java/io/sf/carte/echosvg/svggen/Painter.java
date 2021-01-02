@@ -21,14 +21,13 @@ package io.sf.carte.echosvg.svggen;
 import java.awt.Graphics2D;
 
 /**
- * Interface expected from object that can perform an arbitrary
- * rendering sequence. This is used to generate SVG content and
- * compare it to a reference.
+ * Interface expected from object that can perform an arbitrary rendering
+ * sequence. This is used to generate SVG content and compare it to a reference.
  *
  * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Painter {
-    void paint(Graphics2D g);
+	void paint(Graphics2D g);
 }

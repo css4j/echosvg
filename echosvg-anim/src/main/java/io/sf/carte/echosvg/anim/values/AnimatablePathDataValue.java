@@ -31,174 +31,163 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatablePathDataValue extends AnimatableValue {
 
-    /**
-     * The path commands.  These must be one of the PATHSEG_*
-     * constants defined in {@link org.w3c.dom.svg.SVGPathSeg}.
-     */
-    protected short[] commands;
+	/**
+	 * The path commands. These must be one of the PATHSEG_* constants defined in
+	 * {@link org.w3c.dom.svg.SVGPathSeg}.
+	 */
+	protected short[] commands;
 
-    /**
-     * The path parameters.  Also includes the booleans.
-     */
-    protected float[] parameters;
+	/**
+	 * The path parameters. Also includes the booleans.
+	 */
+	protected float[] parameters;
 
-    /**
-     * Creates a new, uninitialized AnimatablePathDataValue.
-     */
-    protected AnimatablePathDataValue(AnimationTarget target) {
-        super(target);
-    }
+	/**
+	 * Creates a new, uninitialized AnimatablePathDataValue.
+	 */
+	protected AnimatablePathDataValue(AnimationTarget target) {
+		super(target);
+	}
 
-    /**
-     * Creates a new AnimatablePathDataValue.
-     */
-    public AnimatablePathDataValue(AnimationTarget target, short[] commands,
-                                   float[] parameters) {
-        super(target);
-        this.commands = commands;
-        this.parameters = parameters;
-    }
-    
-    /**
-     * Performs interpolation to the given value.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to, float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatablePathDataValue toValue = (AnimatablePathDataValue) to;
-        AnimatablePathDataValue accValue =
-            (AnimatablePathDataValue) accumulation;
+	/**
+	 * Creates a new AnimatablePathDataValue.
+	 */
+	public AnimatablePathDataValue(AnimationTarget target, short[] commands, float[] parameters) {
+		super(target);
+		this.commands = commands;
+		this.parameters = parameters;
+	}
 
-        boolean hasTo = to != null;
-        boolean hasAcc = accumulation != null;
-        boolean canInterpolate = hasTo
-            && toValue.parameters.length == parameters.length
-            && Arrays.equals(toValue.commands, commands);
-        boolean canAccumulate = hasAcc
-            && accValue.parameters.length == parameters.length
-            && Arrays.equals(accValue.commands, commands);
+	/**
+	 * Performs interpolation to the given value.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatablePathDataValue toValue = (AnimatablePathDataValue) to;
+		AnimatablePathDataValue accValue = (AnimatablePathDataValue) accumulation;
 
-        AnimatablePathDataValue base;
-        if (!canInterpolate && hasTo && interpolation >= 0.5) {
-            base = toValue;
-        } else {
-            base = this;
-        }
-        int cmdCount = base.commands.length;
-        int paramCount = base.parameters.length;
+		boolean hasTo = to != null;
+		boolean hasAcc = accumulation != null;
+		boolean canInterpolate = hasTo && toValue.parameters.length == parameters.length
+				&& Arrays.equals(toValue.commands, commands);
+		boolean canAccumulate = hasAcc && accValue.parameters.length == parameters.length
+				&& Arrays.equals(accValue.commands, commands);
 
-        AnimatablePathDataValue res;
-        if (result == null) {
-            res = new AnimatablePathDataValue(target);
-            res.commands = new short[cmdCount];
-            res.parameters = new float[paramCount];
-            System.arraycopy(base.commands, 0, res.commands, 0, cmdCount);
-        } else {
-            res = (AnimatablePathDataValue) result;
-            if (res.commands == null || res.commands.length != cmdCount) {
-                res.commands = new short[cmdCount];
-                System.arraycopy(base.commands, 0, res.commands, 0, cmdCount);
-                res.hasChanged = true;
-            } else {
-                if (!Arrays.equals(base.commands, res.commands)) {
-                    System.arraycopy(base.commands, 0, res.commands, 0,
-                                     cmdCount);
-                    res.hasChanged = true;
-                }
-            }
-        }
+		AnimatablePathDataValue base;
+		if (!canInterpolate && hasTo && interpolation >= 0.5) {
+			base = toValue;
+		} else {
+			base = this;
+		}
+		int cmdCount = base.commands.length;
+		int paramCount = base.parameters.length;
 
-        for (int i = 0; i < paramCount; i++) {
-            float newValue = base.parameters[i];
-            if (canInterpolate) {
-                newValue += interpolation * (toValue.parameters[i] - newValue);
-            }
-            if (canAccumulate) {
-                newValue += multiplier * accValue.parameters[i];
-            }
-            if (res.parameters[i] != newValue) {
-                res.parameters[i] = newValue;
-                res.hasChanged = true;
-            }
-        }
+		AnimatablePathDataValue res;
+		if (result == null) {
+			res = new AnimatablePathDataValue(target);
+			res.commands = new short[cmdCount];
+			res.parameters = new float[paramCount];
+			System.arraycopy(base.commands, 0, res.commands, 0, cmdCount);
+		} else {
+			res = (AnimatablePathDataValue) result;
+			if (res.commands == null || res.commands.length != cmdCount) {
+				res.commands = new short[cmdCount];
+				System.arraycopy(base.commands, 0, res.commands, 0, cmdCount);
+				res.hasChanged = true;
+			} else {
+				if (!Arrays.equals(base.commands, res.commands)) {
+					System.arraycopy(base.commands, 0, res.commands, 0, cmdCount);
+					res.hasChanged = true;
+				}
+			}
+		}
 
-        return res;
-    }
+		for (int i = 0; i < paramCount; i++) {
+			float newValue = base.parameters[i];
+			if (canInterpolate) {
+				newValue += interpolation * (toValue.parameters[i] - newValue);
+			}
+			if (canAccumulate) {
+				newValue += multiplier * accValue.parameters[i];
+			}
+			if (res.parameters[i] != newValue) {
+				res.parameters[i] = newValue;
+				res.hasChanged = true;
+			}
+		}
 
-    /**
-     * Returns the array of path data commands.
-     */
-    public short[] getCommands() {
-        return commands;
-    }
+		return res;
+	}
 
-    /**
-     * Returns the array of path data parameters.
-     */
-    public float[] getParameters() {
-        return parameters;
-    }
+	/**
+	 * Returns the array of path data commands.
+	 */
+	public short[] getCommands() {
+		return commands;
+	}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return false;
-    }
+	/**
+	 * Returns the array of path data parameters.
+	 */
+	public float[] getParameters() {
+		return parameters;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        return 0f;
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return false;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        short[] cmds = new short[commands.length];
-        System.arraycopy(commands, 0, cmds, 0, commands.length);
-        float[] params = new float[parameters.length];
-        return new AnimatablePathDataValue(target, cmds, params);
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		return 0f;
+	}
 
-    /**
-     * The path data commands.
-     */
-    protected static final char[] PATH_COMMANDS = {
-        ' ', 'z', 'M', 'm', 'L', 'l', 'C', 'c', 'Q', 'q', 'A', 'a', 'H', 'h',
-        'V', 'v', 'S', 's', 'T', 't'
-    };
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		short[] cmds = new short[commands.length];
+		System.arraycopy(commands, 0, cmds, 0, commands.length);
+		float[] params = new float[parameters.length];
+		return new AnimatablePathDataValue(target, cmds, params);
+	}
 
-    /**
-     * The number of parameters for each path command.
-     */
-    protected static final int[] PATH_PARAMS = {
-        0, 0, 2, 2, 2, 2, 6, 6, 4, 4, 7, 7, 1, 1, 1, 1, 4, 4, 2, 2
-    };
+	/**
+	 * The path data commands.
+	 */
+	protected static final char[] PATH_COMMANDS = { ' ', 'z', 'M', 'm', 'L', 'l', 'C', 'c', 'Q', 'q', 'A', 'a', 'H',
+			'h', 'V', 'v', 'S', 's', 'T', 't' };
 
-    /**
-     * Returns a string representation of this object.
-     */
-    @Override
-    public String toStringRep() {
-        StringBuffer sb = new StringBuffer();
-        int k = 0;
-        for (short command : commands) {
-            sb.append(PATH_COMMANDS[command]);
-            for (int j = 0; j < PATH_PARAMS[command]; j++) {
-                sb.append(' ');
-                sb.append(parameters[k++]);
-            }
-        }
-        return sb.toString();
-    }
+	/**
+	 * The number of parameters for each path command.
+	 */
+	protected static final int[] PATH_PARAMS = { 0, 0, 2, 2, 2, 2, 6, 6, 4, 4, 7, 7, 1, 1, 1, 1, 4, 4, 2, 2 };
+
+	/**
+	 * Returns a string representation of this object.
+	 */
+	@Override
+	public String toStringRep() {
+		StringBuffer sb = new StringBuffer();
+		int k = 0;
+		for (short command : commands) {
+			sb.append(PATH_COMMANDS[command]);
+			for (int j = 0; j < PATH_PARAMS[command]; j++) {
+				sb.append(' ');
+				sb.append(parameters[k++]);
+			}
+		}
+		return sb.toString();
+	}
 }

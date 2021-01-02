@@ -23,48 +23,46 @@ import java.awt.Image;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 
 /**
- * This interface is to be used to provide alternate ways of
- * generating a placeholder image when the ImageTagRegistry
- * fails to handle a given reference.
+ * This interface is to be used to provide alternate ways of generating a
+ * placeholder image when the ImageTagRegistry fails to handle a given
+ * reference.
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class BrokenLinkProvider {
 
-    /**
-     * The image returned by getBrokenLinkImage should always
-     * return some value when queried for the BROKEN_LINK_PROPERTY.
-     * This allows code the determine if the image is the 'real'
-     * image or the broken link image, which may be important for
-     * the application of profiles etc.
-     */
-    public static final String BROKEN_LINK_PROPERTY =
-        "io.sf.carte.echosvg.BrokenLinkImage";
+	/**
+	 * The image returned by getBrokenLinkImage should always return some value when
+	 * queried for the BROKEN_LINK_PROPERTY. This allows code the determine if the
+	 * image is the 'real' image or the broken link image, which may be important
+	 * for the application of profiles etc.
+	 */
+	public static final String BROKEN_LINK_PROPERTY = "io.sf.carte.echosvg.BrokenLinkImage";
 
-    /**
-     * This method is responsbile for constructing an image that will
-     * represent the missing image in the document.  This method
-     * recives information about the reason a broken link image is
-     * being requested in the <code>code</code> and <code>params</code>
-     * parameters. These parameters may be used to generate nicely
-     * localized messages for insertion into the broken link image, or
-     * for selecting the broken link image returned.
-     *
-     * @param base The object to use for Message decoding.
-     * @param code This is the reason the image is unavailable should
-     *             be taken from ErrorConstants.
-     * @param params This is more detailed information about
-     *        the circumstances of the failure.
-     */
-    public abstract Filter getBrokenLinkImage(Object base,
-                                              String code, Object[] params);
+	/**
+	 * This method is responsbile for constructing an image that will represent the
+	 * missing image in the document. This method recives information about the
+	 * reason a broken link image is being requested in the <code>code</code> and
+	 * <code>params</code> parameters. These parameters may be used to generate
+	 * nicely localized messages for insertion into the broken link image, or for
+	 * selecting the broken link image returned.
+	 *
+	 * @param base   The object to use for Message decoding.
+	 * @param code   This is the reason the image is unavailable should be taken
+	 *               from ErrorConstants.
+	 * @param params This is more detailed information about the circumstances of
+	 *               the failure.
+	 */
+	public abstract Filter getBrokenLinkImage(Object base, String code, Object[] params);
 
-    public static boolean hasBrokenLinkProperty(Filter f) {
-        Object o = f.getProperty(BROKEN_LINK_PROPERTY);
-        if (o == null) return false;
-        if (o == Image.UndefinedProperty) return false;
-        return true;
-    }
+	public static boolean hasBrokenLinkProperty(Filter f) {
+		Object o = f.getProperty(BROKEN_LINK_PROPERTY);
+		if (o == null)
+			return false;
+		if (o == Image.UndefinedProperty)
+			return false;
+		return true;
+	}
 
 }

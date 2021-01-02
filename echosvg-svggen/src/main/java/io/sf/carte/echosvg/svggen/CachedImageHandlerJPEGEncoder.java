@@ -34,46 +34,41 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
  * @version $Id$
  */
 public class CachedImageHandlerJPEGEncoder extends DefaultCachedImageHandler {
-    public static final String CACHED_JPEG_PREFIX = "jpegImage";
-    public static final String CACHED_JPEG_SUFFIX = ".jpg";
+	public static final String CACHED_JPEG_PREFIX = "jpegImage";
+	public static final String CACHED_JPEG_SUFFIX = ".jpg";
 
-    protected String refPrefix = "";
-     
-    /**
-     * @param imageDir directory where this handler should generate images.
-     *        If null, an IllegalArgumentException is thrown.
-     * @param urlRoot root for the urls that point to images created by this
-     *        image handler. If null, then the url corresponding to imageDir
-     *        is used.
-     */
-    public CachedImageHandlerJPEGEncoder(String imageDir, String urlRoot)
-        throws SVGGraphics2DIOException {
-        refPrefix = urlRoot + "/";
-        setImageCacher(new ImageCacher.External(imageDir,
-                                                CACHED_JPEG_PREFIX,
-                                                CACHED_JPEG_SUFFIX));
-    }
-   
-    /**
-     * Uses JPEG encoding.
-     */
-    @Override
-    public void encodeImage(BufferedImage buf, OutputStream os)
-            throws IOException {
-        ImageWriter writer = ImageWriterRegistry.getInstance()
-                .getWriterFor("image/jpeg");
-        ImageWriterParams params = new ImageWriterParams();
-        params.setJPEGQuality(1, false);
-        writer.writeImage(buf, os, params);
-    }
+	protected String refPrefix = "";
 
-    @Override
-    public int getBufferedImageType(){
-        return BufferedImage.TYPE_INT_RGB;
-    }
+	/**
+	 * @param imageDir directory where this handler should generate images. If null,
+	 *                 an IllegalArgumentException is thrown.
+	 * @param urlRoot  root for the urls that point to images created by this image
+	 *                 handler. If null, then the url corresponding to imageDir is
+	 *                 used.
+	 */
+	public CachedImageHandlerJPEGEncoder(String imageDir, String urlRoot) throws SVGGraphics2DIOException {
+		refPrefix = urlRoot + "/";
+		setImageCacher(new ImageCacher.External(imageDir, CACHED_JPEG_PREFIX, CACHED_JPEG_SUFFIX));
+	}
 
-    @Override
-    public String getRefPrefix(){
-        return refPrefix;
-    }
+	/**
+	 * Uses JPEG encoding.
+	 */
+	@Override
+	public void encodeImage(BufferedImage buf, OutputStream os) throws IOException {
+		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/jpeg");
+		ImageWriterParams params = new ImageWriterParams();
+		params.setJPEGQuality(1, false);
+		writer.writeImage(buf, os, params);
+	}
+
+	@Override
+	public int getBufferedImageType() {
+		return BufferedImage.TYPE_INT_RGB;
+	}
+
+	@Override
+	public String getRefPrefix() {
+		return refPrefix;
+	}
 }

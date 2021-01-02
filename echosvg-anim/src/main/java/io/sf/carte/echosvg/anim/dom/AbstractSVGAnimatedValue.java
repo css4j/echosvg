@@ -30,107 +30,106 @@ import io.sf.carte.echosvg.anim.values.AnimatableValue;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractSVGAnimatedValue
-    implements AnimatedLiveAttributeValue {
+public abstract class AbstractSVGAnimatedValue implements AnimatedLiveAttributeValue {
 
-    /**
-     * The associated element.
-     */
-    protected AbstractElement element;
+	/**
+	 * The associated element.
+	 */
+	protected AbstractElement element;
 
-    /**
-     * The namespace URI of the attribute.
-     */
-    protected String namespaceURI;
+	/**
+	 * The namespace URI of the attribute.
+	 */
+	protected String namespaceURI;
 
-    /**
-     * The local name of the attribute.
-     */
-    protected String localName;
+	/**
+	 * The local name of the attribute.
+	 */
+	protected String localName;
 
-    /**
-     * Whether there is a current animated value.
-     */
-    protected boolean hasAnimVal;
+	/**
+	 * Whether there is a current animated value.
+	 */
+	protected boolean hasAnimVal;
 
-    /**
-     * Listener list.
-     */
-    protected LinkedList<AnimatedAttributeListener> listeners = new LinkedList<>();
+	/**
+	 * Listener list.
+	 */
+	protected LinkedList<AnimatedAttributeListener> listeners = new LinkedList<>();
 
-    /**
-     * Creates a new AbstractSVGAnimatedValue.
-     */
-    public AbstractSVGAnimatedValue(AbstractElement elt, String ns, String ln) {
-        element = elt;
-        namespaceURI = ns;
-        localName = ln;
-    }
+	/**
+	 * Creates a new AbstractSVGAnimatedValue.
+	 */
+	public AbstractSVGAnimatedValue(AbstractElement elt, String ns, String ln) {
+		element = elt;
+		namespaceURI = ns;
+		localName = ln;
+	}
 
-    /**
-     * Returns the namespace URI of the attribute.
-     */
-    @Override
-    public String getNamespaceURI() {
-        return namespaceURI;
-    }
+	/**
+	 * Returns the namespace URI of the attribute.
+	 */
+	@Override
+	public String getNamespaceURI() {
+		return namespaceURI;
+	}
 
-    /**
-     * Returns the local name of the attribute.
-     */
-    @Override
-    public String getLocalName() {
-        return localName;
-    }
+	/**
+	 * Returns the local name of the attribute.
+	 */
+	@Override
+	public String getLocalName() {
+		return localName;
+	}
 
-    /**
-     * Returns whether this animated value has a specified value.
-     * @return true if the DOM attribute is specified or if the attribute has
-     *         an animated value, false otherwise
-     */
-    public boolean isSpecified() {
-        return hasAnimVal || element.hasAttributeNS(namespaceURI, localName);
-    }
+	/**
+	 * Returns whether this animated value has a specified value.
+	 * 
+	 * @return true if the DOM attribute is specified or if the attribute has an
+	 *         animated value, false otherwise
+	 */
+	public boolean isSpecified() {
+		return hasAnimVal || element.hasAttributeNS(namespaceURI, localName);
+	}
 
-    /**
-     * Updates the animated value with the given {@link AnimatableValue}.
-     */
-    protected abstract void updateAnimatedValue(AnimatableValue val);
+	/**
+	 * Updates the animated value with the given {@link AnimatableValue}.
+	 */
+	protected abstract void updateAnimatedValue(AnimatableValue val);
 
-    /**
-     * Adds a listener for changes to the animated value.
-     */
-    @Override
-    public void addAnimatedAttributeListener(AnimatedAttributeListener aal) {
-        if (!listeners.contains(aal)) {
-            listeners.add(aal);
-        }
-    }
+	/**
+	 * Adds a listener for changes to the animated value.
+	 */
+	@Override
+	public void addAnimatedAttributeListener(AnimatedAttributeListener aal) {
+		if (!listeners.contains(aal)) {
+			listeners.add(aal);
+		}
+	}
 
-    /**
-     * Removes a listener for changes to the animated value.
-     */
-    @Override
-    public void removeAnimatedAttributeListener(AnimatedAttributeListener aal) {
-        listeners.remove(aal);
-    }
+	/**
+	 * Removes a listener for changes to the animated value.
+	 */
+	@Override
+	public void removeAnimatedAttributeListener(AnimatedAttributeListener aal) {
+		listeners.remove(aal);
+	}
 
-    /**
-     * Fires the listeners for the base value.
-     */
-    protected void fireBaseAttributeListeners() {
-        if (element instanceof SVGOMElement) {
-            ((SVGOMElement) element).fireBaseAttributeListeners(namespaceURI,
-                                                                localName);
-        }
-    }
+	/**
+	 * Fires the listeners for the base value.
+	 */
+	protected void fireBaseAttributeListeners() {
+		if (element instanceof SVGOMElement) {
+			((SVGOMElement) element).fireBaseAttributeListeners(namespaceURI, localName);
+		}
+	}
 
-    /**
-     * Fires the listeners for the animated value.
-     */
-    protected void fireAnimatedAttributeListeners() {
-        for (AnimatedAttributeListener listener : listeners) {
-            listener.animatedAttributeChanged(element, this);
-        }
-    }
+	/**
+	 * Fires the listeners for the animated value.
+	 */
+	protected void fireAnimatedAttributeListeners() {
+		for (AnimatedAttributeListener listener : listeners) {
+			listener.animatedAttributeChanged(element, this);
+		}
+	}
 }

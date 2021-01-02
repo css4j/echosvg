@@ -22,24 +22,21 @@ import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 
 /**
- * Checks for regressions in rendering of a document with a given
- * media.
+ * Checks for regressions in rendering of a document with a given media.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGMediaRenderingAccuracyTest 
-    extends ParametrizedRenderingAccuracyTest {
-    /**
-     * Returns the <code>ImageTranscoder</code> the Test should
-     * use
-     */
-    @Override
-    public ImageTranscoder getTestImageTranscoder(){
-        ImageTranscoder t = super.getTestImageTranscoder();
-        t.addTranscodingHint(SVGAbstractTranscoder.KEY_MEDIA, parameter);
-        return t;
-    }
+public class SVGMediaRenderingAccuracyTest extends ParametrizedRenderingAccuracyTest {
+	/**
+	 * Returns the <code>ImageTranscoder</code> the Test should use
+	 */
+	@Override
+	public ImageTranscoder getTestImageTranscoder() {
+		ImageTranscoder t = super.getTestImageTranscoder();
+		t.addTranscodingHint(SVGAbstractTranscoder.KEY_MEDIA, parameter);
+		return t;
+	}
 
 }

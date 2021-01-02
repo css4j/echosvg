@@ -26,61 +26,60 @@ import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
- * Test the ImageTranscoder with the KEY_PIXEL_UNIT_TO_MILLIMETER
- * transcoding hint.
+ * Test the ImageTranscoder with the KEY_PIXEL_UNIT_TO_MILLIMETER transcoding
+ * hint.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author For later modifications, see Git history.
- * @version $Id$ */
+ * @version $Id$
+ */
 public class PixelToMMTest extends AbstractImageTranscoderTest {
 
-    /** The URI of the input image. */
-    protected String inputURI;
+	/** The URI of the input image. */
+	protected String inputURI;
 
-    /** The URI of the reference image. */
-    protected String refImageURI;
+	/** The URI of the reference image. */
+	protected String refImageURI;
 
-    /** The pixel to mm factor. */
-    protected Float px2mm;
+	/** The pixel to mm factor. */
+	protected Float px2mm;
 
-    /**
-     * Constructs a new <code>PixelToMMTest</code>.
-     *
-     * @param inputURI the URI of the input image
-     * @param refImageURI the URI of the reference image
-     * @param px2mm the pixel to mm conversion factor
-     */
-    public PixelToMMTest(String inputURI, 
-                         String refImageURI, 
-                         Float px2mm) {
-        this.inputURI = inputURI;
-        this.refImageURI = refImageURI;
-        this.px2mm = px2mm;
-    }
+	/**
+	 * Constructs a new <code>PixelToMMTest</code>.
+	 *
+	 * @param inputURI    the URI of the input image
+	 * @param refImageURI the URI of the reference image
+	 * @param px2mm       the pixel to mm conversion factor
+	 */
+	public PixelToMMTest(String inputURI, String refImageURI, Float px2mm) {
+		this.inputURI = inputURI;
+		this.refImageURI = refImageURI;
+		this.px2mm = px2mm;
+	}
 
-    /**
-     * Creates the <code>TranscoderInput</code>.
-     */
-    @Override
-    protected TranscoderInput createTranscoderInput() {
-        return new TranscoderInput(resolveURL(inputURI).toString());
-    }
-    
-    /**
-     * Creates a Map that contains additional transcoding hints.
-     */
-    @Override
-    protected Map<Key, Object> createTranscodingHints() {
-        Map<Key, Object> hints = new HashMap<>(3);
-        hints.put(SVGAbstractTranscoder.KEY_PIXEL_UNIT_TO_MILLIMETER, px2mm);
-        return hints;
-    }
+	/**
+	 * Creates the <code>TranscoderInput</code>.
+	 */
+	@Override
+	protected TranscoderInput createTranscoderInput() {
+		return new TranscoderInput(resolveURL(inputURI).toString());
+	}
 
-    /**
-     * Returns the reference image for this test.
-     */
-    @Override
-    protected byte [] getReferenceImageData() {
-        return createBufferedImageData(resolveURL(refImageURI));
-    }
+	/**
+	 * Creates a Map that contains additional transcoding hints.
+	 */
+	@Override
+	protected Map<Key, Object> createTranscodingHints() {
+		Map<Key, Object> hints = new HashMap<>(3);
+		hints.put(SVGAbstractTranscoder.KEY_PIXEL_UNIT_TO_MILLIMETER, px2mm);
+		return hints;
+	}
+
+	/**
+	 * Returns the reference image for this test.
+	 */
+	@Override
+	protected byte[] getReferenceImageData() {
+		return createBufferedImageData(resolveURL(refImageURI));
+	}
 }

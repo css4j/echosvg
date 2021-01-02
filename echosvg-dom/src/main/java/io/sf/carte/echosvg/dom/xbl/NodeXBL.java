@@ -22,86 +22,86 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Interface implemented by all nodes that support XBL.
- * Eventually will move to org.w3c.dom.xbl (or some such package).
+ * Interface implemented by all nodes that support XBL. Eventually will move to
+ * org.w3c.dom.xbl (or some such package).
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface NodeXBL {
 
-    /**
-     * Get the parent of this node in the fully flattened tree.
-     */
-    Node getXblParentNode();
+	/**
+	 * Get the parent of this node in the fully flattened tree.
+	 */
+	Node getXblParentNode();
 
-    /**
-     * Get the list of child nodes of this node in the fully flattened tree.
-     */
-    NodeList getXblChildNodes();
+	/**
+	 * Get the list of child nodes of this node in the fully flattened tree.
+	 */
+	NodeList getXblChildNodes();
 
-    /**
-     * Get the list of child nodes of this node in the fully flattened tree
-     * that are within the same shadow scope.
-     */
-    NodeList getXblScopedChildNodes();
+	/**
+	 * Get the list of child nodes of this node in the fully flattened tree that are
+	 * within the same shadow scope.
+	 */
+	NodeList getXblScopedChildNodes();
 
-    /**
-     * Get the first child node of this node in the fully flattened tree.
-     */
-    Node getXblFirstChild();
+	/**
+	 * Get the first child node of this node in the fully flattened tree.
+	 */
+	Node getXblFirstChild();
 
-    /**
-     * Get the last child node of this node in the fully flattened tree.
-     */
-    Node getXblLastChild();
+	/**
+	 * Get the last child node of this node in the fully flattened tree.
+	 */
+	Node getXblLastChild();
 
-    /**
-     * Get the node which directly precedes the current node in the
-     * xblParentNode's xblChildNodes list.
-     */
-    Node getXblPreviousSibling();
+	/**
+	 * Get the node which directly precedes the current node in the xblParentNode's
+	 * xblChildNodes list.
+	 */
+	Node getXblPreviousSibling();
 
-    /**
-     * Get the node which directly follows the current node in the
-     * xblParentNode's xblChildNodes list.
-     */
-    Node getXblNextSibling();
+	/**
+	 * Get the node which directly follows the current node in the xblParentNode's
+	 * xblChildNodes list.
+	 */
+	Node getXblNextSibling();
 
-    /**
-     * Get the first element child of this node in the fully flattened tree.
-     */
-    Element getXblFirstElementChild();
+	/**
+	 * Get the first element child of this node in the fully flattened tree.
+	 */
+	Element getXblFirstElementChild();
 
-    /**
-     * Get the last element child of this node in the fully flattened tree.
-     */
-    Element getXblLastElementChild();
+	/**
+	 * Get the last element child of this node in the fully flattened tree.
+	 */
+	Element getXblLastElementChild();
 
-    /**
-     * Get the first element that precedes the current node in the
-     * xblParentNode's xblChildNodes list.
-     */
-    Element getXblPreviousElementSibling();
+	/**
+	 * Get the first element that precedes the current node in the xblParentNode's
+	 * xblChildNodes list.
+	 */
+	Element getXblPreviousElementSibling();
 
-    /**
-     * Get the first element that follows the current node in the
-     * xblParentNode's xblChildNodes list.
-     */
-    Element getXblNextElementSibling();
+	/**
+	 * Get the first element that follows the current node in the xblParentNode's
+	 * xblChildNodes list.
+	 */
+	Element getXblNextElementSibling();
 
-    /**
-     * Get the bound element whose shadow tree this current node resides in.
-     */
-    Element getXblBoundElement();
+	/**
+	 * Get the bound element whose shadow tree this current node resides in.
+	 */
+	Element getXblBoundElement();
 
-    /**
-     * Get the shadow tree of this node.
-     */
-    Element getXblShadowTree();
+	/**
+	 * Get the shadow tree of this node.
+	 */
+	Element getXblShadowTree();
 
-    /**
-     * Get the xbl:definition elements currently binding this element.
-     */
-    NodeList getXblDefinitions();
+	/**
+	 * Get the xbl:definition elements currently binding this element.
+	 */
+	NodeList getXblDefinitions();
 }

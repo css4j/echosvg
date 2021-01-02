@@ -31,93 +31,90 @@ import io.sf.carte.echosvg.css.engine.value.Value;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class CSSOMStoredStyleDeclaration
-    extends CSSOMSVGStyleDeclaration
-    implements CSSOMStyleDeclaration.ValueProvider,
-               CSSOMStyleDeclaration.ModificationHandler,
-               StyleDeclarationProvider {
+public abstract class CSSOMStoredStyleDeclaration extends CSSOMSVGStyleDeclaration implements
+		CSSOMStyleDeclaration.ValueProvider, CSSOMStyleDeclaration.ModificationHandler, StyleDeclarationProvider {
 
-    /**
-     * The object storing the properties.
-     */
-    protected StyleDeclaration declaration;
+	/**
+	 * The object storing the properties.
+	 */
+	protected StyleDeclaration declaration;
 
-    /**
-     * Creates a new CSSOMStoredStyleDeclaration.
-     */
-    public CSSOMStoredStyleDeclaration(CSSEngine eng) {
-        super(null, null, eng);
-        valueProvider = this;
-        setModificationHandler(this);
-    }
+	/**
+	 * Creates a new CSSOMStoredStyleDeclaration.
+	 */
+	public CSSOMStoredStyleDeclaration(CSSEngine eng) {
+		super(null, null, eng);
+		valueProvider = this;
+		setModificationHandler(this);
+	}
 
-    /**
-     * Returns the object storing the properties of this style declaration.
-     */
-    @Override
-    public StyleDeclaration getStyleDeclaration() {
-        return declaration;
-    }
+	/**
+	 * Returns the object storing the properties of this style declaration.
+	 */
+	@Override
+	public StyleDeclaration getStyleDeclaration() {
+		return declaration;
+	}
 
-    /**
-     * Sets the object storing the properties of this style declaration.
-     */
-    @Override
-    public void setStyleDeclaration(StyleDeclaration sd) {
-        declaration = sd;
-    }
+	/**
+	 * Sets the object storing the properties of this style declaration.
+	 */
+	@Override
+	public void setStyleDeclaration(StyleDeclaration sd) {
+		declaration = sd;
+	}
 
-    // ValueProvider /////////////////////////////////////////////////////////
+	// ValueProvider /////////////////////////////////////////////////////////
 
-    /**
-     * Returns the current value associated with this object.
-     */
-    @Override
-    public Value getValue(String name) {
-        int idx = cssEngine.getPropertyIndex(name);
-        for (int i = 0; i < declaration.size(); i++) {
-            if (idx == declaration.getIndex(i)) {
-                return declaration.getValue(i);
-            }
-        }
-        return null;
-    }
+	/**
+	 * Returns the current value associated with this object.
+	 */
+	@Override
+	public Value getValue(String name) {
+		int idx = cssEngine.getPropertyIndex(name);
+		for (int i = 0; i < declaration.size(); i++) {
+			if (idx == declaration.getIndex(i)) {
+				return declaration.getValue(i);
+			}
+		}
+		return null;
+	}
 
-    /**
-     * Tells whether the given property is important.
-     */
-    @Override
-    public boolean isImportant(String name) {
-        int idx = cssEngine.getPropertyIndex(name);
-        for (int i = 0; i < declaration.size(); i++) {
-            if (idx == declaration.getIndex(i)) {
-                return declaration.getPriority(i);
-            }
-        }
-        return false;
-    }
+	/**
+	 * Tells whether the given property is important.
+	 */
+	@Override
+	public boolean isImportant(String name) {
+		int idx = cssEngine.getPropertyIndex(name);
+		for (int i = 0; i < declaration.size(); i++) {
+			if (idx == declaration.getIndex(i)) {
+				return declaration.getPriority(i);
+			}
+		}
+		return false;
+	}
 
-    /**
-     * Returns the text of the declaration.
-     */
-    @Override
-    public String getText() {
-        return declaration.toString(cssEngine);
-    }
+	/**
+	 * Returns the text of the declaration.
+	 */
+	@Override
+	public String getText() {
+		return declaration.toString(cssEngine);
+	}
 
-    /**
-     * Returns the length of the declaration.
-     */
-    @Override
-    public int getLength() {
-        return declaration.size();
-    }
+	/**
+	 * Returns the length of the declaration.
+	 */
+	@Override
+	public int getLength() {
+		return declaration.size();
+	}
 
-    /**
-     * Returns the value at the given.
-     */
-    @Override
-    public String item(int idx) {
-        return cssEngine.getPropertyName(declaration.getIndex(idx));
-    }
+	/**
+	 * Returns the value at the given.
+	 */
+	@Override
+	public String item(int idx) {
+		return cssEngine.getPropertyName(declaration.getIndex(idx));
+	}
 }

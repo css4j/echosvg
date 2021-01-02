@@ -26,38 +26,43 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
  * @version $Id$
  */
 public interface OffsetRable extends Filter {
-      /**
-       * Returns the source to be offset.
-       */
-      Filter getSource();
+	/**
+	 * Returns the source to be offset.
+	 */
+	Filter getSource();
 
-      /**
-       * Sets the source to be offset.
-       * @param src image to offset.
-       */
-      void setSource(Filter src);
+	/**
+	 * Sets the source to be offset.
+	 * 
+	 * @param src image to offset.
+	 */
+	void setSource(Filter src);
 
-      /**
-       * Set the x offset.
-       * @param dx the amount to offset in the x direction
-       */
-      void setXoffset(double dx);
+	/**
+	 * Set the x offset.
+	 * 
+	 * @param dx the amount to offset in the x direction
+	 */
+	void setXoffset(double dx);
 
-      /**
-       * Get the x offset.
-       * @return the amount to offset in the x direction
-       */
-      double getXoffset();
+	/**
+	 * Get the x offset.
+	 * 
+	 * @return the amount to offset in the x direction
+	 */
+	double getXoffset();
 
-      /**
-       * Set the y offset.
-       * @param dy the amount to offset in the y direction
-       */
-      void setYoffset(double dy);
+	/**
+	 * Set the y offset.
+	 * 
+	 * @param dy the amount to offset in the y direction
+	 */
+	void setYoffset(double dy);
 
-      /**
-       * Get the y offset.
-       * @return the amount to offset in the y direction
-       */
-      double getYoffset();
+	/**
+	 * Get the y offset.
+	 * 
+	 * @return the amount to offset in the y direction
+	 */
+	double getYoffset();
 }

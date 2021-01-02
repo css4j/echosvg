@@ -32,77 +32,75 @@ import io.sf.carte.echosvg.dom.xbl.XBLShadowTreeElement;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class XBLOMShadowTreeElement
-        extends XBLOMElement
-        implements XBLShadowTreeElement, IdContainer {
+public class XBLOMShadowTreeElement extends XBLOMElement implements XBLShadowTreeElement, IdContainer {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new XBLOMShadowTreeElement.
-     */
-    protected XBLOMShadowTreeElement() {
-    }
+	/**
+	 * Creates a new XBLOMShadowTreeElement.
+	 */
+	protected XBLOMShadowTreeElement() {
+	}
 
-    /**
-     * Creates a new XBLOMShadowTreeElement.
-     * @param prefix The namespace prefix.
-     * @param owner  The owner document.
-     */
-    public XBLOMShadowTreeElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new XBLOMShadowTreeElement.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public XBLOMShadowTreeElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return XBL_SHADOW_TREE_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return XBL_SHADOW_TREE_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new XBLOMShadowTreeElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new XBLOMShadowTreeElement();
+	}
 
-    // XBLShadowTreeElement //////////////////////////////////////////////////
+	// XBLShadowTreeElement //////////////////////////////////////////////////
 
-    /**
-     * Returns the Element that has an ID attribute with the given value.
-     */
-    @Override
-    public Element getElementById(String elementId) {
-        return getElementById(elementId, this);
-    }
+	/**
+	 * Returns the Element that has an ID attribute with the given value.
+	 */
+	@Override
+	public Element getElementById(String elementId) {
+		return getElementById(elementId, this);
+	}
 
-    protected Element getElementById(String elementId, Node n) {
-        if (n.getNodeType() == Node.ELEMENT_NODE) {
-            Element e = (Element) n;
-            if (e.getAttributeNS(null, "id").equals(elementId)) {
-                return (Element) n;
-            }
-        }
-        for (Node m = n.getFirstChild(); m != null; m = m.getNextSibling()) {
-            Element result = getElementById(elementId, m);
-            if (result != null) {
-                return result;
-            }
-        }
-        return null;
-    }
+	protected Element getElementById(String elementId, Node n) {
+		if (n.getNodeType() == Node.ELEMENT_NODE) {
+			Element e = (Element) n;
+			if (e.getAttributeNS(null, "id").equals(elementId)) {
+				return (Element) n;
+			}
+		}
+		for (Node m = n.getFirstChild(); m != null; m = m.getNextSibling()) {
+			Element result = getElementById(elementId, m);
+			if (result != null) {
+				return result;
+			}
+		}
+		return null;
+	}
 
-    // CSSNavigableNode //////////////////////////////////////////////////////
+	// CSSNavigableNode //////////////////////////////////////////////////////
 
-    /**
-     * Returns the parent of the imported element, from the CSS
-     * point of view.
-     */
-    @Override
-    public Node getCSSParentNode() {
-        return ownerDocument.getXBLManager().getXblBoundElement(this);
-    }
+	/**
+	 * Returns the parent of the imported element, from the CSS point of view.
+	 */
+	@Override
+	public Node getCSSParentNode() {
+		return ownerDocument.getXBLManager().getXblBoundElement(this);
+	}
 }

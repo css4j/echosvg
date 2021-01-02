@@ -37,111 +37,105 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
  */
 public class ImageIOJPEGImageWriter extends ImageIOImageWriter {
 
-    private static final String JPEG_NATIVE_FORMAT = "javax_imageio_jpeg_image_1.0";
+	private static final String JPEG_NATIVE_FORMAT = "javax_imageio_jpeg_image_1.0";
 
-    /**
-     * Main constructor.
-     */
-    public ImageIOJPEGImageWriter() {
-        super("image/jpeg");
-    }
+	/**
+	 * Main constructor.
+	 */
+	public ImageIOJPEGImageWriter() {
+		super("image/jpeg");
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    protected IIOMetadata updateMetadata(IIOMetadata meta, ImageWriterParams params) {
-        //ImageIODebugUtil.dumpMetadata(meta);
-        if (JPEG_NATIVE_FORMAT.equals(meta.getNativeMetadataFormatName())) {
-            meta = addAdobeTransform(meta);
+	/** {@inheritDoc} */
+	@Override
+	protected IIOMetadata updateMetadata(IIOMetadata meta, ImageWriterParams params) {
+		// ImageIODebugUtil.dumpMetadata(meta);
+		if (JPEG_NATIVE_FORMAT.equals(meta.getNativeMetadataFormatName())) {
+			meta = addAdobeTransform(meta);
 
-            IIOMetadataNode root = (IIOMetadataNode)meta.getAsTree(JPEG_NATIVE_FORMAT);
+			IIOMetadataNode root = (IIOMetadataNode) meta.getAsTree(JPEG_NATIVE_FORMAT);
 
-            IIOMetadataNode jv = getChildNode(root, "JPEGvariety");
-            if (jv == null) {
-                jv = new IIOMetadataNode("JPEGvariety");
-                root.appendChild(jv);
-            }
-            IIOMetadataNode child;
-            if (params.getResolution() != null) {
-                child = getChildNode(jv, "app0JFIF");
-                if (child == null) {
-                    child = new IIOMetadataNode("app0JFIF");
-                    jv.appendChild(child);
-                }
-                //JPEG gets special treatment because there seems to be a bug in
-                //the JPEG codec in ImageIO converting the pixel size incorrectly
-                //(or not at all) when using standard metadata format.
-                child.setAttribute("majorVersion", null);
-                child.setAttribute("minorVersion", null);
-                child.setAttribute("resUnits", "1"); //dots per inch
-                child.setAttribute("Xdensity", params.getResolution().toString());
-                child.setAttribute("Ydensity", params.getResolution().toString());
-                child.setAttribute("thumbWidth", null);
-                child.setAttribute("thumbHeight", null);
+			IIOMetadataNode jv = getChildNode(root, "JPEGvariety");
+			if (jv == null) {
+				jv = new IIOMetadataNode("JPEGvariety");
+				root.appendChild(jv);
+			}
+			IIOMetadataNode child;
+			if (params.getResolution() != null) {
+				child = getChildNode(jv, "app0JFIF");
+				if (child == null) {
+					child = new IIOMetadataNode("app0JFIF");
+					jv.appendChild(child);
+				}
+				// JPEG gets special treatment because there seems to be a bug in
+				// the JPEG codec in ImageIO converting the pixel size incorrectly
+				// (or not at all) when using standard metadata format.
+				child.setAttribute("majorVersion", null);
+				child.setAttribute("minorVersion", null);
+				child.setAttribute("resUnits", "1"); // dots per inch
+				child.setAttribute("Xdensity", params.getResolution().toString());
+				child.setAttribute("Ydensity", params.getResolution().toString());
+				child.setAttribute("thumbWidth", null);
+				child.setAttribute("thumbHeight", null);
 
-            }
+			}
 
-            try {
-                meta.setFromTree(JPEG_NATIVE_FORMAT, root);
-            } catch (IIOInvalidTreeException e) {
-                throw new RuntimeException("Cannot update image metadata: "
-                            + e.getMessage(), e);
-            }
+			try {
+				meta.setFromTree(JPEG_NATIVE_FORMAT, root);
+			} catch (IIOInvalidTreeException e) {
+				throw new RuntimeException("Cannot update image metadata: " + e.getMessage(), e);
+			}
 
-            //ImageIODebugUtil.dumpMetadata(meta);
-        }
+			// ImageIODebugUtil.dumpMetadata(meta);
+		}
 
-        return meta;
-    }
+		return meta;
+	}
 
-    private static IIOMetadata addAdobeTransform(IIOMetadata meta) {
-        // add the adobe transformation (transform 1 -> to YCbCr)
-        IIOMetadataNode root = (IIOMetadataNode)meta.getAsTree(JPEG_NATIVE_FORMAT);
+	private static IIOMetadata addAdobeTransform(IIOMetadata meta) {
+		// add the adobe transformation (transform 1 -> to YCbCr)
+		IIOMetadataNode root = (IIOMetadataNode) meta.getAsTree(JPEG_NATIVE_FORMAT);
 
-        IIOMetadataNode markerSequence = getChildNode(root, "markerSequence");
-        if (markerSequence == null) {
-            throw new RuntimeException("Invalid metadata!");
-        }
+		IIOMetadataNode markerSequence = getChildNode(root, "markerSequence");
+		if (markerSequence == null) {
+			throw new RuntimeException("Invalid metadata!");
+		}
 
-        IIOMetadataNode adobeTransform = getChildNode(markerSequence, "app14Adobe");
-        if (adobeTransform == null) {
-            adobeTransform = new IIOMetadataNode("app14Adobe");
-            adobeTransform.setAttribute("transform" , "1"); // convert RGB to YCbCr
-            adobeTransform.setAttribute("version", "101");
-            adobeTransform.setAttribute("flags0", "0");
-            adobeTransform.setAttribute("flags1", "0");
+		IIOMetadataNode adobeTransform = getChildNode(markerSequence, "app14Adobe");
+		if (adobeTransform == null) {
+			adobeTransform = new IIOMetadataNode("app14Adobe");
+			adobeTransform.setAttribute("transform", "1"); // convert RGB to YCbCr
+			adobeTransform.setAttribute("version", "101");
+			adobeTransform.setAttribute("flags0", "0");
+			adobeTransform.setAttribute("flags1", "0");
 
-            markerSequence.appendChild(adobeTransform);
-        } else {
-            adobeTransform.setAttribute("transform" , "1");
-        }
+			markerSequence.appendChild(adobeTransform);
+		} else {
+			adobeTransform.setAttribute("transform", "1");
+		}
 
-        try {
-            meta.setFromTree(JPEG_NATIVE_FORMAT, root);
-        } catch (IIOInvalidTreeException e) {
-            throw new RuntimeException("Cannot update image metadata: "
-                        + e.getMessage(), e);
-        }
-        return meta;
-    }
+		try {
+			meta.setFromTree(JPEG_NATIVE_FORMAT, root);
+		} catch (IIOInvalidTreeException e) {
+			throw new RuntimeException("Cannot update image metadata: " + e.getMessage(), e);
+		}
+		return meta;
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    protected ImageWriteParam getDefaultWriteParam(
-            ImageWriter iiowriter, RenderedImage image,
-            ImageWriterParams params) {
-        JPEGImageWriteParam param = new JPEGImageWriteParam(iiowriter.getLocale());
-        param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-        param.setCompressionQuality(params.getJPEGQuality());
-        if (params.getCompressionMethod() != null
-                && !"JPEG".equals(params.getCompressionMethod())) {
-            throw new IllegalArgumentException(
-                    "No compression method other than JPEG is supported for JPEG output!");
-        }
-        if (params.getJPEGForceBaseline()) {
-            param.setProgressiveMode(ImageWriteParam.MODE_DISABLED);
-        }
-        return param;
-    }
-
+	/** {@inheritDoc} */
+	@Override
+	protected ImageWriteParam getDefaultWriteParam(ImageWriter iiowriter, RenderedImage image,
+			ImageWriterParams params) {
+		JPEGImageWriteParam param = new JPEGImageWriteParam(iiowriter.getLocale());
+		param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		param.setCompressionQuality(params.getJPEGQuality());
+		if (params.getCompressionMethod() != null && !"JPEG".equals(params.getCompressionMethod())) {
+			throw new IllegalArgumentException("No compression method other than JPEG is supported for JPEG output!");
+		}
+		if (params.getJPEGForceBaseline()) {
+			param.setProgressiveMode(ImageWriteParam.MODE_DISABLED);
+		}
+		return param;
+	}
 
 }

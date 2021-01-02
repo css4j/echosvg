@@ -19,77 +19,80 @@
 package io.sf.carte.echosvg.ext.awt.image.spi;
 
 /**
- * Parameters for the encoder which is accessed through the
- * ImageWriter interface.
+ * Parameters for the encoder which is accessed through the ImageWriter
+ * interface.
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class ImageWriterParams {
 
-    private Integer resolution;
-    private Float jpegQuality;
-    private Boolean jpegForceBaseline;
-    private String compressionMethod;
+	private Integer resolution;
+	private Float jpegQuality;
+	private Boolean jpegForceBaseline;
+	private String compressionMethod;
 
-    /**
-     * Default constructor.
-     */
-    public ImageWriterParams() {
-        //nop
-    }
+	/**
+	 * Default constructor.
+	 */
+	public ImageWriterParams() {
+		// nop
+	}
 
-    /**
-     * @return the image resolution in dpi, or null if undefined
-     */
-    public Integer getResolution() {
-        return this.resolution;
-    }
+	/**
+	 * @return the image resolution in dpi, or null if undefined
+	 */
+	public Integer getResolution() {
+		return this.resolution;
+	}
 
-    /**
-     * @return the quality value for encoding a JPEG image
-     *          (0.0-1.0), or null if undefined
-     */
-    public Float getJPEGQuality() {
-        return this.jpegQuality;
-    }
+	/**
+	 * @return the quality value for encoding a JPEG image (0.0-1.0), or null if
+	 *         undefined
+	 */
+	public Float getJPEGQuality() {
+		return this.jpegQuality;
+	}
 
-    /**
-     * @return true if the baseline quantization table is forced,
-     *          or null if undefined.
-     */
-    public Boolean getJPEGForceBaseline() {
-        return this.jpegForceBaseline;
-    }
+	/**
+	 * @return true if the baseline quantization table is forced, or null if
+	 *         undefined.
+	 */
+	public Boolean getJPEGForceBaseline() {
+		return this.jpegForceBaseline;
+	}
 
-    /** @return the compression method for encoding the image */
-    public String getCompressionMethod() {
-        return this.compressionMethod;
-    }
+	/** @return the compression method for encoding the image */
+	public String getCompressionMethod() {
+		return this.compressionMethod;
+	}
 
-    /**
-     * Sets the target resolution of the bitmap image to be written.
-     * @param dpi the resolution in dpi
-     */
-    public void setResolution(int dpi) {
-        this.resolution = dpi;
-    }
+	/**
+	 * Sets the target resolution of the bitmap image to be written.
+	 * 
+	 * @param dpi the resolution in dpi
+	 */
+	public void setResolution(int dpi) {
+		this.resolution = dpi;
+	}
 
-    /**
-     * Sets the quality setting for encoding JPEG images.
-     * @param quality the quality setting (0.0-1.0)
-     * @param forceBaseline force baseline quantization table
-     */
-    public void setJPEGQuality(float quality, boolean forceBaseline) {
-        this.jpegQuality = quality;
-        this.jpegForceBaseline = forceBaseline ? Boolean.TRUE : Boolean.FALSE;
-    }
+	/**
+	 * Sets the quality setting for encoding JPEG images.
+	 * 
+	 * @param quality       the quality setting (0.0-1.0)
+	 * @param forceBaseline force baseline quantization table
+	 */
+	public void setJPEGQuality(float quality, boolean forceBaseline) {
+		this.jpegQuality = quality;
+		this.jpegForceBaseline = forceBaseline ? Boolean.TRUE : Boolean.FALSE;
+	}
 
-    /**
-     * Set the compression method that shall be used to encode the image.
-     * @param method the compression method
-     */
-    public void setCompressionMethod(String method) {
-        this.compressionMethod = method;
-    }
+	/**
+	 * Set the compression method that shall be used to encode the image.
+	 * 
+	 * @param method the compression method
+	 */
+	public void setCompressionMethod(String method) {
+		this.compressionMethod = method;
+	}
 }

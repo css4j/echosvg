@@ -34,151 +34,141 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public class SVGSwitchElementBridge extends SVGGElementBridge {
 
-    /**
-     * The child element that was chosen for rendering according to the
-     * test attributes.
-     */
-    protected Element selectedChild;
+	/**
+	 * The child element that was chosen for rendering according to the test
+	 * attributes.
+	 */
+	protected Element selectedChild;
 
-    /**
-     * Constructs a new bridge for the &lt;switch&gt; element.
-     */
-    public SVGSwitchElementBridge() {}
+	/**
+	 * Constructs a new bridge for the &lt;switch&gt; element.
+	 */
+	public SVGSwitchElementBridge() {
+	}
 
-    /**
-     * Returns 'switch'.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_SWITCH_TAG;
-    }
+	/**
+	 * Returns 'switch'.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_SWITCH_TAG;
+	}
 
-    /**
-     * Returns a new instance of this bridge.
-     */
-    @Override
-    public Bridge getInstance() {
-        return new SVGSwitchElementBridge();
-    }
+	/**
+	 * Returns a new instance of this bridge.
+	 */
+	@Override
+	public Bridge getInstance() {
+		return new SVGSwitchElementBridge();
+	}
 
-    /**
-     * Creates a <code>GraphicsNode</code> according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param e the element that describes the graphics node to build
-     * @return a graphics node that represents the specified element
-     */
-    @Override
-    public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
-        GraphicsNode refNode = null;
-        GVTBuilder builder = ctx.getGVTBuilder();
-        selectedChild = null;
-        for (Node n = e.getFirstChild(); n != null; n = n.getNextSibling()) {
-            if (n.getNodeType() == Node.ELEMENT_NODE) {
-                Element ref = (Element)n;
-                if (n instanceof SVGTests &&
-                        SVGUtilities.matchUserAgent(ref, ctx.getUserAgent())) {
-                    selectedChild = ref;
-                    refNode = builder.build(ctx, ref);
-                    break;
-                }
-            }
-        }
+	/**
+	 * Creates a <code>GraphicsNode</code> according to the specified parameters.
+	 *
+	 * @param ctx the bridge context to use
+	 * @param e   the element that describes the graphics node to build
+	 * @return a graphics node that represents the specified element
+	 */
+	@Override
+	public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
+		GraphicsNode refNode = null;
+		GVTBuilder builder = ctx.getGVTBuilder();
+		selectedChild = null;
+		for (Node n = e.getFirstChild(); n != null; n = n.getNextSibling()) {
+			if (n.getNodeType() == Node.ELEMENT_NODE) {
+				Element ref = (Element) n;
+				if (n instanceof SVGTests && SVGUtilities.matchUserAgent(ref, ctx.getUserAgent())) {
+					selectedChild = ref;
+					refNode = builder.build(ctx, ref);
+					break;
+				}
+			}
+		}
 
-        if (refNode == null) {
-            return null;
-        }
+		if (refNode == null) {
+			return null;
+		}
 
-        CompositeGraphicsNode group =
-            (CompositeGraphicsNode) super.createGraphicsNode(ctx, e);
-        if (group == null) {
-            return null;
-        }
+		CompositeGraphicsNode group = (CompositeGraphicsNode) super.createGraphicsNode(ctx, e);
+		if (group == null) {
+			return null;
+		}
 
-        group.add(refNode);
+		group.add(refNode);
 
-        return group;
-    }
+		return group;
+	}
 
-    /**
-     * Returns true as the &lt;switch&gt; element is not a container.
-     */
-    @Override
-    public boolean isComposite() {
-        return false;
-    }
+	/**
+	 * Returns true as the &lt;switch&gt; element is not a container.
+	 */
+	@Override
+	public boolean isComposite() {
+		return false;
+	}
 
-    // BridgeUpdateHandler implementation //////////////////////////////////
+	// BridgeUpdateHandler implementation //////////////////////////////////
 
-    /**
-     * Disposes this BridgeUpdateHandler and releases all resources.
-     */
-    @Override
-    public void dispose() {
-        selectedChild = null;
-        super.dispose();
-    }
+	/**
+	 * Disposes this BridgeUpdateHandler and releases all resources.
+	 */
+	@Override
+	public void dispose() {
+		selectedChild = null;
+		super.dispose();
+	}
 
-    /**
-     * Responds to the insertion of a child element by re-evaluating the
-     * test attributes.
-     */
-    @Override
-    protected void handleElementAdded(CompositeGraphicsNode gn, 
-                                      Node parent, 
-                                      Element childElt) {
-        for (Node n = childElt.getPreviousSibling(); n
-                != null;
-                n = n.getPreviousSibling()) {
-            if (n == childElt) {
-                return;
-            }
-        }
-        if (childElt instanceof SVGTests
-                && SVGUtilities.matchUserAgent(childElt, ctx.getUserAgent())) {
-            if (selectedChild != null) {
-                gn.remove(0);
-                disposeTree(selectedChild);
-            }
-            selectedChild = childElt;
-            GVTBuilder builder = ctx.getGVTBuilder();
-            GraphicsNode refNode = builder.build(ctx, childElt);
-            if (refNode != null) {
-                gn.add(refNode);
-            }
-        }
-    }
+	/**
+	 * Responds to the insertion of a child element by re-evaluating the test
+	 * attributes.
+	 */
+	@Override
+	protected void handleElementAdded(CompositeGraphicsNode gn, Node parent, Element childElt) {
+		for (Node n = childElt.getPreviousSibling(); n != null; n = n.getPreviousSibling()) {
+			if (n == childElt) {
+				return;
+			}
+		}
+		if (childElt instanceof SVGTests && SVGUtilities.matchUserAgent(childElt, ctx.getUserAgent())) {
+			if (selectedChild != null) {
+				gn.remove(0);
+				disposeTree(selectedChild);
+			}
+			selectedChild = childElt;
+			GVTBuilder builder = ctx.getGVTBuilder();
+			GraphicsNode refNode = builder.build(ctx, childElt);
+			if (refNode != null) {
+				gn.add(refNode);
+			}
+		}
+	}
 
-    /**
-     * Responds to the removal of a child element by re-evaluating the
-     * test attributes.
-     */
-    protected void handleChildElementRemoved(Element e) {
-        CompositeGraphicsNode gn = (CompositeGraphicsNode) node;
-        if (selectedChild == e) {
-            gn.remove(0);
-            disposeTree(selectedChild);
-            selectedChild = null;
-            GraphicsNode refNode = null;
-            GVTBuilder builder = ctx.getGVTBuilder();
-            for (Node n = e.getNextSibling();
-                    n != null;
-                    n = n.getNextSibling()) {
-                if (n.getNodeType() == Node.ELEMENT_NODE) {
-                    Element ref = (Element) n;
-                    if (n instanceof SVGTests &&
-                            SVGUtilities.matchUserAgent
-                                (ref, ctx.getUserAgent())) {
-                        refNode = builder.build(ctx, ref);
-                        selectedChild = ref;
-                        break;
-                    }
-                }
-            }
+	/**
+	 * Responds to the removal of a child element by re-evaluating the test
+	 * attributes.
+	 */
+	protected void handleChildElementRemoved(Element e) {
+		CompositeGraphicsNode gn = (CompositeGraphicsNode) node;
+		if (selectedChild == e) {
+			gn.remove(0);
+			disposeTree(selectedChild);
+			selectedChild = null;
+			GraphicsNode refNode = null;
+			GVTBuilder builder = ctx.getGVTBuilder();
+			for (Node n = e.getNextSibling(); n != null; n = n.getNextSibling()) {
+				if (n.getNodeType() == Node.ELEMENT_NODE) {
+					Element ref = (Element) n;
+					if (n instanceof SVGTests && SVGUtilities.matchUserAgent(ref, ctx.getUserAgent())) {
+						refNode = builder.build(ctx, ref);
+						selectedChild = ref;
+						break;
+					}
+				}
+			}
 
-            if (refNode != null) {
-                gn.add(refNode);
-            }
-        }
-    }
+			if (refNode != null) {
+				gn.add(refNode);
+			}
+		}
+	}
 }

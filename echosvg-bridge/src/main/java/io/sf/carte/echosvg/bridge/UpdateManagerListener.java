@@ -27,39 +27,39 @@ package io.sf.carte.echosvg.bridge;
  */
 public interface UpdateManagerListener {
 
-    /**
-     * Called when the manager was started.
-     */
-    void managerStarted(UpdateManagerEvent e);
+	/**
+	 * Called when the manager was started.
+	 */
+	void managerStarted(UpdateManagerEvent e);
 
-    /**
-     * Called when the manager was suspended.
-     */
-    void managerSuspended(UpdateManagerEvent e);
+	/**
+	 * Called when the manager was suspended.
+	 */
+	void managerSuspended(UpdateManagerEvent e);
 
-    /**
-     * Called when the manager was resumed.
-     */
-    void managerResumed(UpdateManagerEvent e);
+	/**
+	 * Called when the manager was resumed.
+	 */
+	void managerResumed(UpdateManagerEvent e);
 
-    /**
-     * Called when the manager was stopped.
-     */
-    void managerStopped(UpdateManagerEvent e);
+	/**
+	 * Called when the manager was stopped.
+	 */
+	void managerStopped(UpdateManagerEvent e);
 
-    /**
-     * Called when an update started.
-     */
-    void updateStarted(UpdateManagerEvent e);
+	/**
+	 * Called when an update started.
+	 */
+	void updateStarted(UpdateManagerEvent e);
 
-    /**
-     * Called when an update was completed.
-     */
-    void updateCompleted(UpdateManagerEvent e);
+	/**
+	 * Called when an update was completed.
+	 */
+	void updateCompleted(UpdateManagerEvent e);
 
-    /**
-     * Called when an update failed.
-     */
-    void updateFailed(UpdateManagerEvent e);
+	/**
+	 * Called when an update failed.
+	 */
+	void updateFailed(UpdateManagerEvent e);
 
 }

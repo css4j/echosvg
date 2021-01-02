@@ -31,74 +31,77 @@ import io.sf.carte.echosvg.css.engine.value.AbstractValue;
  */
 public abstract class AbstractCIEColor extends AbstractValue {
 
-    /** The three color values. */
-    protected float[] values = new float[3];
+	/** The three color values. */
+	protected float[] values = new float[3];
 
-    /** The white point, initialized to D50. */
-    protected float[] whitepoint = ColorSpaces.getCIELabColorSpaceD50().getWhitePoint();
+	/** The white point, initialized to D50. */
+	protected float[] whitepoint = ColorSpaces.getCIELabColorSpaceD50().getWhitePoint();
 
-    /**
-     * Creates a new CIE-based color.
-     * @param components the color components
-     * @param whitepoint the white point in CIE XYZ coordinates
-     */
-    protected AbstractCIEColor(float[] components, float[] whitepoint) {
-        System.arraycopy(components, 0, this.values, 0, this.values.length);
-        if (whitepoint != null) {
-            System.arraycopy(whitepoint, 0, this.whitepoint, 0, this.whitepoint.length);
-        }
-    }
+	/**
+	 * Creates a new CIE-based color.
+	 * 
+	 * @param components the color components
+	 * @param whitepoint the white point in CIE XYZ coordinates
+	 */
+	protected AbstractCIEColor(float[] components, float[] whitepoint) {
+		System.arraycopy(components, 0, this.values, 0, this.values.length);
+		if (whitepoint != null) {
+			System.arraycopy(whitepoint, 0, this.whitepoint, 0, this.whitepoint.length);
+		}
+	}
 
-    /**
-     * Returns the color values.
-     * @return the color values
-     */
-    public float[] getColorValues() {
-        float[] copy = new float[3];
-        System.arraycopy(this.values, 0, copy, 0, copy.length);
-        return copy;
-    }
+	/**
+	 * Returns the color values.
+	 * 
+	 * @return the color values
+	 */
+	public float[] getColorValues() {
+		float[] copy = new float[3];
+		System.arraycopy(this.values, 0, copy, 0, copy.length);
+		return copy;
+	}
 
-    /**
-     * Returns the white point in CIE XYZ coordinates.
-     * @return the white point in CIE XYZ coordinates
-     */
-    public float[] getWhitePoint() {
-        float[] copy = new float[3];
-        System.arraycopy(this.whitepoint, 0, copy, 0, copy.length);
-        return copy;
-    }
+	/**
+	 * Returns the white point in CIE XYZ coordinates.
+	 * 
+	 * @return the white point in CIE XYZ coordinates
+	 */
+	public float[] getWhitePoint() {
+		float[] copy = new float[3];
+		System.arraycopy(this.whitepoint, 0, copy, 0, copy.length);
+		return copy;
+	}
 
-    public abstract String getFunctionName();
+	public abstract String getFunctionName();
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
-     */
-    @Override
-    public short getCssValueType() {
-        return CSSValue.CSS_CUSTOM;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
+	 */
+	@Override
+	public short getCssValueType() {
+		return CSSValue.CSS_CUSTOM;
+	}
 
-    /**
-     *  A string representation of the current value.
-     */
-    @Override
-    public String getCssText() {
-        StringBuffer sb = new StringBuffer(getFunctionName());
-        sb.append('(');
-        sb.append(values[0]);
-        sb.append(", ");
-        sb.append(values[1]);
-        sb.append(", ");
-        sb.append(values[2]);
-        sb.append( ')' );
-        return sb.toString();
-    }
+	/**
+	 * A string representation of the current value.
+	 */
+	@Override
+	public String getCssText() {
+		StringBuffer sb = new StringBuffer(getFunctionName());
+		sb.append('(');
+		sb.append(values[0]);
+		sb.append(", ");
+		sb.append(values[1]);
+		sb.append(", ");
+		sb.append(values[2]);
+		sb.append(')');
+		return sb.toString();
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return getCssText();
-    }
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return getCssText();
+	}
 }

@@ -38,91 +38,92 @@ import javax.swing.text.ViewFactory;
  */
 public class XMLEditorKit extends DefaultEditorKit {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public static final String XML_MIME_TYPE = "text/xml";
-    
-    protected XMLContext context;
-    protected ViewFactory factory = null;
-    
-    /** Creates a new instance of XMLEditorKit */
-    public XMLEditorKit() {
-        this(null);
-    }
-    
-    /** Creates a new instance of XMLEditorKit
-     * @param context XMLContext
-     */
-    public XMLEditorKit(XMLContext context) {
-        super();
-        factory = new XMLViewFactory();
-        if (context == null) {
-            this.context = new XMLContext();
-        } else {
-            this.context = context;
-        }
-    }
-    
-    /** 
-     * @return XMLContext
-     */
-    public XMLContext getStylePreferences() {
-        return context;
-    }
-    
-    /** Overriden to set the JEditorPane font to match with the XMLContext
-     * {@inheritDoc}
-     */
-    @Override
-    public void install(JEditorPane c) {
-        super.install(c);
-        
-        Object obj = context.getSyntaxFont(StyleContext.DEFAULT_STYLE);
-        if (obj != null) {
-            c.setFont((Font)obj);
-        }
-    }
-    
-    
-    /**
-     * Get the MIME type of the data that this
-     * kit represents support for.  This kit supports
-     * the type <code>text/xml</code>.
-     */
-    @Override
-    public String getContentType() {
-        return XML_MIME_TYPE;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Object clone() {
-        XMLEditorKit kit = new XMLEditorKit();
-        kit.context = context;
-        return kit;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Document createDefaultDocument() {
-        XMLDocument doc = new XMLDocument(context);
-        return doc;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public ViewFactory getViewFactory() {
-        return factory;
-    }
-    
-    /**
-     * A simple view factory implementation.
-     */
-    protected class XMLViewFactory implements ViewFactory {
-        // Creates the XML View.
-        @Override
-        public View create(Element elem) {
-            return new XMLView(context, elem);
-        }
-    }
+	public static final String XML_MIME_TYPE = "text/xml";
+
+	protected XMLContext context;
+	protected ViewFactory factory = null;
+
+	/** Creates a new instance of XMLEditorKit */
+	public XMLEditorKit() {
+		this(null);
+	}
+
+	/**
+	 * Creates a new instance of XMLEditorKit
+	 * 
+	 * @param context XMLContext
+	 */
+	public XMLEditorKit(XMLContext context) {
+		super();
+		factory = new XMLViewFactory();
+		if (context == null) {
+			this.context = new XMLContext();
+		} else {
+			this.context = context;
+		}
+	}
+
+	/**
+	 * @return XMLContext
+	 */
+	public XMLContext getStylePreferences() {
+		return context;
+	}
+
+	/**
+	 * Overriden to set the JEditorPane font to match with the XMLContext
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void install(JEditorPane c) {
+		super.install(c);
+
+		Object obj = context.getSyntaxFont(StyleContext.DEFAULT_STYLE);
+		if (obj != null) {
+			c.setFont((Font) obj);
+		}
+	}
+
+	/**
+	 * Get the MIME type of the data that this kit represents support for. This kit
+	 * supports the type <code>text/xml</code>.
+	 */
+	@Override
+	public String getContentType() {
+		return XML_MIME_TYPE;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public Object clone() {
+		XMLEditorKit kit = new XMLEditorKit();
+		kit.context = context;
+		return kit;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public Document createDefaultDocument() {
+		XMLDocument doc = new XMLDocument(context);
+		return doc;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public ViewFactory getViewFactory() {
+		return factory;
+	}
+
+	/**
+	 * A simple view factory implementation.
+	 */
+	protected class XMLViewFactory implements ViewFactory {
+		// Creates the XML View.
+		@Override
+		public View create(Element elem) {
+			return new XMLView(context, elem);
+		}
+	}
 }

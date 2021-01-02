@@ -30,28 +30,32 @@ import java.util.EventListener;
  */
 public interface SelectionListener extends EventListener {
 
-    /**
-     * Invoked when a selection has changed.
-     * @param evt the selection change event
-     */
-    void selectionChanged(SelectionEvent evt);
+	/**
+	 * Invoked when a selection has changed.
+	 * 
+	 * @param evt the selection change event
+	 */
+	void selectionChanged(SelectionEvent evt);
 
-    /**
-     * Invoked when a selection is done.
-     * @param evt the selection change event
-     */
-    void selectionDone(SelectionEvent evt);
+	/**
+	 * Invoked when a selection is done.
+	 * 
+	 * @param evt the selection change event
+	 */
+	void selectionDone(SelectionEvent evt);
 
-    /**
-     * Invoked when a selection is cleared.
-     * @param evt the selection change event
-     */
-    void selectionCleared(SelectionEvent evt);
+	/**
+	 * Invoked when a selection is cleared.
+	 * 
+	 * @param evt the selection change event
+	 */
+	void selectionCleared(SelectionEvent evt);
 
-    /**
-     * Invoked when a selection started.
-     * @param evt the selection change event
-     */
-    void selectionStarted(SelectionEvent evt);
+	/**
+	 * Invoked when a selection started.
+	 * 
+	 * @param evt the selection change event
+	 */
+	void selectionStarted(SelectionEvent evt);
 
 }

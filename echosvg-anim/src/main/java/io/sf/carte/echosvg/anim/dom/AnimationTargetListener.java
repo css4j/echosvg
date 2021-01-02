@@ -19,9 +19,9 @@
 package io.sf.carte.echosvg.anim.dom;
 
 /**
- * A listener class for animation targets.  This will be for the animation
- * engine to be notified of updates to dependencies such as font size
- * changes and viewport sizes.
+ * A listener class for animation targets. This will be for the animation engine
+ * to be notified of updates to dependencies such as font size changes and
+ * viewport sizes.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -29,10 +29,9 @@ package io.sf.carte.echosvg.anim.dom;
  */
 public interface AnimationTargetListener {
 
-    /**
-     * Invoked to indicate that base value of the specified attribute
-     * or property has changed.
-     */
-    void baseValueChanged(AnimationTarget t, String ns, String ln,
-                          boolean isCSS);
+	/**
+	 * Invoked to indicate that base value of the specified attribute or property
+	 * has changed.
+	 */
+	void baseValueChanged(AnimationTarget t, String ns, String ln, boolean isCSS);
 }

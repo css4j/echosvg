@@ -21,9 +21,8 @@ package io.sf.carte.echosvg.parser;
 import java.io.IOException;
 
 /**
- * This class implements an event-based parser for semicolon separated
- * length pair lists, as used in the 'values' attribute of the 'animateMotion'
- * element.
+ * This class implements an event-based parser for semicolon separated length
+ * pair lists, as used in the 'values' attribute of the 'animateMotion' element.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -31,38 +30,38 @@ import java.io.IOException;
  */
 public class LengthPairListParser extends LengthListParser {
 
-    /**
-     * Parses the given reader.
-     */
-    @Override
-    protected void doParse() throws ParseException, IOException {
-        ((LengthListHandler) lengthHandler).startLengthList();
+	/**
+	 * Parses the given reader.
+	 */
+	@Override
+	protected void doParse() throws ParseException, IOException {
+		((LengthListHandler) lengthHandler).startLengthList();
 
-        current = reader.read();
-        skipSpaces();
+		current = reader.read();
+		skipSpaces();
 
-        try {
-            for (;;) {
-                lengthHandler.startLength();
-                parseLength();
-                lengthHandler.endLength();
-                skipCommaSpaces();
-                lengthHandler.startLength();
-                parseLength();
-                lengthHandler.endLength();
-                skipSpaces();
-                if (current == -1) {
-                    break;
-                }
-                if (current != ';') {
-                    reportUnexpectedCharacterError( current );
-                }
-                current = reader.read();
-                skipSpaces();
-            }
-        } catch (NumberFormatException e) {
-            reportUnexpectedCharacterError( current );
-        }
-        ((LengthListHandler) lengthHandler).endLengthList();
-    }
+		try {
+			for (;;) {
+				lengthHandler.startLength();
+				parseLength();
+				lengthHandler.endLength();
+				skipCommaSpaces();
+				lengthHandler.startLength();
+				parseLength();
+				lengthHandler.endLength();
+				skipSpaces();
+				if (current == -1) {
+					break;
+				}
+				if (current != ';') {
+					reportUnexpectedCharacterError(current);
+				}
+				current = reader.read();
+				skipSpaces();
+			}
+		} catch (NumberFormatException e) {
+			reportUnexpectedCharacterError(current);
+		}
+		((LengthListHandler) lengthHandler).endLengthList();
+	}
 }

@@ -42,156 +42,151 @@ import io.sf.carte.echosvg.dom.svg.SVGContext;
  */
 public class SVGLocatableSupport {
 
-    /**
-     * Creates a new SVGLocatable element.
-     */
-    public SVGLocatableSupport() {
-    }
-    
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGLocatable#getNearestViewportElement()}.
-     */
-    public static SVGElement getNearestViewportElement(Element e) {
-        Element elt = e;
-        while (elt != null) {
-            elt = CSSEngine.getParentCSSStylableElement(elt);
-            if (elt instanceof SVGFitToViewBox) {
-                break;
-            }
-        }
-        return (SVGElement)elt;
-    }
+	/**
+	 * Creates a new SVGLocatable element.
+	 */
+	public SVGLocatableSupport() {
+	}
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGLocatable#getFarthestViewportElement()}.
-     */
-    public static SVGElement getFarthestViewportElement(Element elt) {
-        Element rootSVG = elt.getOwnerDocument().getDocumentElement();
-        if (elt == rootSVG) {
-            return null;
-        }
-        return (SVGElement) rootSVG;
-    }
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGLocatable#getNearestViewportElement()}.
+	 */
+	public static SVGElement getNearestViewportElement(Element e) {
+		Element elt = e;
+		while (elt != null) {
+			elt = CSSEngine.getParentCSSStylableElement(elt);
+			if (elt instanceof SVGFitToViewBox) {
+				break;
+			}
+		}
+		return (SVGElement) elt;
+	}
 
-    /**
-     * To implement {@link org.w3c.dom.svg.SVGLocatable#getBBox()}.
-     */
-    public static SVGRect getBBox(Element elt) {
-        final SVGOMElement svgelt = (SVGOMElement)elt;
-        SVGContext svgctx = svgelt.getSVGContext();
-        if (svgctx == null) return null;
-        if (svgctx.getBBox() == null) return null;
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGLocatable#getFarthestViewportElement()}.
+	 */
+	public static SVGElement getFarthestViewportElement(Element elt) {
+		Element rootSVG = elt.getOwnerDocument().getDocumentElement();
+		if (elt == rootSVG) {
+			return null;
+		}
+		return (SVGElement) rootSVG;
+	}
 
-        return new SVGRect() {
-                @Override
-                public float getX() {
-                    return (float)svgelt.getSVGContext().getBBox().getX();
-                }
-                @Override
-                public void setX(float x) throws DOMException {
-                    throw svgelt.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.rect", null);
-                }
-                @Override
-                public float getY() {
-                    return (float)svgelt.getSVGContext().getBBox().getY();
-                }
-                @Override
-                public void setY(float y) throws DOMException {
-                    throw svgelt.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.rect", null);
-                }
-                @Override
-                public float getWidth() {
-                    return (float)svgelt.getSVGContext().getBBox().getWidth();
-                }
-                @Override
-                public void setWidth(float width) throws DOMException {
-                    throw svgelt.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.rect", null);
-                }
-                @Override
-                public float getHeight() {
-                    return (float)svgelt.getSVGContext().getBBox().getHeight();
-                }
-                @Override
-                public void setHeight(float height) throws DOMException {
-                    throw svgelt.createDOMException
-                        (DOMException.NO_MODIFICATION_ALLOWED_ERR,
-                         "readonly.rect", null);
-                }
-            };
-    }
+	/**
+	 * To implement {@link org.w3c.dom.svg.SVGLocatable#getBBox()}.
+	 */
+	public static SVGRect getBBox(Element elt) {
+		final SVGOMElement svgelt = (SVGOMElement) elt;
+		SVGContext svgctx = svgelt.getSVGContext();
+		if (svgctx == null)
+			return null;
+		if (svgctx.getBBox() == null)
+			return null;
 
-    /**
-     * To implement {@link org.w3c.dom.svg.SVGLocatable#getCTM()}.
-     */
-    public static SVGMatrix getCTM(Element elt) {
-        final SVGOMElement svgelt = (SVGOMElement)elt;
-        return new AbstractSVGMatrix() {
-                @Override
-                protected AffineTransform getAffineTransform() {
-                    return svgelt.getSVGContext().getCTM();
-            }
-        };
-    }
+		return new SVGRect() {
+			@Override
+			public float getX() {
+				return (float) svgelt.getSVGContext().getBBox().getX();
+			}
 
-    /**
-     * To implement {@link org.w3c.dom.svg.SVGLocatable#getScreenCTM()}.
-     */
-    public static SVGMatrix getScreenCTM(Element elt) {
-        final SVGOMElement svgelt  = (SVGOMElement)elt;
-        return new AbstractSVGMatrix() {
-                @Override
-                protected AffineTransform getAffineTransform() {
-                    SVGContext context = svgelt.getSVGContext();
-                    AffineTransform ret = context.getGlobalTransform();
-                    AffineTransform scrnTrans = context.getScreenTransform();
-                    if (scrnTrans != null)
-                        ret.preConcatenate(scrnTrans);
-                    return ret;
-                }
-            };
-    }
+			@Override
+			public void setX(float x) throws DOMException {
+				throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.rect", null);
+			}
 
-    /**
-     * To implement {@link
-     * org.w3c.dom.svg.SVGLocatable#getTransformToElement(SVGElement)}.
-     */
-    public static SVGMatrix getTransformToElement(Element elt,
-                                                  SVGElement element)
-        throws SVGException {
-        final SVGOMElement currentElt = (SVGOMElement)elt;
-        final SVGOMElement targetElt = (SVGOMElement)element;
-        return new AbstractSVGMatrix() {
-                @Override
-                protected AffineTransform getAffineTransform() {
-                    AffineTransform cat = 
-                        currentElt.getSVGContext().getGlobalTransform();
-                    if (cat == null) {
-                        cat = new AffineTransform();
-                    }
-                    AffineTransform tat = 
-                        targetElt.getSVGContext().getGlobalTransform();
-                    if (tat == null) {
-                        tat = new AffineTransform();
-                    }
-                    AffineTransform at = new AffineTransform(cat);
-                    try {
-                        at.preConcatenate(tat.createInverse());
-                        return at;
-                    } catch (NoninvertibleTransformException ex) {
-                        throw currentElt.createSVGException
-                            (SVGException.SVG_MATRIX_NOT_INVERTABLE,
-                             "noninvertiblematrix",
-                             null);
-                    }
-                }
-            };
-    }
+			@Override
+			public float getY() {
+				return (float) svgelt.getSVGContext().getBBox().getY();
+			}
+
+			@Override
+			public void setY(float y) throws DOMException {
+				throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.rect", null);
+			}
+
+			@Override
+			public float getWidth() {
+				return (float) svgelt.getSVGContext().getBBox().getWidth();
+			}
+
+			@Override
+			public void setWidth(float width) throws DOMException {
+				throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.rect", null);
+			}
+
+			@Override
+			public float getHeight() {
+				return (float) svgelt.getSVGContext().getBBox().getHeight();
+			}
+
+			@Override
+			public void setHeight(float height) throws DOMException {
+				throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.rect", null);
+			}
+		};
+	}
+
+	/**
+	 * To implement {@link org.w3c.dom.svg.SVGLocatable#getCTM()}.
+	 */
+	public static SVGMatrix getCTM(Element elt) {
+		final SVGOMElement svgelt = (SVGOMElement) elt;
+		return new AbstractSVGMatrix() {
+			@Override
+			protected AffineTransform getAffineTransform() {
+				return svgelt.getSVGContext().getCTM();
+			}
+		};
+	}
+
+	/**
+	 * To implement {@link org.w3c.dom.svg.SVGLocatable#getScreenCTM()}.
+	 */
+	public static SVGMatrix getScreenCTM(Element elt) {
+		final SVGOMElement svgelt = (SVGOMElement) elt;
+		return new AbstractSVGMatrix() {
+			@Override
+			protected AffineTransform getAffineTransform() {
+				SVGContext context = svgelt.getSVGContext();
+				AffineTransform ret = context.getGlobalTransform();
+				AffineTransform scrnTrans = context.getScreenTransform();
+				if (scrnTrans != null)
+					ret.preConcatenate(scrnTrans);
+				return ret;
+			}
+		};
+	}
+
+	/**
+	 * To implement
+	 * {@link org.w3c.dom.svg.SVGLocatable#getTransformToElement(SVGElement)}.
+	 */
+	public static SVGMatrix getTransformToElement(Element elt, SVGElement element) throws SVGException {
+		final SVGOMElement currentElt = (SVGOMElement) elt;
+		final SVGOMElement targetElt = (SVGOMElement) element;
+		return new AbstractSVGMatrix() {
+			@Override
+			protected AffineTransform getAffineTransform() {
+				AffineTransform cat = currentElt.getSVGContext().getGlobalTransform();
+				if (cat == null) {
+					cat = new AffineTransform();
+				}
+				AffineTransform tat = targetElt.getSVGContext().getGlobalTransform();
+				if (tat == null) {
+					tat = new AffineTransform();
+				}
+				AffineTransform at = new AffineTransform(cat);
+				try {
+					at.preConcatenate(tat.createInverse());
+					return at;
+				} catch (NoninvertibleTransformException ex) {
+					throw currentElt.createSVGException(SVGException.SVG_MATRIX_NOT_INVERTABLE, "noninvertiblematrix",
+							null);
+				}
+			}
+		};
+	}
 }

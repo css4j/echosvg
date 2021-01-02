@@ -29,243 +29,231 @@ import io.sf.carte.echosvg.ext.awt.image.PadMode;
 import io.sf.carte.echosvg.ext.awt.image.SVGComposite;
 
 /**
- * Implements a filter chain. A filter chain is defined by its
- * filter region (i.e., the bounding box of its input/output), its
- * filter resolution and its source. Its source cannot be null,
- * but its resolution can. <br>
- * The filter chain decomposes as follows: 
+ * Implements a filter chain. A filter chain is defined by its filter region
+ * (i.e., the bounding box of its input/output), its filter resolution and its
+ * source. Its source cannot be null, but its resolution can. <br>
+ * The filter chain decomposes as follows:
  * <ul>
- *  <li>A pad operation that makes the input image a big as the
- *      filter region.</li>
- *  <li>If there is a filterResolution specified along at least
- *      one of the axis, a <code>AffineRable</code>
+ * <li>A pad operation that makes the input image a big as the filter
+ * region.</li>
+ * <li>If there is a filterResolution specified along at least one of the axis,
+ * a <code>AffineRable</code>
  * </ul>
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class FilterChainRable8Bit extends AbstractRable
-    implements FilterChainRable, PaintRable {
-    /**
-     * Resolution along the X axis
-     */
-    private int filterResolutionX;
+public class FilterChainRable8Bit extends AbstractRable implements FilterChainRable, PaintRable {
+	/**
+	 * Resolution along the X axis
+	 */
+	private int filterResolutionX;
 
-    /**
-     * Resolution along the Y axis
-     */
-    private int filterResolutionY;
+	/**
+	 * Resolution along the Y axis
+	 */
+	private int filterResolutionY;
 
-    /**
-     * The chain's source
-     */
-    private Filter chainSource;
+	/**
+	 * The chain's source
+	 */
+	private Filter chainSource;
 
-    /**
-     * Scale operation. May be null
-     */
-    private FilterResRable filterRes;
+	/**
+	 * Scale operation. May be null
+	 */
+	private FilterResRable filterRes;
 
-    /**
-     * Crop operation.
-     */
-    private PadRable crop;
+	/**
+	 * Crop operation.
+	 */
+	private PadRable crop;
 
-    /**
-     * Filter region
-     */
-    private Rectangle2D filterRegion;
+	/**
+	 * Filter region
+	 */
+	private Rectangle2D filterRegion;
 
-    /**
-     * Default constructor.
-     */
-    public FilterChainRable8Bit(Filter source, Rectangle2D filterRegion){
-        if(source == null){
-            throw new IllegalArgumentException();
-        }
-        if(filterRegion == null){
-            throw new IllegalArgumentException();
-        }
+	/**
+	 * Default constructor.
+	 */
+	public FilterChainRable8Bit(Filter source, Rectangle2D filterRegion) {
+		if (source == null) {
+			throw new IllegalArgumentException();
+		}
+		if (filterRegion == null) {
+			throw new IllegalArgumentException();
+		}
 
-        // Build crop with chain source and dummy region (will be lazily evaluated
-        // later on).
-        Rectangle2D padRect = (Rectangle2D)filterRegion.clone();
-        crop = new PadRable8Bit(source, padRect, 
-                                    PadMode.ZERO_PAD);
+		// Build crop with chain source and dummy region (will be lazily evaluated
+		// later on).
+		Rectangle2D padRect = (Rectangle2D) filterRegion.clone();
+		crop = new PadRable8Bit(source, padRect, PadMode.ZERO_PAD);
 
-        // Keep a reference to the chain source and filter
-        // regions.
-        this.chainSource = source;
-        this.filterRegion = filterRegion;
+		// Keep a reference to the chain source and filter
+		// regions.
+		this.chainSource = source;
+		this.filterRegion = filterRegion;
 
-        // crop is the real shource for this filter
-        // The filter chain is a simple passthrough to its
-        // crop node.
-        init(crop); 
-  
-    }
+		// crop is the real shource for this filter
+		// The filter chain is a simple passthrough to its
+		// crop node.
+		init(crop);
 
-    /**
-     * Returns the resolution along the X axis.
-     */
-    @Override
-    public int getFilterResolutionX(){
-        return filterResolutionX;
-    }
+	}
 
-    /**
-     * Sets the resolution along the X axis, i.e., the maximum
-     * size for intermediate images along that axis.
-     * If filterResolutionX is less than zero, no filter resolution
-     * is forced on the filter chain. If filterResolutionX is zero,
-     * then the filter returns null. If filterResolutionX is positive,
-     * then the filter resolution is applied.
-     */
-    @Override
-    public void setFilterResolutionX(int filterResolutionX){
-        touch();
-        this.filterResolutionX = filterResolutionX;
+	/**
+	 * Returns the resolution along the X axis.
+	 */
+	@Override
+	public int getFilterResolutionX() {
+		return filterResolutionX;
+	}
 
-        setupFilterRes();
-    }
+	/**
+	 * Sets the resolution along the X axis, i.e., the maximum size for intermediate
+	 * images along that axis. If filterResolutionX is less than zero, no filter
+	 * resolution is forced on the filter chain. If filterResolutionX is zero, then
+	 * the filter returns null. If filterResolutionX is positive, then the filter
+	 * resolution is applied.
+	 */
+	@Override
+	public void setFilterResolutionX(int filterResolutionX) {
+		touch();
+		this.filterResolutionX = filterResolutionX;
 
-    /**
-     * Returns the resolution along the Y axis.
-     */
-    @Override
-    public int getFilterResolutionY(){
-        return filterResolutionY;
-    }
+		setupFilterRes();
+	}
 
-    /**
-     * Sets the resolution along the Y axis, i.e., the maximum
-     * size for intermediate images along that axis.
-     * If filterResolutionY is zero or less, the value of
-     * filterResolutionX is used.
-     */
-    @Override
-    public void setFilterResolutionY(int filterResolutionY){
-        touch();
-        this.filterResolutionY = filterResolutionY;
-        setupFilterRes();
-    }
-    
-    /**
-     * Implementation. Checks the current value of the 
-     * filterResolutionX and filterResolutionY attribute and 
-     * setup the filterRes operation accordingly.
-     */
-    private void setupFilterRes(){
-        if(filterResolutionX >=0){
-            if(filterRes == null){
-                filterRes = new FilterResRable8Bit();
-                filterRes.setSource(chainSource);
-            }
-            
-            filterRes.setFilterResolutionX(filterResolutionX);
-            filterRes.setFilterResolutionY(filterResolutionY);
-        }
-        else{
-            // X is negative, this disables the resolution filter.
-            filterRes = null;
-        }
+	/**
+	 * Returns the resolution along the Y axis.
+	 */
+	@Override
+	public int getFilterResolutionY() {
+		return filterResolutionY;
+	}
 
-        // Now, update the crop source to reflect the filterRes
-        // settings.
-        if(filterRes != null){
-            crop.setSource(filterRes);
-        }
-        else{
-            crop.setSource(chainSource);
-        }
-    }
-    
-    /**
-     * Sets the filter output area, in user space. 
-     * A null value is illegal.
-     */
-    @Override
-    public void setFilterRegion(Rectangle2D filterRegion){
-        if(filterRegion == null){
-            throw new IllegalArgumentException();
-        }
-        touch();
-        this.filterRegion = filterRegion;
-     }
+	/**
+	 * Sets the resolution along the Y axis, i.e., the maximum size for intermediate
+	 * images along that axis. If filterResolutionY is zero or less, the value of
+	 * filterResolutionX is used.
+	 */
+	@Override
+	public void setFilterResolutionY(int filterResolutionY) {
+		touch();
+		this.filterResolutionY = filterResolutionY;
+		setupFilterRes();
+	}
 
-    /**
-     * Returns the filter output area, in user space
-     */
-    @Override
-    public Rectangle2D getFilterRegion(){
-        return filterRegion;
-    }
+	/**
+	 * Implementation. Checks the current value of the filterResolutionX and
+	 * filterResolutionY attribute and setup the filterRes operation accordingly.
+	 */
+	private void setupFilterRes() {
+		if (filterResolutionX >= 0) {
+			if (filterRes == null) {
+				filterRes = new FilterResRable8Bit();
+				filterRes.setSource(chainSource);
+			}
 
-    /**
-     * Returns the source of the chain. Note that a crop and
-     * affine operation may be inserted before the source, 
-     * depending on the filterRegion and filterResolution 
-     * parameters.
-     */
-    @Override
-    public Filter getSource() {
-        return crop;
-    }
-    
-    /**
-     * Sets the source to be src.
-     * @param chainSource image to the chain.
-     */
-    @Override
-    public void setSource(Filter chainSource) {
-        if(chainSource == null){
-            throw new IllegalArgumentException("Null Source for Filter Chain");
-        }
-        touch();
-        this.chainSource = chainSource;
-        
-        if(filterRes == null){
-            crop.setSource(chainSource);
-        }
-        else{
-            filterRes.setSource(chainSource);
-        }
-    }
+			filterRes.setFilterResolutionX(filterResolutionX);
+			filterRes.setFilterResolutionY(filterResolutionY);
+		} else {
+			// X is negative, this disables the resolution filter.
+			filterRes = null;
+		}
 
-    /**
-     * Returns this filter's bounds
-     */
-    @Override
-    public Rectangle2D getBounds2D(){
-        return (Rectangle2D)filterRegion.clone();
-    }
+		// Now, update the crop source to reflect the filterRes
+		// settings.
+		if (filterRes != null) {
+			crop.setSource(filterRes);
+		} else {
+			crop.setSource(chainSource);
+		}
+	}
 
-    /**
-     * Should perform the equivilent action as 
-     * createRendering followed by drawing the RenderedImage to 
-     * Graphics2D, or return false.
-     *
-     * @param g2d The Graphics2D to draw to.
-     * @return true if the paint call succeeded, false if
-     *         for some reason the paint failed (in which 
-     *         case a createRendering should be used).
-     */
-    @Override
-    public boolean paintRable(Graphics2D g2d) {
-        // This optimization only apply if we are using
-        // SrcOver.  Otherwise things break...
-        Composite c = g2d.getComposite();
-        if (!SVGComposite.OVER.equals(c))
-            return false;
-        
-        GraphicsUtil.drawImage(g2d, getSource());
+	/**
+	 * Sets the filter output area, in user space. A null value is illegal.
+	 */
+	@Override
+	public void setFilterRegion(Rectangle2D filterRegion) {
+		if (filterRegion == null) {
+			throw new IllegalArgumentException();
+		}
+		touch();
+		this.filterRegion = filterRegion;
+	}
 
-        return true;
-    }
+	/**
+	 * Returns the filter output area, in user space
+	 */
+	@Override
+	public Rectangle2D getFilterRegion() {
+		return filterRegion;
+	}
 
-    @Override
-    public RenderedImage createRendering(RenderContext context){
-        return crop.createRendering(context);
-    }
+	/**
+	 * Returns the source of the chain. Note that a crop and affine operation may be
+	 * inserted before the source, depending on the filterRegion and
+	 * filterResolution parameters.
+	 */
+	@Override
+	public Filter getSource() {
+		return crop;
+	}
+
+	/**
+	 * Sets the source to be src.
+	 * 
+	 * @param chainSource image to the chain.
+	 */
+	@Override
+	public void setSource(Filter chainSource) {
+		if (chainSource == null) {
+			throw new IllegalArgumentException("Null Source for Filter Chain");
+		}
+		touch();
+		this.chainSource = chainSource;
+
+		if (filterRes == null) {
+			crop.setSource(chainSource);
+		} else {
+			filterRes.setSource(chainSource);
+		}
+	}
+
+	/**
+	 * Returns this filter's bounds
+	 */
+	@Override
+	public Rectangle2D getBounds2D() {
+		return (Rectangle2D) filterRegion.clone();
+	}
+
+	/**
+	 * Should perform the equivilent action as createRendering followed by drawing
+	 * the RenderedImage to Graphics2D, or return false.
+	 *
+	 * @param g2d The Graphics2D to draw to.
+	 * @return true if the paint call succeeded, false if for some reason the paint
+	 *         failed (in which case a createRendering should be used).
+	 */
+	@Override
+	public boolean paintRable(Graphics2D g2d) {
+		// This optimization only apply if we are using
+		// SrcOver. Otherwise things break...
+		Composite c = g2d.getComposite();
+		if (!SVGComposite.OVER.equals(c))
+			return false;
+
+		GraphicsUtil.drawImage(g2d, getSource());
+
+		return true;
+	}
+
+	@Override
+	public RenderedImage createRendering(RenderContext context) {
+		return crop.createRendering(context);
+	}
 }

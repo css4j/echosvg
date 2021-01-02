@@ -23,37 +23,37 @@ import java.util.EventObject;
 import org.w3c.dom.svg.SVGAElement;
 
 /**
- * This class represents an event which indicate an event originated
- * from a GVTTreeBuilder instance.
+ * This class represents an event which indicate an event originated from a
+ * GVTTreeBuilder instance.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class LinkActivationEvent extends EventObject {
-    
-    private static final long serialVersionUID = 1L;
-    /**
-     * The URI the link references.
-     */
-    protected String referencedURI;
 
-    /**
-     * Creates a new LinkActivationEvent.
-     * @param source the object that originated the event, ie. the
-     *               GVTTreeBuilder.
-     * @param link   the link element.
-     * @param uri    the URI of the document loaded.
-     */
-    public LinkActivationEvent(Object source, SVGAElement link, String uri) {
-        super(source);
-        referencedURI = uri;
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The URI the link references.
+	 */
+	protected String referencedURI;
 
-    /**
-     * Returns the referenced URI.
-     */
-    public String getReferencedURI() {
-        return referencedURI;
-    }
+	/**
+	 * Creates a new LinkActivationEvent.
+	 * 
+	 * @param source the object that originated the event, ie. the GVTTreeBuilder.
+	 * @param link   the link element.
+	 * @param uri    the URI of the document loaded.
+	 */
+	public LinkActivationEvent(Object source, SVGAElement link, String uri) {
+		super(source);
+		referencedURI = uri;
+	}
+
+	/**
+	 * Returns the referenced URI.
+	 */
+	public String getReferencedURI() {
+		return referencedURI;
+	}
 }

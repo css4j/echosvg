@@ -27,44 +27,43 @@ package io.sf.carte.echosvg.anim.timing;
  */
 public class OffsetTimingSpecifier extends TimingSpecifier {
 
-    /**
-     * The offset value.
-     */
-    protected float offset;
+	/**
+	 * The offset value.
+	 */
+	protected float offset;
 
-    /**
-     * Creates a new OffsetTimingSpecifier object.
-     */
-    public OffsetTimingSpecifier(TimedElement owner, boolean isBegin,
-                                 float offset) {
-        super(owner, isBegin);
-        this.offset = offset;
-    }
-    
-    /**
-     * Returns a string representation of this timing specifier.
-     */
-    @Override
-    public String toString() {
-        return (offset >= 0 ? "+" : "") + offset;
-    }
+	/**
+	 * Creates a new OffsetTimingSpecifier object.
+	 */
+	public OffsetTimingSpecifier(TimedElement owner, boolean isBegin, float offset) {
+		super(owner, isBegin);
+		this.offset = offset;
+	}
 
-    /**
-     * Initializes this timing specifier by adding the initial instance time
-     * to the owner's instance time list or setting up any event listeners.
-     */
-    @Override
-    public void initialize() {
-        InstanceTime instance = new InstanceTime(this, offset, false);
-        owner.addInstanceTime(instance, isBegin);
-    }
+	/**
+	 * Returns a string representation of this timing specifier.
+	 */
+	@Override
+	public String toString() {
+		return (offset >= 0 ? "+" : "") + offset;
+	}
 
-    /**
-     * Returns whether this timing specifier is event-like (i.e., if it is
-     * an eventbase, accesskey or a repeat timing specifier).
-     */
-    @Override
-    public boolean isEventCondition() {
-        return false;
-    }
+	/**
+	 * Initializes this timing specifier by adding the initial instance time to the
+	 * owner's instance time list or setting up any event listeners.
+	 */
+	@Override
+	public void initialize() {
+		InstanceTime instance = new InstanceTime(this, offset, false);
+		owner.addInstanceTime(instance, isBegin);
+	}
+
+	/**
+	 * Returns whether this timing specifier is event-like (i.e., if it is an
+	 * eventbase, accesskey or a repeat timing specifier).
+	 */
+	@Override
+	public boolean isEventCondition() {
+		return false;
+	}
 }

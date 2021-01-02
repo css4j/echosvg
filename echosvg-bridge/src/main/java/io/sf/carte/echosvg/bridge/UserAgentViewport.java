@@ -27,29 +27,30 @@ package io.sf.carte.echosvg.bridge;
  */
 public class UserAgentViewport implements Viewport {
 
-    private UserAgent userAgent;
+	private UserAgent userAgent;
 
-    /**
-     * Constructs a new viewport for the specified user agent.
-     * @param userAgent the user agent that defines the viewport
-     */
-    public UserAgentViewport(UserAgent userAgent) {
-        this.userAgent = userAgent;
-    }
+	/**
+	 * Constructs a new viewport for the specified user agent.
+	 * 
+	 * @param userAgent the user agent that defines the viewport
+	 */
+	public UserAgentViewport(UserAgent userAgent) {
+		this.userAgent = userAgent;
+	}
 
-    /**
-     * Returns the width of this viewport.
-     */
-    @Override
-    public float getWidth() {
-        return (float) userAgent.getViewportSize().getWidth();
-    }
+	/**
+	 * Returns the width of this viewport.
+	 */
+	@Override
+	public float getWidth() {
+		return (float) userAgent.getViewportSize().getWidth();
+	}
 
-    /**
-     * Returns the height of this viewport.
-     */
-    @Override
-    public float getHeight() {
-        return (float) userAgent.getViewportSize().getHeight();
-    }
+	/**
+	 * Returns the height of this viewport.
+	 */
+	@Override
+	public float getHeight() {
+		return (float) userAgent.getViewportSize().getHeight();
+	}
 }

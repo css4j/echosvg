@@ -29,155 +29,150 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatableRectValue extends AnimatableValue {
 
-    /**
-     * The x coordinate.
-     */
-    protected float x;
+	/**
+	 * The x coordinate.
+	 */
+	protected float x;
 
-    /**
-     * The y coordinate.
-     */
-    protected float y;
+	/**
+	 * The y coordinate.
+	 */
+	protected float y;
 
-    /**
-     * The width.
-     */
-    protected float width;
+	/**
+	 * The width.
+	 */
+	protected float width;
 
-    /**
-     * The height.
-     */
-    protected float height;
+	/**
+	 * The height.
+	 */
+	protected float height;
 
-    /**
-     * Creates a new, uninitialized AnimatableRectValue.
-     */
-    protected AnimatableRectValue(AnimationTarget target) {
-        super(target);
-    }
-    
-    /**
-     * Creates a new AnimatableRectValue with one number.
-     */
-    public AnimatableRectValue(AnimationTarget target, float x, float y,
-                               float w, float h) {
-        super(target);
-        this.x = x;
-        this.y = y;
-        this.width = w;
-        this.height = h;
-    }
+	/**
+	 * Creates a new, uninitialized AnimatableRectValue.
+	 */
+	protected AnimatableRectValue(AnimationTarget target) {
+		super(target);
+	}
 
-    /**
-     * Performs interpolation to the given value.  Rect values cannot be
-     * interpolated.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to,
-                                       float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatableRectValue res;
-        if (result == null) {
-            res = new AnimatableRectValue(target);
-        } else {
-            res = (AnimatableRectValue) result;
-        }
+	/**
+	 * Creates a new AnimatableRectValue with one number.
+	 */
+	public AnimatableRectValue(AnimationTarget target, float x, float y, float w, float h) {
+		super(target);
+		this.x = x;
+		this.y = y;
+		this.width = w;
+		this.height = h;
+	}
 
-        float newX = x, newY = y, newWidth = width, newHeight = height;
-        if (to != null) {
-            AnimatableRectValue toValue = (AnimatableRectValue) to;
-            newX += interpolation * (toValue.x - x);
-            newY += interpolation * (toValue.y - y);
-            newWidth += interpolation * (toValue.width - width);
-            newHeight += interpolation * (toValue.height - height);
-        }
-        if (accumulation != null && multiplier != 0) {
-            AnimatableRectValue accValue = (AnimatableRectValue) accumulation;
-            newX += multiplier * accValue.x;
-            newY += multiplier * accValue.y;
-            newWidth += multiplier * accValue.width;
-            newHeight += multiplier * accValue.height;
-        }
-        if (res.x != newX || res.y != newY
-                || res.width != newWidth || res.height != newHeight) {
-            res.x = newX;
-            res.y = newY;
-            res.width = newWidth;
-            res.height = newHeight;
-            res.hasChanged = true;
-        }
-        return res;
-    }
+	/**
+	 * Performs interpolation to the given value. Rect values cannot be
+	 * interpolated.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatableRectValue res;
+		if (result == null) {
+			res = new AnimatableRectValue(target);
+		} else {
+			res = (AnimatableRectValue) result;
+		}
 
-    /**
-     * Returns the x coordinate.
-     */
-    public float getX() {
-        return x;
-    }
+		float newX = x, newY = y, newWidth = width, newHeight = height;
+		if (to != null) {
+			AnimatableRectValue toValue = (AnimatableRectValue) to;
+			newX += interpolation * (toValue.x - x);
+			newY += interpolation * (toValue.y - y);
+			newWidth += interpolation * (toValue.width - width);
+			newHeight += interpolation * (toValue.height - height);
+		}
+		if (accumulation != null && multiplier != 0) {
+			AnimatableRectValue accValue = (AnimatableRectValue) accumulation;
+			newX += multiplier * accValue.x;
+			newY += multiplier * accValue.y;
+			newWidth += multiplier * accValue.width;
+			newHeight += multiplier * accValue.height;
+		}
+		if (res.x != newX || res.y != newY || res.width != newWidth || res.height != newHeight) {
+			res.x = newX;
+			res.y = newY;
+			res.width = newWidth;
+			res.height = newHeight;
+			res.hasChanged = true;
+		}
+		return res;
+	}
 
-    /**
-     * Returns the y coordinate.
-     */
-    public float getY() {
-        return y;
-    }
+	/**
+	 * Returns the x coordinate.
+	 */
+	public float getX() {
+		return x;
+	}
 
-    /**
-     * Returns the width.
-     */
-    public float getWidth() {
-        return width;
-    }
+	/**
+	 * Returns the y coordinate.
+	 */
+	public float getY() {
+		return y;
+	}
 
-    /**
-     * Returns the height.
-     */
-    public float getHeight() {
-        return height;
-    }
+	/**
+	 * Returns the width.
+	 */
+	public float getWidth() {
+		return width;
+	}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return false;
-    }
+	/**
+	 * Returns the height.
+	 */
+	public float getHeight() {
+		return height;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        return 0f;
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return false;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        return new AnimatableRectValue(target, 0f, 0f, 0f, 0f);
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		return 0f;
+	}
 
-    /**
-     * Returns a string representation of this object.
-     */
-    @Override
-    public String toStringRep() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(x);
-        sb.append(',');
-        sb.append(y);
-        sb.append(',');
-        sb.append(width);
-        sb.append(',');
-        sb.append(height);
-        return sb.toString();
-    }
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		return new AnimatableRectValue(target, 0f, 0f, 0f, 0f);
+	}
+
+	/**
+	 * Returns a string representation of this object.
+	 */
+	@Override
+	public String toStringRep() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(x);
+		sb.append(',');
+		sb.append(y);
+		sb.append(',');
+		sb.append(width);
+		sb.append(',');
+		sb.append(height);
+		return sb.toString();
+	}
 }

@@ -35,38 +35,37 @@ import io.sf.carte.echosvg.script.ImportInfo;
  */
 public class SVG12RhinoInterpreter extends RhinoInterpreter {
 
-    /**
-     * Creates an SVG12RhinoInterpreter object.
-     */
-    public SVG12RhinoInterpreter(URL documentURL) {
-        super(documentURL);
-    }
+	/**
+	 * Creates an SVG12RhinoInterpreter object.
+	 */
+	public SVG12RhinoInterpreter(URL documentURL) {
+		super(documentURL);
+	}
 
-    /**
-     * Creates an SVG12RhinoInterpreter object.
-     */
-    public SVG12RhinoInterpreter(URL documentURL,
-                                 ImportInfo imports) {
-        super(documentURL, imports);
-    }
+	/**
+	 * Creates an SVG12RhinoInterpreter object.
+	 */
+	public SVG12RhinoInterpreter(URL documentURL, ImportInfo imports) {
+		super(documentURL, imports);
+	}
 
-    /**
-     * Defines the class for the global object.
-     */
-    @Override
-    protected void defineGlobalWrapperClass(Scriptable global) {
-        try {
-            ScriptableObject.defineClass(global, GlobalWrapper.class);
-        } catch (Exception ex) {
-            // cannot happen
-        }
-    }
+	/**
+	 * Defines the class for the global object.
+	 */
+	@Override
+	protected void defineGlobalWrapperClass(Scriptable global) {
+		try {
+			ScriptableObject.defineClass(global, GlobalWrapper.class);
+		} catch (Exception ex) {
+			// cannot happen
+		}
+	}
 
-    /**
-     * Creates the global object.
-     */
-    @Override
-    protected ScriptableObject createGlobalObject(Context ctx) {
-        return new GlobalWrapper(ctx);
-    }
+	/**
+	 * Creates the global object.
+	 */
+	@Override
+	protected ScriptableObject createGlobalObject(Context ctx) {
+		return new GlobalWrapper(ctx);
+	}
 }

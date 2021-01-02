@@ -40,107 +40,101 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @version $Id$
  */
 public class ColorProfileManager extends AbstractValueManager {
-    
-    /**
-     * Implements {@link ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return true;
-    }
 
-    /**
-     * Implements {@link ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_COLOR_PROFILE_PROPERTY;
-    }
-    
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return true;
-    }
+	/**
+	 * Implements {@link ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_COLOR_PROFILE_PROPERTY;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_URI_OR_IDENT;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return true;
+	}
 
-    /**
-     * Implements {@link ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return ValueConstants.AUTO_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_URI_OR_IDENT;
+	}
 
-        case IDENT:
-            String s = lu.getStringValue().toLowerCase();
-            if (s.equals(CSSConstants.CSS_AUTO_VALUE)) {
-                return ValueConstants.AUTO_VALUE;
-            }
-            if (s.equals(CSSConstants.CSS_SRGB_VALUE)) {
-                return SVGValueConstants.SRGB_VALUE;
-            }
-            return new StringValue(CSSPrimitiveValue.CSS_IDENT, s);
-            
-        case URI:
-            return new URIValue(lu.getStringValue(),
-                                resolveURI(engine.getCSSBaseURI(),
-                                           lu.getStringValue()));
-        default:
-            break;
-        }
-        throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-    }
+	/**
+	 * Implements {@link ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return ValueConstants.AUTO_VALUE;
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#createStringValue(short,String,CSSEngine)}.
-     */
-    @Override
-    public Value createStringValue(short type, String value, CSSEngine engine)
-        throws DOMException {
-        switch (type) {
-        case CSSPrimitiveValue.CSS_IDENT:
-            String s = value.toLowerCase();
-            if (s.equals(CSSConstants.CSS_AUTO_VALUE)) {
-                return ValueConstants.AUTO_VALUE;
-            }
-            if (s.equals(CSSConstants.CSS_SRGB_VALUE)) {
-                return SVGValueConstants.SRGB_VALUE;
-            }
-            return new StringValue(CSSPrimitiveValue.CSS_IDENT, s);
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-        case CSSPrimitiveValue.CSS_URI:
-            return new URIValue(value,
-                                resolveURI(engine.getCSSBaseURI(), value));
-        }
-        throw createInvalidStringTypeDOMException(type);
-    }
+		case IDENT:
+			String s = lu.getStringValue().toLowerCase();
+			if (s.equals(CSSConstants.CSS_AUTO_VALUE)) {
+				return ValueConstants.AUTO_VALUE;
+			}
+			if (s.equals(CSSConstants.CSS_SRGB_VALUE)) {
+				return SVGValueConstants.SRGB_VALUE;
+			}
+			return new StringValue(CSSPrimitiveValue.CSS_IDENT, s);
+
+		case URI:
+			return new URIValue(lu.getStringValue(), resolveURI(engine.getCSSBaseURI(), lu.getStringValue()));
+		default:
+			break;
+		}
+		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+	}
+
+	/**
+	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
+	 */
+	@Override
+	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+		switch (type) {
+		case CSSPrimitiveValue.CSS_IDENT:
+			String s = value.toLowerCase();
+			if (s.equals(CSSConstants.CSS_AUTO_VALUE)) {
+				return ValueConstants.AUTO_VALUE;
+			}
+			if (s.equals(CSSConstants.CSS_SRGB_VALUE)) {
+				return SVGValueConstants.SRGB_VALUE;
+			}
+			return new StringValue(CSSPrimitiveValue.CSS_IDENT, s);
+
+		case CSSPrimitiveValue.CSS_URI:
+			return new URIValue(value, resolveURI(engine.getCSSBaseURI(), value));
+		}
+		throw createInvalidStringTypeDOMException(type);
+	}
 }

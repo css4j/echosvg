@@ -30,28 +30,27 @@ import java.util.Map;
  * @version $Id$
  */
 public class SVGIDGenerator {
-    private Map<String, Integer> prefixMap = new HashMap<>();
+	private Map<String, Integer> prefixMap = new HashMap<>();
 
-    public SVGIDGenerator() {
-    }
+	public SVGIDGenerator() {
+	}
 
-    /**
-     * Generates an id for the given prefix. This class keeps
-     * track of all invocations to that it generates unique ids
-     *
-     * @param prefix defines the prefix for which the id should
-     *               be generated.
-     * @return a value of the form &lt;prefix&gt;&lt;n&gt;
-     */
-    public String generateID(String prefix) {
-        Integer maxId = prefixMap.get(prefix);
-        if (maxId == null) {
-            maxId = 0;
-            prefixMap.put(prefix, maxId);
-        }
+	/**
+	 * Generates an id for the given prefix. This class keeps track of all
+	 * invocations to that it generates unique ids
+	 *
+	 * @param prefix defines the prefix for which the id should be generated.
+	 * @return a value of the form &lt;prefix&gt;&lt;n&gt;
+	 */
+	public String generateID(String prefix) {
+		Integer maxId = prefixMap.get(prefix);
+		if (maxId == null) {
+			maxId = 0;
+			prefixMap.put(prefix, maxId);
+		}
 
-        maxId = maxId + 1;
-        prefixMap.put(prefix, maxId);
-        return prefix + maxId;
-    }
+		maxId = maxId + 1;
+		prefixMap.put(prefix, maxId);
+		return prefix + maxId;
+	}
 }

@@ -30,75 +30,73 @@ import org.w3c.dom.css.CSSPrimitiveValue;
  */
 public class FloatValue extends AbstractValue {
 
-    /**
-     * Returns the CSS text associated with the given type/value pair.
-     */
-    public static String getCssText(short unit, float value) {
-        if (unit < 0 || unit >= UNITS.length) {
-            throw new DOMException(DOMException.SYNTAX_ERR, "");
-        }
-        String s = String.valueOf(value);
-        if (s.endsWith(".0")) {
-            s = s.substring(0, s.length() - 2);
-        }
-        return s + UNITS[unit - CSSPrimitiveValue.CSS_NUMBER];
-    }
+	/**
+	 * Returns the CSS text associated with the given type/value pair.
+	 */
+	public static String getCssText(short unit, float value) {
+		if (unit < 0 || unit >= UNITS.length) {
+			throw new DOMException(DOMException.SYNTAX_ERR, "");
+		}
+		String s = String.valueOf(value);
+		if (s.endsWith(".0")) {
+			s = s.substring(0, s.length() - 2);
+		}
+		return s + UNITS[unit - CSSPrimitiveValue.CSS_NUMBER];
+	}
 
-    /**
-     * The unit types representations
-     */
-    protected static final String[] UNITS = {
-        "", "%", "em", "ex", "px", "cm", "mm", "in", "pt",
-        "pc", "deg", "rad", "grad", "ms", "s", "Hz", "kHz", ""
-    };
+	/**
+	 * The unit types representations
+	 */
+	protected static final String[] UNITS = { "", "%", "em", "ex", "px", "cm", "mm", "in", "pt", "pc", "deg", "rad",
+			"grad", "ms", "s", "Hz", "kHz", "" };
 
-    /**
-     * The float value
-     */
-    protected float floatValue;
+	/**
+	 * The float value
+	 */
+	protected float floatValue;
 
-    /**
-     * The unit type
-     */
-    protected short unitType;
+	/**
+	 * The unit type
+	 */
+	protected short unitType;
 
-    /**
-     * Creates a new value.
-     */
-    public FloatValue(short unitType, float floatValue) {
-        this.unitType   = unitType;
-        this.floatValue = floatValue;
-    }
+	/**
+	 * Creates a new value.
+	 */
+	public FloatValue(short unitType, float floatValue) {
+		this.unitType = unitType;
+		this.floatValue = floatValue;
+	}
 
-    /**
-     * The type of the value.
-     */
-    @Override
-    public short getPrimitiveType() {
-        return unitType;
-    }
+	/**
+	 * The type of the value.
+	 */
+	@Override
+	public short getPrimitiveType() {
+		return unitType;
+	}
 
-    /**
-     * Returns the float value.
-     */
-    @Override
-    public float getFloatValue() {
-        return floatValue;
-    }
+	/**
+	 * Returns the float value.
+	 */
+	@Override
+	public float getFloatValue() {
+		return floatValue;
+	}
 
-    /**
-     *  A string representation of the current value.
-     */
-    @Override
-    public String getCssText() {
-        return getCssText(unitType, floatValue);
-    }
+	/**
+	 * A string representation of the current value.
+	 */
+	@Override
+	public String getCssText() {
+		return getCssText(unitType, floatValue);
+	}
 
-    /**
-     * Returns a printable representation of this value.
-     */
-    @Override
-    public String toString() {
-        return getCssText();
-    }
+	/**
+	 * Returns a printable representation of this value.
+	 */
+	@Override
+	public String toString() {
+		return getCssText();
+	}
 }

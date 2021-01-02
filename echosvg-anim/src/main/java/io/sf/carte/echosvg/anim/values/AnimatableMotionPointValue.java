@@ -29,147 +29,141 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatableMotionPointValue extends AnimatableValue {
 
-    /**
-     * The x coordinate.
-     */
-    protected float x;
+	/**
+	 * The x coordinate.
+	 */
+	protected float x;
 
-    /**
-     * The y coordinate.
-     */
-    protected float y;
+	/**
+	 * The y coordinate.
+	 */
+	protected float y;
 
-    /**
-     * The rotation angle in radians.
-     */
-    protected float angle;
+	/**
+	 * The rotation angle in radians.
+	 */
+	protected float angle;
 
-    /**
-     * Creates a new, uninitialized AnimatableMotionPointValue.
-     */
-    protected AnimatableMotionPointValue(AnimationTarget target) {
-        super(target);
-    }
-    
-    /**
-     * Creates a new AnimatableMotionPointValue with one x.
-     */
-    public AnimatableMotionPointValue(AnimationTarget target, float x, float y,
-                                     float angle) {
-        super(target);
-        this.x = x;
-        this.y = y;
-        this.angle = angle;
-    }
+	/**
+	 * Creates a new, uninitialized AnimatableMotionPointValue.
+	 */
+	protected AnimatableMotionPointValue(AnimationTarget target) {
+		super(target);
+	}
 
-    /**
-     * Performs interpolation to the given value.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to,
-                                       float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatableMotionPointValue res;
-        if (result == null) {
-            res = new AnimatableMotionPointValue(target);
-        } else {
-            res = (AnimatableMotionPointValue) result;
-        }
+	/**
+	 * Creates a new AnimatableMotionPointValue with one x.
+	 */
+	public AnimatableMotionPointValue(AnimationTarget target, float x, float y, float angle) {
+		super(target);
+		this.x = x;
+		this.y = y;
+		this.angle = angle;
+	}
 
-        float newX = x, newY = y, newAngle = angle;
-        int angleCount = 1;
+	/**
+	 * Performs interpolation to the given value.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatableMotionPointValue res;
+		if (result == null) {
+			res = new AnimatableMotionPointValue(target);
+		} else {
+			res = (AnimatableMotionPointValue) result;
+		}
 
-        if (to != null) {
-            AnimatableMotionPointValue toValue =
-                (AnimatableMotionPointValue) to;
-            newX += interpolation * (toValue.x - x);
-            newY += interpolation * (toValue.y - y);
-            newAngle += toValue.angle;
-            angleCount++;
-        }
-        if (accumulation != null && multiplier != 0) {
-            AnimatableMotionPointValue accValue =
-                (AnimatableMotionPointValue) accumulation;
-            newX += multiplier * accValue.x;
-            newY += multiplier * accValue.y;
-            newAngle += accValue.angle;
-            angleCount++;
-        }
-        newAngle /= angleCount;
+		float newX = x, newY = y, newAngle = angle;
+		int angleCount = 1;
 
-        if (res.x != newX || res.y != newY || res.angle != newAngle) {
-            res.x = newX;
-            res.y = newY;
-            res.angle = newAngle;
-            res.hasChanged = true;
-        }
-        return res;
-    }
+		if (to != null) {
+			AnimatableMotionPointValue toValue = (AnimatableMotionPointValue) to;
+			newX += interpolation * (toValue.x - x);
+			newY += interpolation * (toValue.y - y);
+			newAngle += toValue.angle;
+			angleCount++;
+		}
+		if (accumulation != null && multiplier != 0) {
+			AnimatableMotionPointValue accValue = (AnimatableMotionPointValue) accumulation;
+			newX += multiplier * accValue.x;
+			newY += multiplier * accValue.y;
+			newAngle += accValue.angle;
+			angleCount++;
+		}
+		newAngle /= angleCount;
 
-    /**
-     * Returns the x coordinate.
-     */
-    public float getX() {
-        return x;
-    }
+		if (res.x != newX || res.y != newY || res.angle != newAngle) {
+			res.x = newX;
+			res.y = newY;
+			res.angle = newAngle;
+			res.hasChanged = true;
+		}
+		return res;
+	}
 
-    /**
-     * Returns the y coordinate.
-     */
-    public float getY() {
-        return y;
-    }
+	/**
+	 * Returns the x coordinate.
+	 */
+	public float getX() {
+		return x;
+	}
 
-    /**
-     * Returns the rotation angle.
-     */
-    public float getAngle() {
-        return angle;
-    }
+	/**
+	 * Returns the y coordinate.
+	 */
+	public float getY() {
+		return y;
+	}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return true;
-    }
+	/**
+	 * Returns the rotation angle.
+	 */
+	public float getAngle() {
+		return angle;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        AnimatableMotionPointValue o = (AnimatableMotionPointValue) other;
-        float dx = x - o.x;
-        float dy = y - o.y;
-        return (float) Math.sqrt(dx * dx + dy * dy);
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return true;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        return new AnimatableMotionPointValue(target, 0f, 0f, 0f);
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		AnimatableMotionPointValue o = (AnimatableMotionPointValue) other;
+		float dx = x - o.x;
+		float dy = y - o.y;
+		return (float) Math.sqrt(dx * dx + dy * dy);
+	}
 
-    /**
-     * Returns a string representation of this object.
-     */
-    @Override
-    public String toStringRep() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(formatNumber(x));
-        sb.append(',');
-        sb.append(formatNumber(y));
-        sb.append(',');
-        sb.append(formatNumber(angle));
-        sb.append("rad");
-        return sb.toString();
-    }
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		return new AnimatableMotionPointValue(target, 0f, 0f, 0f);
+	}
+
+	/**
+	 * Returns a string representation of this object.
+	 */
+	@Override
+	public String toStringRep() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(formatNumber(x));
+		sb.append(',');
+		sb.append(formatNumber(y));
+		sb.append(',');
+		sb.append(formatNumber(angle));
+		sb.append("rad");
+		return sb.toString();
+	}
 }

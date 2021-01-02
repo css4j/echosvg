@@ -38,74 +38,60 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @version $Id$
  */
 public class SetAttributeTest extends AbstractTest {
-    protected String testFileName;
-    protected String rootTag;
-    protected String targetId;
-    protected String targetAttribute;
-    protected String targetValue;
+	protected String testFileName;
+	protected String rootTag;
+	protected String targetId;
+	protected String targetAttribute;
+	protected String targetValue;
 
-    protected String parserClassName = XMLResourceDescriptor.getXMLParserClassName();
+	protected String parserClassName = XMLResourceDescriptor.getXMLParserClassName();
 
-    public static String ERROR_GET_ELEMENT_BY_ID_FAILED 
-        = "error.get.element.by.id.failed";
+	public static String ERROR_GET_ELEMENT_BY_ID_FAILED = "error.get.element.by.id.failed";
 
-    public static String ENTRY_KEY_ID 
-        = "entry.key.id";
+	public static String ENTRY_KEY_ID = "entry.key.id";
 
-    public SetAttributeTest(String testFileName,
-                            String rootTag,
-                            String targetId,
-                            String targetAttribute,
-                            String targetValue){
-        this.testFileName = testFileName;
-        this.rootTag = rootTag;
-        this.targetId = targetId;
-        this.targetAttribute = targetAttribute;
-        this.targetValue = targetValue;
-    }
+	public SetAttributeTest(String testFileName, String rootTag, String targetId, String targetAttribute,
+			String targetValue) {
+		this.testFileName = testFileName;
+		this.rootTag = rootTag;
+		this.targetId = targetId;
+		this.targetAttribute = targetAttribute;
+		this.targetValue = targetValue;
+	}
 
-    public String getParserClassName(){
-        return parserClassName;
-    }
+	public String getParserClassName() {
+		return parserClassName;
+	}
 
-    public void setParserClassName(String parserClassName){
-        this.parserClassName = parserClassName;
-    }
+	public void setParserClassName(String parserClassName) {
+		this.parserClassName = parserClassName;
+	}
 
-    @Override
-    public TestReport runImpl() throws Exception {
-        DocumentFactory df 
-            = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), 
-                                     parserClassName);
+	@Override
+	public TestReport runImpl() throws Exception {
+		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parserClassName);
 
-        File f = (new File(testFileName));
-        URL url = f.toURI().toURL();
-        Document doc = df.createDocument(null,
-                                         rootTag,
-                                         url.toString(),
-                                         url.openStream());
+		File f = (new File(testFileName));
+		URL url = f.toURI().toURL();
+		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
-        
-        Element e = doc.getElementById(targetId);
+		Element e = doc.getElementById(targetId);
 
-        if(e == null){
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode(ERROR_GET_ELEMENT_BY_ID_FAILED);
-            report.addDescriptionEntry(ENTRY_KEY_ID,
-                                       targetId);
-            report.setPassed(false);
-            return report;
-        }
-            
-            
-        e.setAttribute(targetAttribute, targetValue);
-        if(targetValue.equals(e.getAttribute(targetAttribute))){
-            return reportSuccess();
-        }
-        DefaultTestReport report = new DefaultTestReport(this);
-        report.setErrorCode(TestReport.ERROR_TEST_FAILED);
-        report.setPassed(false);
-        return report;
-    }
+		if (e == null) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode(ERROR_GET_ELEMENT_BY_ID_FAILED);
+			report.addDescriptionEntry(ENTRY_KEY_ID, targetId);
+			report.setPassed(false);
+			return report;
+		}
+
+		e.setAttribute(targetAttribute, targetValue);
+		if (targetValue.equals(e.getAttribute(targetAttribute))) {
+			return reportSuccess();
+		}
+		DefaultTestReport report = new DefaultTestReport(this);
+		report.setErrorCode(TestReport.ERROR_TEST_FAILED);
+		report.setPassed(false);
+		return report;
+	}
 }
-

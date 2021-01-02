@@ -34,16 +34,13 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  */
 public interface ClipBridge extends Bridge {
 
-    /**
-     * Creates a <code>Clip</code> according to the specified parameters.
-     *
-     * @param ctx the bridge context to use
-     * @param clipElement the element that defines the clip
-     * @param clipedElement the element that references the clip element
-     * @param clipedNode the graphics node to clip
-     */
-    ClipRable createClip(BridgeContext ctx,
-                         Element clipElement,
-                         Element clipedElement,
-                         GraphicsNode clipedNode);
+	/**
+	 * Creates a <code>Clip</code> according to the specified parameters.
+	 *
+	 * @param ctx           the bridge context to use
+	 * @param clipElement   the element that defines the clip
+	 * @param clipedElement the element that references the clip element
+	 * @param clipedNode    the graphics node to clip
+	 */
+	ClipRable createClip(BridgeContext ctx, Element clipElement, Element clipedElement, GraphicsNode clipedNode);
 }

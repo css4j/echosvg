@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.css.engine;
 
 /**
- * This interface must be implemented by the DOM nodes which represent
- * CSS style-sheets.
+ * This interface must be implemented by the DOM nodes which represent CSS
+ * style-sheets.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -28,9 +28,9 @@ package io.sf.carte.echosvg.css.engine;
  */
 public interface CSSStyleSheetNode {
 
-    /**
-     * Returns the StyleSheet object this node represents. The result
-     * is null if no style-sheet is available.
-     */
-    StyleSheet getCSSStyleSheet();
+	/**
+	 * Returns the StyleSheet object this node represents. The result is null if no
+	 * style-sheet is available.
+	 */
+	StyleSheet getCSSStyleSheet();
 }

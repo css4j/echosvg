@@ -20,19 +20,16 @@ package io.sf.carte.echosvg.bridge;
 
 import org.w3c.dom.Document;
 
-
 /**
- * This interface must be implemented in order to call Java code from
- * an SVG document.
+ * This interface must be implemented in order to call Java code from an SVG
+ * document.
  *
- * A ScriptHandler instance is called when a 'script' element's 'type'
- * attribute value is 'application/java-archive' and when the
- * manifest of the jar file referenced by the 'xlink:href' attribute
- * contains a 'Script-Handler' entry.  The value of this entry must be
- * the classname of the ScriptHandler to call.
+ * A ScriptHandler instance is called when a 'script' element's 'type' attribute
+ * value is 'application/java-archive' and when the manifest of the jar file
+ * referenced by the 'xlink:href' attribute contains a 'Script-Handler' entry.
+ * The value of this entry must be the classname of the ScriptHandler to call.
  *
- * This classes implementing this interface must have a default
- * constructor.
+ * This classes implementing this interface must have a default constructor.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -40,11 +37,12 @@ import org.w3c.dom.Document;
  */
 public interface ScriptHandler {
 
-    /**
-     * Runs this handler.  This method is called by the SVG viewer
-     * when the scripts are loaded.
-     * @param doc The current document.
-     * @param win An object which represents the current viewer.
-     */
-    void run(Document doc, Window win);
+	/**
+	 * Runs this handler. This method is called by the SVG viewer when the scripts
+	 * are loaded.
+	 * 
+	 * @param doc The current document.
+	 * @param win An object which represents the current viewer.
+	 */
+	void run(Document doc, Window win);
 }

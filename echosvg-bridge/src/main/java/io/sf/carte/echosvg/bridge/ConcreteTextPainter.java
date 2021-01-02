@@ -23,7 +23,6 @@ import java.awt.font.TextLayout;
 import java.awt.geom.Point2D;
 import java.text.AttributedCharacterIterator;
 
-
 /**
  * Renders the attributed character iterator of a <code>TextNode</code>.
  *
@@ -33,29 +32,29 @@ import java.text.AttributedCharacterIterator;
  */
 public abstract class ConcreteTextPainter extends BasicTextPainter {
 
-    /**
-     * Paints the specified attributed character iterator using the
-     * specified Graphics2D and context and font context.
-     * @param aci the AttributedCharacterIterator containing the text
-     * @param location the location to paint the text
-     * @param anchor the text anchor position
-     * @param g2d the Graphics2D to use
-     */
-    public void paint(AttributedCharacterIterator aci, Point2D location, 
-                      TextNode.Anchor anchor, Graphics2D g2d) {
-        // Compute aci size to be able to draw it
-        TextLayout layout = new TextLayout(aci, fontRenderContext);
-        float advance = layout.getAdvance();
-        float tx = 0;
+	/**
+	 * Paints the specified attributed character iterator using the specified
+	 * Graphics2D and context and font context.
+	 * 
+	 * @param aci      the AttributedCharacterIterator containing the text
+	 * @param location the location to paint the text
+	 * @param anchor   the text anchor position
+	 * @param g2d      the Graphics2D to use
+	 */
+	public void paint(AttributedCharacterIterator aci, Point2D location, TextNode.Anchor anchor, Graphics2D g2d) {
+		// Compute aci size to be able to draw it
+		TextLayout layout = new TextLayout(aci, fontRenderContext);
+		float advance = layout.getAdvance();
+		float tx = 0;
 
-        switch(anchor.getType()){
-        case TextNode.Anchor.ANCHOR_MIDDLE:
-            tx = -advance/2;
-            break;
-        case TextNode.Anchor.ANCHOR_END:
-            tx = -advance;
-        }
-        layout.draw(g2d, (float)(location.getX() + tx), (float)(location.getY()));
-    }
+		switch (anchor.getType()) {
+		case TextNode.Anchor.ANCHOR_MIDDLE:
+			tx = -advance / 2;
+			break;
+		case TextNode.Anchor.ANCHOR_END:
+			tx = -advance;
+		}
+		layout.draw(g2d, (float) (location.getX() + tx), (float) (location.getY()));
+	}
 
 }

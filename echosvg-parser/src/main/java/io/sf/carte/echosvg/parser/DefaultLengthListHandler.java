@@ -25,32 +25,29 @@ package io.sf.carte.echosvg.parser;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DefaultLengthListHandler
-    extends    DefaultLengthHandler
-    implements LengthListHandler {
-    /**
-     * The only instance of this class.
-     */
-    public static final LengthListHandler INSTANCE
-        = new DefaultLengthListHandler();
+public class DefaultLengthListHandler extends DefaultLengthHandler implements LengthListHandler {
+	/**
+	 * The only instance of this class.
+	 */
+	public static final LengthListHandler INSTANCE = new DefaultLengthListHandler();
 
-    /**
-     * This class does not need to be instantiated.
-     */
-    protected DefaultLengthListHandler() {
-    }
+	/**
+	 * This class does not need to be instantiated.
+	 */
+	protected DefaultLengthListHandler() {
+	}
 
-    /**
-     * Implements {@link LengthListHandler#startLengthList()}.
-     */
-    @Override
-    public void startLengthList() throws ParseException {
-    }
+	/**
+	 * Implements {@link LengthListHandler#startLengthList()}.
+	 */
+	@Override
+	public void startLengthList() throws ParseException {
+	}
 
-    /**
-     * Implements {@link LengthListHandler#endLengthList()}.
-     */
-    @Override
-    public void endLengthList() throws ParseException {
-    }
+	/**
+	 * Implements {@link LengthListHandler#endLengthList()}.
+	 */
+	@Override
+	public void endLengthList() throws ParseException {
+	}
 }

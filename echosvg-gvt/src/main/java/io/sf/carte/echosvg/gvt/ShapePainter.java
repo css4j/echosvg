@@ -32,57 +32,57 @@ import java.awt.geom.Rectangle2D;
  */
 public interface ShapePainter {
 
-    /**
-     * Paints the specified shape using the specified Graphics2D.
-     *
-     * @param g2d the Graphics2D to use
-     */
-    void paint(Graphics2D g2d);
+	/**
+	 * Paints the specified shape using the specified Graphics2D.
+	 *
+	 * @param g2d the Graphics2D to use
+	 */
+	void paint(Graphics2D g2d);
 
-    /**
-     * Returns the area painted by this shape painter.
-     */
-    Shape getPaintedArea();
+	/**
+	 * Returns the area painted by this shape painter.
+	 */
+	Shape getPaintedArea();
 
-    /**
-     * Returns the bounds of the area painted by this shape painter
-     */
-    Rectangle2D getPaintedBounds2D();
+	/**
+	 * Returns the bounds of the area painted by this shape painter
+	 */
+	Rectangle2D getPaintedBounds2D();
 
-    /**
-     * Returns true if <code>pt</code> is in the painted area.
-     */
-    boolean inPaintedArea(Point2D pt);
+	/**
+	 * Returns true if <code>pt</code> is in the painted area.
+	 */
+	boolean inPaintedArea(Point2D pt);
 
-    /**
-     * Returns the area covered by this shape painter (even if nothing
-     * is painted there).
-     */
-    Shape getSensitiveArea();
+	/**
+	 * Returns the area covered by this shape painter (even if nothing is painted
+	 * there).
+	 */
+	Shape getSensitiveArea();
 
-    /**
-     * Returns the bounds of the area covered by this shape painter
-     * (even if nothing is painted there).
-     */
-    Rectangle2D getSensitiveBounds2D();
+	/**
+	 * Returns the bounds of the area covered by this shape painter (even if nothing
+	 * is painted there).
+	 */
+	Rectangle2D getSensitiveBounds2D();
 
-    /**
-     * Returns true if <code>pt</code> is in the sensitive area.
-     */
-    boolean inSensitiveArea(Point2D pt);
+	/**
+	 * Returns true if <code>pt</code> is in the sensitive area.
+	 */
+	boolean inSensitiveArea(Point2D pt);
 
-    /**
-     * Sets the Shape this shape painter is associated with.
-     *
-     * @param shape new shape this painter should be associated with.
-     * Should not be null.  
-     */
-    void setShape(Shape shape);
+	/**
+	 * Sets the Shape this shape painter is associated with.
+	 *
+	 * @param shape new shape this painter should be associated with. Should not be
+	 *              null.
+	 */
+	void setShape(Shape shape);
 
-    /**
-     * Gets the shape this shape painter is associated with.
-     *
-     * @return shape associated with this painter
-     */
-    Shape getShape();
+	/**
+	 * Gets the shape this shape painter is associated with.
+	 *
+	 * @return shape associated with this painter
+	 */
+	Shape getShape();
 }

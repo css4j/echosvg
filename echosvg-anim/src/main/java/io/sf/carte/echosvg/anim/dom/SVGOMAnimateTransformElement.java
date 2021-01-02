@@ -30,22 +30,17 @@ import io.sf.carte.echosvg.dom.AbstractDocument;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMAnimateTransformElement
-    extends    SVGOMAnimationElement
-    implements SVGAnimateTransformElement {
+public class SVGOMAnimateTransformElement extends SVGOMAnimationElement implements SVGAnimateTransformElement {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * The attribute initializer.
-     */
-    protected static final AttributeInitializer attributeInitializer;
-    static {
-        attributeInitializer = new AttributeInitializer(1);
-        attributeInitializer.addAttribute(null,
-                                          null,
-                                          SVG_TYPE_ATTRIBUTE,
-                                          SVG_TRANSLATE_VALUE);
-    }
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The attribute initializer.
+	 */
+	protected static final AttributeInitializer attributeInitializer;
+	static {
+		attributeInitializer = new AttributeInitializer(1);
+		attributeInitializer.addAttribute(null, null, SVG_TYPE_ATTRIBUTE, SVG_TRANSLATE_VALUE);
+	}
 
 //     /**
 //      * Table mapping XML attribute names to TraitInformation objects.
@@ -97,46 +92,47 @@ public class SVGOMAnimateTransformElement
 //         xmlTraitInformation = t;
 //     }
 
-    /**
-     * Creates a new SVGOMAnimateTransformElement object.
-     */
-    protected SVGOMAnimateTransformElement() {
-    }
+	/**
+	 * Creates a new SVGOMAnimateTransformElement object.
+	 */
+	protected SVGOMAnimateTransformElement() {
+	}
 
-    /**
-     * Creates a new SVGOMAnimateTransformElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMAnimateTransformElement(String prefix,
-                                        AbstractDocument owner) {
-        super(prefix, owner);
-    }
+	/**
+	 * Creates a new SVGOMAnimateTransformElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMAnimateTransformElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_ANIMATE_TRANSFORM_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_ANIMATE_TRANSFORM_TAG;
+	}
 
-    /**
-     * Returns the AttributeInitializer for this element type.
-     * @return null if this element has no attribute with a default value.
-     */
-    @Override
-    protected AttributeInitializer getAttributeInitializer() {
-        return attributeInitializer;
-    }
+	/**
+	 * Returns the AttributeInitializer for this element type.
+	 * 
+	 * @return null if this element has no attribute with a default value.
+	 */
+	@Override
+	protected AttributeInitializer getAttributeInitializer() {
+		return attributeInitializer;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMAnimateTransformElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMAnimateTransformElement();
+	}
 
 //     /**
 //      * Returns the table of TraitInformation objects for this element.

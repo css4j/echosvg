@@ -31,23 +31,24 @@ import java.lang.ref.Reference;
  * @version $Id$
  */
 final class BufferedImageHintKey extends RenderingHints.Key {
-    BufferedImageHintKey(int number) { super(number); }
+	BufferedImageHintKey(int number) {
+		super(number);
+	}
 
-    @Override
-    public boolean isCompatibleValue(Object val) {
-        if (val == null)
-            return true;
+	@Override
+	public boolean isCompatibleValue(Object val) {
+		if (val == null)
+			return true;
 
-        if (!(val instanceof Reference))
-            return false;
-        Reference<?> ref = (Reference<?>)val;
-        val = ref.get();
-        if (val == null)
-            return true;
-        if (val instanceof BufferedImage)
-            return true;
+		if (!(val instanceof Reference))
+			return false;
+		Reference<?> ref = (Reference<?>) val;
+		val = ref.get();
+		if (val == null)
+			return true;
+		if (val instanceof BufferedImage)
+			return true;
 
-        return false;
-    }
+		return false;
+	}
 }
-

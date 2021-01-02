@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.bridge;
 
 /**
- * A tagging interface to prevent a repaint at the end of the
- * execution of this runnable.
+ * A tagging interface to prevent a repaint at the end of the execution of this
+ * runnable.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.

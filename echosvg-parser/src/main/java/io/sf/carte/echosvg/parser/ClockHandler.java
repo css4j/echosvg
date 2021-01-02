@@ -19,9 +19,8 @@
 package io.sf.carte.echosvg.parser;
 
 /**
- * This interface must be implemented and then registered as the
- * handler of a {@link ClockParser} instance in order
- * to be notified of parsing events.
+ * This interface must be implemented and then registered as the handler of a
+ * {@link ClockParser} instance in order to be notified of parsing events.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -29,8 +28,8 @@ package io.sf.carte.echosvg.parser;
  */
 public interface ClockHandler {
 
-    /**
-     * Invoked when a clock value is parsed.
-     */
-    void clockValue(float clockValue);
+	/**
+	 * Invoked when a clock value is parsed.
+	 */
+	void clockValue(float clockValue);
 }

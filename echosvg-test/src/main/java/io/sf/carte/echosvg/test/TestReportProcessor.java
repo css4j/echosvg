@@ -19,33 +19,27 @@
 package io.sf.carte.echosvg.test;
 
 /**
- * Interface for classes that can process <code>TestReport</code> instances
- * This allows different applications to use the same <code>TestReport</code>
- * for different purposes, such as generating an XML output or
- * emailing a test result summary.
+ * Interface for classes that can process <code>TestReport</code> instances This
+ * allows different applications to use the same <code>TestReport</code> for
+ * different purposes, such as generating an XML output or emailing a test
+ * result summary.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface TestReportProcessor {
-    /**
-     * Generic error code. Takes no parameter.
-     */
-    String INTERNAL_ERROR =
-        "TestReportProcessor.error.code.internal.error";
+	/**
+	 * Generic error code. Takes no parameter.
+	 */
+	String INTERNAL_ERROR = "TestReportProcessor.error.code.internal.error";
 
-    /**
-     * Requests the processor to process the input
-     * <code>TestReport</code> instances. Note that a processor
-     * should make its own copy of any resource described
-     * by a <code>TestReport</code> such as files, as these
-     * may be transient resources. In particular, a
-     * processor should not keep a reference to the
-     * input <code>TestReport</code>
-     */
-    void processReport(TestReport report)
-        throws TestException;
+	/**
+	 * Requests the processor to process the input <code>TestReport</code>
+	 * instances. Note that a processor should make its own copy of any resource
+	 * described by a <code>TestReport</code> such as files, as these may be
+	 * transient resources. In particular, a processor should not keep a reference
+	 * to the input <code>TestReport</code>
+	 */
+	void processReport(TestReport report) throws TestException;
 }
-
-

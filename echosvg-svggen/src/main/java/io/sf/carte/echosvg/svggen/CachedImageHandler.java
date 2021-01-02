@@ -18,21 +18,20 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-
 /**
- * Extends the default ImageHandler interface with calls to
- * allow caching of raster images in generated SVG content.
+ * Extends the default ImageHandler interface with calls to allow caching of
+ * raster images in generated SVG content.
  *
  * @author <a href="mailto:paul_evenblij@compuware.com">Paul Evenblij</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface CachedImageHandler extends GenericImageHandler {
-    /**
-     * Returns the image cache instance in use by this handler
-     *
-     * @return the image cache
-     */
-    ImageCacher getImageCacher();
+	/**
+	 * Returns the image cache instance in use by this handler
+	 *
+	 * @return the image cache
+	 */
+	ImageCacher getImageCacher();
 
 }

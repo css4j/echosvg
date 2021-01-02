@@ -33,142 +33,141 @@ import java.awt.geom.Rectangle2D;
  */
 public class FillShapePainter implements ShapePainter {
 
-    /** 
-     * The Shape to be painted.
-     */
-    protected Shape shape;
+	/**
+	 * The Shape to be painted.
+	 */
+	protected Shape shape;
 
-    /** 
-     * The paint attribute used to fill the shape.
-     */
-    protected Paint paint;
+	/**
+	 * The paint attribute used to fill the shape.
+	 */
+	protected Paint paint;
 
-    /**
-     * Constructs a new <code>FillShapePainter</code> that can be used to fill
-     * a <code>Shape</code>.
-     *
-     * @param shape Shape to be painted by this painter
-     * Should not be null.  
-     */
-    public FillShapePainter(Shape shape) {
-        if (shape == null)
-            throw new IllegalArgumentException("Shape can not be null!");
+	/**
+	 * Constructs a new <code>FillShapePainter</code> that can be used to fill a
+	 * <code>Shape</code>.
+	 *
+	 * @param shape Shape to be painted by this painter Should not be null.
+	 */
+	public FillShapePainter(Shape shape) {
+		if (shape == null)
+			throw new IllegalArgumentException("Shape can not be null!");
 
-        this.shape = shape;
-    }
+		this.shape = shape;
+	}
 
-    /**
-     * Sets the paint used to fill a shape.
-     *
-     * @param newPaint the paint object used to fill the shape
-     */
-    public void setPaint(Paint newPaint) {
-        this.paint = newPaint;
-    }
+	/**
+	 * Sets the paint used to fill a shape.
+	 *
+	 * @param newPaint the paint object used to fill the shape
+	 */
+	public void setPaint(Paint newPaint) {
+		this.paint = newPaint;
+	}
 
-    /**
-     * Gets the paint used to draw the outline of the shape.
-     */
-    public Paint getPaint() {
-        return paint;
-    }
+	/**
+	 * Gets the paint used to draw the outline of the shape.
+	 */
+	public Paint getPaint() {
+		return paint;
+	}
 
-    /**
-     * Paints the specified shape using the specified Graphics2D.
-     *
-     * @param g2d the Graphics2D to use
-     */
-    @Override
-    public void paint(Graphics2D g2d) {
-        if (paint != null) {
-            g2d.setPaint(paint);
-            g2d.fill(shape);
-        }
-    }
+	/**
+	 * Paints the specified shape using the specified Graphics2D.
+	 *
+	 * @param g2d the Graphics2D to use
+	 */
+	@Override
+	public void paint(Graphics2D g2d) {
+		if (paint != null) {
+			g2d.setPaint(paint);
+			g2d.fill(shape);
+		}
+	}
 
-    /**
-     * Returns the area painted by this shape painter.
-     */
-    @Override
-    public Shape getPaintedArea(){
-        if (paint == null)
-            return null;
-        return shape;
-    }
+	/**
+	 * Returns the area painted by this shape painter.
+	 */
+	@Override
+	public Shape getPaintedArea() {
+		if (paint == null)
+			return null;
+		return shape;
+	}
 
-    /**
-     * Returns the bounds of the area painted by this shape painter
-     */
-    @Override
-    public Rectangle2D getPaintedBounds2D(){
-        if ((paint == null) || (shape == null))
-            return  null;
+	/**
+	 * Returns the bounds of the area painted by this shape painter
+	 */
+	@Override
+	public Rectangle2D getPaintedBounds2D() {
+		if ((paint == null) || (shape == null))
+			return null;
 
-        return shape.getBounds2D();
-    }
+		return shape.getBounds2D();
+	}
 
-    /**
-     * Returns true if pt is in the area painted by this shape painter
-     */
-    @Override
-    public boolean inPaintedArea(Point2D pt){
-        if ((paint == null) || (shape == null))
-            return  false;
+	/**
+	 * Returns true if pt is in the area painted by this shape painter
+	 */
+	@Override
+	public boolean inPaintedArea(Point2D pt) {
+		if ((paint == null) || (shape == null))
+			return false;
 
-        return shape.contains(pt);
-    }
+		return shape.contains(pt);
+	}
 
-    /**
-     * Returns the area covered by this shape painter (even if not painted).
-     * 
-     */
-    @Override
-    public Shape getSensitiveArea(){
-        return shape;
-    }
+	/**
+	 * Returns the area covered by this shape painter (even if not painted).
+	 * 
+	 */
+	@Override
+	public Shape getSensitiveArea() {
+		return shape;
+	}
 
-    /**
-     * Returns the bounds of the area covered by this shape painte
-     * (even if not painted).
-     */
-    @Override
-    public Rectangle2D getSensitiveBounds2D() {
-        if (shape == null)
-            return  null;
-        return shape.getBounds2D();
-    }
+	/**
+	 * Returns the bounds of the area covered by this shape painte (even if not
+	 * painted).
+	 */
+	@Override
+	public Rectangle2D getSensitiveBounds2D() {
+		if (shape == null)
+			return null;
+		return shape.getBounds2D();
+	}
 
-    /**
-     * Returns true if pt is in the area painted by this shape painter
-     */
-    @Override
-    public boolean inSensitiveArea(Point2D pt){
-        if (shape == null)
-            return  false;
-        return shape.contains(pt);
-    }
+	/**
+	 * Returns true if pt is in the area painted by this shape painter
+	 */
+	@Override
+	public boolean inSensitiveArea(Point2D pt) {
+		if (shape == null)
+			return false;
+		return shape.contains(pt);
+	}
 
-    /**
-     * Sets the Shape this shape painter is associated with.
-     *
-     * @param shape new shape this painter should be associated with.
-     * Should not be null.  
-     */
-    @Override
-    public void setShape(Shape shape){
-        if (shape == null) {
-            throw new IllegalArgumentException();
-        }
-        this.shape = shape;
-    }
+	/**
+	 * Sets the Shape this shape painter is associated with.
+	 *
+	 * @param shape new shape this painter should be associated with. Should not be
+	 *              null.
+	 */
+	@Override
+	public void setShape(Shape shape) {
+		if (shape == null) {
+			throw new IllegalArgumentException();
+		}
+		this.shape = shape;
+	}
 
-    /**
-     * Gets the Shape this shape painter is associated with.
-     *
-     * @return shape associated with this Painter.
-     */
-    @Override
-    public Shape getShape(){
-        return shape;
-    }
+	/**
+	 * Gets the Shape this shape painter is associated with.
+	 *
+	 * @return shape associated with this Painter.
+	 */
+	@Override
+	public Shape getShape() {
+		return shape;
+	}
 }

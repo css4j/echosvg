@@ -29,95 +29,93 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatableBooleanValue extends AnimatableValue {
 
-    /**
-     * The boolean value.
-     */
-    protected boolean value;
-    
-    /**
-     * Creates a new, uninitialized AnimatableBooleanValue.
-     */
-    protected AnimatableBooleanValue(AnimationTarget target) {
-        super(target);
-    }
+	/**
+	 * The boolean value.
+	 */
+	protected boolean value;
 
-    /**
-     * Creates a new AnimatableBooleanValue.
-     */
-    public AnimatableBooleanValue(AnimationTarget target, boolean b) {
-        super(target);
-        value = b;
-    }
-    
-    /**
-     * Performs interpolation to the given value.  Boolean values cannot be
-     * interpolated.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to, float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatableBooleanValue res;
-        if (result == null) {
-            res = new AnimatableBooleanValue(target);
-        } else {
-            res = (AnimatableBooleanValue) result;
-        }
+	/**
+	 * Creates a new, uninitialized AnimatableBooleanValue.
+	 */
+	protected AnimatableBooleanValue(AnimationTarget target) {
+		super(target);
+	}
 
-        boolean newValue;
-        if (to != null && interpolation >= 0.5) {
-            AnimatableBooleanValue toValue = (AnimatableBooleanValue) to;
-            newValue = toValue.value;
-        } else {
-            newValue = value;
-        }
+	/**
+	 * Creates a new AnimatableBooleanValue.
+	 */
+	public AnimatableBooleanValue(AnimationTarget target, boolean b) {
+		super(target);
+		value = b;
+	}
 
-        if (res.value != newValue) {
-            res.value = newValue;
-            res.hasChanged = true;
-        }
-        return res;
-    }
+	/**
+	 * Performs interpolation to the given value. Boolean values cannot be
+	 * interpolated.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatableBooleanValue res;
+		if (result == null) {
+			res = new AnimatableBooleanValue(target);
+		} else {
+			res = (AnimatableBooleanValue) result;
+		}
 
-    /**
-     * Returns the boolean value.
-     */
-    public boolean getValue() {
-        return value;
-    }
+		boolean newValue;
+		if (to != null && interpolation >= 0.5) {
+			AnimatableBooleanValue toValue = (AnimatableBooleanValue) to;
+			newValue = toValue.value;
+		} else {
+			newValue = value;
+		}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return false;
-    }
+		if (res.value != newValue) {
+			res.value = newValue;
+			res.hasChanged = true;
+		}
+		return res;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        return 0f;
-    }
+	/**
+	 * Returns the boolean value.
+	 */
+	public boolean getValue() {
+		return value;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        return new AnimatableBooleanValue(target, false);
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return false;
+	}
 
-    /**
-     * Returns the CSS text representation of the value.
-     */
-    @Override
-    public String getCssText() {
-        return (value)?"true":"false";
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		return 0f;
+	}
+
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		return new AnimatableBooleanValue(target, false);
+	}
+
+	/**
+	 * Returns the CSS text representation of the value.
+	 */
+	@Override
+	public String getCssText() {
+		return (value) ? "true" : "false";
+	}
 }

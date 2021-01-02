@@ -31,8 +31,8 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  */
 public class DOMImplementationKey extends TranscodingHints.Key {
 
-    @Override
-    public boolean isCompatibleValue(Object v) {
-        return (v instanceof DOMImplementation);
-    }
+	@Override
+	public boolean isCompatibleValue(Object v) {
+		return (v instanceof DOMImplementation);
+	}
 }

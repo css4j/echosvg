@@ -22,38 +22,35 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Interface used to handle both Files and URLs in the
- * <code>SVGConverter</code>
+ * Interface used to handle both Files and URLs in the <code>SVGConverter</code>
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface SVGConverterSource {
-    /**
-     * Returns the name of the source. That would be the
-     * name for a File or URL
-     */
-    String getName();
+	/**
+	 * Returns the name of the source. That would be the name for a File or URL
+	 */
+	String getName();
 
-    /**
-     * Gets a <code>TranscoderInput</code> for that source
-     */
-    InputStream openStream() throws IOException;
+	/**
+	 * Gets a <code>TranscoderInput</code> for that source
+	 */
+	InputStream openStream() throws IOException;
 
-    /**
-     * Checks if same as source described by srcStr
-     */
-    boolean isSameAs(String srcStr);
+	/**
+	 * Checks if same as source described by srcStr
+	 */
+	boolean isSameAs(String srcStr);
 
-    /**
-     * Checks if source can be read
-     */
-    boolean isReadable();
+	/**
+	 * Checks if source can be read
+	 */
+	boolean isReadable();
 
-    /**
-     * Returns a URI string corresponding to this source
-     */
-    String getURI();
+	/**
+	 * Returns a URI string corresponding to this source
+	 */
+	String getURI();
 }
-

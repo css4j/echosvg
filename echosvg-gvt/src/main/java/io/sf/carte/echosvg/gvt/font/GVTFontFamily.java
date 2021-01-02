@@ -31,37 +31,38 @@ import java.util.Map;
  */
 public interface GVTFontFamily {
 
-    /**
-     * Returns the font family name.
-     *
-     * @return The family name.
-     */
-    String getFamilyName();
+	/**
+	 * Returns the font family name.
+	 *
+	 * @return The family name.
+	 */
+	String getFamilyName();
 
-    /**
-     * Returns the FontFace for this fontFamily instance.
-     */
-    GVTFontFace getFontFace();
+	/**
+	 * Returns the FontFace for this fontFamily instance.
+	 */
+	GVTFontFace getFontFace();
 
-    /**
-     * Derives a GVTFont object of the correct size.
-     *
-     * @param size The required size of the derived font.
-     * @param aci The character iterator that will be rendered using
-     * the derived font.
-     */
-    GVTFont deriveFont(float size, AttributedCharacterIterator aci);
+	/**
+	 * Derives a GVTFont object of the correct size.
+	 *
+	 * @param size The required size of the derived font.
+	 * @param aci  The character iterator that will be rendered using the derived
+	 *             font.
+	 */
+	GVTFont deriveFont(float size, AttributedCharacterIterator aci);
 
-    /**
-     * Derives a GVTFont object of the correct size from an attribute Map.
-     * @param size  The required size of the derived font.
-     * @param attrs The Attribute Map to get Values from.
-     */
-    GVTFont deriveFont(float size, Map<Attribute, ?> attrs);
+	/**
+	 * Derives a GVTFont object of the correct size from an attribute Map.
+	 * 
+	 * @param size  The required size of the derived font.
+	 * @param attrs The Attribute Map to get Values from.
+	 */
+	GVTFont deriveFont(float size, Map<Attribute, ?> attrs);
 
-    /**
-     * This method returns true iff the font is a complex SVG font
-     */
-    boolean isComplex();
-     
+	/**
+	 * This method returns true iff the font is a complex SVG font
+	 */
+	boolean isComplex();
+
 }

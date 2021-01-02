@@ -32,48 +32,50 @@ import javax.swing.JButton;
  * @version $Id$
  */
 public class JToolbarButton extends JButton {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new toolbar button.
-     */
-    public JToolbarButton() {
-        initialize();
-    }
+	/**
+	 * Creates a new toolbar button.
+	 */
+	public JToolbarButton() {
+		initialize();
+	}
 
-    /**
-     * Creates a new toolbar button.
-     * @param txt The button text.
-     */
-    public JToolbarButton(String txt) {
-        super(txt);
-        initialize();
-    }
+	/**
+	 * Creates a new toolbar button.
+	 * 
+	 * @param txt The button text.
+	 */
+	public JToolbarButton(String txt) {
+		super(txt);
+		initialize();
+	}
 
-    /**
-     * Initializes the button.
-     */
-    protected void initialize() {
-        if (!System.getProperty("java.version").startsWith("1.3")) {
-            setOpaque(false);
-            setBackground(new java.awt.Color(0, 0, 0, 0));
-        }
-        setBorderPainted(false);
-        setMargin(new Insets(2, 2, 2, 2));
-        addMouseListener(new MouseListener());
-    }
+	/**
+	 * Initializes the button.
+	 */
+	protected void initialize() {
+		if (!System.getProperty("java.version").startsWith("1.3")) {
+			setOpaque(false);
+			setBackground(new java.awt.Color(0, 0, 0, 0));
+		}
+		setBorderPainted(false);
+		setMargin(new Insets(2, 2, 2, 2));
+		addMouseListener(new MouseListener());
+	}
 
-    /**
-     * To manage the mouse interactions.
-     */
-    protected class MouseListener extends MouseAdapter {
-        @Override
-        public void mouseEntered(MouseEvent ev) {
-            setBorderPainted(true);
-        }
-        @Override
-        public void mouseExited(MouseEvent ev) {
-            setBorderPainted(false);
-        }
-    }
+	/**
+	 * To manage the mouse interactions.
+	 */
+	protected class MouseListener extends MouseAdapter {
+		@Override
+		public void mouseEntered(MouseEvent ev) {
+			setBorderPainted(true);
+		}
+
+		@Override
+		public void mouseExited(MouseEvent ev) {
+			setBorderPainted(false);
+		}
+	}
 }

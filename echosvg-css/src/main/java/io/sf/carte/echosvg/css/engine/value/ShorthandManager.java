@@ -24,8 +24,8 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 
 /**
- * This interface represents the objects which provide support for
- * shorthand properties.
+ * This interface represents the objects which provide support for shorthand
+ * properties.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -33,40 +33,35 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
  */
 public interface ShorthandManager {
 
-    /**
-     * Returns the name of the property handled.
-     */
-    String getPropertyName();
+	/**
+	 * Returns the name of the property handled.
+	 */
+	String getPropertyName();
 
-    /**
-     * Whether the handled property can be animated.
-     */
-    boolean isAnimatableProperty();
+	/**
+	 * Whether the handled property can be animated.
+	 */
+	boolean isAnimatableProperty();
 
-    /**
-     * Whether the handled property can be additively animated.
-     */
-    boolean isAdditiveProperty();
+	/**
+	 * Whether the handled property can be additively animated.
+	 */
+	boolean isAdditiveProperty();
 
-    /**
-     * Sets the properties which are affected by this shorthand
-     * property.
-     * @param eng  The current CSSEngine.
-     * @param ph   The property handler to use.
-     * @param lu   The SAC lexical unit used to create the value.
-     * @param imp  The property priority.
-     */
-    void setValues(CSSEngine eng,
-                   PropertyHandler ph,
-                   LexicalUnit lu,
-                   boolean imp)
-        throws DOMException;
+	/**
+	 * Sets the properties which are affected by this shorthand property.
+	 * 
+	 * @param eng The current CSSEngine.
+	 * @param ph  The property handler to use.
+	 * @param lu  The SAC lexical unit used to create the value.
+	 * @param imp The property priority.
+	 */
+	void setValues(CSSEngine eng, PropertyHandler ph, LexicalUnit lu, boolean imp) throws DOMException;
 
-    /**
-     * To handle a property value created by a ShorthandManager.
-     */
-    interface PropertyHandler {
-        void property(String name, LexicalUnit value,
-                             boolean important);
-    }
+	/**
+	 * To handle a property value created by a ShorthandManager.
+	 */
+	interface PropertyHandler {
+		void property(String name, LexicalUnit value, boolean important);
+	}
 }

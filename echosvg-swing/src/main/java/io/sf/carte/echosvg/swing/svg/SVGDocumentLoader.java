@@ -39,133 +39,126 @@ import io.sf.carte.echosvg.util.HaltingThread;
  */
 public class SVGDocumentLoader extends HaltingThread {
 
-    /**
-     * The URL of the document,
-     */
-    protected String url;
+	/**
+	 * The URL of the document,
+	 */
+	protected String url;
 
-    /**
-     * The document loader.
-     */
-    protected DocumentLoader loader;
+	/**
+	 * The document loader.
+	 */
+	protected DocumentLoader loader;
 
-    /**
-     * The exception thrown.
-     */
-    protected Exception exception;
+	/**
+	 * The exception thrown.
+	 */
+	protected Exception exception;
 
-    /**
-     * The listeners.
-     */
-    protected List<Object> listeners = Collections.synchronizedList(new LinkedList<>());
+	/**
+	 * The listeners.
+	 */
+	protected List<Object> listeners = Collections.synchronizedList(new LinkedList<>());
 
-    /**
-     * Creates a new SVGDocumentLoader.
-     * @param u The URL of the document.
-     * @param l The document loader to use
-     */
-    public SVGDocumentLoader(String u, DocumentLoader l) {
-        url = u;
-        loader = l;
-    }
+	/**
+	 * Creates a new SVGDocumentLoader.
+	 * 
+	 * @param u The URL of the document.
+	 * @param l The document loader to use
+	 */
+	public SVGDocumentLoader(String u, DocumentLoader l) {
+		url = u;
+		loader = l;
+	}
 
-    /**
-     * Runs this loader.
-     */
-    @Override
-    public void run() {
-        SVGDocumentLoaderEvent evt;
-        evt = new SVGDocumentLoaderEvent(this, null);
-        try {
-            fireEvent(startedDispatcher, evt);
-            if (isHalted()) {
-                fireEvent(cancelledDispatcher, evt);
-                return;
-            }
+	/**
+	 * Runs this loader.
+	 */
+	@Override
+	public void run() {
+		SVGDocumentLoaderEvent evt;
+		evt = new SVGDocumentLoaderEvent(this, null);
+		try {
+			fireEvent(startedDispatcher, evt);
+			if (isHalted()) {
+				fireEvent(cancelledDispatcher, evt);
+				return;
+			}
 
-            SVGDocument svgDocument = (SVGDocument)loader.loadDocument(url);
+			SVGDocument svgDocument = (SVGDocument) loader.loadDocument(url);
 
-            if (isHalted()) {
-                fireEvent(cancelledDispatcher, evt);
-                return;
-            }
+			if (isHalted()) {
+				fireEvent(cancelledDispatcher, evt);
+				return;
+			}
 
-            evt = new SVGDocumentLoaderEvent(this, svgDocument);
-            fireEvent(completedDispatcher, evt);
-        } catch (InterruptedIOException e) {
-            fireEvent(cancelledDispatcher, evt);
-        } catch (Exception e) {
-            exception = e;
-            fireEvent(failedDispatcher, evt);
-        } catch (ThreadDeath td) {
-            exception = new Exception(td.getMessage());
-            fireEvent(failedDispatcher, evt);
-            throw td;
-        } catch (Throwable t) {
-            t.printStackTrace();
-            exception = new Exception(t.getMessage());
-            fireEvent(failedDispatcher, evt);
-        }
-    }
+			evt = new SVGDocumentLoaderEvent(this, svgDocument);
+			fireEvent(completedDispatcher, evt);
+		} catch (InterruptedIOException e) {
+			fireEvent(cancelledDispatcher, evt);
+		} catch (Exception e) {
+			exception = e;
+			fireEvent(failedDispatcher, evt);
+		} catch (ThreadDeath td) {
+			exception = new Exception(td.getMessage());
+			fireEvent(failedDispatcher, evt);
+			throw td;
+		} catch (Throwable t) {
+			t.printStackTrace();
+			exception = new Exception(t.getMessage());
+			fireEvent(failedDispatcher, evt);
+		}
+	}
 
-    /**
-     * Returns the exception, if any occured.
-     */
-    public Exception getException() {
-        return exception;
-    }
+	/**
+	 * Returns the exception, if any occured.
+	 */
+	public Exception getException() {
+		return exception;
+	}
 
-    /**
-     * Adds a SVGDocumentLoaderListener to this SVGDocumentLoader.
-     */
-    public void addSVGDocumentLoaderListener(SVGDocumentLoaderListener l) {
-        listeners.add(l);
-    }
+	/**
+	 * Adds a SVGDocumentLoaderListener to this SVGDocumentLoader.
+	 */
+	public void addSVGDocumentLoaderListener(SVGDocumentLoaderListener l) {
+		listeners.add(l);
+	}
 
-    /**
-     * Removes a SVGDocumentLoaderListener from this SVGDocumentLoader.
-     */
-    public void removeSVGDocumentLoaderListener(SVGDocumentLoaderListener l) {
-        listeners.remove(l);
-    }
+	/**
+	 * Removes a SVGDocumentLoaderListener from this SVGDocumentLoader.
+	 */
+	public void removeSVGDocumentLoaderListener(SVGDocumentLoaderListener l) {
+		listeners.remove(l);
+	}
 
-    public void fireEvent(Dispatcher dispatcher, Object event) {
-        EventDispatcher.fireEvent(dispatcher, listeners, event, true);
-    }
+	public void fireEvent(Dispatcher dispatcher, Object event) {
+		EventDispatcher.fireEvent(dispatcher, listeners, event, true);
+	}
 
-    static Dispatcher startedDispatcher = new Dispatcher() {
-            @Override
-            public void dispatch(Object listener,
-                                 Object event) {
-                ((SVGDocumentLoaderListener)listener).documentLoadingStarted
-                    ((SVGDocumentLoaderEvent)event);
-            }
-        };
-            
-            static Dispatcher completedDispatcher = new Dispatcher() {
-            @Override
-            public void dispatch(Object listener,
-                                 Object event) {
-                ((SVGDocumentLoaderListener)listener).documentLoadingCompleted
-                 ((SVGDocumentLoaderEvent)event);
-            }
-        };
+	static Dispatcher startedDispatcher = new Dispatcher() {
+		@Override
+		public void dispatch(Object listener, Object event) {
+			((SVGDocumentLoaderListener) listener).documentLoadingStarted((SVGDocumentLoaderEvent) event);
+		}
+	};
 
-    static Dispatcher cancelledDispatcher = new Dispatcher() {
-            @Override
-            public void dispatch(Object listener,
-                                 Object event) {
-                ((SVGDocumentLoaderListener)listener).documentLoadingCancelled
-                 ((SVGDocumentLoaderEvent)event);
-            }
-        };
+	static Dispatcher completedDispatcher = new Dispatcher() {
+		@Override
+		public void dispatch(Object listener, Object event) {
+			((SVGDocumentLoaderListener) listener).documentLoadingCompleted((SVGDocumentLoaderEvent) event);
+		}
+	};
 
-    static Dispatcher failedDispatcher = new Dispatcher() {
-            @Override
-            public void dispatch(Object listener,
-                                 Object event) {
-                ((SVGDocumentLoaderListener)listener).documentLoadingFailed
-                 ((SVGDocumentLoaderEvent)event);
-            }
-        };
+	static Dispatcher cancelledDispatcher = new Dispatcher() {
+		@Override
+		public void dispatch(Object listener, Object event) {
+			((SVGDocumentLoaderListener) listener).documentLoadingCancelled((SVGDocumentLoaderEvent) event);
+		}
+	};
+
+	static Dispatcher failedDispatcher = new Dispatcher() {
+		@Override
+		public void dispatch(Object listener, Object event) {
+			((SVGDocumentLoaderListener) listener).documentLoadingFailed((SVGDocumentLoaderEvent) event);
+		}
+	};
 }

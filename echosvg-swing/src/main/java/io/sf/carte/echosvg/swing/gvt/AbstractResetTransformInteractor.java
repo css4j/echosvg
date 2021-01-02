@@ -23,126 +23,125 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 /**
- * This class represents an interactor which reset the rendering transform
- * of the associated document.
+ * This class represents an interactor which reset the rendering transform of
+ * the associated document.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class AbstractResetTransformInteractor implements Interactor {
-    
-    /**
-     * Whether the interactor has finished.
-     */
-    protected boolean finished = true;
 
-    /**
-     * Tells whether the interaction has finished.
-     */
-    @Override
-    public boolean endInteraction() {
-        return finished;
-    }
+	/**
+	 * Whether the interactor has finished.
+	 */
+	protected boolean finished = true;
 
-    // KeyListener //////////////////////////////////////////////////////////
+	/**
+	 * Tells whether the interaction has finished.
+	 */
+	@Override
+	public boolean endInteraction() {
+		return finished;
+	}
 
-    /**
-     * Invoked when a key has been typed.
-     * This event occurs when a key press is followed by a key release.
-     */
-    @Override
-    public void keyTyped(KeyEvent e) {
-        resetTransform(e);
-    }
-        
-    /**
-     * Invoked when a key has been pressed.
-     */
-    @Override
-    public void keyPressed(KeyEvent e) {
-        resetTransform(e);
-    }
+	// KeyListener //////////////////////////////////////////////////////////
 
-    /**
-     * Invoked when a key has been released.
-     */
-    @Override
-    public void keyReleased(KeyEvent e) {
-        resetTransform(e);
-    }
+	/**
+	 * Invoked when a key has been typed. This event occurs when a key press is
+	 * followed by a key release.
+	 */
+	@Override
+	public void keyTyped(KeyEvent e) {
+		resetTransform(e);
+	}
 
-    // MouseListener ///////////////////////////////////////////////////////
-        
-    /**
-     * Invoked when the mouse has been clicked on a component.
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        resetTransform(e);
-    }
+	/**
+	 * Invoked when a key has been pressed.
+	 */
+	@Override
+	public void keyPressed(KeyEvent e) {
+		resetTransform(e);
+	}
 
-    /**
-     * Invoked when a mouse button has been pressed on a component.
-     */
-    @Override
-    public void mousePressed(MouseEvent e) {
-        resetTransform(e);
-    }
+	/**
+	 * Invoked when a key has been released.
+	 */
+	@Override
+	public void keyReleased(KeyEvent e) {
+		resetTransform(e);
+	}
 
-    /**
-     * Invoked when a mouse button has been released on a component.
-     */
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        resetTransform(e);
-    }
+	// MouseListener ///////////////////////////////////////////////////////
 
-    /**
-     * Invoked when the mouse enters a component.
-     */
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        resetTransform(e);
-    }
+	/**
+	 * Invoked when the mouse has been clicked on a component.
+	 */
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		resetTransform(e);
+	}
 
-    /**
-     * Invoked when the mouse exits a component.
-     */
-    @Override
-    public void mouseExited(MouseEvent e) {
-        resetTransform(e);
-    }
+	/**
+	 * Invoked when a mouse button has been pressed on a component.
+	 */
+	@Override
+	public void mousePressed(MouseEvent e) {
+		resetTransform(e);
+	}
 
-    // MouseMotionListener /////////////////////////////////////////////////
+	/**
+	 * Invoked when a mouse button has been released on a component.
+	 */
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		resetTransform(e);
+	}
 
-    /**
-     * Invoked when a mouse button is pressed on a component and then 
-     * dragged.  Mouse drag events will continue to be delivered to
-     * the component where the first originated until the mouse button is
-     * released (regardless of whether the mouse position is within the
-     * bounds of the component).
-     */
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        resetTransform(e);
-    }
+	/**
+	 * Invoked when the mouse enters a component.
+	 */
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		resetTransform(e);
+	}
 
-    /**
-     * Invoked when the mouse button has been moved on a component
-     * (with no buttons no down).
-     */
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        resetTransform(e);
-    }
+	/**
+	 * Invoked when the mouse exits a component.
+	 */
+	@Override
+	public void mouseExited(MouseEvent e) {
+		resetTransform(e);
+	}
 
-    /**
-     * Resets the associated component's transform.
-     */
-    protected void resetTransform(InputEvent e) {
-        JGVTComponent c = (JGVTComponent)e.getSource();
-        c.resetRenderingTransform();
-        finished = true;
-    }
+	// MouseMotionListener /////////////////////////////////////////////////
+
+	/**
+	 * Invoked when a mouse button is pressed on a component and then dragged. Mouse
+	 * drag events will continue to be delivered to the component where the first
+	 * originated until the mouse button is released (regardless of whether the
+	 * mouse position is within the bounds of the component).
+	 */
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		resetTransform(e);
+	}
+
+	/**
+	 * Invoked when the mouse button has been moved on a component (with no buttons
+	 * no down).
+	 */
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		resetTransform(e);
+	}
+
+	/**
+	 * Resets the associated component's transform.
+	 */
+	protected void resetTransform(InputEvent e) {
+		JGVTComponent c = (JGVTComponent) e.getSource();
+		c.resetRenderingTransform();
+		finished = true;
+	}
 }

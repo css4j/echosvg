@@ -29,142 +29,121 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
- * This class provides a manager for the property with support for
- * rect values.
+ * This class provides a manager for the property with support for rect values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class RectManager extends LengthManager {
-    
-    /**
-     * The current orientation.
-     */
-    protected int orientation;
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case FUNCTION:
-            if (!lu.getFunctionName().equalsIgnoreCase("rect")) {
-                break;
-            }
-        case RECT_FUNCTION:
-            lu = lu.getParameters();
-            Value top = createRectComponent(lu);
-            lu = lu.getNextLexicalUnit();
-            if (lu == null ||
-                lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-                throw createMalformedRectDOMException();
-            }
-            lu = lu.getNextLexicalUnit();
-            Value right = createRectComponent(lu);
-            lu = lu.getNextLexicalUnit();
-            if (lu == null ||
-                lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-                throw createMalformedRectDOMException();
-            }
-            lu = lu.getNextLexicalUnit();
-            Value bottom = createRectComponent(lu);
-            lu = lu.getNextLexicalUnit();
-            if (lu == null ||
-                lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-                throw createMalformedRectDOMException();
-            }
-            lu = lu.getNextLexicalUnit();
-            Value left = createRectComponent(lu);
-            return new RectValue(top, right, bottom, left);
-        default:
-            break;
-        }
-        throw createMalformedRectDOMException();
-    }
+	/**
+	 * The current orientation.
+	 */
+	protected int orientation;
 
-    private Value createRectComponent(LexicalUnit lu) throws DOMException {
-        switch (lu.getLexicalUnitType()) {
-        case IDENT:
-            if (lu.getStringValue().equalsIgnoreCase
-                (CSSConstants.CSS_AUTO_VALUE)) {
-                return ValueConstants.AUTO_VALUE;
-            }
-            break;
-        case DIMENSION:
-            Value value = createLength(lu);
-            if (value != null) {
-                return value;
-            }
-            break;
-        case INTEGER:
-            return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                    lu.getIntegerValue());
-        case REAL:
-            return new FloatValue(CSSPrimitiveValue.CSS_NUMBER,
-                    lu.getFloatValue());
-        case PERCENTAGE:
-            return new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE,
-                    lu.getFloatValue());
-        default:
-            break;
-        }
-        throw createMalformedRectDOMException();
-    }
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case FUNCTION:
+			if (!lu.getFunctionName().equalsIgnoreCase("rect")) {
+				break;
+			}
+		case RECT_FUNCTION:
+			lu = lu.getParameters();
+			Value top = createRectComponent(lu);
+			lu = lu.getNextLexicalUnit();
+			if (lu == null || lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+				throw createMalformedRectDOMException();
+			}
+			lu = lu.getNextLexicalUnit();
+			Value right = createRectComponent(lu);
+			lu = lu.getNextLexicalUnit();
+			if (lu == null || lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+				throw createMalformedRectDOMException();
+			}
+			lu = lu.getNextLexicalUnit();
+			Value bottom = createRectComponent(lu);
+			lu = lu.getNextLexicalUnit();
+			if (lu == null || lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+				throw createMalformedRectDOMException();
+			}
+			lu = lu.getNextLexicalUnit();
+			Value left = createRectComponent(lu);
+			return new RectValue(top, right, bottom, left);
+		default:
+			break;
+		}
+		throw createMalformedRectDOMException();
+	}
 
-    /**
-     * Implements {@link
-     * ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
-     */
-    @Override
-    public Value computeValue(CSSStylableElement elt,
-                              String pseudo,
-                              CSSEngine engine,
-                              int idx,
-                              StyleMap sm,
-                              Value value) {
-        if (value.getCssValueType() != CSSValue.CSS_PRIMITIVE_VALUE) {
-            return value;
-        }
-        if (value.getPrimitiveType() != CSSPrimitiveValue.CSS_RECT) {
-            return value;
-        }
-        RectValue rect = (RectValue)value;
+	private Value createRectComponent(LexicalUnit lu) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case IDENT:
+			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
+				return ValueConstants.AUTO_VALUE;
+			}
+			break;
+		case DIMENSION:
+			Value value = createLength(lu);
+			if (value != null) {
+				return value;
+			}
+			break;
+		case INTEGER:
+			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getIntegerValue());
+		case REAL:
+			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getFloatValue());
+		case PERCENTAGE:
+			return new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE, lu.getFloatValue());
+		default:
+			break;
+		}
+		throw createMalformedRectDOMException();
+	}
 
-        orientation = VERTICAL_ORIENTATION;
-        Value top = super.computeValue(elt, pseudo, engine, idx, sm,
-                                       rect.getTop());
-        Value bottom = super.computeValue(elt, pseudo, engine, idx, sm,
-                                          rect.getBottom());
-        orientation = HORIZONTAL_ORIENTATION;
-        Value left = super.computeValue(elt, pseudo, engine, idx, sm,
-                                        rect.getLeft());
-        Value right = super.computeValue(elt, pseudo, engine, idx, sm,
-                                         rect.getRight());
-        if (top != rect.getTop() ||
-            right != rect.getRight() ||
-            bottom != rect.getBottom() ||
-            left != rect.getLeft()) {
-            return new RectValue(top, right, bottom, left);
-        } else {
-            return value;
-        }
-    }
+	/**
+	 * Implements
+	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
+	 */
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		if (value.getCssValueType() != CSSValue.CSS_PRIMITIVE_VALUE) {
+			return value;
+		}
+		if (value.getPrimitiveType() != CSSPrimitiveValue.CSS_RECT) {
+			return value;
+		}
+		RectValue rect = (RectValue) value;
 
-    /**
-     * Indicates the orientation of the property associated with
-     * this manager.
-     */
-    @Override
-    protected int getOrientation() {
-        return orientation;
-    }
+		orientation = VERTICAL_ORIENTATION;
+		Value top = super.computeValue(elt, pseudo, engine, idx, sm, rect.getTop());
+		Value bottom = super.computeValue(elt, pseudo, engine, idx, sm, rect.getBottom());
+		orientation = HORIZONTAL_ORIENTATION;
+		Value left = super.computeValue(elt, pseudo, engine, idx, sm, rect.getLeft());
+		Value right = super.computeValue(elt, pseudo, engine, idx, sm, rect.getRight());
+		if (top != rect.getTop() || right != rect.getRight() || bottom != rect.getBottom() || left != rect.getLeft()) {
+			return new RectValue(top, right, bottom, left);
+		} else {
+			return value;
+		}
+	}
 
-    private DOMException createMalformedRectDOMException() {
-        Object[] p = new Object[] { getPropertyName() };
-        String s = Messages.formatMessage("malformed.rect", p);
-        return new DOMException(DOMException.SYNTAX_ERR, s);
-    }
+	/**
+	 * Indicates the orientation of the property associated with this manager.
+	 */
+	@Override
+	protected int getOrientation() {
+		return orientation;
+	}
+
+	private DOMException createMalformedRectDOMException() {
+		Object[] p = new Object[] { getPropertyName() };
+		String s = Messages.formatMessage("malformed.rect", p);
+		return new DOMException(DOMException.SYNTAX_ERR, s);
+	}
 }

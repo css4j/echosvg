@@ -21,9 +21,8 @@ package io.sf.carte.echosvg.anim.dom;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 
 /**
- * An interface for animatable elements to expose their underlying values
- * to the compositing functions in
- * {@link io.sf.carte.echosvg.anim.AbstractAnimation}.
+ * An interface for animatable elements to expose their underlying values to the
+ * compositing functions in {@link io.sf.carte.echosvg.anim.AbstractAnimation}.
  * 
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -31,9 +30,9 @@ import io.sf.carte.echosvg.anim.values.AnimatableValue;
  */
 public interface AnimatableElement {
 
-    /**
-     * Returns the underlying value of the animated attribute.  Used for
-     * composition of additive animations.
-     */
-    AnimatableValue getUnderlyingValue();
+	/**
+	 * Returns the underlying value of the animated attribute. Used for composition
+	 * of additive animations.
+	 */
+	AnimatableValue getUnderlyingValue();
 }

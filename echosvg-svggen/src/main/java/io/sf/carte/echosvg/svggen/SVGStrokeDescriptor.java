@@ -26,68 +26,79 @@ import java.util.Map;
 import org.w3c.dom.Element;
 
 /**
- * Used to represent an SVG Paint. This can be achieved with
- * to values: an SVG paint value and an SVG opacity value
+ * Used to represent an SVG Paint. This can be achieved with to values: an SVG
+ * paint value and an SVG opacity value
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGStrokeDescriptor implements SVGDescriptor, SVGSyntax{
-    private String strokeWidth;
-    private String capStyle;
-    private String joinStyle;
-    private String miterLimit;
-    private String dashArray;
-    private String dashOffset;
+public class SVGStrokeDescriptor implements SVGDescriptor, SVGSyntax {
+	private String strokeWidth;
+	private String capStyle;
+	private String joinStyle;
+	private String miterLimit;
+	private String dashArray;
+	private String dashOffset;
 
+	public SVGStrokeDescriptor(String strokeWidth, String capStyle, String joinStyle, String miterLimit,
+			String dashArray, String dashOffset) {
+		if (strokeWidth == null || capStyle == null || joinStyle == null || miterLimit == null || dashArray == null
+				|| dashOffset == null)
+			throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_STROKE_NULL);
 
-    public SVGStrokeDescriptor(String strokeWidth, String capStyle,
-                               String joinStyle, String miterLimit,
-                               String dashArray, String dashOffset){
-        if(strokeWidth == null ||
-           capStyle == null    ||
-           joinStyle == null   ||
-           miterLimit == null  ||
-           dashArray == null   ||
-           dashOffset == null)
-            throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_STROKE_NULL);
+		this.strokeWidth = strokeWidth;
+		this.capStyle = capStyle;
+		this.joinStyle = joinStyle;
+		this.miterLimit = miterLimit;
+		this.dashArray = dashArray;
+		this.dashOffset = dashOffset;
+	}
 
-        this.strokeWidth = strokeWidth;
-        this.capStyle = capStyle;
-        this.joinStyle = joinStyle;
-        this.miterLimit = miterLimit;
-        this.dashArray = dashArray;
-        this.dashOffset = dashOffset;
-    }
+	String getStrokeWidth() {
+		return strokeWidth;
+	}
 
-    String getStrokeWidth(){ return strokeWidth; }
-    String getCapStyle(){ return capStyle; }
-    String getJoinStyle(){ return joinStyle; }
-    String getMiterLimit(){ return miterLimit; }
-    String getDashArray(){ return dashArray; }
-    String getDashOffset(){ return dashOffset; }
+	String getCapStyle() {
+		return capStyle;
+	}
 
-    @Override
-    public Map<String, String> getAttributeMap(Map<String, String> attrMap){
-        if(attrMap == null)
-            attrMap = new HashMap<>();
+	String getJoinStyle() {
+		return joinStyle;
+	}
 
-        attrMap.put(SVG_STROKE_WIDTH_ATTRIBUTE, strokeWidth);
-        attrMap.put(SVG_STROKE_LINECAP_ATTRIBUTE, capStyle);
-        attrMap.put(SVG_STROKE_LINEJOIN_ATTRIBUTE, joinStyle);
-        attrMap.put(SVG_STROKE_MITERLIMIT_ATTRIBUTE, miterLimit);
-        attrMap.put(SVG_STROKE_DASHARRAY_ATTRIBUTE, dashArray);
-        attrMap.put(SVG_STROKE_DASHOFFSET_ATTRIBUTE, dashOffset);
+	String getMiterLimit() {
+		return miterLimit;
+	}
 
-        return attrMap;
-    }
+	String getDashArray() {
+		return dashArray;
+	}
 
-    @Override
-    public List<Element> getDefinitionSet(List<Element> defSet){
-        if(defSet == null)
-            defSet = new LinkedList<>();
+	String getDashOffset() {
+		return dashOffset;
+	}
 
-        return defSet;
-    }
+	@Override
+	public Map<String, String> getAttributeMap(Map<String, String> attrMap) {
+		if (attrMap == null)
+			attrMap = new HashMap<>();
+
+		attrMap.put(SVG_STROKE_WIDTH_ATTRIBUTE, strokeWidth);
+		attrMap.put(SVG_STROKE_LINECAP_ATTRIBUTE, capStyle);
+		attrMap.put(SVG_STROKE_LINEJOIN_ATTRIBUTE, joinStyle);
+		attrMap.put(SVG_STROKE_MITERLIMIT_ATTRIBUTE, miterLimit);
+		attrMap.put(SVG_STROKE_DASHARRAY_ATTRIBUTE, dashArray);
+		attrMap.put(SVG_STROKE_DASHOFFSET_ATTRIBUTE, dashOffset);
+
+		return attrMap;
+	}
+
+	@Override
+	public List<Element> getDefinitionSet(List<Element> defSet) {
+		if (defSet == null)
+			defSet = new LinkedList<>();
+
+		return defSet;
+	}
 }

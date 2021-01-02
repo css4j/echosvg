@@ -29,56 +29,56 @@ import io.sf.carte.doc.style.css.MediaQueryList;
  */
 public class MediaRule extends StyleSheet implements Rule {
 
-    /**
-     * The type constant.
-     */
-    public static final short TYPE = 1;
+	/**
+	 * The type constant.
+	 */
+	public static final short TYPE = 1;
 
-    /**
-     * The media list.
-     */
-    protected MediaQueryList mediaList;
+	/**
+	 * The media list.
+	 */
+	protected MediaQueryList mediaList;
 
-    /**
-     * Returns a constant identifying the rule type.
-     */
-    @Override
-    public short getType() {
-        return TYPE;
-    }
+	/**
+	 * Returns a constant identifying the rule type.
+	 */
+	@Override
+	public short getType() {
+		return TYPE;
+	}
 
-    /**
-     * Sets the media list.
-     */
-    public void setMediaList(MediaQueryList ml) {
-        mediaList = ml;
-    }
+	/**
+	 * Sets the media list.
+	 */
+	public void setMediaList(MediaQueryList ml) {
+		mediaList = ml;
+	}
 
-    /**
-     * Returns the media list.
-     */
-    public MediaQueryList getMediaList() {
-        return mediaList;
-    }
+	/**
+	 * Returns the media list.
+	 */
+	public MediaQueryList getMediaList() {
+		return mediaList;
+	}
 
-    /**
-     * Returns a printable representation of this media rule.
-     */
-    @Override
-    public String toString(CSSEngine eng) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("@media");
-        if (mediaList != null) {
-            for (int i = 0; i < mediaList.getLength(); i++) {
-                sb.append(' ');
-                sb.append(mediaList.item(i));
-            }
-        }
-        sb.append(" {\n");
-        for (int i = 0; i < size; i++) {
-            sb.append(rules[i].toString(eng));
-        }
-        sb.append("}\n");
-        return sb.toString();
-    }
+	/**
+	 * Returns a printable representation of this media rule.
+	 */
+	@Override
+	public String toString(CSSEngine eng) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("@media");
+		if (mediaList != null) {
+			for (int i = 0; i < mediaList.getLength(); i++) {
+				sb.append(' ');
+				sb.append(mediaList.item(i));
+			}
+		}
+		sb.append(" {\n");
+		for (int i = 0; i < size; i++) {
+			sb.append(rules[i].toString(eng));
+		}
+		sb.append("}\n");
+		return sb.toString();
+	}
 }

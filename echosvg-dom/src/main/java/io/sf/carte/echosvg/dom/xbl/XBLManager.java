@@ -23,8 +23,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * An interface for classes that can manage XBL functionality for a
- * document's nodes.
+ * An interface for classes that can manage XBL functionality for a document's
+ * nodes.
  *
  * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
  * @author For later modifications, see Git history.
@@ -32,93 +32,93 @@ import org.w3c.dom.NodeList;
  */
 public interface XBLManager {
 
-    /**
-     * Starts XBL processing on the document.
-     */
-    void startProcessing();
+	/**
+	 * Starts XBL processing on the document.
+	 */
+	void startProcessing();
 
-    /**
-     * Stops XBL processing on the document.
-     */
-    void stopProcessing();
+	/**
+	 * Stops XBL processing on the document.
+	 */
+	void stopProcessing();
 
-    /**
-     * Returns whether XBL processing is currently enabled.
-     */
-    boolean isProcessing();
+	/**
+	 * Returns whether XBL processing is currently enabled.
+	 */
+	boolean isProcessing();
 
-    /**
-     * Get the parent of a node in the fully flattened tree.
-     */
-    Node getXblParentNode(Node n);
+	/**
+	 * Get the parent of a node in the fully flattened tree.
+	 */
+	Node getXblParentNode(Node n);
 
-    /**
-     * Get the list of child nodes of a node in the fully flattened tree.
-     */
-    NodeList getXblChildNodes(Node n);
+	/**
+	 * Get the list of child nodes of a node in the fully flattened tree.
+	 */
+	NodeList getXblChildNodes(Node n);
 
-    /**
-     * Get the list of child nodes of a node in the fully flattened tree
-     * that are within the same shadow scope.
-     */
-    NodeList getXblScopedChildNodes(Node n);
+	/**
+	 * Get the list of child nodes of a node in the fully flattened tree that are
+	 * within the same shadow scope.
+	 */
+	NodeList getXblScopedChildNodes(Node n);
 
-    /**
-     * Get the first child node of a node in the fully flattened tree.
-     */
-    Node getXblFirstChild(Node n);
+	/**
+	 * Get the first child node of a node in the fully flattened tree.
+	 */
+	Node getXblFirstChild(Node n);
 
-    /**
-     * Get the last child node of a node in the fully flattened tree.
-     */
-    Node getXblLastChild(Node n);
+	/**
+	 * Get the last child node of a node in the fully flattened tree.
+	 */
+	Node getXblLastChild(Node n);
 
-    /**
-     * Get the node which directly precedes a node in the xblParentNode's
-     * xblChildNodes list.
-     */
-    Node getXblPreviousSibling(Node n);
+	/**
+	 * Get the node which directly precedes a node in the xblParentNode's
+	 * xblChildNodes list.
+	 */
+	Node getXblPreviousSibling(Node n);
 
-    /**
-     * Get the node which directly follows a node in thexblParentNode's
-     * xblChildNodes list.
-     */
-    Node getXblNextSibling(Node n);
+	/**
+	 * Get the node which directly follows a node in thexblParentNode's
+	 * xblChildNodes list.
+	 */
+	Node getXblNextSibling(Node n);
 
-    /**
-     * Get the first element child of a node in the fully flattened tree.
-     */
-    Element getXblFirstElementChild(Node n);
+	/**
+	 * Get the first element child of a node in the fully flattened tree.
+	 */
+	Element getXblFirstElementChild(Node n);
 
-    /**
-     * Get the last element child of a node in the fully flattened tree.
-     */
-    Element getXblLastElementChild(Node n);
+	/**
+	 * Get the last element child of a node in the fully flattened tree.
+	 */
+	Element getXblLastElementChild(Node n);
 
-    /**
-     * Get the first element that precedes the a node in the
-     * xblParentNode's xblChildNodes list.
-     */
-    Element getXblPreviousElementSibling(Node n);
+	/**
+	 * Get the first element that precedes the a node in the xblParentNode's
+	 * xblChildNodes list.
+	 */
+	Element getXblPreviousElementSibling(Node n);
 
-    /**
-     * Get the first element that follows a node in the
-     * xblParentNode's xblChildNodes list.
-     */
-    Element getXblNextElementSibling(Node n);
+	/**
+	 * Get the first element that follows a node in the xblParentNode's
+	 * xblChildNodes list.
+	 */
+	Element getXblNextElementSibling(Node n);
 
-    /**
-     * Get the bound element whose shadow tree a node resides in.
-     */
-    Element getXblBoundElement(Node n);
+	/**
+	 * Get the bound element whose shadow tree a node resides in.
+	 */
+	Element getXblBoundElement(Node n);
 
-    /**
-     * Get the shadow tree of a node.
-     */
-    Element getXblShadowTree(Node n);
+	/**
+	 * Get the shadow tree of a node.
+	 */
+	Element getXblShadowTree(Node n);
 
-    /**
-     * Get the xbl:definition elements currently binding an element.
-     */
-    NodeList getXblDefinitions(Node n);
+	/**
+	 * Get the xbl:definition elements currently binding an element.
+	 */
+	NodeList getXblDefinitions(Node n);
 }

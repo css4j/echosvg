@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.gvt.event;
 import java.util.EventListener;
 
 /**
- * The listener interface for receiving keyboard focus events on a
- * graphics node.
+ * The listener interface for receiving keyboard focus events on a graphics
+ * node.
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @author For later modifications, see Git history.
@@ -30,14 +30,14 @@ import java.util.EventListener;
  */
 public interface GraphicsNodeFocusListener extends EventListener {
 
-    /**
-     * Invoked when a graphics node gains the keyboard focus.
-     */
-    void focusGained(GraphicsNodeFocusEvent evt);
+	/**
+	 * Invoked when a graphics node gains the keyboard focus.
+	 */
+	void focusGained(GraphicsNodeFocusEvent evt);
 
-    /**
-     * Invoked when a graphics node loses the keyboard focus.
-     */
-    void focusLost(GraphicsNodeFocusEvent evt);
+	/**
+	 * Invoked when a graphics node loses the keyboard focus.
+	 */
+	void focusLost(GraphicsNodeFocusEvent evt);
 
 }

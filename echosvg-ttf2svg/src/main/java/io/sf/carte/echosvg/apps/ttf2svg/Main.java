@@ -22,17 +22,15 @@ package io.sf.carte.echosvg.apps.ttf2svg;
 import io.sf.carte.echosvg.svggen.font.SVGFont;
 
 /**
- * This test runs the True Type Font to SVG Font converter, the 
- * tool that allows some characters from a font to be converted
- * to the SVG Font format.
+ * This test runs the True Type Font to SVG Font converter, the tool that allows
+ * some characters from a font to be converted to the SVG Font format.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class Main {
-    public static void main(String[] args){
-        SVGFont.main(args);
-    }
+	public static void main(String[] args) {
+		SVGFont.main(args);
+	}
 }
-

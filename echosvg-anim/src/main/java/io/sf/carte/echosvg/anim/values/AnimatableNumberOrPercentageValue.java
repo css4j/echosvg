@@ -29,133 +29,126 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
  */
 public class AnimatableNumberOrPercentageValue extends AnimatableNumberValue {
 
-    /**
-     * Whether the number is a percentage.
-     */
-    protected boolean isPercentage;
+	/**
+	 * Whether the number is a percentage.
+	 */
+	protected boolean isPercentage;
 
-    /**
-     * Creates a new, uninitialized AnimatableNumberOrPercentageValue.
-     */
-    protected AnimatableNumberOrPercentageValue(AnimationTarget target) {
-        super(target);
-    }
-    
-    /**
-     * Creates a new AnimatableNumberOrPercentageValue with a number.
-     */
-    public AnimatableNumberOrPercentageValue(AnimationTarget target, float n) {
-        super(target, n);
-    }
+	/**
+	 * Creates a new, uninitialized AnimatableNumberOrPercentageValue.
+	 */
+	protected AnimatableNumberOrPercentageValue(AnimationTarget target) {
+		super(target);
+	}
 
-    /**
-     * Creates a new AnimatableNumberOrPercentageValue with either a number
-     * or a percentage.
-     */
-    public AnimatableNumberOrPercentageValue(AnimationTarget target, float n,
-                                             boolean isPercentage) {
-        super(target, n);
-        this.isPercentage = isPercentage;
-    }
+	/**
+	 * Creates a new AnimatableNumberOrPercentageValue with a number.
+	 */
+	public AnimatableNumberOrPercentageValue(AnimationTarget target, float n) {
+		super(target, n);
+	}
 
-    /**
-     * Performs interpolation to the given value.
-     */
-    @Override
-    public AnimatableValue interpolate(AnimatableValue result,
-                                       AnimatableValue to,
-                                       float interpolation,
-                                       AnimatableValue accumulation,
-                                       int multiplier) {
-        AnimatableNumberOrPercentageValue res;
-        if (result == null) {
-            res = new AnimatableNumberOrPercentageValue(target);
-        } else {
-            res = (AnimatableNumberOrPercentageValue) result;
-        }
+	/**
+	 * Creates a new AnimatableNumberOrPercentageValue with either a number or a
+	 * percentage.
+	 */
+	public AnimatableNumberOrPercentageValue(AnimationTarget target, float n, boolean isPercentage) {
+		super(target, n);
+		this.isPercentage = isPercentage;
+	}
 
-        float newValue;
-        boolean newIsPercentage;
+	/**
+	 * Performs interpolation to the given value.
+	 */
+	@Override
+	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
+			AnimatableValue accumulation, int multiplier) {
+		AnimatableNumberOrPercentageValue res;
+		if (result == null) {
+			res = new AnimatableNumberOrPercentageValue(target);
+		} else {
+			res = (AnimatableNumberOrPercentageValue) result;
+		}
 
-        AnimatableNumberOrPercentageValue toValue
-            = (AnimatableNumberOrPercentageValue) to;
-        AnimatableNumberOrPercentageValue accValue
-            = (AnimatableNumberOrPercentageValue) accumulation;
+		float newValue;
+		boolean newIsPercentage;
 
-        if (to != null) {
-            if (toValue.isPercentage == isPercentage) {
-                newValue = value + interpolation * (toValue.value - value);
-                newIsPercentage = isPercentage;
-            } else {
-                if (interpolation >= 0.5) {
-                    newValue = toValue.value;
-                    newIsPercentage = toValue.isPercentage;
-                } else {
-                    newValue = value;
-                    newIsPercentage = isPercentage;
-                }
-            }
-        } else {
-            newValue = value;
-            newIsPercentage = isPercentage;
-        }
+		AnimatableNumberOrPercentageValue toValue = (AnimatableNumberOrPercentageValue) to;
+		AnimatableNumberOrPercentageValue accValue = (AnimatableNumberOrPercentageValue) accumulation;
 
-        if (accumulation != null && accValue.isPercentage == newIsPercentage) {
-            newValue += multiplier * accValue.value;
-        }
+		if (to != null) {
+			if (toValue.isPercentage == isPercentage) {
+				newValue = value + interpolation * (toValue.value - value);
+				newIsPercentage = isPercentage;
+			} else {
+				if (interpolation >= 0.5) {
+					newValue = toValue.value;
+					newIsPercentage = toValue.isPercentage;
+				} else {
+					newValue = value;
+					newIsPercentage = isPercentage;
+				}
+			}
+		} else {
+			newValue = value;
+			newIsPercentage = isPercentage;
+		}
 
-        if (res.value != newValue
-                || res.isPercentage != newIsPercentage) {
-            res.value = newValue;
-            res.isPercentage = newIsPercentage;
-            res.hasChanged = true;
-        }
-        return res;
-    }
+		if (accumulation != null && accValue.isPercentage == newIsPercentage) {
+			newValue += multiplier * accValue.value;
+		}
 
-    /**
-     * Returns whether the value is a percentage.
-     */
-    public boolean isPercentage() {
-        return isPercentage;
-    }
+		if (res.value != newValue || res.isPercentage != newIsPercentage) {
+			res.value = newValue;
+			res.isPercentage = newIsPercentage;
+			res.hasChanged = true;
+		}
+		return res;
+	}
 
-    /**
-     * Returns whether two values of this type can have their distance
-     * computed, as needed by paced animation.
-     */
-    @Override
-    public boolean canPace() {
-        return false;
-    }
+	/**
+	 * Returns whether the value is a percentage.
+	 */
+	public boolean isPercentage() {
+		return isPercentage;
+	}
 
-    /**
-     * Returns the absolute distance between this value and the specified other
-     * value.
-     */
-    @Override
-    public float distanceTo(AnimatableValue other) {
-        return 0f;
-    }
+	/**
+	 * Returns whether two values of this type can have their distance computed, as
+	 * needed by paced animation.
+	 */
+	@Override
+	public boolean canPace() {
+		return false;
+	}
 
-    /**
-     * Returns a zero value of this AnimatableValue's type.
-     */
-    @Override
-    public AnimatableValue getZeroValue() {
-        return new AnimatableNumberOrPercentageValue(target, 0, isPercentage);
-    }
+	/**
+	 * Returns the absolute distance between this value and the specified other
+	 * value.
+	 */
+	@Override
+	public float distanceTo(AnimatableValue other) {
+		return 0f;
+	}
 
-    /**
-     * Returns the CSS text representation of the value.
-     */
-    @Override
-    public String getCssText() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(formatNumber(value));
-        if (isPercentage) {
-            sb.append('%');
-        }
-        return sb.toString();
-    }
+	/**
+	 * Returns a zero value of this AnimatableValue's type.
+	 */
+	@Override
+	public AnimatableValue getZeroValue() {
+		return new AnimatableNumberOrPercentageValue(target, 0, isPercentage);
+	}
+
+	/**
+	 * Returns the CSS text representation of the value.
+	 */
+	@Override
+	public String getCssText() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(formatNumber(value));
+		if (isPercentage) {
+			sb.append('%');
+		}
+		return sb.toString();
+	}
 }

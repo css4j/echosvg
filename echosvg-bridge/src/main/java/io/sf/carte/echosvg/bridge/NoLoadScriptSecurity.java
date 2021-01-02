@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.bridge;
 
 /**
- * This implementation for the <code>ScriptSecurity</code> interface
- * does not allow scripts to be loaded.
+ * This implementation for the <code>ScriptSecurity</code> interface does not
+ * allow scripts to be loaded.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -28,38 +28,37 @@ package io.sf.carte.echosvg.bridge;
  */
 public class NoLoadScriptSecurity implements ScriptSecurity {
 
-    /**
-     * Message when trying to load a script file and the Document
-     * does not have a URL
-     */
-    public static final String ERROR_NO_SCRIPT_OF_TYPE_ALLOWED
-        = "NoLoadScriptSecurity.error.no.script.of.type.allowed";
+	/**
+	 * Message when trying to load a script file and the Document does not have a
+	 * URL
+	 */
+	public static final String ERROR_NO_SCRIPT_OF_TYPE_ALLOWED = "NoLoadScriptSecurity.error.no.script.of.type.allowed";
 
-    /**
-     * The exception is built in the constructor and thrown if 
-     * the checkLoadScript method is called.
-     */
-    protected SecurityException se;
+	/**
+	 * The exception is built in the constructor and thrown if the checkLoadScript
+	 * method is called.
+	 */
+	protected SecurityException se;
 
-    /**
-     * Controls whether the script should be loaded or not.
-     *
-     * @throws SecurityException if the script should not be loaded.
-     */
-    @Override
-    public void checkLoadScript(){
-        throw se;
-    }
+	/**
+	 * Controls whether the script should be loaded or not.
+	 *
+	 * @throws SecurityException if the script should not be loaded.
+	 */
+	@Override
+	public void checkLoadScript() {
+		throw se;
+	}
 
-    /**
-     * Creates a new NoLoadScriptSecurity object.
-     * @param scriptType type of script, as found in the 
-     *        type attribute of the &lt;script&gt; element.
-     */
-    public NoLoadScriptSecurity(String scriptType){
+	/**
+	 * Creates a new NoLoadScriptSecurity object.
+	 * 
+	 * @param scriptType type of script, as found in the type attribute of the
+	 *                   &lt;script&gt; element.
+	 */
+	public NoLoadScriptSecurity(String scriptType) {
 
-        se = new SecurityException
-            (Messages.formatMessage(ERROR_NO_SCRIPT_OF_TYPE_ALLOWED,
-                                    new Object[]{scriptType}));
-    }
+		se = new SecurityException(
+				Messages.formatMessage(ERROR_NO_SCRIPT_OF_TYPE_ALLOWED, new Object[] { scriptType }));
+	}
 }

@@ -34,61 +34,60 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.RenderedImageCachableRed;
 /**
  * FilterAsAlphaRable implementation.
  *
- * This will take any source Filter and convert it to an alpha channel
- * according the the SVG Mask operation.
+ * This will take any source Filter and convert it to an alpha channel according
+ * the the SVG Mask operation.
  *
  * @author <a href="mailto:Thomas.DeWeese@Kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class FilterAsAlphaRable
-    extends    AbstractRable {
+public class FilterAsAlphaRable extends AbstractRable {
 
-    public FilterAsAlphaRable(Filter src) {
-        super(src, null);
-    }
+	public FilterAsAlphaRable(Filter src) {
+		super(src, null);
+	}
 
-    public Filter getSource() {
-        return (Filter)getSources().get(0);
-    }
+	public Filter getSource() {
+		return (Filter) getSources().get(0);
+	}
 
-    /**
-     * Pass-through: returns the source's bounds
-     */
-    @Override
-    public Rectangle2D getBounds2D(){
-        return getSource().getBounds2D();
-    }
+	/**
+	 * Pass-through: returns the source's bounds
+	 */
+	@Override
+	public Rectangle2D getBounds2D() {
+		return getSource().getBounds2D();
+	}
 
-    @Override
-    public RenderedImage createRendering(RenderContext rc) {
-        // Source gets my usr2dev transform
-        AffineTransform at = rc.getTransform();
+	@Override
+	public RenderedImage createRendering(RenderContext rc) {
+		// Source gets my usr2dev transform
+		AffineTransform at = rc.getTransform();
 
-        // Just copy over the rendering hints.
-        RenderingHints rh = rc.getRenderingHints();
-        if (rh == null) rh = new RenderingHints(null);
+		// Just copy over the rendering hints.
+		RenderingHints rh = rc.getRenderingHints();
+		if (rh == null)
+			rh = new RenderingHints(null);
 
-        // if we didn't have an aoi specify our bounds as the aoi.
-        Shape aoi = rc.getAreaOfInterest();
-        if (aoi == null) {
-            aoi = getBounds2D();
-        }
+		// if we didn't have an aoi specify our bounds as the aoi.
+		Shape aoi = rc.getAreaOfInterest();
+		if (aoi == null) {
+			aoi = getBounds2D();
+		}
 
-        rh.put(RenderingHintsKeyExt.KEY_COLORSPACE, 
-               ColorSpaceHintKey.VALUE_COLORSPACE_ALPHA_CONVERT);
+		rh.put(RenderingHintsKeyExt.KEY_COLORSPACE, ColorSpaceHintKey.VALUE_COLORSPACE_ALPHA_CONVERT);
 
-        RenderedImage ri;
-        ri = getSource().createRendering(new RenderContext(at, aoi, rh));
-        if (ri == null)
-            return null;
+		RenderedImage ri;
+		ri = getSource().createRendering(new RenderContext(at, aoi, rh));
+		if (ri == null)
+			return null;
 
-        CachableRed cr = RenderedImageCachableRed.wrap(ri);
+		CachableRed cr = RenderedImageCachableRed.wrap(ri);
 
-        Object val = cr.getProperty(ColorSpaceHintKey.PROPERTY_COLORSPACE);
-        if (val == ColorSpaceHintKey.VALUE_COLORSPACE_ALPHA_CONVERT)
-            return cr;
+		Object val = cr.getProperty(ColorSpaceHintKey.PROPERTY_COLORSPACE);
+		if (val == ColorSpaceHintKey.VALUE_COLORSPACE_ALPHA_CONVERT)
+			return cr;
 
-        return new FilterAsAlphaRed(cr);
-    }
+		return new FilterAsAlphaRed(cr);
+	}
 }

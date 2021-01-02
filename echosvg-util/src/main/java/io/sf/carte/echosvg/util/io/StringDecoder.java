@@ -29,46 +29,47 @@ import java.io.IOException;
  */
 public class StringDecoder implements CharDecoder {
 
-    /**
-     * The string which contains the decoded characters.
-     */
-    protected String string;
+	/**
+	 * The string which contains the decoded characters.
+	 */
+	protected String string;
 
-    /**
-     * The number of chars in the string.
-     */
-    protected int length;
+	/**
+	 * The number of chars in the string.
+	 */
+	protected int length;
 
-    /**
-     * The next char index.
-     */
-    protected int next;
+	/**
+	 * The next char index.
+	 */
+	protected int next;
 
-    /**
-     * Creates a new StringDecoder.
-     */
-    public StringDecoder(String s) {
-        string = s;
-        length = s.length();
-    }
+	/**
+	 * Creates a new StringDecoder.
+	 */
+	public StringDecoder(String s) {
+		string = s;
+		length = s.length();
+	}
 
-    /**
-     * Reads the next character.
-     * @return a character or END_OF_STREAM.
-     */
-    @Override
-    public int readChar() throws IOException {
-        if (next == length) {
-            return END_OF_STREAM;
-        }
-        return string.charAt(next++);
-    }
+	/**
+	 * Reads the next character.
+	 * 
+	 * @return a character or END_OF_STREAM.
+	 */
+	@Override
+	public int readChar() throws IOException {
+		if (next == length) {
+			return END_OF_STREAM;
+		}
+		return string.charAt(next++);
+	}
 
-    /**
-     * Disposes the associated resources.
-     */
-    @Override
-    public void dispose() throws IOException {
-        string = null;
-    }
+	/**
+	 * Disposes the associated resources.
+	 */
+	@Override
+	public void dispose() throws IOException {
+		string = null;
+	}
 }

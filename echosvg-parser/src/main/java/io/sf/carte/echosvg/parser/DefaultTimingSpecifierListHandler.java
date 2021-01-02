@@ -25,30 +25,28 @@ package io.sf.carte.echosvg.parser;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DefaultTimingSpecifierListHandler
-        extends DefaultTimingSpecifierHandler
-        implements TimingSpecifierListHandler {
+public class DefaultTimingSpecifierListHandler extends DefaultTimingSpecifierHandler
+		implements TimingSpecifierListHandler {
 
-    /**
-     * The default handler.
-     */
-    public static final TimingSpecifierListHandler INSTANCE
-        = new DefaultTimingSpecifierListHandler();
+	/**
+	 * The default handler.
+	 */
+	public static final TimingSpecifierListHandler INSTANCE = new DefaultTimingSpecifierListHandler();
 
-    protected DefaultTimingSpecifierListHandler() {
-    }
+	protected DefaultTimingSpecifierListHandler() {
+	}
 
-    /**
-     * Invoked when parsing of a timing specifier list commences.
-     */
-    @Override
-    public void startTimingSpecifierList() {
-    }
+	/**
+	 * Invoked when parsing of a timing specifier list commences.
+	 */
+	@Override
+	public void startTimingSpecifierList() {
+	}
 
-    /**
-     * Invoked when parsing of a timing specifier list ends.
-     */
-    @Override
-    public void endTimingSpecifierList() {
-    }
+	/**
+	 * Invoked when parsing of a timing specifier list ends.
+	 */
+	@Override
+	public void endTimingSpecifierList() {
+	}
 }

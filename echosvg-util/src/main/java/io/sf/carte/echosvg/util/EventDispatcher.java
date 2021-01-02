@@ -31,93 +31,89 @@ import java.util.List;
  */
 public class EventDispatcher {
 
-    public interface Dispatcher {
-        void dispatch(Object listener,
-                             Object event);
-    }
+	public interface Dispatcher {
+		void dispatch(Object listener, Object event);
+	}
 
+	public static void fireEvent(final Dispatcher dispatcher, final List<Object> listeners, final Object evt,
+			final boolean useEventQueue) {
+		if (useEventQueue && !EventQueue.isDispatchThread()) {
+			Runnable r = new Runnable() {
+				@Override
+				public void run() {
+					fireEvent(dispatcher, listeners, evt, useEventQueue);
+				}
+			};
+			try {
+				EventQueue.invokeAndWait(r);
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// Assume they will get delivered????
+				// be nice to wait on List but how???
+			} catch (ThreadDeath td) {
+				throw td;
+			} catch (Throwable t) {
+				t.printStackTrace();
+			}
+			return;
+		}
 
-    public static void fireEvent(final Dispatcher dispatcher,
-                                 final List<Object> listeners,
-                                 final Object evt,
-                                 final boolean useEventQueue) {
-        if (useEventQueue && !EventQueue.isDispatchThread()) {
-            Runnable r = new Runnable() {
-                    @Override
-                    public void run() {
-                        fireEvent(dispatcher, listeners, evt, useEventQueue);
-                    }
-                };
-            try {
-                EventQueue.invokeAndWait(r);
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                // Assume they will get delivered????
-                // be nice to wait on List but how???
-            } catch (ThreadDeath td) {
-                throw td;
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-            return;
-        }
+		Object[] ll = null;
+		Throwable err = null;
+		int retryCount = 10;
+		while (--retryCount != 0) {
+			// If the thread has been interrupted this can 'mess up'
+			// the class loader and cause this otherwise safe code to
+			// throw errors.
+			try {
+				synchronized (listeners) {
+					if (listeners.size() == 0)
+						return;
+					ll = listeners.toArray();
+					break;
+				}
+			} catch (Throwable t) {
+				err = t;
+			}
+		}
+		if (ll == null) {
+			if (err != null)
+				err.printStackTrace();
+			return;
+		}
+		dispatchEvent(dispatcher, ll, evt);
+	}
 
-        Object [] ll = null;
-        Throwable err = null;
-        int retryCount = 10;
-        while (--retryCount != 0) {
-            // If the thread has been interrupted this can 'mess up'
-            // the class loader and cause this otherwise safe code to
-            // throw errors.
-            try {
-                synchronized (listeners) {
-                    if (listeners.size() == 0)
-                        return;
-                    ll = listeners.toArray();
-                    break;
-                }
-            } catch(Throwable t) {
-                err = t;
-            }
-        }
-        if (ll == null) {
-            if (err != null)
-                err.printStackTrace();
-            return;
-        }
-        dispatchEvent(dispatcher, ll, evt);
-    }
-
-    protected static void dispatchEvent(final Dispatcher dispatcher,
-                                        final Object [] ll,
-                                        final Object evt) {
-        ThreadDeath td = null;
-        try {
-            for (int i = 0; i < ll.length; i++) {
-                try {
-                    Object l;
-                    synchronized (ll) {
-                        l = ll[i];
-                        if (l == null) continue;
-                        ll[i] = null;
-                    }
-                    dispatcher.dispatch(l, evt);
-                } catch (ThreadDeath t) {
-                    // Keep delivering messages but remember to throw later.
-                    td = t;
-                } catch (Throwable t) {
-                    t.printStackTrace();
-                }
-            }
-        } catch (ThreadDeath t) {
-            // Remember to throw later.
-            td = t;
-        } catch (Throwable t) {
-            if (ll[ll.length-1] != null)
-                dispatchEvent(dispatcher, ll, evt);
-            t.printStackTrace();
-        }
-        if (td != null) throw td;
-    }
+	protected static void dispatchEvent(final Dispatcher dispatcher, final Object[] ll, final Object evt) {
+		ThreadDeath td = null;
+		try {
+			for (int i = 0; i < ll.length; i++) {
+				try {
+					Object l;
+					synchronized (ll) {
+						l = ll[i];
+						if (l == null)
+							continue;
+						ll[i] = null;
+					}
+					dispatcher.dispatch(l, evt);
+				} catch (ThreadDeath t) {
+					// Keep delivering messages but remember to throw later.
+					td = t;
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+		} catch (ThreadDeath t) {
+			// Remember to throw later.
+			td = t;
+		} catch (Throwable t) {
+			if (ll[ll.length - 1] != null)
+				dispatchEvent(dispatcher, ll, evt);
+			t.printStackTrace();
+		}
+		if (td != null)
+			throw td;
+	}
 }

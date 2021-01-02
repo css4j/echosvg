@@ -33,123 +33,117 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMFEPointLightElement
-    extends    SVGOMElement
-    implements SVGFEPointLightElement {
+public class SVGOMFEPointLightElement extends SVGOMElement implements SVGFEPointLightElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Table mapping XML attribute names to TraitInformation objects.
-     */
-    protected static DoublyIndexedTable<String,String> xmlTraitInformation;
-    static {
-        DoublyIndexedTable<String,String> t =
-            new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
-        t.put(null, SVG_X_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_Y_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        t.put(null, SVG_Z_ATTRIBUTE,
-                new TraitInformation(true, SVGTypes.TYPE_NUMBER));
-        xmlTraitInformation = t;
-    }
+	/**
+	 * Table mapping XML attribute names to TraitInformation objects.
+	 */
+	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
+	static {
+		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGOMElement.xmlTraitInformation);
+		t.put(null, SVG_X_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_Y_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		t.put(null, SVG_Z_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_NUMBER));
+		xmlTraitInformation = t;
+	}
 
-    /**
-     * The 'x' attribute value.
-     */
-    protected SVGOMAnimatedNumber x;
+	/**
+	 * The 'x' attribute value.
+	 */
+	protected SVGOMAnimatedNumber x;
 
-    /**
-     * The 'y' attribute value.
-     */
-    protected SVGOMAnimatedNumber y;
+	/**
+	 * The 'y' attribute value.
+	 */
+	protected SVGOMAnimatedNumber y;
 
-    /**
-     * The 'z' attribute value.
-     */
-    protected SVGOMAnimatedNumber z;
+	/**
+	 * The 'z' attribute value.
+	 */
+	protected SVGOMAnimatedNumber z;
 
-    /**
-     * Creates a new SVGOMFEPointLightElement object.
-     */
-    protected SVGOMFEPointLightElement() {
-    }
+	/**
+	 * Creates a new SVGOMFEPointLightElement object.
+	 */
+	protected SVGOMFEPointLightElement() {
+	}
 
-    /**
-     * Creates a new SVGOMFEPointLightElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMFEPointLightElement(String prefix,
-                                    AbstractDocument owner) {
-        super(prefix, owner);
-        initializeLiveAttributes();
-    }
+	/**
+	 * Creates a new SVGOMFEPointLightElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMFEPointLightElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes all live attributes for this element.
-     */
-    @Override
-    protected void initializeAllLiveAttributes() {
-        super.initializeAllLiveAttributes();
-        initializeLiveAttributes();
-    }
+	/**
+	 * Initializes all live attributes for this element.
+	 */
+	@Override
+	protected void initializeAllLiveAttributes() {
+		super.initializeAllLiveAttributes();
+		initializeLiveAttributes();
+	}
 
-    /**
-     * Initializes the live attribute values of this element.
-     */
-    private void initializeLiveAttributes() {
-        x = createLiveAnimatedNumber(null, SVG_X_ATTRIBUTE, 0f);
-        y = createLiveAnimatedNumber(null, SVG_Y_ATTRIBUTE, 0f);
-        z = createLiveAnimatedNumber(null, SVG_Z_ATTRIBUTE, 0f);
-    }
+	/**
+	 * Initializes the live attribute values of this element.
+	 */
+	private void initializeLiveAttributes() {
+		x = createLiveAnimatedNumber(null, SVG_X_ATTRIBUTE, 0f);
+		y = createLiveAnimatedNumber(null, SVG_Y_ATTRIBUTE, 0f);
+		z = createLiveAnimatedNumber(null, SVG_Z_ATTRIBUTE, 0f);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG_FE_POINT_LIGHT_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG_FE_POINT_LIGHT_TAG;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEPointLightElement#getX()}.
-     */
-    @Override
-    public SVGAnimatedNumber getX() {
-        return x;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEPointLightElement#getX()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getX() {
+		return x;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEPointLightElement#getY()}.
-     */
-    @Override
-    public SVGAnimatedNumber getY() {
-        return y;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEPointLightElement#getY()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getY() {
+		return y;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGFEPointLightElement#getZ()}.
-     */
-    @Override
-    public SVGAnimatedNumber getZ() {
-        return z;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGFEPointLightElement#getZ()}.
+	 */
+	@Override
+	public SVGAnimatedNumber getZ() {
+		return z;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMFEPointLightElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMFEPointLightElement();
+	}
 
-    /**
-     * Returns the table of TraitInformation objects for this element.
-     */
-    @Override
-    protected DoublyIndexedTable<String,String> getTraitInformationTable() {
-        return xmlTraitInformation;
-    }
+	/**
+	 * Returns the table of TraitInformation objects for this element.
+	 */
+	@Override
+	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
+		return xmlTraitInformation;
+	}
 }

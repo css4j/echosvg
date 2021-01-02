@@ -32,79 +32,77 @@ import org.w3c.dom.svg.SVGPoint;
  */
 public class SVGOMPoint implements SVGPoint {
 
-    /**
-     * The x coordinate.
-     */
-    protected float x;
-    
-    /**
-     * The y coordinate.
-     */
-    protected float y;
+	/**
+	 * The x coordinate.
+	 */
+	protected float x;
 
-    /**
-     * Creates a new SVGOMPoint with coordinates set to <code>0</code>.
-     */
-    public SVGOMPoint() {
-    }
+	/**
+	 * The y coordinate.
+	 */
+	protected float y;
 
-    /**
-     * Creates a new SVGOMPoint with coordinates set to the specified values.
-     */
-    public SVGOMPoint(float x, float y) {
-        this.x = x;
-        this.y = y;
-    }
+	/**
+	 * Creates a new SVGOMPoint with coordinates set to <code>0</code>.
+	 */
+	public SVGOMPoint() {
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPoint#getX()}.
-     */
-    @Override
-    public float getX() {
-        return x;
-    }
+	/**
+	 * Creates a new SVGOMPoint with coordinates set to the specified values.
+	 */
+	public SVGOMPoint(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPoint#setX(float)}.
-     */
-    @Override
-    public void setX(float x) throws DOMException {
-        this.x = x;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPoint#getX()}.
+	 */
+	@Override
+	public float getX() {
+		return x;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPoint#getY()}.
-     */
-    @Override
-    public float getY() {
-        return y;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPoint#setX(float)}.
+	 */
+	@Override
+	public void setX(float x) throws DOMException {
+		this.x = x;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPoint#setY(float)}.
-     */
-    @Override
-    public void setY(float y) throws DOMException {
-        this.y = y;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPoint#getY()}.
+	 */
+	@Override
+	public float getY() {
+		return y;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGPoint#matrixTransform(SVGMatrix)}.
-     */
-    @Override
-    public SVGPoint matrixTransform(SVGMatrix matrix) {
-        return matrixTransform(this, matrix);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPoint#setY(float)}.
+	 */
+	@Override
+	public void setY(float y) throws DOMException {
+		this.y = y;
+	}
 
-    /**
-     * Transforms an {@link SVGPoint} by an {@link SVGMatrix} and returns
-     * the new point.
-     */
-    public static SVGPoint matrixTransform(SVGPoint point, SVGMatrix matrix) {
-        float newX = matrix.getA() * point.getX() + matrix.getC() * point.getY()
-            + matrix.getE();
-        float newY = matrix.getB() * point.getX() + matrix.getD() * point.getY()
-            + matrix.getF();
-        return new SVGOMPoint(newX, newY);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGPoint#matrixTransform(SVGMatrix)}.
+	 */
+	@Override
+	public SVGPoint matrixTransform(SVGMatrix matrix) {
+		return matrixTransform(this, matrix);
+	}
+
+	/**
+	 * Transforms an {@link SVGPoint} by an {@link SVGMatrix} and returns the new
+	 * point.
+	 */
+	public static SVGPoint matrixTransform(SVGPoint point, SVGMatrix matrix) {
+		float newX = matrix.getA() * point.getX() + matrix.getC() * point.getY() + matrix.getE();
+		float newY = matrix.getB() * point.getX() + matrix.getD() * point.getY() + matrix.getF();
+		return new SVGOMPoint(newX, newY);
+	}
 }

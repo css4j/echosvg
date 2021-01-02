@@ -35,28 +35,30 @@ import io.sf.carte.echosvg.dom.util.DocumentFactory;
  */
 public interface SVGDocumentFactory extends DocumentFactory {
 
-    /**
-     * Creates a SVG Document instance.
-     * @param uri The document URI.
-     * @exception IOException if an error occured while reading the document.
-     */
-    SVGDocument createSVGDocument(String uri) throws IOException;
+	/**
+	 * Creates a SVG Document instance.
+	 * 
+	 * @param uri The document URI.
+	 * @exception IOException if an error occured while reading the document.
+	 */
+	SVGDocument createSVGDocument(String uri) throws IOException;
 
-    /**
-     * Creates a SVG Document instance.
-     * @param uri The document URI.
-     * @param is The document input stream.
-     * @exception IOException if an error occured while reading the document.
-     */
-    SVGDocument createSVGDocument(String uri, InputStream is) 
-        throws IOException;
+	/**
+	 * Creates a SVG Document instance.
+	 * 
+	 * @param uri The document URI.
+	 * @param is  The document input stream.
+	 * @exception IOException if an error occured while reading the document.
+	 */
+	SVGDocument createSVGDocument(String uri, InputStream is) throws IOException;
 
-    /**
-     * Creates a SVG Document instance.
-     * @param uri The document URI.
-     * @param r The document reader.
-     * @exception IOException if an error occured while reading the document.
-     */
-    SVGDocument createSVGDocument(String uri, Reader r) throws IOException;
+	/**
+	 * Creates a SVG Document instance.
+	 * 
+	 * @param uri The document URI.
+	 * @param r   The document reader.
+	 * @exception IOException if an error occured while reading the document.
+	 */
+	SVGDocument createSVGDocument(String uri, Reader r) throws IOException;
 
 }

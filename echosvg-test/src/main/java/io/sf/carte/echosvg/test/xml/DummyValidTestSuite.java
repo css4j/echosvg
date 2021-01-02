@@ -19,7 +19,7 @@
 package io.sf.carte.echosvg.test.xml;
 
 import io.sf.carte.echosvg.test.DefaultTestSuite;
- 
+
 /**
  * Dummy TestSuite which always passes. Needed for the test infrastructure
  * validation.
@@ -28,10 +28,17 @@ import io.sf.carte.echosvg.test.DefaultTestSuite;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DummyValidTestSuite extends DefaultTestSuite{
-    public DummyValidTestSuite(){
-        addTest(new DummyValidTest() {{setId("1");}});
-        addTest(new DummyValidTest() {{setId("2");}});
-    }
+public class DummyValidTestSuite extends DefaultTestSuite {
+	public DummyValidTestSuite() {
+		addTest(new DummyValidTest() {
+			{
+				setId("1");
+			}
+		});
+		addTest(new DummyValidTest() {
+			{
+				setId("2");
+			}
+		});
+	}
 }
-

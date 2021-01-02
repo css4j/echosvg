@@ -30,28 +30,29 @@ import java.awt.geom.Rectangle2D;
  */
 
 public interface FloodRable extends Filter {
-    /**
-     * Set the flood paint.
-     * @param paint the flood paint to use when filling
-     */
-    void setFloodPaint(Paint paint);
+	/**
+	 * Set the flood paint.
+	 * 
+	 * @param paint the flood paint to use when filling
+	 */
+	void setFloodPaint(Paint paint);
 
-    /**
-     * Get the flood paint.
-     * @return The current flood paint for the filter
-     */
-    Paint getFloodPaint();
+	/**
+	 * Get the flood paint.
+	 * 
+	 * @return The current flood paint for the filter
+	 */
+	Paint getFloodPaint();
 
-    /**
-     * Sets the flood region
-     * @param floodRegion region to flood with floodPaint
-     */
-    void setFloodRegion(Rectangle2D floodRegion);
+	/**
+	 * Sets the flood region
+	 * 
+	 * @param floodRegion region to flood with floodPaint
+	 */
+	void setFloodRegion(Rectangle2D floodRegion);
 
-    /**
-     * Get the flood region
-     */
-    Rectangle2D getFloodRegion();
+	/**
+	 * Get the flood region
+	 */
+	Rectangle2D getFloodRegion();
 }
-
-

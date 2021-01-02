@@ -27,226 +27,217 @@ import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 
 /**
- * This class provides an implementation of the {@link
- * SVGAnimatedEnumeration} interface.
+ * This class provides an implementation of the {@link SVGAnimatedEnumeration}
+ * interface.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGOMAnimatedEnumeration extends AbstractSVGAnimatedValue
-                                      implements SVGAnimatedEnumeration {
-    
-    /**
-     * The values in this enumeration.
-     */
-    protected String[] values;
+public class SVGOMAnimatedEnumeration extends AbstractSVGAnimatedValue implements SVGAnimatedEnumeration {
 
-    /**
-     * The default value, if the attribute is not specified.
-     */
-    protected short defaultValue;
+	/**
+	 * The values in this enumeration.
+	 */
+	protected String[] values;
 
-    /**
-     * Whether the current base value is valid.
-     */
-    protected boolean valid;
+	/**
+	 * The default value, if the attribute is not specified.
+	 */
+	protected short defaultValue;
 
-    /**
-     * The current base value.
-     */
-    protected short baseVal;
+	/**
+	 * Whether the current base value is valid.
+	 */
+	protected boolean valid;
 
-    /**
-     * The current animated value.
-     */
-    protected short animVal;
+	/**
+	 * The current base value.
+	 */
+	protected short baseVal;
 
-    /**
-     * Whether the value is changing.
-     */
-    protected boolean changing;
+	/**
+	 * The current animated value.
+	 */
+	protected short animVal;
 
-    /**
-     * Creates a new SVGOMAnimatedEnumeration.
-     * @param elt The associated element.
-     * @param ns The attribute's namespace URI.
-     * @param ln The attribute's local name.
-     * @param val The values in this enumeration.
-     * @param def The default value to use.
-     */
-    public SVGOMAnimatedEnumeration(AbstractElement elt,
-                                    String ns,
-                                    String ln,
-                                    String[] val,
-                                    short def) {
-        super(elt, ns, ln);
-        values = val;
-        defaultValue = def;
-    }
+	/**
+	 * Whether the value is changing.
+	 */
+	protected boolean changing;
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAnimatedEnumeration#getBaseVal()}.
-     */
-    @Override
-    public short getBaseVal() {
-        if (!valid) {
-            update();
-        }
-        return baseVal;
-    }
+	/**
+	 * Creates a new SVGOMAnimatedEnumeration.
+	 * 
+	 * @param elt The associated element.
+	 * @param ns  The attribute's namespace URI.
+	 * @param ln  The attribute's local name.
+	 * @param val The values in this enumeration.
+	 * @param def The default value to use.
+	 */
+	public SVGOMAnimatedEnumeration(AbstractElement elt, String ns, String ln, String[] val, short def) {
+		super(elt, ns, ln);
+		values = val;
+		defaultValue = def;
+	}
 
-    /**
-     * Returns the base value as a string.
-     */
-    public String getBaseValAsString() {
-        if (!valid) {
-            update();
-        }
-        return values[baseVal];
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAnimatedEnumeration#getBaseVal()}.
+	 */
+	@Override
+	public short getBaseVal() {
+		if (!valid) {
+			update();
+		}
+		return baseVal;
+	}
 
-    /**
-     * Updates the base value from the attribute.
-     */
-    protected void update() {
-        String val = element.getAttributeNS(namespaceURI, localName);
-        if (val.length() == 0) {
-            baseVal = defaultValue;
-        } else {
-            baseVal = getEnumerationNumber(val);
-        }
-        valid = true;
-    }
+	/**
+	 * Returns the base value as a string.
+	 */
+	public String getBaseValAsString() {
+		if (!valid) {
+			update();
+		}
+		return values[baseVal];
+	}
 
-    /**
-     * Returns the enumeration number of the specified string.
-     */
-    protected short getEnumerationNumber(String s) {
-        for (short i = 0; i < values.length; i++) {
-            if (s.equals(values[i])) {
-                return i;
-            }
-        }
-        return 0;
-    }
+	/**
+	 * Updates the base value from the attribute.
+	 */
+	protected void update() {
+		String val = element.getAttributeNS(namespaceURI, localName);
+		if (val.length() == 0) {
+			baseVal = defaultValue;
+		} else {
+			baseVal = getEnumerationNumber(val);
+		}
+		valid = true;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGAnimatedEnumeration#setBaseVal(short)}.
-     */
-    @Override
-    public void setBaseVal(short baseVal) throws DOMException {
-        if (baseVal >= 0 && baseVal < values.length) {
-            try {
-                this.baseVal = baseVal;
-                valid = true;
-                changing = true;
-                element.setAttributeNS(namespaceURI, localName,
-                                       values[baseVal]);
-            } finally {
-                changing = false;
-            }
-        }
-    }
+	/**
+	 * Returns the enumeration number of the specified string.
+	 */
+	protected short getEnumerationNumber(String s) {
+		for (short i = 0; i < values.length; i++) {
+			if (s.equals(values[i])) {
+				return i;
+			}
+		}
+		return 0;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAnimatedEnumeration#getAnimVal()}.
-     */
-    @Override
-    public short getAnimVal() {
-        if (hasAnimVal) {
-            return animVal;
-        }
-        if (!valid) {
-            update();
-        }
-        return baseVal;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAnimatedEnumeration#setBaseVal(short)}.
+	 */
+	@Override
+	public void setBaseVal(short baseVal) throws DOMException {
+		if (baseVal >= 0 && baseVal < values.length) {
+			try {
+				this.baseVal = baseVal;
+				valid = true;
+				changing = true;
+				element.setAttributeNS(namespaceURI, localName, values[baseVal]);
+			} finally {
+				changing = false;
+			}
+		}
+	}
 
-    /**
-     * Gets the current animated value, throwing an exception if the attribute
-     * is malformed.
-     */
-    public short getCheckedVal() {
-        if (hasAnimVal) {
-            return animVal;
-        }
-        if (!valid) {
-            update();
-        }
-        if (baseVal == 0) {
-            throw new LiveAttributeException
-                (element, localName,
-                 LiveAttributeException.ERR_ATTRIBUTE_MALFORMED,
-                 getBaseValAsString());
-        }
-        return baseVal;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAnimatedEnumeration#getAnimVal()}.
+	 */
+	@Override
+	public short getAnimVal() {
+		if (hasAnimVal) {
+			return animVal;
+		}
+		if (!valid) {
+			update();
+		}
+		return baseVal;
+	}
 
-    /**
-     * Returns the base value of the attribute as an {@link AnimatableValue}.
-     */
-    @Override
-    public AnimatableValue getUnderlyingValue(AnimationTarget target) {
-        return new AnimatableStringValue(target, getBaseValAsString());
-    }
+	/**
+	 * Gets the current animated value, throwing an exception if the attribute is
+	 * malformed.
+	 */
+	public short getCheckedVal() {
+		if (hasAnimVal) {
+			return animVal;
+		}
+		if (!valid) {
+			update();
+		}
+		if (baseVal == 0) {
+			throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_MALFORMED,
+					getBaseValAsString());
+		}
+		return baseVal;
+	}
 
-    /**
-     * Called when an Attr node has been added.
-     */
-    @Override
-    public void attrAdded(Attr node, String newv) {
-        if (!changing) {
-            valid = false;
-        }
-        fireBaseAttributeListeners();
-        if (!hasAnimVal) {
-            fireAnimatedAttributeListeners();
-        }
-    }
+	/**
+	 * Returns the base value of the attribute as an {@link AnimatableValue}.
+	 */
+	@Override
+	public AnimatableValue getUnderlyingValue(AnimationTarget target) {
+		return new AnimatableStringValue(target, getBaseValAsString());
+	}
 
-    /**
-     * Updates the animated value with the given {@link AnimatableValue}.
-     */
-    @Override
-    protected void updateAnimatedValue(AnimatableValue val) {
-        if (val == null) {
-            hasAnimVal = false;
-        } else {
-            hasAnimVal = true;
-            this.animVal =
-                getEnumerationNumber(((AnimatableStringValue) val).getString());
-            fireAnimatedAttributeListeners();
-        }
-        fireAnimatedAttributeListeners();
-    }
+	/**
+	 * Called when an Attr node has been added.
+	 */
+	@Override
+	public void attrAdded(Attr node, String newv) {
+		if (!changing) {
+			valid = false;
+		}
+		fireBaseAttributeListeners();
+		if (!hasAnimVal) {
+			fireAnimatedAttributeListeners();
+		}
+	}
 
-    /**
-     * Called when an Attr node has been modified.
-     */
-    @Override
-    public void attrModified(Attr node, String oldv, String newv) {
-        if (!changing) {
-            valid = false;
-        }
-        fireBaseAttributeListeners();
-        if (!hasAnimVal) {
-            fireAnimatedAttributeListeners();
-        }
-    }
+	/**
+	 * Updates the animated value with the given {@link AnimatableValue}.
+	 */
+	@Override
+	protected void updateAnimatedValue(AnimatableValue val) {
+		if (val == null) {
+			hasAnimVal = false;
+		} else {
+			hasAnimVal = true;
+			this.animVal = getEnumerationNumber(((AnimatableStringValue) val).getString());
+			fireAnimatedAttributeListeners();
+		}
+		fireAnimatedAttributeListeners();
+	}
 
-    /**
-     * Called when an Attr node has been removed.
-     */
-    @Override
-    public void attrRemoved(Attr node, String oldv) {
-        if (!changing) {
-            valid = false;
-        }
-        fireBaseAttributeListeners();
-        if (!hasAnimVal) {
-            fireAnimatedAttributeListeners();
-        }
-    }
+	/**
+	 * Called when an Attr node has been modified.
+	 */
+	@Override
+	public void attrModified(Attr node, String oldv, String newv) {
+		if (!changing) {
+			valid = false;
+		}
+		fireBaseAttributeListeners();
+		if (!hasAnimVal) {
+			fireAnimatedAttributeListeners();
+		}
+	}
+
+	/**
+	 * Called when an Attr node has been removed.
+	 */
+	@Override
+	public void attrRemoved(Attr node, String oldv) {
+		if (!changing) {
+			valid = false;
+		}
+		fireBaseAttributeListeners();
+		if (!hasAnimVal) {
+			fireAnimatedAttributeListeners();
+		}
+	}
 }

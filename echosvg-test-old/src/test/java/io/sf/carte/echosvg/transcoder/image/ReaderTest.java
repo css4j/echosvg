@@ -34,44 +34,44 @@ import io.sf.carte.echosvg.transcoder.TranscoderInput;
  */
 public class ReaderTest extends AbstractImageTranscoderTest {
 
-    /** The URI of the input image. */
-    protected String inputURI;
+	/** The URI of the input image. */
+	protected String inputURI;
 
-    /** The URI of the reference image. */
-    protected String refImageURI;
+	/** The URI of the reference image. */
+	protected String refImageURI;
 
-    /**
-     * Constructs a new <code>ReaderTest</code>.
-     *
-     * @param inputURI the URI of the input image
-     * @param refImageURI the URI of the reference image
-     */
-    public ReaderTest(String inputURI, String refImageURI) {
-        this.inputURI = inputURI;
-        this.refImageURI = refImageURI;
-    }
+	/**
+	 * Constructs a new <code>ReaderTest</code>.
+	 *
+	 * @param inputURI    the URI of the input image
+	 * @param refImageURI the URI of the reference image
+	 */
+	public ReaderTest(String inputURI, String refImageURI) {
+		this.inputURI = inputURI;
+		this.refImageURI = refImageURI;
+	}
 
-    /**
-     * Creates the <code>TranscoderInput</code>.
-     */
-    @Override
-    protected TranscoderInput createTranscoderInput() {
-        try {
-            URL url = resolveURL(inputURI);
-            Reader reader = new InputStreamReader(url.openStream());
-            TranscoderInput input = new TranscoderInput(reader);
-            input.setURI(url.toString()); // Needed for external resources
-            return input;
-        } catch (IOException ex) {
-            throw new IllegalArgumentException(inputURI);
-        }
-    }
+	/**
+	 * Creates the <code>TranscoderInput</code>.
+	 */
+	@Override
+	protected TranscoderInput createTranscoderInput() {
+		try {
+			URL url = resolveURL(inputURI);
+			Reader reader = new InputStreamReader(url.openStream());
+			TranscoderInput input = new TranscoderInput(reader);
+			input.setURI(url.toString()); // Needed for external resources
+			return input;
+		} catch (IOException ex) {
+			throw new IllegalArgumentException(inputURI);
+		}
+	}
 
-    /**
-     * Returns the reference image for this test.
-     */
-    @Override
-    protected byte [] getReferenceImageData() {
-        return createBufferedImageData(resolveURL(refImageURI));
-    }
+	/**
+	 * Returns the reference image for this test.
+	 */
+	@Override
+	protected byte[] getReferenceImageData() {
+		return createBufferedImageData(resolveURL(refImageURI));
+	}
 }

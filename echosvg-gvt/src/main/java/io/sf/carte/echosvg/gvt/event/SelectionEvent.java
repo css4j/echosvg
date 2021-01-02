@@ -30,71 +30,71 @@ import java.awt.Shape;
  */
 public class SelectionEvent {
 
-    /**
-     * The id for the "selection changing" event.
-     * (Selection process is under way)
-     */
-    public static final int SELECTION_CHANGED = 1;
+	/**
+	 * The id for the "selection changing" event. (Selection process is under way)
+	 */
+	public static final int SELECTION_CHANGED = 1;
 
-    /**
-     * The id for the "selection cleared" event.
-     */
-    public static final int SELECTION_CLEARED = 3;
+	/**
+	 * The id for the "selection cleared" event.
+	 */
+	public static final int SELECTION_CLEARED = 3;
 
-    /**
-     * The id for the "selection started" event.
-     */
-    public static final int SELECTION_STARTED = 4;
+	/**
+	 * The id for the "selection started" event.
+	 */
+	public static final int SELECTION_STARTED = 4;
 
-    /**
-     * The id for the "selection completed" event.
-     * (Selection process is complete).
-     */
-    public static final int SELECTION_DONE = 2;
+	/**
+	 * The id for the "selection completed" event. (Selection process is complete).
+	 */
+	public static final int SELECTION_DONE = 2;
 
-    /** The shape enclosing the selection */
-    protected Shape highlightShape;
+	/** The shape enclosing the selection */
+	protected Shape highlightShape;
 
-    /** The object which composes the selection */
-    protected Object selection;
+	/** The object which composes the selection */
+	protected Object selection;
 
-    /** The event type of the current selection event */
-    protected int id;
+	/** The event type of the current selection event */
+	protected int id;
 
-    /**
-     * Constructs a new graphics node paint event.
-     * @param selection the selection
-     * @param id the id of this event
-     * @param highlightShape a user-space shape enclosing the selection.
-     */
-    public SelectionEvent(Object selection, int id, Shape highlightShape ) {
-        this.id = id;
-        this.selection = selection;
-        this.highlightShape = highlightShape;
-    }
+	/**
+	 * Constructs a new graphics node paint event.
+	 * 
+	 * @param selection      the selection
+	 * @param id             the id of this event
+	 * @param highlightShape a user-space shape enclosing the selection.
+	 */
+	public SelectionEvent(Object selection, int id, Shape highlightShape) {
+		this.id = id;
+		this.selection = selection;
+		this.highlightShape = highlightShape;
+	}
 
-    /**
-     * Returns a shape in user space that encloses the current selection.
-     */
-    public Shape getHighlightShape() {
-        return highlightShape;
-    }
+	/**
+	 * Returns a shape in user space that encloses the current selection.
+	 */
+	public Shape getHighlightShape() {
+		return highlightShape;
+	}
 
-    /**
-     * Returns the selection associated with this event.
-     * Only guaranteed current for events of type SELECTION_DONE.
-     */
-    public Object getSelection() {
-        return selection;
-    }
+	/**
+	 * Returns the selection associated with this event. Only guaranteed current for
+	 * events of type SELECTION_DONE.
+	 */
+	public Object getSelection() {
+		return selection;
+	}
 
-    /**
-     * Returns the event's selection event type.
-     * @see io.sf.carte.echosvg.gvt.event.SelectionEvent#SELECTION_CHANGED
-     * @see io.sf.carte.echosvg.gvt.event.SelectionEvent#SELECTION_CLEARED
-     * @see io.sf.carte.echosvg.gvt.event.SelectionEvent#SELECTION_DONE
-     */
-    public int getID() {
-        return id;
-    }
+	/**
+	 * Returns the event's selection event type.
+	 * 
+	 * @see io.sf.carte.echosvg.gvt.event.SelectionEvent#SELECTION_CHANGED
+	 * @see io.sf.carte.echosvg.gvt.event.SelectionEvent#SELECTION_CLEARED
+	 * @see io.sf.carte.echosvg.gvt.event.SelectionEvent#SELECTION_DONE
+	 */
+	public int getID() {
+		return id;
+	}
 }

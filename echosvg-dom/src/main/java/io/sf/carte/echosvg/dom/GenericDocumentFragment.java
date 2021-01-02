@@ -28,46 +28,46 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public class GenericDocumentFragment extends AbstractDocumentFragment {
-    private static final long serialVersionUID = 1L;
-    /**
-     * Is this element immutable?
-     */
-    protected boolean readonly;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Is this element immutable?
+	 */
+	protected boolean readonly;
 
-    /**
-     * Creates a new DocumentFragment object.
-     */
-    protected GenericDocumentFragment() {
-    }
+	/**
+	 * Creates a new DocumentFragment object.
+	 */
+	protected GenericDocumentFragment() {
+	}
 
-    /**
-     * Creates a new DocumentFragment object.
-     */
-    public GenericDocumentFragment(AbstractDocument owner) {
-        ownerDocument = owner;
-    }
+	/**
+	 * Creates a new DocumentFragment object.
+	 */
+	public GenericDocumentFragment(AbstractDocument owner) {
+		ownerDocument = owner;
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return readonly;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-        readonly = v;
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+		readonly = v;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new GenericDocumentFragment();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new GenericDocumentFragment();
+	}
 }

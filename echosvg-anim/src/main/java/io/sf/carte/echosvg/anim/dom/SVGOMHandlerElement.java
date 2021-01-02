@@ -32,37 +32,38 @@ import io.sf.carte.echosvg.util.SVG12Constants;
  */
 public class SVGOMHandlerElement extends SVGOMElement {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Creates a new SVGOMHandlerElement object.
-     */
-    protected SVGOMHandlerElement() {
-    }
+	/**
+	 * Creates a new SVGOMHandlerElement object.
+	 */
+	protected SVGOMHandlerElement() {
+	}
 
-    /**
-     * Creates a new SVGOMHandlerElement object.
-     * @param prefix The namespace prefix.
-     * @param owner The owner document.
-     */
-    public SVGOMHandlerElement(String prefix, AbstractDocument owner) {
-        super(prefix, owner);
+	/**
+	 * Creates a new SVGOMHandlerElement object.
+	 * 
+	 * @param prefix The namespace prefix.
+	 * @param owner  The owner document.
+	 */
+	public SVGOMHandlerElement(String prefix, AbstractDocument owner) {
+		super(prefix, owner);
 
-    }
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link Node#getLocalName()}.
-     */
-    @Override
-    public String getLocalName() {
-        return SVG12Constants.SVG_HANDLER_TAG;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link Node#getLocalName()}.
+	 */
+	@Override
+	public String getLocalName() {
+		return SVG12Constants.SVG_HANDLER_TAG;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new SVGOMHandlerElement();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new SVGOMHandlerElement();
+	}
 }

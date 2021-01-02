@@ -32,99 +32,94 @@ import java.awt.image.WritableRaster;
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 
 /**
- * This implementation of RenderedImage will generate an infinate
- * field of a single color.  It reports bounds but will in fact render
- * out to infinity.
+ * This implementation of RenderedImage will generate an infinate field of a
+ * single color. It reports bounds but will in fact render out to infinity.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
- * @version $Id$ 
+ * @version $Id$
  */
 public class FloodRed extends AbstractRed {
 
-    /**
-     * A single tile that we move around as needed...
-     */
-    private WritableRaster raster;
+	/**
+	 * A single tile that we move around as needed...
+	 */
+	private WritableRaster raster;
 
-    /**
-     * Construct a fully transparent black image <code>bounds</code> size.
-     * @param bounds the bounds of the image (in fact will respond with
-     *               any request).
-     */
-    public FloodRed(Rectangle bounds) {
-        this(bounds, new Color(0, 0, 0, 0));
-    }
+	/**
+	 * Construct a fully transparent black image <code>bounds</code> size.
+	 * 
+	 * @param bounds the bounds of the image (in fact will respond with any
+	 *               request).
+	 */
+	public FloodRed(Rectangle bounds) {
+		this(bounds, new Color(0, 0, 0, 0));
+	}
 
-    /**
-     * Construct a fully transparent image <code>bounds</code> size, will
-     * paint one tile with paint.  Thus paint should not be a pattered
-     * paint or gradient but should be a solid color.
-     * @param bounds the bounds of the image (in fact will respond with
-     *               any request).  
-     */
-    public FloodRed(Rectangle bounds,
-                    Paint paint) {
-        super(); // We _must_ call init...
+	/**
+	 * Construct a fully transparent image <code>bounds</code> size, will paint one
+	 * tile with paint. Thus paint should not be a pattered paint or gradient but
+	 * should be a solid color.
+	 * 
+	 * @param bounds the bounds of the image (in fact will respond with any
+	 *               request).
+	 */
+	public FloodRed(Rectangle bounds, Paint paint) {
+		super(); // We _must_ call init...
 
-        ColorModel cm = GraphicsUtil.sRGB_Unpre;
-        
-        int defSz = AbstractTiledRed.getDefaultTileSize();
+		ColorModel cm = GraphicsUtil.sRGB_Unpre;
 
-        int tw = bounds.width;
-        if (tw > defSz) tw = defSz;
-        int th = bounds.height;
-        if (th > defSz) th = defSz;
+		int defSz = AbstractTiledRed.getDefaultTileSize();
 
-        // fix my sample model so it makes sense given my size.
-        SampleModel sm = cm.createCompatibleSampleModel(tw, th);
+		int tw = bounds.width;
+		if (tw > defSz)
+			tw = defSz;
+		int th = bounds.height;
+		if (th > defSz)
+			th = defSz;
 
-        // Finish initializing our base class...
-        init((CachableRed)null, bounds, cm, sm, 0, 0, null);
+		// fix my sample model so it makes sense given my size.
+		SampleModel sm = cm.createCompatibleSampleModel(tw, th);
 
-        raster = Raster.createWritableRaster(sm, new Point(0, 0));
-        BufferedImage offScreen = new BufferedImage(cm, raster,
-                                                    cm.isAlphaPremultiplied(),
-                                                    null);
+		// Finish initializing our base class...
+		init((CachableRed) null, bounds, cm, sm, 0, 0, null);
 
-        Graphics2D g = GraphicsUtil.createGraphics(offScreen);
-        g.setPaint(paint);
-        g.fillRect(0, 0, bounds.width, bounds.height);
-        g.dispose();
-    }
+		raster = Raster.createWritableRaster(sm, new Point(0, 0));
+		BufferedImage offScreen = new BufferedImage(cm, raster, cm.isAlphaPremultiplied(), null);
 
-    @Override
-    public Raster getTile(int x, int y) {
-        // We have a Single raster that we translate where needed
-        // position.  So just offest appropriately.
-        int tx = tileGridXOff+x*tileWidth;
-        int ty = tileGridYOff+y*tileHeight;
-        return raster.createTranslatedChild(tx, ty);
-    }
+		Graphics2D g = GraphicsUtil.createGraphics(offScreen);
+		g.setPaint(paint);
+		g.fillRect(0, 0, bounds.width, bounds.height);
+		g.dispose();
+	}
 
-    @Override
-    public WritableRaster copyData(WritableRaster wr) {
-        int tx0 = getXTile(wr.getMinX());
-        int ty0 = getYTile(wr.getMinY());
-        int tx1 = getXTile(wr.getMinX()+wr.getWidth() -1);
-        int ty1 = getYTile(wr.getMinY()+wr.getHeight()-1);
+	@Override
+	public Raster getTile(int x, int y) {
+		// We have a Single raster that we translate where needed
+		// position. So just offest appropriately.
+		int tx = tileGridXOff + x * tileWidth;
+		int ty = tileGridYOff + y * tileHeight;
+		return raster.createTranslatedChild(tx, ty);
+	}
 
-        final boolean is_INT_PACK = 
-            GraphicsUtil.is_INT_PACK_Data(getSampleModel(), false);
+	@Override
+	public WritableRaster copyData(WritableRaster wr) {
+		int tx0 = getXTile(wr.getMinX());
+		int ty0 = getYTile(wr.getMinY());
+		int tx1 = getXTile(wr.getMinX() + wr.getWidth() - 1);
+		int ty1 = getYTile(wr.getMinY() + wr.getHeight() - 1);
 
-        for (int y=ty0; y<=ty1; y++)
-            for (int x=tx0; x<=tx1; x++) {
-                Raster r = getTile(x, y);
-                if (is_INT_PACK)
-                    GraphicsUtil.copyData_INT_PACK(r, wr);
-                else
-                    GraphicsUtil.copyData_FALLBACK(r, wr);
-            }
+		final boolean is_INT_PACK = GraphicsUtil.is_INT_PACK_Data(getSampleModel(), false);
 
-        return wr;
-    }
+		for (int y = ty0; y <= ty1; y++)
+			for (int x = tx0; x <= tx1; x++) {
+				Raster r = getTile(x, y);
+				if (is_INT_PACK)
+					GraphicsUtil.copyData_INT_PACK(r, wr);
+				else
+					GraphicsUtil.copyData_FALLBACK(r, wr);
+			}
+
+		return wr;
+	}
 }
-
-
-
-

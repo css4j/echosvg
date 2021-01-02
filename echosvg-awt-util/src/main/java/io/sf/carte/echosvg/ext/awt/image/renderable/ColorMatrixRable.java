@@ -19,8 +19,7 @@
 package io.sf.carte.echosvg.ext.awt.image.renderable;
 
 /**
- * Defines the interface expected from a color matrix
- * operation
+ * Defines the interface expected from a color matrix operation
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -28,36 +27,38 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
  */
 public interface ColorMatrixRable extends FilterColorInterpolation {
 
-    /**
-     * Identifier used to refer to predefined matrices
-     */
-    int TYPE_MATRIX             = 0;
-    int TYPE_SATURATE           = 1;
-    int TYPE_HUE_ROTATE         = 2;
-    int TYPE_LUMINANCE_TO_ALPHA = 3;
+	/**
+	 * Identifier used to refer to predefined matrices
+	 */
+	int TYPE_MATRIX = 0;
+	int TYPE_SATURATE = 1;
+	int TYPE_HUE_ROTATE = 2;
+	int TYPE_LUMINANCE_TO_ALPHA = 3;
 
-    /**
-     * Returns the source to be offset.
-     */
-    Filter getSource();
+	/**
+	 * Returns the source to be offset.
+	 */
+	Filter getSource();
 
-    /**
-     * Sets the source to be offset.
-     * @param src image to offset.
-     */
-    void setSource(Filter src);
+	/**
+	 * Sets the source to be offset.
+	 * 
+	 * @param src image to offset.
+	 */
+	void setSource(Filter src);
 
-    /**
-     * Returns the type of this color matrix.
-     * @return one of TYPE_MATRIX, TYPE_SATURATE, TYPE_HUE_ROTATE,
-     *         TYPE_LUMINANCE_TO_ALPHA
-     */
-    int getType();
+	/**
+	 * Returns the type of this color matrix.
+	 * 
+	 * @return one of TYPE_MATRIX, TYPE_SATURATE, TYPE_HUE_ROTATE,
+	 *         TYPE_LUMINANCE_TO_ALPHA
+	 */
+	int getType();
 
-    /**
-     * Returns the rows of the color matrix. This uses
-     * the same convention as BandCombineOp.
-     */
-    float[][] getMatrix();
+	/**
+	 * Returns the rows of the color matrix. This uses the same convention as
+	 * BandCombineOp.
+	 */
+	float[][] getMatrix();
 
 }

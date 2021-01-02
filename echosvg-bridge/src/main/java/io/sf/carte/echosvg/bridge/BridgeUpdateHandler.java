@@ -32,45 +32,44 @@ import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
  * @version $Id$
  */
 public interface BridgeUpdateHandler {
-    
-    /**
-     * Invoked when an MutationEvent of type 'DOMAttrModified' is fired.
-     */
-    void handleDOMAttrModifiedEvent(MutationEvent evt);
 
-    /**
-     * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
-     */
-    void handleDOMNodeInsertedEvent(MutationEvent evt);
+	/**
+	 * Invoked when an MutationEvent of type 'DOMAttrModified' is fired.
+	 */
+	void handleDOMAttrModifiedEvent(MutationEvent evt);
 
-    /**
-     * Invoked when an MutationEvent of type 'DOMNodeRemoved' is fired.
-     */
-    void handleDOMNodeRemovedEvent(MutationEvent evt);
+	/**
+	 * Invoked when an MutationEvent of type 'DOMNodeInserted' is fired.
+	 */
+	void handleDOMNodeInsertedEvent(MutationEvent evt);
 
-    /**
-     * Invoked when an MutationEvent of type 'DOMCharacterDataModified' 
-     * is fired.
-     */
-    void handleDOMCharacterDataModified(MutationEvent evt);
+	/**
+	 * Invoked when an MutationEvent of type 'DOMNodeRemoved' is fired.
+	 */
+	void handleDOMNodeRemovedEvent(MutationEvent evt);
 
-    /**
-     * Invoked when an CSSEngineEvent is fired.
-     */
-    void handleCSSEngineEvent(CSSEngineEvent evt);
+	/**
+	 * Invoked when an MutationEvent of type 'DOMCharacterDataModified' is fired.
+	 */
+	void handleDOMCharacterDataModified(MutationEvent evt);
 
-    /**
-     * Invoked when the animated value of an animated attribute has changed.
-     */
-    void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav);
+	/**
+	 * Invoked when an CSSEngineEvent is fired.
+	 */
+	void handleCSSEngineEvent(CSSEngineEvent evt);
 
-    /**
-     * Invoked when an 'other' animation value has changed.
-     */
-    void handleOtherAnimationChanged(String type);
+	/**
+	 * Invoked when the animated value of an animated attribute has changed.
+	 */
+	void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav);
 
-    /**
-     * Disposes this BridgeUpdateHandler and releases all resources.
-     */
-    void dispose();
+	/**
+	 * Invoked when an 'other' animation value has changed.
+	 */
+	void handleOtherAnimationChanged(String type);
+
+	/**
+	 * Disposes this BridgeUpdateHandler and releases all resources.
+	 */
+	void dispose();
 }

@@ -37,8 +37,8 @@ import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.Service;
 
 /**
- * This class handles the registered Image tag handlers.  These are
- * instances of RegistryEntry in this package.
+ * This class handles the registered Image tag handlers. These are instances of
+ * RegistryEntry in this package.
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
@@ -46,322 +46,322 @@ import io.sf.carte.echosvg.util.Service;
  */
 public class ImageTagRegistry implements ErrorConstants {
 
-    List<RegistryEntry> entries    = new LinkedList<>();
-    List<String> extensions = null;
-    List<String> mimeTypes  = null;
+	List<RegistryEntry> entries = new LinkedList<>();
+	List<String> extensions = null;
+	List<String> mimeTypes = null;
 
-    URLImageCache rawCache;
-    URLImageCache imgCache;
+	URLImageCache rawCache;
+	URLImageCache imgCache;
 
-    public ImageTagRegistry() {
-        this(null, null);
-    }
+	public ImageTagRegistry() {
+		this(null, null);
+	}
 
-    public ImageTagRegistry(URLImageCache rawCache, URLImageCache imgCache) {
-        if (rawCache == null)
-            rawCache = new URLImageCache();
-        if (imgCache == null)
-            imgCache = new URLImageCache();
+	public ImageTagRegistry(URLImageCache rawCache, URLImageCache imgCache) {
+		if (rawCache == null)
+			rawCache = new URLImageCache();
+		if (imgCache == null)
+			imgCache = new URLImageCache();
 
-        this.rawCache= rawCache;
-        this.imgCache= imgCache;
-    }
+		this.rawCache = rawCache;
+		this.imgCache = imgCache;
+	}
 
-    /** Removes all decoded raster images from the cache.
-     *  All Images will be reloaded from the original source
-     *  if decoded again.
-     */
-    public void flushCache() {
-        rawCache.flush();
-        imgCache.flush();
-    }
+	/**
+	 * Removes all decoded raster images from the cache. All Images will be reloaded
+	 * from the original source if decoded again.
+	 */
+	public void flushCache() {
+		rawCache.flush();
+		imgCache.flush();
+	}
 
-    /** Removes the given URL from the cache.  Only the Image
-     *  associated with that URL will be removed from the cache.
-     */
-    public void flushImage(ParsedURL purl) {
-        rawCache.clear(purl);
-        imgCache.clear(purl);
-    }
+	/**
+	 * Removes the given URL from the cache. Only the Image associated with that URL
+	 * will be removed from the cache.
+	 */
+	public void flushImage(ParsedURL purl) {
+		rawCache.clear(purl);
+		imgCache.clear(purl);
+	}
 
-    public Filter checkCache(ParsedURL purl, ICCColorSpaceWithIntent colorSpace) {
-        // I just realized that this whole thing could
-        boolean needRawData = (colorSpace != null);
+	public Filter checkCache(ParsedURL purl, ICCColorSpaceWithIntent colorSpace) {
+		// I just realized that this whole thing could
+		boolean needRawData = (colorSpace != null);
 
-        Filter      ret        = null;
-        URLImageCache cache;
-        if (needRawData) cache = rawCache;
-        else             cache = imgCache;
+		Filter ret = null;
+		URLImageCache cache;
+		if (needRawData)
+			cache = rawCache;
+		else
+			cache = imgCache;
 
-        ret = cache.request(purl);
-        if (ret == null) {
-            cache.clear(purl);
-            return null;
-        }
+		ret = cache.request(purl);
+		if (ret == null) {
+			cache.clear(purl);
+			return null;
+		}
 
-        // System.out.println("Image came from cache" + purl);
-        if (colorSpace != null)
-            ret = new ProfileRable(ret, colorSpace);
-        return ret;
-    }
+		// System.out.println("Image came from cache" + purl);
+		if (colorSpace != null)
+			ret = new ProfileRable(ret, colorSpace);
+		return ret;
+	}
 
-    public Filter readURL(ParsedURL purl) {
-        return readURL(null, purl, null, true, true);
-    }
+	public Filter readURL(ParsedURL purl) {
+		return readURL(null, purl, null, true, true);
+	}
 
-    public Filter readURL(ParsedURL purl, ICCColorSpaceWithIntent colorSpace) {
-        return readURL(null, purl, colorSpace, true, true);
-    }
+	public Filter readURL(ParsedURL purl, ICCColorSpaceWithIntent colorSpace) {
+		return readURL(null, purl, colorSpace, true, true);
+	}
 
-    public Filter readURL(InputStream is, ParsedURL purl,
-                          ICCColorSpaceWithIntent colorSpace,
-                          boolean allowOpenStream,
-                          boolean returnBrokenLink) {
-        if ((is != null) && !is.markSupported())
-            // Doesn't support mark so wrap with
-            // BufferedInputStream that does.
-            is = new BufferedInputStream(is);
+	public Filter readURL(InputStream is, ParsedURL purl, ICCColorSpaceWithIntent colorSpace, boolean allowOpenStream,
+			boolean returnBrokenLink) {
+		if ((is != null) && !is.markSupported())
+			// Doesn't support mark so wrap with
+			// BufferedInputStream that does.
+			is = new BufferedInputStream(is);
 
-        // I just realized that this whole thing could
-        boolean needRawData = (colorSpace != null);
+		// I just realized that this whole thing could
+		boolean needRawData = (colorSpace != null);
 
-        Filter      ret     = null;
-        URLImageCache cache = null;
+		Filter ret = null;
+		URLImageCache cache = null;
 
-        if (purl != null) {
-            if (needRawData) cache = rawCache;
-            else             cache = imgCache;
+		if (purl != null) {
+			if (needRawData)
+				cache = rawCache;
+			else
+				cache = imgCache;
 
-            ret = cache.request(purl);
-            if (ret != null) {
-                // System.out.println("Image came from cache" + purl);
-                if (colorSpace != null)
-                    ret = new ProfileRable(ret, colorSpace);
-                return ret;
-            }
-        }
-        // System.out.println("Image didn't come from cache: " + purl);
+			ret = cache.request(purl);
+			if (ret != null) {
+				// System.out.println("Image came from cache" + purl);
+				if (colorSpace != null)
+					ret = new ProfileRable(ret, colorSpace);
+				return ret;
+			}
+		}
+		// System.out.println("Image didn't come from cache: " + purl);
 
-        boolean     openFailed = false;
-        List<String> mimeTypes = getRegisteredMimeTypes();
+		boolean openFailed = false;
+		List<String> mimeTypes = getRegisteredMimeTypes();
 
-        Iterator<RegistryEntry> i;
-        i = entries.iterator();
-        while (i.hasNext()) {
-            RegistryEntry re = i.next();
-            if (re instanceof URLRegistryEntry) {
-                if ((purl == null) || !allowOpenStream) continue;
+		Iterator<RegistryEntry> i;
+		i = entries.iterator();
+		while (i.hasNext()) {
+			RegistryEntry re = i.next();
+			if (re instanceof URLRegistryEntry) {
+				if ((purl == null) || !allowOpenStream)
+					continue;
 
-                URLRegistryEntry ure = (URLRegistryEntry)re;
-                if (ure.isCompatibleURL(purl)) {
-                    ret = ure.handleURL(purl, needRawData);
+				URLRegistryEntry ure = (URLRegistryEntry) re;
+				if (ure.isCompatibleURL(purl)) {
+					ret = ure.handleURL(purl, needRawData);
 
-                    // Check if we got an image.
-                    if (ret != null) break;
-                }
-                continue;
-            }
+					// Check if we got an image.
+					if (ret != null)
+						break;
+				}
+				continue;
+			}
 
-            if (re instanceof StreamRegistryEntry) {
-                StreamRegistryEntry sre = (StreamRegistryEntry)re;
-                // Quick out last time the open didn't work for this
-                // URL so don't try again...
-                if (openFailed) continue;
+			if (re instanceof StreamRegistryEntry) {
+				StreamRegistryEntry sre = (StreamRegistryEntry) re;
+				// Quick out last time the open didn't work for this
+				// URL so don't try again...
+				if (openFailed)
+					continue;
 
-                try {
-                    if (is == null) {
-                        // Haven't opened the stream yet let's try.
-                        if ((purl == null) || !allowOpenStream)
-                            break;  // No purl nothing we can do...
-                        try {
-                            is = purl.openStream(mimeTypes.iterator());
-                        } catch(IOException ioe) {
-                            // Couldn't open the stream, go to next entry.
-                            openFailed = true;
-                            continue;
-                        }
+				try {
+					if (is == null) {
+						// Haven't opened the stream yet let's try.
+						if ((purl == null) || !allowOpenStream)
+							break; // No purl nothing we can do...
+						try {
+							is = purl.openStream(mimeTypes.iterator());
+						} catch (IOException ioe) {
+							// Couldn't open the stream, go to next entry.
+							openFailed = true;
+							continue;
+						}
 
-                        if (!is.markSupported())
-                            // Doesn't support mark so wrap with
-                            // BufferedInputStream that does.
-                            is = new BufferedInputStream(is);
-                    }
+						if (!is.markSupported())
+							// Doesn't support mark so wrap with
+							// BufferedInputStream that does.
+							is = new BufferedInputStream(is);
+					}
 
-                    if (sre.isCompatibleStream(is)) {
-                        ret = sre.handleStream(is, purl, needRawData);
-                        if (ret != null) break;
-                    }
-                } catch (StreamCorruptedException sce) {
-                    // Stream is messed up so setup to reopen it..
-                    is = null;
-                }
-                continue;
-            }
-        }
+					if (sre.isCompatibleStream(is)) {
+						ret = sre.handleStream(is, purl, needRawData);
+						if (ret != null)
+							break;
+					}
+				} catch (StreamCorruptedException sce) {
+					// Stream is messed up so setup to reopen it..
+					is = null;
+				}
+				continue;
+			}
+		}
 
-        if (cache != null)
-            cache.put(purl, ret);
+		if (cache != null)
+			cache.put(purl, ret);
 
-        if (ret == null) {
-            if (!returnBrokenLink)
-                return null;
-            if (openFailed)
-                // Technially it's possible that it's an unknown
-                // 'protocol that caused the open to fail but probably
-                // it's a bad URL...
-                return getBrokenLinkImage(this, ERR_URL_UNREACHABLE, null);
+		if (ret == null) {
+			if (!returnBrokenLink)
+				return null;
+			if (openFailed)
+				// Technially it's possible that it's an unknown
+				// 'protocol that caused the open to fail but probably
+				// it's a bad URL...
+				return getBrokenLinkImage(this, ERR_URL_UNREACHABLE, null);
 
-            // We were able to get to the data we just couldn't
-            // make sense of it...
-            return getBrokenLinkImage(this, ERR_URL_UNINTERPRETABLE, null);
-        }
+			// We were able to get to the data we just couldn't
+			// make sense of it...
+			return getBrokenLinkImage(this, ERR_URL_UNINTERPRETABLE, null);
+		}
 
-        if (BrokenLinkProvider.hasBrokenLinkProperty(ret)) {
-            // Don't Return Broken link image unless requested
-            return (returnBrokenLink)?ret:null;
-        }
+		if (BrokenLinkProvider.hasBrokenLinkProperty(ret)) {
+			// Don't Return Broken link image unless requested
+			return (returnBrokenLink) ? ret : null;
+		}
 
-        if (colorSpace != null)
-            ret = new ProfileRable(ret, colorSpace);
+		if (colorSpace != null)
+			ret = new ProfileRable(ret, colorSpace);
 
-        return ret;
-    }
+		return ret;
+	}
 
-    public Filter readStream(InputStream is) {
-        return readStream(is, null);
-    }
+	public Filter readStream(InputStream is) {
+		return readStream(is, null);
+	}
 
-    public Filter readStream(InputStream is, ICCColorSpaceWithIntent colorSpace) {
-        if (!is.markSupported())
-            // Doesn't support mark so wrap with BufferedInputStream that does.
-            is = new BufferedInputStream(is);
+	public Filter readStream(InputStream is, ICCColorSpaceWithIntent colorSpace) {
+		if (!is.markSupported())
+			// Doesn't support mark so wrap with BufferedInputStream that does.
+			is = new BufferedInputStream(is);
 
-        boolean needRawData = (colorSpace != null);
+		boolean needRawData = (colorSpace != null);
 
-        Filter ret = null;
+		Filter ret = null;
 
-        for (RegistryEntry re : entries) {
+		for (RegistryEntry re : entries) {
 
-            if (!(re instanceof StreamRegistryEntry))
-                continue;
-            StreamRegistryEntry sre = (StreamRegistryEntry) re;
+			if (!(re instanceof StreamRegistryEntry))
+				continue;
+			StreamRegistryEntry sre = (StreamRegistryEntry) re;
 
-            try {
-                if (sre.isCompatibleStream(is)) {
-                    ret = sre.handleStream(is, null, needRawData);
+			try {
+				if (sre.isCompatibleStream(is)) {
+					ret = sre.handleStream(is, null, needRawData);
 
-                    if (ret != null) break;
-                }
-            } catch (StreamCorruptedException sce) {
-                break;
-            }
-        }
+					if (ret != null)
+						break;
+				}
+			} catch (StreamCorruptedException sce) {
+				break;
+			}
+		}
 
-        if (ret == null)
-            return getBrokenLinkImage(this, ERR_STREAM_UNREADABLE, null);
+		if (ret == null)
+			return getBrokenLinkImage(this, ERR_STREAM_UNREADABLE, null);
 
-        if ((colorSpace != null) &&
-            (!BrokenLinkProvider.hasBrokenLinkProperty(ret)))
-            ret = new ProfileRable(ret, colorSpace);
+		if ((colorSpace != null) && (!BrokenLinkProvider.hasBrokenLinkProperty(ret)))
+			ret = new ProfileRable(ret, colorSpace);
 
-        return ret;
-    }
+		return ret;
+	}
 
-    public synchronized void register(RegistryEntry newRE) {
-        float priority = newRE.getPriority();
+	public synchronized void register(RegistryEntry newRE) {
+		float priority = newRE.getPriority();
 
-        ListIterator<RegistryEntry> li;
-        li = entries.listIterator();
-        while (li.hasNext()) {
-            RegistryEntry re = li.next();
-            if (re.getPriority() > priority) {
-                li.previous();
-                break; // Insertion point found.
-            }
-        }
-        li.add(newRE);
-        extensions = null;
-        mimeTypes = null;
-    }
+		ListIterator<RegistryEntry> li;
+		li = entries.listIterator();
+		while (li.hasNext()) {
+			RegistryEntry re = li.next();
+			if (re.getPriority() > priority) {
+				li.previous();
+				break; // Insertion point found.
+			}
+		}
+		li.add(newRE);
+		extensions = null;
+		mimeTypes = null;
+	}
 
-    /**
-     * Returns a List that contains String of all the extensions that
-     * can be handleded by the various registered image format
-     * handlers.
-     */
-    public synchronized List<String> getRegisteredExtensions() {
-        if (extensions != null)
-            return extensions;
+	/**
+	 * Returns a List that contains String of all the extensions that can be
+	 * handleded by the various registered image format handlers.
+	 */
+	public synchronized List<String> getRegisteredExtensions() {
+		if (extensions != null)
+			return extensions;
 
-        extensions = new LinkedList<>();
-        for (RegistryEntry re : entries) {
-            extensions.addAll(re.getStandardExtensions());
-        }
-        extensions = Collections.unmodifiableList(extensions);
-        return extensions;
-    }
+		extensions = new LinkedList<>();
+		for (RegistryEntry re : entries) {
+			extensions.addAll(re.getStandardExtensions());
+		}
+		extensions = Collections.unmodifiableList(extensions);
+		return extensions;
+	}
 
-    /**
-     * Returns a List that contains String of all the mime types that
-     * can be handleded by the various registered image format
-     * handlers.
-     */
-    public synchronized List<String> getRegisteredMimeTypes() {
-        if (mimeTypes != null)
-            return mimeTypes;
+	/**
+	 * Returns a List that contains String of all the mime types that can be
+	 * handleded by the various registered image format handlers.
+	 */
+	public synchronized List<String> getRegisteredMimeTypes() {
+		if (mimeTypes != null)
+			return mimeTypes;
 
-        mimeTypes = new LinkedList<>();
-        for (RegistryEntry re : entries) {
-            mimeTypes.addAll(re.getMimeTypes());
-        }
-        mimeTypes = Collections.unmodifiableList(mimeTypes);
-        return mimeTypes;
-    }
+		mimeTypes = new LinkedList<>();
+		for (RegistryEntry re : entries) {
+			mimeTypes.addAll(re.getMimeTypes());
+		}
+		mimeTypes = Collections.unmodifiableList(mimeTypes);
+		return mimeTypes;
+	}
 
-    static ImageTagRegistry registry = null;
+	static ImageTagRegistry registry = null;
 
-    public static synchronized ImageTagRegistry getRegistry() {
-        if (registry != null)
-            return registry;
+	public static synchronized ImageTagRegistry getRegistry() {
+		if (registry != null)
+			return registry;
 
-        registry = new ImageTagRegistry();
+		registry = new ImageTagRegistry();
 
-        //registry.register(new PNGRegistryEntry());
-        //registry.register(new TIFFRegistryEntry());
-        //registry.register(new JPEGRegistryEntry());
-        registry.register(new JDKRegistryEntry());
+		// registry.register(new PNGRegistryEntry());
+		// registry.register(new TIFFRegistryEntry());
+		// registry.register(new JPEGRegistryEntry());
+		registry.register(new JDKRegistryEntry());
 
-        Iterator<Object> iter = Service.providers(RegistryEntry.class);
-        while (iter.hasNext()) {
-            RegistryEntry re = (RegistryEntry)iter.next();
-            // System.out.println("RE: " + re);
-            registry.register(re);
-        }
+		Iterator<Object> iter = Service.providers(RegistryEntry.class);
+		while (iter.hasNext()) {
+			RegistryEntry re = (RegistryEntry) iter.next();
+			// System.out.println("RE: " + re);
+			registry.register(re);
+		}
 
-        return registry;
-    }
+		return registry;
+	}
 
-    static BrokenLinkProvider defaultProvider
-        = new DefaultBrokenLinkProvider();
+	static BrokenLinkProvider defaultProvider = new DefaultBrokenLinkProvider();
 
-    static BrokenLinkProvider brokenLinkProvider = null;
+	static BrokenLinkProvider brokenLinkProvider = null;
 
-    public static synchronized Filter
-        getBrokenLinkImage(Object base, String code, Object [] params) {
-        Filter ret = null;
-        if (brokenLinkProvider != null)
-            ret = brokenLinkProvider.getBrokenLinkImage(base, code, params);
+	public static synchronized Filter getBrokenLinkImage(Object base, String code, Object[] params) {
+		Filter ret = null;
+		if (brokenLinkProvider != null)
+			ret = brokenLinkProvider.getBrokenLinkImage(base, code, params);
 
-        if (ret == null)
-            ret = defaultProvider.getBrokenLinkImage(base, code, params);
+		if (ret == null)
+			ret = defaultProvider.getBrokenLinkImage(base, code, params);
 
-        return ret;
-    }
+		return ret;
+	}
 
-
-    public static synchronized void
-        setBrokenLinkProvider(BrokenLinkProvider provider) {
-        brokenLinkProvider = provider;
-    }
+	public static synchronized void setBrokenLinkProvider(BrokenLinkProvider provider) {
+		brokenLinkProvider = provider;
+	}
 }
-

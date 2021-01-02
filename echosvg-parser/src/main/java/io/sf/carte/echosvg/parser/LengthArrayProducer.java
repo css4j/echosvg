@@ -33,213 +33,215 @@ import org.w3c.dom.svg.SVGLength;
  */
 public class LengthArrayProducer extends DefaultLengthListHandler {
 
-    /**
-     * List of <code>float[]</code> objects.
-     */
-    protected LinkedList<Object> vs;
+	/**
+	 * List of <code>float[]</code> objects.
+	 */
+	protected LinkedList<Object> vs;
 
-    /**
-     * The current <code>float[]</code> object.
-     */
-    protected float[] v;
+	/**
+	 * The current <code>float[]</code> object.
+	 */
+	protected float[] v;
 
-    /**
-     * List of <code>short[]</code> objects.
-     */
-    protected LinkedList<Object> us;
+	/**
+	 * List of <code>short[]</code> objects.
+	 */
+	protected LinkedList<Object> us;
 
-    /**
-     * The current <code>short[]</code> object.
-     */
-    protected short[] u;
+	/**
+	 * The current <code>short[]</code> object.
+	 */
+	protected short[] u;
 
-    /**
-     * The index in which to store the next length.
-     */
-    protected int index;
+	/**
+	 * The index in which to store the next length.
+	 */
+	protected int index;
 
-    /**
-     * The total number of lengths accumulated.
-     */
-    protected int count;
+	/**
+	 * The total number of lengths accumulated.
+	 */
+	protected int count;
 
-    /**
-     * The unit for the current length.
-     */
-    protected short currentUnit;
+	/**
+	 * The unit for the current length.
+	 */
+	protected short currentUnit;
 
-    /**
-     * Returns the array of length units accumulated.
-     */
-    public short[] getLengthTypeArray() {
-        return u;
-    }
+	/**
+	 * Returns the array of length units accumulated.
+	 */
+	public short[] getLengthTypeArray() {
+		return u;
+	}
 
-    /**
-     * Returns the array of length values accumulated.
-     */
-    public float[] getLengthValueArray() {
-        return v;
-    }
+	/**
+	 * Returns the array of length values accumulated.
+	 */
+	public float[] getLengthValueArray() {
+		return v;
+	}
 
-    // LengthListHandler /////////////////////////////////////////////////////
+	// LengthListHandler /////////////////////////////////////////////////////
 
-    /**
-     * Invoked when the length list attribute starts.
-     * @exception ParseException if an error occures while processing the
-     *                           number list.
-     */
-    @Override
-    public void startLengthList() throws ParseException {
-        us = new LinkedList<>();
-        u = new short[11];
-        vs = new LinkedList<>();
-        v = new float[11];
-        count = 0;
-        index = 0;
-    }
+	/**
+	 * Invoked when the length list attribute starts.
+	 * 
+	 * @exception ParseException if an error occures while processing the number
+	 *                           list.
+	 */
+	@Override
+	public void startLengthList() throws ParseException {
+		us = new LinkedList<>();
+		u = new short[11];
+		vs = new LinkedList<>();
+		v = new float[11];
+		count = 0;
+		index = 0;
+	}
 
-    /**
-     * Invoked when a float value has been parsed.
-     * @exception ParseException if an error occures while processing
-     *                           the number
-     */
-    public void numberValue(float v) throws ParseException {
-    }
+	/**
+	 * Invoked when a float value has been parsed.
+	 * 
+	 * @exception ParseException if an error occures while processing the number
+	 */
+	public void numberValue(float v) throws ParseException {
+	}
 
-    /**
-     * Implements {@link LengthHandler#lengthValue(float)}.
-     */
-    @Override
-    public void lengthValue(float val) throws ParseException {
-        if (index == v.length) {
-            vs.add(v);
-            v = new float[v.length * 2 + 1];
-            us.add(u);
-            u = new short[u.length * 2 + 1];
-            index = 0;
-        }
-        v[index] = val;
-    }
+	/**
+	 * Implements {@link LengthHandler#lengthValue(float)}.
+	 */
+	@Override
+	public void lengthValue(float val) throws ParseException {
+		if (index == v.length) {
+			vs.add(v);
+			v = new float[v.length * 2 + 1];
+			us.add(u);
+			u = new short[u.length * 2 + 1];
+			index = 0;
+		}
+		v[index] = val;
+	}
 
-    /**
-     * Implements {@link LengthHandler#startLength()}.
-     */
-    @Override
-    public void startLength() throws ParseException {
-        currentUnit = SVGLength.SVG_LENGTHTYPE_NUMBER;
-    }
+	/**
+	 * Implements {@link LengthHandler#startLength()}.
+	 */
+	@Override
+	public void startLength() throws ParseException {
+		currentUnit = SVGLength.SVG_LENGTHTYPE_NUMBER;
+	}
 
-    /**
-     * Implements {@link LengthHandler#endLength()}.
-     */
-    @Override
-    public void endLength() throws ParseException {
-        u[index++] = currentUnit;
-        count++;
-    }
+	/**
+	 * Implements {@link LengthHandler#endLength()}.
+	 */
+	@Override
+	public void endLength() throws ParseException {
+		u[index++] = currentUnit;
+		count++;
+	}
 
-    /**
-     * Implements {@link LengthHandler#em()}.
-     */
-    @Override
-    public void em() throws ParseException {
-        currentUnit = SVGLength.SVG_LENGTHTYPE_EMS;
-    }
+	/**
+	 * Implements {@link LengthHandler#em()}.
+	 */
+	@Override
+	public void em() throws ParseException {
+		currentUnit = SVGLength.SVG_LENGTHTYPE_EMS;
+	}
 
-    /**
-     * Implements {@link LengthHandler#ex()}.
-     */
-    @Override
-    public void ex() throws ParseException {
-        currentUnit = SVGLength.SVG_LENGTHTYPE_EXS;
-    }
+	/**
+	 * Implements {@link LengthHandler#ex()}.
+	 */
+	@Override
+	public void ex() throws ParseException {
+		currentUnit = SVGLength.SVG_LENGTHTYPE_EXS;
+	}
 
-    /**
-     * Implements {@link LengthHandler#in()}.
-     */
-    @Override
-    public void in() throws ParseException {
-        currentUnit = SVGLength.SVG_LENGTHTYPE_IN;
-    }
+	/**
+	 * Implements {@link LengthHandler#in()}.
+	 */
+	@Override
+	public void in() throws ParseException {
+		currentUnit = SVGLength.SVG_LENGTHTYPE_IN;
+	}
 
-    /**
-     * Implements {@link LengthHandler#cm()}.
-     */
-    @Override
-    public void cm() throws ParseException {
-        currentUnit = SVGLength.SVG_LENGTHTYPE_CM;
-    }
+	/**
+	 * Implements {@link LengthHandler#cm()}.
+	 */
+	@Override
+	public void cm() throws ParseException {
+		currentUnit = SVGLength.SVG_LENGTHTYPE_CM;
+	}
 
-    /**
-     * Implements {@link LengthHandler#mm()}.
-     */
-    @Override
-    public void mm() throws ParseException {
-        currentUnit = SVGLength.SVG_LENGTHTYPE_MM;
-    }
+	/**
+	 * Implements {@link LengthHandler#mm()}.
+	 */
+	@Override
+	public void mm() throws ParseException {
+		currentUnit = SVGLength.SVG_LENGTHTYPE_MM;
+	}
 
-    /**
-     * Implements {@link LengthHandler#pc()}.
-     */
-    @Override
-    public void pc() throws ParseException {
-        currentUnit = SVGLength.SVG_LENGTHTYPE_PC;
-    }
+	/**
+	 * Implements {@link LengthHandler#pc()}.
+	 */
+	@Override
+	public void pc() throws ParseException {
+		currentUnit = SVGLength.SVG_LENGTHTYPE_PC;
+	}
 
-    /**
-     * Implements {@link LengthHandler#pt()}.
-     */
-    @Override
-    public void pt() throws ParseException {
-        currentUnit = SVGLength.SVG_LENGTHTYPE_PT;
-    }
+	/**
+	 * Implements {@link LengthHandler#pt()}.
+	 */
+	@Override
+	public void pt() throws ParseException {
+		currentUnit = SVGLength.SVG_LENGTHTYPE_PT;
+	}
 
-    /**
-     * Implements {@link LengthHandler#px()}.
-     */
-    @Override
-    public void px() throws ParseException {
-        currentUnit = SVGLength.SVG_LENGTHTYPE_PX;
-    }
+	/**
+	 * Implements {@link LengthHandler#px()}.
+	 */
+	@Override
+	public void px() throws ParseException {
+		currentUnit = SVGLength.SVG_LENGTHTYPE_PX;
+	}
 
-    /**
-     * Implements {@link LengthHandler#percentage()}.
-     */
-    @Override
-    public void percentage() throws ParseException {
-        currentUnit = SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
-    }
+	/**
+	 * Implements {@link LengthHandler#percentage()}.
+	 */
+	@Override
+	public void percentage() throws ParseException {
+		currentUnit = SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
+	}
 
-    /**
-     * Invoked when the length list attribute ends.
-     * @exception ParseException if an error occures while processing the
-     *                           number list.
-     */
-    @Override
-    public void endLengthList() throws ParseException {
-        float[] allValues = new float[count];
-        int pos = 0;
-        Iterator<Object> it = vs.iterator();
-        while (it.hasNext()) {
-            float[] a = (float[]) it.next();
-            System.arraycopy(a, 0, allValues, pos, a.length);
-            pos += a.length;
-        }
-        System.arraycopy(v, 0, allValues, pos, index);
-        vs.clear();
-        v = allValues;
+	/**
+	 * Invoked when the length list attribute ends.
+	 * 
+	 * @exception ParseException if an error occures while processing the number
+	 *                           list.
+	 */
+	@Override
+	public void endLengthList() throws ParseException {
+		float[] allValues = new float[count];
+		int pos = 0;
+		Iterator<Object> it = vs.iterator();
+		while (it.hasNext()) {
+			float[] a = (float[]) it.next();
+			System.arraycopy(a, 0, allValues, pos, a.length);
+			pos += a.length;
+		}
+		System.arraycopy(v, 0, allValues, pos, index);
+		vs.clear();
+		v = allValues;
 
-        short[] allUnits = new short[count];
-        pos = 0;
-        it = us.iterator();
-        while (it.hasNext()) {
-            short[] a = (short[]) it.next();
-            System.arraycopy(a, 0, allUnits, pos, a.length);
-            pos += a.length;
-        }
-        System.arraycopy(u, 0, allUnits, pos, index);
-        us.clear();
-        u = allUnits;
-    }
+		short[] allUnits = new short[count];
+		pos = 0;
+		it = us.iterator();
+		while (it.hasNext()) {
+			short[] a = (short[]) it.next();
+			System.arraycopy(a, 0, allUnits, pos, a.length);
+			pos += a.length;
+		}
+		System.arraycopy(u, 0, allUnits, pos, index);
+		us.clear();
+		u = allUnits;
+	}
 }

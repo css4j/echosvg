@@ -22,8 +22,8 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 
 /**
- * This class implements the {@link org.w3c.dom.Attr} interface with
- * support for namespaces.
+ * This class implements the {@link org.w3c.dom.Attr} interface with support for
+ * namespaces.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
@@ -31,65 +31,67 @@ import org.w3c.dom.Node;
  */
 public class GenericAttrNS extends AbstractAttrNS {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * Is this attribute immutable?
-     */
-    protected boolean readonly;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Is this attribute immutable?
+	 */
+	protected boolean readonly;
 
-    /**
-     * Creates a new Attr object.
-     */
-    protected GenericAttrNS() {
-    }
+	/**
+	 * Creates a new Attr object.
+	 */
+	protected GenericAttrNS() {
+	}
 
-    /**
-     * Creates a new Attr object.
-     * @param nsURI The element namespace URI.
-     * @param qname The attribute qualified name for validation purposes.
-     * @param owner The owner document.
-     * @exception DOMException
-     *    INVALID_CHARACTER_ERR: Raised if the specified qualified name 
-     *   contains an illegal character.
-     *   <br> NAMESPACE_ERR: Raised if the <code>qualifiedName</code> is 
-     *   malformed, if the <code>qualifiedName</code> has a prefix and the 
-     *   <code>namespaceURI</code> is <code>null</code> or an empty string, 
-     *   if the <code>qualifiedName</code> has a prefix that is "xml" and the 
-     *   <code>namespaceURI</code> is different from 
-     *   "http://www.w3.org/XML/1998/namespace", if the 
-     *   <code>qualifiedName</code> has a prefix that is "xmlns" and the 
-     *   <code>namespaceURI</code> is different from 
-     *   "http://www.w3.org/2000/xmlns/", or if the <code>qualifiedName</code>
-     *    is "xmlns" and the <code>namespaceURI</code> is different from 
-     *   "http://www.w3.org/2000/xmlns/".
-     */
-    public GenericAttrNS(String nsURI, String qname, AbstractDocument owner)
-        throws DOMException {
-        super(nsURI, qname, owner);
-        setNodeName(qname);
-    }
+	/**
+	 * Creates a new Attr object.
+	 * 
+	 * @param nsURI The element namespace URI.
+	 * @param qname The attribute qualified name for validation purposes.
+	 * @param owner The owner document.
+	 * @exception DOMException INVALID_CHARACTER_ERR: Raised if the specified
+	 *                         qualified name contains an illegal character. <br>
+	 *                         NAMESPACE_ERR: Raised if the
+	 *                         <code>qualifiedName</code> is malformed, if the
+	 *                         <code>qualifiedName</code> has a prefix and the
+	 *                         <code>namespaceURI</code> is <code>null</code> or an
+	 *                         empty string, if the <code>qualifiedName</code> has a
+	 *                         prefix that is "xml" and the
+	 *                         <code>namespaceURI</code> is different from
+	 *                         "http://www.w3.org/XML/1998/namespace", if the
+	 *                         <code>qualifiedName</code> has a prefix that is
+	 *                         "xmlns" and the <code>namespaceURI</code> is
+	 *                         different from "http://www.w3.org/2000/xmlns/", or if
+	 *                         the <code>qualifiedName</code> is "xmlns" and the
+	 *                         <code>namespaceURI</code> is different from
+	 *                         "http://www.w3.org/2000/xmlns/".
+	 */
+	public GenericAttrNS(String nsURI, String qname, AbstractDocument owner) throws DOMException {
+		super(nsURI, qname, owner);
+		setNodeName(qname);
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return readonly;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-        readonly = v;
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+		readonly = v;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new GenericAttrNS();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new GenericAttrNS();
+	}
 }

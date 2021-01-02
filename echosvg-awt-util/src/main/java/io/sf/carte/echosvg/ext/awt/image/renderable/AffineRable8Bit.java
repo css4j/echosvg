@@ -30,130 +30,132 @@ import java.awt.image.renderable.RenderContext;
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 
 /**
- * Concrete implementation of the AffineRable interface.
- * This adjusts the input images coordinate system by a general affine
+ * Concrete implementation of the AffineRable interface. This adjusts the input
+ * images coordinate system by a general affine
  *
  * @author <a href="mailto:Thomas.DeWeeese@Kodak.com">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class AffineRable8Bit 
-    extends    AbstractRable
-    implements AffineRable, PaintRable {
+public class AffineRable8Bit extends AbstractRable implements AffineRable, PaintRable {
 
-    AffineTransform affine;
-    AffineTransform invAffine;
+	AffineTransform affine;
+	AffineTransform invAffine;
 
-    public AffineRable8Bit(Filter src, AffineTransform affine) {
-        init(src);
-        setAffine(affine);
-    }
+	public AffineRable8Bit(Filter src, AffineTransform affine) {
+		init(src);
+		setAffine(affine);
+	}
 
-    @Override
-    public Rectangle2D getBounds2D() {
-        Filter src = getSource();
-        Rectangle2D r = src.getBounds2D();
-        return affine.createTransformedShape(r).getBounds2D();
-    }
-      /**
-       * Returns the source to be affine.
-       */
-    @Override
-    public Filter getSource() {
-        return (Filter)srcs.get(0);
-    }
+	@Override
+	public Rectangle2D getBounds2D() {
+		Filter src = getSource();
+		Rectangle2D r = src.getBounds2D();
+		return affine.createTransformedShape(r).getBounds2D();
+	}
 
-    /**
-     * Sets the source to be affine.
-     * @param src image to affine.
-     */
-    @Override
-    public void setSource(Filter src) {
-        init(src);
-    }
+	/**
+	 * Returns the source to be affine.
+	 */
+	@Override
+	public Filter getSource() {
+		return (Filter) srcs.get(0);
+	}
 
-      /**
-       * Set the affine transform.
-       * @param affine the new Affine transform to apply.
-       */
-    @Override
-    public void setAffine(AffineTransform affine) {
-        touch();
-        this.affine = affine;
-        try {
-            invAffine = affine.createInverse();
-        } catch (NoninvertibleTransformException e) {
-            invAffine = null;
-        }
-    }
+	/**
+	 * Sets the source to be affine.
+	 * 
+	 * @param src image to affine.
+	 */
+	@Override
+	public void setSource(Filter src) {
+		init(src);
+	}
 
-      /**
-       * Get the Affine.
-       * @return the Affine transform currently in effect.
-       */
-    @Override
-    public AffineTransform getAffine() {
-        return (AffineTransform)affine.clone();
-    }
+	/**
+	 * Set the affine transform.
+	 * 
+	 * @param affine the new Affine transform to apply.
+	 */
+	@Override
+	public void setAffine(AffineTransform affine) {
+		touch();
+		this.affine = affine;
+		try {
+			invAffine = affine.createInverse();
+		} catch (NoninvertibleTransformException e) {
+			invAffine = null;
+		}
+	}
 
-    /**
-     * Should perform the equivilent action as 
-     * createRendering followed by drawing the RenderedImage.
-     *
-     * @param g2d The Graphics2D to draw to.
-     * @return true if the paint call succeeded, false if
-     *         for some reason the paint failed (in which 
-     *         case a createRendering should be used).
-     */
-    @Override
-    public boolean paintRable(Graphics2D g2d) {
-        AffineTransform at = g2d.getTransform();
+	/**
+	 * Get the Affine.
+	 * 
+	 * @return the Affine transform currently in effect.
+	 */
+	@Override
+	public AffineTransform getAffine() {
+		return (AffineTransform) affine.clone();
+	}
 
-        g2d.transform(getAffine());
-        GraphicsUtil.drawImage(g2d, getSource());
+	/**
+	 * Should perform the equivilent action as createRendering followed by drawing
+	 * the RenderedImage.
+	 *
+	 * @param g2d The Graphics2D to draw to.
+	 * @return true if the paint call succeeded, false if for some reason the paint
+	 *         failed (in which case a createRendering should be used).
+	 */
+	@Override
+	public boolean paintRable(Graphics2D g2d) {
+		AffineTransform at = g2d.getTransform();
 
-        g2d.setTransform(at);
+		g2d.transform(getAffine());
+		GraphicsUtil.drawImage(g2d, getSource());
 
-        return true;
-    }
+		g2d.setTransform(at);
 
+		return true;
+	}
 
-    @Override
-    public RenderedImage createRendering(RenderContext rc) {
-        // Degenerate Affine no output image..
-        if (invAffine == null) return null;
+	@Override
+	public RenderedImage createRendering(RenderContext rc) {
+		// Degenerate Affine no output image..
+		if (invAffine == null)
+			return null;
 
-        // Just copy over the rendering hints.
-        RenderingHints rh = rc.getRenderingHints();
-        if (rh == null) rh = new RenderingHints(null);
+		// Just copy over the rendering hints.
+		RenderingHints rh = rc.getRenderingHints();
+		if (rh == null)
+			rh = new RenderingHints(null);
 
-        // Map the area of interest to our input...
-        Shape aoi = rc.getAreaOfInterest();
-        if (aoi != null)
-            aoi = invAffine.createTransformedShape(aoi);
+		// Map the area of interest to our input...
+		Shape aoi = rc.getAreaOfInterest();
+		if (aoi != null)
+			aoi = invAffine.createTransformedShape(aoi);
 
-        // update the current affine transform
-        AffineTransform at = rc.getTransform();
-        at.concatenate(affine);
+		// update the current affine transform
+		AffineTransform at = rc.getTransform();
+		at.concatenate(affine);
 
-        // Return what our input creates (it should factor in our affine).
-        return getSource().createRendering(new RenderContext(at, aoi, rh));
-    }
+		// Return what our input creates (it should factor in our affine).
+		return getSource().createRendering(new RenderContext(at, aoi, rh));
+	}
 
-    @Override
-    public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn) {
-        if (srcIndex != 0)
-            throw new IndexOutOfBoundsException("Affine only has one input");
-        if (invAffine == null)
-            return null;
-        return invAffine.createTransformedShape(outputRgn);
-    }
+	@Override
+	public Shape getDependencyRegion(int srcIndex, Rectangle2D outputRgn) {
+		if (srcIndex != 0)
+			throw new IndexOutOfBoundsException("Affine only has one input");
+		if (invAffine == null)
+			return null;
+		return invAffine.createTransformedShape(outputRgn);
+	}
 
-    @Override
-    public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn) {
-        if (srcIndex != 0)
-            throw new IndexOutOfBoundsException("Affine only has one input");
-        return affine.createTransformedShape(inputRgn);
-    }
+	@Override
+	public Shape getDirtyRegion(int srcIndex, Rectangle2D inputRgn) {
+		if (srcIndex != 0)
+			throw new IndexOutOfBoundsException("Affine only has one input");
+		return affine.createTransformedShape(inputRgn);
+	}
 
 }

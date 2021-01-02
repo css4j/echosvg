@@ -41,162 +41,147 @@ import io.sf.carte.echosvg.util.HaltingThread;
  */
 public class SVGLoadEventDispatcher extends HaltingThread {
 
-    /**
-     * The SVG document to give to the bridge.
-     */
-    protected SVGDocument svgDocument;
+	/**
+	 * The SVG document to give to the bridge.
+	 */
+	protected SVGDocument svgDocument;
 
-    /**
-     * The root graphics node.
-     */
-    protected GraphicsNode root;
+	/**
+	 * The root graphics node.
+	 */
+	protected GraphicsNode root;
 
-    /**
-     * The bridge context to use.
-     */
-    protected BridgeContext bridgeContext;
+	/**
+	 * The bridge context to use.
+	 */
+	protected BridgeContext bridgeContext;
 
-    /**
-     * The update manager.
-     */
-    protected UpdateManager updateManager;
+	/**
+	 * The update manager.
+	 */
+	protected UpdateManager updateManager;
 
-    /**
-     * The listeners.
-     */
-    protected List<Object> listeners = Collections.synchronizedList(new LinkedList<>());
+	/**
+	 * The listeners.
+	 */
+	protected List<Object> listeners = Collections.synchronizedList(new LinkedList<>());
 
-    /**
-     * The exception thrown.
-     */
-    protected Exception exception;
+	/**
+	 * The exception thrown.
+	 */
+	protected Exception exception;
 
-    /**
-     * Creates a new SVGLoadEventDispatcher.
-     */
-    public SVGLoadEventDispatcher(GraphicsNode gn,
-                                  SVGDocument doc,
-                                  BridgeContext bc,
-                                  UpdateManager um) {
-        svgDocument = doc;
-        root = gn;
-        bridgeContext = bc;
-        updateManager = um;
-    }
+	/**
+	 * Creates a new SVGLoadEventDispatcher.
+	 */
+	public SVGLoadEventDispatcher(GraphicsNode gn, SVGDocument doc, BridgeContext bc, UpdateManager um) {
+		svgDocument = doc;
+		root = gn;
+		bridgeContext = bc;
+		updateManager = um;
+	}
 
-    /**
-     * Runs the dispatcher.
-     */
-    @Override
-    public void run() {
-        SVGLoadEventDispatcherEvent ev;
-        ev = new SVGLoadEventDispatcherEvent(this, root);
-        try {
-            fireEvent(startedDispatcher, ev);
+	/**
+	 * Runs the dispatcher.
+	 */
+	@Override
+	public void run() {
+		SVGLoadEventDispatcherEvent ev;
+		ev = new SVGLoadEventDispatcherEvent(this, root);
+		try {
+			fireEvent(startedDispatcher, ev);
 
-            if (isHalted()) {
-                fireEvent(cancelledDispatcher, ev);
-                return;
-            }
+			if (isHalted()) {
+				fireEvent(cancelledDispatcher, ev);
+				return;
+			}
 
-            updateManager.dispatchSVGLoadEvent();
+			updateManager.dispatchSVGLoadEvent();
 
-            if (isHalted()) {
-                fireEvent(cancelledDispatcher, ev);
-                return;
-            }
+			if (isHalted()) {
+				fireEvent(cancelledDispatcher, ev);
+				return;
+			}
 
-            fireEvent(completedDispatcher, ev);
-        } catch (InterruptedException e) {
-            fireEvent(cancelledDispatcher, ev);
-        } catch (InterruptedBridgeException e) {
-            fireEvent(cancelledDispatcher, ev);
-        } catch (Exception e) {
-            exception = e;
-            fireEvent(failedDispatcher, ev);
-        } catch (ThreadDeath td) {
-            exception = new Exception(td.getMessage());
-            fireEvent(failedDispatcher, ev);
-            throw td;
-        } catch (Throwable t) {
-            t.printStackTrace();
-            exception = new Exception(t.getMessage());
-            fireEvent(failedDispatcher, ev);
-        }
-    }
+			fireEvent(completedDispatcher, ev);
+		} catch (InterruptedException e) {
+			fireEvent(cancelledDispatcher, ev);
+		} catch (InterruptedBridgeException e) {
+			fireEvent(cancelledDispatcher, ev);
+		} catch (Exception e) {
+			exception = e;
+			fireEvent(failedDispatcher, ev);
+		} catch (ThreadDeath td) {
+			exception = new Exception(td.getMessage());
+			fireEvent(failedDispatcher, ev);
+			throw td;
+		} catch (Throwable t) {
+			t.printStackTrace();
+			exception = new Exception(t.getMessage());
+			fireEvent(failedDispatcher, ev);
+		}
+	}
 
-    /**
-     * Returns the update manager.
-     */
-    public UpdateManager getUpdateManager() {
-        return updateManager;
-    }
+	/**
+	 * Returns the update manager.
+	 */
+	public UpdateManager getUpdateManager() {
+		return updateManager;
+	}
 
-    /**
-     * Returns the exception, if any occured.
-     */
-    public Exception getException() {
-        return exception;
-    }
+	/**
+	 * Returns the exception, if any occured.
+	 */
+	public Exception getException() {
+		return exception;
+	}
 
-    /**
-     * Adds a SVGLoadEventDispatcherListener to this SVGLoadEventDispatcher.
-     */
-    public void addSVGLoadEventDispatcherListener
-        (SVGLoadEventDispatcherListener l) {
-        listeners.add(l);
-    }
+	/**
+	 * Adds a SVGLoadEventDispatcherListener to this SVGLoadEventDispatcher.
+	 */
+	public void addSVGLoadEventDispatcherListener(SVGLoadEventDispatcherListener l) {
+		listeners.add(l);
+	}
 
-    /**
-     * Removes a SVGLoadEventDispatcherListener from this
-     * SVGLoadEventDispatcher.
-     */
-    public void removeSVGLoadEventDispatcherListener
-        (SVGLoadEventDispatcherListener l) {
-        listeners.remove(l);
-    }
+	/**
+	 * Removes a SVGLoadEventDispatcherListener from this SVGLoadEventDispatcher.
+	 */
+	public void removeSVGLoadEventDispatcherListener(SVGLoadEventDispatcherListener l) {
+		listeners.remove(l);
+	}
 
-    public void fireEvent(Dispatcher dispatcher, Object event) {
-        EventDispatcher.fireEvent(dispatcher, listeners, event, true);
-    }
+	public void fireEvent(Dispatcher dispatcher, Object event) {
+		EventDispatcher.fireEvent(dispatcher, listeners, event, true);
+	}
 
-    static Dispatcher startedDispatcher = new Dispatcher() {
-            @Override
-            public void dispatch(Object listener,
-                                 Object event) {
-                ((SVGLoadEventDispatcherListener)listener).
-                    svgLoadEventDispatchStarted
-                    ((SVGLoadEventDispatcherEvent)event);
-            }
-        };
+	static Dispatcher startedDispatcher = new Dispatcher() {
+		@Override
+		public void dispatch(Object listener, Object event) {
+			((SVGLoadEventDispatcherListener) listener)
+					.svgLoadEventDispatchStarted((SVGLoadEventDispatcherEvent) event);
+		}
+	};
 
-    static Dispatcher completedDispatcher = new Dispatcher() {
-            @Override
-            public void dispatch(Object listener,
-                                 Object event) {
-                ((SVGLoadEventDispatcherListener)listener).
-                    svgLoadEventDispatchCompleted
-                    ((SVGLoadEventDispatcherEvent)event);
-            }
-        };
+	static Dispatcher completedDispatcher = new Dispatcher() {
+		@Override
+		public void dispatch(Object listener, Object event) {
+			((SVGLoadEventDispatcherListener) listener)
+					.svgLoadEventDispatchCompleted((SVGLoadEventDispatcherEvent) event);
+		}
+	};
 
-    static Dispatcher cancelledDispatcher = new Dispatcher() {
-            @Override
-            public void dispatch(Object listener,
-                                 Object event) {
-                ((SVGLoadEventDispatcherListener)listener).
-                    svgLoadEventDispatchCancelled
-                    ((SVGLoadEventDispatcherEvent)event);
-            }
-        };
+	static Dispatcher cancelledDispatcher = new Dispatcher() {
+		@Override
+		public void dispatch(Object listener, Object event) {
+			((SVGLoadEventDispatcherListener) listener)
+					.svgLoadEventDispatchCancelled((SVGLoadEventDispatcherEvent) event);
+		}
+	};
 
-    static Dispatcher failedDispatcher = new Dispatcher() {
-            @Override
-            public void dispatch(Object listener,
-                                 Object event) {
-                ((SVGLoadEventDispatcherListener)listener).
-                    svgLoadEventDispatchFailed
-                    ((SVGLoadEventDispatcherEvent)event);
-            }
-        };
+	static Dispatcher failedDispatcher = new Dispatcher() {
+		@Override
+		public void dispatch(Object listener, Object event) {
+			((SVGLoadEventDispatcherListener) listener).svgLoadEventDispatchFailed((SVGLoadEventDispatcherEvent) event);
+		}
+	};
 }

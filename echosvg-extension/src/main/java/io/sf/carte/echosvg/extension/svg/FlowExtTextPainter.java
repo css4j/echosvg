@@ -40,53 +40,52 @@ import io.sf.carte.echosvg.bridge.TextSpanLayout;
  */
 public class FlowExtTextPainter extends StrokingTextPainter {
 
-    /**
-     * A unique instance of this class.
-     */
-    protected static TextPainter singleton = new FlowExtTextPainter();
+	/**
+	 * A unique instance of this class.
+	 */
+	protected static TextPainter singleton = new FlowExtTextPainter();
 
-    /**
-     * Returns a unique instance of this class.
-     */
-    public static TextPainter getInstance() {
-        return singleton;
-    }
+	/**
+	 * Returns a unique instance of this class.
+	 */
+	public static TextPainter getInstance() {
+		return singleton;
+	}
 
-    @Override
-    public List<TextRun> getTextRuns(TextNode node, AttributedCharacterIterator aci) {
-        List<TextRun> textRuns = node.getTextRuns();
-        if (textRuns != null) {
-            return textRuns;
-        }
+	@Override
+	public List<TextRun> getTextRuns(TextNode node, AttributedCharacterIterator aci) {
+		List<TextRun> textRuns = node.getTextRuns();
+		if (textRuns != null) {
+			return textRuns;
+		}
 
-        AttributedCharacterIterator[] chunkACIs = getTextChunkACIs(aci);
-        textRuns = computeTextRuns(node, aci, chunkACIs);
+		AttributedCharacterIterator[] chunkACIs = getTextChunkACIs(aci);
+		textRuns = computeTextRuns(node, aci, chunkACIs);
 
-        aci.first();
-        @SuppressWarnings("unchecked")
-        List<RegionInfo> rgns = (List<RegionInfo>)aci.getAttribute(FLOW_REGIONS);
+		aci.first();
+		@SuppressWarnings("unchecked")
+		List<RegionInfo> rgns = (List<RegionInfo>) aci.getAttribute(FLOW_REGIONS);
 
-        if (rgns != null) {
-            Iterator<TextRun> i = textRuns.iterator();
-            List<List<TextSpanLayout>> chunkLayouts = new ArrayList<>();
-            TextRun tr = i.next();
-            List<TextSpanLayout> layouts = new ArrayList<>();
-            chunkLayouts.add(layouts);
-            layouts.add(tr.getLayout());
-            while (i.hasNext()) {
-                tr = i.next();
-                if (tr.isFirstRunInChunk()) {
-                    layouts = new ArrayList<>();
-                    chunkLayouts.add(layouts);
-                }
-                layouts.add(tr.getLayout());
-            }
+		if (rgns != null) {
+			Iterator<TextRun> i = textRuns.iterator();
+			List<List<TextSpanLayout>> chunkLayouts = new ArrayList<>();
+			TextRun tr = i.next();
+			List<TextSpanLayout> layouts = new ArrayList<>();
+			chunkLayouts.add(layouts);
+			layouts.add(tr.getLayout());
+			while (i.hasNext()) {
+				tr = i.next();
+				if (tr.isFirstRunInChunk()) {
+					layouts = new ArrayList<>();
+					chunkLayouts.add(layouts);
+				}
+				layouts.add(tr.getLayout());
+			}
 
-            FlowExtGlyphLayout.textWrapTextChunk
-                (chunkACIs, chunkLayouts, rgns);
-        }
+			FlowExtGlyphLayout.textWrapTextChunk(chunkACIs, chunkLayouts, rgns);
+		}
 
-        node.setTextRuns(textRuns);
-        return textRuns;
-    }
+		node.setTextRuns(textRuns);
+		return textRuns;
+	}
 }

@@ -32,8 +32,8 @@ import org.mozilla.javascript.WrappedException;
 /**
  * This implementation of the Rhino <code>SecurityController</code> interface is
  * meant for use within the context of EchoSVG only. It is a partial
- * implementation of the interface that does what is needed by EchoSVG and
- * no more.
+ * implementation of the interface that does what is needed by EchoSVG and no
+ * more.
  *
  * @author <a href="mailto:cjolif@ilog.fr">Christophe Jolif</a>
  * @author For later modifications, see Git history.
@@ -41,78 +41,72 @@ import org.mozilla.javascript.WrappedException;
  */
 public class EchoSVGSecurityController extends SecurityController {
 
-    /**
-     * Default constructor
-     */
-    @Override
-    public GeneratedClassLoader createClassLoader
-        (final ClassLoader parentLoader, Object securityDomain) {
+	/**
+	 * Default constructor
+	 */
+	@Override
+	public GeneratedClassLoader createClassLoader(final ClassLoader parentLoader, Object securityDomain) {
 
-        if (securityDomain instanceof RhinoClassLoader) {
-            return (RhinoClassLoader)securityDomain;
-        }
+		if (securityDomain instanceof RhinoClassLoader) {
+			return (RhinoClassLoader) securityDomain;
+		}
 
-        // FIXX: This should be supported by intersecting perms.
-        // Calling var script = Script(source); script(); is not supported
-        throw new SecurityException("Script() objects are not supported");
-    }
+		// FIXX: This should be supported by intersecting perms.
+		// Calling var script = Script(source); script(); is not supported
+		throw new SecurityException("Script() objects are not supported");
+	}
 
-    /**
-     * Get dynamic security domain that allows an action only if it is allowed
-     * by the current Java stack and <i>securityDomain</i>. If
-     * <i>securityDomain</i> is null, return domain representing permissions
-     * allowed by the current stack.
-     */
-    @Override
-    public Object getDynamicSecurityDomain(Object securityDomain) {
+	/**
+	 * Get dynamic security domain that allows an action only if it is allowed by
+	 * the current Java stack and <i>securityDomain</i>. If <i>securityDomain</i> is
+	 * null, return domain representing permissions allowed by the current stack.
+	 */
+	@Override
+	public Object getDynamicSecurityDomain(Object securityDomain) {
 
-        ClassLoader loader = (RhinoClassLoader)securityDomain;
-        // Already have a rhino loader in place no need to
-        // do anything (normally you would want to union the
-        // the current stack with the loader's context but
-        // in our case no one has lower privledges than a
-        // rhino class loader).
-        if (loader != null) 
-            return loader;
+		ClassLoader loader = (RhinoClassLoader) securityDomain;
+		// Already have a rhino loader in place no need to
+		// do anything (normally you would want to union the
+		// the current stack with the loader's context but
+		// in our case no one has lower privledges than a
+		// rhino class loader).
+		if (loader != null)
+			return loader;
 
-        return AccessController.getContext();
-    }
+		return AccessController.getContext();
+	}
 
-    /**
-     * Calls {@link Callable#call(Context, Scriptable, Scriptable, Object[])} of
-     * <code>callable</code> under restricted security domain where an action is
-     * allowed only if it is allowed according to the Java stack on the
-     * moment of the <code>callWithDomain</code> call and
-     * <code>securityDomain</code>. Any call to
-     * {@link #getDynamicSecurityDomain(Object)} during execution of
-     * {@link Callable#call(Context, Scriptable, Scriptable, Object[])}
-     * should return a domain incorporate restrictions imposed by
-     * <code>securityDomain</code>.
-     */
-    @Override
-    public Object callWithDomain(Object securityDomain, final Context cx,
-                                 final Callable callable,
-                                 final Scriptable scope,
-                                 final Scriptable thisObj,
-                                 final Object[] args) {
-        AccessControlContext acc;
-        if (securityDomain instanceof AccessControlContext)
-            acc = (AccessControlContext)securityDomain;
-        else {
-            RhinoClassLoader loader = (RhinoClassLoader)securityDomain;
-            acc = loader.rhinoAccessControlContext;
-        }
+	/**
+	 * Calls {@link Callable#call(Context, Scriptable, Scriptable, Object[])} of
+	 * <code>callable</code> under restricted security domain where an action is
+	 * allowed only if it is allowed according to the Java stack on the moment of
+	 * the <code>callWithDomain</code> call and <code>securityDomain</code>. Any
+	 * call to {@link #getDynamicSecurityDomain(Object)} during execution of
+	 * {@link Callable#call(Context, Scriptable, Scriptable, Object[])} should
+	 * return a domain incorporate restrictions imposed by
+	 * <code>securityDomain</code>.
+	 */
+	@Override
+	public Object callWithDomain(Object securityDomain, final Context cx, final Callable callable,
+			final Scriptable scope, final Scriptable thisObj, final Object[] args) {
+		AccessControlContext acc;
+		if (securityDomain instanceof AccessControlContext)
+			acc = (AccessControlContext) securityDomain;
+		else {
+			RhinoClassLoader loader = (RhinoClassLoader) securityDomain;
+			acc = loader.rhinoAccessControlContext;
+		}
 
-        PrivilegedExceptionAction<Object> execAction = new PrivilegedExceptionAction<Object>() {
-            @Override
-            public Object run() {
-                return callable.call(cx, scope, thisObj, args);
-            }
-        };
-        try {
-            return AccessController.doPrivileged(execAction, acc);
-        } catch (Exception e) {
-            throw new WrappedException(e);
-        }
-    }
+		PrivilegedExceptionAction<Object> execAction = new PrivilegedExceptionAction<Object>() {
+			@Override
+			public Object run() {
+				return callable.call(cx, scope, thisObj, args);
+			}
+		};
+		try {
+			return AccessController.doPrivileged(execAction, acc);
+		} catch (Exception e) {
+			throw new WrappedException(e);
+		}
+	}
 }

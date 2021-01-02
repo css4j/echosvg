@@ -19,12 +19,11 @@
 package io.sf.carte.echosvg.bridge;
 
 /**
- * An interface that allows UserAgents to describe the security 
- * constraints desired for scripting.
+ * An interface that allows UserAgents to describe the security constraints
+ * desired for scripting.
  *
- * Right now, this interface only has one method, but it may be 
- * extended in the future to add finer control over the security
- * settings for scripts.
+ * Right now, this interface only has one method, but it may be extended in the
+ * future to add finer control over the security settings for scripts.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -32,10 +31,10 @@ package io.sf.carte.echosvg.bridge;
  */
 public interface ScriptSecurity {
 
-    /**
-     * Controls whether the script should be loaded or not.
-     *
-     * @throws SecurityException if the script should not be loaded.
-     */
-    void checkLoadScript();
+	/**
+	 * Controls whether the script should be loaded or not.
+	 *
+	 * @throws SecurityException if the script should not be loaded.
+	 */
+	void checkLoadScript();
 }

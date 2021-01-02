@@ -29,66 +29,67 @@ import io.sf.carte.echosvg.anim.timing.TimedElement;
  */
 public class AnimationException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The timed element on which the error occurred.
-     */
-    protected TimedElement e;
+	/**
+	 * The timed element on which the error occurred.
+	 */
+	protected TimedElement e;
 
-    /**
-     * The error code.
-     */
-    protected String code;
+	/**
+	 * The error code.
+	 */
+	protected String code;
 
-    /**
-     * The parameters to use for the error message.
-     */
-    protected Object[] params;
+	/**
+	 * The parameters to use for the error message.
+	 */
+	protected Object[] params;
 
-    /**
-     * The message.
-     */
-    protected String message;
+	/**
+	 * The message.
+	 */
+	protected String message;
 
-    /**
-     * Creates a new AnimationException.
-     * @param e the animation element on which the error occurred
-     * @param code the error code
-     * @param params the parameters to use for the error message
-     */
-    public AnimationException(TimedElement e, String code, Object[] params) {
-        this.e = e;
-        this.code = code;
-        this.params = params;
-    }
+	/**
+	 * Creates a new AnimationException.
+	 * 
+	 * @param e      the animation element on which the error occurred
+	 * @param code   the error code
+	 * @param params the parameters to use for the error message
+	 */
+	public AnimationException(TimedElement e, String code, Object[] params) {
+		this.e = e;
+		this.code = code;
+		this.params = params;
+	}
 
-    /**
-     * Returns the timed element that caused this animation exception.
-     */
-    public TimedElement getElement() {
-        return e;
-    }
+	/**
+	 * Returns the timed element that caused this animation exception.
+	 */
+	public TimedElement getElement() {
+		return e;
+	}
 
-    /**
-     * Returns the error code.
-     */
-    public String getCode() {
-        return code;
-    }
+	/**
+	 * Returns the error code.
+	 */
+	public String getCode() {
+		return code;
+	}
 
-    /**
-     * Returns the error message parameters.
-     */
-    public Object[] getParams() {
-        return params;
-    }
+	/**
+	 * Returns the error message parameters.
+	 */
+	public Object[] getParams() {
+		return params;
+	}
 
-    /**
-     * Returns the error message according to the error code and parameters.
-     */
-    @Override
-    public String getMessage() {
-        return TimedElement.formatMessage(code, params);
-    }
+	/**
+	 * Returns the error message according to the error code and parameters.
+	 */
+	@Override
+	public String getMessage() {
+		return TimedElement.formatMessage(code, params);
+	}
 }

@@ -21,33 +21,32 @@ package io.sf.carte.echosvg.css.engine.value.svg12;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 
 /**
- * This class represents line-height values.  These are basically
- * FloatValues except that it may be 'font-size' relative.
+ * This class represents line-height values. These are basically FloatValues
+ * except that it may be 'font-size' relative.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class LineHeightValue extends FloatValue {
-    
-    /**
-     * True if the line-height is relative to the font-size
-     */
-    protected boolean fontSizeRelative;
 
-    /**
-     * Creates a new value.
-     */
-    public LineHeightValue(short unitType, float floatValue, 
-                           boolean fontSizeRelative) {
-        super(unitType, floatValue);
-        this.fontSizeRelative   = fontSizeRelative;
-    }
+	/**
+	 * True if the line-height is relative to the font-size
+	 */
+	protected boolean fontSizeRelative;
 
-    /**
-     * The type of the value.
-     */
-    public boolean getFontSizeRelative() {
-        return fontSizeRelative;
-    }
+	/**
+	 * Creates a new value.
+	 */
+	public LineHeightValue(short unitType, float floatValue, boolean fontSizeRelative) {
+		super(unitType, floatValue);
+		this.fontSizeRelative = fontSizeRelative;
+	}
+
+	/**
+	 * The type of the value.
+	 */
+	public boolean getFontSizeRelative() {
+		return fontSizeRelative;
+	}
 }

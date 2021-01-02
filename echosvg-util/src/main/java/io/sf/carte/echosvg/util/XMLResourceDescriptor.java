@@ -34,80 +34,77 @@ import java.util.Properties;
  */
 public class XMLResourceDescriptor {
 
-    /**
-     * The XML parser class name key.
-     */
-    public static final String XML_PARSER_CLASS_NAME_KEY =
-        "org.xml.sax.driver";
+	/**
+	 * The XML parser class name key.
+	 */
+	public static final String XML_PARSER_CLASS_NAME_KEY = "org.xml.sax.driver";
 
-    /**
-     * The CSS parser class name key.
-     */
-    public static final String CSS_PARSER_CLASS_NAME_KEY =
-        "org.w3c.css.sac.driver";
+	/**
+	 * The CSS parser class name key.
+	 */
+	public static final String CSS_PARSER_CLASS_NAME_KEY = "org.w3c.css.sac.driver";
 
-    /**
-     * The resources file name
-     */
-    public static final String RESOURCES =
-        "resources/XMLResourceDescriptor.properties";
+	/**
+	 * The resources file name
+	 */
+	public static final String RESOURCES = "resources/XMLResourceDescriptor.properties";
 
-    /**
-     * The resource bundle
-     */
-    protected static Properties parserProps = null;
+	/**
+	 * The resource bundle
+	 */
+	protected static Properties parserProps = null;
 
-    /**
-     * The class name of the XML parser to use.
-     */
-    protected static String xmlParserClassName;
+	/**
+	 * The class name of the XML parser to use.
+	 */
+	protected static String xmlParserClassName;
 
-    protected static synchronized Properties getParserProps() {
-        if (parserProps != null) return parserProps;
+	protected static synchronized Properties getParserProps() {
+		if (parserProps != null)
+			return parserProps;
 
-        parserProps = new Properties();
-        try {
-            Class<XMLResourceDescriptor> cls = XMLResourceDescriptor.class;
-            InputStream is = cls.getResourceAsStream(RESOURCES);
-            parserProps.load(is);
-        } catch (IOException ioe) {
-            throw new MissingResourceException(ioe.getMessage(),
-                                               RESOURCES, null);
-        }
-        return parserProps;
-    }
+		parserProps = new Properties();
+		try {
+			Class<XMLResourceDescriptor> cls = XMLResourceDescriptor.class;
+			InputStream is = cls.getResourceAsStream(RESOURCES);
+			parserProps.load(is);
+		} catch (IOException ioe) {
+			throw new MissingResourceException(ioe.getMessage(), RESOURCES, null);
+		}
+		return parserProps;
+	}
 
-    /**
-     * Returns the class name of the XML parser to use.
-     *
-     * <p>This method first checks if any XML parser has been specified using
-     * the <code>setXMLParserClassName</code> method. If any, this method will
-     * return the value of the property 'org.xml.sax.driver' specified in the
-     * <code>resources/XMLResourceDescriptor.properties</code> resource file.
-     */
-    public static String getXMLParserClassName() {
-        if (xmlParserClassName == null) {
-            xmlParserClassName = getParserProps().getProperty
-                (XML_PARSER_CLASS_NAME_KEY);
-        }
-        return xmlParserClassName;
-    }
+	/**
+	 * Returns the class name of the XML parser to use.
+	 *
+	 * <p>
+	 * This method first checks if any XML parser has been specified using the
+	 * <code>setXMLParserClassName</code> method. If any, this method will return
+	 * the value of the property 'org.xml.sax.driver' specified in the
+	 * <code>resources/XMLResourceDescriptor.properties</code> resource file.
+	 */
+	public static String getXMLParserClassName() {
+		if (xmlParserClassName == null) {
+			xmlParserClassName = getParserProps().getProperty(XML_PARSER_CLASS_NAME_KEY);
+		}
+		return xmlParserClassName;
+	}
 
-    /**
-     * Sets the class name of the XML parser to use.
-     *
-     * @param xmlParserClassName the classname of the XML parser
-     */
-    public static void setXMLParserClassName(String xmlParserClassName) {
-        XMLResourceDescriptor.xmlParserClassName = xmlParserClassName;
-    }
+	/**
+	 * Sets the class name of the XML parser to use.
+	 *
+	 * @param xmlParserClassName the classname of the XML parser
+	 */
+	public static void setXMLParserClassName(String xmlParserClassName) {
+		XMLResourceDescriptor.xmlParserClassName = xmlParserClassName;
+	}
 
-    /**
-     * Returns the class name of the CSS parser to use.
-     *
-     */
-    public static String getCSSParserClassName() {
-        return "io.sf.carte.doc.style.css.parser.CSSParser";
-    }
+	/**
+	 * Returns the class name of the CSS parser to use.
+	 *
+	 */
+	public static String getCSSParserClassName() {
+		return "io.sf.carte.doc.style.css.parser.CSSParser";
+	}
 
 }

@@ -28,197 +28,179 @@ import io.sf.carte.echosvg.test.svg.ImageCompareTest;
 import io.sf.carte.echosvg.test.svg.SVGRenderingAccuracyTest;
 
 /**
- * This test validates that a given rendering sequence, modeled
- * by a <code>Painter</code> by doing several subtests for a
- * single input class:
- * + SVGAccuracyTest with several configurations
- * + SVGRenderingAccuracyTest
- * + ImageComparisonTest between the rendering of the generated
- *   SVG for various configurations.
+ * This test validates that a given rendering sequence, modeled by a
+ * <code>Painter</code> by doing several subtests for a single input class: +
+ * SVGAccuracyTest with several configurations + SVGRenderingAccuracyTest +
+ * ImageComparisonTest between the rendering of the generated SVG for various
+ * configurations.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class SVGGeneratorTests extends DefaultTestSuite {
-    public static final String GENERATOR_REFERENCE_BASE
-        = "test-references/io/sf/carte/echosvg/svggen/";
+	public static final String GENERATOR_REFERENCE_BASE = "test-references/io/sf/carte/echosvg/svggen/";
 
-    public static final String RENDERING_DIR
-        = "rendering";
+	public static final String RENDERING_DIR = "rendering";
 
-    public static final String ACCEPTED_VARIATION_DIR
-        = "accepted-variation";
+	public static final String ACCEPTED_VARIATION_DIR = "accepted-variation";
 
-    public static final String[] VARIATION_PLATFORMS =
-        io.sf.carte.echosvg.test.svg.PreconfiguredRenderingTest.DEFAULT_VARIATION_PLATFORMS;
+	public static final String[] VARIATION_PLATFORMS = io.sf.carte.echosvg.test.svg.PreconfiguredRenderingTest.DEFAULT_VARIATION_PLATFORMS;
 
-    private static final String ACCEPTED_REF_DIR = "accepted-ref";
+	private static final String ACCEPTED_REF_DIR = "accepted-ref";
 
-    public static final String CANDIDATE_VARIATION_DIR
-        = "candidate-variation";
+	public static final String CANDIDATE_VARIATION_DIR = "candidate-variation";
 
-    public static final String CANDIDATE_REF_DIR
-        = "candidate-ref";
+	public static final String CANDIDATE_REF_DIR = "candidate-ref";
 
-    public static final String RENDERING_CANDIDATE_REF_DIR
-        = "candidate-reference";
+	public static final String RENDERING_CANDIDATE_REF_DIR = "candidate-reference";
 
-    public static final String PNG_EXTENSION
-        = ".png";
+	public static final String PNG_EXTENSION = ".png";
 
-    public static final String SVG_EXTENSION
-        = ".svg";
+	public static final String SVG_EXTENSION = ".svg";
 
-    public static final String PLAIN_GENERATION_PREFIX = "";
+	public static final String PLAIN_GENERATION_PREFIX = "";
 
-    public static final String CUSTOM_CONTEXT_GENERATION_PREFIX = "Context";
+	public static final String CUSTOM_CONTEXT_GENERATION_PREFIX = "Context";
 
-    public SVGGeneratorTests(){
-    }
+	public SVGGeneratorTests() {
+	}
 
-    /**
-     * The id should be the Painter's class name
-     * prefixed with the package name defined in
-     * getPackageName
-     */
-    @Override
-    public void setId(String id){
-        super.setId(id);
-        String clName = getPackageName() + "." + id;
-        Class cl = null;
+	/**
+	 * The id should be the Painter's class name prefixed with the package name
+	 * defined in getPackageName
+	 */
+	@Override
+	public void setId(String id) {
+		super.setId(id);
+		String clName = getPackageName() + "." + id;
+		Class cl = null;
 
-        try{
-            cl = Class.forName(clName);
-        }catch(ClassNotFoundException e){
-            throw new IllegalArgumentException(clName);
-        }
+		try {
+			cl = Class.forName(clName);
+		} catch (ClassNotFoundException e) {
+			throw new IllegalArgumentException(clName);
+		}
 
-        Object o = null;
+		Object o = null;
 
-        try {
-            o = cl.getDeclaredConstructor().newInstance();
-        }catch(Exception e){
-            throw new IllegalArgumentException(clName);
-        }
+		try {
+			o = cl.getDeclaredConstructor().newInstance();
+		} catch (Exception e) {
+			throw new IllegalArgumentException(clName);
+		}
 
-        if(!(o instanceof Painter)){
-            throw new IllegalArgumentException(clName);
-        }
+		if (!(o instanceof Painter)) {
+			throw new IllegalArgumentException(clName);
+		}
 
-        Painter painter = (Painter)o;
+		Painter painter = (Painter) o;
 
-        addTest(makeSVGAccuracyTest(painter, id));
-        addTest(makeGeneratorContext(painter, id));
-        addTest(makeSVGRenderingAccuracyTest(painter, id, PLAIN_GENERATION_PREFIX));
-        addTest(makeSVGRenderingAccuracyTest(painter, id, CUSTOM_CONTEXT_GENERATION_PREFIX));
-        addTest(makeImageCompareTest(painter, id, PLAIN_GENERATION_PREFIX,
-                                     CUSTOM_CONTEXT_GENERATION_PREFIX));
-    }
+		addTest(makeSVGAccuracyTest(painter, id));
+		addTest(makeGeneratorContext(painter, id));
+		addTest(makeSVGRenderingAccuracyTest(painter, id, PLAIN_GENERATION_PREFIX));
+		addTest(makeSVGRenderingAccuracyTest(painter, id, CUSTOM_CONTEXT_GENERATION_PREFIX));
+		addTest(makeImageCompareTest(painter, id, PLAIN_GENERATION_PREFIX, CUSTOM_CONTEXT_GENERATION_PREFIX));
+	}
 
-    /**
-     * For the Generator test, the relevant name is the id
-     */
-    @Override
-    public String getName(){
-        return "SVGGeneratorTest - " + getId();
-    }
+	/**
+	 * For the Generator test, the relevant name is the id
+	 */
+	@Override
+	public String getName() {
+		return "SVGGeneratorTest - " + getId();
+	}
 
-    protected String getPackageName(){
-        return "io.sf.carte.echosvg.svggen";
-    }
+	protected String getPackageName() {
+		return "io.sf.carte.echosvg.svggen";
+	}
 
-    private Test makeImageCompareTest(Painter painter,
-                                      String id,
-                                      String prefixA,
-                                      String prefixB){
-        String cl = getNonQualifiedClassName(painter);
-        String clA = prefixA + cl;
-        String clB = prefixB + cl;
-        String testReferenceA = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + clA + PNG_EXTENSION;
-        String testReferenceB = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + clB + PNG_EXTENSION;
-        ImageCompareTest t = new ImageCompareTest(testReferenceA, testReferenceB);
-        t.setName(id + "-RenderingComparison");
-        t.setId(id + ".renderingComparison");
-        return t;
-    }
+	private Test makeImageCompareTest(Painter painter, String id, String prefixA, String prefixB) {
+		String cl = getNonQualifiedClassName(painter);
+		String clA = prefixA + cl;
+		String clB = prefixB + cl;
+		String testReferenceA = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + clA + PNG_EXTENSION;
+		String testReferenceB = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + clB + PNG_EXTENSION;
+		ImageCompareTest t = new ImageCompareTest(testReferenceA, testReferenceB);
+		t.setName(id + "-RenderingComparison");
+		t.setId(id + ".renderingComparison");
+		return t;
+	}
 
-    private Test makeSVGRenderingAccuracyTest(Painter painter, String id, String prefix){
-        String cl = prefix + getNonQualifiedClassName(painter);
-        String testSource = GENERATOR_REFERENCE_BASE + cl + SVG_EXTENSION;
-        String testReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + cl + PNG_EXTENSION;
-        String[] variationURLs = new String[VARIATION_PLATFORMS.length + 1];
-        variationURLs[0] =
-                GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + ACCEPTED_VARIATION_DIR + "/" + cl + PNG_EXTENSION;
-        for (int i = 0; i < VARIATION_PLATFORMS.length; i++) {
-            variationURLs[i + 1] = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + ACCEPTED_VARIATION_DIR + "/" + cl
-                    + '_' + VARIATION_PLATFORMS[i] + PNG_EXTENSION;
-        }
-        String saveVariation =
-                GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + CANDIDATE_VARIATION_DIR + "/" + cl + PNG_EXTENSION;
-        String candidateReference =
-                GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + RENDERING_CANDIDATE_REF_DIR + "/" + cl + PNG_EXTENSION;
+	private Test makeSVGRenderingAccuracyTest(Painter painter, String id, String prefix) {
+		String cl = prefix + getNonQualifiedClassName(painter);
+		String testSource = GENERATOR_REFERENCE_BASE + cl + SVG_EXTENSION;
+		String testReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + cl + PNG_EXTENSION;
+		String[] variationURLs = new String[VARIATION_PLATFORMS.length + 1];
+		variationURLs[0] = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + ACCEPTED_VARIATION_DIR + "/" + cl
+				+ PNG_EXTENSION;
+		for (int i = 0; i < VARIATION_PLATFORMS.length; i++) {
+			variationURLs[i + 1] = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + ACCEPTED_VARIATION_DIR + "/" + cl
+					+ '_' + VARIATION_PLATFORMS[i] + PNG_EXTENSION;
+		}
+		String saveVariation = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + CANDIDATE_VARIATION_DIR + "/" + cl
+				+ PNG_EXTENSION;
+		String candidateReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + RENDERING_CANDIDATE_REF_DIR + "/"
+				+ cl + PNG_EXTENSION;
 
-        SVGRenderingAccuracyTest test = new SVGRenderingAccuracyTest(testSource, testReference);
-        for (String variationURL : variationURLs) {
-            test.addVariationURL(variationURL);
-        }
-        test.setSaveVariation(new File(saveVariation));
-        test.setCandidateReference(new File(candidateReference));
+		SVGRenderingAccuracyTest test = new SVGRenderingAccuracyTest(testSource, testReference);
+		for (String variationURL : variationURLs) {
+			test.addVariationURL(variationURL);
+		}
+		test.setSaveVariation(new File(saveVariation));
+		test.setCandidateReference(new File(candidateReference));
 
-        test.setName(id + "-" + prefix + "RenderingCheck");
-        test.setId(id + "." + prefix + "renderingCheck");
-        return test;
-    }
+		test.setName(id + "-" + prefix + "RenderingCheck");
+		test.setId(id + "." + prefix + "renderingCheck");
+		return test;
+	}
 
-    private Test makeGeneratorContext(Painter painter, String id){
-        String cl = CUSTOM_CONTEXT_GENERATION_PREFIX + getNonQualifiedClassName(painter);
+	private Test makeGeneratorContext(Painter painter, String id) {
+		String cl = CUSTOM_CONTEXT_GENERATION_PREFIX + getNonQualifiedClassName(painter);
 
-        GeneratorContext test
-            = new GeneratorContext(painter, getReferenceURL(painter, CUSTOM_CONTEXT_GENERATION_PREFIX));
+		GeneratorContext test = new GeneratorContext(painter,
+				getReferenceURL(painter, CUSTOM_CONTEXT_GENERATION_PREFIX));
 
-        test.setSaveSVG(new File(GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION));
-        test.setName(id + "-ConfiguredContextGeneration");
-        test.setId(id + ".configuredContextGeneration");
-        return test;
-    }
+		test.setSaveSVG(new File(GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION));
+		test.setName(id + "-ConfiguredContextGeneration");
+		test.setId(id + ".configuredContextGeneration");
+		return test;
+	}
 
-    private Test makeSVGAccuracyTest(Painter painter, String id){
-        String cl = PLAIN_GENERATION_PREFIX + getNonQualifiedClassName(painter);
+	private Test makeSVGAccuracyTest(Painter painter, String id) {
+		String cl = PLAIN_GENERATION_PREFIX + getNonQualifiedClassName(painter);
 
-        SVGAccuracyTest test
-            = new SVGAccuracyTest(painter, getReferenceURL(painter, PLAIN_GENERATION_PREFIX));
+		SVGAccuracyTest test = new SVGAccuracyTest(painter, getReferenceURL(painter, PLAIN_GENERATION_PREFIX));
 
-        test.setSaveSVG(new File(GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION));
-        test.setName(id + "-DefaultContextGeneration");
-        test.setId(id + ".defaultContextGeneration");
-        return test;
-    }
+		test.setSaveSVG(new File(GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION));
+		test.setName(id + "-DefaultContextGeneration");
+		test.setId(id + ".defaultContextGeneration");
+		return test;
+	}
 
-    private String getNonQualifiedClassName(Painter painter){
-        String cl = painter.getClass().getName();
-        int n = cl.lastIndexOf('.');
-        return cl.substring(n+1);
-    }
+	private String getNonQualifiedClassName(Painter painter) {
+		String cl = painter.getClass().getName();
+		int n = cl.lastIndexOf('.');
+		return cl.substring(n + 1);
+	}
 
-    private URL getReferenceURL(Painter painter, String prefix){
-        String suffix = prefix + getNonQualifiedClassName(painter) + SVG_EXTENSION;
-        File acceptedReference = new File(GENERATOR_REFERENCE_BASE + ACCEPTED_REF_DIR + '/' + suffix);
-        if (acceptedReference.exists()) {
-            return file2URL(acceptedReference);
-        } else {
-            File reference = new File(GENERATOR_REFERENCE_BASE + suffix);
-            return file2URL(reference);
-        }
-    }
+	private URL getReferenceURL(Painter painter, String prefix) {
+		String suffix = prefix + getNonQualifiedClassName(painter) + SVG_EXTENSION;
+		File acceptedReference = new File(GENERATOR_REFERENCE_BASE + ACCEPTED_REF_DIR + '/' + suffix);
+		if (acceptedReference.exists()) {
+			return file2URL(acceptedReference);
+		} else {
+			File reference = new File(GENERATOR_REFERENCE_BASE + suffix);
+			return file2URL(reference);
+		}
+	}
 
-    private URL file2URL(File file) {
-        try {
-            return file.toURI().toURL();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	private URL file2URL(File file) {
+		try {
+			return file.toURI().toURL();
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }
-

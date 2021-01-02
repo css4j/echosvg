@@ -34,182 +34,177 @@ import io.sf.carte.echosvg.parser.ParseException;
  */
 public class SVGOMAngle implements SVGAngle {
 
-    /**
-     * The type of this angle.
-     */
-    private short unitType;
+	/**
+	 * The type of this angle.
+	 */
+	private short unitType;
 
-    /**
-     * The value of this angle.
-     */
-    protected float value;
+	/**
+	 * The value of this angle.
+	 */
+	protected float value;
 
-    /**
-     * The unit string representations.
-     */
-    protected static final String[] UNITS = {
-        "", "", "deg", "rad", "grad"
-    };
+	/**
+	 * The unit string representations.
+	 */
+	protected static final String[] UNITS = { "", "", "deg", "rad", "grad" };
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAngle#getUnitType()}.
-     */
-    @Override
-    public short getUnitType() {
-        revalidate();
-        return unitType;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAngle#getUnitType()}.
+	 */
+	@Override
+	public short getUnitType() {
+		revalidate();
+		return unitType;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAngle#getValue()}.
-     */
-    @Override
-    public float getValue() {
-        revalidate();
-        return toUnit(getUnitType(), value, SVG_ANGLETYPE_DEG);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAngle#getValue()}.
+	 */
+	@Override
+	public float getValue() {
+		revalidate();
+		return toUnit(getUnitType(), value, SVG_ANGLETYPE_DEG);
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAngle#setValue(float)}.
-     */
-    @Override
-    public void setValue(float value) throws DOMException {
-        revalidate();
-        this.setUnitType(SVG_ANGLETYPE_DEG);
-        this.value = value;
-        reset();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAngle#setValue(float)}.
+	 */
+	@Override
+	public void setValue(float value) throws DOMException {
+		revalidate();
+		this.setUnitType(SVG_ANGLETYPE_DEG);
+		this.value = value;
+		reset();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAngle#getValueInSpecifiedUnits()}.
-     */
-    @Override
-    public float getValueInSpecifiedUnits() {
-        revalidate();
-        return value;
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAngle#getValueInSpecifiedUnits()}.
+	 */
+	@Override
+	public float getValueInSpecifiedUnits() {
+		revalidate();
+		return value;
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGAngle#setValueInSpecifiedUnits(float)}.
-     */
-    @Override
-    public void setValueInSpecifiedUnits(float value) throws DOMException {
-        revalidate();
-        this.value = value;
-        reset();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAngle#setValueInSpecifiedUnits(float)}.
+	 */
+	@Override
+	public void setValueInSpecifiedUnits(float value) throws DOMException {
+		revalidate();
+		this.value = value;
+		reset();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAngle#getValueAsString()}.
-     */
-    @Override
-    public String getValueAsString() {
-        revalidate();
-        return Float.toString(value) + UNITS[getUnitType()];
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAngle#getValueAsString()}.
+	 */
+	@Override
+	public String getValueAsString() {
+		revalidate();
+		return Float.toString(value) + UNITS[getUnitType()];
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link SVGAngle#setValueAsString(String)}.
-     */
-    @Override
-    public void setValueAsString(String value) throws DOMException {
-        parse(value);
-        reset();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAngle#setValueAsString(String)}.
+	 */
+	@Override
+	public void setValueAsString(String value) throws DOMException {
+		parse(value);
+		reset();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGAngle#newValueSpecifiedUnits(short,float)}.
-     */
-    @Override
-    public void newValueSpecifiedUnits(short unit, float value) {
-        setUnitType(unit);
-        this.value = value;
-        reset();
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAngle#newValueSpecifiedUnits(short,float)}.
+	 */
+	@Override
+	public void newValueSpecifiedUnits(short unit, float value) {
+		setUnitType(unit);
+		this.value = value;
+		reset();
+	}
 
-    /**
-     * <b>DOM</b>: Implements {@link
-     * SVGAngle#convertToSpecifiedUnits(short)}.
-     */
-    @Override
-    public void convertToSpecifiedUnits(short unit) {
-        value = toUnit(getUnitType(), value, unit);
-        setUnitType(unit);
-    }
+	/**
+	 * <b>DOM</b>: Implements {@link SVGAngle#convertToSpecifiedUnits(short)}.
+	 */
+	@Override
+	public void convertToSpecifiedUnits(short unit) {
+		value = toUnit(getUnitType(), value, unit);
+		setUnitType(unit);
+	}
 
-    /**
-     * Resets the associated attribute value according to the current value.
-     * This should be overridden in descendant classes that associate the
-     * angle object with an attribute.
-     */
-    protected void reset() {
-    }
+	/**
+	 * Resets the associated attribute value according to the current value. This
+	 * should be overridden in descendant classes that associate the angle object
+	 * with an attribute.
+	 */
+	protected void reset() {
+	}
 
-    /**
-     * Updates the values in this object according to the associated attribute
-     * value.  This should be overridden in descendant classes that associate
-     * the angle object with an attribute.
-     */
-    protected void revalidate() {
-    }
+	/**
+	 * Updates the values in this object according to the associated attribute
+	 * value. This should be overridden in descendant classes that associate the
+	 * angle object with an attribute.
+	 */
+	protected void revalidate() {
+	}
 
-    /**
-     * Parse a String value as an SVGAngle.
-     */
-    protected void parse(String s) {
-        try {
-            AngleParser angleParser = new AngleParser();
-            angleParser.setAngleHandler(new DefaultAngleHandler() {
-                @Override
-                public void angleValue(float v) throws ParseException {
-                    value = v;
-                }
-                @Override
-                public void deg() throws ParseException {
-                    setUnitType(SVG_ANGLETYPE_DEG);
-                }
-                @Override
-                public void rad() throws ParseException {
-                    setUnitType(SVG_ANGLETYPE_RAD);
-                }
-                @Override
-                public void grad() throws ParseException {
-                    setUnitType(SVG_ANGLETYPE_GRAD);
-                }
-            });
-            setUnitType(SVG_ANGLETYPE_UNSPECIFIED);
-            angleParser.parse(s);
-        } catch (ParseException e) {
-            setUnitType(SVG_ANGLETYPE_UNKNOWN);
-            value = 0;
-        }
-    }
+	/**
+	 * Parse a String value as an SVGAngle.
+	 */
+	protected void parse(String s) {
+		try {
+			AngleParser angleParser = new AngleParser();
+			angleParser.setAngleHandler(new DefaultAngleHandler() {
+				@Override
+				public void angleValue(float v) throws ParseException {
+					value = v;
+				}
 
-    /**
-     * Table of multipliers for angle unit conversion.
-     */
-    protected static double[][] K = {
-        {             1,      Math.PI / 180,        Math.PI / 200 },
-        { 180 / Math.PI,                  1, 1800 / (9 * Math.PI) },
-        {           0.9, 9 * Math.PI / 1800,                    1 }
-    };
+				@Override
+				public void deg() throws ParseException {
+					setUnitType(SVG_ANGLETYPE_DEG);
+				}
 
-    /**
-     * Converts an angle from one unit to another.
-     */
-    public static float toUnit(short fromUnit, float value, short toUnit) {
-        if (fromUnit == 1) {
-            fromUnit = 2;
-        }
-        if (toUnit == 1) {
-            toUnit = 2;
-        }
-        return (float) (K[fromUnit - 2][toUnit - 2] * value);
-    }
+				@Override
+				public void rad() throws ParseException {
+					setUnitType(SVG_ANGLETYPE_RAD);
+				}
 
-    public void setUnitType(short unitType) {
-        this.unitType = unitType;
-    }
+				@Override
+				public void grad() throws ParseException {
+					setUnitType(SVG_ANGLETYPE_GRAD);
+				}
+			});
+			setUnitType(SVG_ANGLETYPE_UNSPECIFIED);
+			angleParser.parse(s);
+		} catch (ParseException e) {
+			setUnitType(SVG_ANGLETYPE_UNKNOWN);
+			value = 0;
+		}
+	}
+
+	/**
+	 * Table of multipliers for angle unit conversion.
+	 */
+	protected static double[][] K = { { 1, Math.PI / 180, Math.PI / 200 }, { 180 / Math.PI, 1, 1800 / (9 * Math.PI) },
+			{ 0.9, 9 * Math.PI / 1800, 1 } };
+
+	/**
+	 * Converts an angle from one unit to another.
+	 */
+	public static float toUnit(short fromUnit, float value, short toUnit) {
+		if (fromUnit == 1) {
+			fromUnit = 2;
+		}
+		if (toUnit == 1) {
+			toUnit = 2;
+		}
+		return (float) (K[fromUnit - 2][toUnit - 2] * value);
+	}
+
+	public void setUnitType(short unitType) {
+		this.unitType = unitType;
+	}
 }

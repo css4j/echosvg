@@ -28,14 +28,14 @@ package io.sf.carte.echosvg.bridge;
  */
 public interface Viewport {
 
-    /**
-     * Returns the width of this viewport.
-     */
-    float getWidth();
+	/**
+	 * Returns the width of this viewport.
+	 */
+	float getWidth();
 
-    /**
-     * Returns the height of this viewport.
-     */
-    float getHeight();
+	/**
+	 * Returns the height of this viewport.
+	 */
+	float getHeight();
 
 }

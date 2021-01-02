@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-
-
 /**
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
@@ -27,25 +25,26 @@ package io.sf.carte.echosvg.svggen;
  * @version $Id$
  */
 public abstract class SVGGraphicObjectConverter implements SVGSyntax {
-    /**
-     * Used by converters to create Elements and other DOM objects.
-     */
-    protected SVGGeneratorContext generatorContext;
+	/**
+	 * Used by converters to create Elements and other DOM objects.
+	 */
+	protected SVGGeneratorContext generatorContext;
 
-    /**
-     * @param generatorContext can be used by the SVGGraphicObjectConverter
-     * extentions to create Elements and other types of DOM objects.
-     */
-    public SVGGraphicObjectConverter(SVGGeneratorContext generatorContext) {
-        if (generatorContext == null)
-            throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_CONTEXT_NULL);
-        this.generatorContext = generatorContext;
-    }
+	/**
+	 * @param generatorContext can be used by the SVGGraphicObjectConverter
+	 *                         extentions to create Elements and other types of DOM
+	 *                         objects.
+	 */
+	public SVGGraphicObjectConverter(SVGGeneratorContext generatorContext) {
+		if (generatorContext == null)
+			throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_CONTEXT_NULL);
+		this.generatorContext = generatorContext;
+	}
 
-    /**
-     * Utility method for subclasses.
-     */
-    public final String doubleString(double value) {
-        return generatorContext.doubleString(value);
-    }
+	/**
+	 * Utility method for subclasses.
+	 */
+	public final String doubleString(double value) {
+		return generatorContext.doubleString(value);
+	}
 }

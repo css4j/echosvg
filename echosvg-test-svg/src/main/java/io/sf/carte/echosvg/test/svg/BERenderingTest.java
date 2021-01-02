@@ -19,8 +19,7 @@
 package io.sf.carte.echosvg.test.svg;
 
 /**
- * Preconfigured test for SVG files under the beSuite
- * directory.
+ * Preconfigured test for SVG files under the beSuite directory.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -28,85 +27,75 @@ package io.sf.carte.echosvg.test.svg;
  */
 public class BERenderingTest extends PreconfiguredRenderingTest {
 
-    public static final String SVG_URL_PREFIX
-        = "test-references/../../beSuite/";
+	public static final String SVG_URL_PREFIX = "test-references/../../beSuite/";
 
-    public static final String REF_IMAGE_PREFIX
-        = "test-references/svgbe/";
+	public static final String REF_IMAGE_PREFIX = "test-references/svgbe/";
 
-    public static final String REF_IMAGE_SUFFIX
-        = "";
+	public static final String REF_IMAGE_SUFFIX = "";
 
-    public static final String VARIATION_PREFIX
-        = "test-references/svgbe/";
+	public static final String VARIATION_PREFIX = "test-references/svgbe/";
 
-    public static final String VARIATION_SUFFIX
-        = "accepted-variation/";
+	public static final String VARIATION_SUFFIX = "accepted-variation/";
 
-    public static final String SAVE_VARIATION_PREFIX
-        = "test-references/svgbe/";
+	public static final String SAVE_VARIATION_PREFIX = "test-references/svgbe/";
 
-    public static final String SAVE_VARIATION_SUFFIX
-        = "candidate-variation/";
+	public static final String SAVE_VARIATION_SUFFIX = "candidate-variation/";
 
-    public static final String SAVE_CANDIDATE_REFERENCE_PREFIX
-        = "test-references/svgbe/";
+	public static final String SAVE_CANDIDATE_REFERENCE_PREFIX = "test-references/svgbe/";
 
-    public static final String SAVE_CANDIDATE_REFERENCE_SUFFIX
-        = "candidate-reference/";
+	public static final String SAVE_CANDIDATE_REFERENCE_SUFFIX = "candidate-reference/";
 
+	@Override
+	protected String getSVGURLPrefix() {
+		return SVG_URL_PREFIX;
+	}
 
-    @Override
-    protected String getSVGURLPrefix(){
-        return SVG_URL_PREFIX;
-    }
+	@Override
+	protected String getRefImagePrefix() {
+		return REF_IMAGE_PREFIX;
+	}
 
-    @Override
-    protected String getRefImagePrefix(){
-        return REF_IMAGE_PREFIX;
-    }
+	@Override
+	protected String getRefImageSuffix() {
+		return REF_IMAGE_SUFFIX;
+	}
 
-    @Override
-    protected String getRefImageSuffix(){
-        return REF_IMAGE_SUFFIX;
-    }
+	@Override
+	protected String getVariationPrefix() {
+		return VARIATION_PREFIX;
+	}
 
-    @Override
-    protected String getVariationPrefix(){
-        return VARIATION_PREFIX;
-    }
+	@Override
+	protected String getVariationSuffix() {
+		return VARIATION_SUFFIX;
+	}
 
-    @Override
-    protected String getVariationSuffix(){
-        return VARIATION_SUFFIX;
-    }
+	@Override
+	protected String[] getVariationPlatforms() {
+		return DEFAULT_VARIATION_PLATFORMS;
+	}
 
-    @Override
-    protected String[] getVariationPlatforms() {
-        return DEFAULT_VARIATION_PLATFORMS;
-    }
+	@Override
+	protected String getSaveVariationPrefix() {
+		return SAVE_VARIATION_PREFIX;
+	}
 
-    @Override
-    protected String getSaveVariationPrefix(){
-        return SAVE_VARIATION_PREFIX;
-    }
+	@Override
+	protected String getSaveVariationSuffix() {
+		return SAVE_VARIATION_SUFFIX;
+	}
 
-    @Override
-    protected String getSaveVariationSuffix(){
-        return SAVE_VARIATION_SUFFIX;
-    }
+	@Override
+	protected String getCandidateReferencePrefix() {
+		return SAVE_CANDIDATE_REFERENCE_PREFIX;
+	}
 
-    @Override
-    protected String getCandidateReferencePrefix(){
-        return SAVE_CANDIDATE_REFERENCE_PREFIX;
-    }
+	@Override
+	protected String getCandidateReferenceSuffix() {
+		return SAVE_CANDIDATE_REFERENCE_SUFFIX;
+	}
 
-    @Override
-    protected String getCandidateReferenceSuffix(){
-        return SAVE_CANDIDATE_REFERENCE_SUFFIX;
-    }
-
-    public BERenderingTest(){
-        setValidating( Boolean.TRUE );
-    }
+	public BERenderingTest() {
+		setValidating(Boolean.TRUE);
+	}
 }

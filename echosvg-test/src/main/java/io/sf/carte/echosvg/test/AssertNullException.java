@@ -19,35 +19,36 @@
 package io.sf.carte.echosvg.test;
 
 /**
- * Exception which Tests can throw when a specific <code>assertNull</code> fails.
+ * Exception which Tests can throw when a specific <code>assertNull</code>
+ * fails.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class AssertNullException extends AssertException {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public static final String ASSERTION_TYPE = "assertNull";
+	public static final String ASSERTION_TYPE = "assertNull";
 
-    /**
-     * Objects which should have be equal
-     */
-    protected Object ref, cmp;
+	/**
+	 * Objects which should have be equal
+	 */
+	protected Object ref, cmp;
 
-    public AssertNullException(){
-    }
+	public AssertNullException() {
+	}
 
-    /**
-     * Requests that the exception populates the TestReport with the
-     * relevant information.
-     */
-    @Override
-    public void addDescription(TestReport report){
-    }
+	/**
+	 * Requests that the exception populates the TestReport with the relevant
+	 * information.
+	 */
+	@Override
+	public void addDescription(TestReport report) {
+	}
 
-    @Override
-    public String getAssertionType(){
-        return ASSERTION_TYPE;
-    }
+	@Override
+	public String getAssertionType() {
+		return ASSERTION_TYPE;
+	}
 }

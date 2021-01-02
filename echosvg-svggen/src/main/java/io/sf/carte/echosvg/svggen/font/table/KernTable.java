@@ -28,36 +28,38 @@ import java.io.RandomAccessFile;
  * @version $Id$
  */
 public class KernTable implements Table {
-    
-    private int version;
-    private int nTables;
-    private KernSubtable[] tables;
 
-    /** Creates new KernTable */
-    protected KernTable(DirectoryEntry de, RandomAccessFile raf) throws IOException {
-        raf.seek(de.getOffset());
-        version = raf.readUnsignedShort();
-        nTables = raf.readUnsignedShort();
-        tables = new KernSubtable[nTables];
-        for (int i = 0; i < nTables; i++) {
-            tables[i] = KernSubtable.read(raf);
-        }
-    }
+	private int version;
+	private int nTables;
+	private KernSubtable[] tables;
 
-    public int getSubtableCount() {
-        return nTables;
-    }
-    
-    public KernSubtable getSubtable(int i) {
-        return tables[i];
-    }
+	/** Creates new KernTable */
+	protected KernTable(DirectoryEntry de, RandomAccessFile raf) throws IOException {
+		raf.seek(de.getOffset());
+		version = raf.readUnsignedShort();
+		nTables = raf.readUnsignedShort();
+		tables = new KernSubtable[nTables];
+		for (int i = 0; i < nTables; i++) {
+			tables[i] = KernSubtable.read(raf);
+		}
+	}
 
-    /** Get the table type, as a table directory value.
-     * @return The table type
-     */
-    @Override
-    public int getType() {
-        return kern;
-    }
+	public int getSubtableCount() {
+		return nTables;
+	}
+
+	public KernSubtable getSubtable(int i) {
+		return tables[i];
+	}
+
+	/**
+	 * Get the table type, as a table directory value.
+	 * 
+	 * @return The table type
+	 */
+	@Override
+	public int getType() {
+		return kern;
+	}
 
 }

@@ -37,8 +37,8 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.Platform;
 
 /**
- * This implementation of RenderableImage will render its input
- * GraphicsNode on demand for tiles.
+ * This implementation of RenderableImage will render its input GraphicsNode on
+ * demand for tiles.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -46,112 +46,108 @@ import io.sf.carte.echosvg.util.Platform;
  */
 public class GraphicsNodeRed8Bit extends AbstractRed {
 
-    /**
-     * GraphicsNode this image can render
-     */
-    private GraphicsNode node;
+	/**
+	 * GraphicsNode this image can render
+	 */
+	private GraphicsNode node;
 
-    private AffineTransform node2dev;
+	private AffineTransform node2dev;
 
-    private RenderingHints  hints;
+	private RenderingHints hints;
 
-    private boolean usePrimitivePaint;
+	private boolean usePrimitivePaint;
 
-    public GraphicsNodeRed8Bit(GraphicsNode node,
-                               AffineTransform node2dev,
-                               boolean usePrimitivePaint,
-                               RenderingHints  hints) {
-        super(); // We _must_ call init...
+	public GraphicsNodeRed8Bit(GraphicsNode node, AffineTransform node2dev, boolean usePrimitivePaint,
+			RenderingHints hints) {
+		super(); // We _must_ call init...
 
-        this.node              = node;
-        this.node2dev          = node2dev;
-        this.hints             = hints;
-        this.usePrimitivePaint = usePrimitivePaint;
+		this.node = node;
+		this.node2dev = node2dev;
+		this.hints = hints;
+		this.usePrimitivePaint = usePrimitivePaint;
 
-        // Calculate my bounds by applying the affine transform to
-        // my input data..
+		// Calculate my bounds by applying the affine transform to
+		// my input data..
 
-        AffineTransform at = node2dev;
-        Rectangle2D bounds2D = node.getPrimitiveBounds();
-        if (bounds2D == null) bounds2D = new Rectangle2D.Float(0,0,1,1);
-        if (!usePrimitivePaint) {
-            // When not using Primitive paint we return our bounds in
-            // the nodes parent's user space.  This makes sense since
-            // this is the space that we will draw our selves into
-            // (since paint unlike primitivePaint incorporates the
-            // transform from our user space to our parents user
-            // space).
-            AffineTransform nodeAt = node.getTransform();
-            if (nodeAt != null) {
-                at = (AffineTransform)at.clone();
-                at.concatenate(nodeAt);
-            }
-        }
-        Rectangle   bounds = at.createTransformedShape(bounds2D).getBounds();
-        // System.out.println("Bounds: " + bounds);
+		AffineTransform at = node2dev;
+		Rectangle2D bounds2D = node.getPrimitiveBounds();
+		if (bounds2D == null)
+			bounds2D = new Rectangle2D.Float(0, 0, 1, 1);
+		if (!usePrimitivePaint) {
+			// When not using Primitive paint we return our bounds in
+			// the nodes parent's user space. This makes sense since
+			// this is the space that we will draw our selves into
+			// (since paint unlike primitivePaint incorporates the
+			// transform from our user space to our parents user
+			// space).
+			AffineTransform nodeAt = node.getTransform();
+			if (nodeAt != null) {
+				at = (AffineTransform) at.clone();
+				at.concatenate(nodeAt);
+			}
+		}
+		Rectangle bounds = at.createTransformedShape(bounds2D).getBounds();
+		// System.out.println("Bounds: " + bounds);
 
-        ColorModel cm = createColorModel();
+		ColorModel cm = createColorModel();
 
-        int defSz = AbstractTiledRed.getDefaultTileSize();
+		int defSz = AbstractTiledRed.getDefaultTileSize();
 
-        // Make tile(0,0) fall on the closest intersection of defaultSz.
-        int tgX = defSz*(int)Math.floor(bounds.x/defSz);
-        int tgY = defSz*(int)Math.floor(bounds.y/defSz);
+		// Make tile(0,0) fall on the closest intersection of defaultSz.
+		int tgX = defSz * (int) Math.floor(bounds.x / defSz);
+		int tgY = defSz * (int) Math.floor(bounds.y / defSz);
 
-        int tw  = (bounds.x+bounds.width)-tgX;
-        if (tw > defSz) tw = defSz;
-        int th  = (bounds.y+bounds.height)-tgY;
-        if (th > defSz) th = defSz;
-        if ((tw <= 0) || (th <= 0)) {
-            tw = 1;
-            th = 1;
-        }
+		int tw = (bounds.x + bounds.width) - tgX;
+		if (tw > defSz)
+			tw = defSz;
+		int th = (bounds.y + bounds.height) - tgY;
+		if (th > defSz)
+			th = defSz;
+		if ((tw <= 0) || (th <= 0)) {
+			tw = 1;
+			th = 1;
+		}
 
-        // fix my sample model so it makes sense given my size.
-        SampleModel sm = cm.createCompatibleSampleModel(tw, th);
+		// fix my sample model so it makes sense given my size.
+		SampleModel sm = cm.createCompatibleSampleModel(tw, th);
 
-        // Finish initializing our base class...
-        init((CachableRed)null, bounds, cm, sm, tgX, tgY, null);
-    }
+		// Finish initializing our base class...
+		init((CachableRed) null, bounds, cm, sm, tgX, tgY, null);
+	}
 
-    @Override
-    public WritableRaster copyData(WritableRaster wr) {
-        genRect(wr);
-        return wr;
-    }
+	@Override
+	public WritableRaster copyData(WritableRaster wr) {
+		genRect(wr);
+		return wr;
+	}
 
-    public void genRect(WritableRaster wr) {
-        // System.out.println("  Rect: " + wr.getBounds());
-        BufferedImage offScreen
-            = new BufferedImage(cm, 
-                                wr.createWritableTranslatedChild(0,0),
-                                cm.isAlphaPremultiplied(),
-                                null);
+	public void genRect(WritableRaster wr) {
+		// System.out.println(" Rect: " + wr.getBounds());
+		BufferedImage offScreen = new BufferedImage(cm, wr.createWritableTranslatedChild(0, 0),
+				cm.isAlphaPremultiplied(), null);
 
-        Graphics2D g = GraphicsUtil.createGraphics(offScreen, hints);
-        g.setComposite(AlphaComposite.Clear);
-        g.fillRect(0, 0, wr.getWidth(), wr.getHeight());
-        g.setComposite(AlphaComposite.SrcOver);
-        g.translate(-wr.getMinX(), -wr.getMinY());
+		Graphics2D g = GraphicsUtil.createGraphics(offScreen, hints);
+		g.setComposite(AlphaComposite.Clear);
+		g.fillRect(0, 0, wr.getWidth(), wr.getHeight());
+		g.setComposite(AlphaComposite.SrcOver);
+		g.translate(-wr.getMinX(), -wr.getMinY());
 
-        // Set transform
-        g.transform(node2dev);
+		// Set transform
+		g.transform(node2dev);
 
+		// Invoke primitive paint.
+		if (usePrimitivePaint) {
+			node.primitivePaint(g);
+		} else {
+			node.paint(g);
+		}
 
-        // Invoke primitive paint.
-        if (usePrimitivePaint) {
-            node.primitivePaint(g);
-        }
-        else {
-            node.paint (g);
-        }
+		g.dispose();
+	}
 
-        g.dispose();
-    }
-
-    public ColorModel createColorModel() {
-        if (Platform.isOSX)
-            return GraphicsUtil.sRGB_Pre;
-        return GraphicsUtil.sRGB_Unpre;
-    }
+	public ColorModel createColorModel() {
+		if (Platform.isOSX)
+			return GraphicsUtil.sRGB_Pre;
+		return GraphicsUtil.sRGB_Unpre;
+	}
 }

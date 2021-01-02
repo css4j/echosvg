@@ -30,8 +30,8 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  */
 public class StringKey extends TranscodingHints.Key {
 
-    @Override
-    public boolean isCompatibleValue(Object v) {
-        return (v instanceof String);
-    }
+	@Override
+	public boolean isCompatibleValue(Object v) {
+		return (v instanceof String);
+	}
 }

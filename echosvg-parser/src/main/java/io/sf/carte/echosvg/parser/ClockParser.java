@@ -29,51 +29,50 @@ import java.io.IOException;
  */
 public class ClockParser extends TimingParser {
 
-    /**
-     * The handler used to report parse events.
-     */
-    protected ClockHandler clockHandler;
+	/**
+	 * The handler used to report parse events.
+	 */
+	protected ClockHandler clockHandler;
 
-    /**
-     * Whether this parser should parse offsets rather than clock values.
-     */
-    protected boolean parseOffset;
+	/**
+	 * Whether this parser should parse offsets rather than clock values.
+	 */
+	protected boolean parseOffset;
 
-    /**
-     * Creates a new ClockParser.
-     */
-    public ClockParser(boolean parseOffset) {
-        super(false, false);
-        this.parseOffset = parseOffset;
-    }
+	/**
+	 * Creates a new ClockParser.
+	 */
+	public ClockParser(boolean parseOffset) {
+		super(false, false);
+		this.parseOffset = parseOffset;
+	}
 
-    /**
-     * Registers a parse event handler.
-     */
-    public void setClockHandler(ClockHandler handler) {
-        clockHandler = handler;
-    }
+	/**
+	 * Registers a parse event handler.
+	 */
+	public void setClockHandler(ClockHandler handler) {
+		clockHandler = handler;
+	}
 
-    /**
-     * Returns the parse event handler in use.
-     */
-    public ClockHandler getClockHandler() {
-        return clockHandler;
-    }
+	/**
+	 * Returns the parse event handler in use.
+	 */
+	public ClockHandler getClockHandler() {
+		return clockHandler;
+	}
 
-    /**
-     * Parses a clock value.
-     */
-    @Override
-    protected void doParse() throws ParseException, IOException {
-        current = reader.read();
-        float clockValue = parseOffset ? parseOffset() : parseClockValue();
-        if (current != -1) {
-            reportError("end.of.stream.expected",
-                        new Object[] {current});
-        }
-        if (clockHandler != null) {
-            clockHandler.clockValue(clockValue);
-        }
-    }
+	/**
+	 * Parses a clock value.
+	 */
+	@Override
+	protected void doParse() throws ParseException, IOException {
+		current = reader.read();
+		float clockValue = parseOffset ? parseOffset() : parseClockValue();
+		if (current != -1) {
+			reportError("end.of.stream.expected", new Object[] { current });
+		}
+		if (clockHandler != null) {
+			clockHandler.clockValue(clockValue);
+		}
+	}
 }

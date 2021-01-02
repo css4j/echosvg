@@ -28,52 +28,49 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public class GenericEntity extends AbstractEntity {
-    private static final long serialVersionUID = 1L;
-    /**
-     * Is this node immutable?
-     */
-    protected boolean readonly;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Is this node immutable?
+	 */
+	protected boolean readonly;
 
-    /**
-     * Creates a new Entity object.
-     */
-    protected GenericEntity() {
-    }
+	/**
+	 * Creates a new Entity object.
+	 */
+	protected GenericEntity() {
+	}
 
-    /**
-     * Creates a new Entity object.
-     */
-    public GenericEntity(String           name,
-                         String           pubId,
-                         String           sysId,
-                         AbstractDocument owner) {
-        ownerDocument = owner;
-        setNodeName(name);
-        setPublicId(pubId);
-        setSystemId(sysId);
-    }
+	/**
+	 * Creates a new Entity object.
+	 */
+	public GenericEntity(String name, String pubId, String sysId, AbstractDocument owner) {
+		ownerDocument = owner;
+		setNodeName(name);
+		setPublicId(pubId);
+		setSystemId(sysId);
+	}
 
-    /**
-     * Tests whether this node is readonly.
-     */
-    @Override
-    public boolean isReadonly() {
-        return readonly;
-    }
+	/**
+	 * Tests whether this node is readonly.
+	 */
+	@Override
+	public boolean isReadonly() {
+		return readonly;
+	}
 
-    /**
-     * Sets this node readonly attribute.
-     */
-    @Override
-    public void setReadonly(boolean v) {
-        readonly = v;
-    }
+	/**
+	 * Sets this node readonly attribute.
+	 */
+	@Override
+	public void setReadonly(boolean v) {
+		readonly = v;
+	}
 
-    /**
-     * Returns a new uninitialized instance of this object's class.
-     */
-    @Override
-    protected Node newNode() {
-        return new GenericEntity();
-    }
+	/**
+	 * Returns a new uninitialized instance of this object's class.
+	 */
+	@Override
+	protected Node newNode() {
+		return new GenericEntity();
+	}
 }

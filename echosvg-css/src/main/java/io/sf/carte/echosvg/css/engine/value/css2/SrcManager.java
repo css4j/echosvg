@@ -45,165 +45,151 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class SrcManager extends IdentifierManager {
 
-    /**
-     * The identifier values.
-     */
-    protected static final StringMap values = new StringMap();
-    static {
-        values.put(CSSConstants.CSS_NONE_VALUE,
-                   ValueConstants.NONE_VALUE);
-    }
+	/**
+	 * The identifier values.
+	 */
+	protected static final StringMap values = new StringMap();
+	static {
+		values.put(CSSConstants.CSS_NONE_VALUE, ValueConstants.NONE_VALUE);
+	}
 
-    public SrcManager() {
-    }
+	public SrcManager() {
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
-     */
-    @Override
-    public boolean isInheritedProperty() {
-        return false;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#isInheritedProperty()}.
+	 */
+	@Override
+	public boolean isInheritedProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAnimatableProperty()}.
-     */
-    @Override
-    public boolean isAnimatableProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAnimatableProperty()}.
+	 */
+	@Override
+	public boolean isAnimatableProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#isAdditiveProperty()}.
-     */
-    @Override
-    public boolean isAdditiveProperty() {
-        return false;
-    }
+	/**
+	 * Implements {@link ValueManager#isAdditiveProperty()}.
+	 */
+	@Override
+	public boolean isAdditiveProperty() {
+		return false;
+	}
 
-    /**
-     * Implements {@link ValueManager#getPropertyType()}.
-     */
-    @Override
-    public int getPropertyType() {
-        return SVGTypes.TYPE_FONT_DESCRIPTOR_SRC_VALUE;
-    }
+	/**
+	 * Implements {@link ValueManager#getPropertyType()}.
+	 */
+	@Override
+	public int getPropertyType() {
+		return SVGTypes.TYPE_FONT_DESCRIPTOR_SRC_VALUE;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
-     */
-    @Override
-    public String getPropertyName() {
-        return CSSConstants.CSS_SRC_PROPERTY;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getPropertyName()}.
+	 */
+	@Override
+	public String getPropertyName() {
+		return CSSConstants.CSS_SRC_PROPERTY;
+	}
 
-    /**
-     * Implements {@link
-     * io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
-     */
-    @Override
-    public Value getDefaultValue() {
-        return ValueConstants.NONE_VALUE;
-    }
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.css.engine.value.ValueManager#getDefaultValue()}.
+	 */
+	@Override
+	public Value getDefaultValue() {
+		return ValueConstants.NONE_VALUE;
+	}
 
+	/**
+	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
+	 */
+	@Override
+	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 
-    /**
-     * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
-     */
-    @Override
-    public Value createValue(LexicalUnit lu, CSSEngine engine)
-        throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
 
-        switch (lu.getLexicalUnitType()) {
-        case INHERIT:
-            return ValueConstants.INHERIT_VALUE;
+		default:
+			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 
-        default:
-            throw createInvalidLexicalUnitDOMException
-                (lu.getLexicalUnitType());
+		case IDENT:
+		case STRING:
+		case URI:
+		}
 
-        case IDENT:
-        case STRING:
-        case URI:
-        }
+		ListValue result = new ListValue();
+		for (;;) {
+			switch (lu.getLexicalUnitType()) {
+			case STRING:
+				result.append(new StringValue(CSSPrimitiveValue.CSS_STRING, lu.getStringValue()));
+				lu = lu.getNextLexicalUnit();
+				break;
 
-        ListValue result = new ListValue();
-        for (;;) {
-            switch (lu.getLexicalUnitType()) {
-            case STRING:
-                result.append(new StringValue(CSSPrimitiveValue.CSS_STRING,
-                                              lu.getStringValue()));
-                lu = lu.getNextLexicalUnit();
-                break;
+			case URI:
+				String uri = resolveURI(engine.getCSSBaseURI(), lu.getStringValue());
 
-            case URI:
-                String uri = resolveURI(engine.getCSSBaseURI(),
-                                        lu.getStringValue());
+				result.append(new URIValue(lu.getStringValue(), uri));
+				lu = lu.getNextLexicalUnit();
+				if ((lu != null) && (lu.getLexicalUnitType() == LexicalUnit.LexicalType.FUNCTION)) {
+					if (!lu.getFunctionName().equalsIgnoreCase("format")) {
+						break;
+					}
+					// Format really does us no good so just ignore it.
 
-                result.append(new URIValue(lu.getStringValue(), uri));
-                lu = lu.getNextLexicalUnit();
-                if ((lu != null) &&
-                    (lu.getLexicalUnitType() == LexicalUnit.LexicalType.FUNCTION)) {
-                    if (!lu.getFunctionName().equalsIgnoreCase("format")) {
-                        break;
-                    }
-                    // Format really does us no good so just ignore it.
+					// TODO: Should probably turn this into a ListValue
+					// and append the format function CSS Value.
+					lu = lu.getNextLexicalUnit();
+				}
+				break;
 
-                    // TODO: Should probably turn this into a ListValue
-                    // and append the format function CSS Value.
-                    lu = lu.getNextLexicalUnit();
-                }
-                break;
+			case IDENT:
+				StringBuffer sb = new StringBuffer(lu.getStringValue());
+				lu = lu.getNextLexicalUnit();
+				if (lu != null && lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
+					do {
+						sb.append(' ');
+						sb.append(lu.getStringValue());
+						lu = lu.getNextLexicalUnit();
+					} while (lu != null && lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT);
+					result.append(new StringValue(CSSPrimitiveValue.CSS_STRING, sb.toString()));
+				} else {
+					String id = sb.toString();
+					String s = id.toLowerCase().intern();
+					Value v = (Value) values.get(s);
+					result.append((v != null) ? v : new StringValue(CSSPrimitiveValue.CSS_STRING, id));
+				}
+				break;
 
-            case IDENT:
-                StringBuffer sb = new StringBuffer(lu.getStringValue());
-                lu = lu.getNextLexicalUnit();
-                if (lu != null &&
-                    lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
-                    do {
-                        sb.append(' ');
-                        sb.append(lu.getStringValue());
-                        lu = lu.getNextLexicalUnit();
-                    } while (lu != null &&
-                             lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT);
-                    result.append(new StringValue(CSSPrimitiveValue.CSS_STRING,
-                                                  sb.toString()));
-                } else {
-                    String id = sb.toString();
-                    String s = id.toLowerCase().intern();
-                    Value v = (Value)values.get(s);
-                    result.append((v != null)
-                                  ? v
-                                  : new StringValue
-                                        (CSSPrimitiveValue.CSS_STRING, id));
-                }
-                break;
+			default:
+				break;
 
-            default:
-                break;
+			}
+			if (lu == null) {
+				return result;
+			}
+			if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+			}
+			lu = lu.getNextLexicalUnit();
+			if (lu == null) {
+				throw createMalformedLexicalUnitDOMException();
+			}
+		}
+	}
 
-            }
-            if (lu == null) {
-                return result;
-            }
-            if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-                throw createInvalidLexicalUnitDOMException
-                    (lu.getLexicalUnitType());
-            }
-            lu = lu.getNextLexicalUnit();
-            if (lu == null) {
-                throw createMalformedLexicalUnitDOMException();
-            }
-        }
-    }
-
-    /**
-     * Implements {@link IdentifierManager#getIdentifiers()}.
-     */
-    @Override
-    public StringMap getIdentifiers() {
-        return values;
-    }
+	/**
+	 * Implements {@link IdentifierManager#getIdentifiers()}.
+	 */
+	@Override
+	public StringMap getIdentifiers() {
+		return values;
+	}
 }

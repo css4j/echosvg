@@ -26,38 +26,38 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
 
 /**
- * ImageWriter implementation that uses EchoSVG's PNG codec to
- * write PNG files.
+ * ImageWriter implementation that uses EchoSVG's PNG codec to write PNG files.
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class PNGImageWriter implements ImageWriter {
 
-    /**
-     * @see ImageWriter#writeImage(java.awt.image.RenderedImage, java.io.OutputStream)
-     */
-    @Override
-    public void writeImage(RenderedImage image, OutputStream out)
-            throws IOException {
-        writeImage(image, out, null);
-    }
+	/**
+	 * @see ImageWriter#writeImage(java.awt.image.RenderedImage,
+	 *      java.io.OutputStream)
+	 */
+	@Override
+	public void writeImage(RenderedImage image, OutputStream out) throws IOException {
+		writeImage(image, out, null);
+	}
 
-    /**
-     * @see ImageWriter#writeImage(java.awt.image.RenderedImage, java.io.OutputStream, io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams)
-     */
-    @Override
-    public void writeImage(RenderedImage image, OutputStream out,
-            ImageWriterParams params) throws IOException {
-        PNGImageEncoder encoder = new PNGImageEncoder(out, null);
-        encoder.encode(image);
-    }
+	/**
+	 * @see ImageWriter#writeImage(java.awt.image.RenderedImage,
+	 *      java.io.OutputStream,
+	 *      io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams)
+	 */
+	@Override
+	public void writeImage(RenderedImage image, OutputStream out, ImageWriterParams params) throws IOException {
+		PNGImageEncoder encoder = new PNGImageEncoder(out, null);
+		encoder.encode(image);
+	}
 
-    /**
-     * @see ImageWriter#getMIMEType()
-     */
-    @Override
-    public String getMIMEType() {
-        return "image/png";
-    }
+	/**
+	 * @see ImageWriter#getMIMEType()
+	 */
+	@Override
+	public String getMIMEType() {
+		return "image/png";
+	}
 }

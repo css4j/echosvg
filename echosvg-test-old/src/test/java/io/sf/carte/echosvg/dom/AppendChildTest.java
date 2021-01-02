@@ -41,70 +41,54 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @version $Id$
  */
 public class AppendChildTest extends AbstractTest {
-    public static String ERROR_GET_ELEMENT_BY_ID_FAILED 
-        = "error.get.element.by.id.failed";
+	public static String ERROR_GET_ELEMENT_BY_ID_FAILED = "error.get.element.by.id.failed";
 
-    public static String ERROR_EXCEPTION_NOT_THROWN
-        = "error.exception.not.thrown";
+	public static String ERROR_EXCEPTION_NOT_THROWN = "error.exception.not.thrown";
 
-    public static String ENTRY_KEY_ID 
-        = "entry.key.id";
+	public static String ENTRY_KEY_ID = "entry.key.id";
 
-    protected String testFileName;
-    protected String rootTag;
-    protected String targetId;
+	protected String testFileName;
+	protected String rootTag;
+	protected String targetId;
 
-    public AppendChildTest(String file,
-                           String root,
-                           String id) {
-        testFileName = file;
-        rootTag = root;
-        targetId = id;
-    }
-    
-    @Override
-    public TestReport runImpl() throws Exception {
-        String parser =
-            XMLResourceDescriptor.getXMLParserClassName();
+	public AppendChildTest(String file, String root, String id) {
+		testFileName = file;
+		rootTag = root;
+		targetId = id;
+	}
 
-        DocumentFactory df 
-            = new SAXDocumentFactory
-            (GenericDOMImplementation.getDOMImplementation(), parser);
+	@Override
+	public TestReport runImpl() throws Exception {
+		String parser = XMLResourceDescriptor.getXMLParserClassName();
 
-        File f = (new File(testFileName));
-        URL url = f.toURI().toURL();
-        Document doc = df.createDocument(null,
-                                         rootTag,
-                                         url.toString(),
-                                         url.openStream());
+		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
 
-        
-        Element e = doc.getElementById(targetId);
+		File f = (new File(testFileName));
+		URL url = f.toURI().toURL();
+		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
-        if (e == null){
-            DefaultTestReport report = new DefaultTestReport(this);
-            report.setErrorCode(ERROR_GET_ELEMENT_BY_ID_FAILED);
-            report.addDescriptionEntry(ENTRY_KEY_ID,
-                                       targetId);
-            report.setPassed(false);
-            return report;
-        }
+		Element e = doc.getElementById(targetId);
 
-        Document otherDocument = df.createDocument(null,
-                                                   rootTag,
-                                                   url.toString(),
-                                                   url.openStream());
+		if (e == null) {
+			DefaultTestReport report = new DefaultTestReport(this);
+			report.setErrorCode(ERROR_GET_ELEMENT_BY_ID_FAILED);
+			report.addDescriptionEntry(ENTRY_KEY_ID, targetId);
+			report.setPassed(false);
+			return report;
+		}
 
-        DocumentFragment docFrag = otherDocument.createDocumentFragment();
-        try {
-            docFrag.appendChild(doc.getDocumentElement());
-        } catch (DOMException ex) {
-            return reportSuccess();
-        }
+		Document otherDocument = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
-        DefaultTestReport report = new DefaultTestReport(this);
-        report.setErrorCode(ERROR_EXCEPTION_NOT_THROWN);
-        report.setPassed(false);
-        return report;
-    }
+		DocumentFragment docFrag = otherDocument.createDocumentFragment();
+		try {
+			docFrag.appendChild(doc.getDocumentElement());
+		} catch (DOMException ex) {
+			return reportSuccess();
+		}
+
+		DefaultTestReport report = new DefaultTestReport(this);
+		report.setErrorCode(ERROR_EXCEPTION_NOT_THROWN);
+		report.setPassed(false);
+		return report;
+	}
 }

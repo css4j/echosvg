@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.ext.awt.image.renderable;
 
 /**
- * Implements a GaussianBlur operation, where the blur size is
- * defined by standard deviations along the x and y axis.
+ * Implements a GaussianBlur operation, where the blur size is defined by
+ * standard deviations along the x and y axis.
  *
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -28,36 +28,39 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
  */
 public interface GaussianBlurRable extends FilterColorInterpolation {
 
-    /**
-     * Returns the source to be Blurred
-     */
-    Filter getSource();
+	/**
+	 * Returns the source to be Blurred
+	 */
+	Filter getSource();
 
-    /**
-     * Sets the source to be blurred.
-     * @param src image to blurred.
-     */
-    void setSource(Filter src);
+	/**
+	 * Sets the source to be blurred.
+	 * 
+	 * @param src image to blurred.
+	 */
+	void setSource(Filter src);
 
-    /**
-     * The deviation along the x axis, in user space.
-     * @param stdDeviationX should be greater than zero.
-     */
-    void setStdDeviationX(double stdDeviationX);
+	/**
+	 * The deviation along the x axis, in user space.
+	 * 
+	 * @param stdDeviationX should be greater than zero.
+	 */
+	void setStdDeviationX(double stdDeviationX);
 
-    /**
-     * The deviation along the y axis, in user space.
-     * @param stdDeviationY should be greater than zero
-     */
-    void setStdDeviationY(double stdDeviationY);
+	/**
+	 * The deviation along the y axis, in user space.
+	 * 
+	 * @param stdDeviationY should be greater than zero
+	 */
+	void setStdDeviationY(double stdDeviationY);
 
-    /**
-     * Returns the deviation along the x-axis, in user space.
-     */
-    double getStdDeviationX();
+	/**
+	 * Returns the deviation along the x-axis, in user space.
+	 */
+	double getStdDeviationX();
 
-    /**
-     * Returns the deviation along the y-axis, in user space.
-     */
-    double getStdDeviationY();
+	/**
+	 * Returns the deviation along the y-axis, in user space.
+	 */
+	double getStdDeviationY();
 }

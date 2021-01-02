@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.dom.svg12;
 
 /**
- * Interface for a global scripting object.
- * Eventually will move to a W3C package.
+ * Interface for a global scripting object. Eventually will move to a W3C
+ * package.
  *
  * @author For later modifications, see Git history.
  * @version $Id$

@@ -30,29 +30,28 @@ import java.io.Reader;
  * @version $Id$
  */
 public class AWTPolygonProducer extends AWTPolylineProducer {
-    /**
-     * Utility method for creating an ExtendedGeneralPath.
-     * @param r The reader used to read the path specification.
-     * @param wr The winding rule to use for creating the path.
-     */
-    public static Shape createShape(Reader r, int wr)
-        throws IOException,
-               ParseException {
-        PointsParser p = new PointsParser();
-        AWTPolygonProducer ph = new AWTPolygonProducer();
+	/**
+	 * Utility method for creating an ExtendedGeneralPath.
+	 * 
+	 * @param r  The reader used to read the path specification.
+	 * @param wr The winding rule to use for creating the path.
+	 */
+	public static Shape createShape(Reader r, int wr) throws IOException, ParseException {
+		PointsParser p = new PointsParser();
+		AWTPolygonProducer ph = new AWTPolygonProducer();
 
-        ph.setWindingRule(wr);
-        p.setPointsHandler(ph);
-        p.parse(r);
+		ph.setWindingRule(wr);
+		p.setPointsHandler(ph);
+		p.parse(r);
 
-        return ph.getShape();
-    }
+		return ph.getShape();
+	}
 
-    /**
-     * Implements {@link PointsHandler#endPoints()}.
-     */
-    @Override
-    public void endPoints() throws ParseException {
-        path.closePath();
-    }
+	/**
+	 * Implements {@link PointsHandler#endPoints()}.
+	 */
+	@Override
+	public void endPoints() throws ParseException {
+		path.closePath();
+	}
 }

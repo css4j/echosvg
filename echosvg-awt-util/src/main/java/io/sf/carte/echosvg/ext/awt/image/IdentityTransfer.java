@@ -27,32 +27,31 @@ package io.sf.carte.echosvg.ext.awt.image;
  *
  * @author <a href="mailto:sheng.pei@sun.com">Sheng Pei</a>
  * @author For later modifications, see Git history.
- * @version $Id$ 
+ * @version $Id$
  */
 public class IdentityTransfer implements TransferFunction {
-    /**
-     * This byte array stores the lookuptable data
-     */
-    public static byte [] lutData = new byte [256];
+	/**
+	 * This byte array stores the lookuptable data
+	 */
+	public static byte[] lutData = new byte[256];
 
-    /*
-     * This method will build the lut data. Each entry
-     * has the value as its index.
-     */
-    static {
-        // as Identity, the lookup table contains
-        // the same value as the index
-        for (int j=0; j<=255; j++) {
-            lutData[j] = (byte)j;
-        }
-    }
+	/*
+	 * This method will build the lut data. Each entry has the value as its index.
+	 */
+	static {
+		// as Identity, the lookup table contains
+		// the same value as the index
+		for (int j = 0; j <= 255; j++) {
+			lutData[j] = (byte) j;
+		}
+	}
 
-    /**
-     * This method will return the lut data in order
-     * to construct a LookUpTable object
-     */
-    @Override
-    public byte [] getLookupTable(){
-        return lutData;
-    }
+	/**
+	 * This method will return the lut data in order to construct a LookUpTable
+	 * object
+	 */
+	@Override
+	public byte[] getLookupTable() {
+		return lutData;
+	}
 }

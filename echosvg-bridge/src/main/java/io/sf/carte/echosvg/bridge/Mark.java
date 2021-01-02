@@ -19,23 +19,23 @@
 package io.sf.carte.echosvg.bridge;
 
 /**
- * Marker interface, mostly, that encapsulates information about a
- * selection gesture.
+ * Marker interface, mostly, that encapsulates information about a selection
+ * gesture.
  *
  * @author <a href="mailto:bill.haneman@ireland.sun.com">Bill Haneman</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface Mark {
-    /*
-     * Return the TextNode this Mark is associated with
-     */
-    TextNode getTextNode();
+	/*
+	 * Return the TextNode this Mark is associated with
+	 */
+	TextNode getTextNode();
 
-    /**
-     * Returns the index of the character that has been hit.
-     *
-     * @return The character index.
-     */
-    int getCharIndex();
+	/**
+	 * Returns the index of the character that has been hit.
+	 *
+	 * @return The character index.
+	 */
+	int getCharIndex();
 }
