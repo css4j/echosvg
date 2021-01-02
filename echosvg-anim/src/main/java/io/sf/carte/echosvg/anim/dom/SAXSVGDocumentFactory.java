@@ -27,7 +27,6 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 
 import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
 import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -121,7 +120,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 
 	@Override
 	public SVGDocument createSVGDocument(String uri) throws IOException {
-		return (SVGDocument) createDocument(uri);
+		return createDocument(uri);
 	}
 
 	/**
@@ -133,7 +132,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 */
 	@Override
 	public SVGDocument createSVGDocument(String uri, InputStream inp) throws IOException {
-		return (SVGDocument) createDocument(uri, inp);
+		return createDocument(uri, inp);
 	}
 
 	/**
@@ -145,7 +144,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 */
 	@Override
 	public SVGDocument createSVGDocument(String uri, Reader r) throws IOException {
-		return (SVGDocument) createDocument(uri, r);
+		return createDocument(uri, r);
 	}
 
 	/**
@@ -155,7 +154,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * @exception IOException if an error occured while reading the document.
 	 */
 	@Override
-	public Document createDocument(String uri) throws IOException {
+	public SVGDocument createDocument(String uri) throws IOException {
 		ParsedURL purl = new ParsedURL(uri);
 
 		InputStream is = purl.openStream(MimeTypeConstants.MIME_TYPES_SVG_LIST.iterator());
@@ -219,18 +218,18 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * @exception IOException if an error occured while reading the document.
 	 */
 	@Override
-	public Document createDocument(String uri, InputStream inp) throws IOException {
-		Document doc;
+	public SVGDocument createDocument(String uri, InputStream inp) throws IOException {
+		SVGOMDocument doc;
 		InputSource is = new InputSource(inp);
 		is.setSystemId(uri);
 
 		try {
-			doc = super.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", uri, is);
+			doc = (SVGOMDocument) super.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", uri, is);
 			if (uri != null) {
-				((SVGOMDocument) doc).setParsedURL(new ParsedURL(uri));
+				doc.setParsedURL(new ParsedURL(uri));
 			}
 
-			AbstractDocument d = (AbstractDocument) doc;
+			AbstractDocument d = doc;
 			d.setDocumentURI(uri);
 			d.setXmlStandalone(isStandalone);
 			d.setXmlVersion(xmlVersion);
@@ -248,18 +247,18 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * @exception IOException if an error occured while reading the document.
 	 */
 	@Override
-	public Document createDocument(String uri, Reader r) throws IOException {
-		Document doc;
+	public SVGDocument createDocument(String uri, Reader r) throws IOException {
+		SVGOMDocument doc;
 		InputSource is = new InputSource(r);
 		is.setSystemId(uri);
 
 		try {
-			doc = super.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", uri, is);
+			doc = (SVGOMDocument) super.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", uri, is);
 			if (uri != null) {
-				((SVGOMDocument) doc).setParsedURL(new ParsedURL(uri));
+				doc.setParsedURL(new ParsedURL(uri));
 			}
 
-			AbstractDocument d = (AbstractDocument) doc;
+			AbstractDocument d = doc;
 			d.setDocumentURI(uri);
 			d.setXmlStandalone(isStandalone);
 			d.setXmlVersion(xmlVersion);
@@ -278,7 +277,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * @exception IOException if an error occured while reading the document.
 	 */
 	@Override
-	public Document createDocument(String ns, String root, String uri) throws IOException {
+	public SVGDocument createDocument(String ns, String root, String uri) throws IOException {
 		if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) || !"svg".equals(root)) {
 			throw new RuntimeException("Bad root element");
 		}
@@ -295,7 +294,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * @exception IOException if an error occured while reading the document.
 	 */
 	@Override
-	public Document createDocument(String ns, String root, String uri, InputStream is) throws IOException {
+	public SVGDocument createDocument(String ns, String root, String uri, InputStream is) throws IOException {
 		if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) || !"svg".equals(root)) {
 			throw new RuntimeException("Bad root element");
 		}
@@ -312,7 +311,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * @exception IOException if an error occured while reading the document.
 	 */
 	@Override
-	public Document createDocument(String ns, String root, String uri, Reader r) throws IOException {
+	public SVGDocument createDocument(String ns, String root, String uri, Reader r) throws IOException {
 		if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) || !"svg".equals(root)) {
 			throw new RuntimeException("Bad root element");
 		}
