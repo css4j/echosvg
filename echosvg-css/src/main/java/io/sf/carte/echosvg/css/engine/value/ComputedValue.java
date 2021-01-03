@@ -133,6 +133,11 @@ public class ComputedValue implements Value {
 		return computedValue.getBlue();
 	}
 
+	@Override
+	public Value getAlpha() throws DOMException {
+		return computedValue.getAlpha();
+	}
+
 	/**
 	 * Implements {@link Value#getLength()}.
 	 */

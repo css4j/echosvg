@@ -28,6 +28,7 @@ import org.w3c.dom.css.Rect;
 
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
+import io.sf.carte.echosvg.css.engine.value.RGBColorValue;
 import io.sf.carte.echosvg.css.engine.value.StringValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 
@@ -86,6 +87,11 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 	 * The blue component, if this value is a RGBColor.
 	 */
 	protected BlueComponent blueComponent;
+
+	/**
+	 * The alpha component, if this value is a RGBColor.
+	 */
+	protected AlphaComponent alphaComponent;
 
 	/**
 	 * The list items.
@@ -608,6 +614,14 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		return blueComponent;
 	}
 
+	public CSSPrimitiveValue getAlpha() {
+		valueProvider.getValue().getAlpha();
+		if (alphaComponent == null) {
+			alphaComponent = new AlphaComponent();
+		}
+		return alphaComponent;
+	}
+
 	/**
 	 * To provides the actual value.
 	 */
@@ -708,6 +722,16 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		 * Called when the blue float value has changed.
 		 */
 		void blueFloatValueChanged(short unit, float value) throws DOMException;
+
+		/**
+		 * Called when the alpha value text has changed.
+		 */
+		void alphaTextChanged(String text) throws DOMException;
+
+		/**
+		 * Called when the alpha float value has changed.
+		 */
+		void alphaFloatValueChanged(short unit, float value) throws DOMException;
 
 		/**
 		 * Called when the list value text has changed.
@@ -846,7 +870,8 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		@Override
 		public void redTextChanged(String text) throws DOMException {
 			final Value val = getValue();
-			text = "rgb(" + text + ", " + val.getGreen().getCssText() + ", " + val.getBlue().getCssText() + ')';
+			text = RGBColorValue.toString(text, val.getGreen().getCssText(), val.getBlue().getCssText(),
+					val.getAlpha().getCssText());
 			textChanged(text);
 		}
 
@@ -855,10 +880,7 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		 */
 		@Override
 		public void redFloatValueChanged(short unit, float value) throws DOMException {
-			final Value val = getValue();
-			String text = "rgb(" + FloatValue.getCssText(unit, value) + ", " + val.getGreen().getCssText() + ", "
-					+ val.getBlue().getCssText() + ')';
-			textChanged(text);
+			redTextChanged(FloatValue.getCssText(unit, value));
 		}
 
 		/**
@@ -867,7 +889,8 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		@Override
 		public void greenTextChanged(String text) throws DOMException {
 			final Value val = getValue();
-			text = "rgb(" + val.getRed().getCssText() + ", " + text + ", " + val.getBlue().getCssText() + ')';
+			text = RGBColorValue.toString(val.getRed().getCssText(), text, val.getBlue().getCssText(),
+					val.getAlpha().getCssText());
 			textChanged(text);
 		}
 
@@ -876,10 +899,7 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		 */
 		@Override
 		public void greenFloatValueChanged(short unit, float value) throws DOMException {
-			final Value val = getValue();
-			String text = "rgb(" + val.getRed().getCssText() + ", " + FloatValue.getCssText(unit, value) + ", "
-					+ val.getBlue().getCssText() + ')';
-			textChanged(text);
+			greenTextChanged(FloatValue.getCssText(unit, value));
 		}
 
 		/**
@@ -888,7 +908,8 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		@Override
 		public void blueTextChanged(String text) throws DOMException {
 			final Value val = getValue();
-			text = "rgb(" + val.getRed().getCssText() + ", " + val.getGreen().getCssText() + ", " + text + ')';
+			text = RGBColorValue.toString(val.getRed().getCssText(), val.getGreen().getCssText(), text,
+					val.getAlpha().getCssText());
 			textChanged(text);
 		}
 
@@ -897,10 +918,20 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		 */
 		@Override
 		public void blueFloatValueChanged(short unit, float value) throws DOMException {
+			blueTextChanged(FloatValue.getCssText(unit, value));
+		}
+
+		@Override
+		public void alphaTextChanged(String text) throws DOMException {
 			final Value val = getValue();
-			String text = "rgb(" + val.getRed().getCssText() + ", " + val.getGreen().getCssText() + ", "
-					+ FloatValue.getCssText(unit, value) + ')';
+			text = RGBColorValue.toString(val.getRed().getCssText(), val.getGreen().getCssText(),
+					val.getBlue().getCssText(), text);
 			textChanged(text);
+		}
+
+		@Override
+		public void alphaFloatValueChanged(short unit, float value) throws DOMException {
+			alphaTextChanged(FloatValue.getCssText(unit, value));
 		}
 
 		/**
@@ -1366,6 +1397,48 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 			} else {
 				getValue();
 				handler.blueFloatValueChanged(unitType, floatValue);
+			}
+		}
+
+	}
+
+	/**
+	 * To represents an alpha component.
+	 */
+	protected class AlphaComponent extends FloatComponent {
+
+		/**
+		 * The returns the actual value of this component.
+		 */
+		@Override
+		protected Value getValue() {
+			return valueProvider.getValue().getAlpha();
+		}
+
+		/**
+		 * <b>DOM</b>: Implements {@link org.w3c.dom.css.CSSValue#setCssText(String)}.
+		 */
+		@Override
+		public void setCssText(String cssText) throws DOMException {
+			if (handler == null) {
+				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
+			} else {
+				getValue();
+				handler.alphaTextChanged(cssText);
+			}
+		}
+
+		/**
+		 * <b>DOM</b>: Implements
+		 * {@link org.w3c.dom.css.CSSPrimitiveValue#setFloatValue(short,float)}.
+		 */
+		@Override
+		public void setFloatValue(short unitType, float floatValue) throws DOMException {
+			if (handler == null) {
+				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
+			} else {
+				getValue();
+				handler.alphaFloatValueChanged(unitType, floatValue);
 			}
 		}
 

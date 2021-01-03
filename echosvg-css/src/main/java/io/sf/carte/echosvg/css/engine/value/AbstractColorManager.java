@@ -117,9 +117,9 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
 	 */
 	@Override
-	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
-		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.RGBCOLOR) {
-			lu = lu.getParameters();
+	public Value createValue(LexicalUnit lunit, CSSEngine engine) throws DOMException {
+		if (lunit.getLexicalUnitType() == LexicalUnit.LexicalType.RGBCOLOR) {
+			LexicalUnit lu = lunit.getParameters();
 			Value red = createColorComponent(lu);
 			lu = lu.getNextLexicalUnit();
 			if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
@@ -131,9 +131,24 @@ public abstract class AbstractColorManager extends IdentifierManager {
 				lu = lu.getNextLexicalUnit();
 			}
 			Value blue = createColorComponent(lu);
-			return createRGBColor(red, green, blue);
+			// Alpha channel
+			lu = lu.getNextLexicalUnit();
+			Value alpha;
+			if (lu != null) {
+				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA
+						|| lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_SLASH) {
+					lu = lu.getNextLexicalUnit();
+					if (lu == null) {
+						throw new DOMException(DOMException.SYNTAX_ERR, "Invalid color: " + lunit.getCssText());
+					}
+				}
+				alpha = createColorComponent(lu);
+			} else {
+				alpha = null;
+			}
+			return createRGBColor(red, green, blue, alpha);
 		}
-		return super.createValue(lu, engine);
+		return super.createValue(lunit, engine);
 	}
 
 	/**
@@ -160,10 +175,10 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	}
 
 	/**
-	 * Creates an RGB color.
+	 * Creates an RGB(A) color.
 	 */
-	protected Value createRGBColor(Value r, Value g, Value b) {
-		return new RGBColorValue(r, g, b);
+	protected Value createRGBColor(Value r, Value g, Value b, Value a) {
+		return a == null ? new RGBColorValue(r, g, b) : new RGBColorValue(r, g, b, a);
 	}
 
 	/**

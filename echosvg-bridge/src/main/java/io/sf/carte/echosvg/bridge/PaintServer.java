@@ -482,9 +482,6 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param ctx     the bridge context to use
 	 */
 	public static Color convertDeviceColor(Element e, Value srgb, DeviceColor c, float opacity, BridgeContext ctx) {
-		int r = resolveColorComponent(srgb.getRed());
-		int g = resolveColorComponent(srgb.getGreen());
-		int b = resolveColorComponent(srgb.getBlue());
 		if (c.isNChannel()) {
 			return convertColor(srgb, opacity); // NYI
 		} else {
@@ -495,7 +492,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 					comps[i] = c.getColor(i);
 				}
 				Color cmyk = new ColorWithAlternatives(cmykCs, comps, opacity, null);
-				Color specColor = new ColorWithAlternatives(r, g, b, Math.round(opacity * 255f), new Color[] { cmyk });
+				int r = resolveColorComponent(srgb.getRed());
+				int g = resolveColorComponent(srgb.getGreen());
+				int b = resolveColorComponent(srgb.getBlue());
+				float a = resolveAlphaComponent(c.getAlpha());
+				Color specColor = new ColorWithAlternatives(r, g, b, Math.round(a * opacity * 255f),
+						new Color[] { cmyk });
 				return specColor;
 			} else {
 				return convertColor(srgb, opacity); // NYI
@@ -513,7 +515,8 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		int r = resolveColorComponent(c.getRed());
 		int g = resolveColorComponent(c.getGreen());
 		int b = resolveColorComponent(c.getBlue());
-		return new Color(r, g, b, Math.round(opacity * 255f));
+		float a = resolveAlphaComponent(c.getAlpha());
+		return new Color(r, g, b, Math.round(a * opacity * 255f));
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -670,6 +673,22 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			return Math.round(f);
 		default:
 			throw new IllegalArgumentException("Color component argument is not an appropriate CSS value");
+		}
+	}
+
+	private static float resolveAlphaComponent(Value v) {
+		float f;
+		switch (v.getPrimitiveType()) {
+		case CSSPrimitiveValue.CSS_PERCENTAGE:
+			f = v.getFloatValue();
+			f = (f > 100f) ? 100f : (f < 0f) ? 0f : f;
+			return f;
+		case CSSPrimitiveValue.CSS_NUMBER:
+			f = v.getFloatValue();
+			f = (f > 1f) ? 1f : (f < 0f) ? 0f : f;
+			return f;
+		default:
+			throw new IllegalArgumentException("Color alpha argument is not an appropriate CSS value");
 		}
 	}
 

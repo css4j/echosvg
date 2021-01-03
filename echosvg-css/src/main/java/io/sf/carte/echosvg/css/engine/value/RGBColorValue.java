@@ -21,6 +21,8 @@ package io.sf.carte.echosvg.css.engine.value;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
+import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
+
 /**
  * This class represents RGB colors.
  *
@@ -46,12 +48,25 @@ public class RGBColorValue extends AbstractValue {
 	protected Value blue;
 
 	/**
-	 * Creates a new RGBColorValue.
+	 * The alpha channel.
+	 */
+	protected Value alpha;
+
+	/**
+	 * Creates a new, opaque RGBColorValue.
 	 */
 	public RGBColorValue(Value r, Value g, Value b) {
+		this(r, g, b, SVGValueConstants.NUMBER_1);
+	}
+
+	/**
+	 * Creates a new RGBColorValue.
+	 */
+	public RGBColorValue(Value r, Value g, Value b, Value a) {
 		red = r;
 		green = g;
 		blue = b;
+		alpha = a;
 	}
 
 	/**
@@ -67,7 +82,7 @@ public class RGBColorValue extends AbstractValue {
 	 */
 	@Override
 	public String getCssText() {
-		return "rgb(" + red.getCssText() + ", " + green.getCssText() + ", " + blue.getCssText() + ')';
+		return toString(red.getCssText(), green.getCssText(), blue.getCssText(), alpha.getCssText());
 	}
 
 	/**
@@ -94,6 +109,11 @@ public class RGBColorValue extends AbstractValue {
 		return blue;
 	}
 
+	@Override
+	public Value getAlpha() throws DOMException {
+		return alpha;
+	}
+
 	/**
 	 * Returns a printable representation of the color.
 	 */
@@ -101,4 +121,13 @@ public class RGBColorValue extends AbstractValue {
 	public String toString() {
 		return getCssText();
 	}
+
+	public static String toString(String red, String green, String blue, String alpha) {
+		if ("1".equals(alpha)) {
+			return "rgb(" + red + ", " + green + ", " + blue + ')';
+		} else {
+			return "rgba(" + red + ", " + green + ", " + blue + ", " + alpha + ')';
+		}
+	}
+
 }
