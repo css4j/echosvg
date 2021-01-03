@@ -1,7 +1,7 @@
 # Echo SVG
 
  EchoSVG is a fork of Apache Batik, a Java based toolkit for applications which
-handle images in the Scalable Vector Graphics SVG) format for various purposes,
+handle images in the Scalable Vector Graphics (SVG) format for various purposes,
 such as viewing, generation or manipulation.
 
  Thanks to its usage of the CSS4J style parser, supports level 4 selectors and
