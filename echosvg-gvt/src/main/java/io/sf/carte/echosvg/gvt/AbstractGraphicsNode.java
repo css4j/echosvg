@@ -551,11 +551,14 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
 					filteredImage = clip;
 				}
 
-				baseG2d = g2d;
-				// Only muck with the clip on a 'child'
-				// graphics 2D otherwise when we restore the
-				// clip it might 'wander' by a pixel.
-				g2d = (Graphics2D) g2d.create();
+				// Only create a child if we do not already have one.
+				if (baseG2d == null) {
+					baseG2d = g2d;
+					// Only muck with the clip on a 'child'
+					// graphics 2D otherwise when we restore the
+					// clip it might 'wander' by a pixel.
+					g2d = (Graphics2D) g2d.create();
+				}
 
 				if (antialiasedClip) {
 					// Remove hard edged clip
