@@ -105,7 +105,7 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
 		boolean passed = true;
 
 		while (iter.hasNext()) {
-			TestReport childReport = (TestReport) iter.next();
+			TestReport childReport = iter.next();
 			passed = passed && childReport.hasPassed();
 		}
 
@@ -135,7 +135,7 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
 		List<TestReport.Entry> descs = new ArrayList<>();
 
 		while (iter.hasNext()) {
-			TestReport childReport = (TestReport) iter.next();
+			TestReport childReport = iter.next();
 			if (!childReport.hasPassed()) {
 				TestReport.Entry entry = new TestReport.Entry(
 						Messages.formatMessage(ENTRY_KEY_FAILED_CHILD_TEST_REPORT, null), childReport);
@@ -145,7 +145,7 @@ public class DefaultTestSuiteReport implements TestSuiteReport {
 
 		iter = reports.iterator();
 		while (iter.hasNext()) {
-			TestReport childReport = (TestReport) iter.next();
+			TestReport childReport = iter.next();
 			if (childReport.hasPassed()) {
 				TestReport.Entry entry = new TestReport.Entry(
 						Messages.formatMessage(ENTRY_KEY_PASSED_CHILD_TEST_REPORT, null), childReport);

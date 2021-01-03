@@ -62,7 +62,7 @@ public class MainTest extends DefaultTestSuite {
 			public TestReport validate(SVGConverter c) {
 				List<String> sources = c.getSources();
 				if (sources.size() == 1) {
-					String src = (String) sources.get(0);
+					String src = sources.get(0);
 					if ("samples/anne.svg".equals(src)) {
 						return reportSuccess();
 					}

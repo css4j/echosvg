@@ -117,7 +117,7 @@ public class XMLReflect implements XMLReflectConstants {
 
 		int ne = v.size();
 		for (int j = ne - 1; j >= 0; j--) {
-			element = (Element) v.get(j);
+			element = v.get(j);
 			NodeList children = element.getChildNodes();
 			if (children != null && children.getLength() > 0) {
 				int n = children.getLength();
