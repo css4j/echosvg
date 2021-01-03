@@ -279,17 +279,18 @@ public abstract class AbstractSVGGradientElementBridge extends AnimatableGeneric
 		 */
 		public Stop createStop(BridgeContext ctx, Element gradientElement, Element stopElement, float opacity) {
 
-			String s = stopElement.getAttributeNS(null, SVG_OFFSET_ATTRIBUTE);
-			if (s.length() == 0) {
-				throw new BridgeException(ctx, stopElement, ERR_ATTRIBUTE_MISSING,
-						new Object[] { SVG_OFFSET_ATTRIBUTE });
-			}
 			float offset;
-			try {
-				offset = SVGUtilities.convertRatio(s);
-			} catch (NumberFormatException nfEx) {
-				throw new BridgeException(ctx, stopElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-						new Object[] { SVG_OFFSET_ATTRIBUTE, s, nfEx });
+			String s = stopElement.getAttributeNS(null, SVG_OFFSET_ATTRIBUTE);
+			if (s.length() != 0) {
+				try {
+					offset = SVGUtilities.convertRatio(s);
+				} catch (NumberFormatException nfEx) {
+					throw new BridgeException(ctx, stopElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+							new Object[] { SVG_OFFSET_ATTRIBUTE, s, nfEx });
+				}
+			} else {
+				// use default value
+				offset = 0f;
 			}
 			Color color = CSSUtilities.convertStopColor(stopElement, opacity, ctx);
 
