@@ -1383,7 +1383,8 @@ public abstract class CSSEngine {
 			implements ShorthandManager.PropertyHandler {
 		public StyleMap styleMap;
 
-		public void property(String name, LexicalUnit value, boolean important, int index) {
+		@Override
+		public void property(String name, LexicalUnit value, boolean important) {
 			int i = getPropertyIndex(name);
 			if (i == -1) {
 				i = getShorthandIndex(name);
@@ -1405,7 +1406,8 @@ public abstract class CSSEngine {
 	protected class StyleDeclarationBuilder extends DocumentAdapter implements ShorthandManager.PropertyHandler {
 		public StyleDeclaration styleDeclaration;
 
-		public void property(String name, LexicalUnit value, boolean important, int index) {
+		@Override
+		public void property(String name, LexicalUnit value, boolean important) {
 			int i = getPropertyIndex(name);
 			if (i == -1) {
 				i = getShorthandIndex(name);
@@ -2022,7 +2024,8 @@ public abstract class CSSEngine {
 		 * <b>SAC</b>: Implements
 		 * {@link DocumentHandler#property(String,LexicalUnit,boolean)}.
 		 */
-		public void property(String name, LexicalUnit value, boolean important, int index) {
+		@Override
+		public void property(String name, LexicalUnit value, boolean important) {
 			int i = getPropertyIndex(name);
 			if (i == -1) {
 				i = getShorthandIndex(name);
