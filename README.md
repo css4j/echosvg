@@ -1,4 +1,4 @@
-# Echo SVG
+# EchoSVG
 
  EchoSVG is a fork of Apache Batik, a Java based toolkit for applications which
 handle images in the Scalable Vector Graphics (SVG) format for various purposes,
@@ -10,9 +10,11 @@ RGBA color values.
 
 ## Building
 
- To build from source, currently the latest CSS4J code is required, which means
-that you have to [build CSS4J from the latest Git](https://github.com/css4j/css4j-dist/)
-first. Once you have installed CSS4J, run `mvn clean install`.
+ To build from source, you need the latest versions of [CSS4J](https://css4j.github.io/)
+and [JCLF](https://sourceforge.net/projects/jclf/), which can be installed with the
+[`install-css4j.sh`](https://raw.githubusercontent.com/css4j/css4j-dist/master/install-css4j.sh)
+and [`install-jclf.sh`](https://raw.githubusercontent.com/css4j/css4j-dist/master/install-jclf.sh)
+scripts. Once you have installed those dependencies, run `mvn clean install`.
 
 
 ##  Licensing
