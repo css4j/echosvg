@@ -116,7 +116,7 @@ public class PNGTranscoder extends ImageTranscoder {
 		WriteAdapter adapter = getWriteAdapter(
 				"io.sf.carte.echosvg.ext.awt.image.codec.png.PNGTranscoderInternalCodecWriteAdapter");
 		if (adapter == null) {
-			adapter = getWriteAdapter("io.sf.carte.echosvg.transcoder.image.PNGTranscoderImageIOWriteAdapter");
+			adapter = getWriteAdapter("io.sf.carte.echosvg.ext.awt.image.codec.imageio.PNGTranscoderImageIOWriteAdapter");
 		}
 		if (adapter == null) {
 			throw new TranscoderException("Could not write PNG file because no WriteAdapter is availble");
