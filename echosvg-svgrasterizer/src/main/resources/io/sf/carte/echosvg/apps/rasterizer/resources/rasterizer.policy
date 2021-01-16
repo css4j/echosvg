@@ -48,6 +48,6 @@ grant codeBase "${app.dev.base}/lib/js.jar" {
 };
 
 grant {
-  permission java.io.FilePermission "resources/org/apache/batik/dom/svg/resources/svg10.dtd", "read";
-  permission java.io.FilePermission "resources/org/apache/batik/dom/svg/resources/UserAgentStyleSheet.css", "read";
+  permission java.io.FilePermission "resources/io/sf/carte/echosvg/dom/svg/resources/svg10.dtd", "read";
+  permission java.io.FilePermission "resources/io/sf/carte/echosvg/dom/svg/resources/UserAgentStyleSheet.css", "read";
 };

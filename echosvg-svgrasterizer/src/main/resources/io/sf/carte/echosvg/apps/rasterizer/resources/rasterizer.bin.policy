@@ -26,47 +26,47 @@ grant codeBase "${app.jar.base}/lib/xerces_2_5_0.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-rasterizer.jar" {
+grant codeBase "${app.jar.base}/echosvg-rasterizer.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-ext.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-ext.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-dom.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-dom.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-css.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-css.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-svg-dom.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-svg-dom.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-gvt.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-gvt.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-parser.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-parser.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-script.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-script.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-bridge.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-bridge.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-swing.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-swing.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-transcoder.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-transcoder.jar" {
   permission java.security.AllPermission;
 };
 
@@ -74,19 +74,19 @@ grant codeBase "${app.jar.base}/lib/pdf-transcoder.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-gui-util.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-gui-util.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-awt-util.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-awt-util.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-util.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-util.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/lib/batik-xml.jar" {
+grant codeBase "${app.jar.base}/lib/echosvg-xml.jar" {
   permission java.security.AllPermission;
 };
 
@@ -104,6 +104,6 @@ grant codeBase "${app.jar.base}/lib/js.jar" {
 };
 
 grant {
-  permission java.io.FilePermission "lib/batik-svg-dom.jar", "read";
+  permission java.io.FilePermission "lib/echosvg-svg-dom.jar", "read";
 };
 

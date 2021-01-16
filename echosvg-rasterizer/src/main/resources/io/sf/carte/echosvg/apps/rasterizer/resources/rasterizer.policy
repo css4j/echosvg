@@ -34,67 +34,67 @@ grant codeBase "${app.jar.base}/xercesImpl-2.9.1.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/../batik-rasterizer-${version}.jar" {
+grant codeBase "${app.jar.base}/../echosvg-rasterizer-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-svgrasterizer-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-svgrasterizer-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-ext-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-ext-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-dom-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-dom-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-css-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-css-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-svg-dom-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-svg-dom-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-gvt-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-gvt-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-parser-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-parser-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-script-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-script-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-bridge-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-bridge-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-swing-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-swing-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-transcoder-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-transcoder-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-gui-util-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-gui-util-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-awt-util-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-awt-util-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-util-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-util-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-xml-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-xml-${version}.jar" {
   permission java.security.AllPermission;
 };
 
@@ -106,19 +106,19 @@ grant codeBase "${app.jar.base}/xmlgraphics-commons-${xmlgraphics.commons.versio
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-anim-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-anim-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-codec-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-codec-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-extension-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-extension-${version}.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/batik-svggen-${version}.jar" {
+grant codeBase "${app.jar.base}/echosvg-svggen-${version}.jar" {
   permission java.security.AllPermission;
 };
 
@@ -132,6 +132,6 @@ grant codeBase "${app.jar.base}/js.jar" {
 };
 
 grant {
- permission java.io.FilePermission  "${app.jar.base}/batik-svg-dom-${version}.jar", "read";
+ permission java.io.FilePermission  "${app.jar.base}/echosvg-svg-dom-${version}.jar", "read";
 };
 
