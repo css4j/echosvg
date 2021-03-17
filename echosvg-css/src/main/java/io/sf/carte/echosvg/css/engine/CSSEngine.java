@@ -1666,6 +1666,16 @@ public abstract class CSSEngine {
 		}
 
 		@Override
+		public void startProperty(String name) {
+			throwUnsupportedEx();
+		}
+
+		@Override
+		public void endProperty(boolean discard) {
+			throwUnsupportedEx();
+		}
+
+		@Override
 		public void startSupports(BooleanCondition condition) {
 			throwUnsupportedEx();
 		}
@@ -1697,6 +1707,11 @@ public abstract class CSSEngine {
 
 		@Override
 		public void property(String name, LexicalUnit value, boolean important) {
+			throwUnsupportedEx();
+		}
+
+		@Override
+		public void lexicalProperty(String name, LexicalUnit value, boolean important) {
 			throwUnsupportedEx();
 		}
 
