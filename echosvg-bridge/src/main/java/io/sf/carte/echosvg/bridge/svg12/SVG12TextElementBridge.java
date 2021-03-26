@@ -56,6 +56,12 @@ public class SVG12TextElementBridge extends SVGTextElementBridge implements SVG1
 	 */
 	@Override
 	protected void addTextEventListeners(BridgeContext ctx, NodeEventTarget e) {
+		if (!(ctx instanceof SVG12BridgeContext)) {
+			// SVG 1.2 text element inside 1.1 document
+			super.addTextEventListeners(ctx, e);
+			return;
+		}
+
 		if (childNodeRemovedEventListener == null) {
 			childNodeRemovedEventListener = new DOMChildNodeRemovedEventListener();
 		}
