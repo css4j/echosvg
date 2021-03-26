@@ -85,7 +85,11 @@ public class ParsedURL {
 	 */
 	private static ParsedURLProtocolHandler defaultHandler = new ParsedURLDefaultProtocolHandler();
 
-	private static String globalUserAgent = "EchoSVG/0.1";
+	private static String globalUserAgent;
+
+	static {
+		globalUserAgent = System.getProperty("http.agent", "EchoSVG/0.1");
+	}
 
 	public static String getGlobalUserAgent() {
 		return globalUserAgent;
