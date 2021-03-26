@@ -260,14 +260,14 @@ public class ParsedURLDefaultProtocolHandler extends AbstractParsedURLProtocolHa
 	public ParsedURLData parseURL(ParsedURL baseURL, String urlStr) {
 		// Reference to same document (including fragment, and query).
 		if (urlStr.length() == 0)
-			return baseURL.data;
+			return baseURL.getURLData();
 
 		// System.err.println("Base: " + baseURL + "\n" +
 		// "Sub: " + urlStr);
 
 		int idx = 0, len = urlStr.length();
 		if (len == 0)
-			return baseURL.data;
+			return baseURL.getURLData();
 
 		// Protocol is only allowed to include -+.a-zA-Z
 		// So as soon as we hit something else we know we

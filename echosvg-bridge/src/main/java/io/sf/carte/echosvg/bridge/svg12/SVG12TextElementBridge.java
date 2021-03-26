@@ -63,23 +63,25 @@ public class SVG12TextElementBridge extends SVGTextElementBridge implements SVG1
 			subtreeModifiedEventListener = new DOMSubtreeModifiedEventListener();
 		}
 
-		SVG12BridgeContext ctx12 = (SVG12BridgeContext) ctx;
-		AbstractNode n = (AbstractNode) e;
-		XBLEventSupport evtSupport = (XBLEventSupport) n.initializeEventSupport();
+    if( ctx instanceof SVG12BridgeContext ) {
+      final SVG12BridgeContext ctx12 = (SVG12BridgeContext) ctx;
+      final AbstractNode n = (AbstractNode) e;
+      final XBLEventSupport evtSupport = (XBLEventSupport) n.initializeEventSupport();
 
-		// to be notified when a child is removed from the
-		// <text> element.
-		evtSupport.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
-				childNodeRemovedEventListener, true);
-		ctx12.storeImplementationEventListenerNS(e, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
-				childNodeRemovedEventListener, true);
+      // to be notified when a child is removed from the
+      // <text> element.
+      evtSupport.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
+          childNodeRemovedEventListener, true);
+      ctx12.storeImplementationEventListenerNS(e, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemoved",
+          childNodeRemovedEventListener, true);
 
-		// to be notified when the modification of the subtree
-		// of the <text> element is done
-		evtSupport.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
-				subtreeModifiedEventListener, false);
-		ctx12.storeImplementationEventListenerNS(e, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
-				subtreeModifiedEventListener, false);
+      // to be notified when the modification of the subtree
+      // of the <text> element is done
+      evtSupport.addImplementationEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
+          subtreeModifiedEventListener, false);
+      ctx12.storeImplementationEventListenerNS(e, XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMSubtreeModified",
+          subtreeModifiedEventListener, false);
+    }
 	}
 
 	/**

@@ -21,12 +21,7 @@ package io.sf.carte.echosvg.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A {@link java.net.URL}-like class that supports custom URI schemes and GZIP
@@ -62,17 +57,18 @@ import java.util.Map;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@SuppressWarnings( "unused" )
 public class ParsedURL {
 
 	/**
 	 * The data class we defer most things to.
 	 */
-	ParsedURLData data;
+	private final ParsedURLData data;
 
 	/**
 	 * The user agent to associate with this URL
 	 */
-	String userAgent;
+	private String userAgent;
 
 	/**
 	 * This maps between protocol names and ParsedURLProtocolHandler instances.
@@ -85,10 +81,12 @@ public class ParsedURL {
 	 */
 	private static ParsedURLProtocolHandler defaultHandler = new ParsedURLDefaultProtocolHandler();
 
-	private static String globalUserAgent = "EchoSVG/0.1";
+	private static String globalUserAgent = System.getProperty( "http.agent" );
 
 	public static String getGlobalUserAgent() {
-		return globalUserAgent;
+		return globalUserAgent == null || globalUserAgent.isEmpty()
+			? "EchoSVG/0.1"
+			: globalUserAgent;
 	}
 
 	public static void setGlobalUserAgent(String userAgent) {
@@ -113,7 +111,6 @@ public class ParsedURL {
 			ParsedURLProtocolHandler handler;
 			handler = (ParsedURLProtocolHandler) iter.next();
 
-			// System.out.println("Handler: " + handler);
 			registerHandler(handler);
 		}
 
@@ -169,13 +166,24 @@ public class ParsedURL {
 	}
 
 	/**
+	 * Construct a new instance from the given url data. Sets the user agent
+	 * string to a default value governed by the System's "http.agent" environment
+	 * variable "http.agent".
+	 *
+	 * @param urlData Holds data for content.
+	 */
+	private ParsedURL( final ParsedURLData urlData ) {
+		data = urlData;
+		setUserAgent( getGlobalUserAgent() );
+	}
+
+	/**
 	 * Construct a ParsedURL from the given url string.
 	 * 
 	 * @param urlStr The string to try and parse as a URL
 	 */
-	public ParsedURL(String urlStr) {
-		userAgent = getGlobalUserAgent();
-		data = parseURL(urlStr);
+	public ParsedURL( final String urlStr ) {
+		this( parseURL( urlStr ) );
 	}
 
 	/**
@@ -186,9 +194,8 @@ public class ParsedURL {
 	 *
 	 * @param url The URL to "mimic".
 	 */
-	public ParsedURL(URL url) {
-		userAgent = getGlobalUserAgent();
-		data = new ParsedURLData(url);
+	public ParsedURL( final URL url ) {
+		this( new ParsedURLData( url ) );
 	}
 
 	/**
@@ -198,12 +205,10 @@ public class ParsedURL {
 	 * @param urlStr  The 'sub' URL may be complete or partial. the missing pieces
 	 *                will be taken from the baseStr.
 	 */
-	public ParsedURL(String baseStr, String urlStr) {
-		userAgent = getGlobalUserAgent();
-		if (baseStr != null)
-			data = parseURL(baseStr, urlStr);
-		else
-			data = parseURL(urlStr);
+	public ParsedURL( final String baseStr, final String urlStr) {
+		this( baseStr == null
+						? parseURL( urlStr )
+						: parseURL( baseStr, urlStr ) );
 	}
 
 	/**
@@ -213,13 +218,10 @@ public class ParsedURL {
 	 * @param urlStr  The 'sub' URL may be complete or partial. the missing pieces
 	 *                will be taken from the baseURL.
 	 */
-	public ParsedURL(URL baseURL, String urlStr) {
-		userAgent = getGlobalUserAgent();
-
-		if (baseURL != null)
-			data = parseURL(new ParsedURL(baseURL), urlStr);
-		else
-			data = parseURL(urlStr);
+	public ParsedURL( final URL baseURL, final String urlStr ) {
+		this( baseURL == null
+						? parseURL( urlStr )
+						: parseURL( new ParsedURL( baseURL ), urlStr ) );
 	}
 
 	/**
@@ -230,11 +232,12 @@ public class ParsedURL {
 	 *                will be taken from the baseURL.
 	 */
 	public ParsedURL(ParsedURL baseURL, String urlStr) {
+		this( baseURL == null
+						? parseURL( urlStr )
+						: parseURL( baseURL, urlStr ) );
+
 		if (baseURL != null) {
-			userAgent = baseURL.getUserAgent();
-			data = parseURL(baseURL, urlStr);
-		} else {
-			data = parseURL(urlStr);
+			setUserAgent( baseURL.getUserAgent() );
 		}
 	}
 
@@ -288,6 +291,15 @@ public class ParsedURL {
 	 */
 	public boolean complete() {
 		return data.complete();
+	}
+
+	/**
+	 * Return the URL data associated with this URL.
+	 *
+	 * @return {@code null} if no data is present.
+	 */
+	protected ParsedURLData getURLData() {
+		return data;
 	}
 
 	/**
@@ -432,8 +444,7 @@ public class ParsedURL {
 	 */
 	public InputStream openStream(String[] mimeTypes) throws IOException {
 		List<String> mt = new ArrayList<>(mimeTypes.length);
-		for (String mimeType : mimeTypes)
-			mt.add(mimeType);
+		Collections.addAll( mt, mimeTypes );
 		return data.openStream(userAgent, mt.iterator());
 	}
 
