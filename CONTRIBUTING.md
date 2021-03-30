@@ -14,12 +14,14 @@ the Github's [issue tracker](https://github.com/css4j/echosvg/issues).
 
 ## Pull requests
 
- If you plan to contribute code to this project, it is recommended to open an
-issue first, explaining the rationale for the changes that you want to
-implement. Then, in the title of the pull request (PR) you can include a
-reference like "fixes #NN" where NN is the issue number.
+ To contribute code to this project it is recommended to open an issue first,
+explaining the rationale for the changes that you want to implement. Then, in
+the title of the pull request (PR) you can include a reference like "fixes #NN"
+where NN is the issue number. And it is generally a good idea to base your PR on
+a branch that was named after the issue; for example your branch could be named
+`issue-4`.
 
-A PR should only try to fix a single issue, unless it fixes two or more issues
+ A PR should only try to fix a single issue, unless it fixes two or more issues
 that are very related or effectively the same. And if a commit has two or more
 different purposes, it is often better to split it in multiple commits. Tools
 like the _Git GUI_ are particularly useful for that.
@@ -34,9 +36,9 @@ any prefix, for example:
 ```
 Add .gitattributes file.
 ```
-When the commit is exclusively about tests, you could use the "Tests:" prefix.
+ When the commit is exclusively about tests, you could use the "Tests:" prefix.
 
-All PRs should come with one or more JUnit tests unless the change is a small,
+ All PRs should come with one or more JUnit tests unless the change is a small,
 obviously correct fix. Ideally, tests should provide a full coverage of the new
 code, except for cases like multiple equivalent comparisons, exceptions that are
 very hard to trigger or never thrown (or put as a theoretical safeguard), etc.
@@ -54,22 +56,24 @@ IDE is often used.
 code is involved.
 - Long, descriptive variable names are preferred.
 - Add comments to explain what the code is trying to do, but avoiding useless
-prose that just mimics the code, like "check if foo is larger than 1" as a
+prose that just mimics the code, like _"check if foo is larger than 1"_ as a
 comment to `if (foo > 1)`.
 - Public and protected methods must have documentation comments.
 - Avoid trailing whitespace except for empty lines in Javadoc comments.
 - Classes and methods should have the minimum visibility that they require.
-There is no reason for a method to have `protected` visibility when being
-package-visible could be enough. For complex package-level or private inner
-classes, it is acceptable to have `protected` methods as a mean to document
-which ones are intended to be overridden by other inner classes.
+A method should not have `protected` visibility when being package-visible could
+be enough, unless subclasses in other packages would naturally extend it. For
+complex package-level or inner classes, it is acceptable to have `protected`
+methods as a mean to document which ones are intended to be overridden by other
+classes. (In that case, protected methods do not appear in the Javadocs and
+therefore are not part of the API)
 
 <br/>
 
 ### Attribution
 
  If you modify a source file that was created by the current maintainer and it
-happens to have an `@author` field with his name, feel free to remove that field
+happens to have an `@author` tag with his name, feel free to remove that field
 and let `git blame` handle the attribution.
 
  It is intended that if you put an `@author` field with your name in a new file,
