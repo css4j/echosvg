@@ -88,7 +88,7 @@ public class ParsedURL {
 	private static String globalUserAgent;
 
 	static {
-		globalUserAgent = System.getProperty("http.agent", "EchoSVG/0.1");
+		globalUserAgent = System.getProperty("http.agent", "Mozilla/4.0 (compatible; EchoSVG)");
 	}
 
 	public static String getGlobalUserAgent() {
