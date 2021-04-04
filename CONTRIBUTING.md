@@ -19,12 +19,16 @@ explaining the rationale for the changes that you want to implement. Then, in
 the title of the pull request (PR) you can include a reference like "fixes #NN"
 where NN is the issue number. And it is generally a good idea to base your PR on
 a branch that was named after the issue; for example your branch could be named
-`issue-4`.
+`issue-14`.
 
  A PR should only try to fix a single issue, unless it fixes two or more issues
 that are very related or effectively the same. And if a commit has two or more
-different purposes, it is often better to split it in multiple commits. Tools
+different purposes, it is often better to split it in multiple commits; tools
 like the _Git GUI_ are particularly useful for that.
+
+<br/>
+
+### Commit messages
 
  It is recommended that commit messages (or at least the message for the main
 commit) start with a prefix related to the area being affected. For example:
@@ -37,6 +41,24 @@ any prefix, for example:
 Add .gitattributes file.
 ```
  When the commit is exclusively about tests, you could use the "Tests:" prefix.
+
+ The commit should focus on a specific task, and its descriptive message should
+tell accurately what the commit does. For example, do not mix bug fixes with
+arbitrary clean-ups, unless the clean-up is part of the fix.
+
+ Although it is acceptable to include a small, unrelated code formatting fix
+inside a bug-fixing commit (like a small indentation fix in the same file), if
+the commit contains several formatting changes they should be split to a
+different commit. That eases the task of future code reviewers.
+
+ It is acceptable to mix tests and main source code in the same commit, as it is
+immediately obvious to the reviewers which are which, and the tests offer an
+insight of what the commit is trying to achieve. You do not need to mention the
+tests in the commit message.
+
+<br/>
+
+### Tests
 
  All PRs should come with one or more JUnit tests unless the change is a small,
 obviously correct fix. Ideally, tests should provide a full coverage of the new
@@ -67,6 +89,26 @@ complex package-level or inner classes, it is acceptable to have `protected`
 methods as a mean to document which ones are intended to be overridden by other
 classes. (In that case, protected methods do not appear in the Javadocs and
 therefore are not part of the API)
+
+<br/>
+
+### Commented code
+
+ The old codebase contains several chunks of commented code; those comments are
+often an indication that either that area or a related part of the codebase
+could be buggy. Please do not remove them unless you have analysed why the
+commented code is there, and determined that there is no such problem.
+
+ At this project's initial code clean-up, in at least one case where commented
+code was removed, the surrounding non-commented part had to be modified as well,
+because there was a bug there.
+
+ It is acceptable, however, to replace commented code with an informational task
+comment, if that does not lead to the loss of information. For example:
+```java
+// FIXME: parameter 'foo' may not be correctly initialised here
+```
+ Pull requests should not contain newly commented code.
 
 <br/>
 
