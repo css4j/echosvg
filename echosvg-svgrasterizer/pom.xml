@@ -70,7 +70,7 @@
 				<configuration>
 					<archive>
 						<manifestEntries>
-							<Automatic-Module-Name>io.sf.carte.echosvg.rasterizer</Automatic-Module-Name>
+							<Automatic-Module-Name>io.sf.carte.echosvg.svgrasterizer</Automatic-Module-Name>
 						</manifestEntries>
 					</archive>
 				</configuration>
