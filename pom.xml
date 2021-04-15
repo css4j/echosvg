@@ -54,8 +54,6 @@
 	<module>echosvg-gvt</module>
 	<module>echosvg-i18n</module>
 	<module>echosvg-parser</module>
-	<module>echosvg-rasterizer-ext</module>
-	<module>echosvg-rasterizer</module>
 	<module>echosvg-script</module>
 	<module>echosvg-shared-resources</module>
 	<module>echosvg-slideshow</module>
