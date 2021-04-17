@@ -15,10 +15,10 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-# This file registers the example DOM extension as a service for the 
-# SVGOMDocument.
+# This file registers the example Bridge extension as a service for the 
+# Bridge context.
 #
 # $Id$
 # -----------------------------------------------------------------------------
 
-org.apache.batik.extension.svg.EchoSVGDomExtension
+io.sf.carte.echosvg.extension.svg.EchoSVGBridgeExtension

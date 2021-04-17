@@ -43,7 +43,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
  * WMF input document into an SVG document.
  * <p>
  * This class is copied from batik
- * org.apache.batik.transcoder.wmf.tosvg.WMFTranscoder class.
+ * io.sf.carte.echosvg.transcoder.wmf.tosvg.WMFTranscoder class.
  * </p>
  * <p>
  * It can use <code>TranscoderInput</code> that are either a URI or a

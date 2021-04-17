@@ -15,16 +15,11 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-# This file registers the interpreter factories for the
-# script languages that EchoSVG understands.
+# This file registers PNG and JPEG writer classes.
 #
 # $Id$
 # -----------------------------------------------------------------------------
 
-
-# ECMAScript
-org.apache.batik.bridge.RhinoInterpreterFactory
-# TCL
-#org.apache.batik.script.jacl.JaclInterpreterFactory
-# Python
-#org.apache.batik.script.jpython.JPythonInterpreterFactory
+io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOPNGImageWriter
+io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOTIFFImageWriter
+io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGImageWriter
