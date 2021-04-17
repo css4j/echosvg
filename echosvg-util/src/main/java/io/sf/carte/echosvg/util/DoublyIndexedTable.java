@@ -38,7 +38,7 @@ public class DoublyIndexedTable<K, L> {
 	/**
 	 * The underlying array
 	 */
-	protected Entry<K, L>[] table;
+	protected Entry[] table;
 
 	/**
 	 * The number of entries
@@ -59,21 +59,21 @@ public class DoublyIndexedTable<K, L> {
 	 */
 	public DoublyIndexedTable(int c) {
 		initialCapacity = c;
-		table = new Entry[c];
+		table = new DoublyIndexedTable.Entry[c];
 	}
 
 	/**
 	 * Creates a new DoublyIndexedTable<String,String> initialized to contain all of
 	 * the entries of the specified other DoublyIndexedTable.
 	 */
-	public DoublyIndexedTable(DoublyIndexedTable<K, L> other) {
+	public DoublyIndexedTable(DoublyIndexedTable<K,L> other) {
 		initialCapacity = other.initialCapacity;
-		table = new Entry[other.table.length];
+		table = new DoublyIndexedTable.Entry[other.table.length];
 		for (int i = 0; i < other.table.length; i++) {
-			Entry<K, L> newE = null;
-			Entry<K, L> e = other.table[i];
+			Entry newE = null;
+			Entry e = other.table[i];
 			while (e != null) {
-				newE = new Entry<>(e.hash, e.key1, e.key2, e.value, newE);
+				newE = new Entry(e.hash, e.key1, e.key2, e.value, newE);
 				e = e.next;
 			}
 			table[i] = newE;
@@ -97,7 +97,7 @@ public class DoublyIndexedTable<K, L> {
 		int hash = hashCode(o1, o2) & 0x7FFFFFFF;
 		int index = hash % table.length;
 
-		for (Entry<K, L> e = table[index]; e != null; e = e.next) {
+		for (Entry e = table[index]; e != null; e = e.next) {
 			if ((e.hash == hash) && e.match(o1, o2)) {
 				Object old = e.value;
 				e.value = value;
@@ -113,7 +113,7 @@ public class DoublyIndexedTable<K, L> {
 			index = hash % table.length;
 		}
 
-		Entry<K, L> e = new Entry<>(hash, o1, o2, value, table[index]);
+		Entry e = new Entry(hash, o1, o2, value, table[index]);
 		table[index] = e;
 		return null;
 	}
@@ -127,7 +127,7 @@ public class DoublyIndexedTable<K, L> {
 		int hash = hashCode(o1, o2) & 0x7FFFFFFF;
 		int index = hash % table.length;
 
-		for (Entry<K, L> e = table[index]; e != null; e = e.next) {
+		for (Entry e = table[index]; e != null; e = e.next) {
 			if ((e.hash == hash) && e.match(o1, o2)) {
 				return e.value;
 			}
@@ -144,7 +144,7 @@ public class DoublyIndexedTable<K, L> {
 		int hash = hashCode(o1, o2) & 0x7FFFFFFF;
 		int index = hash % table.length;
 
-		Entry<K, L> e = table[index];
+		Entry e = table[index];
 		if (e == null) {
 			return null;
 		}
@@ -155,7 +155,7 @@ public class DoublyIndexedTable<K, L> {
 			return e.value;
 		}
 
-		Entry<K, L> prev = e;
+		Entry prev = e;
 		for (e = e.next; e != null; prev = e, e = e.next) {
 			if (e.hash == hash && e.match(o1, o2)) {
 				prev.next = e.next;
@@ -173,8 +173,8 @@ public class DoublyIndexedTable<K, L> {
 		Object[] values = new Object[count];
 		int i = 0;
 
-		for (Entry<K, L> aTable : table) {
-			for (Entry<K, L> e = aTable; e != null; e = e.next) {
+		for (Entry aTable : table) {
+			for (Entry e = aTable; e != null; e = e.next) {
 				values[i++] = e.value;
 			}
 		}
@@ -185,14 +185,14 @@ public class DoublyIndexedTable<K, L> {
 	 * Clears the table.
 	 */
 	public void clear() {
-		table = new Entry[initialCapacity];
+		table = new DoublyIndexedTable.Entry[initialCapacity];
 		count = 0;
 	}
 
 	/**
 	 * Returns an iterator on the entries of the table.
 	 */
-	public Iterator<Entry<K, L>> iterator() {
+	public Iterator<Entry> iterator() {
 		return new TableIterator();
 	}
 
@@ -200,13 +200,13 @@ public class DoublyIndexedTable<K, L> {
 	 * Rehash the table
 	 */
 	protected void rehash() {
-		Entry<K, L>[] oldTable = table;
+		Entry[] oldTable = table;
 
-		table = new Entry[oldTable.length * 2 + 1];
+		table = new DoublyIndexedTable.Entry[oldTable.length * 2 + 1];
 
 		for (int i = oldTable.length - 1; i >= 0; i--) {
-			for (Entry<K, L> old = oldTable[i]; old != null;) {
-				Entry<K, L> e = old;
+			for (Entry old = oldTable[i]; old != null;) {
+				Entry e = old;
 				old = old.next;
 
 				int index = e.hash % table.length;
@@ -227,7 +227,7 @@ public class DoublyIndexedTable<K, L> {
 	/**
 	 * An entry in the {@link DoublyIndexedTable}.
 	 */
-	public static class Entry<K, L> {
+	public class Entry {
 
 		/**
 		 * The hash code.
@@ -252,12 +252,12 @@ public class DoublyIndexedTable<K, L> {
 		/**
 		 * The next entry.
 		 */
-		protected Entry<K, L> next;
+		protected Entry next;
 
 		/**
 		 * Creates a new entry.
 		 */
-		public Entry(int hash, K key1, L key2, Object value, Entry<K, L> next) {
+		Entry(int hash, K key1, L key2, Object value, Entry next) {
 			this.hash = hash;
 			this.key1 = key1;
 			this.key2 = key2;
@@ -307,7 +307,7 @@ public class DoublyIndexedTable<K, L> {
 	/**
 	 * An Iterator class for a {@link DoublyIndexedTable}.
 	 */
-	protected class TableIterator implements Iterator<Entry<K, L>> {
+	protected class TableIterator implements Iterator<Entry> {
 
 		/**
 		 * The index of the next entry to return.
@@ -317,7 +317,7 @@ public class DoublyIndexedTable<K, L> {
 		/**
 		 * The next Entry to return.
 		 */
-		private Entry<K, L> nextEntry;
+		private Entry nextEntry;
 
 		/**
 		 * Whether the Iterator has run out of elements.
@@ -344,11 +344,11 @@ public class DoublyIndexedTable<K, L> {
 		}
 
 		@Override
-		public Entry<K, L> next() {
+		public Entry next() {
 			if (finished) {
 				throw new NoSuchElementException();
 			}
-			Entry<K, L> ret = nextEntry;
+			Entry ret = nextEntry;
 			findNext();
 			return ret;
 		}

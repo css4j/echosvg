@@ -96,9 +96,9 @@ public abstract class AnimationEngine {
 			AnimationTarget target = e.getKey();
 			TargetInfo info = e.getValue();
 
-			Iterator<DoublyIndexedTable.Entry<String, String>> j = info.xmlAnimations.iterator();
+			Iterator<DoublyIndexedTable<String, String>.Entry> j = info.xmlAnimations.iterator();
 			while (j.hasNext()) {
-				DoublyIndexedTable.Entry<String, String> e2 = j.next();
+				DoublyIndexedTable<String, String>.Entry e2 = j.next();
 				String namespaceURI = e2.getKey1();
 				String localName = e2.getKey2();
 				Sandwich sandwich = (Sandwich) e2.getValue();
@@ -307,9 +307,9 @@ public abstract class AnimationEngine {
 			TargetInfo info = e.getValue();
 
 			// Update the XML animations.
-			Iterator<DoublyIndexedTable.Entry<String, String>> j = info.xmlAnimations.iterator();
+			Iterator<DoublyIndexedTable<String, String>.Entry> j = info.xmlAnimations.iterator();
 			while (j.hasNext()) {
-				DoublyIndexedTable.Entry<String, String> e2 = j.next();
+				DoublyIndexedTable<String, String>.Entry e2 = j.next();
 				String namespaceURI = e2.getKey1();
 				String localName = e2.getKey2();
 				Sandwich sandwich = (Sandwich) e2.getValue();
