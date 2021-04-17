@@ -56,12 +56,6 @@
 	  <version>${rhino.version}</version>
 	  <optional>true</optional>
 	</dependency>
-	<dependency>
-	  <groupId>org.python</groupId>
-	  <artifactId>jython</artifactId>
-	  <version>${jython.version}</version>
-	  <optional>true</optional>
-	</dependency>
   </dependencies>
 
   <build>
