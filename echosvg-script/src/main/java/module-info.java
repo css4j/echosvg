@@ -17,7 +17,6 @@ module io.sf.carte.echosvg.script {
     exports io.sf.carte.echosvg.script.rhino;
     exports io.sf.carte.echosvg.script;
     exports io.sf.carte.echosvg.script.jpython;
-    exports io.sf.carte.echosvg.script.jacl;
 
     requires io.sf.carte.echosvg.util;
     requires io.sf.carte.echosvg.anim;
