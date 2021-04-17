@@ -26,6 +26,6 @@ module io.sf.carte.echosvg.awt {
     exports io.sf.carte.echosvg.ext.awt.g2d;
 
     requires io.sf.carte.echosvg.util;
-    requires java.desktop;
+    requires transitive java.desktop;
     requires xmlgraphics.commons;
 }

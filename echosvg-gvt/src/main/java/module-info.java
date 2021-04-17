@@ -22,7 +22,6 @@ module io.sf.carte.echosvg.gvt {
     exports io.sf.carte.echosvg.gvt.text;
     exports io.sf.carte.echosvg.gvt.filter;
 
-    requires io.sf.carte.echosvg.awt;
-    requires io.sf.carte.echosvg.util;
-    requires java.desktop;
+    requires transitive io.sf.carte.echosvg.awt;
+    requires transitive io.sf.carte.echosvg.util;
 }

@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-module io.sf.carte.echosvg.parser {
-    exports io.sf.carte.echosvg.parser;
+module io.sf.carte.echosvg.apps.slideshow {
+	exports io.sf.carte.echosvg.apps.slideshow;
 
-    requires io.sf.carte.echosvg.awt;
-    requires io.sf.carte.echosvg.xml;
-    requires java.xml;
-    requires xml.apis.ext;
+	requires io.sf.carte.echosvg.bridge;
+	requires io.sf.carte.echosvg.gvt;
+	requires xml.apis.ext;
 }
