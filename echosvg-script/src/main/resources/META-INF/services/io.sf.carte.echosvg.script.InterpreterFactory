@@ -24,7 +24,5 @@
 
 # ECMAScript
 io.sf.carte.echosvg.bridge.RhinoInterpreterFactory
-# TCL
-#io.sf.carte.echosvg.script.jacl.JaclInterpreterFactory
 # Python
 #io.sf.carte.echosvg.script.jpython.JPythonInterpreterFactory
