@@ -40,11 +40,6 @@ public class XMLResourceDescriptor {
 	public static final String XML_PARSER_CLASS_NAME_KEY = "org.xml.sax.driver";
 
 	/**
-	 * The CSS parser class name key.
-	 */
-	public static final String CSS_PARSER_CLASS_NAME_KEY = "org.w3c.css.sac.driver";
-
-	/**
 	 * The resources file name
 	 */
 	public static final String RESOURCES = "resources/XMLResourceDescriptor.properties";
@@ -97,14 +92,6 @@ public class XMLResourceDescriptor {
 	 */
 	public static void setXMLParserClassName(String xmlParserClassName) {
 		XMLResourceDescriptor.xmlParserClassName = xmlParserClassName;
-	}
-
-	/**
-	 * Returns the class name of the CSS parser to use.
-	 *
-	 */
-	public static String getCSSParserClassName() {
-		return "io.sf.carte.doc.style.css.parser.CSSParser";
 	}
 
 }
