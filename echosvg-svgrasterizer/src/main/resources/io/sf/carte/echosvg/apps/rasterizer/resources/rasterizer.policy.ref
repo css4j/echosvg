@@ -34,10 +34,6 @@ grant codeBase "${app.jar.base}/@jarsLibDir@xerces_2_5_0.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/echosvg-rasterizer-@echosvgVersion@.jar" {
-  permission java.security.AllPermission;
-};
-
 grant codeBase "${app.jar.base}/@jarsLibDir@echosvg-ext-@echosvgVersion@.jar" {
   permission java.security.AllPermission;
 };
@@ -91,10 +87,6 @@ grant codeBase "${app.jar.base}/@jarsLibDir@echosvg-util-@echosvgVersion@.jar" {
 };
 
 grant codeBase "${app.jar.base}/@jarsLibDir@echosvg-xml-@echosvgVersion@.jar" {
-  permission java.security.AllPermission;
-};
-
-grant codeBase "${app.jar.base}/@jarsLibDir@fop-transcoder-allinone-@fopVersion@.jar" {
   permission java.security.AllPermission;
 };
 
