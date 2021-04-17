@@ -65,7 +65,6 @@
 		<version>${compiler.version}</version><!--$NO-MVN-MAN-VER$-->
 		<configuration>
 		  <excludes>
-			<exclude>**/jacl/*</exclude>
 			<exclude>module-info.java</exclude>
 		  </excludes>
 		</configuration>
