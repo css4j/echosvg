@@ -44,7 +44,6 @@
 	<module>echosvg-anim</module>
 	<module>echosvg-awt-util</module>
 	<module>echosvg-bridge</module>
-	<module>echosvg-codec</module>
 	<module>echosvg-constants</module>
 	<module>echosvg-css</module>
 	<module>echosvg-dom</module>

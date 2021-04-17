@@ -55,11 +55,6 @@
 			<artifactId>echosvg-util</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>echosvg-codec</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 	</dependencies>
 
 	<build>

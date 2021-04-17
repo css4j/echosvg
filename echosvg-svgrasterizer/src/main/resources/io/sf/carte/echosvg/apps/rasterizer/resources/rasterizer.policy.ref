@@ -106,10 +106,6 @@ grant codeBase "${app.jar.base}/@jarsLibDir@echosvg-anim-@echosvgVersion@.jar" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "${app.jar.base}/@jarsLibDir@echosvg-codec-@echosvgVersion@.jar" {
-  permission java.security.AllPermission;
-};
-
 grant codeBase "${app.jar.base}/@jarsLibDir@echosvg-extension-@echosvgVersion@.jar" {
   permission java.security.AllPermission;
 };

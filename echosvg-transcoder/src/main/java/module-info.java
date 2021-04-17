@@ -14,25 +14,30 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.transcoder {
-    exports io.sf.carte.echosvg.transcoder.wmf.tosvg;
-    exports io.sf.carte.echosvg.transcoder.print;
-    exports io.sf.carte.echosvg.transcoder.svg2svg;
-    exports io.sf.carte.echosvg.transcoder.wmf;
-    exports io.sf.carte.echosvg.transcoder.image;
-    exports io.sf.carte.echosvg.transcoder.keys;
-    exports io.sf.carte.echosvg.transcoder;
-    exports io.sf.carte.echosvg.transcoder.image.resources;
+	exports io.sf.carte.echosvg.transcoder.wmf.tosvg;
+	exports io.sf.carte.echosvg.transcoder.print;
+	exports io.sf.carte.echosvg.transcoder.svg2svg;
+	exports io.sf.carte.echosvg.transcoder.wmf;
+	exports io.sf.carte.echosvg.transcoder.image;
+	exports io.sf.carte.echosvg.transcoder.keys;
+	exports io.sf.carte.echosvg.transcoder;
+	exports io.sf.carte.echosvg.transcoder.image.resources;
 
-    requires io.sf.carte.echosvg.awt;
-    requires io.sf.carte.echosvg.bridge;
-    requires io.sf.carte.echosvg.css;
-    requires io.sf.carte.echosvg.gvt;
-    requires io.sf.carte.echosvg.svggen;
-    requires io.sf.carte.echosvg.xml;
-    requires io.sf.carte.echosvg.anim;
-    requires io.sf.carte.echosvg.dom;
-    requires java.desktop;
-    requires java.xml;
-    requires jdk.xml.dom;
-    requires xml.apis.ext;
+	exports io.sf.carte.echosvg.ext.awt.image.codec.png;
+	exports io.sf.carte.echosvg.ext.awt.image.codec.util;
+	exports io.sf.carte.echosvg.ext.awt.image.codec.imageio;
+
+	requires io.sf.carte.echosvg.awt;
+	requires io.sf.carte.echosvg.bridge;
+	requires io.sf.carte.echosvg.i18n;
+	requires io.sf.carte.echosvg.css;
+	requires io.sf.carte.echosvg.gvt;
+	requires io.sf.carte.echosvg.svggen;
+	requires io.sf.carte.echosvg.xml;
+	requires io.sf.carte.echosvg.anim;
+	requires io.sf.carte.echosvg.dom;
+	requires java.desktop;
+	requires java.xml;
+	requires jdk.xml.dom;
+	requires xml.apis.ext;
 }
