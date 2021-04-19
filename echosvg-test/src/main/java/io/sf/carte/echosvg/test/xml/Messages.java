@@ -24,7 +24,7 @@ import java.util.MissingResourceException;
 import io.sf.carte.echosvg.i18n.LocalizableSupport;
 
 /**
- * This class manages the message for the test.svg module.
+ * This class manages the message for the test.xml module.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
