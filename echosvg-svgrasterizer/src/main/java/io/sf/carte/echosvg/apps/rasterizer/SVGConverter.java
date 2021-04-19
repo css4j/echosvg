@@ -46,9 +46,9 @@ import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * This application can be used to convert SVG images to raster images. <br>
- * Possible result raster image formats are PNG, JPEG, TIFF, and PDF. The
- * EchoSVG Transcoder API is used to execute the conversion. FOP is needed to be
- * able to transcode to the PDF format<br>
+ * Possible result raster image formats are PNG, JPEG and TIFF. The EchoSVG
+ * Transcoder API is used to execute the conversion. Please use Apache FOP if
+ * you want to transcode to the PDF format.<br>
  *
  * The source has to be list of files or URL (set by the <code>setSources</code>
  * method). <br>

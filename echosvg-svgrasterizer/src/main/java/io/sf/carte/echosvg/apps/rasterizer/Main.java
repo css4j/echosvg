@@ -507,7 +507,6 @@ public class Main implements SVGConverterController {
 		mimeTypeMap.put("image/jpeg", DestinationType.JPEG);
 		mimeTypeMap.put("image/jpe", DestinationType.JPEG);
 		mimeTypeMap.put("image/png", DestinationType.PNG);
-		mimeTypeMap.put("application/pdf", DestinationType.PDF);
 		mimeTypeMap.put("image/tiff", DestinationType.TIFF);
 
 		optionMap.put(CL_OPTION_OUTPUT, new SingleValueOptionHandler() {

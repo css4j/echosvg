@@ -140,22 +140,6 @@ public class MainTest extends DefaultTestSuite {
 		addTest(t);
 		t.setId("MainConfigTest.mimeType.png");
 
-		t = new MainConfigTest("-m application/pdf") {
-			@Override
-			public TestReport validate(SVGConverter c) {
-				DestinationType type = c.getDestinationType();
-				if (type.equals(DestinationType.PDF)) {
-					return reportSuccess();
-				} else {
-					return reportError("-m", DestinationType.PDF.toString(), "" + type);
-				}
-			}
-
-		};
-
-		addTest(t);
-		t.setId("MainConfigTest.mimeType.pdf");
-
 		t = new MainConfigTest("-m image/tiff") {
 			@Override
 			public TestReport validate(SVGConverter c) {
