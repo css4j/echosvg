@@ -98,16 +98,6 @@
 	</dependency>
 	<dependency>
 	  <groupId>${project.groupId}</groupId>
-	  <artifactId>echosvg-rasterizer-ext</artifactId>
-	  <version>${project.version}</version>
-	</dependency>
-	<dependency>
-	  <groupId>${project.groupId}</groupId>
-	  <artifactId>echosvg-rasterizer</artifactId>
-	  <version>${project.version}</version>
-	</dependency>
-	<dependency>
-	  <groupId>${project.groupId}</groupId>
 	  <artifactId>echosvg-script</artifactId>
 	  <version>${project.version}</version>
 	</dependency>
