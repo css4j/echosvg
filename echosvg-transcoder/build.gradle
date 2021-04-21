@@ -1,0 +1,24 @@
+plugins {
+	id 'echosvg.java-conventions'
+	id 'de.jjohannes.extra-java-module-info'
+}
+
+dependencies {
+	api project(':echosvg-bridge')
+	api project(':echosvg-svggen')
+	api "xml-apis:xml-apis-ext:${xmlApisExtVersion}"
+	testImplementation "junit:junit:${junitVersion}"
+}
+
+extraJavaModuleInfo {
+	failOnMissingModuleInfo.set(false)
+	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
+}
+
+test.enabled = false
+
+description = 'io.sf.carte:echosvg-transcoder'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG SVG transcoder"
+}

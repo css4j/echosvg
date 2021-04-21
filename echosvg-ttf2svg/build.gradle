@@ -1,0 +1,13 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-svggen')
+}
+
+description = 'io.sf.carte:echosvg-ttf2svg'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG Truetype Font to SVG Font Converter Application"
+}

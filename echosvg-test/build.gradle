@@ -1,0 +1,14 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-constants')
+	api project(':echosvg-i18n')
+}
+
+description = 'io.sf.carte:echosvg-test'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG Test Harness"
+}

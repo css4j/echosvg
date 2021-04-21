@@ -1,0 +1,31 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-constants')
+	api project(':echosvg-i18n')
+	testImplementation project(':echosvg-test')
+	testImplementation "junit:junit:${junitVersion}"
+}
+
+description = 'io.sf.carte:echosvg-util'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG utility library"
+}
+
+tasks.register('testJar', Jar) {
+	archiveClassifier = 'tests'
+	from(sourceSets.test.output)
+}
+
+configurations {
+	tests
+}
+
+artifacts {
+	tests testJar
+}
+
+publishing.publications.maven.artifact(testJar)

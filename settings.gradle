@@ -1,0 +1,39 @@
+pluginManagement {
+	plugins {
+		/*
+		 * extra-java-module-info plugin version is declared at gradle.properties file
+		 */
+		id 'de.jjohannes.extra-java-module-info' version "${extraJavaModuleInfoVersion}"
+	}
+}
+
+rootProject.name = 'echosvg'
+
+include(':echosvg-svggen')
+include(':echosvg-ext')
+include(':echosvg-dom')
+include(':echosvg-xml')
+include(':echosvg-bridge')
+include(':echosvg-i18n')
+include(':echosvg-constants')
+include(':echosvg-svgpp')
+include(':echosvg-gui-util')
+include(':echosvg-script')
+include(':echosvg-anim')
+include(':echosvg-awt-util')
+include(':echosvg-css')
+include(':echosvg-svgrasterizer')
+include(':echosvg-swing')
+include(':echosvg-svg-dom')
+include(':echosvg-transcoder')
+include(':echosvg-extension')
+include(':echosvg-util')
+include(':echosvg-ttf2svg')
+include(':echosvg-slideshow')
+include(':echosvg-parser')
+include(':echosvg-gvt')
+include(':echosvg-test')
+include(':echosvg-test-svg')
+include(':echosvg-test-swing')
+include(':echosvg-test-old')
+include(':echosvg-all')

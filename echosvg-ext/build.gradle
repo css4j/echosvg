@@ -1,0 +1,17 @@
+plugins {
+	id 'echosvg.java-conventions'
+	id 'de.jjohannes.extra-java-module-info'
+}
+
+dependencies {
+}
+
+extraJavaModuleInfo {
+	failOnMissingModuleInfo.set(false)
+}
+
+description = 'io.sf.carte:echosvg-ext'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG external code"
+}

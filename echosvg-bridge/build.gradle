@@ -1,0 +1,31 @@
+plugins {
+	id 'echosvg.java-conventions'
+	id 'de.jjohannes.extra-java-module-info'
+}
+
+dependencies {
+	api project(':echosvg-anim')
+	api project(':echosvg-gvt')
+	api project(':echosvg-script')
+	api project(':echosvg-svg-dom')
+	api ("xalan:xalan:${xalanVersion}") {
+		exclude group: 'xml-apis', module: 'xml-apis'
+	}
+	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
+	api "xml-apis:xml-apis-ext:${xmlApisExtVersion}"
+	implementation "org.mozilla:rhino:${rhinoVersion}"
+}
+
+extraJavaModuleInfo {
+	failOnMissingModuleInfo.set(false)
+	automaticModule("xalan-${xalanVersion}.jar", 'xalan')
+	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
+	automaticModule("xmlgraphics-commons-${xmlgraphicsCommonsVersion}.jar", 'xmlgraphics.commons')
+	automaticModule("rhino-${rhinoVersion}.jar", 'rhino')
+}
+
+description = 'io.sf.carte:echosvg-bridge'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG bridge"
+}

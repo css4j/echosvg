@@ -1,0 +1,13 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-transcoder')
+}
+
+description = 'io.sf.carte:echosvg-svgpp'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG SVG Pretty Printer Application"
+}

@@ -1,0 +1,21 @@
+plugins {
+	id 'echosvg.java-conventions'
+	id 'de.jjohannes.extra-java-module-info'
+}
+
+dependencies {
+	api project(':echosvg-anim')
+	implementation "org.mozilla:rhino:${rhinoVersion}"
+}
+
+extraJavaModuleInfo {
+	failOnMissingModuleInfo.set(false)
+	automaticModule("rhino-${rhinoVersion}.jar", 'rhino')
+	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
+}
+
+description = 'io.sf.carte:echosvg-script'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG script language support"
+}

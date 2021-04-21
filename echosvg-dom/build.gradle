@@ -1,0 +1,28 @@
+plugins {
+	id 'echosvg.java-conventions'
+	id 'de.jjohannes.extra-java-module-info'
+}
+
+dependencies {
+	api project(':echosvg-css')
+	api project(':echosvg-ext')
+	api project(':echosvg-xml')
+	api ("xalan:xalan:${xalanVersion}") {
+		exclude group: 'xml-apis', module: 'xml-apis'
+	}
+	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
+	api "xml-apis:xml-apis-ext:${xmlApisExtVersion}"
+}
+
+extraJavaModuleInfo {
+	failOnMissingModuleInfo.set(false)
+	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
+	automaticModule("xmlgraphics-commons-${xmlgraphicsCommonsVersion}.jar", 'xmlgraphics.commons')
+	automaticModule("xalan-${xalanVersion}.jar", 'xalan')
+}
+
+description = 'io.sf.carte:echosvg-dom'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG DOM implementation"
+}

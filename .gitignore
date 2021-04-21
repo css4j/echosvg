@@ -3,3 +3,10 @@
 .project
 .settings
 target
+*/bin/
+**/build/
+/.gradle
+/gradle
+/gradlew
+/gradlew.bat
+/buildSrc/.gradle

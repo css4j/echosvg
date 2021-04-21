@@ -1,0 +1,15 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-parser')
+	api project(':echosvg-transcoder')
+	api project(':echosvg-util')
+}
+
+description = 'io.sf.carte:echosvg-svgrasterizer'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG SVG Rasterizer Library"
+}

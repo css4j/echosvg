@@ -1,0 +1,14 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-awt-util')
+	api project(':echosvg-util')
+}
+
+description = 'io.sf.carte:echosvg-gvt'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG Graphics Vector Tree (GVT)"
+}

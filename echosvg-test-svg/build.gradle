@@ -1,0 +1,15 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-test')
+	api project(':echosvg-test-swing')
+	api project(':echosvg-transcoder')
+}
+
+description = 'io.sf.carte:echosvg-test-svg'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG SVG Tests"
+}

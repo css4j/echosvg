@@ -1,0 +1,13 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-util')
+}
+
+description = 'io.sf.carte:echosvg-xml'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG XML utilities"
+}

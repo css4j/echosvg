@@ -1,0 +1,30 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	testImplementation 'xml-apis:xml-apis:1.4.01'
+	testImplementation project(':echosvg-test')
+	testImplementation project(':echosvg-util')
+	testImplementation project(path: ':echosvg-util', configuration: 'tests')
+	testImplementation project(':echosvg-test-swing')
+	testImplementation project(':echosvg-test-svg')
+	testImplementation project(':echosvg-svgrasterizer')
+	testImplementation "junit:junit:${junitVersion}"
+	testImplementation "org.mozilla:rhino:${rhinoVersion}"
+	testImplementation ('xerces:xercesImpl:2.12.0') {
+		exclude group: 'xml-apis', module: 'xml-apis'
+	}
+}
+
+sourceSets.test.resources {
+	srcDir "$rootDir/test-resources"
+}
+
+test.enabled = false
+
+description = 'io.sf.carte:echosvg-test-old'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG Test Old"
+}

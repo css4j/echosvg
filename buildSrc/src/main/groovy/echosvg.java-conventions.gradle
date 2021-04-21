@@ -1,0 +1,73 @@
+plugins {
+	id 'java-library'
+	/*
+	 * Use 'gradle build publishToMavenLocal' to install in local Maven repo
+	 */
+	id 'maven-publish'
+}
+
+repositories {
+	maven {
+		url = uri('https://repo.maven.apache.org/maven2/')
+	}
+	maven {
+		url "https://css4j.github.io/maven/"
+		mavenContent {
+			releasesOnly()
+		}
+		content {
+			includeGroup "io.sf.carte"
+			includeGroup "io.sf.jclf"
+		}
+	}
+}
+
+group = 'io.sf.carte'
+version = '0.1-SNAPSHOT'
+java.sourceCompatibility = JavaVersion.VERSION_11
+
+subprojects {
+	modularity.mixedJavaRelease 8
+}
+
+sourceSets.main.resources {
+	srcDirs += ["$rootDir/shared-resources"]
+}
+
+java {
+	withSourcesJar()
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+	  options.addStringOption('encoding', 'UTF-8')
+	  options.addStringOption('charset', 'UTF-8')
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from(components.java)
+			pom {
+				url = "https://github.com/css4j/echosvg/"
+				licenses {
+					license {
+						name = "The Apache License, Version 2.0"
+						url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+					}
+				}
+			}
+		}
+	}
+	repositories {
+		maven {
+			name = "fileRepo"
+			def releasesUrl = "file:/c:/***/mavenrepo/releases"
+			def snapshotsUrl = "file:/c:/***/mavenrepo/snapshots"
+			url = version.endsWith('-SNAPSHOT') ? snapshotsUrl : releasesUrl
+		}
+	}
+}

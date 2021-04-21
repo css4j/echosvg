@@ -1,0 +1,13 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	api project(':echosvg-awt-util')
+}
+
+description = 'io.sf.carte:echosvg-svggen'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG Java2D SVG generator"
+}

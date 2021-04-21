@@ -1,0 +1,23 @@
+plugins {
+	id 'echosvg.java-conventions'
+	id 'de.jjohannes.extra-java-module-info'
+}
+
+dependencies {
+	api project(':echosvg-util')
+	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
+	api "xml-apis:xml-apis-ext:${xmlApisExtVersion}"
+	api "io.sf.carte:css4j:${css4jVersion}"
+}
+
+extraJavaModuleInfo {
+	failOnMissingModuleInfo.set(false)
+	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
+	automaticModule("xmlgraphics-commons-${xmlgraphicsCommonsVersion}.jar", 'xmlgraphics.commons')
+}
+
+description = 'io.sf.carte:echosvg-css'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "EchoSVG CSS support"
+}
