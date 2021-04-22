@@ -1,5 +1,0 @@
-plugins {
-	id 'echosvg.java-conventions'
-}
-
-description = 'io.sf.carte:echosvg-shared-resources'
