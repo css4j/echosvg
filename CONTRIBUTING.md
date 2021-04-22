@@ -74,6 +74,7 @@ However, even one test is better than nothing.
 
 - Indent by tabs, not spaces. The automated formatting provided by the Eclipse
 IDE is often used.
+- Avoid trailing whitespace except for empty lines in Javadoc comments.
 - `if`-`else` blocks should always use curly braces, even if a single line of
 code is involved.
 - Long, descriptive variable names are preferred.
@@ -81,7 +82,9 @@ code is involved.
 prose that just mimics the code, like _"check if foo is larger than 1"_ as a
 comment to `if (foo > 1)`.
 - Public and protected methods must have documentation comments.
-- Avoid trailing whitespace except for empty lines in Javadoc comments.
+- Code readability should not be sacrificed for compactness, unless there are
+obvious gains and the trade-off can be justified. For example, `i++; foo(i);` is
+preferable to `foo(++i);` except in conditional expressions.
 - Classes and methods should have the minimum visibility that they require.
 A method should not have `protected` visibility when being package-visible could
 be enough, unless subclasses in other packages would naturally extend it. For
