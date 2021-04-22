@@ -64,10 +64,46 @@ publishing {
 	}
 	repositories {
 		maven {
-			name = "fileRepo"
-			def releasesUrl = "file:/c:/***/mavenrepo/releases"
-			def snapshotsUrl = "file:/c:/***/mavenrepo/snapshots"
+			name = 'mavenRepo'
+			/*
+			 * The following section applies to the 'publish' task:
+			 *
+			 * If you plan to deploy to a repository, please configure the
+			 * 'mavenReleaseRepoUrl' and/or 'mavenSnapshotRepoUrl' properties
+			 * (for example in GRADLE_USER_HOME/gradle.properties).
+			 *
+			 * Otherwise, Gradle shall create a 'build/repository' subdirectory
+			 * at ${rootDir} and deploy there.
+			 *
+			 * Properties 'mavenRepoUsername' and 'mavenRepoPassword' can also
+			 * be set (generally from command line).
+			 */
+			def releasesUrl
+			def snapshotsUrl
+			if (project.hasProperty('mavenReleaseRepoUrl') && project.mavenReleaseRepoUrl) {
+				releasesUrl = mavenReleaseRepoUrl
+			} else {
+				releasesUrl = "${rootDir}/build/repository/releases"
+			}
+			if (project.hasProperty('mavenSnapshotRepoUrl') && project.mavenSnapshotRepoUrl) {
+				snapshotsUrl = mavenSnapshotRepoUrl
+			} else {
+				snapshotsUrl = "${rootDir}/build/repository/snapshots"
+			}
 			url = version.endsWith('-SNAPSHOT') ? snapshotsUrl : releasesUrl
+			if (project.hasProperty('mavenRepoUsername') &&
+					project.hasProperty('mavenRepoPassword')) {
+				credentials.username = mavenRepoUsername
+				credentials.password = mavenRepoPassword
+			}
+		}
+	}
+}
+
+tasks.withType(PublishToMavenRepository) { task ->
+	doFirst {
+		if (repository == publishing.repositories.getByName('mavenRepo')) {
+			logger.lifecycle "Deploying artifacts to \"${it.repository.url}\""
 		}
 	}
 }
