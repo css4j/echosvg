@@ -21,6 +21,10 @@ sourceSets.test.resources {
 	srcDir "$rootDir/test-resources"
 }
 
+tasks.withType(PublishToMavenRepository).configureEach {
+	it.enabled = false
+}
+
 test.enabled = false
 
 description = 'io.sf.carte:echosvg-test-old'
