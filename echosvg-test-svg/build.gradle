@@ -13,3 +13,7 @@ description = 'io.sf.carte:echosvg-test-svg'
 publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG SVG Tests"
 }
+
+tasks.withType(PublishToMavenRepository).configureEach {
+	it.enabled = false
+}

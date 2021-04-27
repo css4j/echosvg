@@ -12,3 +12,7 @@ description = 'io.sf.carte:echosvg-test'
 publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG Test Harness"
 }
+
+tasks.withType(PublishToMavenRepository).configureEach {
+	it.enabled = false
+}
