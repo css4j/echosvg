@@ -21,7 +21,7 @@ extraJavaModuleInfo {
 	automaticModule("xalan-${xalanVersion}.jar", 'xalan')
 	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
 	automaticModule("xmlgraphics-commons-${xmlgraphicsCommonsVersion}.jar", 'xmlgraphics.commons')
-	automaticModule("rhino-${rhinoVersion}.jar", 'rhino')
+	automaticModule("rhino-${rhinoVersion}.jar", 'org.mozilla.rhino')
 }
 
 description = 'io.sf.carte:echosvg-bridge'

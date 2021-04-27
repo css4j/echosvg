@@ -28,7 +28,7 @@ module io.sf.carte.echosvg.bridge {
 	requires java.desktop;
 	requires java.xml;
 	requires jdk.xml.dom;
-	requires rhino;
+	requires org.mozilla.rhino;
 	requires xalan;
 	requires xml.apis.ext;
 	requires xmlgraphics.commons;

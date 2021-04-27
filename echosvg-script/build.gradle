@@ -10,7 +10,7 @@ dependencies {
 
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
-	automaticModule("rhino-${rhinoVersion}.jar", 'rhino')
+	automaticModule("rhino-${rhinoVersion}.jar", 'org.mozilla.rhino')
 	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
 }
 
