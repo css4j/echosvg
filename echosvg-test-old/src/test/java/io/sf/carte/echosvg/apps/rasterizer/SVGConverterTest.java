@@ -288,7 +288,7 @@ public class SVGConverterTest extends DefaultTestSuite {
 			@Override
 			protected void configure(SVGConverter c) {
 				// Do not set destination file or destination directory
-				c.setSources(new String[] { "http://xml.apache.org/batik/dummy.svg" });
+				c.setSources(new String[] { "https://raw.githubusercontent.com/css4j/echosvg/master/samples/dummy.svg" });
 			}
 		};
 		addTest(t);

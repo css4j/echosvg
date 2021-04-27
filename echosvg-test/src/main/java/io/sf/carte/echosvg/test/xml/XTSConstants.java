@@ -27,7 +27,7 @@ package io.sf.carte.echosvg.test.xml;
  * @version $Id$
  */
 public interface XTSConstants extends XMLReflectConstants {
-	String XTS_NAMESPACE_URI = "http://xml.apache.org/xml-batik/test/xts";
+	String XTS_NAMESPACE_URI = "https://css4j.github.io/echosvg/test/xts";
 
 	/////////////////////////////////////////////////////////////////////////
 	// XTS tags

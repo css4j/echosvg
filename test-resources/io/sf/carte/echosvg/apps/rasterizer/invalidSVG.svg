@@ -1,6 +1,5 @@
 
-	SVG pretty-printer - (C) Apache Software Foundation      
-		http://xml.apache.org/batik
+	SVG pretty-printer - (C) Apache Software Foundation
 
 Syntax:
 	svgpp [options] <input file> [<output file>]

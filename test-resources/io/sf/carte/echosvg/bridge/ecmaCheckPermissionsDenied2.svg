@@ -30,7 +30,7 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" 
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     xmlns:test="http://xml.apache.org/batik/test"
+     xmlns:test="https://css4j.github.io/echosvg/test"
      id="body" width="640" height="480" viewBox="0 0 640 480">
 
     <test:testResult id="testResult" />
@@ -64,9 +64,9 @@ importPackage(Packages.java.util);
 importPackage(Packages.javax.sound.sampled);
 
 var svgNS = "http://www.w3.org/2000/svg";
-var testNS = "http://xml.apache.org/batik/test";
+var testNS = "https://css4j.github.io/echosvg/test";
 var testedPath = "build.sh";
-var testedHost = "nagoya.apache.org:8080";
+var testedHost = "raw.githubusercontent.com";
 
 var basePermissions = [
         ["AllPermission", new AllPermission()], 

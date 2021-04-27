@@ -47,7 +47,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  */
 public class JarCheckPermissionsDenied implements ScriptHandler {
     public static final String svgNS = "http://www.w3.org/2000/svg";
-    public static final String testNS = "http://xml.apache.org/batik/test";
+    public static final String testNS = https://css4j.github.io/echosvg/test";
 
     /**
      * Path for the file tested with FilePermission
@@ -57,7 +57,7 @@ public class JarCheckPermissionsDenied implements ScriptHandler {
     /**
      * Host which is used for testing
      */
-    public static final String testedHost = "nagoya.apache.org:8080";
+    public static final String testedHost = "raw.githubusercontent.com";
 
     /**
      * Table of Permissions which will be tested.

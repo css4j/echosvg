@@ -29,13 +29,13 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" 
      xmlns:xlink="http://www.w3.org/1999/xlink" 
-     xmlns:test="http://xml.apache.org/batik/test"
+     xmlns:test="https://css4j.github.io/echosvg/test"
      width="350" height="350" onload="runTest(evt)" >
 
     <test:testResult id="testResult" result="failed" code="invalid.path.seg.value"/>
 
     <script type="text/ecmascript"><![CDATA[
-   var testNS = "http://xml.apache.org/batik/test";
+   var testNS = "https://css4j.github.io/echosvg/test";
    var svgNS = "http://www.w3.org/2000/svg";
 
    function runTest() {

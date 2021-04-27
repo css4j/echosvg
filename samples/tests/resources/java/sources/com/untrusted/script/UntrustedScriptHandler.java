@@ -66,7 +66,7 @@ public class UntrustedScriptHandler implements ScriptHandler {
     /**
      * Host which is used for testing
      */
-    public static final String testedHost = "nagoya.apache.org:8080";
+    public static final String testedHost = "raw.githubusercontent.com";
 
     /**
      * Table of Permissions which will be tested.

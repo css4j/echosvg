@@ -26,7 +26,7 @@ package io.sf.carte.echosvg.test.xml;
  * @version $Id$
  */
 public interface XTRunConstants {
-	String XTRun_NAMESPACE_URI = "http://xml.apache.org/xml-batik/test/xtrun";
+	String XTRun_NAMESPACE_URI = "https://css4j.github.io/echosvg/test/xtrun";
 
 	/////////////////////////////////////////////////////////////////////////
 	// XTRun tags

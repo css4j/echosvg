@@ -123,7 +123,7 @@ public class ExternalResourcesTest extends AbstractTest implements ErrorConstant
 	/**
 	 * Test Namespace
 	 */
-	public static final String testNS = "http://xml.apache.org/batik/test";
+	public static final String testNS = "https://css4j.github.io/echosvg/test";
 
 	/**
 	 * Id of the element where unsecure content is inserted

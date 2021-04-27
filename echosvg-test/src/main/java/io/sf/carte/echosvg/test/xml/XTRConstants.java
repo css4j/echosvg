@@ -26,7 +26,7 @@ package io.sf.carte.echosvg.test.xml;
  * @version $Id$
  */
 public interface XTRConstants extends XMLReflectConstants {
-	String XTR_NAMESPACE_URI = "http://xml.apache.org/xml-batik/test/xtr";
+	String XTR_NAMESPACE_URI = "https://css4j.github.io/echosvg/test/xtr";
 
 	/////////////////////////////////////////////////////////////////////////
 	// XTR tags

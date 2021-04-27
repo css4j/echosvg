@@ -142,7 +142,7 @@ public class SVGOnLoadExceptionTest extends AbstractTest {
 	/**
 	 * Test Namespace
 	 */
-	public static final String testNS = "http://xml.apache.org/batik/test";
+	public static final String testNS = "https://css4j.github.io/echosvg/test";
 
 	/**
 	 * The URL for the input SVG document to be tested

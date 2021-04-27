@@ -45,7 +45,7 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * 
  * The SVG input file should contain script that will position the result of the
  * test in the DOM using the following namespace: <br>
- * xmlns:test="http://xml.apache.org/batik/test" <br>
+ * xmlns:test="https://css4j.github.io/echosvg/test" <br>
  * 
  * The result should be set in the <code>result</code> attribute of the
  * &lt;testResult&gt; element by the script embeded in the input SVG test file.
@@ -53,12 +53,12 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * 
  * Sample input SVG file:<br>
  * <code>
- * &lt;svg ... onload="runTest(evt)" xmlns:test="http://xml.apache.org/batik/test" &gt;
+ * &lt;svg ... onload="runTest(evt)" xmlns:test="https://css4j.github.io/echosvg/test" &gt;
  *   &lt;script type="text/ecmascript"&gt;
  *   function runTest(evt) {
  *      ...; // do some test
  *      var rootSvg = document.getDocumentElement();
- *      var result = document.createElementNS("http://xml.apache.org/batik/test",
+ *      var result = document.createElementNS("https://css4j.github.io/echosvg/test",
  *                                            "testResult");
  *      result.setAttributeNS(null, "result", "failed");
  *      result.setAttributeNS(null, "errorCode", "io.sf.carte.echosvg.css.dom.wrong.computed.value");
@@ -120,7 +120,7 @@ public class SelfContainedSVGOnLoadTest extends AbstractTest {
 	/**
 	 * Test Namespace
 	 */
-	public static final String testNS = "http://xml.apache.org/batik/test";
+	public static final String testNS = "https://css4j.github.io/echosvg/test";
 
 	/**
 	 * Test Constants

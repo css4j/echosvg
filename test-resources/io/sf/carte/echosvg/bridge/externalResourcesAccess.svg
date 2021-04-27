@@ -31,7 +31,7 @@
 <!-- altGlyph and glyphRef are missing because their testing could not be automated -->
 <svg xmlns="http://www.w3.org/2000/svg" 
      xmlns:xlink="http://www.w3.org/1999/xlink" 
-     xmlns:test="http://xml.apache.org/batik/test"
+     xmlns:test="https://css4j.github.io/echosvg/test"
      width="450" height="500" viewBox="0 0 450 500"
      test:targetids="use, image, feImage, tref, textPath, color-profile, linearGradientA, linearGradientB, radialGradientA, radialGradientB,  patternA, patternB,  filterA,filterB , font-face-uri, altGlyph, glyphRef">
 
@@ -48,10 +48,10 @@ function testTarget(securityTarget) {
 
 
     <defs>
-        <image id="image" x="0" y="0" width="100%" height="100%" xlink:href="../../../../../resources/org/apache/batik/apps/svgbrowser/resources/squiggle.png" />
+        <image id="image" x="0" y="0" width="100%" height="100%" xlink:href="../../../../../resources/io/sf/carte/echosvg/apps/svgbrowser/resources/squiggle.png" />
 
         <filter id="externalFeImage">
-            <feImage xlink:href="../../../../../resources/org/apache/batik/apps/svgbrowser/resources/squiggle.png" />
+            <feImage xlink:href="../../../../../resources/io/sf/carte/echosvg/apps/svgbrowser/resources/squiggle.png" />
         </filter>
 
         <rect id="feImage" x="0" y="0" width="100%" height="100%" filter="url(#externalFeImage)" />

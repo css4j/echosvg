@@ -67,7 +67,8 @@ public class DOMUtilitiesCharacterEscaping extends AbstractTest {
 
 		String parser = XMLResourceDescriptor.getXMLParserClassName();
 		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-		doc = f.createDocument("http://xml.apache.org/batik/foo.svg", new StringReader(stringWriter.toString()));
+		doc = f.createDocument("https://raw.githubusercontent.com/css4j/echosvg/master/samples/foo.svg",
+			new StringReader(stringWriter.toString()));
 
 		text = doc.getElementById("myText");
 		cdata = (CDATASection) text.getFirstChild();

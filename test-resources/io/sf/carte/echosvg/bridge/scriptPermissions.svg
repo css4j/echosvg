@@ -29,7 +29,7 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" 
      xmlns:xlink="http://www.w3.org/1999/xlink" 
-     xmlns:test="http://xml.apache.org/batik/test"
+     xmlns:test="https://css4j.github.io/echosvg/test"
      width="450" height="500" viewBox="0 0 450 500">
 
     <test:testResult id="testResult" result="passed"/>
@@ -123,7 +123,7 @@
             <tspan x="0" dy="1.2em">(the result depends on the security settings)</tspan></text>
 
         <g transform="translate(0,120)">
-            <use xlink:href="#testButton" onclick="insertContentAt('http://nagoya.apache.org/batik_1.1/batik-1.1/samples/asf-logo.svg', 'insertionPoint')" />
+            <use xlink:href="#testButton" onclick="insertContentAt('https://raw.githubusercontent.com/css4j/echosvg/master/samples/asf-logo.svg', 'insertionPoint')" />
             <text class="buttonLabel">Network Access</text>
         </g>
         

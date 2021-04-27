@@ -30,14 +30,14 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" 
      xmlns:xlink="http://www.w3.org/1999/xlink" 
-     xmlns:test="http://xml.apache.org/batik/test"
+     xmlns:test="https://css4j.github.io/echosvg/test"
      width="450" height="500" viewBox="0 0 450 500"
      onload="runTest(evt)">
 
     <test:testResult id="testResult" result="passed" />
 
     <script type="text/ecmascript"><![CDATA[
-    var testNS = "http://xml.apache.org/batik/test";
+    var testNS = "https://css4j.github.io/echosvg/test";
 
     function runTest(evt){
         var tr = document.getElementById("testResult");

@@ -40,7 +40,7 @@ importPackage(Packages.javax.sound.sampled);
 
 var svgNS = "http://www.w3.org/2000/svg";
 var testedPath = "build.sh";
-var testedHost = "nagoya.apache.org:8080";
+var testedHost = "raw.githubusercontent.com";
 
 var basePermissions = [
         ["AllPermission", new AllPermission()], 

@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Script-Handler: org.apache.batik.bridge.IWasLoaded
+Script-Handler: io.sf.carte.echosvg.bridge.IWasLoaded
