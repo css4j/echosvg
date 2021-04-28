@@ -23,7 +23,7 @@ repositories {
 }
 
 group = 'io.sf.carte'
-version = '0.1-SNAPSHOT'
+version = '0.1'
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 subprojects {
