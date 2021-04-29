@@ -47,7 +47,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  */
 public class JarCheckPermissionsDenied implements ScriptHandler {
     public static final String svgNS = "http://www.w3.org/2000/svg";
-    public static final String testNS = https://css4j.github.io/echosvg/test";
+    public static final String testNS = "https://css4j.github.io/echosvg/test";
 
     /**
      * Path for the file tested with FilePermission
