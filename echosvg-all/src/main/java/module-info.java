@@ -36,5 +36,5 @@ module io.sf.carte.echosvg {
 	requires transitive io.sf.carte.echosvg.util.gui;
 	requires transitive io.sf.carte.echosvg.xml;
 	requires transitive io.sf.carte.echosvg.apps.slideshow;
-	requires xml.apis.ext;
+	requires transitive org.w3c.dom.svg;
 }

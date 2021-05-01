@@ -27,17 +27,8 @@ module io.sf.carte.echosvg.transcoder {
 	exports io.sf.carte.echosvg.ext.awt.image.codec.util;
 	exports io.sf.carte.echosvg.ext.awt.image.codec.imageio;
 
-	requires io.sf.carte.echosvg.awt;
-	requires io.sf.carte.echosvg.bridge;
+	requires transitive io.sf.carte.echosvg.svggen;
+	requires transitive io.sf.carte.echosvg.bridge;
 	requires io.sf.carte.echosvg.i18n;
-	requires io.sf.carte.echosvg.css;
-	requires io.sf.carte.echosvg.gvt;
-	requires io.sf.carte.echosvg.svggen;
 	requires io.sf.carte.echosvg.xml;
-	requires io.sf.carte.echosvg.anim;
-	requires io.sf.carte.echosvg.dom;
-	requires java.desktop;
-	requires java.xml;
-	requires jdk.xml.dom;
-	requires xml.apis.ext;
 }

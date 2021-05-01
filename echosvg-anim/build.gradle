@@ -1,18 +1,11 @@
 plugins {
 	id 'echosvg.java-conventions'
-	id 'de.jjohannes.extra-java-module-info'
 }
 
 dependencies {
 	api project(':echosvg-dom')
 	api project(':echosvg-parser')
 	api project(':echosvg-svg-dom')
-	api "xml-apis:xml-apis-ext:${xmlApisExtVersion}"
-}
-
-extraJavaModuleInfo {
-	failOnMissingModuleInfo.set(false)
-	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
 }
 
 description = 'io.sf.carte:echosvg-anim'

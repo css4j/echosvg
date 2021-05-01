@@ -17,9 +17,8 @@ module io.sf.carte.echosvg.script {
 	exports io.sf.carte.echosvg.script.rhino;
 	exports io.sf.carte.echosvg.script;
 
-	requires io.sf.carte.echosvg.util;
 	requires io.sf.carte.echosvg.anim;
-	requires java.xml;
+	requires io.sf.carte.echosvg.i18n;
+	requires transitive java.xml;
 	requires org.mozilla.rhino;
-	requires xml.apis.ext;
 }

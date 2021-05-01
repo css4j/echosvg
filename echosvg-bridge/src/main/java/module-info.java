@@ -17,19 +17,14 @@ module io.sf.carte.echosvg.bridge {
 	exports io.sf.carte.echosvg.bridge;
 	exports io.sf.carte.echosvg.bridge.svg12;
 
-	requires io.sf.carte.echosvg.awt;
 	requires io.sf.carte.echosvg.external;
-	requires io.sf.carte.echosvg.gvt;
-	requires io.sf.carte.echosvg.script;
-	requires io.sf.carte.echosvg.dom.svg;
-	requires io.sf.carte.css4j;
-	requires io.sf.carte.echosvg.anim;
-	requires io.sf.carte.echosvg.parser;
-	requires java.desktop;
-	requires java.xml;
-	requires jdk.xml.dom;
+	requires transitive io.sf.carte.echosvg.gvt;
+	requires transitive io.sf.carte.echosvg.script;
+	requires transitive io.sf.carte.echosvg.anim;
+	requires transitive io.sf.carte.echosvg.parser;
+	requires io.sf.carte.echosvg.constants;
+	requires io.sf.carte.echosvg.i18n;
 	requires org.mozilla.rhino;
 	requires xalan;
-	requires xml.apis.ext;
 	requires xmlgraphics.commons;
 }

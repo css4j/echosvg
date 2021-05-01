@@ -12,14 +12,13 @@ dependencies {
 		exclude group: 'xml-apis', module: 'xml-apis'
 	}
 	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
-	api "xml-apis:xml-apis-ext:${xmlApisExtVersion}"
+	api project(':svgom-api')
 	implementation "org.mozilla:rhino:${rhinoVersion}"
 }
 
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
 	automaticModule("xalan-${xalanVersion}.jar", 'xalan')
-	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
 	automaticModule("xmlgraphics-commons-${xmlgraphicsCommonsVersion}.jar", 'xmlgraphics.commons')
 	automaticModule("rhino-${rhinoVersion}.jar", 'org.mozilla.rhino')
 }

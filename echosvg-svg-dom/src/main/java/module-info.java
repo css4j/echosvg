@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.dom.svg {
-    exports io.sf.carte.echosvg.dom.svg12;
-    exports io.sf.carte.echosvg.dom.svg;
+	exports io.sf.carte.echosvg.dom.svg12;
+	exports io.sf.carte.echosvg.dom.svg;
 
-    requires io.sf.carte.echosvg.awt;
-    requires transitive io.sf.carte.echosvg.css;
-    requires io.sf.carte.echosvg.parser;
-    requires transitive io.sf.carte.echosvg.dom;
-    requires java.desktop;
-    requires java.xml;
-    requires jdk.xml.dom;
-    requires xml.apis.ext;
+	requires io.sf.carte.echosvg.awt;
+	requires transitive io.sf.carte.echosvg.css;
+	requires transitive io.sf.carte.echosvg.parser;
+	requires transitive io.sf.carte.echosvg.dom;
 }

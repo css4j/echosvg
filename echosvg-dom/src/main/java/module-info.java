@@ -24,9 +24,8 @@ module io.sf.carte.echosvg.dom {
 	requires transitive io.sf.carte.echosvg.css;
 	requires io.sf.carte.echosvg.external;
 	requires transitive io.sf.carte.echosvg.xml;
-	requires io.sf.carte.css4j;
+	requires io.sf.carte.echosvg.i18n;
 	requires transitive java.xml;
 	requires transitive jdk.xml.dom;
-	requires xml.apis.ext;
 	requires xalan;
 }

@@ -1,0 +1,11 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+description = 'io.sf.carte:smil-api'
+
+version = '1.0'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = "SMIL 1.0 API Java binding"
+}

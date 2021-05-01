@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 module io.sf.carte.echosvg.parser {
-    exports io.sf.carte.echosvg.parser;
+	exports io.sf.carte.echosvg.parser;
 
-    requires io.sf.carte.echosvg.awt;
-    requires io.sf.carte.echosvg.xml;
-    requires java.xml;
-    requires xml.apis.ext;
+	requires io.sf.carte.echosvg.awt;
+	requires io.sf.carte.echosvg.xml;
+	requires io.sf.carte.echosvg.i18n;
+	requires transitive org.w3c.dom.svg;
+	requires transitive java.desktop;
 }

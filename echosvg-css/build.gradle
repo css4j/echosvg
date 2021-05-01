@@ -5,14 +5,13 @@ plugins {
 
 dependencies {
 	api project(':echosvg-util')
+	api project(':svgom-api')
 	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
-	api "xml-apis:xml-apis-ext:${xmlApisExtVersion}"
 	api "io.sf.carte:css4j:${css4jVersion}"
 }
 
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
-	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
 	automaticModule("xmlgraphics-commons-${xmlgraphicsCommonsVersion}.jar", 'xmlgraphics.commons')
 }
 

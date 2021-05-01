@@ -1,6 +1,5 @@
 plugins {
 	id 'echosvg.java-conventions'
-	id 'de.jjohannes.extra-java-module-info'
 }
 
 dependencies {
@@ -14,12 +13,7 @@ dependencies {
 	api project(':echosvg-gvt')
 	api project(':echosvg-script')
 	api project(':echosvg-util')
-	api "xml-apis:xml-apis-ext:${xmlApisExtVersion}"
-}
-
-extraJavaModuleInfo {
-	failOnMissingModuleInfo.set(false)
-	automaticModule("xml-apis-ext-${xmlApisExtVersion}.jar", 'xml.apis.ext')
+	api project(':svgom-api')
 }
 
 description = 'io.sf.carte:echosvg-swing'

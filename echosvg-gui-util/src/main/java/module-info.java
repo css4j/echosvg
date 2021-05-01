@@ -20,5 +20,5 @@ module io.sf.carte.echosvg.util.gui {
 
     requires io.sf.carte.echosvg.util;
     requires io.sf.carte.echosvg.xml;
-    requires java.desktop;
+    requires transitive java.desktop;
 }

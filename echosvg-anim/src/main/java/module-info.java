@@ -19,15 +19,13 @@ module io.sf.carte.echosvg.anim {
 	exports io.sf.carte.echosvg.anim;
 	exports io.sf.carte.echosvg.anim.timing;
 
-	requires io.sf.carte.echosvg.awt;
-	requires io.sf.carte.echosvg.css;
+	requires transitive io.sf.carte.echosvg.awt;
 	requires io.sf.carte.echosvg.external;
-	requires io.sf.carte.echosvg.parser;
+	requires io.sf.carte.echosvg.i18n;
+	requires io.sf.carte.echosvg.constants;
 	requires transitive io.sf.carte.echosvg.dom.svg;
 	requires io.sf.carte.css4j;
-	requires io.sf.carte.echosvg.dom;
 	requires java.desktop;
 	requires java.xml;
 	requires jdk.xml.dom;
-	requires xml.apis.ext;
 }

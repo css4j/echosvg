@@ -16,5 +16,6 @@
 module io.sf.carte.echosvg.xml {
     exports io.sf.carte.echosvg.xml;
 
-    requires transitive io.sf.carte.echosvg.util;
+    requires io.sf.carte.echosvg.util;
+	requires io.sf.carte.echosvg.i18n;
 }
