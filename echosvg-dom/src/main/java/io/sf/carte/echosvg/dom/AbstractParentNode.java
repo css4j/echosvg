@@ -470,7 +470,7 @@ public abstract class AbstractParentNode extends AbstractNode {
 	/**
 	 * To manage a list of nodes.
 	 */
-	protected class ElementsByTagName implements NodeList {
+	public class ElementsByTagName implements NodeList {
 
 		/**
 		 * The table.
@@ -568,7 +568,7 @@ public abstract class AbstractParentNode extends AbstractNode {
 	/**
 	 * To manage a list of nodes.
 	 */
-	protected class ElementsByTagNameNS implements NodeList {
+	public class ElementsByTagNameNS implements NodeList {
 
 		/**
 		 * The table.
