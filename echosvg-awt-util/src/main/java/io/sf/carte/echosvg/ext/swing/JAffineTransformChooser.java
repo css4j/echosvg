@@ -352,7 +352,7 @@ public class JAffineTransformChooser extends JGridBagPanel {
 
 		public static final String ACTION_COMMAND_CANCEL = "cancel";
 
-		public Dialog(Component c, String title, boolean modal, JAffineTransformChooser chooserPane,
+		Dialog(Component c, String title, boolean modal, JAffineTransformChooser chooserPane,
 				AffineTransformTracker okListener, ActionListener cancelListener) {
 			super(JOptionPane.getFrameForComponent(c), title, modal);
 
