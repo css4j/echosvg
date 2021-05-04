@@ -1328,11 +1328,10 @@ public abstract class CSSEngine {
 	 */
 	protected void sortRules(ArrayList<Rule> rules, SelectorMatcher matcher) {
 		int len = rules.size();
-		int[] specificities = new int[len];
+		Specificity[] specificities = new Specificity[len];
 		for (int i = 0; i < len; i++) {
 			StyleRule r = (StyleRule) rules.get(i);
 			SelectorList sl = r.getSelectorList();
-			int spec = 0;
 			Specificity mostSpecific = null;
 			int slen = sl.getLength();
 			for (int k = 0; k < slen; k++) {
@@ -1343,20 +1342,19 @@ public abstract class CSSEngine {
 						mostSpecific = specificity;
 					} else {
 						int sp = Specificity.selectorCompare(specificity, mostSpecific);
-						if (sp > spec) {
-							spec = sp;
+						if (sp > 0) {
 							mostSpecific = specificity;
 						}
 					}
 				}
 			}
-			specificities[i] = spec;
+			specificities[i] = mostSpecific;
 		}
 		for (int i = 1; i < len; i++) {
 			Rule rule = rules.get(i);
-			int spec = specificities[i];
+			Specificity spec = specificities[i];
 			int j = i - 1;
-			while (j >= 0 && specificities[j] > spec) {
+			while (j >= 0 && Specificity.selectorCompare(specificities[j], spec) > 0) {
 				rules.set(j + 1, rules.get(j));
 				specificities[j + 1] = specificities[j];
 				j--;
