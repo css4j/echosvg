@@ -37,8 +37,8 @@ import io.sf.carte.echosvg.util.Platform;
  */
 public abstract class AbstractWMFReader {
 
-	public static final float PIXEL_PER_INCH = Platform.getScreenResolution();
-	public static final float MM_PER_PIXEL = 25.4f / Platform.getScreenResolution();
+	public static final float PIXEL_PER_INCH = 96f;
+	public static final float MM_PER_PIXEL = 25.4f / 96f;
 	protected int left, right, top, bottom, width, height, inch;
 	protected float scaleX, scaleY, scaleXY;
 	protected int vpW, vpH, vpX, vpY;
