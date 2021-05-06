@@ -24,14 +24,16 @@ publishing.publications.maven(MavenPublication).pom {
 //create a single Jar with all dependencies
 tasks.register('uberjar', Jar) {
 	archiveClassifier = "alldeps"
-	from sourceSets.main.output
 	dependsOn configurations.compileClasspath
 	dependsOn configurations.runtimeClasspath
-	from {
-		configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-	}
-	from {
-		configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+	doFirst {
+		from sourceSets.main.output
+		from {
+			configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+		}
+		from {
+			configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+		}
 	}
 	with jar
 	duplicatesStrategy = 'exclude'
