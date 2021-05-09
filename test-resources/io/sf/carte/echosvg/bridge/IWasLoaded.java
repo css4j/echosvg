@@ -15,9 +15,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
- */package io.sf.carte.echosvg.bridge;
+ */
+package io.sf.carte.echosvg.bridge;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * If this script is loaded by jarCheckNoLoad.svg, it will mark
@@ -27,9 +29,10 @@ import org.w3c.dom.*;
  * @version $Id$
  */
 public class IWasLoaded implements ScriptHandler {
-    public void run(final Document document, final Window win){
-        Element result = document.getElementById("testResult");
-        result.setAttributeNS(null, "result", "failed");
-        result.setAttributeNS(null, "errorCode", "IWasLoaded.jar should not have been loaded");
-    }
+	@Override
+	public void run(final Document document, final Window win) {
+		Element result = document.getElementById("testResult");
+		result.setAttributeNS(null, "result", "failed");
+		result.setAttributeNS(null, "errorCode", "IWasLoaded.jar should not have been loaded");
+	}
 }
