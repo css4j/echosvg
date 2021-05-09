@@ -129,22 +129,6 @@ public class ApplicationSecurityEnforcer {
 	 * @param appMainClass   class of the applications's main entry point
 	 * @param securityPolicy resource for the security policy which should be
 	 *                       enforced for the application.
-	 * @param appJarFile     the Jar file into which the application is packaged.
-	 * @deprecated This constructor is now deprecated. Use the two argument
-	 *             constructor instead as this version will be removed after the
-	 *             1.5beta4 release.
-	 */
-	@Deprecated
-	public ApplicationSecurityEnforcer(Class<?> appMainClass, String securityPolicy, String appJarFile) {
-		this(appMainClass, securityPolicy);
-	}
-
-	/**
-	 * Creates a new ApplicationSecurityEnforcer.
-	 * 
-	 * @param appMainClass   class of the applications's main entry point
-	 * @param securityPolicy resource for the security policy which should be
-	 *                       enforced for the application.
 	 */
 	public ApplicationSecurityEnforcer(Class<?> appMainClass, String securityPolicy) {
 		this.appMainClass = appMainClass;
@@ -164,7 +148,7 @@ public class ApplicationSecurityEnforcer {
 	public void enforceSecurity(boolean enforce) {
 		SecurityManager sm = System.getSecurityManager();
 
-		if (sm != null && sm != lastSecurityManagerInstalled) {
+		if (!enforce && sm != null && sm != lastSecurityManagerInstalled) {
 			// Throw a Security exception: we do not want to override
 			// an 'alien' SecurityManager with either null or
 			// a new SecurityManager.
@@ -337,7 +321,7 @@ public class ApplicationSecurityEnforcer {
 				throw new RuntimeException("Unable to derive app.dev.base from: " + expandedMainClassName);
 			}
 
-			String appCodeBase = expandedMainClassName.substring(0, codeBaseEnd);
+			String appCodeBase = expandedMainClassName.substring(5, codeBaseEnd);
 			if (ideClassDir != null) {
 				System.setProperty(PROPERTY_IDE_CLASS_DIR, ideClassDir);
 			}
@@ -353,9 +337,9 @@ public class ApplicationSecurityEnforcer {
 		StringTokenizer st = new StringTokenizer(cp, ";");
 		while (st.hasMoreTokens()) {
 			String cpe = st.nextToken();
-			int idx = cpe.indexOf("\\org.eclipse.osgi\\");
+			int idx = cpe.indexOf("org.eclipse.osgi");
 			if (idx != -1) {
-				return cpe.substring(0, idx + 17);
+				return cpe.substring(0, idx + 16);
 			}
 		}
 		// If you use a different IDE, feel free to send a PR adding support for it
