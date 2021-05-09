@@ -48,9 +48,9 @@ import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
  */
 public class Main implements SVGConverterController {
 	/**
-	 * URL for Squiggle's security policy file
+	 * URL for this browser's security policy file
 	 */
-	public static final String RASTERIZER_SECURITY_POLICY = "io/sf/carte/echosvg/apps/rasterizer/resources/rasterizer.policy";
+	private static final String RASTERIZER_SECURITY_POLICY = "io/sf/carte/echosvg/apps/rasterizer/resources/rasterizer.policy";
 
 	/**
 	 * Interface for handling one command line option
@@ -881,7 +881,6 @@ public class Main implements SVGConverterController {
 				try {
 					optionHandler.handleOption(optionValues, c);
 				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
 					error(ERROR_ILLEGAL_ARGUMENT,
 							new Object[] { v, optionHandler.getOptionDescription(), toString(optionValues) });
 					return;
@@ -902,8 +901,9 @@ public class Main implements SVGConverterController {
 		validateConverterConfig(c);
 
 		if (expandedSources == null || expandedSources.length < 1) {
-			System.out.println(USAGE);
 			System.out.flush();
+			System.err.println(USAGE);
+			System.err.flush();
 			securityEnforcer.enforceSecurity(false);
 			return;
 		}
@@ -914,6 +914,7 @@ public class Main implements SVGConverterController {
 			error(ERROR_WHILE_CONVERTING_FILES, new Object[] { e.getMessage() });
 		} finally {
 			System.out.flush();
+			System.err.flush();
 			securityEnforcer.enforceSecurity(false);
 		}
 	}
