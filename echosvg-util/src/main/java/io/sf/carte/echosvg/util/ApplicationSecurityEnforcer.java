@@ -20,11 +20,12 @@ package io.sf.carte.echosvg.util;
 
 import java.net.URL;
 import java.security.Policy;
+import java.util.StringTokenizer;
 
 /**
  * This is a helper class which helps applications enforce secure script
  * execution. <br>
- * It is used by the Squiggle browser as well as the rasterizer. <br>
+ * It is used by the rasterizer, also by tests. <br>
  * This class can install a <code>SecurityManager</code> for an application and
  * resolves whether the application runs in a development environment or from a
  * jar file (in other words, it resolves code-base issues for the application).
@@ -37,30 +38,30 @@ import java.security.Policy;
 public class ApplicationSecurityEnforcer {
 	/**
 	 * Message for the SecurityException thrown when there is already a
-	 * SecurityManager installed at the time Squiggle tries to install its own
-	 * security settings.
+	 * SecurityManager installed at the time the rasterizer tries to install its
+	 * own security settings.
 	 */
-	public static final String EXCEPTION_ALIEN_SECURITY_MANAGER = "ApplicationSecurityEnforcer.message.security.exception.alien.security.manager";
+	private static final String EXCEPTION_ALIEN_SECURITY_MANAGER = "ApplicationSecurityEnforcer.message.security.exception.alien.security.manager";
 
 	/**
 	 * Message for the NullPointerException thrown when no policy file can be found.
 	 */
-	public static final String EXCEPTION_NO_POLICY_FILE = "ApplicationSecurityEnforcer.message.null.pointer.exception.no.policy.file";
+	private static final String EXCEPTION_NO_POLICY_FILE = "ApplicationSecurityEnforcer.message.null.pointer.exception.no.policy.file";
 
 	/**
-	 * System property for specifying an additional policy file.
+	 * System property for specifying a policy file.
 	 */
-	public static final String PROPERTY_JAVA_SECURITY_POLICY = "java.security.policy";
+	private static final String PROPERTY_JAVA_SECURITY_POLICY = "java.security.policy";
 
 	/**
 	 * Files in a jar file have a URL with the jar protocol
 	 */
-	public static final String JAR_PROTOCOL = "jar:";
+	private static final String JAR_PROTOCOL = "jar:";
 
 	/**
 	 * Used in jar file urls to separate the jar file name from the referenced file
 	 */
-	public static final String JAR_URL_FILE_SEPARATOR = "!/";
+	private static final String JAR_URL_FILE_SEPARATOR = "!/";
 
 	/**
 	 * System property for App's development base directory
@@ -68,34 +69,59 @@ public class ApplicationSecurityEnforcer {
 	public static final String PROPERTY_APP_DEV_BASE = "app.dev.base";
 
 	/**
+	 * System property for App's development class directory
+	 */
+	public static final String PROPERTY_APP_DEV_CLASS_DIR = "app.dev.classdir";
+
+	/**
+	 * System property for App's development test classes directory
+	 */
+	public static final String PROPERTY_APP_DEV_TEST_CLASS_DIR = "app.dev.testdir";
+
+	/**
+	 * System property for IDE's class directory (e.g. Eclipse's OSGI directory)
+	 */
+	public static final String PROPERTY_IDE_CLASS_DIR = "app.ide.classdir";
+
+	/**
 	 * System property for App's jars base directory
 	 */
 	public static final String PROPERTY_APP_JAR_BASE = "app.jar.base";
 
 	/**
-	 * Directory where classes are expanded in the development version
+	 * Directories where classes are in the development version
 	 */
-	public static final String APP_MAIN_CLASS_DIR = "classes/";
+	private static final String DEV_GRADLE_CLASS_DIR = "/build/classes/java/main/";
+	private static final String DEV_GRADLE_TEST_CLASS_DIR = "/build/classes/java/test/";
+	private static final String DEV_ECLIPSE_CLASS_DIR = "/bin/main/";
+	private static final String DEV_ECLIPSE_TEST_CLASS_DIR = "/bin/test/";
+//	private static final String DEV_MAVEN_CLASS_DIR = "/target/classes/";
+//	private static final String DEV_MAVEN_TEST_CLASS_DIR = "/target/test-classes/";
 
 	/**
 	 * The application's main entry point
 	 */
-	protected Class<?> appMainClass;
+	private Class<?> appMainClass;
 
 	/**
 	 * The application's security policy
 	 */
-	protected String securityPolicy;
+	private String securityPolicy;
 
 	/**
 	 * The resource name for the application's main class
 	 */
-	protected String appMainClassRelativeURL;
+	private String appMainClassRelativeURL;
 
 	/**
 	 * Keeps track of the last SecurityManager installed
 	 */
-	protected EchoSVGSecurityManager lastSecurityManagerInstalled;
+	private EchoSVGSecurityManager lastSecurityManagerInstalled;
+
+	/**
+	 * Keeps track of the previous SecurityManager installed
+	 */
+	private SecurityManager previousSecurityManagerInstalled = null;
 
 	/**
 	 * Creates a new ApplicationSecurityEnforcer.
@@ -151,11 +177,13 @@ public class ApplicationSecurityEnforcer {
 			// has been a change since it was last enforced (this
 			// may happen with dynamically generated policy files).
 			System.setSecurityManager(null);
+			previousSecurityManagerInstalled = sm;
 			installSecurityManager();
 		} else {
 			if (sm != null) {
-				System.setSecurityManager(null);
+				System.setSecurityManager(previousSecurityManagerInstalled);
 				lastSecurityManagerInstalled = null;
+				previousSecurityManagerInstalled = null;
 			}
 		}
 	}
@@ -221,7 +249,7 @@ public class ApplicationSecurityEnforcer {
 		if (expandedMainClassName.startsWith(JAR_PROTOCOL)) {
 			setJarBase(expandedMainClassName);
 		} else {
-			setDevBase(expandedMainClassName);
+			setDevProperties(expandedMainClassName);
 		}
 
 		// Install new security manager
@@ -250,7 +278,7 @@ public class ApplicationSecurityEnforcer {
 				// Something is seriously wrong. This should *never* happen
 				// as the APP_SECURITY_POLICY_URL is such that it will be
 				// a substring of its corresponding URL value
-				throw new RuntimeException();
+				throw new RuntimeException("Unable to derive app.jar.base from: " + expandedMainClassName);
 			}
 
 			String appCodeBase = expandedMainClassName.substring(0, codeBaseEnd);
@@ -269,28 +297,69 @@ public class ApplicationSecurityEnforcer {
 	}
 
 	/**
-	 * Position the app.dev.base property for expansion in the policy file used when
+	 * Set the development-related properties for expansion in the policy file used when
 	 * App is running in its development version
 	 */
-	private void setDevBase(String expandedMainClassName) {
+	private void setDevProperties(String expandedMainClassName) {
 		//
 		// Only set the app.code.base property if it is not already
 		// defined.
 		//
 		String curAppCodeBase = System.getProperty(PROPERTY_APP_DEV_BASE);
+		String appClassDir = null;
+		String appTestClassDir = null;
+		String ideClassDir = null;
+
 		if (curAppCodeBase == null) {
-			int codeBaseEnd = expandedMainClassName.indexOf(APP_MAIN_CLASS_DIR + appMainClassRelativeURL);
+			int codeBaseEnd = expandedMainClassName.lastIndexOf(DEV_GRADLE_CLASS_DIR + appMainClassRelativeURL);
 
 			if (codeBaseEnd == -1) {
-				// Something is seriously wrong. This should *never* happen
-				// as the APP_SECURITY_POLICY_URL is such that it will be
-				// a substring of its corresponding URL value
-				throw new RuntimeException();
+				codeBaseEnd = expandedMainClassName.lastIndexOf(DEV_GRADLE_TEST_CLASS_DIR + appMainClassRelativeURL);
+			}
+
+			if (codeBaseEnd == -1) {
+				codeBaseEnd = expandedMainClassName.lastIndexOf(DEV_ECLIPSE_CLASS_DIR + appMainClassRelativeURL);
+
+				if (codeBaseEnd == -1) {
+					codeBaseEnd = expandedMainClassName
+							.lastIndexOf(DEV_ECLIPSE_TEST_CLASS_DIR + appMainClassRelativeURL);
+				}
+				appClassDir = DEV_ECLIPSE_CLASS_DIR;
+				appTestClassDir = DEV_ECLIPSE_TEST_CLASS_DIR;
+				ideClassDir = getIDEClassDir();
+			} else {
+				appClassDir = DEV_GRADLE_CLASS_DIR;
+				appTestClassDir = DEV_GRADLE_TEST_CLASS_DIR;
+			}
+
+			if (codeBaseEnd == -1
+					|| (codeBaseEnd = expandedMainClassName.substring(0, codeBaseEnd).lastIndexOf('/')) == -1) {
+				throw new RuntimeException("Unable to derive app.dev.base from: " + expandedMainClassName);
 			}
 
 			String appCodeBase = expandedMainClassName.substring(0, codeBaseEnd);
+			if (ideClassDir != null) {
+				System.setProperty(PROPERTY_IDE_CLASS_DIR, ideClassDir);
+			}
 			System.setProperty(PROPERTY_APP_DEV_BASE, appCodeBase);
+			System.setProperty(PROPERTY_APP_DEV_CLASS_DIR, appClassDir);
+			System.setProperty(PROPERTY_APP_DEV_TEST_CLASS_DIR, appTestClassDir);
 		}
+	}
+
+	private static String getIDEClassDir() {
+		// Eclipse's OSGI directory
+		String cp = System.getProperty("java.class.path");
+		StringTokenizer st = new StringTokenizer(cp, ";");
+		while (st.hasMoreTokens()) {
+			String cpe = st.nextToken();
+			int idx = cpe.indexOf("\\org.eclipse.osgi\\");
+			if (idx != -1) {
+				return cpe.substring(0, idx + 17);
+			}
+		}
+		// If you use a different IDE, feel free to send a PR adding support for it
+		return null;
 	}
 
 }

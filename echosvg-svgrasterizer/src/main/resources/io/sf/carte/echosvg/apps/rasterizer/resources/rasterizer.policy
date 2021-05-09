@@ -18,36 +18,145 @@
 // $Id$
 // -----------------------------------------------------------------------------
 
-grant codeBase "${app.dev.base}/classes/" {
-  permission java.security.AllPermission;
-};
-
-grant codeBase "${app.dev.base}/lib/xml-apis-dom3.jar" {
-  permission java.security.AllPermission;
-};
-
-grant codeBase "${app.dev.base}/lib/xerces_2_5_0.jar" {
-  permission java.security.AllPermission;
-};
-
-grant codeBase "${app.dev.base}/lib/fop-transcoder-allinone-${xmlgraphics.commons.version}.jar" {
-  permission java.security.AllPermission;
-};
-
-grant codeBase "${app.dev.base}/lib/xmlgraphics-commons-${xmlgraphics.commons.version}.jar" {
-  permission java.security.AllPermission;
-};
-
-grant codeBase "${app.dev.base}/lib/js.jar" {
+// Give permissions to Gradle and libraries in the Gradle cache
+grant codeBase "file:${user.home}/.gradle/-" {
   permission java.lang.RuntimePermission "createClassLoader";
-  permission java.net.SocketPermission "*", "listen, connect, resolve, accept";
   permission java.lang.RuntimePermission "accessDeclaredMembers";
+  permission java.net.SocketPermission "*", "listen, connect, resolve, accept";
+  permission java.util.PropertyPermission "read";
+};
+
+// Maven local repository
+//grant codeBase "file:${user.home}/.m2/repository/-" {
+//  permission java.security.AllPermission;
+//};
+
+// IDE class directory (optional)
+grant codeBase "file:${app.ide.classdir}/-" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-anim${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-awt-util${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-bridge${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-constants${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-css${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-dom${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-ext${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-extension${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-gui-util${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-gvt${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-i18n${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-parser${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-slideshow${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-svg-dom${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-svggen${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-svgpp${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-svgrasterizer${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-swing${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-test${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-test-old${app.dev.testdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-test-svg${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-test-swing${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-transcoder${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-ttf2svg${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-util${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-xml${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/smil-api${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/svgom-api${app.dev.classdir}" {
+  permission java.security.AllPermission;
+};
+
+grant codeBase "${app.dev.base}/echosvg-script${app.dev.classdir}" {
+  permission java.lang.RuntimePermission "createClassLoader";
+  permission java.lang.RuntimePermission "accessDeclaredMembers";
+  permission java.net.SocketPermission "*", "listen, connect, resolve, accept";
   permission java.util.PropertyPermission "org.mozilla.javascript.JavaAdapter", "read";
   permission java.util.PropertyPermission "org.mozilla.javascript.JavaAdapterClassName", "read";
   permission java.io.FilePermission "<<ALL FILES>>", "read";
 };
 
 grant {
-  permission java.io.FilePermission "resources/io/sf/carte/echosvg/dom/svg/resources/svg10.dtd", "read";
-  permission java.io.FilePermission "resources/io/sf/carte/echosvg/dom/svg/resources/UserAgentStyleSheet.css", "read";
+  permission java.io.FilePermission "resources/io/sf/carte/echosvg/dom/svg/resources/-", "read";
 };
