@@ -48,7 +48,7 @@
 
 <test id="transcoder.image.dom" class="io.sf.carte.echosvg.transcoder.image.DOMTest" />
 
-<test id="transcoder.image.dom2" class="io.sf.carte.echosvg.transcoder.image.ParametrizedDOMTest" >
+<test id="transcoder.image.dom2" class="io.sf.carte.echosvg.transcoder.image.ParameterizedDOMTest" >
   <arg class="java.lang.String" value="samples/anne.svg" />
   <arg class="java.lang.String" value="test-references/samples/anne.png" />
 </test>
