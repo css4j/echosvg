@@ -1,11 +1,11 @@
 /*
 
-   Licensed to the Apache Software Foundation (ASF) under one or more
-   contributor license agreements.  See the NOTICE file distributed with
-   this work for additional information regarding copyright ownership.
-   The ASF licenses this file to You under the Apache License, Version 2.0
-   (the "License"); you may not use this file except in compliance with
-   the License.  You may obtain a copy of the License at
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
@@ -45,7 +45,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @version $Id$
  */
-public class JarCheckPermissionsGranted implements ScriptHandler {
+public class JarCheckPermissionsDenied implements ScriptHandler {
 	public static final String svgNS = "http://www.w3.org/2000/svg";
 	public static final String testNS = "https://css4j.github.io/echosvg/test";
 
@@ -57,7 +57,7 @@ public class JarCheckPermissionsGranted implements ScriptHandler {
 	/**
 	 * Host which is used for testing
 	 */
-	public static final String testedHost = "css4j.github.io";
+	public static final String testedHost = "raw.githubusercontent.com";
 
 	/**
 	 * Table of Permissions which will be tested.
@@ -100,7 +100,6 @@ public class JarCheckPermissionsGranted implements ScriptHandler {
 			{ "RuntimePermission setFactory", new RuntimePermission("setFactory") },
 			{ "RuntimePermission setIO", new RuntimePermission("setIO") },
 			{ "RuntimePermission modifyThread", new RuntimePermission("modifyThread") },
-			{ "RuntimePermission stopThread", new RuntimePermission("stopThread") },
 			{ "RuntimePermission modifyThreadGroup", new RuntimePermission("modifyThreadGroup") },
 			{ "RuntimePermission getProtectionDomain", new RuntimePermission("getProtectionDomain") },
 			{ "RuntimePermission readFileDescriptor", new RuntimePermission("readFileDescriptor") },
@@ -153,29 +152,47 @@ public class JarCheckPermissionsGranted implements ScriptHandler {
 	 */
 	@Override
 	public void run(final Document document, final Window win) {
+		int nGrantedTmp = 0;
+
 		//
 		// If the document is loaded over the network, check that the
 		// class has permission to access the server
 		//
 		ParsedURL docURL = ((SVGOMDocument) document).getParsedURL();
-		if (docURL != null && docURL.getHost() != null && !"".equals(docURL.getHost())) {
-			permissions = new Object[basePermissions.length + 3][2];
-			System.arraycopy(basePermissions, 0, permissions, 3, basePermissions.length);
+		if ((docURL != null) && (docURL.getHost() != null) && (!"".equals(docURL.getHost()))) {
+
+			permissions = new Object[basePermissions.length + 4][2];
 
 			String docHost = docURL.getHost();
 			if (docURL.getPort() != -1) {
 				docHost += ":" + docURL.getPort();
 			}
 
-			permissions[0][0] = "SocketPermission accept " + docHost;
-			permissions[0][1] = new SocketPermission(docHost, "accept");
-			permissions[1][0] = "SocketPermission connect " + docHost;
-			permissions[1][1] = new SocketPermission(docHost, "connect");
-			permissions[2][0] = "SocketPermission resolve " + docHost;
-			permissions[2][1] = new SocketPermission(docHost, "resolve");
+			int i = 0;
+			permissions[i][0] = "SocketPermission accept " + docHost;
+			permissions[i][1] = new SocketPermission(docHost, "accept");
+			i++;
+
+			permissions[i][0] = "SocketPermission connect " + docHost;
+			permissions[i][1] = new SocketPermission(docHost, "connect");
+			i++;
+
+			permissions[i][0] = "SocketPermission resolve " + docHost;
+			permissions[i][1] = new SocketPermission(docHost, "resolve");
+			i++;
+
+			permissions[i][0] = "RuntimePermission stopThread";
+			permissions[i][1] = new RuntimePermission("stopThread");
+			i++;
+
+			nGrantedTmp = i;
+
+			System.arraycopy(basePermissions, 0, permissions, i, basePermissions.length);
 		} else {
 			permissions = basePermissions;
 		}
+
+		final int nGranted = nGrantedTmp;
 
 		EventTarget root = (EventTarget) document.getDocumentElement();
 		root.addEventListener("SVGLoad", new EventListener() {
@@ -183,23 +200,40 @@ public class JarCheckPermissionsGranted implements ScriptHandler {
 			public void handleEvent(Event evt) {
 				SecurityManager sm = System.getSecurityManager();
 				int successCnt = 0;
+				Vector unexpectedGrants = new Vector();
 				Vector unexpectedDenial = new Vector();
 				int unexpectedDenialCnt = 0;
 				int unexpectedGrantsCnt = 0;
 
 				if (sm == null) {
-					for (int i = 0; i < permissions.length; i++) {
+					for (int i = 0; i < nGranted; i++) {
 						successCnt++;
 					}
+					for (int i = nGranted; i < permissions.length; i++) {
+						unexpectedGrants.add(permissions[i][0]);
+						unexpectedGrantsCnt++;
+					}
 				} else {
-					for (int i = 0; i < permissions.length; i++) {
+					for (int i = 0; i < nGranted; i++) {
 						Permission p = (Permission) permissions[i][1];
 						try {
 							sm.checkPermission(p);
+							System.out.println(">>>> Permision : " + p + " was granted");
 							successCnt++;
 						} catch (SecurityException se) {
 							unexpectedDenial.add(permissions[i][0]);
 							unexpectedDenialCnt++;
+						}
+					}
+					for (int i = nGranted; i < permissions.length; i++) {
+						Permission p = (Permission) permissions[i][1];
+						try {
+							sm.checkPermission(p);
+							System.out.println(">>>> Permision : " + p + " was granted");
+							unexpectedGrants.add(permissions[i][0]);
+							unexpectedGrantsCnt++;
+						} catch (SecurityException se) {
+							successCnt++;
 						}
 					}
 				}
@@ -213,13 +247,29 @@ public class JarCheckPermissionsGranted implements ScriptHandler {
 					result.setAttributeNS(null, "result", "failed");
 					result.setAttributeNS(null, "errorCode", "unexpected.grants.or.denials");
 
+					String unexpectedGrantsString = "";
 					String unexpectedDenialString = "";
+
+					for (int i = 0; i < unexpectedGrantsCnt; i++) {
+						unexpectedGrantsString += unexpectedGrants.elementAt(i).toString();
+					}
 
 					for (int i = 0; i < unexpectedDenialCnt; i++) {
 						unexpectedDenialString += unexpectedDenial.elementAt(i).toString();
 					}
 
+					System.out.println("unexpected.grants : " + unexpectedGrantsString);
 					Element entry = null;
+
+					entry = document.createElementNS(testNS, "errorDescriptiongEntry");
+					entry.setAttributeNS(null, "id", "unexpected.grants.count");
+					entry.setAttributeNS(null, "value", "" + unexpectedGrantsCnt);
+					result.appendChild(entry);
+
+					entry = document.createElementNS(testNS, "errorDescriptionEntry");
+					entry.setAttributeNS(null, "id", "unexpected.grants");
+					entry.setAttributeNS(null, "value", unexpectedGrantsString);
+					result.appendChild(entry);
 
 					entry = document.createElementNS(testNS, "errorDescriptiongEntry");
 					entry.setAttributeNS(null, "id", "unexpected.denials.count");

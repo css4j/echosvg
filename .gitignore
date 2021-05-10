@@ -10,3 +10,5 @@ target
 /gradlew
 /gradlew.bat
 /buildSrc/.gradle
+/test-resources/io/sf/carte/echosvg/bridge/JarCheckPermissionsDenied.jar
+/test-resources/io/sf/carte/echosvg/bridge/JarCheckPermissionsGranted.jar

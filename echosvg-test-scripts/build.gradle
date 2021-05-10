@@ -1,0 +1,99 @@
+plugins {
+	id 'echosvg.java-conventions'
+}
+
+dependencies {
+	implementation project(':echosvg-bridge')
+}
+
+description = 'io.sf.carte:echosvg-test-scripts'
+
+publishing.publications.maven(MavenPublication).pom {
+	description = 'EchoSVG Test non-js Scripts'
+}
+
+jar.enabled = false
+sourcesJar.enabled = false
+
+task iWasLoadedJar(type: Jar) {
+	archiveFileName = 'IWasLoaded.jar'
+	dependsOn configurations.compileClasspath
+	doFirst {
+		from sourceSets.main.output
+	}
+	manifest {
+		attributes (
+			'Script-Handler' : 'io.sf.carte.echosvg.bridge.IWasLoaded'
+		)
+	}
+	with jar
+	include 'io/sf/carte/echosvg/bridge/IWasLoaded.class'
+	duplicatesStrategy = 'exclude'
+}
+
+task iWasLoadedTooJar(type: Jar) {
+	archiveFileName = 'IWasLoadedToo.jar'
+	dependsOn configurations.compileClasspath
+	doFirst {
+		from sourceSets.main.output
+	}
+	manifest {
+		attributes (
+			'Script-Handler' : 'io.sf.carte.echosvg.bridge.IWasLoadedToo'
+		)
+	}
+	with jar
+	include 'io/sf/carte/echosvg/bridge/IWasLoadedToo.class'
+	duplicatesStrategy = 'exclude'
+}
+
+task jarCheckPermissionsDeniedJar(type: Jar) {
+	archiveFileName = 'JarCheckPermissionsDenied.jar'
+	dependsOn configurations.compileClasspath
+	doFirst {
+		from sourceSets.main.output
+	}
+	manifest {
+		attributes (
+			'Script-Handler' : 'io.sf.carte.echosvg.bridge.JarCheckPermissionsDenied'
+		)
+	}
+	with jar
+	include 'io/sf/carte/echosvg/bridge/JarCheckPermissionsDenied*'
+	duplicatesStrategy = 'exclude'
+}
+
+task jarCheckPermissionsGrantedJar(type: Jar) {
+	archiveFileName = 'JarCheckPermissionsGranted.jar'
+	dependsOn configurations.compileClasspath
+	doFirst {
+		from sourceSets.main.output
+	}
+	manifest {
+		attributes (
+			'Script-Handler' : 'io.sf.carte.echosvg.bridge.JarCheckPermissionsGranted'
+		)
+	}
+	with jar
+	include 'io/sf/carte/echosvg/bridge/JarCheckPermissionsGranted*'
+	duplicatesStrategy = 'exclude'
+}
+
+// Copy jar files to 'jar' directory
+tasks.register('copyJars', Copy) {
+	dependsOn tasks.jarCheckPermissionsDeniedJar
+	dependsOn tasks.jarCheckPermissionsGrantedJar
+	include '**/JarCheckPermissions*.jar'
+	from layout.buildDirectory.dir('libs')
+	into "${rootDir}/test-resources/io/sf/carte/echosvg/bridge"
+}
+
+build.dependsOn iWasLoadedJar
+build.dependsOn iWasLoadedTooJar
+build.dependsOn jarCheckPermissionsDeniedJar
+build.dependsOn jarCheckPermissionsGrantedJar
+build.dependsOn copyJars
+
+tasks.withType(PublishToMavenRepository).configureEach {
+	it.enabled = false
+}
