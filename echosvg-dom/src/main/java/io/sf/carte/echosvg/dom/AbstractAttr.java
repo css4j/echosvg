@@ -18,8 +18,11 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import java.io.IOException;
+
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.TypeInfo;
@@ -352,6 +355,18 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
 				((AbstractElement) getOwnerElement()).fireDOMSubtreeModifiedEvent();
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		Document d = getOwnerDocument();
+		String valueSerial;
+		try {
+			valueSerial = DOMUtilities.contentToString(getValue(), d != null && "1.1".equals(d.getXmlVersion()));
+		} catch (IOException e) {
+			valueSerial = "";
+		}
+		return getName() + "=\"" + valueSerial + '"';
 	}
 
 	/**
