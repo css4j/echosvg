@@ -1040,6 +1040,10 @@ public abstract class CSSEngine {
 			element = elt;
 			parser.setDocumentHandler(styleDeclarationBuilder);
 			parser.parseStyleDeclaration(new StringReader(value));
+		} catch (SecurityException e) {
+			// We catch security exceptions, in the unlikely case that the
+			// creation of values produces one.
+			throw e;
 		} catch (Exception e) {
 			String m = e.getMessage();
 			if (m == null)
@@ -1097,6 +1101,8 @@ public abstract class CSSEngine {
 		try {
 			ss.setMedia(parser.parseMediaQueryList(media, null));
 			parseStyleSheet(ss, is, uri);
+		} catch (SecurityException e) {
+			throw e;
 		} catch (Exception e) {
 			String m = e.getMessage();
 			if (m == null)
@@ -1185,6 +1191,8 @@ public abstract class CSSEngine {
 	public void parseStyleSheet(StyleSheet ss, String rules, ParsedURL uri) throws DOMException {
 		try {
 			parseStyleSheet(ss, new InputSource(new StringReader(rules)), uri);
+		} catch (SecurityException e) {
+			throw e;
 		} catch (Exception e) {
 			// e.printStackTrace();
 			String m = e.getMessage();
