@@ -22,25 +22,24 @@ import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
-import io.sf.carte.echosvg.test.AbstractTest;
 
 /**
  *
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DOM3Test extends AbstractTest {
+public class DOM3Test {
 	static String SVG_NAMESPACE_URI = "http://www.w3.org/2000/svg";
 	static String EX_NAMESPACE_URI = "http://www.example.org/";
 	static String XML_NAMESPACE_URI = "http://www.w3.org/XML/1998/namespace";
 	static String XMLNS_NAMESPACE_URI = "http://www.w3.org/2000/xmlns/";
 	static String XML_EVENTS_NAMESPACE_URI = "http://www.w3.org/2001/xml-events";
 
-	protected Document newDoc() {
+	Document newDoc() {
 		return new GenericDocument(null, GenericDOMImplementation.getDOMImplementation());
 	}
 
-	protected Document newSVGDoc() {
+	Document newSVGDoc() {
 		Document doc = new SVGOMDocument(null, SVGDOMImplementation.getDOMImplementation());
 		doc.appendChild(doc.createElementNS(SVG_NAMESPACE_URI, "svg"));
 		return doc;

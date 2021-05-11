@@ -18,16 +18,22 @@
  */
 package io.sf.carte.echosvg.apps.rasterizer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestSuite;
-import io.sf.carte.echosvg.test.Test;
-import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.test.TestLocations;
 
 /**
  * Validates the operation of the <code>Main</code> class.
@@ -36,197 +42,173 @@ import io.sf.carte.echosvg.test.TestReport;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class MainTest extends DefaultTestSuite {
+public class MainTest {
 
-	public MainTest() {
-		Test t = new MainConfigTest("-d samples") {
+	// This test writes/flushes to System.out and this may interfere with Gradle
+	// Run it from IDE only
+	@org.junit.Ignore
+	@org.junit.Test
+	public void testMain() {
+		URL url;
+		try {
+			url = new URL(TestLocations.getRootBuildURL());
+		} catch (MalformedURLException e) {
+			throw new IllegalStateException();
+		}
+		String rootDir = url.getFile();
+
+		// MainConfigTest.output
+		MainConfigTest t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				File dst = c.getDst();
-				if (dst != null && dst.equals(new File("samples"))) {
-					return reportSuccess();
-				} else {
-					return reportError("-d", "samples", "" + dst);
-				}
+				assertNotNull(dst);
+				assertEquals("-d", "samples", dst.getName());
+			}
+
+			@Override
+			void onError(String errorCode, Object[] errorArgs) {
+				fail("Unexpected error: " + errorCode);
 			}
 
 		};
+		t.runTest("-d " + rootDir + "samples");
 
-		addTest(t);
-		t.setId("MainConfigTest.output");
+		// MainConfigTest.source
 
-		t = new MainConfigTest("samples/anne.svg") {
+		t = new MainConfigTest() {
 			String ERROR_UNEXPECTED_SOURCES = "MainConfigTest.error.unexpected.sources";
 
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				List<String> sources = c.getSources();
-				if (sources.size() == 1) {
-					String src = sources.get(0);
-					if ("samples/anne.svg".equals(src)) {
-						return reportSuccess();
-					}
-				}
-
-				return reportError(ERROR_UNEXPECTED_SOURCES);
+				assertEquals(1, sources.size());
+				String src = sources.get(0);
+				assertEquals(ERROR_UNEXPECTED_SOURCES, rootDir + "samples/anne.svg", src);
 			}
 
 		};
+		t.runTest(rootDir + "samples/anne.svg");
 
-		addTest(t);
-		t.setId("MainConfigTest.source");
+		// MainConfigTest.mimeType.jpegA
 
-		t = new MainConfigTest("-m image/jpeg") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				DestinationType type = c.getDestinationType();
-				if (type.equals(DestinationType.JPEG)) {
-					return reportSuccess();
-				} else {
-					return reportError("-m", DestinationType.JPEG.toString(), "" + type);
-				}
+				assertEquals(DestinationType.JPEG, type);
+				assertEquals("-m", DestinationType.JPEG.toString(), type.toString());
 			}
 
 		};
+		t.runTest("-m image/jpeg");
 
-		addTest(t);
-		t.setId("MainConfigTest.mimeType.jpegA");
+		// MainConfigTest.mimeType.jpegB
 
-		t = new MainConfigTest("-m image/jpg") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				DestinationType type = c.getDestinationType();
-				if (type.equals(DestinationType.JPEG)) {
-					return reportSuccess();
-				} else {
-					return reportError("-m", DestinationType.JPEG.toString(), "" + type);
-				}
+				assertEquals(DestinationType.JPEG, type);
+				assertEquals("-m", DestinationType.JPEG.toString(), type.toString());
 			}
 
 		};
+		t.runTest("-m image/jpg");
 
-		addTest(t);
-		t.setId("MainConfigTest.mimeType.jpegB");
+		// MainConfigTest.mimeType.jpegC
 
-		t = new MainConfigTest("-m image/jpe") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				DestinationType type = c.getDestinationType();
-				if (type.equals(DestinationType.JPEG)) {
-					return reportSuccess();
-				} else {
-					return reportError("-m", DestinationType.JPEG.toString(), "" + type);
-				}
+				assertEquals(DestinationType.JPEG, type);
+				assertEquals("-m", DestinationType.JPEG.toString(), type.toString());
 			}
 
 		};
+		t.runTest("-m image/jpe");
 
-		addTest(t);
-		t.setId("MainConfigTest.mimeType.jpegC");
+		// MainConfigTest.mimeType.png
 
-		t = new MainConfigTest("-m image/png") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				DestinationType type = c.getDestinationType();
-				if (type.equals(DestinationType.PNG)) {
-					return reportSuccess();
-				} else {
-					return reportError("-m", DestinationType.PNG.toString(), "" + type);
-				}
+				assertEquals(DestinationType.PNG, type);
+				assertEquals("-m", DestinationType.PNG.toString(), type.toString());
 			}
 
 		};
+		t.runTest("-m image/png");
 
-		addTest(t);
-		t.setId("MainConfigTest.mimeType.png");
+		// MainConfigTest.mimeType.tiff
 
-		t = new MainConfigTest("-m image/tiff") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				DestinationType type = c.getDestinationType();
-				if (type.equals(DestinationType.TIFF)) {
-					return reportSuccess();
-				} else {
-					return reportError("-m", DestinationType.TIFF.toString(), "" + type);
-				}
+				assertEquals(DestinationType.TIFF, type);
+				assertEquals("-m", DestinationType.TIFF.toString(), type.toString());
 			}
 
 		};
+		t.runTest("-m image/tiff");
 
-		addTest(t);
-		t.setId("MainConfigTest.mimeType.tiff");
+		// MainConfigTest.width
 
-		t = new MainConfigTest("-w 467.69") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				float width = c.getWidth();
-				if (width == 467.69f) {
-					return reportSuccess();
-				} else {
-					return reportError("-w", "" + 467.69, "" + width);
-				}
+				assertEquals("-w", 467.69f, width, 1e-3);
 			}
 
 		};
+		t.runTest("-w 467.69");
 
-		addTest(t);
-		t.setId("MainConfigTest.width");
+		// MainConfigTest.height
 
-		t = new MainConfigTest("-h 345.67") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				float height = c.getHeight();
-				if (height == 345.67f) {
-					return reportSuccess();
-				} else {
-					return reportError("-h", "" + 345.67, "" + height);
-				}
+				assertEquals("-h", 345.67, height, 1e-3);
 			}
 
 		};
+		t.runTest("-h 345.67");
 
-		addTest(t);
-		t.setId("MainConfigTest.height");
-
-		t = new MainConfigTest("-maxw 467.69") {
+		// MainConfigTest.maxWidth
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				float maxWidth = c.getMaxWidth();
-				if (maxWidth == 467.69f) {
-					return reportSuccess();
-				} else {
-					return reportError("-maxw", "" + 467.69, "" + maxWidth);
-				}
+				assertEquals("-maxw", 467.69f, maxWidth, 1e-3);
 			}
 
 		};
-		addTest(t);
-		t.setId("MainConfigTest.maxWidth");
+		t.runTest("-maxw 467.69");
 
-		t = new MainConfigTest("-maxh 345.67") {
+		// MainConfigTest.maxHeight
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				float maxHeight = c.getMaxHeight();
-				if (maxHeight == 345.67f) {
-					return reportSuccess();
-				} else {
-					return reportError("-maxh", "" + 345.67, "" + maxHeight);
-				}
+				assertEquals("-maxh", 345.67, maxHeight, 1e-3);
 			}
 		};
-		addTest(t);
-		t.setId("MainConfigTest.maxHeight");
+		t.runTest("-maxh 345.67");
 
-		t = new MainConfigTest("-a 5,10,20,30") {
+		// MainConfigTest.aoi
+
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				Rectangle2D aoi = c.getArea();
 				Rectangle2D.Float eAoi = new Rectangle2D.Float(5, 10, 20, 30);
-				if (eAoi.equals(aoi)) {
-					return reportSuccess();
-				} else {
-					return reportError("-a", toString(eAoi), toString(aoi));
-				}
+				assertEquals("-a", eAoi, aoi);
+				assertEquals("-a", toString(eAoi), toString(aoi));
 			}
 
 			public String toString(Rectangle2D r) {
@@ -238,20 +220,17 @@ public class MainTest extends DefaultTestSuite {
 			}
 
 		};
+		t.runTest("-a 5,10,20,30");
 
-		addTest(t);
-		t.setId("MainConfigTest.aoi");
+		// MainConfigTest.backgroundColor
 
-		t = new MainConfigTest("-bg 128.200.100.50") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				Color bg = c.getBackgroundColor();
 				Color eBg = new Color(200, 100, 50, 128); // Alpha is last
-				if (eBg.equals(bg)) {
-					return reportSuccess();
-				} else {
-					return reportError("-bg", toString(eBg), toString(bg));
-				}
+				assertEquals("-bg", eBg, bg);
+				assertEquals("-bg", toString(eBg), toString(bg));
 			}
 
 			public String toString(Color c) {
@@ -263,36 +242,28 @@ public class MainTest extends DefaultTestSuite {
 			}
 
 		};
+		t.runTest("-bg 128.200.100.50");
 
-		addTest(t);
-		t.setId("MainConfigTest.backgroundColor");
+		// MainConfigTest.cssMedia
 
-		t = new MainConfigTest("-cssMedia projection") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				String cssMedia = c.getMediaType();
 				String eCssMedia = "projection";
-				if (eCssMedia.equals(cssMedia)) {
-					return reportSuccess();
-				} else {
-					return reportError("-cssMedia", eCssMedia, cssMedia);
-				}
+				assertEquals("-cssMedia", eCssMedia, cssMedia);
 			}
 		};
+		t.runTest("-cssMedia projection");
 
-		addTest(t);
-		t.setId("MainConfigTest.cssMedia");
+		// MainConfigTest.fontFamily
 
-		t = new MainConfigTest("-font-family Arial, Comic Sans MS") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				String fontFamily = c.getDefaultFontFamily();
 				String eFontFamily = "Arial, Comic Sans MS";
-				if (eFontFamily.equals(fontFamily)) {
-					return reportSuccess();
-				} else {
-					return reportError("-font-family", eFontFamily, fontFamily);
-				}
+				assertEquals("-font-family", eFontFamily, fontFamily);
 			}
 
 			@Override
@@ -300,311 +271,238 @@ public class MainTest extends DefaultTestSuite {
 				return new String[] { "-font-family", "Arial, Comic Sans MS" };
 			}
 		};
+		t.runTest("-font-family Arial, Comic Sans MS");
 
-		addTest(t);
-		t.setId("MainConfigTest.fontFamily");
-
-		t = new MainConfigTest("-cssAlternate myAlternateStylesheet") {
+		// MainConfigTest.cssAlternate
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
+			public void validate(SVGConverter c) {
 				String alternate = c.getAlternateStylesheet();
 				String eAlternate = "myAlternateStylesheet";
-				if (eAlternate.equals(alternate)) {
-					return reportSuccess();
-				} else {
-					return reportError("-cssAlternate", eAlternate, alternate);
-				}
+				assertEquals("-cssAlternate", eAlternate, alternate);
 			}
 		};
-		addTest(t);
-		t.setId("MainConfigTest.cssAlternate");
+		t.runTest("-cssAlternate myAlternateStylesheet");
 
-		t = new MainConfigTest("-validate") {
+		// MainConfigTest.validate
+
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
-				if (c.getValidate()) {
-					return reportSuccess();
-				} else {
-					return reportError("-validate", "true", "false");
-				}
+			public void validate(SVGConverter c) {
+				assertTrue("-validate", c.getValidate());
 			}
 		};
+		t.runTest("-validate");
 
-		addTest(t);
-		t.setId("MainConfigTest.validate");
+		// MainConfigTest.onload
 
-		t = new MainConfigTest("-onload") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
-				if (c.getExecuteOnload()) {
-					return reportSuccess();
-				} else {
-					return reportError("-onload", "true", "false");
-				}
+			public void validate(SVGConverter c) {
+				assertTrue("-onload", c.getExecuteOnload());
 			}
 		};
+		t.runTest("-onload");
 
-		addTest(t);
-		t.setId("MainConfigTest.onload");
+		// MainConfigTest.scripts
 
-		t = new MainConfigTest("-scripts text/jpython") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
-				if ("text/jpython".equals(c.getAllowedScriptTypes())) {
-					return reportSuccess();
-				} else {
-					return reportError("-scripts", "text/jpython", ">>" + c.getAllowedScriptTypes() + "<<");
-				}
+			public void validate(SVGConverter c) {
+				assertEquals("-scripts", "text/jpython", c.getAllowedScriptTypes());
 			}
 		};
+		t.runTest("-scripts text/jpython");
 
-		addTest(t);
-		t.setId("MainConfigTest.scripts");
+		// MainConfigTest.anyScriptOrigin
 
-		t = new MainConfigTest("-anyScriptOrigin") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
-				if (!c.getConstrainScriptOrigin()) {
-					return reportSuccess();
-				} else {
-					return reportError("-anyScriptOrigin", "true", "false");
-				}
+			public void validate(SVGConverter c) {
+				assertFalse("-anyScriptOrigin", c.getConstrainScriptOrigin());
 			}
 		};
+		t.runTest("-anyScriptOrigin");
 
-		addTest(t);
-		t.setId("MainConfigTest.anyScriptOrigin");
+		// MainConfigTest.scriptSecurityOff
 
-		t = new MainConfigTest("-scriptSecurityOff") {
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
-				if (c.getSecurityOff()) {
-					return reportSuccess();
-				} else {
-					return reportError("-scriptSecurityOff", "true", "false");
-				}
+			public void validate(SVGConverter c) {
+				assertTrue("-scriptSecurityOff", c.getSecurityOff());
 			}
 		};
+		t.runTest("-scriptSecurityOff");
 
-		addTest(t);
-		t.setId("MainConfigTest.scriptSecurityOff");
-
-		t = new MainConfigTest("-lang fr") {
+		// MainConfigTest.lang
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
-				if ("fr".equals(c.getLanguage())) {
-					return reportSuccess();
-				} else {
-					return reportError("-lang", "fr", c.getLanguage());
-				}
+			public void validate(SVGConverter c) {
+				assertEquals("-lang", "fr", c.getLanguage());
 			}
 		};
-		addTest(t);
-		t.setId("MainConfigTest.lang");
+		t.runTest("-lang fr");
 
-		t = new MainConfigTest("-cssUser myStylesheet.css") {
+		// MainConfigTest.cssUser
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
-				if ("myStylesheet.css".equals(c.getUserStylesheet())) {
-					return reportSuccess();
-				} else {
-					return reportError("-cssUser", "myStylesheet.css", c.getUserStylesheet());
-				}
+			public void validate(SVGConverter c) {
+				assertEquals("-cssUser", "myStylesheet.css", c.getUserStylesheet());
 			}
 		};
-		addTest(t);
-		t.setId("MainConfigTest.cssUser");
+		t.runTest("-cssUser myStylesheet.css");
 
-		t = new MainConfigTest("-dpi 5.08") {
+		// MainConfigTest.dpi
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
-				if (c.getPixelUnitToMillimeter() == 5f) {
-					return reportSuccess();
-				} else {
-					return reportError("-dpi", "5f", "" + c.getPixelUnitToMillimeter());
-				}
+			public void validate(SVGConverter c) {
+				assertEquals("-dpi", 5f, c.getPixelUnitToMillimeter(), 1e-3);
 			}
 		};
-		addTest(t);
-		t.setId("MainConfigTest.dpi");
+		t.runTest("-dpi 5.08");
 
-		t = new MainConfigTest("-q .5") {
+		// MainConfigTest.quality
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
-				if (c.getQuality() == .5f) {
-					return reportSuccess();
-				} else {
-					return reportError("-q", ".5f", "" + c.getQuality());
-				}
+			public void validate(SVGConverter c) {
+				assertEquals("-q", .5f, c.getQuality(), 1e-3);
 			}
 		};
-		addTest(t);
-		t.setId("MainConfigTest.quality");
+		t.runTest("-q .5");
 
-		t = new MainConfigTest("-indexed 8") {
+		// MainConfigTest.indexed
+		t = new MainConfigTest() {
 			@Override
-			public TestReport validate(SVGConverter c) {
-				if (c.getIndexed() == 8) {
-					return reportSuccess();
-				} else {
-					return reportError("-indexed", "8", "" + c.getIndexed());
-				}
+			public void validate(SVGConverter c) {
+				assertEquals("-indexed", 8, c.getIndexed());
 			}
 		};
-		addTest(t);
-		t.setId("MainConfigTest.indexed");
+		t.runTest("-indexed 8");
 
-		t = new MainConfigErrorTest("-d", "hello.svg -d");
-		addTest(t);
-		t.setId("MainConfigErrorTest.output");
+		new MainConfigErrorTest().runTest("-d", "hello.svg -d");
+		// MainConfigErrorTest.output
 
-		t = new MainConfigErrorTest("-m", "hello.svg -m");
-		addTest(t);
-		t.setId("MainConfigErrorTest.mimeType");
+		new MainConfigErrorTest().runTest("-m", "hello.svg -m");
+		// MainConfigErrorTest.mimeType
 
-		t = new MainConfigErrorTest("-w", "hello.svg -w");
-		addTest(t);
-		t.setId("MainConfigErrorTest.width");
+		new MainConfigErrorTest().runTest("-w", "hello.svg -w");
+		// MainConfigErrorTest.width
 
-		t = new MainConfigErrorTest("-h", "hello.svg -h");
-		addTest(t);
-		t.setId("MainConfigErrorTest.height");
+		new MainConfigErrorTest().runTest("-h", "hello.svg -h");
+		// MainConfigErrorTest.height
 
-		t = new MainConfigErrorTest("-maxw", "hello.svg -maxw");
-		addTest(t);
-		t.setId("MainConfigErrorTest.maxWidth");
+		new MainConfigErrorTest().runTest("-maxw", "hello.svg -maxw");
+		// MainConfigErrorTest.maxWidth
 
-		t = new MainConfigErrorTest("-maxh", "hello.svg -maxh");
-		addTest(t);
-		t.setId("MainConfigErrorTest.maxHeight");
+		new MainConfigErrorTest().runTest("-maxh", "hello.svg -maxh");
+		// MainConfigErrorTest.maxHeight
 
-		t = new MainConfigErrorTest("-a", "hello.svg -a");
-		addTest(t);
-		t.setId("MainConfigErrorTest.area");
+		new MainConfigErrorTest().runTest("-a", "hello.svg -a");
+		// MainConfigErrorTest.area
 
-		t = new MainConfigErrorTest("-bg", "hello.svg -bg");
-		addTest(t);
-		t.setId("MainConfigErrorTest.backgroundColor");
+		new MainConfigErrorTest().runTest("-bg", "hello.svg -bg");
+		// MainConfigErrorTest.backgroundColor
 
-		t = new MainConfigErrorTest("-cssMedia", "hello.svg -cssMedia");
-		addTest(t);
-		t.setId("MainConfigErrorTest.mediaType");
+		new MainConfigErrorTest().runTest("-cssMedia", "hello.svg -cssMedia");
+		// MainConfigErrorTest.mediaType
 
-		t = new MainConfigErrorTest("-font-family", "hello.svg -font-family");
-		addTest(t);
-		t.setId("MainConfigErrorTest.font-family");
+		new MainConfigErrorTest().runTest("-font-family", "hello.svg -font-family");
+		// MainConfigErrorTest.font-family
 
-		t = new MainConfigErrorTest("-cssAlternate", "hello.svg -cssAlternate");
-		addTest(t);
-		t.setId("MainConfigErrorTest.cssAlternate");
+		new MainConfigErrorTest().runTest("-cssAlternate", "hello.svg -cssAlternate");
+		// MainConfigErrorTest.cssAlternate
 
-		t = new MainConfigErrorTest("-lang", "hello.svg -lang");
-		addTest(t);
-		t.setId("MainConfigErrorTest.lang");
+		new MainConfigErrorTest().runTest("-lang", "hello.svg -lang");
+		// MainConfigErrorTest.lang
 
-		t = new MainConfigErrorTest("-cssUser", "hello.svg -cssUser");
-		addTest(t);
-		t.setId("MainConfigErrorTest.cssUser");
+		new MainConfigErrorTest().runTest("-cssUser", "hello.svg -cssUser");
+		// MainConfigErrorTest.cssUser
 
-		t = new MainConfigErrorTest("-dpi", "hello.svg -dpi");
-		addTest(t);
-		t.setId("MainConfigErrorTest.dpi");
+		new MainConfigErrorTest().runTest("-dpi", "hello.svg -dpi");
+		// MainConfigErrorTest.dpi
 
-		t = new MainConfigErrorTest("-q", "hello.svg -q");
-		addTest(t);
-		t.setId("MainConfigErrorTest.quality");
+		new MainConfigErrorTest().runTest("-q", "hello.svg -q");
+		// MainConfigErrorTest.quality
 
-		t = new MainConfigErrorTest("-scripts", "hello.svg -scripts");
-		addTest(t);
-		t.setId("MainConfigErrorTest.allowedScriptTypes");
+		new MainConfigErrorTest().runTest("-scripts", "hello.svg -scripts");
+		// MainConfigErrorTest.allowedScriptTypes
 
-		t = new MainIllegalArgTest("-m", "-m images/jpeq");
-		addTest(t);
-		t.setId("MainIllegalArgTest.mediaType");
+		new MainIllegalArgTest().runTest("-m", "-m images/jpeq");
+		// MainIllegalArgTest.mediaType
 
-		t = new MainIllegalArgTest("-w", "-w abd");
-		addTest(t);
-		t.setId("MainIllegalArgTest.width");
+		new MainIllegalArgTest().runTest("-w", "-w abd");
+		// MainIllegalArgTest.width
 
-		t = new MainIllegalArgTest("-h", "-h abaa");
-		addTest(t);
-		t.setId("MainIllegalArgTest.height");
+		new MainIllegalArgTest().runTest("-h", "-h abaa");
+		// MainIllegalArgTest.height
 
-		t = new MainIllegalArgTest("-maxw", "-maxw abd");
-		addTest(t);
-		t.setId("MainIllegalArgTest.maxWidth");
+		new MainIllegalArgTest().runTest("-maxw", "-maxw abd");
+		// MainIllegalArgTest.maxWidth
 
-		t = new MainIllegalArgTest("-maxh", "-maxh abaa");
-		addTest(t);
-		t.setId("MainIllegalArgTest.maxHeight");
+		new MainIllegalArgTest().runTest("-maxh", "-maxh abaa");
+		// MainIllegalArgTest.maxHeight
 
-		t = new MainIllegalArgTest("a", "-a aaaaaa");
-		addTest(t);
-		t.setId("MainIllegalArgTest.aoi");
+		new MainIllegalArgTest().runTest("a", "-a aaaaaa");
+		// MainIllegalArgTest.aoi
 
-		t = new MainIllegalArgTest("bg", "-bg a.b.c.d");
-		addTest(t);
-		t.setId("MainIllegalArgTest.bg");
+		new MainIllegalArgTest().runTest("bg", "-bg a.b.c.d");
+		// MainIllegalArgTest.bg
 
-		t = new MainIllegalArgTest("dpi", "-dpi invalidDPI");
-		addTest(t);
-		t.setId("MainIllegalArgTest.dpi");
+		new MainIllegalArgTest().runTest("dpi", "-dpi invalidDPI");
+		// MainIllegalArgTest.dpi
 
-		t = new MainIllegalArgTest("q", "-q illegalQuality");
-		addTest(t);
-		t.setId("MainIllegalArgTest.q");
+		new MainIllegalArgTest().runTest("q", "-q illegalQuality");
+		// MainIllegalArgTest.q
 
 	}
 
 }
 
-class MainIllegalArgTest extends AbstractTest {
-	String badOption;
-	String args;
-	TestReport report;
+abstract class AbstractMainTest {
+	private static final String ERROR_UNEXPECTED_ERROR_CODE = "MainConfigErrorTest.error.unexpected.error.code";
 
-	public MainIllegalArgTest(String badOption, String args) {
-		this.badOption = badOption;
-		this.args = args;
-	}
+	private boolean usagePrinted = false;
 
-	@Override
-	public String getName() {
-		return getId();
-	}
-
-	public static final String ERROR_NO_ERROR_REPORTED = "MainIllegalArgTest.error.no.error.reported";
-
-	public static final String ERROR_UNEXPECTED_ERROR_CODE = "MainIllegalArgTest.error.unexpected.error.code";
-
-	public static final String ENTRY_KEY_EXPECTED_ERROR_CODE = "MainIllegalArgTest.entry.key.expected.error.code";
-
-	public static final String ENTRY_KEY_GOT_ERROR_CODE = "MainIllegalArgTest.entry.key.got.error.code";
-
-	@Override
-	public TestReport runImpl() throws Exception {
+	public void runTest(String args) {
 		String[] argsArray = makeArgsArray(args);
 		Main main = new Main(argsArray) {
 			@Override
-			public void error(String errorCode, Object[] errorArgs) {
-				if (Main.ERROR_ILLEGAL_ARGUMENT.equals(errorCode)) {
-					report = reportSuccess();
-				} else {
-					report = reportError(ERROR_UNEXPECTED_ERROR_CODE);
-					report.addDescriptionEntry(ENTRY_KEY_EXPECTED_ERROR_CODE, Main.ERROR_ILLEGAL_ARGUMENT);
-					report.addDescriptionEntry(ENTRY_KEY_GOT_ERROR_CODE, errorCode);
-				}
+			public void validateConverterConfig(SVGConverter c) {
+				validate(c);
+			}
+
+			@Override
+			protected void error(String errorCode, Object[] errorArgs) {
+				onError(errorCode, errorArgs);
+			}
+
+			@Override
+			protected void printUsage() {
+				usagePrinted = true;
 			}
 
 		};
 
 		main.execute();
+	}
 
-		if (report == null) {
-			report = reportError(ERROR_NO_ERROR_REPORTED);
-		}
+	protected void validate(SVGConverter c) {
+	}
 
-		return report;
+	void onError(String errorCode, Object[] errorArgs) {
+		assertNoError(errorCode);
+	}
+
+	void assertNoError(String errorCode) {
+		assertNull("Unexpected error code", errorCode);
+	}
+
+	void assertError(String expectedErrorCode, String errorCode) {
+		assertEquals(ERROR_UNEXPECTED_ERROR_CODE, expectedErrorCode, errorCode);
+	}
+
+	void assertUsagePrinted() {
+		assertTrue("Usage was not printed", usagePrinted);
 	}
 
 	String[] makeArgsArray(String args) {
@@ -619,82 +517,47 @@ class MainIllegalArgTest extends AbstractTest {
 
 }
 
-class MainConfigErrorTest extends AbstractTest {
-	String badOption;
-	String args;
-	TestReport report = null;
+class MainIllegalArgTest extends AbstractMainTest {
 
-	public static final String ERROR_UNEXPECTED_ERROR_ARGS_0 = "MainConfigErrorTest.error.unexpected.error.args.0";
+	private static final String ERROR_UNEXPECTED_ERROR_CODE = "MainIllegalArgTest.error.unexpected.error.code";
 
-	public static final String ERROR_UNEXPECTED_ERROR_CODE = "MainConfigErrorTest.error.unexpected.error.code";
-
-	public static final String ERROR_NO_ERROR_REPORTED = "MainConfigErrorTest.error.no.error.reported";
-
-	public static final String ENTRY_KEY_EXPECTED_ERROR_ARGS_0 = "MainConfigErrorTest.entry.key.expected.error.args.0";
-
-	public static final String ENTRY_KEY_GOT_ERROR_ARGS_0 = "MainConfigErrorTest.entry.key.got.error.args.0";
-
-	public static final String ENTRY_KEY_EXPECTED_ERROR_CODE = "MainConfigErrorTest.entry.key.expected.error.code";
-
-	public static final String ENTRY_KEY_GOT_ERROR_CODE = "MainConfigErrorTest.entry.key.got.error.code";
-
-	public MainConfigErrorTest(String badOption, String args) {
-		this.badOption = badOption;
-		this.args = args;
+	public void runTest(String badOption, String args) {
+		runTest(args);
 	}
 
 	@Override
-	public String getName() {
-		return getId();
+	void onError(String errorCode, Object[] errorArgs) {
+		assertEquals(ERROR_UNEXPECTED_ERROR_CODE, Main.ERROR_ILLEGAL_ARGUMENT, errorCode);
 	}
 
 	@Override
-	public TestReport runImpl() throws Exception {
-		String[] argsArray = makeArgsArray(args);
-		Main main = new Main(argsArray) {
-			@Override
-			public void error(String errorCode, Object[] errorArgs) {
-				if (Main.ERROR_NOT_ENOUGH_OPTION_VALUES.equals(errorCode)) {
-					if (errorArgs != null && errorArgs.length > 0 && badOption.equals(errorArgs[0])) {
-						report = reportSuccess();
-					} else {
-						report = reportError(ERROR_UNEXPECTED_ERROR_ARGS_0);
-						report.addDescriptionEntry(ENTRY_KEY_EXPECTED_ERROR_ARGS_0, badOption);
-						report.addDescriptionEntry(ENTRY_KEY_GOT_ERROR_ARGS_0,
-								errorArgs != null && errorArgs.length > 0 ? errorArgs[0] : "none");
-					}
-				} else {
-					report = reportError(ERROR_UNEXPECTED_ERROR_CODE);
-					report.addDescriptionEntry(ENTRY_KEY_EXPECTED_ERROR_CODE, Main.ERROR_NOT_ENOUGH_OPTION_VALUES);
-					report.addDescriptionEntry(ENTRY_KEY_GOT_ERROR_CODE, errorCode);
-				}
-			}
-
-		};
-
-		main.execute();
-
-		if (report == null) {
-			report = reportError(ERROR_NO_ERROR_REPORTED);
-		}
-
-		return report;
+	void assertError(String expectedErrorCode, String errorCode) {
+		super.assertError(expectedErrorCode, errorCode);
+		assertUsagePrinted();
 	}
 
-	String[] makeArgsArray(String args) {
-		StringTokenizer st = new StringTokenizer(args, " ");
-		String[] argsArray = new String[st.countTokens()];
-		for (int i = 0; i < argsArray.length; i++) {
-			argsArray[i] = st.nextToken();
-		}
-
-		return argsArray;
-	}
 }
 
-abstract class MainConfigTest extends AbstractTest {
-	String args;
-	TestReport report;
+class MainConfigErrorTest extends AbstractMainTest {
+
+	private String badOption = null;
+
+	public void runTest(String badOption, String args) {
+		this.badOption = badOption;
+		runTest(args);
+	}
+
+	@Override
+	void onError(String errorCode, Object[] errorArgs) {
+		assertError(Main.ERROR_NOT_ENOUGH_OPTION_VALUES, errorCode);
+		assertNotNull(errorArgs);
+		assertTrue(errorArgs.length > 0);
+		assertEquals(badOption, errorArgs[0]);
+	}
+
+}
+
+abstract class MainConfigTest extends AbstractMainTest {
 
 	static final String ERROR_UNEXPECTED_OPTION_VALUE = "MainConfigTest.error.unexpected.option.value";
 
@@ -704,49 +567,7 @@ abstract class MainConfigTest extends AbstractTest {
 
 	static final String ENTRY_KEY_ACTUAL_VALUE = "MainConfigTest.entry.key.actual.value";
 
-	public TestReport reportError(String option, String expectedValue, String actualValue) {
-		TestReport report = reportError(ERROR_UNEXPECTED_OPTION_VALUE);
-		report.addDescriptionEntry(ENTRY_KEY_OPTION, option);
-		report.addDescriptionEntry(ENTRY_KEY_EXPECTED_VALUE, expectedValue);
-		report.addDescriptionEntry(ENTRY_KEY_ACTUAL_VALUE, actualValue);
-		return report;
-	}
-
-	public MainConfigTest(String args) {
-		this.args = args;
-	}
-
 	@Override
-	public String getName() {
-		return getId();
-	}
-
-	@Override
-	public TestReport runImpl() throws Exception {
-		String[] argsArray = makeArgsArray(args);
-		Main main = new Main(argsArray) {
-			@Override
-			public void validateConverterConfig(SVGConverter c) {
-				report = validate(c);
-			}
-
-		};
-
-		main.execute();
-
-		return report;
-	}
-
-	public abstract TestReport validate(SVGConverter c);
-
-	String[] makeArgsArray(String args) {
-		StringTokenizer st = new StringTokenizer(args, " ");
-		String[] argsArray = new String[st.countTokens()];
-		for (int i = 0; i < argsArray.length; i++) {
-			argsArray[i] = st.nextToken();
-		}
-
-		return argsArray;
-	}
+	public abstract void validate(SVGConverter c);
 
 }

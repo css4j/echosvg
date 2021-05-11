@@ -19,6 +19,8 @@
 
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -30,8 +32,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.TestReport;
+import org.junit.Test;
 
 /**
  * This test validates the PNGEncoder operation. It creates a BufferedImage,
@@ -42,26 +43,10 @@ import io.sf.carte.echosvg.test.TestReport;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class PNGEncoderTest extends AbstractTest {
-	/**
-	 * Error when image cannot be encoded {0} = trace for the exception which was
-	 * reported
-	 */
-	public static final String ERROR_CANNOT_ENCODE_IMAGE = "PNGEncoderTest.error.cannot.encode.image";
+public class PNGEncoderTest {
 
-	/**
-	 * Error when image cannot be decoded {0} = trace for the exception which was
-	 * reported
-	 */
-	public static final String ERROR_CANNOT_DECODE_IMAGE = "PNGEncoderTest.error.cannot.decode.image";
-
-	/**
-	 * Decoded image differs from encoded image
-	 */
-	public static final String ERROR_DECODED_DOES_NOT_MATCH_ENCODED = "PNGEncoderTest.error.decoded.does.not.match.encoded";
-
-	@Override
-	public TestReport runImpl() throws Exception {
+	@Test
+	public void test() throws Exception {
 		// Create a BufferedImage to be encoded
 		BufferedImage image = new BufferedImage(100, 75, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D ig = image.createGraphics();
@@ -91,24 +76,15 @@ public class PNGEncoderTest extends AbstractTest {
 		PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(image);
 		PNGImageEncoder pngImageEncoder = new PNGImageEncoder(os, params);
 
-		try {
-			pngImageEncoder.encode(image);
-			os.close();
-		} catch (Exception e) {
-			return reportException(ERROR_CANNOT_ENCODE_IMAGE, e);
-		}
+		pngImageEncoder.encode(image);
+		os.close();
 
 		// Now, try to decode image
 		InputStream is = buildInputStream(bos);
 
 		PNGImageDecoder pngImageDecoder = new PNGImageDecoder(is, new PNGDecodeParam());
 
-		RenderedImage decodedRenderedImage = null;
-		try {
-			decodedRenderedImage = pngImageDecoder.decodeAsRenderedImage(0);
-		} catch (Exception e) {
-			return reportException(ERROR_CANNOT_DECODE_IMAGE, e);
-		}
+		RenderedImage decodedRenderedImage = pngImageDecoder.decodeAsRenderedImage(0);
 
 		BufferedImage decodedImage = null;
 		if (decodedRenderedImage instanceof BufferedImage) {
@@ -122,18 +98,14 @@ public class PNGEncoderTest extends AbstractTest {
 		}
 
 		// Compare images
-		if (!checkIdentical(image, decodedImage)) {
-			return reportError(ERROR_DECODED_DOES_NOT_MATCH_ENCODED);
-		}
-
-		return reportSuccess();
+		assertTrue(checkIdentical(image, decodedImage));
 	}
 
 	/**
 	 * Template method for building the PNG output stream. This gives a chance to
 	 * sub-classes (e.g., Base64PNGEncoderTest) to add an additional encoding.
 	 */
-	public OutputStream buildOutputStream(ByteArrayOutputStream bos) {
+	protected OutputStream buildOutputStream(ByteArrayOutputStream bos) {
 		return bos;
 	}
 
@@ -141,14 +113,14 @@ public class PNGEncoderTest extends AbstractTest {
 	 * Template method for building the PNG input stream. This gives a chance to
 	 * sub-classes (e.g., Base64PNGEncoderTest) to add an additional decoding.
 	 */
-	public InputStream buildInputStream(ByteArrayOutputStream bos) {
+	protected InputStream buildInputStream(ByteArrayOutputStream bos) {
 		return new ByteArrayInputStream(bos.toByteArray());
 	}
 
 	/**
 	 * Compares the data for the two images
 	 */
-	public static boolean checkIdentical(BufferedImage imgA, BufferedImage imgB) {
+	private static boolean checkIdentical(BufferedImage imgA, BufferedImage imgB) {
 		boolean identical = true;
 		if (imgA.getWidth() == imgB.getWidth() && imgA.getHeight() == imgB.getHeight()) {
 			int w = imgA.getWidth();

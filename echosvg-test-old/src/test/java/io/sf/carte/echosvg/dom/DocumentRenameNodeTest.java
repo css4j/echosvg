@@ -18,7 +18,12 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGGElement;
@@ -32,16 +37,17 @@ import org.w3c.dom.svg.SVGSVGElement;
  * @version $Id$
  */
 public class DocumentRenameNodeTest extends DOM3Test {
-	@Override
-	public boolean runImplBasic() throws Exception {
+
+	@Test
+	public void test() throws DOMException {
 		Document doc = newSVGDoc();
 		Element e2 = doc.createElementNS(SVG_NAMESPACE_URI, "g");
-		boolean pass = e2 instanceof SVGGElement;
+		assertTrue(e2 instanceof SVGGElement);
 		e2 = (Element) ((AbstractDocument) doc).renameNode(e2, SVG_NAMESPACE_URI, "svg");
-		pass = pass && e2 instanceof SVGSVGElement;
+		assertTrue(e2 instanceof SVGSVGElement);
 		Attr a = doc.createAttributeNS(null, "test");
 		a = (Attr) ((AbstractDocument) doc).renameNode(a, EX_NAMESPACE_URI, "test2");
-		pass = pass && a.getNamespaceURI().equals(EX_NAMESPACE_URI) && a.getLocalName().equals("test2");
-		return pass;
+		assertEquals(EX_NAMESPACE_URI, a.getNamespaceURI());
+		assertEquals("test2", a.getLocalName());
 	}
 }

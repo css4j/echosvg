@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
@@ -36,22 +37,34 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 public class PixelToMMTest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
 
 	/** The pixel to mm factor. */
-	protected Float px2mm;
+	private float px2mm;
+
+	@org.junit.Test
+	public void test96dpi() throws TranscoderException {
+		testPixelToMM("test-resources/io/sf/carte/echosvg/transcoder/image/resources/px2mm.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/px2mm96dpi.png", 0.2645833f);
+	}
+
+	@org.junit.Test
+	public void test72dpi() throws TranscoderException {
+		testPixelToMM("test-resources/io/sf/carte/echosvg/transcoder/image/resources/px2mm.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/px2mm72dpi.png", 0.3528f);
+	}
 
 	/**
-	 * Constructs a new <code>PixelToMMTest</code>.
+	 * Runs a new <code>PixelToMMTest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
 	 * @param px2mm       the pixel to mm conversion factor
 	 */
-	public PixelToMMTest(String inputURI, String refImageURI, Float px2mm) {
+	private void testPixelToMM(String inputURI, String refImageURI, float px2mm) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.px2mm = px2mm;
@@ -62,7 +75,7 @@ public class PixelToMMTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected TranscoderInput createTranscoderInput() {
-		return new TranscoderInput(resolveURL(inputURI).toString());
+		return new TranscoderInput(resolveURI(inputURI).toString());
 	}
 
 	/**
@@ -80,6 +93,7 @@ public class PixelToMMTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

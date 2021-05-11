@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 
 /**
@@ -35,18 +36,23 @@ import io.sf.carte.echosvg.transcoder.TranscoderInput;
 public class ReaderTest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
+
+	@org.junit.Test
+	public void test() throws TranscoderException {
+		testReader("samples/anne.svg", "test-references/samples/anne.png");
+	}
 
 	/**
-	 * Constructs a new <code>ReaderTest</code>.
+	 * Runs a new <code>ReaderTest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
 	 */
-	public ReaderTest(String inputURI, String refImageURI) {
+	private void testReader(String inputURI, String refImageURI) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 	}
@@ -57,7 +63,7 @@ public class ReaderTest extends AbstractImageTranscoderTest {
 	@Override
 	protected TranscoderInput createTranscoderInput() {
 		try {
-			URL url = resolveURL(inputURI);
+			URL url = resolveURI(inputURI);
 			Reader reader = new InputStreamReader(url.openStream());
 			TranscoderInput input = new TranscoderInput(reader);
 			input.setURI(url.toString()); // Needed for external resources
@@ -72,6 +78,7 @@ public class ReaderTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

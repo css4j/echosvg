@@ -19,13 +19,14 @@
 
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.test.TestReport;
+import java.io.IOException;
+
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
- * Helper class to simplify writing the unitTesting.xml file for the bridge.
+ * Script test runner.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -33,25 +34,45 @@ import io.sf.carte.echosvg.util.ParsedURL;
  */
 
 public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
-	String scripts = "text/ecmascript, application/java-archive";
-	boolean secure = true;
-	String scriptOrigin = "any";
-	String fileName;
+	private String scripts = "text/ecmascript, application/java-archive";
+	private boolean secure = true;
+	private String scriptOrigin = "any";
+	private String id = null;
+	private String description;
 
 	TestUserAgent userAgent = new TestUserAgent();
 
-	@Override
-	public void setId(String id) {
-		super.setId(id);
-
+	public void runTest() throws IOException {
 		if (id != null) {
-			int i = id.indexOf("(");
-			if (i != -1) {
-				id = id.substring(0, i);
+			ApplicationSecurityEnforcer ase = new ApplicationSecurityEnforcer(this.getClass(),
+					"io/sf/carte/echosvg/apps/svgbrowser/svgbrowser.policy");
+
+			if (secure) {
+				ase.enforceSecurity(true);
 			}
-			fileName = "test-resources/io/sf/carte/echosvg/bridge/" + id + ".svg";
-			svgURL = resolveURL(fileName);
+
+			try {
+				testSVGOnLoad("io/sf/carte/echosvg/bridge/" + id + ".svg", null);
+			} finally {
+				ase.enforceSecurity(false);
+			}
 		}
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public void setSecure(boolean secure) {
@@ -79,33 +100,11 @@ public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
 	}
 
 	@Override
-	public TestReport runImpl() throws Exception {
-		ApplicationSecurityEnforcer ase = new ApplicationSecurityEnforcer(this.getClass(),
-				"io/sf/carte/echosvg/apps/svgbrowser/resources/svgbrowser.policy");
-
-		if (secure) {
-			ase.enforceSecurity(true);
-		}
-
-		try {
-			return super.runImpl();
-		} catch (ExceptionInInitializerError e) {
-			e.printStackTrace();
-			throw e;
-		} catch (NoClassDefFoundError e) {
-			// e.printStackTrace();
-			throw new Exception(e.getMessage());
-		} finally {
-			ase.enforceSecurity(false);
-		}
-	}
-
-	@Override
 	protected UserAgent buildUserAgent() {
 		return userAgent;
 	}
 
-	class TestUserAgent extends UserAgentAdapter {
+	private class TestUserAgent extends UserAgentAdapter {
 		@Override
 		public ScriptSecurity getScriptSecurity(String scriptType, ParsedURL scriptPURL, ParsedURL docPURL) {
 			ScriptSecurity scriptSecurity = null;

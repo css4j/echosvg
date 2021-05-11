@@ -18,10 +18,14 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
+import java.io.IOException;
+
+import org.junit.Test;
+
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 
 /**
- * Helper class to simplify writing the unitTesting.xml file for CSS DOM Tests.
+ * EcmaScript SVG DOM Test.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -29,9 +33,13 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
  */
 
 public class EcmaScriptSVGDOMTest extends SelfContainedSVGOnLoadTest {
-	@Override
-	public void setId(String id) {
-		super.setId(id);
-		svgURL = resolveURL("test-resources/io/sf/carte/echosvg/dom/svg/" + id + ".svg");
+
+	@Test
+	public void test() throws IOException {
+		testSVGOnLoad("io/sf/carte/echosvg/dom/svg/bug30580.svg");
+		testSVGOnLoad("io/sf/carte/echosvg/dom/svg/lengthTest.svg");
+		testSVGOnLoad("io/sf/carte/echosvg/dom/svg/locatableTest.svg");
+		testSVGOnLoad("io/sf/carte/echosvg/dom/svg/presentationAttrRemovalTest.svg");
 	}
+
 }

@@ -39,7 +39,7 @@ public class Base64PNGEncoderTest extends PNGEncoderTest {
 	 * Template method for building the PNG output stream
 	 */
 	@Override
-	public OutputStream buildOutputStream(ByteArrayOutputStream bos) {
+	protected OutputStream buildOutputStream(ByteArrayOutputStream bos) {
 		return new Base64EncoderStream(bos);
 	}
 
@@ -47,9 +47,10 @@ public class Base64PNGEncoderTest extends PNGEncoderTest {
 	 * Template method for building the PNG input stream
 	 */
 	@Override
-	public InputStream buildInputStream(ByteArrayOutputStream bos) {
+	protected InputStream buildInputStream(ByteArrayOutputStream bos) {
 		ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
 
 		return new Base64DecodeStream(bis);
 	}
+
 }

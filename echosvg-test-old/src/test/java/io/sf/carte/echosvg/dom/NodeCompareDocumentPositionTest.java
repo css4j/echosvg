@@ -18,6 +18,10 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 
 /**
@@ -28,8 +32,9 @@ import org.w3c.dom.Document;
  * @version $Id$
  */
 public class NodeCompareDocumentPositionTest extends DOM3Test {
-	@Override
-	public boolean runImplBasic() throws Exception {
+
+	@Test
+	public void test() throws DOMException {
 		Document doc = newSVGDoc();
 		AbstractNode e = (AbstractNode) doc.createElementNS(null, "test");
 		doc.getDocumentElement().appendChild(e);
@@ -40,14 +45,15 @@ public class NodeCompareDocumentPositionTest extends DOM3Test {
 		AbstractNode e4 = (AbstractNode) doc.createElementNS(null, "four");
 		doc.getDocumentElement().appendChild(e4);
 
-		return e.compareDocumentPosition(
-				e2) == (AbstractNode.DOCUMENT_POSITION_CONTAINS | AbstractNode.DOCUMENT_POSITION_PRECEDING)
-				&& e2.compareDocumentPosition(
-						e) == (AbstractNode.DOCUMENT_POSITION_CONTAINED_BY | AbstractNode.DOCUMENT_POSITION_FOLLOWING)
-				&& e.compareDocumentPosition(e) == 0
-				&& e2.compareDocumentPosition(e3) == AbstractNode.DOCUMENT_POSITION_PRECEDING
-				&& e3.compareDocumentPosition(e2) == AbstractNode.DOCUMENT_POSITION_FOLLOWING
-				&& e3.compareDocumentPosition(e4) == AbstractNode.DOCUMENT_POSITION_PRECEDING
-				&& e4.compareDocumentPosition(e3) == AbstractNode.DOCUMENT_POSITION_FOLLOWING;
+		assertEquals(AbstractNode.DOCUMENT_POSITION_CONTAINS | AbstractNode.DOCUMENT_POSITION_PRECEDING,
+				e.compareDocumentPosition(e2));
+		assertEquals(AbstractNode.DOCUMENT_POSITION_CONTAINED_BY | AbstractNode.DOCUMENT_POSITION_FOLLOWING,
+				e2.compareDocumentPosition(e));
+		assertEquals(0, e.compareDocumentPosition(e));
+		assertEquals(AbstractNode.DOCUMENT_POSITION_PRECEDING, e2.compareDocumentPosition(e3));
+		assertEquals(AbstractNode.DOCUMENT_POSITION_FOLLOWING, e3.compareDocumentPosition(e2));
+		assertEquals(AbstractNode.DOCUMENT_POSITION_PRECEDING, e3.compareDocumentPosition(e4));
+		assertEquals(AbstractNode.DOCUMENT_POSITION_FOLLOWING, e4.compareDocumentPosition(e3));
 	}
+
 }

@@ -18,15 +18,14 @@
  */
 package io.sf.carte.echosvg.svggen;
 
+import static org.junit.Assert.fail;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-
-import io.sf.carte.echosvg.test.DefaultTestSuite;
-import io.sf.carte.echosvg.test.Test;
-import io.sf.carte.echosvg.test.TestReport;
-import io.sf.carte.echosvg.test.TestReportValidator;
+import java.net.UnknownHostException;
 
 /**
  * Validates the operation of the <code>SVGAccuractyTest</code> class
@@ -35,36 +34,23 @@ import io.sf.carte.echosvg.test.TestReportValidator;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGAccuracyTestValidator extends DefaultTestSuite {
+public class SVGAccuracyTestValidator {
 	/**
 	 * Checks that test fails if: + Rendering sequence generates an exception +
 	 * There is no reference image + Reference SVG differs from the generated SVG
 	 * Checks that test works if SVG and reference SVG are identical
+	 * @throws IOException 
 	 */
-	public SVGAccuracyTestValidator() {
-		addTest(new NullPainter());
-		addTest(new PainterWithException());
-		addTest(new NullReferenceURL());
-		addTest(new InexistantReferenceURL());
-		addTest(new DiffWithReferenceImage());
-		addTest(new SameAsReferenceImage());
+	@org.junit.Test
+	public void testSVGAccuracyValidator() throws IOException {
+		new PainterWithException().test();
+		new NullReferenceURL().test();
+		new InexistantReferenceURL().test();
+		new DiffWithReferenceImage().test();
+		new SameAsReferenceImage().test();
 	}
 
-	static class NullPainter extends TestReportValidator {
-		@Override
-		public TestReport runImpl() throws Exception {
-			Painter painter = null;
-			URL refURL = new URL("http", "dummyHost", "dummyFile.svg");
-
-			Test t = new SVGAccuracyTest(painter, refURL);
-
-			setConfig(t, false, SVGAccuracyTest.ERROR_CANNOT_GENERATE_SVG);
-
-			return super.runImpl();
-		}
-	}
-
-	static class PainterWithException extends TestReportValidator implements Painter {
+	static class PainterWithException implements Painter {
 
 		@Override
 		public void paint(Graphics2D g) {
@@ -72,19 +58,19 @@ public class SVGAccuracyTestValidator extends DefaultTestSuite {
 			g.fillRect(0, 0, 20, 20);
 		}
 
-		@Override
-		public TestReport runImpl() throws Exception {
+		public void test() throws IOException {
 			Painter painter = this;
 			URL refURL = new URL("http", "dummyHost", "dummyFile.svg");
-			Test t = new SVGAccuracyTest(painter, refURL);
-
-			setConfig(t, false, SVGAccuracyTest.ERROR_CANNOT_GENERATE_SVG);
-
-			return super.runImpl();
+			SVGAccuracyTest t = new SVGAccuracyTest(painter, refURL);
+			try {
+				t.runTest(true);
+				fail("Must throw exception.");
+			} catch (NullPointerException e) {
+			}
 		}
 	}
 
-	static class ValidPainterTest extends TestReportValidator implements Painter {
+	static class ValidPainterTest implements Painter {
 
 		@Override
 		public void paint(Graphics2D g) {
@@ -94,44 +80,39 @@ public class SVGAccuracyTestValidator extends DefaultTestSuite {
 	}
 
 	static class NullReferenceURL extends ValidPainterTest {
-		@Override
-		public TestReport runImpl() throws Exception {
-			Test t = new SVGAccuracyTest(this, null);
-
-			setConfig(t, false, SVGAccuracyTest.ERROR_CANNOT_OPEN_REFERENCE_SVG_FILE);
-
-			return super.runImpl();
+		public void test() throws IOException {
+			SVGAccuracyTest t = new SVGAccuracyTest(this, null);
+			try {
+				t.runTest(true);
+				fail("Must throw exception.");
+			} catch (NullPointerException e) {
+			}
 		}
 	}
 
 	static class InexistantReferenceURL extends ValidPainterTest {
-		@Override
-		public TestReport runImpl() throws Exception {
-			Test t = new SVGAccuracyTest(this, new URL("http", "dummyHost", "dummyFile.svg"));
-
-			setConfig(t, false, SVGAccuracyTest.ERROR_CANNOT_OPEN_REFERENCE_SVG_FILE);
-
-			return super.runImpl();
+		public void test() throws IOException {
+			SVGAccuracyTest t = new SVGAccuracyTest(this, new URL("http", "dummyHost", "dummyFile.svg"));
+			try {
+				t.runTest(true);
+				fail("Must throw exception.");
+			} catch (UnknownHostException e) {
+			}
 		}
 	}
 
 	static class DiffWithReferenceImage extends ValidPainterTest {
-		@Override
-		public TestReport runImpl() throws Exception {
+		public void test() throws IOException {
 			File tmpFile = File.createTempFile("EmptySVGReference", null);
 			tmpFile.deleteOnExit();
 
-			Test t = new SVGAccuracyTest(this, tmpFile.toURI().toURL());
-
-			setConfig(t, false, SVGAccuracyTest.ERROR_GENERATED_SVG_INACCURATE);
-
-			return super.runImpl();
+			SVGAccuracyTest t = new SVGAccuracyTest(this, tmpFile.toURI().toURL());
+			t.runTest(true);
 		}
 	}
 
 	static class SameAsReferenceImage extends ValidPainterTest {
-		@Override
-		public TestReport runImpl() throws Exception {
+		public void test() throws IOException {
 			File tmpFile = File.createTempFile("SVGReference", null);
 			tmpFile.deleteOnExit();
 
@@ -139,17 +120,13 @@ public class SVGAccuracyTestValidator extends DefaultTestSuite {
 
 			t.setSaveSVG(tmpFile);
 
-			setConfig(t, false, SVGAccuracyTest.ERROR_GENERATED_SVG_INACCURATE);
-
 			// This first run should fail but it should
 			// have created the reference image in tmpFile
-			super.runImpl();
+			t.runTest(true);
 
 			// Second run should work because the reference
 			// image should match
-			setConfig(t, true, null);
-
-			return super.runImpl();
+			t.runTest(false);
 		}
 	}
 

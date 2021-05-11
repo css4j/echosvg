@@ -18,7 +18,8 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.test.DefaultTestSuite;
+import org.junit.Test;
+
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
 
 /**
@@ -28,8 +29,10 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class EcmaNoLoadTest extends DefaultTestSuite {
-	public EcmaNoLoadTest() {
+public class EcmaNoLoadTest {
+
+	@Test
+	public void test() throws Exception {
 		String scripts = "application/java-archive";
 		String[] scriptSource = { "bridge/ecmaCheckNoLoadAny", "bridge/ecmaCheckNoLoadSameAsDocument",
 				"bridge/ecmaCheckNoLoadEmbed", "bridge/ecmaCheckNoLoadEmbedAttr", };
@@ -44,8 +47,9 @@ public class EcmaNoLoadTest extends DefaultTestSuite {
 		for (String aScriptSource : scriptSource) {
 			for (boolean aSecure : secure) {
 				for (String aScriptOrigin : scriptOrigin) {
-					SVGOnLoadExceptionTest t = buildTest(scripts, aScriptSource, aScriptOrigin, aSecure, false, false);
-					addTest(t);
+					SVGOnLoadExceptionTest t = buildTest(scripts, aScriptSource, aScriptOrigin, aSecure, false,
+							"java.lang.SecurityException");
+					t.runTest();
 				}
 			}
 		}
@@ -58,18 +62,24 @@ public class EcmaNoLoadTest extends DefaultTestSuite {
 		scripts = "text/ecmascript";
 		for (int i = 0; i < scriptSource.length; i++) {
 			for (int k = 0; k < scriptOrigin.length; k++) {
-				boolean expectSuccess = ((i >= 2) && (k <= 2));
+				String expectedException;
+				if ((i >= 2) && (k <= 2)) {
+					// Success
+					expectedException = null;
+				} else {
+					expectedException = "java.lang.SecurityException";
+				}
 				SVGOnLoadExceptionTest t = buildTest(scripts, scriptSource[i], scriptOrigin[k], true, true,
-						expectSuccess);
-				addTest(t);
+						expectedException);
+				t.runTest();
 			}
 		}
 
 		//
-		// If "applicatin/ecmascript" is allowed, but the accepted
+		// If "application/ecmascript" is allowed, but the accepted
 		// script origin is lower than the candidate script, then
 		// the script should not be loaded (e.g., if scriptOrigin
-		// is embeded and trying to load an external script).
+		// is embedded and trying to load an external script).
 		//
 		for (int j = 0; j < scriptOrigin.length; j++) {
 			int max = j;
@@ -79,27 +89,25 @@ public class EcmaNoLoadTest extends DefaultTestSuite {
 			for (int i = 0; i < max; i++) {
 				for (boolean aSecure : secure) {
 					SVGOnLoadExceptionTest t = buildTest(scripts, scriptSource[i], scriptOrigin[j], aSecure, false,
-							false);
-					addTest(t);
+							"java.lang.SecurityException");
+					t.runTest();
 				}
 			}
 		}
 	}
 
-	SVGOnLoadExceptionTest buildTest(String scripts, String id, String origin, boolean secure, boolean restricted,
-			boolean successExpected) {
+	private SVGOnLoadExceptionTest buildTest(String scripts, String id, String origin, boolean secure,
+			boolean restricted, String expectedException) {
 		SVGOnLoadExceptionTest t = new SVGOnLoadExceptionTest();
 		String desc = "(scripts=" + scripts + ")(scriptOrigin=" + origin + ")(secure=" + secure + ")(restricted="
 				+ restricted + ")";
 
-		t.setId(id + desc);
+		t.setId(id);
+		t.setDescription(id + ' ' + desc);
 		t.setScriptOrigin(origin);
 		t.setSecure(secure);
 		t.setScripts(scripts);
-		if (successExpected)
-			t.setExpectedExceptionClass(null);
-		else
-			t.setExpectedExceptionClass("java.lang.SecurityException");
+		t.setExpectedExceptionClass(expectedException);
 		t.setRestricted(restricted);
 
 		return t;

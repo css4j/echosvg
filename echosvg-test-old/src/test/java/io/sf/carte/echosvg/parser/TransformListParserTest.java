@@ -19,11 +19,11 @@
 
 package io.sf.carte.echosvg.parser;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.StringReader;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
+import org.junit.Test;
 
 /**
  * To test the transform list parser.
@@ -32,56 +32,52 @@ import io.sf.carte.echosvg.test.TestReport;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class TransformListParserTest extends AbstractTest {
-
-	protected String sourceTransform;
-	protected String destinationTransform;
-
-	protected StringBuffer buffer;
-	protected String resultTransform;
+public class TransformListParserTest {
 
 	/**
-	 * Creates a new TransformListParserTest.
-	 * 
-	 * @param stransform The transform to parse.
-	 * @param dtransform The transform after serialization.
+	 * @param sourceTransform      The transform to parse.
+	 * @param destinationTransform The transform after serialization.
 	 */
-	public TransformListParserTest(String stransform, String dtransform) {
-		sourceTransform = stransform;
-		destinationTransform = dtransform;
-	}
-
-	@Override
-	public TestReport runImpl() throws Exception {
+	private void testTransformListParser(String sourceTransform, String destinationTransform) {
 		TransformListParser pp = new TransformListParser();
-		pp.setTransformListHandler(new TestHandler());
+		TestHandler handler = new TestHandler();
+		pp.setTransformListHandler(handler);
 
-		try {
-			pp.parse(new StringReader(sourceTransform));
-		} catch (ParseException e) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode("parse.error");
-			report.addDescriptionEntry("exception.text", e.getMessage());
-			report.setPassed(false);
-			return report;
-		}
+		pp.parse(new StringReader(sourceTransform));
 
-		if (!destinationTransform.equals(resultTransform)) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode("invalid.parsing.events");
-			report.addDescriptionEntry("expected.text", destinationTransform);
-			report.addDescriptionEntry("generated.text", resultTransform);
-			report.setPassed(false);
-			return report;
-		}
-
-		return reportSuccess();
+		assertEquals(destinationTransform, handler.resultTransform);
 	}
 
-	class TestHandler extends DefaultTransformListHandler {
-		boolean first;
+	@Test
+	public void test() throws Exception {
+		testTransformListParser("matrix(1 2 3 4 5 6)", "matrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)");
 
-		public TestHandler() {
+		testTransformListParser("translate(1)", "translate(1.0)");
+
+		testTransformListParser("translate(1e2 3e4)", "translate(100.0, 30000.0)");
+
+		testTransformListParser("scale(1e-2)", "scale(0.01)");
+
+		testTransformListParser("scale(-1e-2 -3e-4)", "scale(-0.01, -3.0E-4)");
+
+		testTransformListParser("skewX(1.234)", "skewX(1.234)");
+
+		testTransformListParser("skewY(.1)", "skewY(0.1)");
+
+		testTransformListParser("translate(1,2) skewY(.1)", "translate(1.0, 2.0) skewY(0.1)");
+
+		testTransformListParser("scale(1,2),skewX(.1e1)", "scale(1.0, 2.0) skewX(1.0)");
+
+		testTransformListParser("scale(1) , skewX(2) translate(3,4)", "scale(1.0) skewX(2.0) translate(3.0, 4.0)");
+	}
+
+	private class TestHandler extends DefaultTransformListHandler {
+		private StringBuffer buffer;
+		String resultTransform;
+
+		private boolean first;
+
+		TestHandler() {
 		}
 
 		@Override

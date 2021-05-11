@@ -18,11 +18,15 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.spi;
 
-import io.sf.carte.echosvg.test.AbstractTest;
+import static org.junit.Assert.assertTrue;
 
-public class ImageTagRegistryTest extends AbstractTest {
-	@Override
-	public boolean runImplBasic() throws Exception {
+import org.junit.Test;
+import org.w3c.dom.DOMException;
+
+public class ImageTagRegistryTest {
+
+	@Test
+	public void test() throws DOMException {
 		ImageTagRegistry ir = new ImageTagRegistry();
 		// Add a new registry entry with a HIGHER priority first
 		ir.register(new AbstractRegistryEntry("Unit test", 100, "working", "application/working") {
@@ -38,6 +42,6 @@ public class ImageTagRegistryTest extends AbstractTest {
 		assertTrue(ir.getRegisteredMimeTypes().contains("application/working"));
 		// The second was not added because of BATIK-1203.
 		assertTrue(ir.getRegisteredMimeTypes().contains("application/missing"));
-		return true;
 	}
+
 }

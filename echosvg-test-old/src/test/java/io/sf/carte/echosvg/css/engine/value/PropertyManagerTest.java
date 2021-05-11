@@ -19,8 +19,13 @@
 
 package io.sf.carte.echosvg.css.engine.value;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.StringReader;
 import java.util.StringTokenizer;
+
+import org.junit.Test;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.nsac.Parser;
@@ -30,9 +35,6 @@ import io.sf.carte.echosvg.css.engine.value.svg.OpacityManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SpacingManager;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
@@ -42,52 +44,252 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class PropertyManagerTest extends AbstractTest {
+public class PropertyManagerTest {
 
 	/**
-	 * The error code for the 'is inherited' test.
+	 * Runs this test.
 	 */
-	public static final String ERROR_IS_INHERITED = "PropertyManagerTest.error.inherited";
+	@Test
+	public void test() throws Exception {
+		// css.engine.value.svg.alignement-baseline
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.AlignmentBaselineManager", false, "auto",
+				"auto | baseline | before-edge | text-before-edge | middle | after-edge | text-after-edge | ideographic | alphabetic | hanging | mathematical");
+
+		// css.engine.value.svg.baseline-shift
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.BaselineShiftManager", false, "baseline",
+				"baseline | sub | super");
+
+		// css.engine.value.css2.clip
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.ClipManager", false, "auto", "auto");
+
+		// css.engine.value.svg.clip-path
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ClipPathManager", false, "none", "none");
+
+		// css.engine.value.svg.clip-rule
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ClipRuleManager", true, "nonzero",
+				"nonzero | evenodd");
+
+		// css.engine.value.svg.color
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ColorManager", true, "__USER_AGENT__", "");
+
+		// css.engine.value.svg.color-interpolation
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ColorInterpolationManager", true, "sRGB",
+				"auto | sRGB | linearRGB");
+
+		// css.engine.value.svg.color-interpolation-filters
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ColorInterpolationFiltersManager", true,
+				"linearRGB", "auto | sRGB | linearRGB");
+
+		// css.engine.value.svg.color-profile
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ColorProfileManager", true, "auto",
+				"auto | sRGB");
+
+		// css.engine.value.svg.color-rendering
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ColorRenderingManager", true, "auto",
+				"auto | optimizeSpeed | optimizeQuality");
+
+		// css.engine.value.css2.cursor
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.CursorManager", true, "auto",
+				"auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize| text | wait | help ");
+
+		// css.engine.value.css2.direction
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.DirectionManager", true, "ltr", "ltr | rtl");
+
+		// css.engine.value.css2.display
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.DisplayManager", false, "inline",
+				"inline | block | list-item | run-in | compact | marker | table | inline-table | table-row-group | table-header-group | table-footer-group | table-row | table-column-group | table-column | table-cell | table-caption | none");
+
+		// css.engine.value.svg.dominant-baseline
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.DominantBaselineManager", false, "auto",
+				"auto | use-script | no-change | reset-size | alphabetic | hanging | ideographic | mathematical | central | middle | text-after-edge | text-before-edge | text-top | text-bottom");
+
+		// css.engine.value.svg.enable-background
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.EnableBackgroundManager", false, "accumulate",
+				"accumulate");
+
+		// css.engine.value.svg.fill
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$FillManager", true,
+				"rgb(0, 0, 0)", "");
+
+		// css.engine.value.svg.fill-opacity
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$FillOpacityManager", true, "1",
+				"");
+
+		// css.engine.value.svg.fill-rule
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.FillRuleManager", true, "nonzero",
+				"nonzero | evenodd");
+
+		// css.engine.value.svg.filter
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.FilterManager", false, "none", "none");
+
+		// css.engine.value.svg.flood-color
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$FloodColorManager", false,
+				"rgb(0, 0, 0)", "currentColor");
+
+		// css.engine.value.svg.flood-opacity
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$FloodOpacityManager", false, "1",
+				"");
+
+		// IGNORE
+		// css.engine.value.css2.font
+		// testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontManager",
+		// true, "1", "");
+
+		// css.engine.value.css2.font-family
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontFamilyManager", true, "__USER_AGENT__", "");
+
+		// css.engine.value.css2.font-size
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontSizeManager", true, "medium", "medium");
+
+		// css.engine.value.css2.font-size-adjust
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontSizeAdjustManager", true, "none", "none");
+
+		// css.engine.value.css2.font-stretch
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontStretchManager", true, "normal",
+				"normal | wider | narrower | ultra-condensed | extra-condensed | condensed | semi-condensed | semi-expanded | expanded | extra-expanded | ultra-expanded");
+
+		// css.engine.value.css2.font-style
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontStyleManager", true, "normal",
+				"normal | italic | oblique");
+
+		// css.engine.value.css2.font-variant
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontVariantManager", true, "normal",
+				"normal | small-caps");
+
+		// css.engine.value.css2.font-weigth
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontWeightManager", true, "normal",
+				"normal | bold | bolder | lighter | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900");
+
+		// css.engine.value.svg.glyph-orientation-horizontal
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.GlyphOrientationHorizontalManager", true, "0deg",
+				"");
+
+		// css.engine.value.svg.glyph-orientation-vertical
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.GlyphOrientationVerticalManager", true, "auto",
+				"auto");
+
+		// css.engine.value.svg.image-rendering
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ImageRenderingManager", true, "auto",
+				"auto | optimizeSpeed | optimizeQuality");
+
+		// css.engine.value.svg.kerning
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.KerningManager", true, "auto", "auto");
+
+		// css.engine.value.svg.letter-spacing
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$LetterSpacingManager", true,
+				"normal", "normal");
+
+		// css.engine.value.svg.lighting-color
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$LightingColorManager", false,
+				"rgb(255, 255, 255)", "currentColor");
+
+		// IGNORE
+		// css.engine.value.svg.marker
+		// testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.MarkerManager",
+		// true, "", "");
+
+		// css.engine.value.svg.marker-start
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$MarkerStartManager", true, "none",
+				"none");
+
+		// css.engine.value.svg.marker-mid
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$MarkerMidManager", true, "none",
+				"none");
+
+		// css.engine.value.svg.marker-end
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$MarkerEndManager", true, "none",
+				"none");
+
+		// css.engine.value.svg.mask
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.MaskManager", false, "none", "none");
+
+		// css.engine.value.svg.opacity
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$DefaultOpacityManager", false,
+				"1", "");
+
+		// css.engine.value.css2.overflow
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.OverflowManager", false, "visible",
+				"visible | hidden | scroll | auto");
+
+		// css.engine.value.svg.pointer-events
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.PointerEventsManager", true, "visiblePainted",
+				"visiblePainted | visibleFill | visibleStroke | visible | painted | fill | stroke | all | none");
+
+		// css.engine.value.svg.shape-rendering
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ShapeRenderingManager", true, "auto",
+				"auto | optimizeSpeed | crispEdges | geometricPrecision");
+
+		// css.engine.value.svg.stop-color
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$StopColorManager", false,
+				"rgb(0, 0, 0)", "");
+
+		// css.engine.value.svg.stop-opacity
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$StopOpacityManager", false, "1",
+				"");
+
+		// css.engine.value.svg.stroke
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$StrokeManager", true, "none",
+				"none");
+
+		// css.engine.value.svg.stroke-dasharray
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.StrokeDasharrayManager", true, "none", "none");
+
+		// css.engine.value.svg.stroke-dashoffset
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.StrokeDashoffsetManager", true, "0", "0");
+
+		// css.engine.value.svg.stroke-linecap
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.StrokeLinecapManager", true, "butt",
+				"butt | round | square");
+
+		// css.engine.value.svg.stroke-linejoin
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.StrokeLinejoinManager", true, "miter",
+				"miter | round | bevel");
+
+		// css.engine.value.svg.stroke-miterlimit
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.StrokeMiterlimitManager", true, "4", "");
+
+		// css.engine.value.svg.stroke-opacity
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$StrokeOpacityManager", true, "1",
+				"");
+
+		// css.engine.value.svg.stroke-width
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.StrokeWidthManager", true, "1", "");
+
+		// css.engine.value.svg.text-anchor
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.TextAnchorManager", true, "start",
+				"start | middle | end");
+
+		// css.engine.value.svg.text-decoration
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.TextDecorationManager", false, "none",
+				"none | underline | overline | line-through | blink");
+
+		// css.engine.value.svg.text-rendering
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.TextRenderingManager", true, "auto",
+				"auto | optimizeSpeed | optimizeLegibility | geometricPrecision");
+
+		// css.engine.value.svg.unicode-bidi
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.UnicodeBidiManager", false, "normal",
+				"normal | embed | bidi-override");
+
+		// css.engine.value.css2.visibility
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.VisibilityManager", true, "visible",
+				"visible | hidden | collapse");
+
+		// css.engine.value.css2.word-spacing
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$WordSpacingManager", true,
+				"normal", "normal");
+
+		// css.engine.value.css2.writing-mode
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.WritingModeManager", true, "lr-tb",
+				"lr-tb | rl-tb | tb-rl | lr | rl | tb");
+	}
 
 	/**
-	 * The error code if the property does not support the 'inherit' value.
+	 * Creates the value manager.
 	 */
-	public static final String ERROR_INHERIT_VALUE = "PropertyManagerTest.error.inherit.value";
-
-	/**
-	 * The error code for the 'default value' test.
-	 */
-	public static final String ERROR_INVALID_DEFAULT_VALUE = "PropertyManagerTest.error.invalid.default.value";
-
-	/**
-	 * The error code for an invalid property value.
-	 */
-	public static final String ERROR_INVALID_VALUE = "PropertyManagerTest.error.invalid.value";
-
-	/**
-	 * The error code if an exception occured while creating the manager.
-	 */
-	public static final String ERROR_INSTANTIATION = "PropertyManagerTest.error.instantiation";
-
-	/**
-	 * The class of the manager.
-	 */
-	protected String managerClassName;
-
-	/**
-	 * This flag bit indicates whether or not the property is inherited.
-	 */
-	protected Boolean isInherited;
-
-	/**
-	 * The candidate values of the property.
-	 */
-	protected String[] identValues;
-
-	/**
-	 * The candidate default value of the property.
-	 */
-	protected String defaultValue;
+	private ValueManager createValueManager(String managerClassName) throws Exception {
+		return (ValueManager) Class.forName(managerClassName).getDeclaredConstructor().newInstance();
+	}
 
 	/**
 	 * Constructs a new test for the specified manager classname.
@@ -96,12 +298,16 @@ public class PropertyManagerTest extends AbstractTest {
 	 * @param isInherited      the expected flag to see if the property is inherited
 	 * @param defaultValue     the default value
 	 * @param identValueList   the list of possible identifiers
+	 * @throws Exception
 	 */
-	public PropertyManagerTest(String managerClassName, Boolean isInherited, String defaultValue,
-			String identValueList) {
-		this.managerClassName = managerClassName;
-		this.isInherited = isInherited;
-		this.defaultValue = defaultValue;
+	void testPropertyManager(String managerClassName, Boolean isInherited, String defaultValue, String identValueList)
+			throws Exception {
+
+		/**
+		 * The candidate values of the property.
+		 */
+		String[] identValues;
+
 		StringTokenizer tokens = new StringTokenizer(identValueList, "|");
 		int nbIdentValue = tokens.countTokens();
 		if (nbIdentValue > 0) {
@@ -109,88 +315,39 @@ public class PropertyManagerTest extends AbstractTest {
 			for (int i = 0; tokens.hasMoreTokens(); ++i) {
 				identValues[i] = tokens.nextToken().trim();
 			}
+		} else {
+			identValues = null;
 		}
-	}
 
-	/**
-	 * Creates the value manager.
-	 */
-	protected ValueManager createValueManager() throws Exception {
-		return (ValueManager) Class.forName(managerClassName).getDeclaredConstructor().newInstance();
-	}
-
-	/**
-	 * Runs this test. This method will only throw exceptions if some aspect of the
-	 * test's internal operation fails.
-	 */
-	@Override
-	public TestReport runImpl() throws Exception {
-		DefaultTestReport report = new DefaultTestReport(this);
-
-		ValueManager manager;
-		try {
-			manager = createValueManager();
-		} catch (Exception ex) {
-			report.setErrorCode(ERROR_INSTANTIATION);
-			report.setPassed(false);
-			report.addDescriptionEntry(ERROR_INSTANTIATION, ex.getMessage());
-			return report;
-		}
+		ValueManager manager = createValueManager(managerClassName);
 
 		// test default value if any
 		if (!defaultValue.equals("__USER_AGENT__")) {
 			String s = manager.getDefaultValue().getCssText();
-			if (!defaultValue.equalsIgnoreCase(s)) {
-				report.setErrorCode(ERROR_INVALID_DEFAULT_VALUE);
-				report.setPassed(false);
-				report.addDescriptionEntry(ERROR_INVALID_DEFAULT_VALUE, "should be: " + defaultValue);
-			}
+			assertTrue(defaultValue.equalsIgnoreCase(s));
 		}
 
 		// test if the property is inherited or not
-		if (isInherited != manager.isInheritedProperty()) {
-			report.setErrorCode(ERROR_IS_INHERITED);
-			report.setPassed(false);
-			report.addDescriptionEntry(ERROR_IS_INHERITED, "");
-		}
+		assertTrue(isInherited == manager.isInheritedProperty());
 
 		Parser cssParser = new CSSParser();
 		// see if the property supports the value 'inherit'
-		try {
-			LexicalUnit lu = cssParser.parsePropertyValue(new StringReader("inherit"));
-			Value v = manager.createValue(lu, null);
-			String s = v.getCssText();
-			if (!"inherit".equalsIgnoreCase(s)) {
-				report.setErrorCode(ERROR_INHERIT_VALUE);
-				report.setPassed(false);
-				report.addDescriptionEntry(ERROR_INHERIT_VALUE, "inherit");
-			}
-		} catch (Exception ex) {
-			report.setErrorCode(ERROR_INHERIT_VALUE);
-			report.setPassed(false);
-			report.addDescriptionEntry(ERROR_INHERIT_VALUE, ex.getMessage());
-		}
+		LexicalUnit lu = cssParser.parsePropertyValue(new StringReader("inherit"));
+		Value v = manager.createValue(lu, null);
+		String s = v.getCssText();
+		assertEquals("inherit", s);
 
 		// test all possible identifiers
 		if (identValues != null) {
-			try {
-				for (String identValue : identValues) {
-					LexicalUnit lu = cssParser.parsePropertyValue(new StringReader(identValue));
-					Value v = manager.createValue(lu, null);
-					String s = v.getCssText();
-					if (!identValue.equalsIgnoreCase(s)) {
-						report.setErrorCode(ERROR_INVALID_VALUE);
-						report.setPassed(false);
-						report.addDescriptionEntry(ERROR_INVALID_VALUE, identValue + '/' + s);
-					}
+			for (String identValue : identValues) {
+				lu = cssParser.parsePropertyValue(new StringReader(identValue));
+				v = manager.createValue(lu, null);
+				s = v.getCssText();
+				if (!s.equalsIgnoreCase(identValue)) {
+					assertEquals(identValue, s);
 				}
-			} catch (Exception ex) {
-				report.setErrorCode(ERROR_INVALID_VALUE);
-				report.setPassed(false);
-				report.addDescriptionEntry(ERROR_INVALID_VALUE, ex.getMessage());
 			}
 		}
-		return report;
 	}
 
 	/**

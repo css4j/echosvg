@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
@@ -36,22 +37,72 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 public class AOITest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
 
 	/** The area of interest. */
-	protected Rectangle2D aoi;
+	private Rectangle2D aoi;
 
 	/** The width of the image. */
-	protected Float imgWidth;
+	private float imgWidth;
 
 	/** The height of the image. */
-	protected Float imgHeight;
+	private float imgHeight;
+
+	@org.junit.Test
+	public void test() throws TranscoderException {
+		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneNW.png", 0f, 0f, 225f,
+				250f);
+		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneNE.png", 225f, 0f, 225f,
+				250f);
+		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneSW.png", 0f, 250f, 225f,
+				250f);
+		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneSE.png", 225f, 250f, 225f,
+				250f);
+		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneC.png", 125f, 150f, 225f,
+				250f);
+		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWNW.png", 0f, 0f, 225f,
+				250f, 225f, 250f);
+		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWNE.png", 225f, 0f, 225f,
+				250f, 225f, 250f);
+		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWSW.png", 0f, 250f, 225f,
+				250f, 225f, 250f);
+		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWSE.png", 225f, 250f,
+				225f, 250f, 225f, 250f);
+		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWC.png", 125f, 150f, 225f,
+				250f, 225f, 250f);
+
+		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyNW.png", 0f, 0f, 212.5f, 150f);
+		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyNE.png", 212.5f, 0f, 212.5f, 150f);
+		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflySW.png", 0f, 150f, 212.5f, 150f);
+		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflySE.png", 212.5f, 150f, 212.5f, 150f);
+		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyC.png", 125f, 150f, 212.5f, 150f);
+		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWNW.png", 0f, 0f, 212.5f, 150f, 212.5f,
+				150f);
+		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWNE.png", 212.5f, 0f, 212.5f, 150f,
+				212.5f, 150f);
+		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWSW.png", 0f, 150f, 212.5f, 150f, 212.5f,
+				150f);
+		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWSE.png", 212.5f, 150f, 212.5f, 150f,
+				212.5f, 150f);
+		testAOI("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWC.png", 125f, 150f, 212.5f, 150f,
+				212.5f, 150f);
+	}
 
 	/**
-	 * Constructs a new <code>AOITest</code>.
+	 * Runs a new <code>AOITest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
@@ -60,12 +111,12 @@ public class AOITest extends AbstractImageTranscoderTest {
 	 * @param width       the width of the area of interest
 	 * @param height      the height of the area of interest
 	 */
-	public AOITest(String inputURI, String refImageURI, Float x, Float y, Float width, Float height) {
-		this(inputURI, refImageURI, x, y, width, height, (float) -1, (float) -1);
+	private void testAOI(String inputURI, String refImageURI, float x, float y, float width, float height) {
+		testAOI(inputURI, refImageURI, x, y, width, height, -1, -1);
 	}
 
 	/**
-	 * Constructs a new <code>AOITest</code>.
+	 * Runs a new <code>AOITest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
@@ -76,8 +127,8 @@ public class AOITest extends AbstractImageTranscoderTest {
 	 * @param imgWidth    the width of the image to generate
 	 * @param imgHeight   the height of the image to generate
 	 */
-	public AOITest(String inputURI, String refImageURI, Float x, Float y, Float width, Float height, Float imgWidth,
-			Float imgHeight) {
+	private void testAOI(String inputURI, String refImageURI, float x, float y, float width, float height,
+			float imgWidth, float imgHeight) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.aoi = new Rectangle2D.Float(x, y, width, height);
@@ -90,7 +141,7 @@ public class AOITest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected TranscoderInput createTranscoderInput() {
-		return new TranscoderInput(resolveURL(inputURI).toString());
+		return new TranscoderInput(resolveURI(inputURI).toString());
 	}
 
 	/**
@@ -114,6 +165,7 @@ public class AOITest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

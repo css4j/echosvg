@@ -18,11 +18,16 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.junit.Test;
 import org.w3c.dom.CDATASection;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -30,8 +35,6 @@ import org.w3c.dom.Element;
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
@@ -42,9 +45,10 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  */
-public class DOMUtilitiesCharacterEscaping extends AbstractTest {
-	@Override
-	public TestReport runImpl() throws Exception {
+public class DOMUtilitiesCharacterEscaping {
+
+	@Test
+	public void test() throws DOMException, IOException {
 		DOMImplementation impl = new SVGDOMImplementation();
 		Document doc = impl.createDocument(SVGConstants.SVG_NAMESPACE_URI, "svg", null);
 
@@ -62,9 +66,6 @@ public class DOMUtilitiesCharacterEscaping extends AbstractTest {
 
 		DOMUtilities.writeDocument(doc, stringWriter);
 
-		String docString = stringWriter.toString();
-		System.err.println(">>>>>>>>>>> Document content \n\n" + docString + "\n\n<<<<<<<<<<<<<<<<");
-
 		String parser = XMLResourceDescriptor.getXMLParserClassName();
 		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
 		doc = f.createDocument("https://raw.githubusercontent.com/css4j/echosvg/master/samples/foo.svg",
@@ -72,13 +73,6 @@ public class DOMUtilitiesCharacterEscaping extends AbstractTest {
 
 		text = doc.getElementById("myText");
 		cdata = (CDATASection) text.getFirstChild();
-		if (cdata.getData().equals(unescapedContent)) {
-			return reportSuccess();
-		}
-
-		TestReport report = reportError("Unexpected CDATA read-back");
-		report.addDescriptionEntry("expected cdata", unescapedContent);
-		report.addDescriptionEntry("actual cdata", cdata.getData());
-		return report;
+		assertEquals(cdata.getData(), unescapedContent);
 	}
 }

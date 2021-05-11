@@ -18,17 +18,17 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import java.io.File;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.IOException;
 import java.net.URL;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
@@ -38,45 +38,27 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class HasChildNodesTest extends AbstractTest {
-	public static String ERROR_GET_ELEMENT_BY_ID_FAILED = "error.get.element.by.id.failed";
+public class HasChildNodesTest {
 
-	public static String ENTRY_KEY_ID = "entry.key.id";
-
-	protected String testFileName;
-	protected String rootTag;
-	protected String targetId;
-
-	public HasChildNodesTest(String file, String root, String id) {
-		testFileName = file;
-		rootTag = root;
-		targetId = id;
+	@Test
+	public void test() throws IOException {
+		testHasChildNodes("io/sf/carte/echosvg/dom/dummyXML3.xml", "doc", "root");
 	}
 
-	@Override
-	public TestReport runImpl() throws Exception {
+	void testHasChildNodes(String testFileName, String rootTag, String targetId) throws IOException {
 		String parser = XMLResourceDescriptor.getXMLParserClassName();
 
 		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
 
-		File f = (new File(testFileName));
-		URL url = f.toURI().toURL();
+		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
 		Element e = doc.getElementById(targetId);
 
-		if (e == null) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode(ERROR_GET_ELEMENT_BY_ID_FAILED);
-			report.addDescriptionEntry(ENTRY_KEY_ID, targetId);
-			report.setPassed(false);
-			return report;
-		}
+		assertNotNull(e);
 
 		while (e.hasChildNodes()) {
 			e.removeChild(e.getFirstChild());
 		}
-
-		return reportSuccess();
 	}
 }

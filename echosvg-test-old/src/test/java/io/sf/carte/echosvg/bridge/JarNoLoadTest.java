@@ -18,7 +18,8 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.test.DefaultTestSuite;
+import org.junit.Test;
+
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
 
 /**
@@ -28,8 +29,10 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class JarNoLoadTest extends DefaultTestSuite {
-	public JarNoLoadTest() {
+public class JarNoLoadTest {
+
+	@Test
+	public void testJarNoLoad() throws Exception {
 		String scripts = "text/ecmascript";
 		String[] scriptSource = { "bridge/jarCheckNoLoadAny", "bridge/jarCheckNoLoadSameAsDocument",
 				"bridge/jarCheckNoLoadEmbed", };
@@ -45,7 +48,7 @@ public class JarNoLoadTest extends DefaultTestSuite {
 			for (boolean aSecure : secure) {
 				for (String aScriptOrigin : scriptOrigin) {
 					SVGOnLoadExceptionTest t = buildTest(scripts, aScriptSource, aScriptOrigin, aSecure);
-					addTest(t);
+					t.runTest();
 				}
 			}
 		}
@@ -61,13 +64,13 @@ public class JarNoLoadTest extends DefaultTestSuite {
 			for (int i = 0; i < j; i++) {
 				for (boolean aSecure : secure) {
 					SVGOnLoadExceptionTest t = buildTest(scripts, scriptSource[i], scriptOrigin[j], aSecure);
-					addTest(t);
+					t.runTest();
 				}
 			}
 		}
 	}
 
-	SVGOnLoadExceptionTest buildTest(String scripts, String id, String origin, boolean secure) {
+	private SVGOnLoadExceptionTest buildTest(String scripts, String id, String origin, boolean secure) {
 		SVGOnLoadExceptionTest t = new SVGOnLoadExceptionTest();
 		String desc = "(scripts=" + scripts + ")(scriptOrigin=" + origin + ")(secure=" + secure + ")";
 

@@ -39,7 +39,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class GeneratorContext extends SVGAccuracyTest implements SVGConstants {
+public class GeneratorContext extends SVGAccuracyTest {
 	public static class TestIDGenerator extends SVGIDGenerator {
 		@Override
 		public String generateID(String prefix) {
@@ -83,7 +83,7 @@ public class GeneratorContext extends SVGAccuracyTest implements SVGConstants {
 		// Use EchoSVG's DOM implementation to create a Document
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		String namespaceURI = SVGDOMImplementation.SVG_NAMESPACE_URI;
-		Document domFactory = impl.createDocument(namespaceURI, SVG_SVG_TAG, null);
+		Document domFactory = impl.createDocument(namespaceURI, SVGConstants.SVG_SVG_TAG, null);
 
 		// Create a default context from our Document instance
 		SVGGeneratorContext ctx = SVGGeneratorContext.createDefault(domFactory);
@@ -119,8 +119,9 @@ public class GeneratorContext extends SVGAccuracyTest implements SVGConstants {
 
 		// Append our stylesheet to the top level group.
 		topLevelGroup = g2d.getTopLevelGroup();
-		Element style = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_STYLE_TAG);
-		style.setAttributeNS(null, SVG_TYPE_ATTRIBUTE, "text/css");
+		Element style = domFactory.createElementNS(SVGConstants.SVG_NAMESPACE_URI,
+				SVGConstants.SVG_STYLE_TAG);
+		style.setAttributeNS(null, SVGConstants.SVG_TYPE_ATTRIBUTE, "text/css");
 		style.appendChild(styleSheet);
 		topLevelGroup.appendChild(style);
 

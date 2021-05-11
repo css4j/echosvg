@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
@@ -35,22 +36,32 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 public class MediaTest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
 
 	/** The CSS media to use. */
-	protected String media;
+	private String media;
+
+	@org.junit.Test
+	public void test() throws TranscoderException {
+		testMedia("samples/tests/spec/styling/cssMedia.svg",
+				"test-references/samples/tests/spec/styling/cssMediaScreen.png", "screen");
+		testMedia("samples/tests/spec/styling/cssMedia.svg",
+				"test-references/samples/tests/spec/styling/cssMediaProjection.png", "projection");
+		testMedia("samples/tests/spec/styling/cssMedia.svg",
+				"test-references/samples/tests/spec/styling/cssMediaPrint.png", "print");
+	}
 
 	/**
-	 * Constructs a new <code>MediaTest</code>.
+	 * Runs a new <code>MediaTest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
 	 * @param media       the CSS media
 	 */
-	public MediaTest(String inputURI, String refImageURI, String media) {
+	private void testMedia(String inputURI, String refImageURI, String media) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.media = media;
@@ -61,7 +72,7 @@ public class MediaTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected TranscoderInput createTranscoderInput() {
-		return new TranscoderInput(resolveURL(inputURI).toString());
+		return new TranscoderInput(resolveURI(inputURI).toString());
 	}
 
 	/**
@@ -79,6 +90,7 @@ public class MediaTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

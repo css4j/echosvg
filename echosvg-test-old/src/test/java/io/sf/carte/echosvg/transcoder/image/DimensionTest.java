@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
@@ -36,30 +37,59 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 public class DimensionTest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
 
 	/** The width of the image. */
-	protected Float width;
+	private Float width;
 
 	/** The height of the image. */
-	protected Float height;
+	private Float height;
+
+	@org.junit.Test
+	public void test()
+			throws TranscoderException {
+		testDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneW200.png", 200, -1);
+		testDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneH200.png", -1, 200);
+		testDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWH200.png", 200,
+				200);
+		testDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneW600.png", 600, -1);
+		testDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneH600.png", -1, 600);
+		testDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneWH600.png", 600,
+				600);
+		//
+		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyW200.png", 200, -1);
+		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyH200.png", -1, 200);
+		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWH200.png", 200, 200);
+		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyW600.png", 600, -1);
+		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyH600.png", -1, 600);
+		testDimension("test-resources/io/sf/carte/echosvg/transcoder/image/resources/butterfly.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/butterflyWH600.png", 600, 600);
+	}
 
 	/**
-	 * Constructs a new <code>DimensionTest</code>.
+	 * Runs a <code>DimensionTest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
 	 * @param width       the image width
 	 * @param height      the image height
+	 * @throws TranscoderException
 	 */
-	public DimensionTest(String inputURI, String refImageURI, Float width, Float height) {
+	private void testDimension(String inputURI, String refImageURI, float width, float height)
+			throws TranscoderException {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.width = width;
 		this.height = height;
+		runTest();
 	}
 
 	/**
@@ -67,7 +97,7 @@ public class DimensionTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected TranscoderInput createTranscoderInput() {
-		return new TranscoderInput(resolveURL(inputURI).toString());
+		return new TranscoderInput(resolveURI(inputURI).toString());
 	}
 
 	/**
@@ -90,6 +120,7 @@ public class DimensionTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.svggen;
 
+import static org.junit.Assert.assertFalse;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Shape;
@@ -32,8 +34,6 @@ import io.sf.carte.echosvg.bridge.BaseScriptingEnvironment;
 import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.GVTBuilder;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.TestReport;
 
 /**
  * Checks that the content generated from the SVGGraphics2D and to which an
@@ -43,10 +43,10 @@ import io.sf.carte.echosvg.test.TestReport;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class ShowGraphics2DOutput extends AbstractTest {
-	@Override
-	public TestReport runImpl() throws Exception {
+public class ShowGraphics2DOutput {
 
+	@org.junit.Test
+	public void test() {
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
@@ -84,11 +84,7 @@ public class ShowGraphics2DOutput extends AbstractTest {
 		scriptEnvironment.loadScripts();
 		scriptEnvironment.dispatchSVGLoadEvent();
 
-		if (!userAgent.failed) {
-			return reportSuccess();
-		} else {
-			return reportError("Got exception while processing document");
-		}
+		assertFalse(userAgent.failed);
 	}
 
 	static class TestUserAgent extends UserAgentAdapter {

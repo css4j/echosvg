@@ -26,6 +26,7 @@ import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
@@ -39,18 +40,23 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 public class GenericDocumentTest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
+
+	@org.junit.Test
+	public void test() throws TranscoderException {
+		testGenericDocument("samples/anne.svg", "test-references/samples/anne.png");
+	}
 
 	/**
-	 * Constructs a new <code>GenericDocumentTest</code>.
+	 * Runs a new <code>GenericDocumentTest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
 	 */
-	public GenericDocumentTest(String inputURI, String refImageURI) {
+	private void testGenericDocument(String inputURI, String refImageURI) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 	}
@@ -61,7 +67,7 @@ public class GenericDocumentTest extends AbstractImageTranscoderTest {
 	@Override
 	protected TranscoderInput createTranscoderInput() {
 		try {
-			URL url = resolveURL(inputURI);
+			URL url = resolveURI(inputURI);
 			String parser = XMLResourceDescriptor.getXMLParserClassName();
 			DOMImplementation impl = GenericDOMImplementation.getDOMImplementation();
 			SAXDocumentFactory f = new SAXDocumentFactory(impl, parser);
@@ -80,6 +86,7 @@ public class GenericDocumentTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

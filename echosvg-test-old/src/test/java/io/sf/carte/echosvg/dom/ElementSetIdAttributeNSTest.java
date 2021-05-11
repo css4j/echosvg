@@ -18,6 +18,10 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -34,14 +38,12 @@ public class ElementSetIdAttributeNSTest extends DOM3Test {
 
 	private static final String ATTR_VALUE = "abc";
 
-	@Override
-	public boolean runImplBasic() throws Exception {
+	@Test
+	public void test() throws DOMException {
 		Document doc = newSVGDoc();
 		doc.getDocumentElement().setAttributeNS(null, ATTR_NAME, ATTR_VALUE);
-		if (!setIdAttributeWorks(doc, true)) {
-			return false;
-		}
-		return setIdAttributeWorks(doc, false);
+		assertTrue(setIdAttributeWorks(doc, true));
+		assertTrue(setIdAttributeWorks(doc, false));
 	}
 
 	private boolean setIdAttributeWorks(Document doc, boolean isId) {

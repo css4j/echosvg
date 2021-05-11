@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.parser;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.StringReader;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
+import org.junit.Test;
 
 /**
  * To test the length parser.
@@ -31,54 +31,51 @@ import io.sf.carte.echosvg.test.TestReport;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class LengthParserTest extends AbstractTest {
-
-	protected String sourceLength;
-	protected String destinationLength;
-
-	protected StringBuffer buffer;
-	protected String resultLength;
+public class LengthParserTest {
 
 	/**
-	 * Creates a new LengthParserTest.
 	 * 
-	 * @param slength The length to parse.
-	 * @param dlength The length after serialization.
+	 * @param sourceLength      The length to parse.
+	 * @param destinationLength The length after serialization.
 	 */
-	public LengthParserTest(String slength, String dlength) {
-		sourceLength = slength;
-		destinationLength = dlength;
-	}
-
-	@Override
-	public TestReport runImpl() throws Exception {
+	private void testLengthParser(String sourceLength, String destinationLength) {
 		LengthParser pp = new LengthParser();
-		pp.setLengthHandler(new TestHandler());
+		TestHandler handler = new TestHandler();
+		pp.setLengthHandler(handler);
 
-		try {
-			pp.parse(new StringReader(sourceLength));
-		} catch (ParseException e) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode("parse.error");
-			report.addDescriptionEntry("exception.text", e.getMessage());
-			report.setPassed(false);
-			return report;
-		}
+		pp.parse(new StringReader(sourceLength));
 
-		if (!destinationLength.equals(resultLength)) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode("invalid.parsing.events");
-			report.addDescriptionEntry("expected.text", destinationLength);
-			report.addDescriptionEntry("generated.text", resultLength);
-			report.setPassed(false);
-			return report;
-		}
-
-		return reportSuccess();
+		assertEquals(destinationLength, handler.resultLength);
 	}
 
-	class TestHandler extends DefaultLengthHandler {
-		public TestHandler() {
+	@Test
+	public void test() throws Exception {
+		testLengthParser("123.456", "123.456");
+
+		testLengthParser("123em", "123.0em");
+
+		testLengthParser(".456ex", "0.456ex");
+
+		testLengthParser("-.456789in", "-0.456789in");
+
+		testLengthParser("-456789.cm", "-456789.0cm");
+
+		testLengthParser("-4567890.mm", "-4567890.0mm");
+
+		testLengthParser("-000456789.pc", "-456789.0pc");
+
+		testLengthParser("-0.00456789pt", "-0.00456789pt");
+
+		testLengthParser("-0px", "0.0px");
+
+		testLengthParser("0000%", "0.0%");
+	}
+
+	private class TestHandler extends DefaultLengthHandler {
+		private StringBuffer buffer;
+		String resultLength;
+
+		TestHandler() {
 		}
 
 		@Override

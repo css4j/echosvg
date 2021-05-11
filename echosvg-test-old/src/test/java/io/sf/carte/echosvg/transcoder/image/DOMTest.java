@@ -28,6 +28,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 
@@ -40,10 +41,9 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
  */
 public class DOMTest extends AbstractImageTranscoderTest {
 
-	/**
-	 * Constructs a new <code>DOMTest</code>.
-	 */
-	public DOMTest() {
+	@org.junit.Test
+	public void test() throws TranscoderException {
+		runTest();
 	}
 
 	/**
@@ -100,4 +100,5 @@ public class DOMTest extends AbstractImageTranscoderTest {
 			throw new RuntimeException("DOMTest error");
 		}
 	}
+
 }

@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.parser;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.StringReader;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
+import org.junit.Test;
 
 /**
  * To test the path parser.
@@ -31,54 +31,96 @@ import io.sf.carte.echosvg.test.TestReport;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class PathParserTest extends AbstractTest {
-
-	protected String sourcePath;
-	protected String destinationPath;
-
-	protected StringBuffer buffer;
-	protected String resultPath;
+public class PathParserTest {
 
 	/**
-	 * Creates a new PathParserTest.
 	 * 
-	 * @param spath The path to parse.
-	 * @param dpath The path after serialization.
+	 * @param sourcePath      The path to parse.
+	 * @param destinationPath The path after serialization.
 	 */
-	public PathParserTest(String spath, String dpath) {
-		sourcePath = spath;
-		destinationPath = dpath;
-	}
-
-	@Override
-	public TestReport runImpl() throws Exception {
+	private void testPathParser(String sourcePath, String destinationPath) {
 		PathParser pp = new PathParser();
-		pp.setPathHandler(new TestHandler());
+		TestHandler handler = new TestHandler();
+		pp.setPathHandler(handler);
 
-		try {
-			pp.parse(new StringReader(sourcePath));
-		} catch (ParseException e) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode("parse.error");
-			report.addDescriptionEntry("exception.text", e.getMessage());
-			report.setPassed(false);
-			return report;
-		}
+		pp.parse(new StringReader(sourcePath));
 
-		if (!destinationPath.equals(resultPath)) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode("invalid.parsing.events");
-			report.addDescriptionEntry("expected.text", destinationPath);
-			report.addDescriptionEntry("generated.text", resultPath);
-			report.setPassed(false);
-			return report;
-		}
-
-		return reportSuccess();
+		assertEquals(destinationPath, handler.resultPath);
 	}
 
-	class TestHandler extends DefaultPathHandler {
-		public TestHandler() {
+	@Test
+	public void test() throws Exception {
+		testPathParser("M1 2", "M1.0 2.0");
+
+		testPathParser("m1.1 2.0", "m1.1 2.0");
+
+		testPathParser("M1 2z", "M1.0 2.0Z");
+
+		testPathParser("M1 2e3Z", "M1.0 2000.0Z");
+
+		testPathParser("M1 2L 3,4", "M1.0 2.0L3.0 4.0");
+
+		testPathParser("M1 2 3,4", "M1.0 2.0L3.0 4.0");
+
+		testPathParser("M1, 2, 3,4", "M1.0 2.0L3.0 4.0");
+
+		testPathParser("m1, 2, 3,4", "m1.0 2.0l3.0 4.0");
+
+		testPathParser("M1 2H3.1", "M1.0 2.0H3.1");
+
+		testPathParser("M1 2H3.1 4", "M1.0 2.0H3.1H4.0");
+
+		testPathParser("M1 2H3.1,4", "M1.0 2.0H3.1H4.0");
+
+		testPathParser("M1 2h 3.1", "M1.0 2.0h3.1");
+
+		testPathParser("M1 2h 3.1 4", "M1.0 2.0h3.1h4.0");
+
+		testPathParser("M1 2h 3.1,4", "M1.0 2.0h3.1h4.0");
+
+		testPathParser("M1 2H 3.1,4", "M1.0 2.0H3.1H4.0");
+
+		testPathParser("M1 2h 3.1-4", "M1.0 2.0h3.1h-4.0");
+
+		testPathParser("M1 2V3.1e-3", "M1.0 2.0V0.0031");
+
+		testPathParser("M1 2V3.1", "M1.0 2.0V3.1");
+
+		testPathParser("M1 2v3.1,.4", "M1.0 2.0v3.1v0.4");
+
+		testPathParser("M1 2v3.1-.4", "M1.0 2.0v3.1v-0.4");
+
+		testPathParser("M1 2C3 4 5 6 7 8", "M1.0 2.0C3.0 4.0 5.0 6.0 7.0 8.0");
+
+		testPathParser("M1 2c.3.4.5.6.7.8", "M1.0 2.0c0.3 0.4 0.5 0.6 0.7 0.8");
+
+		testPathParser("M1 2S3+4+5+6", "M1.0 2.0S3.0 4.0 5.0 6.0");
+
+		testPathParser("M1 2s.3+.4+.5-.6", "M1.0 2.0s0.3 0.4 0.5 -0.6");
+
+		testPathParser("M1 2q3. 4.+5 6", "M1.0 2.0q3.0 4.0 5.0 6.0");
+
+		testPathParser("M1 2Q.3e0.4.5.6", "M1.0 2.0Q0.3 0.4 0.5 0.6");
+
+		testPathParser("M1 2t+.3-.4", "M1.0 2.0t0.3 -0.4");
+
+		testPathParser("M1 2T -.3+4", "M1.0 2.0T-0.3 4.0");
+
+		testPathParser("M1 2a3 4 5 0,1 6 7", "M1.0 2.0a3.0 4.0 5.0 0 1 6.0 7.0");
+
+		testPathParser("M1 2A3 4 5 0,1 6 7", "M1.0 2.0A3.0 4.0 5.0 0 1 6.0 7.0");
+
+		testPathParser("M1 2t+.3-.4,5,6", "M1.0 2.0t0.3 -0.4t5.0 6.0");
+
+		testPathParser("M1 2T -.3+4 5-6", "M1.0 2.0T-0.3 4.0T5.0 -6.0");
+	}
+
+	private class TestHandler extends DefaultPathHandler {
+
+		StringBuffer buffer;
+		String resultPath;
+
+		TestHandler() {
 		}
 
 		@Override

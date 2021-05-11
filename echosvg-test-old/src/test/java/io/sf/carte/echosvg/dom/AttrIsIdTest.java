@@ -18,7 +18,11 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -30,13 +34,14 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class AttrIsIdTest extends DOM3Test {
-	@Override
-	public boolean runImplBasic() throws Exception {
+
+	@Test
+	public void test() throws DOMException {
 		Document doc = newSVGDoc();
 		Element g = doc.createElementNS(SVG_NAMESPACE_URI, "g");
 		g.setAttributeNS(null, "id", "n1");
 		doc.getDocumentElement().appendChild(g);
 		Attr a = g.getAttributeNodeNS(null, "id");
-		return a.isId();
+		assertTrue(a.isId());
 	}
 }

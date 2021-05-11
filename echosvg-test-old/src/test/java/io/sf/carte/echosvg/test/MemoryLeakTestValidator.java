@@ -34,7 +34,7 @@ public class MemoryLeakTestValidator extends MemoryLeakTest {
 	Link start;
 
 	@Override
-	public TestReport doSomething() throws Exception {
+	public String doSomething() throws Exception {
 		for (int i = 0; i < 20; i++)
 			registerObjectDesc(new Object(), "Obj#" + i);
 		for (int i = 0; i < 10; i++) {

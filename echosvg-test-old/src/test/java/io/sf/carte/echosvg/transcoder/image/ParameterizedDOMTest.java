@@ -23,6 +23,7 @@ import java.io.IOException;
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
@@ -33,21 +34,27 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class ParametrizedDOMTest extends AbstractImageTranscoderTest {
+public class ParameterizedDOMTest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
+
+	@org.junit.Test
+	public void test()
+			throws TranscoderException {
+		testParameterizedDOM("samples/anne.svg", "test-references/samples/anne.png");
+	}
 
 	/**
-	 * Constructs a new <code>ParametrizedDOMTest</code>.
+	 * Runs <code>ParameterizedDOMTest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
 	 */
-	public ParametrizedDOMTest(String inputURI, String refImageURI) {
+	private void testParameterizedDOM(String inputURI, String refImageURI) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 	}
@@ -60,7 +67,7 @@ public class ParametrizedDOMTest extends AbstractImageTranscoderTest {
 		try {
 			String parser = XMLResourceDescriptor.getXMLParserClassName();
 			SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-			Document doc = f.createDocument(resolveURL(inputURI).toString());
+			Document doc = f.createDocument(resolveURI(inputURI).toString());
 			return new TranscoderInput(doc);
 		} catch (IOException ex) {
 			throw new IllegalArgumentException(inputURI);
@@ -72,6 +79,7 @@ public class ParametrizedDOMTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

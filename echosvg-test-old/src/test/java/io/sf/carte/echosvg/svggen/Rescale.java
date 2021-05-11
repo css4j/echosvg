@@ -26,6 +26,7 @@ import java.awt.MediaTracker;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.net.URL;
 
 /**
  * This test validates the convertion of Java 2D RescaleOp into an SVG filer.
@@ -42,8 +43,8 @@ public class Rescale implements Painter {
 		//
 		// Load Image
 		//
-		Image image = Toolkit.getDefaultToolkit()
-				.createImage("test-resources/io/sf/carte/echosvg/svggen/resources/vangogh.jpg");
+		URL url = getClass().getClassLoader().getResource("io/sf/carte/echosvg/svggen/resources/vangogh.png");
+		Image image = Toolkit.getDefaultToolkit().createImage(url);
 		MediaTracker tracker = new MediaTracker(new Button(""));
 		tracker.addImage(image, 0);
 		try {

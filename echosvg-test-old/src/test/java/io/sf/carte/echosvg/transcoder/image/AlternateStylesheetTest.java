@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
@@ -35,25 +36,42 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 public class AlternateStylesheetTest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
 
 	/** The alternate stylesheet to use. */
-	protected String alternateStylesheet;
+	private String alternateStylesheet;
+
+	@org.junit.Test
+	public void test() throws TranscoderException {
+		testAlternateStylesheet("samples/tests/spec/styling/smiley.svg",
+				"test-references/samples/tests/spec/styling/smileySmiling.png", "Smiling");
+		testAlternateStylesheet("samples/tests/spec/styling/smiley.svg",
+				"test-references/samples/tests/spec/styling/smileyBasic Sad.png", "Basic Sad");
+		testAlternateStylesheet("samples/tests/spec/styling/smiley.svg",
+				"test-references/samples/tests/spec/styling/smileyWow!.png", "Wow!");
+		testAlternateStylesheet("samples/tests/spec/styling/smiley.svg",
+				"test-references/samples/tests/spec/styling/smileyGrim.png", "Grim");
+		testAlternateStylesheet("samples/tests/spec/styling/smiley.svg",
+				"test-references/samples/tests/spec/styling/smileyOups.png", "Oups");
+	}
 
 	/**
-	 * Constructs a new <code>AlternateStylesheetTest</code>.
+	 * Runs <code>AlternateStylesheetTest</code>.
 	 *
 	 * @param inputURI            the URI of the input image
 	 * @param refImageURI         the URI of the reference image
 	 * @param alternateStylesheet the alternate stylesheet CSS media
+	 * @throws TranscoderException 
 	 */
-	public AlternateStylesheetTest(String inputURI, String refImageURI, String alternateStylesheet) {
+	private void testAlternateStylesheet(String inputURI, String refImageURI, String alternateStylesheet)
+			throws TranscoderException {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.alternateStylesheet = alternateStylesheet;
+		runTest();
 	}
 
 	/**
@@ -61,7 +79,7 @@ public class AlternateStylesheetTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected TranscoderInput createTranscoderInput() {
-		return new TranscoderInput(resolveURL(inputURI).toString());
+		return new TranscoderInput(resolveURI(inputURI).toString());
 	}
 
 	/**
@@ -79,6 +97,7 @@ public class AlternateStylesheetTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

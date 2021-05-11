@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
@@ -34,26 +35,36 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  */
 public class LanguageTest extends AbstractImageTranscoderTest {
 
-	/**
-	 * Constructs a new <code>LanguageTest</code>.
-	 */
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
 
 	/** The preferred language. */
-	protected String language;
+	private String language;
 
 	/**
-	 * Constructs a new <code>LanguageTest</code>.
+	 * Runs a new <code>LanguageTest</code>.
+	 */
+	@org.junit.Test
+	public void testLanguage() throws TranscoderException {
+		testLanguage("test-resources/io/sf/carte/echosvg/transcoder/image/resources/language.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/languageEn.png", "en");
+		testLanguage("test-resources/io/sf/carte/echosvg/transcoder/image/resources/language.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/languageFr.png", "fr");
+		testLanguage("test-resources/io/sf/carte/echosvg/transcoder/image/resources/language.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/language.png", "");
+	}
+
+	/**
+	 * Runs a new <code>LanguageTest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
 	 * @param language    the preferred language
 	 */
-	public LanguageTest(String inputURI, String refImageURI, String language) {
+	private void testLanguage(String inputURI, String refImageURI, String language) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.language = language;
@@ -64,7 +75,7 @@ public class LanguageTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected TranscoderInput createTranscoderInput() {
-		return new TranscoderInput(resolveURL(inputURI).toString());
+		return new TranscoderInput(resolveURI(inputURI).toString());
 	}
 
 	/**
@@ -82,6 +93,7 @@ public class LanguageTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

@@ -19,33 +19,28 @@
 
 package io.sf.carte.echosvg.anim.dom;
 
+import static org.junit.Assert.fail;
+
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
+import org.junit.Test;
 
 /**
  * This class tests that there is System Id for each public Id in the
  * dtdids.properties resource file.
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
- * @author $Id$
+ * @author For later modifications, see Git history.
+ * @version $Id$
  */
-public class SystemIdTest extends AbstractTest {
-	public static final String ERROR_MISSING_SYSTEM_ID = "error.missing.system.id";
+public class SystemIdTest {
 
-	public static final String KEY_MISSING_IDS = "key.missing.ids";
-
-	public SystemIdTest() {
-	}
-
-	@Override
-	public TestReport runImpl() throws Exception {
-		ResourceBundle rb = ResourceBundle.getBundle(SAXSVGDocumentFactory.DTDIDS, Locale.getDefault());
+	@Test
+	public void test() throws Exception {
+		ResourceBundle rb = ResourceBundle.getBundle(SAXSVGDocumentFactory.DTDIDS, Locale.US);
 		String dtdids = rb.getString(SAXSVGDocumentFactory.KEY_PUBLIC_IDS);
 
 		StringTokenizer st = new StringTokenizer(dtdids, "-");
@@ -54,7 +49,6 @@ public class SystemIdTest extends AbstractTest {
 		for (int i = 0; i < nIds; i++) {
 			String publicId = st.nextToken();
 			publicId = "-" + publicId.trim();
-			System.out.println("Testing public id: " + publicId);
 			try {
 				rb.getString(SAXSVGDocumentFactory.KEY_SYSTEM_ID + publicId.replace(' ', '_'));
 			} catch (MissingResourceException e) {
@@ -62,14 +56,9 @@ public class SystemIdTest extends AbstractTest {
 			}
 		}
 
-		if (!"".equals(missingIds)) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode(ERROR_MISSING_SYSTEM_ID);
-			report.addDescriptionEntry(KEY_MISSING_IDS, missingIds);
-			report.setPassed(false);
-			return report;
+		if (missingIds.length() != 0) {
+			fail("Missing publicIds:" + missingIds);
 		}
 
-		return reportSuccess();
 	}
 }

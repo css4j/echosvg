@@ -6,10 +6,7 @@ dependencies {
 	api project(':echosvg-bridge')
 	api project(':echosvg-svggen')
 	api project(':svgom-api')
-	testImplementation "junit:junit:${junitVersion}"
 }
-
-test.enabled = false
 
 description = 'io.sf.carte:echosvg-transcoder'
 

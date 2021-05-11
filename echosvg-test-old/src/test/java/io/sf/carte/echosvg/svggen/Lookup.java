@@ -28,6 +28,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.ByteLookupTable;
 import java.awt.image.LookupTable;
+import java.net.URL;
 
 /**
  * This test validates the convertion of Java 2D LookupOp into an SVG filer.
@@ -44,8 +45,8 @@ public class Lookup implements Painter {
 		//
 		// Load Image
 		//
-		Image image = Toolkit.getDefaultToolkit()
-				.createImage("test-resources/io/sf/carte/echosvg/svggen/resources/vangogh.png");
+		URL url = getClass().getClassLoader().getResource("io/sf/carte/echosvg/svggen/resources/vangogh.png");
+		Image image = Toolkit.getDefaultToolkit().createImage(url);
 		MediaTracker tracker = new MediaTracker(new Button(""));
 		tracker.addImage(image, 0);
 		try {

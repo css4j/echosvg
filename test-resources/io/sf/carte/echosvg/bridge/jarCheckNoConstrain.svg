@@ -32,6 +32,6 @@
      width="450" height="500" viewBox="0 0 450 500">
 
     <test:testResult id="testResult" result="failed" errorCode="IWasLoadedToo.jar should have been loaded"/>
-    <script type="application/java-archive" xlink:href="https://raw.githubusercontent.com/css4j/echosvg/master/test-resources/io/sf/carte/echosvg/bridge/IWasLoadedToo.jar" />
+    <script type="application/java-archive" xlink:href="https://github.com/css4j/echosvg/raw/master/test-resources/io/sf/carte/echosvg/bridge/IWasLoadedToo.jar" />
 
 </svg>

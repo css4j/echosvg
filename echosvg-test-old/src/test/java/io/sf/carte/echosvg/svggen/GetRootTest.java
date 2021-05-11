@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.svggen;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.StringWriter;
@@ -27,8 +29,6 @@ import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
@@ -39,22 +39,17 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class GetRootTest extends AbstractTest implements SVGConstants {
-	public static final Dimension CANVAS_SIZE = new Dimension(300, 400);
+public class GetRootTest {
 
-	public static final String ERROR_DIFFERENT_SVG_OUTPUT = "GetRootTest.error.different.svg.output";
+	private static final Dimension CANVAS_SIZE = new Dimension(300, 400);
 
-	public static final String ENTRY_KEY_NO_ARG_OUTPUT = "GetRootTest.entry.key.no.arg.output";
-
-	public static final String ENTRY_KEY_SVG_ARG_OUTPUT = "GetRootTest.entry.key.svg.arg.output";
-
-	@Override
-	public TestReport runImpl() throws Exception {
+	@org.junit.Test
+	public void test() throws SVGGraphics2DIOException {
 		// First, use the no-argument getRoot
 
 		DOMImplementation impl = GenericDOMImplementation.getDOMImplementation();
 		String namespaceURI = SVGConstants.SVG_NAMESPACE_URI;
-		Document domFactory = impl.createDocument(namespaceURI, SVG_SVG_TAG, null);
+		Document domFactory = impl.createDocument(namespaceURI, SVGConstants.SVG_SVG_TAG, null);
 		SVGGeneratorContext ctx = SVGGeneratorContext.createDefault(domFactory);
 		GraphicContextDefaults defaults = new GraphicContextDefaults();
 		defaults.font = new Font("Arial", Font.PLAIN, 12);
@@ -70,7 +65,7 @@ public class GetRootTest extends AbstractTest implements SVGConstants {
 		g2d.stream(g2d.getRoot(), swA);
 
 		// Now, use the getRoot with argument
-		domFactory = impl.createDocument(namespaceURI, SVG_SVG_TAG, null);
+		domFactory = impl.createDocument(namespaceURI, SVGConstants.SVG_SVG_TAG, null);
 		ctx = SVGGeneratorContext.createDefault(domFactory);
 		ctx.setGraphicContextDefaults(defaults);
 		g2d = new SVGGraphics2D(ctx, false);
@@ -83,13 +78,6 @@ public class GetRootTest extends AbstractTest implements SVGConstants {
 		g2d.stream(g2d.getRoot(domFactory.getDocumentElement()), swB);
 
 		// Compare the two output: they should be identical
-		if (swA.toString().equals(swB.toString())) {
-			return reportSuccess();
-		} else {
-			TestReport report = reportError(ERROR_DIFFERENT_SVG_OUTPUT);
-			report.addDescriptionEntry(ENTRY_KEY_NO_ARG_OUTPUT, swA.toString());
-			report.addDescriptionEntry(ENTRY_KEY_SVG_ARG_OUTPUT, swB.toString());
-			return report;
-		}
+		assertEquals(swA.toString(), swB.toString());
 	}
 }

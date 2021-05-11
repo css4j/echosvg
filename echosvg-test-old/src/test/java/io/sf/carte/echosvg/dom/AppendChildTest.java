@@ -18,9 +18,13 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import java.io.File;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
 import java.net.URL;
 
+import org.junit.Test;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
@@ -28,9 +32,6 @@ import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
@@ -40,55 +41,32 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class AppendChildTest extends AbstractTest {
-	public static String ERROR_GET_ELEMENT_BY_ID_FAILED = "error.get.element.by.id.failed";
+public class AppendChildTest {
 
-	public static String ERROR_EXCEPTION_NOT_THROWN = "error.exception.not.thrown";
-
-	public static String ENTRY_KEY_ID = "entry.key.id";
-
-	protected String testFileName;
-	protected String rootTag;
-	protected String targetId;
-
-	public AppendChildTest(String file, String root, String id) {
-		testFileName = file;
-		rootTag = root;
-		targetId = id;
+	@Test
+	public void test() throws IOException {
+		testAppendChild("io/sf/carte/echosvg/dom/dummyXML3.xml", "doc", "root");
 	}
 
-	@Override
-	public TestReport runImpl() throws Exception {
+	void testAppendChild(String testFileName, String rootTag, String targetId) throws IOException {
 		String parser = XMLResourceDescriptor.getXMLParserClassName();
 
 		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
 
-		File f = (new File(testFileName));
-		URL url = f.toURI().toURL();
+		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
 		Element e = doc.getElementById(targetId);
 
-		if (e == null) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode(ERROR_GET_ELEMENT_BY_ID_FAILED);
-			report.addDescriptionEntry(ENTRY_KEY_ID, targetId);
-			report.setPassed(false);
-			return report;
-		}
+		assertNotNull(e);
 
 		Document otherDocument = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
 		DocumentFragment docFrag = otherDocument.createDocumentFragment();
 		try {
 			docFrag.appendChild(doc.getDocumentElement());
+			fail("Must throw excepyion.");
 		} catch (DOMException ex) {
-			return reportSuccess();
 		}
-
-		DefaultTestReport report = new DefaultTestReport(this);
-		report.setErrorCode(ERROR_EXCEPTION_NOT_THROWN);
-		report.setPassed(false);
-		return report;
 	}
 }

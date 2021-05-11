@@ -18,6 +18,10 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.UserDataHandler;
@@ -30,7 +34,19 @@ import org.w3c.dom.UserDataHandler;
  * @version $Id$
  */
 public class NodeGetUserDataTest extends DOM3Test {
-	static class UserHandler implements UserDataHandler {
+
+	@Test
+	public void test() throws DOMException {
+		UserHandler udh = new UserHandler();
+		Document doc = newDoc();
+		AbstractNode n = (AbstractNode) doc.createElementNS(null, "test");
+		n.setUserData("key", "val", udh);
+		((AbstractDocument) doc).renameNode(n, null, "abc");
+		assertEquals(1, udh.getCount());
+		assertEquals("val", n.getUserData("key"));
+	}
+
+	private static class UserHandler implements UserDataHandler {
 		int count = 0;
 
 		@Override
@@ -43,13 +59,4 @@ public class NodeGetUserDataTest extends DOM3Test {
 		}
 	}
 
-	@Override
-	public boolean runImplBasic() throws Exception {
-		UserHandler udh = new UserHandler();
-		Document doc = newDoc();
-		AbstractNode n = (AbstractNode) doc.createElementNS(null, "test");
-		n.setUserData("key", "val", udh);
-		((AbstractDocument) doc).renameNode(n, null, "abc");
-		return udh.getCount() == 1 && n.getUserData("key").equals("val");
-	}
 }

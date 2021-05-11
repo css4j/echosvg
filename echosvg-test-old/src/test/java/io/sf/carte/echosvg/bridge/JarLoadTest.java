@@ -18,7 +18,9 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.test.DefaultTestSuite;
+import java.io.IOException;
+
+import org.junit.Test;
 
 /**
  * Checks that JAR Scripts which should be loaded are indeed loaded.
@@ -27,11 +29,26 @@ import io.sf.carte.echosvg.test.DefaultTestSuite;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class JarLoadTest extends DefaultTestSuite {
-	public JarLoadTest() {
-		String scripts = "application/java-archive";
+public class JarLoadTest {
+
+	private static final String scriptsType = "application/java-archive";
+
+	@Test
+	public void testJarCheckLoadAny() throws IOException {
+		String scriptSource = "jarCheckLoadAny";
+
+		ScriptSelfTest t = buildTest(scriptsType, scriptSource, "any", true);
+		t.runTest();
+
+		t = buildTest(scriptsType, scriptSource, "any", false);
+		t.runTest();
+	}
+
+	@Test
+	public void testJarCheckLoadSameAsDocument() throws IOException {
+		String scriptSource = "jarCheckLoadSameAsDocument";
 		// Note: base64 encoding of jar content is not supported.
-		String[] scriptSource = { "jarCheckLoadAny", "jarCheckLoadSameAsDocument" };
+
 		boolean[] secure = { true, false };
 		String[] scriptOrigin = { "any", "document", "embeded" };
 
@@ -46,21 +63,21 @@ public class JarLoadTest extends DefaultTestSuite {
 		// All other security settings should not have an
 		// influence on whether or not the script can be loaded.
 		//
-		for (int i = 0; i < scriptSource.length; i++) {
-			for (int j = 0; j <= i; j++) {
-				for (boolean aSecure : secure) {
-					ScriptSelfTest t = buildTest(scripts, scriptSource[i], scriptOrigin[j], aSecure);
-					addTest(t);
-				}
+		// i = 1
+		for (int i = 0; i <= 1; i++) {
+			for (boolean aSecure : secure) {
+				ScriptSelfTest t = buildTest(scriptsType, scriptSource, scriptOrigin[i], aSecure);
+				t.runTest();
 			}
 		}
 	}
 
-	ScriptSelfTest buildTest(String scripts, String id, String origin, boolean secure) {
+	private ScriptSelfTest buildTest(String scripts, String id, String origin, boolean secure) {
 		ScriptSelfTest t = new ScriptSelfTest();
 		String desc = "(scripts=" + scripts + ")(scriptOrigin=" + origin + ")(secure=" + secure + ")";
 
-		t.setId(id + desc);
+		t.setId(id);
+		t.setDescription(id + desc);
 		t.setScriptOrigin(origin);
 		t.setSecure(secure);
 		t.setScripts(scripts);

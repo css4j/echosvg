@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
@@ -35,22 +36,32 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 public class DefaultFontFamilyTest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
 
 	/** The default font-family to use. */
-	protected String defaultFontFamily;
+	private String defaultFontFamily;
+
+	@org.junit.Test
+	public void test() throws TranscoderException {
+		testDefaultFontFamily("samples/tests/spec/styling/defaultFontFamily.svg",
+				"test-references/samples/tests/spec/styling/defaultFontFamilyArial.png", "Arial");
+		testDefaultFontFamily("samples/tests/spec/styling/defaultFontFamily.svg",
+				"test-references/samples/tests/spec/styling/defaultFontFamilyTimes.png", "Times");
+		testDefaultFontFamily("samples/tests/spec/styling/defaultFontFamily.svg",
+				"test-references/samples/tests/spec/styling/defaultFontFamilyTimes.png", "toto, Times");
+	}
 
 	/**
-	 * Constructs a new <code>DefaultFontFamilyTest</code>.
+	 * Runs a new <code>DefaultFontFamilyTest</code>.
 	 *
 	 * @param inputURI          the URI of the input image
 	 * @param refImageURI       the URI of the reference image
 	 * @param defaultFontFamily the default font-family to use
 	 */
-	public DefaultFontFamilyTest(String inputURI, String refImageURI, String defaultFontFamily) {
+	private void testDefaultFontFamily(String inputURI, String refImageURI, String defaultFontFamily) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.defaultFontFamily = defaultFontFamily;
@@ -61,7 +72,7 @@ public class DefaultFontFamilyTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected TranscoderInput createTranscoderInput() {
-		return new TranscoderInput(resolveURL(inputURI).toString());
+		return new TranscoderInput(resolveURI(inputURI).toString());
 	}
 
 	/**
@@ -79,6 +90,7 @@ public class DefaultFontFamilyTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

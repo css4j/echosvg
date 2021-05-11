@@ -10,7 +10,7 @@ dependencies {
 description = 'io.sf.carte:echosvg-test'
 
 publishing.publications.maven(MavenPublication).pom {
-	description = "EchoSVG Test Harness"
+	description = "EchoSVG Test Harness API"
 }
 
 tasks.withType(PublishToMavenRepository).configureEach {

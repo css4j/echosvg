@@ -18,9 +18,12 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import java.io.File;
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
 import java.net.URL;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,9 +31,6 @@ import org.w3c.dom.NodeList;
 
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
@@ -40,50 +40,32 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class GetElementsByTagNameNSTest extends AbstractTest {
-	protected String testFileName;
-	protected String rootTag;
-	protected String tagName;
+public class GetElementsByTagNameNSTest {
 
-	public GetElementsByTagNameNSTest(String file, String root, String tag) {
-		testFileName = file;
-		rootTag = root;
-		tagName = tag;
+	@Test
+	public void test() throws IOException {
+		testGetElementsByTagNameNS("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "elt4");
 	}
 
-	@Override
-	public TestReport runImpl() throws Exception {
+	void testGetElementsByTagNameNS(String testFileName, String rootTag, String tagName) throws IOException {
 		String parser = XMLResourceDescriptor.getXMLParserClassName();
 
 		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
 
-		File f = (new File(testFileName));
-		URL url = f.toURI().toURL();
+		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
 		Element root = doc.getDocumentElement();
 		NodeList lst = root.getElementsByTagNameNS(null, tagName);
 
-		if (lst.getLength() != 1) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode("error.getElementByTagNameNS.failed");
-			report.setPassed(false);
-			return report;
-		}
+		assertEquals(1, lst.getLength());
 
 		Node n;
 		while ((n = root.getFirstChild()) != null) {
 			root.removeChild(n);
 		}
 
-		if (lst.getLength() != 0) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode("error.getElementByTagNameNS.failed");
-			report.setPassed(false);
-			return report;
-		}
-
-		return reportSuccess();
+		assertEquals(0, lst.getLength());
 	}
 
 }

@@ -19,79 +19,52 @@
 
 package io.sf.carte.echosvg.dom;
 
-import java.io.File;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.IOException;
 import java.net.URL;
 
+import org.junit.Test;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * @author <a href="mailto:shillion@ilog.fr">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SetAttributeTest extends AbstractTest {
-	protected String testFileName;
-	protected String rootTag;
-	protected String targetId;
-	protected String targetAttribute;
-	protected String targetValue;
+public class SetAttributeTest {
 
-	protected String parserClassName = XMLResourceDescriptor.getXMLParserClassName();
-
-	public static String ERROR_GET_ELEMENT_BY_ID_FAILED = "error.get.element.by.id.failed";
-
-	public static String ENTRY_KEY_ID = "entry.key.id";
-
-	public SetAttributeTest(String testFileName, String rootTag, String targetId, String targetAttribute,
-			String targetValue) {
-		this.testFileName = testFileName;
-		this.rootTag = rootTag;
-		this.targetId = targetId;
-		this.targetAttribute = targetAttribute;
-		this.targetValue = targetValue;
+	@Test
+	public void test() throws IOException {
+		testSetAttribute("io/sf/carte/echosvg/dom/dummyXML.xml", "doc", "root",
+				"targetAttribute", "targetValue");
 	}
 
-	public String getParserClassName() {
-		return parserClassName;
-	}
+	void testSetAttribute(String testFileName, String rootTag, String targetId, String targetAttribute,
+			String targetValue) throws IOException {
+		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), null);
 
-	public void setParserClassName(String parserClassName) {
-		this.parserClassName = parserClassName;
-	}
-
-	@Override
-	public TestReport runImpl() throws Exception {
-		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parserClassName);
-
-		File f = (new File(testFileName));
-		URL url = f.toURI().toURL();
+		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
 		Element e = doc.getElementById(targetId);
 
-		if (e == null) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode(ERROR_GET_ELEMENT_BY_ID_FAILED);
-			report.addDescriptionEntry(ENTRY_KEY_ID, targetId);
-			report.setPassed(false);
-			return report;
-		}
+		assertNotNull(e);
 
 		e.setAttribute(targetAttribute, targetValue);
-		if (targetValue.equals(e.getAttribute(targetAttribute))) {
-			return reportSuccess();
-		}
-		DefaultTestReport report = new DefaultTestReport(this);
-		report.setErrorCode(TestReport.ERROR_TEST_FAILED);
-		report.setPassed(false);
-		return report;
+		assertEquals(targetValue, e.getAttribute(targetAttribute));
+
+		Attr attr = e.getAttributeNode(targetAttribute);
+
+		assertNotNull(attr);
+		assertEquals(targetValue, attr.getValue());
+		assertEquals(targetValue, attr.getNodeValue());
 	}
+
 }

@@ -18,12 +18,13 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import java.io.File;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import org.w3c.dom.Document;
@@ -32,9 +33,7 @@ import org.w3c.dom.Node;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
@@ -62,7 +61,7 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @version $Id$
  */
 
-public class ExternalResourcesTest extends AbstractTest implements ErrorConstants {
+public class ExternalResourcesTest implements ErrorConstants {
 	/**
 	 * Error when the input file cannot be loaded into a Document object {0} =
 	 * IOException message
@@ -131,58 +130,25 @@ public class ExternalResourcesTest extends AbstractTest implements ErrorConstant
 	public static final String INSERTION_POINT_ID = "insertionPoint";
 
 	/**
-	 * Location of test files in filesystem.
+	 * Location of bridge test files in filesystem.
 	 */
 	public static final String FILE_DIR = "test-resources/io/sf/carte/echosvg/bridge/";
-	/**
-	 * Controls whether the test works in secure mode or not
-	 */
-	protected boolean secure = true;
 
 	String svgURL;
 
-	@Override
-	public void setId(String id) {
-		super.setId(id);
-		String file = id;
-		int idx = file.indexOf('.');
-		if (idx != -1) {
-			file = file.substring(0, idx);
-		}
-		svgURL = resolveURL(FILE_DIR + file + ".svg");
-	}
-
-	public Boolean getSecure() {
-		return secure ? Boolean.TRUE : Boolean.FALSE;
-	}
-
-	public void setSecure(Boolean secure) {
-		this.secure = secure;
-	}
-
 	/**
-	 * Resolves the input string as follows. + First, the string is interpreted as a
-	 * file description. If the file exists, then the file name is turned into a
-	 * URL. + Otherwise, the string is supposed to be a URL. If it is an invalid
+	 * Resolves the input string. If it is an invalid
 	 * URL, an IllegalArgumentException is thrown.
 	 */
-	protected String resolveURL(String url) {
-		// Is url a file?
-		File f = (new File(url)).getAbsoluteFile();
-		if (f.getParentFile().exists()) {
-			try {
-				return f.toURI().toURL().toString();
-			} catch (MalformedURLException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-
-		// url is not a file. It must be a regular URL...
+	private String resolveURL(String basename) {
+		final String resName = TestLocations.getRootBuildURL() + FILE_DIR + basename + ".svg";
+		URL url;
 		try {
-			return (new URL(url)).toString();
+			url = new URL(resName);
 		} catch (MalformedURLException e) {
-			throw new IllegalArgumentException(url);
+			throw new IllegalArgumentException(resName);
 		}
+		return url.toExternalForm();
 	}
 
 	/**
@@ -192,10 +158,23 @@ public class ExternalResourcesTest extends AbstractTest implements ErrorConstant
 	 * should cause a SecurityException. If so, the test passes. Otherwise, the test
 	 * will fail
 	 */
-	@Override
-	public TestReport runImpl() throws Exception {
-		DefaultTestReport report = new DefaultTestReport(this);
+	@org.junit.Test
+	public void testSecure() throws IOException {
+		runTest("externalResourcesAccess", true);
+	}
 
+	@org.junit.Test
+	public void testUnsecure() throws IOException {
+		runTest("externalResourcesAccess", false);
+	}
+
+	public void runTest(String file, boolean secure) throws BridgeException, IOException {
+
+		int idx = file.indexOf('.');
+		if (idx != -1) {
+			file = file.substring(0, idx);
+		}
+		svgURL = resolveURL(file);
 		//
 		// First step:
 		//
@@ -203,36 +182,20 @@ public class ExternalResourcesTest extends AbstractTest implements ErrorConstant
 		//
 		String parserClassName = XMLResourceDescriptor.getXMLParserClassName();
 		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parserClassName);
-		Document doc = null;
-
-		try {
-			doc = f.createDocument(svgURL);
-		} catch (IOException e) {
-			report.setErrorCode(ERROR_CANNOT_LOAD_SVG_DOCUMENT);
-			report.addDescriptionEntry(ENTRY_KEY_ERROR_DESCRIPTION, e.getMessage());
-			report.setPassed(false);
-			return report;
-		} catch (Exception e) {
-			report.setErrorCode(ERROR_CANNOT_LOAD_SVG_DOCUMENT);
-			report.addDescriptionEntry(ENTRY_KEY_ERROR_DESCRIPTION, e.getMessage());
-			report.setPassed(false);
-			return report;
-		}
-
-		List<String> failures = new ArrayList<>();
+		Document doc = f.createDocument(svgURL);
 
 		//
 		// Do an initial processing to validate that the external
 		// stylesheet causes a SecurityException
 		//
-		MyUserAgent userAgent = buildUserAgent();
+		MyUserAgent userAgent = buildUserAgent(secure);
 		GVTBuilder builder = new GVTBuilder();
 		BridgeContext ctx = new BridgeContext(userAgent);
 		ctx.setDynamic(true);
 
 		// We expect either a SecurityException or a BridgeException
 		// with ERR_URI_UNSECURE.
-		Throwable th = null;
+		Exception th = null;
 		try {
 			GraphicsNode gn = builder.build(ctx, doc);
 			gn.getBounds();
@@ -241,22 +204,17 @@ public class ExternalResourcesTest extends AbstractTest implements ErrorConstant
 			th = e;
 		} catch (SecurityException e) {
 			th = e;
-		} catch (Throwable t) {
-			th = t;
 		}
 		if (th == null) {
 			if (secure)
-				failures.add(EXTERNAL_STYLESHEET_ID);
+				fail("Expected either a SecurityException or a BridgeException");
 		} else if (th instanceof SecurityException) {
 			if (!secure)
-				failures.add(EXTERNAL_STYLESHEET_ID);
+				throw (SecurityException) th;
 		} else if (th instanceof BridgeException) {
 			BridgeException be = (BridgeException) th;
 			if (!secure || (secure && !ERR_URI_UNSECURE.equals(be.getCode()))) {
-				report.setErrorCode(ERROR_WHILE_PROCESSING_SVG_DOCUMENT);
-				report.addDescriptionEntry(ENTRY_KEY_ERROR_DESCRIPTION, be.getMessage());
-				report.setPassed(false);
-				return report;
+				throw be;
 			}
 		}
 
@@ -278,11 +236,8 @@ public class ExternalResourcesTest extends AbstractTest implements ErrorConstant
 		//
 		Element root = doc.getDocumentElement();
 		String idList = root.getAttributeNS(testNS, "targetids");
-		if (idList == null || "".equals(idList)) {
-			report.setErrorCode(ERROR_NO_ID_LIST);
-			report.setPassed(false);
-			return report;
-		}
+		assertNotNull(idList);
+		assertNotEquals(0, idList.length());
 
 		StringTokenizer st = new StringTokenizer(idList, ",");
 		String[] ids = new String[st.countTokens()];
@@ -291,7 +246,7 @@ public class ExternalResourcesTest extends AbstractTest implements ErrorConstant
 		}
 
 		for (String id : ids) {
-			userAgent = buildUserAgent();
+			userAgent = buildUserAgent(secure);
 			builder = new GVTBuilder();
 			ctx = new BridgeContext(userAgent);
 			ctx.setDynamic(true);
@@ -299,21 +254,11 @@ public class ExternalResourcesTest extends AbstractTest implements ErrorConstant
 			Document cloneDoc = (Document) doc.cloneNode(true);
 			Element insertionPoint = cloneDoc.getElementById(INSERTION_POINT_ID);
 
-			if (insertionPoint == null) {
-				report.setErrorCode(ERROR_NO_INSERTION_POINT_IN_DOCUMENT);
-				report.addDescriptionEntry(ENTRY_KEY_INSERTION_POINT_ID, INSERTION_POINT_ID);
-				report.setPassed(false);
-				return report;
-			}
+			assertNotNull(insertionPoint);
 
 			Element target = cloneDoc.getElementById(id);
 
-			if (target == null) {
-				report.setErrorCode(ERROR_TARGET_ID_NOT_FOUND);
-				report.addDescriptionEntry(ENTRY_KEY_TARGET_ID, id);
-				report.setPassed(false);
-				return report;
-			}
+			assertNotNull(target);
 
 			insertionPoint.appendChild(target);
 			th = null;
@@ -325,58 +270,29 @@ public class ExternalResourcesTest extends AbstractTest implements ErrorConstant
 				th = e;
 			} catch (SecurityException e) {
 				th = e;
-			} catch (Throwable t) {
-				th = t;
 			}
 			if (th == null) {
 				if (secure)
-					failures.add(id);
+					fail("Expected either a SecurityException or a BridgeException");
 			} else if (th instanceof SecurityException) {
 				if (!secure)
-					failures.add(id);
+					throw (SecurityException) th;
 			} else if (th instanceof BridgeException) {
 				BridgeException be = (BridgeException) th;
 				if (!secure || (secure && !ERR_URI_UNSECURE.equals(be.getCode()))) {
-					report.setErrorCode(ERROR_WHILE_PROCESSING_SVG_DOCUMENT);
-					report.addDescriptionEntry(ENTRY_KEY_ERROR_DESCRIPTION, be.getMessage());
-					report.setPassed(false);
-					return report;
+					throw be;
 				}
-			} else {
-				// Some unknown exception was displayed...
-				report.setErrorCode(ERROR_WHILE_PROCESSING_SVG_DOCUMENT);
-				report.addDescriptionEntry(ENTRY_KEY_ERROR_DESCRIPTION, th.getMessage());
-				report.setPassed(false);
-				return report;
 			}
 
 		}
 
-		if (failures.size() == 0) {
-			return reportSuccess();
-		}
-
-		if (secure) {
-			report.setErrorCode(ERROR_UNTHROWN_SECURITY_EXCEPTIONS);
-			for (String failure : failures) {
-				report.addDescriptionEntry(ENTRY_KEY_EXPECTED_EXCEPTION_ON, failure);
-			}
-		} else {
-			report.setErrorCode(ERROR_THROWN_SECURITY_EXCEPTIONS);
-			for (String failure : failures) {
-				report.addDescriptionEntry(ENTRY_KEY_UNEXPECTED_EXCEPTION_ON, failure);
-			}
-		}
-
-		report.setPassed(false);
-		return report;
 	}
 
 	protected interface MyUserAgent extends UserAgent {
 		Exception getDisplayError();
 	}
 
-	protected MyUserAgent buildUserAgent() {
+	private MyUserAgent buildUserAgent(boolean secure) {
 		if (secure) {
 			return new SecureUserAgent();
 		} else {

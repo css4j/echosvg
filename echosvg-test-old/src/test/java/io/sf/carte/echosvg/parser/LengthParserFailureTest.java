@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.parser;
 
+import static org.junit.Assert.fail;
+
 import java.io.StringReader;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
+import org.junit.Test;
 
 /**
  * To test the length parser.
@@ -31,31 +31,34 @@ import io.sf.carte.echosvg.test.TestReport;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class LengthParserFailureTest extends AbstractTest {
-
-	protected String sourceLength;
+public class LengthParserFailureTest {
 
 	/**
-	 * Creates a new LengthParserFailureTest.
 	 * 
-	 * @param slength The length to parse.
+	 * 
+	 * @param sourceLength The length to parse.
 	 */
-	public LengthParserFailureTest(String slength) {
-		sourceLength = slength;
-	}
-
-	@Override
-	public TestReport runImpl() throws Exception {
+	private void testLengthParserFailure(String sourceLength) {
 		LengthParser pp = new LengthParser();
 		try {
 			pp.parse(new StringReader(sourceLength));
+			fail("Must throw exception for: " + sourceLength);
 		} catch (ParseException e) {
-			return reportSuccess();
 		}
-		DefaultTestReport report = new DefaultTestReport(this);
-		report.setErrorCode("parse.without.error");
-		report.addDescriptionEntry("input.text", sourceLength);
-		report.setPassed(false);
-		return report;
 	}
+
+	@Test
+	public void test() throws Exception {
+		testLengthParserFailure("123.456.7");
+		testLengthParserFailure("1e+");
+		testLengthParserFailure("+e3");
+		testLengthParserFailure("1Em");
+		testLengthParserFailure("--1");
+		testLengthParserFailure("-1E--2");
+		testLengthParserFailure("-.E+1");
+		testLengthParserFailure("-.0EE+1");
+		testLengthParserFailure("1Eem");
+		testLengthParserFailure("1em%");
+	}
+
 }

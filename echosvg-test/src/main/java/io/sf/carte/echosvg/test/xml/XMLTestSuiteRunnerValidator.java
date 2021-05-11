@@ -82,7 +82,7 @@ public class XMLTestSuiteRunnerValidator extends DefaultTestSuite {
 	/**
 	 * Dummy test-suite used to run the test
 	 */
-	static final String dummyTestRun = "test-resources/io/sf/carte/echosvg/test/xml/dummyTestRun.xml";
+	static final String dummyTestRun = "io/sf/carte/echosvg/test/xml/dummyTestRun.xml";
 
 	/**
 	 * This suite is made of elementary tests which validate that the XML result for

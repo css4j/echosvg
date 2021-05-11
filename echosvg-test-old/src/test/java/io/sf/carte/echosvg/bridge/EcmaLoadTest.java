@@ -18,7 +18,9 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import io.sf.carte.echosvg.test.DefaultTestSuite;
+import java.io.IOException;
+
+import org.junit.Test;
 
 /**
  * Checks that ECMA Scripts which should be loaded are indeed loaded.
@@ -27,8 +29,10 @@ import io.sf.carte.echosvg.test.DefaultTestSuite;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class EcmaLoadTest extends DefaultTestSuite {
-	public EcmaLoadTest() {
+public class EcmaLoadTest {
+
+	@Test
+	public void test() throws IOException {
 		String scripts = "text/ecmascript";
 		String[] scriptSource = { "ecmaCheckLoadAny", "ecmaCheckLoadSameAsDocument", "ecmaCheckLoadEmbed",
 				"ecmaCheckLoadEmbedAttr", };
@@ -51,17 +55,18 @@ public class EcmaLoadTest extends DefaultTestSuite {
 			for (int j = 0; j < scriptOrigin[i].length; j++) {
 				for (boolean aSecure : secure) {
 					ScriptSelfTest t = buildTest(scripts, scriptSource[i], scriptOrigin[i][j], aSecure);
-					addTest(t);
+					t.runTest();
 				}
 			}
 		}
 	}
 
-	ScriptSelfTest buildTest(String scripts, String id, String origin, boolean secure) {
+	private ScriptSelfTest buildTest(String scripts, String id, String origin, boolean secure) {
 		ScriptSelfTest t = new ScriptSelfTest();
 		String desc = "(scripts=" + scripts + ")(scriptOrigin=" + origin + ")(secure=" + secure + ')';
 
-		t.setId(id + desc);
+		t.setId(id);
+		t.setDescription(id + ' ' + desc);
 		t.setScriptOrigin(origin);
 		t.setSecure(secure);
 		t.setScripts(scripts);

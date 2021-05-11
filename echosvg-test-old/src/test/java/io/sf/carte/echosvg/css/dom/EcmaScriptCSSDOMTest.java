@@ -19,6 +19,10 @@
 
 package io.sf.carte.echosvg.css.dom;
 
+import java.io.IOException;
+
+import org.junit.Test;
+
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 
 /**
@@ -30,9 +34,15 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
  */
 
 public class EcmaScriptCSSDOMTest extends SelfContainedSVGOnLoadTest {
-	@Override
-	public void setId(String id) {
-		super.setId(id);
-		svgURL = resolveURL("test-resources/io/sf/carte/echosvg/css/dom/" + id + ".svg");
+
+	@Test
+	public void test() throws IOException {
+		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbTest.svg");
+		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbUpdateTest.svg");
+		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbPresentationTest.svg");
+		testSVGOnLoad("io/sf/carte/echosvg/css/dom/bug9740.svg");
+		testSVGOnLoad("io/sf/carte/echosvg/css/dom/bug9779.svg");
+		testSVGOnLoad("io/sf/carte/echosvg/css/dom/bug11670.svg");
 	}
+
 }

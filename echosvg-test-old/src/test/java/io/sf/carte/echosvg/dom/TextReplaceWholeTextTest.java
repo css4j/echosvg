@@ -18,6 +18,11 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Text;
 
@@ -29,8 +34,9 @@ import org.w3c.dom.Text;
  * @version $Id$
  */
 public class TextReplaceWholeTextTest extends DOM3Test {
-	@Override
-	public boolean runImplBasic() throws Exception {
+
+	@Test
+	public void test() throws DOMException {
 		Document doc = newSVGDoc();
 		Text n1 = doc.createTextNode("abc");
 		Text n2 = doc.createTextNode("def");
@@ -40,7 +46,8 @@ public class TextReplaceWholeTextTest extends DOM3Test {
 		doc.getDocumentElement().appendChild(n3);
 		n2.replaceWholeText("xyz");
 
-		return doc.getDocumentElement().getFirstChild().getNodeValue().equals("xyz")
-				&& doc.getDocumentElement().getFirstChild().getNextSibling() == null;
+		assertEquals("xyz", doc.getDocumentElement().getFirstChild().getNodeValue());
+		assertNull(doc.getDocumentElement().getFirstChild().getNextSibling());
 	}
+
 }

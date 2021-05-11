@@ -18,18 +18,19 @@
  */
 package io.sf.carte.echosvg.dom.svg;
 
-import java.io.File;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.IOException;
 import java.net.URL;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
@@ -39,34 +40,24 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class CloneNodeTest extends AbstractTest {
-	protected String testFileName;
-	protected String targetId;
+public class CloneNodeTest {
 
-	public CloneNodeTest(String file, String id) {
-		testFileName = file;
-		targetId = id;
+	@Test
+	public void test() throws IOException {
+		runTest("io/sf/carte/echosvg/dom/svg/test.svg", "nodeID");
 	}
 
-	@Override
-	public TestReport runImpl() throws Exception {
+	void runTest(String testFileName, String targetId) throws IOException {
 		String parser = XMLResourceDescriptor.getXMLParserClassName();
 
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(parser);
 
-		File f = (new File(testFileName));
-		URL url = f.toURI().toURL();
+		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(url.toString(), url.openStream());
 
 		Element e = doc.getElementById(targetId);
 
-		if (e == null) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode("error.get.element.by.id.failed");
-			report.addDescriptionEntry("entry.key.id", targetId);
-			report.setPassed(false);
-			return report;
-		}
+		assertNotNull(e);
 
 		Element celt = (Element) e.cloneNode(true);
 
@@ -78,15 +69,8 @@ public class CloneNodeTest extends AbstractTest {
 			String name = (ns == null) ? attr.getNodeName() : attr.getLocalName();
 			String val = attr.getNodeValue();
 			String val2 = celt.getAttributeNS(ns, name);
-			if (!val.equals(val2)) {
-				DefaultTestReport report = new DefaultTestReport(this);
-				report.setErrorCode("error.attr.comparison.failed");
-				report.addDescriptionEntry("entry.attr.name", name);
-				report.setPassed(false);
-				return report;
-			}
+			assertEquals(val, val2);
 		}
-
-		return reportSuccess();
 	}
+
 }

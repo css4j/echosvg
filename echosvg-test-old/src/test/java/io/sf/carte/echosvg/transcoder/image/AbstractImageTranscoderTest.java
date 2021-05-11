@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.transcoder.image;
 
+import static org.junit.Assert.assertTrue;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.BufferedInputStream;
@@ -28,7 +30,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
@@ -42,9 +43,7 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.test.svg.AbstractRenderingAccuracyTest;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -58,47 +57,22 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractImageTranscoderTest extends AbstractTest {
+public abstract class AbstractImageTranscoderTest {
 
-	/**
-	 * Error when the reference image and the generated image is different.
-	 */
-	public static final String ERROR_IMAGE_DIFFER = "AbstractImageTranscoderTest.error.image.differ";
-
-	/**
-	 * Tag for difference image URI.
-	 */
-	public static final String DIFFERENCE_IMAGE = "AbstractImageTranscoderTest.error.difference.image";
-
-	/**
-	 * Error when an exception occured while transcoding.
-	 */
-	public static final String ERROR_TRANSCODING = "AbstractImageTranscoderTest.error.transcoder.exception";
+	private String filename;
 
 	/**
 	 * Constructs a new <code>AbstractImageTranscoderTest</code>.
 	 */
-	public AbstractImageTranscoderTest() {
+	AbstractImageTranscoderTest() {
 	}
 
 	/**
-	 * Resolves the input string as follows. + First, the string is interpreted as a
-	 * file description. If the file exists, then the file name is turned into a
-	 * URL. + Otherwise, the string is supposed to be a URL. If it is an invalid
-	 * URL, an IllegalArgumentException is thrown.
+	 * Resolves the input string as a URL. If it is an invalid
+	 * URI, an IllegalArgumentException is thrown.
 	 */
-	protected URL resolveURL(String url) {
-		// Is url a file?
-		File f = (new File(url)).getAbsoluteFile();
-		if (f.getParentFile().exists()) {
-			try {
-				return f.toURI().toURL();
-			} catch (MalformedURLException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-
-		// url is not a file. It must be a regular URL...
+	URL resolveURI(String url) {
+		url = TestLocations.getRootBuildURL() + url;
 		try {
 			return new URL(url);
 		} catch (MalformedURLException e) {
@@ -106,34 +80,22 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
 		}
 	}
 
-	DefaultTestReport report;
-
 	/**
-	 * Runs this test. This method will only throw exceptions if some aspect of the
-	 * test's internal operation fails.
+	 * Runs this test.
+	 * @throws TranscoderException 
 	 */
-	@Override
-	public TestReport runImpl() throws Exception {
-		report = new DefaultTestReport(this);
+	public void runTest() throws TranscoderException {
+		DiffImageTranscoder transcoder = new DiffImageTranscoder(getReferenceImageData());
 
-		try {
-			DiffImageTranscoder transcoder = new DiffImageTranscoder(getReferenceImageData());
-
-			Map<Key, Object> hints = createTranscodingHints();
-			if (hints != null) {
-				transcoder.setTranscodingHints(hints);
-			}
-
-			TranscoderInput input = createTranscoderInput();
-			transcoder.transcode(input, null);
-		} catch (Exception ex) {
-			report.setErrorCode(ERROR_TRANSCODING);
-			report.addDescriptionEntry(ERROR_TRANSCODING, toString(ex));
-			ex.printStackTrace();
-			report.setPassed(false);
+		Map<Key, Object> hints = createTranscodingHints();
+		if (hints != null) {
+			transcoder.setTranscodingHints(hints);
 		}
 
-		return report;
+		TranscoderInput input = createTranscoderInput();
+		transcoder.transcode(input, null);
+
+		assertTrue(transcoder.isIdentical());
 	}
 
 	/**
@@ -166,15 +128,12 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
 		return trace.toString();
 	}
 
-	static String filename;
-
 	/**
 	 * Loads an image from a URL
 	 */
-	public static byte[] createBufferedImageData(URL url) {
+	byte[] createBufferedImageData(URL url) {
 		try {
-			filename = url.toString();
-			// System.out.println(url.toString());
+			filename = url.getFile();
 			InputStream istream = url.openStream();
 			byte[] imgData = null;
 			byte[] buf = new byte[1024];
@@ -209,13 +168,13 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
 	/**
 	 * A custom ImageTranscoder for testing.
 	 */
-	protected class DiffImageTranscoder extends ImageTranscoder {
+	private class DiffImageTranscoder extends ImageTranscoder {
 
 		/** The result of the image comparaison. */
-		protected boolean state;
+		private boolean state;
 
 		/** The reference image. */
-		protected byte[] refImgData;
+		private byte[] refImgData;
 
 		/**
 		 * Constructs a new <code>DiffImageTranscoder</code>.
@@ -248,41 +207,44 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
 		public void writeImage(BufferedImage img, TranscoderOutput output) throws TranscoderException {
 
 			try {
-				compareImage(img);
+				state = compareImage(img);
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		}
 
-		protected void writeCandidateReference(byte[] imgData) {
-			try {
-				String s = new File(filename).getName();
-				s = "test-references/io/sf/carte/echosvg/transcoder/image/candidate-reference/" + s;
-				System.out.println(s);
-				FileOutputStream ostream = new FileOutputStream(s);
-				ostream.write(imgData, 0, imgData.length);
-				ostream.flush();
-				ostream.close();
-			} catch (Exception ex) {
-			}
-			return;
+		private void writeCandidateReference(byte[] imgData) {
+			writeCandidateFile(imgData, "test-references/io/sf/carte/echosvg/transcoder/image/candidate-ref/");
 		}
 
-		protected void writeCandidateVariation(byte[] diff) {
+		private void writeCandidateVariation(byte[] diff) {
+			writeCandidateFile(diff, "test-references/io/sf/carte/echosvg/transcoder/image/candidate-variation/");
+		}
+
+		private File writeCandidateFile(byte[] data, String dirname) {
+			File f = null;
 			try {
 				String s = new File(filename).getName();
-				s = ("test-references/io/sf/carte/echosvg/transcoder/image/" + "candidate-variation/" + s);
-				OutputStream out = new FileOutputStream(s);
-				IOUtils.copy(new ByteArrayInputStream(diff), out);
-				report.addDescriptionEntry(DIFFERENCE_IMAGE, new File(s));
+				File candidateDir = new File(resolveURI(dirname).getFile());
+				if (!candidateDir.exists()) {
+					if (!candidateDir.mkdir()) {
+						return null;
+					}
+				}
+				f = new File(candidateDir, s);
+				FileOutputStream ostream = new FileOutputStream(f);
+				ostream.write(data, 0, data.length);
+				ostream.flush();
+				ostream.close();
 			} catch (Exception e) {
 			}
+			return f;
 		}
 
 		/**
 		 * Compares both source and result images and set the state flag.
 		 */
-		protected void compareImage(BufferedImage img) throws TranscoderException, IOException {
+		private boolean compareImage(BufferedImage img) throws TranscoderException, IOException {
 			// compare the resulting image with the reference image
 			// state = true if refImg is the same than img
 
@@ -293,30 +255,25 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
 			byte[] imgData = out.toByteArray();
 
 			if (refImgData == null) {
-				report.setErrorCode(ERROR_IMAGE_DIFFER);
-				report.addDescriptionEntry(ERROR_IMAGE_DIFFER, "");
-				report.setPassed(false);
+				// No reference image, create one
 				writeCandidateReference(imgData);
-				state = false;
-				return;
+				return false;
 			}
 
 			if (!Arrays.equals(refImgData, imgData)) {
 				byte[] actualDiff = createDiffImage(img);
 				File acceptedDiffFile = new File(
-						"test-references/io/sf/carte/echosvg/transcoder/image/accepted-variation/",
+						resolveURI("test-references/io/sf/carte/echosvg/transcoder/image/accepted-variation/")
+								.getFile(),
 						new File(filename).getName());
 				if (!(acceptedDiffFile.exists() && dataFromFileEqual(acceptedDiffFile, actualDiff))) {
-					report.setErrorCode(ERROR_IMAGE_DIFFER);
-					report.addDescriptionEntry(ERROR_IMAGE_DIFFER, "");
-					report.setPassed(false);
 					writeCandidateReference(imgData);
 					writeCandidateVariation(actualDiff);
-					return;
+					return false;
 				}
 			}
 
-			state = true;
+			return true;
 		}
 
 		private byte[] createDiffImage(BufferedImage actualImage) throws IOException {
@@ -338,12 +295,12 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
 		 * Returns true if the reference image is the same than the generated image,
 		 * false otherwise.
 		 */
-		public boolean isIdentical() {
+		boolean isIdentical() {
 			return state;
 		}
 	}
 
-	protected BufferedImage getImage(InputStream is) throws IOException {
+	private BufferedImage getImage(InputStream is) throws IOException {
 		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
 		Filter filt = reg.readStream(is);
 		if (filt == null)
@@ -357,4 +314,5 @@ public abstract class AbstractImageTranscoderTest extends AbstractTest {
 		red.copyData(img.getRaster());
 		return img;
 	}
+
 }

@@ -18,6 +18,10 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import java.io.IOException;
+
+import org.junit.Test;
+
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 
 /**
@@ -29,9 +33,12 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
  */
 
 public class EcmaScriptDOMTest extends SelfContainedSVGOnLoadTest {
-	@Override
-	public void setId(String id) {
-		super.setId(id);
-		svgURL = resolveURL("test-resources/io/sf/carte/echosvg/dom/" + id + ".svg");
+
+	@Test
+	public void test() throws IOException {
+		testSVGOnLoad("io/sf/carte/echosvg/dom/bug18143.svg");
+		testSVGOnLoad("io/sf/carte/echosvg/dom/bug20331.svg");
+		testSVGOnLoad("io/sf/carte/echosvg/dom/bug20332.svg");
 	}
+
 }

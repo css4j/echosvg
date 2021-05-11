@@ -18,6 +18,10 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -29,8 +33,9 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class NodeBaseURITest extends DOM3Test {
-	@Override
-	public boolean runImplBasic() throws Exception {
+
+	@Test
+	public void test() throws DOMException {
 		Document doc = newSVGDoc();
 		doc.setDocumentURI("http://example.com/blah");
 		Element e = doc.createElementNS(SVG_NAMESPACE_URI, "g");
@@ -39,7 +44,9 @@ public class NodeBaseURITest extends DOM3Test {
 		Element e2 = doc.createElementNS(SVG_NAMESPACE_URI, "g");
 		e.appendChild(e2);
 		e2.setAttributeNS(XML_NAMESPACE_URI, "xml:base", "/somewhere");
-		return "http://example.com/blah".equals(doc.getBaseURI()) && "http://example.org/base".equals(e.getBaseURI())
-				&& "http://example.org/somewhere".equals(e2.getBaseURI());
+		assertEquals("http://example.com/blah", doc.getBaseURI());
+		assertEquals("http://example.org/base", e.getBaseURI());
+		assertEquals("http://example.org/somewhere", e2.getBaseURI());
 	}
+
 }

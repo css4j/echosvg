@@ -18,14 +18,17 @@
  */
 package io.sf.carte.echosvg.svggen;
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import io.sf.carte.echosvg.test.DefaultTestSuite;
-import io.sf.carte.echosvg.test.Test;
+import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.test.svg.ImageCompareTest;
 import io.sf.carte.echosvg.test.svg.SVGRenderingAccuracyTest;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 
 /**
  * This test validates that a given rendering sequence, modeled by a
@@ -38,42 +41,186 @@ import io.sf.carte.echosvg.test.svg.SVGRenderingAccuracyTest;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGGeneratorTests extends DefaultTestSuite {
-	public static final String GENERATOR_REFERENCE_BASE = "test-references/io/sf/carte/echosvg/svggen/";
+public class SVGGeneratorTests {
+	private static final String GENERATOR_REFERENCE_BASE;
 
-	public static final String RENDERING_DIR = "rendering";
+	private static final String RENDERING_DIR = "rendering";
 
-	public static final String ACCEPTED_VARIATION_DIR = "accepted-variation";
+	private static final String ACCEPTED_VARIATION_DIR = "accepted-variation";
 
-	public static final String[] VARIATION_PLATFORMS = io.sf.carte.echosvg.test.svg.PreconfiguredRenderingTest.DEFAULT_VARIATION_PLATFORMS;
+	private static final String[] VARIATION_PLATFORMS = io.sf.carte.echosvg.test.svg.PreconfiguredRenderingTest.DEFAULT_VARIATION_PLATFORMS;
 
 	private static final String ACCEPTED_REF_DIR = "accepted-ref";
 
-	public static final String CANDIDATE_VARIATION_DIR = "candidate-variation";
+	private static final String CANDIDATE_VARIATION_DIR = "candidate-variation";
 
-	public static final String CANDIDATE_REF_DIR = "candidate-ref";
+	private static final String CANDIDATE_REF_DIR = "candidate-ref";
 
-	public static final String RENDERING_CANDIDATE_REF_DIR = "candidate-reference";
+	private static final String RENDERING_CANDIDATE_REF_DIR = "candidate-reference";
 
-	public static final String PNG_EXTENSION = ".png";
+	private static final String PNG_EXTENSION = ".png";
 
-	public static final String SVG_EXTENSION = ".svg";
+	private static final String SVG_EXTENSION = ".svg";
 
-	public static final String PLAIN_GENERATION_PREFIX = "";
+	private static final String PLAIN_GENERATION_PREFIX = "";
 
-	public static final String CUSTOM_CONTEXT_GENERATION_PREFIX = "Context";
+	private static final String CUSTOM_CONTEXT_GENERATION_PREFIX = "Context";
 
-	public SVGGeneratorTests() {
+	static {
+		GENERATOR_REFERENCE_BASE = TestLocations.getRootBuildURL() + "test-references/io/sf/carte/echosvg/svggen/";
+	}
+
+	@org.junit.Test
+	public void testATransform() throws IOException, TranscoderException {
+		runTests("ATransform");
+	}
+
+	@org.junit.Ignore
+	@org.junit.Test
+	public void testAttributedCharacterIterator() throws IOException, TranscoderException {
+		runTests("AttributedCharacterIterator");
+	}
+
+	@org.junit.Test
+	public void testBasicShapes() throws IOException, TranscoderException {
+		runTests("BasicShapes");
+	}
+
+	@org.junit.Test
+	public void testBasicShapes2() throws IOException, TranscoderException {
+		runTests("BasicShapes2");
+	}
+
+	@org.junit.Test
+	public void testBStroke() throws IOException, TranscoderException {
+		runTests("BStroke");
+	}
+
+	@org.junit.Test
+	public void testBug4389() throws IOException, TranscoderException {
+		runTests("Bug4389");
+	}
+
+	@org.junit.Test
+	public void testBug4945() throws IOException, TranscoderException {
+		runTests("Bug4945");
+	}
+
+	@org.junit.Test
+	public void testBug6535() throws IOException, TranscoderException {
+		runTests("Bug6535");
+	}
+
+	@org.junit.Test
+	public void testBug17965() throws IOException, TranscoderException {
+		runTests("Bug17965");
+	}
+
+	@org.junit.Test
+	public void testClip() throws IOException, TranscoderException {
+		runTests("Clip");
+	}
+
+	@org.junit.Test
+	public void testColor1() throws IOException, TranscoderException {
+		runTests("Color1");
+	}
+
+	@org.junit.Test
+	public void testColor2() throws IOException, TranscoderException {
+		runTests("Color2");
+	}
+
+	@org.junit.Test
+	public void testDrawImage() throws IOException, TranscoderException {
+		runTests("DrawImage");
+	}
+
+	@org.junit.Ignore
+	@org.junit.Test
+	public void testFont1() throws IOException, TranscoderException {
+		runTests("Font1");
+	}
+
+	@org.junit.Ignore
+	@org.junit.Test // FIXME: Underline and Strikethrough not honored
+	public void testFont2() throws IOException, TranscoderException {
+		runTests("Font2");
+	}
+
+	@org.junit.Test
+	public void testGVector() throws IOException, TranscoderException {
+		runTests("GVector");
+	}
+
+	@org.junit.Test
+	public void testGradient() throws IOException, TranscoderException {
+		runTests("Gradient");
+	}
+
+	@org.junit.Test
+	public void testGraphicObjects() throws IOException, TranscoderException {
+		runTests("GraphicObjects");
+	}
+
+	@org.junit.Test
+	public void testIdentityTest() throws IOException, TranscoderException {
+		runTests("IdentityTest");
+	}
+
+	@org.junit.Test
+	public void testLookup() throws IOException, TranscoderException {
+		runTests("Lookup");
+	}
+
+	@org.junit.Test
+	public void testNegativeLengths() throws IOException, TranscoderException {
+		runTests("NegativeLengths");
+	}
+
+	@org.junit.Test
+	public void testPaints() throws IOException, TranscoderException {
+		runTests("Paints");
+	}
+
+	@org.junit.Test
+	public void testRHints() throws IOException, TranscoderException {
+		runTests("RHints");
+	}
+
+	@org.junit.Test
+	public void testRescale() throws IOException, TranscoderException {
+		runTests("Rescale");
+	}
+
+	@org.junit.Test
+	public void testShearTest() throws IOException, TranscoderException {
+		runTests("ShearTest");
+	}
+
+	@org.junit.Test
+	public void testTexture() throws IOException, TranscoderException {
+		runTests("Texture");
+	}
+
+	@org.junit.Test
+	public void testTextSpacePreserve() throws IOException, TranscoderException {
+		runTests("TextSpacePreserve");
+	}
+
+	@org.junit.Test
+	public void testTransformCollapse() throws IOException, TranscoderException {
+		runTests("TransformCollapse");
 	}
 
 	/**
 	 * The id should be the Painter's class name prefixed with the package name
 	 * defined in getPackageName
+	 * @throws IOException 
+	 * @throws TranscoderException 
 	 */
-	@Override
-	public void setId(String id) {
-		super.setId(id);
-		String clName = getPackageName() + "." + id;
+	public void runTests(String painterClassname) throws IOException, TranscoderException {
+		String clName = getClass().getPackageName() + "." + painterClassname;
 		Class<?> cl = null;
 
 		try {
@@ -96,38 +243,36 @@ public class SVGGeneratorTests extends DefaultTestSuite {
 
 		Painter painter = (Painter) o;
 
-		addTest(makeSVGAccuracyTest(painter, id));
-		addTest(makeGeneratorContext(painter, id));
-		addTest(makeSVGRenderingAccuracyTest(painter, id, PLAIN_GENERATION_PREFIX));
-		addTest(makeSVGRenderingAccuracyTest(painter, id, CUSTOM_CONTEXT_GENERATION_PREFIX));
-		addTest(makeImageCompareTest(painter, id, PLAIN_GENERATION_PREFIX, CUSTOM_CONTEXT_GENERATION_PREFIX));
+		SVGAccuracyTest acctest = makeSVGAccuracyTest(painter, painterClassname);
+		acctest.runTest(false);
+
+		GeneratorContext genctxt = makeGeneratorContext(painter, painterClassname);
+		genctxt.runTest(false);
+
+		SVGRenderingAccuracyTest t = makeSVGRenderingAccuracyTest(painter, painterClassname, PLAIN_GENERATION_PREFIX);
+		t.runTest();
+
+		t = makeSVGRenderingAccuracyTest(painter, painterClassname, CUSTOM_CONTEXT_GENERATION_PREFIX);
+		t.runTest();
+
+		ImageCompareTest ict = makeImageCompareTest(painter, painterClassname, PLAIN_GENERATION_PREFIX, CUSTOM_CONTEXT_GENERATION_PREFIX);
+		String err = ict.compare();
+		if (err != null) {
+			fail(err);
+		}
 	}
 
-	/**
-	 * For the Generator test, the relevant name is the id
-	 */
-	@Override
-	public String getName() {
-		return "SVGGeneratorTest - " + getId();
-	}
-
-	protected String getPackageName() {
-		return "io.sf.carte.echosvg.svggen";
-	}
-
-	private Test makeImageCompareTest(Painter painter, String id, String prefixA, String prefixB) {
+	private ImageCompareTest makeImageCompareTest(Painter painter, String id, String prefixA, String prefixB) {
 		String cl = getNonQualifiedClassName(painter);
 		String clA = prefixA + cl;
 		String clB = prefixB + cl;
 		String testReferenceA = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + clA + PNG_EXTENSION;
 		String testReferenceB = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + clB + PNG_EXTENSION;
 		ImageCompareTest t = new ImageCompareTest(testReferenceA, testReferenceB);
-		t.setName(id + "-RenderingComparison");
-		t.setId(id + ".renderingComparison");
 		return t;
 	}
 
-	private Test makeSVGRenderingAccuracyTest(Painter painter, String id, String prefix) {
+	private SVGRenderingAccuracyTest makeSVGRenderingAccuracyTest(Painter painter, String id, String prefix) throws MalformedURLException {
 		String cl = prefix + getNonQualifiedClassName(painter);
 		String testSource = GENERATOR_REFERENCE_BASE + cl + SVG_EXTENSION;
 		String testReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + cl + PNG_EXTENSION;
@@ -147,34 +292,31 @@ public class SVGGeneratorTests extends DefaultTestSuite {
 		for (String variationURL : variationURLs) {
 			test.addVariationURL(variationURL);
 		}
-		test.setSaveVariation(new File(saveVariation));
-		test.setCandidateReference(new File(candidateReference));
 
-		test.setName(id + "-" + prefix + "RenderingCheck");
-		test.setId(id + "." + prefix + "renderingCheck");
+		test.setSaveVariation(new File(new URL(saveVariation).getFile()));
+		test.setCandidateReference(new File(new URL(candidateReference).getFile()));
+
 		return test;
 	}
 
-	private Test makeGeneratorContext(Painter painter, String id) {
+	private GeneratorContext makeGeneratorContext(Painter painter, String id) throws MalformedURLException {
 		String cl = CUSTOM_CONTEXT_GENERATION_PREFIX + getNonQualifiedClassName(painter);
 
 		GeneratorContext test = new GeneratorContext(painter,
 				getReferenceURL(painter, CUSTOM_CONTEXT_GENERATION_PREFIX));
 
-		test.setSaveSVG(new File(GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION));
-		test.setName(id + "-ConfiguredContextGeneration");
-		test.setId(id + ".configuredContextGeneration");
+		String filename = new URL(GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION).getFile();
+		test.setSaveSVG(new File(filename));
 		return test;
 	}
 
-	private Test makeSVGAccuracyTest(Painter painter, String id) {
+	private SVGAccuracyTest makeSVGAccuracyTest(Painter painter, String id) throws MalformedURLException {
 		String cl = PLAIN_GENERATION_PREFIX + getNonQualifiedClassName(painter);
 
 		SVGAccuracyTest test = new SVGAccuracyTest(painter, getReferenceURL(painter, PLAIN_GENERATION_PREFIX));
 
-		test.setSaveSVG(new File(GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION));
-		test.setName(id + "-DefaultContextGeneration");
-		test.setId(id + ".defaultContextGeneration");
+		String filename = new URL(GENERATOR_REFERENCE_BASE + CANDIDATE_REF_DIR + "/" + cl + SVG_EXTENSION).getFile();
+		test.setSaveSVG(new File(filename));
 		return test;
 	}
 
@@ -184,23 +326,14 @@ public class SVGGeneratorTests extends DefaultTestSuite {
 		return cl.substring(n + 1);
 	}
 
-	private URL getReferenceURL(Painter painter, String prefix) {
+	private URL getReferenceURL(Painter painter, String prefix) throws MalformedURLException {
 		String suffix = prefix + getNonQualifiedClassName(painter) + SVG_EXTENSION;
-		File acceptedReference = new File(GENERATOR_REFERENCE_BASE + ACCEPTED_REF_DIR + '/' + suffix);
-		if (acceptedReference.exists()) {
-			return file2URL(acceptedReference);
-		} else {
-			File reference = new File(GENERATOR_REFERENCE_BASE + suffix);
-			return file2URL(reference);
+		URL refUrl = new URL(GENERATOR_REFERENCE_BASE + ACCEPTED_REF_DIR + '/' + suffix);
+		File acceptedReference = new File(refUrl.getFile());
+		if (!acceptedReference.exists()) {
+			refUrl = new URL(GENERATOR_REFERENCE_BASE + suffix);
 		}
-	}
-
-	private URL file2URL(File file) {
-		try {
-			return file.toURI().toURL();
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
+		return refUrl;
 	}
 
 }

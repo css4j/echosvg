@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.test;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +36,7 @@ import io.sf.carte.echosvg.util.CleanerThread;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class MemoryLeakTest extends AbstractTest {
+public abstract class MemoryLeakTest {
 
 	// I know that 120 seems _really_ high but it turns out
 	// That the "GraphicsNodeTree" was not being cleared when I
@@ -42,13 +44,13 @@ public abstract class MemoryLeakTest extends AbstractTest {
 	// (why so large I don't know) - it will bail if the all
 	// the objects of interest are collected sooner so the runtime
 	// is really only a concern for failures.
-	static final int NUM_GC = 10;
-	static final int MIN_MEMORY = 200000; // 200KB
-	static final int ALLOC_SZ = 1000; // 100KB
+	private static final int NUM_GC = 10;
+	private static final int MIN_MEMORY = 200000; // 200KB
+	private static final int ALLOC_SZ = 1000; // 100KB
 
-	static final String ERROR_OBJS_NOT_CLEARED = "MemoryLeakTest.message.error.objs.not.cleared";
+	private static final String ERROR_OBJS_NOT_CLEARED = "MemoryLeakTest.message.error.objs.not.cleared";
 
-	static final String ERROR_DESCRIPTION = "TestReport.entry.key.error.description";
+	private String testedUri = null;
 
 	public static String fmt(String key, Object[] args) {
 		return Messages.formatMessage(key, args);
@@ -58,7 +60,26 @@ public abstract class MemoryLeakTest extends AbstractTest {
 	}
 
 	Map<String, WeakRef> objs = new HashMap<>();
-	List<TestReport.Entry> entries = new ArrayList<>();
+	List<String> entries = new ArrayList<>();
+
+	public String getURI() {
+		return testedUri;
+	}
+
+	protected String getFilename() {
+		URL url;
+		try {
+			url = new URL(getURI());
+		} catch (MalformedURLException e) {
+			return "";
+		}
+		String path = url.getPath();
+		int idx = path.lastIndexOf('/');
+		if (idx == -1) {
+			return path;
+		}
+		return path.substring(idx + 1);
+	}
 
 	public void registerObject(Object o) {
 		synchronized (objs) {
@@ -137,9 +158,7 @@ public abstract class MemoryLeakTest extends AbstractTest {
 		}
 
 		String objStr = sb.toString();
-		TestReport.Entry entry = new TestReport.Entry(fmt(ERROR_DESCRIPTION, null),
-				fmt(ERROR_OBJS_NOT_CLEARED, new Object[] { objStr }));
-		entries.add(entry);
+		entries.add(objStr);
 
 		if (objStr.length() > 40)
 			objStr = objStr.substring(0, 40) + "...";
@@ -210,38 +229,37 @@ public abstract class MemoryLeakTest extends AbstractTest {
 
 		String objStr = sb.toString();
 
-		TestReport.Entry entry = new TestReport.Entry(fmt(ERROR_DESCRIPTION, null),
-				fmt(ERROR_OBJS_NOT_CLEARED, new Object[] { objStr }));
-		entries.add(entry);
+		entries.add(objStr);
 
 		if (objStr.length() > 40)
 			objStr = objStr.substring(0, 40) + "...";
-		System.err.println(">>>>> Objects not cleared: " + objStr);
+		// Objects not cleared: objStr
 		// System.err.println("Waiting for 5 seconds for heap dump...");
 		// try { Thread.sleep(5000); } catch (InterruptedException ie) { }
 		return false;
 	}
 
-	@Override
-	public TestReport runImpl() throws Exception {
-		TestReport ret = doSomething();
-		if ((ret != null) && !ret.hasPassed())
-			return ret;
+	public String runTest(String testedUri) throws Exception {
+		this.testedUri = resolveURI(testedUri);
+		String error = doSomething();
+		if (error != null)
+			return error;
 
 		checkAllObjects();
 
-		DefaultTestReport report = new DefaultTestReport(this);
 		if (entries.size() == 0) {
-			report.setPassed(true);
-			return report;
+			return null;
 		}
-		report.setErrorCode(ERROR_OBJS_NOT_CLEARED);
-		report.setDescription(entries.toArray(new TestReport.Entry[entries.size()]));
-		report.setPassed(false);
-		return report;
+		return ERROR_OBJS_NOT_CLEARED + ": " +  entries.toArray(new String[entries.size()]);
 	}
 
-	public abstract TestReport doSomething() throws Exception;
+	private static String resolveURI(String uri) throws MalformedURLException {
+		final String resName = TestLocations.getRootBuildURL() + uri;
+		URL url = new URL(resName);
+		return url.toExternalForm();
+	}
+
+	public abstract String doSomething() throws Exception;
 
 	public class WeakRef extends CleanerThread.WeakReferenceCleared<Object> {
 		String desc;

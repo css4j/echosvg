@@ -30,6 +30,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
@@ -44,9 +45,12 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 public class BackgroundColorTest extends AbstractImageTranscoderTest {
 
 	/**
-	 * Constructs a new <code>BackgroundColorTest</code>.
+	 * Runs a new <code>BackgroundColorTest</code>.
+	 * @throws TranscoderException 
 	 */
-	public BackgroundColorTest() {
+	@org.junit.Test
+	public void testBackgroundColor() throws TranscoderException {
+		runTest();
 	}
 
 	/**

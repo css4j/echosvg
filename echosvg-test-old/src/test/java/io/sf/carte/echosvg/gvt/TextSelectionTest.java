@@ -19,18 +19,20 @@
 
 package io.sf.carte.echosvg.gvt;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import static org.junit.Assert.fail;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.junit.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGTextContentElement;
 
 import io.sf.carte.echosvg.swing.JSVGCanvas;
-import io.sf.carte.echosvg.swing.JSVGCanvasHandler;
 import io.sf.carte.echosvg.swing.svg.JSVGComponent;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.swing.test.JSVGCanvasHandler;
 import io.sf.carte.echosvg.test.svg.JSVGRenderingAccuracyTest;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 
 /**
  * This test validates that the text selection API's work properly.
@@ -41,71 +43,47 @@ import io.sf.carte.echosvg.test.svg.JSVGRenderingAccuracyTest;
  */
 public class TextSelectionTest extends JSVGRenderingAccuracyTest {
 
-	/**
-	 * Directory for reference files
-	 */
-	public static final String REFERENCE_DIR = "test-references/io/sf/carte/echosvg/gvt/";
+	private String textID = null;
+	private int start;
+	private int end;
 
-	public static final String VARIATION_DIR = "variation/";
+	@Test
+	public void testTextSelectionBiDi() throws IOException, TranscoderException {
+		runTextSelectionTest("samples/tests/spec/text/textBiDi.svg", "latin", 0, 20);
+		runTextSelectionTest("samples/tests/spec/text/textBiDi.svg", "latin-extended", 0, 15);
+		runTextSelectionTest("samples/tests/spec/text/textBiDi.svg", "cyrillic", 4, 24);
+		runTextSelectionTest("samples/tests/spec/text/textBiDi.svg", "greek", 0, 35);
+		runTextSelectionTest("samples/tests/spec/text/textBiDi.svg", "hebrew", 10, 20);
+		runTextSelectionTest("samples/tests/spec/text/textBiDi.svg", "arabic", 5, 40);
+	}
 
-	public static final String CANDIDATE_DIR = "candidate/";
+	@Test
+	public void testTextSelectionFontOnPath() throws IOException, TranscoderException {
+		runTextSelectionTest("samples/tests/spec/fonts/fontOnPath.svg", "middle50", 1, 13);
+		runTextSelectionTest("samples/tests/spec/fonts/fontOnPath.svg", "start35", 0, 13);
+	}
 
-	/**
-	 * Error when unable to load requested SVG file {0} = file {1} = exception
-	 */
-	public static final String ERROR_READING_SVG = "TextSelectionTest.error.reading.svg";
-
-	/**
-	 * Error id doesn't reference an element {0} = id
-	 */
-	public static final String ERROR_BAD_ID = "TextSelectionTest.error.bad.id";
-
-	/**
-	 * Error id doesn't reference a text element {0} = id {1} = element referenced
-	 */
-	public static final String ERROR_ID_NOT_TEXT = "TextSelectionTest.error.id.not.text";
-
-	/**
-	 * Error couldn't get selection highlight specified. {0} = id {1} = start index
-	 * {2} = end index {3} = exception
-	 */
-	public static final String ERROR_GETTING_SELECTION = "TextSelectionTest.error.getting.selection";
-
-	/**
-	 * Error when unable to read/open ref URL {0} = URL {1} = exception stack trace.
-	 */
-	public static final String ERROR_CANNOT_READ_REF_URL = "TextSelectionTest.error.cannot.read.ref.url";
-
-	/**
-	 * Result didn't match reference result. {0} = first byte of mismatch
-	 */
-	public static final String ERROR_WRONG_RESULT = "TextSelectionTest.error.wrong.result";
-
-	/**
-	 * No Reference or Variation file to compaire with. {0} = reference url
-	 */
-	public static final String ERROR_NO_REFERENCE = "TextSelectionTest.error.no.reference";
-
-	public static final String ENTRY_KEY_ERROR_DESCRIPTION = "TextSelectionTest.entry.key.error.description";
-
-	protected String textID = null;
-	protected int start;
-	protected int end;
-
-	@Override
-	public void setId(String id) {
-		this.id = id;
+	@Test
+	public void testTextSelectionVerticalTextOnPath() throws IOException, TranscoderException {
+		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "supersub", 3, 18);
+		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "beforeafter", 0, 28);
+		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "negpos", 3, 17);
+		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "orient0", 3, 18);
+		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "orient90", 3, 18);
+		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "orient180", 3, 18);
+		runTextSelectionTest("samples/tests/spec/text/verticalTextOnPath.svg", "orient270", 3, 18);
 	}
 
 	/**
-	 * Constructor. ref is ignored if action == ROUND.
+	 * Run test. ref is ignored if action == ROUND.
 	 * 
 	 * @param textID The element to select text from (must be a <text> element)
 	 * @param start  The first character to select
 	 * @param end    The last character to select
 	 * @param file   The reference file.
+	 * @throws MalformedURLException 
 	 */
-	public TextSelectionTest(String file, String textID, Integer start, Integer end) {
+	public void runTextSelectionTest(String file, String textID, int start, int end) throws MalformedURLException {
 		this.textID = textID;
 		this.start = start;
 		this.end = end;
@@ -137,16 +115,8 @@ public class TextSelectionTest extends JSVGRenderingAccuracyTest {
 				+ start + '-' + end + PNG_EXTENSION;
 	}
 
-	/**
-	 * Returns this Test's name
-	 */
 	@Override
-	public String getName() {
-		return super.getName() + '#' + textID + '(' + start + ',' + end + ')';
-	}
-
-	@Override
-	public JSVGCanvasHandler createCanvasHandler() {
+	protected JSVGCanvasHandler createCanvasHandler() {
 		return new JSVGCanvasHandler(this, this) {
 			@Override
 			public JSVGCanvas createCanvas() {
@@ -159,41 +129,23 @@ public class TextSelectionTest extends JSVGRenderingAccuracyTest {
 
 	@Override
 	public void canvasRendered(JSVGCanvas canvas) {
-		DefaultTestReport report = new DefaultTestReport(this);
+		String errorDesc = null;
 		try {
 			Element e = canvas.getSVGDocument().getElementById(textID);
 			if (e == null) {
-				report.setErrorCode(ERROR_BAD_ID);
-				report.setDescription(new TestReport.Entry[] {
-						new TestReport.Entry(Messages.formatMessage(ENTRY_KEY_ERROR_DESCRIPTION, null),
-								Messages.formatMessage(ERROR_BAD_ID, new String[] { textID })) });
-				report.setPassed(false);
-				failReport = report;
-				return;
+				errorDesc = "Could not find element with id: " + textID;
 			}
 			if (!(e instanceof SVGTextContentElement)) {
-				report.setErrorCode(ERROR_ID_NOT_TEXT);
-				report.setDescription(new TestReport.Entry[] {
-						new TestReport.Entry(Messages.formatMessage(ENTRY_KEY_ERROR_DESCRIPTION, null),
-								Messages.formatMessage(ERROR_ID_NOT_TEXT, new String[] { id, e.toString() })) });
-				report.setPassed(false);
-				failReport = report;
-				return;
+				errorDesc = "Element with id " + textID + " is not a Text";
 			}
 			SVGTextContentElement tce = (SVGTextContentElement) e;
 			tce.selectSubString(start, end);
-		} catch (Exception e) {
-			StringWriter trace = new StringWriter();
-			e.printStackTrace(new PrintWriter(trace));
-			report.setErrorCode(ERROR_GETTING_SELECTION);
-			report.setDescription(new TestReport.Entry[] { new TestReport.Entry(
-					Messages.formatMessage(ENTRY_KEY_ERROR_DESCRIPTION, null),
-					Messages.formatMessage(ERROR_GETTING_SELECTION,
-							new String[] { id, String.valueOf(start), String.valueOf(end), trace.toString() })) });
-			report.setPassed(false);
-			failReport = report;
 		} finally {
 			scriptDone();
 		}
+		if (errorDesc != null) {
+			fail(errorDesc);
+		}
 	}
+
 }

@@ -19,6 +19,7 @@
 
 package io.sf.carte.echosvg.transcoder.image;
 
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 
 /**
@@ -31,18 +32,23 @@ import io.sf.carte.echosvg.transcoder.TranscoderInput;
 public class URITest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
+
+	@org.junit.Test
+	public void test() throws TranscoderException {
+		testURI("samples/anne.svg", "test-references/samples/anne.png");
+	}
 
 	/**
-	 * Constructs a new <code>URITest</code>.
+	 * Runs a new <code>URITest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
 	 */
-	public URITest(String inputURI, String refImageURI) {
+	private void testURI(String inputURI, String refImageURI) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 	}
@@ -52,7 +58,7 @@ public class URITest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected TranscoderInput createTranscoderInput() {
-		return new TranscoderInput(resolveURL(inputURI).toString());
+		return new TranscoderInput(resolveURI(inputURI).toString());
 	}
 
 	/**
@@ -60,6 +66,7 @@ public class URITest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

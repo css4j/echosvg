@@ -19,7 +19,8 @@
 
 package io.sf.carte.echosvg.transcoder;
 
-import java.io.File;
+import static org.junit.Assert.assertTrue;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -29,6 +30,7 @@ import java.net.URL;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.junit.Test;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.xml.sax.XMLReader;
@@ -37,8 +39,7 @@ import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.TestReport;
+import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
@@ -50,11 +51,12 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class TranscoderInputTest extends AbstractTest {
-	@Override
-	public TestReport runImpl() throws Exception {
-		String TEST_URI = (new File("samples/anne.svg")).toURI().toURL().toString();
+public class TranscoderInputTest {
 
+	private static final String TEST_URI =  TestLocations.getRootBuildURL() + "samples/anne.svg";
+
+	@Test
+	public void test() throws Exception {
 		TestTranscoder t = new TestTranscoder();
 
 		TranscoderOutput out = new TranscoderOutput(new StringWriter());
@@ -65,7 +67,6 @@ public class TranscoderInputTest extends AbstractTest {
 			saxFactory.setValidating(false);
 			SAXParser parser = saxFactory.newSAXParser();
 			XMLReader xmlReader = parser.getXMLReader();
-			// XMLReader xmlReader = XMLReaderFactory.createXMLReader();
 			TranscoderInput ti = new TranscoderInput(xmlReader);
 			ti.setURI(TEST_URI);
 			t.transcode(ti, out);
@@ -127,7 +128,6 @@ public class TranscoderInputTest extends AbstractTest {
 			assertTrue(t.passed);
 		}
 
-		return reportSuccess();
 	}
 
 	static class TestTranscoder extends XMLAbstractTranscoder {
@@ -144,4 +144,5 @@ public class TranscoderInputTest extends AbstractTest {
 			passed = (document != null);
 		}
 	}
+
 }

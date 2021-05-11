@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
+import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
@@ -37,28 +38,43 @@ public class MaxDimensionTest extends AbstractImageTranscoderTest {
 
 	// -- Variables -----------------------------------------------------------
 	/** The URI of the input image. */
-	protected String inputURI;
+	private String inputURI;
 	/** The URI of the reference image. */
-	protected String refImageURI;
+	private String refImageURI;
 	/** The maximum width of the image. */
-	protected Float maxWidth = Float.NaN;
+	private float maxWidth = Float.NaN;
 	/** The maximum height of the image. */
-	protected Float maxHeight = Float.NaN;
+	private float maxHeight = Float.NaN;
 	/** The width of the image. */
-	protected Float width = Float.NaN;
+	private float width = Float.NaN;
 	/** The height of the image. */
-	protected Float height = Float.NaN;
+	private float height = Float.NaN;
 
-	// -- Constructors --------------------------------------------------------
+	@org.junit.Test
+	public void test() throws TranscoderException {
+		testMaxDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneMaxW200.png",
+				200, -1);
+		testMaxDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneMaxH200.png", -1,
+				200);
+		testMaxDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneMaxWH200.png",
+				200, 200);
+		testMaxDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneMaxW200.png",
+				200, -1, 300, -1);
+		testMaxDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneMaxH200.png", -1,
+				200, -1, 300);
+		testMaxDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneMaxWH200.png",
+				200, 200, 300, 300);
+	}
+
 	/**
-	 * Constructs a new <code>MaxDimensionTest</code>.
+	 * Runs a new <code>MaxDimensionTest</code>.
 	 *
 	 * @param inputURI    URI of the input image.
 	 * @param refImageURI URI of the reference image.
 	 * @param maxWidth    Maximum image width (KEY_MAX_WIDTH value).
 	 * @param maxHeight   Maximum image height (KEY_MAX_HEIGHT value).
 	 */
-	public MaxDimensionTest(String inputURI, String refImageURI, Float maxWidth, Float maxHeight) {
+	private void testMaxDimension(String inputURI, String refImageURI, float maxWidth, float maxHeight) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.maxWidth = maxWidth;
@@ -75,8 +91,8 @@ public class MaxDimensionTest extends AbstractImageTranscoderTest {
 	 * @param width       Image width (KEY_WIDTH value).
 	 * @param height      Image height (KEY_HEIGH value).
 	 */
-	public MaxDimensionTest(String inputURI, String refImageURI, Float maxWidth, Float maxHeight, Float width,
-			Float height) {
+	private void testMaxDimension(String inputURI, String refImageURI, float maxWidth, float maxHeight, float width,
+			float height) {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.maxWidth = maxWidth;
@@ -91,7 +107,7 @@ public class MaxDimensionTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected TranscoderInput createTranscoderInput() {
-		return new TranscoderInput(resolveURL(inputURI).toString());
+		return new TranscoderInput(resolveURI(inputURI).toString());
 	}
 
 	/**
@@ -102,10 +118,10 @@ public class MaxDimensionTest extends AbstractImageTranscoderTest {
 	@Override
 	protected Map<Key, Object> createTranscodingHints() {
 		Map<Key, Object> hints = new HashMap<>(7);
-		if (!width.isNaN() && width > 0) {
+		if (!Float.isNaN(width) && width > 0) {
 			hints.put(SVGAbstractTranscoder.KEY_WIDTH, width);
 		}
-		if (!height.isNaN() && height > 0) {
+		if (!Float.isNaN(height) && height > 0) {
 			hints.put(SVGAbstractTranscoder.KEY_HEIGHT, height);
 		}
 		if (maxWidth > 0) {
@@ -122,6 +138,7 @@ public class MaxDimensionTest extends AbstractImageTranscoderTest {
 	 */
 	@Override
 	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURL(refImageURI));
+		return createBufferedImageData(resolveURI(refImageURI));
 	}
+
 }

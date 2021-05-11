@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -27,14 +29,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * To test the Java serialization.
@@ -43,53 +42,41 @@ import io.sf.carte.echosvg.util.XMLResourceDescriptor;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SerializationTest extends AbstractTest {
+public class SerializationTest {
 
-	protected String testFileName;
-	protected String rootTag;
-	protected String parserClassName = XMLResourceDescriptor.getXMLParserClassName();
-
-	public SerializationTest(String file, String root) {
-		testFileName = file;
-		rootTag = root;
+	@Test
+	public void test() throws IOException, ClassNotFoundException {
+		testSerialization("io/sf/carte/echosvg/dom/dummyXML.xml", "doc");
+		testSerialization("io/sf/carte/echosvg/dom/dummyXML2.xml", "doc");
 	}
 
-	@Override
-	public TestReport runImpl() throws Exception {
-		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parserClassName);
+	void testSerialization(String testFileName, String rootTag) throws IOException, ClassNotFoundException {
+		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), null);
 
-		File f = (new File(testFileName));
-		URL url = f.toURI().toURL();
+		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());
 
 		File ser1 = File.createTempFile("doc1", "ser");
 		File ser2 = File.createTempFile("doc2", "ser");
+		ser1.deleteOnExit();
+		ser2.deleteOnExit();
 
-		try {
-			// Serialization 1
-			ObjectOutputStream oos;
-			oos = new ObjectOutputStream(new FileOutputStream(ser1));
-			oos.writeObject(doc);
-			oos.close();
+		// Serialization 1
+		ObjectOutputStream oos;
+		oos = new ObjectOutputStream(new FileOutputStream(ser1));
+		oos.writeObject(doc);
+		oos.close();
 
-			// Deserialization 1
-			ObjectInputStream ois;
-			ois = new ObjectInputStream(new FileInputStream(ser1));
-			doc = (Document) ois.readObject();
-			ois.close();
+		// Deserialization 1
+		ObjectInputStream ois;
+		ois = new ObjectInputStream(new FileInputStream(ser1));
+		doc = (Document) ois.readObject();
+		ois.close();
 
-			// Serialization 2
-			oos = new ObjectOutputStream(new FileOutputStream(ser2));
-			oos.writeObject(doc);
-			oos.close();
-		} catch (IOException e) {
-			DefaultTestReport report = new DefaultTestReport(this);
-			report.setErrorCode("io.error");
-			report.addDescriptionEntry("message", e.getClass().getName() + ": " + e.getMessage());
-			report.addDescriptionEntry("file.name", testFileName);
-			report.setPassed(false);
-			return report;
-		}
+		// Serialization 2
+		oos = new ObjectOutputStream(new FileOutputStream(ser2));
+		oos.writeObject(doc);
+		oos.close();
 
 		// Binary diff
 		InputStream is1 = new FileInputStream(ser1);
@@ -99,15 +86,9 @@ public class SerializationTest extends AbstractTest {
 			for (;;) {
 				int i1 = is1.read();
 				int i2 = is2.read();
-				if (i1 == -1 && i2 == -1) {
-					return reportSuccess();
-				}
-				if (i1 != i2) {
-					DefaultTestReport report = new DefaultTestReport(this);
-					report.setErrorCode("difference.found");
-					report.addDescriptionEntry("file.name", testFileName);
-					report.setPassed(false);
-					return report;
+				assertEquals(i1, i2);
+				if (i1 == -1) {
+					break;
 				}
 			}
 		} finally {
@@ -118,4 +99,5 @@ public class SerializationTest extends AbstractTest {
 			}
 		}
 	}
+
 }

@@ -18,6 +18,10 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -30,8 +34,9 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public class NodeTextContentTest extends DOM3Test {
-	@Override
-	public boolean runImplBasic() throws Exception {
+
+	@Test
+	public void test() throws DOMException {
 		Document doc = newSVGDoc();
 		AbstractElement e = (AbstractElement) doc.getDocumentElement();
 		e.appendChild(doc.createTextNode("abc"));
@@ -41,7 +46,8 @@ public class NodeTextContentTest extends DOM3Test {
 		e.appendChild(doc.createCDATASection("ghi"));
 		String s = e.getTextContent();
 		e.setTextContent("blah");
-		return s.equals("abcdefghi") && e.getFirstChild().getNodeType() == Node.TEXT_NODE
-				&& e.getFirstChild().getNodeValue().equals("blah") && e.getLastChild() == e.getFirstChild();
+		assertTrue(s.equals("abcdefghi") && e.getFirstChild().getNodeType() == Node.TEXT_NODE
+				&& e.getFirstChild().getNodeValue().equals("blah") && e.getLastChild() == e.getFirstChild());
 	}
+
 }
