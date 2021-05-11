@@ -901,9 +901,7 @@ public class Main implements SVGConverterController {
 		validateConverterConfig(c);
 
 		if (expandedSources == null || expandedSources.length < 1) {
-			System.out.flush();
-			System.err.println(USAGE);
-			System.err.flush();
+			printUsage();
 			securityEnforcer.enforceSecurity(false);
 			return;
 		}
@@ -928,6 +926,12 @@ public class Main implements SVGConverterController {
 		}
 
 		return sb.toString();
+	}
+
+	protected void printUsage() {
+		System.out.flush();
+		System.err.println(USAGE);
+		System.err.flush();
 	}
 
 	/**
