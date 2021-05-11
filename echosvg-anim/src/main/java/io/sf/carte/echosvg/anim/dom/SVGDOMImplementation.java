@@ -18,7 +18,12 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.PrivilegedActionException;
 import java.util.HashMap;
 
 import org.w3c.dom.DOMException;
@@ -107,14 +112,48 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		ParsedURL durl = ((SVGOMDocument) doc).getParsedURL();
 		CSSEngine result = new SVGCSSEngine(doc, durl, p, vms, sms, ctx);
 
-		URL url = getClass().getResource("resources/UserAgentStyleSheet.css");
+		URL url = getResource("resources/UserAgentStyleSheet.css");
 		if (url != null) {
 			ParsedURL purl = new ParsedURL(url);
-			InputSource is = new InputSource(purl.toString());
-			result.setUserAgentStyleSheet(result.parseStyleSheet(is, purl, "all"));
+			InputStream is = openStream(purl);
+			InputStreamReader re = new InputStreamReader(is, StandardCharsets.UTF_8);
+			InputSource source = new InputSource(re);
+			try {
+				result.setUserAgentStyleSheet(result.parseStyleSheet(source, purl, "all"));
+			} finally {
+				try {
+					re.close();
+				} catch (IOException e) {
+				}
+			}
 		}
 
 		return result;
+	}
+
+	protected URL getResource(String resourceName) {
+		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<URL>() {
+			@Override
+			public URL run() {
+				return getClass().getResource(resourceName);
+			}
+		});
+	}
+
+	protected InputStream openStream(ParsedURL purl) {
+		try {
+			return java.security.AccessController
+					.doPrivileged(new java.security.PrivilegedExceptionAction<InputStream>() {
+						@Override
+						public InputStream run() throws IOException {
+							return purl.openStream();
+						}
+					});
+		} catch (PrivilegedActionException e) {
+			DOMException ex = new DOMException(DOMException.INVALID_STATE_ERR, e.getMessage());
+			ex.initCause(e);
+			throw ex;
+		}
 	}
 
 	/**
