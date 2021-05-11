@@ -31,6 +31,7 @@ grant codeBase "file:${user.home}/.gradle/-" {
   permission java.net.SocketPermission "*", "listen, connect, resolve, accept";
   permission java.util.PropertyPermission "*", "read";
   permission java.util.PropertyPermission "java.security.policy", "write";
+  permission java.security.SecurityPermission "getPolicy";
 };
 
 // Maven local repository
@@ -152,6 +153,7 @@ grant codeBase "file:${app.dev.base}/svgom-api${app.dev.classdir}" {
 };
 
 grant codeBase "file:${app.dev.base}/echosvg-bridge${app.dev.classdir}" {
+  permission java.security.SecurityPermission "getPolicy";
   permission java.lang.RuntimePermission "createClassLoader";
   permission java.lang.RuntimePermission "accessDeclaredMembers";
   permission java.net.SocketPermission "*", "listen, connect, resolve, accept";
