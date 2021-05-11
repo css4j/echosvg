@@ -89,25 +89,4 @@ public class ThreadPounder {
 		}
 	}
 
-	public static void main(String[] str) {
-		List<Runnable> l = new ArrayList<>(20);
-		for (int i = 0; i < 20; i++) {
-			final int x = i;
-			l.add(new Runnable() {
-				@Override
-				public void run() {
-					System.out.println("Thread " + x);
-				}
-			});
-		}
-
-		try {
-			ThreadPounder tp = new ThreadPounder(l);
-			System.out.println("Starting:");
-			tp.start();
-			System.out.println("All Started:");
-		} catch (InterruptedException ie) {
-			ie.printStackTrace();
-		}
-	}
 }

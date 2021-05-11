@@ -22,43 +22,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.TestReport;
+import org.junit.Test;
 
-public class RunnableQueueTest extends AbstractTest {
+/**
+ * RunnableQueue Stress Test
+ * 
+ */
+public class RunnableQueueTest {
 
-	public int nThreads;
-	public int activeThreads;
-	public Random rand;
-	public RunnableQueue rq;
+	private int activeThreads;
+	private Random rand;
+	private RunnableQueue rq;
+
+	private StringBuilder buf = new StringBuilder(28000);
+
+	@Test
+	public void testRunnable() throws InterruptedException {
+		runTest(20);
+	}
 
 	/**
-	 * Creates a new RunnableQueueTest.
+	 * Runs a new RunnableQueueTest.
 	 * 
 	 * @param nThreads number of runnables to queue
+	 * @throws InterruptedException 
 	 */
-	public RunnableQueueTest(int nThreads) {
-		this.nThreads = nThreads;
-	}
-
-	public RunnableQueueTest(Integer nThreads) {
-		this((nThreads == null) ? 10 : nThreads);
-	}
-
-	/**
-	 * Returns this Test's name
-	 */
-	@Override
-	public String getName() {
-		return "RunnableQueue Stress Test";
-	}
-
-	/**
-	 * This method will only throw exceptions if some aspect of the test's internal
-	 * operation fails.
-	 */
-	@Override
-	public TestReport runImpl() throws Exception {
+	private void runTest(int nThreads) throws InterruptedException {
 		rq = RunnableQueue.createRunnableQueue();
 
 		List<Runnable> l = new ArrayList<>(nThreads);
@@ -82,11 +71,13 @@ public class RunnableQueueTest extends AbstractTest {
 			}
 		}
 
-		System.exit(0);
-		return null;
 	}
 
-	public class SwitchFlicker implements Runnable {
+	void appendLn(CharSequence seq) {
+		buf.append(seq).append('\n');
+	}
+
+	private class SwitchFlicker implements Runnable {
 		@Override
 		public void run() {
 			boolean suspendp, waitp;
@@ -102,12 +93,12 @@ public class RunnableQueueTest extends AbstractTest {
 						// 1/2 of the time suspend, 1/2 time wait, 1/2 the
 						// time don't
 						rq.suspendExecution(waitp);
-						System.out.println("Suspended - " + (waitp ? "Wait" : "Later"));
+						appendLn("Suspended - " + (waitp ? "Wait" : "Later"));
 						Thread.sleep(time / 10);
 					} else {
 						// 1/2 the time resume
 						rq.resumeExecution();
-						System.out.println("Resumed");
+						appendLn("Resumed");
 						Thread.sleep(time);
 					}
 				} catch (InterruptedException ie) {
@@ -116,12 +107,12 @@ public class RunnableQueueTest extends AbstractTest {
 		}
 	}
 
-	public static final int INVOKE_LATER = 1;
-	public static final int INVOKE_AND_WAIT = 2;
-	public static final int PREEMPT_LATER = 3;
-	public static final int PREEMPT_AND_WAIT = 4;
+	private static final int INVOKE_LATER = 1;
+	private static final int INVOKE_AND_WAIT = 2;
+	private static final int PREEMPT_LATER = 3;
+	private static final int PREEMPT_AND_WAIT = 4;
 
-	public class TPRable implements Runnable {
+	private class TPRable implements Runnable {
 
 		RunnableQueue rq;
 		int idx;
@@ -146,29 +137,29 @@ public class RunnableQueueTest extends AbstractTest {
 					switch (style) {
 					case INVOKE_LATER:
 						synchronized (rqRable) {
-							System.out.println("     InvL #" + idx);
+							appendLn("     InvL #" + idx);
 							rq.invokeLater(rqRable);
-							System.out.println("Done InvL #" + idx);
+							appendLn("Done InvL #" + idx);
 							rqRable.wait();
 						}
 						break;
 					case INVOKE_AND_WAIT:
-						System.out.println("     InvW #" + idx);
+						appendLn("     InvW #" + idx);
 						rq.invokeAndWait(rqRable);
-						System.out.println("Done InvW #" + idx);
+						appendLn("Done InvW #" + idx);
 						break;
 					case PREEMPT_LATER:
 						synchronized (rqRable) {
-							System.out.println("     PreL #" + idx);
+							appendLn("     PreL #" + idx);
 							rq.preemptLater(rqRable);
-							System.out.println("Done PreL #" + idx);
+							appendLn("Done PreL #" + idx);
 							rqRable.wait();
 						}
 						break;
 					case PREEMPT_AND_WAIT:
-						System.out.println("     PreW #" + idx);
+						appendLn("     PreW #" + idx);
 						rq.preemptAndWait(rqRable);
-						System.out.println("Done PreW #" + idx);
+						appendLn("Done PreW #" + idx);
 						break;
 					}
 
@@ -185,7 +176,7 @@ public class RunnableQueueTest extends AbstractTest {
 		}
 	}
 
-	public static class RQRable implements Runnable {
+	private class RQRable implements Runnable {
 		int idx;
 		long dur;
 
@@ -197,9 +188,9 @@ public class RunnableQueueTest extends AbstractTest {
 		@Override
 		public void run() {
 			try {
-				System.out.println("      B Rable #" + idx);
+				appendLn("      B Rable #" + idx);
 				Thread.sleep(dur);
-				System.out.println("      E Rable #" + idx);
+				appendLn("      E Rable #" + idx);
 				synchronized (this) {
 					notify();
 				}
@@ -208,12 +199,4 @@ public class RunnableQueueTest extends AbstractTest {
 		}
 	}
 
-	public static void main(String[] args) {
-		RunnableQueueTest rqt = new RunnableQueueTest(20);
-		try {
-			rqt.runImpl();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }
