@@ -76,7 +76,7 @@ public class BaseScriptingEnvironment {
 	 * {2} - line number of element.
 	 * </pre>
 	 */
-	public static final String INLINE_SCRIPT_DESCRIPTION = "BaseScriptingEnvironment.constant.inline.script.description";
+	private static final String INLINE_SCRIPT_DESCRIPTION = "BaseScriptingEnvironment.constant.inline.script.description";
 
 	/**
 	 * Constant used to describe inline scripts.
@@ -87,7 +87,7 @@ public class BaseScriptingEnvironment {
 	 * {2} - line number of element.
 	 * </pre>
 	 */
-	public static final String EVENT_SCRIPT_DESCRIPTION = "BaseScriptingEnvironment.constant.event.script.description";
+	static final String EVENT_SCRIPT_DESCRIPTION = "BaseScriptingEnvironment.constant.event.script.description";
 
 	/**
 	 * Tells whether the given SVG document is dynamic.
@@ -211,27 +211,27 @@ public class BaseScriptingEnvironment {
 	protected Document document;
 
 	/**
-	 * The URL of the document ot manage
+	 * The URL of the document to manage
 	 */
-	protected ParsedURL docPURL;
+	private ParsedURL docPURL;
 
-	protected Set<String> languages = new HashSet<>();
+	private Set<String> languages = new HashSet<>();
 
 	/**
 	 * The default Interpreter for the document
 	 */
-	protected Interpreter interpreter;
+	private Interpreter interpreter;
 
 	/**
 	 * Map of {@link Interpreter} to {@link io.sf.carte.echosvg.bridge.Window}
 	 * objects.
 	 */
-	protected Map<Interpreter, io.sf.carte.echosvg.bridge.Window> windowObjects = new HashMap<>();
+	private Map<Interpreter, io.sf.carte.echosvg.bridge.Window> windowObjects = new HashMap<>();
 
 	/**
 	 * Set of &lt;script&gt; elements that have already been executed.
 	 */
-	protected WeakHashMap<AbstractElement, Object> executedScripts = new WeakHashMap<>();
+	private WeakHashMap<AbstractElement, Object> executedScripts = new WeakHashMap<>();
 
 	/**
 	 * Creates a new BaseScriptingEnvironment.
@@ -243,6 +243,10 @@ public class BaseScriptingEnvironment {
 		document = ctx.getDocument();
 		docPURL = new ParsedURL(((SVGDocument) document).getURL());
 		userAgent = bridgeContext.getUserAgent();
+	}
+
+	ParsedURL getDocumentParsedURL() {
+		return docPURL;
 	}
 
 	/**
@@ -269,7 +273,6 @@ public class BaseScriptingEnvironment {
 	 * Creates a new Window object.
 	 */
 	protected io.sf.carte.echosvg.bridge.Window createWindow(Interpreter interp, String lang) {
-
 		return new Window(interp, lang);
 	}
 

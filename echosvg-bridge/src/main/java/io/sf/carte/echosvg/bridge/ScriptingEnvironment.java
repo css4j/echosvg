@@ -345,7 +345,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 			return;
 
 		try {
-			checkCompatibleScriptURL(lang, docPURL);
+			checkCompatibleScriptURL(lang, getDocumentParsedURL());
 
 			Object event;
 			if (evt instanceof ScriptEventWrapper) {
