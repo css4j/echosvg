@@ -18,136 +18,186 @@
  */
 package io.sf.carte.echosvg.util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.URL;
 
-import io.sf.carte.echosvg.test.AbstractTest;
-import io.sf.carte.echosvg.test.DefaultTestReport;
-import io.sf.carte.echosvg.test.TestReport;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
- * This test validates that the Base65 encoder/decoders work properly.
+ * This test validates that the Base64 encoder/decoders work properly.
  *
  * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class Base64Test extends AbstractTest {
-	/**
-	 * Error when bad action string given. {0} = Bad action string
-	 */
-	public static final String ERROR_BAD_ACTION_STRING = "Base64Test.error.bad.action.string";
+public class Base64Test {
 
-	/**
-	 * Error when unable to read/open in URL {0} = URL {1} = exception stack trace.
-	 */
-	public static final String ERROR_CANNOT_READ_IN_URL = "Base64Test.error.cannot.read.in.url";
-
-	/**
-	 * Error when unable to read/open ref URL {0} = URL {1} = exception stack trace.
-	 */
-	public static final String ERROR_CANNOT_READ_REF_URL = "Base64Test.error.cannot.read.ref.url";
-
-	/**
-	 * Result didn't match reference result. {0} = first byte of mismatch
-	 */
-	public static final String ERROR_WRONG_RESULT = "Base64Test.error.wrong.result";
-
-	public static final String ENTRY_KEY_ERROR_DESCRIPTION = "Base64Test.entry.key.error.description";
-
-	protected String action = null;
-	protected URL in = null;
-	protected URL ref = null;
-
-	/**
-	 * Constructor. ref is ignored if action == ROUND.
-	 * 
-	 * @param action The action to perform, one of: ROUND : base64 encode then
-	 *               base64 decode. ENCODE : encode in to base 64 and compare result
-	 *               to ref. DECODE : decode in (must be base 64) and compare to
-	 *               ref.
-	 * @param in     The source file to apply 'action' to.
-	 * @param ref    The reference file.
-	 */
-	public Base64Test(String action, URL in, URL ref) {
-		this.action = action;
-		this.in = in;
-		this.ref = ref;
+	@Test
+	public void testB64_1() throws Exception {
+		performTest("B64.1", "ENCODE", "zeroByte", "zeroByte.64");
 	}
 
-	/**
-	 * Constructor, for round trip testing (only one file required).
-	 * 
-	 * @param in The source file to round trip.
-	 */
-	public Base64Test(URL in) {
-		this.action = "ROUND";
-		this.in = in;
+	@Test
+	public void testB64_2() throws Exception {
+		performTest("B64.2", "DECODE", "zeroByte.64", "zeroByte");
 	}
 
-	/**
-	 * Returns this Test's name
-	 */
-	@Override
-	public String getName() {
-		return action + " -- " + in + " -- " + super.getName();
+	@Test
+	public void testB64_3() throws Exception {
+		performTest("B64.3", "ROUND", "zeroByte", null);
 	}
 
-	/**
-	 * This method will only throw exceptions if some aspect of the test's internal
-	 * operation fails.
-	 */
-	@Override
-	public TestReport runImpl() throws Exception {
-		DefaultTestReport report = new DefaultTestReport(this);
+	@Test
+	public void testB64_4() throws Exception {
+		performTest("B64.4", "ENCODE", "oneByte", "oneByte.64");
+	}
 
-		InputStream inIS;
+	@Test
+	public void testB64_5() throws Exception {
+		performTest("B64.5", "DECODE", "oneByte.64", "oneByte");
+	}
 
+	@Test
+	public void testB64_6() throws Exception {
+		performTest("B64.6", "ROUND", "oneByte", null);
+	}
+
+	@Test
+	public void testB64_7() throws Exception {
+		performTest("B64.4", "ENCODE", "twoByte", "twoByte.64");
+	}
+
+	@Test
+	public void testB64_8() throws Exception {
+		performTest("B64.4", "DECODE", "twoByte.64", "twoByte");
+	}
+
+	@Test
+	public void testB64_9() throws Exception {
+		performTest("B64.9", "ROUND", "twoByte", null);
+	}
+
+	@Test
+	public void testB64_10() throws Exception {
+		performTest("B64.10", "ENCODE", "threeByte", "threeByte.64");
+	}
+
+	@Test
+	public void testB64_11() throws Exception {
+		performTest("B64.11", "DECODE", "threeByte.64", "threeByte");
+	}
+
+	@Test
+	public void testB64_12() throws Exception {
+		performTest("B64.12", "ROUND", "threeByte", null);
+	}
+
+	@Test
+	public void testB64_13() throws Exception {
+		performTest("B64.13", "ENCODE", "fourByte", "fourByte.64");
+	}
+
+	@Test
+	public void testB64_14() throws Exception {
+		performTest("B64.14", "DECODE", "fourByte.64", "fourByte");
+	}
+
+	@Test
+	public void testB64_15() throws Exception {
+		performTest("B64.15", "ROUND", "fourByte", null);
+	}
+
+	@Test
+	public void testB64_16() throws Exception {
+		performTest("B64.16", "ENCODE", "tenByte", "tenByte.64");
+	}
+
+	@Test
+	public void testB64_17() throws Exception {
+		performTest("B64.17", "DECODE", "tenByte.64", "tenByte");
+	}
+
+	@Test
+	public void testB64_18() throws Exception {
+		performTest("B64.18", "ROUND", "tenByte", null);
+	}
+
+	@Ignore
+	@Test
+	public void testB64_19() throws Exception {
+		performTest("B64.19", "ENCODE", "small", "small.64");
+	}
+
+	@Ignore
+	@Test
+	public void testB64_20() throws Exception {
+		performTest("B64.20", "DECODE", "small.64", "small");
+	}
+
+	@Test
+	public void testB64_21() throws Exception {
+		performTest("B64.21", "ROUND", "small", null);
+	}
+
+	@Test
+	public void testB64_22() throws Exception {
+		performTest("B64.22", "ENCODE", "medium", "medium.64");
+	}
+
+	@Test
+	public void testB64_23() throws Exception {
+		performTest("B64.23", "DECODE", "medium.64", "medium");
+	}
+
+	@Test
+	public void testB64_24() throws Exception {
+		performTest("B64.24", "DECODE", "medium.pc.64", "medium");
+	}
+
+	@Test
+	public void testB64_25() throws Exception {
+		performTest("B64.25", "ROUND", "medium", null);
+	}
+
+	@Test
+	public void testB64_26() throws Exception {
+		performTest("B64.26", "ROUND", "large", null);
+	}
+
+	private void performTest(String id, String action, String in, String ref) {
+		performTestCont(id, action, in != null ? getResource(in) : null, ref != null ? getResource(ref) : null);
+	}
+
+	private void performTestCont(String id, String action, URL in, URL ref) {
 		try {
-			inIS = in.openStream();
-		} catch (Exception e) {
-			StringWriter trace = new StringWriter();
-			e.printStackTrace(new PrintWriter(trace));
-			report.setErrorCode(ERROR_CANNOT_READ_IN_URL);
-			report.setDescription(new TestReport.Entry[] {
-					new TestReport.Entry(TestMessages.formatMessage(ENTRY_KEY_ERROR_DESCRIPTION, null),
-							TestMessages.formatMessage(ERROR_CANNOT_READ_IN_URL,
-									new String[] { in.toString(), trace.toString() })) });
-			report.setPassed(false);
-			return report;
+			runTestCase(id, action, in, ref);
+		} catch (IOException e) {
+			fail("IOException: " + e.getMessage());
 		}
+	}
+
+	private URL getResource(String name) {
+		return getClass().getResource(name);
+	}
+
+	private void runTestCase(String id, String action, URL in, URL ref) throws IOException {
+		InputStream inIS = in.openStream();
 
 		if (action.equals("ROUND"))
-			this.ref = in;
+			ref = in;
 		else if (!action.equals("ENCODE") && !action.equals("DECODE")) {
-			report.setErrorCode(ERROR_BAD_ACTION_STRING);
-			report.setDescription(new TestReport.Entry[] {
-					new TestReport.Entry(TestMessages.formatMessage(ENTRY_KEY_ERROR_DESCRIPTION, null),
-							TestMessages.formatMessage(ERROR_BAD_ACTION_STRING, new String[] { action })) });
-			report.setPassed(false);
-			return report;
+			fail("Error bad action string for test: " + id);
 		}
 
-		InputStream refIS;
-		try {
-			refIS = ref.openStream();
-		} catch (Exception e) {
-			StringWriter trace = new StringWriter();
-			e.printStackTrace(new PrintWriter(trace));
-			report.setErrorCode(ERROR_CANNOT_READ_REF_URL);
-			report.setDescription(new TestReport.Entry[] {
-					new TestReport.Entry(TestMessages.formatMessage(ENTRY_KEY_ERROR_DESCRIPTION, null),
-							TestMessages.formatMessage(ERROR_CANNOT_READ_REF_URL,
-									new String[] { ref.toString(), trace.toString() })) });
-			report.setPassed(false);
-			return report;
-		}
+		InputStream refIS = ref.openStream();
 
 		if (action.equals("ENCODE") || action.equals("ROUND")) {
 			// We need to encode the incomming data
@@ -168,17 +218,7 @@ public class Base64Test extends AbstractTest {
 
 		int mismatch = compareStreams(inIS, refIS, action.equals("ENCODE"));
 
-		if (mismatch == -1) {
-			report.setPassed(true);
-			return report;
-		}
-
-		report.setErrorCode(ERROR_WRONG_RESULT);
-		report.setDescription(new TestReport.Entry[] {
-				new TestReport.Entry(TestMessages.formatMessage(ENTRY_KEY_ERROR_DESCRIPTION, null),
-						TestMessages.formatMessage(ERROR_WRONG_RESULT, new String[] { String.valueOf(mismatch) })) });
-		report.setPassed(false);
-		return report;
+		assertEquals("Computed answer differed from reference at byte: " + mismatch, -1, mismatch);
 	}
 
 	/**
@@ -306,4 +346,5 @@ public class Base64Test extends AbstractTest {
 			}
 		}
 	}
+
 }
