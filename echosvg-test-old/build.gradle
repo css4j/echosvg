@@ -2,6 +2,19 @@ plugins {
 	id 'echosvg.java-conventions'
 }
 
+sourceSets {
+	test {
+		resources {
+			srcDir "$rootDir/test-resources"
+		}
+	}
+	jmh {
+		java.srcDirs = ['src/jmh/java']
+		resources.srcDirs = ['src/jmh/resources']
+		compileClasspath += sourceSets.main.runtimeClasspath
+	}
+}
+
 dependencies {
 	testImplementation 'xml-apis:xml-apis:1.4.01'
 	testImplementation project(':echosvg-test')
@@ -14,10 +27,10 @@ dependencies {
 	testImplementation ('xerces:xercesImpl:2.12.0') {
 		exclude group: 'xml-apis', module: 'xml-apis'
 	}
-}
-
-sourceSets.test.resources {
-	srcDir "$rootDir/test-resources"
+	jmhImplementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
+	jmhAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
+	jmhImplementation project(':echosvg-anim')
+	jmhImplementation project(':echosvg-svggen')
 }
 
 description = 'io.sf.carte:echosvg-test-old'
@@ -33,8 +46,69 @@ test.enabled = false
 jar.enabled = false
 sourcesJar.enabled = false
 
-// Not sure that all the stuff in test-resources is clean from ASF trademarks
-// Disable Maven publication for now
+/*
+ * JMH benchmarks
+ */
+task jmh(type: JavaExec, dependsOn: jmhClasses) {
+	main = 'org.openjdk.jmh.Main'
+	classpath = sourceSets.jmh.compileClasspath + sourceSets.jmh.runtimeClasspath
+}
+
+classes.finalizedBy(jmhClasses)
+
+//create a single Jar with all benchmark dependencies
+tasks.register('jmhJar', Jar) {
+	archiveClassifier = "jmh"
+	manifest {
+		attributes(
+			'Main-Class' : 'org.openjdk.jmh.Main'
+		)
+	}
+	dependsOn configurations.jmhCompileClasspath
+	dependsOn configurations.jmhRuntimeClasspath
+	doFirst {
+		from sourceSets.jmh.output
+		from {
+			configurations.jmhCompileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+		}
+		from {
+			configurations.jmhRuntimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+		}
+	}
+	with jar
+	duplicatesStrategy = 'exclude'
+	exclude 'module-info.class'
+	exclude 'javax/**'
+	exclude 'org/w3c/css/**'
+}
+
+build.dependsOn jmhJar
+
+// Execute JMH benchmarks
+task runJmh(type: JavaExec, description: 'Run JMH benchmarks') {
+	classpath = sourceSets.jmh.runtimeClasspath
+	main = 'org.openjdk.jmh.Main'
+
+	def regexp = project.properties.get('jmh.regexp', 'Mark');
+	def format = project.properties.get('jmh.rf', 'json');
+	def resultFilename = project.properties.get('jmh.rff', "jmh-result.${format}");
+	def resultFile = file("${buildDir}/reports/jmh/${resultFilename}")
+
+	doFirst {
+		resultFile.parentFile.mkdirs()
+	}
+
+	args regexp
+	args '-rf', format
+	args '-rff', resultFile
+	jvmArgs '-Dfile.encoding=UTF-8'
+}
+
+/*
+ * Maven repository deployments (disabled)
+ */
+// Disable Maven publication (shipped security policies are not
+// adequate for running tests from a jar)
 tasks.withType(PublishToMavenRepository).configureEach {
 	it.enabled = false
 }
