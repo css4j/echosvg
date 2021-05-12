@@ -31,7 +31,7 @@ dependencies {
 	jmhImplementation project(':echosvg-svggen')
 }
 
-description = 'io.sf.carte:echosvg-test-old'
+description = 'io.sf.carte:echosvg-test'
 
 publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG Test Suite"
