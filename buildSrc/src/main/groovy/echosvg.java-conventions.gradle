@@ -83,12 +83,12 @@ publishing {
 			if (project.hasProperty('mavenReleaseRepoUrl') && project.mavenReleaseRepoUrl) {
 				releasesUrl = mavenReleaseRepoUrl
 			} else {
-				releasesUrl = "${rootDir}/build/repository/releases"
+				releasesUrl = "${buildDir}/repository/releases"
 			}
 			if (project.hasProperty('mavenSnapshotRepoUrl') && project.mavenSnapshotRepoUrl) {
 				snapshotsUrl = mavenSnapshotRepoUrl
 			} else {
-				snapshotsUrl = "${rootDir}/build/repository/snapshots"
+				snapshotsUrl = "${buildDir}/repository/snapshots"
 			}
 			url = version.endsWith('-SNAPSHOT') ? snapshotsUrl : releasesUrl
 			if (project.hasProperty('mavenRepoUsername') &&
