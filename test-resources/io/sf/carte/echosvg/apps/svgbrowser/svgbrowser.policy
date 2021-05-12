@@ -112,15 +112,7 @@ grant codeBase "file:${app.dev.base}/echosvg-swing${app.dev.classdir}" {
   permission java.security.AllPermission;
 };
 
-grant codeBase "file:${app.dev.base}/echosvg-test${app.dev.classdir}" {
-  permission java.security.AllPermission;
-};
-
-grant codeBase "file:${app.dev.base}/echosvg-test-old${app.dev.testdir}" {
-  permission java.security.AllPermission;
-};
-
-grant codeBase "file:${app.dev.base}/echosvg-test-svg${app.dev.classdir}" {
+grant codeBase "file:${app.dev.base}/echosvg-test${app.dev.testdir}" {
   permission java.security.AllPermission;
 };
 
@@ -159,6 +151,7 @@ grant codeBase "file:${app.dev.base}/echosvg-bridge${app.dev.classdir}" {
   permission java.net.SocketPermission "*", "listen, connect, resolve, accept";
   permission java.net.URLPermission "https:*", "GET,POST";
   permission java.net.URLPermission "http:*", "GET,POST";
+  permission java.util.PropertyPermission "rhino.stack.style", "read";
   permission java.io.FilePermission "<<ALL FILES>>", "read";
 };
 

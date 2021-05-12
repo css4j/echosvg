@@ -17,6 +17,8 @@ sourceSets {
 
 dependencies {
 	testImplementation project(':echosvg-util')
+	testImplementation project(':echosvg-transcoder')
+	testImplementation project(':echosvg-i18n')
 	testImplementation project(':echosvg-test-swing')
 	testImplementation project(':echosvg-svgrasterizer')
 	testImplementation "junit:junit:${junitVersion}"

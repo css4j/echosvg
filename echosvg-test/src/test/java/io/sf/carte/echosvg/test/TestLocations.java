@@ -23,7 +23,7 @@ public class TestLocations {
 
 	public static final String TEST_IMAGES_PATH = "/reports/tests/test/images";
 
-	private static final String TEST_DIRNAME = "echosvg-test-old";
+	private static final String TEST_DIRNAME = "echosvg-test";
 
 	public static String getRootBuildURL() {
 		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<String>() {
