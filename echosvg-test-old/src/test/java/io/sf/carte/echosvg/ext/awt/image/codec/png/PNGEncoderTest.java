@@ -98,7 +98,7 @@ public class PNGEncoderTest {
 		}
 
 		// Compare images
-		assertTrue(checkIdentical(image, decodedImage));
+		assertTrue("Images are not identical", checkIdentical(image, decodedImage));
 	}
 
 	/**

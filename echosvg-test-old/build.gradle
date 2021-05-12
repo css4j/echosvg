@@ -16,8 +16,6 @@ sourceSets {
 }
 
 dependencies {
-	testImplementation 'xml-apis:xml-apis:1.4.01'
-	testImplementation project(':echosvg-test')
 	testImplementation project(':echosvg-util')
 	testImplementation project(':echosvg-test-swing')
 	testImplementation project(':echosvg-svgrasterizer')

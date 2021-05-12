@@ -48,13 +48,7 @@ public abstract class MemoryLeakTest {
 	private static final int MIN_MEMORY = 200000; // 200KB
 	private static final int ALLOC_SZ = 1000; // 100KB
 
-	private static final String ERROR_OBJS_NOT_CLEARED = "MemoryLeakTest.message.error.objs.not.cleared";
-
 	private String testedUri = null;
-
-	public static String fmt(String key, Object[] args) {
-		return Messages.formatMessage(key, args);
-	}
 
 	public MemoryLeakTest() {
 	}
@@ -239,6 +233,13 @@ public abstract class MemoryLeakTest {
 		return false;
 	}
 
+	/**
+	 * Test the given URI, return en error if any.
+	 * 
+	 * @param testedUri
+	 * @return a message describing the error, {@code null} otherwise.
+	 * @throws Exception
+	 */
 	public String runTest(String testedUri) throws Exception {
 		this.testedUri = resolveURI(testedUri);
 		String error = doSomething();
@@ -250,7 +251,7 @@ public abstract class MemoryLeakTest {
 		if (entries.size() == 0) {
 			return null;
 		}
-		return ERROR_OBJS_NOT_CLEARED + ": " +  entries.toArray(new String[entries.size()]);
+		return "Not all registered objects cleared: " +  entries.toArray(new String[entries.size()]);
 	}
 
 	private static String resolveURI(String uri) throws MalformedURLException {

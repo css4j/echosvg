@@ -61,16 +61,6 @@ public class RectListManagerTest {
 
 	private static final String CANDIDATE_DIR = "candidate-ref/";
 
-	/**
-	 * Result didn't match reference result. {0} = first byte of mismatch
-	 */
-	private static final String ERROR_WRONG_RESULT = "RectListManagerTest.error.wrong.result";
-
-	/**
-	 * No Reference or Variation file to compaire with. {0} = reference url
-	 */
-	private static final String ERROR_NO_REFERENCE = "RectListManagerTest.error.no.reference";
-
 	private static final String RECT_PREF = "rect";
 	private static final String RLM_PREF = "rectlistmanger";
 	private static final String MERGE_PREF = "merge";
@@ -262,7 +252,8 @@ public class RectListManagerTest {
 			Checker check = new Checker(canIS, refIS);
 			check.start();
 			mismatch = check.getMismatch();
-
+		} else {
+			fail("Reference file does not exist: " + ref.toExternalForm());
 		}
 
 		if (mismatch == -1) {
@@ -270,11 +261,7 @@ public class RectListManagerTest {
 			return;
 		}
 
-		if (mismatch == -2) {
-			fail(ERROR_NO_REFERENCE);
-		} else {
-			fail(ERROR_WRONG_RESULT);
-		}
+		fail("Result doesn't match, starting at byte: " + mismatch);
 	}
 
 	private static class Checker extends Thread {

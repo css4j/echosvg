@@ -20,7 +20,6 @@ module io.sf.carte.echosvg.test.swing {
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.script;
 	requires transitive io.sf.carte.echosvg.swing;
-	requires transitive io.sf.carte.echosvg.test;
 	requires io.sf.carte.echosvg.util;
 	requires java.desktop;
 }

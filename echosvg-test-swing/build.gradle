@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
 	api project(':echosvg-swing')
-	api project(':echosvg-test')
 }
 
 description = 'io.sf.carte:echosvg-test-swing'

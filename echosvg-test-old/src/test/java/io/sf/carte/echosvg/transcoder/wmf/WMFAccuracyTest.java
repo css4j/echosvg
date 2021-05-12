@@ -152,7 +152,7 @@ public class WMFAccuracyTest {
 		if (wmfFile.endsWith(WMF_EXTENSION)) {
 			ret[2] = WMF_EXTENSION;
 		} else {
-			throw new IllegalArgumentException("WMF File must end in '.wmf': " + wmfFile);
+			throw new IllegalArgumentException("WMF File must end with '.wmf': " + wmfFile);
 		}
 
 		wmfFile = wmfFile.substring(0, wmfFile.length() - ret[2].length());

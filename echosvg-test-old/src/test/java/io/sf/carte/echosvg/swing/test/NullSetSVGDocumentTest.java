@@ -120,7 +120,7 @@ public class NullSetSVGDocumentTest extends JSVGMemoryLeakTest {
 			if (canvas.getOffScreen() == null)
 				return;
 			// Canvas not cleared
-			setFailReport("Canvas not cleared");
+			setFailReport("Display image was not cleared from canvas component");
 			return;
 		}
 	}
