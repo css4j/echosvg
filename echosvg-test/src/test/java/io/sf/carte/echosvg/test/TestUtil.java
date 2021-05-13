@@ -216,10 +216,22 @@ public class TestUtil {
 
 		Node n = node.getFirstChild();
 		Node m = other.getFirstChild();
-		if (n != null && m != null) {
+		if (n != null) {
 			if (!isEquivalentNode(n, m)) {
 				return false;
 			}
+		} else if (m != null) {
+			return false;
+		}
+
+		n = node.getNextSibling();
+		m = other.getNextSibling();
+		if (n != null) {
+			if (!isEquivalentNode(n, m)) {
+				return false;
+			}
+		} else if (m != null) {
+			return false;
 		}
 
 		return true;
@@ -240,8 +252,11 @@ public class TestUtil {
 
 		for (int i = 0; i < nl; i++) {
 			Node attr = attributes.item(i);
-			Node attr2 = attributes2.getNamedItemNS(attr.getNamespaceURI(), attr.getLocalName());
-			if (attr2 == null) {
+			String localName = attr.getLocalName();
+			Node attr2;
+			if (localName != null) {
+				attr2 = attributes2.getNamedItemNS(attr.getNamespaceURI(), localName);
+			} else {
 				attr2 = attributes2.getNamedItem(attr.getNodeName());
 			}
 			if (attr2 == null) {
