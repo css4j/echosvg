@@ -18,8 +18,11 @@
  */
 package io.sf.carte.echosvg.dom;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
+
+import io.sf.carte.echosvg.dom.util.DOMUtilities;
 
 /**
  * This class provides a generic implementation of the {@link org.w3c.dom.Text}
@@ -102,4 +105,15 @@ public class GenericText extends AbstractText {
 	protected Node newNode() {
 		return new GenericText();
 	}
+
+	@Override
+	public String toString() {
+		Document d = getOwnerDocument();
+		try {
+			return DOMUtilities.contentToString(getData(), d == null || "1.1".equals(d.getXmlVersion()));
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
 }

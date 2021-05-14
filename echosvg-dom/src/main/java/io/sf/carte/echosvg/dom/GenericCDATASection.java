@@ -102,4 +102,10 @@ public class GenericCDATASection extends AbstractText implements CDATASection {
 	protected Node newNode() {
 		return new GenericCDATASection();
 	}
+
+	@Override
+	public String toString() {
+		return "<![CDATA[" + getData() + "]]>";
+	}
+
 }
