@@ -148,7 +148,7 @@ public class ApplicationSecurityEnforcer {
 	public void enforceSecurity(boolean enforce) {
 		SecurityManager sm = System.getSecurityManager();
 
-		if (!enforce && sm != null && sm != lastSecurityManagerInstalled) {
+		if (!enforce && sm != null && sm != lastSecurityManagerInstalled && sm != previousSecurityManagerInstalled) {
 			// Throw a Security exception: we do not want to override
 			// an 'alien' SecurityManager with either null or
 			// a new SecurityManager.
