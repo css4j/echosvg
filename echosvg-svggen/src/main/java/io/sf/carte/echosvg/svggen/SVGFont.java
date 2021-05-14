@@ -132,7 +132,7 @@ public class SVGFont extends AbstractSVGConverter {
 	public void recordFontUsage(String string, Font font) {
 
 		Font commonSizeFont = createCommonSizeFont(font);
-		String fontKey = (commonSizeFont.getFamily() + commonSizeFont.getStyle());
+		String fontKey = getFontKey(commonSizeFont);
 
 //        String textUsingFont = (String)fontStringMap.get(fontKey);
 //        if (textUsingFont == null) {
@@ -159,6 +159,10 @@ public class SVGFont extends AbstractSVGConverter {
 		}
 
 		fontStringMap.put(fontKey, chl);
+	}
+
+	private String getFontKey(Font commonSizeFont) {
+		return commonSizeFont.getFamily() + commonSizeFont.getStyle();
 	}
 
 	/**
@@ -205,7 +209,7 @@ public class SVGFont extends AbstractSVGConverter {
 		String fontFamilyStr = familyToSVG(font);
 
 		Font commonSizeFont = createCommonSizeFont(font);
-		String fontKey = (commonSizeFont.getFamily() + commonSizeFont.getStyle());
+		String fontKey = getFontKey(commonSizeFont);
 
 		CharListHelper clh = fontStringMap.get(fontKey);
 
@@ -215,7 +219,7 @@ public class SVGFont extends AbstractSVGConverter {
 			return new SVGFontDescriptor(fontSize, fontWeight, fontStyle, fontFamilyStr, null);
 		}
 
-		Document domFactory = generatorContext.domFactory;
+		Document domFactory = generatorContext.getDOMFactory();
 
 		// see if a description already exists for this font
 		SVGFontDescriptor fontDesc = (SVGFontDescriptor) descMap.get(fontKey);

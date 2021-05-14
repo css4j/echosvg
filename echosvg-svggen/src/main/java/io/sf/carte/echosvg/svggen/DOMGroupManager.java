@@ -56,7 +56,15 @@ import io.sf.carte.echosvg.ext.awt.g2d.TransformStackElement;
  * @version $Id$
  */
 public class DOMGroupManager implements SVGSyntax, ErrorConstants {
+
+	/**
+	 * {@code DRAW} method.
+	 */
 	public static final short DRAW = 0x01;
+
+	/**
+	 * {@code FILL} method.
+	 */
 	public static final short FILL = 0x10;
 
 	/**
@@ -114,20 +122,32 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
 	}
 
 	/**
-	 * Adds a node to the current group, if possible
+	 * Adds a node to the current group, if possible.
 	 * 
-	 * @param element child Element to add to the group
+	 * @param element child Element to add to the group.
 	 */
 	public void addElement(Element element) {
 		addElement(element, (short) (DRAW | FILL));
 	}
 
 	/**
-	 * Adds a node to the current group, if possible
+	 * Adds a node to the current group, if possible.
 	 * 
-	 * @param element child Element to add to the group
+	 * @param element child Element to add to the group.
+	 * @param method {@link DRAW} or {@link FILL}.
 	 */
 	public void addElement(Element element, short method) {
+		addElement(element, method, null);
+	}
+
+	/**
+	 * Adds a node to the current group, if possible.
+	 * 
+	 * @param element child Element to add to the group.
+	 * @param method {@link DRAW} or {@link FILL}.
+	 * @param elementGC element graphics context.
+	 */
+	void addElement(Element element, short method, SVGGraphicContext elementGC) {
 		//
 		// If this is the first child to be added to the
 		// currentGroup, 'freeze' the style attributes.
@@ -135,7 +155,11 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
 		if (!currentGroup.hasChildNodes()) {
 			currentGroup.appendChild(element);
 
-			groupGC = domTreeManager.gcConverter.toSVG(gc);
+			if (elementGC == null) {
+				groupGC = domTreeManager.gcConverter.toSVG(gc);
+			} else {
+				groupGC = elementGC;
+			}
 			SVGGraphicContext deltaGC;
 			deltaGC = processDeltaGC(groupGC, domTreeManager.defaultGC);
 			domTreeManager.getStyleHandler().setStyle(currentGroup, deltaGC.getGroupContext(),
@@ -159,7 +183,9 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
 				// out delta between current gc and group
 				// context
 				//
-				SVGGraphicContext elementGC = domTreeManager.gcConverter.toSVG(gc);
+				if (elementGC == null) {
+					elementGC = domTreeManager.gcConverter.toSVG(gc);
+				}
 				SVGGraphicContext deltaGC = processDeltaGC(elementGC, groupGC);
 
 				// If there are less than the maximum number

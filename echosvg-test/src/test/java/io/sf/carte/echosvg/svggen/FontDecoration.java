@@ -33,7 +33,7 @@ import java.util.Map;
  * @author See Git history.
  * @version $Id$
  */
-public class Font2 implements Painter {
+public class FontDecoration implements Painter {
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -52,7 +52,7 @@ public class Font2 implements Painter {
 		Map<TextAttribute, Object> attributes = new Hashtable<TextAttribute, Object>();
 		attributes.put(TextAttribute.FAMILY, "Arial");
 		attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_EXTRABOLD);
-		attributes.put(TextAttribute.SIZE, 24);
+		attributes.put(TextAttribute.SIZE, 20);
 		attributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
 		Font font = new Font(attributes);
 		g.setFont(font);
@@ -61,8 +61,10 @@ public class Font2 implements Painter {
 		g.drawString("Strike Through", 10, 40);
 		g.setPaint(fontColor);
 		g.translate(0, 30);
-		attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-		font = new Font(attributes);
+		Map<TextAttribute, Object> attributes2 = new Hashtable<TextAttribute, Object>(attributes);
+		attributes2.remove(TextAttribute.STRIKETHROUGH);
+		attributes2.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		font = new Font(attributes2);
 		g.setFont(font);
 		g.drawString("Underline", 10, 70);
 	}

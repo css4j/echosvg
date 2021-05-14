@@ -559,77 +559,12 @@ public abstract class AbstractRenderingAccuracyTest {
 	 * the imageType suffix in the temp directory of the test-reports directory.
 	 */
 	private File imageToFile(BufferedImage img, String imageType) throws IOException {
-		String file = getURLFile(svgURL);
-
-		File imageFile = null;
-		if (file.length() != 0) {
-			imageFile = makeTempFileName(file, imageType);
-		} else {
-			imageFile = makeRandomFileName(imageType);
-		}
+		File imageFile = TestLocations.getTempFilename(svgURL, TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, imageType,
+				IMAGE_FILE_EXTENSION);
 
 		saveImage(img, imageFile);
 
 		return imageFile;
-	}
-
-	/**
-	 * Extracts the file portion of the URL
-	 */
-	private String getURLFile(URL url) {
-		String path = url.getPath();
-		int n = path.lastIndexOf('/');
-		if (n == -1) {
-			return path;
-		} else {
-			if (n < path.length()) {
-				return path.substring(n + 1, path.length());
-			} else {
-				return "";
-			}
-		}
-	}
-
-	private File makeTempFileName(String svgFileName, String imageType) {
-		int dotIndex = svgFileName.lastIndexOf('.');
-		if (dotIndex == -1) {
-			return getNextTempFileName(svgFileName + imageType);
-		} else {
-			return getNextTempFileName(svgFileName.substring(0, dotIndex) + imageType + IMAGE_FILE_EXTENSION);
-		}
-	}
-
-	private File getNextTempFileName(String fileName) {
-		File f = new File(getTempDirectory(), fileName);
-		if (!f.exists()) {
-			return f;
-		} else {
-			return getNextTempFileName(fileName, 1);
-		}
-	}
-
-	private File getNextTempFileName(String fileName, int instance) {
-		// First, create a 'versioned' file name
-		int n = fileName.lastIndexOf('.');
-		String iFileName = fileName + instance;
-		if (n != -1) {
-			iFileName = fileName.substring(0, n) + instance + fileName.substring(n, fileName.length());
-		}
-
-		File r = new File(getTempDirectory(), iFileName);
-		if (!r.exists()) {
-			return r;
-		} else {
-			return getNextTempFileName(fileName, instance + 1);
-		}
-	}
-
-	/**
-	 * Creates a temporary File into which the input image is saved.
-	 */
-	private File makeRandomFileName(String imageType) throws IOException {
-
-		return File.createTempFile(TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX + imageType, null);
 	}
 
 }

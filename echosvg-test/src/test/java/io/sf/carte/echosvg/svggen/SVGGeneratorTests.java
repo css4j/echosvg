@@ -143,9 +143,9 @@ public class SVGGeneratorTests {
 	}
 
 	@org.junit.Ignore
-	@org.junit.Test // FIXME: Underline and Strikethrough not honored
-	public void testFont2() throws IOException, TranscoderException {
-		runTests("Font2");
+	@org.junit.Test
+	public void testFontDecoration() throws IOException, TranscoderException {
+		runTests("FontDecoration");
 	}
 
 	@org.junit.Test

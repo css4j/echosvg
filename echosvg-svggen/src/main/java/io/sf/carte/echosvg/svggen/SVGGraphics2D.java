@@ -1063,7 +1063,7 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 			// string, this is so that the SVG Font element will
 			// only create glyphs for the characters that are
 			// needed
-			domTreeManager.gcConverter.getFontConverter().recordFontUsage(s, getFont());
+			domTreeManager.getGraphicContextConverter().getFontConverter().recordFontUsage(s, getFont());
 		}
 
 		// Account for the font transform if there is one
@@ -1076,7 +1076,10 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 
 		text.setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, XML_PRESERVE_VALUE);
 		text.appendChild(getDOMFactory().createTextNode(s));
-		domGroupManager.addElement(text, DOMGroupManager.FILL);
+
+		SVGGraphicContext textGC = domTreeManager.getGraphicContextConverter().toSVG(gc);
+		setTextElementAttributes(textGC, text);
+		domGroupManager.addElement(text, DOMGroupManager.FILL, textGC);
 
 		if (txtTxf != null) {
 			this.setTransform(savTxf);
@@ -1102,6 +1105,21 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 			}
 		}
 		return txtTxf;
+	}
+
+	private void setTextElementAttributes(SVGGraphicContext textGC, Element text) {
+		Map<TextAttribute, ?> attributes = getFont().getAttributes();
+
+		String decoration = "";
+		if (TextAttribute.UNDERLINE_ON.equals(attributes.get(TextAttribute.UNDERLINE)))
+			decoration += CSS_UNDERLINE_VALUE + " ";
+		if (TextAttribute.STRIKETHROUGH_ON.equals(attributes.get(TextAttribute.STRIKETHROUGH)))
+			decoration += CSS_LINE_THROUGH_VALUE + " ";
+
+		int len = decoration.length();
+		if (len != 0) {
+			textGC.getGraphicElementContext().put(CSS_TEXT_DECORATION_PROPERTY, decoration.substring(0, len - 1));
+		}
 	}
 
 	/**
@@ -1207,7 +1225,7 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 			// This must come after registering font usage other
 			// wise it doesn't know what chars were used.
 			SVGGraphicContext elementGC;
-			elementGC = domTreeManager.gcConverter.toSVG(gc);
+			elementGC = domTreeManager.getGraphicContextConverter().toSVG(gc);
 			elementGC.getGroupContext().put(SVG_STROKE_ATTRIBUTE, SVG_NONE_VALUE);
 
 			SVGGraphicContext deltaGC;

@@ -121,7 +121,7 @@ public class SVGAccuracyTest {
 				fail("File: " + refURL.toExternalForm() + '\n' +  failMessage);
 			}
 		} else if (expectError) {
-			fail("Expected accuracy error but no error, on file : " + refURL.toExternalForm());
+			fail("Expected accuracy error but found no error, on file: " + refURL.toExternalForm());
 		}
 
 	}

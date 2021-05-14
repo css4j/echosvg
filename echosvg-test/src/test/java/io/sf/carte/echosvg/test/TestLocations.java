@@ -61,20 +61,27 @@ public class TestLocations {
 
 	public static File getTempFilename(URL svgUrl, String filePrefix, String fileSuffix, String imageType,
 			String dotExtension) throws IOException {
-		String buildPath = getTestProjectBuildPath();
-		if (buildPath != null) {
-			File buildDir = new File(buildPath);
-			if (buildDir.exists()) {
-				File imgDir = new File(buildDir + TEST_IMAGES_PATH);
-				if (imgDir.exists() || imgDir.mkdirs()) {
-					String s = svgUrl.getPath();
-					int idx = s.lastIndexOf('/');
-					if (idx != -1) {
-						return new File(imgDir, s.subSequence(idx + 1, s.length()) + imageType + ".png");
+		String path = svgUrl.getPath();
+		int idx = path.lastIndexOf('/');
+		if (idx != -1) {
+			int dotIndex = path.lastIndexOf('.');
+			if (dotIndex == -1) {
+				dotIndex = path.length();
+			}
+			String buildPath = getTestProjectBuildPath();
+			if (buildPath != null) {
+				File buildDir = new File(buildPath);
+				if (buildDir.exists()) {
+					File imgDir = new File(buildDir + TEST_IMAGES_PATH);
+					if (imgDir.exists() || imgDir.mkdirs()) {
+						return new File(imgDir, path.subSequence(idx + 1, dotIndex) + imageType + dotExtension);
 					}
 				}
 			}
+			return File.createTempFile(filePrefix,
+					fileSuffix + path.subSequence(idx + 1, dotIndex) + imageType + dotExtension, null);
 		}
+
 		return File.createTempFile(filePrefix, fileSuffix + imageType + dotExtension, null);
 	}
 
