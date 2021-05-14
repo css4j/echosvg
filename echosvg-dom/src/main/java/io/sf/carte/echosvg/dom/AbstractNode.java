@@ -789,14 +789,32 @@ public abstract class AbstractNode implements ExtendedNode, NodeXBL, XBLManagerD
 				return false;
 			}
 		}
+
 		Node n = getFirstChild();
 		Node m = other.getFirstChild();
-		if (n != null && m != null) {
+		if (n != null) {
 			if (!n.isEqualNode(m)) {
 				return false;
 			}
+			do {
+				n = n.getNextSibling();
+				m = m.getNextSibling();
+				if (n != null) {
+					if (!n.isEqualNode(m)) {
+						return false;
+					}
+				} else {
+					if (m != null) {
+						return false;
+					}
+					break;
+				}
+			} while (true);
+		} else if (m != null) {
+			return false;
 		}
-		return n == m;
+
+		return true;
 	}
 
 	/**
@@ -810,26 +828,29 @@ public abstract class AbstractNode implements ExtendedNode, NodeXBL, XBLManagerD
 	 * Compare two NamedNodeMaps for equality.
 	 */
 	protected boolean compareNamedNodeMaps(NamedNodeMap nnm1, NamedNodeMap nnm2) {
-		if (nnm1 == null && nnm2 != null || nnm1 != null && nnm2 == null) {
+		if (nnm1 == null) {
+			return nnm2 == null;
+		} else if (nnm2 == null) {
 			return false;
 		}
-		if (nnm1 != null) {
-			int len = nnm1.getLength();
-			if (len != nnm2.getLength()) {
-				return false;
+
+		int nl = nnm1.getLength();
+		if (nl != nnm2.getLength()) {
+			return false;
+		}
+
+		int len = nnm1.getLength();
+		for (int i = 0; i < len; i++) {
+			Node n1 = nnm1.item(i);
+			String n1ln = n1.getLocalName();
+			Node n2;
+			if (n1ln != null) {
+				n2 = nnm2.getNamedItemNS(n1.getNamespaceURI(), n1ln);
+			} else {
+				n2 = nnm2.getNamedItem(n1.getNodeName());
 			}
-			for (int i = 0; i < len; i++) {
-				Node n1 = nnm1.item(i);
-				String n1ln = n1.getLocalName();
-				Node n2;
-				if (n1ln != null) {
-					n2 = nnm2.getNamedItemNS(n1.getNamespaceURI(), n1ln);
-				} else {
-					n2 = nnm2.getNamedItem(n1.getNodeName());
-				}
-				if (!n1.isEqualNode(n2)) {
-					return false;
-				}
+			if (!n1.isEqualNode(n2)) {
+				return false;
 			}
 		}
 		return true;
