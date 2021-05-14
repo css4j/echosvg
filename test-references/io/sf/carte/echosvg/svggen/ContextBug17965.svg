@@ -7,7 +7,7 @@
   ><style type="text/css" xml:space="preserve"
     ><![CDATA[.testC1 {font-size:30px;text-rendering:optimizeLegibility;fill:blue;stroke:blue;}
 .testC2 {stroke:none;}
-.testC3 {font-size:20px;stroke:none;font-family:'Dialog';}
+.testC3 {font-size:20px;stroke:none;font-family:'SansSerif';}
 .testC4 {stroke-dashoffset:0;font-weight:normal;font-size:12px;text-rendering:auto;font-style:normal;fill:black;color-interpolation:auto;image-rendering:auto;stroke:black;stroke-opacity:1;shape-rendering:auto;stroke-linejoin:miter;stroke-dasharray:none;font-family:'Arial';stroke-width:1;color-rendering:auto;fill-opacity:1;stroke-linecap:square;stroke-miterlimit:10;}
 ]]></style
       ><g

@@ -688,7 +688,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
 		baselineOffsets[Font.CENTER_BASELINE] = (ascent + descent) / 2 - ascent;
 		baselineOffsets[Font.HANGING_BASELINE] = -ascent;
 
-		float stOffset = fontFace.getStrikethroughPosition() * -scale;
+		float stOffset = fontFace.getStrikethroughPosition() * scale;
 		float stThickness = fontFace.getStrikethroughThickness() * scale;
 		float ulOffset = fontFace.getUnderlinePosition() * scale;
 		float ulThickness = fontFace.getUnderlineThickness() * scale;

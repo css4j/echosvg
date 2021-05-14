@@ -112,10 +112,9 @@ public class ImageCompareTest {
 	}
 
 	/**
-	 * This test makes a binary comparison of the two images (and not a pixel
-	 * comparison). If the images are different, the test generates a report
-	 * containing the two images and a delta images to help the user visualize the
-	 * difference.
+	 * This test makes a comparison of the two images. If the images are different,
+	 * the test generates a report containing the two images and a delta images to
+	 * help the user visualize the difference.
 	 *
 	 * @param urlA first image
 	 * @param urlB second image
@@ -144,6 +143,16 @@ public class ImageCompareTest {
 	 * @return a string describing the differences between the images, null if no differences.
 	 */
 	public String compare() throws IOException {
+		return compare(0d);
+	}
+
+	/**
+	 * Compare two images
+	 * 
+	 * @param allowingPercentOfDifferentPixels the allowed percentage of different pixels.
+	 * @return a string describing the differences between the images, null if no differences.
+	 */
+	public String compare(double allowingPercentOfDifferentPixels) throws IOException {
 		initURLs();
 
 		BufferedImage imageA = getImage(urlA);
@@ -156,7 +165,8 @@ public class ImageCompareTest {
 			throw new IllegalStateException(ERROR_COULD_NOT_LOAD_IMAGE + ' ' + urlB.toString());
 		}
 
-		ImageComparisonResult result = AbstractRenderingAccuracyTest.compareImages(imageA, imageB);
+		ImageComparisonResult result = AbstractRenderingAccuracyTest.compareImages(imageA, imageB,
+				allowingPercentOfDifferentPixels);
 
 		boolean accurate = result.getImageComparisonState() == ImageComparisonState.MATCH;
 

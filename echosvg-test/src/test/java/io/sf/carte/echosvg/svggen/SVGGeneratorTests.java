@@ -75,7 +75,6 @@ public class SVGGeneratorTests {
 		runTests("ATransform");
 	}
 
-	@org.junit.Ignore
 	@org.junit.Test
 	public void testAttributedCharacterIterator() throws IOException, TranscoderException {
 		runTests("AttributedCharacterIterator");
@@ -136,13 +135,11 @@ public class SVGGeneratorTests {
 		runTests("DrawImage");
 	}
 
-	@org.junit.Ignore
 	@org.junit.Test
 	public void testFont1() throws IOException, TranscoderException {
 		runTests("Font1");
 	}
 
-	@org.junit.Ignore
 	@org.junit.Test
 	public void testFontDecoration() throws IOException, TranscoderException {
 		runTests("FontDecoration");
@@ -216,8 +213,9 @@ public class SVGGeneratorTests {
 	/**
 	 * The id should be the Painter's class name prefixed with the package name
 	 * defined in getPackageName
-	 * @throws IOException 
-	 * @throws TranscoderException 
+	 * 
+	 * @throws IOException
+	 * @throws TranscoderException
 	 */
 	public void runTests(String painterClassname) throws IOException, TranscoderException {
 		String clName = getClass().getPackageName() + "." + painterClassname;
@@ -255,8 +253,9 @@ public class SVGGeneratorTests {
 		t = makeSVGRenderingAccuracyTest(painter, painterClassname, CUSTOM_CONTEXT_GENERATION_PREFIX);
 		t.runTest();
 
-		ImageCompareTest ict = makeImageCompareTest(painter, painterClassname, PLAIN_GENERATION_PREFIX, CUSTOM_CONTEXT_GENERATION_PREFIX);
-		String err = ict.compare();
+		ImageCompareTest ict = makeImageCompareTest(painter, painterClassname, PLAIN_GENERATION_PREFIX,
+				CUSTOM_CONTEXT_GENERATION_PREFIX);
+		String err = ict.compare(0.005d);
 		if (err != null) {
 			fail(err);
 		}

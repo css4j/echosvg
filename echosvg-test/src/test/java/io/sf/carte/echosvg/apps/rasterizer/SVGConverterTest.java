@@ -978,10 +978,11 @@ class ConverterOutputTest {
 		pngDest = destFile.toURI().toURL().toExternalForm();
 		ImageCompareTest t = new ImageCompareTest(pngDest, pngRef);
 		String err = t.compare();
-		//destFile.delete();
 
 		if (err != null) {
 			fail(err);
+		} else {
+			destFile.delete();
 		}
 	}
 }

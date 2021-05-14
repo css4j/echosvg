@@ -270,17 +270,37 @@ public class SVGFont extends AbstractSVGConverter {
 
 			missingGlyphElement.setAttributeNS(null, SVG_D_ATTRIBUTE,
 					SVGPath.toSVGPathData(missingGlyphShape, generatorContext));
-			missingGlyphElement.setAttributeNS(null, SVG_HORIZ_ADV_X_ATTRIBUTE, String.valueOf(gm.getAdvance()));
+			missingGlyphElement.setAttributeNS(null, SVG_HORIZ_ADV_X_ATTRIBUTE,
+					SVGGeneratorContext.decimalFormats[3].format(gm.getAdvance()));
 			fontDef.appendChild(missingGlyphElement);
 
 			// set the font's default horizontal advance to be the same as
 			// the missing glyph
-			fontDef.setAttributeNS(null, SVG_HORIZ_ADV_X_ATTRIBUTE, String.valueOf(gm.getAdvance()));
+			fontDef.setAttributeNS(null, SVG_HORIZ_ADV_X_ATTRIBUTE,
+					SVGGeneratorContext.decimalFormats[3].format(gm.getAdvance()));
 
 			// set the ascent and descent attributes
 			LineMetrics lm = commonSizeFont.getLineMetrics("By", localFRC);
-			fontFace.setAttributeNS(null, SVG_ASCENT_ATTRIBUTE, String.valueOf(lm.getAscent()));
-			fontFace.setAttributeNS(null, SVG_DESCENT_ATTRIBUTE, String.valueOf(lm.getDescent()));
+			// LineMetrics lm = font.getLineMetrics("Èj", localFRC);
+			fontFace.setAttributeNS(null, SVG_ASCENT_ATTRIBUTE,
+					SVGGeneratorContext.decimalFormats[3].format(lm.getAscent()));
+			fontFace.setAttributeNS(null, SVG_DESCENT_ATTRIBUTE,
+					SVGGeneratorContext.decimalFormats[3].format(lm.getDescent()));
+
+			// Decoration attributes
+			final int cfsz = commonSizeFont.getSize();
+			float stOffset = lm.getStrikethroughOffset() * COMMON_FONT_SIZE / cfsz;
+			float stThickness = lm.getStrikethroughThickness() * COMMON_FONT_SIZE / cfsz;
+			float ulOffset = lm.getUnderlineOffset() * COMMON_FONT_SIZE / cfsz;
+			float ulThickness = lm.getUnderlineThickness() * COMMON_FONT_SIZE / cfsz;
+			fontFace.setAttributeNS(null, SVG_STRIKETHROUGH_POSITION_ATTRIBUTE,
+					SVGGeneratorContext.decimalFormats[2].format(stOffset));
+			fontFace.setAttributeNS(null, SVG_STRIKETHROUGH_THICKNESS_ATTRIBUTE,
+					SVGGeneratorContext.decimalFormats[2].format(stThickness));
+			fontFace.setAttributeNS(null, SVG_UNDERLINE_POSITION_ATTRIBUTE,
+					SVGGeneratorContext.decimalFormats[2].format(ulOffset));
+			fontFace.setAttributeNS(null, SVG_UNDERLINE_THICKNESS_ATTRIBUTE,
+					SVGGeneratorContext.decimalFormats[2].format(ulThickness));
 
 			//
 			// Font ID

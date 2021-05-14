@@ -308,26 +308,10 @@ public abstract class AbstractRenderingAccuracyTest {
 		// encoding failed and we should return that report.
 		encode(svgURL, tmpFileOS);
 
-		//
-		// Do a binary comparison of the encoded images.
-		//
-		//InputStream refStream = null;
-		//InputStream newStream = null;
-		//refStream = new BufferedInputStream(refImgURL.openStream());
-
-		//newStream = new BufferedInputStream(new FileInputStream(tmpFile));
-
-		//boolean accurate = compare(refStream, newStream);
-
-		//
-		// If the files still differ here, it means that even the
-		// variation does not account for the difference return an
-		// error
-		//
 		BufferedImage ref = getImage(refImgURL);
 		BufferedImage gen = getImage(tmpFile);
 
-		ImageComparisonResult result = AbstractRenderingAccuracyTest.compareImages(ref, gen);
+		ImageComparisonResult result = compareImages(ref, gen);
 
 		boolean accurate = result.getImageComparisonState() == ImageComparisonState.MATCH;
 
@@ -379,6 +363,12 @@ public abstract class AbstractRenderingAccuracyTest {
 			return;
 		}
 
+		//
+		// If the files still differ here, it means that even the
+		// variation does not account for the difference return an
+		// error
+		//
+
 		// Rendering is not accurate
 		if (saveVariation != null) {
 			// There is a computed variation different from the
@@ -404,7 +394,13 @@ public abstract class AbstractRenderingAccuracyTest {
 	}
 
 	static ImageComparisonResult compareImages(BufferedImage imageA, BufferedImage imageB) {
+		return compareImages(imageA, imageB, 0d);
+	}
+
+	static ImageComparisonResult compareImages(BufferedImage imageA, BufferedImage imageB,
+			double allowingPercentOfDifferentPixels) {
 		ImageComparison comparison = new ImageComparison(imageA, imageB);
+		comparison.setAllowingPercentOfDifferentPixels(allowingPercentOfDifferentPixels);
 		ImageComparisonResult result = comparison.compareImages();
 		return result;
 	}
