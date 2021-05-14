@@ -109,7 +109,7 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 	 * This SVGGraphics2D relies on the DOMTreeManager to process attributes based
 	 * on the GraphicContext state and create groups when needed.
 	 */
-	protected DOMTreeManager domTreeManager;
+	private DOMTreeManager domTreeManager;
 
 	/**
 	 * The DOMGroupManager manages additions to the current group node associated
@@ -119,27 +119,27 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 	 * group) but that all SVGGraphics2D originating from the same SVGGraphics2D
 	 * through various createGraphics calls share the same DOMTreeManager.
 	 */
-	protected DOMGroupManager domGroupManager;
+	private DOMGroupManager domGroupManager;
 
 	/**
 	 * Contains some information for SVG generation.
 	 */
-	protected SVGGeneratorContext generatorCtx;
+	private SVGGeneratorContext generatorCtx;
 
 	/**
 	 * Used to convert Java 2D API Shape objects to equivalent SVG elements
 	 */
-	protected SVGShape shapeConverter;
+	private SVGShape shapeConverter;
 
 	/**
 	 * SVG Canvas size
 	 */
-	protected Dimension svgCanvasSize;
+	private Dimension svgCanvasSize;
 
 	/**
 	 * Used to create proper font metrics
 	 */
-	protected Graphics2D fmg;
+	private Graphics2D fmg;
 
 	{
 		BufferedImage bi = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
@@ -193,7 +193,7 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 	 */
 	protected final void setDOMTreeManager(DOMTreeManager treeMgr) {
 		this.domTreeManager = treeMgr;
-		generatorCtx.genericImageHandler.setDOMTreeManager(domTreeManager);
+		generatorCtx.getGenericImageHandler().setDOMTreeManager(domTreeManager);
 	}
 
 	/**
@@ -217,28 +217,28 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 	 *         instance
 	 */
 	public final Document getDOMFactory() {
-		return generatorCtx.domFactory;
+		return generatorCtx.getDOMFactory();
 	}
 
 	/**
 	 * @return the ImageHandler used by this SVGGraphics2D instance
 	 */
 	public final ImageHandler getImageHandler() {
-		return generatorCtx.imageHandler;
+		return generatorCtx.getImageHandler();
 	}
 
 	/**
 	 * @return the GenericImageHandler used by this SVGGraphics2D instance
 	 */
 	public final GenericImageHandler getGenericImageHandler() {
-		return generatorCtx.genericImageHandler;
+		return generatorCtx.getGenericImageHandler();
 	}
 
 	/**
 	 * @return the extension handler used by this SVGGraphics2D instance
 	 */
 	public final ExtensionHandler getExtensionHandler() {
-		return generatorCtx.extensionHandler;
+		return generatorCtx.getExtensionHandler();
 	}
 
 	/**
@@ -349,7 +349,7 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 		this.domTreeManager = new DOMTreeManager(gc, generatorCtx, DEFAULT_MAX_GC_OVERRIDES);
 		this.domGroupManager = new DOMGroupManager(gc, domTreeManager);
 		this.domTreeManager.addGroupManager(domGroupManager);
-		generatorCtx.genericImageHandler.setDOMTreeManager(domTreeManager);
+		generatorCtx.getGenericImageHandler().setDOMTreeManager(domTreeManager);
 	}
 
 	/**
@@ -390,7 +390,7 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 			// method => rethrow it in all cases
 			throw io;
 		} catch (IOException e) {
-			generatorCtx.errorHandler.handleError(new SVGGraphics2DIOException(e));
+			generatorCtx.getErrorHandler().handleError(new SVGGraphics2DIOException(e));
 		}
 	}
 
@@ -463,9 +463,9 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 			// and wrapping it again in another SVGGraphics2DIOException
 			// as would do the second catch (XmlWriter throws SVGGraphics2DIO
 			// Exception but flush throws IOException)
-			generatorCtx.errorHandler.handleError(e);
+			generatorCtx.getErrorHandler().handleError(e);
 		} catch (IOException io) {
-			generatorCtx.errorHandler.handleError(new SVGGraphics2DIOException(io));
+			generatorCtx.getErrorHandler().handleError(new SVGGraphics2DIOException(io));
 		} finally {
 			// Restore the svgRoot to its original tree position
 			if (rootParent != null) {
@@ -571,7 +571,7 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 	 */
 	@Override
 	public void setXORMode(Color c1) {
-		generatorCtx.errorHandler.handleError(new SVGGraphics2DRuntimeException(ERR_XOR));
+		generatorCtx.getErrorHandler().handleError(new SVGGraphics2DRuntimeException(ERR_XOR));
 	}
 
 	/**
@@ -1058,7 +1058,7 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 			return;
 		}
 
-		if (generatorCtx.svgFont) {
+		if (generatorCtx.isEmbeddedFontsOn()) {
 			// record that the font is being used to draw this
 			// string, this is so that the SVG Font element will
 			// only create glyphs for the characters that are

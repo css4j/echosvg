@@ -55,7 +55,7 @@ public abstract class DefaultCachedImageHandler implements CachedImageHandler, S
 	private static final Class<?>[] paramc = new Class[] { BufferedImage.class };
 	private static Object[] paramo = null;
 
-	protected ImageCacher imageCacher;
+	private ImageCacher imageCacher;
 
 	/**
 	 * The image cache can be used by subclasses for efficient image storage
@@ -158,7 +158,7 @@ public abstract class DefaultCachedImageHandler implements CachedImageHandler, S
 				handleHREF(image, imageElement, generatorContext);
 			} catch (SVGGraphics2DIOException e) {
 				try {
-					generatorContext.errorHandler.handleError(e);
+					generatorContext.getErrorHandler().handleError(e);
 				} catch (SVGGraphics2DIOException io) {
 					// we need a runtime exception because
 					// java.awt.Graphics2D method doesn't throw exceptions..
@@ -196,7 +196,7 @@ public abstract class DefaultCachedImageHandler implements CachedImageHandler, S
 				handleHREF(image, imageElement, generatorContext);
 			} catch (SVGGraphics2DIOException e) {
 				try {
-					generatorContext.errorHandler.handleError(e);
+					generatorContext.getErrorHandler().handleError(e);
 				} catch (SVGGraphics2DIOException io) {
 					// we need a runtime exception because
 					// java.awt.Graphics2D method doesn't throw exceptions..
@@ -234,7 +234,7 @@ public abstract class DefaultCachedImageHandler implements CachedImageHandler, S
 				handleHREF(image, imageElement, generatorContext);
 			} catch (SVGGraphics2DIOException e) {
 				try {
-					generatorContext.errorHandler.handleError(e);
+					generatorContext.getErrorHandler().handleError(e);
 				} catch (SVGGraphics2DIOException io) {
 					// we need a runtime exception because
 					// java.awt.Graphics2D method doesn't throw exceptions..

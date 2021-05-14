@@ -195,7 +195,7 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
 		// While the files we are generating exist, try to create another
 		// id that is unique.
 		while (imageFile == null) {
-			String fileId = generatorContext.idGenerator.generateID(getPrefix());
+			String fileId = generatorContext.getIDGenerator().generateID(getPrefix());
 			imageFile = new File(imageDir, fileId + getSuffix());
 			if (imageFile.exists())
 				imageFile = null;

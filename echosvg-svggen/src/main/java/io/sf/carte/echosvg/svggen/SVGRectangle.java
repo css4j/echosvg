@@ -74,7 +74,7 @@ public class SVGRectangle extends SVGGraphicObjectConverter {
 	 */
 	private Element toSVG(RectangularShape rect) {
 		if (rect.getWidth() > 0 && rect.getHeight() > 0) {
-			Element svgRect = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_RECT_TAG);
+			Element svgRect = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_RECT_TAG);
 			svgRect.setAttributeNS(null, SVG_X_ATTRIBUTE, doubleString(rect.getX()));
 			svgRect.setAttributeNS(null, SVG_Y_ATTRIBUTE, doubleString(rect.getY()));
 			svgRect.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, doubleString(rect.getWidth()));

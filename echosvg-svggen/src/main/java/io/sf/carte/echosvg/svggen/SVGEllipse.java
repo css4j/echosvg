@@ -62,7 +62,7 @@ public class SVGEllipse extends SVGGraphicObjectConverter {
 	 * @param ellipse the Ellipse2D object to be converted to a circle
 	 */
 	private Element toSVGCircle(Ellipse2D ellipse) {
-		Element svgCircle = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_CIRCLE_TAG);
+		Element svgCircle = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_CIRCLE_TAG);
 		svgCircle.setAttributeNS(null, SVG_CX_ATTRIBUTE, doubleString(ellipse.getX() + ellipse.getWidth() / 2));
 		svgCircle.setAttributeNS(null, SVG_CY_ATTRIBUTE, doubleString(ellipse.getY() + ellipse.getHeight() / 2));
 		svgCircle.setAttributeNS(null, SVG_R_ATTRIBUTE, doubleString(ellipse.getWidth() / 2));
@@ -74,7 +74,8 @@ public class SVGEllipse extends SVGGraphicObjectConverter {
 	 */
 	private Element toSVGEllipse(Ellipse2D ellipse) {
 		if (ellipse.getWidth() > 0 && ellipse.getHeight() > 0) {
-			Element svgCircle = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_ELLIPSE_TAG);
+			Element svgCircle = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI,
+					SVG_ELLIPSE_TAG);
 			svgCircle.setAttributeNS(null, SVG_CX_ATTRIBUTE, doubleString(ellipse.getX() + ellipse.getWidth() / 2));
 			svgCircle.setAttributeNS(null, SVG_CY_ATTRIBUTE, doubleString(ellipse.getY() + ellipse.getHeight() / 2));
 			svgCircle.setAttributeNS(null, SVG_RX_ATTRIBUTE, doubleString(ellipse.getWidth() / 2));
@@ -85,14 +86,14 @@ public class SVGEllipse extends SVGGraphicObjectConverter {
 			Line2D line = new Line2D.Double(ellipse.getX(), ellipse.getY(), ellipse.getX(),
 					ellipse.getY() + ellipse.getHeight());
 			if (svgLine == null)
-				svgLine = new SVGLine(generatorContext);
+				svgLine = new SVGLine(getGeneratorContext());
 			return svgLine.toSVG(line);
 		} else if (ellipse.getWidth() > 0 && ellipse.getHeight() == 0) {
 			// Degenerate to a line
 			Line2D line = new Line2D.Double(ellipse.getX(), ellipse.getY(), ellipse.getX() + ellipse.getWidth(),
 					ellipse.getY());
 			if (svgLine == null)
-				svgLine = new SVGLine(generatorContext);
+				svgLine = new SVGLine(getGeneratorContext());
 			return svgLine.toSVG(line);
 		}
 		return null;

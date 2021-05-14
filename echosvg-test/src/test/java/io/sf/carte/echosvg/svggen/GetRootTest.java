@@ -52,7 +52,7 @@ public class GetRootTest {
 		Document domFactory = impl.createDocument(namespaceURI, SVGConstants.SVG_SVG_TAG, null);
 		SVGGeneratorContext ctx = SVGGeneratorContext.createDefault(domFactory);
 		GraphicContextDefaults defaults = new GraphicContextDefaults();
-		defaults.font = new Font("Arial", Font.PLAIN, 12);
+		defaults.setFont(new Font("Arial", Font.PLAIN, 12));
 		ctx.setGraphicContextDefaults(defaults);
 		SVGGraphics2D g2d = new SVGGraphics2D(ctx, false);
 

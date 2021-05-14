@@ -47,7 +47,7 @@ public class SVGGeneratorContext implements ErrorConstants {
 	/**
 	 * Factory used by this Graphics2D to create Elements that make the SVG DOM Tree
 	 */
-	Document domFactory;
+	private Document domFactory;
 
 	/**
 	 * Handler that defines how images are referenced in the generated SVG fragment.
@@ -58,59 +58,59 @@ public class SVGGeneratorContext implements ErrorConstants {
 	 * @see io.sf.carte.echosvg.svggen.ImageHandlerPNGEncoder
 	 * @see io.sf.carte.echosvg.svggen.ImageHandlerJPEGEncoder
 	 */
-	ImageHandler imageHandler;
+	private ImageHandler imageHandler;
 
 	/**
 	 * Generic image handler. This allows more sophisticated image handling
 	 * strategies than the <code>ImageHandler</code> interfaces.
 	 */
-	GenericImageHandler genericImageHandler;
+	private GenericImageHandler genericImageHandler;
 
 	/**
 	 * To deal with Java 2D extension (custom java.awt.Paint for example).
 	 */
-	ExtensionHandler extensionHandler;
+	private ExtensionHandler extensionHandler;
 
 	/**
 	 * To generate consitent ids.
 	 */
-	SVGIDGenerator idGenerator;
+	private SVGIDGenerator idGenerator;
 
 	/**
 	 * To set style.
 	 */
-	StyleHandler styleHandler;
+	private StyleHandler styleHandler;
 
 	/**
 	 * The comment to insert at generation time.
 	 */
-	String generatorComment;
+	private String generatorComment;
 
 	/**
 	 * The error handler.
 	 */
-	ErrorHandler errorHandler;
+	private ErrorHandler errorHandler;
 
 	/**
 	 * Do we accept SVG Fonts generation?
 	 */
-	boolean svgFont = false;
+	private boolean svgFont = false;
 
 	/**
 	 * GraphicContextDefaults
 	 */
-	GraphicContextDefaults gcDefaults;
+	private GraphicContextDefaults gcDefaults;
 
 	/**
 	 * Number of decimal places to use in output values. 3 decimal places are used
 	 * by default.
 	 */
-	int precision = 4;
+	private int precision = 4;
 
 	/**
 	 * Current double value formatter
 	 */
-	protected DecimalFormat decimalFormat = decimalFormats[precision];
+	private DecimalFormat decimalFormat = decimalFormats[precision];
 
 	/**
 	 * Class to describe the GraphicContext defaults to be used. Note that this
@@ -120,13 +120,13 @@ public class SVGGeneratorContext implements ErrorConstants {
 	 * class).
 	 */
 	public static class GraphicContextDefaults {
-		protected Paint paint;
-		protected Stroke stroke;
-		protected Composite composite;
-		protected Shape clip;
-		protected RenderingHints hints;
-		protected Font font;
-		protected Color background;
+		private Paint paint;
+		private Stroke stroke;
+		private Composite composite;
+		private Shape clip;
+		private RenderingHints hints;
+		private Font font;
+		private Color background;
 
 		public void setStroke(Stroke stroke) {
 			this.stroke = stroke;
@@ -318,6 +318,10 @@ public class SVGGeneratorContext implements ErrorConstants {
 		}
 		this.imageHandler = null;
 		this.genericImageHandler = genericImageHandler;
+	}
+
+	GenericImageHandler getGenericImageHandler() {
+		return genericImageHandler;
 	}
 
 	/**

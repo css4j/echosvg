@@ -78,7 +78,7 @@ public abstract class SwingSVGPrettyPrint implements SVGSyntax {
 		// Now, structure DOM tree to reflect this component's structure
 		Element cmpGroup = g.getTopLevelGroup();
 		cmpGroup.setAttributeNS(null, "id",
-				svgGen.getGeneratorContext().idGenerator.generateID(cmp.getClass().getName()));
+				svgGen.getGeneratorContext().getIDGenerator().generateID(cmp.getClass().getName()));
 
 		topLevelGroup.appendChild(cmpGroup);
 		svgGen.setTopLevelGroup(topLevelGroup);
@@ -109,7 +109,7 @@ public abstract class SwingSVGPrettyPrint implements SVGSyntax {
 		// Now, structure DOM tree to reflect this component's structure
 		Element cmpGroup = g.getTopLevelGroup();
 		cmpGroup.setAttributeNS(null, "id",
-				svgGen.getGeneratorContext().idGenerator.generateID(cmp.getClass().getName()));
+				svgGen.getGeneratorContext().getIDGenerator().generateID(cmp.getClass().getName()));
 
 		topLevelGroup.appendChild(cmpGroup);
 		svgGen.setTopLevelGroup(topLevelGroup);

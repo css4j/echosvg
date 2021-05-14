@@ -79,7 +79,7 @@ public class SVGClip extends AbstractSVGConverter {
 			GeneralPath clipPath = new GeneralPath(clip);
 
 			// Check if this object is already in the Map
-			ClipKey clipKey = new ClipKey(clipPath, generatorContext);
+			ClipKey clipKey = new ClipKey(clipPath, getGeneratorContext());
 			clipDesc = (SVGClipDescriptor) descMap.get(clipKey);
 
 			if (clipDesc == null) {
@@ -109,10 +109,11 @@ public class SVGClip extends AbstractSVGConverter {
 	 * @param clip path to convert to an SVG clipPath element
 	 */
 	private Element clipToSVG(Shape clip) {
-		Element clipDef = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_CLIP_PATH_TAG);
+		Element clipDef = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_CLIP_PATH_TAG);
 		clipDef.setAttributeNS(null, SVG_CLIP_PATH_UNITS_ATTRIBUTE, SVG_USER_SPACE_ON_USE_VALUE);
 
-		clipDef.setAttributeNS(null, SVG_ID_ATTRIBUTE, generatorContext.idGenerator.generateID(ID_PREFIX_CLIP_PATH));
+		clipDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
+				getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_CLIP_PATH));
 
 		Element clipPath = shapeConverter.toSVG(clip);
 		// unfortunately it may be null because of SVGPath that may produce null

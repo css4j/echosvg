@@ -28,7 +28,7 @@ public abstract class SVGGraphicObjectConverter implements SVGSyntax {
 	/**
 	 * Used by converters to create Elements and other DOM objects.
 	 */
-	protected SVGGeneratorContext generatorContext;
+	private final SVGGeneratorContext generatorContext;
 
 	/**
 	 * @param generatorContext can be used by the SVGGraphicObjectConverter
@@ -39,6 +39,10 @@ public abstract class SVGGraphicObjectConverter implements SVGSyntax {
 		if (generatorContext == null)
 			throw new SVGGraphics2DRuntimeException(ErrorConstants.ERR_CONTEXT_NULL);
 		this.generatorContext = generatorContext;
+	}
+
+	SVGGeneratorContext getGeneratorContext() {
+		return generatorContext;
 	}
 
 	/**

@@ -109,7 +109,7 @@ public class GeneratorContext extends SVGAccuracyTest {
 
 		// Set the default font to use
 		GraphicContextDefaults defaults = new GraphicContextDefaults();
-		defaults.font = new Font("Arial", Font.PLAIN, 12);
+		defaults.setFont(new Font("Arial", Font.PLAIN, 12));
 		ctx.setGraphicContextDefaults(defaults);
 
 		//

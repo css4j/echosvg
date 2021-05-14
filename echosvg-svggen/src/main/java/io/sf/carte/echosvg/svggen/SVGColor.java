@@ -99,7 +99,7 @@ public class SVGColor extends AbstractSVGConverter {
 	@Override
 	public SVGDescriptor toSVG(GraphicContext gc) {
 		Paint paint = gc.getPaint();
-		return toSVG((Color) paint, generatorContext);
+		return toSVG((Color) paint, getGeneratorContext());
 	}
 
 	/**

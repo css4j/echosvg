@@ -66,7 +66,7 @@ public class SVGTexturePaint extends AbstractSVGConverter {
 	public SVGPaintDescriptor toSVG(TexturePaint texture) {
 		// Reuse definition if pattern has already been converted
 		SVGPaintDescriptor patternDesc = (SVGPaintDescriptor) descMap.get(texture);
-		Document domFactory = generatorContext.domFactory;
+		Document domFactory = getGeneratorContext().getDOMFactory();
 
 		if (patternDesc == null) {
 			Rectangle2D anchorRect = texture.getAnchorRect();
@@ -115,15 +115,16 @@ public class SVGTexturePaint extends AbstractSVGConverter {
 			// handleImage((RenderedImage)textureImage, imageElement,
 			// generatorContext);
 
-			Element patternContent = generatorContext.genericImageHandler.createElement(generatorContext);
+			Element patternContent = getGeneratorContext().getGenericImageHandler()
+					.createElement(getGeneratorContext());
 
-			generatorContext.genericImageHandler.handleImage((RenderedImage) textureImage, patternContent, 0, 0,
-					textureImage.getWidth(), textureImage.getHeight(), generatorContext);
+			getGeneratorContext().getGenericImageHandler().handleImage((RenderedImage) textureImage, patternContent, 0,
+					0, textureImage.getWidth(), textureImage.getHeight(), getGeneratorContext());
 
 			patternDef.appendChild(patternContent);
 
 			patternDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
-					generatorContext.idGenerator.generateID(ID_PREFIX_PATTERN));
+					getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_PATTERN));
 
 //            StringBuffer patternAttrBuf = new StringBuffer(URL_PREFIX);
 //            patternAttrBuf.append(SIGN_POUND);

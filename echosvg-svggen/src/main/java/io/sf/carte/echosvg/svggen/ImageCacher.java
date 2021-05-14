@@ -48,7 +48,7 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
 
 	DOMTreeManager domTreeManager = null;
 	Map<Integer, LinkedList<ImageCacheEntry>> imageCache;
-	Checksum checkSum;
+	private Checksum checkSum;
 
 	/**
 	 * Creates an ImageCacher.
@@ -235,7 +235,7 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
 		ImageCacheEntry createEntry(int checksum, Object data, int width, int height, SVGGeneratorContext ctx) {
 
 			// Get a new unique id
-			String id = ctx.idGenerator.generateID(ID_PREFIX_IMAGE);
+			String id = ctx.getIDGenerator().generateID(ID_PREFIX_IMAGE);
 
 			// Add the image data reference to the <defs> section
 			addToTree(id, (String) data, width, height, ctx);
@@ -343,7 +343,7 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
 				// While the files we are generating exist, try to create
 				// another unique id.
 				while (imageFile == null) {
-					String fileId = ctx.idGenerator.generateID(prefix);
+					String fileId = ctx.getIDGenerator().generateID(prefix);
 					imageFile = new File(imageDir, fileId + suffix);
 					if (imageFile.exists())
 						imageFile = null;

@@ -71,22 +71,22 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
 	 * Reference to the GraphicContext this manager will use to reflect style
 	 * attributes in the tree nodes.
 	 */
-	protected GraphicContext gc;
+	private GraphicContext gc;
 
 	/**
 	 * DOMTreeManager that this group manager cooperates with
 	 */
-	protected DOMTreeManager domTreeManager;
+	private DOMTreeManager domTreeManager;
 
 	/**
 	 * Current group's SVG GraphicContext state
 	 */
-	protected SVGGraphicContext groupGC;
+	private SVGGraphicContext groupGC;
 
 	/**
 	 * Current group node
 	 */
-	protected Element currentGroup;
+	private Element currentGroup;
 
 	/**
 	 * Constructor
@@ -110,7 +110,7 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
 		recycleCurrentGroup();
 
 		// Build the default GC descriptor
-		groupGC = domTreeManager.gcConverter.toSVG(gc);
+		groupGC = domTreeManager.getGraphicContextConverter().toSVG(gc);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
 			currentGroup.appendChild(element);
 
 			if (elementGC == null) {
-				groupGC = domTreeManager.gcConverter.toSVG(gc);
+				groupGC = domTreeManager.getGraphicContextConverter().toSVG(gc);
 			} else {
 				groupGC = elementGC;
 			}
@@ -184,7 +184,7 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
 				// context
 				//
 				if (elementGC == null) {
-					elementGC = domTreeManager.gcConverter.toSVG(gc);
+					elementGC = domTreeManager.getGraphicContextConverter().toSVG(gc);
 				}
 				SVGGraphicContext deltaGC = processDeltaGC(elementGC, groupGC);
 
@@ -258,7 +258,7 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
 	 * stack
 	 */
 	protected void setTransform(Element element, TransformStackElement[] transformStack) {
-		String transform = domTreeManager.gcConverter.toSVG(transformStack).trim();
+		String transform = domTreeManager.getGraphicContextConverter().toSVG(transformStack).trim();
 		if (transform.length() > 0)
 			element.setAttributeNS(null, SVG_TRANSFORM_ATTRIBUTE, transform);
 	}

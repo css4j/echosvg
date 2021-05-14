@@ -56,14 +56,14 @@ public class SVGPath extends SVGGraphicObjectConverter {
 	public Element toSVG(Shape path) {
 		// Create the path element and process its
 		// d attribute.
-		String dAttr = toSVGPathData(path, generatorContext);
+		String dAttr = toSVGPathData(path, getGeneratorContext());
 		if (dAttr == null || dAttr.length() == 0) {
 			// be careful not to append null to the DOM tree
 			// because it will crash
 			return null;
 		}
 
-		Element svgPath = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_PATH_TAG);
+		Element svgPath = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_PATH_TAG);
 		svgPath.setAttributeNS(null, SVG_D_ATTRIBUTE, dAttr);
 
 		// Set winding rule if different than SVG's default

@@ -68,7 +68,7 @@ public class SVGLinearGradient extends AbstractSVGConverter {
 		// Reuse definition if gradient has already been converted
 		SVGPaintDescriptor gradientDesc = (SVGPaintDescriptor) descMap.get(gradient);
 
-		Document domFactory = generatorContext.domFactory;
+		Document domFactory = getGeneratorContext().getDOMFactory();
 
 		if (gradientDesc == null) {
 			Element gradientDef = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_LINEAR_GRADIENT_TAG);
@@ -98,7 +98,7 @@ public class SVGLinearGradient extends AbstractSVGConverter {
 			Element gradientStop = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_STOP_TAG);
 			gradientStop.setAttributeNS(null, SVG_OFFSET_ATTRIBUTE, SVG_ZERO_PERCENT_VALUE);
 
-			SVGPaintDescriptor colorDesc = SVGColor.toSVG(gradient.getColor1(), generatorContext);
+			SVGPaintDescriptor colorDesc = SVGColor.toSVG(gradient.getColor1(), getGeneratorContext());
 			gradientStop.setAttributeNS(null, SVG_STOP_COLOR_ATTRIBUTE, colorDesc.getPaintValue());
 			gradientStop.setAttributeNS(null, SVG_STOP_OPACITY_ATTRIBUTE, colorDesc.getOpacityValue());
 
@@ -110,7 +110,7 @@ public class SVGLinearGradient extends AbstractSVGConverter {
 			gradientStop = domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_STOP_TAG);
 			gradientStop.setAttributeNS(null, SVG_OFFSET_ATTRIBUTE, SVG_HUNDRED_PERCENT_VALUE);
 
-			colorDesc = SVGColor.toSVG(gradient.getColor2(), generatorContext);
+			colorDesc = SVGColor.toSVG(gradient.getColor2(), getGeneratorContext());
 			gradientStop.setAttributeNS(null, SVG_STOP_COLOR_ATTRIBUTE, colorDesc.getPaintValue());
 			gradientStop.setAttributeNS(null, SVG_STOP_OPACITY_ATTRIBUTE, colorDesc.getOpacityValue());
 
@@ -120,7 +120,7 @@ public class SVGLinearGradient extends AbstractSVGConverter {
 			// Gradient ID
 			//
 			gradientDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
-					generatorContext.idGenerator.generateID(ID_PREFIX_LINEAR_GRADIENT));
+					getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_LINEAR_GRADIENT));
 
 			//
 			// Build Paint descriptor

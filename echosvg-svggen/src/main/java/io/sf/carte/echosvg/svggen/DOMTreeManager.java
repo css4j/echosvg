@@ -65,13 +65,13 @@ public class DOMTreeManager implements SVGSyntax, ErrorConstants {
 	 * Set of group managers that build groups for this manager. The
 	 * synchronizedList is part of the fix for bug #40686
 	 */
-	protected final List<DOMGroupManager> groupManagers = Collections
+	private final List<DOMGroupManager> groupManagers = Collections
 			.synchronizedList(new ArrayList<DOMGroupManager>());
 
 	/**
 	 * Set of definitions that are to be placed at the top of the document tree
 	 */
-	protected List<Element> genericDefSet = new LinkedList<>();
+	private List<Element> genericDefSet = new LinkedList<>();
 
 	/**
 	 * Default SVG GraphicContext state
@@ -81,29 +81,29 @@ public class DOMTreeManager implements SVGSyntax, ErrorConstants {
 	/**
 	 * Top level group
 	 */
-	protected Element topLevelGroup;
+	private Element topLevelGroup;
 
 	/**
 	 * Used to convert the Java 2D API graphic context state into the SVG equivalent
 	 * set of attributes and related definitions
 	 */
-	SVGGraphicContextConverter gcConverter;
+	private SVGGraphicContextConverter gcConverter;
 
 	/**
 	 * The context that stores the domFactory, the imageHandler and the
 	 * extensionHandler.
 	 */
-	protected SVGGeneratorContext generatorContext;
+	private SVGGeneratorContext generatorContext;
 
 	/**
 	 * Converters used bVy this object to translate graphic context attributes
 	 */
-	protected SVGBufferedImageOp filterConverter;
+	private SVGBufferedImageOp filterConverter;
 
 	/**
 	 * Set of definitions which can be used by custom extensions
 	 */
-	protected List<Element> otherDefs;
+	private List<Element> otherDefs;
 
 	/**
 	 * Constructor
@@ -193,7 +193,7 @@ public class DOMTreeManager implements SVGSyntax, ErrorConstants {
 		}
 
 		// Create top level group node
-		topLevelGroup = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
+		topLevelGroup = generatorContext.getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
 
 		// Build new converters
 		if (recycleConverters) {
@@ -231,15 +231,15 @@ public class DOMTreeManager implements SVGSyntax, ErrorConstants {
 		Element svg = svgElement;
 
 		if (svg == null) {
-			svg = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_SVG_TAG);
+			svg = generatorContext.getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_SVG_TAG);
 		}
 
 		// Enable background if required by AlphaComposite convertion
 		if (gcConverter.getCompositeConverter().getAlphaCompositeConverter().requiresBackgroundAccess())
 			svg.setAttributeNS(null, SVG_ENABLE_BACKGROUND_ATTRIBUTE, SVG_NEW_VALUE);
 
-		if (generatorContext.generatorComment != null) {
-			Comment generatorComment = generatorContext.domFactory.createComment(generatorContext.generatorComment);
+		if (generatorContext.getComment() != null) {
+			Comment generatorComment = generatorContext.getDOMFactory().createComment(generatorContext.getComment());
 			svg.appendChild(generatorComment);
 		}
 
@@ -254,7 +254,7 @@ public class DOMTreeManager implements SVGSyntax, ErrorConstants {
 
 	public void applyDefaultRenderingStyle(Element element) {
 		Map<String, String> groupDefaults = defaultGC.getGroupContext();
-		generatorContext.styleHandler.setStyle(element, groupDefaults, generatorContext);
+		generatorContext.getStyleHandler().setStyle(element, groupDefaults, generatorContext);
 	}
 
 	/**
@@ -263,7 +263,7 @@ public class DOMTreeManager implements SVGSyntax, ErrorConstants {
 	public Element getGenericDefinitions() {
 		// when called several times, this will create several generic
 		// definition elements... not sure it is desired behavior...
-		Element genericDefs = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_DEFS_TAG);
+		Element genericDefs = generatorContext.getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_DEFS_TAG);
 		for (Element aGenericDefSet : genericDefSet) {
 			genericDefs.appendChild(aGenericDefSet);
 		}
@@ -364,9 +364,9 @@ public class DOMTreeManager implements SVGSyntax, ErrorConstants {
 					defElement = (Element) defsElements.item(0);
 
 				if (defElement == null) {
-					defElement = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_DEFS_TAG);
+					defElement = generatorContext.getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_DEFS_TAG);
 					defElement.setAttributeNS(null, SVG_ID_ATTRIBUTE,
-							generatorContext.idGenerator.generateID(ID_PREFIX_DEFS));
+							generatorContext.getIDGenerator().generateID(ID_PREFIX_DEFS));
 					topLevelGroup.insertBefore(defElement, topLevelGroup.getFirstChild());
 				}
 
@@ -396,10 +396,10 @@ public class DOMTreeManager implements SVGSyntax, ErrorConstants {
 	}
 
 	Document getDOMFactory() {
-		return generatorContext.domFactory;
+		return generatorContext.getDOMFactory();
 	}
 
 	StyleHandler getStyleHandler() {
-		return generatorContext.styleHandler;
+		return generatorContext.getStyleHandler();
 	}
 }

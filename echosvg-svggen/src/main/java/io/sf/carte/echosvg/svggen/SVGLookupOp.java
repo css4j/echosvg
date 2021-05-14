@@ -110,7 +110,7 @@ public class SVGLookupOp extends AbstractSVGFilterConverter {
 		// Reuse definition if lookupOp has already been converted
 		SVGFilterDescriptor filterDesc = descMap.get(lookupOp);
 
-		Document domFactory = generatorContext.domFactory;
+		Document domFactory = generatorContext.getDOMFactory();
 
 		if (filterDesc == null) {
 			//
@@ -170,7 +170,7 @@ public class SVGLookupOp extends AbstractSVGFilterConverter {
 			filterDef.appendChild(feComponentTransferDef);
 
 			filterDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
-					generatorContext.idGenerator.generateID(ID_PREFIX_FE_COMPONENT_TRANSFER));
+					generatorContext.getIDGenerator().generateID(ID_PREFIX_FE_COMPONENT_TRANSFER));
 			//
 			// Create a filter descriptor
 			//

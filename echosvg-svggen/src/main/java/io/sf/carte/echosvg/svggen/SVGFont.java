@@ -95,7 +95,7 @@ public class SVGFont extends AbstractSVGConverter {
 	/**
 	 * Logical fonts mapping
 	 */
-	static Map<String, String> logicalFontMap = new HashMap<>();
+	private static Map<String, String> logicalFontMap = new HashMap<>();
 
 	static {
 		logicalFontMap.put("dialog", "sans-serif");
@@ -109,13 +109,13 @@ public class SVGFont extends AbstractSVGConverter {
 	/**
 	 * The common font size to use when generating all SVG fonts.
 	 */
-	static final int COMMON_FONT_SIZE = 100;
+	private static final int COMMON_FONT_SIZE = 100;
 
 	/**
 	 * Used to keep track of which characters have been rendered by each font used.
 	 * MapKey is the fontKey, mapValue is a sorted array of used characters.
 	 */
-	final Map<String, CharListHelper> fontStringMap = new HashMap<>();
+	private final Map<String, CharListHelper> fontStringMap = new HashMap<>();
 
 	/**
 	 * @param generatorContext used to build Elements
@@ -219,7 +219,7 @@ public class SVGFont extends AbstractSVGConverter {
 			return new SVGFontDescriptor(fontSize, fontWeight, fontStyle, fontFamilyStr, null);
 		}
 
-		Document domFactory = generatorContext.getDOMFactory();
+		Document domFactory = getGeneratorContext().getDOMFactory();
 
 		// see if a description already exists for this font
 		SVGFontDescriptor fontDesc = (SVGFontDescriptor) descMap.get(fontKey);
@@ -269,7 +269,7 @@ public class SVGFont extends AbstractSVGConverter {
 			missingGlyphShape = at.createTransformedShape(missingGlyphShape);
 
 			missingGlyphElement.setAttributeNS(null, SVG_D_ATTRIBUTE,
-					SVGPath.toSVGPathData(missingGlyphShape, generatorContext));
+					SVGPath.toSVGPathData(missingGlyphShape, getGeneratorContext()));
 			missingGlyphElement.setAttributeNS(null, SVG_HORIZ_ADV_X_ATTRIBUTE,
 					SVGGeneratorContext.decimalFormats[3].format(gm.getAdvance()));
 			fontDef.appendChild(missingGlyphElement);
@@ -305,7 +305,8 @@ public class SVGFont extends AbstractSVGConverter {
 			//
 			// Font ID
 			//
-			fontDef.setAttributeNS(null, SVG_ID_ATTRIBUTE, generatorContext.idGenerator.generateID(ID_PREFIX_FONT));
+			fontDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
+					getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_FONT));
 		}
 
 		//
@@ -344,7 +345,7 @@ public class SVGFont extends AbstractSVGConverter {
 				AffineTransform at = AffineTransform.getScaleInstance(1, -1);
 				glyphShape = at.createTransformedShape(glyphShape);
 
-				glyphElement.setAttributeNS(null, SVG_D_ATTRIBUTE, SVGPath.toSVGPathData(glyphShape, generatorContext));
+				glyphElement.setAttributeNS(null, SVG_D_ATTRIBUTE, SVGPath.toSVGPathData(glyphShape, getGeneratorContext()));
 				glyphElement.setAttributeNS(null, SVG_HORIZ_ADV_X_ATTRIBUTE, String.valueOf(gm.getAdvance()));
 				glyphElement.setAttributeNS(null, SVG_UNICODE_ATTRIBUTE, String.valueOf(c));
 

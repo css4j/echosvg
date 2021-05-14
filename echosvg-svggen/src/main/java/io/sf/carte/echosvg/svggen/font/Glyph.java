@@ -30,8 +30,8 @@ import io.sf.carte.echosvg.svggen.font.table.GlyphDescription;
  */
 public class Glyph {
 
-	protected short leftSideBearing;
-	protected int advanceWidth;
+	private short leftSideBearing;
+	private int advanceWidth;
 	private Point[] points;
 
 	public Glyph(GlyphDescription gd, short lsb, int advance) {

@@ -42,7 +42,7 @@ public class SVGLine extends SVGGraphicObjectConverter {
 	 * @param line the Line2D object to be converted
 	 */
 	public Element toSVG(Line2D line) {
-		Element svgLine = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_LINE_TAG);
+		Element svgLine = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_LINE_TAG);
 		svgLine.setAttributeNS(null, SVG_X1_ATTRIBUTE, doubleString(line.getX1()));
 		svgLine.setAttributeNS(null, SVG_Y1_ATTRIBUTE, doubleString(line.getY1()));
 		svgLine.setAttributeNS(null, SVG_X2_ATTRIBUTE, doubleString(line.getX2()));

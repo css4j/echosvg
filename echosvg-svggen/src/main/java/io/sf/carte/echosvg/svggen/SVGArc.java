@@ -63,7 +63,7 @@ public class SVGArc extends SVGGraphicObjectConverter {
 		if (width == 0 || height == 0) {
 			Line2D line = new Line2D.Double(arc.getX(), arc.getY(), arc.getX() + width, arc.getY() + height);
 			if (svgLine == null) {
-				svgLine = new SVGLine(generatorContext);
+				svgLine = new SVGLine(getGeneratorContext());
 			}
 			return svgLine.toSVG(line);
 		}
@@ -71,12 +71,12 @@ public class SVGArc extends SVGGraphicObjectConverter {
 		if (ext >= 360 || ext <= -360) {
 			Ellipse2D ellipse = new Ellipse2D.Double(arc.getX(), arc.getY(), width, height);
 			if (svgEllipse == null) {
-				svgEllipse = new SVGEllipse(generatorContext);
+				svgEllipse = new SVGEllipse(getGeneratorContext());
 			}
 			return svgEllipse.toSVG(ellipse);
 		}
 
-		Element svgPath = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_PATH_TAG);
+		Element svgPath = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_PATH_TAG);
 		StringBuffer d = new StringBuffer(64);
 
 		Point2D startPt = arc.getStartPoint();

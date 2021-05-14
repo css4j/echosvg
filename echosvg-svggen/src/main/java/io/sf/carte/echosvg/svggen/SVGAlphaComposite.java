@@ -216,7 +216,7 @@ public class SVGAlphaComposite extends AbstractSVGConverter {
 			throw new RuntimeException("invalid rule:" + composite.getRule());
 		}
 
-		Element compositeFilter = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_FILTER_TAG);
+		Element compositeFilter = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_FILTER_TAG);
 		compositeFilter.setAttributeNS(null, SVG_ID_ATTRIBUTE, id);
 		compositeFilter.setAttributeNS(null, SVG_FILTER_UNITS_ATTRIBUTE, SVG_OBJECT_BOUNDING_BOX_VALUE);
 		compositeFilter.setAttributeNS(null, SVG_X_ATTRIBUTE, SVG_ZERO_PERCENT_VALUE);
@@ -224,23 +224,23 @@ public class SVGAlphaComposite extends AbstractSVGConverter {
 		compositeFilter.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, SVG_HUNDRED_PERCENT_VALUE);
 		compositeFilter.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, SVG_HUNDRED_PERCENT_VALUE);
 
-		Element feComposite = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_FE_COMPOSITE_TAG);
+		Element feComposite = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_FE_COMPOSITE_TAG);
 		feComposite.setAttributeNS(null, SVG_OPERATOR_ATTRIBUTE, operator);
 		feComposite.setAttributeNS(null, SVG_IN_ATTRIBUTE, input1);
 		feComposite.setAttributeNS(null, SVG_IN2_ATTRIBUTE, input2);
 		feComposite.setAttributeNS(null, SVG_K2_ATTRIBUTE, k2);
 		feComposite.setAttributeNS(null, SVG_RESULT_ATTRIBUTE, SVG_COMPOSITE_VALUE);
 
-		Element feFlood = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_FE_FLOOD_TAG);
+		Element feFlood = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_FE_FLOOD_TAG);
 		feFlood.setAttributeNS(null, SVG_FLOOD_COLOR_ATTRIBUTE, "white");
 		feFlood.setAttributeNS(null, SVG_FLOOD_OPACITY_ATTRIBUTE, "1");
 		feFlood.setAttributeNS(null, SVG_RESULT_ATTRIBUTE, SVG_FLOOD_VALUE);
 
-		Element feMerge = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI, SVG_FE_MERGE_TAG);
-		Element feMergeNodeFlood = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI,
+		Element feMerge = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI, SVG_FE_MERGE_TAG);
+		Element feMergeNodeFlood = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI,
 				SVG_FE_MERGE_NODE_TAG);
 		feMergeNodeFlood.setAttributeNS(null, SVG_IN_ATTRIBUTE, SVG_FLOOD_VALUE);
-		Element feMergeNodeComposite = generatorContext.domFactory.createElementNS(SVG_NAMESPACE_URI,
+		Element feMergeNodeComposite = getGeneratorContext().getDOMFactory().createElementNS(SVG_NAMESPACE_URI,
 				SVG_FE_MERGE_NODE_TAG);
 		feMergeNodeComposite.setAttributeNS(null, SVG_IN_ATTRIBUTE, SVG_COMPOSITE_VALUE);
 

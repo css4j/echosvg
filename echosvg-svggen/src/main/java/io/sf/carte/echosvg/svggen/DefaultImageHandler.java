@@ -63,7 +63,7 @@ public class DefaultImageHandler implements ImageHandler, ErrorConstants, XMLCon
 			handleHREF(image, imageElement, generatorContext);
 		} catch (SVGGraphics2DIOException e) {
 			try {
-				generatorContext.errorHandler.handleError(e);
+				generatorContext.getErrorHandler().handleError(e);
 			} catch (SVGGraphics2DIOException io) {
 				// we need a runtime exception because
 				// java.awt.Graphics2D method doesn't throw exceptions..
@@ -91,7 +91,7 @@ public class DefaultImageHandler implements ImageHandler, ErrorConstants, XMLCon
 			handleHREF(image, imageElement, generatorContext);
 		} catch (SVGGraphics2DIOException e) {
 			try {
-				generatorContext.errorHandler.handleError(e);
+				generatorContext.getErrorHandler().handleError(e);
 			} catch (SVGGraphics2DIOException io) {
 				// we need a runtime exception because
 				// java.awt.Graphics2D method doesn't throw exceptions..
@@ -119,7 +119,7 @@ public class DefaultImageHandler implements ImageHandler, ErrorConstants, XMLCon
 			handleHREF(image, imageElement, generatorContext);
 		} catch (SVGGraphics2DIOException e) {
 			try {
-				generatorContext.errorHandler.handleError(e);
+				generatorContext.getErrorHandler().handleError(e);
 			} catch (SVGGraphics2DIOException io) {
 				// we need a runtime exception because
 				// java.awt.Graphics2D method doesn't throw exceptions..

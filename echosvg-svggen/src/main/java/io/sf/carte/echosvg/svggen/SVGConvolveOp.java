@@ -71,7 +71,7 @@ public class SVGConvolveOp extends AbstractSVGFilterConverter {
 	public SVGFilterDescriptor toSVG(ConvolveOp convolveOp) {
 		// Reuse definition if convolveOp has already been converted
 		SVGFilterDescriptor filterDesc = descMap.get(convolveOp);
-		Document domFactory = generatorContext.domFactory;
+		Document domFactory = generatorContext.getDOMFactory();
 
 		if (filterDesc == null) {
 			//
@@ -99,7 +99,7 @@ public class SVGConvolveOp extends AbstractSVGFilterConverter {
 			filterDef.appendChild(feConvolveMatrixDef);
 
 			filterDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
-					generatorContext.idGenerator.generateID(ID_PREFIX_FE_CONVOLVE_MATRIX));
+					generatorContext.getIDGenerator().generateID(ID_PREFIX_FE_CONVOLVE_MATRIX));
 
 			// Convert the edge mode
 			if (convolveOp.getEdgeCondition() == ConvolveOp.EDGE_NO_OP)
