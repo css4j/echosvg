@@ -33,6 +33,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.junit.After;
+
 import io.sf.carte.echosvg.test.TestLocations;
 
 /**
@@ -44,9 +46,13 @@ import io.sf.carte.echosvg.test.TestLocations;
  */
 public class MainTest {
 
-	// This test writes/flushes to System.out and this may interfere with Gradle
+	@After
+	public void tearDown() {
+		System.setSecurityManager(null);
+	}
+
+	// This test interferes with Gradle
 	// Run it from IDE only
-	@org.junit.Ignore
 	@org.junit.Test
 	public void testMain() {
 		URL url;

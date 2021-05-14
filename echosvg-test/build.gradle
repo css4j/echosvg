@@ -39,7 +39,10 @@ publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG Test Suite"
 }
 
-test.enabled = false
+test {
+	exclude 'io/sf/carte/echosvg/apps/rasterizer/MainTest.class'
+	exclude 'io/sf/carte/echosvg/bridge/*LoadTest.class'
+}
 
 // Some tests do not work when the classes are in a testJar
 // And the main jar is empty
