@@ -216,16 +216,17 @@ public class SVGFontFaceElementBridge extends AbstractSVGBridge implements Error
 		}
 
 		// overline-thickness
+		float overlineThickness;
 		String overlineThicknessStr = fontFaceElement.getAttributeNS(null, SVG_OVERLINE_THICKNESS_ATTRIBUTE);
 		if (overlineThicknessStr.length() == 0) {
-			overlineThicknessStr = String.valueOf(unitsPerEm / 20);
-		}
-		float overlineThickness;
-		try {
-			overlineThickness = SVGUtilities.convertSVGNumber(overlineThicknessStr);
-		} catch (NumberFormatException nfEx) {
-			throw new BridgeException(ctx, fontFaceElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_FONT_FACE_SLOPE_DEFAULT_VALUE, overlineThicknessStr });
+			overlineThickness = underlineThickness;
+		} else {
+			try {
+				overlineThickness = SVGUtilities.convertSVGNumber(overlineThicknessStr);
+			} catch (NumberFormatException nfEx) {
+				throw new BridgeException(ctx, fontFaceElement, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
+						new Object[] { SVG_FONT_FACE_SLOPE_DEFAULT_VALUE, overlineThicknessStr });
+			}
 		}
 
 		List<Object> srcs = null;
