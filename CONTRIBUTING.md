@@ -66,6 +66,19 @@ code, except for cases like multiple equivalent comparisons, exceptions that are
 very hard to trigger or never thrown (or put as a theoretical safeguard), etc.
 However, even one test is better than nothing.
 
+ For consistency, classes that contain tests (i.e. with `@Test` annotation(s))
+must end with `Test`. This makes easier to tell the actual tests apart from
+their helper classes.
+
+<br/>
+
+### Benchmarks
+
+ EchoSVG uses [JMH](https://github.com/openjdk/jmh) for benchmarks, with the
+benchmarking files being located at `echosvg-test/src/jmh`. All the classes
+containing benchmarks must end with `Mark` for ease of identification (a
+similar convention to tests ending with `Test`).
+
 <br/>
 
 ### Code style
