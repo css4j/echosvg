@@ -27,4 +27,7 @@ module io.sf.carte.echosvg.bridge {
 	requires org.mozilla.rhino;
 	requires xalan;
 	requires xmlgraphics.commons;
+
+	provides io.sf.carte.echosvg.script.InterpreterFactory
+	with io.sf.carte.echosvg.bridge.RhinoInterpreterFactory;
 }
