@@ -13,12 +13,47 @@ If you are using Apache Batik, you may want to read [MIGRATING_FROM_BATIK](https
 
 ## Building from source
 
- To build from source, you need version 7 of Gradle. If you want to create a
-Gradle wrapper, run `gradle wrapper --gradle-version 7.0`.
+To build from source, you need version 7 of Gradle. If you do not have Gradle
+installed, it is easy to do so using a package manager (for example
+[`scoop`](https://scoop.sh/) in Windows).
 
- Just run `gradle build` to build, and `gradle build uberjar` to produce a
-_uberJar_ bundle containing all the packages with their dependencies (in the
-`echosvg-all` module).
+It is a good idea to create a Gradle wrapper, especially if you want to use a
+IDE (otherwise it is not really necessary). To create it, run
+`gradle wrapper --gradle-version 7.0.2` (or any Gradle version later than 7.0).
+
+Run `gradle build` to build, and `gradle uberjar` to produce a _uberJar_
+bundle containing all the packages with their dependencies (to be found at the
+`build/libs` directory of the `echosvg-all` module).
+
+To install in your local Maven repository: `gradle build publishToMavenLocal`.
+
+And to deploy to a Maven repository: `gradle publish`, but before doing that you
+should read the `publishing.repositories.maven` block of
+[echosvg.java-conventions.gradle](https://github.com/css4j/echosvg/blob/master/buildSrc/src/main/groovy/echosvg.java-conventions.gradle)
+to learn which properties you need to set (like `mavenReleaseRepoUrl`or
+`mavenRepoUsername`), either at the command line or your
+`GRADLE_USER_HOME/gradle.properties` file.
+
+### Tests
+
+Most of the (JUnit-based) test suite is executed during build (except some tests
+that are currently incompatible with Gradle), but beware that many tests are
+platform-dependent and could fail. If you encounter test failures, please open
+an issue with the details so the necessary tweaks can be made.
+
+The full test suite can be executed from the Eclipse IDE; please open an issue
+if you are interested in executing the tests from other IDEs.
+
+### Benchmarks
+
+To run all the benchmarks (currently only one):
+```shell
+gradle runJmh
+```
+To run specific benchmark(s) matched by a regular expression:
+```shell
+gradle runJmh regexp
+```
 
 <br/>
 
