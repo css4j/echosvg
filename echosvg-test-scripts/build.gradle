@@ -84,7 +84,8 @@ tasks.register('copyJars', Copy) {
 	dependsOn tasks.jarCheckPermissionsDeniedJar
 	dependsOn tasks.jarCheckPermissionsGrantedJar
 	include '**/JarCheckPermissions*.jar'
-	from layout.buildDirectory.dir('libs')
+	from layout.buildDirectory.file('libs/JarCheckPermissionsDenied.jar')
+	from layout.buildDirectory.file('libs/JarCheckPermissionsGranted.jar')
 	into "${rootDir}/test-resources/io/sf/carte/echosvg/bridge"
 }
 
