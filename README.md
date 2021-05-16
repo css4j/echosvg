@@ -13,36 +13,60 @@ If you are using Apache Batik, you may want to read [MIGRATING_FROM_BATIK](https
 
 ## Building from source
 
-To build from source, you need version 7 of Gradle. If you do not have Gradle
+### Requirements
+
+To build EchoSVG, you need the following software installed:
+
+- The [Git version control system](https://git-scm.com/downloads) is required to
+obtain the sources. Any recent version should suffice.
+- A recent modular Java JDK (version 16 is being used to build). You can install it
+from your favourite package manager or by downloading from
+[AdoptOpenJDK](https://adoptopenjdk.net/).
+- Version 7 of [Gradle](https://gradle.org/). If you do not have Gradle
 installed, it is easy to do so using a package manager (for example
 [`scoop`](https://scoop.sh/) in Windows).
 
 It is a good idea to create a Gradle wrapper, especially if you want to use a
-IDE (otherwise it is not really necessary). To create it, run
-`gradle wrapper --gradle-version 7.0.2` (or any Gradle version later than 7.0).
+[IDE](https://en.wikipedia.org/wiki/Integrated_development_environment)
+(otherwise it is not really necessary). To create it, run
+`gradle wrapper --gradle-version 7.0.2` (or any Gradle version later than 7.0)
+at the EchoSVG sources directory.
 
-Run `gradle build` to build, and `gradle uberjar` to produce a _uberJar_
-bundle containing all the packages with their dependencies (to be found at the
-`build/libs` directory of the `echosvg-all` module).
+### Building with Gradle
 
-To install in your local Maven repository: `gradle build publishToMavenLocal`.
+Run `gradle build` to build. For example:
 
-And to deploy to a Maven repository: `gradle publish`, but before doing that you
-should read the `publishing.repositories.maven` block of
-[echosvg.java-conventions.gradle](https://github.com/css4j/echosvg/blob/master/buildSrc/src/main/groovy/echosvg.java-conventions.gradle)
-to learn which properties you need to set (like `mavenReleaseRepoUrl`or
-`mavenRepoUsername`), either at the command line or your
-`GRADLE_USER_HOME/gradle.properties` file.
+```shell
+git clone https://github.com/css4j/echosvg.git
+cd echosvg
+gradle build
+```
+or
+```shell
+git clone https://github.com/css4j/echosvg.git
+cd echosvg
+gradle wrapper --gradle-version 7.0.2
+gradle build
+```
+if you want to create a wrapper (only need to do that once!).
+
+<br/>
 
 ### Tests
 
 Most of the (JUnit-based) test suite is executed during build (except some tests
-that are currently incompatible with Gradle), but beware that many tests are
-platform-dependent and could fail. If you encounter test failures, please open
+that are currently incompatible with Gradle), but **beware that many tests are
+platform-dependent and could fail**. If you encounter test failures, please open
 an issue with the details so the necessary tweaks can be made.
 
+To build without running the tests:
+```shell
+gradle build -x test
+```
 The full test suite can be executed from the Eclipse IDE; please open an issue
 if you are interested in executing the tests from other IDEs.
+
+<br/>
 
 ### Benchmarks
 
@@ -63,7 +87,49 @@ java -jar echosvg-test/build/libs/echosvg-<version>-jmh.jar <regexp>
 
 <br/>
 
+### Deploying to a Maven repository
+
+Use:
+- `gradle build publishToMavenLocal` to install in your local Maven repository.
+- `gradle publish` to deploy to a (generally remote) Maven repository.
+
+Before deploying to a remote Maven repository, please read the
+`publishing.repositories.maven` block of
+[echosvg.java-conventions.gradle](https://github.com/css4j/echosvg/blob/master/buildSrc/src/main/groovy/echosvg.java-conventions.gradle)
+to learn which properties you need to set (like `mavenReleaseRepoUrl`or
+`mavenRepoUsername`), either at the command line or your
+`GRADLE_USER_HOME/gradle.properties` file.
+
+<br/>
+
+### Creating a _uber Jar_ or _fat Jar_
+
+Sometimes, in non-modular projects it is useful to have a single Jar file
+bundled with all the dependencies, often called a _uber Jar_ or _fat Jar_.
+Execute the `uberjar` task to create it:
+```shell
+gradle uberjar
+```
+The file is to be found at
+`echosvg-all/build/libs/echosvg-all-<version>-alldeps.jar`.
+
+<br/>
+
+## Open the project in your IDE
+
+Modern IDEs are able to import Gradle projects and let it manage the
+dependencies. For example, in the Eclipse IDE:
+```
+File > Import... > Gradle > Existing Gradle Project
+```
+Eclipse shall ask you if you want to use a wrapper or its own instance of
+Gradle. If you created a wrapper after getting the sources, select the
+"wrapper" choice.
+
+<br/>
+
 ## Usage from a Gradle project
+
 If your Gradle project depends on echosvg, you can use this project's own Maven
 repository in a `repositories` section of your build file:
 ```groovy
