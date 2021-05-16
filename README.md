@@ -52,7 +52,13 @@ gradle runJmh
 ```
 To run specific benchmark(s) matched by a regular expression:
 ```shell
-gradle runJmh regexp
+gradle runJmh <regexp>
+```
+A jmh-ready _fat Jar_ with all the dependencies is available at
+`echosvg-test/build/libs/echosvg-<version>-jmh.jar`, and is the recommended way to run
+benchmarks:
+```shell
+java -jar echosvg-test/build/libs/echosvg-<version>-jmh.jar <regexp>
 ```
 
 <br/>

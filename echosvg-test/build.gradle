@@ -61,7 +61,8 @@ classes.finalizedBy(jmhClasses)
 
 //create a single Jar with all benchmark dependencies
 tasks.register('jmhJar', Jar) {
-	archiveClassifier = "jmh"
+	archiveBaseName = 'echosvg'
+	archiveClassifier = 'jmh'
 	manifest {
 		attributes(
 			'Main-Class' : 'org.openjdk.jmh.Main'
