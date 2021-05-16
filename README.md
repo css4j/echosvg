@@ -15,7 +15,7 @@ If you are using Apache Batik, you may want to read [MIGRATING_FROM_BATIK](https
 
 ### Requirements
 
-To build EchoSVG, you need the following software installed:
+To build EchoSVG you need the following software installed:
 
 - The [Git version control system](https://git-scm.com/downloads) is required to
 obtain the sources. Any recent version should suffice.
@@ -31,6 +31,8 @@ It is a good idea to create a Gradle wrapper, especially if you want to use a
 (otherwise it is not really necessary). To create it, run
 `gradle wrapper --gradle-version 7.0.2` (or any Gradle version later than 7.0)
 at the EchoSVG sources directory.
+
+<br/>
 
 ### Building with Gradle
 
@@ -70,7 +72,8 @@ if you are interested in executing the tests from other IDEs.
 
 ### Benchmarks
 
-To run all the benchmarks (currently only one):
+This project uses [JMH](https://github.com/openjdk/jmh) for benchmarking. To run
+all the benchmarks (currently only one):
 ```shell
 gradle runJmh
 ```
@@ -97,8 +100,8 @@ Before deploying to a remote Maven repository, please read the
 `publishing.repositories.maven` block of
 [echosvg.java-conventions.gradle](https://github.com/css4j/echosvg/blob/master/buildSrc/src/main/groovy/echosvg.java-conventions.gradle)
 to learn which properties you need to set (like `mavenReleaseRepoUrl`or
-`mavenRepoUsername`), either at the command line or your
-`GRADLE_USER_HOME/gradle.properties` file.
+`mavenRepoUsername`), either at the [command line](https://docs.gradle.org/current/userguide/build_environment.html#sec:project_properties)
+(`-P` option) or your `GRADLE_USER_HOME/gradle.properties` file.
 
 <br/>
 
@@ -118,7 +121,7 @@ The file is to be found at
 ## Open the project in your IDE
 
 Modern IDEs are able to import Gradle projects and let it manage the
-dependencies. For example, in the Eclipse IDE:
+dependencies. For example, in the [Eclipse IDE](https://www.eclipse.org/):
 ```
 File > Import... > Gradle > Existing Gradle Project
 ```
