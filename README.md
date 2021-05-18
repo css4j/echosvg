@@ -24,7 +24,7 @@ from your favourite package manager or by downloading from
 [AdoptOpenJDK](https://adoptopenjdk.net/).
 - Version 7 of [Gradle](https://gradle.org/). If you do not have Gradle
 installed, it is easy to do so using a package manager (for example
-[`scoop`](https://scoop.sh/) in Windows).
+[`scoop`](https://scoop.sh/) in Windows or [SDKMAN!](https://sdkman.io/) on Linux).
 
 It is a good idea to create a Gradle wrapper, especially if you want to use a
 [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment)
