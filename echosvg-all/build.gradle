@@ -21,6 +21,27 @@ publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG aggregate artifact"
 }
 
+// Produce a Javadoc of all packages
+tasks.register('mergedJavadoc', Javadoc) {
+	description 'Produces a merged Javadoc of all packages'
+	destinationDir = file("$buildDir/docs/javadoc")
+	title = "$project.name $version API"
+	dependsOn configurations.compileClasspath
+	dependsOn configurations.runtimeClasspath
+	includes += '**/*.java'
+	excludes += '**/module-info.java'
+	parent.subprojects.each { proj ->
+		source += proj.layout.projectDir.dir('src/main/java')
+		proj.tasks.withType(Javadoc).each { task ->
+			excludes += task.excludes
+			includes += task.includes
+		}
+	}
+	classpath = configurations.compileClasspath
+	classpath += configurations.runtimeClasspath
+	failOnError false
+}
+
 //create a single Jar with all dependencies
 tasks.register('uberjar', Jar) {
 	archiveClassifier = "alldeps"
