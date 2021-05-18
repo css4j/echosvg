@@ -19,7 +19,12 @@
 
 package io.sf.carte.echosvg.bridge;
 
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
@@ -54,7 +59,17 @@ public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
 			try {
 				testSVGOnLoad("io/sf/carte/echosvg/bridge/" + id + ".svg", null);
 			} finally {
-				ase.enforceSecurity(false);
+				try {
+					AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
+						@Override
+						public Void run() throws Exception {
+							ase.enforceSecurity(false);
+							return null;
+						}
+					});
+				} catch (PrivilegedActionException pae) {
+					fail(pae.getException().getMessage());
+				}
 			}
 		}
 	}
