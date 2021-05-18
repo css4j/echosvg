@@ -5,6 +5,7 @@
 target
 */bin/
 **/build/
+/.idea
 /.gradle
 /gradle
 /gradlew
