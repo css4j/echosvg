@@ -96,6 +96,9 @@ public class MainTest {
 		};
 		t.runTest(rootDir + "samples/anne.svg");
 
+		File file = new File(rootDir + "samples/anne.png");
+		file.deleteOnExit();
+
 		// MainConfigTest.mimeType.jpegA
 
 		t = new MainConfigTest() {
