@@ -20,13 +20,17 @@ package io.sf.carte.echosvg.transcoder.wmf;
 
 import static org.junit.Assert.fail;
 
+import java.awt.GraphicsEnvironment;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
+import org.junit.Assume;
 import org.junit.Test;
 
 import io.sf.carte.echosvg.test.TestLocations;
@@ -73,6 +77,14 @@ public class WMFAccuracyTest {
 	 */
 	private File saveSVG;
 
+	private boolean hasArial = isArialAvailable();
+
+	private static boolean isArialAvailable() {
+		List<String> fonts = Arrays
+				.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
+		return fonts.contains("Arial");
+	}
+
 	@Test
 	public void testBlackShapes() throws IOException, TranscoderException {
 		runTest("samples/tests/resources/wmf/black_shapes.wmf");
@@ -85,21 +97,25 @@ public class WMFAccuracyTest {
 
 	@Test
 	public void testNegApmText1() throws IOException, TranscoderException {
+		Assume.assumeTrue("Arial font is not available", hasArial);
 		runTest("samples/tests/resources/wmf/negApmText1.wmf");
 	}
 
 	@Test
 	public void testNegApmText2() throws IOException, TranscoderException {
+		Assume.assumeTrue("Arial font is not available", hasArial);
 		runTest("samples/tests/resources/wmf/negApmText2.wmf");
 	}
 
 	@Test
 	public void testChart() throws IOException, TranscoderException {
+		Assume.assumeTrue("Arial font is not available", hasArial);
 		runTest("samples/tests/resources/wmf/testChart.wmf");
 	}
 
 	@Test
 	public void testTextGreek() throws IOException, TranscoderException {
+		Assume.assumeTrue("Arial font is not available", hasArial);
 		runTest("samples/tests/resources/wmf/textGreek.wmf");
 	}
 
