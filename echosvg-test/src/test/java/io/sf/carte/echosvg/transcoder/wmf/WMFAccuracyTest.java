@@ -77,16 +77,19 @@ public class WMFAccuracyTest {
 	 */
 	private File saveSVG;
 
-	private boolean hasArial = isArialAvailable();
+	private boolean hasArial = isFontAvailable("Arial");
 
-	private static boolean isArialAvailable() {
+	private boolean hasCourierNew = isFontAvailable("Courier New");
+
+	private static boolean isFontAvailable(String familyName) {
 		List<String> fonts = Arrays
 				.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
-		return fonts.contains("Arial");
+		return fonts.contains(familyName);
 	}
 
 	@Test
 	public void testBlackShapes() throws IOException, TranscoderException {
+		Assume.assumeTrue("'Courier' font is not available", isFontAvailable("Courier"));
 		runTest("samples/tests/resources/wmf/black_shapes.wmf");
 	}
 
@@ -110,12 +113,13 @@ public class WMFAccuracyTest {
 	@Test
 	public void testChart() throws IOException, TranscoderException {
 		Assume.assumeTrue("Arial font is not available", hasArial);
+		Assume.assumeTrue("'Courier New' font is not available", hasCourierNew);
 		runTest("samples/tests/resources/wmf/testChart.wmf");
 	}
 
 	@Test
 	public void testTextGreek() throws IOException, TranscoderException {
-		Assume.assumeTrue("Arial font is not available", hasArial);
+		Assume.assumeTrue("'Courier New' font is not available", hasCourierNew);
 		runTest("samples/tests/resources/wmf/textGreek.wmf");
 	}
 
