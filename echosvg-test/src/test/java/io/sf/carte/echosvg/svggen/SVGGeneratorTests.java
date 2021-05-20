@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.junit.Assume;
 import org.junit.BeforeClass;
 
 import io.sf.carte.echosvg.test.TestFonts;
@@ -147,7 +148,13 @@ public class SVGGeneratorTests {
 
 	@org.junit.Test
 	public void testFont1() throws Exception {
+		Assume.assumeTrue("Test uses logical fonts, reference data is for Windows", isWindows());
 		runTests("Font1");
+	}
+
+	private static boolean isWindows() {
+		String osName = System.getProperty("os.name", "");
+		return osName.startsWith("Windows");
 	}
 
 	@org.junit.Test
