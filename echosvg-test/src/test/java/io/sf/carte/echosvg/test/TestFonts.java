@@ -81,6 +81,11 @@ public class TestFonts {
 		registerFont(Font.TRUETYPE_FONT, fontPathUrl, "UbuntuMono-Italic.ttf");
 	}
 
+	public static void registerFont(int truetypeFont, String fontFilename)
+			throws FontFormatException, IOException {
+		registerFont(Font.TRUETYPE_FONT, TestLocations.getRootBuildURL() + FONT_PATH, fontFilename);
+	}
+
 	private static void registerFont(int truetypeFont, String fontPathUrl, String fontFile)
 			throws FontFormatException, IOException {
 		URL url = new URL(fontPathUrl + fontFile);

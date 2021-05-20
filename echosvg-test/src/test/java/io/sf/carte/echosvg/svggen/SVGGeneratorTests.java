@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.svggen;
 
 import static org.junit.Assert.fail;
 
+import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
@@ -191,6 +192,7 @@ public class SVGGeneratorTests {
 
 	@org.junit.Test
 	public void testRHints() throws Exception {
+		TestFonts.registerFont(Font.TRUETYPE_FONT, "Anton-Regular.ttf");
 		runTests("RHints");
 	}
 

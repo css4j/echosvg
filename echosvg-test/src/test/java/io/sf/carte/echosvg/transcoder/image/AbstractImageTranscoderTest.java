@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.transcoder.image;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -59,6 +59,12 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  */
 public abstract class AbstractImageTranscoderTest {
 
+	private static final String RENDERING_CANDIDATE_REF_PATH = "test-references/io/sf/carte/echosvg/transcoder/image/candidate-ref/";
+
+	private static final String RENDERING_CANDIDATE_VAR_PATH = "test-references/io/sf/carte/echosvg/transcoder/image/candidate-variation/";
+
+	private static final String RENDERING_ACCEPTED_VAR_PATH = "test-references/io/sf/carte/echosvg/transcoder/image/accepted-variation/";
+
 	private String filename;
 
 	/**
@@ -95,7 +101,22 @@ public abstract class AbstractImageTranscoderTest {
 		TranscoderInput input = createTranscoderInput();
 		transcoder.transcode(input, null);
 
-		assertTrue(transcoder.isIdentical());
+		if (!transcoder.isIdentical()) {
+			String message;
+			String uri = input.getURI();
+			if (uri != null) {
+				try {
+					message = "Image comparison failed: rendering " + new URL(uri).getPath() + ",\nobtained "
+							+ RENDERING_CANDIDATE_REF_PATH + new File(filename).getName();
+				} catch (MalformedURLException e) {
+					message = "Image comparison with a reference (in test-references) failed.";
+				}
+			} else {
+				message = "Image comparison failed: see result at " + RENDERING_CANDIDATE_REF_PATH
+						+ new File(filename).getName();
+			}
+			fail(message);
+		}
 	}
 
 	/**
@@ -214,11 +235,11 @@ public abstract class AbstractImageTranscoderTest {
 		}
 
 		private void writeCandidateReference(byte[] imgData) {
-			writeCandidateFile(imgData, "test-references/io/sf/carte/echosvg/transcoder/image/candidate-ref/");
+			writeCandidateFile(imgData, RENDERING_CANDIDATE_REF_PATH);
 		}
 
 		private void writeCandidateVariation(byte[] diff) {
-			writeCandidateFile(diff, "test-references/io/sf/carte/echosvg/transcoder/image/candidate-variation/");
+			writeCandidateFile(diff, RENDERING_CANDIDATE_VAR_PATH);
 		}
 
 		private File writeCandidateFile(byte[] data, String dirname) {
@@ -263,9 +284,7 @@ public abstract class AbstractImageTranscoderTest {
 			if (!Arrays.equals(refImgData, imgData)) {
 				byte[] actualDiff = createDiffImage(img);
 				File acceptedDiffFile = new File(
-						resolveURI("test-references/io/sf/carte/echosvg/transcoder/image/accepted-variation/")
-								.getFile(),
-						new File(filename).getName());
+						resolveURI(RENDERING_ACCEPTED_VAR_PATH).getFile(), new File(filename).getName());
 				if (!(acceptedDiffFile.exists() && dataFromFileEqual(acceptedDiffFile, actualDiff))) {
 					writeCandidateReference(imgData);
 					writeCandidateVariation(actualDiff);

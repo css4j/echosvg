@@ -63,13 +63,13 @@
     <g id="testContent">
     <text x="225" y="50" class="title">Alternate Stylesheets</text>
 
-<text x="20" y="80" style="font-size:12; text-anchor:start">
+<text x="20" y="80" style="font-size:12; text-anchor:start" class="legend">
 <tspan>Choose your alternate stylesheet using the 'View->Use Stylesheet'</tspan>
 <tspan x="20" y="100"> submenu items.</tspan>
 </text>
 
 <circle cx="50%" cy="50%" r="25%" style="fill:gold; stroke:orange; stroke-width:4"/>
-<g style="font-size:128; text-anchor:middle; fill:black; stroke:none" >
+<g style="font-family: 'Open Sans'; font-size:128; text-anchor:middle; fill:black; stroke:none" >
     <text class="smiling" x="50%" y="56%">:-)</text>
     <text class="basicsad" x="50%" y="56%">:-(</text>
     <text class="wow" x="50%" y="56%">:-o</text> 

@@ -48,7 +48,7 @@ public class RHints implements Painter {
 
 		Font defaultFont = g.getFont();
 		java.awt.geom.AffineTransform defaultTransform = g.getTransform();
-		Font textFont = new Font("Impact", Font.PLAIN, 25);
+		Font textFont = new Font("Anton", Font.PLAIN, 25);
 
 		//
 		// First, test text antialiasing

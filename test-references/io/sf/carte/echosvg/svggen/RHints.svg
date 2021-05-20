@@ -8,7 +8,7 @@
     ><text x="10" xml:space="preserve" y="20" stroke="none"
       >Text antialiasing</text
     ></g
-    ><g text-rendering="geometricPrecision" font-size="25px" shape-rendering="crispEdges" font-family="'Impact'"
+    ><g text-rendering="geometricPrecision" font-size="25px" shape-rendering="crispEdges" font-family="'Anton'"
     ><text x="30" xml:space="preserve" y="60" stroke="none"
       >HELLO antialiased</text
       ><text text-rendering="optimizeSpeed" x="30" xml:space="preserve" y="90" stroke="none"
