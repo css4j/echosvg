@@ -20,11 +20,15 @@ package io.sf.carte.echosvg.svggen;
 
 import static org.junit.Assert.fail;
 
+import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.junit.BeforeClass;
+
+import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.test.svg.ImageCompareTest;
 import io.sf.carte.echosvg.test.svg.SVGRenderingAccuracyTest;
@@ -70,143 +74,148 @@ public class SVGGeneratorTests {
 		GENERATOR_REFERENCE_BASE = TestLocations.getRootBuildURL() + "test-references/io/sf/carte/echosvg/svggen/";
 	}
 
+	@BeforeClass
+	public static void beforeClass() throws FontFormatException, IOException {
+		TestFonts.loadTestFonts();
+	}
+
 	@org.junit.Test
-	public void testATransform() throws IOException, TranscoderException {
+	public void testATransform() throws Exception {
 		runTests("ATransform");
 	}
 
 	@org.junit.Test
-	public void testAttributedCharacterIterator() throws IOException, TranscoderException {
+	public void testAttributedCharacterIterator() throws Exception {
 		runTests("AttributedCharacterIterator");
 	}
 
 	@org.junit.Test
-	public void testBasicShapes() throws IOException, TranscoderException {
+	public void testBasicShapes() throws Exception {
 		runTests("BasicShapes");
 	}
 
 	@org.junit.Test
-	public void testBasicShapes2() throws IOException, TranscoderException {
+	public void testBasicShapes2() throws Exception {
 		runTests("BasicShapes2");
 	}
 
 	@org.junit.Test
-	public void testBStroke() throws IOException, TranscoderException {
+	public void testBStroke() throws Exception {
 		runTests("BStroke");
 	}
 
 	@org.junit.Test
-	public void testBug4389() throws IOException, TranscoderException {
+	public void testBug4389() throws Exception {
 		runTests("Bug4389");
 	}
 
 	@org.junit.Test
-	public void testBug4945() throws IOException, TranscoderException {
+	public void testBug4945() throws Exception {
 		runTests("Bug4945");
 	}
 
 	@org.junit.Test
-	public void testBug6535() throws IOException, TranscoderException {
+	public void testBug6535() throws Exception {
 		runTests("Bug6535");
 	}
 
 	@org.junit.Test
-	public void testBug17965() throws IOException, TranscoderException {
+	public void testBug17965() throws Exception {
 		runTests("Bug17965");
 	}
 
 	@org.junit.Test
-	public void testClip() throws IOException, TranscoderException {
+	public void testClip() throws Exception {
 		runTests("Clip");
 	}
 
 	@org.junit.Test
-	public void testColor1() throws IOException, TranscoderException {
+	public void testColor1() throws Exception {
 		runTests("Color1");
 	}
 
 	@org.junit.Test
-	public void testColor2() throws IOException, TranscoderException {
+	public void testColor2() throws Exception {
 		runTests("Color2");
 	}
 
 	@org.junit.Test
-	public void testDrawImage() throws IOException, TranscoderException {
+	public void testDrawImage() throws Exception {
 		runTests("DrawImage");
 	}
 
 	@org.junit.Test
-	public void testFont1() throws IOException, TranscoderException {
+	public void testFont1() throws Exception {
 		runTests("Font1");
 	}
 
 	@org.junit.Test
-	public void testFontDecoration() throws IOException, TranscoderException {
+	public void testFontDecoration() throws Exception {
 		runTests("FontDecoration");
 	}
 
 	@org.junit.Test
-	public void testGVector() throws IOException, TranscoderException {
+	public void testGVector() throws Exception {
 		runTests("GVector");
 	}
 
 	@org.junit.Test
-	public void testGradient() throws IOException, TranscoderException {
+	public void testGradient() throws Exception {
 		runTests("Gradient");
 	}
 
 	@org.junit.Test
-	public void testGraphicObjects() throws IOException, TranscoderException {
+	public void testGraphicObjects() throws Exception {
 		runTests("GraphicObjects");
 	}
 
 	@org.junit.Test
-	public void testIdentityTest() throws IOException, TranscoderException {
+	public void testIdentityTest() throws Exception {
 		runTests("IdentityTest");
 	}
 
 	@org.junit.Test
-	public void testLookup() throws IOException, TranscoderException {
+	public void testLookup() throws Exception {
 		runTests("Lookup");
 	}
 
 	@org.junit.Test
-	public void testNegativeLengths() throws IOException, TranscoderException {
+	public void testNegativeLengths() throws Exception {
 		runTests("NegativeLengths");
 	}
 
 	@org.junit.Test
-	public void testPaints() throws IOException, TranscoderException {
+	public void testPaints() throws Exception {
 		runTests("Paints");
 	}
 
 	@org.junit.Test
-	public void testRHints() throws IOException, TranscoderException {
+	public void testRHints() throws Exception {
 		runTests("RHints");
 	}
 
 	@org.junit.Test
-	public void testRescale() throws IOException, TranscoderException {
+	public void testRescale() throws Exception {
 		runTests("Rescale");
 	}
 
 	@org.junit.Test
-	public void testShearTest() throws IOException, TranscoderException {
+	public void testShearTest() throws Exception {
 		runTests("ShearTest");
 	}
 
 	@org.junit.Test
-	public void testTexture() throws IOException, TranscoderException {
+	public void testTexture() throws Exception {
 		runTests("Texture");
 	}
 
 	@org.junit.Test
-	public void testTextSpacePreserve() throws IOException, TranscoderException {
+	public void testTextSpacePreserve() throws Exception {
 		runTests("TextSpacePreserve");
 	}
 
 	@org.junit.Test
-	public void testTransformCollapse() throws IOException, TranscoderException {
+	public void testTransformCollapse() throws Exception {
 		runTests("TransformCollapse");
 	}
 
@@ -216,8 +225,9 @@ public class SVGGeneratorTests {
 	 * 
 	 * @throws IOException
 	 * @throws TranscoderException
+	 * @throws FontFormatException 
 	 */
-	public void runTests(String painterClassname) throws IOException, TranscoderException {
+	void runTests(String painterClassname) throws IOException, TranscoderException, FontFormatException {
 		String clName = getClass().getPackageName() + "." + painterClassname;
 		Class<?> cl = null;
 

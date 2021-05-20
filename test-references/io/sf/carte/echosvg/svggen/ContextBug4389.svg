@@ -7,7 +7,7 @@
   ><style type="text/css" xml:space="preserve"
     ><![CDATA[.testC1 {}
 .testC2 {}
-.testC3 {stroke-dashoffset:0;font-weight:normal;font-size:12px;text-rendering:auto;font-style:normal;fill:black;color-interpolation:auto;image-rendering:auto;stroke:black;stroke-opacity:1;shape-rendering:auto;stroke-linejoin:miter;stroke-dasharray:none;font-family:'Arial';stroke-width:1;color-rendering:auto;fill-opacity:1;stroke-linecap:square;stroke-miterlimit:10;}
+.testC3 {stroke-dashoffset:0;font-weight:normal;font-size:12px;text-rendering:auto;font-style:normal;fill:black;color-interpolation:auto;image-rendering:auto;stroke:black;stroke-opacity:1;shape-rendering:auto;stroke-linejoin:miter;stroke-dasharray:none;font-family:'Open Sans';stroke-width:1;color-rendering:auto;fill-opacity:1;stroke-linecap:square;stroke-miterlimit:10;}
 ]]></style
       ><g
       ><defs id="testdefs1"

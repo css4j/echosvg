@@ -22,6 +22,7 @@ import static org.junit.Assert.fail;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,6 +35,7 @@ import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
+import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.util.SVGConstants;
 
@@ -90,8 +92,9 @@ public class SVGAccuracyTest {
 	 * operation fails.
 	 * 
 	 * @param expectError false if no error expected
+	 * @throws FontFormatException 
 	 */
-	void runTest(boolean expectError) throws IOException {
+	void runTest(boolean expectError) throws IOException, FontFormatException {
 
 		SVGGraphics2D g2d = buildSVGGraphics2D();
 		g2d.setSVGCanvasSize(CANVAS_SIZE);
@@ -148,8 +151,9 @@ public class SVGAccuracyTest {
 
 	/**
 	 * Builds an <code>SVGGraphics2D</code> with a default configuration.
+	 * @throws FontFormatException 
 	 */
-	protected SVGGraphics2D buildSVGGraphics2D() {
+	protected SVGGraphics2D buildSVGGraphics2D() throws IOException, FontFormatException {
 		DOMImplementation impl = GenericDOMImplementation.getDOMImplementation();
 		String namespaceURI = SVGConstants.SVG_NAMESPACE_URI;
 		Document domFactory = impl.createDocument(namespaceURI, SVGConstants.SVG_SVG_TAG, null);
@@ -157,7 +161,7 @@ public class SVGAccuracyTest {
 		SVGGeneratorContext ctx = SVGGeneratorContext.createDefault(domFactory);
 
 		GraphicContextDefaults defaults = new GraphicContextDefaults();
-		defaults.setFont(new Font("Arial", Font.PLAIN, 12));
+		defaults.setFont(new Font(TestFonts.FONT_FAMILY_SANS1, Font.PLAIN, 12));
 		ctx.setGraphicContextDefaults(defaults);
 		ctx.setPrecision(12);
 

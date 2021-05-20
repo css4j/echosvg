@@ -23,6 +23,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+import io.sf.carte.echosvg.test.TestFonts;
+
 /**
  * This test validates outputing font-size as a float
  *
@@ -39,7 +41,7 @@ public class Bug6535 implements Painter {
 		g.scale(10, 10);
 
 		// Set default font
-		Font font = new Font("Arial", Font.PLAIN, 1);
+		Font font = new Font(TestFonts.FONT_FAMILY_SANS1, Font.PLAIN, 1);
 		Font font2 = font.deriveFont(1.5f);
 
 		g.setFont(font);
@@ -50,7 +52,7 @@ public class Bug6535 implements Painter {
 
 		g.scale(.1, .1);
 
-		font = new Font("Arial", Font.PLAIN, 10);
+		font = new Font(TestFonts.FONT_FAMILY_SANS1, Font.PLAIN, 10);
 		font2 = font.deriveFont(15f);
 
 		g.setFont(font);

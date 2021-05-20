@@ -23,6 +23,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+import io.sf.carte.echosvg.test.TestFonts;
+
 /**
  * This test validates the convertion of Java 2D GlyphVectors SVG Shapes.
  *
@@ -37,7 +39,7 @@ public class GVector implements Painter {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		// Set default font
-		Font font = new Font("Arial", Font.BOLD, 15);
+		Font font = new Font(TestFonts.FONT_FAMILY_SANS1, Font.BOLD, 15);
 		g.setFont(font);
 
 		// Colors used for labels and test output

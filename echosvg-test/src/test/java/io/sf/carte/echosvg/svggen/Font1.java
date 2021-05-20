@@ -24,6 +24,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 
+import io.sf.carte.echosvg.test.TestFonts;
+
 /**
  * This test validates the convertion of Java 2D Fonts into SVG font attributes.
  *
@@ -38,7 +40,7 @@ public class Font1 implements Painter {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		// Set default font
-		g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+		g.setFont(new java.awt.Font(TestFonts.FONT_FAMILY_SANS1, java.awt.Font.BOLD, 12));
 
 		// Colors used for labels and test output
 		Color labelColor = new Color(0x666699);
@@ -48,7 +50,7 @@ public class Font1 implements Painter {
 		// First, font size
 		//
 		java.awt.geom.AffineTransform defaultTransform = g.getTransform();
-		java.awt.Font defaultFont = new java.awt.Font("Arial", java.awt.Font.BOLD, 16);
+		java.awt.Font defaultFont = new java.awt.Font(TestFonts.FONT_FAMILY_SANS1, java.awt.Font.BOLD, 16);
 		g.setFont(defaultFont);
 		FontRenderContext frc = g.getFontRenderContext();
 		g.setPaint(labelColor);
@@ -95,7 +97,8 @@ public class Font1 implements Painter {
 		//
 		// Font families
 		//
-		String[] fontFamilies = { "Arial", "Times New Roman", "Courier New", "Verdana" };
+		String[] fontFamilies = { TestFonts.FONT_FAMILY_SANS1, TestFonts.FONT_FAMILY_SERIF1,
+				TestFonts.FONT_FAMILY_MONOSPACED1, TestFonts.FONT_FAMILY_SANS2 };
 
 		g.setFont(defaultFont);
 		g.setPaint(labelColor);

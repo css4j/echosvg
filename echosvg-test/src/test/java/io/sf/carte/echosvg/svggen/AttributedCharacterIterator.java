@@ -37,6 +37,8 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.text.AttributedString;
 
+import io.sf.carte.echosvg.test.TestFonts;
+
 /**
  * This test validates the convertion of Java 2D AffineTransform into SVG
  * Shapes.
@@ -49,7 +51,7 @@ import java.text.AttributedString;
 public class AttributedCharacterIterator implements Painter {
 	@Override
 	public void paint(Graphics2D g) {
-		String fontName = "Arial";
+		String fontName = TestFonts.FONT_FAMILY_SANS1;
 		int fontSize = 15;
 
 		String text = "Attributed Strings are fun !";

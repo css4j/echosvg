@@ -30,6 +30,7 @@ import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
+import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
@@ -109,7 +110,7 @@ public class GeneratorContext extends SVGAccuracyTest {
 
 		// Set the default font to use
 		GraphicContextDefaults defaults = new GraphicContextDefaults();
-		defaults.setFont(new Font("Arial", Font.PLAIN, 12));
+		defaults.setFont(new Font(TestFonts.FONT_FAMILY_SANS1, Font.PLAIN, 12));
 		ctx.setGraphicContextDefaults(defaults);
 
 		//

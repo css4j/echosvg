@@ -18,9 +18,14 @@
  */
 package io.sf.carte.echosvg.transcoder.image;
 
+import java.awt.FontFormatException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.BeforeClass;
+
+import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -43,6 +48,11 @@ public class AlternateStylesheetTest extends AbstractImageTranscoderTest {
 
 	/** The alternate stylesheet to use. */
 	private String alternateStylesheet;
+
+	@BeforeClass
+	public static void beforeClass() throws FontFormatException, IOException {
+		TestFonts.loadTestFonts();
+	}
 
 	@org.junit.Test
 	public void test() throws TranscoderException {

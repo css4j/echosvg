@@ -26,6 +26,8 @@ import java.awt.font.TextAttribute;
 import java.util.Hashtable;
 import java.util.Map;
 
+import io.sf.carte.echosvg.test.TestFonts;
+
 /**
  * This test validates the convertion of Java 2D text into SVG Shapes, one of
  * the options of the SVGGraphics2D constructor.
@@ -42,7 +44,7 @@ public class FontDecoration implements Painter {
 		g.setBackground(backgroundColor);
 
 		// Set default font
-		g.setFont(new Font("Arial", Font.BOLD, 12));
+		g.setFont(new Font(TestFonts.FONT_FAMILY_SANS1, Font.BOLD, 12));
 
 		// Colors used for labels and test output
 		Color labelColor = new Color(0x666699);
@@ -50,7 +52,7 @@ public class FontDecoration implements Painter {
 
 		//
 		Map<TextAttribute, Object> attributes = new Hashtable<TextAttribute, Object>();
-		attributes.put(TextAttribute.FAMILY, "Arial");
+		attributes.put(TextAttribute.FAMILY, TestFonts.FONT_FAMILY_SANS1);
 		attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_EXTRABOLD);
 		attributes.put(TextAttribute.SIZE, 20);
 		attributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);

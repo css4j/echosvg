@@ -28,6 +28,8 @@ import java.awt.TexturePaint;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
+import io.sf.carte.echosvg.test.TestFonts;
+
 /**
  * This test validates the convertion of the three elementary thypes of Java 2D
  * API graphic objects: shapes, text and images
@@ -44,7 +46,7 @@ public class GraphicObjects implements Painter {
 
 		// Text
 		g.setPaint(Color.black);
-		g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		g.setFont(new Font(TestFonts.FONT_FAMILY_SERIF1, Font.PLAIN, 20));
 		g.drawString("Hello SVG drawString(...)", 20, 40);
 
 		g.translate(0, 70);
@@ -88,7 +90,7 @@ public class GraphicObjects implements Painter {
 		ig.setPaint(paint);
 		ig.fillRect(0, 0, 200, 150);
 		ig.setPaint(Color.black);
-		ig.setFont(new Font("Arial", Font.PLAIN, 10));
+		ig.setFont(new Font(TestFonts.FONT_FAMILY_SANS1, Font.PLAIN, 10));
 		ig.drawString("This is an image with alpha", 10, 30);
 		ig.dispose();
 
