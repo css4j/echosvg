@@ -11,3 +11,7 @@
 5) The generic rasterizer module (and related files) was removed (svgrasterizer
    is still available but no longer supports PDF graphics). See [issue #10](https://github.com/css4j/echosvg/issues/10)
    for more details.
+6) SAXDocumentFactory and SAXSVGDocumentFactory no longer have constructors with
+   `String` arguments. Either remove the string argument or replace it by a
+   `null` and you should be fine. Alternatively, you can now use your own
+   `XMLReader` in place of the parser class name.

@@ -57,7 +57,7 @@ if you want to create a wrapper (only need to do that once!).
 ### Tests
 
 Most of the (JUnit-based) test suite is executed during build (except some tests
-that are currently incompatible with Gradle), but **beware that many tests are
+that are currently incompatible with Gradle), but **beware that some tests are
 platform-dependent and could fail**. If you encounter test failures, please open
 an issue with the details so the necessary tweaks can be made.
 
@@ -65,8 +65,9 @@ To build without running the tests:
 ```shell
 gradle build -x test
 ```
-The full test suite can be executed from the Eclipse IDE; please open an issue
-if you are interested in executing the tests from other IDEs.
+The full test suite can be executed from the Eclipse IDE, and most of it runs
+satisfactorily from _IntelliJ IDEA_; please open an issue if you find issues
+executing the tests from other IDEs.
 
 <br/>
 
@@ -118,10 +119,26 @@ The file is to be found at
 
 <br/>
 
+### Produce a merged Javadoc
+
+A merged Javadoc allows to have the Javadocs of all the packages merged in a
+single directory, and the `mergedJavadoc` task can do it:
+```shell
+gradle mergedJavadoc
+```
+The Javadocs are created at `echosvg-all/build/docs/javadoc`.
+
+Unfortunately —and due to JDK limitations— the generated Javadocs are not
+modular.
+
+<br/>
+
 ## Open the project in your IDE
 
 Modern IDEs are able to import Gradle projects and let it manage the
-dependencies. For example, in the [Eclipse IDE](https://www.eclipse.org/):
+dependencies. In _IntelliJ IDEA_ you can just open the root directory and the
+Gradle project is opened, while in the [Eclipse IDE](https://www.eclipse.org/)
+you need to import it explicitly:
 ```
 File > Import... > Gradle > Existing Gradle Project
 ```
@@ -171,4 +188,6 @@ version is `0.1`).
 
 ##  Licensing
 
- For licensing issues, please read the LICENSE and NOTICE files.
+ For licensing issues, please read the LICENSE and NOTICE files. The tests use
+files which may have their own additional licenses, under the `samples`
+directory. Please look for the appropriate license files there.
