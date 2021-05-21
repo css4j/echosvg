@@ -64,7 +64,6 @@ import io.sf.carte.echosvg.util.EncodingUtilities;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.RunnableQueue;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This class contains the informations needed by the SVG scripting.
@@ -883,7 +882,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 		@Override
 		public Node parseXML(String text, Document doc) {
 			// Try and parse it as an SVGDocument
-			SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(XMLResourceDescriptor.getXMLParserClassName());
+			SAXSVGDocumentFactory df = new SAXSVGDocumentFactory();
 			URL urlObj = null;
 			if (doc instanceof SVGOMDocument) {
 				urlObj = ((SVGOMDocument) doc).getURLObject();
@@ -916,10 +915,9 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 			// Parse as a generic XML document.
 			SAXDocumentFactory sdf;
 			if (doc != null) {
-				sdf = new SAXDocumentFactory(doc.getImplementation(), XMLResourceDescriptor.getXMLParserClassName());
+				sdf = new SAXDocumentFactory(doc.getImplementation());
 			} else {
-				sdf = new SAXDocumentFactory(new GenericDOMImplementation(),
-						XMLResourceDescriptor.getXMLParserClassName());
+				sdf = new SAXDocumentFactory(new GenericDOMImplementation());
 			}
 			return DOMUtilities.parseXML(text, doc, uri, null, null, sdf);
 		}

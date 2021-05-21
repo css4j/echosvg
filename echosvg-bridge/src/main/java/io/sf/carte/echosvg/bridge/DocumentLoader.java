@@ -72,7 +72,7 @@ public class DocumentLoader {
 	 */
 	public DocumentLoader(UserAgent userAgent) {
 		this.userAgent = userAgent;
-		documentFactory = new SAXSVGDocumentFactory(userAgent.getXMLParserClassName(), true);
+		documentFactory = new SAXSVGDocumentFactory(null, true);
 		documentFactory.setValidating(userAgent.isXMLParserValidating());
 	}
 

@@ -94,7 +94,6 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 	public static final String KEY_SHOW_PRINTER_DIALOG_STR = "showPrinterDialog";
 	public static final String KEY_USER_STYLESHEET_URI_STR = "userStylesheet";
 	public static final String KEY_WIDTH_STR = "width";
-	public static final String KEY_XML_PARSER_CLASSNAME_STR = "xmlParserClassName";
 	public static final String VALUE_MEDIA_PRINT = "print";
 	public static final String VALUE_PAGE_ORIENTATION_LANDSCAPE = "landscape";
 	public static final String VALUE_PAGE_ORIENTATION_PORTRAIT = "portrait";
@@ -685,9 +684,6 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 		// User stylesheet
 		setTranscoderFloatHint(transcoder, KEY_USER_STYLESHEET_URI_STR, KEY_USER_STYLESHEET_URI);
-
-		// XML parser
-		setTranscoderStringHint(transcoder, KEY_XML_PARSER_CLASSNAME_STR, KEY_XML_PARSER_CLASSNAME);
 
 		// Scale to page
 		setTranscoderBooleanHint(transcoder, KEY_SCALE_TO_PAGE_STR, KEY_SCALE_TO_PAGE);

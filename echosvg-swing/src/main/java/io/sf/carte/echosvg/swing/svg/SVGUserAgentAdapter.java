@@ -25,7 +25,6 @@ import io.sf.carte.echosvg.bridge.RelaxedExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.RelaxedScriptSecurity;
 import io.sf.carte.echosvg.bridge.ScriptSecurity;
 import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /*
 import io.sf.carte.echosvg.bridge.DefaultExternalResourceSecurity;
@@ -226,14 +225,6 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
 	@Override
 	public String getUserStyleSheetURI() {
 		return null;
-	}
-
-	/**
-	 * Returns the class name of the XML parser.
-	 */
-	@Override
-	public String getXMLParserClassName() {
-		return XMLResourceDescriptor.getXMLParserClassName();
 	}
 
 	/**

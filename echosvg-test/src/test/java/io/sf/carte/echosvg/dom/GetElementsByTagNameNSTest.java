@@ -31,7 +31,6 @@ import org.w3c.dom.NodeList;
 
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This class tests the getElementsByTagNameNS method.
@@ -48,9 +47,7 @@ public class GetElementsByTagNameNSTest {
 	}
 
 	void testGetElementsByTagNameNS(String testFileName, String rootTag, String tagName) throws IOException {
-		String parser = XMLResourceDescriptor.getXMLParserClassName();
-
-		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
+		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
 
 		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());

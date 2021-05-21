@@ -37,7 +37,6 @@ import io.sf.carte.echosvg.bridge.GVTBuilder;
 import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
 import io.sf.carte.echosvg.test.TestLocations;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This test takes an SVG file as an input. It processes the input SVG (meaning
@@ -192,8 +191,7 @@ public class SelfContainedSVGOnLoadTest {
 		//
 		// Load the input SVG into a Document object
 		//
-		String parserClassName = XMLResourceDescriptor.getXMLParserClassName();
-		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parserClassName);
+		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
 
 		if (svgURL.startsWith("io/sf")) {
 			URL url = getClass().getClassLoader().getResource(svgURL);

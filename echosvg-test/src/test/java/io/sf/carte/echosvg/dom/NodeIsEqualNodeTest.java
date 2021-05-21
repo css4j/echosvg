@@ -32,7 +32,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * Tests the {@link Node#isEqualNode(Node)} method.
@@ -47,8 +46,7 @@ public class NodeIsEqualNodeTest {
 
 	@Test
 	public void test() throws DOMException, IOException {
-		String parser = XMLResourceDescriptor.getXMLParserClassName();
-		SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
+		SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
 		Document doc = df.createDocument("http://example.org/", new StringReader(DOC));
 
 		AbstractElement a = (AbstractElement) doc.getDocumentElement();

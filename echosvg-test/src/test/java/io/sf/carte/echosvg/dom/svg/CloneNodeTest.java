@@ -31,7 +31,6 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This class tests the cloneNode method.
@@ -48,9 +47,7 @@ public class CloneNodeTest {
 	}
 
 	void runTest(String testFileName, String targetId) throws IOException {
-		String parser = XMLResourceDescriptor.getXMLParserClassName();
-
-		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory(parser);
+		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory();
 
 		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(url.toString(), url.openStream());

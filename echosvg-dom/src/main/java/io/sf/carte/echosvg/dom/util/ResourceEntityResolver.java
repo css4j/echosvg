@@ -16,35 +16,27 @@
    limitations under the License.
 
  */
-
 package io.sf.carte.echosvg.dom.util;
 
-import java.io.IOException;
-
-import org.xml.sax.SAXException;
+import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
 
 /**
- * Wrapper for SAX Exceptions which would make it possible to include line and
- * column information with SAX parse errors.
+ * EntityResolver that loads local DTDs.
  *
- * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
- * @author For later modifications, see Git history.
+ * @author Carlos Amengual
+ * @author See Git history.
  * @version $Id$
  */
-public class SAXIOException extends IOException {
+class ResourceEntityResolver extends DefaultEntityResolver {
 
-	private static final long serialVersionUID = 2L;
-
-	public SAXIOException(String message, SAXException saxe) {
-		super(message, saxe);
+	ResourceEntityResolver() {
+		super();
+		registerSystemIds();
 	}
 
-	public SAXIOException(SAXException saxe) {
-		super(saxe);
-	}
-
-	public SAXException getSAXException() {
-		return (SAXException) getCause();
+	private void registerSystemIds() {
+		registerSystemIdFilename("http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd",
+				"io/sf/carte/echosvg/dom/util/svg10.dtd");
 	}
 
 }

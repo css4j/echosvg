@@ -180,7 +180,7 @@ public class TestUtil {
 		InputStream refStream = refURL.openStream();
 		String documentURI = refURL.toExternalForm();
 
-		SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory(null);
+		SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory();
 		SVGDocument refDoc = factory.createDocument(documentURI, refStream);
 		refStream.close();
 		SVGDocument newDoc = factory.createDocument(documentURI, newStream);

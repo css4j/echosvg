@@ -10,7 +10,7 @@
   For SVG 1.0:
 
     Namespace:
-      http://www.w3.org/2000/svg  
+      http://www.w3.org/2000/svg
 
     Public identifier:
       PUBLIC "-//W3C//DTD SVG 1.0//EN"
@@ -19,7 +19,7 @@
       http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd
 ============================================================================= -->
 <!-- ==============================================================
-     ENTITY DECLARATIONS: Data types 
+     ENTITY DECLARATIONS: Data types
      ============================================================== -->
 <!ENTITY % BaselineShiftValue "CDATA">
 <!-- 'baseline-shift' property/attribute value (e.g., 'baseline', 'sub', etc.) -->
@@ -127,7 +127,7 @@
 <!ENTITY % ViewBoxSpec "CDATA">
 <!-- 'viewBox' attribute specification -->
 <!-- ==============================================================
-     ENTITY DECLARATIONS: Collections of common attributes 
+     ENTITY DECLARATIONS: Collections of common attributes
      ============================================================== -->
 <!-- All elements have an ID. -->
 <!ENTITY % stdAttrs "id ID #IMPLIED
@@ -181,7 +181,7 @@
           (title,((desc,metadata?)|(metadata,desc?))?)|
           (metadata,((desc,title?)|(title,desc?))?))?)">
 <!-- ==============================================================
-     ENTITY DECLARATIONS: Collections of presentation attributes 
+     ENTITY DECLARATIONS: Collections of presentation attributes
      ============================================================== -->
 <!-- The following presentation attributes have to do with specifying color. -->
 <!ENTITY % PresentationAttributes-Color "color %Color; #IMPLIED
@@ -282,14 +282,14 @@
    %PresentationAttributes-TextElements;
    %PresentationAttributes-Viewports;">
 <!-- ==============================================================
-     ENTITY DECLARATIONS: DTD extensions 
+     ENTITY DECLARATIONS: DTD extensions
      ============================================================== -->
 <!-- Allow for extending the DTD with internal subset for 
      container and graphics elements -->
 <!ENTITY % ceExt "">
 <!ENTITY % geExt "">
 <!-- ==============================================================
-     DECLARATIONS CORRESPONDING TO: Document Structure 
+     DECLARATIONS CORRESPONDING TO: Document Structure
      ============================================================== -->
 <!ENTITY % svgExt "">
 <!ELEMENT svg (desc|title|metadata|defs|
@@ -463,7 +463,7 @@
 	%graphicsElementEvents; 
 >
 <!-- ==============================================================
-     DECLARATIONS CORRESPONDING TO: Styling 
+     DECLARATIONS CORRESPONDING TO: Styling
      ============================================================== -->
 <!ELEMENT style (#PCDATA)>
 <!ATTLIST style
@@ -772,7 +772,7 @@
 	dy %Number; #IMPLIED
 >
 <!-- ==============================================================
-     DECLARATIONS CORRESPONDING TO: Painting: Filling, Stroking and Marker Symbols 
+     DECLARATIONS CORRESPONDING TO: Painting: Filling, Stroking and Marker Symbols
      ============================================================== -->
 <!ENTITY % markerExt "">
 <!ELEMENT marker (desc|title|metadata|defs|
@@ -800,7 +800,7 @@
 	orient CDATA #IMPLIED
 >
 <!-- ==============================================================
-     DECLARATIONS CORRESPONDING TO: Color 
+     DECLARATIONS CORRESPONDING TO: Color
      ============================================================== -->
 <!ELEMENT color-profile (%descTitleMetadata;)>
 <!ATTLIST color-profile
@@ -812,7 +812,7 @@
 	rendering-intent (auto | perceptual | relative-colorimetric | saturation | absolute-colorimetric) "auto"
 >
 <!-- ==============================================================
-     DECLARATIONS CORRESPONDING TO: Gradients and Patterns 
+     DECLARATIONS CORRESPONDING TO: Gradients and Patterns
      ============================================================== -->
 <!ENTITY % linearGradientExt "">
 <!ELEMENT linearGradient (%descTitleMetadata;,(stop|animate|set|animateTransform
@@ -896,7 +896,7 @@
 	height %Length; #IMPLIED
 >
 <!-- ==============================================================
-     DECLARATIONS CORRESPONDING TO: Clipping, Masking and Compositing 
+     DECLARATIONS CORRESPONDING TO: Clipping, Masking and Compositing
      ============================================================== -->
 <!ENTITY % clipPathExt "">
 <!ELEMENT clipPath (%descTitleMetadata;,
@@ -1191,7 +1191,7 @@
 	type (fractalNoise | turbulence) "turbulence"
 >
 <!-- ==============================================================
-     DECLARATIONS CORRESPONDING TO: Interactivity 
+     DECLARATIONS CORRESPONDING TO: Interactivity
      ============================================================== -->
 <!ELEMENT cursor (%descTitleMetadata;)>
 <!ATTLIST cursor
@@ -1257,7 +1257,7 @@
 	type %ContentType; #REQUIRED
 >
 <!-- ==============================================================
-     DECLARATIONS CORRESPONDING TO: Animation 
+     DECLARATIONS CORRESPONDING TO: Animation
      ============================================================== -->
 <!ENTITY % animElementAttrs "%xlinkRefAttrs;
   xlink:href %URI; #IMPLIED">
@@ -1509,7 +1509,7 @@
 	xlink:href %URI; #REQUIRED
 >
 <!-- ==============================================================
-     DECLARATIONS CORRESPONDING TO: Metadata 
+     DECLARATIONS CORRESPONDING TO: Metadata
      ============================================================== -->
 <!ENTITY % metadataExt "">
 <!ELEMENT metadata (#PCDATA %metadataExt;)* >
@@ -1517,7 +1517,7 @@
 	%stdAttrs; 
 >
 <!-- ==============================================================
-     DECLARATIONS CORRESPONDING TO: Extensibility 
+     DECLARATIONS CORRESPONDING TO: Extensibility
      ============================================================== -->
 <!ENTITY % foreignObjectExt "">
 <!ELEMENT foreignObject (#PCDATA %ceExt;%foreignObjectExt;)* >

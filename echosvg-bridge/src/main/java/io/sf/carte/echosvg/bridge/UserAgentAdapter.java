@@ -34,7 +34,6 @@ import org.w3c.dom.svg.SVGDocument;
 import io.sf.carte.echosvg.gvt.event.EventDispatcher;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGFeatureStrings;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * An abstract user agent adaptor implementation. It exists to simply the
@@ -212,14 +211,6 @@ public class UserAgentAdapter implements UserAgent {
 	@Override
 	public String getUserStyleSheetURI() {
 		return null;
-	}
-
-	/**
-	 * Returns the XML parser to use
-	 */
-	@Override
-	public String getXMLParserClassName() {
-		return XMLResourceDescriptor.getXMLParserClassName();
 	}
 
 	/**

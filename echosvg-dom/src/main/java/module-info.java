@@ -27,5 +27,8 @@ module io.sf.carte.echosvg.dom {
 	requires io.sf.carte.echosvg.i18n;
 	requires transitive java.xml;
 	requires transitive jdk.xml.dom;
+	requires io.sf.carte.xml.dtd;
 	requires xalan;
+
+	uses org.xml.sax.XMLReader;
 }

@@ -30,7 +30,6 @@ import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.transcoder.keys.BooleanKey;
 import io.sf.carte.echosvg.transcoder.keys.DOMImplementationKey;
 import io.sf.carte.echosvg.transcoder.keys.StringKey;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This class may be the base class of all transcoders which take an XML
@@ -78,14 +77,10 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 		if (input.getDocument() != null) {
 			document = input.getDocument();
 		} else {
-			String parserClassname = (String) hints.get(KEY_XML_PARSER_CLASSNAME);
 			String namespaceURI = (String) hints.get(KEY_DOCUMENT_ELEMENT_NAMESPACE_URI);
 			String documentElement = (String) hints.get(KEY_DOCUMENT_ELEMENT);
 			DOMImplementation domImpl = (DOMImplementation) hints.get(KEY_DOM_IMPLEMENTATION);
 
-			if (parserClassname == null) {
-				parserClassname = XMLResourceDescriptor.getXMLParserClassName();
-			}
 			if (domImpl == null) {
 				handler.fatalError(new TranscoderException("Unspecified transcoding hints: KEY_DOM_IMPLEMENTATION"));
 				return;
@@ -100,7 +95,7 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 				return;
 			}
 			// parse the XML document
-			DocumentFactory f = createDocumentFactory(domImpl, parserClassname);
+			DocumentFactory f = createDocumentFactory(domImpl);
 			Object xmlParserValidating = hints.get(KEY_XML_PARSER_VALIDATING);
 			boolean validating = xmlParserValidating != null && (Boolean) xmlParserValidating;
 			f.setValidating(validating);
@@ -138,11 +133,10 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 	 * <code>DocumentFactory</code> (ie. for SVG, you have to use the
 	 * <code>SAXSVGDocumentFactory</code>).
 	 *
-	 * @param domImpl         the DOM Implementation to use
-	 * @param parserClassname the XML parser classname
+	 * @param domImpl the DOM Implementation to use
 	 */
-	protected DocumentFactory createDocumentFactory(DOMImplementation domImpl, String parserClassname) {
-		return new SAXDocumentFactory(domImpl, parserClassname);
+	protected DocumentFactory createDocumentFactory(DOMImplementation domImpl) {
+		return new SAXDocumentFactory(domImpl);
 	}
 
 	/**
@@ -159,33 +153,6 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 	// --------------------------------------------------------------------
 	// Keys definition
 	// --------------------------------------------------------------------
-
-	/**
-	 * XML parser classname key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
-	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_XML_PARSER_CLASSNAME</td>
-	 * </tr>
-	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String</td>
-	 * </tr>
-	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">null</td>
-	 * </tr>
-	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">Yes</td>
-	 * </tr>
-	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the XML parser classname to use.</td>
-	 * </tr>
-	 * </table>
-	 */
-	public static final TranscodingHints.Key KEY_XML_PARSER_CLASSNAME = new StringKey();
 
 	/**
 	 * The validation mode of the XML parser.

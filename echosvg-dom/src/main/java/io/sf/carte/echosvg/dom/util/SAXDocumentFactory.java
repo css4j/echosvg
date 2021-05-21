@@ -25,6 +25,7 @@ import java.io.Reader;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ServiceLoader;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -36,6 +37,8 @@ import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
@@ -45,8 +48,6 @@ import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.LexicalHandler;
-import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.util.HaltingThread;
@@ -59,98 +60,93 @@ import io.sf.carte.echosvg.util.HaltingThread;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler, DocumentFactory {
+public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, ContentHandler, ErrorHandler {
 
 	/**
 	 * The DOM implementation used to create the document.
 	 */
-	protected DOMImplementation implementation;
-
-	/**
-	 * The SAX2 parser classname.
-	 */
-	protected String parserClassName;
+	private DOMImplementation implementation;
 
 	/**
 	 * The SAX2 parser object.
 	 */
-	protected XMLReader parser;
+	private XMLReader parser;
 
 	/**
 	 * The created document.
 	 */
-	protected Document document;
+	private Document document;
 
 	/**
 	 * The created document descriptor.
 	 */
-	protected DocumentDescriptor documentDescriptor;
+	private DocumentDescriptor documentDescriptor;
 
 	/**
 	 * Whether a document descriptor must be generated.
 	 */
-	protected boolean createDocumentDescriptor;
+	private boolean createDocumentDescriptor;
 
 	/**
 	 * The current node.
 	 */
-	protected Node currentNode;
+	private Node currentNode;
 
 	/**
 	 * The locator.
 	 */
-	protected Locator locator;
+	private Locator locator;
 
 	/**
 	 * Contains collected string data. May be Text, CDATA or Comment.
 	 */
-	protected StringBuffer stringBuffer = new StringBuffer();
+	private StringBuffer stringBuffer = new StringBuffer();
 
 	/**
 	 * The DTD to use when the document is created.
 	 */
-	protected DocumentType doctype;
+	private DocumentType doctype;
 
 	/**
 	 * Indicates if stringBuffer has content, needed in case of zero sized "text"
 	 * content.
 	 */
-	protected boolean stringContent;
+	private boolean stringContent;
 
 	/**
 	 * True if the parser is currently parsing a DTD.
 	 */
-	protected boolean inDTD;
+	private boolean inDTD;
 
 	/**
 	 * True if the parser is currently parsing a CDATA section.
 	 */
-	protected boolean inCDATA;
+	private boolean inCDATA;
 
 	/**
 	 * Whether the parser still hasn't read the document element's opening tag.
 	 */
-	protected boolean inProlog;
+	private boolean inProlog;
 
 	/**
 	 * Whether the parser is in validating mode.
 	 */
-	protected boolean isValidating;
+	private boolean isValidating;
 
 	/**
 	 * Whether the document just parsed was standalone.
 	 */
-	protected boolean isStandalone;
+	private boolean isStandalone;
 
 	/**
 	 * XML version of the document just parsed.
 	 */
-	protected String xmlVersion;
+	private String xmlVersion;
 
 	/**
 	 * The stack used to store the namespace URIs.
 	 */
-	protected HashTableStack namespaces;
+	private HashTableStack namespaces;
 
 	/**
 	 * The error handler.
@@ -161,7 +157,7 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		Node createNode(Document doc);
 	}
 
-	static class ProcessingInstructionInfo implements PreInfo {
+	private static class ProcessingInstructionInfo implements PreInfo {
 		public String target, data;
 
 		public ProcessingInstructionInfo(String target, String data) {
@@ -175,7 +171,7 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		}
 	}
 
-	static class CommentInfo implements PreInfo {
+	private static class CommentInfo implements PreInfo {
 		public String comment;
 
 		public CommentInfo(String comment) {
@@ -188,7 +184,7 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		}
 	}
 
-	static class CDataInfo implements PreInfo {
+	private static class CDataInfo implements PreInfo {
 		public String cdata;
 
 		public CDataInfo(String cdata) {
@@ -201,7 +197,7 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		}
 	}
 
-	static class TextInfo implements PreInfo {
+	private static class TextInfo implements PreInfo {
 		public String text;
 
 		public TextInfo(String text) {
@@ -218,31 +214,72 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 	 * Various elements encountered prior to real document root element. List of
 	 * PreInfo objects.
 	 */
-	protected List<PreInfo> preInfo;
+	private List<PreInfo> preInfo;
+
+	/**
+	 * Creates a new SAXDocumentFactory object with a default parser. No document
+	 * descriptor will be created while generating a document.
+	 * 
+	 * @param impl The DOM implementation to use for building the DOM tree.
+	 */
+	public SAXDocumentFactory(DOMImplementation impl) {
+		this(impl, null);
+	}
 
 	/**
 	 * Creates a new SAXDocumentFactory object. No document descriptor will be
 	 * created while generating a document.
 	 * 
 	 * @param impl   The DOM implementation to use for building the DOM tree.
-	 * @param parser The SAX2 parser classname.
+	 * @param reader The SAX2 reader. If {@code null}, a default one shall be
+	 *               created.
 	 */
-	public SAXDocumentFactory(DOMImplementation impl, String parser) {
-		implementation = impl;
-		parserClassName = parser;
+	public SAXDocumentFactory(DOMImplementation impl, XMLReader reader) {
+		this(impl, reader, false);
 	}
 
 	/**
 	 * Creates a new SAXDocumentFactory object.
 	 * 
 	 * @param impl   The DOM implementation to use for building the DOM tree.
-	 * @param parser The SAX2 parser classname.
+	 * @param reader The SAX2 reader. If {@code null}, a default one shall be
+	 *               created.
 	 * @param dd     Whether a document descriptor must be generated.
 	 */
-	public SAXDocumentFactory(DOMImplementation impl, String parser, boolean dd) {
-		implementation = impl;
-		parserClassName = parser;
-		createDocumentDescriptor = dd;
+	public SAXDocumentFactory(DOMImplementation impl, XMLReader reader, boolean dd) {
+		this.implementation = impl;
+		this.parser = getXMLReader(reader);
+		this.createDocumentDescriptor = dd;
+	}
+
+	private static XMLReader getXMLReader(XMLReader reader) {
+		if (reader == null) {
+			ServiceLoader<XMLReader> loader = ServiceLoader.load(XMLReader.class);
+			Iterator<XMLReader> it = loader.iterator();
+			if (it.hasNext()) {
+				reader = it.next();
+				try {
+					reader.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
+				} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+				}
+				try {
+					reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+					reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+				} catch (SAXNotRecognizedException | SAXNotSupportedException e) {
+				}
+			} else {
+				SAXParser saxParser;
+				try {
+					saxParser = saxFactory.newSAXParser();
+					reader = saxParser.getXMLReader();
+				} catch (ParserConfigurationException | SAXException e) {
+					e.printStackTrace();
+					return null; // That should never happen
+				}
+			}
+		}
+
+		return reader;
 	}
 
 	/**
@@ -325,8 +362,7 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 	@Override
 	public Document createDocument(String ns, String root, String uri, XMLReader r) throws IOException {
 		r.setContentHandler(this);
-		r.setDTDHandler(this);
-		r.setEntityResolver(this);
+		r.setEntityResolver(createEntityResolver());
 		try {
 			r.parse(uri);
 		} catch (SAXException e) {
@@ -341,6 +377,10 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		document = null;
 		doctype = null;
 		return ret;
+	}
+
+	private EntityResolver createEntityResolver() {
+		return new ResourceEntityResolver();
 	}
 
 	/**
@@ -398,19 +438,18 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		return ret;
 	}
 
-	static SAXParserFactory saxFactory;
+	private static final SAXParserFactory saxFactory;
+
 	static {
 		saxFactory = SAXParserFactory.newInstance();
 		try {
+			saxFactory.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			// saxFactory.setFeature("http://xml.org/sax/features/namespaces", true); // Default
+			saxFactory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
+			saxFactory.setFeature("http://xml.org/sax/features/xmlns-uris", true);
 			saxFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
 			saxFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-			saxFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-		} catch (SAXNotRecognizedException e) {
-			e.printStackTrace();
-		} catch (SAXNotSupportedException e) {
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
+		} catch (SAXNotRecognizedException | SAXNotSupportedException | ParserConfigurationException e) {
 		}
 	}
 
@@ -422,29 +461,11 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 	 */
 	protected Document createDocument(InputSource is) throws IOException {
 		try {
-			if (parserClassName != null) {
-				parser = XMLReaderFactory.createXMLReader(parserClassName);
-			} else {
-				SAXParser saxParser;
-				try {
-					saxParser = saxFactory.newSAXParser();
-				} catch (ParserConfigurationException pce) {
-					throw new IOException("Could not create SAXParser: " + pce.getMessage());
-				}
-				parser = saxParser.getXMLReader();
-			}
-
 			parser.setContentHandler(this);
-			parser.setDTDHandler(this);
-			parser.setEntityResolver(this);
+			parser.setEntityResolver(createEntityResolver());
 			parser.setErrorHandler((errorHandler == null) ? this : errorHandler);
 
-			parser.setFeature("http://xml.org/sax/features/namespaces", true);
-			parser.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
 			parser.setFeature("http://xml.org/sax/features/validation", isValidating);
-			parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
-			parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-			parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 			parser.setProperty("http://xml.org/sax/properties/lexical-handler", this);
 			parser.parse(is);
 		} catch (SAXException e) {
@@ -460,7 +481,6 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		document = null;
 		doctype = null;
 		locator = null;
-		parser = null;
 		return ret;
 	}
 
@@ -501,6 +521,14 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 	@Override
 	public boolean isValidating() {
 		return isValidating;
+	}
+
+	protected boolean isStandalone() {
+		return isStandalone;
+	}
+
+	protected String getXmlVersion() {
+		return xmlVersion;
 	}
 
 	/**
@@ -545,7 +573,8 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 	 */
 	@Override
 	public void startDocument() throws SAXException {
-		preInfo = new LinkedList<>();
+		initPreInfo();
+
 		namespaces = new HashTableStack();
 		namespaces.put("xml", XMLConstants.XML_NAMESPACE_URI);
 		namespaces.put("xmlns", XMLConstants.XMLNS_NAMESPACE_URI);
@@ -568,6 +597,14 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		} else {
 			documentDescriptor = null;
 		}
+	}
+
+	protected void initPreInfo() {
+		preInfo = new LinkedList<>();
+	}
+
+	@Override
+	public void endDocument() throws SAXException {
 	}
 
 	/**
@@ -635,7 +672,7 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		if (currentNode == null) {
 			implementation = getDOMImplementation(version);
 			document = implementation.createDocument(nsURI, rawName, doctype);
-			Iterator<PreInfo> i = preInfo.iterator();
+			Iterator<PreInfo> i = preInfoIterator();
 			currentNode = e = document.getDocumentElement();
 			while (i.hasNext()) {
 				PreInfo pi = i.next();
@@ -667,6 +704,10 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		}
 	}
 
+	protected Iterator<PreInfo> preInfoIterator() {
+		return preInfo.iterator();
+	}
+
 	/**
 	 * <b>SAX</b>: Implements
 	 * {@link org.xml.sax.ContentHandler#endElement(String,String,String)}.
@@ -689,9 +730,9 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		stringContent = false;
 		if (currentNode == null) {
 			if (inCDATA)
-				preInfo.add(new CDataInfo(str));
+				addPreInfo(new CDataInfo(str));
 			else
-				preInfo.add(new TextInfo(str));
+				addPreInfo(new TextInfo(str));
 		} else {
 			Node n;
 			if (inCDATA)
@@ -700,6 +741,10 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 				n = document.createTextNode(str);
 			currentNode.appendChild(n);
 		}
+	}
+
+	protected void addPreInfo(PreInfo node) {
+		preInfo.add(node);
 	}
 
 	/**
@@ -734,7 +779,7 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 		appendStringData(); // Add any collected String Data before PI
 
 		if (currentNode == null)
-			preInfo.add(new ProcessingInstructionInfo(target, data));
+			addPreInfo(new ProcessingInstructionInfo(target, data));
 		else
 			currentNode.appendChild(document.createProcessingInstruction(target, data));
 	}
@@ -807,9 +852,22 @@ public class SAXDocumentFactory extends DefaultHandler implements LexicalHandler
 
 		String str = new String(ch, start, length);
 		if (currentNode == null) {
-			preInfo.add(new CommentInfo(str));
+			addPreInfo(new CommentInfo(str));
 		} else {
 			currentNode.appendChild(document.createComment(str));
 		}
 	}
+
+	@Override
+	public void skippedEntity(String name) throws SAXException {
+	}
+
+	@Override
+	public void startPrefixMapping(String prefix, String uri) throws SAXException {
+	}
+
+	@Override
+	public void endPrefixMapping(String prefix) throws SAXException {
+	}
+
 }

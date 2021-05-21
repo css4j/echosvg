@@ -138,11 +138,10 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 * Implementation is automatically used.
 	 *
 	 * @param domImpl         the DOM Implementation (not used)
-	 * @param parserClassname the XML parser classname
 	 */
 	@Override
-	protected DocumentFactory createDocumentFactory(DOMImplementation domImpl, String parserClassname) {
-		return new SAXSVGDocumentFactory(parserClassname);
+	protected DocumentFactory createDocumentFactory(DOMImplementation domImpl) {
+		return new SAXSVGDocumentFactory();
 	}
 
 	@Override
@@ -996,18 +995,6 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 				return s;
 
 			return super.getUserStyleSheetURI();
-		}
-
-		/**
-		 * Returns the XML parser to use from the TranscodingHints.
-		 */
-		@Override
-		public String getXMLParserClassName() {
-			String s = (String) SVGAbstractTranscoder.this.hints.get(KEY_XML_PARSER_CLASSNAME);
-			if (s != null)
-				return s;
-
-			return super.getXMLParserClassName();
 		}
 
 		/**

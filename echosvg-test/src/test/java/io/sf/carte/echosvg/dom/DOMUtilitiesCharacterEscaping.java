@@ -36,7 +36,6 @@ import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * Checks that Text nodes can be properly written and read. This test creates a
@@ -66,8 +65,7 @@ public class DOMUtilitiesCharacterEscaping {
 
 		DOMUtilities.writeDocument(doc, stringWriter);
 
-		String parser = XMLResourceDescriptor.getXMLParserClassName();
-		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
+		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
 		doc = f.createDocument("https://raw.githubusercontent.com/css4j/echosvg/master/samples/foo.svg",
 			new StringReader(stringWriter.toString()));
 

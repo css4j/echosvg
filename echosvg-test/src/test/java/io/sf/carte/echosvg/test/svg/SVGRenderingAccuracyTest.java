@@ -47,11 +47,6 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 
 	/**
-	 * Validating parser class name
-	 */
-	private static final String VALIDATING_PARSER = configuration.getString("validating.parser");
-
-	/**
 	 * Controls whether or not the SVG file should be validated. By default, no
 	 * validation is used.
 	 */
@@ -132,7 +127,6 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 
 		if (validate) {
 			t.addTranscodingHint(XMLAbstractTranscoder.KEY_XML_PARSER_VALIDATING, Boolean.TRUE);
-			t.addTranscodingHint(XMLAbstractTranscoder.KEY_XML_PARSER_CLASSNAME, VALIDATING_PARSER);
 		}
 
 		if (userLanguage != null) {

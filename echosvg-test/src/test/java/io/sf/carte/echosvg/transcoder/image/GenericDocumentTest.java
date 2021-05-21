@@ -28,7 +28,6 @@ import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * Test the ImageTranscoder input with a GenericDocument.
@@ -68,9 +67,8 @@ public class GenericDocumentTest extends AbstractImageTranscoderTest {
 	protected TranscoderInput createTranscoderInput() {
 		try {
 			URL url = resolveURI(inputURI);
-			String parser = XMLResourceDescriptor.getXMLParserClassName();
 			DOMImplementation impl = GenericDOMImplementation.getDOMImplementation();
-			SAXDocumentFactory f = new SAXDocumentFactory(impl, parser);
+			SAXDocumentFactory f = new SAXDocumentFactory(impl);
 			Document doc = f.createDocument(url.toString());
 			TranscoderInput input = new TranscoderInput(doc);
 			input.setURI(url.toString()); // Needed for external resources

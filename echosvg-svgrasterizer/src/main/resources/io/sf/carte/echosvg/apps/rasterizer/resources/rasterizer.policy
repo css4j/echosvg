@@ -175,6 +175,6 @@ grant codeBase "file:${app.dev.base}/echosvg-script${app.dev.classdir}" {
 };
 
 grant {
-  permission java.io.FilePermission "${app.dev.base}/echosvg-svg-dom${app.dev.classdir}io/sf/carte/echosvg/dom/svg/resources/-", "read";
+  permission java.io.FilePermission "${app.dev.base}/echosvg-dom${app.dev.classdir}io/sf/carte/echosvg/dom/util/-", "read";
   permission java.io.FilePermission "${java.home}/lib/-", "read";
 };

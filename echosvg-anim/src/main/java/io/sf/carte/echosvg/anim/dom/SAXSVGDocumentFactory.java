@@ -21,15 +21,13 @@ package io.sf.carte.echosvg.anim.dom;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.io.StringReader;
 import java.net.MalformedURLException;
-import java.util.MissingResourceException;
-import java.util.Properties;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.svg.SVGDocumentFactory;
@@ -47,75 +45,38 @@ import io.sf.carte.echosvg.util.ParsedURL;
  */
 public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocumentFactory {
 
-	public static final Object LOCK = new Object();
-
-	/**
-	 * Key used for public identifiers
-	 */
-	public static final String KEY_PUBLIC_IDS = "publicIds";
-
-	/**
-	 * Key used for public identifiers
-	 */
-	public static final String KEY_SKIPPABLE_PUBLIC_IDS = "skippablePublicIds";
-
-	/**
-	 * Key used for the skippable DTD substitution
-	 */
-	public static final String KEY_SKIP_DTD = "skipDTD";
-
-	/**
-	 * Key used for system identifiers
-	 */
-	public static final String KEY_SYSTEM_ID = "systemId.";
-
-	/**
-	 * The dtd public IDs resource bundle class name.
-	 */
-	protected static final String DTDIDS = "io.sf.carte.echosvg.anim.dom.resources.dtdids";
-
 	/**
 	 * Constant for HTTP content type header charset field.
 	 */
-	protected static final String HTTP_CHARSET = "charset";
+	private static final String HTTP_CHARSET = "charset";
 
 	/**
-	 * The accepted DTD public IDs.
-	 */
-	protected static String dtdids;
-
-	/**
-	 * The DTD public IDs we know we can skip.
-	 */
-	protected static String skippable_dtdids;
-
-	/**
-	 * The DTD content to use when skipping
-	 */
-	protected static String skip_dtd;
-
-	/**
-	 * The ResourceBunder for the public and system ids
-	 */
-	protected static Properties dtdProps;
-
-	/**
-	 * Creates a new SVGDocumentFactory object.
+	 * Creates a new SVGDocumentFactory object with a default parser.
 	 * 
-	 * @param parser The SAX2 parser classname.
 	 */
-	public SAXSVGDocumentFactory(String parser) {
-		super(SVGDOMImplementation.getDOMImplementation(), parser);
+	public SAXSVGDocumentFactory() {
+		this(null);
 	}
 
 	/**
 	 * Creates a new SVGDocumentFactory object.
 	 * 
-	 * @param parser The SAX2 parser classname.
+	 * @param reader The SAX2 reader. If {@code null}, a default one shall be
+	 *               created.
+	 */
+	public SAXSVGDocumentFactory(XMLReader reader) {
+		this(reader, false);
+	}
+
+	/**
+	 * Creates a new SVGDocumentFactory object.
+	 * 
+	 * @param reader The SAX2 reader. If {@code null}, a default one shall be
+	 *               created.
 	 * @param dd     Whether a document descriptor must be generated.
 	 */
-	public SAXSVGDocumentFactory(String parser, boolean dd) {
-		super(SVGDOMImplementation.getDOMImplementation(), parser, dd);
+	public SAXSVGDocumentFactory(XMLReader reader, boolean dd) {
+		super(SVGDOMImplementation.getDOMImplementation(), reader, dd);
 	}
 
 	@Override
@@ -128,7 +89,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * 
 	 * @param uri The document URI.
 	 * @param inp The document input stream.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public SVGDocument createSVGDocument(String uri, InputStream inp) throws IOException {
@@ -204,8 +165,8 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 				isrc);
 		doc.setParsedURL(new ParsedURL(uri));
 		doc.setDocumentInputEncoding(charset);
-		doc.setXmlStandalone(isStandalone);
-		doc.setXmlVersion(xmlVersion);
+		doc.setXmlStandalone(isStandalone());
+		doc.setXmlVersion(getXmlVersion());
 
 		return doc;
 	}
@@ -231,8 +192,8 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 
 			AbstractDocument d = doc;
 			d.setDocumentURI(uri);
-			d.setXmlStandalone(isStandalone);
-			d.setXmlVersion(xmlVersion);
+			d.setXmlStandalone(isStandalone());
+			d.setXmlVersion(getXmlVersion());
 		} catch (MalformedURLException e) {
 			throw new IOException(e.getMessage());
 		}
@@ -260,8 +221,8 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 
 			AbstractDocument d = doc;
 			d.setDocumentURI(uri);
-			d.setXmlStandalone(isStandalone);
-			d.setXmlVersion(xmlVersion);
+			d.setXmlStandalone(isStandalone());
+			d.setXmlVersion(getXmlVersion());
 		} catch (MalformedURLException e) {
 			throw new IOException(e.getMessage());
 		}
@@ -339,58 +300,4 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 		// namespaces.put("xlink", XLinkSupport.XLINK_NAMESPACE_URI);
 	}
 
-	/**
-	 * <b>SAX2</b>: Implements
-	 * {@link org.xml.sax.EntityResolver#resolveEntity(String,String)}.
-	 */
-	@Override
-	public InputSource resolveEntity(String publicId, String systemId) throws SAXException {
-		try {
-			synchronized (LOCK) {
-				// Bootstrap if needed - move to a static block???
-				if (dtdProps == null) {
-					dtdProps = new Properties();
-					try {
-						Class<SAXSVGDocumentFactory> cls = SAXSVGDocumentFactory.class;
-						InputStream is = cls.getResourceAsStream("resources/dtdids.properties");
-						dtdProps.load(is);
-					} catch (IOException ioe) {
-						throw new SAXException(ioe);
-					}
-				}
-
-				if (dtdids == null)
-					dtdids = dtdProps.getProperty(KEY_PUBLIC_IDS);
-
-				if (skippable_dtdids == null)
-					skippable_dtdids = dtdProps.getProperty(KEY_SKIPPABLE_PUBLIC_IDS);
-
-				if (skip_dtd == null)
-					skip_dtd = dtdProps.getProperty(KEY_SKIP_DTD);
-			}
-
-			if (publicId == null)
-				return null; // Let SAX Parser find it.
-
-			if (!isValidating && (skippable_dtdids.indexOf(publicId) != -1)) {
-				// We are not validating and this is a DTD we can
-				// safely skip so do it... Here we provide just enough
-				// of the DTD to keep stuff running (set svg and
-				// xlink namespaces).
-				return new InputSource(new StringReader(skip_dtd));
-			}
-
-			if (dtdids.indexOf(publicId) != -1) {
-				String localSystemId = dtdProps.getProperty(KEY_SYSTEM_ID + publicId.replace(' ', '_'));
-
-				if (localSystemId != null && !"".equals(localSystemId)) {
-					return new InputSource(getClass().getResource(localSystemId).toString());
-				}
-			}
-		} catch (MissingResourceException e) {
-			throw new SAXException(e);
-		}
-		// Let the SAX parser find the entity.
-		return null;
-	}
 }

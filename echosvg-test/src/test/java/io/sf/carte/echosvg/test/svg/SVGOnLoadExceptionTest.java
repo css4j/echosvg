@@ -366,7 +366,7 @@ public class SVGOnLoadExceptionTest {
 		//
 		// Load the input SVG into a Document object
 		//
-		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(null);
+		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
 		f.setValidating(validate);
 		Document doc = f.createDocument(svgURL);
 

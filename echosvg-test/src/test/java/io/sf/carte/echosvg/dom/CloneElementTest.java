@@ -31,7 +31,6 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This class tests the non-deep cloneNode method for elements.
@@ -48,9 +47,7 @@ public class CloneElementTest {
 	}
 
 	void testCloneElement(String testFileName, String rootTag, String targetId) throws IOException {
-		String parser = XMLResourceDescriptor.getXMLParserClassName();
-
-		SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
+		SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
 
 		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());

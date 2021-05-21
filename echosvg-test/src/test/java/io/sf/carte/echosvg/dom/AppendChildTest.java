@@ -32,7 +32,6 @@ import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This class tests the appendChild method.
@@ -49,9 +48,7 @@ public class AppendChildTest {
 	}
 
 	void testAppendChild(String testFileName, String rootTag, String targetId) throws IOException {
-		String parser = XMLResourceDescriptor.getXMLParserClassName();
-
-		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
+		DocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
 
 		URL url = getClass().getClassLoader().getResource(testFileName);
 		Document doc = df.createDocument(null, rootTag, url.toString(), url.openStream());

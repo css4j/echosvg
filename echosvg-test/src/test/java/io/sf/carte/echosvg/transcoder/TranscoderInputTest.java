@@ -41,7 +41,6 @@ import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This test validates that the various configurations of TranscoderInput are
@@ -97,8 +96,7 @@ public class TranscoderInputTest {
 		}
 		// Document
 		{
-			String parser = XMLResourceDescriptor.getXMLParserClassName();
-			SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
+			SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
 			Document doc = f.createDocument(TEST_URI);
 			TranscoderInput ti = new TranscoderInput(doc);
 			ti.setURI(TEST_URI);
@@ -109,9 +107,8 @@ public class TranscoderInputTest {
 
 		// Generic Document
 		{
-			String parser = XMLResourceDescriptor.getXMLParserClassName();
 			DOMImplementation impl = GenericDOMImplementation.getDOMImplementation();
-			SAXDocumentFactory f = new SAXDocumentFactory(impl, parser);
+			SAXDocumentFactory f = new SAXDocumentFactory(impl);
 			Document doc = f.createDocument(TEST_URI);
 			TranscoderInput ti = new TranscoderInput(doc);
 			ti.setURI(TEST_URI);

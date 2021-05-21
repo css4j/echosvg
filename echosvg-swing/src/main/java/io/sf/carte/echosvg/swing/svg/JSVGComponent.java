@@ -87,7 +87,6 @@ import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.RunnableQueue;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.echosvg.util.SVGFeatureStrings;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This class represents a swing component that can display SVG documents. This
@@ -2711,28 +2710,6 @@ public class JSVGComponent extends JGVTComponent {
 		}
 
 		/**
-		 * Returns the class name of the XML parser.
-		 */
-		@Override
-		public String getXMLParserClassName() {
-			if (EventQueue.isDispatchThread()) {
-				return userAgent.getXMLParserClassName();
-			} else {
-				class Query implements Runnable {
-					String result;
-
-					@Override
-					public void run() {
-						result = userAgent.getXMLParserClassName();
-					}
-				}
-				Query q = new Query();
-				invokeAndWait(q);
-				return q.result;
-			}
-		}
-
-		/**
 		 * Returns true if the XML parser must be in validation mode, false otherwise.
 		 */
 		@Override
@@ -3498,17 +3475,6 @@ public class JSVGComponent extends JGVTComponent {
 		@Override
 		public void deselectAll() {
 			JSVGComponent.this.deselectAll();
-		}
-
-		/**
-		 * Returns the class name of the XML parser.
-		 */
-		@Override
-		public String getXMLParserClassName() {
-			if (svgUserAgent != null) {
-				return svgUserAgent.getXMLParserClassName();
-			}
-			return XMLResourceDescriptor.getXMLParserClassName();
 		}
 
 		/**

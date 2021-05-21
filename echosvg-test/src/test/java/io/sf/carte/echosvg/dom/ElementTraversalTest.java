@@ -32,7 +32,6 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 import io.sf.carte.echosvg.w3c.dom.ElementTraversal;
 
 /**
@@ -48,8 +47,7 @@ public class ElementTraversalTest {
 
 	@Test
 	public void test() throws DOMException, IOException {
-		String parser = XMLResourceDescriptor.getXMLParserClassName();
-		SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation(), parser);
+		SAXDocumentFactory df = new SAXDocumentFactory(GenericDOMImplementation.getDOMImplementation());
 		Document doc = df.createDocument("http://example.org/", new StringReader(DOC));
 
 		AbstractElement a = (AbstractElement) doc.getDocumentElement();

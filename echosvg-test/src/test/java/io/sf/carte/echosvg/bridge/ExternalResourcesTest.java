@@ -35,7 +35,6 @@ import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.carte.echosvg.util.XMLResourceDescriptor;
 
 /**
  * This test validates that SecurityExceptions are generated when the user is
@@ -180,8 +179,7 @@ public class ExternalResourcesTest implements ErrorConstants {
 		//
 		// Load the input SVG into a Document object
 		//
-		String parserClassName = XMLResourceDescriptor.getXMLParserClassName();
-		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parserClassName);
+		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
 		Document doc = f.createDocument(svgURL);
 
 		//

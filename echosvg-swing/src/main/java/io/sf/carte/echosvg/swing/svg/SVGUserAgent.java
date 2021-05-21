@@ -116,11 +116,6 @@ public interface SVGUserAgent {
 	String getUserStyleSheetURI();
 
 	/**
-	 * Returns the class name of the XML parser.
-	 */
-	String getXMLParserClassName();
-
-	/**
 	 * Returns true if the XML parser must be in validation mode, false otherwise.
 	 */
 	boolean isXMLParserValidating();
