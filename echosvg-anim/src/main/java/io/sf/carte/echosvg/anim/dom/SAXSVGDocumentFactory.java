@@ -168,6 +168,8 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 		doc.setXmlStandalone(isStandalone());
 		doc.setXmlVersion(getXmlVersion());
 
+		is.close();
+
 		return doc;
 	}
 
