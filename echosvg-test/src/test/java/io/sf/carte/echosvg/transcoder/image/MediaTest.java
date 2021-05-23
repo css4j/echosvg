@@ -18,9 +18,15 @@
  */
 package io.sf.carte.echosvg.transcoder.image;
 
+import java.awt.FontFormatException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -44,12 +50,25 @@ public class MediaTest extends AbstractImageTranscoderTest {
 	/** The CSS media to use. */
 	private String media;
 
-	@org.junit.Test
-	public void test() throws TranscoderException {
+	@BeforeClass
+	public static void beforeClass() throws FontFormatException, IOException {
+		TestFonts.loadTestFonts();
+	}
+
+	@Test
+	public void testScreen() throws TranscoderException {
 		testMedia("samples/tests/spec/styling/cssMedia.svg",
 				"test-references/samples/tests/spec/styling/cssMediaScreen.png", "screen");
+	}
+
+	@Test
+	public void testProjection() throws TranscoderException {
 		testMedia("samples/tests/spec/styling/cssMedia.svg",
 				"test-references/samples/tests/spec/styling/cssMediaProjection.png", "projection");
+	}
+
+	@Test
+	public void testPrint() throws TranscoderException {
 		testMedia("samples/tests/spec/styling/cssMedia.svg",
 				"test-references/samples/tests/spec/styling/cssMediaPrint.png", "print");
 	}
@@ -60,11 +79,13 @@ public class MediaTest extends AbstractImageTranscoderTest {
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
 	 * @param media       the CSS media
+	 * @throws TranscoderException 
 	 */
-	private void testMedia(String inputURI, String refImageURI, String media) {
+	private void testMedia(String inputURI, String refImageURI, String media) throws TranscoderException {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.media = media;
+		runTest();
 	}
 
 	/**

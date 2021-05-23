@@ -57,8 +57,6 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
  */
 public class SVGConverterTest {
 
-	static final String ROOT_BUILD_DIR = TestLocations.getRootBuildURL();
-
 	static String resolveRelURI(String relPath) {
 		URL url = resolveURI(relPath);
 		String f = url.getFile();
@@ -72,7 +70,7 @@ public class SVGConverterTest {
 	static URL resolveURI(String relPath) {
 		URL url;
 		try {
-			url = new URL(ROOT_BUILD_DIR + relPath);
+			url = new URL(TestLocations.PROJECT_ROOT_URL + relPath);
 		} catch (MalformedURLException e) {
 			throw new IllegalStateException(e);
 		}
@@ -972,7 +970,7 @@ class ConverterOutputTest {
 
 		c.execute();
 
-		URL urlRef = new URL(SVGConverterTest.ROOT_BUILD_DIR + pngRef);
+		URL urlRef = new URL(TestLocations.PROJECT_ROOT_URL + pngRef);
 		pngRef = urlRef.toExternalForm();
 
 		pngDest = destFile.toURI().toURL().toExternalForm();

@@ -42,6 +42,8 @@ publishing.publications.maven(MavenPublication).pom {
 test {
 	exclude 'io/sf/carte/echosvg/apps/rasterizer/MainTest.class'
 	exclude 'io/sf/carte/echosvg/bridge/*LoadTest.class'
+	exclude 'io/sf/carte/echosvg/bridge/*PermissionsTest.class'
+	exclude 'io/sf/carte/echosvg/script/rhino/RhinoTest.class'
 }
 
 // Some tests do not work when the classes are in a testJar

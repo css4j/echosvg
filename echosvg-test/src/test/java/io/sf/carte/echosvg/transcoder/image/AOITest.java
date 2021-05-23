@@ -110,8 +110,10 @@ public class AOITest extends AbstractImageTranscoderTest {
 	 * @param y           the y coordinate of the area of interest
 	 * @param width       the width of the area of interest
 	 * @param height      the height of the area of interest
+	 * @throws TranscoderException 
 	 */
-	private void testAOI(String inputURI, String refImageURI, float x, float y, float width, float height) {
+	private void testAOI(String inputURI, String refImageURI, float x, float y, float width, float height)
+			throws TranscoderException {
 		testAOI(inputURI, refImageURI, x, y, width, height, -1, -1);
 	}
 
@@ -126,14 +128,16 @@ public class AOITest extends AbstractImageTranscoderTest {
 	 * @param height      the height of the area of interest
 	 * @param imgWidth    the width of the image to generate
 	 * @param imgHeight   the height of the image to generate
+	 * @throws TranscoderException 
 	 */
 	private void testAOI(String inputURI, String refImageURI, float x, float y, float width, float height,
-			float imgWidth, float imgHeight) {
+			float imgWidth, float imgHeight) throws TranscoderException {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.aoi = new Rectangle2D.Float(x, y, width, height);
 		this.imgWidth = imgWidth;
 		this.imgHeight = imgHeight;
+		runTest();
 	}
 
 	/**

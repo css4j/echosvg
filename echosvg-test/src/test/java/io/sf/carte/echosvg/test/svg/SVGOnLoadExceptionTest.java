@@ -23,6 +23,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FilePermission;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.AccessControlContext;
@@ -56,6 +57,7 @@ import io.sf.carte.echosvg.bridge.RelaxedExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.RelaxedScriptSecurity;
 import io.sf.carte.echosvg.bridge.ScriptSecurity;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
+import io.sf.carte.echosvg.dom.util.SAXIOException;
 import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
 import io.sf.carte.echosvg.util.ParsedURL;
@@ -249,7 +251,7 @@ public class SVGOnLoadExceptionTest {
 	 * URL, an IllegalArgumentException is thrown.
 	 */
 	private void setDocumentURL(String id) {
-		final String resName = TestLocations.getRootBuildURL() + FILE_DIR + id + SVG_EXTENSION;
+		final String resName = TestLocations.PROJECT_ROOT_URL + FILE_DIR + id + SVG_EXTENSION;
 		URL urlRes;
 		try {
 			urlRes = new URL(resName);
@@ -265,7 +267,7 @@ public class SVGOnLoadExceptionTest {
 	 * URL, an IllegalArgumentException is thrown.
 	 */
 	protected String resolveURL(String resourceURI) {
-		final String resName = TestLocations.getRootBuildURL() + resourceURI;
+		final String resName = TestLocations.PROJECT_ROOT_URL + resourceURI;
 		URL urlRes;
 		try {
 			urlRes = new URL(resName);
@@ -360,7 +362,7 @@ public class SVGOnLoadExceptionTest {
 	 * Implementation helper
 	 * @throws Exception 
 	 */
-	protected void testImpl() throws Exception {
+	protected void testImpl() throws IOException {
 		//
 		// First step:
 		//
@@ -368,7 +370,14 @@ public class SVGOnLoadExceptionTest {
 		//
 		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
 		f.setValidating(validate);
-		Document doc = f.createDocument(svgURL);
+		Document doc;
+
+		try {
+			doc = f.createDocument(svgURL);
+		} catch (SAXIOException e) {
+			checkException(e);
+			return;
+		}
 
 		//
 		// Second step:
@@ -394,11 +403,7 @@ public class SVGOnLoadExceptionTest {
 			}
 		}
 		if (e != null) {
-			String exname = e.getClass().getName();
-			if (!exceptionMatches(e.getClass(), getExpectedExceptionClass())) {
-				e.printStackTrace();
-				assertEquals("Unexpected exception from " + fileName + ',', getExpectedExceptionClass(), exname);
-			}
+			checkException(e);
 			return;
 		}
 
@@ -413,6 +418,14 @@ public class SVGOnLoadExceptionTest {
 		} else {
 			fail("Expected exception from " + fileName + ": " + expectedExceptionClass
 					+ ", found no exception. Result: " + s);
+		}
+	}
+
+	private void checkException(Exception e) {
+		String exname = e.getClass().getName();
+		if (!exceptionMatches(e.getClass(), getExpectedExceptionClass())) {
+			e.printStackTrace();
+			assertEquals("Unexpected exception from " + fileName + ',', getExpectedExceptionClass(), exname);
 		}
 	}
 

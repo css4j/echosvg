@@ -78,7 +78,7 @@ public abstract class AbstractImageTranscoderTest {
 	 * URI, an IllegalArgumentException is thrown.
 	 */
 	URL resolveURI(String url) {
-		url = TestLocations.getRootBuildURL() + url;
+		url = TestLocations.PROJECT_ROOT_URL + url;
 		try {
 			return new URL(url);
 		} catch (MalformedURLException e) {

@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
@@ -54,16 +55,32 @@ public class AlternateStylesheetTest extends AbstractImageTranscoderTest {
 		TestFonts.loadTestFonts();
 	}
 
-	@org.junit.Test
+	@Test
 	public void test() throws TranscoderException {
 		testAlternateStylesheet("samples/tests/spec/styling/smiley.svg",
 				"test-references/samples/tests/spec/styling/smileySmiling.png", "Smiling");
+	}
+
+	@Test
+	public void testSad() throws TranscoderException {
 		testAlternateStylesheet("samples/tests/spec/styling/smiley.svg",
 				"test-references/samples/tests/spec/styling/smileyBasic Sad.png", "Basic Sad");
+	}
+
+	@Test
+	public void testWow() throws TranscoderException {
 		testAlternateStylesheet("samples/tests/spec/styling/smiley.svg",
 				"test-references/samples/tests/spec/styling/smileyWow!.png", "Wow!");
+	}
+
+	@Test
+	public void testGrim() throws TranscoderException {
 		testAlternateStylesheet("samples/tests/spec/styling/smiley.svg",
 				"test-references/samples/tests/spec/styling/smileyGrim.png", "Grim");
+	}
+
+	@Test
+	public void testOups() throws TranscoderException {
 		testAlternateStylesheet("samples/tests/spec/styling/smiley.svg",
 				"test-references/samples/tests/spec/styling/smileyOups.png", "Oups");
 	}

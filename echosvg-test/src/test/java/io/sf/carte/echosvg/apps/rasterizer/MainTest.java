@@ -57,7 +57,7 @@ public class MainTest {
 	public void testMain() {
 		URL url;
 		try {
-			url = new URL(TestLocations.getRootBuildURL());
+			url = new URL(TestLocations.PROJECT_ROOT_URL);
 		} catch (MalformedURLException e) {
 			throw new IllegalStateException();
 		}

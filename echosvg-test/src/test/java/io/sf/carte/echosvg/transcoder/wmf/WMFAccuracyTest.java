@@ -51,9 +51,7 @@ import io.sf.carte.echosvg.transcoder.wmf.tosvg.WMFTranscoder;
  */
 public class WMFAccuracyTest {
 
-	private static final String ROOT_BUILD_DIR = TestLocations.getRootBuildURL();
-
-	private static final String GENERATOR_REFERENCE_BASE = ROOT_BUILD_DIR
+	private static final String GENERATOR_REFERENCE_BASE = TestLocations.PROJECT_ROOT_URL
 			+ "test-references/io/sf/carte/echosvg/transcoder/wmf";
 
 	private static final String CANDIDATE_REF_DIR = "candidate";
@@ -156,7 +154,7 @@ public class WMFAccuracyTest {
 
 		String[] dirNfile = breakWMFFile(wmfFile);
 
-		wmfURL = new URL(ROOT_BUILD_DIR + dirNfile[0]+ dirNfile[1] + dirNfile[2]);
+		wmfURL = new URL(TestLocations.PROJECT_ROOT_URL + dirNfile[0]+ dirNfile[1] + dirNfile[2]);
 		refURL = new URL(GENERATOR_REFERENCE_BASE + '/' + dirNfile[1] + SVG_EXTENSION);
 		String saveURL = new URL(GENERATOR_REFERENCE_BASE + '/' + CANDIDATE_REF_DIR + "/" + dirNfile[1] + SVG_EXTENSION).getFile();
 		saveSVG = new File(saveURL);

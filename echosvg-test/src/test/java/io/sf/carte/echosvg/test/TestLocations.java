@@ -21,11 +21,13 @@ import java.net.URL;
 
 public class TestLocations {
 
+	public static final String PROJECT_ROOT_URL = getRootBuildURL();
+
 	public static final String TEST_IMAGES_PATH = "/reports/tests/test/images";
 
 	private static final String TEST_DIRNAME = "echosvg-test";
 
-	public static String getRootBuildURL() {
+	private static String getRootBuildURL() {
 		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<String>() {
 			@Override
 			public String run() {

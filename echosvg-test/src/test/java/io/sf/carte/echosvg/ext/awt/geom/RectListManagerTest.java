@@ -54,7 +54,7 @@ public class RectListManagerTest {
 	/**
 	 * Directory for reference files
 	 */
-	private static final String REFERENCE_DIR = TestLocations.getRootBuildURL()
+	private static final String REFERENCE_DIR = TestLocations.PROJECT_ROOT_URL
 			+ "test-references/io/sf/carte/echosvg/ext/awt/geom/";
 
 	//private static final String VARIATION_DIR = "variation/";

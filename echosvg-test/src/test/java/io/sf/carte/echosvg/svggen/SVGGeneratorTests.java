@@ -73,7 +73,7 @@ public class SVGGeneratorTests {
 	private static final String CUSTOM_CONTEXT_GENERATION_PREFIX = "Context";
 
 	static {
-		GENERATOR_REFERENCE_BASE = TestLocations.getRootBuildURL() + "test-references/io/sf/carte/echosvg/svggen/";
+		GENERATOR_REFERENCE_BASE = TestLocations.PROJECT_ROOT_URL + "test-references/io/sf/carte/echosvg/svggen/";
 	}
 
 	@BeforeClass

@@ -63,11 +63,13 @@ public class LanguageTest extends AbstractImageTranscoderTest {
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
 	 * @param language    the preferred language
+	 * @throws TranscoderException 
 	 */
-	private void testLanguage(String inputURI, String refImageURI, String language) {
+	private void testLanguage(String inputURI, String refImageURI, String language) throws TranscoderException {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.language = language;
+		runTest();
 	}
 
 	/**

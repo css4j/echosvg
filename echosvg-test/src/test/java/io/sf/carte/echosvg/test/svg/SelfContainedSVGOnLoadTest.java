@@ -143,7 +143,7 @@ public class SelfContainedSVGOnLoadTest {
 	 * URL, an IllegalArgumentException is thrown.
 	 */
 	protected String resolveURL(String url) {
-		final String resName = TestLocations.getRootBuildURL() + url;
+		final String resName = TestLocations.PROJECT_ROOT_URL + url;
 		URL urlRes;
 		try {
 			urlRes = new URL(resName);

@@ -255,7 +255,7 @@ public abstract class MemoryLeakTest {
 	}
 
 	private static String resolveURI(String uri) throws MalformedURLException {
-		final String resName = TestLocations.getRootBuildURL() + uri;
+		final String resName = TestLocations.PROJECT_ROOT_URL + uri;
 		URL url = new URL(resName);
 		return url.toExternalForm();
 	}

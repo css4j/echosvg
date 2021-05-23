@@ -208,7 +208,7 @@ public abstract class AbstractRenderingAccuracyTest {
 		if (url.startsWith("file:")) {
 			return new URL(url);
 		}
-		return new URL(TestLocations.getRootBuildURL() + url);
+		return new URL(TestLocations.PROJECT_ROOT_URL + url);
 	}
 
 	/**

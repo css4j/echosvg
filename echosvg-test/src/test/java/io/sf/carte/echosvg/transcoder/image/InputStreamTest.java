@@ -50,10 +50,12 @@ public class InputStreamTest extends AbstractImageTranscoderTest {
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
+	 * @throws TranscoderException 
 	 */
-	private void testInputStream(String inputURI, String refImageURI) {
+	private void testInputStream(String inputURI, String refImageURI) throws TranscoderException {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
+		runTest();
 	}
 
 	/**

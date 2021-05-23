@@ -39,7 +39,7 @@ public class TestFonts {
 	public static final String FONT_FAMILY_MONOSPACED1 = "Ubuntu Mono";
 
 	public static void loadTestFonts() throws FontFormatException, IOException {
-		String fontPathUrl = TestLocations.getRootBuildURL() + FONT_PATH;
+		String fontPathUrl = TestLocations.PROJECT_ROOT_URL + FONT_PATH;
 
 		registerFont(Font.TRUETYPE_FONT, fontPathUrl, "OpenSans-Regular.ttf");
 		registerFont(Font.TRUETYPE_FONT, fontPathUrl, "OpenSans-Bold.ttf");
@@ -83,7 +83,7 @@ public class TestFonts {
 
 	public static void registerFont(int truetypeFont, String fontFilename)
 			throws FontFormatException, IOException {
-		registerFont(Font.TRUETYPE_FONT, TestLocations.getRootBuildURL() + FONT_PATH, fontFilename);
+		registerFont(Font.TRUETYPE_FONT, TestLocations.PROJECT_ROOT_URL + FONT_PATH, fontFilename);
 	}
 
 	private static void registerFont(int truetypeFont, String fontPathUrl, String fontFile)

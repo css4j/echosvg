@@ -140,7 +140,7 @@ public class ExternalResourcesTest implements ErrorConstants {
 	 * URL, an IllegalArgumentException is thrown.
 	 */
 	private String resolveURL(String basename) {
-		final String resName = TestLocations.getRootBuildURL() + FILE_DIR + basename + ".svg";
+		final String resName = TestLocations.PROJECT_ROOT_URL + FILE_DIR + basename + ".svg";
 		URL url;
 		try {
 			url = new URL(resName);

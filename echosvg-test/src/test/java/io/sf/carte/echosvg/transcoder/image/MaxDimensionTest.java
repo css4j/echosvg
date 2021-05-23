@@ -73,12 +73,15 @@ public class MaxDimensionTest extends AbstractImageTranscoderTest {
 	 * @param refImageURI URI of the reference image.
 	 * @param maxWidth    Maximum image width (KEY_MAX_WIDTH value).
 	 * @param maxHeight   Maximum image height (KEY_MAX_HEIGHT value).
+	 * @throws TranscoderException 
 	 */
-	private void testMaxDimension(String inputURI, String refImageURI, float maxWidth, float maxHeight) {
+	private void testMaxDimension(String inputURI, String refImageURI, float maxWidth, float maxHeight)
+			throws TranscoderException {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.maxWidth = maxWidth;
 		this.maxHeight = maxHeight;
+		runTest();
 	}
 
 	/**
@@ -90,15 +93,17 @@ public class MaxDimensionTest extends AbstractImageTranscoderTest {
 	 * @param maxHeight   Maximum image height (KEY_MAX_HEIGHT value).
 	 * @param width       Image width (KEY_WIDTH value).
 	 * @param height      Image height (KEY_HEIGH value).
+	 * @throws TranscoderException 
 	 */
 	private void testMaxDimension(String inputURI, String refImageURI, float maxWidth, float maxHeight, float width,
-			float height) {
+			float height) throws TranscoderException {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
 		this.maxWidth = maxWidth;
 		this.maxHeight = maxHeight;
 		this.width = width;
 		this.height = height;
+		runTest();
 	}
 
 	// -- Methods -------------------------------------------------------------

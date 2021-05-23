@@ -44,7 +44,7 @@ public class NullSetSVGDocumentTest extends JSVGMemoryLeakTest {
 	public NullSetSVGDocumentTest() {
 	}
 
-	private static final String TEST_NON_NULL_URI = TestLocations.getRootBuildURL() + "samples/anne.svg";
+	private static final String TEST_NON_NULL_URI = TestLocations.PROJECT_ROOT_URL + "samples/anne.svg";
 
 	@Override
 	public String getName() {
