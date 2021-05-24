@@ -23,7 +23,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.SinglePixelPackedSampleModel;
 import java.lang.reflect.InvocationTargetException;
 
-import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
@@ -43,11 +42,6 @@ public class TIFFTranscoder extends ImageTranscoder {
 	 */
 	public TIFFTranscoder() {
 		hints.put(KEY_FORCE_TRANSPARENT_WHITE, Boolean.FALSE);
-	}
-
-	/** @return the transcoder's user agent */
-	public UserAgent getUserAgent() {
-		return this.userAgent;
 	}
 
 	/**

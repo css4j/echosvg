@@ -85,28 +85,28 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	/**
 	 * Current area of interest.
 	 */
-	protected Rectangle2D curAOI;
+	private Rectangle2D curAOI;
 
 	/**
 	 * Transform needed to render the current area of interest
 	 */
-	protected AffineTransform curTxf;
+	private AffineTransform curTxf;
 
 	/**
 	 * Current GVT Tree, i.e., the GVT tree representing the page being printed
 	 * currently.
 	 */
-	protected GraphicsNode root;
+	private GraphicsNode root;
 
 	/**
 	 * Current bridge context
 	 */
-	protected BridgeContext ctx;
+	private BridgeContext ctx;
 
 	/**
 	 * Current gvt builder
 	 */
-	protected GVTBuilder builder;
+	private GVTBuilder builder;
 
 	/**
 	 * Image's width and height (init to 400x400).
@@ -114,7 +114,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	protected float width = 400, height = 400;
 
 	/** The user agent dedicated to an SVG Transcoder. */
-	protected UserAgent userAgent;
+	private UserAgent userAgent;
 
 	protected SVGAbstractTranscoder() {
 		userAgent = createUserAgent();
@@ -130,6 +130,50 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	protected UserAgent createUserAgent() {
 		return new SVGAbstractTranscoderUserAgent();
+	}
+
+	/*
+	 * XXX: Nothing uses this.
+	 */
+	Rectangle2D getCurrentAOI() {
+		return curAOI;
+	}
+
+	protected AffineTransform getCurrentAOITransform() {
+		return curTxf;
+	}
+
+	protected BridgeContext getBridgeContext() {
+		return ctx;
+	}
+
+	protected void setBridgeContext(BridgeContext ctx) {
+		this.ctx = ctx;
+	}
+
+	protected GraphicsNode getCurrentGVTree() {
+		return root;
+	}
+
+	/**
+	 * Set the root node of the current GVT tree.
+	 * 
+	 * @param root the root node.
+	 */
+	protected void setCurrentGVTree(GraphicsNode root) {
+		this.root = root;
+	}
+
+	public UserAgent getUserAgent() {
+		return userAgent;
+	}
+
+	protected void setWidth(float width) {
+		this.width = width;
+	}
+
+	protected void setHeight(float height) {
+		this.height = height;
 	}
 
 	/**
@@ -966,8 +1010,9 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 		@Override
 		public String getDefaultFontFamily() {
 			String s = (String) hints.get(KEY_DEFAULT_FONT_FAMILY);
-			if (s != null)
+			if (s != null) {
 				return s;
+			}
 
 			return super.getDefaultFontFamily();
 		}

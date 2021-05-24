@@ -154,8 +154,8 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 		// We do this to hide 'ctx' from the SVGAbstractTranscoder
 		// otherwise it will dispose of the context before we can
 		// print the document.
-		theCtx = ctx;
-		ctx = null;
+		theCtx = getBridgeContext();
+		setBridgeContext(null);
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 			curIndex = -1;
 			if (theCtx != null)
 				theCtx.dispose();
-			userAgent.displayMessage("Done");
+			getUserAgent().displayMessage("Done");
 			return NO_SUCH_PAGE;
 		}
 
@@ -293,8 +293,10 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 			// method which takes a document as an input. That method
 			// builds the GVT root tree.{
 			try {
-				width = (int) pageFormat.getImageableWidth();
-				height = (int) pageFormat.getImageableHeight();
+				int width = (int) pageFormat.getImageableWidth();
+				int height = (int) pageFormat.getImageableHeight();
+				setWidth(width);
+				setHeight(height);
 				super.transcode(printedInputs.get(pageIndex), null);
 				curIndex = pageIndex;
 			} catch (TranscoderException e) {
@@ -325,13 +327,13 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 		//
 		// Append transform to selected area
 		//
-		g.transform(curTxf);
+		g.transform(getCurrentAOITransform());
 
 		//
 		// Delegate rendering to painter
 		//
 		try {
-			root.paint(g);
+			getCurrentGVTree().paint(g);
 		} catch (Exception e) {
 			g.setTransform(t);
 			g.setClip(clip);
@@ -380,7 +382,7 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 	 * Prints an error on the output page
 	 */
 	private void drawError(Graphics g, Exception e) {
-		userAgent.displayError(e);
+		getUserAgent().displayError(e);
 		// Should also probably draw exception on page.
 	}
 

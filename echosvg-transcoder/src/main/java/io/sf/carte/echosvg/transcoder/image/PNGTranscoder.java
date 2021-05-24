@@ -23,7 +23,6 @@ import java.awt.image.SinglePixelPackedSampleModel;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 
-import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
@@ -45,11 +44,6 @@ public class PNGTranscoder extends ImageTranscoder {
 	 */
 	public PNGTranscoder() {
 		hints.put(KEY_FORCE_TRANSPARENT_WHITE, Boolean.FALSE);
-	}
-
-	/** @return the transcoder's user agent */
-	public UserAgent getUserAgent() {
-		return this.userAgent;
 	}
 
 	/**

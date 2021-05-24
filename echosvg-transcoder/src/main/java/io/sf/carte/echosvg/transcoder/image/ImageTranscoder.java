@@ -105,15 +105,15 @@ public abstract class ImageTranscoder extends SVGAbstractTranscoder {
 		ImageRenderer renderer = createRenderer();
 		renderer.updateOffScreen(w, h);
 		// curTxf.translate(0.5, 0.5);
-		renderer.setTransform(curTxf);
-		renderer.setTree(this.root);
-		this.root = null; // We're done with it...
+		renderer.setTransform(getCurrentAOITransform());
+		renderer.setTree(getCurrentGVTree());
+		setCurrentGVTree(null); // We're done with it...
 
 		try {
 			// now we are sure that the aoi is the image size
 			Shape raoi = new Rectangle2D.Float(0, 0, width, height);
 			// Warning: the renderer's AOI must be in user space
-			renderer.repaint(curTxf.createInverse().createTransformedShape(raoi));
+			renderer.repaint(getCurrentAOITransform().createInverse().createTransformedShape(raoi));
 			BufferedImage rend = renderer.getOffScreen();
 			renderer = null; // We're done with it...
 

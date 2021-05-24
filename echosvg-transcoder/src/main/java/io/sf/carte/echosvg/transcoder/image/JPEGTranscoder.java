@@ -87,7 +87,7 @@ public class JPEGTranscoder extends ImageTranscoder {
 			ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/jpeg");
 			ImageWriterParams params = new ImageWriterParams();
 			params.setJPEGQuality(quality, true);
-			float PixSzMM = userAgent.getPixelUnitToMillimeter();
+			float PixSzMM = getUserAgent().getPixelUnitToMillimeter();
 			int PixSzInch = (int) (25.4 / PixSzMM + 0.5);
 			params.setResolution(PixSzInch);
 			writer.writeImage(img, ostream, params);
