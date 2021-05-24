@@ -461,7 +461,7 @@ public class GraphicContext implements Cloneable {
 	 * @see RenderingHints
 	 */
 	public void setRenderingHints(Map<?, ?> hints) {
-		this.hints.clear();
+		this.hints = new RenderingHints(null);
 		this.hints.putAll(hints);
 	}
 
