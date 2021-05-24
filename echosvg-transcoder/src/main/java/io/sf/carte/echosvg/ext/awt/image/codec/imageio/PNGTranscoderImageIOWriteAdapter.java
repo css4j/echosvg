@@ -64,26 +64,6 @@ public class PNGTranscoderImageIOWriteAdapter implements PNGTranscoder.WriteAdap
 		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
 		ImageWriterParams params = new ImageWriterParams();
 
-		/*
-		 * NYI!!!!! PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(img);
-		 * if (params instanceof PNGEncodeParam.RGB) {
-		 * ((PNGEncodeParam.RGB)params).setBackgroundRGB (new int [] { 255, 255, 255 });
-		 * }
-		 */
-
-		// If they specify GAMMA key with a value of '0' then omit
-		// gamma chunk. If they do not provide a GAMMA then just
-		// generate an sRGB chunk. Otherwise supress the sRGB chunk
-		// and just generate gamma and chroma chunks.
-		/*
-		 * NYI!!!!!! if (hints.containsKey(PNGTranscoder.KEY_GAMMA)) { float gamma =
-		 * ((Float)hints.get(PNGTranscoder.KEY_GAMMA)).floatValue(); if (gamma > 0) {
-		 * params.setGamma(gamma); }
-		 * params.setChromaticity(PNGTranscoder.DEFAULT_CHROMA); } else { // We
-		 * generally want an sRGB chunk and our encoding intent // is perceptual
-		 * params.setSRGBIntent(PNGEncodeParam.INTENT_PERCEPTUAL); }
-		 */
-
 		float PixSzMM = transcoder.getUserAgent().getPixelUnitToMillimeter();
 		int PixSzInch = (int) (25.4 / PixSzMM + 0.5);
 		params.setResolution(PixSzInch);
