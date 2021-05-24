@@ -110,7 +110,7 @@ public class GraphicContext implements Cloneable {
 	/**
 	 * Current Font
 	 */
-	protected Font font = new Font("sanserif", Font.PLAIN, 12);
+	protected Font font = new Font("SansSerif", Font.PLAIN, 12);
 
 	/**
 	 * Current background color.

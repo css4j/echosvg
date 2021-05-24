@@ -88,6 +88,7 @@ public class WMFAccuracyTest {
 	@Test
 	public void testBlackShapes() throws IOException, TranscoderException {
 		Assume.assumeTrue("'Courier' font is not available", isFontAvailable("Courier"));
+		Assume.assumeTrue("'System' font is not available", isFontAvailable("System"));
 		runTest("samples/tests/resources/wmf/black_shapes.wmf");
 	}
 
