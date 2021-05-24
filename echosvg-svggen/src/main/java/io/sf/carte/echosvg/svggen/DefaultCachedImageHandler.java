@@ -362,7 +362,7 @@ public abstract class DefaultCachedImageHandler implements CachedImageHandler, S
 			throw new SVGGraphics2DRuntimeException(ERR_CONTEXT_NULL);
 
 		try {
-			os = new ByteArrayOutputStream();
+			os = new ByteArrayOutputStream(2048);
 			// encode the image in memory
 			encodeImage(buf, os);
 			os.flush();

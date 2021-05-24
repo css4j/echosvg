@@ -79,7 +79,7 @@ class ChunkStream extends OutputStream implements DataOutput {
 	ChunkStream(String type) throws IOException {
 		this.type = type;
 
-		this.baos = new ByteArrayOutputStream();
+		this.baos = new ByteArrayOutputStream(2048);
 		this.dos = new DataOutputStream(baos);
 	}
 

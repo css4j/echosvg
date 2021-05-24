@@ -119,7 +119,7 @@ public class ImageHandlerBase64Encoder extends DefaultImageHandler {
 		//
 		// Setup Base64Encoder stream to byte array.
 		//
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		ByteArrayOutputStream os = new ByteArrayOutputStream(2048);
 		Base64EncoderStream b64Encoder = new Base64EncoderStream(os);
 		try {
 			//

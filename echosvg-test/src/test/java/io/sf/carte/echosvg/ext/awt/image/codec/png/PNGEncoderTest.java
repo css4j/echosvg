@@ -69,7 +69,7 @@ public class PNGEncoderTest {
 
 		// Create an output stream where the PNG data
 		// will be stored.
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(256);
 		OutputStream os = buildOutputStream(bos);
 
 		// Now, try to encode image

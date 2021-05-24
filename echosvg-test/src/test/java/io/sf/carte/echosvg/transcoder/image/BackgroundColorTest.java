@@ -100,7 +100,7 @@ public class BackgroundColorTest extends AbstractImageTranscoderTest {
 			g2d.fillRect(0, 0, 400, 400);
 			g2d.setColor(Color.red);
 			g2d.fillRect(100, 50, 100, 50);
-			ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+			ByteArrayOutputStream ostream = new ByteArrayOutputStream(2048);
 			PNGTranscoder t = new PNGTranscoder();
 			TranscoderOutput output = new TranscoderOutput(ostream);
 			t.writeImage(img, output);

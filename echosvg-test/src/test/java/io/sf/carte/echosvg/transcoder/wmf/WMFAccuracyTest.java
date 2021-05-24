@@ -130,7 +130,7 @@ public class WMFAccuracyTest {
 	 */
 	private void runTest(String filename) throws IOException, TranscoderException {
 		setFile(filename);
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		ByteArrayOutputStream out = new ByteArrayOutputStream(2048);
 		WMFTranscoder wmft = new WMFTranscoder();
 		TranscoderInput input;
 		input = new TranscoderInput(wmfURL.toString());

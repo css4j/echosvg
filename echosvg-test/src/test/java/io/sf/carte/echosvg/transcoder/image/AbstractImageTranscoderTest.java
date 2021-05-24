@@ -191,7 +191,7 @@ public abstract class AbstractImageTranscoderTest {
 	 */
 	private class DiffImageTranscoder extends ImageTranscoder {
 
-		/** The result of the image comparaison. */
+		/** The result of the image comparison. */
 		private boolean state;
 
 		/** The reference image. */
@@ -269,7 +269,7 @@ public abstract class AbstractImageTranscoderTest {
 			// compare the resulting image with the reference image
 			// state = true if refImg is the same than img
 
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			ByteArrayOutputStream out = new ByteArrayOutputStream(2048);
 			TranscoderOutput output = new TranscoderOutput(out);
 			PNGTranscoder t = new PNGTranscoder();
 			t.writeImage(img, output);
@@ -299,13 +299,13 @@ public abstract class AbstractImageTranscoderTest {
 			BufferedImage referenceImage = getImage(new ByteArrayInputStream(refImgData));
 			BufferedImage diffImage = AbstractRenderingAccuracyTest.buildDiffImage(referenceImage, actualImage);
 			ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
-			ByteArrayOutputStream diff = new ByteArrayOutputStream();
+			ByteArrayOutputStream diff = new ByteArrayOutputStream(2048);
 			writer.writeImage(diffImage, diff);
 			return diff.toByteArray();
 		}
 
 		private boolean dataFromFileEqual(File file, byte[] data) throws IOException {
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			ByteArrayOutputStream out = new ByteArrayOutputStream(data.length);
 			IOUtils.copy(new BufferedInputStream(new FileInputStream(file)), out);
 			return Arrays.equals(out.toByteArray(), data);
 		}

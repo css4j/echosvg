@@ -102,7 +102,7 @@ public class SVGAccuracyTest {
 		//
 		// Generate SVG content
 		//
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(2048);
 		OutputStreamWriter osw = new OutputStreamWriter(bos, "UTF-8");
 		painter.paint(g2d);
 		configureSVGGraphics2D(g2d);
