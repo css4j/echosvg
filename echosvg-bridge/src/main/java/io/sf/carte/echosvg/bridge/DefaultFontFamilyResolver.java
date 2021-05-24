@@ -81,26 +81,26 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
 		// Load all fonts. Work around
 		//
 
-		GraphicsEnvironment env;
-		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		String[] fontNames = env.getAvailableFontFamilyNames();
 
 		int nFonts = fontNames != null ? fontNames.length : 0;
 		for (int i = 0; i < nFonts; i++) {
-			fonts.put(fontNames[i].toLowerCase(), fontNames[i]);
+			String lcFontName = fontNames[i].toLowerCase();
+			fonts.put(lcFontName, fontNames[i]);
 
 			// also add the font name with the spaces removed
-			StringTokenizer st = new StringTokenizer(fontNames[i]);
-			String fontNameWithoutSpaces = "";
+			StringTokenizer st = new StringTokenizer(lcFontName);
+			StringBuilder fontNameWithoutSpaces = new StringBuilder(lcFontName.length());
 			while (st.hasMoreTokens()) {
-				fontNameWithoutSpaces += st.nextToken();
+				fontNameWithoutSpaces.append(st.nextToken());
 			}
-			fonts.put(fontNameWithoutSpaces.toLowerCase(), fontNames[i]);
+			if (fontNameWithoutSpaces.length() != lcFontName.length()) {
+				fonts.put(fontNameWithoutSpaces.toString(), fontNames[i]);
 
-			// also add the font name with spaces replaced by dashes
-			String fontNameWithDashes = fontNames[i].replace(' ', '-');
-			if (!fontNameWithDashes.equals(fontNames[i])) {
-				fonts.put(fontNameWithDashes.toLowerCase(), fontNames[i]);
+				// also add the font name with spaces replaced by dashes
+				String fontNameWithDashes = lcFontName.replace(' ', '-');
+				fonts.put(fontNameWithDashes, fontNames[i]);
 			}
 		}
 
@@ -131,6 +131,52 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
 	 * reduce the number of font family objects used.
 	 */
 	protected static final Map<String, GVTFontFamily> resolvedFontFamilies = new HashMap<>();
+
+	/**
+	 * Get the singleton instance of {@code DefaultFontFamilyResolver}.
+	 * 
+	 * @return the singleton instance.
+	 */
+	public static DefaultFontFamilyResolver getInstance() {
+		return SINGLETON;
+	}
+
+	/**
+	 * Register a font with this resolver.
+	 * 
+	 * @param font the font.
+	 */
+	public void registerFont(Font font) {
+		String fontName = font.getFontName();
+		String lcFontName = fontName.toLowerCase();
+		fonts.putIfAbsent(lcFontName, fontName);
+
+		// Now the font family
+		String fontFamily = font.getFamily();
+		String lcFontFamily = fontFamily.toLowerCase();
+
+		if (!fonts.containsKey(lcFontFamily)) {
+			fonts.put(lcFontFamily, fontFamily);
+
+			// also add the font name with the spaces removed
+			StringTokenizer st = new StringTokenizer(lcFontFamily);
+			StringBuilder fontNameWithoutSpaces = new StringBuilder(lcFontFamily.length());
+			while (st.hasMoreTokens()) {
+				fontNameWithoutSpaces.append(st.nextToken());
+			}
+			if (fontNameWithoutSpaces.length() != lcFontFamily.length()) {
+				fonts.put(fontNameWithoutSpaces.toString(), fontFamily);
+				// also add the font name with spaces replaced by dashes
+				String fontNameWithDashes = lcFontFamily.replace(' ', '-');
+				fonts.put(fontNameWithDashes, fontFamily);
+			}
+
+			AWTFontFamily awtFontFamily = new AWTFontFamily(fontFamily);
+			awtFontFamilies.add(awtFontFamily);
+			AWTGVTFont gvtFont = new AWTGVTFont(fontFamily, 0, 12);
+			awtFonts.add(gvtFont);
+		}
+	}
 
 	@Override
 	public AWTFontFamily resolve(String familyName, FontFace fontFace) {
@@ -169,13 +215,6 @@ public final class DefaultFontFamilyResolver implements FontFamilyResolver {
 			resolvedFontFamilies.put(familyName, resolvedFF);
 		}
 
-		// if (resolvedFF != null) {
-		// System.out.println("resolved " + fontFamily.getFamilyName() +
-		// " to " + resolvedFF.getFamilyName());
-		// } else {
-		// System.out.println("could not resolve " +
-		// fontFamily.getFamilyName());
-		// }
 		return resolvedFF;
 	}
 

@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import io.sf.carte.echosvg.bridge.DefaultFontFamilyResolver;
+
 /**
  * Free fonts used by tests.
  *
@@ -81,19 +83,20 @@ public class TestFonts {
 		registerFont(Font.TRUETYPE_FONT, fontPathUrl, "UbuntuMono-Italic.ttf");
 	}
 
-	public static void registerFont(int truetypeFont, String fontFilename)
+	public static void registerFont(int fontFormat, String fontFilename)
 			throws FontFormatException, IOException {
-		registerFont(Font.TRUETYPE_FONT, TestLocations.PROJECT_ROOT_URL + FONT_PATH, fontFilename);
+		registerFont(fontFormat, TestLocations.PROJECT_ROOT_URL + FONT_PATH, fontFilename);
 	}
 
-	private static void registerFont(int truetypeFont, String fontPathUrl, String fontFile)
+	private static void registerFont(int fontFormat, String fontPathUrl, String fontFile)
 			throws FontFormatException, IOException {
 		URL url = new URL(fontPathUrl + fontFile);
 		File f = new File(url.getPath());
-		Font baseFont = Font.createFont(Font.TRUETYPE_FONT, f);
+		Font baseFont = Font.createFont(fontFormat, f);
 
 		GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		genv.registerFont(baseFont);
+		DefaultFontFamilyResolver.getInstance().registerFont(baseFont);
 	}
 
 }

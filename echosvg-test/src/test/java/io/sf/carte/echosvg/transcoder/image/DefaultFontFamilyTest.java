@@ -39,16 +39,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DefaultFontFamilyTest extends AbstractImageTranscoderTest {
-
-	/** The URI of the input image. */
-	private String inputURI;
-
-	/** The URI of the reference image. */
-	private String refImageURI;
-
-	/** The default font-family to use. */
-	private String defaultFontFamily;
+public class DefaultFontFamilyTest {
 
 	@BeforeClass
 	public static void beforeClass() throws FontFormatException, IOException {
@@ -83,36 +74,53 @@ public class DefaultFontFamilyTest extends AbstractImageTranscoderTest {
 	 */
 	private void testDefaultFontFamily(String inputURI, String refImageURI, String defaultFontFamily)
 			throws TranscoderException {
-		this.inputURI = inputURI;
-		this.refImageURI = refImageURI;
-		this.defaultFontFamily = defaultFontFamily;
-		runTest();
+		DefaultFontFamilyRunner runner = new DefaultFontFamilyRunner(inputURI, refImageURI, defaultFontFamily);
+		runner.runTest();
 	}
 
-	/**
-	 * Creates the <code>TranscoderInput</code>.
-	 */
-	@Override
-	protected TranscoderInput createTranscoderInput() {
-		return new TranscoderInput(resolveURI(inputURI).toString());
-	}
+	private static class DefaultFontFamilyRunner extends AbstractImageTranscoderTest {
 
-	/**
-	 * Creates a Map that contains additional transcoding hints.
-	 */
-	@Override
-	protected Map<Key, Object> createTranscodingHints() {
-		Map<Key, Object> hints = new HashMap<>(3);
-		hints.put(SVGAbstractTranscoder.KEY_DEFAULT_FONT_FAMILY, defaultFontFamily);
-		return hints;
-	}
+		/** The URI of the input image. */
+		private String inputURI;
 
-	/**
-	 * Returns the reference image for this test.
-	 */
-	@Override
-	protected byte[] getReferenceImageData() {
-		return createBufferedImageData(resolveURI(refImageURI));
+		/** The URI of the reference image. */
+		private String refImageURI;
+
+		/** The default font-family to use. */
+		private String defaultFontFamily;
+
+		DefaultFontFamilyRunner(String inputURI, String refImageURI, String defaultFontFamily) {
+			super();
+			this.inputURI = inputURI;
+			this.refImageURI = refImageURI;
+			this.defaultFontFamily = defaultFontFamily;
+		}
+
+		/**
+		 * Creates the <code>TranscoderInput</code>.
+		 */
+		@Override
+		protected TranscoderInput createTranscoderInput() {
+			return new TranscoderInput(resolveURI(inputURI).toString());
+		}
+
+		/**
+		 * Creates a Map that contains additional transcoding hints.
+		 */
+		@Override
+		protected Map<Key, Object> createTranscodingHints() {
+			Map<Key, Object> hints = new HashMap<>(3);
+			hints.put(SVGAbstractTranscoder.KEY_DEFAULT_FONT_FAMILY, defaultFontFamily);
+			return hints;
+		}
+
+		/**
+		 * Returns the reference image for this test.
+		 */
+		@Override
+		protected byte[] getReferenceImageData() {
+			return createBufferedImageData(resolveURI(refImageURI));
+		}
 	}
 
 }

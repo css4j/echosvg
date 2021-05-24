@@ -21,6 +21,9 @@ import java.net.URL;
 
 public class TestLocations {
 
+	/**
+	 * The project's root directory URL, with the last '/' included.
+	 */
 	public static final String PROJECT_ROOT_URL = getRootBuildURL();
 
 	public static final String TEST_IMAGES_PATH = "/reports/tests/test/images";
