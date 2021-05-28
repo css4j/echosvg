@@ -126,7 +126,7 @@ public class CompositeRable8Bit extends AbstractColorInterpolationRable implemen
 
 	@Override
 	public RenderedImage createRendering(RenderContext rc) {
-		if (srcs.size() == 0)
+		if (getSources().size() == 0)
 			return null;
 
 		// Just copy over the rendering hints.

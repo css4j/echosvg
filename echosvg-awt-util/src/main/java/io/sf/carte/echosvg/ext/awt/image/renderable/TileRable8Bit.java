@@ -140,7 +140,7 @@ public class TileRable8Bit extends AbstractColorInterpolationRable implements Ti
 	 */
 	@Override
 	public Filter getSource() {
-		return (Filter) srcs.get(0);
+		return (Filter) getSources().get(0);
 	}
 
 	/**

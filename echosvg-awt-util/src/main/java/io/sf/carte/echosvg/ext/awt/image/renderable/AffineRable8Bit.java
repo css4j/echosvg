@@ -59,7 +59,7 @@ public class AffineRable8Bit extends AbstractRable implements AffineRable, Paint
 	 */
 	@Override
 	public Filter getSource() {
-		return (Filter) srcs.get(0);
+		return (Filter) getSources().get(0);
 	}
 
 	/**

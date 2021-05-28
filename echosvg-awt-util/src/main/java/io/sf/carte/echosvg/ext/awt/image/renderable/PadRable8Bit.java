@@ -58,7 +58,7 @@ public class PadRable8Bit extends AbstractRable implements PadRable, PaintRable 
 	 */
 	@Override
 	public Filter getSource() {
-		return (Filter) srcs.get(0);
+		return (Filter) getSources().get(0);
 	}
 
 	/**

@@ -74,7 +74,7 @@ public class FilterResRable8Bit extends AbstractRable implements FilterResRable,
 	 */
 	@Override
 	public Filter getSource() {
-		return (Filter) srcs.get(0);
+		return (Filter) getSources().get(0);
 	}
 
 	/**

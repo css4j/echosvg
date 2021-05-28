@@ -49,9 +49,9 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.RenderedImageCachableRed;
  */
 public abstract class AbstractRable implements Filter {
 
-	protected Vector<RenderableImage> srcs;
-	protected Map<String, Object> props = new HashMap<>();
-	protected long stamp = 0;
+	private Vector<RenderableImage> srcs;
+	private Map<String, Object> props = new HashMap<>();
+	private long stamp = 0;
 
 	/**
 	 * void constructor. The subclass must call one of the flavors of init before
