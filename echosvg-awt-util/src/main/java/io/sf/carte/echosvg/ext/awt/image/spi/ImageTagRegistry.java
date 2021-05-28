@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.ServiceLoader;
 
 import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
 
@@ -34,7 +35,6 @@ import io.sf.carte.echosvg.ext.awt.image.URLImageCache;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.renderable.ProfileRable;
 import io.sf.carte.echosvg.util.ParsedURL;
-import io.sf.carte.echosvg.util.Service;
 
 /**
  * This class handles the registered Image tag handlers. These are instances of
@@ -336,10 +336,11 @@ public class ImageTagRegistry implements ErrorConstants {
 		// registry.register(new JPEGRegistryEntry());
 		registry.register(new JDKRegistryEntry());
 
-		Iterator<Object> iter = Service.providers(RegistryEntry.class);
+		ServiceLoader<RegistryEntry> loader = ServiceLoader.load(RegistryEntry.class);
+
+		Iterator<RegistryEntry> iter = loader.iterator();
 		while (iter.hasNext()) {
-			RegistryEntry re = (RegistryEntry) iter.next();
-			// System.out.println("RE: " + re);
+			RegistryEntry re = iter.next();
 			registry.register(re);
 		}
 

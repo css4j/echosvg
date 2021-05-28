@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -74,7 +75,6 @@ import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.CleanerThread;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
-import io.sf.carte.echosvg.util.Service;
 
 /**
  * This class represents a context used by the various bridges and the builder.
@@ -2021,10 +2021,11 @@ public class BridgeContext implements ErrorConstants, CSSContext {
 		}
 		globalExtensions = new LinkedList<>();
 
-		Iterator<Object> iter = Service.providers(BridgeExtension.class);
+		ServiceLoader<BridgeExtension> loader = ServiceLoader.load(BridgeExtension.class);
 
+		Iterator<BridgeExtension> iter = loader.iterator();
 		while (iter.hasNext()) {
-			BridgeExtension be = (BridgeExtension) iter.next();
+			BridgeExtension be = iter.next();
 			float priority = be.getPriority();
 			ListIterator<BridgeExtension> li = globalExtensions.listIterator();
 			for (;;) {

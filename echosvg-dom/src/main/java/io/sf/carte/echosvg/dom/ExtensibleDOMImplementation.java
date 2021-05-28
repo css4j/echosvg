@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.ServiceLoader;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -38,7 +39,6 @@ import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
-import io.sf.carte.echosvg.util.Service;
 import io.sf.carte.echosvg.xml.XMLUtilities;
 
 /**
@@ -220,10 +220,12 @@ public abstract class ExtensibleDOMImplementation extends AbstractDOMImplementat
 
 		extensions = new LinkedList<>();
 
-		Iterator<Object> iter = Service.providers(DomExtension.class);
+		ServiceLoader<DomExtension> loader = ServiceLoader.load(DomExtension.class);
+
+		Iterator<DomExtension> iter = loader.iterator();
 
 		while (iter.hasNext()) {
-			DomExtension de = (DomExtension) iter.next();
+			DomExtension de = iter.next();
 			float priority = de.getPriority();
 			ListIterator<DomExtension> li = extensions.listIterator();
 			for (;;) {

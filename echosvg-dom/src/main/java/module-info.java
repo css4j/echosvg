@@ -31,4 +31,5 @@ module io.sf.carte.echosvg.dom {
 	requires xalan;
 
 	uses org.xml.sax.XMLReader;
+	uses io.sf.carte.echosvg.dom.DomExtension;
 }

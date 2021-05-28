@@ -20,6 +20,7 @@ dependencies {
 	testImplementation project(':echosvg-transcoder')
 	testImplementation project(':echosvg-i18n')
 	testImplementation project(':echosvg-test-swing')
+	testImplementation project(':echosvg-extension')
 	testImplementation project(':echosvg-svgrasterizer')
 	testImplementation "junit:junit:${junitVersion}"
 	testImplementation "com.github.romankh3:image-comparison:${imagecomparisonVersion}"

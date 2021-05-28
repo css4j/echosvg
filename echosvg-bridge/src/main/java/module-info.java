@@ -30,4 +30,6 @@ module io.sf.carte.echosvg.bridge {
 
 	provides io.sf.carte.echosvg.script.InterpreterFactory
 	with io.sf.carte.echosvg.bridge.RhinoInterpreterFactory;
+
+	uses io.sf.carte.echosvg.bridge.BridgeExtension;
 }

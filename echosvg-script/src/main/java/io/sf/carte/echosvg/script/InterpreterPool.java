@@ -23,11 +23,11 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.ServiceLoader;
 
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
-import io.sf.carte.echosvg.util.Service;
 
 /**
  * A class allowing to create/query an
@@ -62,10 +62,12 @@ public class InterpreterPool {
 	protected Map<String, InterpreterFactory> factories = new HashMap<>(7);
 
 	static {
-		Iterator<Object> iter = Service.providers(InterpreterFactory.class);
+		ServiceLoader<InterpreterFactory> loader = ServiceLoader.load(InterpreterFactory.class);
+
+		Iterator<InterpreterFactory> iter = loader.iterator();
 		while (iter.hasNext()) {
 			InterpreterFactory factory = null;
-			factory = (InterpreterFactory) iter.next();
+			factory = iter.next();
 			String[] mimeTypes = factory.getMimeTypes();
 			for (String mimeType : mimeTypes) {
 				defaultFactories.put(mimeType, factory);

@@ -17,14 +17,17 @@ module io.sf.carte.echosvg.extension {
 	exports io.sf.carte.echosvg.extension;
 	exports io.sf.carte.echosvg.extension.svg;
 
-	requires io.sf.carte.echosvg.bridge;
-	requires io.sf.carte.echosvg.gvt;
-	requires io.sf.carte.echosvg.parser;
-	requires transitive io.sf.carte.echosvg.dom;
-	requires io.sf.carte.echosvg.anim;
+	requires transitive io.sf.carte.echosvg.bridge;
 	requires io.sf.carte.echosvg.constants;
 	requires java.desktop;
 
 	requires jdk.xml.dom;
 	requires transitive org.w3c.dom.svg;
+
+	provides io.sf.carte.echosvg.bridge.BridgeExtension
+	with io.sf.carte.echosvg.extension.svg.EchoSVGBridgeExtension;
+
+	provides io.sf.carte.echosvg.dom.DomExtension
+	with io.sf.carte.echosvg.extension.svg.EchoSVGDomExtension;
+
 }

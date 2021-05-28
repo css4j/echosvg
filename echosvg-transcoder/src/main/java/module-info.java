@@ -31,4 +31,15 @@ module io.sf.carte.echosvg.transcoder {
 	requires transitive io.sf.carte.echosvg.bridge;
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.xml;
+
+	provides io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter
+			with io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOPNGImageWriter,
+			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOTIFFImageWriter,
+			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGImageWriter;
+
+	provides io.sf.carte.echosvg.ext.awt.image.spi.RegistryEntry
+			with io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGRegistryEntry,
+			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOPNGRegistryEntry,
+			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOTIFFRegistryEntry;
+
 }

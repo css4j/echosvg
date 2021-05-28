@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 
 /**
  * A {@link java.net.URL}-like class that supports custom URI schemes and GZIP
@@ -112,12 +113,12 @@ public class ParsedURL {
 		registerHandler(new ParsedURLDataProtocolHandler());
 		registerHandler(new ParsedURLJarProtocolHandler());
 
-		Iterator<Object> iter = Service.providers(ParsedURLProtocolHandler.class);
-		while (iter.hasNext()) {
-			ParsedURLProtocolHandler handler;
-			handler = (ParsedURLProtocolHandler) iter.next();
+		ServiceLoader<ParsedURLProtocolHandler> loader = ServiceLoader.load(ParsedURLProtocolHandler.class);
 
-			// System.out.println("Handler: " + handler);
+		Iterator<ParsedURLProtocolHandler> iter = loader.iterator();
+		while (iter.hasNext()) {
+			ParsedURLProtocolHandler handler = iter.next();
+
 			registerHandler(handler);
 		}
 

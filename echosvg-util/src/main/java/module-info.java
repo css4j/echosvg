@@ -21,4 +21,6 @@ module io.sf.carte.echosvg.util {
 	requires io.sf.carte.echosvg.constants;
 	requires io.sf.carte.echosvg.i18n;
 	requires transitive java.desktop;
+
+	uses io.sf.carte.echosvg.util.ParsedURLProtocolHandler;
 }

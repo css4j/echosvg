@@ -60,10 +60,6 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
 		String[] extensions = { "http://xml.apache.org/batik/ext/poly/1.0", "http://xml.apache.org/batik/ext/star/1.0",
 				"http://xml.apache.org/batik/ext/histogramNormalization/1.0",
 				"http://xml.apache.org/batik/ext/colorSwitch/1.0", "http://xml.apache.org/batik/ext/flowText/1.0", };
-//        List v = new ArrayList(extensions.length);
-//        for (int i=0; i<extensions.length; i++) {
-//            v.add(extensions[i]);
-//        }
 		List<String> v = Arrays.asList(extensions);
 		return Collections.unmodifiableList(v).iterator();
 	}

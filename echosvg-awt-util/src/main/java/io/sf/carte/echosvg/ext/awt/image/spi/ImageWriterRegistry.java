@@ -21,8 +21,7 @@ package io.sf.carte.echosvg.ext.awt.image.spi;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import io.sf.carte.echosvg.util.Service;
+import java.util.ServiceLoader;
 
 /**
  *
@@ -49,10 +48,11 @@ public final class ImageWriterRegistry {
 	}
 
 	private void setup() {
-		Iterator<Object> iter = Service.providers(ImageWriter.class);
+		ServiceLoader<ImageWriter> loader = ServiceLoader.load(ImageWriter.class);
+
+		Iterator<ImageWriter> iter = loader.iterator();
 		while (iter.hasNext()) {
-			ImageWriter writer = (ImageWriter) iter.next();
-			// System.out.println("RE: " + writer);
+			ImageWriter writer = iter.next();
 			register(writer);
 		}
 	}
