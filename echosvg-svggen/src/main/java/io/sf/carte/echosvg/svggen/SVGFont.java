@@ -289,7 +289,7 @@ public class SVGFont extends AbstractSVGConverter {
 
 			// Decoration attributes
 			final int cfsz = commonSizeFont.getSize();
-			float stOffset = lm.getStrikethroughOffset() * COMMON_FONT_SIZE / cfsz;
+			float stOffset = -lm.getStrikethroughOffset() * COMMON_FONT_SIZE / cfsz;
 			float stThickness = lm.getStrikethroughThickness() * COMMON_FONT_SIZE / cfsz;
 			float ulOffset = lm.getUnderlineOffset() * COMMON_FONT_SIZE / cfsz;
 			float ulThickness = lm.getUnderlineThickness() * COMMON_FONT_SIZE / cfsz;
