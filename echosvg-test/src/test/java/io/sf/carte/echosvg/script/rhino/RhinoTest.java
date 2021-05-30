@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.script.rhino;
 
-import java.io.IOException;
-
 import org.junit.Test;
 
 /**
@@ -30,11 +28,11 @@ import org.junit.Test;
 public class RhinoTest {
 
 	@Test
-	public void testECMAPermissionsDenied() throws IOException {
+	public void testECMAPermissionsDenied() throws Exception {
 		runTest("script/rhino/eval", true);
 	}
 
-	private void runTest(String id, boolean secure) throws IOException {
+	private void runTest(String id, boolean secure) throws Exception {
 		ScriptSelfTest t = new ScriptSelfTest();
 
 		t.setId(id);

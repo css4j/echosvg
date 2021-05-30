@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import java.io.IOException;
-
 import org.junit.Test;
 
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
@@ -35,7 +33,7 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 public class EcmaScriptDOMTest extends SelfContainedSVGOnLoadTest {
 
 	@Test
-	public void test() throws IOException {
+	public void test() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/dom/bug18143.svg");
 		testSVGOnLoad("io/sf/carte/echosvg/dom/bug20331.svg");
 		testSVGOnLoad("io/sf/carte/echosvg/dom/bug20332.svg");

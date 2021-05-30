@@ -31,6 +31,10 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
  */
 public class JarNoLoadTest {
 
+	/*
+	 * Check conditions under which Jar script should not be loaded and generate a
+	 * SecurityException instead.
+	 */
 	@Test
 	public void testJarNoLoad() throws Exception {
 		String scripts = "text/ecmascript";

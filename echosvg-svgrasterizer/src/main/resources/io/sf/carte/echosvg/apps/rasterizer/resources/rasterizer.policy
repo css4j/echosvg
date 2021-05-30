@@ -38,6 +38,10 @@ grant codeBase "file:${app.dev.base}/gradle/-" {
   permission java.security.AllPermission;
 };
 
+grant codeBase "file:${app.dev.base}/.gradle/-" {
+  permission java.security.AllPermission;
+};
+
 // Maven local repository
 //grant codeBase "file:${user.home}/.m2/repository/-" {
 //  permission java.security.AllPermission;

@@ -19,8 +19,6 @@
 
 package io.sf.carte.echosvg.css.dom;
 
-import java.io.IOException;
-
 import org.junit.Test;
 
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
@@ -36,7 +34,7 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 public class EcmaScriptCSSDOMTest extends SelfContainedSVGOnLoadTest {
 
 	@Test
-	public void test() throws IOException {
+	public void test() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbTest.svg");
 		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbUpdateTest.svg");
 		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbPresentationTest.svg");

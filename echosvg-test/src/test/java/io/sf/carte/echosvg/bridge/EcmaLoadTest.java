@@ -18,8 +18,11 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import java.io.IOException;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
+import org.junit.After;
 import org.junit.Test;
 
 /**
@@ -31,8 +34,24 @@ import org.junit.Test;
  */
 public class EcmaLoadTest {
 
+	@After
+	public void tearDown() throws Exception {
+		try {
+			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
+				@Override
+				public Void run() throws Exception {
+					System.setSecurityManager(null);
+					System.setProperty("java.security.policy", "");
+					return null;
+				}
+			});
+		} catch (PrivilegedActionException pae) {
+			throw pae.getException();
+		}
+	}
+
 	@Test
-	public void test() throws IOException {
+	public void test() throws Exception {
 		String scripts = "text/ecmascript";
 		String[] scriptSource = { "ecmaCheckLoadAny", "ecmaCheckLoadSameAsDocument", "ecmaCheckLoadEmbed",
 				"ecmaCheckLoadEmbedAttr", };

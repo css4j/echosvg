@@ -18,6 +18,11 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
+
+import org.junit.After;
 import org.junit.Test;
 
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
@@ -30,6 +35,22 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
  * @version $Id$
  */
 public class EcmaNoLoadTest {
+
+	@After
+	public void tearDown() throws Exception {
+		try {
+			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
+				@Override
+				public Void run() throws Exception {
+					System.setSecurityManager(null);
+					System.setProperty("java.security.policy", "");
+					return null;
+				}
+			});
+		} catch (PrivilegedActionException pae) {
+			throw pae.getException();
+		}
+	}
 
 	@Test
 	public void test() throws Exception {

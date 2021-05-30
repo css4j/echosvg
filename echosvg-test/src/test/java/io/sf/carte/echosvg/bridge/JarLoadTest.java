@@ -18,8 +18,11 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import java.io.IOException;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
+import org.junit.After;
 import org.junit.Test;
 
 /**
@@ -33,8 +36,24 @@ public class JarLoadTest {
 
 	private static final String scriptsType = "application/java-archive";
 
+	@After
+	public void tearDown() throws Exception {
+		try {
+			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
+				@Override
+				public Void run() throws Exception {
+					System.setSecurityManager(null);
+					System.setProperty("java.security.policy", "");
+					return null;
+				}
+			});
+		} catch (PrivilegedActionException pae) {
+			throw pae.getException();
+		}
+	}
+
 	@Test
-	public void testJarCheckLoadAny() throws IOException {
+	public void testJarCheckLoadAny() throws Exception {
 		String scriptSource = "jarCheckLoadAny";
 
 		ScriptSelfTest t = buildTest(scriptsType, scriptSource, "any", true);
@@ -45,7 +64,7 @@ public class JarLoadTest {
 	}
 
 	@Test
-	public void testJarCheckLoadSameAsDocument() throws IOException {
+	public void testJarCheckLoadSameAsDocument() throws Exception {
 		String scriptSource = "jarCheckLoadSameAsDocument";
 		// Note: base64 encoding of jar content is not supported.
 

@@ -18,8 +18,11 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import java.io.IOException;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
+import org.junit.After;
 import org.junit.Test;
 
 /**
@@ -29,8 +32,30 @@ import org.junit.Test;
  */
 public class PermissionsTest {
 
+	@After
+	public void tearDown() throws Exception {
+		try {
+			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
+				@Override
+				public Void run() throws Exception {
+					System.setSecurityManager(null);
+					System.setProperty("java.security.policy", "");
+					return null;
+				}
+			});
+		} catch (PrivilegedActionException pae) {
+			throw pae.getException();
+		}
+	}
+
+	/*
+	 * Check that permissions are denied for: scripts loaded 'normall', for scripts
+	 * loaded with a Function() object and for scripts loaded with the 'eval()'
+	 * function. Note that scripts loaded with the 'Script()' object are disallowed
+	 * completely in secure mode.
+	 */
 	@Test
-	public void testECMAPermissionsDenied() throws IOException {
+	public void testECMAPermissionsDenied() throws Exception {
 		String scripts = "text/ecmascript";
 		String[] scriptSource = { "ecmaCheckPermissionsDenied", "ecmaCheckPermissionsDeniedFunction",
 				"ecmaCheckPermissionsDeniedEval", };
@@ -40,8 +65,13 @@ public class PermissionsTest {
 		runTest(scripts, scriptSource, scriptOrigin, secure);
 	}
 
+	/*
+	 * Check that permissions are granted for all types of scripts when in
+	 * non-secure model, except for Script() objects which are not supported _at
+	 * all_
+	 */
 	@Test
-	public void testECMAPermissionsGranted() throws IOException {
+	public void testECMAPermissionsGranted() throws Exception {
 		String scripts = "text/ecmascript";
 		String[] scriptSource = { "ecmaCheckPermissionsGranted", "ecmaCheckPermissionsGrantedFunction",
 				"ecmaCheckPermissionsGrantedEval", };
@@ -52,7 +82,7 @@ public class PermissionsTest {
 	}
 
 	@Test
-	public void testJarPermissionsDenied() throws IOException {
+	public void testJarPermissionsDenied() throws Exception {
 		String scripts = "application/java-archive";
 		String[] scriptSource = { "jarCheckPermissionsDenied" };
 		boolean secure = true;
@@ -62,7 +92,7 @@ public class PermissionsTest {
 	}
 
 	@Test
-	public void testJarPermissionsGranted() throws IOException {
+	public void testJarPermissionsGranted() throws Exception {
 		String scripts = "application/java-archive";
 		String[] scriptSource = { "jarCheckPermissionsGranted" };
 		boolean secure = false;
@@ -72,7 +102,7 @@ public class PermissionsTest {
 	}
 
 	private void runTest(String scripts, String[] scriptSource, String[][] scriptOrigin, boolean secure)
-			throws IOException {
+			throws Exception {
 		for (int i = 0; i < scriptSource.length; i++) {
 			for (int j = 0; j < scriptOrigin[i].length; j++) {
 				ScriptSelfTest t = buildTest(scripts, scriptSource[i], scriptOrigin[i][j], secure);

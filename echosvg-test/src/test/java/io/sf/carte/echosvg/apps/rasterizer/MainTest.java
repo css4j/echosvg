@@ -30,6 +30,9 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -47,8 +50,19 @@ import io.sf.carte.echosvg.test.TestLocations;
 public class MainTest {
 
 	@After
-	public void tearDown() {
-		System.setSecurityManager(null);
+	public void tearDown() throws Exception {
+		try {
+			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
+				@Override
+				public Void run() throws Exception {
+					System.setSecurityManager(null);
+					System.setProperty("java.security.policy", "");
+					return null;
+				}
+			});
+		} catch (PrivilegedActionException pae) {
+			throw pae.getException();
+		}
 	}
 
 	// This test interferes with Gradle
