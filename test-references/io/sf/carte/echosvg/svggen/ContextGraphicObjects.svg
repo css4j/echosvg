@@ -18,7 +18,7 @@
       ><g
       ><defs id="testdefs1"
         ><font horiz-adv-x="50" id="testfont1"
-          ><font-face ascent="73.5" descent="26.5" underline-position="12.75" units-per-em="100" font-family="Newsreader" underline-thickness="4.8" font-style="normal" strikethrough-thickness="6.5" strikethrough-position="-25.05" font-weight="normal"
+          ><font-face ascent="73.5" descent="26.5" underline-position="12.75" units-per-em="100" font-family="Newsreader" underline-thickness="4.8" font-style="normal" strikethrough-thickness="6.5" strikethrough-position="25.05" font-weight="normal"
             /><missing-glyph horiz-adv-x="50" d="M5 -25.4062 L5 74.5938 L45 74.5938 L45 -25.4062 L5 -25.4062 ZM10 -20.4062 L40 -20.4062 L40 69.5938 L10 69.5938 L10 -20.4062 Z"
             /><glyph unicode=")" horiz-adv-x="29.949966" d="M16.75 29.4531 Q16.75 34.5 16.125 39.3438 Q15.5 44.2031 14 49.0156 Q12.5 53.8438 9.8281 58.9219 Q7.1562 64 3.0469 69.5469 L5.9062 72.0469 Q11.5 65.8438 15.2188 60.5469 Q18.9531 55.25 21.2031 50.2969 Q23.4531 45.3438 24.3906 40.2656 Q25.3438 35.2031 25.3438 29.4531 Q25.3438 23.7031 24.3906 18.5938 Q23.4531 13.5 21.2031 8.5469 Q18.9531 3.5938 15.2188 -1.7031 Q11.5 -7 5.9062 -13.2031 L3.0469 -10.6562 Q7.1562 -5.0938 9.8281 -0.0156 Q12.5 5.0469 14 9.875 Q15.5 14.7031 16.125 19.5156 Q16.75 24.3438 16.75 29.4531 Z"
             /><glyph unicode="." horiz-adv-x="23.949982" d="M12 12.3438 Q14.9531 12.3438 16.7969 10.5469 Q18.6562 8.75 18.6562 5.8438 Q18.6562 2.9531 16.7969 1.125 Q14.9531 -0.7031 12 -0.7031 Q9.0469 -0.7031 7.1875 1.125 Q5.3438 2.9531 5.3438 5.8438 Q5.3438 8.75 7.1875 10.5469 Q9.0469 12.3438 12 12.3438 Z"
