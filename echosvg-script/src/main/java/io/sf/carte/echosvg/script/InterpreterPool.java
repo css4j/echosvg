@@ -20,6 +20,9 @@ package io.sf.carte.echosvg.script;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -105,8 +108,7 @@ public class InterpreterPool {
 	 *                 supports that).
 	 */
 	public Interpreter createInterpreter(Document document, String language, ImportInfo imports) {
-		InterpreterFactory factory;
-		factory = factories.get(language);
+		InterpreterFactory factory = factories.get(language);
 
 		if (factory == null)
 			return null;
@@ -121,7 +123,7 @@ public class InterpreterPool {
 			url = new URL(svgDoc.getDocumentURI());
 		} catch (MalformedURLException e) {
 		}
-		interpreter = factory.createInterpreter(url, svgDoc.isSVG12(), imports);
+		interpreter = createInterpreter(factory, url, svgDoc.isSVG12(), imports);
 
 		if (interpreter == null)
 			return null;
@@ -130,6 +132,22 @@ public class InterpreterPool {
 			interpreter.bindObject(BIND_NAME_DOCUMENT, document);
 
 		return interpreter;
+	}
+
+	private static Interpreter createInterpreter(InterpreterFactory factory, URL documentURL, boolean svg12,
+			ImportInfo imports) {
+		try {
+			return AccessController.doPrivileged(new PrivilegedExceptionAction<Interpreter>() {
+				@Override
+				public Interpreter run() throws Exception {
+					return factory.createInterpreter(documentURL, svg12, imports);
+				}
+			});
+		} catch (PrivilegedActionException pae) {
+			Exception ex = pae.getException();
+			ex.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
