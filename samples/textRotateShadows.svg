@@ -36,7 +36,7 @@
 
     <defs>
       <clipPath id="textClip">
-       <text x="0" y="0" text-anchor="middle" font-size="400" font-family="Serif" id="text">batik</text>
+       <text x="0" y="0" text-anchor="middle" font-size="400" font-family="Newsreader" id="text">echo!</text>
       </clipPath>
        <g id="words">
          <use xlink:href="#text"/>

@@ -35,10 +35,18 @@
 
   <title>Test of Text vertical-align.</title>
 
+  <style type="text/css"><![CDATA[
+    svg {
+      font-family: 'Open Sans';
+      font-size:   12;
+    }
+  ]]>
+  </style>
+
   <g id="content" >
     <text class="title" x="50%" y="40">Test of Text vertical-align</text>
 
-    <g font-family="serif" transform="translate(0,60)">
+    <g font-family="Newsreader" transform="translate(0,60)">
       <g fill="rgb(220,220,255)">
         <rect x="12.5"  y="0" width="125" height="36"/>
         <rect x="162.5" y="0" width="125" height="36"/>
@@ -66,7 +74,7 @@
       </flowRoot>
     </g>
 
-    <g font-family="serif" transform="translate(0,120)" >
+    <g font-family="Newsreader" transform="translate(0,120)" >
       <g fill="rgb(220,220,255)">
         <rect x="12.5"  y="0"  width="125" height="36"/>
         <rect x="12.5"  y="40" width="125" height="36"/>
@@ -100,7 +108,7 @@
       </flowRoot>
     </g>
 
-    <g font-family="serif" transform="translate(0,220)" >
+    <g font-family="Newsreader" transform="translate(0,220)" >
       <g fill="rgb(220,220,255)">
         <rect x="12.5"  y="0"  width="125" height="72"/>
         <rect x="162.5" y="0"  width="125" height="72"/>
@@ -128,7 +136,7 @@
       </flowRoot>
     </g>
 
-    <g font-family="serif" transform="translate(0,320)" >
+    <g font-family="Newsreader" transform="translate(0,320)" >
       <g fill="rgb(220,220,255)">
         <rect x="12.5"  y="0"  width="125" height="72"/>
         <rect x="162.5" y="0"  width="125" height="72"/>

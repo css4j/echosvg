@@ -69,15 +69,8 @@ public class SwingMemoryLeakTest {
 	@Test
 	public void testSetSVGDocument() throws Exception {
 		SetSVGDocumentTest test = new SetSVGDocumentTest();
-		URL svgURL;
-		try {
-			svgURL = AbstractRenderingAccuracyTest.resolveURL(
-					"io/sf/carte/echosvg/test/svg/SetSVGDocumentTest.svg");
-		} catch (MalformedURLException e) {
-			throw new IllegalArgumentException(e);
-		}
 
-		test.setFile(svgURL.getPath());
+		test.setFile("test-resources/io/sf/carte/echosvg/test/svg/SetSVGDocumentTest.svg");
 		test.runTest();
 	}
 

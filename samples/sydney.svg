@@ -25,6 +25,13 @@
      xmlns="http://www.w3.org/2000/svg" 
      xmlns:xlink="http://www.w3.org/1999/xlink" >
 
+<style type="text/css"><![CDATA[
+  svg {
+	font-family: 'Roboto';
+	font-size:   12;
+  }
+]]>
+</style>
 <script type="text/ecmascript">
 <![CDATA[
 var svgns   = "http://www.w3.org/2000/svg";

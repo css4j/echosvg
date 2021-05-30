@@ -40,7 +40,7 @@ import io.sf.carte.echosvg.swing.test.JSVGCanvasHandler;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class JSVGRenderingAccuracyTest extends SamplesRenderingTest implements JSVGCanvasHandler.Delegate {
+public class JSVGRenderingAccuracyTest extends RenderingTest implements JSVGCanvasHandler.Delegate {
 
 	public static String fmt(String key, Object[] args) {
 		return Messages.formatMessage(key, args);

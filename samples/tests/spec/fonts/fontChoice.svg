@@ -35,8 +35,12 @@
 <title>SVGFont - font selection test</title>
 
     <style type="text/css"><![CDATA[
-        
-    ]]></style>
+      svg {
+        font-family: 'Open Sans';
+        font-size:   12;
+      }
+    ]]>
+    </style>
 
     <g id="content">
 
@@ -56,7 +60,7 @@
             <!-- true type to SVG converter (ttf2svg).              -->
             <!-- Styling has been added for testing purposes.       -->
 
-            <font horiz-adv-x="901" fill="#6666FF">
+            <font horiz-adv-x="901" fill="#6666FF" id="SVGGeorgia">
                 <font-face
                  font-family="SVGGeorgia"
                  font-weight="normal"
@@ -166,30 +170,30 @@
         </defs>
 
         <!-- The characters 'G', 'a', 'g' and 'r' should use the SVG version of Georgia, -->
-        <!-- the others should use SansSerif -->
+        <!-- the others should use Open Sans -->
 
-        <text x="50" y="150" font-family="SVGGeorgia, SansSerif" font-size="35">Georgia</text>
+        <text x="50" y="150" font-family="SVGGeorgia, 'Open Sans'" font-size="35">Georgia</text>
 
 
         <!-- The characters 'd', 'G', 'a', 'g' and 'r' should use the bold version of SVG Georgia -->
 
-        <text x="50" y="225" font-family="SVGGeorgia, SansSerif" font-size="35" 
+        <text x="50" y="225" font-family="SVGGeorgia, 'Open Sans'" font-size="35" 
               font-weight="bold">Bold Georgia</text>
 
 
-        <!-- The next two lines should only use the SansSerif font -->
+        <!-- The next two lines should only use the 'Open Sans' font -->
 
-        <text x="50" y="300" font-family="SansSerif, SVGGeorgia" font-size="35" >SansSerif</text>
+        <text x="50" y="300" font-family="'Open Sans', SVGGeorgia" font-size="35" >Open Sans</text>
 
-        <text x="50" y="375" font-family="SVGGeorgia, SansSerif" font-size="35" 
+        <text x="50" y="375" font-family="SVGGeorgia, 'Open Sans'" font-size="35" 
               font-style="italic" font-weight="bold">Bold Italic SansSerif</text>
 
         <!-- description for each test -->
         <g font-size="10">
-            <text x="50" y="170">font-family="SVGGeorgia, SansSerif"</text>
-            <text x="50" y="245">font-family="SVGGeorgia, SansSerif" font-weight="bold"</text>
-            <text x="50" y="320">font-family="SansSerif, SVGGeorgia"</text>
-            <text x="50" y="395">font-family="SVGGeorgia, SansSerif" font-weight="bold" font-style="italic"</text>
+            <text x="50" y="170">font-family="SVGGeorgia, 'Open Sans'"</text>
+            <text x="50" y="245">font-family="SVGGeorgia, 'Open Sans'" font-weight="bold"</text>
+            <text x="50" y="320">font-family="'Open Sans', SVGGeorgia"</text>
+            <text x="50" y="395">font-family="SVGGeorgia, 'Open Sans'" font-weight="bold" font-style="italic"</text>
         </g>
        
     </g>

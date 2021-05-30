@@ -22,9 +22,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -166,7 +168,7 @@ public class SelfContainedSVGOnLoadTest {
 	 *
 	 * @param svgURL the URL string for the SVG document being tested
 	 */
-	public void testSVGOnLoad(String svgURL) throws IOException {
+	public void testSVGOnLoad(String svgURL) throws Exception {
 		testSVGOnLoad(svgURL, null);
 	}
 
@@ -183,21 +185,16 @@ public class SelfContainedSVGOnLoadTest {
 	 *
 	 * @param svgURL the URL string for the SVG document being tested
 	 * @param expectedError the expected error, if any.
+	 * @throws Exception 
 	 */
-	public void testSVGOnLoad(String svgURL, String expectedError) throws IOException {
+	public void testSVGOnLoad(String svgURL, String expectedError) throws Exception {
 
 		//
 		// First step:
 		//
 		// Load the input SVG into a Document object
 		//
-		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
-
-		if (svgURL.startsWith("io/sf")) {
-			URL url = getClass().getClassLoader().getResource(svgURL);
-			svgURL = url.toExternalForm();
-		}
-		Document doc = f.createDocument(svgURL);
+		Document doc = createDocument(svgURL);
 
 		//
 		// Second step:
@@ -242,6 +239,32 @@ public class SelfContainedSVGOnLoadTest {
 			fail("Script was loaded, but expected error: " + expectedError);
 		}
 
+	}
+
+	private Document createDocument(String svgURL) throws Exception {
+		try {
+			return AccessController.doPrivileged(new PrivilegedExceptionAction<Document>() {
+				@Override
+				public Document run() throws Exception {
+					SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
+
+					String uri = svgURL;
+					if (svgURL.startsWith("io/sf")) {
+						URL url = getClass().getClassLoader().getResource(svgURL);
+
+						if (url == null) {
+							fail("Failed to load: " + svgURL);
+						}
+
+						uri = url.toExternalForm();
+					}
+					Document doc = f.createDocument(uri);
+					return doc;
+				}
+			});
+		} catch (PrivilegedActionException pae) {
+			throw pae.getException();
+		}
 	}
 
 	/**

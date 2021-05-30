@@ -49,12 +49,12 @@
     <text  x="50%" y="10%" font-size="0.3" text-anchor="middle" >
       Small font size test (viewBox="0 0 9 10")</text>
 
-    <g font-family="dialog" font-size="0.3" 
+    <g font-family="Open Sans" font-size="0.3" 
       text-anchor="start" fill="MidnightBlue">
       <text x="10%" y="20%">
         Text can change 
         <tspan font-size="0.6">size,</tspan>
-        <tspan font-size="0.4" font-family="Serif">typeface,</tspan> 
+        <tspan font-size="0.4" font-family="Newsreader">typeface,</tspan> 
         <tspan fill="green">color,</tspan>
         or 
         <tspan fill="none" font-style="oblique" stroke="red" stroke-width="0.02">style</tspan>
@@ -67,7 +67,7 @@
       <text x="10%" y="32%">Styling features include 
         <tspan font-weight="bold">weight,</tspan> 
         <tspan font-style="oblique">posture,</tspan> and 
-        <tspan font-family="serif">typeface.</tspan>
+        <tspan font-family="Newsreader">typeface.</tspan>
       </text>
 
       <rect x="10%" y="35%" width="45%" height="10%" fill="DodgerBlue"/>

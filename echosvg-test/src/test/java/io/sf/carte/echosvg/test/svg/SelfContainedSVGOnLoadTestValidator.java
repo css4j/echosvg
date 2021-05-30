@@ -21,7 +21,6 @@ package io.sf.carte.echosvg.test.svg;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import org.junit.Test;
 
@@ -74,42 +73,42 @@ public class SelfContainedSVGOnLoadTestValidator {
 	public static final String successURL = "io/sf/carte/echosvg/test/svg/success.svg";
 
 	@Test
-	public void testSuccess() throws IOException {
+	public void testSuccess() throws Exception {
 		new SuccessTest().runTest();
 	}
 
 	@Test
-	public void testCannotLoadSVGDocument() throws IOException {
+	public void testCannotLoadSVGDocument() throws Exception {
 		new CannotLoadSVGDocument().runTest();
 	}
 
 	@Test
-	public void testProcessingError() throws IOException {
+	public void testProcessingError() throws Exception {
 		new ProcessingError().runTest();
 	}
 
 	@Test
-	public void testInvalidTestResultElementsNumber() throws IOException {
+	public void testInvalidTestResultElementsNumber() throws Exception {
 		new InvalidTestResultElementsNumber().runTest();
 	}
 
 	@Test
-	public void testMissingOrEmptyErrorCode() throws IOException {
+	public void testMissingOrEmptyErrorCode() throws Exception {
 		new MissingOrEmptyErrorCode().runTest();
 	}
 
 	@Test
-	public void testReportError() throws IOException {
+	public void testReportError() throws Exception {
 		new ReportError().runTest();
 	}
 
 	@Test
-	public void testReportErrorAndEntries() throws IOException {
+	public void testReportErrorAndEntries() throws Exception {
 		new ReportErrorAndEntries().runTest();
 	}
 
 	static class SuccessTest {
-		public void runTest() throws IOException {
+		public void runTest() throws Exception {
 			SelfContainedSVGOnLoadTest t = new SelfContainedSVGOnLoadTest();
 			t.testSVGOnLoad(successURL, null);
 		}
@@ -127,7 +126,7 @@ public class SelfContainedSVGOnLoadTestValidator {
 		}
 
 		@Override
-		public void runTest() throws IOException {
+		public void runTest() throws Exception {
 			SelfContainedSVGOnLoadTest t = new SelfContainedSVGOnLoadTest();
 			try {
 				t.testSVGOnLoad(svgURL, expectedErrorCode);

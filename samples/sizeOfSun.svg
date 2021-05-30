@@ -33,7 +33,7 @@
   <style type="text/css"><![CDATA[
     .planet {
       text-anchor:middle;
-      font-family: Helvetica;
+      font-family: 'Open Sans';
       font-size: 12;
     }
   ]]>
@@ -206,7 +206,7 @@
         <use xlink:href="#mercury" transform="translate(230 0)"/>
       </g>
     </g>
-    <g id="legend" style="font-family:Helvetica">
+    <g id="legend" style="font-family:'Open Sans'">
       <text x="50%" y="50" style="font-size:24; text-anchor:middle; fill:white">Size of the Sun</text>
       <g style="font-size:12; text-anchor:middle; fill:white">
         <text x="50%" y="100">You could line up all of the planets along the</text>

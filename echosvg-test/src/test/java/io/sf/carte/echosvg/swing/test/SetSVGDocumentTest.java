@@ -42,6 +42,19 @@ public class SetSVGDocumentTest extends JSVGRenderingAccuracyTest {
 	public SetSVGDocumentTest() {
 	}
 
+	@Override
+	protected String[] breakSVGFile(String svgFile) {
+		if (svgFile == null) {
+			throw new IllegalArgumentException(svgFile);
+		}
+
+		String[] ret = new String[3];
+		ret[0] = "test-resources/io/sf/carte/echosvg/test/svg/";
+		ret[1] = "SetSVGDocumentTest";
+		ret[2] = ".svg";
+		return ret;
+	}
+
 	/* JSVGCanvasHandler.Delegate Interface */
 	@Override
 	public boolean canvasInit(JSVGCanvas canvas) {

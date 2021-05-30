@@ -38,7 +38,7 @@
     <defs>
 
      <style type="text/css"><![CDATA[
-       .Caption { font-size: 8; font-family: dialog; font-weight: normal;
+       .Caption { font-size: 8; font-family: 'Roboto'; font-weight: normal;
                   font-style: normal; stroke: none; stroke-width: 0; 
                   fill: black } ]]>
      </style>
@@ -68,37 +68,37 @@
 
         <g transform="translate(100, 180)">
             <text font-size="1cm">sample</text>
-            <text y="15" style="Caption">font-size="1cm"</text>
+            <text y="15" class="Caption">font-size="1cm"</text>
         </g>       
 
         <g transform="translate(225, 180)">
             <text font-size="200%">sample</text>
-            <text y="15" style="Caption">font-size="200%"</text>
+            <text y="15" class="Caption">font-size="200%"</text>
         </g>       
 
         <g transform="translate(350, 180)">
             <text font-size="30pt">sample</text>
-            <text y="15" style="Caption">font-size="28"</text>
+            <text y="15" class="Caption">font-size="28"</text>
         </g>       
 
         <g transform="translate(100, 225)">
             <text font-size="30"><tref xlink:href="#sample"/></text>
-            <text y="15" style="Caption">referenced text via &lt;tref&gt;</text>
+            <text y="15" class="Caption">referenced text via &lt;tref&gt;</text>
         </g>       
 
         <g transform="translate(225, 225)">
             <text font-size="30">
-            sa<tspan font-family="Serif" font-weight="bold" fill="DarkRed"
+            sa<tspan font-family="Newsreader" font-weight="bold" fill="DarkRed"
             text-decoration="underline" >m</tspan>ple
             </text>
-            <text y="15" style="Caption">use of &lt;tspan&gt;</text>
+            <text y="15" class="Caption">use of &lt;tspan&gt;</text>
         </g>       
 
         <g transform="translate(350, 225)">
             <g font-size="30">
                 <use xlink:href="#sample"/>
             </g>
-            <text y="15" style="Caption">predefined text via &lt;use&gt;</text>
+            <text y="15" class="Caption">predefined text via &lt;use&gt;</text>
         </g>       
  
         <text x="50%" y="280" font-size="15" >
@@ -108,36 +108,36 @@
             <g font-size="30" transform="rotate(180)">
                 <use xlink:href="#sample"/>
             </g>
-            <text y="30" style="Caption">transform="rotate(180)"</text>
+            <text y="30" class="Caption">transform="rotate(180)"</text>
         </g>       
 
         <g transform="translate(225, 320)">
             <g font-size="30" opacity="0.5">
                 <use xlink:href="#sample"/>
             </g>
-            <text y="15" style="Caption">opacity="0.5"</text>
+            <text y="15" class="Caption">opacity="0.5"</text>
         </g>       
 
         <g transform="translate(350, 320)">
             <g font-size="30" fill="DarkRed">
                 <use xlink:href="#sample"/>
             </g>
-            <text y="15" style="Caption">fill="DarkRed"</text>
+            <text y="15" class="Caption">fill="DarkRed"</text>
         </g>       
 
         <g transform="translate(100, 370)">
             <g font-size="30" filter="url(#gaussianBlur)">
                 <use xlink:href="#sample"/>
             </g>
-            <text y="15" style="Caption">filter="url(#gaussianBlur)"</text>
+            <text y="15" class="Caption">filter="url(#gaussianBlur)"</text>
         </g>       
 
         <g transform="translate(225, 370)">
             <g font-size="30" fill="yellow" stroke="MidnightBlue">
                 <use xlink:href="#sample"/>
             </g>
-            <text y="15" style="Caption">fill="yellow";</text>
-            <text y="25" style="Caption">stroke="MidnightBlue"</text>
+            <text y="15" class="Caption">fill="yellow";</text>
+            <text y="25" class="Caption">stroke="MidnightBlue"</text>
         </g>       
 
 <defs>
@@ -154,22 +154,22 @@
             <rect x="-50" y="-25" width="100" height="50" 
                fill="url(#gradient)" 
                clip-path="url(#textClip)"/>
-            <text y="15" style="Caption">text as clip-path</text>
+            <text y="15" class="Caption">text as clip-path</text>
         </g>       
 
         <text x="150" y="440" font-size="60" 
           fill="BlancheDalmond" stroke="DarkRed" stroke-width="2"
           stroke-linejoin="miter" stroke-linecap="square">
          a</text>
-        <text x="150" y="455" style="Caption">stroke-linejoin="miter"</text>
-        <text x="150" y="465" style="Caption">stroke-linecap="square"</text>
+        <text x="150" y="455" class="Caption">stroke-linejoin="miter"</text>
+        <text x="150" y="465" class="Caption">stroke-linecap="square"</text>
 
         <text x="300" y="440" font-size="60" 
           fill="BlancheDalmond" stroke="DarkRed" stroke-width="2"
           stroke-linejoin="round" stroke-linecap="round">
          a</text>
-        <text x="300" y="455" style="Caption">stroke-linejoin="round"</text>
-        <text x="300" y="465" style="Caption">stroke-linecap="round"</text>
+        <text x="300" y="455" class="Caption">stroke-linejoin="round"</text>
+        <text x="300" y="465" class="Caption">stroke-linecap="round"</text>
 
     </g>
 

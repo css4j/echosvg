@@ -56,7 +56,7 @@
 
     <g id="test-content" style="font-size:18">
 
-     <text x="100"><textPath xlink:href="#path1" onload="changeStyle(evt, 'font-family:Impact')">font-family:Arial</textPath></text>
+     <text x="100"><textPath xlink:href="#path1" onload="changeStyle(evt, 'font-family:Anton')">font-family:'Open Sans'</textPath></text>
      <text x="100"><textPath xlink:href="#path2" onload="changeStyle(evt, 'font-size:32')">font-size:32</textPath></text>
      <text x="100"><textPath xlink:href="#path3" onload="changeStyle(evt, 'fill:crimson')">fill:crimson</textPath></text>
      <text x="100"><textPath xlink:href="#path4" onload="changeStyle(evt, 'stroke:orange;font-size:18')">stroke:orange; font-size:18</textPath></text>

@@ -41,7 +41,7 @@
     </radialGradient>
     <path style="fill:url(#aigrd1);stroke:none;" d="M450,500H0V0h450v500z"/>
   </g>
-  <g id="Content" style="fill-rule:nonzero;clip-rule:nonzero;fill:none;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4; font-family:'Verdana';" font-size="10" text-anchor="middle">
+  <g id="Content" style="fill-rule:nonzero;clip-rule:nonzero;fill:none;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4; font-family:'Sansation';" font-size="10" text-anchor="middle">
     <g>
       <radialGradient id="aigrd2" cx="117.666" cy="274.8911" r="81.2985" fx="117.666" fy="274.8911" gradientUnits="userSpaceOnUse">
         <stop  offset="0" style="stop-color:#FFFFFF"/>
@@ -719,7 +719,7 @@
 
         <g systemLanguage="fr">
     <g transform="translate(100, 130)" text-anchor="middle" fill="white" 
-      stroke="none" font-size="16" font-family="Verdana"
+      stroke="none" font-size="16" font-family="Sansation"
       filter="url(#bgRect)">
       <text x="0" y="0">Les phases <tspan x="0" y="16">de </tspan><tspan x="0" y="32">la lune</tspan></text>
     </g>
@@ -728,7 +728,7 @@
 
         <g systemLanguage="en">
     <g transform="translate(100, 130)" text-anchor="middle" fill="white" 
-      stroke="none" font-size="16" font-family="Verdana"
+      stroke="none" font-size="16" font-family="Sansation"
       filter="url(#bgRect)">
       <text  x="0" y="0">The phases <tspan x="0" y="16">of </tspan><tspan x="0" y="32">the moon</tspan></text>
     </g>

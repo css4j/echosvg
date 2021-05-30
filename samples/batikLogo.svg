@@ -21,7 +21,7 @@
 
 -->
 <!-- ====================================================================== -->
-<!-- Defines the EchoSVG Logo using an SVG font.                              -->
+<!-- Defines the Batik Logo using an SVG font.                              -->
 <!--                                                                        -->
 <!-- @author vhardy@apache.org                                              -->
 <!-- @author thomas.deweese@kodak.com                                       -->
@@ -30,7 +30,7 @@
 <!-- ====================================================================== -->
 
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="body" width="450" height="500" viewBox="0 0 450 500">
-    <title>EchoSVG Logo</title>
+    <title>Batik Logo</title>
     <g id="content">
         <defs>
             <symbol id="EchoSVG_Squiggle" stroke="none" viewBox="0 0 540 570">

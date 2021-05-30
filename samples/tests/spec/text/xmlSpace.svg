@@ -34,11 +34,19 @@
      xmlns:xlink="http://www.w3.org/1999/xlink" 
      xmlns:foo="https://css4j.github.io/echosvg/foo">
 
+    <style type="text/css"><![CDATA[
+      svg {
+        font-family: 'Open Sans';
+        font-size:   12;
+      }
+    ]]>
+    </style>
+
     <text class="title" x="50%" y="40">Test of xml:space handling</text>
 
       <font horiz-adv-x="600" id="stroke">
          <font-face
-             font-family="BlockSpace"
+             font-family="Notable"
              font-weight="normal"
              units-per-em="1000"
              ascent="1000"
@@ -56,7 +64,7 @@
                    fill: black } ]]>
       </style>
 
-      <g font="20 BlockSpace">
+      <g font="20 Notable">
          <text x="10" y=" 75">  X  X  </text>
             <text class="cap" x="120" y="75">no xml:space attr</text>
 

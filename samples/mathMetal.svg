@@ -36,6 +36,10 @@
 
     <defs>
         <style type="text/css" ><![CDATA[
+svg {
+    font-family: 'Open Sans';
+    font-size:   12;
+}
 .Text4 {font-family:embedTimes;font-weight:normal;font-size:30pt;font-style:normal}
 .Text3 {font-family:embedTimesItal;font-weight:normal;font-size:15pt;font-style:italic}
 .Text1 {font-family:embedSymbol;font-weight:normal;font-size:30pt;font-style:normal}

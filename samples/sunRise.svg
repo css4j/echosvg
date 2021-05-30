@@ -27,6 +27,13 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="body" width="450" height="500" viewBox="0 0 450 500">
 <title>Sun Rise</title>
+    <style type="text/css"><![CDATA[
+      svg {
+        font-family: 'Open Sans';
+        font-size:   12;
+      }
+    ]]>
+    </style>
 
     <g id="testContent" transform="">
         <defs>

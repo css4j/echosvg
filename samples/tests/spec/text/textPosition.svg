@@ -33,7 +33,7 @@
 
   <style type="text/css"><![CDATA[
     .info {
-      font-family: Arial;
+      font-family:'Open Sans';
       font-size: 10;
     }
   ]]>
@@ -45,55 +45,55 @@
 
 <text class="title" x="50%" y="30">Text Position</text>
 
-<g id="testContent" style="font-family:Arial; font-size:24">
+<g id="testContent" style="font-family:Roboto; font-size:24">
 
 <!-- ################################################################ -->
 
-<text x="50" y="80">EchoSVG</text>
+<text x="50" y="80">Echo</text>
 <text x="50" y="100" class="info">&lt;text x="100" y="80"></text>
 
-<text x="240" y="80" style="letter-spacing:20">EchoSVG</text>
+<text x="240" y="80" style="letter-spacing:20">Echo</text>
 <text x="240" y="100" class="info">&lt;text x="240" y="80" letter-spacing="20"></text>
 
 
-<text x="50 70 90 110 130" y="140">EchoSVG</text>
+<text x="50 70 90 110 130" y="140">Echo</text>
 <text x="50" y="160" class="info">&lt;text x="50 70 90 110 130" y="140"></text>
 
-<text dx="240 20 20 20 20" y="140">EchoSVG</text>
+<text dx="240 20 20 20 20" y="140">Echo</text>
 <text x="240" y="160" class="info">&lt;text dx="240 20 20 20 20" y="140"></text>
 
 <!-- ################################################################ -->
 
-<text><tspan x="50" y="200">EchoSVG</tspan></text>
+<text><tspan x="50" y="200">Echo</tspan></text>
 <text x="50" y="220" class="info">&lt;tspan x="50" y="200"></text>
 
-<text><tspan x="240" y="200" style="letter-spacing:20">EchoSVG</tspan></text>
+<text><tspan x="240" y="200" style="letter-spacing:20">Echo</tspan></text>
 <text><tspan x="240" y="220" class="info">&lt;tspan x="240" y="200" letter-spacing="20"></tspan></text>
 
 
-<text><tspan x="50 70 90 110 130" y="260">EchoSVG</tspan></text>
+<text><tspan x="50 70 90 110 130" y="260">Echo</tspan></text>
 <text x="50" y="280" class="info">&lt;tspan x="50 70 90 110 130" y="260"></text>
 
-<text><tspan dx="240 20 20 20 20" y="260">EchoSVG</tspan></text>
+<text><tspan dx="240 20 20 20 20" y="260">Echo</tspan></text>
 <text x="240" y="280" class="info">&lt;tspan dx="240 20 20 20 20" y="260"></text>
 
 <!-- ################################################################ -->
 
-<text><tspan x="50 60 70 80 90" dx="0 10 20 30 40" y="320">EchoSVG</tspan></text>
+<text><tspan x="50 60 70 80 90" dx="0 10 20 30 40" y="320">Echo</tspan></text>
 <text x="50" y="340" class="info">&lt;tspan x="50 60 70 80 90" <tspan x="83" dy="1.1em">dx="0 10 20 30 40" y="320"></tspan></text>
 
 
-<text><tspan x="240" dx="0 10 10 10 10" y="320" style="letter-spacing:10">EchoSVG</tspan></text>
+<text><tspan x="240" dx="0 10 10 10 10" y="320" style="letter-spacing:10">Echo</tspan></text>
 <text x="240" y="340" class="info">&lt;tspan x="240" dx="0 10 10 10 10" <tspan x="273" dy="1.1em">y="320" style="letter-spacing:10"></tspan></text>
 
 
 <!-- ################################################################ -->
 
-<text><tspan x="50" letter-spacing="10" y="380">EchoSVG</tspan><tspan x="10" y="380"/></text>
+<text><tspan x="50" letter-spacing="10" y="380">Echo</tspan><tspan x="10" y="380"/></text>
 <text x="50" y="400" class="info">Empty Trailing tspan</text>
 
 
-<text><tspan x="200" y="380"/><tspan x="240" letter-spacing="20" y="380">EchoSVG</tspan></text>
+<text><tspan x="200" y="380"/><tspan x="240" letter-spacing="20" y="380">Echo</tspan></text>
 <text x="240" y="400" class="info">Empty Preceeding tspan</text>
 
 

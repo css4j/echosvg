@@ -36,8 +36,12 @@
 <title>SVGFont - d attribute test</title>
 
     <style type="text/css"><![CDATA[
-        
-    ]]></style>
+      svg {
+        font-family: 'Open Sans';
+        font-size:   12;
+      }
+    ]]>
+    </style>
 
     <g id="content">
 

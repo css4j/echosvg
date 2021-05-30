@@ -57,7 +57,7 @@
       <!-- no lengthadjust -->
       <g transform="translate(0,  30)">
               <use xlink:href="#bg1"/>
-              <text x="225" y="19" text-anchor="middle">xml-batik</text>
+              <text x="225" y="19" text-anchor="middle">xml-echo</text>
               <text x="225" y="40" text-anchor="middle">No textLength</text>
       </g>
       
@@ -81,7 +81,7 @@
       <g transform="translate(0, 165)">
               <use xlink:href="#bg2"/>
               <text x="225" y="19" text-anchor="middle" textLength="50"
-                      lengthAdjust="spacingAndGlyphs">EchoSVG</text>
+                      lengthAdjust="spacingAndGlyphs">Echo</text>
               <text x="225" y="40" text-anchor="middle">textLength="50" lengthAdjust="spacingAndGlyphs"</text>
       </g>
       
@@ -89,7 +89,7 @@
       <g transform="translate(0, 210)">
               <use xlink:href="#bg1"/>
               <text x="225" y="19" text-anchor="middle" textLength="50"
-                      lengthAdjust="spacing">EchoSVG</text>
+                      lengthAdjust="spacing">Echo</text>
               <text x="225" y="40" text-anchor="middle">textLength="50" lengthAdjust="spacing"</text>
       </g>
       
@@ -97,7 +97,7 @@
       <g transform="translate(0, 255)">
               <use xlink:href="#bg2"/>
               <text x="225" y="19" text-anchor="middle" textLength="50"
-                      lengthAdjust="spacingAndGlyphs">EchoSVG</text>
+                      lengthAdjust="spacingAndGlyphs">Echo SVG</text>
               <text x="225" y="40" text-anchor="middle">textLength="50" lengthAdjust="spacingAndGlyphs" (shrinking)</text>
       </g>
       
@@ -105,7 +105,7 @@
       <g transform="translate(0, 300)">
               <use xlink:href="#bg1"/>
               <text x="200" y="19" textLength="50"
-                      lengthAdjust="spacingAndGlyphs">EchoSVG</text>
+                      lengthAdjust="spacingAndGlyphs">Echo SVG</text>
               <text x="225" y="40" text-anchor="middle">textLength="50" lengthAdjust="spacingAndGlyphs" (no anchor)</text>
       </g>
       
@@ -113,7 +113,7 @@
       <g transform="translate(0, 345)">
               <use xlink:href="#bg2"/>
               <text x="225" y="19" text-anchor="middle" textLength="50" 
-                    lengthAdjust="spacingAndGlyphs">Apache <tspan fill="red">EchoSVG</tspan>!!</text>
+                    lengthAdjust="spacingAndGlyphs">Echo <tspan fill="red">SVG</tspan>!!</text>
               <text x="225" y="40" text-anchor="middle">textLength="50" lengthAdjust="spacingAndGlyphs" (tspan)</text>
       </g>
 
@@ -126,7 +126,7 @@
          <line x1="125" y1="3" x2="125" y2="87" stroke="red"/>
          <text x="125" y="79" text-anchor="middle" textLength="25" 
                lengthAdjust="spacingAndGlyphs"
-               font-size="100">B a t i k</text>
+               font-size="100">E c h o</text>
          <text x="160" y="40">lengthAdjust="spacingAndGlyphs"
           <tspan x="160" dy="1.2em">textLength="25"</tspan>
           <tspan x="160" dy="1.2em">font-size="100"</tspan></text>

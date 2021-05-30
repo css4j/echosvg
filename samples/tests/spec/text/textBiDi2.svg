@@ -35,11 +35,19 @@
     <!-- Test content                                                  -->
     <!-- ============================================================= -->
 
+    <style type="text/css"><![CDATA[
+      svg {
+        font-family: 'Open Sans';
+        font-size:   12;
+      }
+    ]]>
+    </style>
+
     <g id="testContent">
         <text class="title" x="50%" y="10%" font-size="15" text-anchor="middle" >
             BiDi Text / International Text 2</text>
 
-      <g font-family="dialog" font-size="15" text-anchor="start">
+      <g font-family="Open Sans" font-size="15" text-anchor="start">
         <text id="HE" fill="DarkOliveGreen" x="40" y="110"
          >&#x5d0;&#x5d1;&#x5d2; ABC</text>
         <text id="EH" fill="DarkOliveGreen" x="225" y="110"

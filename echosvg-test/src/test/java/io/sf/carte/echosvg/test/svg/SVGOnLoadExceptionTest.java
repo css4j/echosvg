@@ -57,7 +57,6 @@ import io.sf.carte.echosvg.bridge.RelaxedExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.RelaxedScriptSecurity;
 import io.sf.carte.echosvg.bridge.ScriptSecurity;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
-import io.sf.carte.echosvg.dom.util.SAXIOException;
 import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
 import io.sf.carte.echosvg.util.ParsedURL;
@@ -292,7 +291,17 @@ public class SVGOnLoadExceptionTest {
 				"io/sf/carte/echosvg/apps/svgbrowser/svgbrowser.policy");
 
 		if (secure) {
-			ase.enforceSecurity(true);
+			try {
+				AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
+					@Override
+					public Void run() throws Exception {
+						ase.enforceSecurity(true);
+						return null;
+					}
+				});
+			} catch (PrivilegedActionException pae) {
+				throw pae.getException();
+			}
 		}
 
 		try {
@@ -345,7 +354,17 @@ public class SVGOnLoadExceptionTest {
 				}
 			}
 		} finally {
-			ase.enforceSecurity(false);
+			try {
+				AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
+					@Override
+					public Void run() throws Exception {
+						ase.enforceSecurity(false);
+						return null;
+					}
+				});
+			} catch (PrivilegedActionException pae) {
+				throw pae.getException();
+			}
 		}
 	}
 
@@ -373,8 +392,8 @@ public class SVGOnLoadExceptionTest {
 		Document doc;
 
 		try {
-			doc = f.createDocument(svgURL);
-		} catch (SAXIOException e) {
+			doc = createDocument(f);
+		} catch (Exception e) {
 			checkException(e);
 			return;
 		}
@@ -418,6 +437,19 @@ public class SVGOnLoadExceptionTest {
 		} else {
 			fail("Expected exception from " + fileName + ": " + expectedExceptionClass
 					+ ", found no exception. Result: " + s);
+		}
+	}
+
+	private Document createDocument(SAXSVGDocumentFactory f) throws Exception {
+		try {
+		return java.security.AccessController.doPrivileged(new java.security.PrivilegedExceptionAction<Document>() {
+			@Override
+			public Document run() throws IOException {
+				return f.createDocument(svgURL);
+			}
+		});
+		} catch (PrivilegedActionException e) {
+			throw e.getException();
 		}
 	}
 

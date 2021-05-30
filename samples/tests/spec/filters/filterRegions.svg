@@ -52,7 +52,7 @@
 
             .filterRegionControlLabel {
                 fill: black;
-                font-family: Verdana;
+                font-family: 'Sansation';
                 font-size: 10;
                 text-anchor: middle;
             }

@@ -32,6 +32,14 @@
 
   <title>Vertical Text Test</title>
 
+  <style type="text/css"><![CDATA[
+    svg {
+      font-family: 'Roboto';
+      font-size:   12;
+    }
+  ]]>
+  </style>
+
   <defs>
     <path id="Path1" style="fill:none; stroke:blue;" transform="scale(0.15,0.15)"
           d="M 100 200 C 200 100 300 0 400 100 C 500 200 600 300 700 200 C 800 100 900 0 1000 100

@@ -29,7 +29,7 @@ import java.net.MalformedURLException;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class ParameterizedRenderingAccuracyTest extends SamplesRenderingTest {
+public class ParameterizedRenderingAccuracyTest extends RenderingTest {
 
 	/**
 	 * Parameter which was passed appended to the SVG file

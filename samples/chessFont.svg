@@ -94,7 +94,7 @@
     <text id="blackQueen">&#x265B;</text>
 
     <g id="chessBoard" transform="scale(10,10)" 
-       style="font-family: Times New Roman; font-size: .4" text-anchor="middle">
+       style="font-family: 'Newsreader'; font-size: .4" text-anchor="middle">
        <!-- black squares -->
        <rect x="1" y="0" width="1" height="1" fill="#ccc" stroke="none"/>
        <rect x="3" y="0" width="1" height="1" fill="#ccc" stroke="none"/>

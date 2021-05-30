@@ -21,6 +21,8 @@ package io.sf.carte.echosvg.test.svg;
 import java.io.File;
 import java.net.MalformedURLException;
 
+import org.junit.Test;
+
 /**
  * Base class for tests which take an additional parameter in addition to the
  * SVG file.
@@ -32,30 +34,35 @@ import java.net.MalformedURLException;
 public class SVGReferenceRenderingAccuracyTest extends ParameterizedRenderingAccuracyTest {
 	protected String alias;
 
-	@org.junit.Test
+	@Test
 	public void test1() throws MalformedURLException {
 		runTest("samples/anne.svg", "svgView(viewBox(0,0,100,200))", "ViewBox1");
 	}
 
-	@org.junit.Test
+	@Test
 	public void test2() throws MalformedURLException {
 		runTest("samples/anne.svg", "svgView(viewBox(100,50,100,200))", "ViewBox2");
 	}
 
-	@org.junit.Test
+	@Test
 	public void test3() throws MalformedURLException {
 		runTest("samples/anne.svg", "svgView(transform(translate(-100,-50)))", "Transform1");
 	}
 
-	@org.junit.Test
+	@Test
 	public void test4() throws MalformedURLException {
 		runTest("samples/anne.svg", "svgView(transform(translate(225,250)rotate(45)translate(-225,-250)))",
 				"Transform2");
 	}
 
-	@org.junit.Test
+	@Test
 	public void test5() throws MalformedURLException {
 		runTest("samples/anne.svg", "svgView(transform(rotate(45,225,250)))", "Transform3");
+	}
+
+	@Test
+	public void testCandyScale() throws MalformedURLException {
+		runTest("samples/batikCandy.svg", "svgView(transform(scale(0.01)))", "BumpMap1");
 	}
 
 	/**

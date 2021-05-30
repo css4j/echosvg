@@ -140,7 +140,7 @@ public abstract class AbstractRenderingAccuracyTest {
 	 * The File where the candidate reference should be saved if there is not
 	 * candidate reference or if it cannot be opened.
 	 */
-	protected File candidateReference;
+	private File candidateReference;
 
 	/**
 	 * Temporary directory
@@ -293,7 +293,7 @@ public abstract class AbstractRenderingAccuracyTest {
 				File parentDir = tmpFile.getParentFile();
 				if (!parentDir.exists()) {
 					if (!parentDir.mkdir()) {
-						return;
+						throw new IOException("Could not create directory: " + parentDir.getAbsolutePath());
 					}
 				}
 			}

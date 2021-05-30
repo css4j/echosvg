@@ -39,7 +39,7 @@
         .default { clip-path:url(#defaultClip); color-rendering:auto; }
         .quality { clip-path:url(#qualityClip); 
                    color-rendering:optimizeQuality; }
-        .saqLabel {  font-family: Verdana, Helvetica; 
+        .saqLabel {  font-family: 'Sansation'; 
                      font-size: 5;
                      text-anchor: middle; 
                      fill:black; stroke:none;}

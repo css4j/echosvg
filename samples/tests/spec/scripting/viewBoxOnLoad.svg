@@ -52,7 +52,7 @@
 
     <rect x="75" y="75" width="100" height="100" fill="#AAF"/>
     
-    <text x="125" y="45" class="title">viewBox modification
+    <text x="125" y="45" style="font:15px 'Roboto'; text-anchor: middle;">viewBox modification
         <tspan x="125" dy="1.2em"> in 'onload'</tspan></text>
 
     <text x="125" y="188" class="legend">No red should show</text>

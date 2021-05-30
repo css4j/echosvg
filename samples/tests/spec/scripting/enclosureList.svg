@@ -411,20 +411,20 @@
     </svg>
    </g>
 
-   <text x="225" y="220" text-anchor="middle" font-size="15"
+   <text x="227" y="220" text-anchor="middle" font-size="15"
     >This <tspan id="ts1" font-weight="bold">is <tspan font-style="italic"
-    >a</tspan> test </tspan><tspan x="225" dy="20" text-anchor="middle"
-    >of text encolsure!!!</tspan></text>
+    >a</tspan> test </tspan><tspan x="227" dy="20" text-anchor="middle"
+    >of text enclosure!!!</tspan></text>
 
    <text x="85" y="440" text-anchor="middle" font-size="15"
     >This <tspan id="ts2" font-weight="bold">is <tspan font-style="italic"
     >a</tspan> test </tspan><tspan x="85" dy="20" text-anchor="middle"
-    >of text encolsure!!!</tspan></text>
+    >of text enclosure!!!</tspan></text>
 
    <text x="365" y="440" text-anchor="middle" font-size="15"
     >This <tspan id="ts3" font-weight="bold">is <tspan font-style="italic"
     >a</tspan> test </tspan><tspan x="365" dy="20" text-anchor="middle"
-    >of text encolsure!!!!</tspan></text>
+    >of text enclosure!!!!</tspan></text>
   </g>
 </svg>
 

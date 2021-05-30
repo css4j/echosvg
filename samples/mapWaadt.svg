@@ -33,6 +33,14 @@
 <svg viewBox="0 0 450 500" width="450" height="500" xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink">
 
+    <style type="text/css"><![CDATA[
+      svg {
+        font-family: 'Open Sans';
+        font-size:   12;
+      }
+    ]]>
+    </style>
+
     <svg xml:space="preserve" x="72" y="25" viewBox="-3752 0 7599 11202" width="305.26" height="450"
          style="shape-rendering:geometricPrecision; text-rendering:auto; image-rendering:optimizeQuality">
         <defs>

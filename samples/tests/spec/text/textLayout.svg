@@ -36,13 +36,13 @@
 
     <defs>
      <style type="text/css"><![CDATA[
-       .Caption { font-size: 8; font-family: dialog; font-weight: normal;
+       .Caption { font-size: 8; font-family: 'Open Sans'; font-weight: normal;
                   font-style: normal; stroke: none; stroke-width: 0; 
                   fill: black } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .SerifPlain { font-size: 24; font-family: Serif; font-weight: normal;
+       .SerifPlain { font-size: 24; font-family: 'Newsreader'; font-weight: normal;
                   font-style: normal; stroke: none; stroke-width: 0; 
                   fill: black } ]]>
      </style>

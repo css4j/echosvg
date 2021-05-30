@@ -68,11 +68,11 @@
       </linearGradient>
 
       <clipPath id="clip" clipPathUnits="userSpaceOnUse">
-        <text x="100" y="200" style="font-size:40pt; font-family:Arial">BATIK</text>
+        <text x="100" y="200" style="font-size:40pt; font-family:'Open Sans'">BATIK</text>
       </clipPath>
 
       <clipPath id="svgClip" clipPathUnits="userSpaceOnUse" >
-        <text x="100" y="300" style="font-size:40pt; font-family:Arial">BATIK</text>
+        <text x="100" y="300" style="font-size:40pt; font-family:'Open Sans'">BATIK</text>
       </clipPath>
 
     </defs>

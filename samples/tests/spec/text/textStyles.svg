@@ -24,6 +24,7 @@
 <!-- Test description here                                                     -->
 <!--                                                                           -->
 <!-- @author bill.haneman@ireland.sun.com                                      -->
+<!-- @author later modifications (see Git history)                             -->
 <!-- @version $Id$                                                             -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>
@@ -36,81 +37,77 @@
 
     <defs>
      <style type="text/css"><![CDATA[
-       .Caption { font-size: 8; font-family: dialog; font-weight: normal;
+       .Caption { font-size: 8; font-family: 'Open Sans'; font-weight: normal;
                   font-style: normal; stroke: none; stroke-width: 0; 
                   fill: black } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .SansSerifPlain { font-family: SansSerif } ]]>
+       .SansSerifPlain { font-family: 'Roboto' } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .SansSerifBold { font-family: SansSerif; font-weight: bold } ]]>
+       .SansSerifBold { font-family: 'Roboto'; font-weight: bold } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .SansSerifOblique { font-family: SansSerif; font-style: oblique } ]]>
+       .SansSerifOblique { font-family: 'Roboto'; font-style: oblique } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .SerifPlain { font-family: Serif } ]]>
+       .SerifPlain { font-family: 'Bitter' } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .SerifBold { font-family: Serif; font-weight: bold } ]]>
+       .SerifBold { font-family: 'Bitter'; font-weight: bold } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .SerifOblique { font-family: Serif; font-style: oblique } ]]>
+       .SerifOblique { font-family: 'Bitter'; font-style: oblique } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .Monospaced { font-family: Monospaced } ]]>
+       .Monospaced { font-family: 'Ubuntu Mono' } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .MonospacedBold { font-family: Monospaced; font-weight:bold } ]]>
+       .MonospacedBold { font-family: 'Ubuntu Mono'; font-weight:bold } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .MonospacedOblique { font-family: Monospaced; font-style:oblique } ]]>
+       .MonospacedOblique { font-family: 'Ubuntu Mono'; font-style:oblique } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .Default {   } ]]>
+       .OpenSans { font-family: 'Open Sans' } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .DefaultBoldOblique { font-style: oblique; font-weight: bold } ]]>
+       .OpenSansBoldOblique { font-style: oblique; font-weight: bold } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .DefaultOutline { stroke-width: 1; stroke: black; fill: none } ]]>
+       .OpenSansOutline { stroke-width: 1; stroke: black; fill: none } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .Times { font-family: Times  } ]]>
+       .Newsreader { font-family: 'Newsreader'  } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .Arial { font-family: Arial  } ]]>
+       .Sansation { font-family: 'Sansation'  } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .Verdana { font-family: Verdana  } ]]>
+       .Dosis { font-family: 'Dosis'  } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .Helvetica { font-family: Helvetica  } ]]>
+       .Anton { font-family: 'Anton'  } ]]>
      </style>
 
      <style type="text/css"><![CDATA[
-       .Impact { font-family: Impact  } ]]>
-     </style>
-
-     <style type="text/css"><![CDATA[
-       .AvantGarde { font-family: AvantGarde  } ]]>
+       .Poppins { font-family: 'Poppins'  } ]]>
      </style>
 
      <text x="0" y="0" text-anchor="middle" id="sample">sample</text>
@@ -121,101 +118,101 @@
         <text class="title" x="50%" y="10%" font-size="15" >
             Text Font Faces and Styles</text>
        
-       <text x="50%" y="15%" font-size="10">Standard Font Faces</text>
+       <text x="50%" y="15%" font-size="10">Opensource Font Faces</text>
 
         <g transform="translate(100, 110)" class="SansSerifPlain">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">SansSerif, normal weight</text>
+            <text y="15" class="Caption">Roboto, normal weight</text>
         </g>
 
         <g transform="translate(225, 110)" class="SansSerifBold">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">SansSerif, bold</text>
+            <text y="15" class="Caption">Roboto, bold</text>
         </g>
 
         <g transform="translate(350, 110)" class="SansSerifOblique">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">SansSerif, oblique</text>
+            <text y="15" class="Caption">Roboto, oblique</text>
         </g>
 
         <g transform="translate(100, 160)" class="SerifPlain">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">Serif, normal weight</text>
+            <text y="15" class="Caption">Bitter, normal weight</text>
         </g>
 
         <g transform="translate(225, 160)" class="SerifBold">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">Serif, bold</text>
+            <text y="15" class="Caption">Bitter, bold</text>
         </g>
 
         <g transform="translate(350, 160)" class="SerifOblique">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">Serif, oblique</text>
+            <text y="15" class="Caption">Bitter, oblique</text>
         </g>
 
         <g transform="translate(100, 210)" class="Monospaced">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">Monospaced, normal weight</text>
+            <text y="15" class="Caption">Ubuntu Mono, normal weight</text>
         </g>
 
         <g transform="translate(225, 210)" class="MonospacedBold">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">Monospaced, bold</text>
+            <text y="15" class="Caption">Ubuntu Mono, bold</text>
         </g>
 
         <g transform="translate(350, 210)" class="MonospacedOblique">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">Monospaced, oblique</text>
+            <text y="15" class="Caption">Ubuntu Mono, oblique</text>
         </g>
 
-        <g transform="translate(100, 260)" class="Default">
+        <g transform="translate(100, 260)" class="OpenSans">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">(default)</text>
+            <text y="15" class="Caption">Open Sans</text>
         </g>
 
-        <g transform="translate(225, 260)" class="DefaultBoldOblique">
+        <g transform="translate(225, 260)" class="OpenSansBoldOblique">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">default, bold, oblique</text>
+            <text y="15" class="Caption">Open Sans, bold, oblique</text>
         </g>
 
-        <g transform="translate(350, 260)" class="DefaultOutline">
+        <g transform="translate(350, 260)" class="OpenSansOutline">
             <use xlink:href="#sample"/>
             <text y="15" class="Caption">stroke-width=1, fill=none</text>
         </g>
 
-        <text x="50%" y="62%" font-size="10">Named Font Families</text>
+        <text x="50%" y="62%" font-size="10">More Font Families</text>
         <text x="50%" y="65%" font-size="10" font-style="oblique">
-            (Not all typefaces are available on all systems.)
+            (All typefaces are loaded from ttf files.)
         </text>
 
-        <g transform="translate(100, 360)" class="Times">
+        <g transform="translate(100, 360)" class="Newsreader">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">Times</text>
+            <text y="15" class="Caption">Newsreader</text>
         </g>
 
-        <g transform="translate(225, 360)" class="Verdana">
+        <g transform="translate(225, 360)" class="Sansation">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">Verdana</text>
+            <text y="15" class="Caption">Sansation</text>
         </g>
 
-        <g transform="translate(350, 360)" class="Helvetica">
+        <g transform="translate(350, 360)" class="Dosis">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">Helvetica</text>
+            <text y="15" class="Caption">Dosis</text>
         </g>
 
-        <g transform="translate(100, 410)" class="Arial">
+        <g transform="translate(100, 410)" class="OpenSans">
             <text><tref xlink:href="#sample" text-decoration="underline"/></text>
-            <text y="15" class="Caption">Arial (underlined)</text>
+            <text y="15" class="Caption">Open Sans (underlined)</text>
         </g>
 
-        <g transform="translate(225, 410)" class="Impact">
+        <g transform="translate(225, 410)" class="Anton">
             <use xlink:href="#sample"/>
-            <text y="15" class="Caption">Impact</text>
+            <text y="15" class="Caption">Anton</text>
         </g>
 
-        <g transform="translate(350, 410)" class="AvantGarde">
+        <g transform="translate(350, 410)" class="Poppins">
             <text><tref xlink:href="#sample" text-decoration="line-through"/></text>
-            <text y="15" class="Caption">AvantGarde (line-through)</text>
+            <text y="15" class="Caption">Poppins (line-through)</text>
         </g>
 
     </g>

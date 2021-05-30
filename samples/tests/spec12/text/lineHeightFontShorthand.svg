@@ -39,7 +39,7 @@
          >Test CSS 'font' shorthand 'line-height'</text>
 
 <style type="text/css"><![CDATA[
-  @font-face { font-family: "bolder"; src: "Courier" }
+  @font-face { font-family: "bolder"; src: "Ubuntu Mono" }
   .f1 { font: 20px Serif; }
   .f2 { font: 20/2 SanSerif; }
   .f3 { font: 20/1 times; }

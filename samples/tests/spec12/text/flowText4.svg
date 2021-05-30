@@ -35,7 +35,7 @@
      xmlns:xlink="http://www.w3.org/1999/xlink">
 <title>Test of Text wrapping stuff.</title>
 
-   <g id="content" >
+   <g id="content" style="font-family:'Open Sans'">
 
       <text class="title" x="50%" y="40">Test of Text wrapping stuff</text>
          <!-- Space after size 40 'that' is aci 45 -->

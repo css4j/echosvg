@@ -33,55 +33,55 @@
      xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <style type="text/css"><![CDATA[
-    @font-face { font-family: "CSS EchoSVG SVGFont"; 
-                 src: url(batikFont.svg#EchoSVG); }
+    @font-face { font-family: "CSS SVGGeorgia"; 
+                 src: url(fontChoice.svg#SVGGeorgia); }
 
-    @font-face { font-family: "CSS EchoSVG TrueType"; 
+    @font-face { font-family: "CSS Font TrueType"; 
                  src: url(../../resources/ttf/glb12.ttf); }
 
-    @font-face { font-family: "CSS EchoSVG LCL"; 
-                 src: 'Courier', 'Courier New', url(batikFont.svg#EchoSVG); }
+    @font-face { font-family: "CSS Mono LCL"; 
+                 src: 'Ubuntu Mono Regular', 'NotCourierSans', url(fontChoice.svg#SVGGeorgia); }
 
-    @font-face { font-family: "CSS EchoSVG FB"; 
-                 src: 'No Font', url(batikFont.svg#EchoSVG); }
-    @font-face { font-family: "CSS EchoSVG FB2"; 
-                 src: url(badLink.svg#EchoSVG), url(badLink.ttf), 'Courier', 'Courier New'; }
+    @font-face { font-family: "CSS Georgia FB"; 
+                 src: 'No Font', url(fontChoice.svg#SVGGeorgia); }
+    @font-face { font-family: "CSS Monospaced FB2"; 
+                 src: url(badLink.svg#EchoSVG), url(badLink.ttf), 'Ubuntu Mono Regular', 'NotCourierSans'; }
     ]]></style>
   
   <defs>
-    <font-face font-family="SVG EchoSVG SVGFont">
+    <font-face font-family="SVG Georgia SVGFont">
       <font-face-src>
-        <font-face-uri xlink:href="batikFont.svg#EchoSVG"/>
+        <font-face-uri xlink:href="fontChoice.svg#SVGGeorgia"/>
       </font-face-src>     
     </font-face>
     
-    <font-face font-family="SVG EchoSVG TrueType">
+    <font-face font-family="SVG Font TrueType">
       <font-face-src>
         <font-face-uri xlink:href="../../resources/ttf/glb12.ttf"/>
       </font-face-src>     
     </font-face>
     
-    <font-face font-family="SVG EchoSVG LCL">
+    <font-face font-family="SVG Mono LCL">
       <font-face-src>
-        <font-face-name name="Courier"/>
-        <font-face-name name="Courier New"/>
-        <font-face-uri xlink:href="batikFont.svg#EchoSVG"/>
+        <font-face-name name="Ubuntu Mono Regular"/>
+        <font-face-name name="NotCourierSans"/>
+        <font-face-uri xlink:href="fontChoice.svg#SVGGeorgia"/>
       </font-face-src>     
     </font-face>
     
-    <font-face font-family="SVG EchoSVG FB">
+    <font-face font-family="SVG Georgia FB">
       <font-face-src>
         <font-face-name name="NoFont"/>
-        <font-face-uri xlink:href="batikFont.svg#EchoSVG"/>
+        <font-face-uri xlink:href="fontChoice.svg#SVGGeorgia"/>
       </font-face-src>     
     </font-face>
     
-    <font-face font-family="SVG EchoSVG FB2">
+    <font-face font-family="SVG Monospaced FB2">
       <font-face-src>
         <font-face-uri xlink:href="badLink.svg#EchoSVG"/>
         <font-face-uri xlink:href="badLink.ttf"/>
-        <font-face-name name="Courier"/>
-        <font-face-name name="Courier New"/>
+        <font-face-name name="Ubuntu Mono Regular"/>
+        <font-face-name name="NotCourierSans"/>
       </font-face-src>     
     </font-face>
   </defs>
@@ -91,30 +91,30 @@
     >&lt;font-face&gt; and @font-face test</text>
 
   <g id="content">
-    <text x="40" y="100" font-family="'SVG EchoSVG SVGFont'" font-size="20"
-      >SVG EchoSVG EchoSVG</text>
-    <text x="240" y="100" font-family="'CSS EchoSVG SVGFont'" font-size="20"
-      >CSS EchoSVG EchoSVG</text>
+    <text x="30" y="100" font-family="'SVG Georgia SVGFont'" font-size="20"
+      >SVG Georgia Georgia</text>
+    <text x="240" y="100" font-family="'CSS SVGGeorgia'" font-size="20"
+      >CSS Georgia Georgia</text>
     
-    <text x="40" y="150" font-family="'SVG EchoSVG TrueType'" font-size="20"
-      >SVG EchoSVG EchoSVG</text>
-    <text x="240" y="150" font-family="'CSS EchoSVG TrueType'" font-size="20"
-      >CSS EchoSVG EchoSVG</text>
+    <text x="30" y="150" font-family="'SVG Font TrueType'" font-size="20"
+      >SVG Georgia Georgia</text>
+    <text x="240" y="150" font-family="'CSS Font TrueType'" font-size="20"
+      >CSS Georgia Georgia</text>
     
-    <text x="40" y="200" font-family="'SVG EchoSVG LCL'" font-size="20"
-      >SVG EchoSVG EchoSVG</text>
-    <text x="240" y="200" font-family="'CSS EchoSVG LCL'" font-size="20"
-      >CSS EchoSVG EchoSVG</text>
+    <text x="30" y="200" font-family="'SVG Mono LCL'" font-size="20"
+      >SVG Georgia Georgia</text>
+    <text x="240" y="200" font-family="'CSS Mono LCL'" font-size="20"
+      >CSS Georgia Georgia</text>
     
-    <text x="40" y="250" font-family="'SVG EchoSVG FB'" font-size="20"
-      >SVG EchoSVG EchoSVG</text>
-    <text x="240" y="250" font-family="'CSS EchoSVG FB'" font-size="20"
-      >CSS EchoSVG EchoSVG</text>
+    <text x="30" y="250" font-family="'SVG Georgia FB'" font-size="20"
+      >SVG Georgia Georgia</text>
+    <text x="240" y="250" font-family="'CSS Georgia FB'" font-size="20"
+      >CSS Georgia Georgia</text>
     
-    <text x="40" y="300" font-family="'SVG EchoSVG FB2'" font-size="20"
-      >SVG EchoSVG EchoSVG</text>
-    <text x="240" y="300" font-family="'CSS EchoSVG FB2'" font-size="20"
-      >CSS EchoSVG EchoSVG</text>
+    <text x="30" y="300" font-family="'SVG Monospaced FB2'" font-size="20"
+      >SVG Georgia Georgia</text>
+    <text x="240" y="300" font-family="'CSS Monospaced FB2'" font-size="20"
+      >CSS Georgia Georgia</text>
   </g>
 
   <!-- ============================================================= -->

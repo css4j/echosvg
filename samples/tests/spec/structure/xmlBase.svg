@@ -31,15 +31,10 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="body" width="450" height="500" viewBox="0 0 450 500">
     <title>XML Base Test</title>
-    <g id="content" xml:base="../../../batikLogo.svg">
-       <font-face font-family="EchoSVG SVGFont">
-          <font-face-src>
-              <font-face-uri xlink:href="#EchoSVG"/>
-          </font-face-src>
-       </font-face>
+    <g id="content" xml:base="../../../ref-me.svg">
 
         <text x="225" y="30" class="title">
-        Test of xml:base, use and SVG fonts 
+        Test of xml:base, use and (TODO) Web fonts 
         </text>
 
        <use transform="translate(25, 200) scale(.5)"
@@ -48,20 +43,22 @@
 
        <g transform="translate(250,200) scale(.5)" filter="url(#dropShadow)">
         <use xlink:href="#EchoSVG_Logo" />
+        <use transform="translate(36, -47) scale(.06)" xlink:href="#EchoSVG_Squiggle" /> 
        </g> <!-- End EchoSVG_Logo_Shadow -->
        
        
        <g transform="translate(25, 350) scale(.5)" filter="url(#dropShadow)">
-          <text x="0" y="0" font-family="EchoSVG SVGFont" 
-                font-size="180">EchoSVG</text>
+          <text x="0" y="0" font-family="Newsreader" 
+                font-size="160">Echo</text>
           <use xlink:href="#EchoSVG_Logo_Underline"/>
        </g> <!-- End EchoSVG_Logo_Shadow -->
 
        <g xml:base="tests/">
            <use transform="translate(250 350) scale(.5)" 
-                xlink:href="../batikLogo.svg#EchoSVG_Logo_Shadow" />
+                xlink:href="../ref-me.svg#EchoSVG_Logo_Shadow" />
+           <use transform="translate(403, 325) scale(.03)" xlink:href="../ref-me.svg#EchoSVG_Squiggle" /> 
        </g>
     </g>
 
-    <use xlink:href="../../../batikLogo.svg#EchoSVG_Tag_Box" /> 
+    <use xlink:href="../../../ref-me.svg#EchoSVG_Tag_Box" /> 
 </svg>

@@ -37,6 +37,14 @@
      xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>SVGFont - both glyph types test</title>
 
+    <style type="text/css"><![CDATA[
+      svg {
+        font-family: 'Open Sans';
+        font-size:   12;
+      }
+    ]]>
+    </style>
+
     <g id="content">
 
         <text class="title" x="50%" y="50">SVG fonts - both glyph types</text>

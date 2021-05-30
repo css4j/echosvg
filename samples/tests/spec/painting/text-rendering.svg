@@ -42,17 +42,17 @@
 
   <g style="text-anchor:middle;font-size:64;font-weight:bold;fill:gold;stroke:crimson;stroke-width:2">
 
-  <text x="120" y="130" style="text-rendering:auto">EchoSVG</text>
-  <text x="330" y="130" style="text-rendering:optimizeSpeed">EchoSVG</text>
-  <text x="120" y="280" style="text-rendering:optimizeLegibility">EchoSVG</text>
-  <text x="330" y="280" style="text-rendering:geometricPrecision">EchoSVG</text>
+  <text x="120" y="130" style="text-rendering:auto">Echo</text>
+  <text x="330" y="130" style="text-rendering:optimizeSpeed">Echo</text>
+  <text x="120" y="280" style="text-rendering:optimizeLegibility">Echo</text>
+  <text x="330" y="280" style="text-rendering:geometricPrecision">Echo</text>
   </g>
 
   <g style="text-anchor:middle;font-size:64;font-weight:bold;fill:crimson">
-      <text x="120" y="200" text-rendering="auto"              >EchoSVG</text>
-      <text x="330" y="200" text-rendering="optimizeSpeed"     >EchoSVG</text>
-      <text x="120" y="350" text-rendering="optimizeLegibility">EchoSVG</text>
-      <text x="330" y="350" text-rendering="geometricPrecision">EchoSVG</text>
+      <text x="120" y="200" text-rendering="auto"              >Echo</text>
+      <text x="330" y="200" text-rendering="optimizeSpeed"     >Echo</text>
+      <text x="120" y="350" text-rendering="optimizeLegibility">Echo</text>
+      <text x="330" y="350" text-rendering="geometricPrecision">Echo</text>
   </g>
 
   <g style="font-size:11;fill:black;stroke:none;text-anchor:middle">

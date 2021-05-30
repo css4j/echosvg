@@ -32,6 +32,13 @@
 <svg viewBox="0 0 600 420" width="600" height="420" 
      xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink">
+    <style type="text/css"><![CDATA[
+      svg {
+        font-family: 'Open Sans';
+        font-size:   12;
+      }
+    ]]>
+    </style>
     <svg xml:space="preserve" x="25" y="25" width="550" height="382.36"
          style="shape-rendering:geometricPrecision; text-rendering:auto; image-rendering:optimizeSpeed"
          viewBox="-5483 0 11053 7684">

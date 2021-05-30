@@ -13,6 +13,7 @@ target
 /buildSrc/.gradle
 /test-references/**/candidate/
 /test-references/**/candidate-ref/
+/test-references/**/candidate-reference/
 /test-references/**/candidate-variation/
 /test-resources/io/sf/carte/echosvg/bridge/JarCheckPermissionsDenied.jar
 /test-resources/io/sf/carte/echosvg/bridge/JarCheckPermissionsGranted.jar

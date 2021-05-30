@@ -33,22 +33,26 @@
 <title>SVGFont - external font test</title>
 
     <style type="text/css"><![CDATA[
-        
-    ]]></style>
+      svg {
+        font-family: 'Open Sans';
+        font-size:   12;
+      }
+    ]]>
+    </style>
 
     <g id="content">
 
         <text class="title" x="50%" y="40">External SVG Font Test</text>
 
         <defs>
-            <font-face font-family="EchoSVG SVGFont">
+            <font-face font-family="SVGGeorgia">
                 <font-face-src>
-                    <font-face-uri xlink:href="batikFont.svg#EchoSVG"/>
+                    <font-face-uri xlink:href="fontChoice.svg#SVGGeorgia"/>
                 </font-face-src>     
             </font-face>
         </defs>
 
-        <text x="80" y="250" font-family="'EchoSVG SVGFont'" font-size="50">EchoSVG EchoSVG</text>
+        <text x="40" y="250" font-family="'SVGGeorgia'" font-size="50">Georgia Georgia</text>
        
     </g>
 

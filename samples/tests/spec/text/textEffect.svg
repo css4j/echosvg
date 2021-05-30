@@ -80,7 +80,7 @@
 
     </defs>
 
-    <text x="120" y="160" style="fill:url(#linearGradient); font-size:40pt; font-family:Arial; text-anchor:middle">
+    <text x="120" y="160" style="fill:url(#linearGradient); font-size:40pt; font-family:'Open Sans'; text-anchor:middle">
       BATIK
     </text>
 
@@ -88,7 +88,7 @@
       BATIK
     </text>
 
-    <text x="120" y="260" style="stroke:url(#radialGradient); stroke-width:2; fill:none; font-size:40pt; text-anchor:middle; font-family:Arial">
+    <text x="120" y="260" style="stroke:url(#radialGradient); stroke-width:2; fill:none; font-size:40pt; text-anchor:middle; font-family:'Open Sans'">
       BATIK
     </text>
 
@@ -96,7 +96,7 @@
       BATIK
     </text>
 
-    <text x="120" y="360" style="filter:url(#dropShadow); fill:red; font-size:40pt; font-family:Arial; text-anchor:middle">
+    <text x="120" y="360" style="filter:url(#dropShadow); fill:red; font-size:40pt; font-family:'Open Sans'; text-anchor:middle">
       BATIK
     </text>
 
@@ -104,7 +104,7 @@
       BATIK
     </text>
 
-    <text x="120" y="400" style="font-size:12; filter:none; fill:black; text-anchor:middle">(System font)</text>
+    <text x="120" y="400" style="font-size:12; filter:none; fill:black; text-anchor:middle">(Open Sans)</text>
     <text x="330" y="400" style="font-size:12; filter:none; fill:black; text-anchor:middle">(SVG font)</text>
 
   </g>

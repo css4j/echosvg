@@ -40,7 +40,7 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 
 	public static final char PATH_SEPARATOR = '/';
 
-	public static final String[] DEFAULT_VARIATION_PLATFORMS = { "java6-linux", "java5-osx" };
+	public static final String[] DEFAULT_VARIATION_PLATFORMS = { "java16-xfce", "java16-win10Light" };
 
 	/**
 	 * For preconfigured tests, the configuration has to be derived from the test
@@ -64,8 +64,8 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 		for (String variationURL : variationURLs) {
 			addVariationURL(variationURL);
 		}
-		setSaveVariation(new File(buildSaveVariationFile(dirNfile[0], dirNfile[1])));
-		setCandidateReference(new File(buildCandidateReferenceFile(dirNfile[0], dirNfile[1])));
+		setSaveVariation(new File(resolveURL(buildSaveVariationFile(dirNfile[0], dirNfile[1])).getPath()));
+		setCandidateReference(new File(resolveURL(buildCandidateReferenceFile(dirNfile[0], dirNfile[1])).getPath()));
 	}
 
 	/**

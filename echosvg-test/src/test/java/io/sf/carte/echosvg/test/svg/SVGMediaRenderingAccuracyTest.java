@@ -20,6 +20,8 @@ package io.sf.carte.echosvg.test.svg;
 
 import java.net.MalformedURLException;
 
+import org.junit.Test;
+
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 
@@ -32,7 +34,7 @@ import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
  */
 public class SVGMediaRenderingAccuracyTest extends ParameterizedRenderingAccuracyTest {
 
-	@org.junit.Test
+	@Test
 	public void test() throws MalformedURLException {
 		runTest("samples/tests/spec/styling/cssMedia.svg", "Screen");
 		runTest("samples/tests/spec/styling/cssMedia.svg", "Print");

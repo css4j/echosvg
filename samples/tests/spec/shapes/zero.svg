@@ -47,7 +47,7 @@
         <rect x="40" y="80" width="20" height="120" />
         <rect x="40" y="200" width="20" height="120" />
         <rect x="40" y="320" width="20" height="120" />
-        <g style="stroke:none; fill:black; font-size:12pt; font-family: Arial">
+        <g style="stroke:none; fill:black; font-size:12pt; font-family:'Open Sans'">
                 <text transform="translate(55, 170) rotate(-90)">&lt;rect></text>
                 <text transform="translate(55, 290) rotate(-90)">&lt;circle></text>
                 <text transform="translate(55, 410) rotate(-90)">&lt;ellipse></text>
@@ -60,7 +60,7 @@
         <rect x="190" y="95" width="80" height="0" />
         <rect x="290" y="95" width="0" height="0" />
 </g>
-<g style="stroke:none; fill:black; font-size:12; font-family: Arial; text-anchor:middle">
+<g style="stroke:none; fill:black; font-size:12; font-family:'Open Sans'; text-anchor:middle">
         <text x="130" y="194">width="0"</text>
         <text x="230" y="194">height="0"</text>
         <text x="330" y="194">width &amp; height="0"</text>
@@ -70,7 +70,7 @@
 <g style="stroke:none; fill:crimson">
         <circle cx="225" cy="255" r="0"/>
 </g>
-<g style="stroke:none; fill:black; font-size:12; font-family: Arial; text-anchor:middle">
+<g style="stroke:none; fill:black; font-size:12; font-family:'Open Sans'; text-anchor:middle">
         <text x="225" y="314">r="0"</text>
 </g>
 
@@ -80,7 +80,7 @@
         <ellipse cx="230" cy="365" rx="40" ry="0" />
         <ellipse cx="330" cy="365" rx="0" ry="0" />
 </g>
-<g style="stroke:none; fill:black; font-size:12; font-family: Arial; text-anchor:middle">
+<g style="stroke:none; fill:black; font-size:12; font-family:'Open Sans'; text-anchor:middle">
         <text x="130" y="415">rx="0"</text>
         <text x="230" y="415">ry="0"</text>
         <text x="330" y="415">rx &amp; ry="0"</text>

@@ -58,8 +58,8 @@
                     <rect x="90" y="90" width="35" height="14.5" />
                     <rect x="25" y="120" width="50" height="28" />
                     <rect x="80" y="120" width="50" height="28" />
-                    <rect x="35" y="158" width="30" height="16" />
-                    <rect x="90" y="158" width="30" height="16" />
+                    <rect x="30" y="158" width="40" height="16" />
+                    <rect x="85" y="158" width="40" height="16" />
                 </g>
             </g>
 
@@ -132,8 +132,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">EchoSVG</text>
-        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
+        <text x="50" y="170">Echo</text>
+        <text x="105" y="170" style="visibility:hidden">Echo</text>
     </a>
 </g>
 
@@ -145,8 +145,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">EchoSVG</text>
-        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
+        <text x="50" y="170">Echo</text>
+        <text x="105" y="170" style="visibility:hidden">Echo</text>
     </a>
 </g>
 
@@ -158,8 +158,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">EchoSVG</text>
-        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
+        <text x="50" y="170">Echo</text>
+        <text x="105" y="170" style="visibility:hidden">Echo</text>
     </a>
 </g>
 
@@ -171,8 +171,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">EchoSVG</text>
-        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
+        <text x="50" y="170">Echo</text>
+        <text x="105" y="170" style="visibility:hidden">Echo</text>
     </a>
 </g>
 
@@ -184,8 +184,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">EchoSVG</text>
-        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
+        <text x="50" y="170">Echo</text>
+        <text x="105" y="170" style="visibility:hidden">Echo</text>
     </a>
 </g>
 
@@ -197,8 +197,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">EchoSVG</text>
-        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
+        <text x="50" y="170">Echo</text>
+        <text x="105" y="170" style="visibility:hidden">Echo</text>
     </a>
 </g>
 
@@ -210,8 +210,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">EchoSVG</text>
-        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
+        <text x="50" y="170">Echo</text>
+        <text x="105" y="170" style="visibility:hidden">Echo</text>
     </a>
 </g>
 
@@ -223,8 +223,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">EchoSVG</text>
-        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
+        <text x="50" y="170">Echo</text>
+        <text x="105" y="170" style="visibility:hidden">Echo</text>
     </a>
 </g>
 
@@ -236,8 +236,8 @@
         <image xlink:href="../../resources/images/svg.svg" x="25" y="120" width="50" height="28" />
         <image xlink:href="../../resources/images/svg.svg" x="80" y="120" width="50" height="28" style="visibility:hidden"/>
 
-        <text x="50" y="170">EchoSVG</text>
-        <text x="105" y="170" style="visibility:hidden">EchoSVG</text>
+        <text x="50" y="170">Echo</text>
+        <text x="105" y="170" style="visibility:hidden">Echo</text>
     </a>
 </g>
 

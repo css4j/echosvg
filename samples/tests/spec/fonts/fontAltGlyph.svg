@@ -146,7 +146,7 @@
            </font>
            
            <altGlyphDef id="BCD">
-               <glyphRef xlink:href="batikFont.svg#B"/>
+               <glyphRef xlink:href="#B"/>
                <glyphRef xlink:href="#purpleC"/>
                <glyphRef xlink:href="#purpleD"/>
            </altGlyphDef>
@@ -199,11 +199,11 @@
 
             <text x="30" y="280">a<altGlyph xlink:href="#BCD">bcd</altGlyph>efg</text>
 
-            <text x="30" y="330">a<altGlyph xlink:href="batikFont.svg#bcde">bcde</altGlyph>fg</text>
+            <text x="30" y="330">a<altGlyph xlink:href="#bcde">bcde</altGlyph>fg</text>
 
             <text x="30" y="380">ab<altGlyph xlink:href="#items">cd</altGlyph>efg</text>
 
-            <text x="30" y="430">a<altGlyph xlink:href="batikFont.svg#bcItems">bc</altGlyph>defg</text>
+            <text x="30" y="430">a<altGlyph xlink:href="#bcItems">bc</altGlyph>defg</text>
 
         </g>
 

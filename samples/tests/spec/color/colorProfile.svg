@@ -35,7 +35,7 @@
 
     <style type="text/css"><![CDATA[
         .header { fill:rgb(240, 240, 240); stroke:black; }
-        .headerLabel {  font-family: Verdana, Helvetica; 
+        .headerLabel {  font-family: 'Sansation'; 
                         font-size: 10;
                         text-anchor: middle; 
                         fill:black; stroke:none;}

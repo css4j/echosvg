@@ -103,7 +103,7 @@
         arrayStyleTspan[5] = 'fill:red;text-decoration:underline';
         arrayStyleTspan[6] = 'fill:red;text-decoration:overline';
         arrayStyleTspan[7] = 'fill:red;text-decoration:line-through';
-        arrayStyleTspan[8] = 'fill:red;font-family:Times New Roman';
+        arrayStyleTspan[8] = 'fill:red;font-family:"Newsreader"';
         nbStyleTspan = 9;
 
       group = doc.getElementById('group');

@@ -31,7 +31,14 @@
 <svg id="body" width="450" height="500" viewBox="0 0 450 500"
      xmlns="http://www.w3.org/2000/svg" version="1.2"
      xmlns:xlink="http://www.w3.org/1999/xlink" >
-<title>Test of Text wrapping stuff.</title>
+  <style type="text/css"><![CDATA[
+    svg {
+      font-family: 'Roboto';
+      font-size:   12;
+    }
+  ]]>
+  </style>
+  <title>Test of Text wrapping stuff.</title>
 
    <g id="content" >
 
