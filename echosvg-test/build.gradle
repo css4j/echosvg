@@ -3,16 +3,32 @@ plugins {
 }
 
 sourceSets {
+	// Tests
 	test {
 		resources {
 			srcDir "$rootDir/test-resources"
 		}
 	}
+	// Interactive tests
+	itest {
+		java.srcDirs = ['src/itest/java']
+		resources {
+			srcDir "$rootDir/test-resources"
+		}
+		compileClasspath += sourceSets.test.output
+		runtimeClasspath += sourceSets.test.output
+	}
+	// JMH benchmarks
 	jmh {
 		java.srcDirs = ['src/jmh/java']
 		resources.srcDirs = ['src/jmh/resources']
 		compileClasspath += sourceSets.main.runtimeClasspath
 	}
+}
+
+configurations {
+	itestImplementation.extendsFrom testImplementation
+	itestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 dependencies {
@@ -52,6 +68,15 @@ test {
 jar.enabled = false
 sourcesJar.enabled = false
 
+tasks.register('iTest', Test) {
+	description = 'Run interactive tests'
+	group = 'verification'
+
+	testClassesDirs = sourceSets.itest.output.classesDirs
+	classpath = sourceSets.itest.runtimeClasspath
+	dependsOn configurations.itestCompileClasspath
+}
+
 /*
  * JMH benchmarks
  */
@@ -64,6 +89,7 @@ classes.finalizedBy(jmhClasses)
 
 //create a single Jar with all benchmark dependencies
 tasks.register('jmhJar', Jar) {
+	description = 'Create a single benchmark Jar with dependencies'
 	archiveBaseName = 'echosvg'
 	archiveClassifier = 'jmh'
 	manifest {
