@@ -128,7 +128,14 @@ comment, if that does not lead to the loss of information. For example:
 
 <br/>
 
-### Attribution
+### Copyright and attribution
+
+ All contributions are submitted under a [Developer Certificate of Origin](DeveloperCertificateOfOrigin.txt).
+Although every author maintains their copyright, in case that code from this
+project —including your contribution(s)— is used in a way that is deemed as a
+license infringement, you are —in principle— not opposed to be represented by
+the maintainer of this project in any legal proceedings intended to protect the
+license of this project.
 
  If you modify a source file that was created by the current maintainer and it
 happens to have an `@author` tag with his name, feel free to remove that field
