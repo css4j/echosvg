@@ -69,6 +69,14 @@ The full test suite can be executed from the Eclipse IDE, and most of it runs
 satisfactorily from _IntelliJ IDEA_; please open an issue if you find issues
 executing the tests from other IDEs.
 
+#### Interactive tests
+
+Several interactive tests can be executed via:
+```shell
+gradle iTest
+```
+Note that several of those tests are failing (a few being unfinished).
+
 <br/>
 
 ### Benchmarks
