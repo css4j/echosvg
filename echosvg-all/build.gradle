@@ -21,6 +21,9 @@ publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG aggregate artifact"
 }
 
+compileLegacyJava.enabled = false
+checkLegacyJava.enabled = false
+
 // Produce a Javadoc of all packages
 tasks.register('mergedJavadoc', Javadoc) {
 	description 'Produces a merged Javadoc of all packages'
