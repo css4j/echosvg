@@ -237,7 +237,7 @@ public class SVGGeneratorTests {
 	 * @throws FontFormatException 
 	 */
 	void runTests(String painterClassname) throws IOException, TranscoderException, FontFormatException {
-		String clName = getClass().getPackageName() + "." + painterClassname;
+		String clName = getClass().getPackage().getName() + "." + painterClassname;
 		Class<?> cl = null;
 
 		try {
