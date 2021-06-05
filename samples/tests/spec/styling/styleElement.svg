@@ -35,7 +35,7 @@
      xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <style type="text/css">
-    rect { stroke="black" }
+    rect { stroke: black }
   </style>
 
 <!-- The '.blue' will be applied as the comment characters will be ignored.
