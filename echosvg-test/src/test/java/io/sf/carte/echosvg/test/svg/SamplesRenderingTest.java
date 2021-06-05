@@ -230,6 +230,7 @@ public class SamplesRenderingTest {
 		testNV("samples/tests/spec12/paints/solidColor2.svg");
 	}
 
+	// See issue #27
 	@Ignore
 	@Test
 	public void testFilterRegion() throws TranscoderException, IOException {
@@ -333,8 +334,9 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/filters/feComposite.svg");
 	}
 
-	// BATIK-254: "Unable to convolve src image", see also BATIK-1280
-	@org.junit.Ignore
+	// Issue #28: "Unable to convolve src image", see also BATIK-1280
+	// and BATIK-254 (may be related)
+	@Ignore
 	@Test
 	public void testFilterFeConvolveMatrix() throws TranscoderException, IOException {
 		test("samples/tests/spec/filters/feConvolveMatrix.svg");
@@ -950,6 +952,7 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/text/textDecoration.svg");
 	}
 
+	// See issue #31
 	@Ignore
 	@Test
 	public void testTextDecoration2() throws TranscoderException, IOException {
@@ -1102,6 +1105,7 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/scripting/enclosureList.svg");
 	}
 
+	// See issue #30
 	@Ignore
 	@Test
 	public void testScriptEnclosureList2() throws TranscoderException, IOException {
