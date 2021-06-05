@@ -65,7 +65,7 @@ tasks.register('checkLegacyJava') {
 			def classfile = classfiles.stream().findAny().get()
 			if (classfile != null) {
 				def classbytes = classfile.bytes
-				def bcversion = classbytes[6] * 256 + classbytes[7]
+				def bcversion = classbytes[6] * 128 + classbytes[7]
 				if (bcversion != 52) {
 					throw new GradleException("Bytecode on " + classfile +
 							" is not valid Java 8. Version should be 52, instead is " + bcversion)
