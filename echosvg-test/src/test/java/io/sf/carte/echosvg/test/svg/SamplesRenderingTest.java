@@ -452,7 +452,6 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/fonts/fontFace.svg");
 	}
 
-	@Ignore
 	@Test
 	public void testFontGlyphChoice() throws TranscoderException, IOException {
 		test("samples/tests/spec/fonts/fontGlyphChoice.svg");
