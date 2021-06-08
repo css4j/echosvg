@@ -984,7 +984,6 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/text/textLayout.svg");
 	}
 
-	@Ignore
 	@Test
 	public void testTextLayout2() throws TranscoderException, IOException {
 		test("samples/tests/spec/text/textLayout2.svg");
@@ -995,7 +994,6 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/text/textLength.svg");
 	}
 
-	@Ignore
 	@Test
 	public void testTextOnPath() throws TranscoderException, IOException {
 		test("samples/tests/spec/text/textOnPath.svg");
@@ -1041,7 +1039,6 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/text/verticalText.svg");
 	}
 
-	@Ignore
 	@Test
 	public void testVerticalTextOnPath() throws TranscoderException, IOException {
 		test("samples/tests/spec/text/verticalTextOnPath.svg");
