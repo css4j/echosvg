@@ -12,6 +12,16 @@ publishing.publications.maven(MavenPublication).pom {
 	description = 'EchoSVG Test non-js Scripts'
 }
 
+java {
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+compileJava.dependsOn ':echosvg-bridge:compileLegacyJava'
+
+compileLegacyJava.enabled = false
+checkLegacyJava.enabled = false
+
 jar.enabled = false
 sourcesJar.enabled = false
 

@@ -5,16 +5,12 @@ plugins {
 sourceSets {
 	// Tests
 	test {
-		resources {
-			srcDir "$rootDir/test-resources"
-		}
+		resources.srcDirs = ["$rootDir/test-resources"]
 	}
 	// Interactive tests
 	itest {
 		java.srcDirs = ['src/itest/java']
-		resources {
-			srcDir "$rootDir/test-resources"
-		}
+		resources.srcDirs = ["$rootDir/test-resources"]
 		compileClasspath += sourceSets.test.output
 		runtimeClasspath += sourceSets.test.output
 	}
@@ -29,11 +25,10 @@ sourceSets {
 configurations {
 	itestImplementation.extendsFrom testImplementation
 	itestRuntimeOnly.extendsFrom testRuntimeOnly
+	all*.exclude group: 'xml-apis', module: 'xml-apis'
 }
 
 dependencies {
-	testImplementation project(':echosvg-util')
-	testImplementation project(':echosvg-transcoder')
 	testImplementation project(':echosvg-i18n')
 	testImplementation project(':echosvg-test-swing')
 	testImplementation project(':echosvg-extension')
@@ -63,11 +58,24 @@ test {
 	exclude 'io/sf/carte/echosvg/script/rhino/RhinoTest.class'
 }
 
+compileTestJava {
+	// Rhino scripting may not work correctly if JDK is modular
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+// We have no 'main' set here, so disable Legacy stuff
+compileLegacyJava.enabled = false
+checkLegacyJava.enabled = false
+
 // Some tests do not work when the classes are in a testJar
 // And the main jar is empty
 jar.enabled = false
 sourcesJar.enabled = false
 
+/*
+ * Interactive tests runner
+ */
 tasks.register('iTest', Test) {
 	description = 'Run interactive tests'
 	group = 'verification'
@@ -80,12 +88,18 @@ tasks.register('iTest', Test) {
 /*
  * JMH benchmarks
  */
+classes.finalizedBy(jmhClasses)
+
+// XXX: find a way to remove the following block
+compileJmhJava {
+	dependsOn ':echosvg-bridge:compileLegacyJava'
+	dependsOn ':echosvg-svggen:compileLegacyJava'
+}
+
 task jmh(type: JavaExec, dependsOn: jmhClasses) {
 	main = 'org.openjdk.jmh.Main'
 	classpath = sourceSets.jmh.compileClasspath + sourceSets.jmh.runtimeClasspath
 }
-
-classes.finalizedBy(jmhClasses)
 
 //create a single Jar with all benchmark dependencies
 tasks.register('jmhJar', Jar) {

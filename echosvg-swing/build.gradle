@@ -3,16 +3,9 @@ plugins {
 }
 
 dependencies {
-	api project(':echosvg-anim')
-	api project(':echosvg-awt-util')
 	api project(':echosvg-bridge')
-	api project(':echosvg-css')
-	api project(':echosvg-dom')
 	api project(':echosvg-ext')
 	api project(':echosvg-gui-util')
-	api project(':echosvg-gvt')
-	api project(':echosvg-script')
-	api project(':echosvg-util')
 	api project(':svgom-api')
 }
 

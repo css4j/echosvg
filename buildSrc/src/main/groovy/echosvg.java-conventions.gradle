@@ -25,10 +25,6 @@ repositories {
 group = 'io.sf.carte'
 version = '0.1'
 
-subprojects {
-	modularity.mixedJavaRelease 8
-}
-
 sourceSets.main.resources {
 	srcDirs += ["$rootDir/shared-resources"]
 }
@@ -38,6 +34,25 @@ java {
 	sourceCompatibility = JavaVersion.VERSION_11
 	targetCompatibility = JavaVersion.VERSION_11
 }
+
+tasks.register('jvmVersionAttribute') {
+	description = "Set the correct 'org.gradle.jvm.version' attribute"
+	def jvmVersionAttribute = Attribute.of('org.gradle.jvm.version', Integer)
+	configurations.each {
+		if (it.canBeConsumed) {
+			def categoryAttr = it.attributes.getAttribute(Category.CATEGORY_ATTRIBUTE)
+			if (categoryAttr != null && categoryAttr.name == Category.LIBRARY) {
+				def usageAttr = it.attributes.getAttribute(Usage.USAGE_ATTRIBUTE)
+				if (usageAttr != null && (usageAttr.name == Usage.JAVA_API
+						|| usageAttr.name == Usage.JAVA_RUNTIME)) {
+					it.attributes.attribute(jvmVersionAttribute, 8)
+				}
+			}
+		}
+	}
+}
+
+compileJava.dependsOn tasks.jvmVersionAttribute
 
 tasks.register('compileLegacyJava', JavaCompile) {
 	description = 'Compile to Java 8 bytecode, except module-info'
