@@ -98,6 +98,7 @@ tasks.register('copyJars', Copy) {
 	dependsOn tasks.build
 	dependsOn ':echosvg-all:jar'
 	include '**/*.jar'
+	excludes = ['IWasLoaded*.jar', 'JarCheckPermissions*.jar', 'echosvg-*-jmh.jar']
 	from layout.buildDirectory.dir("libs")
 	into "${rootDir}/jar"
 }
