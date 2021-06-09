@@ -25,7 +25,6 @@ sourceSets {
 configurations {
 	itestImplementation.extendsFrom testImplementation
 	itestRuntimeOnly.extendsFrom testRuntimeOnly
-	all*.exclude group: 'xml-apis', module: 'xml-apis'
 }
 
 dependencies {
@@ -36,9 +35,8 @@ dependencies {
 	testImplementation "junit:junit:${junitVersion}"
 	testImplementation "com.github.romankh3:image-comparison:${imagecomparisonVersion}"
 	testImplementation "org.mozilla:rhino:${rhinoVersion}"
-	testImplementation ('xerces:xercesImpl:2.12.0') {
-		exclude group: 'xml-apis', module: 'xml-apis'
-	}
+	testImplementation ('xerces:xercesImpl:2.12.0')
+	testImplementation ('xml-apis:xml-apis:1.4.01')
 	jmhImplementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
 	jmhAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
 	jmhImplementation project(':echosvg-anim')
@@ -62,6 +60,7 @@ compileTestJava {
 	// Rhino scripting may not work correctly if JDK is modular
 	sourceCompatibility = JavaVersion.VERSION_1_8
 	targetCompatibility = JavaVersion.VERSION_1_8
+	dependsOn ':echosvg-all:compileJava'
 }
 
 // We have no 'main' set here, so disable Legacy stuff

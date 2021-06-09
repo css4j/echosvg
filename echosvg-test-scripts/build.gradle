@@ -89,8 +89,8 @@ task jarCheckPermissionsGrantedJar(type: Jar) {
 	duplicatesStrategy = 'exclude'
 }
 
-// Copy jar files to 'jar' directory
-tasks.register('copyJars', Copy) {
+// Copy script jar files to 'jar' directory
+tasks.register('copyScriptJars', Copy) {
 	dependsOn tasks.jarCheckPermissionsDeniedJar
 	dependsOn tasks.jarCheckPermissionsGrantedJar
 	include '**/JarCheckPermissions*.jar'
@@ -103,7 +103,7 @@ build.dependsOn iWasLoadedJar
 build.dependsOn iWasLoadedTooJar
 build.dependsOn jarCheckPermissionsDeniedJar
 build.dependsOn jarCheckPermissionsGrantedJar
-build.dependsOn copyJars
+build.dependsOn copyScriptJars
 
 tasks.withType(PublishToMavenRepository).configureEach {
 	it.enabled = false

@@ -11,6 +11,7 @@ target
 /gradlew
 /gradlew.bat
 /buildSrc/.gradle
+/jar/
 /test-references/**/candidate/
 /test-references/**/candidate-ref/
 /test-references/**/candidate-reference/
