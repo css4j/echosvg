@@ -37,15 +37,17 @@ java {
 
 tasks.register('jvmVersionAttribute') {
 	description = "Set the correct 'org.gradle.jvm.version' attribute"
-	def jvmVersionAttribute = Attribute.of('org.gradle.jvm.version', Integer)
-	configurations.each {
-		if (it.canBeConsumed) {
-			def categoryAttr = it.attributes.getAttribute(Category.CATEGORY_ATTRIBUTE)
-			if (categoryAttr != null && categoryAttr.name == Category.LIBRARY) {
-				def usageAttr = it.attributes.getAttribute(Usage.USAGE_ATTRIBUTE)
-				if (usageAttr != null && (usageAttr.name == Usage.JAVA_API
-						|| usageAttr.name == Usage.JAVA_RUNTIME)) {
-					it.attributes.attribute(jvmVersionAttribute, 8)
+	if (!project.getPluginManager().hasPlugin('eclipse')) {
+		def jvmVersionAttribute = Attribute.of('org.gradle.jvm.version', Integer)
+		configurations.each {
+			if (it.canBeConsumed) {
+				def categoryAttr = it.attributes.getAttribute(Category.CATEGORY_ATTRIBUTE)
+				if (categoryAttr != null && categoryAttr.name == Category.LIBRARY) {
+					def usageAttr = it.attributes.getAttribute(Usage.USAGE_ATTRIBUTE)
+					if (usageAttr != null && (usageAttr.name == Usage.JAVA_API
+							|| usageAttr.name == Usage.JAVA_RUNTIME)) {
+						it.attributes.attribute(jvmVersionAttribute, 8)
+					}
 				}
 			}
 		}
@@ -73,6 +75,7 @@ classes.dependsOn compileLegacyJava
 // Check bytecode version, in case some other task screws it
 tasks.register('checkLegacyJava') {
 	description = 'Check Java 8 bytecode'
+	enabled = enabled && !project.getPluginManager().hasPlugin('eclipse')
 	def classdir = sourceSets.main.output.classesDirs.files.stream().findAny().get()
 	def classfiles = fileTree(classdir).matching({it.exclude('module-info.class')}).files
 	doFirst() {

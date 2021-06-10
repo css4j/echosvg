@@ -36,11 +36,17 @@ dependencies {
 	testImplementation "com.github.romankh3:image-comparison:${imagecomparisonVersion}"
 	testImplementation "org.mozilla:rhino:${rhinoVersion}"
 	testImplementation ('xerces:xercesImpl:2.12.0')
-	testImplementation ('xml-apis:xml-apis:1.4.01')
+	if (!project.getPluginManager().hasPlugin('eclipse')) {
+		testImplementation ('xml-apis:xml-apis:1.4.01')
+	}
 	jmhImplementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
 	jmhAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
 	jmhImplementation project(':echosvg-anim')
 	jmhImplementation project(':echosvg-svggen')
+}
+
+if (project.getPluginManager().hasPlugin('eclipse')) {
+	configurations.all*.exclude group: 'xml-apis', module: 'xml-apis'
 }
 
 description = 'io.sf.carte:echosvg-test'
