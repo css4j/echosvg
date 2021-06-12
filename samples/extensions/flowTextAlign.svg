@@ -24,6 +24,7 @@
 <!-- Tests various text on a path                                           -->
 <!--                                                                        -->
 <!-- @author bella.robinson@cmis.csiro.au                                   -->
+<!-- @author for later modifications, see Git history                       -->
 <!-- @version $Id$   -->
 <!-- ====================================================================== -->
 
@@ -38,7 +39,7 @@
 <g id="content" >
   <text class="title" x="50%" y="40">Test of Text vertical-align</text>
 
-  <g font-family="serif" transform="translate(0,60)">
+  <g font-family="Newsreader" transform="translate(0,60)">
     <g fill="rgb(220,220,255)">
       <rect x="12.5"  y="0" width="125" height="36"/>
       <rect x="162.5" y="0" width="125" height="36"/>
@@ -67,7 +68,7 @@
     </flowText>
   </g>
 
-  <g font-family="serif" transform="translate(0,120)" >
+  <g font-family="Newsreader" transform="translate(0,120)" >
     <g fill="rgb(220,220,255)">
       <rect x="12.5"  y="0"  width="125" height="36"/>
       <rect x="12.5"  y="40" width="125" height="36"/>
@@ -102,7 +103,7 @@
     </flowText>
   </g>
 
-  <g font-family="serif" transform="translate(0,220)" >
+  <g font-family="Newsreader" transform="translate(0,220)" >
     <g fill="rgb(220,220,255)">
       <rect x="12.5"  y="0"  width="125" height="72"/>
       <rect x="162.5" y="0"  width="125" height="72"/>
@@ -131,7 +132,7 @@
     </flowText>
   </g>
 
-  <g font-family="serif" transform="translate(0,320)" >
+  <g font-family="Newsreader" transform="translate(0,320)" >
     <g fill="rgb(220,220,255)">
       <rect x="12.5"  y="0"  width="125" height="72"/>
       <rect x="162.5" y="0"  width="125" height="72"/>
@@ -168,7 +169,7 @@
 </g>
 
 <!-- check a totally empty flow text element. -->
-<g font-family="serif" transform="translate(0,405)" >
+<g font-family="Newsreader" transform="translate(0,405)" >
   <g fill="rgb(220,220,255)">
     <rect x="12.5"  y="0"  width="125" height="72"/>
   </g>
