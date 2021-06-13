@@ -69,6 +69,10 @@ The full test suite can be executed from the Eclipse IDE, and most of it runs
 satisfactorily from _IntelliJ IDEA_; please open an issue if you find issues
 executing the tests from other IDEs.
 
+_Note_: when running tests from the Eclipse IDE, it is recommended to run them
+as a "JUnit Test" in the "Run As" menu option. If you run them as "Gradle Test"
+you may encounter well-known security-related issues (issue #19).
+
 #### Interactive tests
 
 Several interactive tests can be executed via:
