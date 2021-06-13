@@ -150,3 +150,14 @@ the same criteria would apply.
 
  All your contributions are submitted according to the license of this project,
 see the LICENSE file for more information.
+
+## Distribution
+
+ This project [is not being submitted to the Maven Central repository](https://groups.google.com/g/css4j/c/op5jIoINb3M/m/IiiN-LfkDAAJ)
+and this is something known to deter some contributors, thus being a relevant
+information to cover here.
+
+ However, the project distributes its artifacts through the css4j Maven
+repository, as explained in the [README](README.md) (see 'Usage from a Gradle
+project'). Please use that repository **only** for the artifact groups that it
+supplies.
