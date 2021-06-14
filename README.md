@@ -22,35 +22,19 @@ obtain the sources. Any recent version should suffice.
 - A recent modular Java JDK (version 16 is being used to build). You can install it
 from your favourite package manager or by downloading from
 [AdoptOpenJDK](https://adoptopenjdk.net/).
-- Version 7 of [Gradle](https://gradle.org/). If you do not have Gradle
-installed, it is easy to do so using a package manager (for example
-[`scoop`](https://scoop.sh/) in Windows or [SDKMAN!](https://sdkman.io/) on Linux).
-
-It is a good idea to create a Gradle wrapper, especially if you want to use a
-[IDE](https://en.wikipedia.org/wiki/Integrated_development_environment)
-(otherwise it is not really necessary). To create it, run
-`gradle wrapper --gradle-version 7.0.2` (or any Gradle version later than 7.0)
-at the EchoSVG sources directory.
 
 <br/>
 
 ### Building with Gradle
 
-Run `gradle build` to build. For example:
+Execute the build script with `gradlew build` to build. For example:
 
 ```shell
 git clone https://github.com/css4j/echosvg.git
 cd echosvg
-gradle build
+./gradlew build
 ```
-or
-```shell
-git clone https://github.com/css4j/echosvg.git
-cd echosvg
-gradle wrapper --gradle-version 7.0.2
-gradle build
-```
-if you want to create a wrapper (only need to do that once!).
+or just `gradlew build` (without the `./`) on a Windows command prompt.
 
 <br/>
 
@@ -63,7 +47,7 @@ an issue with the details so the necessary tweaks can be made.
 
 To build without running the tests:
 ```shell
-gradle build -x test
+gradlew build -x test
 ```
 The full test suite can be executed from the Eclipse IDE, and most of it runs
 satisfactorily from _IntelliJ IDEA_; please open an issue if you find issues
@@ -77,7 +61,7 @@ you may encounter well-known security-related issues (issue #19).
 
 Several interactive tests can be executed via:
 ```shell
-gradle iTest
+gradlew iTest
 ```
 Note that several of those tests are failing (a few being unfinished).
 
@@ -88,11 +72,11 @@ Note that several of those tests are failing (a few being unfinished).
 This project uses [JMH](https://github.com/openjdk/jmh) for benchmarking. To run
 all the benchmarks (currently only one):
 ```shell
-gradle runJmh
+gradlew runJmh
 ```
 To run specific benchmark(s) matched by a regular expression:
 ```shell
-gradle runJmh <regexp>
+gradlew runJmh <regexp>
 ```
 A jmh-ready _fat Jar_ with all the dependencies is available at
 `echosvg-test/build/libs/echosvg-<version>-jmh.jar`, and is the recommended way to run
@@ -106,8 +90,8 @@ java -jar echosvg-test/build/libs/echosvg-<version>-jmh.jar <regexp>
 ### Deploying to a Maven repository
 
 Use:
-- `gradle build publishToMavenLocal` to install in your local Maven repository.
-- `gradle publish` to deploy to a (generally remote) Maven repository.
+- `gradlew build publishToMavenLocal` to install in your local Maven repository.
+- `gradlew publish` to deploy to a (generally remote) Maven repository.
 
 Before deploying to a remote Maven repository, please read the
 `publishing.repositories.maven` block of
@@ -124,7 +108,7 @@ Sometimes, in non-modular projects it is useful to have a single Jar file
 bundled with all the dependencies, often called a _uber Jar_ or _fat Jar_.
 Execute the `uberjar` task to create it:
 ```shell
-gradle uberjar
+gradlew uberjar
 ```
 The file is to be found at
 `echosvg-all/build/libs/echosvg-all-<version>-alldeps.jar`.
@@ -136,7 +120,7 @@ The file is to be found at
 A merged Javadoc allows to have the Javadocs of all the packages merged in a
 single directory, and the `mergedJavadoc` task can do it:
 ```shell
-gradle mergedJavadoc
+gradlew mergedJavadoc
 ```
 The Javadocs are created at `echosvg-all/build/docs/javadoc`.
 
@@ -155,8 +139,7 @@ you need to import it explicitly:
 File > Import... > Gradle > Existing Gradle Project
 ```
 Eclipse shall ask you if you want to use a wrapper or its own instance of
-Gradle. If you created a wrapper after getting the sources, select the
-"wrapper" choice.
+Gradle, select the "wrapper" choice.
 
 <br/>
 
