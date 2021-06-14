@@ -102,7 +102,7 @@ compileJmhJava {
 }
 
 task jmh(type: JavaExec, dependsOn: jmhClasses) {
-	main = 'org.openjdk.jmh.Main'
+	mainClass = 'org.openjdk.jmh.Main'
 	classpath = sourceSets.jmh.compileClasspath + sourceSets.jmh.runtimeClasspath
 }
 
@@ -139,7 +139,7 @@ build.dependsOn jmhJar
 // Execute JMH benchmarks
 task runJmh(type: JavaExec, description: 'Run JMH benchmarks') {
 	classpath = sourceSets.jmh.runtimeClasspath
-	main = 'org.openjdk.jmh.Main'
+	mainClass = 'org.openjdk.jmh.Main'
 
 	def regexp = project.properties.get('jmh.regexp', 'Mark');
 	def format = project.properties.get('jmh.rf', 'json');
