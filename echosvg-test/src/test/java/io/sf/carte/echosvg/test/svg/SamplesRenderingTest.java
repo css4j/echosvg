@@ -1081,10 +1081,6 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/scripting/display.svg");
 	}
 
-	/*
-	 * The modified colors are invalid, one either has numbers or percentages,
-	 * not both.
-	 */
 	@Test
 	public void testScriptDomSVGColor() throws TranscoderException, IOException {
 		test("samples/tests/spec/scripting/domSVGColor.svg");
