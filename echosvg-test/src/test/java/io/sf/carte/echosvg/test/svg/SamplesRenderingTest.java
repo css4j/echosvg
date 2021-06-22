@@ -335,7 +335,6 @@ public class SamplesRenderingTest {
 	}
 
 	// Issue #28: "Unable to convolve src image", see also BATIK-1280
-	// and BATIK-254 (may be related)
 	@Ignore
 	@Test
 	public void testFilterFeConvolveMatrix() throws TranscoderException, IOException {
@@ -1086,7 +1085,6 @@ public class SamplesRenderingTest {
 	 * The modified colors are invalid, one either has numbers or percentages,
 	 * not both.
 	 */
-	@Ignore
 	@Test
 	public void testScriptDomSVGColor() throws TranscoderException, IOException {
 		test("samples/tests/spec/scripting/domSVGColor.svg");
