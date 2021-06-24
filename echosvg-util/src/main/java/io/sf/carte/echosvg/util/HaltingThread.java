@@ -32,7 +32,7 @@ public class HaltingThread extends Thread {
 	/**
 	 * Boolean indicating if this thread has ever been 'halted'.
 	 */
-	protected boolean beenHalted = false;
+	private volatile boolean beenHalted = false;
 
 	public HaltingThread() {
 	}
@@ -53,27 +53,21 @@ public class HaltingThread extends Thread {
 	 * returns true if someone has halted the thread.
 	 */
 	public boolean isHalted() {
-		synchronized (this) {
-			return beenHalted;
-		}
+		return beenHalted;
 	}
 
 	/**
 	 * Set's beenHalted to true.
 	 */
 	public void halt() {
-		synchronized (this) {
-			beenHalted = true;
-		}
+		beenHalted = true;
 	}
 
 	/**
 	 * Set's beenHalted to false.
 	 */
 	public void clearHalted() {
-		synchronized (this) {
-			beenHalted = false;
-		}
+		beenHalted = false;
 	}
 
 	/**
