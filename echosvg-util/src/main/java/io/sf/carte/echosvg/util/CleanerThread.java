@@ -23,28 +23,55 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * One line Class Desc
- *
- * Complete Class Desc
+ * A reference queue cleaner thread.
+ * <p>
+ * When the objects in the {@link ReferenceQueue} returned by
+ * {@link #getReferenceQueue()} implement the {@link ReferenceCleared}
+ * interface, they are {@link ReferenceCleared#cleared() cleared()} by the
+ * {@code CleanerThread}.
+ * </p>
+ * <p>
+ * The cleaner thread can be disposed by using the {@link #shutdown()} method or
+ * by a timeout. The timeout only applies after a first reference is obtained
+ * from the {@link ReferenceQueue}, and it can be set with
+ * {@link #setTimeout(long)}.
+ * </p>
  *
  * @author <a href="mailto:deweese@apache.org">l449433</a>
+ * @author Carlos Amengual
  * @author For later modifications, see Git history.
  * @version $Id$
  */
 public class CleanerThread extends Thread {
 
-	static volatile ReferenceQueue<Object> queue = null;
-	static CleanerThread thread = null;
+	private static long queueTimeoutMs = 45000;
 
+	private static final ReentrantLock queueLock = new ReentrantLock();
+	private static ReferenceQueue<Object> queue = null;
+	private static volatile CleanerThread thread = null;
+	private static volatile boolean newCaller = false;
+
+	/**
+	 * Get a reference queue that is being cleaned by a {@code CleanerThread}.
+	 * 
+	 * @return the reference queue.
+	 */
 	public static ReferenceQueue<Object> getReferenceQueue() {
-
-		if (queue == null) {
-			synchronized (CleanerThread.class) {
-				queue = new ReferenceQueue<>();
+		newCaller = true;
+		queueLock.lock();
+		try {
+			if (thread == null) {
+				if (queue == null) {
+					queue = new ReferenceQueue<>();
+				}
 				thread = new CleanerThread();
+				thread.start();
 			}
+		} finally {
+			queueLock.unlock();
 		}
 		return queue;
 	}
@@ -92,24 +119,36 @@ public class CleanerThread extends Thread {
 	protected CleanerThread() {
 		super("EchoSVG CleanerThread");
 		setDaemon(true);
-		start();
 	}
 
 	@Override
 	public void run() {
-		while (true) {
+		long timeoutMs = 0;
+		while (thread != null) {
+			newCaller = false;
 			try {
 				Reference<?> ref;
 				try {
-					ref = queue.remove();
-					// System.err.println("Cleaned: " + ref);
+					ref = queue.remove(timeoutMs);
 				} catch (InterruptedException ie) {
-					continue;
+					break;
 				}
 
-				if (ref instanceof ReferenceCleared) {
-					ReferenceCleared rc = (ReferenceCleared) ref;
-					rc.cleared();
+				if (ref == null) {
+					// If no reference was found before timeout AND nobody
+					// has called getReferenceQueue() meanwhile, shutdown.
+					if (!newCaller) {
+						shutdownMe(this);
+						break;
+					} else {
+						timeoutMs = 0;
+					}
+				} else {
+					if (ref instanceof ReferenceCleared) {
+						ReferenceCleared rc = (ReferenceCleared) ref;
+						rc.cleared();
+					}
+					timeoutMs = queueTimeoutMs;
 				}
 			} catch (ThreadDeath td) {
 				throw td;
@@ -118,4 +157,68 @@ public class CleanerThread extends Thread {
 			}
 		}
 	}
+
+	/**
+	 * Shut down the cleaner thread.
+	 * <p>
+	 * Web apps are encouraged to call this method explicitly when shutting down.
+	 * </p>
+	 */
+	public static void shutdown() {
+		queueLock.lock();
+		try {
+			if (thread != null) {
+				thread.interrupt();
+				thread = null;
+			}
+			queue = null;
+		} finally {
+			queueLock.unlock();
+		}
+	}
+
+	private static void shutdownMe(CleanerThread shutdownThread) {
+		queueLock.lock();
+		try {
+			/*
+			 * Other threads may have called 'shutdown()' and 'getReferenceQueue()' right
+			 * before this method being invoked, so to avoid the potential race condition
+			 * (admittedly a very small chance) only reset the queue if the current static
+			 * thread is the same as the argument CleanerThread.
+			 */
+			if (thread == shutdownThread) {
+				thread = null;
+			}
+		} finally {
+			queueLock.unlock();
+		}
+	}
+
+	/**
+	 * Set the timeout of the cleaner thread, in milliseconds.
+	 * <p>
+	 * The timeout will only take effect <i>after</i> a first reference is pulled
+	 * from the queue by the cleaner thread.
+	 * </p>
+	 * <p>
+	 * If the timeout is zero, the thread will never time out. Even if the timeout
+	 * is non-zero, you are encouraged to call {@link #shutdown()} to terminate the
+	 * cleaner thread.
+	 * </p>
+	 * <p>
+	 * The default timeout is of 45 seconds.
+	 * </p>
+	 * 
+	 * @param timeoutMs the timeout in milliseconds.
+	 * @throws IllegalArgumentException If the value of the timeout argument is
+	 *                                  negative.
+	 */
+	public static void setTimeout(long timeoutMs) {
+		if (timeoutMs < 0) {
+			throw new IllegalArgumentException("Negative timeout value");
+		}
+
+		CleanerThread.queueTimeoutMs = timeoutMs;
+	}
+
 }
