@@ -584,7 +584,7 @@ public abstract class AbstractDocument extends AbstractParentNode
 			return;
 
 		if (elementsById == null) {
-			Map<String, Object> tmp = new WeakHashMap<>();
+			Map<String, Object> tmp = new HashMap<>();
 			tmp.put(id, new IdSoftRef(e, id));
 			elementsById = tmp;
 			return;
