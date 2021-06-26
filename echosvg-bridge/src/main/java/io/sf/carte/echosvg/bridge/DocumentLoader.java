@@ -20,7 +20,7 @@ package io.sf.carte.echosvg.bridge;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.WeakHashMap;
+import java.util.HashMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -52,7 +52,7 @@ public class DocumentLoader {
 	 * WARNING: tagged private as no element of this Map should be referenced outise
 	 * of this class
 	 */
-	protected WeakHashMap<String, DocumentState> cacheMap = new WeakHashMap<>();
+	protected HashMap<String, DocumentState> cacheMap = new HashMap<>();
 
 	/**
 	 * The user agent.
