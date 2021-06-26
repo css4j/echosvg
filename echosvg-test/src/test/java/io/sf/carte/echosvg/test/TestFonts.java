@@ -70,6 +70,26 @@ public class TestFonts {
 			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Roboto-Medium.ttf");
 			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Roboto-MediumItalic.ttf");
 
+			// Alternative replacement for 'Arial', 'Helvetica'
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-Regular.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-Black.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-BlackItalic.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-Bold.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-BoldItalic.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-ExtraBold.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-ExtraBoldItalic.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-ExtraLight.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-ExtraLightItalic.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-Italic.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-Light.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-LightItalic.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-Medium.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-MediumItalic.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-SemiBold.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-SemiBoldItalic.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-Thin.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Raleway-ThinItalic.ttf");
+
 			// Replacement for 'Verdana'
 			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Sansation_Regular.ttf");
 			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Sansation_Bold.ttf");

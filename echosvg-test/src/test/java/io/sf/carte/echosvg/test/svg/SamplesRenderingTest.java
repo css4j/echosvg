@@ -179,7 +179,6 @@ public class SamplesRenderingTest {
 		testNV("samples/tests/spec12/text/flowText3.svg");
 	}
 
-	@Ignore
 	@Test
 	public void testFlowText4() throws TranscoderException, IOException {
 		testNV("samples/tests/spec12/text/flowText4.svg");
