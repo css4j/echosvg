@@ -26,6 +26,7 @@
 <!-- establish a new viewport and therefore, the overflow property applies.    -->
 <!--                                                                           -->
 <!-- @author vhardy@apache.org                                                 -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$    -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>  

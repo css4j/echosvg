@@ -24,6 +24,7 @@
 <!-- Checks access to external resources                                       -->
 <!--                                                                           -->
 <!-- @author vincent.hardy@sun.com                                             -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$  -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../../../../../samples/tests/resources/style/test.css" ?>

@@ -24,6 +24,7 @@
 <!-- Test description here                                                     -->
 <!--                                                                           -->
 <!-- @author bill.haneman@ireland.sun.com                                      -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$                                                             -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="./tests/resources/style/test.css" ?>

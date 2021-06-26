@@ -24,6 +24,7 @@
 <!-- This test shows the various shapes that can have markers.                 -->
 <!--                                                                           -->
 <!-- @author vhardy@apache.org                                                 -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$  -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>

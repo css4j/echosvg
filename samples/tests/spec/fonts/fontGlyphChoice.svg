@@ -24,6 +24,7 @@
 <!-- Tests the orientation and lang glyph attributes.                          -->
 <!--                                                                           -->
 <!-- @author bella.robinson@cmis.csiro.au                                      -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$     -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>  

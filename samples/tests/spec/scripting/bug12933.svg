@@ -24,6 +24,7 @@
 <!-- test for bug in updateTracker                                             -->
 <!--                                                                           -->
 <!-- @author nicolas.socheleau@bitflash.com                                    -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$ -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>  

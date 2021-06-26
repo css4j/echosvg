@@ -24,6 +24,7 @@
 <!-- Testing calls to CSSStlyeDeclaration.setProperty                       -->
 <!--                                                                        -->
 <!-- @author deweese@apache.org                                             -->
+<!-- @author for later modifications, see Git history                       -->
 <!-- @version $Id$ -->
 <!-- ====================================================================== -->
 

@@ -27,6 +27,7 @@
 <!-- This sequence should not trigger the circle's mouseup handler.         -->
 <!--                                                                        -->
 <!-- @author vincent.hardy@sun.com                                          -->
+<!-- @author for later modifications, see Git history                       -->
 <!-- @version $Id$                                                          -->
 <!-- ====================================================================== -->
 

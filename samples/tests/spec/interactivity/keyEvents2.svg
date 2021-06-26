@@ -25,6 +25,7 @@
 <!-- Traces the DOM_VK_* values on keydown events                              -->
 <!--                                                                           -->
 <!-- @author vincent.hardy@sun.com                                             -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$ -->
 <!-- ========================================================================= -->
 

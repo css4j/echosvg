@@ -18,6 +18,7 @@
 <!-- A 52 card deck.  The face cards don't have faces :(                    -->
 <!--                                                                        -->
 <!-- @author deweese@apache.org                                             -->
+<!-- @author for later modifications, see Git history                       -->
 <!-- @version $Id$          -->
 <!-- ====================================================================== -->
 <svg width="1000" height="450" viewBox="0 0 1000 450" 

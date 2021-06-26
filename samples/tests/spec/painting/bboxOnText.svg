@@ -24,6 +24,7 @@
 <!-- Test created after bug submitted by cjolif@ilog.fr showing a problem with -->
 <!-- radialGradient with objectBoundingBox on a text element.                  -->
 <!-- @author vhardy@apache.org                                                 -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$ -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>  

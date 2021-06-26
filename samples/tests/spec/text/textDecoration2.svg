@@ -24,6 +24,7 @@
 <!-- Test the handling of text decoration, especially in the presence of    -->
 <!-- of dx, dy attributes.                                                  -->
 <!-- @author deweese@apache.org                                             -->
+<!-- @author for later modifications, see Git history                       -->
 <!-- @version $Id$ -->
 <!-- ====================================================================== -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>  

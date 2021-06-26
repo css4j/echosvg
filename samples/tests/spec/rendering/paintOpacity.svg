@@ -24,6 +24,7 @@
 <!-- into account for all the types of Paint servers                           -->
 <!--                                                                           -->
 <!-- @author vhardy@apache.org                                                 -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$   -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>  

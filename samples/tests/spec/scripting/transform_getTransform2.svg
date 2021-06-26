@@ -18,10 +18,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
---><!--      ======================================================================      -->
+-->
+<!--      ======================================================================      -->
 <!--      Modification of a polygon attributes                                        -->
 <!--                                                                                  -->
 <!--      @author nicolas.socheleau@bitflash.com                                      -->
+<!--      @author for later modifications, see Git history                            -->
 <!--      @version $Id$      -->
 <!--      ======================================================================      -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css"      ?>

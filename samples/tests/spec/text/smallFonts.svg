@@ -21,11 +21,12 @@
 
 -->
 <!-- ========================================================================= -->
-<!-- Tests small font sizes (<1) with various text features.                    -->
+<!-- Tests small font sizes (<1) with various text features.                   -->
 <!-- This is basically a copy of the textFeatures test file with a small       -->
-<!-- viewbox set.                                                               -->
+<!-- viewbox set.                                                              -->
 <!--                                                                           -->
-<!-- @author bella.robinson@cmis.csiro.au                                     -->
+<!-- @author bella.robinson@cmis.csiro.au                                      -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$                                                             -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>

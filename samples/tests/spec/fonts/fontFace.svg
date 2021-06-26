@@ -24,6 +24,7 @@
 <!-- Test of font-face element and @font-face rule.                         -->
 <!--                                                                        -->
 <!-- @author thomas.deweese@kodak.com                                       -->
+<!-- @author for later modifications, see Git history                       -->
 <!-- @version $Id$    -->
 <!-- ====================================================================== -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>  

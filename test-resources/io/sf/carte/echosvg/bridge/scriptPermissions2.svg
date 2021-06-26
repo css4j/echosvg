@@ -29,6 +29,7 @@
 <!-- thrown.                                                                   -->
 <!--                                                                           -->
 <!-- @author vincent.hardy@sun.com                                             -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$  -->
 <!-- ========================================================================= -->
 <!-- altGlyph and glyphRef are missing because their testing could not be automated -->

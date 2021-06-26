@@ -23,6 +23,7 @@
 <!-- Tests various text on a path                                              -->
 <!--                                                                           -->
 <!-- @author bella.robinson@cmis.csiro.au                                      -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$        -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../../resources/style/test.css" ?>  

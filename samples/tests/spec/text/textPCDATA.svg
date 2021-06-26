@@ -24,6 +24,7 @@
 <!-- Validates that CDATA sections in &lt;text&gt; elements are supported.     -->
 <!--                                                                           -->
 <!-- @author vincent.hardy@sun.com                                             -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$        -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>

@@ -24,6 +24,7 @@
 <!-- This test validates arcto and multiple move to                         -->
 <!--                                                                        -->
 <!-- @author deweese@apache.org                                             -->
+<!-- @author for later modifications, see Git history                       -->
 <!-- @version $Id$  -->
 <!-- ====================================================================== -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>  

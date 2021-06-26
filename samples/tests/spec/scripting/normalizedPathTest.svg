@@ -24,6 +24,7 @@
 <!-- Illustrates how a SVG Normalized Path does not have loss of precision. -->
 <!--                                                                        -->
 <!-- @author andrest@world-affair.com                                       -->
+<!-- @author for later modifications, see Git history                       -->
 <!-- @version $Id: normalizedPathTest.svg                                   -->
 <!-- ====================================================================== -->
 

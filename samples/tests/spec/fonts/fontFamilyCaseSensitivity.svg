@@ -25,6 +25,7 @@
 <!-- names if the font-families are not case-sensitive.                        -->
 <!--                                                                           -->
 <!-- @author vincent.hardy@sun.com                                             -->
+<!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$    -->
 <!-- ========================================================================= -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>  

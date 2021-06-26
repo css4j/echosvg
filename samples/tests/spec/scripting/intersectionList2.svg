@@ -25,6 +25,7 @@
 <!-- Testing the getIntersectionList interface on the svg:svg element.      -->
 <!--                                                                        -->
 <!-- @author deweese@apache.org                                             -->
+<!-- @author for later modifications, see Git history                       -->
 <!-- @version $Id$ -->
 <!-- ====================================================================== -->
 
