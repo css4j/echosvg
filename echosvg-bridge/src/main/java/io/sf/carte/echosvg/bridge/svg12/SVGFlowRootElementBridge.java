@@ -61,6 +61,7 @@ import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.ComputedValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
+import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 import io.sf.carte.echosvg.css.engine.value.svg12.LineHeightValue;
 import io.sf.carte.echosvg.css.engine.value.svg12.SVG12ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractNode;
@@ -855,7 +856,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 		int textAlign;
 		if (v == SVG12ValueConstants.START_VALUE)
 			textAlign = BlockInfo.ALIGN_START;
-		else if (v == SVG12ValueConstants.MIDDLE_VALUE)
+		else if (v == SVG12ValueConstants.CENTER_VALUE || v == SVGValueConstants.MIDDLE_VALUE)
 			textAlign = BlockInfo.ALIGN_MIDDLE;
 		else if (v == SVG12ValueConstants.END_VALUE)
 			textAlign = BlockInfo.ALIGN_END;

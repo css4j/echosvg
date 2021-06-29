@@ -24,6 +24,8 @@ import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
+import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
+import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
@@ -43,7 +45,8 @@ public class TextAlignManager extends IdentifierManager {
 
 	static {
 		values.put(SVG12CSSConstants.CSS_START_VALUE, SVG12ValueConstants.START_VALUE);
-		values.put(SVG12CSSConstants.CSS_MIDDLE_VALUE, SVG12ValueConstants.MIDDLE_VALUE);
+		values.put(CSSConstants.CSS_CENTER_VALUE, SVG12ValueConstants.CENTER_VALUE);
+		values.put(CSSConstants.CSS_MIDDLE_VALUE, SVGValueConstants.MIDDLE_VALUE);
 		values.put(SVG12CSSConstants.CSS_END_VALUE, SVG12ValueConstants.END_VALUE);
 		values.put(SVG12CSSConstants.CSS_FULL_VALUE, SVG12ValueConstants.FULL_VALUE);
 	}

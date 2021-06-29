@@ -24,6 +24,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
 import io.sf.carte.echosvg.css.engine.value.StringValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
+import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
 
 /**
@@ -37,8 +38,8 @@ public interface SVG12ValueConstants extends SVGValueConstants {
 
 	/** The 'start' keyword. */
 	Value START_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, SVG12CSSConstants.CSS_FULL_VALUE);
-	/** The 'middle' keyword. */
-	Value MIDDLE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, SVG12CSSConstants.CSS_MIDDLE_VALUE);
+	/** The 'center' keyword. */
+	Value CENTER_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CENTER_VALUE);
 	/** The 'end' keyword. */
 	Value END_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, SVG12CSSConstants.CSS_END_VALUE);
 	/** The 'full' keyword. */

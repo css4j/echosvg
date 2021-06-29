@@ -41,7 +41,7 @@ public interface SVG12CSSConstants extends CSSConstants {
 	String CSS_MARGIN_LEFT_PROPERTY = "margin-left";
 	/** property name for indent */
 	String CSS_INDENT_PROPERTY = "indent";
-	/** propery name for text-align */
+	/** property name for text-align */
 	String CSS_TEXT_ALIGN_PROPERTY = "text-align";
 	/** property name for color attribute */
 	String CSS_SOLID_COLOR_PROPERTY = "solid-color";
@@ -50,8 +50,6 @@ public interface SVG12CSSConstants extends CSSConstants {
 
 	/** Value for text-align to start of text on line */
 	String CSS_START_VALUE = "start";
-	/** Value for text-align to middle of text on line */
-	String CSS_MIDDLE_VALUE = "middle";
 	/** Value for text-align to end of region */
 	String CSS_END_VALUE = "end";
 	/** Value for text-align to both edges of region */
