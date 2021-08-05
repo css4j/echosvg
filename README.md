@@ -141,6 +141,13 @@ File > Import... > Gradle > Existing Gradle Project
 Eclipse shall ask you if you want to use a wrapper or its own instance of
 Gradle, select the "wrapper" choice.
 
+If you use Eclipse 2021-06, it is advisable to run a build with `./gradlew build`
+before importing the project. Apparently Eclipse requires some files produced by
+a build but is unable to do that by itself.
+
+Note: it is normal to experience build issues with the `echosvg-test-scripts`
+subproject in Eclipse, you may prefer to keep that project closed.
+
 <br/>
 
 ## Usage from a Gradle project
