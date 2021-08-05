@@ -66,7 +66,7 @@ compileTestJava {
 	// Rhino scripting may not work correctly if JDK is modular
 	sourceCompatibility = JavaVersion.VERSION_1_8
 	targetCompatibility = JavaVersion.VERSION_1_8
-	dependsOn ':echosvg-all:compileJava'
+	dependsOn ':echosvg-all:classes'
 }
 
 // We have no 'main' set here, so disable Legacy stuff
@@ -97,8 +97,8 @@ classes.finalizedBy(jmhClasses)
 
 // XXX: find a way to remove the following block
 compileJmhJava {
-	dependsOn ':echosvg-bridge:compileLegacyJava'
-	dependsOn ':echosvg-svggen:compileLegacyJava'
+	dependsOn ':echosvg-bridge:classes'
+	dependsOn ':echosvg-svggen:classes'
 }
 
 task jmh(type: JavaExec, dependsOn: jmhClasses) {

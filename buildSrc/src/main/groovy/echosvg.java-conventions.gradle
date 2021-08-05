@@ -74,7 +74,7 @@ classes.dependsOn compileLegacyJava
 
 // Check bytecode version, in case some other task screws it
 tasks.register('checkLegacyJava') {
-	description = 'Check Java 8 bytecode'
+	description = 'Check that classes are Java 8 bytecode (except module-info)'
 	enabled = enabled && !project.getPluginManager().hasPlugin('eclipse')
 	def classdir = sourceSets.main.output.classesDirs.files.stream().findAny().get()
 	def classfiles = fileTree(classdir).matching({it.exclude('module-info.class')}).files
