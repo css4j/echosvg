@@ -60,6 +60,14 @@ test {
 	exclude 'io/sf/carte/echosvg/bridge/*LoadTest.class'
 	exclude 'io/sf/carte/echosvg/bridge/*PermissionsTest.class'
 	exclude 'io/sf/carte/echosvg/script/rhino/RhinoTest.class'
+	// Exclude tests via gradlew test -PexcludeTests="SamplesRenderingTest.testVerticalText,..."
+	if (project.hasProperty('excludeTests')) {
+		filter {
+			project.properties['excludeTests']?.replaceAll('\s', '')?.split(',').each {
+				excludeTestsMatching "*.${it}"
+			}
+		}
+	}
 }
 
 compileTestJava {
