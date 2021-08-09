@@ -33,4 +33,4 @@ jobs:
 
       # Build
       - name: Build with Gradle
-        run: ./gradlew build -PexcludeTests="SamplesRenderingTest.testVerticalText"
+        run: ./gradlew build -PexcludeTests="SamplesRenderingTest.testFontArabic,SamplesRenderingTest.testVerticalText"
