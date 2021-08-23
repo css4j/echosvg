@@ -109,11 +109,6 @@ compileJmhJava {
 	dependsOn ':echosvg-svggen:classes'
 }
 
-task jmh(type: JavaExec, dependsOn: jmhClasses) {
-	mainClass = 'org.openjdk.jmh.Main'
-	classpath = sourceSets.jmh.compileClasspath + sourceSets.jmh.runtimeClasspath
-}
-
 //create a single Jar with all benchmark dependencies
 tasks.register('jmhJar', Jar) {
 	description = 'Create a single benchmark Jar with dependencies'
@@ -145,7 +140,9 @@ tasks.register('jmhJar', Jar) {
 build.dependsOn jmhJar
 
 // Execute JMH benchmarks
-task runJmh(type: JavaExec, description: 'Run JMH benchmarks') {
+task runJmh(type: JavaExec) {
+	description = 'Run JMH benchmarks'
+	dependsOn jmhClasses
 	classpath = sourceSets.jmh.runtimeClasspath
 	mainClass = 'org.openjdk.jmh.Main'
 
