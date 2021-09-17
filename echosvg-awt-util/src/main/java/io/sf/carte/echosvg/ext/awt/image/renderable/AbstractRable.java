@@ -249,7 +249,7 @@ public abstract class AbstractRable implements Filter {
 
 	@Override
 	public Object getProperty(String name) {
-		RenderableImage ret = (RenderableImage) props.get(name);
+		Object ret = props.get(name);
 		if (ret != null)
 			return ret;
 		for (RenderableImage src : srcs) {
