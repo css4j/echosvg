@@ -22,7 +22,7 @@
 -->
 
 <!-- ====================================================================== -->
-<!-- Image element references an SVG file                                   -->
+<!-- CSS Font Shorthand property                                            -->
 <!--                                                                        -->
 <!-- @author Thierry.Kormann@sophia.inria.fr                                -->
 <!-- @author for later modifications, see Git history                       -->
@@ -40,58 +40,57 @@
          >Test the CSS 'font' shorthand property</text>
 
 <style type="text/css"><![CDATA[
-  @font-face { font-family: "bolder"; src: "Courier" }
-  .f1 { font: 20px Serif; }
-  .f2 { font: 20 SanSerif; }
-  .f3 { font: 20 times; }
-  .f4 { font: bold 20 times; }
-  .f5 { font: italic 20 times; }
-  .f6 { font: bold italic 20 times; }
-  .f7 { font: italic bold 20 times; }
-  .f8 { font: 700 20 times; }
-  .f9 { font: 700 small-caps 20 times; }
-  .f10 { font: small-caps 700 20 times; }
-  .f11 { font: small-caps 700 italic 20 times; }
-  .f12 { font: 700 small-caps italic 20 times; }
-  .f13 { font: small-caps italic 700 20 times; }
-  .f14 { font: 200 "bolder"; }
-  .f15 { font: 200 bolder; }
-  .f16 { font: 200px bolder; }
-  .f17 { font: bolder 200 bolder; }
+  .f1 { font: 20px "Playfair Display"; }
+  .f2 { font: 20 'Roboto'; }
+  .f3 { font: 20 'Newsreader'; }
+  .f4 { font: bold 20 'Newsreader'; }
+  .f5 { font: italic 20 Newsreader; }
+  .f6 { font: bold italic 20 'Newsreader'; }
+  .f7 { font: italic bold 20 'Newsreader'; }
+  .f8 { font: 700 20 'Newsreader'; }
+  .f9 { font: 700 small-caps 20 'Newsreader'; }
+  .f10 { font: small-caps 700 20 'Newsreader'; }
+  .f11 { font: small-caps 700 italic 20 'Newsreader'; }
+  .f12 { font: 700 small-caps italic 20 'Newsreader'; }
+  .f13 { font: small-caps italic 700 20 'Newsreader'; }
+  .f14 { font: 200 Inconsolata; }
+  .f15 { font: 200 "Inconsolata"; }
+  .f16 { font: 200px Inconsolata; }
+  .f17 { font: 200 Inconsolata bold; }
   .f18 { font: menu; }
   .f19 { font: small-caption; }
 ]]></style>
 
-    <g id="testContent" font-size="8pt" font-family="sanserif">
-       <text x="225" y="60">default</text>
-       <text class="f1" x="10" y="60">font: 20px Serif</text>
-       <text class="f2" x="10" y="80">font: 20 SanSerif</text>
-       <text class="f3" x="10" y="100">font: 20 times</text>
-       <text class="f4" x="10" y="120">font: bold 20 times</text>
-       <text class="f5" x="10" y="140">font: italic 20 times</text>
-       <text class="f6" x="10" y="160">font: bold italic 20 times</text>
-       <text class="f7" x="10" y="180">font: italic bold 20 times</text>
-       <text class="f8" x="10" y="200">font: 200 20 times</text>
-       <text class="f9"  x="10" y="220">font: 700 small-caps 20 times</text>
-       <text class="f10" x="10" y="240">font: small-caps 700 20 times</text>
-       <text class="f11" x="10" y="260">font: small-caps 700 italic 20 times</text>
-       <text class="f12" x="10" y="280">font: 700 small-caps italic 20 times</text>
-       <text class="f13" x="10" y="300">font: small-caps italic 700 20 times</text>
+    <g id="testContent" font-size="8pt" font-family="Open Sans">
+       <text x="280" y="60">Open Sans</text>
+       <text class="f1" x="10" y="60">font: 20px "Playfair Display"</text>
+       <text class="f2" x="10" y="80">font: 20 'Roboto'</text>
+       <text class="f3" x="10" y="100">font: 20 'Newsreader'</text>
+       <text class="f4" x="10" y="120">font: bold 20 'Newsreader'</text>
+       <text class="f5" x="10" y="140">font: italic 20 Newsreader</text>
+       <text class="f6" x="10" y="160">font: bold italic 20 'Newsreader'</text>
+       <text class="f7" x="10" y="180">font: italic bold 20 'Newsreader'</text>
+       <text class="f8" x="10" y="200">font: 200 20 'Newsreader'</text>
+       <text class="f9"  x="10" y="220">font: 700 small-caps 20 'Newsreader'</text>
+       <text class="f10" x="10" y="240">font: small-caps 700 20 'Newsreader'</text>
+       <text class="f11" x="10" y="260">font: small-caps 700 italic 20 'Newsreader'</text>
+       <text class="f12" x="10" y="280">font: 700 small-caps italic 20 'Newsreader'</text>
+       <text class="f13" x="10" y="300">font: small-caps italic 700 20 'Newsreader'</text>
        <g transform="scale(.1)">
-          <text class="f14" x="100" y="3200">font: 200 "bolder"</text>
-          <text class="f15" x="100" y="3400">font: 200 bolder</text>
-          <text class="f16" x="100" y="3600">font: 200px bolder</text>
-          <text class="f17" x="100" y="3800">font: bolder 200 bolder</text>
+          <text class="f14" x="100" y="3200">font: 200 Inconsolata</text>
+          <text class="f15" x="100" y="3400">font: 200 "Inconsolata"</text>
+          <text class="f16" x="100" y="3600">font: 200px Inconsolata</text>
+          <text class="f17" x="100" y="3800">font: 200 Inconsolata bold</text>
        </g>
        <g font-weight="bold">
-          <text class="f5" x="10" y="400">font: italic 20 times</text>
+          <text class="f5" x="10" y="400">font: italic 20 'Newsreader'</text>
        </g>
-          <text x="200" y="400">group font-weight="bold"</text>
+          <text x="280" y="400">group font-weight="bold"</text>
 
        <g font-style="italic">
-          <text class="f4" x="10" y="420">font: bold 20 times</text>
+          <text class="f4" x="10" y="420">font: bold 20 'Newsreader'</text>
        </g>
-          <text x="200" y="420">group font-style="italic"</text>
+          <text x="280" y="420">group font-style="italic"</text>
 
        <text class="f18" x="10" y="440">File: menu</text>
        <text class="f19" x="10" y="460">File: small-caption</text>

@@ -32,9 +32,9 @@ public class TestFonts {
 
 	public static final String FONT_PATH = "samples/tests/resources/ttf/";
 
-	public static final String FONT_FAMILY_SANS1 = "Open Sans";
+	public static final String FONT_FAMILY_SANS1 = "Roboto";
 
-	public static final String FONT_FAMILY_SANS2 = "Roboto";
+	public static final String FONT_FAMILY_SANS2 = "Open Sans";
 
 	public static final String FONT_FAMILY_SERIF1 = "Newsreader";
 
@@ -179,6 +179,16 @@ public class TestFonts {
 			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "UbuntuMono-Bold.ttf");
 			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "UbuntuMono-BoldItalic.ttf");
 			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "UbuntuMono-Italic.ttf");
+
+			// Replacement for other Monospaced
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Inconsolata-Regular.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Inconsolata-Black.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Inconsolata-Bold.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Inconsolata-ExtraBold.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Inconsolata-ExtraLight.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Inconsolata-Light.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Inconsolata-Medium.ttf");
+			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "Inconsolata-SemiBold.ttf");
 
 			// Replacement for 'Lucida Sans Typewriter'
 			registerFont(Font.TRUETYPE_FONT, fontPathUrl, "NotCourierSans.ttf");

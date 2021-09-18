@@ -51,7 +51,7 @@ import io.sf.carte.echosvg.test.TestFonts;
 public class AttributedCharacterIterator implements Painter {
 	@Override
 	public void paint(Graphics2D g) {
-		String fontName = TestFonts.FONT_FAMILY_SANS1;
+		String fontName = TestFonts.FONT_FAMILY_SANS2;
 		int fontSize = 15;
 
 		String text = "Attributed Strings are fun !";

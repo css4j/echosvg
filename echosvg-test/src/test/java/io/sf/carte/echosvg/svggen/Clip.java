@@ -96,7 +96,7 @@ public class Clip implements Painter {
 		g.translate(0, 3 * vOffset);
 
 		// Use a non-rectangle clipping area
-		g.drawString("Non-Rectagular clip", 110, 25);
+		g.drawString("Non-Rectangular clip", 110, 25);
 		Shape circle = new Ellipse2D.Float(0, 0, w, h);
 		g.clip(circle);
 		g.drawImage(image, 0, 0, null);
@@ -109,7 +109,7 @@ public class Clip implements Painter {
 
 		// Use a non-rectangle clipping area again,
 		// after setting a scale transform
-		g.drawString("Non-Rectagular clip after", 110, 15);
+		g.drawString("Non-Rectangular clip after", 110, 15);
 		g.drawString(".5 scale", 110, 30);
 		g.scale(.5, .5);
 		g.clip(circle);
@@ -122,7 +122,7 @@ public class Clip implements Painter {
 
 		// Use a non-rectangle clipping area again,
 		// before setting a scale transform
-		g.drawString("Non-Rectagular clip before", 110, 15);
+		g.drawString("Non-Rectangular clip before", 110, 15);
 		g.drawString(".5 scale", 110, 30);
 		g.clip(circle);
 		g.scale(.5, .5);

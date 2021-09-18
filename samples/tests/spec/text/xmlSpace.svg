@@ -60,7 +60,7 @@
                 d="M20 0 V800 H520 V0 z M 50 30 H490 V770 H50 z"/>
       </font>
       <style type="text/css"><![CDATA[
-        .cap { font: normal normal 8 monospaced;
+        .cap { font: normal normal 9 "Ubuntu Mono";
                stroke: none; stroke-width: 0; 
                    fill: black } ]]>
       </style>
