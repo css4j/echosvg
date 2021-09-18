@@ -20,15 +20,9 @@ package io.sf.carte.echosvg.test.svg;
 
 import static org.junit.Assert.fail;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
-import java.awt.image.WritableRaster;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,16 +34,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import com.github.romankh3.image.comparison.ImageComparison;
-import com.github.romankh3.image.comparison.model.ImageComparisonResult;
-import com.github.romankh3.image.comparison.model.ImageComparisonState;
-
-import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
 import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.image.ImageComparator;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.util.ParsedURL;
 
@@ -131,10 +121,14 @@ public abstract class AbstractRenderingAccuracyTest {
 	protected List<URL> variationURLs;
 
 	/**
-	 * The File where the newly computed variation should be saved if different from
-	 * the variationURL
+	 * The file where the newly computed range variation should be saved.
 	 */
-	protected File saveVariation;
+	private String saveRangeVariation;
+
+	/**
+	 * The file where the newly computed platform variation should be saved.
+	 */
+	private String savePlatformVariation;
 
 	/**
 	 * The File where the candidate reference should be saved if there is not
@@ -212,14 +206,25 @@ public abstract class AbstractRenderingAccuracyTest {
 	}
 
 	/**
-	 * Sets the File where the variation from the reference image should be stored
+	 * Sets the File where the range variation from the reference image should be stored
 	 */
-	public void setSaveVariation(File saveVariation) {
-		this.saveVariation = saveVariation;
+	public void setSaveRangeVariation(String saveVariation) {
+		this.saveRangeVariation = saveVariation;
 	}
 
-	public File getSaveVariation() {
-		return saveVariation;
+	private String getSaveRangeVariation() {
+		return saveRangeVariation;
+	}
+
+	/**
+	 * Sets the File where the platform variation from the reference image should be stored
+	 */
+	public void setSavePlatformVariation(String saveVariation) {
+		this.savePlatformVariation = saveVariation;
+	}
+
+	private String getSavePlatformVariation() {
+		return savePlatformVariation;
 	}
 
 	public String[] getVariationURLs() {
@@ -267,11 +272,15 @@ public abstract class AbstractRenderingAccuracyTest {
 
 	/**
 	 * Requests this <code>Test</code> to run.
+	 * 
+	 * @param allowedPercentBelowThreshold
+	 * @param allowedPercentOverThreshold
 	 * @throws TranscoderException 
 	 * @throws IOException 
 	 *
 	 */
-	public void runTest() throws TranscoderException, IOException {
+	public void runTest(float allowedPercentBelowThreshold, float allowedPercentOverThreshold)
+			throws TranscoderException, IOException {
 		//
 		// First, do clean-up
 		//
@@ -308,59 +317,39 @@ public abstract class AbstractRenderingAccuracyTest {
 		// encoding failed and we should return that report.
 		encode(svgURL, tmpFileOS);
 
+		tmpFileOS.close();
+
 		BufferedImage ref = getImage(refImgURL);
 		BufferedImage gen = getImage(tmpFile);
 
-		ImageComparisonResult result = compareImages(ref, gen);
+		short result = compareImages(ref, gen, allowedPercentBelowThreshold, allowedPercentOverThreshold);
 
-		boolean accurate = result.getImageComparisonState() == ImageComparisonState.MATCH;
-
-		if (accurate) {
+		if (result == ImageComparator.MATCH) {
 			//
-			// Yahooooooo! everything worked out well.
+			// Everything worked out well.
 			//
 			tmpFile.delete();
 			return;
 		}
 
-		BufferedImage diff = buildDiffImage(ref, gen);
-
 		//
-		// If there is an accepted variation, check if it equals the
+		// If there are accepted variations, check if it covers the
 		// computed difference.
 		//
+		Variants variants = null;
 		if (variationURLs != null) {
-			for (URL variationURL : variationURLs) {
-				File tmpDiff = imageToFile(diff, IMAGE_TYPE_DIFF);
+			variants = new Variants();
+			short variantResult = ImageComparator.compareVariantImages(ref, gen, 8, allowedPercentBelowThreshold,
+					allowedPercentOverThreshold, variants);
 
-				InputStream variationURLStream = null;
-				try {
-					variationURLStream = variationURL.openStream();
-				} catch (IOException e) {
-					// Could not open variationURL stream. Just trace that
-					System.err.println(Messages.formatMessage(COULD_NOT_OPEN_VARIATION_URL,
-							new Object[] { variationURL.toString() }));
-				}
-
-				if (variationURLStream != null) {
-					InputStream refDiffStream = new BufferedInputStream(variationURLStream);
-
-					InputStream tmpDiffStream = new BufferedInputStream(new FileInputStream(tmpDiff));
-
-					if (compare(refDiffStream, tmpDiffStream)) {
-						// We accept the generated result.
-						accurate = true;
-					}
-				}
+			if (variantResult == ImageComparator.MATCH) {
+				// Everything worked out well, at least with variation.
+				tmpFile.delete();
+				return;
+			} else if (variantResult == ImageComparator.VARIANT_ERROR) {
+				// If there is an error in any variant file, we want to know that
+				result = variantResult;
 			}
-		}
-
-		if (accurate) {
-			//
-			// Yahooooooo! everything worked out well, at least
-			// with variation.
-			tmpFile.delete();
-			return;
 		}
 
 		//
@@ -370,18 +359,23 @@ public abstract class AbstractRenderingAccuracyTest {
 		//
 
 		// Rendering is not accurate
-		if (saveVariation != null) {
-			// There is a computed variation different from the
+		if (getSaveRangeVariation() != null) {
+			saveRangeDiff(ref, gen, variants);
+		}
+
+		BufferedImage diff = ImageComparator.createDiffImage(ref, gen);
+		if (getSavePlatformVariation() != null) {
+			// There is a computed platform variation different from the
 			// referenced variation and there is a place where the new
 			// variation should be saved.
-			saveImage(diff, saveVariation);
+			saveImage(diff, new File(getSavePlatformVariation()));
 		}
 
 		// Build two images:
 		// a. One with the reference image and the newly generated image
 		// b. One with the difference between the two images and the set
 		// of different pixels.
-		BufferedImage cmp = makeCompareImage(ref, gen);
+		BufferedImage cmp = ImageComparator.createCompareImage(ref, gen);
 		File cmpFile = imageToFile(cmp, IMAGE_TYPE_COMPARISON);
 		File diffFile = imageToFile(diff, IMAGE_TYPE_DIFF);
 
@@ -389,37 +383,116 @@ public abstract class AbstractRenderingAccuracyTest {
 			tmpFile.delete();
 		}
 
-		fail("Rendering not accurate, see generated images: " + diffFile.getAbsolutePath() + ", "
+		fail("Rendering not accurate [code " + result + "], see generated images: " + diffFile.getAbsolutePath() + ", "
 				+ cmpFile.getAbsolutePath());
 	}
 
-	static ImageComparisonResult compareImages(BufferedImage imageA, BufferedImage imageB) {
-		return compareImages(imageA, imageB, 0d);
+	private void saveRangeDiff(BufferedImage ref, BufferedImage gen, Variants variants) throws IOException {
+		BufferedImage exactDiff;
+		if (variants != null) {
+			// Attempt to update the range variant, if available
+			variants.setTrace(false);
+			BufferedImage rangeDiff = variants.getVariantImage(0);
+			if (rangeDiff != null) {
+				exactDiff = ImageComparator.createMergedDiffImage(ref, gen, rangeDiff);
+				saveImage(exactDiff, new File(getSaveRangeVariation()));
+				return;
+			}
+		}
+
+		exactDiff = ImageComparator.createExactDiffImage(ref, gen);
+		// There is a computed range variation different from the
+		// referenced variation and there is a place where the new
+		// variation should be saved.
+		saveImage(exactDiff, new File(getSaveRangeVariation()));
 	}
 
-	static ImageComparisonResult compareImages(BufferedImage imageA, BufferedImage imageB,
-			double allowingPercentOfDifferentPixels) {
-		ImageComparison comparison = new ImageComparison(imageA, imageB);
-		comparison.setAllowingPercentOfDifferentPixels(allowingPercentOfDifferentPixels);
-		ImageComparisonResult result = comparison.compareImages();
-		return result;
+	private class Variants implements ImageComparator.ImageVariants {
+
+		private boolean trace = true;
+
+		private Variants() {
+			super();
+		}
+
+		void setTrace(boolean trace) {
+			this.trace = trace;
+		}
+
+		@Override
+		public int getVariantCount() {
+			return variationURLs.size();
+		}
+
+		@Override
+		public BufferedImage getVariantImage(int index) {
+			URL variationURL;
+			try {
+				variationURL = variationURLs.get(index);
+			} catch (IndexOutOfBoundsException e) {
+				return null;
+			}
+
+			InputStream variationURLStream;
+			try {
+				variationURLStream = variationURL.openStream();
+			} catch (IOException e) {
+				// Could not open variationURL stream. Just trace that
+				if (trace) {
+					System.err.println(Messages.formatMessage(COULD_NOT_OPEN_VARIATION_URL,
+							new Object[] { variationURL.toString() }));
+				}
+				return null;
+			}
+
+			ImageTagRegistry reg = ImageTagRegistry.getRegistry();
+			Filter filt = reg.readStream(variationURLStream);
+			if (filt == null) {
+				if (trace) {
+					System.err.println(Messages.formatMessage(COULD_NOT_OPEN_VARIATION_URL,
+							new Object[] { variationURL.toString() }));
+				}
+				try {
+					variationURLStream.close();
+				} catch (IOException e) {
+				}
+				return null;
+			}
+
+			RenderedImage red = filt.createDefaultRendering();
+			if (red == null) {
+				if (trace) {
+					System.err.println(Messages.formatMessage(COULD_NOT_OPEN_VARIATION_URL,
+							new Object[] { variationURL.toString() }));
+				}
+				try {
+					variationURLStream.close();
+				} catch (IOException e) {
+				}
+				return null;
+			}
+
+			BufferedImage img = new BufferedImage(red.getWidth(), red.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			red.copyData(img.getRaster());
+
+			try {
+				variationURLStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			return img;
+		}
+
+	}
+
+	static short compareImages(BufferedImage imageA, BufferedImage imageB, float allowedPercentBelowThreshold,
+			float allowedPercentOverThreshold) {
+		return ImageComparator.compareImages(imageA, imageB, 8, allowedPercentBelowThreshold,
+				allowedPercentOverThreshold);
 	}
 
 	protected abstract void encode(URL srcURL, FileOutputStream fos) throws TranscoderException, IOException;
-
-	/**
-	 * Compare the two input streams
-	 */
-	private boolean compare(InputStream refStream, InputStream newStream) throws IOException {
-		int b, nb;
-		do {
-			b = refStream.read();
-			nb = newStream.read();
-		} while (b != -1 && nb != -1 && b == nb);
-		refStream.close();
-		newStream.close();
-		return (b == nb);
-	}
 
 	/**
 	 * Saves an image in a given File
@@ -451,62 +524,6 @@ public abstract class AbstractRenderingAccuracyTest {
 	}
 
 	/**
-	 * Builds a new BufferedImage that is the difference between the two input
-	 * images
-	 */
-	public static BufferedImage buildDiffImage(BufferedImage ref, BufferedImage gen) {
-		BufferedImage diff = new BufferedImage(ref.getWidth(), ref.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		WritableRaster refWR = ref.getRaster();
-		WritableRaster genWR = gen.getRaster();
-		WritableRaster dstWR = diff.getRaster();
-
-		boolean refPre = ref.isAlphaPremultiplied();
-		if (!refPre) {
-			ColorModel cm = ref.getColorModel();
-			cm = GraphicsUtil.coerceData(refWR, cm, true);
-			ref = new BufferedImage(cm, refWR, true, null);
-		}
-		boolean genPre = gen.isAlphaPremultiplied();
-		if (!genPre) {
-			ColorModel cm = gen.getColorModel();
-			cm = GraphicsUtil.coerceData(genWR, cm, true);
-			gen = new BufferedImage(cm, genWR, true, null);
-		}
-
-		int w = ref.getWidth();
-		int h = ref.getHeight();
-		int y, i, val;
-		int[] refPix = null;
-		int[] genPix = null;
-		for (y = 0; y < h; y++) {
-			refPix = refWR.getPixels(0, y, w, 1, refPix);
-			genPix = genWR.getPixels(0, y, w, 1, genPix);
-			for (i = 0; i < refPix.length; i++) {
-				val = ((genPix[i] - refPix[i]) * 10) + 128;
-				if ((val & 0xFFFFFF00) != 0)
-					if ((val & 0x80000000) != 0)
-						val = 0;
-					else
-						val = 255;
-				genPix[i] = val;
-			}
-			dstWR.setPixels(0, y, w, 1, genPix);
-		}
-
-		if (!genPre) {
-			ColorModel cm = gen.getColorModel();
-			cm = GraphicsUtil.coerceData(genWR, cm, false);
-		}
-
-		if (!refPre) {
-			ColorModel cm = ref.getColorModel();
-			cm = GraphicsUtil.coerceData(refWR, cm, false);
-		}
-
-		return diff;
-	}
-
-	/**
 	 * Loads an image from a File
 	 */
 	private BufferedImage getImage(File file) throws IOException {
@@ -530,23 +547,6 @@ public abstract class AbstractRenderingAccuracyTest {
 		red.copyData(img.getRaster());
 
 		return img;
-	}
-
-	/**
-	 *
-	 */
-	private BufferedImage makeCompareImage(BufferedImage ref, BufferedImage gen) {
-		BufferedImage cmp = new BufferedImage(ref.getWidth() * 2, ref.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
-		Graphics2D g = cmp.createGraphics();
-		g.setPaint(Color.white);
-		g.fillRect(0, 0, cmp.getWidth(), cmp.getHeight());
-		g.drawImage(ref, 0, 0, null);
-		g.translate(ref.getWidth(), 0);
-		g.drawImage(gen, 0, 0, null);
-		g.dispose();
-
-		return cmp;
 	}
 
 	/**

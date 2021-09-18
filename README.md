@@ -43,7 +43,8 @@ or just `gradlew build` (without the `./`) on a Windows command prompt.
 Most of the (JUnit-based) test suite is executed during build (except some tests
 that are currently incompatible with Gradle), but **beware that some tests are
 platform-dependent and could fail**. If you encounter test failures, please open
-an issue with the details so the necessary tweaks can be made.
+an issue with the details so the necessary tweaks can be made. If the failing
+test involves an image comparison, you may want to read [IMAGE_COMPARISONS](IMAGE_COMPARISONS.md).
 
 To build without running the tests:
 ```shell

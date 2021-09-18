@@ -60,6 +60,8 @@ public class SVGGeneratorTests {
 
 	private static final String CANDIDATE_VARIATION_DIR = "candidate-variation";
 
+	private static final String PLATFORM_VARIATION_SUFFIX = io.sf.carte.echosvg.test.svg.PreconfiguredRenderingTest.PLATFORM_VARIATION_SUFFIX;
+
 	private static final String CANDIDATE_REF_DIR = "candidate-ref";
 
 	private static final String RENDERING_CANDIDATE_REF_DIR = "candidate-reference";
@@ -266,15 +268,18 @@ public class SVGGeneratorTests {
 		GeneratorContext genctxt = makeGeneratorContext(painter, painterClassname);
 		genctxt.runTest(false);
 
+		float allowedPercentBelowThreshold = 0.00001f;
+		float allowedPercentOverThreshold = 0.00001f;
 		SVGRenderingAccuracyTest t = makeSVGRenderingAccuracyTest(painter, painterClassname, PLAIN_GENERATION_PREFIX);
-		t.runTest();
+		t.runTest(allowedPercentBelowThreshold, allowedPercentOverThreshold);
 
 		t = makeSVGRenderingAccuracyTest(painter, painterClassname, CUSTOM_CONTEXT_GENERATION_PREFIX);
-		t.runTest();
+		t.runTest(allowedPercentBelowThreshold, allowedPercentOverThreshold);
 
 		ImageCompareTest ict = makeImageCompareTest(painter, painterClassname, PLAIN_GENERATION_PREFIX,
 				CUSTOM_CONTEXT_GENERATION_PREFIX);
-		String err = ict.compare(0.005d);
+		// Tolerances must be higher, as rendering varies a bit
+		String err = ict.compare(0.65f, 0.004f);
 		if (err != null) {
 			fail(err);
 		}
@@ -301,8 +306,9 @@ public class SVGGeneratorTests {
 			variationURLs[i + 1] = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + ACCEPTED_VARIATION_DIR + "/" + cl
 					+ '_' + VARIATION_PLATFORMS[i] + PNG_EXTENSION;
 		}
-		String saveVariation = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + CANDIDATE_VARIATION_DIR + "/" + cl
-				+ PNG_EXTENSION;
+		String vPath = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + CANDIDATE_VARIATION_DIR + "/" + cl;
+		String saveRangeVariation = vPath + PNG_EXTENSION;
+		String savePlatformVariation = vPath + PLATFORM_VARIATION_SUFFIX + PNG_EXTENSION;
 		String candidateReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + RENDERING_CANDIDATE_REF_DIR + "/"
 				+ cl + PNG_EXTENSION;
 
@@ -311,7 +317,8 @@ public class SVGGeneratorTests {
 			test.addVariationURL(variationURL);
 		}
 
-		test.setSaveVariation(new File(new URL(saveVariation).getFile()));
+		test.setSaveRangeVariation(new URL(saveRangeVariation).getFile());
+		test.setSavePlatformVariation(new URL(savePlatformVariation).getFile());
 		test.setCandidateReference(new File(new URL(candidateReference).getFile()));
 
 		return test;

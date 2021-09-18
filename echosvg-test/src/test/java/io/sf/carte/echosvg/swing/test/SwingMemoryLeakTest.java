@@ -71,7 +71,7 @@ public class SwingMemoryLeakTest {
 		SetSVGDocumentTest test = new SetSVGDocumentTest();
 
 		test.setFile("test-resources/io/sf/carte/echosvg/test/svg/SetSVGDocumentTest.svg");
-		test.runTest();
+		test.runTest(0f, 0f);
 	}
 
 	@Test

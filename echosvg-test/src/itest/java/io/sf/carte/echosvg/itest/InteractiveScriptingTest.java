@@ -118,7 +118,7 @@ public class InteractiveScriptingTest {
 	private void testDynamicUpdate(String file) throws TranscoderException, IOException {
 		JSVGRenderingAccuracyTest runner = new JSVGRenderingAccuracyTest();
 		runner.setFile(file);
-		runner.runTest();
+		runner.runTest(0f, 0f);
 	}
 
 }

@@ -1451,20 +1451,20 @@ public class SamplesRenderingTest {
 		RenderingTest runner = new RenderingTest();
 		runner.setUserLanguage(lang);
 		runner.setFile(file);
-		runner.runTest();
+		runner.runTest(0.00001f, 0.00001f);
 	}
 
 	private void test(String file, boolean validating) throws TranscoderException, IOException {
 		RenderingTest runner = new RenderingTest();
 		runner.setValidating(validating);
 		runner.setFile(file);
-		runner.runTest();
+		runner.runTest(0.00001f, 0.00001f);
 	}
 
 	private void testDynamicUpdate(String file) throws TranscoderException, IOException {
 		JSVGRenderingAccuracyTest runner = new JSVGRenderingAccuracyTest();
 		runner.setFile(file);
-		runner.runTest();
+		runner.runTest(0.00001f, 0.00001f);
 	}
 
 }

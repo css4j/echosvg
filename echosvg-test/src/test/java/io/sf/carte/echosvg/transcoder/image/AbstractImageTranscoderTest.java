@@ -44,7 +44,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
 import io.sf.carte.echosvg.test.TestLocations;
-import io.sf.carte.echosvg.test.svg.AbstractRenderingAccuracyTest;
+import io.sf.carte.echosvg.test.image.ImageComparator;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
@@ -297,7 +297,7 @@ public abstract class AbstractImageTranscoderTest {
 
 		private byte[] createDiffImage(BufferedImage actualImage) throws IOException {
 			BufferedImage referenceImage = getImage(new ByteArrayInputStream(refImgData));
-			BufferedImage diffImage = AbstractRenderingAccuracyTest.buildDiffImage(referenceImage, actualImage);
+			BufferedImage diffImage = ImageComparator.createDiffImage(referenceImage, actualImage);
 			ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
 			ByteArrayOutputStream diff = new ByteArrayOutputStream(2048);
 			writer.writeImage(diffImage, diff);

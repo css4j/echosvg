@@ -104,9 +104,9 @@ public class TextSelectionTest extends JSVGRenderingAccuracyTest {
 	}
 
 	@Override
-	public String buildSaveVariationFile(String svgDir, String svgFile) {
+	protected String buildSaveVariationPath(String svgDir, String svgFile) {
 		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + '-' + textID + '-' + start + '-'
-				+ end + PNG_EXTENSION;
+				+ end;
 	}
 
 	@Override

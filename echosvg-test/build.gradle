@@ -33,7 +33,6 @@ dependencies {
 	testImplementation project(':echosvg-extension')
 	testImplementation project(':echosvg-svgrasterizer')
 	testImplementation "junit:junit:${junitVersion}"
-	testImplementation "com.github.romankh3:image-comparison:${imagecomparisonVersion}"
 	testImplementation "org.mozilla:rhino:${rhinoVersion}"
 	testImplementation ('xerces:xercesImpl:2.12.0')
 	if (!project.getPluginManager().hasPlugin('eclipse')) {

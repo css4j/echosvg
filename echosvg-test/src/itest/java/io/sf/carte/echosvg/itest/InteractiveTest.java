@@ -61,7 +61,7 @@ public class InteractiveTest {
 		JSVGRenderingAccuracyTest runner = new JSVGRenderingAccuracyTest();
 		runner.setFile(file);
 		runner.setValidating(validating);
-		runner.runTest();
+		runner.runTest(0f, 0f);
 	}
 
 }

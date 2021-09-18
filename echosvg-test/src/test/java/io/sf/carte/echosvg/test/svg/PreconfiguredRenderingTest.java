@@ -40,7 +40,8 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 
 	public static final char PATH_SEPARATOR = '/';
 
-	public static final String[] DEFAULT_VARIATION_PLATFORMS = { "java16-xfce", "java16-win10Light" };
+	public static final String PLATFORM_VARIATION_SUFFIX = "_platform";
+	public static final String[] DEFAULT_VARIATION_PLATFORMS = { "xfce", "win10Light" };
 
 	/**
 	 * For preconfigured tests, the configuration has to be derived from the test
@@ -64,7 +65,11 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 		for (String variationURL : variationURLs) {
 			addVariationURL(variationURL);
 		}
-		setSaveVariation(new File(resolveURL(buildSaveVariationFile(dirNfile[0], dirNfile[1])).getPath()));
+		String vpath = buildSaveVariationPath(dirNfile[0], dirNfile[1]);
+		String rangeVariation = vpath + PNG_EXTENSION;
+		String platformVariation = vpath + PLATFORM_VARIATION_SUFFIX + PNG_EXTENSION;
+		setSaveRangeVariation(resolveURL(rangeVariation).getPath());
+		setSavePlatformVariation(resolveURL(platformVariation).getPath());
 		setCandidateReference(new File(resolveURL(buildCandidateReferenceFile(dirNfile[0], dirNfile[1])).getPath()));
 	}
 
@@ -124,10 +129,10 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	/**
 	 * Gives a chance to the subclass to control the construction of the
 	 * saveVariation URL, which is built as: getSaveVariationPrefix() + svgDir +
-	 * getSaveVariationSuffix() + svgFile + PNG_EXTENSION
+	 * getSaveVariationSuffix() + svgFile, without PNG_EXTENSION
 	 */
-	public String buildSaveVariationFile(String svgDir, String svgFile) {
-		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + PNG_EXTENSION;
+	protected String buildSaveVariationPath(String svgDir, String svgFile) {
+		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile;
 	}
 
 	protected abstract String getSaveVariationPrefix();

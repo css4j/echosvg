@@ -19,8 +19,6 @@
 
 package io.sf.carte.echosvg.test.svg;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
@@ -32,15 +30,13 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.github.romankh3.image.comparison.model.ImageComparisonResult;
-import com.github.romankh3.image.comparison.model.ImageComparisonState;
-
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
 import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.image.ImageComparator;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
@@ -53,49 +49,33 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class ImageCompareTest {
-	public static final String ERROR_COULD_NOT_OPEN_IMAGE = "ImageCompareTest.error.could.not.open.image";
+	private static final String ERROR_COULD_NOT_LOAD_IMAGE = "ImageCompareTest error: could not load image ";
 
-	public static final String ERROR_COULD_NOT_LOAD_IMAGE = "ImageCompareTest.error.could.not.load.image";
+	private static final String IMAGE_TYPE_DIFFERENCE = "_diff";
 
-	public static final String ERROR_DIFFERENCES = "ImageCompareTest.error.differences";
-
-	public static final String ERROR_WHILE_COMPARING_FILES = "ImageCompareTest.error.while.comparing.files";
-
-	public static final String ENTRY_KEY_FIRST_IMAGE = "ImageCompareTest.entry.key.first.image";
-
-	public static final String ENTRY_KEY_SECOND_IMAGE = "ImageCompareTest.entry.key.second.image";
-
-	public static final String ENTRY_KEY_COMPARISON = "ImageCompareTest.entry.key.comparison";
-
-	public static final String ENTRY_KEY_DIFFERENCE = "ImageCompareTest.entry.key.difference";
-
-	public static final String ENTRY_KEY_IMAGE_URL = "ImageCompareTest.entry.key.image.url";
-
-	public static final String IMAGE_TYPE_DIFFERENCE = "_diff";
-
-	public static final String IMAGE_TYPE_COMPARISON = "_cmp";
+	private static final String IMAGE_TYPE_COMPARISON = "_cmp";
 
 	/**
 	 * Prefix for the temporary files created by Tests of this class
 	 */
-	public static final String TEMP_FILE_PREFIX = "ImageCompareTest";
+	private static final String TEMP_FILE_PREFIX = "ImageCompareTest";
 
 	/**
 	 * Suffix for the temporary files created by Tests of this class
 	 */
-	public static final String TEMP_FILE_SUFFIX = "";
+	private static final String TEMP_FILE_SUFFIX = "";
 
 	/**
 	 * URL for the first image to be compared.
 	 */
-	protected String urlAStr;
-	protected URL urlA;
+	private String urlAStr;
+	private URL urlA;
 
 	/**
 	 * URL for the second image to be compared
 	 */
-	protected String urlBStr;
-	protected URL urlB;
+	private String urlBStr;
+	private URL urlB;
 
 	/**
 	 * Resolves the input string as follows. + First, the string is interpreted as a
@@ -140,64 +120,40 @@ public class ImageCompareTest {
 	/**
 	 * Compare two images
 	 * 
-	 * @return a string describing the differences between the images, null if no differences.
-	 */
-	public String compare() throws IOException {
-		return compare(0d);
-	}
-
-	/**
-	 * Compare two images
-	 * 
 	 * @param allowingPercentOfDifferentPixels the allowed percentage of different pixels.
 	 * @return a string describing the differences between the images, null if no differences.
 	 */
-	public String compare(double allowingPercentOfDifferentPixels) throws IOException {
+	public String compare(float allowedPercentBelowThreshold, float allowedPercentOverThreshold) throws IOException {
 		initURLs();
 
 		BufferedImage imageA = getImage(urlA);
 		if (imageA == null) {
-			throw new IllegalStateException(ERROR_COULD_NOT_LOAD_IMAGE + ' ' + urlA.toString());
+			throw new IllegalStateException(ERROR_COULD_NOT_LOAD_IMAGE + urlA.toString());
 		}
 
 		BufferedImage imageB = getImage(urlB);
 		if (imageB == null) {
-			throw new IllegalStateException(ERROR_COULD_NOT_LOAD_IMAGE + ' ' + urlB.toString());
+			throw new IllegalStateException(ERROR_COULD_NOT_LOAD_IMAGE + urlB.toString());
 		}
 
-		ImageComparisonResult result = AbstractRenderingAccuracyTest.compareImages(imageA, imageB,
-				allowingPercentOfDifferentPixels);
+		short result = AbstractRenderingAccuracyTest.compareImages(imageA, imageB, allowedPercentBelowThreshold,
+				allowedPercentOverThreshold);
 
-		boolean accurate = result.getImageComparisonState() == ImageComparisonState.MATCH;
-
-		if (accurate) {
+		if (result == ImageComparator.MATCH) {
 			return null;
 		}
 
 		// We are in error (images are different: produce an image
 		// with the two images side by side as well as a diff image)
 		BufferedImage diff = buildDiffImage(imageA, imageB);
-		BufferedImage cmp = buildCompareImage(imageA, imageB);
+		BufferedImage cmp = ImageComparator.createCompareImage(imageA, imageB);
 
 		File tmpDiff = imageToFile(diff, IMAGE_TYPE_DIFFERENCE);
 		File tmpCmp = imageToFile(cmp, IMAGE_TYPE_COMPARISON);
 
-		return ERROR_DIFFERENCES + " comp: " + tmpCmp.getAbsolutePath() + " diff: " + tmpDiff.getAbsolutePath();
+		return "Images are different [code " + result + "]. Comp: " + tmpCmp.getAbsolutePath() + " diff: "
+				+ tmpDiff.getAbsolutePath();
 
-	}
-
-	private BufferedImage buildCompareImage(BufferedImage ref, BufferedImage gen) {
-		BufferedImage cmp = new BufferedImage(ref.getWidth() * 2, ref.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
-		Graphics2D g = cmp.createGraphics();
-		g.setPaint(Color.white);
-		g.fillRect(0, 0, cmp.getWidth(), cmp.getHeight());
-		g.drawImage(ref, 0, 0, null);
-		g.translate(ref.getWidth(), 0);
-		g.drawImage(gen, 0, 0, null);
-		g.dispose();
-
-		return cmp;
 	}
 
 	/**

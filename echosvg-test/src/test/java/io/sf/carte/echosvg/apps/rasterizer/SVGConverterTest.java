@@ -975,7 +975,7 @@ class ConverterOutputTest {
 
 		pngDest = destFile.toURI().toURL().toExternalForm();
 		ImageCompareTest t = new ImageCompareTest(pngDest, pngRef);
-		String err = t.compare();
+		String err = t.compare(0.9f, 0.06f);
 
 		if (err != null) {
 			fail(err);

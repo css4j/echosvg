@@ -57,7 +57,7 @@ public class ParameterizedRenderingAccuracyTest extends RenderingTest {
 		for (String variationURL : variationURLs) {
 			addVariationURL(variationURL);
 		}
-		setSaveVariation(new File(buildSaveVariationFile(dirNfile[0], dirNfile[1])));
+		buildSaveVariationPath(dirNfile[0], dirNfile[1]);
 		setCandidateReference(new File(buildCandidateReferenceFile(dirNfile[0], dirNfile[1])));
 	}
 
@@ -88,14 +88,9 @@ public class ParameterizedRenderingAccuracyTest extends RenderingTest {
 		return urls;
 	}
 
-	/**
-	 * Gives a chance to the subclass to control the construction of the
-	 * saveVariation URL, which is built as: getSaveVariationPrefix() + svgDir +
-	 * getSaveVariationSuffix() + svgFile + parameter + PNG_EXTENSION
-	 */
 	@Override
-	public String buildSaveVariationFile(String svgDir, String svgFile) {
-		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + parameter + PNG_EXTENSION;
+	protected String buildSaveVariationPath(String svgDir, String svgFile) {
+		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + parameter;
 	}
 
 	/**

@@ -86,7 +86,11 @@ public class SVGReferenceRenderingAccuracyTest extends ParameterizedRenderingAcc
 		for (String variationURL : variationURLs) {
 			addVariationURL(variationURL);
 		}
-		setSaveVariation(new File(buildSaveVariationFile(dirNfile[0], dirNfile[1])));
+		String vPath = buildSaveVariationPath(dirNfile[0], dirNfile[1]);
+		String saveRangeVariation = vPath + PNG_EXTENSION;
+		String savePlatformVariation = vPath + PLATFORM_VARIATION_SUFFIX + PNG_EXTENSION;
+		setSaveRangeVariation(saveRangeVariation);
+		setSavePlatformVariation(savePlatformVariation);
 		setCandidateReference(new File(buildCandidateReferenceFile(dirNfile[0], dirNfile[1])));
 	}
 
@@ -132,7 +136,7 @@ public class SVGReferenceRenderingAccuracyTest extends ParameterizedRenderingAcc
 	 * getSaveVariationSuffix() + svgFile + parameter + PNG_EXTENSION
 	 */
 	@Override
-	public String buildSaveVariationFile(String svgDir, String svgFile) {
+	public String buildSaveVariationPath(String svgDir, String svgFile) {
 		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + alias + PNG_EXTENSION;
 	}
 
