@@ -64,6 +64,7 @@ platform variants are accepted: one for the Xfce desktop environment, and anothe
 for the light theme of Windows 10. They use the `xfce` and `win10Light` suffixes.
 
 The following is an example of a platform variation image:
+
 ![Variant example](https://raw.githubusercontent.com/css4j/echosvg/master/test-resources/io/sf/carte/echosvg/test/image/systemColors_xfce.png)
 
 To enable a range variant, move the variant to the `accepted-variation` directory.

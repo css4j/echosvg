@@ -20,9 +20,7 @@
 package io.sf.carte.echosvg.test.svg;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
-import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,7 +28,6 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
@@ -145,7 +142,7 @@ public class ImageCompareTest {
 
 		// We are in error (images are different: produce an image
 		// with the two images side by side as well as a diff image)
-		BufferedImage diff = buildDiffImage(imageA, imageB);
+		BufferedImage diff = ImageComparator.createDiffImage(imageA, imageB);
 		BufferedImage cmp = ImageComparator.createCompareImage(imageA, imageB);
 
 		File tmpDiff = imageToFile(diff, IMAGE_TYPE_DIFFERENCE);
@@ -181,64 +178,6 @@ public class ImageCompareTest {
 	 */
 	private File obtainDiffCmpFilename(String imageType) throws IOException {
 		return TestLocations.getTempFilename(urlA, TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, imageType, ".png");
-	}
-
-	/**
-	 * Builds a new BufferedImage that is the difference between the two input
-	 * images
-	 */
-	private static BufferedImage buildDiffImage(BufferedImage ref, BufferedImage gen) {
-		BufferedImage diff = new BufferedImage(ref.getWidth(), ref.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		WritableRaster refWR = ref.getRaster();
-		WritableRaster genWR = gen.getRaster();
-		WritableRaster dstWR = diff.getRaster();
-
-		boolean refPre = ref.isAlphaPremultiplied();
-		if (!refPre) {
-			ColorModel cm = ref.getColorModel();
-			cm = GraphicsUtil.coerceData(refWR, cm, true);
-			ref = new BufferedImage(cm, refWR, true, null);
-		}
-		boolean genPre = gen.isAlphaPremultiplied();
-		if (!genPre) {
-			ColorModel cm = gen.getColorModel();
-			cm = GraphicsUtil.coerceData(genWR, cm, true);
-			gen = new BufferedImage(cm, genWR, true, null);
-		}
-
-		int w = ref.getWidth();
-		int h = ref.getHeight();
-
-		int y, i, val;
-		int[] refPix = null;
-		int[] genPix = null;
-		for (y = 0; y < h; y++) {
-			refPix = refWR.getPixels(0, y, w, 1, refPix);
-			genPix = genWR.getPixels(0, y, w, 1, genPix);
-			for (i = 0; i < refPix.length; i++) {
-				// val = ((genPix[i]-refPix[i])*5)+128;
-				val = ((refPix[i] - genPix[i]) * 10) + 128;
-				if ((val & 0xFFFFFF00) != 0)
-					if ((val & 0x80000000) != 0)
-						val = 0;
-					else
-						val = 255;
-				genPix[i] = val;
-			}
-			dstWR.setPixels(0, y, w, 1, genPix);
-		}
-
-		if (!genPre) {
-			ColorModel cm = gen.getColorModel();
-			cm = GraphicsUtil.coerceData(genWR, cm, false);
-		}
-
-		if (!refPre) {
-			ColorModel cm = ref.getColorModel();
-			cm = GraphicsUtil.coerceData(refWR, cm, false);
-		}
-
-		return diff;
 	}
 
 	/**

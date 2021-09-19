@@ -135,6 +135,20 @@ public class ImageComparatorTest {
 		assertEquals(ImageComparator.DIFFERENT_PIXELS_OVER_THRESHOLD, result);
 	}
 
+	@Test
+	public void testCompareVariantImages2() throws IOException {
+		BufferedImage img = loadImage("textBiDi2.png");
+		BufferedImage other1 = loadImage("textBiDi2-candidate.png");
+		BufferedImage variant1 = loadImage("textBiDi2_xfce.png");
+
+		BufferedImage[] variantImages = new BufferedImage[2];
+		variantImages[1] = variant1;
+		MyVariants variants = new MyVariants(variantImages);
+
+		short result = ImageComparator.compareVariantImages(img, other1, 0, 0f, 0f, variants);
+		assertEquals(ImageComparator.MATCH, result);
+	}
+
 	private static BufferedImage loadImage(String filename) throws IOException {
 		InputStream is = classpathStream(filename);
 		ImageTagRegistry reg = ImageTagRegistry.getRegistry();

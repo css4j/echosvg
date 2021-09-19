@@ -318,6 +318,12 @@ public class ImageComparator {
 		 */
 		if (variant != null) {
 			if (w != variant.getWidth() || h != variant.getHeight()) {
+				if (!canPre) {
+					GraphicsUtil.coerceData(canWR, can.getColorModel(), false);
+				}
+				if (!refPre) {
+					GraphicsUtil.coerceData(refWR, ref.getColorModel(), false);
+				}
 				return VARIANT_ERROR;
 			}
 
@@ -346,12 +352,12 @@ public class ImageComparator {
 		// De-multiply, if appropriate
 		if (!canPre) {
 			ColorModel cm = can.getColorModel();
-			cm = GraphicsUtil.coerceData(canWR, cm, false);
+			GraphicsUtil.coerceData(canWR, cm, false);
 		}
 
 		if (!refPre) {
 			ColorModel cm = ref.getColorModel();
-			cm = GraphicsUtil.coerceData(refWR, cm, false);
+			GraphicsUtil.coerceData(refWR, cm, false);
 		}
 
 		return result;

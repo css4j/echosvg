@@ -338,6 +338,9 @@ public abstract class AbstractRenderingAccuracyTest {
 		//
 		Variants variants = null;
 		if (variationURLs != null) {
+			// Reload the images, may have been changed during alpha pre-mult
+			ref = getImage(refImgURL);
+			gen = getImage(tmpFile);
 			variants = new Variants();
 			short variantResult = ImageComparator.compareVariantImages(ref, gen, 8, allowedPercentBelowThreshold,
 					allowedPercentOverThreshold, variants);
@@ -360,8 +363,16 @@ public abstract class AbstractRenderingAccuracyTest {
 
 		// Rendering is not accurate
 		if (getSaveRangeVariation() != null) {
+			// Reload the images, to operate on exact file contents
+			ref = getImage(refImgURL);
+			gen = getImage(tmpFile);
+
 			saveRangeDiff(ref, gen, variants);
 		}
+
+		// Reload the images
+		ref = getImage(refImgURL);
+		gen = getImage(tmpFile);
 
 		BufferedImage diff = ImageComparator.createDiffImage(ref, gen);
 		if (getSavePlatformVariation() != null) {
@@ -371,7 +382,7 @@ public abstract class AbstractRenderingAccuracyTest {
 			saveImage(diff, new File(getSavePlatformVariation()));
 		}
 
-		// Build two images:
+		// Save two images:
 		// a. One with the reference image and the newly generated image
 		// b. One with the difference between the two images and the set
 		// of different pixels.
