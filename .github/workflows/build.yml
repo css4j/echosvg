@@ -16,6 +16,12 @@ jobs:
   build:
     runs-on: windows-latest
 
+    strategy:
+      matrix:
+        java: [ '11', '17' ]
+
+    name: Java ${{ matrix.Java }} build
+
     steps:
       # Checks-out the repository under $GITHUB_WORKSPACE
       - uses: actions/checkout@v2
@@ -24,7 +30,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '16'
+          java-version: ${{ matrix.java }}
           distribution: 'adopt'
 
       # Validate wrapper to prevent potential supply chain attack

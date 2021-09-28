@@ -19,9 +19,8 @@ To build EchoSVG you need the following software installed:
 
 - The [Git version control system](https://git-scm.com/downloads) is required to
 obtain the sources. Any recent version should suffice.
-- A recent modular Java JDK (version 16 is being used to build). You can install it
-from your favourite package manager or by downloading from
-[Adoptium](https://adoptium.net/).
+- Java 11 or later. You can install it from your favourite package manager or by
+downloading from [Adoptium](https://adoptium.net/).
 
 <br/>
 
