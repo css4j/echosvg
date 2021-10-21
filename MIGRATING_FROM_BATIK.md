@@ -14,4 +14,12 @@
 6) SAXDocumentFactory and SAXSVGDocumentFactory no longer have constructors with
    `String` arguments. Either remove the string argument or replace it by a
    `null` and you should be fine. Alternatively, you can now use your own
-   `XMLReader` in place of the parser class name.
+   `XMLReader` in place of the parser class name. (The API change was made for
+   security reasons)
+7) EchoSVG does not depend on `xml-apis-ext-1.3.04.jar` to provide the SVGOM and
+   SMIL APIs (see [#15](https://github.com/css4j/echosvg/issues/15)).
+   If `xml-apis-ext` happens to be in your modulepath, you could configure an
+   exclusion for it (in Maven or Gradle), then use `svgom-api` and `smil-api`
+   instead. If your project requires the old SAC api which is provided by
+   `xml-apis-ext` as well, you can use [`sac.jar`](https://mvnrepository.com/artifact/org.w3c.css/sac)
+   as a replacement.
