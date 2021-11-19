@@ -1,16 +1,10 @@
 plugins {
 	id 'echosvg.java-conventions'
-	id 'de.jjohannes.extra-java-module-info'
 }
 
 dependencies {
 	api project(':echosvg-anim')
 	implementation "org.mozilla:rhino:${rhinoVersion}"
-}
-
-extraJavaModuleInfo {
-	failOnMissingModuleInfo.set(false)
-	automaticModule("rhino-${rhinoVersion}.jar", 'org.mozilla.rhino')
 }
 
 description = 'io.sf.carte:echosvg-script'
