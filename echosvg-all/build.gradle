@@ -1,6 +1,9 @@
 plugins {
+	id 'de.jjohannes.extra-java-module-info'
 	id 'echosvg.java-conventions'
 }
+
+description = 'io.sf.carte:echosvg-all'
 
 dependencies {
 	api project(':echosvg-script')
@@ -13,9 +16,14 @@ dependencies {
 	api project(':echosvg-ttf2svg')
 	api project(':echosvg-svgrasterizer')
 	api project(':svgom-api')
+	implementation "org.mozilla:rhino:${rhinoVersion}"
 }
 
-description = 'io.sf.carte:echosvg-all'
+extraJavaModuleInfo {
+	failOnMissingModuleInfo.set(false)
+	automaticModule("xalan-${xalanVersion}.jar", 'xalan')
+	automaticModule("xmlgraphics-commons-${xmlgraphicsCommonsVersion}.jar", 'xmlgraphics.commons')
+}
 
 publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG aggregate artifact"
@@ -28,7 +36,7 @@ checkLegacyJava.enabled = false
 tasks.register('mergedJavadoc', Javadoc) {
 	description 'Produces a merged Javadoc of all packages'
 	destinationDir = file("$buildDir/docs/javadoc")
-	title = "$project.name $version API"
+	title = "$rootProject.name $version API"
 	dependsOn configurations.compileClasspath
 	dependsOn configurations.runtimeClasspath
 	includes += '**/*.java'
@@ -42,7 +50,173 @@ tasks.register('mergedJavadoc', Javadoc) {
 	}
 	classpath = configurations.compileClasspath
 	classpath += configurations.runtimeClasspath
-	failOnError false
+}
+
+tasks.register('removeModularSources', Delete) {
+	doFirst {
+		delete "$buildDir/src"
+	}
+}
+
+// Prepare modular sources for multi-module javadoc
+tasks.register('prepareModularSources') {
+	description = 'Copy source files to \'build/src\' directory'
+	dependsOn removeModularSources
+
+	doFirst {
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.anim") {
+			fileset(dir: "$rootDir/echosvg-anim/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.awt") {
+			fileset(dir: "$rootDir/echosvg-awt-util/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.bridge") {
+			fileset(dir: "$rootDir/echosvg-bridge/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.constants") {
+			fileset(dir: "$rootDir/echosvg-constants/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.css") {
+			fileset(dir: "$rootDir/echosvg-css/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.dom") {
+			fileset(dir: "$rootDir/echosvg-dom/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.dom.svg") {
+			fileset(dir: "$rootDir/echosvg-svg-dom/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.external") {
+			fileset(dir: "$rootDir/echosvg-ext/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.extension") {
+			fileset(dir: "$rootDir/echosvg-extension/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.util.gui") {
+			fileset(dir: "$rootDir/echosvg-gui-util/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.gvt") {
+			fileset(dir: "$rootDir/echosvg-gvt/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.i18n") {
+			fileset(dir: "$rootDir/echosvg-i18n/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.parser") {
+			fileset(dir: "$rootDir/echosvg-parser/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.script") {
+			fileset(dir: "$rootDir/echosvg-script/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.apps.slideshow") {
+			fileset(dir: "$rootDir/echosvg-slideshow/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.svggen") {
+			fileset(dir: "$rootDir/echosvg-svggen/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.svgpp") {
+			fileset(dir: "$rootDir/echosvg-svgpp/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.svgrasterizer") {
+			fileset(dir: "$rootDir/echosvg-svgrasterizer/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.swing") {
+			fileset(dir: "$rootDir/echosvg-swing/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.transcoder") {
+			fileset(dir: "$rootDir/echosvg-transcoder/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.ttf2svg") {
+			fileset(dir: "$rootDir/echosvg-ttf2svg/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.util") {
+			fileset(dir: "$rootDir/echosvg-util/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.xml") {
+			fileset(dir: "$rootDir/echosvg-xml/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+	}
+}
+
+// Create a modular Javadoc with all modules
+tasks.register('modularJavadoc', Javadoc) {
+	description = 'Create a modular Javadoc with all modules'
+	dependsOn configurations.compileClasspath
+	dependsOn prepareModularSources
+
+	destinationDir = file("$buildDir/docs/modular")
+	title = "$rootProject.name $version API"
+	source = [ "$buildDir/src/io.sf.carte.echosvg.anim",
+		"$buildDir/src/io.sf.carte.echosvg.apps.slideshow",
+		"$buildDir/src/io.sf.carte.echosvg.awt",
+		"$buildDir/src/io.sf.carte.echosvg.bridge",
+		"$buildDir/src/io.sf.carte.echosvg.constants",
+		"$buildDir/src/io.sf.carte.echosvg.css",
+		"$buildDir/src/io.sf.carte.echosvg.dom",
+		"$buildDir/src/io.sf.carte.echosvg.dom.svg",
+		"$buildDir/src/io.sf.carte.echosvg.external",
+		"$buildDir/src/io.sf.carte.echosvg.extension",
+		"$buildDir/src/io.sf.carte.echosvg.gvt",
+		"$buildDir/src/io.sf.carte.echosvg.i18n",
+		"$buildDir/src/io.sf.carte.echosvg.parser",
+		"$buildDir/src/io.sf.carte.echosvg.script",
+		"$buildDir/src/io.sf.carte.echosvg.svggen",
+		"$buildDir/src/io.sf.carte.echosvg.svgpp",
+		"$buildDir/src/io.sf.carte.echosvg.svgrasterizer",
+		"$buildDir/src/io.sf.carte.echosvg.swing",
+		"$buildDir/src/io.sf.carte.echosvg.transcoder",
+		"$buildDir/src/io.sf.carte.echosvg.ttf2svg",
+		"$buildDir/src/io.sf.carte.echosvg.util",
+		"$buildDir/src/io.sf.carte.echosvg.util.gui",
+		"$buildDir/src/io.sf.carte.echosvg.xml" ]
+	includes += '**/*.java'
+	classpath = configurations.compileClasspath
+	classpath += configurations.runtimeClasspath
+	options.addStringOption('-module-source-path', "$buildDir/src")
 }
 
 //create a single Jar with all dependencies

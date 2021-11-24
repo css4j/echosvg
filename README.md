@@ -115,17 +115,27 @@ The file is to be found at
 
 <br/>
 
-### Produce a merged Javadoc
+### Produce a modular Javadoc
 
-A merged Javadoc allows to have the Javadocs of all the packages merged in a
-single directory, and the `mergedJavadoc` task can do it:
+A Javadoc of all the modules is produced by the `modularJavadoc` task:
+```shell
+gradlew modularJavadoc
+```
+The Javadocs are created at `echosvg-all/build/docs/modular`.
+
+<br/>
+
+### Produce a non-modular Javadoc
+
+If you do not like modular javadocs, a merged non-modular Javadoc can be built
+with the `mergedJavadoc` task:
 ```shell
 gradlew mergedJavadoc
 ```
 The Javadocs are created at `echosvg-all/build/docs/javadoc`.
 
-Unfortunately —and due to JDK limitations— the generated Javadocs are not
-modular.
+This task may be removed in the future; if the non-modular javadocs are useful
+to you, please open an issue so it is preserved.
 
 <br/>
 

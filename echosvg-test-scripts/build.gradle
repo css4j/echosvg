@@ -17,9 +17,10 @@ java {
 	targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-compileJava.dependsOn ':echosvg-bridge:compileLegacyJava'
+compileLegacyJava.dependsOn ':echosvg-bridge:checkLegacyJava'
 
-compileLegacyJava.enabled = false
+compileJava.enabled = false
+copyModularJava.enabled = false
 checkLegacyJava.enabled = false
 
 jar.enabled = false

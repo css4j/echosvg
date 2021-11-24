@@ -37,6 +37,7 @@ java {
 
 tasks.register('jvmVersionAttribute') {
 	description = "Set the correct 'org.gradle.jvm.version' attribute"
+	dependsOn copyModularJava
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
 		def jvmVersionAttribute = Attribute.of('org.gradle.jvm.version', Integer)
 		configurations.each {
@@ -54,27 +55,38 @@ tasks.register('jvmVersionAttribute') {
 	}
 }
 
-compileJava.dependsOn tasks.jvmVersionAttribute
-
 tasks.register('compileLegacyJava', JavaCompile) {
 	description = 'Compile to Java 8 bytecode, except module-info'
-	dependsOn tasks.compileJava
 	sourceCompatibility = JavaVersion.VERSION_1_8
 	targetCompatibility = JavaVersion.VERSION_1_8
-	source = tasks.compileJava.stableSources
-	classpath = tasks.compileJava.classpath
-	destinationDirectory = tasks.compileJava.destinationDirectory
+	source = sourceSets.main.java
+	dependsOn configurations.compileClasspath
+	classpath = sourceSets.main.compileClasspath
+	destinationDirectory = sourceSets.main.java.destinationDirectory
 	modularity.inferModulePath = false
-	includes = tasks.compileJava.includes
-	excludes = tasks.compileJava.excludes
-	excludes += ['module-info.java']
+	excludes = ['module-info.java']
 }
 
-classes.dependsOn compileLegacyJava
+compileJava {
+	includes = ['module-info.java']
+	dependsOn compileLegacyJava
+	destinationDirectory = layout.buildDirectory.dir('classes11/main')
+	classpath = sourceSets.main.compileClasspath
+	//classpath += files(compileLegacyJava.destinationDirectory)
+}
+
+tasks.register('copyModularJava', Copy) {
+	description = 'Copy Java 11 classes to sourceSets.main.java.destinationDirectory'
+	dependsOn compileJava
+	from file(compileJava.destinationDirectory)
+	include 'module-info.class'
+	into file(sourceSets.main.java.destinationDirectory)
+}
 
 // Check bytecode version, in case some other task screws it
 tasks.register('checkLegacyJava') {
 	description = 'Check that classes are Java 8 bytecode (except module-info)'
+	dependsOn jvmVersionAttribute
 	enabled = enabled && !project.getPluginManager().hasPlugin('eclipse')
 	def classdir = sourceSets.main.output.classesDirs.files.stream().findAny().get()
 	def classfiles = fileTree(classdir).matching({it.exclude('module-info.class')}).files
@@ -86,14 +98,16 @@ tasks.register('checkLegacyJava') {
 				def bcversion = classbytes[6] * 128 + classbytes[7]
 				if (bcversion != 52) {
 					throw new GradleException("Bytecode on " + classfile +
-							" is not valid Java 8. Version should be 52, instead is " + bcversion)
+						" is not valid Java 8. Version should be 52, instead is " + bcversion)
 				}
 			}
 		}
 	}
 }
 
+classes.dependsOn jvmVersionAttribute
 classes.finalizedBy checkLegacyJava
+jar.dependsOn checkLegacyJava
 
 // Copy jar files to 'jar' directory
 tasks.register('copyJars', Copy) {
@@ -111,6 +125,7 @@ tasks.withType(JavaCompile) {
 }
 
 tasks.withType(Javadoc) {
+	options.addStringOption('Xdoclint:none', '-quiet')
 	options.addStringOption('encoding', 'UTF-8')
 	options.addStringOption('charset', 'UTF-8')
 	options.links 'https://docs.oracle.com/en/java/javase/11/docs/api/'

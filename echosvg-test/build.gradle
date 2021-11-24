@@ -59,6 +59,7 @@ test {
 	exclude 'io/sf/carte/echosvg/bridge/*LoadTest.class'
 	exclude 'io/sf/carte/echosvg/bridge/*PermissionsTest.class'
 	exclude 'io/sf/carte/echosvg/script/rhino/RhinoTest.class'
+
 	// Exclude tests via gradlew test -PexcludeTests="SamplesRenderingTest.testVerticalText,..."
 	if (project.hasProperty('excludeTests')) {
 		filter {
@@ -76,8 +77,9 @@ compileTestJava {
 	dependsOn ':echosvg-all:classes'
 }
 
-// We have no 'main' set here, so disable Legacy stuff
+// We have no 'main' set here, so disable main compilations
 compileLegacyJava.enabled = false
+compileJava.enabled = false
 checkLegacyJava.enabled = false
 
 // Some tests do not work when the classes are in a testJar
