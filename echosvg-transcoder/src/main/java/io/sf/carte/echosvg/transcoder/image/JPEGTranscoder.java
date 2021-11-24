@@ -103,26 +103,27 @@ public class JPEGTranscoder extends ImageTranscoder {
 
 	/**
 	 * The encoder quality factor key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_QUALITY</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_QUALITY</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Float (between 0 and 1)</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Float (between 0 and 1)</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">0.75 (lossy)</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">0.75 (lossy)</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">Recommended</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">Recommended</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the JPEG image encoding quality.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the JPEG image encoding quality.</td>
 	 * </tr>
 	 * </table>
 	 */

@@ -156,26 +156,27 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 
 	/**
 	 * The validation mode of the XML parser.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_XML_PARSER_VALIDATING</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_XML_PARSER_VALIDATING</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Boolean</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Boolean</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">false</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">false</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the validation mode of the XML parser.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the validation mode of the XML parser.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -183,26 +184,27 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 
 	/**
 	 * Document element key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_DOCUMENT_ELEMENT</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_DOCUMENT_ELEMENT</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">null</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">null</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">Yes</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">Yes</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the qualified name of the document type to be
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the qualified name of the document type to be
 	 * created.</td>
 	 * </tr>
 	 * </table>
@@ -211,26 +213,27 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 
 	/**
 	 * Document element namespace URI key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_DOCUMENT_ELEMENT_NAMESPACE_URI</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_DOCUMENT_ELEMENT_NAMESPACE_URI</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">null</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">null</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">Yes</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">Yes</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the namespace URI of the document element.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the namespace URI of the document element.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -238,26 +241,27 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 
 	/**
 	 * DOM Implementation key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_DOM_IMPLEMENTATION</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_DOM_IMPLEMENTATION</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">null</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">null</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">Yes</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">Yes</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the DOM Implementation to use.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the DOM Implementation to use.</td>
 	 * </tr>
 	 * </table>
 	 */

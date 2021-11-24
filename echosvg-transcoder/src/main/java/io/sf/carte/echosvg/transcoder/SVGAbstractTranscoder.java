@@ -428,26 +428,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The image width key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_WIDTH</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_WIDTH</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">float</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">float</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">The width of the topmost svg element</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">The width of the topmost svg element</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the width of the image to create.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the width of the image to create.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -455,26 +456,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The image height key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_HEIGHT</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_HEIGHT</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Float</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Float</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">The height of the topmost svg element</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">The height of the topmost svg element</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the height of the image to create.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the height of the image to create.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -482,26 +484,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The maximum width of the image key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_MAX_WIDTH</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_MAX_WIDTH</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Float</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Float</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">The width of the topmost svg element</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">The width of the topmost svg element</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the maximum width of the image to create. The value
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the maximum width of the image to create. The value
 	 * will set the maximum width of the image even when a bigger width is specified
 	 * in a document or set with KEY_WIDTH.</td>
 	 * </tr>
@@ -511,26 +514,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The maximux height of the image key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_MAX_HEIGHT</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_MAX_HEIGHT</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Float</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Float</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">The height of the topmost svg element</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">The height of the topmost svg element</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the maximum height of the image to create. The value
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the maximum height of the image to create. The value
 	 * will set the maximum height of the image even when bigger height is specified
 	 * in a document or set with KEY_HEIGHT.</td>
 	 * </tr>
@@ -540,26 +544,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The area of interest key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_AOI</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_AOI</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Rectangle2D</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Rectangle2D</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">The document's size</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">The document's size</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the area of interest to render. The rectangle
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the area of interest to render. The rectangle
 	 * coordinates must be specified in pixels and in the document coordinates
 	 * system.</td>
 	 * </tr>
@@ -569,26 +574,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The language key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_LANGUAGE</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_LANGUAGE</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">"en"</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">"en"</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the preferred language of the document.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the preferred language of the document.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -596,26 +602,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The media key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_MEDIA</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_MEDIA</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">"screen"</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">"screen"</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the media to use with CSS.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the media to use with CSS.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -624,26 +631,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	/**
 	 * The default font-family key.
 	 *
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_DEFAULT_FONT_FAMILY</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_DEFAULT_FONT_FAMILY</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">"Arial, Helvetica, sans-serif"</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">"Arial, Helvetica, sans-serif"</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Controls the default value used by the CSS engine for the
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Controls the default value used by the CSS engine for the
 	 * font-family property when that property is unspecified.</td>
 	 * </tr>
 	 * </table>
@@ -652,26 +660,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The alternate stylesheet key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_ALTERNATE_STYLESHEET</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_ALTERNATE_STYLESHEET</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">null</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">null</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the alternate style sheet title.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the alternate style sheet title.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -679,26 +688,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The user stylesheet URI key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_USER_STYLESHEET_URI</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_USER_STYLESHEET_URI</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">null</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">null</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the user style sheet.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the user style sheet.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -706,26 +716,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The number of millimeters in each pixel key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_PIXEL_UNIT_TO_MILLIMETER</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_PIXEL_UNIT_TO_MILLIMETER</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Float</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Float</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">0.264583</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">0.264583</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the size of a px CSS unit in millimeters.</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the size of a px CSS unit in millimeters.</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -734,29 +745,30 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	/**
 	 * The pixel to millimeter conversion factor key.
 	 * 
-	 * @deprecated As of EchoSVG Version 1.5b3
+	 * @deprecated As of Batik Version 1.5b3
 	 * @see #KEY_PIXEL_UNIT_TO_MILLIMETER
 	 *
-	 *      <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 *      <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 *      <caption></caption>
 	 *      <tr>
-	 *      <th valign="top" align="right">Key:</th>
-	 *      <td valign="top">KEY_PIXEL_TO_MM</td>
+	 *      <th style="text-align: end; vertical-align: top">Key:</th>
+	 *      <td style="vertical-align: top">KEY_PIXEL_TO_MM</td>
 	 *      </tr>
 	 *      <tr>
-	 *      <th valign="top" align="right">Value:</th>
-	 *      <td valign="top">Float</td>
+	 *      <th style="text-align: end; vertical-align: top">Value:</th>
+	 *      <td style="vertical-align: top">Float</td>
 	 *      </tr>
 	 *      <tr>
-	 *      <th valign="top" align="right">Default:</th>
-	 *      <td valign="top">0.264583</td>
+	 *      <th style="text-align: end; vertical-align: top">Default:</th>
+	 *      <td style="vertical-align: top">0.264583</td>
 	 *      </tr>
 	 *      <tr>
-	 *      <th valign="top" align="right">Required:</th>
-	 *      <td valign="top">No</td>
+	 *      <th style="text-align: end; vertical-align: top">Required:</th>
+	 *      <td style="vertical-align: top">No</td>
 	 *      </tr>
 	 *      <tr>
-	 *      <th valign="top" align="right">Description:</th>
-	 *      <td valign="top">Specify the size of a px CSS unit in millimeters.</td>
+	 *      <th style="text-align: end; vertical-align: top">Description:</th>
+	 *      <td style="vertical-align: top">Specify the size of a px CSS unit in millimeters.</td>
 	 *      </tr>
 	 *      </table>
 	 */
@@ -765,26 +777,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The 'onload' execution key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_EXECUTE_ONLOAD</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_EXECUTE_ONLOAD</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Boolean</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Boolean</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">false</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">false</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify if scripts added on the 'onload' event attribute
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify if scripts added on the 'onload' event attribute
 	 * must be invoked.</td>
 	 * </tr>
 	 * </table>
@@ -793,26 +806,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The snapshot time key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_SNAPSHOT_TIME</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_SNAPSHOT_TIME</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Float</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Float</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">0</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">0</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specifies the document time to seek to before rasterization.
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specifies the document time to seek to before rasterization.
 	 * Only applies if {@link #KEY_EXECUTE_ONLOAD} is set to <code>true</code>.</td>
 	 * </tr>
 	 * </table>
@@ -823,26 +837,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 * The set of supported script languages (i.e., the set of possible values for
 	 * the &lt;script&gt; tag's type attribute).
 	 *
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_ALLOWED_SCRIPT_TYPES</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_ALLOWED_SCRIPT_TYPES</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String (Comma separated values)</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String (Comma separated values)</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">text/ecmascript, application/java-archive</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">text/ecmascript, application/java-archive</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specifies the allowed values for the type attribute in the
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specifies the allowed values for the type attribute in the
 	 * &lt;script&gt; element. This is a comma separated list. The special value '*'
 	 * means that all script types are allowed.</td>
 	 * </tr>
@@ -861,26 +876,27 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 * Controls whether or not scripts can only be loaded from the same location as
 	 * the document which references them.
 	 *
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_CONSTRAIN_SCRIPT_ORIGIN</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_CONSTRAIN_SCRIPT_ORIGIN</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Boolean</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Boolean</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">true</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">true</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">When set to true, script elements referencing files from a
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">When set to true, script elements referencing files from a
 	 * different origin (server) than the document containing the script element
 	 * will not be loaded. When set to true, script elements may reference script
 	 * files from any origin.</td>

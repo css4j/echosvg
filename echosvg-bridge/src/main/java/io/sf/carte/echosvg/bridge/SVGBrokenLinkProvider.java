@@ -42,7 +42,7 @@ public class SVGBrokenLinkProvider extends DefaultBrokenLinkProvider implements 
 
 	/**
 	 * This method is responsible for constructing an image that will represent the
-	 * missing image in the document. This method recives information about the
+	 * missing image in the document. This method receives information about the
 	 * reason a broken link image is being requested in the <code>code</code> and
 	 * <code>params</code> parameters. These parameters may be used to generate
 	 * nicely localized messages for insertion into the broken link image, or for

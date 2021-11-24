@@ -44,8 +44,7 @@ import io.sf.carte.echosvg.xml.XMLUtilities;
 /**
  * This class implements the {@link org.w3c.dom.DOMImplementation} interface. It
  * allows the user to extend the set of elements supported by a Document,
- * directly or through the Service API (see
- * {@link io.sf.carte.echosvg.util.Service}).
+ * directly or through the Service API (see {@link java.util.ServiceLoader}).
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.

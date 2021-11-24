@@ -144,26 +144,27 @@ public class TIFFTranscoder extends ImageTranscoder {
 	/**
 	 * The forceTransparentWhite key.
 	 *
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_FORCE_TRANSPARENT_WHITE</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_FORCE_TRANSPARENT_WHITE</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Boolean</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Boolean</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">false</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">false</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">It controls whether the encoder should force the image's
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">It controls whether the encoder should force the image's
 	 * fully transparent pixels to be fully transparent white instead of fully
 	 * transparent black. This is useful when the encoded TIFF is displayed in a
 	 * viewer which does not support TIFF transparency and lets the image display
@@ -177,26 +178,27 @@ public class TIFFTranscoder extends ImageTranscoder {
 
 	/**
 	 * The compression method for the image.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_COMPRESSION_METHOD</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_COMPRESSION_METHOD</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String ("none", "packbits", "jpeg" etc.)</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String ("none", "packbits", "jpeg" etc.)</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">"none" (no compression)</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">"none" (no compression)</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">Recommended</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">Recommended</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specify the compression method used to encode the
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the compression method used to encode the
 	 * image.</td>
 	 * </tr>
 	 * </table>

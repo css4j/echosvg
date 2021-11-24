@@ -2043,7 +2043,7 @@ public abstract class CSSEngine {
 
 		/**
 		 * <b>SAC</b>: Implements
-		 * {@link DocumentHandler#property(String,LexicalUnit,boolean)}.
+		 * {@link CSSHandler#property(String,LexicalUnit,boolean)}.
 		 */
 		@Override
 		public void property(String name, LexicalUnit value, boolean important) {

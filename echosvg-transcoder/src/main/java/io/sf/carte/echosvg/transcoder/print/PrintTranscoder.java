@@ -392,26 +392,27 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	/**
 	 * The showPageDialog key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_SHOW_PAGE_DIALOG</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_SHOW_PAGE_DIALOG</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Boolean</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Boolean</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">false</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">false</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specifies whether or not the transcoder should pop up a
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specifies whether or not the transcoder should pop up a
 	 * dialog box for selecting the page format.</td>
 	 * </tr>
 	 * </table>
@@ -420,26 +421,27 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	/**
 	 * The showPrinterDialog key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_SHOW_PAGE_DIALOG</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_SHOW_PAGE_DIALOG</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Boolean</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Boolean</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">false</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">false</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specifies whether or not the transcoder should pop up a
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specifies whether or not the transcoder should pop up a
 	 * dialog box for selecting the printer. If the dialog box is not shown, the
 	 * transcoder will use the default printer.</td>
 	 * </tr>
@@ -449,26 +451,27 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	/**
 	 * The pageWidth key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_PAGE_WIDTH</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_PAGE_WIDTH</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Length</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Length</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">None</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">None</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">The width of the print page</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">The width of the print page</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -476,26 +479,27 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	/**
 	 * The pageHeight key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_PAGE_HEIGHT</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_PAGE_HEIGHT</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Length</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Length</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">none</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">none</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">The height of the print page</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">The height of the print page</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -503,26 +507,27 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	/**
 	 * The marginTop key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_MARGIN_TOP</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_MARGIN_TOP</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Length</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Length</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">None</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">None</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">The print page top margin</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">The print page top margin</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -530,26 +535,27 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	/**
 	 * The marginRight key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_MARGIN_RIGHT</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_MARGIN_RIGHT</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Length</TD>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Length</TD>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">None</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">None</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">The print page right margin</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">The print page right margin</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -557,26 +563,27 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	/**
 	 * The marginBottom key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_MARGIN_BOTTOM</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_MARGIN_BOTTOM</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Length</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Length</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">None</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">None</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">The print page bottom margin</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">The print page bottom margin</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -584,26 +591,27 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	/**
 	 * The marginLeft key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_MARGIN_LEFT</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_MARGIN_LEFT</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Length</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Length</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">None</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">None</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">The print page left margin</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">The print page left margin</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -611,26 +619,27 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	/**
 	 * The pageOrientation key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_PAGE_ORIENTATION</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_PAGE_ORIENTATION</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">String</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">VALUE_PAGE_ORIENTATION_PORTRAIT</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">VALUE_PAGE_ORIENTATION_PORTRAIT</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">The print page's orientation</td>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">The print page's orientation</td>
 	 * </tr>
 	 * </table>
 	 */
@@ -638,26 +647,27 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	/**
 	 * The scaleToPage key.
-	 * <table summary="" border="0" cellspacing="0" cellpadding="1">
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
 	 * <tr>
-	 * <th valign="top" align="right">Key:</th>
-	 * <td valign="top">KEY_SCALE_TO_PAGE</td>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_SCALE_TO_PAGE</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Value:</th>
-	 * <td valign="top">Boolean</td>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Boolean</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Default:</th>
-	 * <td valign="top">true</td>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">true</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Required:</th>
-	 * <td valign="top">No</td>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
-	 * <th valign="top" align="right">Description:</th>
-	 * <td valign="top">Specifies whether or not the SVG images are scaled to fit
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specifies whether or not the SVG images are scaled to fit
 	 * into the printed page</td>
 	 * </tr>
 	 * </table>

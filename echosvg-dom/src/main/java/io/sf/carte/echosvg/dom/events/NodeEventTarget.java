@@ -76,7 +76,7 @@ public interface NodeEventTarget extends EventTarget {
 	 *                           as defined in [<a href=
 	 *                           'http://www.w3.org/TR/2004/REC-xml-names11-20040204/'>XML
 	 *                           Namespaces 1.1</a>] .
-	 * @version DOM Level 3
+	 * @since DOM Level 3
 	 */
 	@Override
 	boolean dispatchEvent(Event evt) throws EventException, DOMException;

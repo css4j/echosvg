@@ -63,7 +63,7 @@ public class DoublyIndexedTable<K, L> {
 	}
 
 	/**
-	 * Creates a new DoublyIndexedTable<String,String> initialized to contain all of
+	 * Creates a new DoublyIndexedTable&lt;String,String&gt; initialized to contain all of
 	 * the entries of the specified other DoublyIndexedTable.
 	 */
 	public DoublyIndexedTable(DoublyIndexedTable<K,L> other) {
