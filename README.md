@@ -187,10 +187,21 @@ dependencies {
     api "io.sf.carte:echosvg-transcoder:${echosvgVersion}"
 }
 ```
+Although you probably want to filter out the problematic `xml-apis` dependency
+which is carried by old artifacts like Apache Xalan:
+```groovy
+dependencies {
+    api ("io.sf.carte:echosvg-transcoder:${echosvgVersion}") {
+        exclude group: 'xml-apis', module: 'xml-apis'
+    }
+}
+```
 or, if you want all of the main modules:
 ```groovy
 dependencies {
-    api "io.sf.carte:echosvg-all:${echosvgVersion}"
+    api ("io.sf.carte:echosvg-all:${echosvgVersion}") {
+        exclude group: 'xml-apis', module: 'xml-apis'
+    }
 }
 ```
 where `echosvgVersion` would be defined in a `gradle.properties` file (current
