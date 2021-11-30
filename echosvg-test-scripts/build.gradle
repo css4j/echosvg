@@ -20,7 +20,6 @@ java {
 compileLegacyJava.dependsOn ':echosvg-bridge:checkLegacyJava'
 
 compileJava.enabled = false
-copyModularJava.enabled = false
 checkLegacyJava.enabled = false
 
 jar.enabled = false

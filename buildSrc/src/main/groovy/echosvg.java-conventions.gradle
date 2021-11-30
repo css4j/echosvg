@@ -37,7 +37,6 @@ java {
 
 tasks.register('jvmVersionAttribute') {
 	description = "Set the correct 'org.gradle.jvm.version' attribute"
-	dependsOn copyModularJava
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
 		def jvmVersionAttribute = Attribute.of('org.gradle.jvm.version', Integer)
 		configurations.each {
@@ -70,17 +69,7 @@ tasks.register('compileLegacyJava', JavaCompile) {
 compileJava {
 	includes = ['module-info.java']
 	dependsOn compileLegacyJava
-	destinationDirectory = layout.buildDirectory.dir('classes11/main')
 	classpath = sourceSets.main.compileClasspath
-	//classpath += files(compileLegacyJava.destinationDirectory)
-}
-
-tasks.register('copyModularJava', Copy) {
-	description = 'Copy Java 11 classes to sourceSets.main.java.destinationDirectory'
-	dependsOn compileJava
-	from file(compileJava.destinationDirectory)
-	include 'module-info.class'
-	into file(sourceSets.main.java.destinationDirectory)
 }
 
 // Check bytecode version, in case some other task screws it
