@@ -196,7 +196,7 @@ public class GVTACIImpl implements GVTAttributedCharacterIterator {
 		int ndx = currentIndex;
 		do {
 			++ndx;
-		} while (attributes.equals(mapList.get(ndx)));
+		} while (attributes.equals(mapList.get(ndx).keySet()));
 		return ndx;
 	}
 
