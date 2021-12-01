@@ -217,6 +217,7 @@ public class WMFTranscoder extends ToSVGAbstractTranscoder {
 		// Cannot deal with null input
 		if (input == null) {
 			handler.fatalError(new TranscoderException(String.valueOf(ERROR_NULL_INPUT)));
+			return null;
 		}
 
 		// Can deal with InputStream
