@@ -230,8 +230,8 @@ public class TileRed extends AbstractRed implements TileGenerator {
 		int x1 = src.getMinX() + src.getWidth() - 1;
 		int y1 = src.getMinY() + src.getHeight() - 1;
 
-		int tileTx = (int) Math.ceil(((minX - x1) / xStep)) * xStep;
-		int tileTy = (int) Math.ceil(((minY - y1) / yStep)) * yStep;
+		int tileTx = (int) Math.ceil((((double) (minX - x1)) / xStep)) * xStep;
+		int tileTy = (int) Math.ceil((((double) (minY - y1)) / yStep)) * yStep;
 
 		g.translate(tileTx, tileTy);
 
