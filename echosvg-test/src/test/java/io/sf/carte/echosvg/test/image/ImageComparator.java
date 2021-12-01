@@ -449,7 +449,7 @@ public class ImageComparator {
 							continue;
 						}
 					}
-					final int acceptDiff = Math.round((varPx - 128) / diffPixelFactor);
+					final int acceptDiff = Math.round(((float) (varPx - 128)) / diffPixelFactor);
 					diff = Math.abs(diff - acceptDiff);
 					// We give a margin of 1
 					if (diff <= 1) {
