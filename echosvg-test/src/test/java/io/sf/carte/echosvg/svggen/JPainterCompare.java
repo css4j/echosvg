@@ -159,7 +159,7 @@ public class JPainterCompare extends JPanel implements SVGConstants {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			new Error(
+			throw new Error(
 					Messages.formatMessage(ERROR_COULD_NOT_CONVERT_FILE_PATH_TO_URL, new Object[] { e.getMessage() }));
 		}
 
