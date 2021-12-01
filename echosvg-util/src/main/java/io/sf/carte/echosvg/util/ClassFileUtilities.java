@@ -95,13 +95,15 @@ public class ClassFileUtilities {
 		File cwd = new File(".");
 		File buildDir = null;
 		String[] cwdFiles = cwd.list();
-		for (String cwdFile : cwdFiles) {
-			if (cwdFile.startsWith("echosvg-")) {
-				buildDir = new File(cwdFile);
-				if (!buildDir.isDirectory()) {
-					buildDir = null;
-				} else {
-					break;
+		if (cwdFiles != null) {
+			for (String cwdFile : cwdFiles) {
+				if (cwdFile.startsWith("echosvg-")) {
+					buildDir = new File(cwdFile);
+					if (!buildDir.isDirectory()) {
+						buildDir = null;
+					} else {
+						break;
+					}
 				}
 			}
 		}
@@ -217,29 +219,31 @@ public class ClassFileUtilities {
 	private static void collectJars(File dir, Map<String, Jar> jars, Map<String, ClassFile> classFiles)
 			throws IOException {
 		File[] files = dir.listFiles();
-		for (File file : files) {
-			String n = file.getName();
-			if (n.endsWith(".jar") && file.isFile()) {
-				Jar j = new Jar();
-				j.name = file.getPath();
-				j.file = file;
-				j.jarFile = new JarFile(file);
-				jars.put(j.name, j);
+		if (files != null) {
+			for (File file : files) {
+				String n = file.getName();
+				if (n.endsWith(".jar") && file.isFile()) {
+					Jar j = new Jar();
+					j.name = file.getPath();
+					j.file = file;
+					j.jarFile = new JarFile(file);
+					jars.put(j.name, j);
 
-				Enumeration<JarEntry> entries = j.jarFile.entries();
-				while (entries.hasMoreElements()) {
-					ZipEntry ze = entries.nextElement();
-					String name = ze.getName();
-					if (name.endsWith(".class")) {
-						ClassFile cf = new ClassFile();
-						cf.name = name;
-						cf.jar = j;
-						classFiles.put(j.name + '!' + cf.name, cf);
-						j.files.add(cf);
+					Enumeration<JarEntry> entries = j.jarFile.entries();
+					while (entries.hasMoreElements()) {
+						ZipEntry ze = entries.nextElement();
+						String name = ze.getName();
+						if (name.endsWith(".class")) {
+							ClassFile cf = new ClassFile();
+							cf.name = name;
+							cf.jar = j;
+							classFiles.put(j.name + '!' + cf.name, cf);
+							j.files.add(cf);
+						}
 					}
+				} else if (file.isDirectory()) {
+					collectJars(file, jars, classFiles);
 				}
-			} else if (file.isDirectory()) {
-				collectJars(file, jars, classFiles);
 			}
 		}
 	}
