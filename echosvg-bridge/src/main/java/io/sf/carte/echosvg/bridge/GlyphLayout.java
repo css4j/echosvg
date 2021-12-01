@@ -1911,8 +1911,8 @@ public class GlyphLayout implements TextSpanLayout {
 		}
 
 		// if not one of 0, 90, 180 or 270, round to nearest value
-		if ((glyphOrientationAngle != 0) || (glyphOrientationAngle != 90) || // todo - this logic expression
-				(glyphOrientationAngle != 180) || (glyphOrientationAngle != 270)) { // is true for all values.....
+		if ((glyphOrientationAngle != 0) && (glyphOrientationAngle != 90) &&
+				(glyphOrientationAngle != 180) && (glyphOrientationAngle != 270)) {
 
 			while (glyphOrientationAngle < 0) {
 				glyphOrientationAngle += 360;
