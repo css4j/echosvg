@@ -951,8 +951,10 @@ public class Main implements SVGConverterController {
 			File f = new File(v);
 			if (f.exists() && f.isDirectory()) {
 				File[] fl = f.listFiles(new SVGConverter.SVGFileFilter());
-				for (File aFl : fl) {
-					expandedSources.add(aFl.getPath());
+				if (fl != null) {
+					for (File aFl : fl) {
+						expandedSources.add(aFl.getPath());
+					}
 				}
 			} else {
 				expandedSources.add(v);
