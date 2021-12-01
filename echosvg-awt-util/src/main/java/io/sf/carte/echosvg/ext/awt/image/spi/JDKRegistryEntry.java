@@ -86,24 +86,21 @@ public class JDKRegistryEntry extends AbstractRegistryEntry implements URLRegist
 	 */
 	@Override
 	public Filter handleURL(ParsedURL purl, boolean needRawData) {
-
 		final URL url;
-		try {
-			url = new URL(purl.toString());
-		} catch (MalformedURLException mue) {
+
+		if (purl != null) {
+			try {
+				url = new URL(purl.toString());
+			} catch (MalformedURLException mue) {
+				return null;
+			}
+		} else {
 			return null;
 		}
 
 		final DeferRable dr = new DeferRable();
-		final String errCode;
-		final Object[] errParam;
-		if (purl != null) {
-			errCode = ERR_URL_FORMAT_UNREADABLE;
-			errParam = new Object[] { "JDK", url };
-		} else {
-			errCode = ERR_STREAM_FORMAT_UNREADABLE;
-			errParam = new Object[] { "JDK" };
-		}
+		final String errCode = ERR_URL_FORMAT_UNREADABLE;
+		final Object[] errParam = new Object[] { "JDK", url };
 
 		Thread t = new Thread() {
 			@Override

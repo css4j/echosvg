@@ -1217,10 +1217,10 @@ public final class TurbulencePatternRed extends AbstractRed {
 		this.seed = seed;
 		this.isFractalNoise = isFractalNoise;
 		this.tile = tile;
+		if (txf == null)
+			txf = IDENTITY;
 		this.txf = txf;
 
-		if (this.txf == null)
-			this.txf = IDENTITY;
 
 		int nChannels = cs.getNumComponents();
 		if (alpha)
