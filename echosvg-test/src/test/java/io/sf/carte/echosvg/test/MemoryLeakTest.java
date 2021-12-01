@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.test;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -251,7 +252,8 @@ public abstract class MemoryLeakTest {
 		if (entries.size() == 0) {
 			return null;
 		}
-		return "Not all registered objects cleared: " +  entries.toArray(new String[entries.size()]);
+		return "Not all registered objects cleared: " +
+			Arrays.toString(entries.toArray(new String[entries.size()]));
 	}
 
 	private static String resolveURI(String uri) throws MalformedURLException {
