@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -1133,6 +1134,14 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 			definition = def;
 			template = t;
 			importElement = imp;
+		}
+
+		@Override
+		public int hashCode() {
+			/*
+			 * Only importElement and definition are used in equals()
+			 */
+			return Objects.hash(importElement, definition);
 		}
 
 		/**
