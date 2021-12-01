@@ -61,11 +61,6 @@ public abstract class TimedDocumentRoot extends TimeContainer {
 	protected LinkedList<TimegraphListener> listeners = new LinkedList<>();
 
 	/**
-	 * Whether the document is currently being sampled.
-	 */
-	protected boolean isSampling;
-
-	/**
 	 * Whether the document is currently being sampled for a hyperlink.
 	 */
 	protected boolean isHyperlinking;

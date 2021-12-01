@@ -91,12 +91,6 @@ public class SVGOMDocument extends AbstractStylableDocument
 	protected static final String RESOURCES = "io.sf.carte.echosvg.dom.svg.resources.Messages";
 
 	/**
-	 * The localizable support for the error messages.
-	 */
-	protected transient LocalizableSupport localizableSupport = new LocalizableSupport(RESOURCES,
-			getClass().getClassLoader());
-
-	/**
 	 * The string representing the referrer.
 	 */
 	protected String referrer = "";
