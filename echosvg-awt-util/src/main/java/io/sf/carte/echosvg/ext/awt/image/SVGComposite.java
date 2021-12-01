@@ -68,6 +68,11 @@ public class SVGComposite implements Composite {
 	}
 
 	@Override
+	public int hashCode() {
+		return rule.getRule();
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (o instanceof SVGComposite) {
 			SVGComposite svgc = (SVGComposite) o;
