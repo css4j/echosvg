@@ -171,12 +171,6 @@ public class ClipRable8Bit extends AbstractRable implements ClipRable {
 
 		Graphics2D g2d = GraphicsUtil.createGraphics(bi, rh);
 
-		if (false) {
-			java.util.Set s = rh.keySet();
-			for (Object o : s) {
-				System.out.println("XXX: " + o + " -> " + rh.get(o));
-			}
-		}
 		g2d.translate(-devR.x, -devR.y);
 		g2d.setPaint(Color.white);
 		g2d.fill(devShape);
