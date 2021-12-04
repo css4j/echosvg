@@ -89,7 +89,7 @@ public class DisplacementMapRed extends AbstractRed {
 	TileOffsets[] xOffsets;
 	TileOffsets[] yOffsets;
 
-	static class TileOffsets {
+	public static class TileOffsets {
 		int[] tile;
 		int[] off;
 
