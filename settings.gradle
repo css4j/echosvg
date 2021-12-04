@@ -9,8 +9,6 @@ pluginManagement {
 
 rootProject.name = 'echosvg'
 
-include(':smil-api')
-include(':svgom-api')
 include(':echosvg-svggen')
 include(':echosvg-ext')
 include(':echosvg-dom')

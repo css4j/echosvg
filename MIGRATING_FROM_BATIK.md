@@ -17,8 +17,8 @@
    is still available but no longer supports PDF graphics). See [issue #10](https://github.com/css4j/echosvg/issues/10)
    for more details.
 
-6) SAXDocumentFactory and SAXSVGDocumentFactory no longer have constructors with
-   `String` arguments. Either remove the string argument or replace it by a
+6) `SAXDocumentFactory` and `SAXSVGDocumentFactory` no longer have constructors
+   with `String` arguments. Either remove the string argument or replace it by a
    `null` and you should be fine. Alternatively, you can now use your own
    `XMLReader` in place of the parser class name. (The API change was made for
    security reasons)
@@ -27,14 +27,14 @@
    SMIL APIs (see [#15](https://github.com/css4j/echosvg/issues/15)).
    If `xml-apis-ext` happens to be in your modulepath, you could configure an
    exclusion for it (in Maven or Gradle), then use `svgom-api` and `smil-api`
-   instead. If your project requires the old SAC api which is provided by
-   `xml-apis-ext` as well, you can use [`sac.jar`](https://mvnrepository.com/artifact/org.w3c.css/sac)
+   from the [Web APIs](https://github.com/css4j/web-apis) project instead. If
+   your project requires the old SAC api which is provided by `xml-apis-ext` as
+   well, you can use [`sac.jar`](https://mvnrepository.com/artifact/org.w3c.css/sac)
    as a replacement.
 
 8) `EchoSVGSecurityManager` is deprecated for removal due to Security Manager
    API being deprecated for removal since Java 17. Similarly,
    `RhinoClassLoader.getAccessControlContext()` and other security-related
    methods in other classes are deprecated for removal as well. The constructor
-   `ApplicationSecurityEnforcer(Class<?>, String)` is no longer public, please
-   use `ApplicationSecurityEnforcer.createSecurityEnforcer(Class, String)`
-   instead.
+   `ApplicationSecurityEnforcer(Class, String)` is no longer public, please use
+   `ApplicationSecurityEnforcer.createSecurityEnforcer(Class, String)` instead.

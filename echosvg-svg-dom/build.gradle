@@ -5,7 +5,6 @@ plugins {
 dependencies {
 	api project(':echosvg-dom')
 	api project(':echosvg-parser')
-	api project(':svgom-api')
 }
 
 description = 'io.sf.carte:echosvg-svg-dom'

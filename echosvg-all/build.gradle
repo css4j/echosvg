@@ -15,7 +15,6 @@ dependencies {
 	api project(':echosvg-svgpp')
 	api project(':echosvg-ttf2svg')
 	api project(':echosvg-svgrasterizer')
-	api project(':svgom-api')
 	implementation "org.mozilla:rhino:${rhinoVersion}"
 }
 
