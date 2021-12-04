@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
  *
  * @version $Id$
  */
+@SuppressWarnings({ "deprecation", "removal" })
 public class LoadPermissionsTest {
 
 	@After

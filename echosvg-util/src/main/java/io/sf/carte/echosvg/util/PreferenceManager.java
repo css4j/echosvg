@@ -29,7 +29,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Properties;
@@ -95,7 +94,7 @@ public class PreferenceManager {
 	protected static String getSystemProperty(String prop) {
 		try {
 			return System.getProperty(prop);
-		} catch (AccessControlException e) {
+		} catch (SecurityException e) {
 			return "";
 		}
 	}

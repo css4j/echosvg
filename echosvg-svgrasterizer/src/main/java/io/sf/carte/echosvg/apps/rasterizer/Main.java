@@ -46,6 +46,7 @@ import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class Main implements SVGConverterController {
 	/**
 	 * URL for this browser's security policy file
@@ -889,8 +890,8 @@ public class Main implements SVGConverterController {
 		}
 
 		// Apply script security option
-		ApplicationSecurityEnforcer securityEnforcer = new ApplicationSecurityEnforcer(this.getClass(),
-				RASTERIZER_SECURITY_POLICY);
+		ApplicationSecurityEnforcer securityEnforcer = ApplicationSecurityEnforcer
+				.createSecurityEnforcer(this.getClass(), RASTERIZER_SECURITY_POLICY);
 
 		securityEnforcer.enforceSecurity(!c.getSecurityOff());
 

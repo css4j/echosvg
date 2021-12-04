@@ -18,13 +18,15 @@
  */
 package io.sf.carte.echosvg.script.rhino;
 
-import java.lang.reflect.Constructor;
+import java.security.AccessControlContext;
+import java.security.AccessController;
+import java.security.PrivilegedExceptionAction;
 
 import org.mozilla.javascript.Callable;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.GeneratedClassLoader;
 import org.mozilla.javascript.Scriptable;
-import org.mozilla.javascript.SecurityController;
+import org.mozilla.javascript.WrappedException;
 
 /**
  * This implementation of the Rhino <code>SecurityController</code> interface is
@@ -36,30 +38,13 @@ import org.mozilla.javascript.SecurityController;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class EchoSVGSecurityController extends SecurityController {
-
-	private static final EchoSVGSecurityController singleton = createSecurityController();
-
-	private static EchoSVGSecurityController createSecurityController() {
-		EchoSVGSecurityController sc;
-		try {
-			Class<?> cl = Class.forName("io.sf.carte.echosvg.script.rhino.SMSecurityController");
-			Constructor<?> ctor = cl.getConstructor();
-			sc = (EchoSVGSecurityController) ctor.newInstance();
-		} catch (Exception e) {
-			sc = new EchoSVGSecurityController();
-		}
-		return sc;
-	}
-
-	public static EchoSVGSecurityController getInstance() {
-		return singleton;
-	}
+@SuppressWarnings("removal")
+class SMSecurityController extends EchoSVGSecurityController {
 
 	/**
 	 * Default constructor
 	 */
-	EchoSVGSecurityController() {
+	public SMSecurityController() {
 		super();
 	}
 
@@ -80,9 +65,20 @@ public class EchoSVGSecurityController extends SecurityController {
 	 * the current Java stack and <i>securityDomain</i>. If <i>securityDomain</i> is
 	 * null, return domain representing permissions allowed by the current stack.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public Object getDynamicSecurityDomain(Object securityDomain) {
-		return securityDomain;
+
+		ClassLoader loader = (RhinoClassLoader) securityDomain;
+		// Already have a rhino loader in place no need to
+		// do anything (normally you would want to union the
+		// the current stack with the loader's context but
+		// in our case no one has lower privledges than a
+		// rhino class loader).
+		if (loader != null)
+			return loader;
+
+		return AccessController.getContext();
 	}
 
 	/**
@@ -95,10 +91,29 @@ public class EchoSVGSecurityController extends SecurityController {
 	 * return a domain incorporate restrictions imposed by
 	 * <code>securityDomain</code>.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public Object callWithDomain(Object securityDomain, final Context cx, final Callable callable,
 			final Scriptable scope, final Scriptable thisObj, final Object[] args) {
-		return callable.call(cx, scope, thisObj, args);
+		AccessControlContext acc;
+		if (securityDomain instanceof AccessControlContext)
+			acc = (AccessControlContext) securityDomain;
+		else {
+			RhinoClassLoader loader = (RhinoClassLoader) securityDomain;
+			acc = (AccessControlContext) loader.getAccessControlObject();
+		}
+
+		PrivilegedExceptionAction<Object> execAction = new PrivilegedExceptionAction<Object>() {
+			@Override
+			public Object run() {
+				return callable.call(cx, scope, thisObj, args);
+			}
+		};
+		try {
+			return AccessController.doPrivileged(execAction, acc);
+		} catch (Exception e) {
+			throw new WrappedException(e);
+		}
 	}
 
 }

@@ -83,6 +83,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@SuppressWarnings({ "deprecation", "removal" })
 public class SVGOnLoadExceptionTest {
 	/**
 	 * Value for the script having successfully run.
@@ -287,7 +288,8 @@ public class SVGOnLoadExceptionTest {
 	 *
 	 */
 	public void runTest() throws Exception {
-		ApplicationSecurityEnforcer ase = new ApplicationSecurityEnforcer(this.getClass(),
+		ApplicationSecurityEnforcer ase = ApplicationSecurityEnforcer
+				.createSecurityEnforcer(this.getClass(),
 				"io/sf/carte/echosvg/apps/svgbrowser/svgbrowser.policy");
 
 		if (secure) {

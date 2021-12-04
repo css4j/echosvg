@@ -20,7 +20,6 @@ package io.sf.carte.echosvg.script;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.util.HashMap;
@@ -136,16 +135,20 @@ public class InterpreterPool {
 
 	private static Interpreter createInterpreter(InterpreterFactory factory, URL documentURL, boolean svg12,
 			ImportInfo imports) {
+		PrivilegedExceptionAction<?> pea = new PrivilegedExceptionAction<Interpreter>() {
+			@Override
+			public Interpreter run() throws Exception {
+				return factory.createInterpreter(documentURL, svg12, imports);
+			}
+		};
 		try {
-			return AccessController.doPrivileged(new PrivilegedExceptionAction<Interpreter>() {
-				@Override
-				public Interpreter run() throws Exception {
-					return factory.createInterpreter(documentURL, svg12, imports);
-				}
-			});
+			return (Interpreter) SecurityHelper.getInstance().runPrivilegedExceptionAction(pea);
 		} catch (PrivilegedActionException pae) {
 			Exception ex = pae.getException();
 			ex.printStackTrace();
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

@@ -31,37 +31,27 @@ public class TestLocations {
 	private static final String TEST_DIRNAME = "echosvg-test";
 
 	private static String getRootBuildURL() {
-		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<String>() {
-			@Override
-			public String run() {
-				String resName = TestLocations.class.getName().replace(".", "/") + ".class";
-				URL url = getClass().getClassLoader().getResource(resName);
-				if (url == null) {
-					return null;
-				}
-				String classUrl = url.toExternalForm();
-				int testDirIdx = classUrl.lastIndexOf(TEST_DIRNAME);
-				String rootDirUrl = classUrl.substring(0, testDirIdx);
-				return rootDirUrl;
-			}
-		});
+		String resName = TestLocations.class.getName().replace(".", "/") + ".class";
+		URL url = ResourceLoader.getInstance().getResource(TestLocations.class, resName);
+		if (url == null) {
+			return null;
+		}
+		String classUrl = url.toExternalForm();
+		int testDirIdx = classUrl.lastIndexOf(TEST_DIRNAME);
+		String rootDirUrl = classUrl.substring(0, testDirIdx);
+		return rootDirUrl;
 	}
 
 	public static String getTestProjectBuildPath() {
-		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<String>() {
-			@Override
-			public String run() {
-				String resName = TestLocations.class.getName().replace(".", "/") + ".class";
-				URL url = getClass().getClassLoader().getResource(resName);
-				if (url == null) {
-					return null;
-				}
-				String classUrl = url.toExternalForm();
-				int testDirIdx = classUrl.lastIndexOf(TEST_DIRNAME);
-				String buildDir = classUrl.substring(5, testDirIdx + TEST_DIRNAME.length()) + "/build/";
-				return buildDir;
-			}
-		});
+		String resName = TestLocations.class.getName().replace(".", "/") + ".class";
+		URL url = ResourceLoader.getInstance().getResource(TestLocations.class, resName);
+		if (url == null) {
+			return null;
+		}
+		String classUrl = url.toExternalForm();
+		int testDirIdx = classUrl.lastIndexOf(TEST_DIRNAME);
+		String buildDir = classUrl.substring(5, testDirIdx + TEST_DIRNAME.length()) + "/build/";
+		return buildDir;
 	}
 
 	public static File getTempFilename(URL svgUrl, String filePrefix, String fileSuffix, String imageType,
@@ -91,20 +81,19 @@ public class TestLocations {
 	}
 
 	public static String getProjectClassURL(Class<?> projectClass) {
-		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<String>() {
-			@Override
-			public String run() {
-				String resName = projectClass.getName().replace(".", "/") + ".class";
-				String classUrl = projectClass.getClassLoader().getResource(resName).toExternalForm();
-				String classdir;
-				if (classUrl.endsWith(resName)) {
-					classdir = classUrl.substring(0, classUrl.length() - resName.length());
-				} else {
-					classdir = null;
-				}
-				return classdir;
-			}
-		});
+		String resName = projectClass.getName().replace(".", "/") + ".class";
+		URL url = ResourceLoader.getInstance().getResource(projectClass, resName);
+		if (url == null) {
+			return null;
+		}
+		String strUrl = url.toExternalForm();
+		String classdir;
+		if (strUrl.endsWith(resName)) {
+			classdir = strUrl.substring(0, strUrl.length() - resName.length());
+		} else {
+			classdir = null;
+		}
+		return classdir;
 	}
 
 }

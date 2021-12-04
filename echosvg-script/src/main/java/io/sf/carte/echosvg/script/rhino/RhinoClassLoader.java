@@ -23,7 +23,6 @@ import java.io.FilePermission;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.security.AccessControlContext;
 import java.security.CodeSource;
 import java.security.Permission;
 import java.security.PermissionCollection;
@@ -56,7 +55,8 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
 	 * class loader if it was running stand-alone (i.e., not invoked by code with
 	 * lesser priviledges).
 	 */
-	protected AccessControlContext rhinoAccessControlContext;
+	@SuppressWarnings("removal")
+	private java.security.AccessControlContext rhinoAccessControlContext;
 
 	/**
 	 * Constructor.
@@ -64,6 +64,7 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
 	 * @param documentURL the URL from which to load classes and resources
 	 * @param parent      the parent class loader for delegation
 	 */
+	@SuppressWarnings({ "deprecation", "removal" })
 	public RhinoClassLoader(URL documentURL, ClassLoader parent) {
 		super(documentURL != null ? new URL[] { documentURL } : new URL[] {}, parent);
 		this.documentURL = documentURL;
@@ -77,7 +78,8 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
 		//
 		ProtectionDomain rhinoProtectionDomain = new ProtectionDomain(codeSource, getPermissions(codeSource));
 
-		rhinoAccessControlContext = new AccessControlContext(new ProtectionDomain[] { rhinoProtectionDomain });
+		rhinoAccessControlContext = new java.security.AccessControlContext(
+				new ProtectionDomain[] { rhinoProtectionDomain });
 	}
 
 	/**
@@ -114,8 +116,21 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
 
 	/**
 	 * Returns the AccessControlContext which should be associated with RhinoCode.
+	 * 
+	 * @deprecated see {@link #getAccessControlObject()}.
 	 */
-	public AccessControlContext getAccessControlContext() {
+	@Deprecated(forRemoval=true)
+	public java.security.AccessControlContext getAccessControlContext() {
+		return rhinoAccessControlContext;
+	}
+
+	/**
+	 * Returns the access control object which should be associated with RhinoCode.
+	 * 
+	 * @return the access control object, or {@code null} if the JVM has no concept
+	 *         of access control objects.
+	 */
+	public Object getAccessControlObject() {
 		return rhinoAccessControlContext;
 	}
 

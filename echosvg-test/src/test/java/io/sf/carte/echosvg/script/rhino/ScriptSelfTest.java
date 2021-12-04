@@ -43,6 +43,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 
+@SuppressWarnings({ "deprecation", "removal" })
 public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
 
 	private boolean secure = true;
@@ -52,8 +53,8 @@ public class ScriptSelfTest extends SelfContainedSVGOnLoadTest {
 	private TestUserAgent userAgent = new TestUserAgent();
 
 	public void runTest() throws Exception {
-		ApplicationSecurityEnforcer ase = new ApplicationSecurityEnforcer(this.getClass(),
-				"io/sf/carte/echosvg/apps/svgbrowser/svgbrowser.policy");
+		ApplicationSecurityEnforcer ase = ApplicationSecurityEnforcer.createSecurityEnforcer(
+				this.getClass(), "io/sf/carte/echosvg/apps/svgbrowser/svgbrowser.policy");
 
 		if (secure) {
 			try {

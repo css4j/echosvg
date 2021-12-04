@@ -23,7 +23,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.security.PrivilegedActionException;
 import java.util.HashMap;
 
 import org.w3c.dom.DOMException;
@@ -115,7 +114,12 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		URL url = getResource("resources/UserAgentStyleSheet.css");
 		if (url != null) {
 			ParsedURL purl = new ParsedURL(url);
-			InputStream is = openStream(purl);
+			InputStream is;
+			try {
+				is = openStream(purl);
+			} catch (IOException e) {
+				return result;
+			}
 			InputStreamReader re = new InputStreamReader(is, StandardCharsets.UTF_8);
 			InputSource source = new InputSource(re);
 			try {
@@ -132,28 +136,11 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 	}
 
 	protected URL getResource(String resourceName) {
-		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<URL>() {
-			@Override
-			public URL run() {
-				return getClass().getResource(resourceName);
-			}
-		});
+		return ResourceLoader.getInstance().getResource(getClass(), resourceName);
 	}
 
-	protected InputStream openStream(ParsedURL purl) {
-		try {
-			return java.security.AccessController
-					.doPrivileged(new java.security.PrivilegedExceptionAction<InputStream>() {
-						@Override
-						public InputStream run() throws IOException {
-							return purl.openStream();
-						}
-					});
-		} catch (PrivilegedActionException e) {
-			DOMException ex = new DOMException(DOMException.INVALID_STATE_ERR, e.getMessage());
-			ex.initCause(e);
-			throw ex;
-		}
+	protected InputStream openStream(ParsedURL purl) throws IOException {
+		return ResourceLoader.getInstance().openStream(purl);
 	}
 
 	/**

@@ -47,6 +47,7 @@ import io.sf.carte.echosvg.test.TestLocations;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@SuppressWarnings({ "deprecation", "removal" })
 public class MainTest {
 
 	@After

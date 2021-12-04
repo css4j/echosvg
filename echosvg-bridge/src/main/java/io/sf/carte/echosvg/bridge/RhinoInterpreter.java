@@ -24,7 +24,6 @@ import java.io.StringReader;
 import java.io.Writer;
 import java.net.URL;
 import java.security.AccessControlContext;
-import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -42,7 +41,6 @@ import org.mozilla.javascript.JavaScriptException;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
-import org.mozilla.javascript.SecurityController;
 import org.mozilla.javascript.WrapFactory;
 import org.mozilla.javascript.WrappedException;
 import org.w3c.dom.events.EventTarget;
@@ -120,7 +118,7 @@ public class RhinoInterpreter implements Interpreter {
 	 * The SecurityController implementation for EchoSVG, which ensures scripts have
 	 * access to the server they were downloaded from
 	 */
-	protected SecurityController securityController = new EchoSVGSecurityController();
+	private EchoSVGSecurityController securityController = EchoSVGSecurityController.getInstance();
 
 	/**
 	 * Factory object for creating Contexts.
@@ -247,10 +245,24 @@ public class RhinoInterpreter implements Interpreter {
 	 * 
 	 * @see io.sf.carte.echosvg.script.rhino.RhinoClassLoader
 	 */
+	@Deprecated(forRemoval=true)
 	public AccessControlContext getAccessControlContext() {
 		if (rhinoClassLoader == null)
 			return null;
 		return rhinoClassLoader.getAccessControlContext();
+	}
+
+	/**
+	 * Returns the access control object associated with this Interpreter.
+	 * 
+	 * @see io.sf.carte.echosvg.script.rhino.RhinoClassLoader
+	 */
+	public Object getAccessControlObject() {
+		if (rhinoClassLoader == null) {
+			return null;
+		}
+
+		return rhinoClassLoader.getAccessControlObject();
 	}
 
 	/**
@@ -365,7 +377,7 @@ public class RhinoInterpreter implements Interpreter {
 							}
 						}
 					};
-					script = (Script) AccessController.doPrivileged(compile);
+					script = (Script) SecurityHelper.getInstance().runPrivilegedAction(compile);
 
 					if (compiledScripts.size() + 1 > MAX_CACHED_SCRIPTS) {
 						// too many cached items - we should delete the

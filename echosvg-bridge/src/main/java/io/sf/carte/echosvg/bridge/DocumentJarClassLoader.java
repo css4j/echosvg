@@ -23,7 +23,7 @@ import java.net.URLClassLoader;
 import java.security.CodeSource;
 import java.security.Permission;
 import java.security.PermissionCollection;
-import java.security.Policy;
+import java.security.Permissions;
 import java.security.cert.Certificate;
 import java.util.Enumeration;
 
@@ -77,12 +77,7 @@ public class DocumentJarClassLoader extends URLClassLoader {
 	protected PermissionCollection getPermissions(CodeSource codesource) {
 		// First, get the permissions which may be granted
 		// through the policy file(s)
-		Policy p = Policy.getPolicy();
-
-		PermissionCollection pc = null;
-		if (p != null) {
-			pc = p.getPermissions(codesource);
-		}
+		PermissionCollection pc = SecurityHelper.getInstance().getPermissions(codesource);
 
 		// Now, add permissions if the documentCodeSource is not null
 		if (documentCodeSource != null) {
@@ -96,6 +91,8 @@ public class DocumentJarClassLoader extends URLClassLoader {
 			} else {
 				pc = urlPC;
 			}
+		} else if (pc == null) {
+			pc = new Permissions();
 		}
 
 		return pc;

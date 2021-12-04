@@ -19,8 +19,6 @@
 
 package io.sf.carte.echosvg.bridge;
 
-import java.security.AccessControlContext;
-import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 import org.mozilla.javascript.Context;
@@ -159,7 +157,7 @@ public class WindowWrapper extends ImporterTopLevel {
 		}
 
 		RhinoInterpreter interp = (RhinoInterpreter) window.getInterpreter();
-		AccessControlContext acc = interp.getAccessControlContext();
+		Object acc = interp.getAccessControlObject();
 
 		PrivilegedAction<Node> pa = new PrivilegedAction<Node>() {
 			@Override
@@ -173,10 +171,11 @@ public class WindowWrapper extends ImporterTopLevel {
 		// If acc is null we are running in an Applet (or some other
 		// restrictive environment) so don't sweat security it's
 		// the "Browsers" problem...
-		if (acc != null)
-			ret = AccessController.doPrivileged(pa, acc);
-		else
-			ret = AccessController.doPrivileged(pa);
+		if (acc != null) {
+			ret = (Node) SecurityHelper.getInstance().runPrivilegedAction(pa, acc);
+		} else {
+			ret = (Node) SecurityHelper.getInstance().runPrivilegedAction(pa);
+		}
 
 		return Context.toObject(ret, thisObj);
 	}
@@ -192,14 +191,16 @@ public class WindowWrapper extends ImporterTopLevel {
 		WindowWrapper ww = (WindowWrapper) thisObj;
 		final Window window = ww.window;
 
-		AccessControlContext acc = ((RhinoInterpreter) window.getInterpreter()).getAccessControlContext();
+		Object acc = ((RhinoInterpreter) window.getInterpreter()).getAccessControlObject();
 
-		String ret = AccessController.doPrivileged(new PrivilegedAction<String>() {
+		PrivilegedAction<String> pa = new PrivilegedAction<String>() {
 			@Override
 			public String run() {
 				return window.printNode((Node) Context.jsToJava(args[0], Node.class));
 			}
-		}, acc);
+		};
+
+		String ret = (String) SecurityHelper.getInstance().runPrivilegedAction(pa, acc);
 		return ret;
 	}
 
@@ -223,25 +224,28 @@ public class WindowWrapper extends ImporterTopLevel {
 		}
 		final Window.URLResponseHandler fw = urlHandler;
 
-		AccessControlContext acc = ((RhinoInterpreter) window.getInterpreter()).getAccessControlContext();
+		Object acc = ((RhinoInterpreter) window.getInterpreter()).getAccessControlObject();
 
+		PrivilegedAction<Void> action;
 		if (len == 2) {
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+			action = new PrivilegedAction<Void>() {
 				@Override
 				public Void run() {
 					window.getURL(uri, fw);
 					return null;
 				}
-			}, acc);
+			};
 		} else {
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+			action = new PrivilegedAction<Void>() {
 				@Override
 				public Void run() {
 					window.getURL(uri, fw, (String) Context.jsToJava(args[2], String.class));
 					return null;
 				}
-			}, acc);
+			};
 		}
+
+		SecurityHelper.getInstance().runPrivilegedAction(action, acc);
 	}
 
 	/**
@@ -265,38 +269,40 @@ public class WindowWrapper extends ImporterTopLevel {
 		}
 		final Window.URLResponseHandler fw = urlHandler;
 
-		AccessControlContext acc;
-		acc = interp.getAccessControlContext();
+		Object acc = interp.getAccessControlObject();
+		PrivilegedAction<Void> pa;
 
 		switch (len) {
 		case 3:
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+			pa = new PrivilegedAction<Void>() {
 				@Override
 				public Void run() {
 					window.postURL(uri, content, fw);
 					return null;
 				}
-			}, acc);
+			};
 			break;
 		case 4:
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+			pa = new PrivilegedAction<Void>() {
 				@Override
 				public Void run() {
 					window.postURL(uri, content, fw, (String) Context.jsToJava(args[3], String.class));
 					return null;
 				}
-			}, acc);
+			};
 			break;
 		default:
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+			pa = new PrivilegedAction<Void>() {
 				@Override
 				public Void run() {
 					window.postURL(uri, content, fw, (String) Context.jsToJava(args[3], String.class),
 							(String) Context.jsToJava(args[4], String.class));
 					return null;
 				}
-			}, acc);
+			};
 		}
+
+		SecurityHelper.getInstance().runPrivilegedAction(pa, acc);
 	}
 
 	/**

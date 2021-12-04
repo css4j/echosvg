@@ -790,6 +790,7 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 	@Override
 	public void removeTargetListener(String ns, String an, boolean isCSS, AnimationTargetListener l) {
 		if (!isCSS) {
+			@SuppressWarnings("unchecked")
 			LinkedList<AnimationTargetListener> ll = (LinkedList<AnimationTargetListener>) targetListeners.get(ns, an);
 			ll.remove(l);
 		}
@@ -801,6 +802,7 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 	 */
 	void fireBaseAttributeListeners(String ns, String ln) {
 		if (targetListeners != null) {
+			@SuppressWarnings("unchecked")
 			LinkedList<AnimationTargetListener> ll = (LinkedList<AnimationTargetListener>) targetListeners.get(ns, ln);
 			for (AnimationTargetListener l : ll) {
 				l.baseValueChanged(this, ns, ln, false);

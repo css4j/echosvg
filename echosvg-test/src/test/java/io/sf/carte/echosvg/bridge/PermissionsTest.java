@@ -30,6 +30,7 @@ import org.junit.Test;
  *
  * @version $Id$
  */
+@SuppressWarnings({ "deprecation", "removal" })
 public class PermissionsTest {
 
 	@After

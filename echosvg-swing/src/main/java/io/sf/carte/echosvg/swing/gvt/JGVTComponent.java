@@ -1251,14 +1251,9 @@ public class JGVTComponent extends JComponent {
 			CharacterIterator iter = (CharacterIterator) o;
 
 			// first see if we can access the clipboard
-			SecurityManager securityManager;
-			securityManager = System.getSecurityManager();
-			if (securityManager != null) {
-				try {
-					securityManager.checkPermission(new AWTPermission("accessClipboard"));
-				} catch (SecurityException e) {
-					return; // Can't access clipboard.
-				}
+			if (!PermissionChecker.getInstance().checkPermission(new AWTPermission("accessClipboard"))) {
+				// Can't access clipboard.
+				return;
 			}
 
 			int sz = iter.getEndIndex() - iter.getBeginIndex();

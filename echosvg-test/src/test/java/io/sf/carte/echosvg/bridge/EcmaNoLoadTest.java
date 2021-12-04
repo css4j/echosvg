@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@SuppressWarnings({ "deprecation", "removal" })
 public class EcmaNoLoadTest {
 
 	@After

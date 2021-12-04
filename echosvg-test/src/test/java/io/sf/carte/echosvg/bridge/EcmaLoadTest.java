@@ -32,6 +32,7 @@ import org.junit.Test;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@SuppressWarnings({ "deprecation", "removal" })
 public class EcmaLoadTest {
 
 	@After

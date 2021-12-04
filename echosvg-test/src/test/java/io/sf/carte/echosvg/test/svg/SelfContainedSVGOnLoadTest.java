@@ -72,6 +72,7 @@ import io.sf.carte.echosvg.test.TestLocations;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@SuppressWarnings({ "removal" })
 public class SelfContainedSVGOnLoadTest {
 	/**
 	 * Error when the input file cannot be loaded into a Document object {0} =
@@ -229,7 +230,7 @@ public class SelfContainedSVGOnLoadTest {
 
 		Element testResult = (Element) testResultList.item(0);
 
-		// Now, get the result attribute. Whould be either "passed" or "failed"
+		// Now, get the result attribute. Would be either "passed" or "failed"
 		String result = testResult.getAttributeNS(null, ATTRIBUTE_RESULT);
 
 		if (!TEST_RESULT_PASSED.equals(result)) {
@@ -241,6 +242,7 @@ public class SelfContainedSVGOnLoadTest {
 
 	}
 
+	@SuppressWarnings({ "deprecation" })
 	private Document createDocument(String svgURL) throws Exception {
 		try {
 			return AccessController.doPrivileged(new PrivilegedExceptionAction<Document>() {

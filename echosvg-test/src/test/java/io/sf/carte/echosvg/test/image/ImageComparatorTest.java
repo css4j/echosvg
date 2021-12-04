@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
+import io.sf.carte.echosvg.test.ResourceLoader;
 
 public class ImageComparatorTest {
 
@@ -163,12 +164,7 @@ public class ImageComparatorTest {
 	}
 
 	private static InputStream classpathStream(final String filename) {
-		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<InputStream>() {
-			@Override
-			public InputStream run() {
-				return getClass().getResourceAsStream(filename);
-			}
-		});
+		return ResourceLoader.getInstance().getResourceAsStream(ImageComparatorTest.class, filename);
 	}
 
 	private static class MyVariants implements ImageComparator.ImageVariants {
