@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
-import io.sf.carte.echosvg.util.Platform;
 
 /**
  * This class provides a general framework to read WMF Metafiles.
