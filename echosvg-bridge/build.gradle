@@ -13,7 +13,6 @@ dependencies {
 	}
 	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
 	api project(':svgom-api')
-	implementation "org.mozilla:rhino:${rhinoVersion}"
 }
 
 extraJavaModuleInfo {

@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
 	api project(':echosvg-anim')
-	implementation "org.mozilla:rhino:${rhinoVersion}"
+	api "org.mozilla:rhino:${rhinoVersion}"
 }
 
 description = 'io.sf.carte:echosvg-script'
