@@ -1,5 +1,6 @@
 plugins {
 	id 'de.jjohannes.extra-java-module-info'
+	id 'org.ajoberstar.grgit'
 	id 'echosvg.java-conventions'
 }
 
@@ -15,7 +16,6 @@ dependencies {
 	api project(':echosvg-svgpp')
 	api project(':echosvg-ttf2svg')
 	api project(':echosvg-svgrasterizer')
-	implementation "org.mozilla:rhino:${rhinoVersion}"
 }
 
 extraJavaModuleInfo {
@@ -53,14 +53,27 @@ tasks.register('mergedJavadoc', Javadoc) {
 
 tasks.register('removeModularSources', Delete) {
 	doFirst {
+		delete "$buildDir/repos"
 		delete "$buildDir/src"
+	}
+}
+
+// Clone all the repositories
+tasks.register('cloneRepos') {
+	dependsOn removeModularSources
+
+	doFirst {
+		def gitWebAPIs = grgit.clone(dir: "$buildDir/repos/web-apis",
+			uri: 'https://github.com/css4j/web-apis.git',
+			refToCheckout: "v${svgomVersion}")
+		gitWebAPIs?.close()
 	}
 }
 
 // Prepare modular sources for multi-module javadoc
 tasks.register('prepareModularSources') {
 	description = 'Copy source files to \'build/src\' directory'
-	dependsOn removeModularSources
+	dependsOn cloneRepos
 
 	doFirst {
 		ant.copy(todir: "$buildDir/src/io.sf.carte.echosvg.anim") {
@@ -178,6 +191,18 @@ tasks.register('prepareModularSources') {
 				include(name: '**/*')
 			}
 		}
+
+		// Web APIs
+		ant.copy(todir: "$buildDir/src/org.w3c.dom.smil") {
+			fileset(dir: "$buildDir/repos/web-apis/smil-api/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/org.w3c.dom.svg") {
+			fileset(dir: "$buildDir/repos/web-apis/svgom-api/src/main/java") {
+				include(name: '**/*')
+			}
+		}
 	}
 }
 
@@ -211,7 +236,9 @@ tasks.register('modularJavadoc', Javadoc) {
 		"$buildDir/src/io.sf.carte.echosvg.ttf2svg",
 		"$buildDir/src/io.sf.carte.echosvg.util",
 		"$buildDir/src/io.sf.carte.echosvg.util.gui",
-		"$buildDir/src/io.sf.carte.echosvg.xml" ]
+		"$buildDir/src/io.sf.carte.echosvg.xml",
+		"$buildDir/src/org.w3c.dom.smil",
+		"$buildDir/src/org.w3c.dom.svg" ]
 	includes += '**/*.java'
 	classpath = configurations.compileClasspath
 	classpath += configurations.runtimeClasspath

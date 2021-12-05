@@ -1,9 +1,10 @@
 pluginManagement {
 	plugins {
 		/*
-		 * extra-java-module-info plugin version is declared at gradle.properties file
+		 * plugin versions are declared at gradle.properties file
 		 */
 		id 'de.jjohannes.extra-java-module-info' version "${extraJavaModuleInfoVersion}"
+		id 'org.ajoberstar.grgit' version "${grGitVersion}"
 	}
 }
 
