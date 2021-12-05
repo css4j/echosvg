@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * XML utilities.
+ */
 module io.sf.carte.echosvg.xml {
     exports io.sf.carte.echosvg.xml;
 

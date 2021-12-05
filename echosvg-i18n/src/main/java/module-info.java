@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * i18n library.
+ */
 module io.sf.carte.echosvg.i18n {
     exports io.sf.carte.echosvg.i18n;
 }

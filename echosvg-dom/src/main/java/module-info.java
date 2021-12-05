@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * DOM implementation.
+ * 
+ * @uses org.xml.sax.XMLReader
+ * @uses io.sf.carte.echosvg.dom.DomExtension
+ */
 module io.sf.carte.echosvg.dom {
 	exports io.sf.carte.echosvg.dom.util;
 	exports io.sf.carte.echosvg.dom.traversal;

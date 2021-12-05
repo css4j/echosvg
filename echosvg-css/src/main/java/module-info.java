@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * CSS support.
+ */
 module io.sf.carte.echosvg.css {
 	exports io.sf.carte.echosvg.css.engine;
 	exports io.sf.carte.echosvg.css.engine.value.css2;

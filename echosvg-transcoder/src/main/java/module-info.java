@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * SVG transcoder.
+ * 
+ * @provides io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter
+ * @provides io.sf.carte.echosvg.ext.awt.image.spi.RegistryEntry
+ */
 module io.sf.carte.echosvg.transcoder {
 	exports io.sf.carte.echosvg.transcoder.wmf.tosvg;
 	exports io.sf.carte.echosvg.transcoder.print;

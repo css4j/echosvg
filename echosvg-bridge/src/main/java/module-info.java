@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Bridge.
+ * 
+ * @provides io.sf.carte.echosvg.script.InterpreterFactory
+ * @uses io.sf.carte.echosvg.bridge.BridgeExtension
+ */
 module io.sf.carte.echosvg.bridge {
 	exports io.sf.carte.echosvg.bridge;
 	exports io.sf.carte.echosvg.bridge.svg12;

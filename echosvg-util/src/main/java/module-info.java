@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Utility library.
+ * 
+ * @uses io.sf.carte.echosvg.util.ParsedURLProtocolHandler
+ */
 module io.sf.carte.echosvg.util {
 	exports io.sf.carte.echosvg.util.io;
 	exports io.sf.carte.echosvg.util.resources;

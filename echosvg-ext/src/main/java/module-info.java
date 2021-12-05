@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Interfaces to be used by external code.
+ */
 module io.sf.carte.echosvg.external {
     exports io.sf.carte.echosvg.w3c.dom;
     exports io.sf.carte.echosvg.w3c.dom.events;

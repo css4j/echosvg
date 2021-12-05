@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Extension support.
+ * 
+ * @provides io.sf.carte.echosvg.bridge.BridgeExtension
+ * @provides io.sf.carte.echosvg.dom.DomExtension
+ */
 module io.sf.carte.echosvg.extension {
 	exports io.sf.carte.echosvg.extension;
 	exports io.sf.carte.echosvg.extension.svg;

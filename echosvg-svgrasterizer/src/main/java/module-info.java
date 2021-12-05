@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * SVG rasterizer library.
+ */
 module io.sf.carte.echosvg.svgrasterizer {
 	exports io.sf.carte.echosvg.apps.rasterizer;
 

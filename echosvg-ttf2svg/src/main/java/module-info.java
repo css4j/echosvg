@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Truetype font to SVG font converter application.
+ */
 module io.sf.carte.echosvg.ttf2svg {
     exports io.sf.carte.echosvg.apps.ttf2svg;
 

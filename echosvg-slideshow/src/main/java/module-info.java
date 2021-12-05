@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * SVG slideshow application.
+ */
 module io.sf.carte.echosvg.apps.slideshow {
 	exports io.sf.carte.echosvg.apps.slideshow;
 

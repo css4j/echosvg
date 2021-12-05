@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Script language support.
+ * 
+ * @uses io.sf.carte.echosvg.script.InterpreterFactory
+ */
 module io.sf.carte.echosvg.script {
 	exports io.sf.carte.echosvg.script.rhino;
 	exports io.sf.carte.echosvg.script;

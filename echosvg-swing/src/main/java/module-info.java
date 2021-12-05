@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * SVG Swing components.
+ */
 module io.sf.carte.echosvg.swing {
 	exports io.sf.carte.echosvg.swing.svg;
 	exports io.sf.carte.echosvg.swing.gvt;

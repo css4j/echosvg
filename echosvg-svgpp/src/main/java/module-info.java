@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * SVG Pretty Printer Application.
+ */
 module io.sf.carte.echosvg.svgpp {
     exports io.sf.carte.echosvg.apps.svgpp;
 

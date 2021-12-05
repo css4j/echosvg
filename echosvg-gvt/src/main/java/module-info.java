@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Graphics Vector Tree (GVT).
+ */
 module io.sf.carte.echosvg.gvt {
     exports io.sf.carte.echosvg.gvt.font;
     exports io.sf.carte.echosvg.gvt.flow;

@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Aggregate module.
+ */
 module io.sf.carte.echosvg {
 	requires transitive io.sf.carte.echosvg.anim;
 	requires transitive io.sf.carte.echosvg.awt;

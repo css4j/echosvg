@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Constants library.
+ */
 module io.sf.carte.echosvg.constants {
     exports io.sf.carte.echosvg.constants;
 }

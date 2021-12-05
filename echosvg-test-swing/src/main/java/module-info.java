@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Swing tests.
+ */
 module io.sf.carte.echosvg.test.swing {
 	exports io.sf.carte.echosvg.swing.test;
 

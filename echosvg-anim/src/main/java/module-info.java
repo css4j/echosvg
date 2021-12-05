@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Animation engine.
+ */
 module io.sf.carte.echosvg.anim {
 	exports io.sf.carte.echosvg.anim.values;
 	exports io.sf.carte.echosvg.anim.dom;

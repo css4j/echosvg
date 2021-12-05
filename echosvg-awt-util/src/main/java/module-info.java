@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * AWT utilities.
+ * 
+ * @uses io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter
+ * @uses io.sf.carte.echosvg.ext.awt.image.spi.RegistryEntry
+ */
 module io.sf.carte.echosvg.awt {
 	exports io.sf.carte.echosvg.ext.awt.image.renderable;
 	exports io.sf.carte.echosvg.ext.awt;

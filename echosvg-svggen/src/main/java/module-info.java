@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Java2D SVG generator.
+ */
 module io.sf.carte.echosvg.svggen {
 	exports io.sf.carte.echosvg.svggen;
 	exports io.sf.carte.echosvg.svggen.font;
