@@ -2,13 +2,12 @@
 .classpath
 .project
 .settings
-target
 */bin/
 **/build/
 /.idea
 /.gradle
 /buildSrc/.gradle
-/jar/
+/CHANGES.txt
 /test-references/**/candidate/
 /test-references/**/candidate-ref/
 /test-references/**/candidate-reference/
