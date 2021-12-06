@@ -207,17 +207,20 @@ public class DynamicRenderer extends StaticRenderer {
 						if (!dr.intersects(r))
 							continue;
 						r = dr.intersection(r);
-						if (sr != null && !sr.intersects(r))
-							continue;
-						r = sr.intersection(r);
-						// System.err.println("Copy: " + r);
-						Raster src = currentRaster.createWritableChild(r.x, r.y, r.width, r.height, r.x, r.y, null);
-						GraphicsUtil.copyData(src, copyRaster);
-						if (g2d != null) {
-							g2d.setPaint(fillColor);
-							g2d.fill(r);
-							g2d.setPaint(borderColor);
-							g2d.draw(r);
+						if (sr != null) {
+							if (!sr.intersects(r)) {
+								continue;
+							}
+							r = sr.intersection(r);
+							// System.err.println("Copy: " + r);
+							Raster src = currentRaster.createWritableChild(r.x, r.y, r.width, r.height, r.x, r.y, null);
+							GraphicsUtil.copyData(src, copyRaster);
+							if (g2d != null) {
+								g2d.setPaint(fillColor);
+								g2d.fill(r);
+								g2d.setPaint(borderColor);
+								g2d.draw(r);
+							}
 						}
 					}
 				}
