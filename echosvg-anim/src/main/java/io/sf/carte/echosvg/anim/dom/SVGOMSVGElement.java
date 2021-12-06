@@ -353,17 +353,16 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 	public void setCurrentScale(float currentScale) throws DOMException {
 		SVGContext context = getSVGContext();
 		AffineTransform scrnTrans = context.getScreenTransform();
-		float scale = 1;
 		if (scrnTrans != null) {
-			scale = (float) Math.sqrt(scrnTrans.getDeterminant());
+			float scale = (float) Math.sqrt(scrnTrans.getDeterminant());
+			float delta = currentScale / scale;
+			// The way currentScale, currentTranslate are defined
+			// changing scale has no effect on translate.
+			scrnTrans = new AffineTransform(scrnTrans.getScaleX() * delta, scrnTrans.getShearY() * delta,
+					scrnTrans.getShearX() * delta, scrnTrans.getScaleY() * delta, scrnTrans.getTranslateX(),
+					scrnTrans.getTranslateY());
+			context.setScreenTransform(scrnTrans);
 		}
-		float delta = currentScale / scale;
-		// The way currentScale, currentTranslate are defined
-		// changing scale has no effect on translate.
-		scrnTrans = new AffineTransform(scrnTrans.getScaleX() * delta, scrnTrans.getShearY() * delta,
-				scrnTrans.getShearX() * delta, scrnTrans.getScaleY() * delta, scrnTrans.getTranslateX(),
-				scrnTrans.getTranslateY());
-		context.setScreenTransform(scrnTrans);
 	}
 
 	/**
