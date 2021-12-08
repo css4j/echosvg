@@ -19,6 +19,7 @@
 package io.sf.carte.echosvg.script.rhino;
 
 import java.lang.reflect.Constructor;
+import java.security.ProtectionDomain;
 
 import org.mozilla.javascript.Callable;
 import org.mozilla.javascript.Context;
@@ -73,6 +74,19 @@ public class EchoSVGSecurityController extends SecurityController {
 		// FIXX: This should be supported by intersecting perms.
 		// Calling var script = Script(source); script(); is not supported
 		throw new SecurityException("Script() objects are not supported");
+	}
+
+	/**
+	 * Get the access control object (an {@code AccessControlContext}, if the JVM
+	 * supports the SecurityManager API) which can be associated with the given
+	 * {@code ProtectionDomain}.
+	 * 
+	 * @param protectionDomain the protection domain.
+	 * @return the access control object, or {@code null} if the JVM knows no access
+	 *         control context.
+	 */
+	Object getAccessControlObject(ProtectionDomain protectionDomain) {
+		return null;
 	}
 
 	/**

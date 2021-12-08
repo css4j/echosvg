@@ -55,8 +55,7 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
 	 * class loader if it was running stand-alone (i.e., not invoked by code with
 	 * lesser priviledges).
 	 */
-	@SuppressWarnings("removal")
-	private java.security.AccessControlContext rhinoAccessControlContext;
+	private Object rhinoAccessControlContext;
 
 	/**
 	 * Constructor.
@@ -64,7 +63,6 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
 	 * @param documentURL the URL from which to load classes and resources
 	 * @param parent      the parent class loader for delegation
 	 */
-	@SuppressWarnings({ "deprecation", "removal" })
 	public RhinoClassLoader(URL documentURL, ClassLoader parent) {
 		super(documentURL != null ? new URL[] { documentURL } : new URL[] {}, parent);
 		this.documentURL = documentURL;
@@ -78,8 +76,8 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
 		//
 		ProtectionDomain rhinoProtectionDomain = new ProtectionDomain(codeSource, getPermissions(codeSource));
 
-		rhinoAccessControlContext = new java.security.AccessControlContext(
-				new ProtectionDomain[] { rhinoProtectionDomain });
+		rhinoAccessControlContext = EchoSVGSecurityController.getInstance()
+				.getAccessControlObject(rhinoProtectionDomain);
 	}
 
 	/**
@@ -112,16 +110,6 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
 	@Override
 	public void linkClass(Class<?> clazz) {
 		super.resolveClass(clazz);
-	}
-
-	/**
-	 * Returns the AccessControlContext which should be associated with RhinoCode.
-	 * 
-	 * @deprecated see {@link #getAccessControlObject()}.
-	 */
-	@Deprecated(forRemoval=true)
-	public java.security.AccessControlContext getAccessControlContext() {
-		return rhinoAccessControlContext;
 	}
 
 	/**

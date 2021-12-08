@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.script.rhino;
 import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.security.PrivilegedExceptionAction;
+import java.security.ProtectionDomain;
 
 import org.mozilla.javascript.Callable;
 import org.mozilla.javascript.Context;
@@ -58,6 +59,13 @@ class SMSecurityController extends EchoSVGSecurityController {
 		// FIXX: This should be supported by intersecting perms.
 		// Calling var script = Script(source); script(); is not supported
 		throw new SecurityException("Script() objects are not supported");
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	Object getAccessControlObject(ProtectionDomain protectionDomain) {
+		return new java.security.AccessControlContext(
+				new ProtectionDomain[] { protectionDomain });
 	}
 
 	/**

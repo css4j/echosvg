@@ -23,7 +23,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
 import java.net.URL;
-import java.security.AccessControlContext;
 import java.security.PrivilegedAction;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -238,18 +237,6 @@ public class RhinoInterpreter implements Interpreter {
 	 */
 	protected ScriptableObject createGlobalObject(Context ctx) {
 		return new WindowWrapper(ctx);
-	}
-
-	/**
-	 * Returns the AccessControlContext associated with this Interpreter.
-	 * 
-	 * @see io.sf.carte.echosvg.script.rhino.RhinoClassLoader
-	 */
-	@Deprecated(forRemoval=true)
-	public AccessControlContext getAccessControlContext() {
-		if (rhinoClassLoader == null)
-			return null;
-		return rhinoClassLoader.getAccessControlContext();
 	}
 
 	/**
