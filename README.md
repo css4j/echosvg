@@ -19,6 +19,7 @@ To build EchoSVG you need the following software installed:
 
 - The [Git version control system](https://git-scm.com/downloads) is required to
 obtain the sources. Any recent version should suffice.
+
 - Java 11 or later. You can install it from your favourite package manager or by
 downloading from [Adoptium](https://adoptium.net/).
 
@@ -90,15 +91,22 @@ java -jar echosvg-test/build/libs/echosvg-<version>-jmh.jar <regexp>
 ### Deploying to a Maven repository
 
 Use:
+
 - `gradlew build publishToMavenLocal` to install in your local Maven repository.
+
 - `gradlew publish` to deploy to a (generally remote) Maven repository.
 
-Before deploying to a remote Maven repository, please read the
-`publishing.repositories.maven` block of
-[echosvg.java-conventions.gradle](https://github.com/css4j/echosvg/blob/master/buildSrc/src/main/groovy/echosvg.java-conventions.gradle)
-to learn which properties you need to set (like `mavenReleaseRepoUrl`or
-`mavenRepoUsername`), either at the [command line](https://docs.gradle.org/current/userguide/build_environment.html#sec:project_properties)
-(`-P` option) or your `GRADLE_USER_HOME/gradle.properties` file.
+If you plan to deploy to a repository, please configure the `mavenReleaseRepoUrl`
+and/or `mavenSnapshotRepoUrl` properties (for example in
+`GRADLE_USER_HOME/gradle.properties` or in the [command line](https://docs.gradle.org/current/userguide/build_environment.html#sec:project_properties)).
+Otherwise, Gradle shall create a `build/repository` subdirectory and deploy there.
+
+Properties `mavenRepoUsername` and `mavenRepoPassword` can also be set (generally
+from the command line).
+
+If you would rather look directly at the Gradle publish configurations, please
+read the `publishing.repositories.maven` block of
+[echosvg.java-conventions.gradle](https://github.com/css4j/echosvg/blob/master/buildSrc/src/main/groovy/echosvg.java-conventions.gradle).
 
 <br/>
 
