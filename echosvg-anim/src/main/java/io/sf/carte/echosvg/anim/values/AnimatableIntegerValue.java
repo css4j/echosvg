@@ -62,10 +62,22 @@ public class AnimatableIntegerValue extends AnimatableValue {
 			res = (AnimatableIntegerValue) result;
 		}
 
+		/* formatter:off
+		 * 
+		 * We round the interpolation result before adding.
+		 * 
+		 * See https://www.w3.org/TR/css-values-4/#combine-integers
+		 * 
+		 * "interpolation happens in the real number space as for <number>s, and
+		 *  the result is converted to an <integer> by rounding to the nearest
+		 *  integer."
+		 * 
+		 * @formatter:on
+		 */
 		int v = value;
 		if (to != null) {
 			AnimatableIntegerValue toInteger = (AnimatableIntegerValue) to;
-			v += value + interpolation * (toInteger.getValue() - value);
+			v += Math.round(value + interpolation * (toInteger.getValue() - value));
 		}
 		if (accumulation != null) {
 			AnimatableIntegerValue accInteger = (AnimatableIntegerValue) accumulation;
