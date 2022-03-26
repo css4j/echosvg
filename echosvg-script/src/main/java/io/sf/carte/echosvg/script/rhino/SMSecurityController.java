@@ -70,21 +70,24 @@ class SMSecurityController extends EchoSVGSecurityController {
 
 	/**
 	 * Get dynamic security domain that allows an action only if it is allowed by
-	 * the current Java stack and <i>securityDomain</i>. If <i>securityDomain</i> is
-	 * null, return domain representing permissions allowed by the current stack.
+	 * the current Java stack and <i>securityDomain</i>.
+	 * <p>
+	 * If <i>securityDomain</i> is {@code null}, return domain representing
+	 * permissions allowed by the current stack.
+	 * </p>
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public Object getDynamicSecurityDomain(Object securityDomain) {
 
-		ClassLoader loader = (RhinoClassLoader) securityDomain;
-		// Already have a rhino loader in place no need to
+		// 'securityDomain' is a RhinoClassLoader.
+		// Having a rhino loader in place, there is no need to
 		// do anything (normally you would want to union the
-		// the current stack with the loader's context but
-		// in our case no one has lower privledges than a
-		// rhino class loader).
-		if (loader != null)
-			return loader;
+		// the current stack with the loader's context, but
+		// in our case no one has lower privileges than a
+		// Rhino class loader).
+		if (securityDomain != null)
+			return securityDomain;
 
 		return AccessController.getContext();
 	}
