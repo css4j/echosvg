@@ -36,12 +36,13 @@ dependencies {
 	testImplementation "org.mozilla:rhino:${rhinoVersion}"
 	testImplementation ('xerces:xercesImpl:2.12.0')
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
-		testImplementation ('xml-apis:xml-apis:1.4.01')
+		testImplementation ("xml-apis:xml-apis:$xmlApisVersion")
 	}
 	jmhImplementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
 	jmhAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
 	jmhImplementation project(':echosvg-anim')
 	jmhImplementation project(':echosvg-svggen')
+	jmhImplementation "xml-apis:xml-apis:$xmlApisVersion"
 }
 
 if (project.getPluginManager().hasPlugin('eclipse')) {
