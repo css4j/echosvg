@@ -5,6 +5,7 @@ plugins {
 dependencies {
 	api project(':echosvg-bridge')
 	api project(':echosvg-svggen')
+	implementation "xml-apis:xml-apis:$xmlApisVersion"
 }
 
 description = 'io.sf.carte:echosvg-transcoder'

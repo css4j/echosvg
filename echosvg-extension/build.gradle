@@ -5,6 +5,7 @@ plugins {
 dependencies {
 	api project(':echosvg-awt-util')
 	api project(':echosvg-bridge')
+	implementation "xml-apis:xml-apis:$xmlApisVersion"
 }
 
 description = 'io.sf.carte:echosvg-extension'

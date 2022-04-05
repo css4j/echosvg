@@ -7,7 +7,10 @@ dependencies {
 	api project(':echosvg-css')
 	api project(':echosvg-ext')
 	api project(':echosvg-xml')
-	api ("xalan:xalan:${xalanVersion}")
+	api ("xalan:xalan:${xalanVersion}") {
+		exclude group: 'xml-apis', module: 'xml-apis'
+	}
+	implementation "xml-apis:xml-apis:$xmlApisVersion"
 	api "io.sf.carte:xml-dtd:${xmlDtdVersion}"
 	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
 }

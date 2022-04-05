@@ -6,6 +6,7 @@ dependencies {
 	api project(':echosvg-bridge')
 	api project(':echosvg-ext')
 	api project(':echosvg-gui-util')
+	implementation "xml-apis:xml-apis:$xmlApisVersion"
 }
 
 description = 'io.sf.carte:echosvg-swing'

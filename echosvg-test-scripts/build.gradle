@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
 	implementation project(':echosvg-bridge')
+	implementation "xml-apis:xml-apis:$xmlApisVersion"
 }
 
 description = 'io.sf.carte:echosvg-test-scripts'
