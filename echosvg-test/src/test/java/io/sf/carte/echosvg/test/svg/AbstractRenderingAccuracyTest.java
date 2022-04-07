@@ -86,6 +86,12 @@ public abstract class AbstractRenderingAccuracyTest {
 	private static final String IMAGE_FILE_EXTENSION = ".png";
 
 	/**
+	 * Threshold to apply when comparing different pixels with
+	 * {@link ImageComparator}.
+	 */
+	private static final int PIXEL_THRESHOLD = 8;
+
+	/**
 	 * The configuration resource bundle
 	 */
 	static ResourceBundle configuration;
@@ -273,10 +279,16 @@ public abstract class AbstractRenderingAccuracyTest {
 	/**
 	 * Requests this <code>Test</code> to run.
 	 * 
-	 * @param allowedPercentBelowThreshold
-	 * @param allowedPercentOverThreshold
-	 * @throws TranscoderException 
-	 * @throws IOException 
+	 * @param allowedPercentBelowThreshold the allowed percentage of different
+	 *                                     pixels where the difference does not
+	 *                                     exceed a fixed threshold of
+	 *                                     {@code PIXEL_THRESHOLD}.
+	 * @param allowedPercentOverThreshold  the allowed percentage of different
+	 *                                     pixels where the difference exceeds a
+	 *                                     fixed threshold of
+	 *                                     {@code PIXEL_THRESHOLD}.
+	 * @throws TranscoderException
+	 * @throws IOException
 	 *
 	 */
 	public void runTest(float allowedPercentBelowThreshold, float allowedPercentOverThreshold)
@@ -342,8 +354,8 @@ public abstract class AbstractRenderingAccuracyTest {
 			ref = getImage(refImgURL);
 			gen = getImage(tmpFile);
 			variants = new Variants();
-			short variantResult = ImageComparator.compareVariantImages(ref, gen, 8, allowedPercentBelowThreshold,
-					allowedPercentOverThreshold, variants);
+			short variantResult = ImageComparator.compareVariantImages(ref, gen, PIXEL_THRESHOLD,
+					allowedPercentBelowThreshold, allowedPercentOverThreshold, variants);
 
 			if (variantResult == ImageComparator.MATCH) {
 				// Everything worked out well, at least with variation.
@@ -499,7 +511,7 @@ public abstract class AbstractRenderingAccuracyTest {
 
 	static short compareImages(BufferedImage imageA, BufferedImage imageB, float allowedPercentBelowThreshold,
 			float allowedPercentOverThreshold) {
-		return ImageComparator.compareImages(imageA, imageB, 8, allowedPercentBelowThreshold,
+		return ImageComparator.compareImages(imageA, imageB, PIXEL_THRESHOLD, allowedPercentBelowThreshold,
 				allowedPercentOverThreshold);
 	}
 

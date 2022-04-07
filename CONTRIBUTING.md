@@ -7,8 +7,16 @@
 
 ## Report issues
 
- If you find any issue with the software or want to ask for an enhancement, use
-the Github's [issue tracker](https://github.com/css4j/echosvg/issues).
+ To report any issue with the software or to ask for an enhancement, please use
+Github's [issue tracker](https://github.com/css4j/echosvg/issues).
+
+ If you believe that you found a bug in the software, please argument carefully
+how to reproduce the problem (including Java and operating system version
+information), what result did you expect and what did you obtain instead. If the
+issue is related to SVG rendering, you may want to look at the
+[SamplesRenderingTest.java](https://github.com/css4j/echosvg/blob/master/echosvg-test/src/test/java/io/sf/carte/echosvg/test/svg/SamplesRenderingTest.java)
+source file and to [IMAGE_COMPARISONS.md](https://github.com/css4j/echosvg/blob/master/IMAGE_COMPARISONS.md)
+to prepare and run your own tests.
 
 <br/>
 

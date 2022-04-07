@@ -19,7 +19,15 @@
 package io.sf.carte.echosvg.test.svg;
 
 /**
- * Preconfigured test for SVG files under the {@code samples} directory.
+ * Preconfigured test for rendering SVG files.
+ * <p>
+ * This test renders a SVG file, generally under the {@code samples} directory,
+ * and compares the result with a reference image.
+ * </p>
+ * <p>
+ * Read the {@code IMAGE_COMPARISONS.md} file for details about the handling of
+ * candidate and reference images.
+ * </p>
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.

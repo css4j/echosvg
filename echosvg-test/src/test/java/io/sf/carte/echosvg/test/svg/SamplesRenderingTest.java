@@ -27,6 +27,18 @@ import org.junit.Test;
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
+/**
+ * This test renders a number of SVG files, generally under the {@code samples}
+ * directory, and compares the result with a reference image.
+ * <p>
+ * Read the {@code IMAGE_COMPARISONS.md} file for details about the handling of
+ * candidate and reference images.
+ * </p>
+ * <p>
+ * If you want to test a non-conformant SVG document, run a non-validating test
+ * with {@link #testNV(String)}.
+ * </p>
+ */
 public class SamplesRenderingTest {
 
 	@BeforeClass
@@ -1443,10 +1455,30 @@ public class SamplesRenderingTest {
 		test(file, true);
 	}
 
+	/**
+	 * A non-validating test.
+	 * 
+	 * @param file the SVG file to test.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
 	private void testNV(String file) throws TranscoderException, IOException {
 		test(file, false);
 	}
 
+	/**
+	 * Test the rendering of a file with the given user language.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file the SVG file to test.
+	 * @param lang the language.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
 	private void test(String file, String lang) throws TranscoderException, IOException {
 		RenderingTest runner = new RenderingTest();
 		runner.setUserLanguage(lang);
@@ -1454,6 +1486,19 @@ public class SamplesRenderingTest {
 		runner.runTest(0.00001f, 0.00001f);
 	}
 
+	/**
+	 * Test the rendering of a SVG file.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file the SVG file to test.
+	 * @param validating if true, the SVG is validated.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
 	private void test(String file, boolean validating) throws TranscoderException, IOException {
 		RenderingTest runner = new RenderingTest();
 		runner.setValidating(validating);
@@ -1461,6 +1506,18 @@ public class SamplesRenderingTest {
 		runner.runTest(0.00001f, 0.00001f);
 	}
 
+	/**
+	 * Dynamic test of the rendering of a SVG file.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file the SVG file to test.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
 	private void testDynamicUpdate(String file) throws TranscoderException, IOException {
 		JSVGRenderingAccuracyTest runner = new JSVGRenderingAccuracyTest();
 		runner.setFile(file);
