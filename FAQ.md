@@ -14,12 +14,12 @@ plugin:
 
 ```groovy
 plugins {
-	id 'de.jjohannes.extra-java-module-info'
+  id 'de.jjohannes.extra-java-module-info' version '0.11'
 }
 
 extraJavaModuleInfo {
-	failOnMissingModuleInfo.set(false)
-	automaticModule("xalan-${xalanVersion}.jar", 'xalan')
+  failOnMissingModuleInfo.set(false)
+  automaticModule("xalan-${xalanVersion}.jar", 'xalan')
 }
 ```
 
