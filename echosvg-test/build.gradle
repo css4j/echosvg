@@ -34,7 +34,7 @@ dependencies {
 	testImplementation project(':echosvg-svgrasterizer')
 	testImplementation "junit:junit:${junitVersion}"
 	testImplementation "org.mozilla:rhino:${rhinoVersion}"
-	testImplementation ('xerces:xercesImpl:2.12.0')
+	testImplementation "xerces:xercesImpl:${xercesVersion}"
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
 		testImplementation ("xml-apis:xml-apis:$xmlApisVersion")
 	}
