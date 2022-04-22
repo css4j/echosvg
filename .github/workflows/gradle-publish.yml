@@ -29,4 +29,6 @@ jobs:
       run: ./gradlew build -x test
 
     - name: Publish to GitHub Packages
-      run: ./gradlew publish -PmavenReleaseRepoUrl="https://maven.pkg.github.com/css4j/echosvg" -PmavenRepoUsername=${{ github.actor }} -PmavenRepoPassword=${{ secrets.GITHUB_TOKEN }}
+      run: >-
+        ./gradlew publish -PmavenReleaseRepoUrl="https://maven.pkg.github.com/css4j/echosvg"
+        -PmavenRepoUsername=${{ github.actor }} -PmavenRepoPassword=${{ secrets.GITHUB_TOKEN }}
