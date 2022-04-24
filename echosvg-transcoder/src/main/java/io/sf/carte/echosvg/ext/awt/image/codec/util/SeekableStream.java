@@ -972,13 +972,4 @@ public abstract class SeekableStream extends InputStream implements DataInput {
 		return DataInputStream.readUTF(this);
 	}
 
-	/**
-	 * Releases any system resources associated with this stream by calling the
-	 * <code>close()</code> method.
-	 */
-	@Override
-	protected void finalize() throws Throwable {
-		super.finalize();
-		close();
-	}
 }
