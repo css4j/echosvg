@@ -180,6 +180,7 @@ repositories {
             releasesOnly()
         }
         content {
+            includeGroup 'com.github.css4j'
             includeGroup 'io.sf.carte'
             includeGroup 'io.sf.jclf'
         }
@@ -202,7 +203,7 @@ dependencies {
 }
 ```
 where `echosvgVersion` would be defined in a `gradle.properties` file (current
-version is `0.1.2`).
+version is `0.2`).
 
 <br/>
 
