@@ -31,7 +31,6 @@ module io.sf.carte.echosvg.bridge {
 	requires transitive io.sf.carte.echosvg.parser;
 	requires io.sf.carte.echosvg.constants;
 	requires io.sf.carte.echosvg.i18n;
-	requires xalan;
 	requires xmlgraphics.commons;
 
 	provides io.sf.carte.echosvg.script.InterpreterFactory

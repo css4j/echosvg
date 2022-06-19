@@ -7,9 +7,7 @@ dependencies {
 	api project(':echosvg-css')
 	api project(':echosvg-ext')
 	api project(':echosvg-xml')
-	api ("xalan:xalan:${xalanVersion}") {
-		exclude group: 'xml-apis', module: 'xml-apis'
-	}
+	api "com.github.css4j:echoxsl:${echoXslVersion}"
 	implementation "xml-apis:xml-apis:$xmlApisVersion"
 	api "io.sf.carte:xml-dtd:${xmlDtdVersion}"
 	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
@@ -18,7 +16,6 @@ dependencies {
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
 	automaticModule('org.apache.xmlgraphics:xmlgraphics-commons', 'xmlgraphics.commons')
-	automaticModule('xalan:xalan', 'xalan')
 }
 
 description = 'io.sf.carte:echosvg-dom'

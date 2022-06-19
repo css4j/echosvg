@@ -8,16 +8,12 @@ dependencies {
 	api project(':echosvg-gvt')
 	api project(':echosvg-script')
 	api project(':echosvg-svg-dom')
-	api ("xalan:xalan:${xalanVersion}") {
-		exclude group: 'xml-apis', module: 'xml-apis'
-	}
 	implementation "xml-apis:xml-apis:$xmlApisVersion"
 	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
 }
 
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
-	automaticModule('xalan:xalan', 'xalan')
 	automaticModule('org.apache.xmlgraphics:xmlgraphics-commons', 'xmlgraphics.commons')
 }
 
