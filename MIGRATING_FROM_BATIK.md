@@ -38,3 +38,5 @@
    methods in other classes are deprecated for removal as well. The constructor
    `ApplicationSecurityEnforcer(Class, String)` is no longer public, please use
    `ApplicationSecurityEnforcer.createSecurityEnforcer(Class, String)` instead.
+
+9) `BridgeContext` (in the `bridge` module) gained a `close` method.

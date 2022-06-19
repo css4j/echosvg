@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.bridge;
 
 import java.awt.Cursor;
 import java.awt.geom.Dimension2D;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.lang.ref.SoftReference;
@@ -89,7 +90,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class BridgeContext implements ErrorConstants, CSSContext {
+public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 
 	/**
 	 * The document is bridge context is dedicated to.
@@ -308,7 +309,7 @@ public class BridgeContext implements ErrorConstants, CSSContext {
 	 * Calls dispose on this BridgeContext, if it is a child context.
 	 */
 	@Override
-	protected void finalize() {
+	public void close() {
 		if (primaryContext != null) {
 			dispose();
 		}

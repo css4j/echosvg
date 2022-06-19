@@ -255,6 +255,10 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 				}
 			}
 		} catch (BridgeException ex) {
+			try {
+				ctx.close();
+			} catch (RuntimeException e) {
+			}
 			throw new TranscoderException(ex);
 		}
 
