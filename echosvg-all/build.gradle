@@ -20,8 +20,8 @@ dependencies {
 
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
-	automaticModule("xalan-${xalanVersion}.jar", 'xalan')
-	automaticModule("xmlgraphics-commons-${xmlgraphicsCommonsVersion}.jar", 'xmlgraphics.commons')
+	automaticModule('xalan:xalan', 'xalan')
+	automaticModule('org.apache.xmlgraphics:xmlgraphics-commons', 'xmlgraphics.commons')
 }
 
 publishing.publications.maven(MavenPublication).pom {

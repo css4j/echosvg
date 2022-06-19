@@ -12,7 +12,7 @@ dependencies {
 
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
-	automaticModule("xmlgraphics-commons-${xmlgraphicsCommonsVersion}.jar", 'xmlgraphics.commons')
+	automaticModule('org.apache.xmlgraphics:xmlgraphics-commons', 'xmlgraphics.commons')
 }
 
 description = 'io.sf.carte:echosvg-css'

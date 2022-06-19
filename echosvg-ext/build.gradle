@@ -6,10 +6,6 @@ plugins {
 dependencies {
 }
 
-extraJavaModuleInfo {
-	failOnMissingModuleInfo.set(false)
-}
-
 description = 'io.sf.carte:echosvg-ext'
 
 publishing.publications.maven(MavenPublication).pom {
