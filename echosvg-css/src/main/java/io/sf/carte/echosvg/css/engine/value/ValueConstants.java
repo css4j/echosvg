@@ -585,6 +585,11 @@ public interface ValueConstants {
 	Value TEAL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_TEAL_VALUE);
 
 	/**
+	 * The 'transparent' color name.
+	 */
+	Value TRANSPARENT_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_TRANSPARENT_VALUE);
+
+	/**
 	 * The 'white' color name.
 	 */
 	Value WHITE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_WHITE_VALUE);
@@ -816,5 +821,10 @@ public interface ValueConstants {
 	 * The 'aqua' RGB color.
 	 */
 	Value AQUA_RGB_VALUE = new RGBColorValue(NUMBER_0, NUMBER_255, NUMBER_255);
+
+	/**
+	 * The 'transparent' RGB color.
+	 */
+	Value TRANSPARENT_RGB_VALUE = new RGBColorValue(NUMBER_0, NUMBER_0, NUMBER_0, NUMBER_0);
 
 }

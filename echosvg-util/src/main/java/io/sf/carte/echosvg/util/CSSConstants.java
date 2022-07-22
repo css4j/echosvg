@@ -391,6 +391,7 @@ public interface CSSConstants {
 	String CSS_THREEDSHADOW_VALUE = "threedshadow";
 	String CSS_TOMATO_VALUE = "tomato";
 	String CSS_TOP_VALUE = "top";
+	String CSS_TRANSPARENT_VALUE = "transparent";
 	String CSS_TURQUOISE_VALUE = "turquoise";
 	String CSS_ULTRA_CONDENSED_VALUE = "ultra-condensed";
 	String CSS_ULTRA_EXPANDED_VALUE = "ultra-expanded";

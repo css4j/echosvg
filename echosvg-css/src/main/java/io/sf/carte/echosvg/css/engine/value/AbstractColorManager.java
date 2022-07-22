@@ -57,6 +57,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		values.put(CSSConstants.CSS_RED_VALUE, ValueConstants.RED_VALUE);
 		values.put(CSSConstants.CSS_SILVER_VALUE, ValueConstants.SILVER_VALUE);
 		values.put(CSSConstants.CSS_TEAL_VALUE, ValueConstants.TEAL_VALUE);
+		values.put(CSSConstants.CSS_TRANSPARENT_VALUE, ValueConstants.TRANSPARENT_VALUE);
 		values.put(CSSConstants.CSS_WHITE_VALUE, ValueConstants.WHITE_VALUE);
 		values.put(CSSConstants.CSS_YELLOW_VALUE, ValueConstants.YELLOW_VALUE);
 
@@ -111,6 +112,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		computedValues.put(CSSConstants.CSS_BLUE_VALUE, ValueConstants.BLUE_RGB_VALUE);
 		computedValues.put(CSSConstants.CSS_TEAL_VALUE, ValueConstants.TEAL_RGB_VALUE);
 		computedValues.put(CSSConstants.CSS_AQUA_VALUE, ValueConstants.AQUA_RGB_VALUE);
+		computedValues.put(CSSConstants.CSS_TRANSPARENT_VALUE, ValueConstants.TRANSPARENT_RGB_VALUE);
 	}
 
 	/**

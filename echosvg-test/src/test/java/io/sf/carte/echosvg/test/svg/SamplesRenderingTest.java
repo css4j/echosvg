@@ -99,6 +99,11 @@ public class SamplesRenderingTest {
 	}
 
 	@Test
+	public void testEllipses() throws TranscoderException, IOException {
+		test("samples/ellipses.svg");
+	}
+
+	@Test
 	public void testGradients() throws TranscoderException, IOException {
 		test("samples/gradients.svg");
 	}
