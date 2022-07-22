@@ -24,7 +24,7 @@ repositories {
 }
 
 group = 'io.sf.carte'
-version = '0.2'
+version = '0.2.1-SNAPSHOT'
 
 sourceSets.main.resources {
 	srcDirs += ["$rootDir/shared-resources"]
