@@ -18,13 +18,18 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.DefaultBrokenLinkProvider;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
+import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.gvt.filter.GraphicsNodeRable8Bit;
+import io.sf.carte.echosvg.gvt.font.GVTFont;
 
 /**
  * This interface is to be used to provide alternate ways of generating a
@@ -60,6 +65,17 @@ public class SVGBrokenLinkProvider extends DefaultBrokenLinkProvider implements 
 		props.put(BROKEN_LINK_PROPERTY, message);
 
 		CompositeGraphicsNode cgn = new CompositeGraphicsNode();
+		ShapeNode shapeNode = new ShapeNode();
+		shapeNode.setShape(new java.awt.Rectangle(100, 100));
+		TextNode textNode = new TextNode();
+		AttributedString atts = new AttributedString(message);
+		atts.addAttribute(StrokingTextPainter.GVT_FONTS, new LinkedList<GVTFont>());
+		atts.addAttribute(TextAttribute.SIZE, 14f);
+		textNode.setAttributedCharacterIterator(atts.getIterator());
+		cgn.add(shapeNode);
+		cgn.add(textNode);
+
 		return new GraphicsNodeRable8Bit(cgn, props);
 	}
+
 }

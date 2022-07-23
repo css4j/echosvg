@@ -20,26 +20,40 @@ package io.sf.carte.echosvg.ext.awt.image.spi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.awt.color.ColorSpace;
 import java.awt.image.RenderedImage;
 
 import org.junit.Test;
 
+import io.sf.carte.echosvg.bridge.SVGBrokenLinkProvider;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
-import io.sf.carte.echosvg.test.TestLocations;
-import io.sf.carte.echosvg.util.ParsedURL;
 
 public class JDKRegistryEntryTest {
 
 	@Test
-	public void testBrokenLink() {
-		ParsedURL purl = new ParsedURL(TestLocations.PROJECT_ROOT_URL + "doesnotexist.png");
-		URLRegistryEntry re = new JDKRegistryEntry();
-		assertTrue(re.isCompatibleURL(purl));
+	public void testDefaultBrokenLinkProvider() {
+		ImageTagRegistry.setBrokenLinkProvider(null);
+		JDKRegistryEntry re = new JDKRegistryEntry();
 
-		Filter filt = re.handleURL(purl, false);
+		Object[] errParam = new Object[] { "JDK", "foo" };
+		Filter filt = ImageTagRegistry.getBrokenLinkImage(re, ErrorConstants.ERR_URL_FORMAT_UNREADABLE, errParam);
+		RenderedImage red = filt.createDefaultRendering();
+		assertNotNull(red);
+
+		assertEquals(100, red.getWidth());
+		assertEquals(100, red.getHeight());
+		assertEquals(0, red.getMinX());
+		assertEquals(0, red.getMinY());
+	}
+
+	@Test
+	public void testSVGBrokenLinkProvider() {
+		ImageTagRegistry.setBrokenLinkProvider(new SVGBrokenLinkProvider());
+		JDKRegistryEntry re = new JDKRegistryEntry();
+
+		Object[] errParam = new Object[] { "JDK", "foo" };
+		Filter filt = ImageTagRegistry.getBrokenLinkImage(re, ErrorConstants.ERR_URL_FORMAT_UNREADABLE, errParam);
 		assertNotNull(filt);
 		assertEquals(100d, filt.getWidth(), 1e-7);
 		assertEquals(100d, filt.getHeight(), 1e-7);

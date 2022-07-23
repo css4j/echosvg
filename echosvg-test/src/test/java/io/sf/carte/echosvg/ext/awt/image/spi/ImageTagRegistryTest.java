@@ -27,9 +27,8 @@ import java.awt.image.RenderedImage;
 
 import org.junit.Test;
 
+import io.sf.carte.echosvg.bridge.SVGBrokenLinkProvider;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
-import io.sf.carte.echosvg.test.TestLocations;
-import io.sf.carte.echosvg.util.ParsedURL;
 
 public class ImageTagRegistryTest {
 
@@ -53,11 +52,11 @@ public class ImageTagRegistryTest {
 	}
 
 	@Test
-	public void testBrokenLink() {
+	public void testDefaultBrokenLinkProvider() {
+		ImageTagRegistry.setBrokenLinkProvider(null);
 		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
-		Filter filt = reg.readURL(new ParsedURL(TestLocations.PROJECT_ROOT_URL + "doesnotexist.foo"));
-		assertNotNull(filt);
 
+		Filter filt = ImageTagRegistry.getBrokenLinkImage(reg, ErrorConstants.ERR_STREAM_UNREADABLE, null);
 		RenderedImage red = filt.createDefaultRendering();
 		assertNotNull(red);
 
@@ -68,12 +67,11 @@ public class ImageTagRegistryTest {
 	}
 
 	@Test
-	public void testBrokenLinkPNG() {
+	public void testSVGBrokenLinkProvider() {
+		ImageTagRegistry.setBrokenLinkProvider(new SVGBrokenLinkProvider());
 		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
-		assertTrue(reg.getRegisteredMimeTypes().contains("image/png"));
 
-		ParsedURL purl = new ParsedURL(TestLocations.PROJECT_ROOT_URL + "doesnotexist.png");
-		Filter filt = reg.readURL(purl);
+		Filter filt = ImageTagRegistry.getBrokenLinkImage(reg, ErrorConstants.ERR_STREAM_UNREADABLE, null);
 		assertNotNull(filt);
 		assertEquals(100d, filt.getWidth(), 1e-7);
 		assertEquals(100d, filt.getHeight(), 1e-7);
