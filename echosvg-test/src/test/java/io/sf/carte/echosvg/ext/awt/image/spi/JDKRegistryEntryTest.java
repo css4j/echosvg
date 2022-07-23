@@ -31,49 +31,15 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.util.ParsedURL;
 
-public class ImageTagRegistryTest {
-
-	@Test
-	public void testMimeTypes() {
-		ImageTagRegistry ir = new ImageTagRegistry();
-		// Add a new registry entry with a HIGHER priority first
-		ir.register(new AbstractRegistryEntry("Unit test", 100, "working", "application/working") {
-		});
-		// Ensure the first one is present:
-		assertTrue(ir.getRegisteredMimeTypes().contains("application/working"));
-		// Ensure the second is NOT YET present:
-		assertTrue(!ir.getRegisteredMimeTypes().contains("application/missing"));
-		// Add a new registry entry with a LOW priority later
-		ir.register(new AbstractRegistryEntry("Unit test", 1, "missing", "application/missing") {
-		});
-		// This one still works - this is expected:
-		assertTrue(ir.getRegisteredMimeTypes().contains("application/working"));
-		// The second was not added because of BATIK-1203.
-		assertTrue(ir.getRegisteredMimeTypes().contains("application/missing"));
-	}
+public class JDKRegistryEntryTest {
 
 	@Test
 	public void testBrokenLink() {
-		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
-		Filter filt = reg.readURL(new ParsedURL(TestLocations.PROJECT_ROOT_URL + "doesnotexist.foo"));
-		assertNotNull(filt);
-
-		RenderedImage red = filt.createDefaultRendering();
-		assertNotNull(red);
-
-		assertEquals(100, red.getWidth());
-		assertEquals(100, red.getHeight());
-		assertEquals(0, red.getMinX());
-		assertEquals(0, red.getMinY());
-	}
-
-	@Test
-	public void testBrokenLinkPNG() {
-		ImageTagRegistry reg = ImageTagRegistry.getRegistry();
-		assertTrue(reg.getRegisteredMimeTypes().contains("image/png"));
-
 		ParsedURL purl = new ParsedURL(TestLocations.PROJECT_ROOT_URL + "doesnotexist.png");
-		Filter filt = reg.readURL(purl);
+		URLRegistryEntry re = new JDKRegistryEntry();
+		assertTrue(re.isCompatibleURL(purl));
+
+		Filter filt = re.handleURL(purl, false);
 		assertNotNull(filt);
 		assertEquals(100d, filt.getWidth(), 1e-7);
 		assertEquals(100d, filt.getHeight(), 1e-7);

@@ -45,7 +45,8 @@ module io.sf.carte.echosvg.transcoder {
 			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGImageWriter;
 
 	provides io.sf.carte.echosvg.ext.awt.image.spi.RegistryEntry
-			with io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGRegistryEntry,
+			with io.sf.carte.echosvg.ext.awt.image.codec.png.PNGRegistryEntry,
+			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGRegistryEntry,
 			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOPNGRegistryEntry,
 			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOTIFFRegistryEntry;
 
