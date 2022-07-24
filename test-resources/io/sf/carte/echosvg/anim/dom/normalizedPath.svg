@@ -1,0 +1,48 @@
+<?xml version="1.0" standalone="no"?>
+
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ====================================================================== -->
+<!-- Test the normalizedPathSegList.                                          -->
+<!--                                                                        -->
+<!-- @author Dan Royer                                                      -->
+<!-- @author github.com/carlosame                                           -->
+<!-- @version $Id$    -->
+<!-- ====================================================================== -->
+
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+      <path id="path1" d="
+M 118.5,102.5
+C 118.5,80.168 136.668,62 159,62
+h 144
+c 22.332,0 40.5,18.168 40.5,40.5
+v 48
+c 0,8.239 -16.171,16.553 -30.019,21.169
+C 291.56,178.976 262.268,183 231,183 199.732,183 170.439,178.976 148.519,171.669 134.671,167.053 118.5,158.739 118.5,150.5
+Z
+m 0,80
+v -8.518
+c 5.971,4.143 14.148,8.208 25.275,11.918 23.41,7.803 54.387,12.1 87.225,12.1 32.838,0 63.815,-4.297 87.225,-12.101 11.128,-3.709 19.304,-7.775 25.275,-11.918
+v 8.518
+c 0,22.332 -18.168,40.5 -40.5,40.5
+H 159
+C 136.668,223 118.5,204.832 118.5,182.5
+Z
+"/>
+</svg>
