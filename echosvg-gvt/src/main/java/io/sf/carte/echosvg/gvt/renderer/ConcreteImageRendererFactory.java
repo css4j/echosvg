@@ -42,7 +42,7 @@ public class ConcreteImageRendererFactory implements ImageRendererFactory {
 	 */
 	@Override
 	public ImageRenderer createStaticImageRenderer() {
-		if (Platform.isOSX)
+		if (Platform.isOSX())
 			return new MacRenderer();
 		return new StaticRenderer();
 	}
@@ -52,7 +52,7 @@ public class ConcreteImageRendererFactory implements ImageRendererFactory {
 	 */
 	@Override
 	public ImageRenderer createDynamicImageRenderer() {
-		if (Platform.isOSX)
+		if (Platform.isOSX())
 			return new MacRenderer();
 		return new DynamicRenderer();
 	}

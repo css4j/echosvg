@@ -97,7 +97,6 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 	 * Static initialization of the cursorMap
 	 */
 	static {
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		cursorMap = new HashMap<>();
 		cursorMap.put(SVG_CROSSHAIR_VALUE, Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		cursorMap.put(SVG_DEFAULT_VALUE, Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -112,8 +111,11 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 		cursorMap.put(SVG_W_RESIZE_VALUE, Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
 		cursorMap.put(SVG_TEXT_VALUE, Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		cursorMap.put(SVG_WAIT_VALUE, Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+
 		Cursor moveCursor = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
-		if (Platform.isOSX) {
+		if (Platform.isOSX()) {
 			try {
 				Image img = toolkit.createImage(CursorManager.class.getResource("resources/move.gif"));
 				moveCursor = toolkit.createCustomCursor(img, new Point(11, 11), "move");
@@ -121,6 +123,7 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 			}
 		}
 		cursorMap.put(SVG_MOVE_VALUE, moveCursor);
+
 		Cursor helpCursor;
 		try {
 			Image img = toolkit.createImage(CursorManager.class.getResource("resources/help.gif"));

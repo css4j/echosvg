@@ -33,8 +33,20 @@ public abstract class Platform {
 
 	/**
 	 * Whether we are running on Mac OS X.
+	 * 
+	 * @deprecated Use {@link #isOSX()}.
 	 */
-	public static boolean isOSX = System.getProperty("os.name").equals("Mac OS X");
+	@Deprecated
+	public static final boolean isOSX = System.getProperty("os.name").equals("Mac OS X");
+
+	/**
+	 * Whether we are running on Mac OS X.
+	 * 
+	 * @return {@code true} if we are running on Mac OS X.
+	 */
+	public static boolean isOSX() {
+		return isOSX;
+	}
 
 	/**
 	 * Returns the active screen resolution. If EchoSVG is run in a headless

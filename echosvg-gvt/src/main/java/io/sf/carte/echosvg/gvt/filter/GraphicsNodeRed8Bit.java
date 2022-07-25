@@ -146,7 +146,7 @@ public class GraphicsNodeRed8Bit extends AbstractRed {
 	}
 
 	public ColorModel createColorModel() {
-		if (Platform.isOSX)
+		if (Platform.isOSX())
 			return GraphicsUtil.sRGB_Pre;
 		return GraphicsUtil.sRGB_Unpre;
 	}

@@ -1175,7 +1175,7 @@ public class JGVTComponent extends JComponent {
 			if (interactor != null) {
 				// because the mouseDragged event doesn't seem to be generated on OSX when ctrl
 				// is held down
-				if (Platform.isOSX && interactor instanceof AbstractZoomInteractor)
+				if (Platform.isOSX() && interactor instanceof AbstractZoomInteractor)
 					mouseDragged(e);
 				else
 					interactor.mouseMoved(e);
