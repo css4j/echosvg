@@ -38,7 +38,6 @@ import java.text.CharacterIterator;
 import io.sf.carte.echosvg.gvt.text.ArabicTextHandler;
 import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
 import io.sf.carte.echosvg.gvt.text.TextPaintInfo;
-import io.sf.carte.echosvg.util.Platform;
 
 /**
  * This is a wrapper class for a java.awt.font.GlyphVector instance.
@@ -473,35 +472,13 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
 
 	// This is true if GlyphVector.getGlyphOutline returns glyph outlines
 	// that are positioned (if it is false the outlines are always at 0,0).
-	private static final boolean outlinesPositioned;
+	private static final boolean outlinesPositioned = true;
 	// This is true if Graphics2D.drawGlyphVector works for the
 	// current JDK/OS combination.
-	private static final boolean drawGlyphVectorWorks;
+	private static final boolean drawGlyphVectorWorks = false;
 	// This is true if Graphics2D.drawGlyphVector will correctly
 	// render Glyph Vectors with per glyph transforms.
-	private static final boolean glyphVectorTransformWorks;
-
-	static {
-		String s = System.getProperty("java.specification.version");
-		if ("1.6".compareTo(s) <= 0) {
-			outlinesPositioned = true;
-			drawGlyphVectorWorks = false; // [GA] not verified; needs further research
-			glyphVectorTransformWorks = true;
-		} else if ("1.4".compareTo(s) <= 0) {
-			// TODO Java 5
-			outlinesPositioned = true;
-			drawGlyphVectorWorks = true;
-			glyphVectorTransformWorks = true;
-		} else if (Platform.isOSX) {
-			outlinesPositioned = true;
-			drawGlyphVectorWorks = false;
-			glyphVectorTransformWorks = false;
-		} else {
-			outlinesPositioned = false;
-			drawGlyphVectorWorks = true;
-			glyphVectorTransformWorks = false;
-		}
-	}
+	private static final boolean glyphVectorTransformWorks = true;
 
 	// Returns true if GlyphVector.getGlyphOutlines returns glyph outlines
 	// that are positioned (otherwise they are always at 0,0).
