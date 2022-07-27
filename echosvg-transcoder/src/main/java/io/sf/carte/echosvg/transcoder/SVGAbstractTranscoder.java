@@ -22,9 +22,9 @@ import java.awt.Dimension;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
-import java.util.LinkedList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -916,7 +916,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 */
 	protected class SVGAbstractTranscoderUserAgent extends UserAgentAdapter {
 		/**
-		 * Vector containing the allowed script types
+		 * List containing the allowed script types
 		 */
 		protected List<String> scripts;
 
@@ -1113,17 +1113,14 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 		 * &lt;script&gt; element's type attribute.
 		 */
 		protected void computeAllowedScripts() {
-			scripts = new LinkedList<>();
 			if (!SVGAbstractTranscoder.this.hints.containsKey(KEY_ALLOWED_SCRIPT_TYPES)) {
+				scripts = Collections.emptyList();
 				return;
 			}
 
 			String allowedScripts = (String) SVGAbstractTranscoder.this.hints.get(KEY_ALLOWED_SCRIPT_TYPES);
 
-			StringTokenizer st = new StringTokenizer(allowedScripts, ",");
-			while (st.hasMoreTokens()) {
-				scripts.add(st.nextToken());
-			}
+			scripts = Arrays.asList(allowedScripts.split(", "));
 		}
 
 		@Override
