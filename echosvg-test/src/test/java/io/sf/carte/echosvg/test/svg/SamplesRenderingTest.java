@@ -1175,6 +1175,11 @@ public class SamplesRenderingTest {
 	}
 
 	@Test
+	public void testScriptNormalizedPathTest2() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/scripting/normalizedPathTest2.svg");
+	}
+
+	@Test
 	public void testScriptPaintType() throws TranscoderException, IOException {
 		test("samples/tests/spec/scripting/paintType.svg");
 	}

@@ -1,0 +1,135 @@
+<?xml version="1.0" standalone="no"?>
+
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ====================================================================== -->
+<!-- Script the normalizedPathSegList attribute.                            -->
+<!--                                                                        -->
+<!-- @version $Id$    -->
+<!-- ====================================================================== -->
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:test="https://css4j.github.io/echosvg/test"
+     width="210mm" height="297mm" viewBox="0 0 210 297"
+     onload="normalizedPathTest();">
+  <script type="text/javascript">
+    //<![CDATA[
+    function serializePathSeg(psi) {
+        var buf = psi.pathSegTypeAsLetter;
+        switch (psi.pathSegType) {
+        case 2: // SVGPathSeg.PATHSEG_MOVETO_ABS
+        case 4: // SVGPathSeg.PATHSEG_LINETO_ABS
+            buf += ' ';
+            buf += psi.x;
+            buf += ' ';
+            buf += psi.y;
+            break;
+        case 6: // SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS
+            buf += ' ';
+            buf += psi.x;
+            buf += ' ';
+            buf += psi.y;
+            buf += ',';
+            buf += psi.x1;
+            buf += ' ';
+            buf += psi.y1;
+            buf += ',';
+            buf += psi.x2;
+            buf += ' ';
+            buf += psi.y2;
+            break;
+        case 1: // SVGPathSeg.PATHSEG_CLOSEPATH
+            break;
+        }
+        buf += ' ';
+        return buf;
+    }
+    //
+    function normalizedPathTest() {
+    var expected = 'M 118.5 102.5 C 159 62,118.5 80.168,136.668 62 L 303 62 '
+            + 'C 343.5 102.5,325.33 62,343.5 80.17 '
+            + 'L 343.5 150.5 '
+            + 'C 313.48 171.67,343.5 158.74,327.33 167.05 '
+            + 'C 231 183,291.56 178.98,262.27 183 '
+            + 'C 148.52 171.67,199.73 183,170.44 178.98 '
+            + 'C 118.5 150.5,134.67 167.05,118.5 158.74 '
+            + 'z '
+            + 'M 118.5 230.5 '
+            + 'L 118.5 221.98 '
+            + 'C 143.77 233.9,124.47 226.12,132.65 230.19 '
+            + 'C 231 246,167.18 241.7,198.16 246 '
+            + 'C 318.23 233.9,263.84 246,294.82 241.7 '
+            + 'C 343.5 221.98,329.35 230.19,337.53 226.12 '
+            + 'L 343.5 230.5 '
+            + 'C 303 271,343.5 252.83,325.33 271 '
+            + 'L 159 271 '
+            + 'C 118.5 182.5,136.67 223,118.5 204.83 z ';
+        var path = document.getElementById("path1");
+        var norm;
+        if (path.normalizedPathSegList) {
+            norm = path.normalizedPathSegList;
+        } else {
+            setTestResult('skipped');
+            return;
+        }
+        var result = '';
+        var n = norm.numberOfItems;
+        for (var i = 0; i < n; i++) {
+            var itemnps = serializePathSeg(norm.getItem(i));
+            result += itemnps;
+        }
+        assertEquals(expected, result);
+    }
+    //
+    function assertEquals(expected, actual) {
+        if (expected == actual) {
+            setTestResult('passed');
+        } else {
+            //console.log('Actual: ' + actual);
+        }
+    }
+    //
+    function setTestResult(result) {
+       var resultElm = document.getElementById("testResult");
+       resultElm.setAttributeNS(null, "result", result);
+    }
+    //]]>
+  </script>
+
+      <test:testResult id="testResult"/>
+
+      <path id="path1" d="
+M 118.5,102.5
+C 118.5,80.168 136.668,62 159,62
+h 144
+c 22.332,0 40.5,18.168 40.5,40.5
+v 48
+c 0,8.239 -16.171,16.553 -30.019,21.169
+C 291.56,178.976 262.268,183 231,183 199.732,183 170.439,178.976 148.519,171.669 134.671,167.053 118.5,158.739 118.5,150.5
+Z
+m 0,80
+v -8.518
+c 5.971,4.143 14.148,8.208 25.275,11.918 23.41,7.803 54.387,12.1 87.225,12.1 32.838,0 63.815,-4.297 87.225,-12.101 11.128,-3.709 19.304,-7.775 25.275,-11.918
+v 8.518
+c 0,22.332 -18.168,40.5 -40.5,40.5
+H 159
+C 136.668,223 118.5,204.832 118.5,182.5
+Z
+"/>
+</svg>
