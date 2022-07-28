@@ -36,23 +36,23 @@
         case 2: // SVGPathSeg.PATHSEG_MOVETO_ABS
         case 4: // SVGPathSeg.PATHSEG_LINETO_ABS
             buf += ' ';
-            buf += psi.x;
+            buf += psi.x.toFixed(1);
             buf += ' ';
-            buf += psi.y;
+            buf += psi.y.toFixed(1);
             break;
         case 6: // SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS
             buf += ' ';
-            buf += psi.x;
+            buf += psi.x1.toFixed(1);
             buf += ' ';
-            buf += psi.y;
-            buf += ',';
-            buf += psi.x1;
+            buf += psi.y1.toFixed(1);
             buf += ' ';
-            buf += psi.y1;
-            buf += ',';
-            buf += psi.x2;
+            buf += psi.x2.toFixed(1);
             buf += ' ';
-            buf += psi.y2;
+            buf += psi.y2.toFixed(1);
+            buf += ' ';
+            buf += psi.x.toFixed(1);
+            buf += ' ';
+            buf += psi.y.toFixed(1);
             break;
         case 1: // SVGPathSeg.PATHSEG_CLOSEPATH
             break;
@@ -62,24 +62,20 @@
     }
     //
     function normalizedPathTest() {
-    var expected = 'M 118.5 102.5 C 159 62,118.5 80.168,136.668 62 L 303 62 '
-            + 'C 343.5 102.5,325.33 62,343.5 80.17 '
-            + 'L 343.5 150.5 '
-            + 'C 313.48 171.67,343.5 158.74,327.33 167.05 '
-            + 'C 231 183,291.56 178.98,262.27 183 '
-            + 'C 148.52 171.67,199.73 183,170.44 178.98 '
-            + 'C 118.5 150.5,134.67 167.05,118.5 158.74 '
-            + 'z '
-            + 'M 118.5 230.5 '
-            + 'L 118.5 221.98 '
-            + 'C 143.77 233.9,124.47 226.12,132.65 230.19 '
-            + 'C 231 246,167.18 241.7,198.16 246 '
-            + 'C 318.23 233.9,263.84 246,294.82 241.7 '
-            + 'C 343.5 221.98,329.35 230.19,337.53 226.12 '
-            + 'L 343.5 230.5 '
-            + 'C 303 271,343.5 252.83,325.33 271 '
-            + 'L 159 271 '
-            + 'C 118.5 182.5,136.67 223,118.5 204.83 z ';
+    var expected = 'M 118.5 102.5 C 118.5 80.2 136.7 62.0 159.0 62.0 '
+            + 'L 303.0 62.0 C 325.3 62.0 343.5 80.2 343.5 102.5 L 343.5 150.5 '
+            + 'C 343.5 158.7 327.3 167.1 313.5 171.7 '
+            + 'C 291.6 179.0 262.3 183.0 231.0 183.0 '
+            + 'C 199.7 183.0 170.4 179.0 148.5 171.7 '
+            + 'C 134.7 167.1 118.5 158.7 118.5 150.5 z '
+            + 'M 118.5 182.5 L 118.5 174.0 '
+            + 'C 124.5 178.1 132.6 182.2 143.8 185.9 '
+            + 'C 167.2 193.7 198.2 198.0 231.0 198.0 '
+            + 'C 263.8 198.0 294.8 193.7 318.2 185.9 '
+            + 'C 329.4 182.2 337.5 178.1 343.5 174.0 L 343.5 182.5 '
+            + 'C 343.5 204.8 325.3 223.0 303.0 223.0 L 159.0 223.0 '
+            + 'C 136.7 223.0 118.5 204.8 118.5 182.5 z ';
+
         var path = document.getElementById("path1");
         var norm;
         if (path.normalizedPathSegList) {
@@ -88,6 +84,7 @@
             setTestResult('skipped');
             return;
         }
+
         var result = '';
         var n = norm.numberOfItems;
         for (var i = 0; i < n; i++) {
@@ -102,6 +99,7 @@
             setTestResult('passed');
         } else {
             //console.log('Actual: ' + actual);
+            System.err.println('Actual: ' + actual);
         }
     }
     //

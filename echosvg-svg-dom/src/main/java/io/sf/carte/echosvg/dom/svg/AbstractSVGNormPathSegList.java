@@ -66,6 +66,9 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
 
 		protected ListHandler listHandler;
 		protected SVGPathSegGenericItem lastAbs;
+		private boolean initialIsSet = false;
+		private float curInitialX = 0f;
+		private float curInitialY = 0f;
 
 		public NormalizedPathSegListBuilder(ListHandler listHandler) {
 			this.listHandler = listHandler;
@@ -109,6 +112,12 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
 			lastAbs.setX(x);
 			lastAbs.setY(y);
 			lastAbs.setPathSegType(SVGPathSeg.PATHSEG_MOVETO_ABS);
+
+			if (!initialIsSet) {
+				curInitialX = x;
+				curInitialY = y;
+				initialIsSet = true;
+			}
 		}
 
 		/**
@@ -117,6 +126,11 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
 		@Override
 		public void closePath() throws ParseException {
 			listHandler.item(new SVGPathSegItem(SVGPathSeg.PATHSEG_CLOSEPATH, PATHSEG_CLOSEPATH_LETTER));
+
+			lastAbs.setX(curInitialX);
+			lastAbs.setY(curInitialY);
+			lastAbs.setPathSegType(SVGPathSeg.PATHSEG_MOVETO_ABS);
+			initialIsSet = false;
 		}
 
 		/**
@@ -139,6 +153,12 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
 			lastAbs.setX(x);
 			lastAbs.setY(y);
 			lastAbs.setPathSegType(SVGPathSeg.PATHSEG_LINETO_ABS);
+
+			if (!initialIsSet) {
+				curInitialX = x;
+				curInitialY = y;
+				initialIsSet = true;
+			}
 		}
 
 		/**
@@ -197,6 +217,12 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
 					PATHSEG_CURVETO_CUBIC_ABS_LETTER, x1, y1, x2, y2, x, y));
 			lastAbs.setValue(x1, y1, x2, y2, x, y);
 			lastAbs.setPathSegType(SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS);
+
+			if (!initialIsSet) {
+				curInitialX = x;
+				curInitialY = y;
+				initialIsSet = true;
+			}
 		}
 
 		/**
@@ -243,6 +269,12 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
 			lastAbs.setX1(x1);
 			lastAbs.setY1(y1);
 			lastAbs.setPathSegType(SVGPathSeg.PATHSEG_CURVETO_QUADRATIC_ABS);
+
+			if (!initialIsSet) {
+				curInitialX = x1;
+				curInitialY = y1;
+				initialIsSet = true;
+			}
 		}
 
 		/**

@@ -53,25 +53,25 @@ public class NormalizedPathSegListTest {
 	 * @formatter:off
 	 */
 	String pathRef1 = "M 118.5 102.5\n"
-			+ "C 159 62,118.5 80.17,136.67 62\n"
+			+ "C 118.5 80.17 136.67 62 159 62\n"
 			+ "L 303 62\n"
-			+ "C 343.5 102.5,325.33 62,343.5 80.17\n"
+			+ "C 325.33 62 343.5 80.17 343.5 102.5\n"
 			+ "L 343.5 150.5\n"
-			+ "C 313.48 171.67,343.5 158.74,327.33 167.05\n"
-			+ "C 231 183,291.56 178.98,262.27 183\n"
-			+ "C 148.52 171.67,199.73 183,170.44 178.98\n"
-			+ "C 118.5 150.5,134.67 167.05,118.5 158.74\n"
+			+ "C 343.5 158.74 327.33 167.05 313.48 171.67\n"
+			+ "C 291.56 178.98 262.27 183 231 183\n"
+			+ "C 199.73 183 170.44 178.98 148.52 171.67\n"
+			+ "C 134.67 167.05 118.5 158.74 118.5 150.5\n"
 			+ "z\n"
-			+ "M 118.5 230.5\n"
-			+ "L 118.5 221.98\n"
-			+ "C 143.77 233.9,124.47 226.12,132.65 230.19\n"
-			+ "C 231 246,167.18 241.7,198.16 246\n"
-			+ "C 318.23 233.9,263.84 246,294.82 241.7\n"
-			+ "C 343.5 221.98,329.35 230.19,337.53 226.12\n"
-			+ "L 343.5 230.5\n"
-			+ "C 303 271,343.5 252.83,325.33 271\n"
-			+ "L 159 271\n"
-			+ "C 118.5 182.5,136.67 223,118.5 204.83\n"
+			+ "M 118.5 182.5\n"
+			+ "L 118.5 173.98\n"
+			+ "C 124.47 178.12 132.65 182.19 143.77 185.9\n"
+			+ "C 167.18 193.7 198.16 198 231 198\n"
+			+ "C 263.84 198 294.82 193.7 318.23 185.9\n"
+			+ "C 329.35 182.19 337.53 178.12 343.5 173.98\n"
+			+ "L 343.5 182.5\n"
+			+ "C 343.5 204.83 325.33 223 303 223\n"
+			+ "L 159 223\n"
+			+ "C 136.67 223 118.5 204.83 118.5 182.5\n"
 			+ "z\n";
 	/*
 	 * @formatter:on
@@ -145,17 +145,17 @@ public class NormalizedPathSegListTest {
 		case SVGPathSeg.PATHSEG_CURVETO_CUBIC_ABS:
 			buf.append(' ');
 			SVGPathSegCurvetoCubicAbs c = (SVGPathSegCurvetoCubicAbs) pathSeg;
-			buf.append(fmt.format(c.getX()));
-			buf.append(' ');
-			buf.append(fmt.format(c.getY()));
-			buf.append(',');
 			buf.append(fmt.format(c.getX1()));
 			buf.append(' ');
 			buf.append(fmt.format(c.getY1()));
-			buf.append(',');
+			buf.append(' ');
 			buf.append(fmt.format(c.getX2()));
 			buf.append(' ');
 			buf.append(fmt.format(c.getY2()));
+			buf.append(' ');
+			buf.append(fmt.format(c.getX()));
+			buf.append(' ');
+			buf.append(fmt.format(c.getY()));
 			break;
 		case SVGPathSeg.PATHSEG_CLOSEPATH:
 			break;
