@@ -45,3 +45,7 @@ jobs:
       # Build
       - name: Build with Gradle
         run: ./gradlew build -PexcludeTests="SamplesRenderingTest.testFontArabic,SamplesRenderingTest.testVerticalText"
+
+      # Generate modular javadocs
+      - name: Modular javadocs
+        run: ./gradlew modularJavadoc
