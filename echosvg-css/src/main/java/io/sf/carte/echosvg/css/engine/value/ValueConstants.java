@@ -222,6 +222,11 @@ public interface ValueConstants {
 	Value INLINE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_INLINE_VALUE);
 
 	/**
+	 * The 'inline-block' keyword.
+	 */
+	Value INLINE_BLOCK_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_INLINE_BLOCK_VALUE);
+
+	/**
 	 * The 'inline-table' keyword.
 	 */
 	Value INLINE_TABLE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_INLINE_TABLE_VALUE);

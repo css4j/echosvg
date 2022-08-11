@@ -225,6 +225,7 @@ public interface CSSConstants {
 	String CSS_INFOBACKGROUND_VALUE = "infobackground";
 	String CSS_INFOTEXT_VALUE = "infotext";
 	String CSS_INLINE_TABLE_VALUE = "inline-table";
+	String CSS_INLINE_BLOCK_VALUE = "inline-block";
 	String CSS_INLINE_VALUE = "inline";
 	String CSS_ITALIC_VALUE = "italic";
 	String CSS_IVORY_VALUE = "ivory";

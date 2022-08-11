@@ -38,11 +38,12 @@ public class DisplayManager extends IdentifierManager {
 	/**
 	 * The identifier values.
 	 */
-	protected static final StringMap values = new StringMap();
+	protected static final StringMap values = new StringMap(19);
 	static {
 		values.put(CSSConstants.CSS_BLOCK_VALUE, ValueConstants.BLOCK_VALUE);
 		values.put(CSSConstants.CSS_COMPACT_VALUE, ValueConstants.COMPACT_VALUE);
 		values.put(CSSConstants.CSS_INLINE_VALUE, ValueConstants.INLINE_VALUE);
+		values.put(CSSConstants.CSS_INLINE_BLOCK_VALUE, ValueConstants.INLINE_BLOCK_VALUE);
 		values.put(CSSConstants.CSS_INLINE_TABLE_VALUE, ValueConstants.INLINE_TABLE_VALUE);
 		values.put(CSSConstants.CSS_LIST_ITEM_VALUE, ValueConstants.LIST_ITEM_VALUE);
 		values.put(CSSConstants.CSS_MARKER_VALUE, ValueConstants.MARKER_VALUE);
