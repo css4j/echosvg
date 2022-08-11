@@ -51,6 +51,15 @@ public class StringMap {
 	}
 
 	/**
+	 * Creates a new table with an initial capacity.
+	 * 
+	 * @param initialCapacity the initial capacity.
+	 */
+	public StringMap(int initialCapacity) {
+		table = new Entry[initialCapacity];
+	}
+
+	/**
 	 * Creates a copy of the given StringMap object.
 	 * 
 	 * @param t The table to copy.
