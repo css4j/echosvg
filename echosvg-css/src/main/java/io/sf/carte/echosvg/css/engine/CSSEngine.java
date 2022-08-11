@@ -1718,7 +1718,7 @@ public abstract class CSSEngine {
 
 		@Override
 		public void lexicalProperty(String name, LexicalUnit value, boolean important) {
-			throwUnsupportedEx();
+			// Ignore custom properties
 		}
 
 		private void throwUnsupportedEx() {
