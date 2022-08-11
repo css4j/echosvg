@@ -173,8 +173,13 @@ public class SamplesRenderingTest {
 		test("samples/textRotateShadows.svg");
 	}
 
+	@Test
+	public void testUnsupportedRules() throws TranscoderException, IOException {
+		testNV("samples/unsupportedRules.svg");
+	}
+
 	/*
-	 * SVG 2
+	 * SVG 1.2
 	 */
 	@Test
 	public void testFlowBidi() throws TranscoderException, IOException {

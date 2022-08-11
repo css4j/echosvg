@@ -1,0 +1,55 @@
+<?xml version="1.0" standalone="no"?>
+
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ====================================================================== -->
+<!-- A SVG file with unsupported CSS rules in the STYLE element.            -->
+<!--                                                                        -->
+<!-- @version $Id$    -->
+<!-- ====================================================================== -->
+
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320">
+  <style>
+@supports ( display: flex ) {
+  body.grid, div.grid { display: flex; }
+  #mygrid { background: blue; color: white; }
+}
+@keyframes slidein {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+#cir1,#cir2 { opacity:0.6 }
+#el1 { opacity: 0.7 }
+  </style>
+  <path d="M 10 315
+           L 110 215
+           A 36 60 0 0 1 150.71 170.29
+           L 172.55 152.45
+           A 30 50 -45 0 1 215.1 109.9
+           L 315 10" stroke="black"/>
+  <circle cx="150.71" cy="170.29" r="2" fill="red" id="cir1"/>
+  <circle cx="110" cy="215" r="2" fill="red" id="cir2"/>
+  <ellipse cx="144.931" cy="229.512" rx="36" ry="60" fill="transparent" stroke="blue" id="el1"/>
+  <ellipse cx="115.779" cy="155.778" rx="36" ry="60" fill="transparent" stroke="blue"/>
+</svg>

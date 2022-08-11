@@ -39,6 +39,7 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MutationEvent;
 
 import io.sf.carte.doc.style.css.BooleanCondition;
+import io.sf.carte.doc.style.css.CSSRule;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.SelectorMatcher;
 import io.sf.carte.doc.style.css.nsac.AttributeCondition;
@@ -1437,6 +1438,8 @@ public abstract class CSSEngine {
 		protected StyleRule styleRule;
 		protected StyleDeclaration styleDeclaration;
 
+		private int ignoredForRule = 0;
+
 		@Override
 		public void parseStart(ParserControl parserctl) {
 		}
@@ -1450,7 +1453,29 @@ public abstract class CSSEngine {
 		}
 
 		@Override
+		public void namespaceDeclaration(String prefix, String uri) {
+		}
+
+		@Override
+		public void startCounterStyle(String name) {
+			if (ignoredForRule == 0) {
+				ignoredForRule = CSSRule.COUNTER_STYLE_RULE;
+			}
+		}
+
+		@Override
+		public void endCounterStyle() {
+			if (ignoredForRule == CSSRule.COUNTER_STYLE_RULE) {
+				ignoredForRule = 0;
+			}
+		}
+
+		@Override
 		public void importStyle(String uri, MediaQueryList media, String defaultNamespaceURI) {
+			if (ignoredForRule > 0) {
+				return;
+			}
+
 			ImportRule ir = new ImportRule();
 			ir.setMediaList(media);
 			ir.setParent(styleSheet);
@@ -1467,6 +1492,10 @@ public abstract class CSSEngine {
 
 		@Override
 		public void startMedia(MediaQueryList media) {
+			if (ignoredForRule > 0) {
+				return;
+			}
+
 			MediaRule mr = new MediaRule();
 			mr.setMediaList(media);
 			mr.setParent(styleSheet);
@@ -1476,24 +1505,42 @@ public abstract class CSSEngine {
 
 		@Override
 		public void endMedia(MediaQueryList media) {
+			if (ignoredForRule > 0) {
+				return;
+			}
+
 			styleSheet = styleSheet.getParent();
 		}
 
 		@Override
 		public void startPage(PageSelectorList pageSelectorList) {
+			if (ignoredForRule == 0) {
+				ignoredForRule = CSSRule.PAGE_RULE;
+			}
 		}
 
 		@Override
 		public void endPage(PageSelectorList pageSelectorList) {
+			if (ignoredForRule == CSSRule.PAGE_RULE) {
+				ignoredForRule = 0;
+			}
 		}
 
 		@Override
 		public void startFontFace() {
+			if (ignoredForRule > 0) {
+				return;
+			}
+
 			styleDeclaration = new StyleDeclaration();
 		}
 
 		@Override
 		public void endFontFace() {
+			if (ignoredForRule > 0) {
+				return;
+			}
+
 			StyleMap sm = new StyleMap(getNumberOfProperties());
 			int len = styleDeclaration.size();
 			for (int i = 0; i < len; i++) {
@@ -1515,7 +1562,111 @@ public abstract class CSSEngine {
 		}
 
 		@Override
+		public void startMargin(String name) {
+			// ignoredForRule = CSSRule.PAGE_RULE
+		}
+
+		@Override
+		public void endMargin() {
+			// ignoredForRule = CSSRule.PAGE_RULE
+		}
+
+		@Override
+		public void startKeyframes(String name) {
+			if (ignoredForRule == 0) {
+				ignoredForRule = CSSRule.KEYFRAMES_RULE;
+			}
+		}
+
+		@Override
+		public void endKeyframes() {
+			if (ignoredForRule == CSSRule.KEYFRAMES_RULE) {
+				ignoredForRule = 0;
+			}
+		}
+
+		@Override
+		public void startKeyframe(LexicalUnit keyframeSelector) {
+			// ignoredForRule = CSSRule.KEYFRAMES_RULE
+		}
+
+		@Override
+		public void endKeyframe() {
+			// ignoredForRule = CSSRule.KEYFRAMES_RULE
+		}
+
+		@Override
+		public void startFontFeatures(String[] familyName) {
+			if (ignoredForRule == 0) {
+				ignoredForRule = CSSRule.FONT_FEATURE_VALUES_RULE;
+			}
+		}
+
+		@Override
+		public void endFontFeatures() {
+			if (ignoredForRule == CSSRule.FONT_FEATURE_VALUES_RULE) {
+				ignoredForRule = 0;
+			}
+		}
+
+		@Override
+		public void startFeatureMap(String mapName) {
+			// ignoredForRule = CSSRule.FONT_FEATURE_VALUES_RULE
+		}
+
+		@Override
+		public void endFeatureMap() {
+			// ignoredForRule = CSSRule.FONT_FEATURE_VALUES_RULE
+		}
+
+		@Override
+		public void startProperty(String name) {
+			if (ignoredForRule == 0) {
+				ignoredForRule = CSSRule.PROPERTY_RULE;
+			}
+		}
+
+		@Override
+		public void endProperty(boolean discard) {
+			if (ignoredForRule == CSSRule.PROPERTY_RULE) {
+				ignoredForRule = 0;
+			}
+		}
+
+		@Override
+		public void startSupports(BooleanCondition condition) {
+			if (ignoredForRule == 0) {
+				ignoredForRule = CSSRule.SUPPORTS_RULE;
+			}
+		}
+
+		@Override
+		public void endSupports(BooleanCondition condition) {
+			if (ignoredForRule == CSSRule.SUPPORTS_RULE) {
+				ignoredForRule = 0;
+			}
+		}
+
+		@Override
+		public void startViewport() {
+			if (ignoredForRule == 0) {
+				ignoredForRule = CSSRule.VIEWPORT_RULE;
+			}
+		}
+
+		@Override
+		public void endViewport() {
+			if (ignoredForRule == CSSRule.VIEWPORT_RULE) {
+				ignoredForRule = 0;
+			}
+		}
+
+		@Override
 		public void startSelector(SelectorList selectors) {
+			if (ignoredForRule > 0) {
+				return;
+			}
+
 			styleRule = new StyleRule();
 			styleRule.setSelectorList(selectors);
 			styleDeclaration = new StyleDeclaration();
@@ -1531,6 +1682,10 @@ public abstract class CSSEngine {
 
 		@Override
 		public void property(String name, LexicalUnit value, boolean important) {
+			if (ignoredForRule > 0) {
+				return;
+			}
+
 			int i = getPropertyIndex(name);
 			if (i == -1) {
 				i = getShorthandIndex(name);
