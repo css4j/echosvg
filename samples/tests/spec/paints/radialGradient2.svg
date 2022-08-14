@@ -45,7 +45,7 @@
                    color-rendering:optimizeQuality; }
 
         .saqLabel {  font-family: 'Sansation'; 
-                     font-size: 5;
+                     font-size: 5px;
                      text-anchor: middle; 
                      fill:black; stroke:none;}
         .line { fill:none; stroke:black; stroke-width:0.25; } 

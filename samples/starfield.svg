@@ -39,7 +39,7 @@
     <style type="text/css">
       <![CDATA[
           .title {
-              font-size: 52;
+              font-size: 52px;
               font-style: italic;
               font-weight: bolder
           }
@@ -74,7 +74,7 @@
           }
           /* <text/> default property values */
           text {
-              font-size: 9;
+              font-size: 9px;
               text-anchor: middle
           }
           /* The property values for a <text/> preceded by another <text/> */

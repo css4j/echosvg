@@ -55,7 +55,7 @@
         <path id="path10" transform="translate(100,460)" style="stroke:black;fill:none" d="M -100 0 C -55 15 -45 15 0 0 C 45 -15 55 -15 100 0 C 145 15 155 15 200 0 C 245 -15 255 -15 300 0" />
     </defs>
 
-    <g id="test-content" style="font-size:18">
+    <g id="test-content" style="font-size:18px">
 
      <text x="100"><textPath xlink:href="#path1" onload="changeStyle(evt, 'font-family:Anton')">font-family:'Open Sans'</textPath></text>
      <text x="100"><textPath xlink:href="#path2" onload="changeStyle(evt, 'font-size:32')">font-size:32</textPath></text>

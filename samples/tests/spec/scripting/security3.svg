@@ -53,7 +53,7 @@
         }
 
         .label {
-            font-size: 12;
+            font-size: 12px;
             font-family: 'Open Sans';
             fill: black;
             text-anchor: start;

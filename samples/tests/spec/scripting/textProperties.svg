@@ -41,7 +41,7 @@
         }
     ]]></script>
 
-    <g id="test-content" style="font-size:18">
+    <g id="test-content" style="font-size:18px">
 
      <text x="100" y="100" onload="changeStyle(evt, 'font-family:Anton')">font-family:'Open Sans'</text>
      <text x="100" y="140" onload="changeStyle(evt, 'font-size:32')">font-size:32</text>

@@ -61,7 +61,7 @@
         <rect x="190" y="95" width="80" height="0" />
         <rect x="290" y="95" width="0" height="0" />
 </g>
-<g style="stroke:none; fill:black; font-size:12; font-family:'Open Sans'; text-anchor:middle">
+<g style="stroke:none; fill:black; font-size:12px; font-family:'Open Sans'; text-anchor:middle">
         <text x="130" y="194">width="0"</text>
         <text x="230" y="194">height="0"</text>
         <text x="330" y="194">width &amp; height="0"</text>
@@ -71,7 +71,7 @@
 <g style="stroke:none; fill:crimson">
         <circle cx="225" cy="255" r="0"/>
 </g>
-<g style="stroke:none; fill:black; font-size:12; font-family:'Open Sans'; text-anchor:middle">
+<g style="stroke:none; fill:black; font-size:12px; font-family:'Open Sans'; text-anchor:middle">
         <text x="225" y="314">r="0"</text>
 </g>
 
@@ -81,7 +81,7 @@
         <ellipse cx="230" cy="365" rx="40" ry="0" />
         <ellipse cx="330" cy="365" rx="0" ry="0" />
 </g>
-<g style="stroke:none; fill:black; font-size:12; font-family:'Open Sans'; text-anchor:middle">
+<g style="stroke:none; fill:black; font-size:12px; font-family:'Open Sans'; text-anchor:middle">
         <text x="130" y="415">rx="0"</text>
         <text x="230" y="415">ry="0"</text>
         <text x="330" y="415">rx &amp; ry="0"</text>

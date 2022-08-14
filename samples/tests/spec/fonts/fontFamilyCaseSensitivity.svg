@@ -36,8 +36,8 @@
     <style type="text/css"><![CDATA[
         .oddRow { fill: #cccccc; stroke: black; }
         .evenRow { fill: white; stroke: black; }
-        .textLabel { text-anchor: middle; font-size: 12; }
-        .textSample { text-anchor: middle; font-size: 14; fill: crimson; }
+        .textLabel { text-anchor: middle; font-size: 12px; }
+        .textSample { text-anchor: middle; font-size: 14px; fill: crimson; }
         .em { font-style:italic; }
     ]]></style>
     

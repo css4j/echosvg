@@ -44,7 +44,7 @@
     <!-- ============================================================= -->
     <!-- Test content                                                  -->
     <!-- ============================================================= -->
-    <g id="testContent" style="font-size:10">
+    <g id="testContent" style="font-size:10px">
         <defs>
         <!-- ============================================== -->
         <!-- patternUnits : default (objectBoundingBox)     -->

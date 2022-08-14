@@ -39,7 +39,7 @@
     <defs>
 
      <style type="text/css"><![CDATA[
-       .Caption { font-size: 8; font-family: 'Roboto'; font-weight: normal;
+       .Caption { font-size: 8px; font-family: 'Roboto'; font-weight: normal;
                   font-style: normal; stroke: none; stroke-width: 0; 
                   fill: black } ]]>
      </style>

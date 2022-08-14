@@ -47,7 +47,7 @@
     <image x="60" y="200" width="150" height="50" xlink:href="../../resources/images/jpeg.jpg" style="image-rendering:optimizeQuality"/>
   </g>
 
-  <g style="font-size:11;fill:black;stroke:none;text-anchor:middle">
+  <g style="font-size:11px;fill:black;stroke:none;text-anchor:middle">
     <text x="135" y="160">auto</text>
     <text x="335" y="160">optimizeSpeed</text>
     <text x="135" y="270">optimizeQuality</text>

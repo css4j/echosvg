@@ -53,7 +53,7 @@
                 stroke-dashoffset="25"/>
       </g>
 
-      <g style="font-size:11;fill:black;stroke:none;text-anchor:middle">
+      <g style="font-size:11px;fill:black;stroke:none;text-anchor:middle">
         <text x="120" y="204">stroke-width='0'</text>
         <text x="300" y="204">stroke-dasharray="10,10"</text>
         <text x="120" y="354">stroke-dashoffset="-15"</text>

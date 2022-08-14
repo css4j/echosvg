@@ -39,7 +39,7 @@
   <text x="225" y="50" class="title">
     Test 'visibility' property inheritance
   </text>
-<g transform="translate(0 10)" style="font-size:12">
+<g transform="translate(0 10)" style="font-size:12px">
 
     <g transform="translate(80 40)">
       <g>

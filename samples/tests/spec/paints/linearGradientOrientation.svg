@@ -68,7 +68,7 @@
     <rect x="75" y="100" width="150" height="20" style="fill:#eee"/>
     <rect x="75" y="120" width="150" height="50" />
   </g>
-  <g style="stroke:none; fill:black; text-anchor:middle; font-size:12">
+  <g style="stroke:none; fill:black; text-anchor:middle; font-size:12px">
     <text x="150" y="114">x1 &lt; x2 / y1 = y2</text>
     <text x="300" y="114">x1 > x2 / y1 = y2</text>
 

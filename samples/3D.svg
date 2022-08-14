@@ -491,7 +491,7 @@
 
 <rect x="0" y="10%" width="100%" height="1" style="fill:url(#grad1)" />
 <rect x="0" y="90%" width="100%" height="1" style="fill:url(#grad1)" />
-<text x="50%" y="40" style="text-anchor:middle; font-family:Impact;font-size:36; fill:white;">EchoSVG 3D</text>
+<text x="50%" y="40" style="text-anchor:middle; font-family:Impact;font-size:36px; fill:white;">EchoSVG 3D</text>
     <g id="container" onload="startAnimation(evt)">
 
     </g>

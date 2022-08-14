@@ -45,7 +45,7 @@
        <rect x="75" y="70" width="300" height="40" style="fill:#eee; stroke:black" />
        <rect x="75" y="110" width="300" height="40" style="fill:white; stroke:black" />
        <rect x="75" y="150" width="300" height="40" style="fill:#eee; stroke:black" />
-       <text x="90" y="64" style="fill:white;font-size:14">x attributed tspan with extra text</text>
+       <text x="90" y="64" style="fill:white;font-size:14px">x attributed tspan with extra text</text>
        <g style="stroke:lightsteelblue; fill:none">
          <line x1="150" y1="70" x2="150" y2="190" />
          <line x1="190" y1="70" x2="190" y2="190" />
@@ -60,7 +60,7 @@
        <rect x="75" y="70" width="300" height="40" style="fill:#eee; stroke:black" />
        <rect x="75" y="110" width="300" height="40" style="fill:white; stroke:black" />
        <rect x="75" y="150" width="300" height="40" style="fill:#eee; stroke:black" />
-       <text x="90" y="64" style="fill:white;font-size:14">x attribute for some chars</text>
+       <text x="90" y="64" style="fill:white;font-size:14px">x attribute for some chars</text>
        <g style="stroke:lightsteelblue; fill:none">
          <line x1="150" y1="70" x2="150" y2="190" />
          <line x1="190" y1="70" x2="190" y2="190" />
@@ -73,7 +73,7 @@
        <rect x="75" y="70" width="300" height="40" style="fill:#eee; stroke:black" />
        <rect x="75" y="110" width="300" height="40" style="fill:white; stroke:black" />
        <rect x="75" y="150" width="300" height="40" style="fill:#eee; stroke:black" />
-       <text x="90" y="64" style="fill:white;font-size:14">x &amp; y attributes with inheritance</text>
+       <text x="90" y="64" style="fill:white;font-size:14px">x &amp; y attributes with inheritance</text>
        <g style="stroke:lightsteelblue; fill:none">
          <line x1="150" y1="70" x2="150" y2="190" />
          <line x1="190" y1="70" x2="190" y2="190" />

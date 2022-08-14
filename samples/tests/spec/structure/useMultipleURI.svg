@@ -38,7 +38,7 @@
   <!-- ============================================================= -->
   <g id="testContent">
     <text x="225" y="50" class="title">Multiple &lt;use> with CSS property values: URIs</text>
-    <text x="225" y="70" style="text-anchor:middle; font-size:12; font-style:italic">This file is using the defs.svg file to get the external resources</text>
+    <text x="225" y="70" style="text-anchor:middle; font-size:12px; font-style:italic">This file is using the defs.svg file to get the external resources</text>
 
     <!-- ############################### -->
     <g id="board" style="fill:none; stroke:black;">
@@ -54,7 +54,7 @@
 
       <line x1="75" y1="270" x2="375" y2="270" />
 
-      <g style="font-size:12; text-anchor:middle; fill:black; stroke:none">
+      <g style="font-size:12px; text-anchor:middle; fill:black; stroke:none">
         <text x="150" y="114">&lt;use></text>
         <text x="300" y="114">External &lt;use></text>
 

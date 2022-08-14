@@ -50,7 +50,7 @@
  </defs>                                                                                                                                                            
   <!-- ============================================================= -->
   <!-- ============================================================= -->
-  <g transform="translate(175 100)" style="font-size:10; text-anchor:middle">
+  <g transform="translate(175 100)" style="font-size:10px; text-anchor:middle">
 
      <g transform="translate(10 20)">
      <rect x="0" y="10" width="20" height="80" style="fill:gold"/>
@@ -78,7 +78,7 @@
 
      </svg>
 
-  <g transform="translate(55 260)" style="font-size:10; text-anchor:middle">
+  <g transform="translate(55 260)" style="font-size:10px; text-anchor:middle">
      <text x="20" y="120">px</text>
      <text x="50" y="120">%</text>
      <text x="80" y="120">mm</text>
@@ -100,7 +100,7 @@
 
      </svg>
 
-  <g transform="translate(175 260)" style="font-size:10; text-anchor:middle">
+  <g transform="translate(175 260)" style="font-size:10px; text-anchor:middle">
      <text x="20" y="120">px</text>
      <text x="50" y="120">%</text>
      <text x="80" y="120">mm</text>
@@ -122,7 +122,7 @@
 
      </svg>
 
-  <g transform="translate(295 260)" style="font-size:10; text-anchor:middle">
+  <g transform="translate(295 260)" style="font-size:10px; text-anchor:middle">
      <text x="20" y="120">px</text>
      <text x="50" y="120">%</text>
      <text x="80" y="120">mm</text>

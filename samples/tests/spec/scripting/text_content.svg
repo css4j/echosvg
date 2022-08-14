@@ -255,7 +255,7 @@
   <defs>
   </defs>
 
-  <g id="test-content" style="font-size:18">
+  <g id="test-content" style="font-size:18px">
     <text id="simple" x="25" y="100">Simple Text</text>
     <text x="25" y="130">Using 
       <tspan id="tspans" fill="blue">Tspan</tspan></text>

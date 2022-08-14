@@ -113,9 +113,9 @@
       
       <use xlink:href="#heart" fill="red"
         x="20" y="40" width="60" height="80"/>
-      <text x="8" y="28" style="fill:red; font-size:27;">A</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">A</text>
       <text transform="scale(-1,-1)" x="-92" y="-132"
-        style="fill:red; font-size:27;">A</text>
+        style="fill:red; font-size:27px;">A</text>
     </symbol>
     
     <symbol id="h2" viewBox="0 0 100 160">
@@ -126,9 +126,9 @@
       <use transform="scale(1,-1)" xlink:href="#heart"  fill="red"
         x="40" y="-120" width="20" height="20"/>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">2</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">2</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132"
-        style="fill:red; font-size:27;">2</text>
+        style="fill:red; font-size:27px;">2</text>
     </symbol>
 
     <symbol id="h3" viewBox="0 0 100 160">
@@ -141,9 +141,9 @@
       <use transform="scale(1,-1)" xlink:href="#heart" fill="red"
         x="40" y="-120" width="20" height="20"/>
       
-      <text x="8" y="28" style="fill:red; font-size:27;">3</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">3</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">3</text>
+        style="fill:red; font-size:27px;">3</text>
     </symbol>
 
     <symbol id="h4" viewBox="0 0 100 160">
@@ -160,9 +160,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">4</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">4</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">4</text>
+        style="fill:red; font-size:27px;">4</text>
     </symbol>
 
     <symbol id="h5" viewBox="0 0 100 160">
@@ -181,9 +181,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">5</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">5</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">5</text>
+        style="fill:red; font-size:27px;">5</text>
     </symbol>
 
     <symbol id="h6" viewBox="0 0 100 160">
@@ -205,9 +205,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">6</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">6</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">6</text>
+        style="fill:red; font-size:27px;">6</text>
     </symbol>
 
     <symbol id="h7" viewBox="0 0 100 160">
@@ -231,9 +231,9 @@
           x="40" y="-104" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">7</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">7</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">7</text>
+        style="fill:red; font-size:27px;">7</text>
     </symbol>
 
     <symbol id="h8" viewBox="0 0 100 160">
@@ -260,9 +260,9 @@
       </g>
 
 
-      <text x="8" y="28" style="fill:red; font-size:27;">8</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">8</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">8</text>
+        style="fill:red; font-size:27px;">8</text>
     </symbol>
 
     <symbol id="h9" viewBox="0 0 100 160">
@@ -291,9 +291,9 @@
         x="63" y="-102.5" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">9</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">9</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">9</text>
+        style="fill:red; font-size:27px;">9</text>
     </symbol>
 
     <symbol id="h10" viewBox="0 0 100 160">
@@ -324,30 +324,30 @@
           x="40" y="-112.5" width="20" height="20" />
       </g>
 
-      <text x="2" y="28" dx="0 -4" style="fill:red; font-size:27;">10</text>
+      <text x="2" y="28" dx="0 -4" style="fill:red; font-size:27px;">10</text>
       <text transform="scale(-1,-1)" x="-98"  y="-132"  dx="0 -4" 
-        style="fill:red; font-size:27;">10</text>
+        style="fill:red; font-size:27px;">10</text>
     </symbol>
 
     <symbol id="h11" viewBox="0 0 100 160">
       <use xlink:href="#card-heart" width="100" height="160"/>
-      <text x="10" y="28" style="fill:red; font-size:27;">J</text>
+      <text x="10" y="28" style="fill:red; font-size:27px;">J</text>
       <text transform="scale(-1,-1)" x="-90"  y="-132" 
-        style="fill:red; font-size:27;">J</text>
+        style="fill:red; font-size:27px;">J</text>
     </symbol>
 
     <symbol id="h12" viewBox="0 0 100 160">
       <use xlink:href="#card-heart" width="100" height="160"/>
-      <text x="6" y="28" style="fill:red; font-size:27;">Q</text>
+      <text x="6" y="28" style="fill:red; font-size:27px;">Q</text>
       <text transform="scale(-1,-1)" x="-94"  y="-132" 
-        style="fill:red; font-size:27;">Q</text>
+        style="fill:red; font-size:27px;">Q</text>
     </symbol>
 
     <symbol id="h13" viewBox="0 0 100 160">
       <use xlink:href="#card-heart" width="100" height="160"/>
-      <text x="8" y="28" style="fill:red; font-size:27;">K</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">K</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">K</text>
+        style="fill:red; font-size:27px;">K</text>
     </symbol>
     
     <symbol id="c1" viewBox="0 0 100 160">
@@ -355,9 +355,9 @@
       
       <use xlink:href="#club" fill="black"
         x="20" y="40" width="60" height="80"/>
-      <text x="8" y="28" style="fill:black; font-size:27;">A</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">A</text>
       <text transform="scale(-1,-1)" x="-92" y="-132"
-        style="fill:black; font-size:27;">A</text>
+        style="fill:black; font-size:27px;">A</text>
     </symbol>
     
     <symbol id="c2" viewBox="0 0 100 160">
@@ -368,9 +368,9 @@
       <use transform="scale(1,-1)" xlink:href="#club"  fill="black"
         x="40" y="-120" width="20" height="20"/>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">2</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">2</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132"
-        style="fill:black; font-size:27;">2</text>
+        style="fill:black; font-size:27px;">2</text>
     </symbol>
 
     <symbol id="c3" viewBox="0 0 100 160">
@@ -383,9 +383,9 @@
       <use transform="scale(1,-1)" xlink:href="#club" fill="black"
         x="40" y="-120" width="20" height="20"/>
       
-      <text x="8" y="28" style="fill:black; font-size:27;">3</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">3</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">3</text>
+        style="fill:black; font-size:27px;">3</text>
     </symbol>
 
     <symbol id="c4" viewBox="0 0 100 160">
@@ -402,9 +402,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">4</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">4</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">4</text>
+        style="fill:black; font-size:27px;">4</text>
     </symbol>
 
     <symbol id="c5" viewBox="0 0 100 160">
@@ -423,9 +423,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">5</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">5</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">5</text>
+        style="fill:black; font-size:27px;">5</text>
     </symbol>
 
     <symbol id="c6" viewBox="0 0 100 160">
@@ -447,9 +447,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">6</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">6</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">6</text>
+        style="fill:black; font-size:27px;">6</text>
     </symbol>
 
     <symbol id="c7" viewBox="0 0 100 160">
@@ -473,9 +473,9 @@
           x="40" y="-104" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">7</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">7</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">7</text>
+        style="fill:black; font-size:27px;">7</text>
     </symbol>
 
     <symbol id="c8" viewBox="0 0 100 160">
@@ -502,9 +502,9 @@
       </g>
 
 
-      <text x="8" y="28" style="fill:black; font-size:27;">8</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">8</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">8</text>
+        style="fill:black; font-size:27px;">8</text>
     </symbol>
 
     <symbol id="c9" viewBox="0 0 100 160">
@@ -533,9 +533,9 @@
         x="63" y="-102.5" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">9</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">9</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">9</text>
+        style="fill:black; font-size:27px;">9</text>
     </symbol>
 
     <symbol id="c10" viewBox="0 0 100 160">
@@ -566,30 +566,30 @@
           x="40" y="-112.5" width="20" height="20" />
       </g>
 
-      <text x="2" y="28" dx="0 -4" style="fill:black; font-size:27;">10</text>
+      <text x="2" y="28" dx="0 -4" style="fill:black; font-size:27px;">10</text>
       <text transform="scale(-1,-1)" x="-98"  y="-132"  dx="0 -4" 
-        style="fill:black; font-size:27;">10</text>
+        style="fill:black; font-size:27px;">10</text>
     </symbol>
 
     <symbol id="c11" viewBox="0 0 100 160">
       <use xlink:href="#card-club" width="100" height="160"/>
-      <text x="10" y="28" style="fill:black; font-size:27;">J</text>
+      <text x="10" y="28" style="fill:black; font-size:27px;">J</text>
       <text transform="scale(-1,-1)" x="-90"  y="-132" 
-        style="fill:black; font-size:27;">J</text>
+        style="fill:black; font-size:27px;">J</text>
     </symbol>
 
     <symbol id="c12" viewBox="0 0 100 160">
       <use xlink:href="#card-club" width="100" height="160"/>
-      <text x="6" y="28" style="fill:black; font-size:27;">Q</text>
+      <text x="6" y="28" style="fill:black; font-size:27px;">Q</text>
       <text transform="scale(-1,-1)" x="-94"  y="-132" 
-        style="fill:black; font-size:27;">Q</text>
+        style="fill:black; font-size:27px;">Q</text>
     </symbol>
 
     <symbol id="c13" viewBox="0 0 100 160">
       <use xlink:href="#card-club" width="100" height="160"/>
-      <text x="8" y="28" style="fill:black; font-size:27;">K</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">K</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">K</text>
+        style="fill:black; font-size:27px;">K</text>
     </symbol>
     
     <symbol id="d1" viewBox="0 0 100 160">
@@ -597,9 +597,9 @@
       
       <use xlink:href="#diamond" fill="red"
         x="20" y="40" width="60" height="80"/>
-      <text x="8" y="28" style="fill:red; font-size:27;">A</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">A</text>
       <text transform="scale(-1,-1)" x="-92" y="-132"
-        style="fill:red; font-size:27;">A</text>
+        style="fill:red; font-size:27px;">A</text>
     </symbol>
     
     <symbol id="d2" viewBox="0 0 100 160">
@@ -610,9 +610,9 @@
       <use transform="scale(1,-1)" xlink:href="#diamond"  fill="red"
         x="40" y="-120" width="20" height="20"/>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">2</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">2</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132"
-        style="fill:red; font-size:27;">2</text>
+        style="fill:red; font-size:27px;">2</text>
     </symbol>
 
     <symbol id="d3" viewBox="0 0 100 160">
@@ -625,9 +625,9 @@
       <use transform="scale(1,-1)" xlink:href="#diamond" fill="red"
         x="40" y="-120" width="20" height="20"/>
       
-      <text x="8" y="28" style="fill:red; font-size:27;">3</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">3</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">3</text>
+        style="fill:red; font-size:27px;">3</text>
     </symbol>
 
     <symbol id="d4" viewBox="0 0 100 160">
@@ -644,9 +644,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">4</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">4</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">4</text>
+        style="fill:red; font-size:27px;">4</text>
     </symbol>
 
     <symbol id="d5" viewBox="0 0 100 160">
@@ -665,9 +665,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">5</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">5</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">5</text>
+        style="fill:red; font-size:27px;">5</text>
     </symbol>
 
     <symbol id="d6" viewBox="0 0 100 160">
@@ -689,9 +689,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">6</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">6</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">6</text>
+        style="fill:red; font-size:27px;">6</text>
     </symbol>
 
     <symbol id="d7" viewBox="0 0 100 160">
@@ -715,9 +715,9 @@
           x="40" y="-104" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">7</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">7</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">7</text>
+        style="fill:red; font-size:27px;">7</text>
     </symbol>
 
     <symbol id="d8" viewBox="0 0 100 160">
@@ -744,9 +744,9 @@
       </g>
 
 
-      <text x="8" y="28" style="fill:red; font-size:27;">8</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">8</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">8</text>
+        style="fill:red; font-size:27px;">8</text>
     </symbol>
 
     <symbol id="d9" viewBox="0 0 100 160">
@@ -775,9 +775,9 @@
         x="63" y="-102.5" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:red; font-size:27;">9</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">9</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">9</text>
+        style="fill:red; font-size:27px;">9</text>
     </symbol>
 
     <symbol id="d10" viewBox="0 0 100 160">
@@ -808,30 +808,30 @@
           x="40" y="-112.5" width="20" height="20" />
       </g>
 
-      <text x="2" y="28" dx="0 -4" style="fill:red; font-size:27;">10</text>
+      <text x="2" y="28" dx="0 -4" style="fill:red; font-size:27px;">10</text>
       <text transform="scale(-1,-1)" x="-98"  y="-132"  dx="0 -4" 
-        style="fill:red; font-size:27;">10</text>
+        style="fill:red; font-size:27px;">10</text>
     </symbol>
 
     <symbol id="d11" viewBox="0 0 100 160">
       <use xlink:href="#card-diamond" width="100" height="160"/>
-      <text x="10" y="28" style="fill:red; font-size:27;">J</text>
+      <text x="10" y="28" style="fill:red; font-size:27px;">J</text>
       <text transform="scale(-1,-1)" x="-90"  y="-132" 
-        style="fill:red; font-size:27;">J</text>
+        style="fill:red; font-size:27px;">J</text>
     </symbol>
 
     <symbol id="d12" viewBox="0 0 100 160">
       <use xlink:href="#card-diamond" width="100" height="160"/>
-      <text x="6" y="28" style="fill:red; font-size:27;">Q</text>
+      <text x="6" y="28" style="fill:red; font-size:27px;">Q</text>
       <text transform="scale(-1,-1)" x="-94"  y="-132" 
-        style="fill:red; font-size:27;">Q</text>
+        style="fill:red; font-size:27px;">Q</text>
     </symbol>
 
     <symbol id="d13" viewBox="0 0 100 160">
       <use xlink:href="#card-diamond" width="100" height="160"/>
-      <text x="8" y="28" style="fill:red; font-size:27;">K</text>
+      <text x="8" y="28" style="fill:red; font-size:27px;">K</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:red; font-size:27;">K</text>
+        style="fill:red; font-size:27px;">K</text>
     </symbol>
     
     <symbol id="s1" viewBox="0 0 100 160">
@@ -839,9 +839,9 @@
       
       <use xlink:href="#spade" fill="black"
         x="20" y="40" width="60" height="80"/>
-      <text x="8" y="28" style="fill:black; font-size:27;">A</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">A</text>
       <text transform="scale(-1,-1)" x="-92" y="-132"
-        style="fill:black; font-size:27;">A</text>
+        style="fill:black; font-size:27px;">A</text>
     </symbol>
     
     <symbol id="s2" viewBox="0 0 100 160">
@@ -852,9 +852,9 @@
       <use transform="scale(1,-1)" xlink:href="#spade"  fill="black"
         x="40" y="-120" width="20" height="20"/>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">2</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">2</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132"
-        style="fill:black; font-size:27;">2</text>
+        style="fill:black; font-size:27px;">2</text>
     </symbol>
 
     <symbol id="s3" viewBox="0 0 100 160">
@@ -867,9 +867,9 @@
       <use transform="scale(1,-1)" xlink:href="#spade" fill="black"
         x="40" y="-120" width="20" height="20"/>
       
-      <text x="8" y="28" style="fill:black; font-size:27;">3</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">3</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">3</text>
+        style="fill:black; font-size:27px;">3</text>
     </symbol>
 
     <symbol id="s4" viewBox="0 0 100 160">
@@ -886,9 +886,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">4</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">4</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">4</text>
+        style="fill:black; font-size:27px;">4</text>
     </symbol>
 
     <symbol id="s5" viewBox="0 0 100 160">
@@ -907,9 +907,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">5</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">5</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">5</text>
+        style="fill:black; font-size:27px;">5</text>
     </symbol>
 
     <symbol id="s6" viewBox="0 0 100 160">
@@ -931,9 +931,9 @@
           x="60" y="-120" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">6</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">6</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">6</text>
+        style="fill:black; font-size:27px;">6</text>
     </symbol>
 
     <symbol id="s7" viewBox="0 0 100 160">
@@ -957,9 +957,9 @@
           x="40" y="-104" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">7</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">7</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">7</text>
+        style="fill:black; font-size:27px;">7</text>
     </symbol>
 
     <symbol id="s8" viewBox="0 0 100 160">
@@ -986,9 +986,9 @@
       </g>
 
 
-      <text x="8" y="28" style="fill:black; font-size:27;">8</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">8</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">8</text>
+        style="fill:black; font-size:27px;">8</text>
     </symbol>
 
     <symbol id="s9" viewBox="0 0 100 160">
@@ -1017,9 +1017,9 @@
         x="63" y="-102.5" width="20" height="20" />
       </g>
 
-      <text x="8" y="28" style="fill:black; font-size:27;">9</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">9</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">9</text>
+        style="fill:black; font-size:27px;">9</text>
     </symbol>
 
     <symbol id="s10" viewBox="0 0 100 160">
@@ -1050,30 +1050,30 @@
           x="40" y="-112.5" width="20" height="20" />
       </g>
 
-      <text x="2" y="28" dx="0 -4" style="fill:black; font-size:27;">10</text>
+      <text x="2" y="28" dx="0 -4" style="fill:black; font-size:27px;">10</text>
       <text transform="scale(-1,-1)" x="-98"  y="-132"  dx="0 -4" 
-        style="fill:black; font-size:27;">10</text>
+        style="fill:black; font-size:27px;">10</text>
     </symbol>
 
     <symbol id="s11" viewBox="0 0 100 160">
       <use xlink:href="#card-spade" width="100" height="160"/>
-      <text x="10" y="28" style="fill:black; font-size:27;">J</text>
+      <text x="10" y="28" style="fill:black; font-size:27px;">J</text>
       <text transform="scale(-1,-1)" x="-90"  y="-132" 
-        style="fill:black; font-size:27;">J</text>
+        style="fill:black; font-size:27px;">J</text>
     </symbol>
 
     <symbol id="s12" viewBox="0 0 100 160">
       <use xlink:href="#card-spade" width="100" height="160"/>
-      <text x="6" y="28" style="fill:black; font-size:27;">Q</text>
+      <text x="6" y="28" style="fill:black; font-size:27px;">Q</text>
       <text transform="scale(-1,-1)" x="-94"  y="-132" 
-        style="fill:black; font-size:27;">Q</text>
+        style="fill:black; font-size:27px;">Q</text>
     </symbol>
 
     <symbol id="s13" viewBox="0 0 100 160">
       <use xlink:href="#card-spade" width="100" height="160"/>
-      <text x="8" y="28" style="fill:black; font-size:27;">K</text>
+      <text x="8" y="28" style="fill:black; font-size:27px;">K</text>
       <text transform="scale(-1,-1)" x="-92"  y="-132" 
-        style="fill:black; font-size:27;">K</text>
+        style="fill:black; font-size:27px;">K</text>
     </symbol>
     
   </defs>

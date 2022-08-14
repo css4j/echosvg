@@ -37,7 +37,7 @@
     <style type="text/css"><![CDATA[
         .header { fill:rgb(240, 240, 240); stroke:black; }
         .headerLabel {  font-family: 'Sansation'; 
-                        font-size: 10;
+                        font-size: 10px;
                         text-anchor: middle; 
                         fill:black; stroke:none;}
     ]]></style>

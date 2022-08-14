@@ -42,7 +42,7 @@
   <g id="testContent">
     <text x="225" y="50" class="title">CSS Media</text>
 
-    <text x="20" y="80" style="font-size:12; text-anchor:start">
+    <text x="20" y="80" style="font-size:12px; text-anchor:start">
       <tspan>Demonstrate how a slide can be different depending on the CSS media.</tspan>
       <tspan x="20" y="94">Choose your media using the 'Edit=>Preference' menu item.</tspan>
       <tspan x="20" y="108">You can switch between 'screen', 'print' or 'projection'</tspan>

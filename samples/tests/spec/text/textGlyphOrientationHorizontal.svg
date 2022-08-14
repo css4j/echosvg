@@ -51,7 +51,7 @@
 
    <text class="title" x="50%" y="30">Text Orientation Horizontal</text>
 
-   <g id="testContent" style="font-family:'Roboto'; font-size:24">
+   <g id="testContent" style="font-family:'Roboto'; font-size:24px">
 
      <line x1="50" x2="200" y1="80" y2="80" stroke="blue" stroke-width="2"/>
      <text x="50" y="80" glyph-orientation-horizontal="0">Echo is Good</text>

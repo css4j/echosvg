@@ -69,7 +69,7 @@
    </font>
 
    <text x="150" y="200" 
-         style="stroke:lightgrey;font-family:FOPFont;font-size:120"
+         style="stroke:lightgrey;font-family:FOPFont;font-size:120px"
        >FOP</text>
 
    <svg x="150" y="201" width="162" height="20">
@@ -81,7 +81,7 @@
            SVG font defn) in the text rendering bounds it will skip
            the text entirely resulting in nothing being drawn on
            top of the rect -->
-      <text y="-1" style="stroke:black; font-family:FOPFont; font-size:120"
+      <text y="-1" style="stroke:black; font-family:FOPFont; font-size:120px"
        >FOP</text>
    </svg>
 

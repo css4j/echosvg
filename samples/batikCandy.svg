@@ -90,7 +90,7 @@
    </filter>
 </defs>
 
-<g style="font-size:128; font-family:SVGImpact; text-anchor:middle;">
+<g style="font-size:128px; font-family:SVGImpact; text-anchor:middle;">
   <text x="50%" y="35%" style="filter:url(#dropShadow)">EchoSVG</text>
   <text x="50%" y="35%" style="fill:rgb(172,20,20)">EchoSVG</text>
   <text x="50%" y="35%" style="filter:url(#emboss)">EchoSVG</text>

@@ -79,10 +79,10 @@
     </defs>
 
     <rect x="100" y="160" width="200" height="45" style="fill:url(#grad); clip-path:url(#clip)" />
-    <text x="300" y="200" style="font-size:12; filter:none; fill:black">(System font)</text>
+    <text x="300" y="200" style="font-size:12px; filter:none; fill:black">(System font)</text>
 
     <rect x="100" y="260" width="200" height="45" style="fill:url(#grad); clip-path:url(#svgClip)" />
-    <text x="300" y="300" style="font-size:12; filter:none; fill:black">(SVG font)</text>
+    <text x="300" y="300" style="font-size:12px; filter:none; fill:black">(SVG font)</text>
 
   </g>
 

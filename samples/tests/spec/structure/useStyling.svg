@@ -38,7 +38,7 @@
   <!-- ============================================================= -->
   <g id="testContent">
     <text x="225" y="60" class="title">&lt;use> and styling using &lt;style></text>
-    <text x="225" y="80" style="text-anchor:middle; font-size:12; font-style:italic">This file is using the defs.svg file to get the external resources</text>
+    <text x="225" y="80" style="text-anchor:middle; font-size:12px; font-style:italic">This file is using the defs.svg file to get the external resources</text>
 
     <!-- ############################### -->
     <style type="text/css"><![CDATA[     

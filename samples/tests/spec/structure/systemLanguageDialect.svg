@@ -38,9 +38,9 @@
     <text x="225" y="50" class="title">Test the 'systemLanguage' attribute with dialect</text>
 
 
-    <text x="50%" y="150" style="text-anchor:middle; font-size:32" systemLanguage="en">english (en)</text>
+    <text x="50%" y="150" style="text-anchor:middle; font-size:32px" systemLanguage="en">english (en)</text>
 
-    <text x="50%" y="250" style="text-anchor:middle; font-size:32" systemLanguage="en-UK">english UK (en-UK)</text>
+    <text x="50%" y="250" style="text-anchor:middle; font-size:32px" systemLanguage="en-UK">english UK (en-UK)</text>
 
   </g>
 

@@ -45,7 +45,7 @@
       <rect x="75" y="70" width="300" height="40" style="fill:#eee; stroke:black" />
       <rect x="75" y="110" width="300" height="40" style="fill:white; stroke:black" />
       <rect x="75" y="150" width="300" height="40" style="fill:#eee; stroke:black" />
-      <text x="90" y="64" style="fill:white;font-size:14">x attribute define new text chunks</text>
+      <text x="90" y="64" style="fill:white;font-size:14px">x attribute define new text chunks</text>
       <g style="stroke:crimson; fill:none">
         <line x1="145" y1="70" x2="145" y2="190" />
         <line x1="185" y1="70" x2="185" y2="190" />
@@ -60,7 +60,7 @@
       <rect x="75" y="70" width="300" height="40" style="fill:#eee" />
       <rect x="75" y="110" width="300" height="40" style="fill:white" />
       <rect x="75" y="150" width="300" height="40" style="fill:#eee" />
-      <text x="90" y="64" style="fill:white;stroke:none;font-size:14"
+      <text x="90" y="64" style="fill:white;stroke:none;font-size:14px"
         >y attribute does not define new text chunk</text>
       <g style="stroke:crimson; fill:none">
         <line x1="225" y1="70" x2="225" y2="190" />
@@ -72,7 +72,7 @@
       <rect x="75" y="70" width="300" height="40" style="fill:#eee; stroke:black" />
       <rect x="75" y="110" width="300" height="40" style="fill:white; stroke:black" />
       <rect x="75" y="150" width="300" height="40" style="fill:#eee; stroke:black" />
-      <text x="90" y="64" style="fill:white;font-size:14">x &amp; y attributes define new text chunks</text>
+      <text x="90" y="64" style="fill:white;font-size:14px">x &amp; y attributes define new text chunks</text>
       <g style="stroke:crimson; fill:none">
         <line x1="145" y1="70" x2="145" y2="190" />
         <line x1="185" y1="70" x2="185" y2="190" />

@@ -287,7 +287,7 @@
 </defs>
 
  
-    <g style="font-family:SVGComic; font-size:50">
+    <g style="font-family:SVGComic; font-size:50px">
         <text x="50" y="120">ab<tspan style="fill:blue" dy="5 5 5 5 5 5">cde fgh</tspan><tspan dy="-30">ij</tspan></text>
         <text x="50" y="220" style="text-decoration:underline; fill:red">UnderLine</text>
         <text x="50" y="320" style="fill:green"><tspan style="text-decoration:overline">Over</tspan>Line</text>

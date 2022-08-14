@@ -38,7 +38,7 @@
     <!-- ============================================================= -->
     <g id="testContent">
     <text x="225" y="50" class="title">External Paint Servers</text>
-    <text x="225" y="70" style="text-anchor:middle; font-size:12; font-style:italic">This file is using the defs.svg file to get the external resources</text>
+    <text x="225" y="70" style="text-anchor:middle; font-size:12px; font-style:italic">This file is using the defs.svg file to get the external resources</text>
 
 <!-- ############################### -->
 <g id="board" style="fill:none; stroke:black;">
@@ -58,7 +58,7 @@
   <line x1="75" y1="220" x2="375" y2="220" />
   <line x1="75" y1="320" x2="375" y2="320" />
 
-  <g style="font-size:12; text-anchor:middle; fill:black; stroke:none">
+  <g style="font-size:12px; text-anchor:middle; fill:black; stroke:none">
     <text x="125" y="114">Linear Gradient</text>
     <text x="225" y="114">Radial Gradient</text>
     <text x="325" y="114">Pattern</text>

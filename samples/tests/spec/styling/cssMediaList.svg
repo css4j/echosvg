@@ -40,7 +40,7 @@
   <g id="testContent">
     <text x="225" y="50" class="title">CSS Media 2</text>
 
-    <text x="20" y="80" style="font-size:12; text-anchor:start">
+    <text x="20" y="80" style="font-size:12px; text-anchor:start">
       <tspan>Show which CSS media is taken into account</tspan>
       <tspan x="20" dy="14">Choose your media using the 'Edit=>Preference' menu item.</tspan>
     </text>
@@ -65,7 +65,7 @@
       <line x1="100" y1="0" x2="100" y2="200" />
 
 
-      <g style="font-size:12; text-anchor:start; stroke:none; fill:black">
+      <g style="font-size:12px; text-anchor:start; stroke:none; fill:black">
         <text x="10" y="14" >all</text>
         <text x="10" y="34" >aural</text>
         <text x="10" y="54" >braille</text>

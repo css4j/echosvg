@@ -39,7 +39,7 @@
   <style type="text/css"><![CDATA[
     svg {
       font-family: 'Roboto';
-      font-size:   11;
+      font-size:   11px;
     }
   ]]>
   </style>

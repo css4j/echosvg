@@ -103,7 +103,7 @@
     </script>
 
     <g id="test-content">
-        <g style="font-size:40" >
+        <g style="font-size:40px" >
 
           <text><tspan x="70" y="135" style="fill:orange" 
                 onload="addText(evt)" >
@@ -126,7 +126,7 @@
 
         </g>
 
-        <g style="stroke:black;fill:none;stroke-width:1;font-size:40">
+        <g style="stroke:black;fill:none;stroke-width:1;font-size:40px">
           <text><tspan x="70" y="135">
             the quick <tspan>brown</tspan> fox
           </tspan></text>
@@ -143,10 +143,10 @@
 
         <g style="fill:black; stroke:none; text-anchor:middle">
                 <text x="225" y="230" >insert nodes 
-                   <tspan style="font-size:8">( TEXT_NODE and CDATA_SECTION_NODE )</tspan>
+                   <tspan style="font-size:8px">( TEXT_NODE and CDATA_SECTION_NODE )</tspan>
                 </text>
                 <text x="225" y="430" >remove nodes 
-                   <tspan style="font-size:8">( TEXT_NODE and CDATA_SECTION_NODE )</tspan>
+                   <tspan style="font-size:8px">( TEXT_NODE and CDATA_SECTION_NODE )</tspan>
                 </text>
         </g>
     </g>

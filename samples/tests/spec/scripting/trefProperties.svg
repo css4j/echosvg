@@ -55,7 +55,7 @@
         <text id="text10">letter-spacing:10</text>
     </defs>
 
-    <g id="test-content" style="font-size:18">
+    <g id="test-content" style="font-size:18px">
 
      <text x="100" y="100"><tref xlink:href="#text1" onload="changeStyle(evt, 'font-family:Anton')"/></text>
      <text x="100" y="140"><tref xlink:href="#text2" onload="changeStyle(evt, 'font-size:32')"/></text>

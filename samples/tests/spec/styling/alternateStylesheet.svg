@@ -40,13 +40,13 @@
 
   .title {
     font-family: 'Open Sans';
-    font-size: 16;
+    font-size: 16px;
     text-anchor: middle;
   }
 
   .legend {
     font-family: 'Open Sans';
-    font-size: 10;
+    font-size: 10px;
     text-anchor: middle;
   }
 
@@ -62,7 +62,7 @@
   <g id="testContent">
     <text x="225" y="50" class="title">Alternate Stylesheets 2</text>
 
-    <text x="20" y="80" style="font-size:12; text-anchor:start">
+    <text x="20" y="80" style="font-size:12px; text-anchor:start">
       <tspan>Choose your alternate stylesheet using the 'View->Use Stylesheet'</tspan>
       <tspan x="20" y="100"> submenu items.</tspan>
     </text>
@@ -92,7 +92,7 @@
 
     <g>
 
-      <g style="text-anchor:middle; font-size:128; font-family:Anton;">
+      <g style="text-anchor:middle; font-size:128px; font-family:Anton;">
         <text x="50%" y="50%" style="filter:url(#dropShadow); fill:black">Echo</text>
         <text x="50%" y="50%" class="logo" style="filter:url(#emboss);">Echo</text>
       </g>

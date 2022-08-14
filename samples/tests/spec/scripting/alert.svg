@@ -68,7 +68,7 @@
         </g>
         <line x1="225" y1="60" x2="225" y2="300" />
     </g>
-    <g style="fill:black; stroke:none; text-anchor:middle; font-size:14">
+    <g style="fill:black; stroke:none; text-anchor:middle; font-size:14px">
         <g>
             <text x="137.5" y="75">mousedown</text>
             <text x="312.5" y="75">mouseup</text>

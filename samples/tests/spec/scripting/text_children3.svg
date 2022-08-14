@@ -113,7 +113,7 @@
     </script>
 
     <g id="test-content">
-        <g style="font-size:40" >
+        <g style="font-size:40px" >
 
           <text x="70" y="115" style="fill:orange" 
                 onload="addtspan(evt,9,' brown','fill:brown')" >the quick fox</text>
@@ -145,7 +145,7 @@
 
         </g>
 
-        <g style="stroke:black;fill:none;stroke-width:1;font-size:40">
+        <g style="stroke:black;fill:none;stroke-width:1;font-size:40px">
           <text x="70" y="115">
             the quick <tspan>brown</tspan> fox
           </text>
@@ -168,10 +168,10 @@
 
         <g style="fill:black; stroke:none; text-anchor:middle">
                 <text x="225" y="230" >insert nodes 
-                   <tspan style="font-size:8">( &lt;tspan&gt;,&lt;tref&gt;,&lt;textPath&gt; )</tspan>
+                   <tspan style="font-size:8px">( &lt;tspan&gt;,&lt;tref&gt;,&lt;textPath&gt; )</tspan>
                 </text>
                 <text x="225" y="430" >remove nodes 
-                   <tspan style="font-size:8">( &lt;tspan&gt;,&lt;tref&gt;,&lt;textPath&gt; )</tspan>
+                   <tspan style="font-size:8px">( &lt;tspan&gt;,&lt;tref&gt;,&lt;textPath&gt; )</tspan>
                 </text>
         </g>
     </g>

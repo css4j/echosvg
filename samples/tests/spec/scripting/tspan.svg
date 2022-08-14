@@ -56,7 +56,7 @@
 
     <g id="test-content">
 
-         <g id="dynamic" style="fill:orange;stroke:none;font-size:32;text-anchor:middle" >
+         <g id="dynamic" style="fill:orange;stroke:none;font-size:32px;text-anchor:middle" >
 
                 <text x="35" y="180" >E<tspan onload="initXY(evt,120,180)"
                     >XAMPLE</tspan>1</text>
@@ -73,7 +73,7 @@
 
          </g>
 
-         <g id="expected" style="fill:none;stroke:black;stroke-width:1;font-size:32;text-anchor:middle">
+         <g id="expected" style="fill:none;stroke:black;stroke-width:1;font-size:32px;text-anchor:middle">
 
                 <text x="35" y="180" >E<tspan x="120" y="180" 
                     >XAMPLE</tspan>1</text>

@@ -124,7 +124,7 @@
   <line x1="100" y1="0" x2="100" y2="75" style="stroke:black; fill:none" />
   <line x1="100" y1="0" x2="200" y2="75" style="stroke:black; fill:none" />
   <circle cx="100" cy="0" r="25" style="fill:#eee;" />
-  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18">&lt;g></text>
+  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18px">&lt;g></text>
 
   <!-- ### color inherited inside this document  ###-->
   <g style="fill:orange">
@@ -151,7 +151,7 @@
   <line x1="100" y1="0" x2="100" y2="75" style="stroke:black; fill:none" />
   <line x1="100" y1="0" x2="200" y2="75" style="stroke:black; fill:none" />
   <circle cx="100" cy="0" r="25" style="fill:#eee;" />
-  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18">&lt;g></text>
+  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18px">&lt;g></text>
 
   <!-- ### gradient inherited inside this document ###-->
   <g style="fill:url(#extGrad3)">
@@ -275,7 +275,7 @@
   <line x1="100" y1="0" x2="100" y2="75" style="stroke:black; fill:none" />
   <line x1="100" y1="0" x2="200" y2="75" style="stroke:black; fill:none" />
   <circle cx="100" cy="0" r="25" style="fill:#eee;" />
-  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18">&lt;g></text>
+  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18px">&lt;g></text>
 
   <!-- ### color inherited inside this document  ###-->
   <g class="colorOrange">
@@ -302,7 +302,7 @@
   <line x1="100" y1="0" x2="100" y2="75" style="stroke:black; fill:none" />
   <line x1="100" y1="0" x2="200" y2="75" style="stroke:black; fill:none" />
   <circle cx="100" cy="0" r="25" style="fill:#eee;" />
-  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18">&lt;g></text>
+  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18px">&lt;g></text>
 
   <!-- ### gradient inherited inside this document ###-->
   <g class="gradClass">
@@ -334,7 +334,7 @@
   <line x1="100" y1="0" x2="100" y2="75" style="stroke:black; fill:none" />
   <line x1="100" y1="0" x2="200" y2="75" style="stroke:black; fill:none" />
   <circle cx="100" cy="0" r="25" style="fill:#eee;" />
-  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18">&lt;g></text>
+  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18px">&lt;g></text>
 
   <!-- ### color inherited inside this document  ###-->
   <g class="colorOrangeStylesheet">
@@ -361,7 +361,7 @@
   <line x1="100" y1="0" x2="100" y2="75" style="stroke:black; fill:none" />
   <line x1="100" y1="0" x2="200" y2="75" style="stroke:black; fill:none" />
   <circle cx="100" cy="0" r="25" style="fill:#eee;" />
-  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18">&lt;g></text>
+  <text x="100" y="6" style="fill:black; text-anchor:middle; font-size:18px">&lt;g></text>
 
   <!-- ### gradient inherited inside this document ###-->
   <g class="gradClassStylesheet">

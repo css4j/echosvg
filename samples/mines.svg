@@ -339,28 +339,28 @@
         /></g>
     
     <use id="square0" xlink:href="#empty"/>
-    <g id="square1" style="text-anchor:middle; font-size:8;"
+    <g id="square1" style="text-anchor:middle; font-size:8px;"
       ><use xlink:href="#empty"
         /><text x="5" y="8" fill="#008" pointer-events="none">1</text></g>
-    <g id="square2" style="text-anchor:middle; font-size:8;"
+    <g id="square2" style="text-anchor:middle; font-size:8px;"
       ><use xlink:href="#empty"
         /><text x="5" y="8" fill="#00C" pointer-events="none">2</text></g>
-    <g id="square3" style="text-anchor:middle; font-size:8;"
+    <g id="square3" style="text-anchor:middle; font-size:8px;"
       ><use xlink:href="#empty"
         /><text x="5" y="8" fill="#40F" pointer-events="none">3</text></g>
-    <g id="square4" style="text-anchor:middle; font-size:8;"
+    <g id="square4" style="text-anchor:middle; font-size:8px;"
       ><use xlink:href="#empty"
         /><text x="5" y="8" fill="#80C" pointer-events="none">4</text></g>
-    <g id="square5" style="text-anchor:middle; font-size:8;"
+    <g id="square5" style="text-anchor:middle; font-size:8px;"
       ><use xlink:href="#empty"
         /><text x="5" y="8" fill="#C0C" pointer-events="none">5</text></g>
-    <g id="square6" style="text-anchor:middle; font-size:8;"
+    <g id="square6" style="text-anchor:middle; font-size:8px;"
       ><use xlink:href="#empty"
         /><text x="5" y="8" fill="#F08" pointer-events="none">6</text></g>
-    <g id="square7" style="text-anchor:middle; font-size:8;"
+    <g id="square7" style="text-anchor:middle; font-size:8px;"
       ><use xlink:href="#empty"
         /><text x="5" y="8" fill="#F04" pointer-events="none">7</text></g>
-    <g id="square8" style="text-anchor:middle; font-size:8;"
+    <g id="square8" style="text-anchor:middle; font-size:8px;"
       ><use xlink:href="#empty"
         /><text x="5" y="8" fill="#F00" pointer-events="none">8</text></g>
     

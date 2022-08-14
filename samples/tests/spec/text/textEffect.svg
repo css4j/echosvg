@@ -105,8 +105,8 @@
       BATIK
     </text>
 
-    <text x="120" y="400" style="font-size:12; filter:none; fill:black; text-anchor:middle">(Open Sans)</text>
-    <text x="330" y="400" style="font-size:12; filter:none; fill:black; text-anchor:middle">(SVG font)</text>
+    <text x="120" y="400" style="font-size:12px; filter:none; fill:black; text-anchor:middle">(Open Sans)</text>
+    <text x="330" y="400" style="font-size:12px; filter:none; fill:black; text-anchor:middle">(SVG font)</text>
 
   </g>
 

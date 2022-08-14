@@ -22,11 +22,11 @@ svg {
 }
 .title {
   font-family: 'Open Sans', 'Roboto';
-  font-size: 16;
+  font-size: 16px;
   text-anchor: middle;
 }
 .legend {
   font-family: 'Open Sans', 'Roboto';
-  font-size: 10;
+  font-size: 10px;
   text-anchor: middle;
 }

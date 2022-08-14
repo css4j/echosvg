@@ -55,7 +55,7 @@
     </script>
 
     <g id="test-content">
-         <g id="dynamic" style="fill:orange;stroke:none;font-size:32;text-anchor:middle" >
+         <g id="dynamic" style="fill:orange;stroke:none;font-size:32px;text-anchor:middle" >
 
                 <text onload="initXY(evt,100,180)" 
                     >EXAMPLE1</text>
@@ -72,7 +72,7 @@
 
          </g>
 
-         <g id="expected" style="fill:none;stroke:black;stroke-width:1;font-size:32;text-anchor:middle">
+         <g id="expected" style="fill:none;stroke:black;stroke-width:1;font-size:32px;text-anchor:middle">
 
                 <text x="100" y="180" 
                     >EXAMPLE1</text>

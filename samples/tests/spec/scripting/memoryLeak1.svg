@@ -59,7 +59,7 @@
   </defs>
 
   <g id="test-content">
-    <g style="font-size:20" >
+    <g style="font-size:20px" >
       <text id="t1_bg" x="5"   y="135" fill="purple" >Simple Text</text>
       <text id="t2"    x="155" y="135" fill="crimson">Simple Text</text>
       <text id="t1"    x="305" y="135" fill="gold"   >Simple Text</text>
@@ -77,7 +77,7 @@
       <circle id="c2"   cx="360" cy="235" r="25" fill="gold"/>
     </g>
 
-    <g style="font-size:15" >
+    <g style="font-size:15px" >
       <text x="5"  y="290" fill="purple">Some 
         <tspan id="ts_bg" font-weight="bold">Complex</tspan> Text</text>
       <text x="155"  y="290" fill="crimson">Some 

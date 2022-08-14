@@ -233,7 +233,7 @@
 
             <!-- draw text using the SVG Font -->
 
-            <g id="text-content" style="fill:blue; stroke:none; font-family:SVGArial; font-size:45">
+            <g id="text-content" style="fill:blue; stroke:none; font-family:SVGArial; font-size:45px">
                 <text x="120" y="150">abcd</text>
                 <text x="120" y="210">efgh</text>
                 <text x="120" y="270">ijij</text>

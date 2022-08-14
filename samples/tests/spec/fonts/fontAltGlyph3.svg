@@ -179,7 +179,7 @@
         </defs>
 
  
-        <g id="alt_glyph_tests" style="font-family:SVGComic; font-size:30">
+        <g id="alt_glyph_tests" style="font-family:SVGComic; font-size:30px">
 
             <text x="30" y="80">a
 <altGlyph xlink:href="#purpleB">b</altGlyph>c

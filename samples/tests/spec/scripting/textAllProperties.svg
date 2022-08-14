@@ -254,7 +254,7 @@
 
 ]]>    </script>
 
-    <g id="test-content" style="font-size:30" >
+    <g id="test-content" style="font-size:30px" >
         <!-- testing only
          <use transform="translate(155,220)" xlink:href="#path" style="stroke:blue;fill:none" />
         -->

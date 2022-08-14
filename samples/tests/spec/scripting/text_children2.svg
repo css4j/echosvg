@@ -65,7 +65,7 @@
     </script>
 
     <g id="test-content">
-        <g style="text-anchor:middle;font-size:24;stroke:none;fill:crimson" >
+        <g style="text-anchor:middle;font-size:24px;stroke:none;fill:crimson" >
 
           <text x="100" y="155" dy="0 -2 5 -5 5 -5 5 -5 5 -5 5 -5 5 -2"
              xml:space="preserve" onload="text_append(evt,' the end')" >append at</text>
@@ -78,7 +78,7 @@
 
         </g>
 
-        <g style="stroke:black; fill:none; stroke-width:1 ;text-anchor:middle; font-size:24">
+        <g style="stroke:black; fill:none; stroke-width:1 ;text-anchor:middle; font-size:24px">
           <text x="100" y="155" dy="0 -2 5 -5 5 -5 5 -5 5 -5 5 -5 5 -2"
              >append at the end</text>
           <text x="100" y="355" dy="0 -2 5 -5 5 -5 5 -5 5 -2"
