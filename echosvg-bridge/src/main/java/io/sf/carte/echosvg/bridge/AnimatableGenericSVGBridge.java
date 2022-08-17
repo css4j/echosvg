@@ -74,6 +74,7 @@ public abstract class AnimatableGenericSVGBridge extends AnimatableSVGBridge
 	 * @see #getPixelUnitToMillimeter()
 	 */
 	@Override
+	@Deprecated(forRemoval=true)
 	public float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 	}

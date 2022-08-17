@@ -143,6 +143,7 @@ public class UserAgentAdapter implements UserAgent {
 	 * @see #getPixelUnitToMillimeter()
 	 */
 	@Override
+	@Deprecated(forRemoval=true)
 	public float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 

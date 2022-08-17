@@ -81,6 +81,7 @@ public interface SVGUserAgent {
 	 * 
 	 * @see #getPixelUnitToMillimeter()
 	 */
+	@Deprecated(forRemoval=true)
 	float getPixelToMM();
 
 	/**

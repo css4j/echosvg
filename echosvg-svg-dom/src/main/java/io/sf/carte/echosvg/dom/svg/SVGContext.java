@@ -47,6 +47,7 @@ public interface SVGContext {
 	 * 
 	 * @see #getPixelUnitToMillimeter()
 	 */
+	@Deprecated(forRemoval=true)
 	float getPixelToMM();
 
 	/**

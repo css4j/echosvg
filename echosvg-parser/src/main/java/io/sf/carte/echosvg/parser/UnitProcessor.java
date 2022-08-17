@@ -424,6 +424,7 @@ public abstract class UnitProcessor {
 		 * 
 		 * @see #getPixelUnitToMillimeter()
 		 */
+		@Deprecated(forRemoval=true)
 		float getPixelToMM();
 
 		/**

@@ -64,6 +64,7 @@ public interface CSSContext {
 	 * 
 	 * @see #getPixelUnitToMillimeter()
 	 */
+	@Deprecated(forRemoval=true)
 	float getPixelToMillimeter();
 
 	/**

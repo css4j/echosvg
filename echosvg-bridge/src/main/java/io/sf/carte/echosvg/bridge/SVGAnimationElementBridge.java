@@ -370,6 +370,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 	 * @see #getPixelUnitToMillimeter()
 	 */
 	@Override
+	@Deprecated(forRemoval=true)
 	public float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 

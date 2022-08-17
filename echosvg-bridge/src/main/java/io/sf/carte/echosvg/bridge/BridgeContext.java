@@ -1783,6 +1783,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 	 * @see #getPixelUnitToMillimeter()
 	 */
 	@Override
+	@Deprecated(forRemoval=true)
 	public float getPixelToMillimeter() {
 		return getPixelUnitToMillimeter();
 

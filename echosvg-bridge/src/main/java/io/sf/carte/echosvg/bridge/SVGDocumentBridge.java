@@ -218,6 +218,7 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler, S
 	 * @see #getPixelUnitToMillimeter()
 	 */
 	@Override
+	@Deprecated(forRemoval=true)
 	public float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 	}

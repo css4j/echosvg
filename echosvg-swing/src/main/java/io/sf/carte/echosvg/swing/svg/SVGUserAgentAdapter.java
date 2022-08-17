@@ -125,6 +125,7 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
 	 * @see #getPixelUnitToMillimeter()
 	 */
 	@Override
+	@Deprecated(forRemoval=true)
 	public float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 

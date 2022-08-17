@@ -325,6 +325,7 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 		 * @see #getPixelUnitToMillimeter()
 		 */
 		@Override
+		@Deprecated(forRemoval=true)
 		public float getPixelToMM() {
 			return getPixelUnitToMillimeter();
 

@@ -132,6 +132,7 @@ public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge
 	 * @see #getPixelUnitToMillimeter()
 	 */
 	@Override
+	@Deprecated(forRemoval=true)
 	public float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 

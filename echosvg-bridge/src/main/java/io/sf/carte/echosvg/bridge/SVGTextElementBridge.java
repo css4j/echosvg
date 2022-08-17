@@ -1849,6 +1849,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		 * @see #getPixelUnitToMillimeter()
 		 */
 		@Override
+		@Deprecated(forRemoval=true)
 		public float getPixelToMM() {
 			return getPixelUnitToMillimeter();
 

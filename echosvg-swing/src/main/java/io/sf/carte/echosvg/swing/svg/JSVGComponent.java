@@ -2503,6 +2503,7 @@ public class JSVGComponent extends JGVTComponent {
 		 * @see #getPixelUnitToMillimeter()
 		 */
 		@Override
+		@Deprecated(forRemoval=true)
 		public float getPixelToMM() {
 			return getPixelUnitToMillimeter();
 		}
@@ -3248,6 +3249,7 @@ public class JSVGComponent extends JGVTComponent {
 		 * @see #getPixelUnitToMillimeter()
 		 */
 		@Override
+		@Deprecated(forRemoval=true)
 		public float getPixelToMM() {
 			return getPixelUnitToMillimeter();
 		}

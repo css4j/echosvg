@@ -257,6 +257,7 @@ public abstract class AbstractSVGLength implements SVGLength {
 		 * @see #getPixelUnitToMillimeter()
 		 */
 		@Override
+		@Deprecated(forRemoval=true)
 		public float getPixelToMM() {
 			return getPixelUnitToMillimeter();
 		}

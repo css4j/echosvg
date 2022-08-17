@@ -93,6 +93,7 @@ public interface UserAgent {
 	 * 
 	 * @see #getPixelUnitToMillimeter()
 	 */
+	@Deprecated(forRemoval=true)
 	float getPixelToMM();
 
 	/**

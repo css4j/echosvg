@@ -892,6 +892,7 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 		 * @see #getPixelUnitToMillimeter()
 		 */
 		@Override
+		@Deprecated(forRemoval=true)
 		public float getPixelToMM() {
 			return getPixelUnitToMillimeter();
 		}
