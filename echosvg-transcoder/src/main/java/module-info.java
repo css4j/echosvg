@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2021 Carlos Amengual
+ * Copyright (c) 2020-2022 Carlos Amengual
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,21 +21,21 @@
  * @provides io.sf.carte.echosvg.ext.awt.image.spi.RegistryEntry
  */
 module io.sf.carte.echosvg.transcoder {
-	exports io.sf.carte.echosvg.transcoder.wmf.tosvg;
+	exports io.sf.carte.echosvg.transcoder;
+	exports io.sf.carte.echosvg.transcoder.image;
+	exports io.sf.carte.echosvg.transcoder.image.resources;
+	exports io.sf.carte.echosvg.transcoder.keys;
 	exports io.sf.carte.echosvg.transcoder.print;
 	exports io.sf.carte.echosvg.transcoder.svg2svg;
 	exports io.sf.carte.echosvg.transcoder.wmf;
-	exports io.sf.carte.echosvg.transcoder.image;
-	exports io.sf.carte.echosvg.transcoder.keys;
-	exports io.sf.carte.echosvg.transcoder;
-	exports io.sf.carte.echosvg.transcoder.image.resources;
+	exports io.sf.carte.echosvg.transcoder.wmf.tosvg;
 
+	exports io.sf.carte.echosvg.ext.awt.image.codec.imageio;
 	exports io.sf.carte.echosvg.ext.awt.image.codec.png;
 	exports io.sf.carte.echosvg.ext.awt.image.codec.util;
-	exports io.sf.carte.echosvg.ext.awt.image.codec.imageio;
 
-	requires transitive io.sf.carte.echosvg.svggen;
 	requires transitive io.sf.carte.echosvg.bridge;
+	requires transitive io.sf.carte.echosvg.svggen;
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.xml;
 
