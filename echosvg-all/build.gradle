@@ -1,5 +1,5 @@
 plugins {
-	id 'de.jjohannes.extra-java-module-info'
+	id 'org.gradlex.extra-java-module-info'
 	id 'org.ajoberstar.grgit'
 	id 'echosvg.java-conventions'
 }
