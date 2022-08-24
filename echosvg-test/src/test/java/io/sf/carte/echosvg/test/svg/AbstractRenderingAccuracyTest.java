@@ -266,6 +266,15 @@ public abstract class AbstractRenderingAccuracyTest {
 	}
 
 	/**
+	 * Get the image suffix, for example {@code -dark}.
+	 * 
+	 * @return the image suffix, generally the empty string.
+	 */
+	protected String getImageSuffix() {
+		return "";
+	}
+
+	/**
 	 * Returns the URL of the SVG being rendered.
 	 */
 	public String getURI() {
@@ -319,7 +328,8 @@ public abstract class AbstractRenderingAccuracyTest {
 				}
 			}
 		} else {
-			tmpFile = TestLocations.getTempFilename(svgURL, TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, "", ".png");
+			tmpFile = TestLocations.getTempFilename(svgURL, TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, getImageSuffix(),
+					".png");
 		}
 
 		FileOutputStream tmpFileOS = new FileOutputStream(tmpFile);
@@ -578,8 +588,8 @@ public abstract class AbstractRenderingAccuracyTest {
 	 * the imageType suffix in the temp directory of the test-reports directory.
 	 */
 	private File imageToFile(BufferedImage img, String imageType) throws IOException {
-		File imageFile = TestLocations.getTempFilename(svgURL, TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, imageType,
-				IMAGE_FILE_EXTENSION);
+		File imageFile = TestLocations.getTempFilename(svgURL, TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX,
+				getImageSuffix() + imageType, IMAGE_FILE_EXTENSION);
 
 		saveImage(img, imageFile);
 

@@ -27,6 +27,7 @@ module io.sf.carte.echosvg.transcoder {
 	exports io.sf.carte.echosvg.transcoder.keys;
 	exports io.sf.carte.echosvg.transcoder.print;
 	exports io.sf.carte.echosvg.transcoder.svg2svg;
+	exports io.sf.carte.echosvg.transcoder.util;
 	exports io.sf.carte.echosvg.transcoder.wmf;
 	exports io.sf.carte.echosvg.transcoder.wmf.tosvg;
 
@@ -38,6 +39,7 @@ module io.sf.carte.echosvg.transcoder {
 	requires transitive io.sf.carte.echosvg.svggen;
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.xml;
+	requires io.sf.carte.xml.dtd;
 
 	provides io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter
 			with io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOPNGImageWriter,

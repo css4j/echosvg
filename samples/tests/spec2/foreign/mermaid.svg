@@ -1,0 +1,81 @@
+<svg viewBox="0 0 505.8828125 436.6640625" style="max-width: 505.8828125px;" height="436.6640625" aria-labelledby="chart-title-mermaid-svg chart-desc-mermaid-svg" role="img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="100%" id="mermaid-svg">
+<title id="chart-title-mermaid-svg"></title>
+<desc id="chart-desc-mermaid-svg"></desc>
+<style>
+#mermaid-svg {font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}
+#mermaid-svg .error-icon{fill:#552222;}
+#mermaid-svg .error-text{fill:#552222;stroke:#552222;}
+#mermaid-svg .edge-thickness-normal{stroke-width:2px;}
+#mermaid-svg .edge-thickness-thick{stroke-width:3.5px;}
+#mermaid-svg .edge-pattern-solid{stroke-dasharray:0;}
+#mermaid-svg .edge-pattern-dashed{stroke-dasharray:3;}
+#mermaid-svg .edge-pattern-dotted{stroke-dasharray:2;}
+#mermaid-svg .marker{fill:#333333;stroke:#333333;}
+#mermaid-svg .marker.cross{stroke:#333333;}
+#mermaid-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}
+#mermaid-svg .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}
+#mermaid-svg .cluster-label text{fill:#333;}
+#mermaid-svg .cluster-label span{color:#333;}
+#mermaid-svg .label text,#mermaid-svg span{fill:#333;color:#333;}
+#mermaid-svg .node rect,#mermaid-svg .node circle,#mermaid-svg .node ellipse,#mermaid-svg .node polygon,#mermaid-svg .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}
+#mermaid-svg .node .label{text-align:center;}
+#mermaid-svg .node.clickable{cursor:pointer;}
+#mermaid-svg .arrowheadPath{fill:#333333;}
+#mermaid-svg .edgePath .path{stroke:#333333;stroke-width:2.0px;}
+#mermaid-svg .flowchart-link{stroke:#333333;fill:none;}
+#mermaid-svg .edgeLabel{background-color:#e8e8e8;text-align:center;}
+#mermaid-svg .edgeLabel rect{opacity:0.5;background-color:#e8e8e8;fill:#e8e8e8;}
+#mermaid-svg .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}
+#mermaid-svg .cluster text{fill:#333;}
+#mermaid-svg .cluster span{color:#333;}
+#mermaid-svg div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}
+#mermaid-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}
+</style>
+<g transform="translate(0, 0)"><g class="output"><g class="clusters"></g>
+<g class="edgePaths"><g style="opacity: 1;" id="L-A-B" class="edgePath LS-A LE-B">
+<path style="fill:none" marker-end="url(#arrowhead23)" d="M268.109375,47L268.109375,52.75C268.109375,58.5,268.109375,70,268.109375,81.5C268.109375,93,268.109375,104.5,268.109375,110.25L268.109375,116" class="path"></path><defs><marker orient="auto" markerHeight="6" markerWidth="8" markerUnits="strokeWidth" refY="5" refX="9" viewBox="0 0 10 10" id="arrowhead23">
+<path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowheadPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs></g>
+<g style="opacity: 1;" id="L-B-C" class="edgePath LS-B LE-C"><path style="fill:none" marker-end="url(#arrowhead24)" d="M268.109375,155L268.109375,159.16666666666666C268.109375,163.33333333333334,268.109375,171.66666666666666,268.1927083333333,180.08333333333334C268.2760416666667,188.5,268.4427083333333,197,268.5260416666667,201.25L268.609375,205.5" class="path"></path>
+<defs><marker orient="auto" markerHeight="6" markerWidth="8" markerUnits="strokeWidth" refY="5" refX="9" viewBox="0 0 10 10" id="arrowhead24"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowheadPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs></g>
+<g style="opacity: 1;" id="L-C-D" class="edgePath LS-C LE-D"><path style="fill:none" marker-end="url(#arrowhead25)" d="M230.4220333045915,282.9767208045915L206.78919442049292,295.0079444204929C183.15635553639436,307.0391680363943,135.89067776819718,331.1016152681971,112.25783888409859,348.8828388840986C88.625,366.6640625,88.625,378.1640625,88.625,383.9140625L88.625,389.6640625" class="path"></path>
+<defs><marker orient="auto" markerHeight="6" markerWidth="8" markerUnits="strokeWidth" refY="5" refX="9" viewBox="0 0 10 10" id="arrowhead25">
+<path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowheadPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs></g><g style="opacity: 1;" id="L-C-E" class="edgePath LS-C LE-E"><path style="fill:none" marker-end="url(#arrowhead26)" d="M268.609375,321.1640625L268.5260416666667,326.8307291666667C268.4427083333333,332.4973958333333,268.2760416666667,343.8307291666667,268.1927083333333,355.2473958333333C268.109375,366.6640625,268.109375,378.1640625,268.109375,383.9140625L268.109375,389.6640625" class="path"></path><defs>
+<marker orient="auto" markerHeight="6" markerWidth="8" markerUnits="strokeWidth" refY="5" refX="9" viewBox="0 0 10 10" id="arrowhead26"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowheadPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs>
+</g>
+<g style="opacity: 1;" id="L-C-F" class="edgePath LS-C LE-F">
+<path style="fill:none" marker-end="url(#arrowhead27)" d="M305.66069871049393,284.11273878950607L326.83964475874495,295.95462607458836C348.018590806996,307.7965133596707,390.376482903498,331.48028792983536,411.55542895174904,349.07217521491765C432.734375,366.6640625,432.734375,378.1640625,432.734375,383.9140625L432.734375,389.6640625" class="path"></path>
+<defs><marker orient="auto" markerHeight="6" markerWidth="8" markerUnits="strokeWidth" refY="5" refX="9" viewBox="0 0 10 10" id="arrowhead27"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowheadPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs></g></g>
+<g class="edgeLabels"><g style="opacity: 1;" transform="translate(268.109375,81.5)" class="edgeLabel"><g class="label" transform="translate(-20.4921875,-9.5)"><rect height="19" width="40.984375" ry="0" rx="0"></rect>
+<foreignObject height="19" width="40.984375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span style="" class="edgeLabel L-LS-A' L-LE-B" id="L-L-A-B">CSS4J</span></div></foreignObject></g></g>
+<g style="opacity: 1;" transform="" class="edgeLabel"><g class="label" transform="translate(0,0)"><rect height="0" width="0" ry="0" rx="0"></rect>
+<foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span style="" class="edgeLabel L-LS-B' L-LE-C" id="L-L-B-C"></span></div></foreignObject></g></g>
+<g style="opacity: 1;" transform="translate(88.625,355.1640625)" class="edgeLabel"><g class="label" transform="translate(-80.625,-9.5)"><rect height="19" width="161.25" ry="0" rx="0"></rect>
+<foreignObject height="19" width="161.25"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span style="" class="edgeLabel L-LS-C' L-LE-D" id="L-L-C-D">--mermaid-font-family</span></div></foreignObject></g></g>
+<g style="opacity: 1;" transform="translate(268.109375,355.1640625)" class="edgeLabel"><g class="label" transform="translate(-20.359375,-9.5)"><rect height="19" width="40.71875" ry="0" rx="0"></rect>
+<foreignObject height="19" width="40.71875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span style="" class="edgeLabel L-LS-C' L-LE-E" id="L-L-C-E">calc()</span></div></foreignObject></g></g>
+<g style="opacity: 1;" transform="translate(432.734375,355.1640625)" class="edgeLabel"><g class="label" transform="translate(-65.1484375,-9.5)"><rect height="19" width="130.296875" ry="0" rx="0"></rect>
+<foreignObject height="19" width="130.296875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span style="" class="edgeLabel L-LS-C' L-LE-F" id="L-L-C-F">screen and (color)</span></div></foreignObject></g></g></g>
+<g class="nodes"><g style="opacity: 1;" transform="translate(268.109375,27.5)" id="flowchart-A-10" class="node default"><rect class="label-container" height="39" width="111.25" y="-19.5" x="-55.625" ry="0" rx="0"></rect>
+<g transform="translate(0,0)" class="label"><g transform="translate(-45.625,-9.5)">
+<foreignObject height="19" width="91.25"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml">Mermaid CSS</div></foreignObject></g></g></g>
+<g style="opacity: 1;" transform="translate(268.109375,135.5)" id="flowchart-B-11" class="node default"><rect class="label-container" height="39" width="201.453125" y="-19.5" x="-100.7265625" ry="5" rx="5"></rect>
+<g transform="translate(0,0)" class="label"><g transform="translate(-90.7265625,-9.5)"><foreignObject height="19" width="181.453125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml">Bypass style computation</div></foreignObject></g></g></g>
+<g style="opacity: 1;" transform="translate(268.109375,262.83203125)" id="flowchart-C-13" class="node default"><polygon class="label-container" transform="translate(-57.83203125,57.83203125)" points="57.83203125,0 115.6640625,-57.83203125 57.83203125,-115.6640625 0,-57.83203125"></polygon>
+<g transform="translate(0,0)" class="label"><g transform="translate(-34.7578125,-9.5)"><foreignObject height="19" width="69.515625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml">CSS Specs</div></foreignObject></g></g></g>
+<g style="opacity: 1;" transform="translate(88.625,409.1640625)" id="flowchart-D-15" class="node default"><rect class="label-container" height="39" width="150.765625" y="-19.5" x="-75.3828125" ry="0" rx="0"></rect>
+<g transform="translate(0,0)" class="label"><g transform="translate(-65.3828125,-9.5)">
+<foreignObject height="19" width="130.765625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml">Custom Properties</div></foreignObject></g></g></g>
+<g style="opacity: 1;" transform="translate(268.109375,409.1640625)" id="flowchart-E-17" class="node default">
+<rect class="label-container" height="39" width="108.203125" y="-19.5" x="-54.1015625" ry="0" rx="0"></rect>
+<g transform="translate(0,0)" class="label"><g transform="translate(-44.1015625,-9.5)">
+<foreignObject height="19" width="88.203125">
+<div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml">CSS Values 4</div></foreignObject>
+</g></g></g>
+<g style="opacity: 1;" transform="translate(432.734375,409.1640625)" id="flowchart-F-19" class="node default">
+<rect class="label-container" height="39" width="121.046875" y="-19.5" x="-60.5234375" ry="0" rx="0"></rect>
+<g transform="translate(0,0)" class="label"><g transform="translate(-50.5234375,-9.5)">
+<foreignObject height="19" width="101.046875">
+<div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml">Media Queries</div>
+</foreignObject>
+</g></g></g></g></g></g>
+</svg>

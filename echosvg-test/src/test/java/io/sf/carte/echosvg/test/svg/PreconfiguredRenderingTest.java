@@ -97,7 +97,18 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	 * + svgDir + getRefImageSuffix() + svgFile
 	 */
 	protected String buildRefImgURL(String svgDir, String svgFile) {
-		return getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile + PNG_EXTENSION;
+		String refPrefix = getRefImagePrefix();
+		String refSuffix = getRefImageSuffix();
+		String imgSuffix = getImageSuffix();
+
+		StringBuilder buf = new StringBuilder(refPrefix.length() + refSuffix.length() + imgSuffix.length()
+				+ svgDir.length() + svgFile.length() + 4);
+
+		buf.append(refPrefix).append(svgDir).append(refSuffix);
+
+		buf.append(svgFile).append(imgSuffix).append(PNG_EXTENSION);
+
+		return buf.toString();
 	}
 
 	protected abstract String getRefImagePrefix();
@@ -112,10 +123,10 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	public String[] buildVariationURLs(String svgDir, String svgFile) {
 		String[] platforms = getVariationPlatforms();
 		String[] urls = new String[platforms.length + 1];
-		urls[0] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + PNG_EXTENSION;
+		urls[0] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + getImageSuffix() + PNG_EXTENSION;
 		for (int i = 0; i < platforms.length; i++) {
-			urls[i + 1] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + '_' + platforms[i]
-					+ PNG_EXTENSION;
+			urls[i + 1] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + getImageSuffix() + '_'
+					+ platforms[i] + PNG_EXTENSION;
 		}
 		return urls;
 	}
@@ -132,7 +143,7 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	 * getSaveVariationSuffix() + svgFile, without PNG_EXTENSION
 	 */
 	protected String buildSaveVariationPath(String svgDir, String svgFile) {
-		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile;
+		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + getImageSuffix();
 	}
 
 	protected abstract String getSaveVariationPrefix();
@@ -145,7 +156,8 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	 * svgDir + getCandidatereferenceSuffix() + svgFile + PNG_EXTENSION
 	 */
 	public String buildCandidateReferenceFile(String svgDir, String svgFile) {
-		return getCandidateReferencePrefix() + svgDir + getCandidateReferenceSuffix() + svgFile + PNG_EXTENSION;
+		return getCandidateReferencePrefix() + svgDir + getCandidateReferenceSuffix() + svgFile + getImageSuffix()
+				+ PNG_EXTENSION;
 	}
 
 	protected abstract String getCandidateReferencePrefix();
