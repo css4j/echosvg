@@ -1,0 +1,144 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE html>
+
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ====================================================================== -->
+<!-- Illustrates SVG with recent CSS.                                       -->
+<!--                                                                        -->
+<!-- @author github.com/carlosame                                           -->
+<!-- @version $Id$    -->
+<!-- ====================================================================== -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500">
+  <style>
+/*<![CDATA[*/
+
+g {
+    --fillColorBlue: #0000ff; /* blue */
+    --fillColorRed: #ff0000; /* red */
+    --fillColorGreen: #00ff00; /* green */
+    --fillColorYellow: #ffff00; /* yellow */
+    --strokeColorBlue: #000044; /* dark blue */
+    --strokeColorRed: #440000; /* dark red */
+    --strokeColorYellow: #868400; /* dark yellow */
+    --strokeColorGreen: #027a00; /* dark green */
+    --fillColorBlueAlpha: #0000ff4c; /* blue with transparency */
+    --fillColorRedAlpha: #ff00004c; /* red with transparency */
+    --fillColorGreenAlpha: #00ff004c; /* green with transparency */
+    --fillColorYellowAlpha: #ffff004c; /* yellow with transparency */
+    --textColor: #175a9e;
+    --textFontSize: 10pt;
+    --circle-stroke-width: calc(3*2px);
+    --ellipse-stroke-width: calc(2*1px);
+
+    font: bold var(--textFontSize) "Open Sans", sans-serif;
+}
+circle {
+  stroke-width: 5px;
+}
+ellipse {
+  stroke-width: 3px;
+}
+
+@supports (color: lch(67% 45 240)) {
+  g {
+    --fillColorBlue: lch(67% 45 240); /* blue */
+    --fillColorRed: lch(48% 77 33); /* red */
+    --fillColorGreen: lch(88% 109 134); /* green */
+    --fillColorYellow: lch(96% 92 99.6); /* yellow */
+    --strokeColorBlue: lch(48% 45 240); /* dark blue */
+    --strokeColorRed: lch(24% 77 33); /* dark red */
+    --fillColorBlueAlpha: lch(67% 45 240/0.3); /* blue with transparency */
+    --fillColorRedAlpha: lch(48% 77 33/.22); /* red with transparency */
+    --fillColorGreenAlpha: lch(88% 109 134/0.3); /* green */
+    --fillColorYellowAlpha: lch(96% 92 99.6/.3); /* yellow */
+    --textColor: lch(37.1% 43.5 269);
+    --circle-stroke-width: calc(1px + 5px);
+    --ellipse-stroke-width: calc(1px + 1px);
+  }
+}
+
+@media screen and (100px <= width <= 9000px) {
+  circle {
+    stroke-width: var(--circle-stroke-width);
+  }
+  ellipse {
+    stroke-width: var(--ellipse-stroke-width);
+  }
+}
+
+@media print {
+  text.itemdesc {
+    font-family: "Ubuntu Mono";
+    font-size: calc(var(--textFontSize) + 2pt);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  svg {
+    background-color: #000;
+  }
+  g {
+    --fillColorBlue: #3b3be7;
+    --fillColorRed: #c82f2f;
+    --fillColorGreen: #1e7a1e;
+    --fillColorYellow: #b6b601;
+    --strokeColorBlue: #1919b1;
+    --strokeColorRed: #3d1a1a;
+    --strokeColorYellow: #4a490f;
+    --strokeColorGreen: #0c280b;
+    --fillColorBlueAlpha: #1616f97a;
+    --fillColorRedAlpha: #bc333366;
+    --fillColorGreenAlpha: #04f3044c;
+    --fillColorYellowAlpha: #caca055c;
+    --textColor: #9ec5eb;
+  }
+}
+
+text.itemdesc {
+  fill: var(--textColor);
+}
+
+/*]]>*/
+  </style>
+  <g>
+  <circle cx="250" cy="300" r="20" style="fill:var(--fillColorBlue); stroke:var(--strokeColorBlue)"/>
+  <circle cx="150" cy="150" r="20" style="fill:var(--fillColorRed); stroke:var(--strokeColorRed)"/>
+  <circle cx="280" cy="150" r="20" style="fill:var(--fillColorYellow); stroke:var(--strokeColorYellow)"/>
+  <circle cx="120" cy="300" r="20" style="fill:var(--fillColorGreen); stroke:var(--strokeColorGreen)"/>
+  <ellipse cx="250" cy="300" rx="100" ry="130" transform="rotate(-20 250 300)"
+style="fill:var(--fillColorBlueAlpha); stroke:var(--fillColorBlue)"/>
+  <ellipse cx="150" cy="150" rx="100" ry="130" transform="rotate(-20 150 150)"
+style="fill:var(--fillColorRedAlpha); stroke:var(--fillColorRed)"/>
+  <ellipse cx="280" cy="150" rx="100" ry="130" transform="rotate(30 280 150)"
+style="fill:var(--fillColorYellowAlpha); stroke:var(--fillColorYellow)"/>
+  <ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)"
+style="fill:var(--fillColorGreenAlpha); stroke:var(--fillColorGreen)"/>
+  <text x="80" y="50" class="itemdesc" text-anchor="middle">Media Queries</text>
+  <text x="320" y="50" class="itemdesc" text-anchor="middle">Conditional rules</text>
+  <text x="75" y="390" class="itemdesc" text-anchor="middle">calc() / Values 4</text>
+  <text x="300" y="390" class="itemdesc" text-anchor="middle">Custom Properties</text>
+  </g>
+</svg>
+</body>
+</html>
