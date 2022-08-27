@@ -7,7 +7,11 @@ such as viewing, generation or manipulation.
  Thanks to its usage of the CSS4J style parser, supports level 4 CSS selectors
 and RGBA color values (colors with alpha channel).
 
-If you are using Apache Batik, you may want to read [MIGRATING_FROM_BATIK](https://github.com/css4j/echosvg/blob/master/MIGRATING_FROM_BATIK.md).
+This document mostly contains information of interest to developers, like how to
+build from source or run tests. If you just want to use the binaries, you are
+invited to read the [Wiki](https://github.com/css4j/echosvg/wiki).
+
+And if you are using Apache Batik, you may want to read [MIGRATING_FROM_BATIK](https://github.com/css4j/echosvg/blob/master/MIGRATING_FROM_BATIK.md).
 
 <br/>
 
