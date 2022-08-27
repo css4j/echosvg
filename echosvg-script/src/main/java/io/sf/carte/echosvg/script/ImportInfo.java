@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -34,20 +35,23 @@ import java.util.Set;
 /**
  * This class represents a list of Java classes/packages to import into a
  * scripting environment.
- *
- * It can initializes it's self by reading a file, from the classpath
- * (META_INF/imports/script.xt).
- *
+ * <p>
+ * It initializes itself by reading a file from the classpath
+ * ({@code META_INF/imports/script.txt}).
+ * </p>
+ * <p>
  * The format of the file is as follows:
+ * </p>
+ * <ul>
+ * <li>Anything after a '#' on a line is ignored.</li>
  *
- * Anything after a '#' on a line is ignored.
+ * <li>The first space delimited token on a line must be either '{@code class}'
+ * or '{@code package}'.</li>
  *
- * The first space delimited token on a line must be either 'class' or
- * 'package'.
- *
- * The remainder of a line is whitespace delimited, fully qualified, Java
- * class/package name (i.e. java.lang.System).
- *
+ * <li>The remainder of a line is a whitespace delimited, fully qualified Java
+ * class/package name (<i>e.g.</i> {@code java.lang.System}).</li>
+ * </ul>
+ * 
  * @author <a href="mailto:deweese@apache.org">deweese</a>
  * @author For later modifications, see Git history.
  * @version $Id$
@@ -55,7 +59,7 @@ import java.util.Set;
 public class ImportInfo {
 	/**
 	 * Default file to read imports from, can be overridden by setting the
-	 * 'io.sf.carte.echosvg.script.imports' System property
+	 * '{@code io.sf.carte.echosvg.script.imports'} System property.
 	 */
 	static final String defaultFile = "META-INF/imports/script.txt";
 
@@ -75,6 +79,8 @@ public class ImportInfo {
 	 * Returns the default ImportInfo instance.
 	 *
 	 * This instance is initialized by reading the file identified by 'importFile'.
+	 * 
+	 * @return the default ImportInfo instance.
 	 */
 	public static ImportInfo getImports() {
 		if (defaultImports == null)
@@ -124,7 +130,9 @@ public class ImportInfo {
 	}
 
 	/**
-	 * Return an unmodifiable iterator over the list of classes
+	 * Return an unmodifiable iterator over the list of classes.
+	 * 
+	 * @return the classname iterator.
 	 */
 	public Iterator<String> getClasses() {
 		return Collections.unmodifiableSet(classes).iterator();
@@ -132,31 +140,35 @@ public class ImportInfo {
 
 	/**
 	 * Return an unmodifiable iterator over the list of packages
+	 * 
+	 * @return the package name iterator.
 	 */
 	public Iterator<String> getPackages() {
 		return Collections.unmodifiableSet(packages).iterator();
 	}
 
 	/**
-	 * Add a class to the set of classes to import (must be a fully qualified
-	 * classname - "java.lang.System").
+	 * Add a class to the set of classes to import.
+	 * 
+	 * @param cls the fully qualified class name (like {@code java.lang.System}).
 	 */
 	public void addClass(String cls) {
 		classes.add(cls);
 	}
 
 	/**
-	 * Add a package to the set of packages to import (must be a fully qualified
-	 * package - "java.lang").
+	 * Add a package to the set of packages to import.
+	 * 
+	 * @param pkg the fully qualified package name (like {@code java.lang}).
 	 */
 	public void addPackage(String pkg) {
 		packages.add(pkg);
 	}
 
 	/**
-	 * Remove a class from the set of classes to import (must be a fully qualified
-	 * classname - "java.lang.System").
+	 * Remove a class from the set of classes to import.
 	 * 
+	 * @param cls the fully qualified class name (like {@code java.lang.System}).
 	 * @return true if the class was present.
 	 */
 	public boolean removeClass(String cls) {
@@ -164,9 +176,9 @@ public class ImportInfo {
 	}
 
 	/**
-	 * Remove a package from the set of packages to import (must be a fully
-	 * qualified package - "java.lang").
+	 * Remove a package from the set of packages to import.
 	 * 
+	 * @param pkg the fully qualified package name (like {@code java.lang}).
 	 * @return true if the package was present.
 	 */
 	public boolean removePackage(String pkg) {
@@ -177,17 +189,19 @@ public class ImportInfo {
 	static final String packageStr = "package";
 
 	/**
-	 * Add imports read from a URL to this ImportInfo instance. See the class
-	 * documentation for the expected format of the file.
+	 * Read from a URL and add imports into this {@code ImportInfo} instance.
+	 * 
+	 * <p>
+	 * See the class documentation for the expected format of the file.
+	 * </p>
+	 * 
+	 * @param src the URL of the {@code utf-8} encoded file to read from.
+	 * @throws IOException
 	 */
 	public void addImports(URL src) throws IOException {
-		InputStream is = null;
-		Reader r = null;
-		BufferedReader br = null;
-		try {
-			is = src.openStream();
-			r = new InputStreamReader(is, "UTF-8");
-			br = new BufferedReader(r);
+		try (InputStream is = src.openStream();
+				Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
+				BufferedReader br = new BufferedReader(r)) {
 
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -234,29 +248,7 @@ public class ImportInfo {
 						addPackage(id);
 				}
 			}
-		} finally {
-			// close and release all io-resources to avoid leaks
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException ignored) {
-				}
-				is = null;
-			}
-			if (r != null) {
-				try {
-					r.close();
-				} catch (IOException ignored) {
-				}
-				r = null;
-			}
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException ignored) {
-				}
-				br = null;
-			}
 		}
 	}
+
 }

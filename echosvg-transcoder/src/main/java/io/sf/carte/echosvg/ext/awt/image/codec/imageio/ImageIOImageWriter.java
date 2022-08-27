@@ -80,9 +80,7 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
 			if (iiowriter != null) {
 				iiowriter.addIIOWriteWarningListener(this);
 
-				ImageOutputStream imgout = null;
-				try {
-					imgout = ImageIO.createImageOutputStream(out);
+				try (ImageOutputStream imgout = ImageIO.createImageOutputStream(out)) {
 					ImageWriteParam iwParam = getDefaultWriteParam(iiowriter, image, params);
 
 					ImageTypeSpecifier type;
@@ -103,10 +101,6 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
 					iiowriter.setOutput(imgout);
 					IIOImage iioimg = new IIOImage(image, null, meta);
 					iiowriter.write(null, iioimg, iwParam);
-				} finally {
-					if (imgout != null) {
-						imgout.close();
-					}
 				}
 			} else {
 				throw new UnsupportedOperationException(

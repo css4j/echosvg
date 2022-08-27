@@ -540,11 +540,9 @@ public abstract class AbstractRenderingAccuracyTest {
 			}
 			imgFile.createNewFile();
 		}
-		OutputStream out = new FileOutputStream(imgFile);
-		try {
+
+		try (OutputStream out = new FileOutputStream(imgFile)) {
 			saveImage(img, out);
-		} finally {
-			out.close();
 		}
 	}
 

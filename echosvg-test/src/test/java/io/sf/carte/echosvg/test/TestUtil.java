@@ -289,13 +289,8 @@ public class TestUtil {
 			}
 		}
 
-		FileOutputStream os = new FileOutputStream(candidateFile);
-		try {
+		try (FileOutputStream os = new FileOutputStream(candidateFile)) {
 			os.write(data);
-		} finally {
-			try {
-				os.close();
-			} catch (IOException e) {}
 		}
 	}
 

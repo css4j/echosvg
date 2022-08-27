@@ -79,10 +79,8 @@ public class SerializationTest {
 		oos.close();
 
 		// Binary diff
-		InputStream is1 = new FileInputStream(ser1);
-		InputStream is2 = new FileInputStream(ser2);
-
-		try {
+		try (InputStream is1 = new FileInputStream(ser1);
+				InputStream is2 = new FileInputStream(ser2)) {
 			for (;;) {
 				int i1 = is1.read();
 				int i2 = is2.read();
@@ -90,12 +88,6 @@ public class SerializationTest {
 				if (i1 == -1) {
 					break;
 				}
-			}
-		} finally {
-			try {
-				is1.close();
-				is2.close();
-			} catch (IOException e) {
 			}
 		}
 	}

@@ -162,11 +162,9 @@ public class ImageCompareTest {
 		//imageFile.deleteOnExit();
 
 		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
-		OutputStream out = new FileOutputStream(imageFile);
-		try {
+
+		try (OutputStream out = new FileOutputStream(imageFile)) {
 			writer.writeImage(img, out);
-		} finally {
-			out.close();
 		}
 
 		return imageFile;
