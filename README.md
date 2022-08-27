@@ -48,7 +48,7 @@ test involves an image comparison, you may want to read [IMAGE_COMPARISONS](IMAG
 
 To build without running the tests:
 ```shell
-gradlew build -x test
+./gradlew build -x test
 ```
 The full test suite can be executed from the Eclipse IDE, and most of it runs
 satisfactorily from _IntelliJ IDEA_; please open an issue if you find issues
@@ -62,7 +62,7 @@ you may encounter well-known security-related issues (issue #19).
 
 Several interactive tests can be executed via:
 ```shell
-gradlew iTest
+./gradlew iTest
 ```
 Note that several of those tests are failing (a few being unfinished).
 
@@ -73,11 +73,11 @@ Note that several of those tests are failing (a few being unfinished).
 This project uses [JMH](https://github.com/openjdk/jmh) for benchmarking. To run
 all the benchmarks (currently only one):
 ```shell
-gradlew runJmh
+./gradlew runJmh
 ```
 To run specific benchmark(s) matched by a regular expression:
 ```shell
-gradlew runJmh <regexp>
+./gradlew runJmh <regexp>
 ```
 A jmh-ready _fat Jar_ with all the dependencies is available at
 `echosvg-test/build/libs/echosvg-<version>-jmh.jar`, and is the recommended way to run
@@ -92,9 +92,9 @@ java -jar echosvg-test/build/libs/echosvg-<version>-jmh.jar <regexp>
 
 Use:
 
-- `gradlew build publishToMavenLocal` to install in your local Maven repository.
+- `./gradlew build publishToMavenLocal` to install in your local Maven repository.
 
-- `gradlew publish` to deploy to a (generally remote) Maven repository.
+- `./gradlew publish` to deploy to a (generally remote) Maven repository.
 
 If you plan to deploy to a repository, please configure the `mavenReleaseRepoUrl`
 and/or `mavenSnapshotRepoUrl` properties (for example in
@@ -116,7 +116,7 @@ Sometimes, in non-modular projects it is useful to have a single Jar file
 bundled with all the dependencies, often called a _uber Jar_ or _fat Jar_.
 Execute the `uberjar` task to create it:
 ```shell
-gradlew uberjar
+./gradlew uberjar
 ```
 The file is to be found at
 `echosvg-all/build/libs/echosvg-all-<version>-alldeps.jar`.
@@ -127,7 +127,7 @@ The file is to be found at
 
 A Javadoc of all the modules is produced by the `modularJavadoc` task:
 ```shell
-gradlew modularJavadoc
+./gradlew modularJavadoc
 ```
 The Javadocs are created at `echosvg-all/build/docs/modular`.
 
@@ -138,7 +138,7 @@ The Javadocs are created at `echosvg-all/build/docs/modular`.
 If you do not like modular javadocs, a merged non-modular Javadoc can be built
 with the `mergedJavadoc` task:
 ```shell
-gradlew mergedJavadoc
+./gradlew mergedJavadoc
 ```
 The Javadocs are created at `echosvg-all/build/docs/javadoc`.
 
