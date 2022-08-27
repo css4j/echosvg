@@ -24,7 +24,7 @@ import org.junit.Test;
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 
 /**
- * Helper class to simplify writing the unitTesting.xml file for CSS DOM Tests.
+ * CSSOM scripting tests.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -34,12 +34,32 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 public class EcmaScriptCSSDOMTest extends SelfContainedSVGOnLoadTest {
 
 	@Test
-	public void test() throws Exception {
+	public void testRgb() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbTest.svg");
+	}
+
+	@Test
+	public void testRgbUpdate() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbUpdateTest.svg");
+	}
+
+	@Test
+	public void testRgbPresentation() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/css/dom/rgbPresentationTest.svg");
+	}
+
+	@Test
+	public void testBug9740() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/css/dom/bug9740.svg");
+	}
+
+	@Test
+	public void testBug9779() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/css/dom/bug9779.svg");
+	}
+
+	@Test
+	public void testBug11670() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/css/dom/bug11670.svg");
 	}
 

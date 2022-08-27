@@ -23,7 +23,7 @@ import org.junit.Test;
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 
 /**
- * Helper class to simplify writing the unitTesting.xml file for DOM Tests.
+ * DOM scripting tests.
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
@@ -33,9 +33,17 @@ import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 public class EcmaScriptDOMTest extends SelfContainedSVGOnLoadTest {
 
 	@Test
-	public void test() throws Exception {
+	public void testBug18143() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/dom/bug18143.svg");
+	}
+
+	@Test
+	public void testBug20331() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/dom/bug20331.svg");
+	}
+
+	@Test
+	public void testBug20332() throws Exception {
 		testSVGOnLoad("io/sf/carte/echosvg/dom/bug20332.svg");
 	}
 
