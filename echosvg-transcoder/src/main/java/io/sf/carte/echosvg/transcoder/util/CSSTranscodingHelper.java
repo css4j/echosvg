@@ -366,13 +366,13 @@ public class CSSTranscodingHelper {
 
 		// Parse
 		InputSource source = new InputSource(reader);
+		source.setSystemId(documentURI);
 		DOMDocument document;
 		try {
 			document = (DOMDocument) builder.parse(source);
 		} catch (SAXException e) {
 			throw new TranscoderException(e);
 		}
-		document.setDocumentURI(documentURI);
 
 		DocumentType docType = null;
 
