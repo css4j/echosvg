@@ -120,7 +120,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * {@link SVGAbstractTranscoder#KEY_WIDTH} and
  * {@link SVGAbstractTranscoder#KEY_HEIGHT} transcoding hints. And the target
  * medium ({@code screen}, {@code print}, etc.) can be set via the
- * {@link SVGAbstractTranscoder.KEY_MEDIA} hint.
+ * {@link SVGAbstractTranscoder#KEY_MEDIA} hint.
  * </p>
  * <p>
  * For example:
