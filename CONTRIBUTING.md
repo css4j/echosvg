@@ -10,10 +10,19 @@
  To report any issue with the software or to ask for an enhancement, please use
 Github's [issue tracker](https://github.com/css4j/echosvg/issues).
 
- If you believe that you found a bug in the software, please argument carefully
-how to reproduce the problem (including Java and operating system version
-information), what result did you expect and what did you obtain instead. If the
-issue is related to SVG rendering, you may want to look at the
+ If you believe that you found a bug in the software, please explain clearly
+what he problem is: what result did you expect and what did you obtain instead.
+
+ Describe step by step how to reproduce the issue with example document(s),
+rendered images and the minimum amount of code that would reproduce it. Remember
+including also Java and operating system version information.
+
+ Please research and document your bug as much as possible, and provide a
+minimal reproducer. If the reproducer involves using a downstream application
+(one that depends on EchoSVG), it will be considered invalid and the issue will
+likely not be fixed.
+
+ If the issue is related to SVG rendering, you may want to look at the
 [SamplesRenderingTest.java](https://github.com/css4j/echosvg/blob/master/echosvg-test/src/test/java/io/sf/carte/echosvg/test/svg/SamplesRenderingTest.java)
 source file and to [IMAGE_COMPARISONS.md](https://github.com/css4j/echosvg/blob/master/IMAGE_COMPARISONS.md)
 to prepare and run your own tests.
@@ -74,9 +83,26 @@ code, except for cases like multiple equivalent comparisons, exceptions that are
 very hard to trigger or never thrown (or put as a theoretical safeguard), etc.
 However, even one test is better than nothing.
 
- For consistency, the names of classes that contain tests (i.e. with `@Test`
+1) For consistency, the names of classes that contain tests (i.e. with `@Test`
 annotation(s)) must end with `Test`. This makes easier to tell the actual tests
 apart from their helper classes.
+
+2) It is acceptable to mix tests and main source code in the same commit, as it
+is immediately obvious to the reviewers which are which, and the tests offer an
+insight of what the commit is trying to achieve. You do not need to mention the
+tests in the commit message.
+
+3) Tests should not involve remote network connections, unless the subject of
+that test is to check the connection or its security.
+
+4) There are scripting tests which are executed via the various subclasses of
+`SelfContainedSVGOnLoadTest`. Those tests (_e.g._ in `test-resources/io/sf/carte/echosvg/dom`
+or `test-resources/io/sf/carte/echosvg/css/dom`) return their result through the
+`testResult` element. The tests pass only if the `result` attribute contains the
+`passed` value, while the `errorCode` attribute may contain additional
+information. If your test requires storing additional information, a child
+element with name `errorDescriptionEntry` may be added to `result`, with the
+relevant data being in the `id` and `value` attributes.
 
 <br/>
 
