@@ -13,7 +13,7 @@
    and [#13](https://github.com/css4j/echosvg/issues/13)). That scripting wasn't
    functional in Batik anyway.
 
-5) The generic rasterizer module (and related files) was removed (svgrasterizer
+5) The generic `rasterizer` module (and related files) was removed (`svgrasterizer`
    is still available but no longer supports PDF graphics). See [issue #10](https://github.com/css4j/echosvg/issues/10)
    for more details.
 
