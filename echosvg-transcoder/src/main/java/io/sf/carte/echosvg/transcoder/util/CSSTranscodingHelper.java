@@ -18,43 +18,10 @@
  */
 package io.sf.carte.echosvg.transcoder.util;
 
-import java.awt.GraphicsEnvironment;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.Text;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-
 import io.sf.carte.doc.agent.DeviceFactory;
-import io.sf.carte.doc.dom.CSSDOMImplementation;
-import io.sf.carte.doc.dom.DOMDocument;
-import io.sf.carte.doc.dom.DOMElement;
-import io.sf.carte.doc.dom.DOMNode;
-import io.sf.carte.doc.dom.XMLDocumentBuilder;
-import io.sf.carte.doc.style.css.BoxValues;
-import io.sf.carte.doc.style.css.CSSCanvas;
-import io.sf.carte.doc.style.css.CSSDocument;
-import io.sf.carte.doc.style.css.CSSMediaException;
-import io.sf.carte.doc.style.css.CSSTypedValue;
-import io.sf.carte.doc.style.css.CSSUnit;
-import io.sf.carte.doc.style.css.CSSValue;
+import io.sf.carte.doc.dom.*;
+import io.sf.carte.doc.style.css.*;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
-import io.sf.carte.doc.style.css.StyleDatabase;
 import io.sf.carte.doc.style.css.om.AbstractCSSCanvas;
 import io.sf.carte.doc.style.css.om.AbstractStyleDatabase;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
@@ -64,16 +31,24 @@ import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.doc.xml.dtd.DefaultEntityResolver;
 import io.sf.carte.echosvg.anim.dom.SVG12DOMImplementation;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
-import io.sf.carte.echosvg.transcoder.DefaultErrorHandler;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
-import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
-import io.sf.carte.echosvg.transcoder.Transcoder;
-import io.sf.carte.echosvg.transcoder.TranscoderException;
-import io.sf.carte.echosvg.transcoder.TranscoderInput;
-import io.sf.carte.echosvg.transcoder.TranscoderOutput;
-import io.sf.carte.echosvg.transcoder.TranscodingHints;
+import io.sf.carte.echosvg.transcoder.*;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 import io.sf.carte.echosvg.util.SVGConstants;
+import org.w3c.dom.*;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.util.List;
+import java.util.*;
+
+import static io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder.*;
+import static java.lang.String.format;
 
 /**
  * Utility for transcoding documents that use modern CSS, bypassing the EchoSVG
@@ -125,24 +100,24 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * <p>
  * For example:
  * </p>
- * 
- * <pre>
-   Transcoder transcoder = new PNGTranscoder();
-
-   CSSTranscodingHelper helper = new CSSTranscodingHelper(transcoder);
-
-   helper.getTranscoder().addTranscodingHint(SVGAbstractTranscoder.KEY_MEDIA, "screen");
-   helper.getTranscoder().addTranscodingHint(SVGAbstractTranscoder.KEY_WIDTH, 450);
-   helper.getTranscoder().addTranscodingHint(SVGAbstractTranscoder.KEY_HEIGHT, 500);
-
-   String uri = "https://www.example.com/my_image.svg";
-   java.io.Reader re = ... [SVG document reader]
-   java.io.OutputStream os = ... [where to write the image]
-
-   TranscoderOutput dst = new TranscoderOutput(os);
-
-   helper.transcode(re, uri, dst, null);
- * </pre>
+ *
+ * <pre>{@code
+ * Transcoder transcoder = new PNGTranscoder();
+ *
+ * CSSTranscodingHelper helper = new CSSTranscodingHelper(transcoder);
+ *
+ * helper.getTranscoder().addTranscodingHint(SVGAbstractTranscoder.KEY_MEDIA, "screen");
+ * helper.getTranscoder().addTranscodingHint(SVGAbstractTranscoder.KEY_WIDTH, 450);
+ * helper.getTranscoder().addTranscodingHint(SVGAbstractTranscoder.KEY_HEIGHT, 500);
+ *
+ * String uri = "https://www.example.com/my_image.svg";
+ * java.io.Reader re = ... [SVG document reader]
+ * java.io.OutputStream os = ... [where to write the image]
+ *
+ * TranscoderOutput dst = new TranscoderOutput(os);
+ *
+ * helper.transcode(re, uri, dst, null);
+ * }</pre>
  * 
  * <h3>Dark Mode</h3>
  * <p>
@@ -189,15 +164,12 @@ import io.sf.carte.echosvg.util.SVGConstants;
  */
 public class CSSTranscodingHelper {
 
-	private static final Set<String> noStyle;
-
-	static {
-		// Do not compute styles for the following elements
-		final String[] noStArray = { "style", "script", "base", "link", "head", "title", "meta" };
-
-		noStyle = new HashSet<>(noStArray.length);
-		Collections.addAll(noStyle, noStArray);
-	}
+	/**
+	 * Do not compute styles for the following elements
+ 	 */
+	private static final Set<String> NO_STYLE = Set.of(
+		"style", "script", "base", "link", "head", "title", "meta"
+	);
 
 	/**
 	 * The transcoder.
@@ -205,9 +177,9 @@ public class CSSTranscodingHelper {
 	private final Transcoder transcoder;
 
 	/**
-	 * dark mode toggle.
+	 * Dark mode toggle ({@code false} by default).
 	 */
-	private boolean darkMode = false;
+	private boolean darkMode;
 
 	/**
 	 * dark mode initial value for the CSS {@code color} property.
@@ -215,14 +187,14 @@ public class CSSTranscodingHelper {
 	private static final CSSTypedValue darkmodeInitialColor = (CSSTypedValue) new ValueFactory().parseProperty("#fff");
 
 	/**
-	 * Toggle for HTML processing.
+	 * Toggle for HTML processing ({@code false} by default).
 	 */
-	private boolean htmlEmbed = false;
+	private boolean htmlEmbed;
 
 	/**
-	 * Optional {@code XMLReader}.
+	 * Optional {@code XMLReader} ({@code null} by default).
 	 */
-	private XMLReader xmlReader = null;
+	private XMLReader xmlReader;
 
 	/**
 	 * Constructs a helper for transcoding to PNG.
@@ -304,7 +276,7 @@ public class CSSTranscodingHelper {
 	}
 
 	/**
-	 * Transcode a SVG document styled with CSS 3 using the given transcoder.
+	 * Transcode an SVG document styled with CSS 3 using the given transcoder.
 	 * <p>
 	 * This method attempts to convert advanced CSS into something that EchoSVG can
 	 * understand. It may or may not succeed.
@@ -325,52 +297,47 @@ public class CSSTranscodingHelper {
 	}
 
 	/**
-	 * Transcode a SVG document styled with CSS 3 using the given transcoder.
-	 * 
+	 * Transcode an SVG document styled with CSS 3 using the given transcoder.
+	 *
 	 * <p>
-	 * This method attempts to convert advanced CSS into something that EchoSVG can
-	 * understand. It may or may not succeed.
+	 * This method attempts to convert advanced CSS into something that EchoSVG
+	 * can understand. It may or may not succeed.
 	 * </p>
-	 * 
-	 * @param reader      the {@code Reader} containing the character stream of the
-	 *                    document that contains the SVG tree.
-	 * @param documentURI the URI of the document. If the URI ends with
-	 *                    {@code .html}, HTML processing is enabled.
+	 *
+	 * @param reader      the {@code Reader} containing the character stream of
+	 *                    the document that contains the SVG tree.
+	 * @param documentURI the URI of the document. If the URI ends with a common
+	 *                    HTML file name extension, HTML processing is enabled.
 	 * @param output      the {@code TranscoderOutput} to write the result.
 	 * @param selector    the selector to find the topmost {@code svg} element
-	 *                    containing the subtree to be transcoded. If {@code null},
-	 *                    it is assumed that it is the document element (the whole
-	 *                    document being a SVG document). If not {@code null}, HTML
-	 *                    processing is used.
-	 * 
-	 * @throws TranscoderException If an error occured while transcoding.
-	 * @throws IOException         If any I/O error occurs.
+	 *                    containing the subtree to be transcoded. If {@code
+	 *                    null}, it is assumed that it is the document element
+	 *                    (the whole document being an SVG document). If not
+	 *                    {@code null}, HTML processing is used.
+	 * @throws TranscoderException If an error occurred while transcoding.
 	 */
-	public void transcode(Reader reader, String documentURI, TranscoderOutput output, String selector)
-			throws TranscoderException, IOException {
-		// Instantiate a DOM implementation that has modern CSS support
-		CSSDOMImplementation impl = new CSSDOMImplementation();
-		// Serialize colors to sRGB
-		impl.setStyleFormattingFactory(new RGBStyleFormattingFactory());
+	public void transcode(
+		final Reader reader,
+		final String documentURI,
+		final TranscoderOutput output,
+		final String selector)
+			throws TranscoderException {
+		final XMLDocumentBuilder builder = createXMLDocumentBuilder();
+		final boolean isHtml = isHtml(documentURI);
 
-		// The DocumentBuilder
-		XMLDocumentBuilder builder = new XMLDocumentBuilder(impl);
-		builder.setEntityResolver(new DefaultEntityResolver());
-		builder.getSAXParserFactory().setXIncludeAware(true);
-		builder.setXMLReader(xmlReader);
-
-		if (htmlEmbed || selector != null || (documentURI != null && documentURI.endsWith(".html"))) {
+		if (htmlEmbed || selector != null || isHtml) {
 			// Prepare builder to process HTML
 			builder.setHTMLProcessing(true);
 		}
 
 		// Parse
-		InputSource source = new InputSource(reader);
+		final InputSource source = new InputSource(reader);
 		source.setSystemId(documentURI);
-		DOMDocument document;
+		final DOMDocument document;
+
 		try {
 			document = (DOMDocument) builder.parse(source);
-		} catch (SAXException e) {
+		} catch (final SAXException | IOException e) {
 			throw new TranscoderException(e);
 		}
 
@@ -378,9 +345,12 @@ public class CSSTranscodingHelper {
 
 		// Determine the SVG root element
 		DOMElement svgRoot = null;
-		if (selector != null && (selector = selector.trim()).length() != 0) {
-			svgRoot = document.querySelectorAll(selector).item(0);
+		String cssSelector = selector == null ? null : selector.trim();
+
+		if (cssSelector != null && !cssSelector.isEmpty()) {
+			svgRoot = document.querySelectorAll(cssSelector).item(0);
 		}
+
 		if (svgRoot == null) {
 			svgRoot = document.getDocumentElement();
 			docType = document.getDoctype();
@@ -389,7 +359,7 @@ public class CSSTranscodingHelper {
 		// The svg root must be a SVG element
 		if (!"svg".equals(svgRoot.getLocalName())) {
 			docType = null;
-			if (selector == null) {
+			if (cssSelector == null) {
 				svgRoot = document.getElementsByTagNameNS("*", "svg").item(0);
 				if (svgRoot == null) {
 					String msg = "Document contains no <svg> elements.";
@@ -399,69 +369,131 @@ public class CSSTranscodingHelper {
 				// Before throwing the exception, sanitize possibly untrusted
 				// selector by removing control characters ('Other, Control'
 				// Unicode category).
-				selector = selector.replaceAll("\\p{Cc}", "*CTRL*");
-				String msg = "Element selected by '" + selector + "' is not a <svg>.";
+				cssSelector = cssSelector.replaceAll("\\p{Cc}", "*CTRL*");
+				final String msg = format("Element selected by '%s' is not a <svg>.", cssSelector);
 				throw new TranscoderException(msg);
 			}
 		}
 
-		boolean isSVG12;
-		String version = svgRoot.getAttribute("version");
-		if (version.length() == 0) {
-			// Assume 1.2 unless doctype Public ID is 1.0
-			isSVG12 = docType == null || !"-//W3C//DTD SVG 1.0//EN".equals(docType.getPublicId());
-		} else {
-			isSVG12 = version.indexOf('2') != -1;
-		}
-
-		// Now create the SVG document from the SVG implementation
-		org.w3c.dom.DOMImplementation svgImpl;
-		if (!isSVG12) {
-			svgImpl = SVGDOMImplementation.getDOMImplementation();
-		} else {
-			svgImpl = SVG12DOMImplementation.getDOMImplementation();
-		}
+		final DOMImplementation svgImpl = createDOMImplementation(svgRoot, docType);
 
 		// Create the DOCTYPE if appropriate, then the SVG document
 		DocumentType svgDocType = null;
 		if (docType != null) {
 			svgDocType = svgImpl.createDocumentType(docType.getName(), docType.getPublicId(), docType.getSystemId());
 		}
-		org.w3c.dom.Document svgDoc = svgImpl.createDocument(SVGConstants.SVG_NAMESPACE_URI, null, svgDocType);
+		final Document svgDoc = svgImpl.createDocument(SVGConstants.SVG_NAMESPACE_URI, null, svgDocType);
 		svgDoc.setDocumentURI(documentURI);
 
-		// Check for an alternate style sheet
-		String alt = (String) transcoder.getTranscodingHints().get(SVGAbstractTranscoder.KEY_ALTERNATE_STYLESHEET);
-
-		// Check for a target medium
-		String medium = (String) transcoder.getTranscodingHints().get(SVGAbstractTranscoder.KEY_MEDIA);
-		if (medium == null || (medium = medium.trim()).length() == 0) {
-			// This won't match a real medium but the rest of the machinery will work
-			medium = "medium";
-		}
 		try {
+			// Check for a target medium. In case a real medium isn't present, ensure
+			// the rest of the machinery will work by providing a forced default.
+			final String medium = getHintString(KEY_MEDIA, "medium");
 			document.setTargetMedium(medium);
-		} catch (CSSMediaException e) {
-		}
+		} catch (final CSSMediaException ignored) {}
 
 		// Set a DeviceFactory for the given medium
-		MyDeviceFactory devFactory = new MyDeviceFactory();
-		devFactory.setHints(svgRoot);
-		impl.setDeviceFactory(devFactory);
+		final MyDeviceFactory deviceFactory = new MyDeviceFactory();
+		deviceFactory.setCanvasDimensions(svgRoot);
+		((CSSDOMImplementation)builder.getDOMImplementation()).setDeviceFactory(deviceFactory);
+
+		// Check for an alternate style sheet
+		final String alt = getHintString(KEY_ALTERNATE_STYLESHEET, null);
 
 		// If there is an alternate style sheet, set it
-		if (alt != null && (alt = alt.trim()).length() != 0) {
+		if (alt != null) {
 			document.enableStyleSheetsForSet(alt);
 		}
 
-		// Now fill the SVG document with computed styles
+		// Fill the SVG document with computed styles.
 		copyWithComputedStyles(svgRoot, svgDoc, svgDoc);
+		transcode(svgDoc, output);
+	}
 
-		// Transcode
-		TranscoderInput input = new TranscoderInput(svgDoc);
+	private DOMImplementation createDOMImplementation(
+		final DOMElement svgRoot,
+		final DocumentType docType) {
+		final String version = svgRoot.getAttribute("version");
+
+		// Assume 1.2 unless doctype Public ID is 1.0
+		final boolean isSVG12 = version.isBlank()
+			? docType == null || !"-//W3C//DTD SVG 1.0//EN".equals(docType.getPublicId())
+			: version.indexOf('2') != -1;
+
+		// Now create the SVG document from the SVG implementation
+		return isSVG12
+			? SVG12DOMImplementation.getDOMImplementation()
+			: SVGDOMImplementation.getDOMImplementation();
+	}
+
+	/**
+	 * Transcodes the given SVG document to the given {@link TranscoderOutput}.
+	 *
+	 * @param svg    The document to transcode.
+	 * @param output The destination for the transcoded document.
+	 * @throws TranscoderException Error transcoding the document.
+	 */
+	private void transcode(final Document svg, final TranscoderOutput output)
+		throws TranscoderException {
+		TranscoderInput input = new TranscoderInput(svg);
 		ErrorHandler handler = new DefaultErrorHandler();
 		transcoder.setErrorHandler(handler);
 		transcoder.transcode(input, output);
+	}
+
+	/**
+	 * Answers whether the given document URI represents an HTML document.
+	 *
+	 * @param uri The URI to check.
+	 * @return {@code true} if the URI isn't null and the name ends with a
+	 * well-known HTML extension.
+	 */
+	private boolean isHtml(final String uri) {
+		return uri != null && (
+				uri.endsWith(".htm") ||
+				uri.endsWith(".html") ||
+				uri.endsWith(".xhtml")
+			);
+	}
+
+	/**
+	 * Returns the value for a transcoding hint, or the given value if none
+	 * found. Note: This functionality belongs in the {@link TranscodingHints}
+	 * class. Note: We could also provide a lambda function that returns the
+	 * default value, to provide a little extra flexibility.
+	 *
+	 * @param key          The transcoding hint's key to use for look up.
+	 * @param defaultValue The value to return if the key has no associated
+	 *                      value.
+	 * @return The transcoding hint value for the given key, or the default
+	 * value if none found.
+	 */
+	private String getHintString(
+			final TranscodingHints.Key key,
+			final String defaultValue) {
+		final TranscodingHints hints = transcoder.getTranscodingHints();
+		final String hint = (String) hints.get(key);
+		final String result = hint == null ? defaultValue : hint.trim();
+
+		return result.isEmpty() ? defaultValue : result;
+	}
+
+	/**
+	 * Instantiates a DOM implementation that has modern CSS support.
+	 *
+	 * @return An instance of {@link XMLDocumentBuilder} that has modern CSS
+	 * support, including entity resolution using {@link DefaultEntityResolver}.
+	 */
+	private XMLDocumentBuilder createXMLDocumentBuilder() {
+		final CSSDOMImplementation impl = new CSSDOMImplementation();
+		impl.setStyleFormattingFactory(new RGBStyleFormattingFactory());
+
+		final XMLDocumentBuilder builder = new XMLDocumentBuilder(impl);
+		builder.setEntityResolver(new DefaultEntityResolver());
+		builder.getSAXParserFactory().setXIncludeAware(true);
+		builder.setXMLReader(xmlReader);
+
+		return builder;
 	}
 
 	private static void copyWithComputedStyles(DOMNode node, Document svgDoc, Node svgParent) {
@@ -487,9 +519,7 @@ public class CSSTranscodingHelper {
 
 		// Repeat the process for child nodes, if any
 		if (node.hasChildNodes()) {
-			Iterator<DOMNode> it = node.getChildNodes().iterator();
-			while (it.hasNext()) {
-				DOMNode n = it.next();
+			for(final DOMNode n : node.getChildNodes()) {
 				copyWithComputedStyles(n, svgDoc, svgNode);
 			}
 		}
@@ -505,7 +535,7 @@ public class CSSTranscodingHelper {
 	private static Element importElement(DOMElement elm, Document svgDoc) {
 		Element svgElm;
 		String name = elm.getLocalName();
-		if (noStyle.contains(name)) {
+		if (NO_STYLE.contains(name)) {
 			// This element is imported but excluded from style
 			// computations or replacement
 			svgElm = (Element) svgDoc.importNode(elm, false);
@@ -538,58 +568,70 @@ public class CSSTranscodingHelper {
 		// Make sure that we use SVG 1.2
 		svgDoc.getDocumentElement().setAttribute("version", "1.2");
 
-		Element flowDiv = svgDoc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "flowDiv");
-		Element flowRegion = svgDoc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "flowRegion");
+		final Element flowDiv = svgDoc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "flowDiv");
+		final Element flowRegion = svgDoc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "flowRegion");
 		flowRoot.appendChild(flowRegion);
 		flowRoot.appendChild(flowDiv);
 
-		DOMElement elm = fo.getFirstElementChild();
+		final DOMElement elm = fo.getFirstElementChild();
 		if (SVGConstants.SVG_NAMESPACE_URI.equals(elm.getNamespaceURI())) {
 			// Do not replace this one
-			Element svgElm = importElement(elm, svgDoc);
+			final Element svgElm = importElement(elm, svgDoc);
 			flowRoot.appendChild(svgElm);
 		} else {
 			// Compute the style
-			ComputedCSSStyle style = elm.getComputedStyle(null);
-			// If a block element, compute box model
-			String display = style.getDisplay();
-			boolean isBlock = "block".equals(display) || "inline-block".equals(display);
-			if (isBlock) {
-				BoxValues box = style.getBoxValues(CSSUnit.CSS_PX);
+			final ComputedCSSStyle style = elm.getComputedStyle(null);
+
+			// Only compute the box model for block elements (ignore non-blocks).
+			if (isBlock(style)) {
+				final BoxValues box = style.getBoxValues(CSSUnit.CSS_PX);
+
 				if (box.getWidth() > 1e-4) {
 					box.fillBoxValues(style);
 				}
-				Element rect = svgDoc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "rect");
+
+				final Element rect = svgDoc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "rect");
 				copyAttributes(fo, rect);
 				rect.setAttribute("visibility", "hidden");
 				flowRegion.appendChild(rect);
 				rect.setAttribute("style", style.getMinifiedCssText());
 				replaceElement(elm, svgDoc, flowDiv, flowDiv);
-			} // Ignore non-blocks
+			}
 		}
 	}
 
-	private static void copyAttributes(DOMElement fo, Element rect) {
-		Iterator<Attr> it = fo.getAttributes().iterator();
-		while (it.hasNext()) {
-			Attr attr = it.next();
-			rect.setAttributeNS(attr.getNamespaceURI(), attr.getName(), attr.getValue());
+	/**
+	 * Note: This belongs in {@link ComputedCSSStyle} so that we can write
+	 * {@code style.isBlock()}, which upholds encapsulation.
+	 *
+	 * @param style The style to check as a block or inline-block style
+	 * @return {@code true} if the given style is a block style.
+	 */
+	private static boolean isBlock(final ComputedCSSStyle style) {
+		final String display = style.getDisplay();
+		return "block".equals(display) || "inline-block".equals(display);
+	}
+
+	private static void copyAttributes(final DOMElement fo, final Element rect) {
+		for(final Attr attr : fo.getAttributes()) {
+			rect.setAttributeNS(
+				attr.getNamespaceURI(),
+				attr.getName(),
+				attr.getValue()
+			);
 		}
 	}
 
-	private static void replaceElement(DOMElement elm, Document svgDoc, Element flowDiv, Element svgParent) {
-		ComputedCSSStyle style = elm.getComputedStyle(null);
-		String display = style.getDisplay();
-		boolean isBlock = "block".equals(display) || "inline-block".equals(display);
-		String elemName;
-		if (isBlock) {
-			elemName = "flowPara";
-		} else {
-			elemName = "flowSpan";
-		}
+	private static void replaceElement(
+			final DOMElement elm,
+			final Document svgDoc,
+			final Element flowDiv,
+			final Element svgParent) {
+		final ComputedCSSStyle style = elm.getComputedStyle(null);
+		final String elemName = isBlock(style) ? "flowPara" : "flowSpan";
+		final Element flowElm = svgDoc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, elemName);
 
-		Element flowElm = svgDoc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, elemName);
-		if (style.getLength() != 0) {
+		if (!style.isEmpty()) {
 			flowElm.setAttribute("style", style.getMinifiedCssText());
 		}
 		svgParent.appendChild(flowElm);
@@ -597,23 +639,28 @@ public class CSSTranscodingHelper {
 		if (elm.getFirstElementChild() == null) {
 			// No child elements
 			String content = elm.getTextContent();
-			String preserve = elm.getAttributeNS("http://www.w3.org/XML/1998/namespace", "space");
+			final String preserve = elm.getAttributeNS("http://www.w3.org/XML/1998/namespace", "space");
+
 			if (!"preserve".equalsIgnoreCase(preserve)) {
 				content = content.trim();
 			}
-			if (content.length() == 0) {
+
+			if (content.isBlank()) {
 				return;
 			}
-			Text text = svgDoc.createTextNode(content);
+
+			final Text text = svgDoc.createTextNode(content);
 			flowElm.appendChild(text);
 		} else {
-			Iterator<DOMNode> it = elm.iterator();
+			final Iterator<DOMNode> it = elm.iterator();
+
 			while (it.hasNext()) {
-				DOMNode node = it.next();
+				final DOMNode node = it.next();
+
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					replaceElement((DOMElement) node, svgDoc, flowDiv, flowElm);
 				} else {
-					Text text = svgDoc.createTextNode(node.getNodeValue());
+					final Text text = svgDoc.createTextNode(node.getNodeValue());
 					flowElm.appendChild(text);
 				}
 			}
@@ -622,59 +669,68 @@ public class CSSTranscodingHelper {
 
 	private class MyDeviceFactory implements DeviceFactory {
 
-		private MyStyleDatabase sdb = new MyStyleDatabase();
+		private final MyStyleDatabase STYLE_DB = new MyStyleDatabase();
 
-		private float height = 0f, width = 0f;
+		/** Default height is 0. */
+		private float height;
+		/** Default width is 0. */
+		private float width;
 
 		@Override
-		public StyleDatabase getStyleDatabase(String medium) {
-			return sdb;
+		public StyleDatabase getStyleDatabase(final String medium) {
+			return STYLE_DB;
 		}
 
 		/**
-		 * Set some style database information using the transcoding hints and the SVG
-		 * root element.
-		 * 
-		 * @param svgRoot the SVG root element.
+		 * Set some style database information using the transcoding hints and the
+		 * SVG root element. If there are neither transcoding hints or dimensions
+		 * specified by the SVG document, this will assume an A4-sized canvas.
+		 *
+		 * @param root the SVG root element.
 		 */
-		void setHints(DOMElement svgRoot) {
-			TranscodingHints transcodingHints = getTranscoder().getTranscodingHints();
-			// Width
-			Float width = (Float) transcodingHints.get(SVGAbstractTranscoder.KEY_WIDTH);
-			if (width != null) {
-				this.width = width.floatValue();
-			} else {
-				String w = svgRoot.getAttribute("width");
-				if (w.length() != 0) {
-					try {
-						this.width = Float.parseFloat(w);
-					} catch (NumberFormatException e) {
-					}
-				}
-				if (this.width == 0) {
-					this.width = 595f; // A4
+		void setCanvasDimensions(final DOMElement root) {
+			this.width = parseFloatHint(root, "width", KEY_WIDTH, 595f);
+			this.height = parseFloatHint(root, "height", KEY_HEIGHT, 842f);
+		}
+
+		/**
+		 * Returns the value associated with a transcoding hint key, or the given
+		 * default value if the associated value is not found.
+		 *
+		 * @param root          The SVG document root element.
+		 * @param attributeName The SVG attribute value to use if the hint key
+		 *                      is not found.
+		 * @param key           The transcoding hint key to look up.
+		 * @param defaultValue  The value to return if the value associated with
+		 *                      the key is out of bounds or missing.
+		 * @return The default value if the value associated with the key is
+		 * less than or equal to zero.
+		 */
+		private float parseFloatHint(
+			final DOMElement root,
+			final String attributeName,
+			final TranscodingHints.Key key,
+			final float defaultValue) {
+			assert defaultValue > 0;
+
+			final TranscodingHints hints = getTranscoder().getTranscodingHints();
+			final Object keyValue = hints.get(key);
+			float result = keyValue instanceof Float ? (Float) keyValue : 0;
+
+			if (keyValue == null) {
+				try {
+					final String attributeValue = root.getAttribute(attributeName);
+					result = Float.parseFloat(attributeValue);
+				} catch (final NumberFormatException ignored) {
 				}
 			}
-			// Height
-			Float height = (Float) transcodingHints.get(SVGAbstractTranscoder.KEY_HEIGHT);
-			if (height != null) {
-				this.height = height.floatValue();
-			} else {
-				String h = svgRoot.getAttribute("height");
-				if (h.length() != 0) {
-					try {
-						this.height = Float.parseFloat(h);
-					} catch (NumberFormatException e) {
-					}
-				}
-				if (this.height == 0) {
-					this.height = 842f; // A4
-				}
-			}
+
+			// Ensure that the resulting value is always greater than zero.
+			return result <= 0 ? defaultValue : result;
 		}
 
 		@Override
-		public CSSCanvas createCanvas(String medium, CSSDocument doc) {
+		public CSSCanvas createCanvas(final String medium, final CSSDocument doc) {
 			return new MyCanvas(doc.getOwnerDocument());
 		}
 
@@ -682,7 +738,7 @@ public class CSSTranscodingHelper {
 
 			private static final long serialVersionUID = 1L;
 
-			private final List<String> fonts = getAvailableFontList();
+			private final List<String> FONTS = getAvailableFontList();
 
 			private List<String> getAvailableFontList() {
 				return Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
@@ -701,17 +757,20 @@ public class CSSTranscodingHelper {
 			@Override
 			public int getColorDepth() {
 				// We do not have the actual Graphics2D here yet, but we try
-				GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-				java.awt.GraphicsConfiguration gConfiguration = genv.getDefaultScreenDevice().getDefaultConfiguration();
+				final GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+				final GraphicsConfiguration conf = env.getDefaultScreenDevice().getDefaultConfiguration();
 				int bpc = 255;
-				if (gConfiguration != null) {
-					int[] comp = gConfiguration.getColorModel().getComponentSize();
+
+				if (conf != null) {
+					final int[] comp = conf.getColorModel().getComponentSize();
+
 					for (int i = 0; i < 3; i++) {
 						if (bpc > comp[i]) {
 							bpc = comp[i];
 						}
 					}
 				}
+
 				return bpc;
 			}
 
@@ -726,8 +785,8 @@ public class CSSTranscodingHelper {
 			}
 
 			@Override
-			protected boolean isFontFamilyAvailable(String fontFamily) {
-				return fonts.contains(fontFamily);
+			protected boolean isFontFamilyAvailable(final String fontFamily) {
+				return FONTS.contains(fontFamily);
 			}
 
 			@Override
@@ -736,42 +795,45 @@ public class CSSTranscodingHelper {
 			}
 
 			@Override
-			public boolean supports(String property, CSSValue value) {
+			public boolean supports(final String property, final CSSValue value) {
 				if ("color".equalsIgnoreCase(property) || "background-color".equalsIgnoreCase(property)) {
 					return supportsColor(value);
 				}
+
 				return value.getCssValueType() == CssType.TYPED && isSupportedType((CSSTypedValue) value);
 			}
 
-			private boolean supportsColor(CSSValue value) {
+			private boolean supportsColor(final CSSValue value) {
 				switch (value.getPrimitiveType()) {
-				case COLOR:
-					return true;
-				case IDENT:
-					return ColorIdentifiers.getInstance()
-							.isColorIdentifier(value.getCssText().toLowerCase(Locale.ROOT));
-				default:
+					case COLOR:
+						return true;
+					case IDENT:
+						final String text = value.getCssText();
+						return ColorIdentifiers
+							.getInstance()
+							.isColorIdentifier(text.toLowerCase(Locale.ROOT));
+					default:
+						return false;
 				}
-				return false;
 			}
 
-			private boolean isSupportedType(CSSTypedValue value) {
-				short unit = value.getUnitType();
-				return (CSSUnit.isLengthUnitType(unit) && !CSSUnit.isRelativeLengthUnitType(unit))
+			private boolean isSupportedType(final CSSTypedValue value) {
+				final short unit = value.getUnitType();
+
+				return CSSUnit.isLengthUnitType(unit) && !CSSUnit.isRelativeLengthUnitType(unit)
 						|| CSSUnit.isAngleUnitType(unit) || CSSUnit.isTimeUnitType(unit);
 			}
-
 		}
 
 		class MyCanvas extends AbstractCSSCanvas {
 
-			protected MyCanvas(CSSDocument doc) {
+			protected MyCanvas(final CSSDocument doc) {
 				super(doc);
 			}
 
 			@Override
 			public StyleDatabase getStyleDatabase() {
-				return sdb;
+				return STYLE_DB;
 			}
 
 			@Override
@@ -803,9 +865,6 @@ public class CSSTranscodingHelper {
 			protected float getResolution() {
 				return Float.POSITIVE_INFINITY;
 			}
-
 		}
-
 	}
-
 }
