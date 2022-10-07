@@ -40,6 +40,7 @@ module io.sf.carte.echosvg.transcoder {
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.xml;
 	requires io.sf.carte.xml.dtd;
+	requires io.sf.carte.css4j.awt;
 
 	provides io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter
 			with io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOPNGImageWriter,

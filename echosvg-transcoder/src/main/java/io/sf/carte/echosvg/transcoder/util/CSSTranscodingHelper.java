@@ -18,7 +18,10 @@
  */
 package io.sf.carte.echosvg.transcoder.util;
 
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Reader;
@@ -48,6 +51,7 @@ import io.sf.carte.doc.dom.DOMNode;
 import io.sf.carte.doc.dom.XMLDocumentBuilder;
 import io.sf.carte.doc.style.css.BoxValues;
 import io.sf.carte.doc.style.css.CSSCanvas;
+import io.sf.carte.doc.style.css.CSSComputedProperties;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSMediaException;
 import io.sf.carte.doc.style.css.CSSTypedValue;
@@ -55,6 +59,7 @@ import io.sf.carte.doc.style.css.CSSUnit;
 import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.StyleDatabase;
+import io.sf.carte.doc.style.css.awt.AWTHelper;
 import io.sf.carte.doc.style.css.om.AbstractCSSCanvas;
 import io.sf.carte.doc.style.css.om.AbstractStyleDatabase;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
@@ -72,6 +77,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
+import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 import io.sf.carte.echosvg.util.SVGConstants;
 
@@ -457,6 +463,10 @@ public class CSSTranscodingHelper {
 		// Now fill the SVG document with computed styles
 		copyWithComputedStyles(svgRoot, svgDoc, svgDoc);
 
+		// Dispose canvas resources, if any
+		MyDeviceFactory.MyCanvas canvas = (MyDeviceFactory.MyCanvas) document.getCanvas();
+		canvas.dispose();
+
 		// Transcode
 		TranscoderInput input = new TranscoderInput(svgDoc);
 		ErrorHandler handler = new DefaultErrorHandler();
@@ -675,7 +685,15 @@ public class CSSTranscodingHelper {
 
 		@Override
 		public CSSCanvas createCanvas(String medium, CSSDocument doc) {
-			return new MyCanvas(doc.getOwnerDocument());
+			CSSCanvas canvas;
+			if (transcoder instanceof ImageTranscoder) {
+				BufferedImage dest = ((ImageTranscoder) transcoder).createImage(Math.round(width), Math.round(height));
+				Graphics2D graphics2d = dest.createGraphics();
+				canvas = new Graphics2DCanvas(doc, graphics2d);
+			} else {
+				canvas = new MyCanvas(doc);
+			}
+			return canvas;
 		}
 
 		private class MyStyleDatabase extends AbstractStyleDatabase {
@@ -763,7 +781,7 @@ public class CSSTranscodingHelper {
 
 		}
 
-		class MyCanvas extends AbstractCSSCanvas {
+		private class MyCanvas extends AbstractCSSCanvas {
 
 			protected MyCanvas(CSSDocument doc) {
 				super(doc);
@@ -802,6 +820,32 @@ public class CSSTranscodingHelper {
 			@Override
 			protected float getResolution() {
 				return Float.POSITIVE_INFINITY;
+			}
+
+			void dispose() {
+			}
+
+		}
+
+		private class Graphics2DCanvas extends MyCanvas {
+
+			final Graphics2D graphics2d;
+
+			protected Graphics2DCanvas(CSSDocument doc, Graphics2D graphics2d) {
+				super(doc);
+				this.graphics2d = graphics2d;
+			}
+
+			@Override
+			public int stringWidth(String text, CSSComputedProperties style) {
+				java.awt.Font font = AWTHelper.createFont(style);
+				FontMetrics fm = graphics2d.getFontMetrics(font);
+				return fm.stringWidth(text);
+			}
+
+			@Override
+			void dispose() {
+				graphics2d.dispose();
 			}
 
 		}

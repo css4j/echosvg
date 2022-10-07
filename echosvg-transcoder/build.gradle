@@ -5,6 +5,7 @@ plugins {
 dependencies {
 	api project(':echosvg-bridge')
 	api project(':echosvg-svggen')
+	implementation "io.sf.carte:css4j-awt:$css4jAwtVersion"
 	implementation "xml-apis:xml-apis:$xmlApisVersion"
 }
 
