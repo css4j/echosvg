@@ -178,7 +178,7 @@ public class SVGClipPathElementBridge extends AnimatableGenericSVGBridge impleme
 		hints = CSSUtilities.convertShapeRendering(clipElement, null);
 		if (hints != null) {
 			Object o = hints.get(RenderingHints.KEY_ANTIALIASING);
-			useAA = (o == RenderingHints.VALUE_ANTIALIAS_ON);
+			useAA = (o != RenderingHints.VALUE_ANTIALIAS_OFF);
 		}
 
 		return new ClipRable8Bit(filter, clipPath, useAA);
