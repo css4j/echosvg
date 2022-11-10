@@ -26,10 +26,6 @@ repositories {
 group = 'io.sf.carte'
 version = '0.3-SNAPSHOT'
 
-sourceSets.main.resources {
-	srcDirs += ["$rootDir/shared-resources"]
-}
-
 java {
 	withSourcesJar()
 	sourceCompatibility = JavaVersion.VERSION_11
@@ -120,10 +116,24 @@ tasks.withType(Javadoc) {
 	options.links 'https://docs.oracle.com/en/java/javase/11/docs/api/'
 }
 
+tasks.register('lineEndingConvCopy', CRLFConvertCopy) {
+	description 'Convert LICENSE and NOTICE to Windows line endings'
+	from "$rootDir/LICENSE"
+	from "$rootDir/NOTICE"
+}
+
 // Reproducible build
 tasks.withType(AbstractArchiveTask).configureEach {
 	preserveFileTimestamps = false
 	reproducibleFileOrder = true
+	// Copy license file
+	dependsOn lineEndingConvCopy
+	from ("$buildDir/tmp/crlf/LICENSE") {
+		into 'META-INF'
+	}
+	from ("$buildDir/tmp/crlf/NOTICE") {
+		into 'META-INF'
+	}
 }
 
 publishing {
