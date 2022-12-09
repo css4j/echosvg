@@ -37,6 +37,8 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 
 	public static final String SVG_EXTENSION = ".svg";
 	public static final String SVGZ_EXTENSION = ".svgz";
+	private static final String HTML_EXTENSION = ".html";
+	private static final String XHTML_EXTENSION = ".xhtml";
 
 	public static final char PATH_SEPARATOR = '/';
 
@@ -175,6 +177,10 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 			ret[2] = SVG_EXTENSION;
 		} else if (svgFile.endsWith(SVGZ_EXTENSION)) {
 			ret[2] = SVGZ_EXTENSION;
+		} else if (svgFile.endsWith(HTML_EXTENSION)) {
+			ret[2] = HTML_EXTENSION;
+		} else if (svgFile.endsWith(XHTML_EXTENSION)) {
+			ret[2] = XHTML_EXTENSION;
 		} else {
 			throw new IllegalArgumentException(svgFile);
 		}

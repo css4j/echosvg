@@ -25,6 +25,8 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
+import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
+import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.transcoder.keys.BooleanKey;
@@ -37,13 +39,20 @@ import io.sf.carte.echosvg.transcoder.keys.StringKey;
  * advantage of this class, you have to specify the following transcoding hints:
  *
  * <ul>
- * <li><code>KEY_DOM_IMPLEMENTATION</code>: the DOM Implementation to use
+ * <li><code>KEY_DOM_IMPLEMENTATION</code>: the DOM Implementation to use. If no
+ * hint is provided a SVG 1.1 implementation shall be used, or a 1.2 if the
+ * input is a DOM <code>Document</code> where the SVG root has a 1.2
+ * <code>version</code> attribute.</li>
  *
  * <li><code>KEY_DOCUMENT_ELEMENT_NAMESPACE_URI</code>: the namespace URI of the
- * document to create
+ * document to create. By default it is the SVG namespace URI. If you want to
+ * process a <code>svg</code> element embedded into a XHTML document, it should
+ * be the XHTML namespace URI.</li>
  *
  * <li><code>KEY_DOCUMENT_ELEMENT</code>: the qualified name of the document
- * type to create
+ * element to create. By default it is the <code>svg</code> element. If you want
+ * to process a <code>svg</code> element embedded into a XHTML document, it must
+ * be the <code>html</code> element.</li>
  * </ul>
  *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
@@ -71,52 +80,15 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 	 */
 	@Override
 	public void transcode(TranscoderInput input, TranscoderOutput output) throws TranscoderException {
-
 		Document document = null;
-		String uri = input.getURI();
 		if (input.getDocument() != null) {
 			document = input.getDocument();
 		} else {
-			String namespaceURI = (String) hints.get(KEY_DOCUMENT_ELEMENT_NAMESPACE_URI);
-			String documentElement = (String) hints.get(KEY_DOCUMENT_ELEMENT);
-			DOMImplementation domImpl = (DOMImplementation) hints.get(KEY_DOM_IMPLEMENTATION);
-
-			if (domImpl == null) {
-				handler.fatalError(new TranscoderException("Unspecified transcoding hints: KEY_DOM_IMPLEMENTATION"));
-				return;
-			}
-			if (namespaceURI == null) {
-				handler.fatalError(
-						new TranscoderException("Unspecified transcoding hints: KEY_DOCUMENT_ELEMENT_NAMESPACE_URI"));
-				return;
-			}
-			if (documentElement == null) {
-				handler.fatalError(new TranscoderException("Unspecified transcoding hints: KEY_DOCUMENT_ELEMENT"));
-				return;
-			}
-			// parse the XML document
-			DocumentFactory f = createDocumentFactory(domImpl);
-			Object xmlParserValidating = hints.get(KEY_XML_PARSER_VALIDATING);
-			boolean validating = xmlParserValidating != null && (Boolean) xmlParserValidating;
-			f.setValidating(validating);
-			try {
-				if (input.getInputStream() != null) {
-					document = f.createDocument(namespaceURI, documentElement, input.getURI(), input.getInputStream());
-				} else if (input.getReader() != null) {
-					document = f.createDocument(namespaceURI, documentElement, input.getURI(), input.getReader());
-				} else if (input.getXMLReader() != null) {
-					document = f.createDocument(namespaceURI, documentElement, input.getURI(), input.getXMLReader());
-				} else if (uri != null) {
-					document = f.createDocument(namespaceURI, documentElement, uri);
-				}
-			} catch (DOMException ex) {
-				handler.fatalError(new TranscoderException(ex));
-			} catch (IOException ex) {
-				handler.fatalError(new TranscoderException(ex));
-			}
+			document = loadDocument(input);
 		}
 		// call the dedicated transcode method
 		if (document != null) {
+			String uri = input.getURI();
 			try {
 				transcode(document, uri, output);
 			} catch (TranscoderException ex) {
@@ -128,10 +100,85 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 	}
 
 	/**
+	 * Retrieve the document from the URI, {@code InputStream} or reader given by
+	 * {@code input}.
+	 * 
+	 * @param input the transcoder input.
+	 * @return the document.
+	 * @throws TranscoderException
+	 */
+	private Document loadDocument(TranscoderInput input) throws TranscoderException {
+		String namespaceURI = (String) hints.get(KEY_DOCUMENT_ELEMENT_NAMESPACE_URI);
+		String documentElement = (String) hints.get(KEY_DOCUMENT_ELEMENT);
+
+		DocumentFactory f = createDocumentFactory(documentElement);
+
+		if (namespaceURI == null) {
+			handler.fatalError(
+					new TranscoderException("Unspecified transcoding hints: KEY_DOCUMENT_ELEMENT_NAMESPACE_URI"));
+			return null;
+		}
+		if (documentElement == null) {
+			handler.fatalError(new TranscoderException("Unspecified transcoding hints: KEY_DOCUMENT_ELEMENT"));
+			return null;
+		}
+
+		// parse the XML document
+		Object xmlParserValidating = hints.get(KEY_XML_PARSER_VALIDATING);
+		boolean validating = xmlParserValidating != null && (Boolean) xmlParserValidating;
+		f.setValidating(validating);
+		String uri = input.getURI();
+
+		Document document = null;
+		try {
+			if (input.getInputStream() != null) {
+				document = f.createDocument(namespaceURI, documentElement, uri, input.getInputStream());
+			} else if (input.getReader() != null) {
+				document = f.createDocument(namespaceURI, documentElement, uri, input.getReader());
+			} else if (input.getXMLReader() != null) {
+				document = f.createDocument(namespaceURI, documentElement, uri, input.getXMLReader());
+			} else if (uri != null) {
+				document = f.createDocument(namespaceURI, documentElement, uri);
+			}
+		} catch (DOMException ex) {
+			handler.fatalError(new TranscoderException(ex));
+		} catch (IOException ex) {
+			handler.fatalError(new TranscoderException(ex));
+		}
+
+		return document;
+	}
+
+	/**
+	 * Create a {@code DocumentFactory} appropriate for the given document element.
+	 * 
+	 * @param documentElement the document element name.
+	 * @return the {@code DocumentFactory}.
+	 */
+	private DocumentFactory createDocumentFactory(String documentElement) {
+		DocumentFactory f;
+		DOMImplementation domImpl = (DOMImplementation) hints.get(KEY_DOM_IMPLEMENTATION);
+		if (domImpl == null) {
+			if (documentElement.equals("html")) {
+				domImpl = GenericDOMImplementation.getDOMImplementation();
+				f = new SAXDocumentFactory(domImpl);
+			} else {
+				domImpl = SVGDOMImplementation.getDOMImplementation();
+				f = createDocumentFactory(domImpl);
+			}
+		} else {
+			f = createDocumentFactory(domImpl);
+		}
+		return f;
+	}
+
+	/**
 	 * Creates the <code>DocumentFactory</code> used to create the DOM tree.
+	 * <p>
 	 * Override this method if you have to use another implementation of the
 	 * <code>DocumentFactory</code> (ie. for SVG, you have to use the
 	 * <code>SAXSVGDocumentFactory</code>).
+	 * </p>
 	 *
 	 * @param domImpl the DOM Implementation to use
 	 */

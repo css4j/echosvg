@@ -929,6 +929,11 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/styling/styleElement.svg");
 	}
 
+	@Test
+	public void testXHTMLEmbed() throws TranscoderException, IOException {
+		testXHTML("samples/tests/spec/styling/css2.xhtml");
+	}
+
 	/*
 	 * Text
 	 */
@@ -1519,6 +1524,24 @@ public class SamplesRenderingTest {
 		runner.setValidating(validating);
 		runner.setFile(file);
 		runner.runTest(0.00001f, 0.00001f);
+	}
+
+	/**
+	 * Test the rendering of a SVG image inside an XHTML document.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file the HTML file to test.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	private void testXHTML(String file) throws TranscoderException, IOException {
+		RenderingTest runner = new XHTMLRenderingAccuracyTest();
+		runner.setFile(file);
+		runner.runTest(0.000001f, 0.000001f);
 	}
 
 	/**

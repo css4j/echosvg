@@ -1437,9 +1437,6 @@ public class StyleBypassRenderingTest {
 
 	private class BypassRenderingTest extends RenderingTest {
 
-		private static final String HTML_EXTENSION = ".html";
-		private static final String XHTML_EXTENSION = ".xhtml";
-
 		private final String medium;
 
 		/**
@@ -1486,43 +1483,6 @@ public class StyleBypassRenderingTest {
 			Reader re = new InputStreamReader(is, StandardCharsets.UTF_8);
 
 			helper.transcode(re, uri, dst, null);
-		}
-
-		@Override
-		protected String[] breakSVGFile(String svgFile) {
-			if (svgFile == null) {
-				throw new IllegalArgumentException(svgFile);
-			}
-
-			String[] ret = new String[3];
-
-			if (svgFile.endsWith(SVG_EXTENSION)) {
-				ret[2] = SVG_EXTENSION;
-			} else if (svgFile.endsWith(SVGZ_EXTENSION)) {
-				ret[2] = SVGZ_EXTENSION;
-			} else if (svgFile.endsWith(HTML_EXTENSION)) {
-				ret[2] = HTML_EXTENSION;
-			} else if (svgFile.endsWith(XHTML_EXTENSION)) {
-				ret[2] = XHTML_EXTENSION;
-			} else {
-				throw new IllegalArgumentException(svgFile);
-			}
-
-			svgFile = svgFile.substring(0, svgFile.length() - ret[2].length());
-
-			int fileNameStart = svgFile.lastIndexOf(PATH_SEPARATOR);
-			String svgDir = "";
-			if (fileNameStart != -1) {
-				if (svgFile.length() < fileNameStart + 2) {
-					// Nothing after PATH_SEPARATOR
-					throw new IllegalArgumentException(svgFile);
-				}
-				svgDir = svgFile.substring(0, fileNameStart + 1);
-				svgFile = svgFile.substring(fileNameStart + 1);
-			}
-			ret[0] = svgDir;
-			ret[1] = svgFile;
-			return ret;
 		}
 
 		protected String getImageSuffix() {
