@@ -64,33 +64,36 @@ public class ParameterizedRenderingAccuracyTest extends RenderingTest {
 	/**
 	 * Gives a chance to the subclass to control the construction of the reference
 	 * PNG file from the svgFile name The refImgURL is built as: getRefImagePrefix()
-	 * + svgDir + getRefImageSuffix() + svgFile
+	 * + svgDir + getRefImageSuffix() + svgFile + parameter + getImageSuffix() +
+	 * PNG_EXTENSION
 	 */
 	@Override
 	protected String buildRefImgURL(String svgDir, String svgFile) {
-		return getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile + parameter + PNG_EXTENSION;
+		return getRefImagePrefix() + svgDir + getRefImageSuffix() + svgFile + parameter + getImageSuffix()
+				+ PNG_EXTENSION;
 	}
 
 	/**
 	 * Gives a chance to the subclass to control the construction of the variation
 	 * URL, which is built as: getVariationPrefix() + svgDir + getVariationSuffix()
-	 * + svgFile + parameter + PNG_EXTENSION
+	 * + svgFile + parameter + getImageSuffix() + PNG_EXTENSION
 	 */
 	@Override
 	public String[] buildVariationURLs(String svgDir, String svgFile) {
 		String[] platforms = getVariationPlatforms();
 		String[] urls = new String[platforms.length + 1];
-		urls[0] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + parameter + PNG_EXTENSION;
+		urls[0] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + parameter + getImageSuffix()
+				+ PNG_EXTENSION;
 		for (int i = 0; i < platforms.length; i++) {
-			urls[i + 1] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + parameter + '_'
-					+ platforms[i] + PNG_EXTENSION;
+			urls[i + 1] = getVariationPrefix() + svgDir + getVariationSuffix() + svgFile + parameter + getImageSuffix()
+					+ '_' + platforms[i] + PNG_EXTENSION;
 		}
 		return urls;
 	}
 
 	@Override
 	protected String buildSaveVariationPath(String svgDir, String svgFile) {
-		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + parameter;
+		return getSaveVariationPrefix() + svgDir + getSaveVariationSuffix() + svgFile + parameter + getImageSuffix();
 	}
 
 	/**
@@ -101,7 +104,7 @@ public class ParameterizedRenderingAccuracyTest extends RenderingTest {
 	@Override
 	public String buildCandidateReferenceFile(String svgDir, String svgFile) {
 		return getCandidateReferencePrefix() + svgDir + getCandidateReferenceSuffix() + svgFile + parameter
-				+ PNG_EXTENSION;
+				+ getImageSuffix() + PNG_EXTENSION;
 	}
 
 }

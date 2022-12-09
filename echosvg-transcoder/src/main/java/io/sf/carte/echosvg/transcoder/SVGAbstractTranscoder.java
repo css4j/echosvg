@@ -26,11 +26,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGSVGElement;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
+import io.sf.carte.echosvg.anim.dom.SVG12DOMImplementation;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.bridge.BaseScriptingEnvironment;
@@ -48,7 +54,6 @@ import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
 import io.sf.carte.echosvg.bridge.ViewBox;
 import io.sf.carte.echosvg.bridge.svg12.SVG12BridgeContext;
-import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.gvt.CanvasGraphicsNode;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
@@ -121,7 +126,6 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 		hints.put(KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, SVGConstants.SVG_NAMESPACE_URI);
 		hints.put(KEY_DOCUMENT_ELEMENT, SVGConstants.SVG_SVG_TAG);
-		hints.put(KEY_DOM_IMPLEMENTATION, SVGDOMImplementation.getDOMImplementation());
 		hints.put(KEY_MEDIA, "screen");
 		hints.put(KEY_DEFAULT_FONT_FAMILY, DEFAULT_DEFAULT_FONT_FAMILY);
 		hints.put(KEY_EXECUTE_ONLOAD, Boolean.FALSE);
@@ -200,23 +204,19 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	/**
 	 * Transcodes the specified Document as an image in the specified output.
 	 *
-	 * @param document the document to transcode
-	 * @param uri      the uri of the document or null if any
-	 * @param output   the ouput where to transcode
+	 * @param document the document to transcode. Cannot be {@code null}.
+	 * @param uri      the uri of the document or {@code null} if any.
+	 * @param output   the ouput where to transcode.
 	 * @exception TranscoderException if an error occured while transcoding
 	 */
 	@Override
 	protected void transcode(Document document, String uri, TranscoderOutput output) throws TranscoderException {
-
-		if ((document != null) && !(document.getImplementation() instanceof SVGDOMImplementation)) {
-			DOMImplementation impl;
-			impl = (DOMImplementation) hints.get(KEY_DOM_IMPLEMENTATION);
-			// impl = SVGDOMImplementation.getDOMImplementation();
-			document = DOMUtilities.deepCloneDocument(document, impl);
-			if (uri != null) {
-				ParsedURL url = new ParsedURL(uri);
-				((SVGOMDocument) document).setParsedURL(url);
-			}
+		SVGOMDocument svgDoc;
+		// document is assumed to be non-null here
+		if (!(document instanceof SVGOMDocument)) {
+			svgDoc = importAsSVGDocument(document, uri);
+		} else {
+			svgDoc = (SVGOMDocument) document;
 		}
 
 		if (hints.containsKey(KEY_WIDTH))
@@ -224,7 +224,6 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 		if (hints.containsKey(KEY_HEIGHT))
 			height = (Float) hints.get(KEY_HEIGHT);
 
-		SVGOMDocument svgDoc = (SVGOMDocument) document;
 		SVGSVGElement root = svgDoc.getRootElement();
 		ctx = createBridgeContext(svgDoc);
 
@@ -319,6 +318,137 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 		}
 
 		this.root = gvtRoot;
+	}
+
+	/**
+	 * Import the given document with a SVG DOM implementation.
+	 * 
+	 * @param document the document to import.
+	 * @param uri      the document URI.
+	 * @return the imported SVG document.
+	 */
+	private SVGOMDocument importAsSVGDocument(Document document, String uri) {
+		// Obtain the document element and DocumentType
+		Element docElm = document.getDocumentElement();
+		// Check whether the document element is a SVG element anyway
+		if (docElm.getNamespaceURI() != SVGDOMImplementation.SVG_NAMESPACE_URI
+				&& !"SVG".equalsIgnoreCase(docElm.getTagName())) {
+			// Not a SVG document, get the first SVG element
+			docElm = (Element) document.getElementsByTagNameNS("*", SVGConstants.SVG_SVG_TAG).item(0);
+		}
+
+		// Obtain a DOM implementation
+		DOMImplementation impl;
+		impl = (DOMImplementation) hints.get(KEY_DOM_IMPLEMENTATION);
+		if (impl == null) {
+			// Look for the version attribute of the root element
+			if ("1.2".equals(docElm.getAttribute(SVGConstants.SVG_VERSION_ATTRIBUTE))) {
+				impl = SVG12DOMImplementation.getDOMImplementation();
+			} else {
+				impl = SVGDOMImplementation.getDOMImplementation();
+			}
+		}
+
+		// Clone the document
+		SVGOMDocument svgDocument = (SVGOMDocument) deepCloneDocument(document, docElm, impl);
+
+		if (uri != null) {
+			ParsedURL url = new ParsedURL(uri);
+			svgDocument.setParsedURL(url);
+		}
+
+		return svgDocument;
+	}
+
+	/**
+	 * Deep clone the document {@code doc} with the {@code impl} DOM implementation,
+	 * importing {@code root} as the document element.
+	 * 
+	 * @param doc  the document to be imported.
+	 * @param root the element to be imported as document element.
+	 * @param impl the DOM implementation.
+	 * 
+	 * @return the cloned document.
+	 */
+	private static Document deepCloneDocument(Document doc, Element root, DOMImplementation impl) {
+		Document result = impl.createDocument(root.getNamespaceURI(), root.getNodeName(), null);
+		Element rroot = result.getDocumentElement();
+
+		// Let's see if the designed root node is also the origin's document root
+		boolean before = root.getParentNode().getNodeType() == Node.DOCUMENT_NODE;
+		Node firstNode;
+		if (before) {
+			firstNode = doc.getFirstChild();
+		} else {
+			firstNode = root;
+			// Now let's see if there are HEAD-level STYLE elements
+			appendHeadStyleElements(doc, result, rroot);
+		}
+
+		for (Node n = firstNode; n != null; n = n.getNextSibling()) {
+			if (n == root) {
+				before = false;
+				if (root.hasAttributes()) {
+					NamedNodeMap attr = root.getAttributes();
+					int len = attr.getLength();
+					for (int i = 0; i < len; i++) {
+						rroot.setAttributeNode((Attr) result.importNode(attr.item(i), true));
+					}
+				}
+				for (Node c = root.getFirstChild(); c != null; c = c.getNextSibling()) {
+					rroot.appendChild(result.importNode(c, true));
+				}
+			} else {
+				short type = n.getNodeType();
+				if (type == Node.DOCUMENT_TYPE_NODE || type == Node.COMMENT_NODE
+						|| type == Node.PROCESSING_INSTRUCTION_NODE) {
+					if (before) {
+						result.insertBefore(result.importNode(n, true), rroot);
+					} else {
+						result.appendChild(result.importNode(n, true));
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Append to {@code rroot} any {@code STYLE} elements inside {@code doc}'s
+	 * {@code HEAD} element.
+	 * 
+	 * @param doc    the document that is being imported.
+	 * @param result the resulting SVG document.
+	 * @param rroot  result's document element.
+	 */
+	private static void appendHeadStyleElements(Document doc, Document result, Element rroot) {
+		for (Node n = doc.getDocumentElement().getFirstChild(); n != null; n = n.getNextSibling()) {
+			if (n.getNodeType() == Node.ELEMENT_NODE) {
+				if ("head".equals(n.getNodeName()) || "head".equals(n.getLocalName())) {
+					NodeList styleList = ((Element) n).getElementsByTagNameNS("*", "style");
+					int len = styleList.getLength();
+					for (int i = 0; i < len; i++) {
+						Node style = styleList.item(i);
+						// Let's import this element, but with a SVG namespace
+						NamedNodeMap attr = style.getAttributes();
+						String qname = "style";
+						String pre = rroot.getPrefix();
+						if (pre != null) {
+							qname = pre + ':' + qname;
+						}
+						Element rstyle = result.createElementNS(SVGConstants.SVG_NAMESPACE_URI, qname);
+						int attrLen = attr.getLength();
+						for (int j = 0; j < attrLen; j++) {
+							rstyle.setAttributeNode((Attr) result.importNode(attr.item(j), true));
+						}
+						rstyle.setTextContent(style.getTextContent());
+						rroot.appendChild(rstyle);
+					}
+					break;
+				}
+			}
+		}
 	}
 
 	protected CanvasGraphicsNode getCanvasGraphicsNode(GraphicsNode gn) {
