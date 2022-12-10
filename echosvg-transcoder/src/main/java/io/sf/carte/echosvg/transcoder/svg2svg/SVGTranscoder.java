@@ -246,7 +246,7 @@ public class SVGTranscoder extends AbstractTranscoder {
 	/**
 	 * To represent a newline value.
 	 */
-	protected static class NewlineValue {
+	public static class NewlineValue {
 		protected final String value;
 
 		protected NewlineValue(String val) {
@@ -271,7 +271,7 @@ public class SVGTranscoder extends AbstractTranscoder {
 	/**
 	 * To represent a doctype value.
 	 */
-	protected static class DoctypeValue {
+	public static class DoctypeValue {
 		final int value;
 
 		protected DoctypeValue(int value) {
