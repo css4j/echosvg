@@ -305,7 +305,7 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Required:</th>
-	 * <td style="vertical-align: top">Yes</td>
+	 * <td style="vertical-align: top">No</td>
 	 * </tr>
 	 * <tr>
 	 * <th style="text-align: end; vertical-align: top">Description:</th>
