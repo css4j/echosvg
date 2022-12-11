@@ -111,7 +111,7 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	@Override
 	protected void encode(URL srcURL, FileOutputStream fos) throws TranscoderException, IOException {
 		ImageTranscoder transcoder = getTestImageTranscoder();
-		TranscoderInput src = new TranscoderInput(getURI());
+		TranscoderInput src = getTranscoderInput();
 		TranscoderOutput dst = new TranscoderOutput(fos);
 		transcoder.transcode(src, dst);
 	}
@@ -133,6 +133,16 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 			t.addTranscodingHint(SVGAbstractTranscoder.KEY_LANGUAGE, userLanguage);
 		}
 		return t;
+	}
+
+	/**
+	 * Returns the <code>TranscoderInput</code> that the Test should use,
+	 * 
+	 * @return the <code>TranscoderInput</code>.
+	 * @throws IOException if an I/O error happened creating the input.
+	 */
+	TranscoderInput getTranscoderInput() throws IOException {
+		return new TranscoderInput(getURI());
 	}
 
 	/**

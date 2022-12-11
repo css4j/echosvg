@@ -288,7 +288,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * @param ns   The namespace URI of the root element of the document.
 	 * @param root The name of the root element of the document.
 	 * @param uri  The document URI.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public Document createDocument(String ns, String root, String uri) throws IOException {
@@ -299,7 +299,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * Creates a Document instance.
 	 * 
 	 * @param uri The document URI.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	public Document createDocument(String uri) throws IOException {
 		return createDocument(new InputSource(uri));
@@ -312,7 +312,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * @param root The name of the root element of the document.
 	 * @param uri  The document URI.
 	 * @param is   The document input stream.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public Document createDocument(String ns, String root, String uri, InputStream is) throws IOException {
@@ -326,7 +326,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * 
 	 * @param uri The document URI.
 	 * @param is  The document input stream.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	public Document createDocument(String uri, InputStream is) throws IOException {
 		InputSource inp = new InputSource(is);
@@ -341,7 +341,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * @param root The name of the root element of the document.
 	 * @param uri  The document URI.
 	 * @param r    The document reader.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public Document createDocument(String ns, String root, String uri, Reader r) throws IOException {
@@ -357,8 +357,9 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * @param root The name of the root element of the document.
 	 * @param uri  The document URI.
 	 * @param r    an XMLReaderInstance
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
+	@Deprecated
 	@Override
 	public Document createDocument(String ns, String root, String uri, XMLReader r) throws IOException {
 		r.setContentHandler(this);
@@ -388,7 +389,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * 
 	 * @param uri The document URI.
 	 * @param r   The document reader.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	public Document createDocument(String uri, Reader r) throws IOException {
 		InputSource inp = new InputSource(r);
@@ -403,7 +404,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * @param root The name of the root element.
 	 * @param uri  The document URI.
 	 * @param is   The document input source.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	protected Document createDocument(String ns, String root, String uri, InputSource is) throws IOException {
 		Document ret = createDocument(is);
@@ -457,7 +458,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * Creates a Document.
 	 * 
 	 * @param is The document input source.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	protected Document createDocument(InputSource is) throws IOException {
 		try {
@@ -492,6 +493,11 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	@Override
 	public DocumentDescriptor getDocumentDescriptor() {
 		return documentDescriptor;
+	}
+
+	@Override
+	public void setXMLReader(XMLReader reader) {
+		this.parser = getXMLReader(reader);
 	}
 
 	/**

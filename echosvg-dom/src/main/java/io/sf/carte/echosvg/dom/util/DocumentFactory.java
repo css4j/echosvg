@@ -76,7 +76,9 @@ public interface DocumentFactory {
 	 * @param uri  The document URI.
 	 * @param r    An XMLReader instance
 	 * @exception IOException if an error occured while reading the document.
+	 * @deprecated see {@link #setXMLReader(XMLReader)}.
 	 */
+	@Deprecated
 	Document createDocument(String ns, String root, String uri, XMLReader r) throws IOException;
 
 	/**
@@ -96,4 +98,12 @@ public interface DocumentFactory {
 	 * @return null if no document or descriptor was previously generated.
 	 */
 	DocumentDescriptor getDocumentDescriptor();
+
+	/**
+	 * Set the factory to parse with the given {@code XMLReader}.
+	 * 
+	 * @param reader the reader.
+	 */
+	void setXMLReader(XMLReader reader);
+
 }

@@ -127,6 +127,9 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 		Object xmlParserValidating = hints.get(KEY_XML_PARSER_VALIDATING);
 		boolean validating = xmlParserValidating != null && (Boolean) xmlParserValidating;
 		f.setValidating(validating);
+
+		f.setXMLReader(input.getXMLReader());
+
 		String uri = input.getURI();
 
 		Document document = null;
@@ -135,8 +138,6 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 				document = f.createDocument(namespaceURI, documentElement, uri, input.getInputStream());
 			} else if (input.getReader() != null) {
 				document = f.createDocument(namespaceURI, documentElement, uri, input.getReader());
-			} else if (input.getXMLReader() != null) {
-				document = f.createDocument(namespaceURI, documentElement, uri, input.getXMLReader());
 			} else if (uri != null) {
 				document = f.createDocument(namespaceURI, documentElement, uri);
 			}

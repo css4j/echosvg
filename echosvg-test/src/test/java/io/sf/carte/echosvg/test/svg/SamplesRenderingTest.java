@@ -930,6 +930,11 @@ public class SamplesRenderingTest {
 	}
 
 	@Test
+	public void testHTMLEmbed() throws TranscoderException, IOException {
+		testHTML("samples/tests/spec/styling/css2.html");
+	}
+
+	@Test
 	public void testXHTMLEmbed() throws TranscoderException, IOException {
 		testXHTML("samples/tests/spec/styling/css2.xhtml");
 	}
@@ -1534,12 +1539,30 @@ public class SamplesRenderingTest {
 	 * reference image.
 	 * </p>
 	 * 
-	 * @param file the HTML file to test.
+	 * @param file the XHTML file to test.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
 	private void testXHTML(String file) throws TranscoderException, IOException {
 		RenderingTest runner = new XHTMLRenderingAccuracyTest();
+		runner.setFile(file);
+		runner.runTest(0.000001f, 0.000001f);
+	}
+
+	/**
+	 * Test the rendering of a SVG image inside an HTML document.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file the HTML file to test.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	private void testHTML(String file) throws TranscoderException, IOException {
+		RenderingTest runner = new HTMLRenderingAccuracyTest();
 		runner.setFile(file);
 		runner.runTest(0.000001f, 0.000001f);
 	}
