@@ -15,6 +15,10 @@ script and a recent version of [Python](https://www.python.org/) (required to
 run it). The script is necessary to create the index files in the bare-bones
 Maven repository currently used by EchoSVG.
 
+- An archiver like [7-Zip](https://7-zip.org/).
+
+<br/>
+
 ## Steps
 
 1) In the `master` branch of your local copy of the EchoSVG Git repository, bump
@@ -23,10 +27,11 @@ file or remove the `-SNAPSHOT` suffix as necessary. Bump also the latest version
 in the [`README`](README.md). Commit the changes to the Git repository.
 
 2) If there is an issue tracking the release, close it (could be done adding a
-'closes...' to the message in the previously described commit).
+'closes...' to the message in the previously described commit). Same if there is
+a milestone.
 
 3) If your local copy of the EchoSVG Git repository exactly matches the current
-`master` HEAD, use that copy to execute the `gradlew` commands shown later,
+`master` HEAD, use that copy to execute the `./gradlew` commands shown later,
 otherwise create a new clone of the `git@github.com:css4j/echosvg.git`
 repository with `git clone` and use it.
 
@@ -37,14 +42,14 @@ system do not execute the tests, as several would fail. That is:
 
 ```shell
 cd /path/to/echosvg
-gradlew build -x test
+./gradlew build -x test
 ```
 
 5) For convenience, now copy all the produced _jar_ files into a new `jar`
 directory:
 
 ```shell
-gradlew copyJars
+./gradlew copyJars
 ```
 
 6) Use `changes.sh <new-version>` to create a `CHANGES.txt` file with the
@@ -66,7 +71,7 @@ local copy of the bare-bones Maven repository with:
 
 ```shell
 cd /path/to/echosvg
-gradlew publish -PmavenReleaseRepoUrl="file:///path/to/css4j.github.io/maven"
+./gradlew publish -PmavenReleaseRepoUrl="file:///path/to/css4j.github.io/maven"
 ```
 
 9) Produce the necessary directory indexes in the local copy of the bare-bones
@@ -84,7 +89,22 @@ triggered by that commit to the `css4j.github.io` repository completed
 successfully. A failure could mean that you need to document something, or that
 the artifacts are not usable with Java 8, for example.
 
-10) Create a `v<version>` tag in the EchoSVG Git repository. For example:
+10) Generate two archives with the modular Javadocs (for example with the 7-Zip
+archiver):
+
+```shell
+cd /path/to/echosvg
+./gradlew modularJavadoc
+cd echosvg-all/build/docs
+mv modular echosvg-modular-javadocs-0.3.1
+7z a echosvg-modular-javadocs-0.3.1.7z echosvg-modular-javadocs-0.3.1
+7z a -mx7 echosvg-modular-javadocs-0.3.1.zip echosvg-modular-javadocs-0.3.1
+```
+
+The compressed archives will be part of the published release. Notice that the
+`.7z` archive is much smaller than the `.zip`.
+
+11) Create a `v<version>` tag in the EchoSVG Git repository. For example:
 
 ```shell
 cd /path/to/echosvg
@@ -98,15 +118,16 @@ generally a good idea to sign a release tag.
 Alternatively, you could create the new tag when drafting the Github release
 (next step).
 
-11) Draft a new Github release at https://github.com/css4j/echosvg/releases
+12) Draft a new Github release at https://github.com/css4j/echosvg/releases
 
 Summarize the most important changes in the release description, then create a
 `## Detail of changes` section and paste the contents of the `CHANGES.txt` file
 under it.
 
 Add to the Github release the _jar_ files from the `jar` directory in your copy
-of the EchoSVG release code.
+of the EchoSVG release code, and also the modular javadoc archives
+(`echosvg-modular-javadocs-0.3.1.7z` and `echosvg-modular-javadocs-0.3.1.zip`).
 
-12) Verify that the new [Github packages](https://github.com/orgs/css4j/packages?repo_name=echosvg)
+13) Verify that the new [Github packages](https://github.com/orgs/css4j/packages?repo_name=echosvg)
 were created successfully by the [Gradle Package](https://github.com/css4j/echosvg/actions/workflows/gradle-publish.yml)
 task.
