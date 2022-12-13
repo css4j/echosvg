@@ -241,10 +241,14 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 */
 	@Override
 	public SVGDocument createDocument(String ns, String root, String uri) throws IOException {
-		if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) || !"svg".equals(root)) {
-			throw new RuntimeException("Bad root element");
-		}
+		checkRootElement(ns, root);
 		return createDocument(uri);
+	}
+
+	protected void checkRootElement(String ns, String root) {
+		if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) || !"svg".equals(root)) {
+			throw new IllegalArgumentException("Bad root element");
+		}
 	}
 
 	/**
@@ -258,9 +262,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 */
 	@Override
 	public SVGDocument createDocument(String ns, String root, String uri, InputStream is) throws IOException {
-		if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) || !"svg".equals(root)) {
-			throw new RuntimeException("Bad root element");
-		}
+		checkRootElement(ns, root);
 		return createDocument(uri, is);
 	}
 
@@ -275,9 +277,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 */
 	@Override
 	public SVGDocument createDocument(String ns, String root, String uri, Reader r) throws IOException {
-		if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) || !"svg".equals(root)) {
-			throw new RuntimeException("Bad root element");
-		}
+		checkRootElement(ns, root);
 		return createDocument(uri, r);
 	}
 
