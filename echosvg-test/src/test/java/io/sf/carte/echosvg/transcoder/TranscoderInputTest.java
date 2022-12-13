@@ -67,6 +67,7 @@ public class TranscoderInputTest {
 			SAXParser parser = saxFactory.newSAXParser();
 			XMLReader xmlReader = parser.getXMLReader();
 			TranscoderInput ti = new TranscoderInput(xmlReader);
+			ti.setEncoding("utf-8");
 			ti.setURI(TEST_URI);
 			t.transcode(ti, out);
 			assertTrue(t.passed);
@@ -77,6 +78,7 @@ public class TranscoderInputTest {
 			URL uri = new URL(TEST_URI);
 			InputStream is = uri.openStream();
 			TranscoderInput ti = new TranscoderInput(is);
+			ti.setEncoding("utf-8");
 			ti.setURI(TEST_URI);
 			t = new TestTranscoder();
 			t.transcode(ti, out);
@@ -87,7 +89,7 @@ public class TranscoderInputTest {
 		{
 			URL uri = new URL(TEST_URI);
 			InputStream is = uri.openStream();
-			Reader r = new InputStreamReader(is);
+			Reader r = new InputStreamReader(is, "utf-8");
 			TranscoderInput ti = new TranscoderInput(r);
 			ti.setURI(TEST_URI);
 			t = new TestTranscoder();
@@ -97,7 +99,7 @@ public class TranscoderInputTest {
 		// Document
 		{
 			SAXSVGDocumentFactory f = new SAXSVGDocumentFactory();
-			Document doc = f.createDocument(TEST_URI);
+			Document doc = f.createDocument(TEST_URI, "utf-8");
 			TranscoderInput ti = new TranscoderInput(doc);
 			ti.setURI(TEST_URI);
 			t = new TestTranscoder();
@@ -109,7 +111,7 @@ public class TranscoderInputTest {
 		{
 			DOMImplementation impl = GenericDOMImplementation.getDOMImplementation();
 			SAXDocumentFactory f = new SAXDocumentFactory(impl);
-			Document doc = f.createDocument(TEST_URI);
+			Document doc = f.createDocument(TEST_URI, "utf-8");
 			TranscoderInput ti = new TranscoderInput(doc);
 			ti.setURI(TEST_URI);
 			t = new TestTranscoder();
@@ -120,6 +122,7 @@ public class TranscoderInputTest {
 		// URI only
 		{
 			TranscoderInput ti = new TranscoderInput(TEST_URI);
+			ti.setEncoding("utf-8");
 			t = new TestTranscoder();
 			t.transcode(ti, out);
 			assertTrue(t.passed);
@@ -138,7 +141,7 @@ public class TranscoderInputTest {
 
 		@Override
 		protected void transcode(Document document, String uri, TranscoderOutput output) {
-			passed = (document != null);
+			passed = document != null && document.getDocumentURI() != null;
 		}
 	}
 

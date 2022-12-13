@@ -142,7 +142,9 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	 * @throws IOException if an I/O error happened creating the input.
 	 */
 	TranscoderInput getTranscoderInput() throws IOException {
-		return new TranscoderInput(getURI());
+		TranscoderInput inp = new TranscoderInput(getURI());
+		inp.setEncoding("utf-8");
+		return inp;
 	}
 
 	/**

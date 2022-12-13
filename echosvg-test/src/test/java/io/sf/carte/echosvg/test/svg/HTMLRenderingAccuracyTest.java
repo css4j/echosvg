@@ -24,7 +24,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
-import io.sf.carte.echosvg.util.MimeTypeConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
 import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
@@ -57,7 +56,7 @@ class HTMLRenderingAccuracyTest extends XHTMLRenderingAccuracyTest {
 	TranscoderInput getTranscoderInput() throws IOException {
 		ParsedURL purl = new ParsedURL(getURI());
 
-		InputStream is = purl.openStream(MimeTypeConstants.MIME_TYPES_SVG_LIST.iterator());
+		InputStream is = purl.openStream();
 
 		TranscoderInput src = new TranscoderInput(new InputStreamReader(is, StandardCharsets.UTF_8));
 		src.setURI(purl.getPostConnectionURL());

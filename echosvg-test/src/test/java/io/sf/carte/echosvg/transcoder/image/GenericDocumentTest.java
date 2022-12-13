@@ -71,7 +71,7 @@ public class GenericDocumentTest extends AbstractImageTranscoderTest {
 			URL url = resolveURI(inputURI);
 			DOMImplementation impl = GenericDOMImplementation.getDOMImplementation();
 			SAXDocumentFactory f = new SAXDocumentFactory(impl);
-			Document doc = f.createDocument(url.toString());
+			Document doc = f.createDocument(url.toString(), "utf-8");
 			TranscoderInput input = new TranscoderInput(doc);
 			input.setURI(url.toString()); // Needed for external resources
 			return input;

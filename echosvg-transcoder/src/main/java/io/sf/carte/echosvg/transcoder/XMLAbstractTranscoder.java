@@ -135,11 +135,12 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 		Document document = null;
 		try {
 			if (input.getInputStream() != null) {
-				document = f.createDocument(namespaceURI, documentElement, uri, input.getInputStream());
+				document = f.createDocument(namespaceURI, documentElement, uri, input.getInputStream(),
+						input.getEncoding());
 			} else if (input.getReader() != null) {
 				document = f.createDocument(namespaceURI, documentElement, uri, input.getReader());
 			} else if (uri != null) {
-				document = f.createDocument(namespaceURI, documentElement, uri);
+				document = f.createDocument(namespaceURI, documentElement, uri, input.getEncoding());
 			}
 		} catch (DOMException ex) {
 			handler.fatalError(new TranscoderException(ex));

@@ -292,7 +292,24 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 */
 	@Override
 	public Document createDocument(String ns, String root, String uri) throws IOException {
-		return createDocument(ns, root, uri, new InputSource(uri));
+		return parseDocument(ns, root, uri, new InputSource(uri));
+	}
+
+	/**
+	 * Creates a Document instance.
+	 * 
+	 * @param ns   The namespace URI of the root element of the document.
+	 * @param root The name of the root element of the document.
+	 * @param uri  The document URI.
+	 * @param encoding The default content encoding, {@code null} if not known.
+	 * @exception IOException if an error occured while reading the document.
+	 */
+	@Override
+	public Document createDocument(String ns, String root, String uri, String encoding)
+			throws IOException {
+		InputSource inp = new InputSource(uri);
+		inp.setEncoding(encoding);
+		return parseDocument(ns, root, uri, inp);
 	}
 
 	/**
@@ -302,7 +319,20 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * @exception IOException if an error occurred while reading the document.
 	 */
 	public Document createDocument(String uri) throws IOException {
-		return createDocument(new InputSource(uri));
+		return parseDocument(new InputSource(uri));
+	}
+
+	/**
+	 * Creates a Document instance.
+	 * 
+	 * @param uri The document URI.
+	 * @param encoding The default content encoding, {@code null} if not known.
+	 * @exception IOException if an error occurred while reading the document.
+	 */
+	public Document createDocument(String uri, String encoding) throws IOException {
+		InputSource inp = new InputSource(uri);
+		inp.setEncoding(encoding);
+		return parseDocument(inp);
 	}
 
 	/**
@@ -318,7 +348,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	public Document createDocument(String ns, String root, String uri, InputStream is) throws IOException {
 		InputSource inp = new InputSource(is);
 		inp.setSystemId(uri);
-		return createDocument(ns, root, uri, inp);
+		return parseDocument(ns, root, uri, inp);
 	}
 
 	/**
@@ -337,7 +367,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 		InputSource inp = new InputSource(is);
 		inp.setSystemId(uri);
 		inp.setEncoding(encoding);
-		return createDocument(ns, root, uri, inp);
+		return parseDocument(ns, root, uri, inp);
 	}
 
 	/**
@@ -350,7 +380,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	public Document createDocument(String uri, InputStream is) throws IOException {
 		InputSource inp = new InputSource(is);
 		inp.setSystemId(uri);
-		return createDocument(inp);
+		return parseDocument(inp);
 	}
 
 	/**
@@ -366,7 +396,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	public Document createDocument(String ns, String root, String uri, Reader r) throws IOException {
 		InputSource inp = new InputSource(r);
 		inp.setSystemId(uri);
-		return createDocument(ns, root, uri, inp);
+		return parseDocument(ns, root, uri, inp);
 	}
 
 	/**
@@ -396,6 +426,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 		Document ret = document;
 		document = null;
 		doctype = null;
+		ret.setDocumentURI(uri);
 		return ret;
 	}
 
@@ -413,7 +444,22 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	public Document createDocument(String uri, Reader r) throws IOException {
 		InputSource inp = new InputSource(r);
 		inp.setSystemId(uri);
-		return createDocument(inp);
+		return parseDocument(inp);
+	}
+
+	/**
+	 * Parses a Document and sets the document URI.
+	 * 
+	 * @param ns   The namespace URI of the root element.
+	 * @param root The name of the root element.
+	 * @param uri  The document URI.
+	 * @param is   The document input source.
+	 * @exception IOException if an error occurred while reading the document.
+	 */
+	private Document parseDocument(String ns, String root, String uri, InputSource is) throws IOException {
+		Document doc = createDocument(ns, root, uri, is);
+		doc.setDocumentURI(uri);
+		return doc;
 	}
 
 	/**
@@ -476,6 +522,18 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 			saxFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		} catch (SAXNotRecognizedException | SAXNotSupportedException | ParserConfigurationException e) {
 		}
+	}
+
+	/**
+	 * Parses a Document.
+	 * 
+	 * @param is The document input source.
+	 * @exception IOException if an error occurred while reading the document.
+	 */
+	private Document parseDocument(InputSource is) throws IOException {
+		Document doc = createDocument(is);
+		doc.setDocumentURI(is.getSystemId());
+		return doc;
 	}
 
 	/**

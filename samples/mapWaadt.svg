@@ -2257,7 +2257,7 @@
 
             <path id="textPathLacLeman" style="visibility:hidden;" d="M -3200,8500 C -2700,8300 -2000,8200 -1300,8200" />
             <text class="fil17 fnt1" style="letter-spacing:110px;">
-                <textPath xlink:href="#textPathLacLeman" startOffset="5%">Lac LÈman</textPath>
+                <textPath xlink:href="#textPathLacLeman" startOffset="5%">Lac L√©man</textPath>
             </text>
 
             <text x="1270" y="8054" class="fil16 fnt0">Lausanne</text>
@@ -2285,7 +2285,7 @@
         <g id="text_legend">
 
             <switch>
-            <text x="-3738" y="231" class="fil16 fnt3" systemLanguage="de">Besch‰ftigung Kanton Waadt</text>
+            <text x="-3738" y="231" class="fil16 fnt3" systemLanguage="de">Besch√§ftigung Kanton Waadt</text>
             <text x="-3738" y="231" class="fil16 fnt3" systemLanguage="en">Employment canton of Vaud</text></switch>
 
             <text x="3739" y="231" class="fil16 fnt3" style="text-anchor:end;">1985/95</text>
@@ -2308,7 +2308,7 @@
             <rect  class="fil9 str1" x="-2284" y="9927" width="315" height="315"/>
 
             <switch>
-            <text x="-3442" y="9148" class="fil16 fnt6" systemLanguage="de">Verh‰ltnis Teilzeit/Vollzeit</text>
+            <text x="-3442" y="9148" class="fil16 fnt6" systemLanguage="de">Verh√§ltnis Teilzeit/Vollzeit</text>
             <text x="-3442" y="9148" class="fil16 fnt6" systemLanguage="en">Ratio part-time/full-time</text></switch>
 
             <text x="-3304" y="9246" class="fil16 fnt7">&lt; 22.3 % &lt; 39.1 % &lt;</text>
@@ -2319,18 +2319,18 @@
                 <text x="-450" y="5624" class="fil16 fnt6" systemLanguage="en">Share of women in the</text></switch>
 
                 <switch>
-                <text x="-420" y="5725" class="fil16 fnt6" systemLanguage="de">Teilzeitbesch‰ftigten</text>
+                <text x="-420" y="5725" class="fil16 fnt6" systemLanguage="de">Teilzeitbesch√§ftigten</text>
                 <text x="-420" y="5725" class="fil16 fnt6" systemLanguage="en">part-time employees</text></switch></g>
 
             <g transform="matrix(2.64845E-014 -1 1 2.64845E-014 -9107.01 10113.9)">
                 <text x="0" y="5624" class="fil16 fnt7">&lt; 81.8 % &lt; 66.7 % &lt;</text></g>
 
             <switch>
-            <text x="-1877" y="10133" class="fil16 fnt6" systemLanguage="de">Gemeinden unter 10 Besch‰ftigten</text>
+            <text x="-1877" y="10133" class="fil16 fnt6" systemLanguage="de">Gemeinden unter 10 Besch√§ftigten</text>
             <text x="-1877" y="10133" class="fil16 fnt6" systemLanguage="en">Municipalities under 10 employed</text></switch>
 
             <switch>
-            <text x="-1877" y="10234" class="fil16 fnt6" systemLanguage="de">oder ohne Teilzeitbesch‰ftigung</text>
+            <text x="-1877" y="10234" class="fil16 fnt6" systemLanguage="de">oder ohne Teilzeitbesch√§ftigung</text>
             <text x="-1877" y="10234" class="fil16 fnt6" systemLanguage="en">or without part-time employment</text></switch>
 
             <g>
@@ -2392,16 +2392,16 @@
             <text x="631" y="10375" class="fil16 fnt6">100</text>
 
             <switch>
-            <text x="-218" y="10988" class="fil16 fnt6" systemLanguage="de">Grˆsster Teilkreis: Lausanne</text>
+            <text x="-218" y="10988" class="fil16 fnt6" systemLanguage="de">Gr√∂sster Teilkreis: Lausanne</text>
             <text x="-218" y="10988" class="fil16 fnt6" systemLanguage="en">Biggest circle: Lausanne</text></switch>
 
             <switch>
-            <text x="-218" y="11088" class="fil16 fnt6" systemLanguage="de">71.606 Vollzeitbesch‰ftigte</text>
+            <text x="-218" y="11088" class="fil16 fnt6" systemLanguage="de">71.606 Vollzeitbesch√§ftigte</text>
             <text x="-218" y="11088" class="fil16 fnt6" systemLanguage="en">71,606 full-time employed</text></switch>
 
             <switch>
-            <text x="-224" y="10680" class="fil16 fnt6" systemLanguage="de">1 mm≤ = 22 Besch‰ftigte</text>
-            <text x="-224" y="10680" class="fil16 fnt6" systemLanguage="en">1 mm≤ = 22 employed</text></switch>
+            <text x="-224" y="10680" class="fil16 fnt6" systemLanguage="de">1 mm¬≤ = 22 Besch√§ftigte</text>
+            <text x="-224" y="10680" class="fil16 fnt6" systemLanguage="en">1 mm¬≤ = 22 employed</text></switch>
 
             <g>
                 <path  class="fil12 str1"
@@ -2422,10 +2422,10 @@
             <g systemLanguage="de">
                 <text x="2433" y="9313" class="fil16 fnt6">Frauen</text>
                 <text x="2433" y="9794" class="fil16 fnt6">Frauen</text>
-                <text x="2433" y="9439" class="fil16 fnt6">M‰nner</text>
-                <text x="2433" y="9914" class="fil16 fnt6">M‰nner</text>
-                <text x="2433" y="9195" class="fil16 fnt9">Vollzeitbesch‰ftigte</text>
-                <text x="2433" y="9665" class="fil16 fnt9">Teilzeitbesch‰ftigte</text></g>
+                <text x="2433" y="9439" class="fil16 fnt6">M√§nner</text>
+                <text x="2433" y="9914" class="fil16 fnt6">M√§nner</text>
+                <text x="2433" y="9195" class="fil16 fnt9">Vollzeitbesch√§ftigte</text>
+                <text x="2433" y="9665" class="fil16 fnt9">Teilzeitbesch√§ftigte</text></g>
             <g systemLanguage="en">
                 <text x="2433" y="9313" class="fil16 fnt6">Women</text>
                 <text x="2433" y="9794" class="fil16 fnt6">Women</text>
@@ -2453,8 +2453,8 @@
                 <rect  class="fil10 str13" x="-3734" y="793" width="7473" height="7954"/>
                 <!-- Superscript replaced by U+00B2
                 <text x="-6" y="10643" class="fil16 fnt10">2</text> -->
-                <text x="-3731" y="8965" class="fil16 fnt11">Gemeindetypen entsprechend Besch‰ftigungsverh‰ltnis</text>
-                <text x="-275" y="8965" class="fil16 fnt11">Besch‰ftigte absolut</text></g>
+                <text x="-3731" y="8965" class="fil16 fnt11">Gemeindetypen entsprechend Besch√§ftigungsverh√§ltnis</text>
+                <text x="-275" y="8965" class="fil16 fnt11">Besch√§ftigte absolut</text></g>
             <g systemLanguage="en">
                 <text x="1082" y="10481" class="fil16 fnt6">Source: company counts 1985/1995, Federal Office of Statistics</text>
                 <text x="1082" y="10682" class="fil16 fnt6">Editors: Heiko Munde, Andreas Neumann, Simone Schoch</text>

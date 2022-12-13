@@ -1194,11 +1194,11 @@
             <text x="161" y="7357" class="fil8 fnt0" systemLanguage="en">west of Greenwich</text></switch>
 
             <switch>
-            <text x="664" y="344" class="fil8 fnt0" systemLanguage="de">östl. v. Greenwich</text>
+            <text x="664" y="344" class="fil8 fnt0" systemLanguage="de">Ã¶stl. v. Greenwich</text>
             <text x="664" y="344" class="fil8 fnt0" systemLanguage="en">east of Greenwich</text></switch>
 
             <switch>
-            <text x="950" y="7357" class="fil8 fnt0" systemLanguage="de">östl. v. Greenwich</text>
+            <text x="950" y="7357" class="fil8 fnt0" systemLanguage="de">Ã¶stl. v. Greenwich</text>
             <text x="950" y="7357" class="fil8 fnt0" systemLanguage="en">east of Greenwich</text></switch>
 
             <text x="3412" y="5999" class="fil8 fnt0">36</text>
@@ -1215,12 +1215,12 @@
             <text x="3500" y="7501" class="fil8 fnt0" style="text-anchor:end;" systemLanguage="en">Modified conic projection after Lambert</text></switch>
 
             <switch>
-            <text x="3500" y="7585" class="fil8 fnt0" style="text-anchor:end;" systemLanguage="de">Berührungsbreitenkreise: 38° und 42° nördl. Breite, (Kanarische Inseln: 28° nördl. Breite)</text>
-            <text x="3500" y="7585" class="fil8 fnt0" style="text-anchor:end;" systemLanguage="en">Touching latitudes: 38° and 42° north latitude (Canary Islands: 28° north latitude)</text></switch>
+            <text x="3500" y="7585" class="fil8 fnt0" style="text-anchor:end;" systemLanguage="de">BerÃ¼hrungsbreitenkreise: 38Â° und 42Â° nÃ¶rdl. Breite, (Kanarische Inseln: 28Â° nÃ¶rdl. Breite)</text>
+            <text x="3500" y="7585" class="fil8 fnt0" style="text-anchor:end;" systemLanguage="en">Touching latitudes: 38Â° and 42Â° north latitude (Canary Islands: 28Â° north latitude)</text></switch>
 
             <switch>
-            <text x="3500" y="7669" class="fil8 fnt0" style="text-anchor:end;" systemLanguage="de">Zentralmeridian: 4° westl. Länge, (Kanarische Inseln: 16° westl. Länge)</text>
-            <text x="3500" y="7669" class="fil8 fnt0" style="text-anchor:end;" systemLanguage="en">Central meridian: 4° west longitude, (Canary Islands: 16° west longitude)</text></switch></g>
+            <text x="3500" y="7669" class="fil8 fnt0" style="text-anchor:end;" systemLanguage="de">Zentralmeridian: 4Â° westl. LÃ¤nge, (Kanarische Inseln: 16Â° westl. LÃ¤nge)</text>
+            <text x="3500" y="7669" class="fil8 fnt0" style="text-anchor:end;" systemLanguage="en">Central meridian: 4Â° west longitude, (Canary Islands: 16Â° west longitude)</text></switch></g>
 
         <g id="rects_for_legend">
             <g>
@@ -1394,7 +1394,7 @@
             </switch>
             <switch>
             <text systemLanguage="de" class="fil19 fnt1" style="letter-spacing:70px;">
-                <textPath xlink:href="#textPathMiddleSea" startOffset="0%">ländisches Meer</textPath>
+                <textPath xlink:href="#textPathMiddleSea" startOffset="0%">lÃ¤ndisches Meer</textPath>
             </text>
             <text systemLanguage="en" class="fil19 fnt1" style="letter-spacing:130px;">
                 <textPath xlink:href="#textPathMiddleSea" startOffset="5%">ranean Sea</textPath>
@@ -1443,7 +1443,7 @@
             <text x="619" y="3777" class="fil8 fnt5">Valencia</text>
             <text x="-966" y="3255" class="fil8 fnt5">Madrid</text>
             <text x="-1400" y="715" class="fil8 fnt5">Bilbao</text>
-            <text x="-4377" y="663" class="fil8 fnt5">La Coruña</text>
+            <text x="-4377" y="663" class="fil8 fnt5">La CoruÃ±a</text>
 
             <switch>
             <text x="-2247" y="5318" class="fil8 fnt5" systemLanguage="de">Sevilla</text>
@@ -1621,21 +1621,21 @@
 
             <switch>
             <g systemLanguage="de">
-                <text x="-5481" y="166" class="fil8 fnt10">Spanien - Bevölkerung</text>
+                <text x="-5481" y="166" class="fil8 fnt10">Spanien - BevÃ¶lkerung</text>
                 <text x="3500" y="157" class="fil8 fnt10" style="text-anchor:end;">1970 - 1990</text>
                 <text x="-5483" y="7499" class="fil8 fnt8">Erstellt v. Andreas Neumann im Rahmen d. Kartenentwurfspraktikums, Sommersemester 1998,</text>
-                <text x="-5483" y="7583" class="fil8 fnt8">geleitet v. Prof. Ingrid Kretschmer, Institut für Geographie der Universität Wien.</text>
+                <text x="-5483" y="7583" class="fil8 fnt8">geleitet v. Prof. Ingrid Kretschmer, Institut fÃ¼r Geographie der UniversitÃ¤t Wien.</text>
                 <text x="-5483" y="7666" class="fil8 fnt8">Verwendete Software: Arc/Info und Module, CorelDRAW und div. Perl-Scripts.</text>
-                <text x="3665" y="363" class="fil8 fnt11">Bevölkerungsdichte</text>
-                <text x="3665" y="4063" class="fil8 fnt11">Bevölkerungsveränderung</text>
-                <text x="3665" y="1815" class="fil8 fnt11">Bevölkerung absolut</text>
-                <text x="3665" y="510" class="fil8 fnt7">Einwohner/km² auf Provinzebene</text>
-                <text x="3665" y="4210" class="fil8 fnt7">Prozentuelle Veränderung der</text>
-                <text x="3665" y="4344" class="fil8 fnt7">Provinzen gegenüber Stand 1970</text>
-                <text x="3665" y="5750" class="fil8 fnt7">Prozentuelle Veränderung der</text>
-                <text x="3665" y="5884" class="fil8 fnt7">Hauptstädte gegenüber Stand 1970</text>
+                <text x="3665" y="363" class="fil8 fnt11">BevÃ¶lkerungsdichte</text>
+                <text x="3665" y="4063" class="fil8 fnt11">BevÃ¶lkerungsverÃ¤nderung</text>
+                <text x="3665" y="1815" class="fil8 fnt11">BevÃ¶lkerung absolut</text>
+                <text x="3665" y="510" class="fil8 fnt7">Einwohner/kmÂ² auf Provinzebene</text>
+                <text x="3665" y="4210" class="fil8 fnt7">Prozentuelle VerÃ¤nderung der</text>
+                <text x="3665" y="4344" class="fil8 fnt7">Provinzen gegenÃ¼ber Stand 1970</text>
+                <text x="3665" y="5750" class="fil8 fnt7">Prozentuelle VerÃ¤nderung der</text>
+                <text x="3665" y="5884" class="fil8 fnt7">HauptstÃ¤dte gegenÃ¼ber Stand 1970</text>
                 <text x="3665" y="1962" class="fil8 fnt7">Auf Provinzebene und in den</text>
-                <text x="3665" y="2096" class="fil8 fnt7">Hauptstädten (inneres Quadrat)</text></g>
+                <text x="3665" y="2096" class="fil8 fnt7">HauptstÃ¤dten (inneres Quadrat)</text></g>
             <g systemLanguage="en">
                 <text x="-5481" y="166" class="fil8 fnt10">Spain - Population</text>
                 <text x="3500" y="157" class="fil8 fnt10" style="text-anchor:end;">1970 - 1990</text>
@@ -1646,7 +1646,7 @@
                 <text x="3665" y="4063" class="fil8 fnt11">Population change</text>
                 <text x="3665" y="1815" class="fil8 fnt11">Population absolute</text>
                 <!-- Hmm, there is a superscript "2" here that is aligned to the German text... -->
-                <text x="3665" y="510" class="fil8 fnt7">Inhab. per km² at province level</text>
+                <text x="3665" y="510" class="fil8 fnt7">Inhab. per kmÂ² at province level</text>
                 <text x="3665" y="4210" class="fil8 fnt7">Percentual change of the</text>
                 <text x="3665" y="4344" class="fil8 fnt7">province vs situation 1970</text>
                 <text x="3665" y="5750" class="fil8 fnt7">Percentual change of the</text>

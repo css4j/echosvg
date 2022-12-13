@@ -116,6 +116,29 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 */
 	@Override
 	public SVGDocument createDocument(String uri) throws IOException {
+		return createDocumentWithDefaultEncoding(uri, null);
+	}
+
+	/**
+	 * Creates a SVG Document instance. This method supports gzipped sources.
+	 * 
+	 * @param uri The document URI.
+	 * @param encoding The default content encoding, {@code null} if not known.
+	 * @exception IOException if an error occurred while reading the document.
+	 */
+	@Override
+	public SVGDocument createDocument(String uri, String encoding) throws IOException {
+		return createDocumentWithDefaultEncoding(uri, encoding);
+	}
+
+	/**
+	 * Creates a SVG Document instance. This method supports gzipped sources.
+	 * 
+	 * @param uri The document URI.
+	 * @param encoding The default content encoding, {@code null} if not known.
+	 * @exception IOException if an error occurred while reading the document.
+	 */
+	private SVGDocument createDocumentWithDefaultEncoding(String uri, String encoding) throws IOException {
 		ParsedURL purl = new ParsedURL(uri);
 
 		InputStream is = purl.openStream(MimeTypeConstants.MIME_TYPES_SVG_LIST.iterator());
@@ -134,7 +157,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 			cindex = contentType.indexOf(HTTP_CHARSET);
 		}
 
-		String charset = null;
+		String charset = encoding;
 		if (cindex != -1) {
 			int i = cindex + HTTP_CHARSET.length();
 			int eqIdx = contentType.indexOf('=', i);
@@ -155,9 +178,9 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 				else
 					charset = contentType.substring(eqIdx);
 				charset = charset.trim();
-				isrc.setEncoding(charset);
 			}
 		}
+		isrc.setEncoding(charset);
 
 		isrc.setSystemId(uri);
 
@@ -255,6 +278,21 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	@Override
 	public SVGDocument createDocument(String ns, String root, String uri) throws IOException {
 		return createDocument(uri);
+	}
+
+	/**
+	 * Creates a Document instance.
+	 * 
+	 * @param ns   The namespace URI of the root element of the document.
+	 * @param root The name of the root element of the document.
+	 * @param uri  The document URI.
+	 * @param encoding The default content encoding, {@code null} if not known.
+	 * @exception IOException if an error occured while reading the document.
+	 */
+	@Override
+	public SVGDocument createDocument(String ns, String root, String uri, String encoding)
+			throws IOException {
+		return createDocument(uri, encoding);
 	}
 
 	@Override

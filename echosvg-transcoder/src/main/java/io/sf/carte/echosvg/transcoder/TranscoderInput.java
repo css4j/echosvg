@@ -39,9 +39,14 @@ public class TranscoderInput {
 	protected XMLReader xmlReader;
 
 	/**
-	 * The optional input has a byte stream.
+	 * The optional input as a byte stream.
 	 */
 	protected InputStream istream;
+
+	/**
+	 * The optional encoding when input is a byte stream or a URI.
+	 */
+	private String encoding;
 
 	/**
 	 * The optional input as a character stream.
@@ -142,6 +147,32 @@ public class TranscoderInput {
 	 */
 	public InputStream getInputStream() {
 		return istream;
+	}
+
+	/**
+	 * Set the character encoding, if known.
+	 * 
+	 * The encoding must be a string acceptable for an XML encoding declaration (see
+	 * section 4.3.3 of the XML 1.0 recommendation).
+	 * 
+	 * This method has no effect when the application provides a reader.
+	 * 
+	 * @param encoding a string describing the character encoding.
+	 */
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
+	/**
+	 * Get the character encoding for a byte stream or URI.
+	 * <p>
+	 * This value will be ignored when the application provides a reader.
+	 * </p>
+	 * 
+	 * @return the encoding, or null if none was supplied.
+	 */
+	public String getEncoding() {
+		return encoding;
 	}
 
 	/**
