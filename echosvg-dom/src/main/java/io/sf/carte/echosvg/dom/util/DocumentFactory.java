@@ -71,6 +71,19 @@ public interface DocumentFactory {
 	/**
 	 * Creates a Document instance.
 	 * 
+	 * @param ns       The namespace URI of the root element of the document.
+	 * @param root     The name of the root element of the document.
+	 * @param uri      The document URI.
+	 * @param is       The document input stream.
+	 * @param encoding The document source encoding, {@code null} if not known.
+	 * @exception IOException if an error occured while reading the document.
+	 */
+	Document createDocument(String ns, String root, String uri, InputStream is, String encoding)
+			throws IOException;
+
+	/**
+	 * Creates a Document instance.
+	 * 
 	 * @param ns   The namespace URI of the root element of the document.
 	 * @param root The name of the root element of the document.
 	 * @param uri  The document URI.

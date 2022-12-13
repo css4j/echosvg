@@ -52,7 +52,7 @@ public class ImportNodeTest {
 		SAXSVGDocumentFactory df = new SAXSVGDocumentFactory();
 
 		URL url = getClass().getClassLoader().getResource(testFileName);
-		Document doc = df.createDocument(url.toString(), url.openStream());
+		Document doc = df.createDocument(url.toString(), url.openStream(), "utf-8");
 
 		Element e = doc.getElementById(targetId);
 

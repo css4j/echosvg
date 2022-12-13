@@ -324,6 +324,25 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	/**
 	 * Creates a Document instance.
 	 * 
+	 * @param ns       The namespace URI of the root element of the document.
+	 * @param root     The name of the root element of the document.
+	 * @param uri      The document URI.
+	 * @param is       The document input stream.
+	 * @param encoding The document source encoding, {@code null} if not known.
+	 * @exception IOException if an error occurred while reading the document.
+	 */
+	@Override
+	public Document createDocument(String ns, String root, String uri, InputStream is, String encoding)
+			throws IOException {
+		InputSource inp = new InputSource(is);
+		inp.setSystemId(uri);
+		inp.setEncoding(encoding);
+		return createDocument(ns, root, uri, inp);
+	}
+
+	/**
+	 * Creates a Document instance.
+	 * 
 	 * @param uri The document URI.
 	 * @param is  The document input stream.
 	 * @exception IOException if an error occurred while reading the document.
@@ -407,6 +426,8 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * @exception IOException if an error occurred while reading the document.
 	 */
 	protected Document createDocument(String ns, String root, String uri, InputSource is) throws IOException {
+		checkRootElement(ns, root);
+
 		Document ret = createDocument(is);
 		Element docElem = ret.getDocumentElement();
 
@@ -437,6 +458,9 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 		}
 
 		return ret;
+	}
+
+	protected void checkRootElement(String ns, String root) {
 	}
 
 	private static final SAXParserFactory saxFactory;

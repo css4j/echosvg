@@ -93,7 +93,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 */
 	@Override
 	public SVGDocument createSVGDocument(String uri, InputStream inp) throws IOException {
-		return createDocument(uri, inp);
+		return createDocument(uri, inp, null);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * 
 	 * @param uri The document URI.
 	 * @param r   The document reader.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public SVGDocument createSVGDocument(String uri, Reader r) throws IOException {
@@ -112,7 +112,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * Creates a SVG Document instance. This method supports gzipped sources.
 	 * 
 	 * @param uri The document URI.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public SVGDocument createDocument(String uri) throws IOException {
@@ -178,13 +178,26 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * 
 	 * @param uri The document URI.
 	 * @param inp The document input stream.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public SVGDocument createDocument(String uri, InputStream inp) throws IOException {
+		return createDocument(uri, inp, null);
+	}
+
+	/**
+	 * Creates a SVG Document instance.
+	 * 
+	 * @param uri The document URI.
+	 * @param inp The document input stream.
+	 * @param encoding The document encoding, {@code null} if not known.
+	 * @exception IOException if an error occurred while reading the document.
+	 */
+	public SVGDocument createDocument(String uri, InputStream inp, String encoding) throws IOException {
 		SVGOMDocument doc;
 		InputSource is = new InputSource(inp);
 		is.setSystemId(uri);
+		is.setEncoding(encoding);
 
 		try {
 			doc = (SVGOMDocument) super.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", uri, is);
@@ -207,7 +220,7 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * 
 	 * @param uri The document URI.
 	 * @param r   The document reader.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public SVGDocument createDocument(String uri, Reader r) throws IOException {
@@ -237,14 +250,14 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * @param ns   The namespace URI of the root element of the document.
 	 * @param root The name of the root element of the document.
 	 * @param uri  The document URI.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public SVGDocument createDocument(String ns, String root, String uri) throws IOException {
-		checkRootElement(ns, root);
 		return createDocument(uri);
 	}
 
+	@Override
 	protected void checkRootElement(String ns, String root) {
 		if (!SVGDOMImplementation.SVG_NAMESPACE_URI.equals(ns) || !"svg".equals(root)) {
 			throw new IllegalArgumentException("Bad root element");
@@ -258,12 +271,27 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * @param root The name of the root element of the document.
 	 * @param uri  The document URI.
 	 * @param is   The document input stream.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public SVGDocument createDocument(String ns, String root, String uri, InputStream is) throws IOException {
-		checkRootElement(ns, root);
-		return createDocument(uri, is);
+		return createDocument(uri, is, null);
+	}
+
+	/**
+	 * Creates a Document instance.
+	 * 
+	 * @param ns   The namespace URI of the root element of the document.
+	 * @param root The name of the root element of the document.
+	 * @param uri  The document URI.
+	 * @param is   The document input stream.
+	 * @param encoding The document source encoding, {@code null} if not known.
+	 * @exception IOException if an error occurred while reading the document.
+	 */
+	@Override
+	public SVGDocument createDocument(String ns, String root, String uri, InputStream is, String encoding)
+			throws IOException {
+		return createDocument(uri, is, encoding);
 	}
 
 	/**
@@ -273,11 +301,10 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 	 * @param root The name of the root element of the document.
 	 * @param uri  The document URI.
 	 * @param r    The document reader.
-	 * @exception IOException if an error occured while reading the document.
+	 * @exception IOException if an error occurred while reading the document.
 	 */
 	@Override
 	public SVGDocument createDocument(String ns, String root, String uri, Reader r) throws IOException {
-		checkRootElement(ns, root);
 		return createDocument(uri, r);
 	}
 

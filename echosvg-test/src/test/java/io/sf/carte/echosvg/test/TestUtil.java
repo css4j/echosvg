@@ -181,9 +181,9 @@ public class TestUtil {
 		String documentURI = refURL.toExternalForm();
 
 		SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory();
-		SVGDocument refDoc = factory.createDocument(documentURI, refStream);
+		SVGDocument refDoc = factory.createDocument(documentURI, refStream, "utf-8");
 		refStream.close();
-		SVGDocument newDoc = factory.createDocument(documentURI, newStream);
+		SVGDocument newDoc = factory.createDocument(documentURI, newStream, "utf-8");
 
 		return isEquivalentNode(refDoc, newDoc);
 	}
