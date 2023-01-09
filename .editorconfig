@@ -1,0 +1,19 @@
+#
+# https://editorconfig.org/
+#
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+
+[*.{java,gradle,groovy}]
+indent_style = tab
+
+[*.{svg,html,xhtml,xml,xsl,css}]
+indent_style = space
+indent_size = 4
+
+[*.bat]
+end_of_line = crlf
+charset = latin1
