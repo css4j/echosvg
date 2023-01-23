@@ -56,7 +56,7 @@ directory:
 changes from the latest tag. For example if you are releasing `0.3.1`:
 
 ```shell
-changes.sh 0.3.1
+./changes.sh 0.3.1
 ```
 
 Edit the resulting `CHANGES.txt` as convenient, to use it as the basis for the
