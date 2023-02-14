@@ -195,6 +195,14 @@ class SMApplicationSecurityEnforcer extends ApplicationSecurityEnforcer {
 			setDevProperties(expandedMainClassName);
 		}
 
+		// For Gradle users, set GRADLE_USER_HOME
+		String gradleUserHome = System.getenv("GRADLE_USER_HOME");
+		if (gradleUserHome == null) {
+			// No GRADLE_USER_HOME, set it to '/.gradle' under home directory
+			gradleUserHome = System.getProperty("user.home") + "/.gradle";
+		}
+		System.setProperty("gradle.user.home", gradleUserHome);
+
 		// Install new security manager
 		System.setSecurityManager(securityManager);
 		lastSecurityManagerInstalled = securityManager;
