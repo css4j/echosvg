@@ -19,7 +19,7 @@
 
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -32,7 +32,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * This test validates the PNGEncoder operation. It creates a BufferedImage,
@@ -98,7 +98,7 @@ public class PNGEncoderTest {
 		}
 
 		// Compare images
-		assertTrue("Images are not identical", checkIdentical(image, decodedImage));
+		assertTrue(checkIdentical(image, decodedImage), "Images are not identical");
 	}
 
 	/**

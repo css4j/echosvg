@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -235,7 +235,7 @@ public class SelfContainedSVGOnLoadTest {
 
 		if (!TEST_RESULT_PASSED.equals(result)) {
 			String errorCode = testResult.getAttributeNS(null, "errorCode");
-			assertEquals("Failed with unexpected error code,", expectedError, errorCode);
+			assertEquals(expectedError, errorCode, "Failed with unexpected error code,");
 		} else if (expectedError.length() > 0) {
 			fail("Script was loaded, but expected error: " + expectedError);
 		}

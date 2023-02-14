@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.transcoder.image;
 import java.io.IOException;
 import java.net.URL;
 
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
@@ -44,7 +45,7 @@ public class GenericDocumentTest extends AbstractImageTranscoderTest {
 	/** The URI of the reference image. */
 	private String refImageURI;
 
-	@org.junit.Test
+	@Test
 	public void test() throws TranscoderException {
 		testGenericDocument("samples/anne.svg", "test-references/samples/anne.png");
 	}

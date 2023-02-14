@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;

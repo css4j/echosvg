@@ -22,8 +22,8 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
 
@@ -37,7 +37,7 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
 @SuppressWarnings({ "deprecation", "removal" })
 public class EcmaNoLoadTest {
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		try {
 			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {

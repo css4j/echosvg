@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.swing.test;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.svg.AbstractRenderingAccuracyTest;
 
@@ -54,13 +54,13 @@ public class SwingMemoryLeakTest {
 		new JSVGInterruptTest().runTest("samples/anne.svg");
 	}
 
-	@Ignore
+	@Disabled
 	@Test
 	public void testInterrupt2() throws Exception {
 		new JSVGInterruptTest().runTest("samples/sydney.svg");
 	}
 
-	@Ignore
+	@Disabled
 	@Test
 	public void testInterrupt3() throws Exception {
 		new JSVGInterruptTest().runTest("samples/mines.svg");

@@ -19,7 +19,7 @@
 
 package io.sf.carte.echosvg.ext.awt.geom;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Rectangle;
 import java.io.BufferedReader;
@@ -37,7 +37,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.util.Base64Test;

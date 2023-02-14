@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,8 +28,8 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.net.URL;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * This test validates that the Base64 encoder/decoders work properly.
@@ -130,13 +130,13 @@ public class Base64Test {
 		performTest("B64.18", "ROUND", "tenByte", null);
 	}
 
-	@Ignore
+	@Disabled
 	@Test
 	public void testB64_19() throws Exception {
 		performTest("B64.19", "ENCODE", "small", "small.64");
 	}
 
-	@Ignore
+	@Disabled
 	@Test
 	public void testB64_20() throws Exception {
 		performTest("B64.20", "DECODE", "small.64", "small");
@@ -218,7 +218,7 @@ public class Base64Test {
 
 		int mismatch = compareStreams(inIS, refIS, action.equals("ENCODE"));
 
-		assertEquals("Computed answer differed from reference at byte: " + mismatch, -1, mismatch);
+		assertEquals(-1, mismatch, "Computed answer differed from reference at byte: " + mismatch);
 	}
 
 	/**

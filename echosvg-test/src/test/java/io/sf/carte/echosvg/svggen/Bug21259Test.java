@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,6 +26,7 @@ import java.awt.Rectangle;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -41,7 +42,7 @@ import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
  */
 public class Bug21259Test {
 
-	@org.junit.Test
+	@Test
 	public void test() throws SVGGraphics2DIOException {
 		Document document = SVGDOMImplementation.getDOMImplementation()
 				.createDocument(SVGDOMImplementation.SVG_NAMESPACE_URI, "svg", null);

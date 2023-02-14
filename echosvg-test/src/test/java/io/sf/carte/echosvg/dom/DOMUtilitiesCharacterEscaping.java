@@ -18,14 +18,14 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;

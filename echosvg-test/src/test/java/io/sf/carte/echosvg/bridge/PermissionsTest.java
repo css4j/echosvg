@@ -22,8 +22,8 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Checks the permissions applied to ECMA and Jar Scripts.
@@ -33,7 +33,7 @@ import org.junit.Test;
 @SuppressWarnings({ "deprecation", "removal" })
 public class PermissionsTest {
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		try {
 			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {

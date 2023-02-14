@@ -20,7 +20,7 @@ package io.sf.carte.echosvg.test.svg;
 
 import java.net.MalformedURLException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;

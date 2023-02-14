@@ -21,6 +21,8 @@ package io.sf.carte.echosvg.transcoder.image;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -47,7 +49,7 @@ public class LanguageTest extends AbstractImageTranscoderTest {
 	/**
 	 * Runs a new <code>LanguageTest</code>.
 	 */
-	@org.junit.Test
+	@Test
 	public void testLanguage() throws TranscoderException {
 		testLanguage("test-resources/io/sf/carte/echosvg/transcoder/image/resources/language.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/languageEn.png", "en");

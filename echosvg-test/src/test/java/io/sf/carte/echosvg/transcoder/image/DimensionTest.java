@@ -21,6 +21,8 @@ package io.sf.carte.echosvg.transcoder.image;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -48,7 +50,7 @@ public class DimensionTest extends AbstractImageTranscoderTest {
 	/** The height of the image. */
 	private Float height;
 
-	@org.junit.Test
+	@Test
 	public void test()
 			throws TranscoderException {
 		testDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneW200.png", 200, -1);

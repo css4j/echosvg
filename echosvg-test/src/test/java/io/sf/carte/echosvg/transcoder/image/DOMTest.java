@@ -23,6 +23,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -41,7 +42,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
  */
 public class DOMTest extends AbstractImageTranscoderTest {
 
-	@org.junit.Test
+	@Test
 	public void test() throws TranscoderException {
 		runTest();
 	}

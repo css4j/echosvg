@@ -18,7 +18,8 @@
  */
 package io.sf.carte.echosvg.transcoder.wmf;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.awt.GraphicsEnvironment;
 import java.io.ByteArrayOutputStream;
@@ -30,8 +31,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.test.TestUtil;
@@ -87,8 +87,8 @@ public class WMFAccuracyTest {
 
 	@Test
 	public void testBlackShapes() throws IOException, TranscoderException {
-		Assume.assumeTrue("'Courier' font is not available", isFontAvailable("Courier"));
-		Assume.assumeTrue("'System' font is not available", isFontAvailable("System"));
+		assumeTrue(isFontAvailable("Courier"), "'Courier' font is not available");
+		assumeTrue(isFontAvailable("System"), "'System' font is not available");
 		runTest("samples/tests/resources/wmf/black_shapes.wmf");
 	}
 
@@ -99,26 +99,26 @@ public class WMFAccuracyTest {
 
 	@Test
 	public void testNegApmText1() throws IOException, TranscoderException {
-		Assume.assumeTrue("Arial font is not available", hasArial);
+		assumeTrue(hasArial, "Arial font is not available");
 		runTest("samples/tests/resources/wmf/negApmText1.wmf");
 	}
 
 	@Test
 	public void testNegApmText2() throws IOException, TranscoderException {
-		Assume.assumeTrue("Arial font is not available", hasArial);
+		assumeTrue(hasArial, "Arial font is not available");
 		runTest("samples/tests/resources/wmf/negApmText2.wmf");
 	}
 
 	@Test
 	public void testChart() throws IOException, TranscoderException {
-		Assume.assumeTrue("Arial font is not available", hasArial);
-		Assume.assumeTrue("'Courier New' font is not available", hasCourierNew);
+		assumeTrue(hasArial, "Arial font is not available");
+		assumeTrue(hasCourierNew, "'Courier New' font is not available");
 		runTest("samples/tests/resources/wmf/testChart.wmf");
 	}
 
 	@Test
 	public void testTextGreek() throws IOException, TranscoderException {
-		Assume.assumeTrue("'Courier New' font is not available", hasCourierNew);
+		assumeTrue(hasCourierNew, "'Courier New' font is not available");
 		runTest("samples/tests/resources/wmf/textGreek.wmf");
 	}
 

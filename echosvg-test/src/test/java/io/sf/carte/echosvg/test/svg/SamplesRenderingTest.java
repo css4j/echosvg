@@ -20,9 +20,9 @@ package io.sf.carte.echosvg.test.svg;
 
 import java.io.IOException;
 
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
@@ -41,7 +41,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  */
 public class SamplesRenderingTest {
 
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		TestFonts.loadTestFonts();
 	}
@@ -76,7 +76,7 @@ public class SamplesRenderingTest {
 		test("samples/batikFX.svg");
 	}
 
-	@Ignore
+	@Disabled
 	@Test
 	public void testBatikLogo() throws TranscoderException, IOException {
 		test("samples/batikLogo.svg");
@@ -252,7 +252,7 @@ public class SamplesRenderingTest {
 	}
 
 	// See issue #27
-	@Ignore
+	@Disabled
 	@Test
 	public void testFilterRegion() throws TranscoderException, IOException {
 		testNV("samples/tests/spec12/filters/filterRegion.svg");
@@ -356,7 +356,7 @@ public class SamplesRenderingTest {
 	}
 
 	// Issue #28: "Unable to convolve src image", see also BATIK-1280
-	@Ignore
+	@Disabled
 	@Test
 	public void testFilterFeConvolveMatrix() throws TranscoderException, IOException {
 		test("samples/tests/spec/filters/feConvolveMatrix.svg");
@@ -420,7 +420,7 @@ public class SamplesRenderingTest {
 	/*
 	 * Fonts
 	 */
-	@Ignore
+	@Disabled
 	@Test
 	public void testFont() throws TranscoderException, IOException {
 		test("samples/tests/spec/fonts/echosvgFont.svg");
@@ -468,7 +468,7 @@ public class SamplesRenderingTest {
 	/*
 	 * Can't make this one work
 	 */
-	@Ignore
+	@Disabled
 	@Test
 	public void testFontFace() throws TranscoderException, IOException {
 		test("samples/tests/spec/fonts/fontFace.svg");
@@ -494,7 +494,7 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/fonts/fontGlyphsD.svg");
 	}
 
-	@Ignore
+	@Disabled
 	@Test
 	public void testFontKerning() throws TranscoderException, IOException {
 		test("samples/tests/spec/fonts/fontKerning.svg");
@@ -983,7 +983,7 @@ public class SamplesRenderingTest {
 	}
 
 	// See issue #31
-	@Ignore
+	@Disabled
 	@Test
 	public void testTextDecoration2() throws TranscoderException, IOException {
 		test("samples/tests/spec/text/textDecoration2.svg");
@@ -1128,7 +1128,7 @@ public class SamplesRenderingTest {
 	}
 
 	// See issue #30
-	@Ignore
+	@Disabled
 	@Test
 	public void testScriptEnclosureList2() throws TranscoderException, IOException {
 		test("samples/tests/spec/scripting/enclosureList2.svg");
@@ -1450,7 +1450,7 @@ public class SamplesRenderingTest {
 		testDynamicUpdate("samples/tests/spec/scripting/setProperty.svg");
 	}
 
-	@Ignore
+	@Disabled
 	@Test
 	public void testStyling() throws TranscoderException, IOException {
 		testDynamicUpdate("samples/tests/spec/scripting/styling.svg");

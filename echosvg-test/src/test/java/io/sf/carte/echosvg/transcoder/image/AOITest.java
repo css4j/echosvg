@@ -22,6 +22,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -51,7 +53,7 @@ public class AOITest extends AbstractImageTranscoderTest {
 	/** The height of the image. */
 	private float imgHeight;
 
-	@org.junit.Test
+	@Test
 	public void test() throws TranscoderException {
 		testAOI("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneNW.png", 0f, 0f, 225f,
 				250f);

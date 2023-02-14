@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * This test validates that the ParsedURL class properly parses and cascades
@@ -114,6 +114,6 @@ public class ParsedURLTest {
 			url = new ParsedURL(url, sub);
 		}
 
-		assertEquals("Bad URL: ", ref, url.toString());
+		assertEquals(ref, url.toString(), "Bad URL: ");
 	}
 }

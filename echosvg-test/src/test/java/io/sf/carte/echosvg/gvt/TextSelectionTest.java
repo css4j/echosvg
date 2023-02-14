@@ -19,12 +19,12 @@
 
 package io.sf.carte.echosvg.gvt;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGTextContentElement;
 

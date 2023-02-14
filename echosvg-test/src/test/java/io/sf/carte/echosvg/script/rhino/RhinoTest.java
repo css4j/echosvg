@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.script.rhino;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Checks the permissions applied to Rhino Scripts.

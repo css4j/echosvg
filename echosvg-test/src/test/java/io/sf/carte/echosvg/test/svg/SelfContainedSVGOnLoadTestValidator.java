@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.FileNotFoundException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * This test validates the operation of SelfContainedSVGOnLoadTest. It is a test

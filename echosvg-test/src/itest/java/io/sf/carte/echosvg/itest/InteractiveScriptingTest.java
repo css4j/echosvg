@@ -20,9 +20,9 @@ package io.sf.carte.echosvg.itest;
 
 import java.io.IOException;
 
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.test.svg.JSVGRenderingAccuracyTest;
@@ -33,7 +33,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  */
 public class InteractiveScriptingTest {
 
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		TestFonts.loadTestFonts();
 	}
@@ -79,7 +79,7 @@ public class InteractiveScriptingTest {
 	}
 
 	// Ignored by Batik
-	@Ignore
+	@Disabled
 	@Test
 	public void testRemoveLast() throws TranscoderException, IOException {
 		testDynamicUpdate("samples/tests/spec/scripting/removeLast.svg");

@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.svggen;
 
 import java.awt.geom.Rectangle2D;
 
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
@@ -34,7 +35,7 @@ import io.sf.carte.echosvg.dom.GenericDOMImplementation;
  */
 public class DoubleStringTest {
 
-	@org.junit.Test
+	@Test
 	public void test() {
 		// Get a DOMImplementation
 		DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();

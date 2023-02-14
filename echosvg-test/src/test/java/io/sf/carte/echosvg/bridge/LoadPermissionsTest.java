@@ -22,9 +22,9 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
-import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
 
@@ -36,7 +36,7 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
 @SuppressWarnings({ "deprecation", "removal" })
 public class LoadPermissionsTest {
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		try {
 			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
@@ -100,7 +100,7 @@ public class LoadPermissionsTest {
 	/*
 	 * This should generate only a warning, according to Batik (bridge/unitTesting.xml)
 	 */
-	@Ignore
+	@Disabled
 	@Test
 	public void testBridgeExceptionInvalidCSS() throws Exception {
 		runTest("application/java-archive", "bridge/error/css-invalid", "ANY", false, false,
@@ -282,7 +282,7 @@ public class LoadPermissionsTest {
 	}
 
 	// This should display a broken-image image, no exception
-	@Ignore
+	@Disabled
 	@Test
 	public void testBridgeExceptionImageBadURL() throws Exception {
 		runTest("application/java-archive", "bridge/error/image-badurl", "ANY", false, false,
@@ -407,7 +407,7 @@ public class LoadPermissionsTest {
 	}
 
 	// This is not an error according to 13.2.4
-	@Ignore
+	@Disabled
 	@Test
 	public void testBridgeExceptionEmptyRadialGradient() throws Exception {
 		runTest("application/java-archive", "bridge/error/radialGradient-empty", "ANY", false, false,
@@ -433,7 +433,7 @@ public class LoadPermissionsTest {
 	}
 
 	// This is not an error according to 13.2.3
-	@Ignore
+	@Disabled
 	@Test
 	public void testBridgeExceptionRadialGradientRZero() throws Exception {
 		runTest("application/java-archive", "bridge/error/radialGradient-r-zero", "ANY", false, false,

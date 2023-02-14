@@ -22,13 +22,14 @@ package io.sf.carte.echosvg.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class ThreadPounderTest {
 
 	private StringBuilder buf = new StringBuilder(32);
 
-	@org.junit.Ignore
+	@Disabled
 	@Test
 	public void testThreadPounder() throws InterruptedException {
 		final int sz = 200;

@@ -20,8 +20,8 @@ package io.sf.carte.echosvg.itest;
 
 import java.io.IOException;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.test.svg.JSVGRenderingAccuracyTest;
@@ -32,7 +32,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  */
 public class InteractiveTest {
 
-	@BeforeClass
+	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		TestFonts.loadTestFonts();
 	}

@@ -19,8 +19,8 @@
 
 package io.sf.carte.echosvg.apps.rasterizer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -35,6 +35,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.test.svg.ImageCompareTest;
@@ -85,7 +87,7 @@ public class SVGConverterTest {
 	///////////////////////////////////////////////////////////////////////
 	// Configuration tests
 	///////////////////////////////////////////////////////////////////////
-	@org.junit.Test
+	@Test
 	public void testTranscoderConfig() throws SVGConverterException, IOException {
 		AbstractConfigTest t = null;
 
@@ -108,7 +110,7 @@ public class SVGConverterTest {
 	//
 	// Checks that the proper hints are used
 	//
-	@org.junit.Test
+	@Test
 	public void testHintsConfig() throws SVGConverterException, IOException {
 		// HintsConfigTest.KEY_AOI
 		HintsConfigTest t = new HintsConfigTest(new Object[][] { { SVGAbstractTranscoder.KEY_AOI, new Rectangle(40, 50, 40, 80) } }) {
@@ -265,7 +267,7 @@ public class SVGConverterTest {
 	//
 	// Check sources
 	//
-	@org.junit.Test
+	@Test
 	public void testSourcesConfig() throws SVGConverterException, IOException {
 		// SourcesConfigTest.SimpleList
 		SourcesConfigTest t = new SourcesConfigTest(
@@ -283,7 +285,7 @@ public class SVGConverterTest {
 		t.runTest();
 	}
 
-	@org.junit.Test
+	@Test
 	public void testDestConfig() throws SVGConverterException, IOException {
 		//
 		// Check destination
@@ -310,7 +312,7 @@ public class SVGConverterTest {
 		t.runTest();
 	}
 
-	@org.junit.Test
+	@Test
 	public void testOperation() throws SVGConverterException, IOException {
 		//
 		// Check that complete process goes without error
@@ -334,7 +336,7 @@ public class SVGConverterTest {
 	// Configuration error test. These tests check that the expected
 	// error gets reported for a given mis-configuration
 	///////////////////////////////////////////////////////////////////////
-	@org.junit.Test
+	@Test
 	public void testConfigError() throws SVGConverterException, IOException {
 		// ConfigErrorTest.ERROR_NO_SOURCES_SPECIFIED
 		ConfigErrorTest cet = new ConfigErrorTest(SVGConverter.ERROR_NO_SOURCES_SPECIFIED) {
@@ -487,7 +489,7 @@ public class SVGConverterTest {
 	// Test that files are created as expected and are producing the
 	// expected result.
 	//
-	@org.junit.Test
+	@Test
 	public void testOutput() throws SVGConverterException, IOException {
 		// Plain file
 		// OutputTest.plain
@@ -497,7 +499,7 @@ public class SVGConverterTest {
 
 	}
 
-	@org.junit.Test
+	@Test
 	public void testOutputView() throws SVGConverterException, IOException {
 		// File with reference
 		// OutputTest.reference
@@ -919,7 +921,7 @@ class ConfigErrorTest implements SVGConverterController {
 			foundErrorCode = e.getErrorCode();
 		}
 
-		assertEquals("Expected error code " + errorCode, errorCode, foundErrorCode);
+		assertEquals(errorCode, foundErrorCode, "Expected error code " + errorCode);
 	}
 
 	protected void configure(SVGConverter c) {

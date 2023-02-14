@@ -18,7 +18,8 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -27,8 +28,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.junit.Assume;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.test.TestLocations;
@@ -78,79 +79,79 @@ public class SVGGeneratorTests {
 		GENERATOR_REFERENCE_BASE = TestLocations.PROJECT_ROOT_URL + "test-references/io/sf/carte/echosvg/svggen/";
 	}
 
-	@BeforeClass
+	@BeforeAll
 	public static void beforeClass() throws FontFormatException, IOException {
 		TestFonts.loadTestFonts();
 	}
 
-	@org.junit.Test
+	@Test
 	public void testATransform() throws Exception {
 		runTests("ATransform");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testAttributedCharacterIterator() throws Exception {
 		runTests("AttributedCharacterIterator");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testBasicShapes() throws Exception {
 		runTests("BasicShapes");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testBasicShapes2() throws Exception {
 		runTests("BasicShapes2");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testBStroke() throws Exception {
 		runTests("BStroke");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testBug4389() throws Exception {
 		runTests("Bug4389");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testBug4945() throws Exception {
 		runTests("Bug4945");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testBug6535() throws Exception {
 		runTests("Bug6535");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testBug17965() throws Exception {
 		runTests("Bug17965");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testClip() throws Exception {
 		runTests("Clip");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testColor1() throws Exception {
 		runTests("Color1");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testColor2() throws Exception {
 		runTests("Color2");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testDrawImage() throws Exception {
 		runTests("DrawImage");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testFont1() throws Exception {
-		Assume.assumeTrue("Test uses logical fonts, reference data is for Windows", isWindows());
+		assumeTrue(isWindows(), "Test uses logical fonts, reference data is for Windows");
 		runTests("Font1");
 	}
 
@@ -159,73 +160,73 @@ public class SVGGeneratorTests {
 		return osName.startsWith("Windows");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testFontDecoration() throws Exception {
 		runTests("FontDecoration");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testGVector() throws Exception {
 		runTests("GVector");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testGradient() throws Exception {
 		runTests("Gradient");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testGraphicObjects() throws Exception {
 		runTests("GraphicObjects");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testIdentityTest() throws Exception {
 		runTests("IdentityTest");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testLookup() throws Exception {
 		runTests("Lookup");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testNegativeLengths() throws Exception {
 		runTests("NegativeLengths");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testPaints() throws Exception {
 		runTests("Paints");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testRHints() throws Exception {
 		TestFonts.registerFont(Font.TRUETYPE_FONT, "Anton-Regular.ttf");
 		runTests("RHints");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testRescale() throws Exception {
 		runTests("Rescale");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testShearTest() throws Exception {
 		runTests("ShearTest");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testTexture() throws Exception {
 		runTests("Texture");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testTextSpacePreserve() throws Exception {
 		runTests("TextSpacePreserve");
 	}
 
-	@org.junit.Test
+	@Test
 	public void testTransformCollapse() throws Exception {
 		runTests("TransformCollapse");
 	}
