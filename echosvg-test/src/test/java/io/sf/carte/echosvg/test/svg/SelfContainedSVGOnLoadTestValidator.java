@@ -110,7 +110,7 @@ public class SelfContainedSVGOnLoadTestValidator {
 	static class SuccessTest {
 		public void runTest() throws Exception {
 			SelfContainedSVGOnLoadTest t = new SelfContainedSVGOnLoadTest();
-			t.testSVGOnLoad(successURL, null);
+			t.testSVGOnLoad(successURL, "");
 		}
 	}
 

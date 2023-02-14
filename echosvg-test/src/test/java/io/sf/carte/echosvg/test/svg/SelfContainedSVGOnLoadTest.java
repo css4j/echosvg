@@ -170,7 +170,7 @@ public class SelfContainedSVGOnLoadTest {
 	 * @param svgURL the URL string for the SVG document being tested
 	 */
 	public void testSVGOnLoad(String svgURL) throws Exception {
-		testSVGOnLoad(svgURL, null);
+		testSVGOnLoad(svgURL, "");
 	}
 
 	/**
@@ -236,7 +236,7 @@ public class SelfContainedSVGOnLoadTest {
 		if (!TEST_RESULT_PASSED.equals(result)) {
 			String errorCode = testResult.getAttributeNS(null, "errorCode");
 			assertEquals("Failed with unexpected error code,", expectedError, errorCode);
-		} else if (expectedError != null) {
+		} else if (expectedError.length() > 0) {
 			fail("Script was loaded, but expected error: " + expectedError);
 		}
 
