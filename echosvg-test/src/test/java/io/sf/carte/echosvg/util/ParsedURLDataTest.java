@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * This test validates that the ParsedURL class properly parses and cascades
@@ -76,7 +76,7 @@ public class ParsedURLDataTest {
 		String info = ("CT: " + purl.getContentType() + " CE: " + purl.getContentEncoding() + " DATA: " + sb + "URL: "
 				+ purl);
 
-		assertEquals("Bad URL: ", ref, info);
+		assertEquals(ref, info, "Bad URL: ");
 	}
 
 }

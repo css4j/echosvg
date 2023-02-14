@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -48,7 +49,7 @@ public class BackgroundColorTest extends AbstractImageTranscoderTest {
 	 * Runs a new <code>BackgroundColorTest</code>.
 	 * @throws TranscoderException 
 	 */
-	@org.junit.Test
+	@Test
 	public void testBackgroundColor() throws TranscoderException {
 		runTest();
 	}

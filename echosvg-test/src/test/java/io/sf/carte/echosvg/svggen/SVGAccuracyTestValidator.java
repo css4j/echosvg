@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -26,6 +26,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.UnknownHostException;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Validates the operation of the <code>SVGAccuractyTest</code> class
@@ -41,7 +43,7 @@ public class SVGAccuracyTestValidator {
 	 * Checks that test works if SVG and reference SVG are identical
 	 * @throws IOException 
 	 */
-	@org.junit.Test
+	@Test
 	public void testSVGAccuracyValidator() throws Exception {
 		new PainterWithException().test();
 		new NullReferenceURL().test();

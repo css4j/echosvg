@@ -18,15 +18,16 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.StringTokenizer;
 
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -157,12 +158,12 @@ public class ExternalResourcesTest implements ErrorConstants {
 	 * should cause a SecurityException. If so, the test passes. Otherwise, the test
 	 * will fail
 	 */
-	@org.junit.Test
+	@Test
 	public void testSecure() throws IOException {
 		runTest("externalResourcesAccess", true);
 	}
 
-	@org.junit.Test
+	@Test
 	public void testUnsecure() throws IOException {
 		runTest("externalResourcesAccess", false);
 	}

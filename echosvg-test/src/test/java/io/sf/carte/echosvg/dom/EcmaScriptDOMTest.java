@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.dom;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest;
 

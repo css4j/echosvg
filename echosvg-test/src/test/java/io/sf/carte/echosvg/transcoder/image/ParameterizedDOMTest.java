@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.transcoder.image;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
@@ -41,7 +42,7 @@ public class ParameterizedDOMTest extends AbstractImageTranscoderTest {
 	/** The URI of the reference image. */
 	private String refImageURI;
 
-	@org.junit.Test
+	@Test
 	public void test()
 			throws TranscoderException {
 		testParameterizedDOM("samples/anne.svg", "test-references/samples/anne.png");

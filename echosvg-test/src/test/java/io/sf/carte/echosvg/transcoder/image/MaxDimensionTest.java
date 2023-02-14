@@ -21,6 +21,8 @@ package io.sf.carte.echosvg.transcoder.image;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -50,7 +52,7 @@ public class MaxDimensionTest extends AbstractImageTranscoderTest {
 	/** The height of the image. */
 	private float height = Float.NaN;
 
-	@org.junit.Test
+	@Test
 	public void test() throws TranscoderException {
 		testMaxDimension("samples/anne.svg", "test-references/io/sf/carte/echosvg/transcoder/image/anneMaxW200.png",
 				200, -1);

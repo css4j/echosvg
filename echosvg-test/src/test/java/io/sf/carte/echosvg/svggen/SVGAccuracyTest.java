@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Dimension;
 import java.awt.Font;

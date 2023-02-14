@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FilePermission;
@@ -459,7 +459,7 @@ public class SVGOnLoadExceptionTest {
 		String exname = e.getClass().getName();
 		if (!exceptionMatches(e.getClass(), getExpectedExceptionClass())) {
 			e.printStackTrace();
-			assertEquals("Unexpected exception from " + fileName + ',', getExpectedExceptionClass(), exname);
+			assertEquals(getExpectedExceptionClass(), exname, "Unexpected exception from " + fileName + ',');
 		}
 	}
 

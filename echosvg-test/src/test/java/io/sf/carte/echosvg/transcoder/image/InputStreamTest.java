@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import org.junit.jupiter.api.Test;
+
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 
@@ -40,7 +42,7 @@ public class InputStreamTest extends AbstractImageTranscoderTest {
 	/** The URI of the reference image. */
 	private String refImageURI;
 
-	@org.junit.Test
+	@Test
 	public void test() throws TranscoderException {
 		testInputStream("samples/anne.svg", "test-references/samples/anne.png");
 	}

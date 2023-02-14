@@ -19,6 +19,8 @@
 
 package io.sf.carte.echosvg.transcoder.image;
 
+import org.junit.jupiter.api.Test;
+
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 
@@ -37,7 +39,7 @@ public class URITest extends AbstractImageTranscoderTest {
 	/** The URI of the reference image. */
 	private String refImageURI;
 
-	@org.junit.Test
+	@Test
 	public void test() throws TranscoderException {
 		testURI("samples/anne.svg", "test-references/samples/anne.png");
 	}

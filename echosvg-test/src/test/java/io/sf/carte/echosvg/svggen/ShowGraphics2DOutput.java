@@ -18,13 +18,14 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
@@ -45,7 +46,7 @@ import io.sf.carte.echosvg.bridge.UserAgentAdapter;
  */
 public class ShowGraphics2DOutput {
 
-	@org.junit.Test
+	@Test
 	public void test() {
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;

@@ -21,7 +21,7 @@ package io.sf.carte.echosvg.test.svg;
 import java.io.File;
 import java.net.MalformedURLException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Base class for tests which take an additional parameter in addition to the

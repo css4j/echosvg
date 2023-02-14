@@ -18,13 +18,13 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.spi;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.awt.color.ColorSpace;
 import java.awt.image.RenderedImage;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.bridge.SVGBrokenLinkProvider;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;

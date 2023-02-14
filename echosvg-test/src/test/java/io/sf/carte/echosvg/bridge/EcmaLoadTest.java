@@ -22,8 +22,8 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Checks that ECMA Scripts which should be loaded are indeed loaded.
@@ -35,7 +35,7 @@ import org.junit.Test;
 @SuppressWarnings({ "deprecation", "removal" })
 public class EcmaLoadTest {
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		try {
 			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {

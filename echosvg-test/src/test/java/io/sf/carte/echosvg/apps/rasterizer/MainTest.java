@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.apps.rasterizer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
@@ -36,7 +36,8 @@ import java.security.PrivilegedExceptionAction;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestLocations;
 
@@ -50,7 +51,7 @@ import io.sf.carte.echosvg.test.TestLocations;
 @SuppressWarnings({ "deprecation", "removal" })
 public class MainTest {
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		try {
 			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
@@ -68,7 +69,7 @@ public class MainTest {
 
 	// This test interferes with Gradle
 	// Run it from IDE only
-	@org.junit.Test
+	@Test
 	public void testMain() {
 		URL url;
 		try {
@@ -84,7 +85,7 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				File dst = c.getDst();
 				assertNotNull(dst);
-				assertEquals("-d", "samples", dst.getName());
+				assertEquals("samples", dst.getName(), "-d");
 			}
 
 			@Override
@@ -105,7 +106,7 @@ public class MainTest {
 				List<String> sources = c.getSources();
 				assertEquals(1, sources.size());
 				String src = sources.get(0);
-				assertEquals(ERROR_UNEXPECTED_SOURCES, rootDir + "samples/anne.svg", src);
+				assertEquals(rootDir + "samples/anne.svg", src, ERROR_UNEXPECTED_SOURCES);
 			}
 
 		};
@@ -121,7 +122,7 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				DestinationType type = c.getDestinationType();
 				assertEquals(DestinationType.JPEG, type);
-				assertEquals("-m", DestinationType.JPEG.toString(), type.toString());
+				assertEquals(DestinationType.JPEG.toString(), type.toString(), "-m");
 			}
 
 		};
@@ -134,7 +135,7 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				DestinationType type = c.getDestinationType();
 				assertEquals(DestinationType.JPEG, type);
-				assertEquals("-m", DestinationType.JPEG.toString(), type.toString());
+				assertEquals(DestinationType.JPEG.toString(), type.toString(), "-m");
 			}
 
 		};
@@ -147,7 +148,7 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				DestinationType type = c.getDestinationType();
 				assertEquals(DestinationType.JPEG, type);
-				assertEquals("-m", DestinationType.JPEG.toString(), type.toString());
+				assertEquals(DestinationType.JPEG.toString(), type.toString(), "-m");
 			}
 
 		};
@@ -160,7 +161,7 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				DestinationType type = c.getDestinationType();
 				assertEquals(DestinationType.PNG, type);
-				assertEquals("-m", DestinationType.PNG.toString(), type.toString());
+				assertEquals(DestinationType.PNG.toString(), type.toString(), "-m");
 			}
 
 		};
@@ -173,7 +174,7 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				DestinationType type = c.getDestinationType();
 				assertEquals(DestinationType.TIFF, type);
-				assertEquals("-m", DestinationType.TIFF.toString(), type.toString());
+				assertEquals(DestinationType.TIFF.toString(), type.toString(), "-m");
 			}
 
 		};
@@ -185,7 +186,7 @@ public class MainTest {
 			@Override
 			public void validate(SVGConverter c) {
 				float width = c.getWidth();
-				assertEquals("-w", 467.69f, width, 1e-3);
+				assertEquals(467.69f, width, 1e-3, "-w");
 			}
 
 		};
@@ -197,7 +198,7 @@ public class MainTest {
 			@Override
 			public void validate(SVGConverter c) {
 				float height = c.getHeight();
-				assertEquals("-h", 345.67, height, 1e-3);
+				assertEquals(345.67, height, 1e-3, "-h");
 			}
 
 		};
@@ -208,7 +209,7 @@ public class MainTest {
 			@Override
 			public void validate(SVGConverter c) {
 				float maxWidth = c.getMaxWidth();
-				assertEquals("-maxw", 467.69f, maxWidth, 1e-3);
+				assertEquals(467.69f, maxWidth, 1e-3, "-maxw");
 			}
 
 		};
@@ -219,7 +220,7 @@ public class MainTest {
 			@Override
 			public void validate(SVGConverter c) {
 				float maxHeight = c.getMaxHeight();
-				assertEquals("-maxh", 345.67, maxHeight, 1e-3);
+				assertEquals(345.67, maxHeight, 1e-3, "-maxh");
 			}
 		};
 		t.runTest("-maxh 345.67");
@@ -231,8 +232,8 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				Rectangle2D aoi = c.getArea();
 				Rectangle2D.Float eAoi = new Rectangle2D.Float(5, 10, 20, 30);
-				assertEquals("-a", eAoi, aoi);
-				assertEquals("-a", toString(eAoi), toString(aoi));
+				assertEquals(eAoi, aoi, "-a");
+				assertEquals(toString(eAoi), toString(aoi), "-a");
 			}
 
 			public String toString(Rectangle2D r) {
@@ -253,8 +254,8 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				Color bg = c.getBackgroundColor();
 				Color eBg = new Color(200, 100, 50, 128); // Alpha is last
-				assertEquals("-bg", eBg, bg);
-				assertEquals("-bg", toString(eBg), toString(bg));
+				assertEquals(eBg, bg, "-bg");
+				assertEquals(toString(eBg), toString(bg), "-bg");
 			}
 
 			public String toString(Color c) {
@@ -275,7 +276,7 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				String cssMedia = c.getMediaType();
 				String eCssMedia = "projection";
-				assertEquals("-cssMedia", eCssMedia, cssMedia);
+				assertEquals(eCssMedia, cssMedia, "-cssMedia");
 			}
 		};
 		t.runTest("-cssMedia projection");
@@ -287,7 +288,7 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				String fontFamily = c.getDefaultFontFamily();
 				String eFontFamily = "Arial, Comic Sans MS";
-				assertEquals("-font-family", eFontFamily, fontFamily);
+				assertEquals(eFontFamily, fontFamily, "-font-family");
 			}
 
 			@Override
@@ -303,7 +304,7 @@ public class MainTest {
 			public void validate(SVGConverter c) {
 				String alternate = c.getAlternateStylesheet();
 				String eAlternate = "myAlternateStylesheet";
-				assertEquals("-cssAlternate", eAlternate, alternate);
+				assertEquals(eAlternate, alternate, "-cssAlternate");
 			}
 		};
 		t.runTest("-cssAlternate myAlternateStylesheet");
@@ -313,7 +314,7 @@ public class MainTest {
 		t = new MainConfigTest() {
 			@Override
 			public void validate(SVGConverter c) {
-				assertTrue("-validate", c.getValidate());
+				assertTrue(c.getValidate(), "-validate");
 			}
 		};
 		t.runTest("-validate");
@@ -323,7 +324,7 @@ public class MainTest {
 		t = new MainConfigTest() {
 			@Override
 			public void validate(SVGConverter c) {
-				assertTrue("-onload", c.getExecuteOnload());
+				assertTrue(c.getExecuteOnload(), "-onload");
 			}
 		};
 		t.runTest("-onload");
@@ -333,7 +334,7 @@ public class MainTest {
 		t = new MainConfigTest() {
 			@Override
 			public void validate(SVGConverter c) {
-				assertEquals("-scripts", "text/jpython", c.getAllowedScriptTypes());
+				assertEquals("text/jpython", c.getAllowedScriptTypes(), "-scripts");
 			}
 		};
 		t.runTest("-scripts text/jpython");
@@ -343,7 +344,7 @@ public class MainTest {
 		t = new MainConfigTest() {
 			@Override
 			public void validate(SVGConverter c) {
-				assertFalse("-anyScriptOrigin", c.getConstrainScriptOrigin());
+				assertFalse(c.getConstrainScriptOrigin(), "-anyScriptOrigin");
 			}
 		};
 		t.runTest("-anyScriptOrigin");
@@ -353,7 +354,7 @@ public class MainTest {
 		t = new MainConfigTest() {
 			@Override
 			public void validate(SVGConverter c) {
-				assertTrue("-scriptSecurityOff", c.getSecurityOff());
+				assertTrue(c.getSecurityOff(), "-scriptSecurityOff");
 			}
 		};
 		t.runTest("-scriptSecurityOff");
@@ -362,7 +363,7 @@ public class MainTest {
 		t = new MainConfigTest() {
 			@Override
 			public void validate(SVGConverter c) {
-				assertEquals("-lang", "fr", c.getLanguage());
+				assertEquals("fr", c.getLanguage(), "-lang");
 			}
 		};
 		t.runTest("-lang fr");
@@ -371,7 +372,7 @@ public class MainTest {
 		t = new MainConfigTest() {
 			@Override
 			public void validate(SVGConverter c) {
-				assertEquals("-cssUser", "myStylesheet.css", c.getUserStylesheet());
+				assertEquals("myStylesheet.css", c.getUserStylesheet(), "-cssUser");
 			}
 		};
 		t.runTest("-cssUser myStylesheet.css");
@@ -380,7 +381,7 @@ public class MainTest {
 		t = new MainConfigTest() {
 			@Override
 			public void validate(SVGConverter c) {
-				assertEquals("-dpi", 5f, c.getPixelUnitToMillimeter(), 1e-3);
+				assertEquals(5f, c.getPixelUnitToMillimeter(), 1e-3, "-dpi");
 			}
 		};
 		t.runTest("-dpi 5.08");
@@ -389,7 +390,7 @@ public class MainTest {
 		t = new MainConfigTest() {
 			@Override
 			public void validate(SVGConverter c) {
-				assertEquals("-q", .5f, c.getQuality(), 1e-3);
+				assertEquals(.5f, c.getQuality(), 1e-3, "-q");
 			}
 		};
 		t.runTest("-q .5");
@@ -398,7 +399,7 @@ public class MainTest {
 		t = new MainConfigTest() {
 			@Override
 			public void validate(SVGConverter c) {
-				assertEquals("-indexed", 8, c.getIndexed());
+				assertEquals(8, c.getIndexed(), "-indexed");
 			}
 		};
 		t.runTest("-indexed 8");
@@ -522,11 +523,11 @@ abstract class AbstractMainTest {
 	}
 
 	void assertError(String expectedErrorCode, String errorCode) {
-		assertEquals(ERROR_UNEXPECTED_ERROR_CODE, expectedErrorCode, errorCode);
+		assertEquals(expectedErrorCode, errorCode, ERROR_UNEXPECTED_ERROR_CODE);
 	}
 
 	void assertUsagePrinted() {
-		assertTrue("Usage was not printed", usagePrinted);
+		assertTrue(usagePrinted, "Usage was not printed");
 	}
 
 	String[] makeArgsArray(String args) {
@@ -551,7 +552,7 @@ class MainIllegalArgTest extends AbstractMainTest {
 
 	@Override
 	void onError(String errorCode, Object[] errorArgs) {
-		assertEquals(ERROR_UNEXPECTED_ERROR_CODE, Main.ERROR_ILLEGAL_ARGUMENT, errorCode);
+		assertEquals(Main.ERROR_ILLEGAL_ARGUMENT, errorCode, ERROR_UNEXPECTED_ERROR_CODE);
 	}
 
 	@Override

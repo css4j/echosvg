@@ -21,6 +21,8 @@ package io.sf.carte.echosvg.transcoder.image;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -45,13 +47,13 @@ public class PixelToMMTest extends AbstractImageTranscoderTest {
 	/** The pixel to mm factor. */
 	private float px2mm;
 
-	@org.junit.Test
+	@Test
 	public void test96dpi() throws TranscoderException {
 		testPixelToMM("test-resources/io/sf/carte/echosvg/transcoder/image/resources/px2mm.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/px2mm96dpi.png", 0.2645833f);
 	}
 
-	@org.junit.Test
+	@Test
 	public void test72dpi() throws TranscoderException {
 		testPixelToMM("test-resources/io/sf/carte/echosvg/transcoder/image/resources/px2mm.svg",
 				"test-references/io/sf/carte/echosvg/transcoder/image/px2mm72dpi.png", 0.3528f);

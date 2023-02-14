@@ -18,12 +18,13 @@
  */
 package io.sf.carte.echosvg.svggen;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.StringWriter;
 
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
@@ -44,7 +45,7 @@ public class GetRootTest {
 
 	private static final Dimension CANVAS_SIZE = new Dimension(300, 400);
 
-	@org.junit.Test
+	@Test
 	public void test() throws SVGGraphics2DIOException {
 		// First, use the no-argument getRoot
 

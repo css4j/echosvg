@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
@@ -41,7 +41,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  */
 public class DefaultFontFamilyTest {
 
-	@BeforeClass
+	@BeforeAll
 	public static void beforeClass() throws FontFormatException, IOException {
 		TestFonts.loadTestFonts();
 	}

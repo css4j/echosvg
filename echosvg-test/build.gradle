@@ -32,7 +32,7 @@ dependencies {
 	testImplementation project(':echosvg-test-swing')
 	testImplementation project(':echosvg-extension')
 	testImplementation project(':echosvg-svgrasterizer')
-	testImplementation "junit:junit:${junitVersion}"
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 	testImplementation "org.mozilla:rhino:${rhinoVersion}"
 	testImplementation "nu.validator:htmlparser:${htmlParserVersion}"
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
@@ -56,6 +56,8 @@ publishing.publications.maven(MavenPublication).pom {
 }
 
 test {
+	useJUnitPlatform()
+
 	exclude 'io/sf/carte/echosvg/apps/rasterizer/MainTest.class'
 	exclude 'io/sf/carte/echosvg/bridge/*LoadTest.class'
 	exclude 'io/sf/carte/echosvg/bridge/*PermissionsTest.class'

@@ -20,6 +20,8 @@ package io.sf.carte.echosvg.test.svg;
 
 import java.net.MalformedURLException;
 
+import org.junit.jupiter.api.Test;
+
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 
@@ -33,7 +35,7 @@ import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
  */
 public class SVGAlternateStyleSheetRenderingAccuracyTest extends ParameterizedRenderingAccuracyTest {
 
-	@org.junit.Test
+	@Test
 	public void test() throws MalformedURLException {
 		runTest("samples/tests/spec/styling/alternateStylesheet.svg", "Hot");
 		runTest("samples/tests/spec/styling/alternateStylesheet.svg", "Cold");

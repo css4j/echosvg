@@ -23,6 +23,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 
+import org.junit.jupiter.api.Test;
+
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 
@@ -41,7 +43,7 @@ public class ReaderTest extends AbstractImageTranscoderTest {
 	/** The URI of the reference image. */
 	private String refImageURI;
 
-	@org.junit.Test
+	@Test
 	public void test() throws TranscoderException {
 		testReader("samples/anne.svg", "test-references/samples/anne.png");
 	}
