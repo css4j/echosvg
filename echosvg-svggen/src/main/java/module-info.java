@@ -25,6 +25,5 @@ module io.sf.carte.echosvg.svggen {
 	requires transitive io.sf.carte.echosvg.awt;
 	requires io.sf.carte.echosvg.constants;
 	requires io.sf.carte.echosvg.i18n;
-	requires java.desktop;
 	requires java.xml;
 }

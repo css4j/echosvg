@@ -26,7 +26,6 @@ module io.sf.carte.echosvg.extension {
 
 	requires transitive io.sf.carte.echosvg.bridge;
 	requires io.sf.carte.echosvg.constants;
-	requires java.desktop;
 
 	requires jdk.xml.dom;
 	requires transitive org.w3c.dom.svg;

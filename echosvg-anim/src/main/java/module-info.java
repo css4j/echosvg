@@ -29,7 +29,6 @@ module io.sf.carte.echosvg.anim {
 	requires io.sf.carte.echosvg.constants;
 	requires transitive io.sf.carte.echosvg.dom.svg;
 	requires io.sf.carte.css4j;
-	requires transitive java.desktop;
 	requires java.xml;
 	requires jdk.xml.dom;
 }

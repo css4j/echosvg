@@ -35,6 +35,7 @@ module io.sf.carte.echosvg.awt {
 	requires transitive io.sf.carte.echosvg.util;
 	requires xmlgraphics.commons;
 	requires io.sf.carte.echosvg.i18n;
+	requires java.desktop;
 
 	uses io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 	uses io.sf.carte.echosvg.ext.awt.image.spi.RegistryEntry;

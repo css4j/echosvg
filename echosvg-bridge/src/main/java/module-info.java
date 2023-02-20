@@ -28,7 +28,8 @@ module io.sf.carte.echosvg.bridge {
 	requires transitive io.sf.carte.echosvg.gvt;
 	requires transitive io.sf.carte.echosvg.script;
 	requires transitive io.sf.carte.echosvg.anim;
-	requires transitive io.sf.carte.echosvg.parser;
+	requires io.sf.carte.echosvg.parser;
+	requires io.sf.carte.echosvg.xml;
 	requires io.sf.carte.echosvg.constants;
 	requires io.sf.carte.echosvg.i18n;
 	requires xmlgraphics.commons;
