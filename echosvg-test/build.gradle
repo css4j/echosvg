@@ -35,6 +35,7 @@ dependencies {
 	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 	testImplementation "org.mozilla:rhino:${rhinoVersion}"
 	testImplementation "nu.validator:htmlparser:${htmlParserVersion}"
+	testImplementation "io.sf.jclf:jclf-text:${jclfTextVersion}"
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
 		testImplementation ("xml-apis:xml-apis:$xmlApisVersion")
 	}
