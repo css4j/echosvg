@@ -98,6 +98,7 @@ tasks.register('iTest', Test) {
 	description = 'Run interactive tests'
 	group = 'verification'
 
+	useJUnitPlatform()
 	testClassesDirs = sourceSets.itest.output.classesDirs
 	classpath = sourceSets.itest.runtimeClasspath
 	dependsOn configurations.itestCompileClasspath
