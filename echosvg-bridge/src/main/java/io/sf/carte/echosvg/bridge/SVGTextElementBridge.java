@@ -441,6 +441,9 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 				((SVGOMElement) e).setSVGContext(new TextPathBridge(ctx, this, e));
 			} else if (e.getLocalName().equals(SVG_TREF_TAG)) {
 				((SVGOMElement) e).setSVGContext(new TRefBridge(ctx, this, e));
+			} else if (e.getLocalName().equals(SVG_ALT_GLYPH_TAG)) {
+				// XXX: Use the TRef bridge
+				((SVGOMElement) e).setSVGContext(new TRefBridge(ctx, this, e));
 			}
 		}
 
