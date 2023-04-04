@@ -319,19 +319,6 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 		}
 
 		/**
-		 * Returns the size of a px CSS unit in millimeters. This will be removed after
-		 * next release.
-		 * 
-		 * @see #getPixelUnitToMillimeter()
-		 */
-		@Override
-		@Deprecated(forRemoval=true)
-		public float getPixelToMM() {
-			return getPixelUnitToMillimeter();
-
-		}
-
-		/**
 		 * Returns the font-size value.
 		 */
 		@Override

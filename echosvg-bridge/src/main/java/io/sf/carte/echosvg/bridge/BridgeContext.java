@@ -1777,19 +1777,6 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 	}
 
 	/**
-	 * Returns the size of a px CSS unit in millimeters. This will be removed after
-	 * next release.
-	 * 
-	 * @see #getPixelUnitToMillimeter()
-	 */
-	@Override
-	@Deprecated(forRemoval=true)
-	public float getPixelToMillimeter() {
-		return getPixelUnitToMillimeter();
-
-	}
-
-	/**
 	 * Returns the medium font size.
 	 */
 	@Override

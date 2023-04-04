@@ -1,0 +1,66 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ====================================================================== -->
+<!-- Illustrates the usage of resolutions.                                  -->
+<!--                                                                        -->
+<!-- @author github.com/carlosame                                           -->
+<!-- @version $Id$    -->
+<!-- ====================================================================== -->
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500">
+  <style type="text/css">
+/*<![CDATA[*/
+
+g {
+    font: bold 12pt "Open Sans", sans-serif;
+}
+circle {
+  stroke-width: 5px;
+}
+ellipse {
+  stroke-width: 3px;
+}
+
+text.itemdesc {
+  fill: #175a9e;
+}
+
+/*]]>*/
+  </style>
+  <g>
+  <circle cx="280" cy="300" r="25" style="fill:#0000ff; stroke:#000044"/>
+  <circle cx="130" cy="150" r="25" style="fill:#ff0000; stroke:#440000"/>
+  <circle cx="280" cy="150" r="25" style="fill:#ffff00; stroke:#868400"/>
+  <circle cx="120" cy="300" r="25" style="fill:#00ff00; stroke:#027a00"/>
+  <ellipse cx="280" cy="300" rx="100" ry="130" transform="rotate(-20 250 300)"
+style="fill:#0000ff4c; stroke:#0000ff"/>
+  <ellipse cx="150" cy="150" rx="100" ry="130" transform="rotate(-20 150 150)"
+style="fill:#ff00004c; stroke:#ff0000"/>
+  <ellipse cx="280" cy="150" rx="100" ry="130" transform="rotate(30 280 150)"
+style="fill:#8684004c; stroke:#ffff00"/>
+  <ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)"
+style="fill:#00ff004c; stroke:#00ff00"/>
+  <text x="80" y="50" class="itemdesc" text-anchor="middle">Ellipses</text>
+  <text x="320" y="50" class="itemdesc" text-anchor="middle">and circles</text>
+  <text x="75" y="390" class="itemdesc" text-anchor="middle">to test</text>
+  <text x="290" y="390" class="itemdesc" text-anchor="middle">Resolution</text>
+  </g>
+</svg>

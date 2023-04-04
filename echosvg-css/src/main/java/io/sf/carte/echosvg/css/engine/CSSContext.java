@@ -65,7 +65,9 @@ public interface CSSContext {
 	 * @see #getPixelUnitToMillimeter()
 	 */
 	@Deprecated(forRemoval=true)
-	float getPixelToMillimeter();
+	default float getPixelToMillimeter() {
+		return getPixelUnitToMillimeter();
+	}
 
 	/**
 	 * Returns the medium font size.

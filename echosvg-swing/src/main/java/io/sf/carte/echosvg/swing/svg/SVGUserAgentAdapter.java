@@ -119,19 +119,6 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
 	}
 
 	/**
-	 * Returns the size of a px CSS unit in millimeters. This will be removed after
-	 * next release.
-	 * 
-	 * @see #getPixelUnitToMillimeter()
-	 */
-	@Override
-	@Deprecated(forRemoval=true)
-	public float getPixelToMM() {
-		return getPixelUnitToMillimeter();
-
-	}
-
-	/**
 	 * Returns the default font family.
 	 */
 	@Override

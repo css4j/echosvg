@@ -2497,18 +2497,6 @@ public class JSVGComponent extends JGVTComponent {
 		}
 
 		/**
-		 * Returns the size of a px CSS unit in millimeters. This will be removed after
-		 * next release.
-		 * 
-		 * @see #getPixelUnitToMillimeter()
-		 */
-		@Override
-		@Deprecated(forRemoval=true)
-		public float getPixelToMM() {
-			return getPixelUnitToMillimeter();
-		}
-
-		/**
 		 * Returns the default font family.
 		 */
 		@Override
@@ -3240,18 +3228,6 @@ public class JSVGComponent extends JGVTComponent {
 				return svgUserAgent.getPixelUnitToMillimeter();
 			}
 			return 0.264583333333333333333f; // 96 dpi
-		}
-
-		/**
-		 * Returns the size of a px CSS unit in millimeters. This will be removed after
-		 * next release.
-		 * 
-		 * @see #getPixelUnitToMillimeter()
-		 */
-		@Override
-		@Deprecated(forRemoval=true)
-		public float getPixelToMM() {
-			return getPixelUnitToMillimeter();
 		}
 
 		/**

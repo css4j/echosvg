@@ -48,7 +48,9 @@ public interface SVGContext {
 	 * @see #getPixelUnitToMillimeter()
 	 */
 	@Deprecated(forRemoval=true)
-	float getPixelToMM();
+	default float getPixelToMM() {
+		return getPixelUnitToMillimeter();
+	}
 
 	/**
 	 * Returns the tight bounding box in current user space (i.e., after application

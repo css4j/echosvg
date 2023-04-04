@@ -68,18 +68,6 @@ public abstract class AnimatableGenericSVGBridge extends AnimatableSVGBridge
 	}
 
 	/**
-	 * Returns the size of a px CSS unit in millimeters. This will be removed after
-	 * next release.
-	 * 
-	 * @see #getPixelUnitToMillimeter()
-	 */
-	@Override
-	@Deprecated(forRemoval=true)
-	public float getPixelToMM() {
-		return getPixelUnitToMillimeter();
-	}
-
-	/**
 	 * Returns the tight bounding box in current user space (i.e., after application
 	 * of the transform attribute, if any) on the geometry of all contained graphics
 	 * elements, exclusive of stroke-width and filter effects).

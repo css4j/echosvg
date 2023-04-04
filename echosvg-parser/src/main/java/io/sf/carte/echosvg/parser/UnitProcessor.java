@@ -425,7 +425,9 @@ public abstract class UnitProcessor {
 		 * @see #getPixelUnitToMillimeter()
 		 */
 		@Deprecated(forRemoval=true)
-		float getPixelToMM();
+		default float getPixelToMM() {
+			return getPixelUnitToMillimeter();
+		}
 
 		/**
 		 * Returns the font-size value.

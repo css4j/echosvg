@@ -125,19 +125,6 @@ public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge
 		return theCtx.getUserAgent().getPixelUnitToMillimeter();
 	}
 
-	/**
-	 * Returns the size of a px CSS unit in millimeters. This will be removed after
-	 * next release.
-	 * 
-	 * @see #getPixelUnitToMillimeter()
-	 */
-	@Override
-	@Deprecated(forRemoval=true)
-	public float getPixelToMM() {
-		return getPixelUnitToMillimeter();
-
-	}
-
 	@Override
 	public Rectangle2D getBBox() {
 		return null;

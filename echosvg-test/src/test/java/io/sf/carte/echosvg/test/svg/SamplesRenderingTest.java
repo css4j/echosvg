@@ -730,6 +730,10 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/rendering/paintOpacity.svg");
 	}
 
+	public void testRenderingResolutionPxMM() throws TranscoderException, IOException {
+		testResolutionPxMM("samples/tests/spec/rendering/resolution.svg", 0.25f);
+	}
+
 	/*
 	 * Shapes
 	 */
@@ -1563,6 +1567,13 @@ public class SamplesRenderingTest {
 	 */
 	private void testHTML(String file) throws TranscoderException, IOException {
 		RenderingTest runner = new HTMLRenderingAccuracyTest();
+		runner.setFile(file);
+		runner.runTest(0.000001f, 0.000001f);
+	}
+
+	private void testResolutionPxMM(String file, float pxToMM)
+			throws TranscoderException, IOException {
+		RenderingTest runner = new ResolutionPxMmRenderingTest(pxToMM);
 		runner.setFile(file);
 		runner.runTest(0.000001f, 0.000001f);
 	}

@@ -459,18 +459,6 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 		return ctx.getUserAgent().getPixelUnitToMillimeter();
 	}
 
-	/**
-	 * Returns the size of a px CSS unit in millimeters. This will be removed after
-	 * next release.
-	 * 
-	 * @see #getPixelUnitToMillimeter()
-	 */
-	@Override
-	@Deprecated(forRemoval=true)
-	public float getPixelToMM() {
-		return getPixelUnitToMillimeter();
-	}
-
 	protected SoftReference<Shape> bboxShape = null;
 	protected Rectangle2D bbox = null;
 
