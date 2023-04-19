@@ -8,6 +8,7 @@
 /.gradle
 /buildSrc/.gradle
 /CHANGES.txt
+
 /test-references/**/candidate/
 /test-references/**/candidate-ref/
 /test-references/**/candidate-reference/
@@ -15,3 +16,5 @@
 /test-resources/io/sf/carte/echosvg/bridge/JarCheckPermissionsDenied.jar
 /test-resources/io/sf/carte/echosvg/bridge/JarCheckPermissionsGranted.jar
 /test-reports/
+
+/jar/
