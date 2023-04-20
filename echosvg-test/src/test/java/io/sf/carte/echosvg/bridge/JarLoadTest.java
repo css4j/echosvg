@@ -69,9 +69,6 @@ public class JarLoadTest {
 		String scriptSource = "jarCheckLoadSameAsDocument";
 		// Note: base64 encoding of jar content is not supported.
 
-		boolean[] secure = { true, false };
-		String[] scriptOrigin = { "any", "document", "embeded" };
-
 		//
 		// <!> Need to make restricted {true/false}
 		//
@@ -83,13 +80,11 @@ public class JarLoadTest {
 		// All other security settings should not have an
 		// influence on whether or not the script can be loaded.
 		//
-		// i = 1
-		for (int i = 0; i <= 1; i++) {
-			for (boolean aSecure : secure) {
-				ScriptSelfTest t = buildTest(scriptsType, scriptSource, scriptOrigin[i], aSecure);
-				t.runTest();
-			}
-		}
+		ScriptSelfTest t = buildTest(scriptsType, scriptSource, "any", true);
+		t.runTest();
+
+		t = buildTest(scriptsType, scriptSource, "any", false);
+		t.runTest();
 	}
 
 	private ScriptSelfTest buildTest(String scripts, String id, String origin, boolean secure) {

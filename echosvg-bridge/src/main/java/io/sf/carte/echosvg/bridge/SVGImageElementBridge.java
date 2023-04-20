@@ -175,17 +175,12 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			purl = new ParsedURL(baseURI, uriStr);
 		}
 
+		checkLoadExternalResource(ctx, e, purl);
+
 		return createImageGraphicsNode(ctx, e, purl);
 	}
 
-	protected GraphicsNode createImageGraphicsNode(BridgeContext ctx, Element e, ParsedURL purl) {
-		Rectangle2D bounds = getImageBounds(ctx, e);
-		if ((bounds.getWidth() == 0) || (bounds.getHeight() == 0)) {
-			ShapeNode sn = new ShapeNode();
-			sn.setShape(bounds);
-			return sn;
-		}
-
+	private void checkLoadExternalResource(BridgeContext ctx, Element e, ParsedURL purl) {
 		SVGDocument svgDoc = (SVGDocument) e.getOwnerDocument();
 		String docURL = svgDoc.getURL();
 		ParsedURL pDocURL = null;
@@ -198,6 +193,15 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			userAgent.checkLoadExternalResource(purl, pDocURL);
 		} catch (SecurityException secEx) {
 			throw new BridgeException(ctx, e, secEx, ERR_URI_UNSECURE, new Object[] { purl });
+		}
+	}
+
+	protected GraphicsNode createImageGraphicsNode(BridgeContext ctx, Element e, ParsedURL purl) {
+		Rectangle2D bounds = getImageBounds(ctx, e);
+		if ((bounds.getWidth() == 0) || (bounds.getHeight() == 0)) {
+			ShapeNode sn = new ShapeNode();
+			sn.setShape(bounds);
+			return sn;
 		}
 
 		DocumentLoader loader = ctx.getDocumentLoader();

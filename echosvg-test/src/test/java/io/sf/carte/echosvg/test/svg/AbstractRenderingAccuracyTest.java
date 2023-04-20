@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
+import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
 import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.test.image.ImageComparator;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
@@ -98,6 +99,13 @@ public abstract class AbstractRenderingAccuracyTest {
 
 	static {
 		configuration = ResourceBundle.getBundle(CONFIGURATION_RESOURCES, Locale.getDefault());
+
+		RhinoClassShutter.addToWhitelist("io.sf.carte.echosvg.test.svg.*");
+		RhinoClassShutter.addToWhitelist("io.sf.carte.echosvg.test.image.*");
+		RhinoClassShutter.addToWhitelist("io.sf.carte.echosvg.swing.test.*");
+		RhinoClassShutter.addToWhitelist("java.*");
+		RhinoClassShutter.addToWhitelist("javax.*");
+		RhinoClassShutter.addToWhitelist("org.gradle.*");
 	}
 
 	/**

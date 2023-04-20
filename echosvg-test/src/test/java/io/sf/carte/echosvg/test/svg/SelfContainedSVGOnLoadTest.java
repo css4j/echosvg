@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.GVTBuilder;
 import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
+import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
 import io.sf.carte.echosvg.test.TestLocations;
 
 /**
@@ -134,6 +135,12 @@ public class SelfContainedSVGOnLoadTest {
 	public static final String ATTRIBUTE_VALUE = "value";
 	public static final String TEST_RESULT_PASSED = "passed";
 	public static final String TEST_RESULT_FAILED = "failed";
+
+	static {
+		RhinoClassShutter.addToWhitelist("java.*");
+		RhinoClassShutter.addToWhitelist("javax.*");
+		RhinoClassShutter.addToWhitelist("org.gradle.*");
+	}
 
 	/**
 	 * Default constructor
@@ -236,7 +243,7 @@ public class SelfContainedSVGOnLoadTest {
 		if (!TEST_RESULT_PASSED.equals(result)) {
 			String errorCode = testResult.getAttributeNS(null, "errorCode");
 			assertEquals(expectedError, errorCode, "Failed with unexpected error code,");
-		} else if (expectedError.length() > 0) {
+		} else if (expectedError != null && expectedError.length() > 0) {
 			fail("Script was loaded, but expected error: " + expectedError);
 		}
 

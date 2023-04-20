@@ -90,7 +90,16 @@ task jarCheckPermissionsGrantedJar(type: Jar) {
 	duplicatesStrategy = 'exclude'
 }
 
-// Copy script jar files to 'jar' directory
+task jarPolicyTestJar(type: Jar) {
+	archiveFileName = 'JarPolicyTest.jar'
+	dependsOn lineEndingConvCopy
+	from ("$rootDir/test-resources/io/sf/carte/echosvg/transcoder/image/text-red.css") {
+		into 'css'
+	}
+	duplicatesStrategy = 'exclude'
+}
+
+// Copy script jar files to destination directory
 tasks.register('copyScriptJars', Copy) {
 	dependsOn tasks.jarCheckPermissionsDeniedJar
 	dependsOn tasks.jarCheckPermissionsGrantedJar
@@ -100,11 +109,18 @@ tasks.register('copyScriptJars', Copy) {
 	into "${rootDir}/test-resources/io/sf/carte/echosvg/bridge"
 }
 
+// Copy policy test jar to destination directory
+tasks.register('copyPolicyJar', Copy) {
+	dependsOn tasks.jarPolicyTestJar
+	from layout.buildDirectory.file('libs/JarPolicyTest.jar')
+	into "${rootDir}/test-resources/io/sf/carte/echosvg/css"
+}
+
 build.dependsOn iWasLoadedJar
 build.dependsOn iWasLoadedTooJar
 build.dependsOn jarCheckPermissionsDeniedJar
 build.dependsOn jarCheckPermissionsGrantedJar
-build.dependsOn copyScriptJars
+build.dependsOn copyScriptJars, copyPolicyJar
 
 tasks.withType(PublishToMavenRepository).configureEach {
 	it.enabled = false

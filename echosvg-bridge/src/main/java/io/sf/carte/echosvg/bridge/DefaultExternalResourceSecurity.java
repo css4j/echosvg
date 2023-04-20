@@ -18,6 +18,9 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
@@ -73,23 +76,34 @@ public class DefaultExternalResourceSecurity implements ExternalResourceSecurity
 	public DefaultExternalResourceSecurity(ParsedURL externalResourceURL, ParsedURL docURL) {
 		// Make sure that the archives comes from the same host
 		// as the document itself
+		if (DATA_PROTOCOL.equals(externalResourceURL.getProtocol())) {
+			return;
+		}
 		if (docURL == null) {
 			se = new SecurityException(
 					Messages.formatMessage(ERROR_CANNOT_ACCESS_DOCUMENT_URL, new Object[] { externalResourceURL }));
 		} else {
 			String docHost = docURL.getHost();
-
-			if (externalResourceURL == null) {
-				throw new NullPointerException();
-			}
-
 			String externalResourceHost = externalResourceURL.getHost();
 
-			if ((docHost != externalResourceHost) && ((docHost == null) || (!docHost.equals(externalResourceHost)))) {
+			String externalPath;
+			if (externalResourceHost == null
+					&& !DATA_PROTOCOL.equals(externalResourceURL.getProtocol())
+					&& (externalPath = externalResourceURL.getPath()) != null) {
+				try {
+					externalResourceHost = new URI(externalPath).getHost();
+				} catch (URISyntaxException e) {
+					throw new RuntimeException(e);
+				}
+			}
+
+			if (docHost != externalResourceHost
+					&& (docHost == null || !docHost.equals(externalResourceHost))) {
 
 				if (!DATA_PROTOCOL.equals(externalResourceURL.getProtocol())) {
-					se = new SecurityException(Messages.formatMessage(ERROR_EXTERNAL_RESOURCE_FROM_DIFFERENT_URL,
-							new Object[] { externalResourceURL }));
+					se = new SecurityException(
+							Messages.formatMessage(ERROR_EXTERNAL_RESOURCE_FROM_DIFFERENT_URL,
+									new Object[] { externalResourceURL }));
 				}
 
 			}

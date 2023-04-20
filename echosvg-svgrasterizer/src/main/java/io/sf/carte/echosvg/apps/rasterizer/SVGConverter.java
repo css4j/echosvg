@@ -245,7 +245,7 @@ public class SVGConverter {
 	 */
 	protected boolean constrainScriptOrigin = true;
 
-	protected boolean allowExternalResources = true;
+	protected boolean allowExternalResources;
 
 	/** Controls whether scripts should be run securely or not */
 	protected boolean securityOff = false;
@@ -885,8 +885,8 @@ public class SVGConverter {
 			map.put(SVGAbstractTranscoder.KEY_CONSTRAIN_SCRIPT_ORIGIN, Boolean.FALSE);
 		}
 
-		if (!allowExternalResources) {
-			map.put(SVGAbstractTranscoder.KEY_ALLOW_EXTERNAL_RESOURCES, Boolean.FALSE);
+		if (allowExternalResources) {
+			map.put(SVGAbstractTranscoder.KEY_ALLOW_EXTERNAL_RESOURCES, Boolean.TRUE);
 		}
 
 		return map;

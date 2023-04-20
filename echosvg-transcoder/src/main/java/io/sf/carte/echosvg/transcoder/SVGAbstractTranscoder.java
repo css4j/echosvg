@@ -45,8 +45,8 @@ import io.sf.carte.echosvg.bridge.BridgeException;
 import io.sf.carte.echosvg.bridge.DefaultScriptSecurity;
 import io.sf.carte.echosvg.bridge.ExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.GVTBuilder;
-import io.sf.carte.echosvg.bridge.NoLoadExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.NoLoadScriptSecurity;
+import io.sf.carte.echosvg.bridge.RelaxedExternalResourceSecurity;
 import io.sf.carte.echosvg.bridge.RelaxedScriptSecurity;
 import io.sf.carte.echosvg.bridge.SVGUtilities;
 import io.sf.carte.echosvg.bridge.ScriptSecurity;
@@ -1039,6 +1039,37 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 */
 	public static final TranscodingHints.Key KEY_CONSTRAIN_SCRIPT_ORIGIN = new BooleanKey();
 
+	/**
+	 * Controls whether or not scripts are allowed to load resources without any
+	 * restriction.
+	 *
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_ALLOW_EXTERNAL_RESOURCES</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Boolean</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">false</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">When set to true, script elements will be
+	 * able to load resources without any restriction. Setting it to true may cause
+	 * serious issues if the script is not trusted or can be abused in any way, and
+	 * you are advised against doing that.</td>
+	 * </tr>
+	 * </table>
+	 */
 	public static final TranscodingHints.Key KEY_ALLOW_EXTERNAL_RESOURCES = new BooleanKey();
 
 	/**
@@ -1256,9 +1287,9 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 		@Override
 		public ExternalResourceSecurity getExternalResourceSecurity(ParsedURL resourceURL, ParsedURL docURL) {
 			if (isAllowExternalResources()) {
-				return super.getExternalResourceSecurity(resourceURL, docURL);
+				return new RelaxedExternalResourceSecurity(resourceURL, docURL);
 			}
-			return new NoLoadExternalResourceSecurity();
+			return super.getExternalResourceSecurity(resourceURL, docURL);
 		}
 
 		public boolean isAllowExternalResources() {
@@ -1266,7 +1297,7 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 			if (b != null) {
 				return b;
 			}
-			return true;
+			return false;
 		}
 	}
 }

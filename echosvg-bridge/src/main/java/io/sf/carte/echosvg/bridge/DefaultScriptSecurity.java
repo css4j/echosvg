@@ -18,7 +18,11 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import io.sf.carte.echosvg.util.ParsedURL;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * Default implementation for the <code>ScriptSecurity</code> interface. It
@@ -30,7 +34,9 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class DefaultScriptSecurity implements ScriptSecurity {
+
 	public static final String DATA_PROTOCOL = "data";
+
 	/**
 	 * Message when trying to load a script file and the Document does not have a
 	 * URL
@@ -72,17 +78,22 @@ public class DefaultScriptSecurity implements ScriptSecurity {
 	public DefaultScriptSecurity(String scriptType, ParsedURL scriptURL, ParsedURL docURL) {
 		// Make sure that the archives comes from the same host
 		// as the document itself
-		if (docURL == null) {
+		if (docURL == null || SVGConstants.SVG_SCRIPT_TYPE_JAVA.equals(scriptType)) {
 			se = new SecurityException(
 					Messages.formatMessage(ERROR_CANNOT_ACCESS_DOCUMENT_URL, new Object[] { scriptURL }));
 		} else {
 			String docHost = docURL.getHost();
-
-			if (scriptURL == null) {
-				throw new NullPointerException();
-			}
-
 			String scriptHost = scriptURL.getHost();
+
+			String externalPath;
+			if (scriptHost == null && !DATA_PROTOCOL.equals(scriptURL.getProtocol())
+					&& (externalPath = scriptURL.getPath()) != null) {
+				try {
+					scriptHost = new URI(externalPath).getHost();
+				} catch (URISyntaxException e) {
+					throw new RuntimeException(e);
+				}
+			}
 
 			if ((docHost != scriptHost) && ((docHost == null) || (!docHost.equals(scriptHost)))) {
 				if (!docURL.equals(scriptURL)

@@ -18,6 +18,14 @@
  */
 package io.sf.carte.echosvg.script.rhino;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
 import org.mozilla.javascript.ClassShutter;
 
 /**
@@ -29,21 +37,112 @@ import org.mozilla.javascript.ClassShutter;
  */
 public class RhinoClassShutter implements ClassShutter {
 
-	/*
-	 * public RhinoClassShutter() { // I suspect that we might want to initialize
-	 * this // from a resource file. // test(); }
+	private static final List<Pattern> whitelist = new ArrayList<>();
+
+	static {
+		addToWhitelist("java.io.PrintStream");
+		addToWhitelist("java.lang.System");
+		addToWhitelist("java.net.URL");
+		addToWhitelist(".*Permission");
+		addToWhitelist("org.w3c.*");
+		addToWhitelist("io.sf.carte.echosvg.w3c.*");
+		addToWhitelist("io.sf.carte.echosvg.anim.*");
+		addToWhitelist("io.sf.carte.echosvg.dom.*");
+		addToWhitelist("io.sf.carte.echosvg.css.*");
+		addToWhitelist("io.sf.carte.echosvg.util.*");
+	}
+
+	public RhinoClassShutter() {
+		super();
+	}
+
+	/**
+	 * Add the given regular expression to the whitelist.
 	 * 
-	 * public void test() { test("org.mozilla.javascript.Context");
-	 * test("org.mozilla.javascript");
-	 * test("io.sf.carte.echosvg.dom.SVGOMDocument");
-	 * test("io.sf.carte.echosvg.script.rhino.RhinoInterpreter");
-	 * test("io.sf.carte.echosvg.apps.svgbrowser.JSVGViewerFrame");
-	 * test("io.sf.carte.echosvg.bridge.BridgeContext");
-	 * test("io.sf.carte.echosvg.bridge.BaseScriptingEnvironment");
-	 * test("io.sf.carte.echosvg.bridge.ScriptingEnvironment"); } public void
-	 * test(String cls) { System.err.println("Test '" + cls + "': " +
-	 * visibleToScripts(cls)); }
+	 * @param regex the regular expression.
+	 * @throws PatternSyntaxException - if the regular expression's syntax is
+	 *                                invalid
 	 */
+	public static void addToWhitelist(String regex) throws PatternSyntaxException {
+		if (regex == null || (regex = regex.trim()).length() == 0) {
+			return;
+		}
+
+		for (Pattern p : whitelist) {
+			if (regex.equals(p.pattern())) {
+				// Already here
+				return;
+			}
+		}
+
+		Pattern p = Pattern.compile(regex);
+		whitelist.add(p);
+	}
+
+	/**
+	 * Remove the given regular expression from the whitelist.
+	 * 
+	 * @param regex the regular expression.
+	 * @throws PatternSyntaxException - if the regular expression's syntax is
+	 *                                invalid
+	 */
+	public static void removeFromWhitelist(String regex) throws PatternSyntaxException {
+		if (regex == null || (regex = regex.trim()).length() == 0) {
+			return;
+		}
+		for (Pattern p : whitelist) {
+			if (regex.equals(p.pattern())) {
+				whitelist.remove(p);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Loads a whitelist from the given reader.
+	 * <p>
+	 * Loading a whitelist does not reset the list, and only applies the new entries
+	 * to it.
+	 * </p>
+	 * <ul>
+	 * <li>If an entry begins with a {@code #}, the line will be ignored.</li>
+	 * <li>If an entry starts with a {@code -}, the entry shall be removed.</li>
+	 * <li>If begins with a {@code +} or with a character different from {@code -}
+	 * and {@code #}, the entry shall be added.</li>
+	 * </ul>
+	 * <p>
+	 * Example:
+	 * </p>
+	 * 
+	 * <pre>
+	 * # Comment
+	 * +java.io.PrintWriter
+	 * +com.example.*
+	 * -java.lang.System
+	 * </pre>
+	 * 
+	 * @param reader the reader.
+	 * @throws IOException            - if an I/O problem occurs when reading the
+	 *                                list
+	 * @throws PatternSyntaxException - if a regular expression's syntax is invalid
+	 */
+	public static void loadWhitelist(Reader reader) throws IOException, PatternSyntaxException {
+		BufferedReader re = new BufferedReader(reader);
+		String s;
+		while ((s = re.readLine()) != null) {
+			int len = s.length();
+			if (len > 0) {
+				char c = s.charAt(0);
+				if (c == '-') {
+					removeFromWhitelist(s.substring(1, len));
+				} else if (c == '+') {
+					addToWhitelist(s.substring(1, len));
+				} else if (c != '#') {
+					addToWhitelist(s);
+				}
+			}
+		}
+	}
 
 	/**
 	 * Returns whether the given class is visible to scripts.
@@ -56,7 +155,7 @@ public class RhinoClassShutter implements ClassShutter {
 
 		if (fullClassName.startsWith("io.sf.carte.echosvg.")) {
 			// Just get package within this implementation.
-			String implPkg = fullClassName.substring(17);
+			String implPkg = fullClassName.substring(20);
 
 			// Don't let them mess with this implementation's script internals.
 			if (implPkg.startsWith("script"))
@@ -81,8 +180,10 @@ public class RhinoClassShutter implements ClassShutter {
 				if (implBridgeClass.startsWith("ScriptingEnvironment")) {
 					if (implBridgeClass.startsWith("$Window$", 20)) {
 						String c = implBridgeClass.substring(28);
-						if (c.equals("IntervalScriptTimerTask") || c.equals("IntervalRunnableTimerTask")
-								|| c.equals("TimeoutScriptTimerTask") || c.equals("TimeoutRunnableTimerTask")) {
+						if (c.equals("IntervalScriptTimerTask")
+								|| c.equals("IntervalRunnableTimerTask")
+								|| c.equals("TimeoutScriptTimerTask")
+								|| c.equals("TimeoutRunnableTimerTask")) {
 							return true;
 						}
 					}
@@ -94,6 +195,13 @@ public class RhinoClassShutter implements ClassShutter {
 			}
 		}
 
-		return true;
+		for (Pattern p : whitelist) {
+			if (p.matcher(fullClassName).matches()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
+
 }

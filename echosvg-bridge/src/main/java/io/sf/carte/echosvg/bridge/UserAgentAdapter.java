@@ -358,8 +358,9 @@ public class UserAgentAdapter implements UserAgent {
 	 * @param docURL      url for the document into which the resource was found.
 	 */
 	@Override
-	public ExternalResourceSecurity getExternalResourceSecurity(ParsedURL resourceURL, ParsedURL docURL) {
-		return new RelaxedExternalResourceSecurity(resourceURL, docURL);
+	public ExternalResourceSecurity getExternalResourceSecurity(ParsedURL resourceURL,
+			ParsedURL docURL) {
+		return new DefaultExternalResourceSecurity(resourceURL, docURL);
 	}
 
 	/**

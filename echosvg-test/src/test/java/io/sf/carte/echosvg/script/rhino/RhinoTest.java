@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.script.rhino;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -26,6 +27,12 @@ import org.junit.jupiter.api.Test;
  * @version $Id$
  */
 public class RhinoTest {
+
+	@BeforeAll
+	public static void setUpBeforeAll() {
+		RhinoClassShutter.addToWhitelist("java.lang.System");
+		RhinoClassShutter.addToWhitelist("org.gradle.*");
+	}
 
 	@Test
 	public void testECMAPermissionsDenied() throws Exception {
