@@ -23,7 +23,7 @@ repositories {
 }
 
 group = 'io.sf.carte'
-version = '0.3'
+version = '0.3.1-SNAPSHOT'
 
 java {
 	withSourcesJar()
