@@ -1,7 +1,7 @@
 plugins {
 	id 'java-library'
 	/*
-	 * Use 'gradle build publishToMavenLocal' to install in local Maven repo
+	 * Use 'gradle publishToMavenLocal' to install in local Maven repo
 	 */
 	id 'maven-publish'
 }
