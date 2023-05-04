@@ -48,7 +48,7 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  */
 public class Any2LumRed extends AbstractRed {
 
-	boolean isColorConvertOpAplhaSupported;
+	private static final boolean isColorConvertOpAplhaSupported = getColorConvertOpAplhaSupported();
 
 	/**
 	 * Construct a luminace image from src.
@@ -58,8 +58,6 @@ public class Any2LumRed extends AbstractRed {
 	public Any2LumRed(CachableRed src) {
 		super(src, src.getBounds(), fixColorModel(src), fixSampleModel(src), src.getTileGridXOffset(),
 				src.getTileGridYOffset(), null);
-
-		isColorConvertOpAplhaSupported = getColorConvertOpAplhaSupported();
 
 		props.put(ColorSpaceHintKey.PROPERTY_COLORSPACE, ColorSpaceHintKey.VALUE_COLORSPACE_GREY);
 	}
@@ -202,7 +200,7 @@ public class Any2LumRed extends AbstractRed {
 		}
 	}
 
-	protected static boolean getColorConvertOpAplhaSupported() {
+	private static boolean getColorConvertOpAplhaSupported() {
 		int size = 50;
 
 		// create source image filled with an opaque color
@@ -228,7 +226,7 @@ public class Any2LumRed extends AbstractRed {
 		return getAlpha(srcImage) == getAlpha(dstImage);
 	}
 
-	protected static int getAlpha(BufferedImage bufferedImage) {
+	private static int getAlpha(BufferedImage bufferedImage) {
 		int x = bufferedImage.getWidth() / 2;
 		int y = bufferedImage.getHeight() / 2;
 		return 0xff & (bufferedImage.getRGB(x, y) >> 24);
