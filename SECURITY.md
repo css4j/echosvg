@@ -36,8 +36,22 @@ operating system container) if you need to do that.
 
 <br/>
 
+## Security scanners
+
+If you run a security scanner on the EchoSVG codebase, it may report a false XXE
+vulnerability in `SAXDocumentFactory.java`. It is a false positive, and the reason
+why this project does not use `load-external-dtd` nor `disallow-doctype-decl`,
+which are the configurations that the security scanner probably expects, is that
+they lead to [data loss](https://css4j.github.io/resolver.html) when XML entities
+are used.
+
+<br/>
+
 ## Using EchoSVG safely
 
 If you are concerned about security and privacy, be sure to learn about the features
 of this library that have security implications, like the `KEY_ALLOW_EXTERNAL_RESOURCES`,
 `KEY_CONSTRAIN_SCRIPT_ORIGIN` or `KEY_ALLOWED_SCRIPT_TYPES` transcoding hints.
+
+But keep in mind that there is no way to be safe when processing untrusted content
+(and hence the recommendation given previously to use operating system containers).
