@@ -399,10 +399,9 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
 	}
 
 	protected static String assertValidCharacters(String s, boolean isXML11) throws IOException {
-
 		int len = s.length();
-		for (int i = 0; i < len; i++) {
-			char c = s.charAt(i);
+		for (int i = 0; i < len; i = s.offsetByCodePoints(i, 1)) {
+			int c = s.codePointAt(i);
 			if (!isXML11 && !isXMLCharacter(c) || isXML11 && !isXML11Character(c)) {
 				throw new IOException("Invalid character");
 			}
@@ -418,9 +417,10 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
 
 		StringBuffer result = new StringBuffer(s.length());
 
-		int len = s.length();
-		for (int i = 0; i < len; i++) {
-			char c = s.charAt(i);
+		final int len = s.length();
+		int i = 0;
+		while (i < len) {
+			int c = s.codePointAt(i);
 			if (!isXML11 && !isXMLCharacter(c) || isXML11 && !isXML11Character(c)) {
 				throw new IOException("Invalid character");
 			}
@@ -442,8 +442,10 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
 				result.append("&apos;");
 				break;
 			default:
-				result.append(c);
+				result.appendCodePoint(c);
 			}
+
+			i = s.offsetByCodePoints(i, 1);
 		}
 
 		return result.toString();

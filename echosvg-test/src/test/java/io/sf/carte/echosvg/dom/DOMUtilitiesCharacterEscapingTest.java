@@ -44,7 +44,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  *
  * @author <a href="mailto:vincent.hardy@sun.com">Vincent Hardy</a>
  */
-public class DOMUtilitiesCharacterEscaping {
+public class DOMUtilitiesCharacterEscapingTest {
 
 	@Test
 	public void test() throws DOMException, IOException {

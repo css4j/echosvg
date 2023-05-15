@@ -91,8 +91,7 @@ public class XMLUtilities extends XMLCharacters {
 	 * first. This method gives meaningful results only for c &gt;= 0.
 	 */
 	public static boolean isXMLCharacter(int c) {
-
-		return (((XML_CHARACTER[c >>> 5] & (1 << (c & 0x1F))) != 0) || (c >= 0x10000 && c <= 0x10ffff));
+		return (c >= 0x10000 && c <= 0x10ffff) || ((XML_CHARACTER[c >>> 5] & (1 << (c & 0x1F))) != 0);
 	}
 
 	/**
