@@ -15,7 +15,9 @@ jobs:
 
   # Validate wrapper to prevent potential supply chain attack
   gradle-wrapper-validation:
-    runs-on: windows-latest
+
+    # Run on Ubuntu which consumes less minutes
+    runs-on: ubuntu-latest
 
     name: Validate Gradle wrapper
 
@@ -24,6 +26,8 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
 
   build:
+
+    # Many tests only pass on Windows
     runs-on: windows-latest
 
     strategy:
