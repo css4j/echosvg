@@ -4,6 +4,7 @@ plugins {
 	 * Use 'gradle publishToMavenLocal' to install in local Maven repo
 	 */
 	id 'maven-publish'
+	id 'org.owasp.dependencycheck'
 }
 
 repositories {
