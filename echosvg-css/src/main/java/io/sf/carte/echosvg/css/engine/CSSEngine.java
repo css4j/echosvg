@@ -1197,9 +1197,17 @@ public abstract class CSSEngine {
 		} catch (Exception e) {
 			// e.printStackTrace();
 			String m = e.getMessage();
-			if (m == null)
+			if (m == null) {
 				m = "";
-			String s = Messages.formatMessage("stylesheet.syntax.error", new Object[] { uri.toString(), rules, m });
+			}
+			final String strUri;
+			if (uri != null) {
+				strUri = uri.toString();
+			} else {
+				strUri = "";
+			}
+			String s = Messages.formatMessage("stylesheet.syntax.error",
+					new Object[] { strUri, rules, m });
 			DOMException de = new DOMException(DOMException.SYNTAX_ERR, s);
 			de.initCause(e);
 			if (userAgent == null)
