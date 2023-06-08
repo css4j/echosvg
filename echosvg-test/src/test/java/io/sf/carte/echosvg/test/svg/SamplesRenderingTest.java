@@ -944,6 +944,14 @@ public class SamplesRenderingTest {
 	}
 
 	/*
+	 * CSS3 Styling
+	 */
+	@Test
+	public void testMermaidColor4() throws TranscoderException, IOException {
+		testNV("samples/tests/spec2/styling/mermaid-color4.svg");
+	}
+
+	/*
 	 * Text
 	 */
 	@Test

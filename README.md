@@ -5,7 +5,8 @@ handle images in the Scalable Vector Graphics (SVG) format for various purposes,
 such as viewing, generation or manipulation.
 
  Thanks to its usage of the CSS4J style parser, supports level 4 CSS selectors
-and RGBA color values (colors with alpha channel).
+and color values (including colors with alpha channel) as well as the Level 5
+`color-mix()` function.
 
 This document mostly contains information of interest to developers, like how to
 build from source or run tests. If you just want to use the binaries, you are

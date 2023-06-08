@@ -18,11 +18,20 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import java.io.IOException;
+import java.io.StringReader;
+
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
+import io.sf.carte.doc.style.css.CSSTypedValue;
+import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
+import io.sf.carte.doc.style.css.parser.CSSParser;
+import io.sf.carte.doc.style.css.property.StyleValue;
+import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -120,7 +129,34 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	 */
 	@Override
 	public Value createValue(LexicalUnit lunit, CSSEngine engine) throws DOMException {
-		if (lunit.getLexicalUnitType() == LexicalUnit.LexicalType.RGBCOLOR) {
+		switch (lunit.getLexicalUnitType()) {
+		case HSLCOLOR:
+		case HWBCOLOR:
+		case LABCOLOR:
+		case LCHCOLOR:
+		case OKLABCOLOR:
+		case OKLCHCOLOR:
+		case COLOR_FUNCTION:
+		case COLOR_MIX:
+			ValueFactory vf = new ValueFactory();
+			String rgbSerialization;
+			try {
+				StyleValue css4jValue = vf.createCSSValue(lunit);
+				if (css4jValue.getCssValueType() != CssType.TYPED) {
+					throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
+				}
+				rgbSerialization = ((CSSTypedValue) css4jValue).toRGBColor().toString();
+			} catch(DOMException e) {
+				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
+			}
+			// Now re-parse the result
+			CSSParser parser = new CSSParser();
+			try {
+				lunit = parser.parsePropertyValue(new StringReader(rgbSerialization));
+			} catch (CSSParseException | IOException e) {
+				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
+			}
+		case RGBCOLOR:
 			LexicalUnit lu = lunit.getParameters();
 			Value red = createColorComponent(lu);
 			lu = lu.getNextLexicalUnit();
@@ -149,8 +185,9 @@ public abstract class AbstractColorManager extends IdentifierManager {
 				alpha = null;
 			}
 			return createRGBColor(red, green, blue, alpha);
+		default:
+			return super.createValue(lunit, engine);
 		}
-		return super.createValue(lunit, engine);
 	}
 
 	/**
