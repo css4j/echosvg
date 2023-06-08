@@ -152,6 +152,15 @@ to you, please open an issue so it is preserved.
 
 <br/>
 
+### Dependency check
+
+The OWASP Dependency Check plugin can be run with:
+```shell
+./gradlew dependencyCheckAnalyze
+```
+
+<br/>
+
 ## Open the project in your IDE
 
 Modern IDEs are able to import Gradle projects and let it manage the
