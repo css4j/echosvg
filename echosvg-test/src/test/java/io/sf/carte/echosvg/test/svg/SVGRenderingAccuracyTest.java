@@ -26,6 +26,7 @@ import java.net.URL;
 
 import org.w3c.dom.Document;
 
+import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -33,6 +34,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * Checks for regressions in rendering a specific SVG document. The
@@ -46,6 +48,8 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
  */
 public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 
+	static final String DEFAULT_MEDIUM = SVGConstants.SVG_SCREEN_VALUE;
+
 	/**
 	 * Controls whether or not the SVG file should be validated. By default, no
 	 * validation is used.
@@ -56,6 +60,11 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	 * The userLanguage for which the document should be tested.
 	 */
 	private String userLanguage;
+
+	/**
+	 * The media for which the document should be tested.
+	 */
+	private String media;
 
 	/**
 	 * Constructor.
@@ -99,6 +108,19 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		return this.userLanguage;
 	}
 
+	public String getMedia() {
+		return media;
+	}
+
+	public void setMedia(String media) {
+		this.media = media;
+	}
+
+	@Override
+	protected String getImageSuffix() {
+		return media != null && !DEFAULT_MEDIUM.equals(media) ? '-' + media : "";
+	}
+
 	/**
 	 * Template method which subclasses can override if they need to manipulate the
 	 * DOM in some way before running the accuracy test. For example, this can be
@@ -120,7 +142,7 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	 * Returns the <code>ImageTranscoder</code> the Test should use
 	 */
 	ImageTranscoder getTestImageTranscoder() {
-		ImageTranscoder t = new InternalPNGTranscoder();
+		ImageTranscoder t = createTestImageTranscoder();
 		t.addTranscodingHint(ImageTranscoder.KEY_FORCE_TRANSPARENT_WHITE, Boolean.FALSE);
 		t.addTranscodingHint(ImageTranscoder.KEY_BACKGROUND_COLOR, new Color(0, 0, 0, 0));
 		t.addTranscodingHint(SVGAbstractTranscoder.KEY_EXECUTE_ONLOAD, Boolean.TRUE);
@@ -132,7 +154,16 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		if (userLanguage != null) {
 			t.addTranscodingHint(SVGAbstractTranscoder.KEY_LANGUAGE, userLanguage);
 		}
+
+		if (media != null) {
+			t.addTranscodingHint(SVGAbstractTranscoder.KEY_MEDIA, media);
+		}
+
 		return t;
+	}
+
+	ImageTranscoder createTestImageTranscoder() {
+		return new InternalPNGTranscoder();
 	}
 
 	/**
@@ -166,4 +197,40 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 			super.transcode(document, uri, output);
 		}
 	}
+
+	/**
+	 * A PNG transcoder that does not print a stack trace.
+	 */
+	class NoStackTraceTranscoder extends InternalPNGTranscoder {
+
+		@Override
+		protected UserAgent createUserAgent() {
+			return new NoStackTraceTranscoderUserAgent();
+		}
+
+		/**
+		 * A Transcoder user agent that does not print a stack trace.
+		 */
+		class NoStackTraceTranscoderUserAgent
+				extends SVGAbstractTranscoder.SVGAbstractTranscoderUserAgent {
+
+			/**
+			 * Displays the specified error using the <code>ErrorHandler</code>.
+			 * <p>
+			 * And does not print a stack trace.
+			 * </p>
+			 */
+			@Override
+			public void displayError(Exception e) {
+				try {
+					NoStackTraceTranscoder.this.handler.error(new TranscoderException(e));
+				} catch (TranscoderException ex) {
+					throw new RuntimeException(ex.getMessage());
+				}
+			}
+
+		}
+
+	}
+
 }

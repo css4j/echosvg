@@ -943,6 +943,16 @@ public class SamplesRenderingTest {
 		testXHTML("samples/tests/spec/styling/css2.xhtml");
 	}
 
+	@Test
+	public void testXHTMLErrorRecovery() throws TranscoderException, IOException {
+		testXHTMLErrIgnore("samples/tests/spec/styling/error-recovery.xhtml", null);
+	}
+
+	@Test
+	public void testXHTMLErrorRecoveryPrintMedia() throws TranscoderException, IOException {
+		testXHTMLErrIgnore("samples/tests/spec/styling/error-recovery.xhtml", "print");
+	}
+
 	/*
 	 * CSS3 Styling
 	 */
@@ -1557,6 +1567,27 @@ public class SamplesRenderingTest {
 	 */
 	private void testXHTML(String file) throws TranscoderException, IOException {
 		RenderingTest runner = new XHTMLRenderingAccuracyTest();
+		runner.setFile(file);
+		runner.runTest(0.000001f, 0.000001f);
+	}
+
+	/**
+	 * Test the rendering of a SVG image inside an XHTML document, ignoring errors.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file the XHTML file to test.
+	 * @param media the media to test, or {@code null} if default media.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	private void testXHTMLErrIgnore(String file, String media)
+			throws TranscoderException, IOException {
+		RenderingTest runner = new XHTMLErrIgnoreTest();
+		runner.setMedia(media);
 		runner.setFile(file);
 		runner.runTest(0.000001f, 0.000001f);
 	}

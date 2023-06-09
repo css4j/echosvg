@@ -1407,9 +1407,23 @@ public abstract class CSSEngine {
 					// Unknown property
 					return;
 				}
-				shorthandManagers[i].setValues(CSSEngine.this, this, value, important);
+				try {
+					shorthandManagers[i].setValues(CSSEngine.this, this, value, important);
+				} catch (Exception e) {
+					if (userAgent == null)
+						throw e;
+					userAgent.displayError(e);
+				}
 			} else {
-				Value v = valueManagers[i].createValue(value, CSSEngine.this);
+				Value v;
+				try {
+					v = valueManagers[i].createValue(value, CSSEngine.this);
+				} catch (Exception e) {
+					if (userAgent == null)
+						throw e;
+					userAgent.displayError(e);
+					return;
+				}
 				putAuthorProperty(styleMap, i, v, important, StyleMap.INLINE_AUTHOR_ORIGIN);
 			}
 		}
@@ -1701,9 +1715,23 @@ public abstract class CSSEngine {
 					// Unknown property
 					return;
 				}
-				shorthandManagers[i].setValues(CSSEngine.this, this, value, important);
+				try {
+					shorthandManagers[i].setValues(CSSEngine.this, this, value, important);
+				} catch (Exception e) {
+					if (userAgent == null)
+						throw e;
+					userAgent.displayError(e);
+				}
 			} else {
-				Value v = valueManagers[i].createValue(value, CSSEngine.this);
+				Value v;
+				try {
+					v = valueManagers[i].createValue(value, CSSEngine.this);
+				} catch (Exception e) {
+					if (userAgent == null)
+						throw e;
+					userAgent.displayError(e);
+					return;
+				}
 				styleDeclaration.append(v, i, important);
 			}
 		}

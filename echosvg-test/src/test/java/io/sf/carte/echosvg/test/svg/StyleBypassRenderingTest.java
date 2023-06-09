@@ -32,7 +32,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestFonts;
-import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
@@ -54,8 +53,6 @@ import io.sf.carte.echosvg.transcoder.util.CSSTranscodingHelper;
  * </p>
  */
 public class StyleBypassRenderingTest {
-
-	private final String DEFAULT_MEDIUM = "screen";
 
 	private final String PRINT_MEDIUM = "print";
 
@@ -830,12 +827,14 @@ public class StyleBypassRenderingTest {
 
 	@Test
 	public void testStructureSystemLanguage() throws TranscoderException, IOException {
-		test("samples/tests/spec/structure/systemLanguage.svg", DEFAULT_MEDIUM, "fr");
+		test("samples/tests/spec/structure/systemLanguage.svg",
+				SVGRenderingAccuracyTest.DEFAULT_MEDIUM, "fr");
 	}
 
 	@Test
 	public void testStructureSystemLanguageDialect() throws TranscoderException, IOException {
-		test("samples/tests/spec/structure/systemLanguageDialect.svg", DEFAULT_MEDIUM, "en-UK");
+		test("samples/tests/spec/structure/systemLanguageDialect.svg",
+				SVGRenderingAccuracyTest.DEFAULT_MEDIUM, "en-UK");
 	}
 
 	/*
@@ -1354,7 +1353,7 @@ public class StyleBypassRenderingTest {
 	}
 
 	private void test(String file) throws TranscoderException, IOException {
-		test(file, DEFAULT_MEDIUM, false, true);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, true);
 	}
 
 	/**
@@ -1376,7 +1375,7 @@ public class StyleBypassRenderingTest {
 	 * @throws IOException
 	 */
 	private void testDark(String file) throws TranscoderException, IOException {
-		test(file, DEFAULT_MEDIUM, true, true);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, true, true);
 	}
 
 	/**
@@ -1387,7 +1386,7 @@ public class StyleBypassRenderingTest {
 	 * @throws IOException
 	 */
 	private void testNV(String file) throws TranscoderException, IOException {
-		test(file, DEFAULT_MEDIUM, false, false);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, false);
 	}
 
 	/**
@@ -1437,8 +1436,6 @@ public class StyleBypassRenderingTest {
 
 	private class BypassRenderingTest extends RenderingTest {
 
-		private final String medium;
-
 		/**
 		 * dark mode toggle.
 		 */
@@ -1446,7 +1443,7 @@ public class StyleBypassRenderingTest {
 
 		BypassRenderingTest(String medium) {
 			super();
-			this.medium = medium;
+			setMedia(medium);
 		}
 
 		/**
@@ -1461,7 +1458,6 @@ public class StyleBypassRenderingTest {
 		@Override
 		protected void encode(URL srcURL, FileOutputStream fos) throws TranscoderException, IOException {
 			ImageTranscoder transcoder = getTestImageTranscoder();
-			transcoder.addTranscodingHint(SVGAbstractTranscoder.KEY_MEDIA, medium);
 
 			CSSTranscodingHelper helper = new CSSTranscodingHelper(transcoder);
 
@@ -1485,8 +1481,10 @@ public class StyleBypassRenderingTest {
 			helper.transcode(re, uri, dst, null);
 		}
 
+		@Override
 		protected String getImageSuffix() {
-			if (!DEFAULT_MEDIUM.equals(medium)) {
+			String medium = getMedia();
+			if (medium != null && !DEFAULT_MEDIUM.equals(medium)) {
 				return '-' + medium + getDarkModeSuffix();
 			}
 			return getDarkModeSuffix();
