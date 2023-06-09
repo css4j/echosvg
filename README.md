@@ -9,10 +9,14 @@ and color values (including colors with alpha channel) as well as the Level 5
 `color-mix()` function.
 
 This document mostly contains information of interest to developers, like how to
-build from source or run tests. If you just want to use the binaries, you are
-invited to read the [Wiki](https://github.com/css4j/echosvg/wiki).
+build from source or run tests. If you want general information (like how to use
+the binaries) you are invited to read the [Wiki](https://github.com/css4j/echosvg/wiki),
+especially the part about [why this fork was created](https://github.com/css4j/echosvg/wiki/Why-EchoSVG).
 
-And if you are using Apache Batik, you may want to read [MIGRATING_FROM_BATIK](https://github.com/css4j/echosvg/blob/master/MIGRATING_FROM_BATIK.md).
+If you are using Apache Batik you may want to read [how Batik's testing
+infrastructure was improved](https://github.com/css4j/echosvg/wiki/From-Batik-test-suite-to-EchoSVG-tests),
+and if you decide to switch to EchoSVG, the [MIGRATING_FROM_BATIK](https://github.com/css4j/echosvg/blob/master/MIGRATING_FROM_BATIK.md)
+document may be of help.
 
 <br/>
 
