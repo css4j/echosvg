@@ -22,6 +22,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * This class represents a doubly indexed hash table, which holds soft
@@ -37,22 +38,27 @@ public class AWTGlyphGeometryCache {
 	/**
 	 * The initial capacity
 	 */
-	protected static final int INITIAL_CAPACITY = 71;
+	private static final int INITIAL_CAPACITY = 71;
 
 	/**
 	 * The underlying array
 	 */
-	protected Entry[] table;
+	private Entry[] table;
 
 	/**
 	 * The number of entries
 	 */
-	protected int count;
+	private volatile int count;
 
 	/**
 	 * The reference queue.
 	 */
-	protected ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
+	private ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
+
+	/**
+	 * The table lock
+	 */
+	private final ReentrantLock tableLock = new ReentrantLock();
 
 	/**
 	 * Creates a new AWTGlyphGeometryCache.
@@ -143,7 +149,12 @@ public class AWTGlyphGeometryCache {
 	 * Clears the table.
 	 */
 	public void clear() {
-		table = new Entry[INITIAL_CAPACITY];
+		tableLock.lock();
+		try {
+			table = new Entry[INITIAL_CAPACITY];
+		} finally {
+			tableLock.unlock();
+		}
 		count = 0;
 		referenceQueue = new ReferenceQueue<>();
 	}
@@ -152,19 +163,25 @@ public class AWTGlyphGeometryCache {
 	 * Rehash the table
 	 */
 	protected void rehash() {
-		Entry[] oldTable = table;
+		tableLock.lock();
 
-		table = new Entry[oldTable.length * 2 + 1];
+		try {
+			Entry[] oldTable = table;
 
-		for (int i = oldTable.length - 1; i >= 0; i--) {
-			for (Entry old = oldTable[i]; old != null;) {
-				Entry e = old;
-				old = old.next;
+			table = new Entry[oldTable.length * 2 + 1];
 
-				int index = e.hash % table.length;
-				e.next = table[index];
-				table[index] = e;
+			for (int i = oldTable.length - 1; i >= 0; i--) {
+				for (Entry old = oldTable[i]; old != null;) {
+					Entry e = old;
+					old = old.next;
+
+					int index = e.hash % table.length;
+					e.next = table[index];
+					table[index] = e;
+				}
 			}
+		} finally {
+			tableLock.unlock();
 		}
 	}
 
