@@ -106,39 +106,47 @@ public class AWTGlyphGeometryCache {
 	 * @return the old value or null
 	 */
 	public Value put(char c, Value value) {
-		removeClearedEntries();
-
 		int hash = hashCode(c) & 0x7FFFFFFF;
-		int index = hash % table.length;
 
-		Entry e = table[index];
-		if (e != null) {
-			if ((e.hash == hash) && e.match(c)) {
-				Object old = e.get();
-				table[index] = new Entry(hash, c, value, e.next);
-				return (Value) old;
-			}
-			Entry o = e;
-			e = e.next;
-			while (e != null) {
+		tableLock.lock();
+
+		int index;
+		try {
+			removeClearedEntries();
+
+			index = hash % table.length;
+
+			Entry e = table[index];
+			if (e != null) {
 				if ((e.hash == hash) && e.match(c)) {
 					Object old = e.get();
-					e = new Entry(hash, c, value, e.next);
-					o.next = e;
+					table[index] = new Entry(hash, c, value, e.next);
 					return (Value) old;
 				}
-
-				o = e;
+				Entry o = e;
 				e = e.next;
-			}
-		}
+				while (e != null) {
+					if ((e.hash == hash) && e.match(c)) {
+						Object old = e.get();
+						e = new Entry(hash, c, value, e.next);
+						o.next = e;
+						return (Value) old;
+					}
 
-		// The key is not in the hash table
-		int len = table.length;
-		if (count++ >= (len - (len >> 2))) {
-			// more than 75% loaded: grow
-			rehash();
-			index = hash % table.length;
+					o = e;
+					e = e.next;
+				}
+			}
+
+			// The key is not in the hash table
+			int len = table.length;
+			if (count++ >= (len - (len >> 2))) {
+				// more than 75% loaded: grow
+				rehash();
+				index = hash % table.length;
+			}
+		} finally {
+			tableLock.unlock();
 		}
 
 		table[index] = new Entry(hash, c, value, table[index]);
@@ -163,25 +171,19 @@ public class AWTGlyphGeometryCache {
 	 * Rehash the table
 	 */
 	protected void rehash() {
-		tableLock.lock();
+		Entry[] oldTable = table;
 
-		try {
-			Entry[] oldTable = table;
+		table = new Entry[oldTable.length * 2 + 1];
 
-			table = new Entry[oldTable.length * 2 + 1];
+		for (int i = oldTable.length - 1; i >= 0; i--) {
+			for (Entry old = oldTable[i]; old != null;) {
+				Entry e = old;
+				old = old.next;
 
-			for (int i = oldTable.length - 1; i >= 0; i--) {
-				for (Entry old = oldTable[i]; old != null;) {
-					Entry e = old;
-					old = old.next;
-
-					int index = e.hash % table.length;
-					e.next = table[index];
-					table[index] = e;
-				}
+				int index = e.hash % table.length;
+				e.next = table[index];
+				table[index] = e;
 			}
-		} finally {
-			tableLock.unlock();
 		}
 	}
 
