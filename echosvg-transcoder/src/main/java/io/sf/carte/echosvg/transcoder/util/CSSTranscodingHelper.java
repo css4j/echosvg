@@ -467,10 +467,14 @@ public class CSSTranscodingHelper {
 		MyDeviceFactory.MyCanvas canvas = (MyDeviceFactory.MyCanvas) document.getCanvas();
 		canvas.dispose();
 
+		// If no error handler is set, use the default
+		if (transcoder.getErrorHandler() == null) {
+			ErrorHandler handler = new DefaultErrorHandler();
+			transcoder.setErrorHandler(handler);
+		}
+
 		// Transcode
 		TranscoderInput input = new TranscoderInput(svgDoc);
-		ErrorHandler handler = new DefaultErrorHandler();
-		transcoder.setErrorHandler(handler);
 		transcoder.transcode(input, output);
 	}
 
