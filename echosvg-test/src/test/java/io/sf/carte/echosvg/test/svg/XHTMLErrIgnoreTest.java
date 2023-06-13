@@ -18,7 +18,10 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import io.sf.carte.echosvg.transcoder.DummyErrorHandler;
+import io.sf.carte.echosvg.transcoder.ErrorHandler;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 
 /**
@@ -30,8 +33,11 @@ import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
  */
 public class XHTMLErrIgnoreTest extends XHTMLRenderingAccuracyTest {
 
-	public XHTMLErrIgnoreTest() {
+	private final int expectedErrorCount;
+
+	public XHTMLErrIgnoreTest(int expectedErrorCount) {
 		super();
+		this.expectedErrorCount = expectedErrorCount;
 		setValidating(false);
 	}
 
@@ -48,6 +54,12 @@ public class XHTMLErrIgnoreTest extends XHTMLRenderingAccuracyTest {
 	@Override
 	ImageTranscoder createTestImageTranscoder() {
 		return new NoStackTraceTranscoder();
+	}
+
+	@Override
+	protected void checkErrorHandler(ErrorHandler errorHandler) {
+		DummyErrorHandler handler = (DummyErrorHandler) errorHandler;
+		assertEquals(expectedErrorCount, handler.getErrorCount(), "Unmatched error count");
 	}
 
 }

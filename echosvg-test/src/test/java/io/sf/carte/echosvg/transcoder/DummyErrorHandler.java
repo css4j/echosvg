@@ -28,16 +28,41 @@ package io.sf.carte.echosvg.transcoder;
  */
 public class DummyErrorHandler implements ErrorHandler {
 
+	private int errorCount = 0;
+
+	private int warningCount = 0;
+
 	@Override
 	public void error(TranscoderException ex) throws TranscoderException {
+		errorCount++;
 	}
 
 	@Override
 	public void fatalError(TranscoderException ex) throws TranscoderException {
+		errorCount++;
 	}
 
 	@Override
 	public void warning(TranscoderException ex) throws TranscoderException {
+		warningCount++;
+	}
+
+	/**
+	 * Get the error count.
+	 * 
+	 * @return the error count.
+	 */
+	public int getErrorCount() {
+		return errorCount;
+	}
+
+	/**
+	 * Get the warning count.
+	 * 
+	 * @return the warning count.
+	 */
+	public int getWarningCount() {
+		return warningCount;
 	}
 
 }

@@ -27,6 +27,7 @@ import java.net.URL;
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.bridge.UserAgent;
+import io.sf.carte.echosvg.transcoder.ErrorHandler;
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
@@ -136,6 +137,10 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		TranscoderInput src = getTranscoderInput();
 		TranscoderOutput dst = new TranscoderOutput(fos);
 		transcoder.transcode(src, dst);
+		checkErrorHandler(transcoder.getErrorHandler());
+	}
+
+	protected void checkErrorHandler(ErrorHandler errorHandler) {
 	}
 
 	/**

@@ -945,12 +945,12 @@ public class SamplesRenderingTest {
 
 	@Test
 	public void testXHTMLErrorRecovery() throws TranscoderException, IOException {
-		testXHTMLErrIgnore("samples/tests/spec/styling/error-recovery.xhtml", null);
+		testXHTMLErrIgnore("samples/tests/spec/styling/error-recovery.xhtml", null, 6);
 	}
 
 	@Test
 	public void testXHTMLErrorRecoveryPrintMedia() throws TranscoderException, IOException {
-		testXHTMLErrIgnore("samples/tests/spec/styling/error-recovery.xhtml", "print");
+		testXHTMLErrIgnore("samples/tests/spec/styling/error-recovery.xhtml", "print", 6);
 	}
 
 	/*
@@ -1579,14 +1579,16 @@ public class SamplesRenderingTest {
 	 * reference image.
 	 * </p>
 	 * 
-	 * @param file the XHTML file to test.
-	 * @param media the media to test, or {@code null} if default media.
+	 * @param file               the XHTML file to test.
+	 * @param media              the media to test, or {@code null} if default
+	 *                           media.
+	 * @param expectedErrorCount the expected error count.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	private void testXHTMLErrIgnore(String file, String media)
+	private void testXHTMLErrIgnore(String file, String media, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		RenderingTest runner = new XHTMLErrIgnoreTest();
+		RenderingTest runner = new XHTMLErrIgnoreTest(expectedErrorCount);
 		runner.setMedia(media);
 		runner.setFile(file);
 		runner.runTest(0.000001f, 0.000001f);

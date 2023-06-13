@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,6 +34,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestFonts;
+import io.sf.carte.echosvg.transcoder.DummyErrorHandler;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
@@ -828,13 +831,13 @@ public class StyleBypassRenderingTest {
 	@Test
 	public void testStructureSystemLanguage() throws TranscoderException, IOException {
 		test("samples/tests/spec/structure/systemLanguage.svg",
-				SVGRenderingAccuracyTest.DEFAULT_MEDIUM, "fr");
+				SVGRenderingAccuracyTest.DEFAULT_MEDIUM, "fr", 0);
 	}
 
 	@Test
 	public void testStructureSystemLanguageDialect() throws TranscoderException, IOException {
 		test("samples/tests/spec/structure/systemLanguageDialect.svg",
-				SVGRenderingAccuracyTest.DEFAULT_MEDIUM, "en-UK");
+				SVGRenderingAccuracyTest.DEFAULT_MEDIUM, "en-UK", 0);
 	}
 
 	/*
@@ -1334,17 +1337,17 @@ public class StyleBypassRenderingTest {
 	 */
 	@Test
 	public void testCSS3() throws TranscoderException, IOException {
-		test("samples/tests/spec2/styling/css3.html");
+		test("samples/tests/spec2/styling/css3.html", 5);
 	}
 
 	@Test
 	public void testCSS3Print() throws TranscoderException, IOException {
-		testPrint("samples/tests/spec2/styling/css3.html");
+		testPrint("samples/tests/spec2/styling/css3.html", 5);
 	}
 
 	@Test
 	public void testCSS3Dark() throws TranscoderException, IOException {
-		testDark("samples/tests/spec2/styling/css3.html");
+		testDark("samples/tests/spec2/styling/css3.html", 5);
 	}
 
 	@Test
@@ -1353,40 +1356,62 @@ public class StyleBypassRenderingTest {
 	}
 
 	private void test(String file) throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, true);
+		test(file, 0);
+	}
+
+	private void test(String file, int expectedErrorCount) throws TranscoderException, IOException {
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, true, expectedErrorCount);
 	}
 
 	/**
 	 * A {@code print} medium test.
 	 * 
 	 * @param file the SVG file to test.
+	 * @param expectedErrorCount the expected error count.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	private void testPrint(String file) throws TranscoderException, IOException {
-		test(file, PRINT_MEDIUM, false, true);
+	private void testPrint(String file, int expectedErrorCount)
+			throws TranscoderException, IOException {
+		test(file, PRINT_MEDIUM, false, true, expectedErrorCount);
 	}
 
 	/**
 	 * A dark mode test.
 	 * 
 	 * @param file the SVG file to test.
+	 * @param expectedErrorCount the expected error count.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	private void testDark(String file) throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, true, true);
+	private void testDark(String file, int expectedErrorCount)
+			throws TranscoderException, IOException {
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, true, true, expectedErrorCount);
 	}
 
 	/**
-	 * A non-validating test.
+	 * A non-validating test that expects no errors.
 	 * 
 	 * @param file the SVG file to test.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	private void testNV(String file) throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, false);
+	private void testNV(String file)
+			throws TranscoderException, IOException {
+		testNV(file, 0);
+	}
+
+	/**
+	 * A non-validating test.
+	 * 
+	 * @param file               the SVG file to test.
+	 * @param expectedErrorCount the expected error count.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	private void testNV(String file, int expectedErrorCount)
+			throws TranscoderException, IOException {
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, false, expectedErrorCount);
 	}
 
 	/**
@@ -1397,14 +1422,17 @@ public class StyleBypassRenderingTest {
 	 * reference image.
 	 * </p>
 	 * 
-	 * @param file   the SVG file to test.
-	 * @param medium the target medium ({@code screen}, {@code print}, etc).
-	 * @param lang   the language.
+	 * @param file               the SVG file to test.
+	 * @param medium             the target medium ({@code screen}, {@code print},
+	 *                           etc).
+	 * @param lang               the language.
+	 * @param expectedErrorCount the expected error count.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	private void test(String file, String medium, String lang) throws TranscoderException, IOException {
-		RenderingTest runner = new BypassRenderingTest(medium);
+	private void test(String file, String medium, String lang, int expectedErrorCount)
+			throws TranscoderException, IOException {
+		RenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
 		runner.setUserLanguage(lang);
 		runner.setFile(file);
 		runner.runTest(0.00001f, 0.00001f);
@@ -1425,9 +1453,9 @@ public class StyleBypassRenderingTest {
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	private void test(String file, String medium, boolean darkMode, boolean validating)
-			throws TranscoderException, IOException {
-		BypassRenderingTest runner = new BypassRenderingTest(medium);
+	private void test(String file, String medium, boolean darkMode, boolean validating,
+			int expectedErrorCount) throws TranscoderException, IOException {
+		BypassRenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
 		runner.setDarkMode(darkMode);
 		runner.setValidating(validating);
 		runner.setFile(file);
@@ -1436,13 +1464,16 @@ public class StyleBypassRenderingTest {
 
 	private class BypassRenderingTest extends RenderingTest {
 
+		private final int expectedErrorCount;
+
 		/**
 		 * dark mode toggle.
 		 */
 		private boolean darkMode = false;
 
-		BypassRenderingTest(String medium) {
+		BypassRenderingTest(String medium, int expectedErrorCount) {
 			super();
+			this.expectedErrorCount = expectedErrorCount;
 			setMedia(medium);
 		}
 
@@ -1456,8 +1487,11 @@ public class StyleBypassRenderingTest {
 		}
 
 		@Override
-		protected void encode(URL srcURL, FileOutputStream fos) throws TranscoderException, IOException {
+		protected void encode(URL srcURL, FileOutputStream fos)
+				throws TranscoderException, IOException {
 			ImageTranscoder transcoder = getTestImageTranscoder();
+			DummyErrorHandler errorHandler = new DummyErrorHandler();
+			transcoder.setErrorHandler(errorHandler);
 
 			CSSTranscodingHelper helper = new CSSTranscodingHelper(transcoder);
 
@@ -1465,7 +1499,8 @@ public class StyleBypassRenderingTest {
 
 			if (darkMode) {
 				// Opaque background for dark mode
-				transcoder.addTranscodingHint(ImageTranscoder.KEY_BACKGROUND_COLOR, new Color(0, 0, 0, 255));
+				transcoder.addTranscodingHint(ImageTranscoder.KEY_BACKGROUND_COLOR,
+						new Color(0, 0, 0, 255));
 			}
 
 			TranscoderOutput dst = new TranscoderOutput(fos);
@@ -1479,6 +1514,13 @@ public class StyleBypassRenderingTest {
 			Reader re = new InputStreamReader(is, StandardCharsets.UTF_8);
 
 			helper.transcode(re, uri, dst, null);
+
+			assertEquals(expectedErrorCount, errorHandler.getErrorCount(), "Unmatched error count");
+		}
+
+		@Override
+		ImageTranscoder createTestImageTranscoder() {
+			return new NoStackTraceTranscoder();
 		}
 
 		@Override
