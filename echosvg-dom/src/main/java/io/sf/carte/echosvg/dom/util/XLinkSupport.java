@@ -126,10 +126,16 @@ public class XLinkSupport implements XMLConstants {
 	}
 
 	/**
-	 * Returns the value of the 'xlink:href' attribute of the given element.
+	 * Returns the value of the legacy 'xlink:href' attribute of the given element.
+	 * If that attribute has no value set, returns the value of the plain
+	 * {@code href} attribute.
 	 */
 	public static String getXLinkHref(Element elt) {
-		return elt.getAttributeNS(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		String href = elt.getAttributeNS(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		if (href.length() == 0) {
+			href = elt.getAttribute("href");
+		}
+		return href;
 	}
 
 	/**
