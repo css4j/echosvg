@@ -749,7 +749,12 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 			URIResolver ur = createURIResolver(document, documentLoader);
 			Node ref = ur.getNode(uri, e);
 			if (ref == null) {
-				throw new BridgeException(this, e, ERR_URI_BAD_TARGET, new Object[] { uri });
+				BridgeException ex = new BridgeException(this, e, ERR_URI_BAD_TARGET, new Object[] { uri });
+				if (userAgent != null) {
+					userAgent.displayError(ex);
+				} else {
+					throw ex;
+				}
 			} else {
 				SVGOMDocument refDoc = (SVGOMDocument) (ref.getNodeType() == Node.DOCUMENT_NODE ? ref
 						: ref.getOwnerDocument());
@@ -763,8 +768,8 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 				if (refDoc != document) {
 					createSubBridgeContext(refDoc);
 				}
-				return ref;
 			}
+			return ref;
 		} catch (MalformedURLException ex) {
 			throw new BridgeException(this, e, ex, ERR_URI_MALFORMED, new Object[] { uri });
 		} catch (InterruptedIOException ex) {

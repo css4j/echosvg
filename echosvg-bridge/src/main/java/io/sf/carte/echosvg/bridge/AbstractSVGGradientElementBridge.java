@@ -178,8 +178,11 @@ public abstract class AbstractSVGGradientElementBridge extends AnimatableGeneric
 				throw new BridgeException(ctx, paintElement, ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
 						new Object[] { uri });
 			}
-			refs.add(purl);
 			paintElement = ctx.getReferencedElement(paintElement, uri);
+			if (paintElement == null) {
+				return null; // Missing reference
+			}
+			refs.add(purl);
 		}
 	}
 

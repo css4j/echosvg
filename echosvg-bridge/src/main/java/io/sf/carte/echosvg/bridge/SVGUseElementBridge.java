@@ -100,6 +100,9 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 			return null;
 
 		CompositeGraphicsNode gn = buildCompositeGraphicsNode(ctx, e, null);
+		if (gn == null) {
+			return null;
+		}
 		associateSVGContext(ctx, e, gn);
 
 		return gn;
@@ -124,6 +127,9 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 		}
 
 		Element refElement = ctx.getReferencedElement(e, uri);
+		if (refElement == null) {
+			return null; // Missing reference
+		}
 
 		SVGOMDocument document, refDocument;
 		document = (SVGOMDocument) e.getOwnerDocument();
@@ -207,6 +213,10 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 
 		GVTBuilder builder = ctx.getGVTBuilder();
 		GraphicsNode refNode = builder.build(ctx, g);
+
+		if (refNode == null) {
+			return null; // No bridge was built for ref. node
+		}
 
 		///////////////////////////////////////////////////////////////////////
 

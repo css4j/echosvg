@@ -235,8 +235,11 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge implemen
 				throw new BridgeException(ctx, patternElement, ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
 						new Object[] { uri });
 			}
-			refs.add(purl);
 			patternElement = ctx.getReferencedElement(patternElement, uri);
+			if (patternElement == null) {
+				return null; // Missing reference
+			}
+			refs.add(purl);
 		}
 	}
 

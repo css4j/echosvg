@@ -221,9 +221,10 @@ public class MultiResGraphicsNode extends AbstractGraphicsNode implements SVGCon
 
 		try {
 			GVTBuilder builder = ctx.getGVTBuilder();
-			GraphicsNode gn;
-			gn = builder.build(ctx, srcElems[idx]);
-			srcs[idx] = new SoftReference<>(gn);
+			GraphicsNode gn = builder.build(ctx, srcElems[idx]);
+			if (gn != null) {
+				srcs[idx] = new SoftReference<>(gn);
+			}
 			return gn;
 		} catch (Exception ex) {
 			ex.printStackTrace();

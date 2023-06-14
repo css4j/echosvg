@@ -893,6 +893,9 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 				} else if (ln.equals(SVG_TREF_TAG)) {
 					String uriStr = XLinkSupport.getXLinkHref((Element) n);
 					Element ref = ctx.getReferencedElement((Element) n, uriStr);
+					if (ref == null) {
+						continue; // Missing reference
+					}
 					s = TextUtilities.getElementContent(ref);
 					s = normalizeString(s, preserve, prevEndsWithSpace);
 					if (s.length() != 0) {

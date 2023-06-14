@@ -153,8 +153,10 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 					&& SVG_MPATH_TAG.equals(n.getLocalName())) {
 				String uri = XLinkSupport.getXLinkHref((Element) n);
 				Element path = ctx.getReferencedElement(element, uri);
-				if (!SVG_NAMESPACE_URI.equals(path.getNamespaceURI()) || !SVG_PATH_TAG.equals(path.getLocalName())) {
-					throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+				if (path == null || !SVG_NAMESPACE_URI.equals(path.getNamespaceURI())
+						|| !SVG_PATH_TAG.equals(path.getLocalName())) {
+					throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET,
+							new Object[] { uri });
 				}
 				SVGOMPathElement pathElt = (SVGOMPathElement) path;
 				AWTPathProducer app = new AWTPathProducer();
@@ -305,7 +307,7 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 			t = element.getParentNode();
 		} else {
 			t = ctx.getReferencedElement(element, uri);
-			if (t.getOwnerDocument() != element.getOwnerDocument()) {
+			if (t == null || t.getOwnerDocument() != element.getOwnerDocument()) {
 				throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
 			}
 		}

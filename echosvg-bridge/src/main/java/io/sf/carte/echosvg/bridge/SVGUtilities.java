@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -238,7 +239,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	 * @return the value of the attribute or an empty string if not defined
 	 */
 	public static String getChainableAttributeNS(Element element, String namespaceURI, String attrName,
-			BridgeContext ctx) {
+			BridgeContext ctx) throws BridgeException {
 
 		DocumentLoader loader = ctx.getDocumentLoader();
 		Element e = element;
@@ -265,6 +266,15 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 				URIResolver resolver = ctx.createURIResolver(svgDoc, loader);
 				e = resolver.getElement(purl.toString(), e);
 				refs.add(purl);
+			} catch (FileNotFoundException ioEx) {
+				BridgeException ex = new BridgeException(ctx, e, ioEx, ERR_URI_IO,
+						new Object[] { uriStr });
+				UserAgent userAgent = ctx.getUserAgent();
+				if (userAgent == null) {
+					throw ex;
+				}
+				userAgent.displayError(ex);
+				return "";
 			} catch (IOException ioEx) {
 				throw new BridgeException(ctx, e, ioEx, ERR_URI_IO, new Object[] { uriStr });
 			} catch (SecurityException secEx) {

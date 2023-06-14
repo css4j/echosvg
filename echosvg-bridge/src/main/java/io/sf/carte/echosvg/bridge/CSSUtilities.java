@@ -627,9 +627,23 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 		case CSSPrimitiveValue.CSS_URI:
 			String uri = v.getStringValue();
 			Element filter = ctx.getReferencedElement(filteredElement, uri);
+			if (filter == null) {
+				return null; // Missing reference
+			}
 			Bridge bridge = ctx.getBridge(filter);
-			if (bridge == null || !(bridge instanceof FilterBridge)) {
-				throw new BridgeException(ctx, filteredElement, ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
+			if (bridge == null) {
+				// Assume that the cause of this was already reported
+				return null;
+			}
+			if (!(bridge instanceof FilterBridge)) {
+				BridgeException ex = new BridgeException(ctx, filteredElement,
+						ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
+				UserAgent userAgent = ctx.getUserAgent();
+				if (userAgent == null) {
+					throw ex;
+				}
+				userAgent.displayError(ex);
+				return null;
 			}
 			return ((FilterBridge) bridge).createFilter(ctx, filter, filteredElement, filteredNode);
 		default:
@@ -660,9 +674,23 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 		case CSSPrimitiveValue.CSS_URI:
 			String uri = v.getStringValue();
 			Element cp = ctx.getReferencedElement(clippedElement, uri);
+			if (cp == null) {
+				return null; // Missing reference
+			}
 			Bridge bridge = ctx.getBridge(cp);
-			if (bridge == null || !(bridge instanceof ClipBridge)) {
-				throw new BridgeException(ctx, clippedElement, ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
+			if (bridge == null) {
+				// Assume that the cause of this was already reported
+				return null;
+			}
+			if (!(bridge instanceof ClipBridge)) {
+				BridgeException ex = new BridgeException(ctx, clippedElement,
+						ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
+				UserAgent userAgent = ctx.getUserAgent();
+				if (userAgent == null) {
+					throw ex;
+				}
+				userAgent.displayError(ex);
+				return null;
 			}
 			return ((ClipBridge) bridge).createClip(ctx, cp, clippedElement, clippedNode);
 		default:
@@ -703,9 +731,23 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 		case CSSPrimitiveValue.CSS_URI:
 			String uri = v.getStringValue();
 			Element m = ctx.getReferencedElement(maskedElement, uri);
+			if (m == null) {
+				return null; // Missing reference
+			}
 			Bridge bridge = ctx.getBridge(m);
-			if (bridge == null || !(bridge instanceof MaskBridge)) {
-				throw new BridgeException(ctx, maskedElement, ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
+			if (bridge == null) {
+				// Assume that the cause of this was already reported
+				return null;
+			}
+			if (!(bridge instanceof MaskBridge)) {
+				BridgeException ex = new BridgeException(ctx, maskedElement, ERR_CSS_URI_BAD_TARGET,
+						new Object[] { uri });
+				UserAgent userAgent = ctx.getUserAgent();
+				if (userAgent == null) {
+					throw ex;
+				}
+				userAgent.displayError(ex);
+				return null;
 			}
 			return ((MaskBridge) bridge).createMask(ctx, m, maskedElement, maskedNode);
 		default:

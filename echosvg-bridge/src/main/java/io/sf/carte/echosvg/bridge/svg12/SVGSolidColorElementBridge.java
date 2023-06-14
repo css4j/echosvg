@@ -125,6 +125,9 @@ public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge imple
 			}
 			refs.put(purl, purl);
 			paintElement = ctx.getReferencedElement(paintElement, uri);
+			if (paintElement == null) {
+				return opacity; // Missing reference
+			}
 		}
 	}
 
@@ -164,6 +167,9 @@ public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge imple
 			}
 			refs.put(purl, purl);
 			paintElement = ctx.getReferencedElement(paintElement, uri);
+			if (paintElement == null) {
+				return new Color(0, 0, 0, opacity); // Missing reference
+			}
 		}
 	}
 }

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ========================================================================= -->
+<!-- Rendering with a missing reference test.                                  -->
+<!--                                                                           -->
+<!-- @author github.com/DaveJarvis                                             -->
+<!-- @author github.com/carlosame                                              -->
+<!-- @author for later modifications, see Git history                          -->
+<!-- @version $Id$ -->
+<!-- ========================================================================= -->
+<svg
+   version="1.1"
+   id="svg12"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg" width="450" height="500">
+  <title>Rendering with missing references</title>
+  <defs id="defs16">
+  <linearGradient id="gradient1" x1="0" x2="0" y1="0" y2="1" href="url(#no_such_uri)">
+    <stop offset="0%" stop-color="#059" />
+    <stop offset="40%" stop-color="#2060aa" stop-opacity="0" />
+    <stop offset="100%" stop-color="#30a0ef" />
+  </linearGradient>
+  <pattern id="pattern1" viewBox="0,0,10,10" href="url(#no_such_uri)"
+      width="10%" height="10%">
+    <polygon points="0,0 2,5 0,10 5,8 10,10 8,5 10,0 5,2" stroke="skyblue"
+      fill="url(#no_such_uri) #0f6ab3ef" marker-end="url(#no_such_uri)"/>
+  </pattern>
+  </defs>
+  <g
+     id="g469880">
+    <g
+       id="g469848">
+      <g
+         id="g469794">
+        <g
+           class="st35"
+           id="g469792">
+          <defs
+             id="defs469783" />
+          <clipPath
+             id="SVGID_00000145770309263158979710000005844928936766913719_">
+            <use
+               xlink:href="#SVGID_00000072257059765744298700000011011170644502566322_"
+               id="use3" />
+          </clipPath>
+          <g
+             clip-path="url(#SVGID_00000145770309263158979710000005844928936766913719_)"
+             id="g469790">
+            <polyline
+               class="st33"
+               points="-377.1,71.3 -377.1,76.6 -377,103.2 -400.2,116.6 -404.8,119.3 -404.9,114 -400.2,111.3          -400.2,106 -395.6,103.3 -395.6,98 -391,95.3 -391,89.9 -386.4,87.3 -386.4,81.9 -381.7,79.3 -381.7,73.9 -377.1,71.3                 "
+               id="polyline469788" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+  <switch>
+    <text id="text1" x="74" y="160" style="font: 18pt 'Roboto';"
+       requiredFeatures="#no_such_feature" systemLanguage="xx-xx"
+       fill="#2274ba">Required features</text>
+    <use xlink:href="#no_such_uri" x="72" fill="#129"/>
+    <text id="text1" x="72" y="160" style="font: 18pt 'Open Sans';"
+       filter="url(#no_such_uri)" fill="url(#no_such_uri) #2082aa">Missing references</text>
+  </switch>
+  <rect id="rect1" x="40" y="200" height="75" width="75" 
+     fill="url(#gradient1) #f33"/>
+  <rect id="rect2" x="240" y="200" height="75" width="75" 
+     style="background:url(#no_such_uri)" fill="url(#pattern1) #3f7"/>
+  <rect id="rect3" x="40" y="320" height="75" width="75" 
+     filter="url(#no_such_uri)" fill="#af5a9e"/>
+  <rect id="rect4" x="240" y="320" height="75" width="75" 
+     fill="url(#no_such_uri) gold"/>
+  <ellipse
+     style="fill:#bf3a10e4;fill-rule:evenodd"
+     id="ellipse1"
+     cx="100"
+     cy="75"
+     rx="42.953468"
+     ry="24.367519" />
+  <circle
+     style="fill:#0280b0d0;fill-rule:evenodd"
+     id="circle1"
+     cx="260"
+     cy="75"
+     r="32" />
+</svg>

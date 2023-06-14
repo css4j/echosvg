@@ -80,6 +80,9 @@ public class SVGSwitchElementBridge extends SVGGElementBridge {
 				if (n instanceof SVGTests && SVGUtilities.matchUserAgent(ref, ctx.getUserAgent())) {
 					selectedChild = ref;
 					refNode = builder.build(ctx, ref);
+					if (refNode == null) {
+						continue;
+					}
 					break;
 				}
 			}
@@ -160,6 +163,9 @@ public class SVGSwitchElementBridge extends SVGGElementBridge {
 					Element ref = (Element) n;
 					if (n instanceof SVGTests && SVGUtilities.matchUserAgent(ref, ctx.getUserAgent())) {
 						refNode = builder.build(ctx, ref);
+						if (refNode == null) {
+							continue;
+						}
 						selectedChild = ref;
 						break;
 					}
