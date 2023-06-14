@@ -158,7 +158,9 @@ public class SVGGlyphElementBridge extends AbstractSVGBridge implements ErrorCon
 				if (childNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element childElement = (Element) childNode;
 					GraphicsNode childGraphicsNode = builder.build(ctx, childElement);
-					glyphChildrenNode.add(childGraphicsNode);
+					if (childGraphicsNode != null) {
+						glyphChildrenNode.add(childGraphicsNode);
+					}
 				}
 			}
 			glyphContentNode.add(glyphChildrenNode);

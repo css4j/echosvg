@@ -430,6 +430,10 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 			}
 			GraphicsNode node = ctx.getGVTBuilder().build(ctx, rootElement);
 
+			if (node == null) {
+				return null;
+			}
+
 			//
 			// The cursorSize define the viewport into which the
 			// cursor is displayed. That viewport is platform

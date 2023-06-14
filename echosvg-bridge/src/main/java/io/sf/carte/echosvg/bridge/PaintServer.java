@@ -124,9 +124,22 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		} else {
 			String uri = v.getStringValue();
 			Element markerElement = ctx.getReferencedElement(e, uri);
+			if (markerElement == null) {
+				return null; // Missing reference
+			}
 			Bridge bridge = ctx.getBridge(markerElement);
-			if (bridge == null || !(bridge instanceof MarkerBridge)) {
-				throw new BridgeException(ctx, e, ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
+			if (bridge == null) {
+				// Assume that the cause of this was already reported
+				return null;
+			}
+			if (!(bridge instanceof MarkerBridge)) {
+				BridgeException ex = new BridgeException(ctx, e, ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
+				UserAgent userAgent = ctx.getUserAgent();
+				if (userAgent == null) {
+					throw ex;
+				}
+				userAgent.displayError(ex);
+				return null;
 			}
 			return ((MarkerBridge) bridge).createMarker(ctx, markerElement, e);
 		}
@@ -315,10 +328,24 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 
 		String uri = paintDef.getStringValue();
 		Element paintElement = ctx.getReferencedElement(paintedElement, uri);
+		if (paintElement == null) {
+			return null; // Missing reference
+		}
 
 		Bridge bridge = ctx.getBridge(paintElement);
-		if (bridge == null || !(bridge instanceof PaintBridge)) {
-			throw new BridgeException(ctx, paintedElement, ERR_CSS_URI_BAD_TARGET, new Object[] { uri });
+		if (bridge == null) {
+			// Assume that the cause of this was already reported
+			return null;
+		}
+		if (!(bridge instanceof PaintBridge)) {
+			BridgeException ex = new BridgeException(ctx, paintedElement, ERR_CSS_URI_BAD_TARGET,
+					new Object[] { uri });
+			UserAgent userAgent = ctx.getUserAgent();
+			if (userAgent == null) {
+				throw ex;
+			}
+			userAgent.displayError(ex);
+			return null;
 		}
 		return ((PaintBridge) bridge).createPaint(ctx, paintElement, paintedElement, paintedNode, opacity);
 	}

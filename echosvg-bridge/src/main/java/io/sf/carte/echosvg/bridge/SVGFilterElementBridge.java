@@ -166,8 +166,11 @@ public class SVGFilterElementBridge extends AnimatableGenericSVGBridge implement
 				throw new BridgeException(ctx, filterElement, ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
 						new Object[] { uri });
 			}
-			refs.add(url);
 			filterElement = ctx.getReferencedElement(filterElement, uri);
+			if (filterElement == null) {
+				return in; // Missing reference
+			}
+			refs.add(url);
 		}
 	}
 

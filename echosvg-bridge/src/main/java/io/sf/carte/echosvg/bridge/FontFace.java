@@ -144,7 +144,8 @@ public abstract class FontFace extends GVTFontFace implements ErrorConstants {
 		if (purl.getRef() != null) {
 			// Reference must be to a SVGFont.
 			Element ref = ctx.getReferencedElement(e, purlStr);
-			if (!ref.getNamespaceURI().equals(SVG_NAMESPACE_URI) || !ref.getLocalName().equals(SVG_FONT_TAG)) {
+			if (ref == null || !ref.getNamespaceURI().equals(SVG_NAMESPACE_URI)
+					|| !ref.getLocalName().equals(SVG_FONT_TAG)) {
 				return null;
 			}
 

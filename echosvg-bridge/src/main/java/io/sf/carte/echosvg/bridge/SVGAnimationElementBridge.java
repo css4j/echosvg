@@ -164,7 +164,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 			t = element.getParentNode();
 		} else {
 			t = ctx.getReferencedElement(element, uri);
-			if (t.getOwnerDocument() != element.getOwnerDocument()) {
+			if (t == null || t.getOwnerDocument() != element.getOwnerDocument()) {
 				throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
 			}
 		}

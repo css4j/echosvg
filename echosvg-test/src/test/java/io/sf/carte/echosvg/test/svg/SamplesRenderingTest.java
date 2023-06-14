@@ -534,6 +534,11 @@ public class SamplesRenderingTest {
 	}
 
 	@Test
+	public void testMissingRef() throws TranscoderException, IOException {
+		testNVErrIgnore("samples/tests/spec/linking/missingRef.svg", null, 16);
+	}
+
+	@Test
 	public void testPointerEvents() throws TranscoderException, IOException {
 		test("samples/tests/spec/linking/pointerEvents.svg");
 	}
@@ -1551,6 +1556,29 @@ public class SamplesRenderingTest {
 		runner.setValidating(validating);
 		runner.setFile(file);
 		runner.runTest(0.00001f, 0.00001f);
+	}
+
+	/**
+	 * Test the rendering of a SVG image, ignoring reported errors.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file               the SVG file to test.
+	 * @param media              the media to test, or {@code null} if default
+	 *                           media.
+	 * @param expectedErrorCount the expected error count.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	private void testNVErrIgnore(String file, String media, int expectedErrorCount)
+			throws TranscoderException, IOException {
+		RenderingTest runner = new ErrIgnoreTest(expectedErrorCount);
+		runner.setMedia(media);
+		runner.setFile(file);
+		runner.runTest(0.000001f, 0.000001f);
 	}
 
 	/**

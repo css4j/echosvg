@@ -129,6 +129,10 @@ public class SVGFeImageElementBridge extends AbstractSVGFilterPrimitiveElementBr
 		contentElement.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, String.valueOf(primitiveRegion.getHeight()));
 
 		GraphicsNode node = ctx.getGVTBuilder().build(ctx, proxyElement);
+		if (node == null) {
+			return null;
+		}
+
 		Filter filter = node.getGraphicsNodeRable(true);
 
 		// 'primitiveUnits' attribute - default is userSpaceOnUse
@@ -173,6 +177,7 @@ public class SVGFeImageElementBridge extends AbstractSVGFilterPrimitiveElementBr
 	 *                        ObjectBoundingBox space
 	 * @param filterElement   parent filter element
 	 * @param filteredNode    node to which the filter applies
+	 * @return the filter, or {@code null} if it could not be created.
 	 */
 	protected static Filter createSVGFeImage(BridgeContext ctx, Rectangle2D primitiveRegion, Element refElement,
 			boolean toBBoxNeeded, Element filterElement, GraphicsNode filteredNode) {
@@ -186,6 +191,11 @@ public class SVGFeImageElementBridge extends AbstractSVGFilterPrimitiveElementBr
 		// like a <use>, i.e., CSS cascading and the whole zing bang.
 		//
 		GraphicsNode node = ctx.getGVTBuilder().build(ctx, refElement);
+
+		if (node == null) {
+			return null;
+		}
+
 		Filter filter = node.getGraphicsNodeRable(true);
 
 		AffineTransform at = new AffineTransform();

@@ -20,7 +20,7 @@
 package io.sf.carte.echosvg.transcoder;
 
 /**
- * An error handler that ignores errors and warnings.
+ * An error handler that ignores errors and warnings (but not fatal errors).
  *
  * @author github.com/carlosame
  * @author For later modifications, see Git history.
@@ -39,6 +39,7 @@ public class DummyErrorHandler implements ErrorHandler {
 
 	@Override
 	public void fatalError(TranscoderException ex) throws TranscoderException {
+		ex.printStackTrace();
 		errorCount++;
 	}
 

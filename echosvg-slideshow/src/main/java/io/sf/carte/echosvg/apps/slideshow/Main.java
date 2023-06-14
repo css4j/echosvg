@@ -138,6 +138,10 @@ public class Main extends JComponent {
 					Document svgDoc = loader.loadDocument(fileName);
 					System.out.println("Building: " + fileName);
 					gvtRoot = builder.build(ctx, svgDoc);
+					if (gvtRoot == null) {
+						System.err.println("Could not build a bridge for: " + fileName);
+						continue;
+					}
 					System.out.println("Rendering: " + fileName);
 					renderer.setTree(gvtRoot);
 

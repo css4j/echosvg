@@ -409,12 +409,12 @@ public class StyleBypassRenderingTest {
 	 */
 	@Test
 	public void testFontAltGlyph() throws TranscoderException, IOException {
-		test("samples/tests/spec/fonts/fontAltGlyph.svg");
+		test("samples/tests/spec/fonts/fontAltGlyph.svg", 4);
 	}
 
 	@Test
 	public void testFontAltGlyph2() throws TranscoderException, IOException {
-		test("samples/tests/spec/fonts/fontAltGlyph2.svg");
+		test("samples/tests/spec/fonts/fontAltGlyph2.svg", 5);
 	}
 
 	@Test
@@ -1111,7 +1111,7 @@ public class StyleBypassRenderingTest {
 
 	@Test
 	public void testScriptPaintType() throws TranscoderException, IOException {
-		test("samples/tests/spec/scripting/paintType.svg");
+		test("samples/tests/spec/scripting/paintType.svg", 2);
 	}
 
 	@Test

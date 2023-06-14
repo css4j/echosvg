@@ -623,6 +623,14 @@ public class ImageComparator {
 	public static BufferedImage createExactDiffImage(BufferedImage ref, BufferedImage gen) {
 		final int w = ref.getWidth();
 		final int h = ref.getHeight();
+		if (w != gen.getWidth()) {
+			throw new IllegalArgumentException(
+					"Ref. image has width " + w + " but generated image is " + gen.getWidth());
+		}
+		if (h != gen.getHeight()) {
+			throw new IllegalArgumentException(
+					"Ref. image has height " + h + " but generated image is " + gen.getHeight());
+		}
 
 		BufferedImage diff = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		WritableRaster refWR = ref.getRaster();

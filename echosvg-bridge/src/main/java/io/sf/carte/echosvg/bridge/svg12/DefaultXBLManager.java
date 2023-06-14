@@ -278,6 +278,9 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 	protected void addDefinitionRef(Element defRef) {
 		String ref = defRef.getAttributeNS(null, XBL_REF_ATTRIBUTE);
 		Element e = ctx.getReferencedElement(defRef, ref);
+		if (e == null) {
+			return;
+		}
 		if (!XBL_NAMESPACE_URI.equals(e.getNamespaceURI()) || !XBL_DEFINITION_TAG.equals(e.getLocalName())) {
 			throw new BridgeException(ctx, defRef, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { ref });
 		}
@@ -312,6 +315,9 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 	protected void addImport(Element imp) {
 		String bindings = imp.getAttributeNS(null, XBL_BINDINGS_ATTRIBUTE);
 		Node n = ctx.getReferencedNode(imp, bindings);
+		if (n == null) {
+			return;
+		}
 		if (n.getNodeType() == Node.ELEMENT_NODE
 				&& !(XBL_NAMESPACE_URI.equals(n.getNamespaceURI()) && XBL_XBL_TAG.equals(n.getLocalName()))) {
 			throw new BridgeException(ctx, imp, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { n });

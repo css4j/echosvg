@@ -25,6 +25,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMImplementation;
@@ -238,6 +239,11 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 				ctx.setDynamicState(BridgeContext.DYNAMIC);
 
 			gvtRoot = builder.build(ctx, svgDoc);
+
+			if (gvtRoot == null) {
+				throw new TranscoderException("Could not build a bridge for the document at uri "
+						+ Objects.toString(uri, "<unknown>"));
+			}
 
 			// dispatch an 'onload' event if needed
 			if (ctx.isDynamic()) {
