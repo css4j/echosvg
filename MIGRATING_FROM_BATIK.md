@@ -1,5 +1,24 @@
 # Migrating from Apache Batik
 
+ There are several reasons why EchoSVG is not a drop-in replacement for Apache
+Batik:
+
+- Avoid using Apache Software Foundation package names and trademarks.
+
+- Improved conformance to the SVG and CSS specifications.
+
+- Better user experience (_e.g._ the `codec`-`transcoder` merge).
+
+- A circularity with Apache FOP. To render PDF images, Batik uses FOP which in
+  turn uses Batik, so depending on FOP would imply mixing EchoSVG and Batik. See
+  issue [#10](https://github.com/css4j/echosvg/issues/10).
+
+- Changes in the Java™ Platform.
+
+<br/>
+
+## Migration checklist
+
  To migrate from Apache Batik, you generally have to deal with the following:
 
 1) Package names are now prefixed by `io.sf.carte.echosvg` instead of
@@ -40,3 +59,6 @@
    `ApplicationSecurityEnforcer.createSecurityEnforcer(Class, String)` instead.
 
 9) `BridgeContext` (in the `bridge` module) gained a `close` method.
+
+10) `SVGAnimationElementBridge.initializeAnimation()` gained a `BridgeContext`
+   argument and now returns a `boolean`.

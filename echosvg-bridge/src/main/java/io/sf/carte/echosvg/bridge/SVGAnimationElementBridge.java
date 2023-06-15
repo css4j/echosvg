@@ -144,8 +144,9 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 			b.eng = ctx.getAnimationEngine();
 			b.element.setSVGContext(b);
 			if (b.eng.hasStarted()) {
-				b.initializeAnimation();
-				b.initializeTimedElement();
+				if (b.initializeAnimation(ctx)) {
+					b.initializeTimedElement();
+				}
 			} else {
 				b.eng.addInitialBridge(b);
 			}
@@ -155,8 +156,10 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 	/**
 	 * Parses the animation element's target attributes and adds it to the
 	 * document's AnimationEngine.
+	 * @param ctx the bridge context to use in error reporting.
+	 * @return true if the initialization was successful.
 	 */
-	protected void initializeAnimation() {
+	protected boolean initializeAnimation(BridgeContext ctx) {
 		// Determine the target element.
 		String uri = XLinkSupport.getXLinkHref(element);
 		Node t;
@@ -165,7 +168,14 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 		} else {
 			t = ctx.getReferencedElement(element, uri);
 			if (t == null || t.getOwnerDocument() != element.getOwnerDocument()) {
-				throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+				BridgeException ex = new BridgeException(ctx, element,
+						ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+				UserAgent userAgent = ctx.getUserAgent();
+				if (userAgent == null) {
+					throw ex;
+				}
+				userAgent.displayError(ex);
+				return false;
 			}
 		}
 		animationTarget = null;
@@ -174,7 +184,14 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 			animationTarget = targetElement;
 		}
 		if (animationTarget == null) {
-			throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+			BridgeException ex = new BridgeException(ctx, element,
+					ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+			UserAgent userAgent = ctx.getUserAgent();
+			if (userAgent == null) {
+				throw ex;
+			}
+			userAgent.displayError(ex);
+			return false;
 		}
 
 		// Get the attribute/property name.
@@ -197,8 +214,14 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 		if (animationType == AnimationEngine.ANIM_TYPE_CSS && !targetElement.isPropertyAnimatable(attributeLocalName)
 				|| animationType == AnimationEngine.ANIM_TYPE_XML
 						&& !targetElement.isAttributeAnimatable(attributeNamespaceURI, attributeLocalName)) {
-			throw new BridgeException(ctx, element, "attribute.not.animatable",
+			BridgeException ex = new BridgeException(ctx, element, "attribute.not.animatable",
 					new Object[] { targetElement.getNodeName(), an });
+			UserAgent userAgent = ctx.getUserAgent();
+			if (userAgent == null) {
+				throw ex;
+			}
+			userAgent.displayError(ex);
+			return false;
 		}
 
 		// Check that the attribute/property is animatable with this
@@ -210,14 +233,21 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 			type = targetElement.getAttributeType(attributeNamespaceURI, attributeLocalName);
 		}
 		if (!canAnimateType(type)) {
-			throw new BridgeException(ctx, element, "type.not.animatable",
+			BridgeException ex = new BridgeException(ctx, element, "type.not.animatable",
 					new Object[] { targetElement.getNodeName(), an, element.getNodeName() });
+			UserAgent userAgent = ctx.getUserAgent();
+			if (userAgent == null) {
+				throw ex;
+			}
+			userAgent.displayError(ex);
+			return false;
 		}
 
 		// Add the animation.
 		timedElement = createTimedElement();
 		animation = createAnimation(animationTarget);
 		eng.addAnimation(animationTarget, animationType, attributeNamespaceURI, attributeLocalName, animation);
+		return true;
 	}
 
 	/**
