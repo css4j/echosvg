@@ -424,13 +424,17 @@ public class SVGAnimationEngine extends AnimationEngine {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(new Date(documentStartTime));
 				timedDocumentRoot.resetDocument(cal);
-				SVGAnimationElementBridge[] bridges = initialBridges.toArray(new SVGAnimationElementBridge[0]);
+				SVGAnimationElementBridge[] bridges = initialBridges
+						.toArray(new SVGAnimationElementBridge[0]);
+				boolean[] initResults = new boolean[bridges.length];
 				initialBridges = null;
-				for (SVGAnimationElementBridge bridge : bridges) {
-					bridge.initializeAnimation();
+				for (int i = 0; i < bridges.length; i++) {
+					initResults[i] = bridges[i].initializeAnimation(ctx);
 				}
-				for (SVGAnimationElementBridge bridge : bridges) {
-					bridge.initializeTimedElement();
+				for (int i = 0; i < bridges.length; i++) {
+					if (initResults[i]) {
+						bridges[i].initializeTimedElement();
+					}
 				}
 
 				// tick(0, false);

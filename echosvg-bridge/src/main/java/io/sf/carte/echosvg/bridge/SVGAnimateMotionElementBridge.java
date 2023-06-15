@@ -297,9 +297,11 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 	/**
 	 * Parses the animation element's target attributes and adds it to the
 	 * document's AnimationEngine.
+	 * @param ctx the bridge context to use in error reporting.
+	 * @return true if the initialization was successful.
 	 */
 	@Override
-	protected void initializeAnimation() {
+	protected boolean initializeAnimation(BridgeContext ctx) {
 		// Determine the target element.
 		String uri = XLinkSupport.getXLinkHref(element);
 		Node t;
@@ -308,7 +310,14 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 		} else {
 			t = ctx.getReferencedElement(element, uri);
 			if (t == null || t.getOwnerDocument() != element.getOwnerDocument()) {
-				throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+				BridgeException ex = new BridgeException(ctx, element,
+						ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+				UserAgent userAgent = ctx.getUserAgent();
+				if (userAgent == null) {
+					throw ex;
+				}
+				userAgent.displayError(ex);
+				return false;
 			}
 		}
 		animationTarget = null;
@@ -317,7 +326,14 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 			animationTarget = targetElement;
 		}
 		if (animationTarget == null) {
-			throw new BridgeException(ctx, element, ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+			BridgeException ex = new BridgeException(ctx, element,
+					ErrorConstants.ERR_URI_BAD_TARGET, new Object[] { uri });
+			UserAgent userAgent = ctx.getUserAgent();
+			if (userAgent == null) {
+				throw ex;
+			}
+			userAgent.displayError(ex);
+			return false;
 		}
 
 		// Add the animation.
@@ -325,5 +341,6 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 		animation = createAnimation(animationTarget);
 		eng.addAnimation(animationTarget, AnimationEngine.ANIM_TYPE_OTHER, attributeNamespaceURI, attributeLocalName,
 				animation);
+		return true;
 	}
 }
