@@ -23,6 +23,8 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.util.Arrays;
@@ -218,7 +220,8 @@ public class CSSTranscodingHelper {
 	/**
 	 * dark mode initial value for the CSS {@code color} property.
 	 */
-	private static final CSSTypedValue darkmodeInitialColor = (CSSTypedValue) new ValueFactory().parseProperty("#fff");
+	private static final CSSTypedValue darkmodeInitialColor = (CSSTypedValue) new ValueFactory()
+			.parseProperty("#fff");
 
 	/**
 	 * Toggle for HTML processing.
@@ -311,6 +314,108 @@ public class CSSTranscodingHelper {
 
 	/**
 	 * Transcode a SVG document styled with CSS 3 using the given transcoder.
+	 * 
+	 * <p>
+	 * This method attempts to convert advanced CSS into something that EchoSVG can
+	 * understand. It may or may not succeed.
+	 * </p>
+	 * 
+	 * @param input    the transcoder input document. If its {@code URI} (or the
+	 *                 {@code documentURI} of the document) ends with {@code .html},
+	 *                 HTML processing is enabled.
+	 * @param output   the {@code TranscoderOutput} to write the result.
+	 * @param selector the selector to find the topmost {@code svg} element
+	 *                 containing the subtree to be transcoded. If {@code null}, it
+	 *                 is assumed that it is the document element (the whole
+	 *                 document being a SVG document). If not {@code null}, HTML
+	 *                 processing is used.
+	 * 
+	 * @throws TranscoderException      If an error occured while transcoding.
+	 * @throws IOException              If any I/O error occurs.
+	 * @throws NullPointerException     If {@code input} is {@code null}.
+	 * @throws IllegalArgumentException If the {@code input} contains no input
+	 *                                  sources.
+	 */
+	public void transcode(TranscoderInput input, TranscoderOutput output, String selector)
+			throws TranscoderException, IOException {
+		XMLReader oldXmlReader = xmlReader;
+
+		XMLReader inpXmlReader = input.getXMLReader();
+		if (inpXmlReader != null) {
+			xmlReader = input.getXMLReader();
+		}
+
+		try {
+			Document doc = input.getDocument();
+			if (doc != null) {
+				if (doc.getDocumentURI() == null) {
+					doc.setDocumentURI(input.getURI());
+				}
+				transcodeDocument(doc, output, selector);
+				return;
+			}
+		} finally {
+			if (inpXmlReader != null) {
+				xmlReader = oldXmlReader;
+			}
+		}
+
+		final Reader reader = input.getReader();
+		try {
+			if (reader != null) {
+				transcode(reader, input.getURI(), output, selector);
+				return;
+			}
+		} finally {
+			if (inpXmlReader != null) {
+				xmlReader = oldXmlReader;
+			}
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+
+		InputStream is = input.getInputStream();
+		try {
+			if (is != null) {
+				InputStreamReader re;
+				if (input.getEncoding() != null) {
+					re = new InputStreamReader(is, input.getEncoding());
+				} else {
+					re = new InputStreamReader(is);
+				}
+				transcode(re, input.getURI(), output, selector);
+				return;
+			}
+		} finally {
+			if (inpXmlReader != null) {
+				xmlReader = oldXmlReader;
+			}
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+
+		try {
+			if (input.getURI() == null) {
+				throw new IllegalArgumentException("No inputs found.");
+			}
+			transcode(null, input.getURI(), output, selector);
+		} finally {
+			if (inpXmlReader != null) {
+				xmlReader = oldXmlReader;
+			}
+		}
+	}
+
+	/**
+	 * Transcode a SVG document styled with CSS 3 using the given transcoder.
 	 * <p>
 	 * This method attempts to convert advanced CSS into something that EchoSVG can
 	 * understand. It may or may not succeed.
@@ -325,7 +430,8 @@ public class CSSTranscodingHelper {
 	 * @throws TranscoderException If an error occured while transcoding.
 	 * @throws IOException         If any I/O error occurs.
 	 */
-	public void transcode(Reader reader, String documentURI, OutputStream out) throws TranscoderException, IOException {
+	public void transcode(Reader reader, String documentURI, OutputStream out)
+			throws TranscoderException, IOException {
 		TranscoderOutput output = new TranscoderOutput(out);
 		transcode(reader, documentURI, output, null);
 	}
@@ -339,7 +445,8 @@ public class CSSTranscodingHelper {
 	 * </p>
 	 * 
 	 * @param reader      the {@code Reader} containing the character stream of the
-	 *                    document that contains the SVG tree.
+	 *                    document that contains the SVG tree. If {@code null}, the
+	 *                    document shall be read from the {@code documentURI}.
 	 * @param documentURI the URI of the document. If the URI ends with
 	 *                    {@code .html}, HTML processing is enabled.
 	 * @param output      the {@code TranscoderOutput} to write the result.
@@ -352,12 +459,10 @@ public class CSSTranscodingHelper {
 	 * @throws TranscoderException If an error occured while transcoding.
 	 * @throws IOException         If any I/O error occurs.
 	 */
-	public void transcode(Reader reader, String documentURI, TranscoderOutput output, String selector)
-			throws TranscoderException, IOException {
-		// Instantiate a DOM implementation that has modern CSS support
-		CSSDOMImplementation impl = new CSSDOMImplementation();
-		// Serialize colors to sRGB
-		impl.setStyleFormattingFactory(new RGBStyleFormattingFactory());
+	public void transcode(Reader reader, String documentURI, TranscoderOutput output,
+			String selector) throws TranscoderException, IOException {
+		// Obtain a DOM implementation with modern CSS support
+		CSSDOMImplementation impl = createCSSDOMImplementation();
 
 		// The DocumentBuilder
 		XMLDocumentBuilder builder = new XMLDocumentBuilder(impl);
@@ -365,7 +470,8 @@ public class CSSTranscodingHelper {
 		builder.getSAXParserFactory().setXIncludeAware(true);
 		builder.setXMLReader(xmlReader);
 
-		if (htmlEmbed || selector != null || (documentURI != null && documentURI.endsWith(".html"))) {
+		if (htmlEmbed || selector != null
+				|| (documentURI != null && documentURI.endsWith(".html"))) {
 			// Prepare builder to process HTML
 			builder.setHTMLProcessing(true);
 		}
@@ -380,6 +486,117 @@ public class CSSTranscodingHelper {
 			throw new TranscoderException(e);
 		}
 
+		transcodeDOMDocument(document, output, selector);
+	}
+
+	private CSSDOMImplementation createCSSDOMImplementation() {
+		// Instantiate a DOM implementation that has modern CSS support
+		CSSDOMImplementation impl = new CSSDOMImplementation();
+		// Serialize colors to sRGB
+		impl.setStyleFormattingFactory(new RGBStyleFormattingFactory());
+		return impl;
+	}
+
+	/**
+	 * Transcode a SVG document styled with CSS 3 using the given transcoder.
+	 * 
+	 * <p>
+	 * This method attempts to convert advanced CSS into something that EchoSVG can
+	 * understand. It may or may not succeed.
+	 * </p>
+	 * 
+	 * @param document the input document. If its {@code documentURI} ends with
+	 *                 {@code .html}, HTML processing is enabled.
+	 * @param output   the {@code TranscoderOutput} to write the result.
+	 * @param selector the selector to find the topmost {@code svg} element
+	 *                 containing the subtree to be transcoded. If {@code null}, it
+	 *                 is assumed that it is the document element (the whole
+	 *                 document being a SVG document). If not {@code null}, HTML
+	 *                 processing is used.
+	 * 
+	 * @throws TranscoderException      If an error occured while transcoding.
+	 * @throws IOException              If any I/O error occurs.
+	 * @throws NullPointerException     If {@code document} is {@code null}.
+	 * @throws IllegalArgumentException If the document contains no elements.
+	 */
+	public void transcodeDocument(Document document, TranscoderOutput output, String selector)
+			throws TranscoderException, IOException {
+		DOMDocument cssDocument;
+
+		if (document instanceof DOMDocument) {
+			cssDocument = (DOMDocument) document;
+		} else {
+			// Get the document element
+			Element inputDocElm = document.getDocumentElement();
+			if (inputDocElm == null) {
+				throw new IllegalArgumentException("The document has no document element.");
+			}
+
+			DocumentType inputDocType = document.getDoctype();
+			// Obtain a DOM implementation with modern CSS support
+			CSSDOMImplementation impl = createCSSDOMImplementation();
+
+			// Obtain the new DocType, if necessary
+			DocumentType docType = null;
+			String docTypeName;
+			if (inputDocType != null && (docTypeName = inputDocType.getName()) != null) {
+				docType = impl.createDocumentType(docTypeName, inputDocType.getPublicId(),
+						inputDocType.getSystemId());
+			}
+
+			// Instantiate a document of the correct type
+			if (isHTMLDocument(inputDocElm, inputDocType)) {
+				cssDocument = impl.createDocument(null, null, docType);
+			} else {
+				cssDocument = impl.createDocument("", null, docType);
+			}
+
+			// Set the documentURI
+			cssDocument.setDocumentURI(document.getDocumentURI());
+
+			// Import and append the document element
+			Node docElm = cssDocument.importNode(inputDocElm, true);
+			cssDocument.appendChild(docElm);
+		}
+
+		transcodeDOMDocument(cssDocument, output, selector);
+	}
+
+	/**
+	 * Determine whether the document is HTML.
+	 * 
+	 * @param docElm  the document element to check.
+	 * @param docType the document type of the document to check.
+	 * @return {@code true} if the document is HTML or XHTML.
+	 */
+	private boolean isHTMLDocument(Element docElm, DocumentType docType) {
+		String tagName = docElm.getTagName();
+		return "html".equalsIgnoreCase(tagName) || "html".equalsIgnoreCase(docElm.getLocalName())
+				|| (docType != null && "html".equalsIgnoreCase(docType.getName()));
+	}
+
+	/**
+	 * Transcode a SVG document styled with CSS 3 using the given transcoder.
+	 * 
+	 * <p>
+	 * This method attempts to convert advanced CSS into something that EchoSVG can
+	 * understand. It may or may not succeed.
+	 * </p>
+	 * 
+	 * @param document the CSS-enabled input document. If its {@code documentURI}
+	 *                 ends with {@code .html}, HTML processing is enabled.
+	 * @param output   the {@code TranscoderOutput} to write the result.
+	 * @param selector the selector to find the topmost {@code svg} element
+	 *                 containing the subtree to be transcoded. If {@code null}, it
+	 *                 is assumed that it is the document element (the whole
+	 *                 document being a SVG document). If not {@code null}, HTML
+	 *                 processing is used.
+	 * 
+	 * @throws TranscoderException If an error occured while transcoding.
+	 * @throws IOException         If any I/O error occurs.
+	 */
+	private void transcodeDOMDocument(DOMDocument document, TranscoderOutput output,
+			String selector) throws TranscoderException, IOException {
 		DocumentType docType = null;
 
 		// Determine the SVG root element
@@ -431,16 +648,20 @@ public class CSSTranscodingHelper {
 		// Create the DOCTYPE if appropriate, then the SVG document
 		DocumentType svgDocType = null;
 		if (docType != null) {
-			svgDocType = svgImpl.createDocumentType(docType.getName(), docType.getPublicId(), docType.getSystemId());
+			svgDocType = svgImpl.createDocumentType(docType.getName(), docType.getPublicId(),
+					docType.getSystemId());
 		}
-		org.w3c.dom.Document svgDoc = svgImpl.createDocument(SVGConstants.SVG_NAMESPACE_URI, null, svgDocType);
-		svgDoc.setDocumentURI(documentURI);
+		org.w3c.dom.Document svgDoc = svgImpl.createDocument(SVGConstants.SVG_NAMESPACE_URI, null,
+				svgDocType);
+		svgDoc.setDocumentURI(document.getDocumentURI());
 
 		// Check for an alternate style sheet
-		String alt = (String) transcoder.getTranscodingHints().get(SVGAbstractTranscoder.KEY_ALTERNATE_STYLESHEET);
+		String alt = (String) transcoder.getTranscodingHints()
+				.get(SVGAbstractTranscoder.KEY_ALTERNATE_STYLESHEET);
 
 		// Check for a target medium
-		String medium = (String) transcoder.getTranscodingHints().get(SVGAbstractTranscoder.KEY_MEDIA);
+		String medium = (String) transcoder.getTranscodingHints()
+				.get(SVGAbstractTranscoder.KEY_MEDIA);
 		if (medium == null || (medium = medium.trim()).length() == 0) {
 			// This won't match a real medium but the rest of the machinery will work
 			medium = "medium";
@@ -453,7 +674,7 @@ public class CSSTranscodingHelper {
 		// Set a DeviceFactory for the given medium
 		MyDeviceFactory devFactory = new MyDeviceFactory();
 		devFactory.setHints(svgRoot);
-		impl.setDeviceFactory(devFactory);
+		document.getImplementation().setDeviceFactory(devFactory);
 
 		// If there is an alternate style sheet, set it
 		if (alt != null && (alt = alt.trim()).length() != 0) {
@@ -476,6 +697,11 @@ public class CSSTranscodingHelper {
 		// Transcode
 		TranscoderInput input = new TranscoderInput(svgDoc);
 		transcoder.transcode(input, output);
+
+		// Set the final document as alternative output
+		if (output.getDocument() == null) {
+			output.setDocument(svgDoc);
+		}
 	}
 
 	private static void copyWithComputedStyles(DOMNode node, Document svgDoc, Node svgParent) {
@@ -485,9 +711,11 @@ public class CSSTranscodingHelper {
 			if ("foreignObject".equals(node.getLocalName())) {
 				// <foreignObject> element
 				DOMElement fo = (DOMElement) node;
-				Element flowRoot = svgDoc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, "flowRoot");
+				Element flowRoot = svgDoc.createElementNS(SVGConstants.SVG_NAMESPACE_URI,
+						"flowRoot");
 				svgParent.appendChild(flowRoot);
-				flowRoot.setAttributeNS("http://www.w3.org/XML/1998/namespace", "space", "preserve");
+				flowRoot.setAttributeNS("http://www.w3.org/XML/1998/namespace", "space",
+						"preserve");
 				replaceForeignSubtree(fo, svgDoc, flowRoot);
 				return;
 			} else {
@@ -501,9 +729,7 @@ public class CSSTranscodingHelper {
 
 		// Repeat the process for child nodes, if any
 		if (node.hasChildNodes()) {
-			Iterator<DOMNode> it = node.getChildNodes().iterator();
-			while (it.hasNext()) {
-				DOMNode n = it.next();
+			for (DOMNode n : node.getChildNodes()) {
 				copyWithComputedStyles(n, svgDoc, svgNode);
 			}
 		}
@@ -584,14 +810,13 @@ public class CSSTranscodingHelper {
 	}
 
 	private static void copyAttributes(DOMElement fo, Element rect) {
-		Iterator<Attr> it = fo.getAttributes().iterator();
-		while (it.hasNext()) {
-			Attr attr = it.next();
+		for (Attr attr : fo.getAttributes()) {
 			rect.setAttributeNS(attr.getNamespaceURI(), attr.getName(), attr.getValue());
 		}
 	}
 
-	private static void replaceElement(DOMElement elm, Document svgDoc, Element flowDiv, Element svgParent) {
+	private static void replaceElement(DOMElement elm, Document svgDoc, Element flowDiv,
+			Element svgParent) {
 		ComputedCSSStyle style = elm.getComputedStyle(null);
 		String display = style.getDisplay();
 		boolean isBlock = "block".equals(display) || "inline-block".equals(display);
@@ -691,7 +916,8 @@ public class CSSTranscodingHelper {
 		public CSSCanvas createCanvas(String medium, CSSDocument doc) {
 			CSSCanvas canvas;
 			if (transcoder instanceof ImageTranscoder) {
-				BufferedImage dest = ((ImageTranscoder) transcoder).createImage(Math.round(width), Math.round(height));
+				BufferedImage dest = ((ImageTranscoder) transcoder).createImage(Math.round(width),
+						Math.round(height));
 				Graphics2D graphics2d = dest.createGraphics();
 				canvas = new Graphics2DCanvas(doc, graphics2d);
 			} else {
@@ -707,7 +933,8 @@ public class CSSTranscodingHelper {
 			private final List<String> fonts = getAvailableFontList();
 
 			private List<String> getAvailableFontList() {
-				return Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
+				return Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment()
+						.getAvailableFontFamilyNames());
 			}
 
 			@Override
@@ -724,7 +951,8 @@ public class CSSTranscodingHelper {
 			public int getColorDepth() {
 				// We do not have the actual Graphics2D here yet, but we try
 				GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-				java.awt.GraphicsConfiguration gConfiguration = genv.getDefaultScreenDevice().getDefaultConfiguration();
+				java.awt.GraphicsConfiguration gConfiguration = genv.getDefaultScreenDevice()
+						.getDefaultConfiguration();
 				int bpc = 255;
 				if (gConfiguration != null) {
 					int[] comp = gConfiguration.getColorModel().getComponentSize();
@@ -759,10 +987,12 @@ public class CSSTranscodingHelper {
 
 			@Override
 			public boolean supports(String property, CSSValue value) {
-				if ("color".equalsIgnoreCase(property) || "background-color".equalsIgnoreCase(property)) {
+				if ("color".equalsIgnoreCase(property)
+						|| "background-color".equalsIgnoreCase(property)) {
 					return supportsColor(value);
 				}
-				return value.getCssValueType() == CssType.TYPED && isSupportedType((CSSTypedValue) value);
+				return value.getCssValueType() == CssType.TYPED
+						&& isSupportedType((CSSTypedValue) value);
 			}
 
 			private boolean supportsColor(CSSValue value) {
