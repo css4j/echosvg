@@ -32,10 +32,12 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.DummyErrorHandler;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
+import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.util.CSSTranscodingHelper;
@@ -483,6 +485,11 @@ public class StyleBypassRenderingTest {
 	@Test
 	public void testLinkingViewBox() throws TranscoderException, IOException {
 		test("samples/tests/spec/linking/linkingViewBox.svg");
+	}
+
+	@Test
+	public void testMissingRef_All() throws TranscoderException, IOException {
+		testAllInputSources("samples/tests/spec/linking/missingRef.svg", null, false, false, 16);
 	}
 
 	@Test
@@ -1336,8 +1343,8 @@ public class StyleBypassRenderingTest {
 	 * SVG 2, CSS3
 	 */
 	@Test
-	public void testCSS3() throws TranscoderException, IOException {
-		test("samples/tests/spec2/styling/css3.html", 5);
+	public void testCSS3_All() throws TranscoderException, IOException {
+		testAllInputSources("samples/tests/spec2/styling/css3.html", null, false, false, 5);
 	}
 
 	@Test
@@ -1446,20 +1453,69 @@ public class StyleBypassRenderingTest {
 	 * reference image.
 	 * </p>
 	 * 
-	 * @param file       the SVG file to test.
-	 * @param medium     the target medium ({@code screen}, {@code print}, etc).
-	 * @param darkMode   if true, dark mode is enabled in CSS.
-	 * @param validating if true, the SVG is validated.
+	 * @param file               the SVG file to test.
+	 * @param medium             the target medium ({@code screen}, {@code print},
+	 *                           etc).
+	 * @param darkMode           if true, dark mode is enabled in CSS.
+	 * @param validating         if true, the SVG is validated.
+	 * @param expectedErrorCount the expected number of errors.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
 	private void test(String file, String medium, boolean darkMode, boolean validating,
 			int expectedErrorCount) throws TranscoderException, IOException {
 		BypassRenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
+		configureAndRun(runner, file, darkMode, validating);
+	}
+
+	private void configureAndRun(BypassRenderingTest runner, String file, boolean darkMode,
+			boolean validating) throws TranscoderException, IOException {
 		runner.setDarkMode(darkMode);
 		runner.setValidating(validating);
 		runner.setFile(file);
 		runner.runTest(0.00001f, 0.00001f);
+	}
+
+	/**
+	 * Test the rendering of a SVG file, with all the supported input source
+	 * variants.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file               the SVG file to test.
+	 * @param medium             the target medium ({@code screen}, {@code print},
+	 *                           etc).
+	 * @param darkMode           if true, dark mode is enabled in CSS.
+	 * @param validating         if true, the SVG is validated.
+	 * @param expectedErrorCount the expected number of errors.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	private void testAllInputSources(String file, String medium, boolean darkMode,
+			boolean validating, int expectedErrorCount) throws TranscoderException, IOException {
+		BypassRenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
+		configureAndRun(runner, file, darkMode, validating);
+
+		Document doc = runner.getRenderDocument();
+		runner = new DocumentInputHelperRenderingTest(medium, expectedErrorCount);
+		runner.setRenderDocument(doc);
+		configureAndRun(runner, file, darkMode, validating);
+
+		runner = new TIDocumentInputHelperRenderingTest(medium, expectedErrorCount);
+		runner.setRenderDocument(doc);
+		configureAndRun(runner, file, darkMode, validating);
+
+		runner = new TIInputStreamHelperRenderingTest(medium, expectedErrorCount);
+		configureAndRun(runner, file, darkMode, validating);
+
+		runner = new TIReaderInputHelperRenderingTest(medium, expectedErrorCount);
+		configureAndRun(runner, file, darkMode, validating);
+
+		runner = new TIURIInputHelperRenderingTest(medium, expectedErrorCount);
+		configureAndRun(runner, file, darkMode, validating);
 	}
 
 	private class BypassRenderingTest extends RenderingTest {
@@ -1470,6 +1526,8 @@ public class StyleBypassRenderingTest {
 		 * dark mode toggle.
 		 */
 		private boolean darkMode = false;
+
+		private transient Document renderDocument;
 
 		BypassRenderingTest(String medium, int expectedErrorCount) {
 			super();
@@ -1484,6 +1542,14 @@ public class StyleBypassRenderingTest {
 		 */
 		public void setDarkMode(boolean darkMode) {
 			this.darkMode = darkMode;
+		}
+
+		public Document getRenderDocument() {
+			return renderDocument;
+		}
+
+		public void setRenderDocument(Document renderDocument) {
+			this.renderDocument = renderDocument;
 		}
 
 		@Override
@@ -1505,6 +1571,13 @@ public class StyleBypassRenderingTest {
 
 			TranscoderOutput dst = new TranscoderOutput(fos);
 
+			encode(helper, dst);
+
+			assertEquals(expectedErrorCount, errorHandler.getErrorCount(), "Unmatched error count");
+		}
+
+		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
+				throws TranscoderException, IOException {
 			String uri = getURI();
 			URL url = new URL(uri);
 			URLConnection con = url.openConnection();
@@ -1515,7 +1588,7 @@ public class StyleBypassRenderingTest {
 
 			helper.transcode(re, uri, dst, null);
 
-			assertEquals(expectedErrorCount, errorHandler.getErrorCount(), "Unmatched error count");
+			renderDocument = dst.getDocument();
 		}
 
 		@Override
@@ -1534,6 +1607,99 @@ public class StyleBypassRenderingTest {
 
 		private String getDarkModeSuffix() {
 			return darkMode ? "-dark" : "";
+		}
+
+	}
+
+	private class DocumentInputHelperRenderingTest extends BypassRenderingTest {
+
+		DocumentInputHelperRenderingTest(String medium, int expectedErrorCount) {
+			super(medium, expectedErrorCount);
+		}
+
+		@Override
+		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
+				throws TranscoderException, IOException {
+			helper.transcodeDocument(getRenderDocument(), dst, null);
+		}
+
+	}
+
+	private class TIReaderInputHelperRenderingTest extends BypassRenderingTest {
+
+		TIReaderInputHelperRenderingTest(String medium, int expectedErrorCount) {
+			super(medium, expectedErrorCount);
+		}
+
+		@Override
+		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
+				throws TranscoderException, IOException {
+			String uri = getURI();
+			URL url = new URL(uri);
+			URLConnection con = url.openConnection();
+			con.setConnectTimeout(5000);
+			con.connect();
+			InputStream is = con.getInputStream();
+			Reader re = new InputStreamReader(is, StandardCharsets.UTF_8);
+
+			TranscoderInput input = new TranscoderInput(re);
+			input.setURI(uri);
+			helper.transcode(input, dst, null);
+		}
+
+	}
+
+	private class TIInputStreamHelperRenderingTest extends BypassRenderingTest {
+
+		TIInputStreamHelperRenderingTest(String medium, int expectedErrorCount) {
+			super(medium, expectedErrorCount);
+		}
+
+		@Override
+		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
+				throws TranscoderException, IOException {
+			String uri = getURI();
+			URL url = new URL(uri);
+			URLConnection con = url.openConnection();
+			con.setConnectTimeout(5000);
+			con.connect();
+			InputStream is = con.getInputStream();
+
+			TranscoderInput input = new TranscoderInput(is);
+			input.setEncoding("utf-8");
+			input.setURI(uri);
+			helper.transcode(input, dst, null);
+		}
+
+	}
+
+	private class TIURIInputHelperRenderingTest extends BypassRenderingTest {
+
+		TIURIInputHelperRenderingTest(String medium, int expectedErrorCount) {
+			super(medium, expectedErrorCount);
+		}
+
+		@Override
+		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
+				throws TranscoderException, IOException {
+			String uri = getURI();
+			TranscoderInput input = new TranscoderInput(uri);
+			helper.transcode(input, dst, null);
+		}
+
+	}
+
+	private class TIDocumentInputHelperRenderingTest extends BypassRenderingTest {
+
+		TIDocumentInputHelperRenderingTest(String medium, int expectedErrorCount) {
+			super(medium, expectedErrorCount);
+		}
+
+		@Override
+		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
+				throws TranscoderException, IOException {
+			TranscoderInput input = new TranscoderInput(getRenderDocument());
+			helper.transcode(input, dst, null);
 		}
 
 	}
