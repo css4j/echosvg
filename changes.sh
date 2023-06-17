@@ -14,5 +14,5 @@ TITLE="EchoSVG CHANGES"
 VERHDR="Version ${1}"
 OUTFILE="CHANGES.txt"
 echo -en "${TITLE}\\r\\n${TITLE//?/=}\\r\\n\\r\\n${VERHDR}\\r\\n${VERHDR//?/-}\\r\\n\\r\\n">${OUTFILE}
-git log --reverse --pretty=format:%s ${OLDTAG}..|sed -e 's/^/- /'|fold -s|sed -r 's/^([^-])/  \1/'|sed -e 's/$/\r/'>>${OUTFILE}
+git log --reverse --pretty=format:%s ${OLDTAG}..|sed -e 's/^/- /'|sed -e 's/$/./'|fold -s|sed -r 's/^([^-])/  \1/'|sed -e 's/$/\r/'>>${OUTFILE}
 echo -en "\\n">>${OUTFILE}
