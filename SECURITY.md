@@ -47,6 +47,20 @@ are used.
 
 <br/>
 
+## Reporting a vulnerability
+
+Any software that renders SVG and is compliant with the specification can be abused
+to produce a DoS attack, and little can be done except maybe limiting the compliance.
+However, sometimes there are security issues that are actionable.
+
+To report a security vulnerability, please read
+[Privately reporting a security vulnerability](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability#privately-reporting-a-security-vulnerability).
+Take into account what is written in this document about the inherent difficulties in
+securing this software, and keep in mind that nobody is being paid to work on EchoSVG.
+If the fix requires a large amount of work, it may never be produced.
+
+<br/>
+
 ## Using EchoSVG safely
 
 If you are concerned about security and privacy, be sure to learn about the features
