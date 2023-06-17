@@ -198,6 +198,8 @@ the same criteria would apply.
  All your contributions are submitted according to the license of this project,
 see the LICENSE file for more information.
 
+<br/>
+
 ## Distribution
 
  This project [is not being submitted to the Maven Central repository](https://groups.google.com/g/css4j/c/op5jIoINb3M/m/IiiN-LfkDAAJ)
