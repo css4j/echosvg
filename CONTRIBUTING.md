@@ -121,17 +121,24 @@ similar convention to tests ending with `Test`).
 
 - Indent by tabs, not spaces. The automated formatting provided by the Eclipse
 IDE is often used.
+
 - Avoid trailing whitespace except for empty lines in Javadoc comments.
+
 - `if`-`else` blocks should always use curly braces, even if a single line of
 code is involved.
+
 - Long, descriptive variable names are preferred.
+
 - Add comments to explain what the code is trying to do, but avoiding useless
 prose that just mimics the code, like _"check if foo is larger than 1"_ as a
 comment to `if (foo > 1)`.
+
 - Public and protected methods must have documentation comments.
+
 - Code readability should not be sacrificed for compactness, unless there are
 obvious gains and the trade-off can be justified. For example, `i++; foo(i);` is
 preferable to `foo(++i);` except in conditional expressions.
+
 - Classes and methods should have the minimum visibility that they require.
 A method should not have `protected` visibility when being package-visible could
 be enough, unless subclasses in other packages would naturally extend it. For
@@ -139,6 +146,12 @@ complex package-level or inner classes, it is acceptable to have `protected`
 methods as a mean to document which ones are intended to be overridden by other
 classes. (In that case, protected methods do not appear in the Javadocs and
 therefore are not part of the API)
+
+- Local variables and the `final` keyword: in Java, final local variables are
+automatically detected by the compiler, so the `final` keyword is unnecessary
+and only adds clutter. However, in some cases it is good to explicitly mark a
+local variable as `final`: when it may be confused with a non-final one, when
+setting a literal value, or when used in a final-only context (_e.g._ lambdas).
 
 <br/>
 
