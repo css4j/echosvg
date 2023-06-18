@@ -319,6 +319,20 @@ public class CSSTranscodingHelper {
 	 * This method attempts to convert advanced CSS into something that EchoSVG can
 	 * understand. It may or may not succeed.
 	 * </p>
+	 * <p>
+	 * If the {@code input} contains a {@code Reader} or a stream, it is closed. The
+	 * reason is that this method was created to address a specific use case where
+	 * it is called from a method that does not know what the input object has, and
+	 * that does other things before returning.
+	 * </p>
+	 * <p>
+	 * If you want to close your own {@code Reader} or stream, by all means use the
+	 * {@link #transcode(Reader, String, TranscoderOutput, String)} method with a
+	 * {@code Reader} argument. For more information, see
+	 * <a href="https://github.com/css4j/echosvg/discussions/64">Multi-input
+	 * wrappers like <code>InputSource</code> or <code>TranscoderInput</code>
+	 * considered harmful</a>.
+	 * </p>
 	 * 
 	 * @param input    the transcoder input document. If its {@code URI} (or the
 	 *                 {@code documentURI} of the document) ends with {@code .html},
