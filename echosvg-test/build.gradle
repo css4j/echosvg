@@ -33,6 +33,7 @@ dependencies {
 	testImplementation project(':echosvg-extension')
 	testImplementation project(':echosvg-svgrasterizer')
 	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation "org.mozilla:rhino:${rhinoVersion}"
 	testImplementation "nu.validator:htmlparser:${htmlParserVersion}"
 	testImplementation "io.sf.jclf:jclf-text:${jclfTextVersion}"
