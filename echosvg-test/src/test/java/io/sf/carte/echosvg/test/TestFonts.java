@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2021 Carlos Amengual
+ * Copyright (c) 2020-2023 Carlos Amengual
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 import io.sf.carte.echosvg.bridge.DefaultFontFamilyResolver;
 
@@ -218,6 +220,18 @@ public class TestFonts {
 		GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		genv.registerFont(baseFont);
 		DefaultFontFamilyResolver.getInstance().registerFont(baseFont);
+	}
+
+	/**
+	 * Check whether the given font is available.
+	 * 
+	 * @param familyName the font family name.
+	 * @return true if the font is available.
+	 */
+	public static boolean isFontAvailable(String familyName) {
+		List<String> fonts = Arrays.asList(
+				GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
+		return fonts.contains(familyName);
 	}
 
 }

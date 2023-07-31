@@ -18,6 +18,9 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import static io.sf.carte.echosvg.test.TestFonts.isFontAvailable;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -1009,10 +1012,10 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/text/textDecoration.svg");
 	}
 
-	// See issue #31
-	@Disabled
 	@Test
 	public void testTextDecoration2() throws TranscoderException, IOException {
+		assumeTrue(isFontAvailable("Lucida Sans Typewriter"),
+				"'Lucida Sans Typewriter' font is not available");
 		test("samples/tests/spec/text/textDecoration2.svg");
 	}
 

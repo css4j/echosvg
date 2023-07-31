@@ -18,18 +18,16 @@
  */
 package io.sf.carte.echosvg.transcoder.wmf;
 
+import static io.sf.carte.echosvg.test.TestFonts.isFontAvailable;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-import java.awt.GraphicsEnvironment;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -78,12 +76,6 @@ public class WMFAccuracyTest {
 	private boolean hasArial = isFontAvailable("Arial");
 
 	private boolean hasCourierNew = isFontAvailable("Courier New");
-
-	private static boolean isFontAvailable(String familyName) {
-		List<String> fonts = Arrays
-				.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
-		return fonts.contains(familyName);
-	}
 
 	@Test
 	public void testBlackShapes() throws IOException, TranscoderException {
