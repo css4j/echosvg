@@ -53,6 +53,9 @@ Any software that renders SVG and is compliant with the specification can be abu
 to produce a DoS attack, and little can be done except maybe limiting the compliance.
 However, sometimes there are security issues that are actionable.
 
+Only the latest version is supported, and it is recommended that you check
+whether the latest `master` branch is vulnerable before reporting any issue.
+
 To report a security vulnerability, please read
 [Privately reporting a security vulnerability](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability#privately-reporting-a-security-vulnerability).
 Take into account what is written in this document about the inherent difficulties in
