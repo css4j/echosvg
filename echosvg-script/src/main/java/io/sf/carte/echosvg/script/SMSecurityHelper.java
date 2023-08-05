@@ -31,6 +31,7 @@ class SMSecurityHelper extends SecurityHelper {
 		super();
 	}
 
+	@Override
 	@SuppressWarnings("deprecation")
 	Object runPrivilegedExceptionAction(PrivilegedExceptionAction<?> action) throws Exception {
 		return AccessController.doPrivileged(action);

@@ -104,6 +104,7 @@ class SMApplicationSecurityEnforcer extends ApplicationSecurityEnforcer {
 	 * new <code>SecurityManager</code> if there is already one it did not install
 	 * in place.
 	 */
+	@Override
 	public void enforceSecurity(boolean enforce) {
 		SecurityManager sm = System.getSecurityManager();
 
@@ -135,6 +136,7 @@ class SMApplicationSecurityEnforcer extends ApplicationSecurityEnforcer {
 	 * Returns the url for the default policy. This never returns null, but it may
 	 * throw a NullPointerException
 	 */
+	@Override
 	public URL getPolicyURL() {
 		ClassLoader cl = getApplicationMainClass().getClassLoader();
 		URL policyURL = cl.getResource(getSecurityPolicy());
@@ -150,6 +152,7 @@ class SMApplicationSecurityEnforcer extends ApplicationSecurityEnforcer {
 	/**
 	 * Installs a SecurityManager on behalf of the application
 	 */
+	@Override
 	public void installSecurityManager() {
 		java.security.Policy policy = java.security.Policy.getPolicy();
 		EchoSVGSecurityManager securityManager = new EchoSVGSecurityManager();
