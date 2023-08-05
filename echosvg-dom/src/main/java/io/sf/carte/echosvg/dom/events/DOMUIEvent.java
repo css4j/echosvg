@@ -96,7 +96,6 @@ public class DOMUIEvent extends AbstractEvent implements UIEvent {
 	 */
 	protected String[] split(String s) {
 		List<String> a = new ArrayList<>(8);
-		StringBuffer sb;
 		int i = 0;
 		int len = s.length();
 		while (i < len) {
@@ -104,7 +103,7 @@ public class DOMUIEvent extends AbstractEvent implements UIEvent {
 			if (XMLUtilities.isXMLSpace(c)) {
 				continue;
 			}
-			sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			sb.append(c);
 			while (i < len) {
 				c = s.charAt(i++);

@@ -79,7 +79,7 @@ public class ICCNamedColor extends AbstractValue {
 	 */
 	@Override
 	public String getCssText() {
-		StringBuffer sb = new StringBuffer(ICC_NAMED_COLOR_FUNCTION);
+		StringBuilder sb = new StringBuilder(ICC_NAMED_COLOR_FUNCTION);
 		sb.append('(');
 		sb.append(colorProfile);
 		sb.append(", ");

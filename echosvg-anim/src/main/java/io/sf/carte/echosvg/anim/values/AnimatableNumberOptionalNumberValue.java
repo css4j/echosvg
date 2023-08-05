@@ -162,7 +162,7 @@ public class AnimatableNumberOptionalNumberValue extends AnimatableValue {
 	 */
 	@Override
 	public String getCssText() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append(formatNumber(number));
 		if (hasOptionalNumber) {
 			sb.append(' ');

@@ -297,7 +297,7 @@ public abstract class AbstractParentNode extends AbstractNode {
 	 */
 	@Override
 	public String getTextContent() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (Node n = getFirstChild(); n != null; n = n.getNextSibling()) {
 			switch (n.getNodeType()) {
 			case COMMENT_NODE:

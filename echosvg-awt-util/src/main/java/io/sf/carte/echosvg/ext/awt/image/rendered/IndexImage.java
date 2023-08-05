@@ -595,7 +595,7 @@ public class IndexImage {
 	 */
 	static void logRGB(byte[] r, byte[] g, byte[] b) {
 
-		StringBuffer buff = new StringBuffer(100);
+		StringBuilder buff = new StringBuilder(100);
 		int nColors = r.length;
 		for (int i = 0; i < nColors; i++) {
 			String rgbStr = "(" + (r[i] + 128) + ',' + (g[i] + 128) + ',' + (b[i] + 128) + "),";

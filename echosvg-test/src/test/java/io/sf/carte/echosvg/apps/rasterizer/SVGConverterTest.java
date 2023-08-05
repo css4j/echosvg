@@ -546,7 +546,7 @@ abstract class AbstractConfigTest implements SVGConverterController {
 
 	private String makeSourceList(List<?> v) {
 		int n = v.size();
-		StringBuffer sb = new StringBuffer(n * 8);
+		StringBuilder sb = new StringBuilder(n * 8);
 		for (Object aV : v) {
 			sb.append(aV.toString());
 		}
@@ -556,7 +556,7 @@ abstract class AbstractConfigTest implements SVGConverterController {
 
 	private String makeHintsString(Map<Object, Object> map) {
 		Iterator<Object> iter = map.keySet().iterator();
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		while (iter.hasNext()) {
 			Object key = iter.next();
 			sb.append(key.toString());

@@ -176,7 +176,7 @@ public class SVGTransform extends AbstractSVGConverter {
 		//
 		int nPresentations = presentation.size();
 
-		StringBuffer transformStackBuffer = new StringBuffer(nPresentations * 8);
+		StringBuilder transformStackBuffer = new StringBuilder(nPresentations * 8);
 		for (i = 0; i < nPresentations; i++) {
 			transformStackBuffer.append(convertTransform(presentation.get(i)));
 			transformStackBuffer.append(SPACE);

@@ -523,7 +523,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
 	 */
 	@Override
 	public String toStringRep() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		Iterator<SVGTransform> i = transforms.iterator();
 		while (i.hasNext()) {
 			AbstractSVGTransform t = (AbstractSVGTransform) i.next();

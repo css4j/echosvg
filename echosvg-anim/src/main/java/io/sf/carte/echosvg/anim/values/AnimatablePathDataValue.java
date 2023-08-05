@@ -179,7 +179,7 @@ public class AnimatablePathDataValue extends AnimatableValue {
 	 */
 	@Override
 	public String toStringRep() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		int k = 0;
 		for (short command : commands) {
 			sb.append(PATH_COMMANDS[command]);

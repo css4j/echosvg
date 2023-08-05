@@ -88,7 +88,7 @@ public abstract class AbstractCIEColor extends AbstractValue {
 	 */
 	@Override
 	public String getCssText() {
-		StringBuffer sb = new StringBuffer(getFunctionName());
+		StringBuilder sb = new StringBuilder(getFunctionName());
 		sb.append('(');
 		sb.append(values[0]);
 		sb.append(", ");

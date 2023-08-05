@@ -145,7 +145,7 @@ public class CmapFormat4 extends CmapFormat {
 	 */
 	private static String intToStr(int[] array) {
 		int nSlots = array.length;
-		StringBuffer workBuff = new StringBuffer(nSlots * 8);
+		StringBuilder workBuff = new StringBuilder(nSlots * 8);
 		workBuff.append('[');
 		for (int i = 0; i < nSlots; i++) {
 			workBuff.append(array[i]);

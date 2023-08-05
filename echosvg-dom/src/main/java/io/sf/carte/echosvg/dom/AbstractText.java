@@ -125,7 +125,7 @@ public abstract class AbstractText extends AbstractCharacterData implements Text
 	 */
 	@Override
 	public String getWholeText() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (Node n = this; n != null; n = getPreviousLogicallyAdjacentTextNode(n)) {
 			sb.insert(0, n.getNodeValue());
 		}

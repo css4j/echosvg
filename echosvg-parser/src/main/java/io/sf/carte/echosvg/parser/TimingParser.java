@@ -105,7 +105,7 @@ public abstract class TimingParser extends AbstractParser {
 	 * Parses an XML name with optional escaping in the middle.
 	 */
 	protected String parseName() throws ParseException, IOException {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		boolean midEscaped = false;
 		do {
 			sb.append((char) current);
@@ -151,7 +151,7 @@ public abstract class TimingParser extends AbstractParser {
 				reportUnexpectedCharacterError(current);
 			}
 			current = reader.read();
-			StringBuffer keyName = new StringBuffer();
+			StringBuilder keyName = new StringBuilder();
 			while (current >= 'A' && current <= 'Z' || current >= 'a' && current <= 'z'
 					|| current >= '0' && current <= '9' || current == '+') {
 				keyName.append((char) current);
@@ -404,7 +404,7 @@ public abstract class TimingParser extends AbstractParser {
 					tzn = "UTC";
 					current = reader.read();
 				} else if (current == '+' || current == '-') {
-					StringBuffer tznb = new StringBuffer();
+					StringBuilder tznb = new StringBuilder();
 					tzSpecified = true;
 					if (current == '-') {
 						tzNegative = true;

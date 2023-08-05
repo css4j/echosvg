@@ -151,7 +151,7 @@ public class SrcManager extends IdentifierManager {
 				break;
 
 			case IDENT:
-				StringBuffer sb = new StringBuffer(lu.getStringValue());
+				StringBuilder sb = new StringBuilder(lu.getStringValue());
 				lu = lu.getNextLexicalUnit();
 				if (lu != null && lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
 					do {

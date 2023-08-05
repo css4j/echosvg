@@ -102,7 +102,7 @@ public final class ArabicTextHandler {
 
 		if (charOrder != null) {
 			// need to reconstruct the reordered attributed string
-			StringBuffer reorderedString = new StringBuffer(numChars);
+			StringBuilder reorderedString = new StringBuilder(numChars);
 			char c;
 			for (int i = 0; i < numChars; i++) {
 				c = aci.setIndex(charOrder[i]);
@@ -404,7 +404,7 @@ public final class ArabicTextHandler {
 		int start = aci.getBeginIndex();
 		int end = aci.getEndIndex();
 		int numChar = end - start;
-		StringBuffer substString = new StringBuffer(numChar);
+		StringBuilder substString = new StringBuilder(numChar);
 		for (int i = start; i < end; i++) {
 			char c = aci.setIndex(i);
 			if (!arabicChar(c)) {

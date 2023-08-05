@@ -415,7 +415,7 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
 	 */
 	public static String contentToString(String s, boolean isXML11) throws IOException {
 
-		StringBuffer result = new StringBuffer(s.length());
+		StringBuilder result = new StringBuilder(s.length());
 
 		final int len = s.length();
 		int i = 0;
@@ -644,7 +644,7 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
 		}
 
 		// Try and parse as a document fragment
-		StringBuffer sb = new StringBuffer(
+		StringBuilder sb = new StringBuilder(
 				wrapperElementPrefix.length() + text.length() + wrapperElementSuffix.length());
 		sb.append(wrapperElementPrefix);
 		sb.append(text);
@@ -803,7 +803,7 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
 			if ((NAME_FIRST_CHARACTER[d] & (1 << m)) == 0) {
 				throw new DOMException(DOMException.INVALID_CHARACTER_ERR, "Wrong name initial:  " + c);
 			}
-			StringBuffer ident = new StringBuffer();
+			StringBuilder ident = new StringBuilder();
 			ident.append(c);
 			while (++i < data.length()) {
 				c = data.charAt(i);
@@ -847,7 +847,7 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
 			// The next char must be '\'' or '"'
 			c = data.charAt(i);
 			i++;
-			StringBuffer value = new StringBuffer();
+			StringBuilder value = new StringBuilder();
 			if (c == '\'') {
 				while (i < data.length()) {
 					c = data.charAt(i);

@@ -91,7 +91,7 @@ public class ICCColor extends AbstractValue {
 	 */
 	@Override
 	public String getCssText() {
-		StringBuffer sb = new StringBuffer(count * 8);
+		StringBuilder sb = new StringBuilder(count * 8);
 		sb.append(ICC_COLOR_FUNCTION).append('(');
 		sb.append(colorProfile);
 		for (int i = 0; i < count; i++) {

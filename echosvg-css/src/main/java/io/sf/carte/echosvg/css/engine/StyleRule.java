@@ -85,7 +85,7 @@ public class StyleRule implements Rule {
 	 */
 	@Override
 	public String toString(CSSEngine eng) {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		if (selectorList != null) {
 			sb.append(selectorList.item(0));
 			for (int i = 1; i < selectorList.getLength(); i++) {

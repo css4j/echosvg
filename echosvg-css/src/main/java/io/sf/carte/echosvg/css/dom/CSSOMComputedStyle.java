@@ -74,7 +74,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
 	 */
 	@Override
 	public String getCssText() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < cssEngine.getNumberOfProperties(); i++) {
 			sb.append(cssEngine.getPropertyName(i));
 			sb.append(": ");

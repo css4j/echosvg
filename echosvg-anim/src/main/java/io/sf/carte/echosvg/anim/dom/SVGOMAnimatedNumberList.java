@@ -399,7 +399,7 @@ public class SVGOMAnimatedNumberList extends AbstractSVGAnimatedValue implements
 			if (itemList.size() == 0) {
 				return "";
 			}
-			StringBuffer sb = new StringBuffer(itemList.size() * 8);
+			StringBuilder sb = new StringBuilder(itemList.size() * 8);
 			Iterator<SVGItem> i = itemList.iterator();
 			if (i.hasNext()) {
 				sb.append(i.next().getValueAsString());

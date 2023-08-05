@@ -71,7 +71,7 @@ public class FontFaceRule implements Rule {
 	 */
 	@Override
 	public String toString(CSSEngine eng) {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append("@font-face { ");
 		sb.append(sm.toString(eng));
 		sb.append(" }\n");

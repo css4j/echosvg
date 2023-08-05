@@ -363,7 +363,7 @@ public class XMLUtilities extends XMLCharacters {
 		}
 		sc = (char) c;
 
-		StringBuffer enc = new StringBuffer();
+		StringBuilder enc = new StringBuilder();
 		for (;;) {
 			c = r.read();
 			if (c == -1) {

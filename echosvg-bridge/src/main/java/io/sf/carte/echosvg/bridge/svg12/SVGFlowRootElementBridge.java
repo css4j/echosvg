@@ -412,8 +412,8 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 		if (as == null)
 			return;
 
-		StringBuffer chars = new StringBuffer();
-		StringBuffer brkStr = new StringBuffer();
+		StringBuilder chars = new StringBuilder();
+		StringBuilder brkStr = new StringBuilder();
 		AttributedCharacterIterator aci = as.getIterator();
 		AttributedCharacterIterator.Attribute WORD_LIMIT = TextLineBreaks.WORD_LIMIT;
 

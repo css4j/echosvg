@@ -90,7 +90,7 @@ public class SVGFont implements XMLConstants, SVGConstants, ScriptTags, FeatureT
 	private static String CONFIG_SVG_TEST_CARD_END = "SVGFont.config.svg.test.card.end";
 
 	protected static String encodeEntities(String s) {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) == XML_CHAR_LT) {
 				sb.append(XML_ENTITY_LT);
@@ -116,7 +116,7 @@ public class SVGFont implements XMLConstants, SVGConstants, ScriptTags, FeatureT
 			return "";
 		}
 
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		int offset = 0;
 
 		while (offset < count) {

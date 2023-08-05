@@ -411,7 +411,7 @@ public class ClassFileUtilities {
 
 				case 'L':
 					c = desc.charAt(++i);
-					StringBuffer sb = new StringBuffer();
+					StringBuilder sb = new StringBuilder();
 					while (c != ';') {
 						sb.append(c);
 						c = desc.charAt(++i);
@@ -438,7 +438,7 @@ public class ClassFileUtilities {
 
 			case 'L':
 				c = desc.charAt(++i);
-				StringBuffer sb = new StringBuffer();
+				StringBuilder sb = new StringBuilder();
 				while (c != ';') {
 					sb.append(c);
 					c = desc.charAt(++i);
@@ -461,7 +461,7 @@ public class ClassFileUtilities {
 
 		case 'L':
 			c = desc.charAt(++i);
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			while (c != ';') {
 				sb.append(c);
 				c = desc.charAt(++i);

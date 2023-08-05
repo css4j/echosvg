@@ -458,7 +458,7 @@ public abstract class AbstractSVGTransformList extends AbstractSVGList implement
 		 * Returns the string representation of this transform.
 		 */
 		protected String getStringValue() {
-			StringBuffer buf = new StringBuffer();
+			StringBuilder buf = new StringBuilder();
 			switch (type) {
 			case SVGTransform.SVG_TRANSFORM_TRANSLATE:
 				buf.append("translate(");

@@ -968,7 +968,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 	 * Normalizes the given string.
 	 */
 	protected String normalizeString(String s, boolean preserve, boolean stripfirst) {
-		StringBuffer sb = new StringBuffer(s.length());
+		StringBuilder sb = new StringBuilder(s.length());
 		if (preserve) {
 			for (int i = 0; i < s.length(); i++) {
 				char c = s.charAt(i);
@@ -1145,7 +1145,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 				return new AttributedString(strings.get(0), attributes.get(0));
 			}
 
-			StringBuffer sb = new StringBuffer(strings.size() * 5);
+			StringBuilder sb = new StringBuilder(strings.size() * 5);
 			for (String string : strings) {
 				sb.append(string);
 			}
@@ -1183,7 +1183,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 				return strings.get(0);
 			}
 
-			StringBuffer sb = new StringBuffer(strings.size() * 5);
+			StringBuilder sb = new StringBuilder(strings.size() * 5);
 			for (String string : strings) {
 				sb.append(string);
 			}

@@ -193,7 +193,7 @@ public class AnimatableLengthListValue extends AnimatableValue {
 	 */
 	@Override
 	public String getCssText() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		if (lengthValues.length > 0) {
 			sb.append(formatNumber(lengthValues[0]));
 			sb.append(AnimatableLengthValue.UNITS[lengthTypes[0] - 1]);

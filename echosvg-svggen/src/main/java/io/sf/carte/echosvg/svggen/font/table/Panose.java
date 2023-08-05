@@ -92,7 +92,7 @@ public class Panose {
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append(String.valueOf(bFamilyType)).append(" ").append(String.valueOf(bSerifStyle)).append(" ")
 				.append(String.valueOf(bWeight)).append(" ").append(String.valueOf(bProportion)).append(" ")
 				.append(String.valueOf(bContrast)).append(" ").append(String.valueOf(bStrokeVariation)).append(" ")

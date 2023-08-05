@@ -78,7 +78,7 @@ public class ListValue extends AbstractValue {
 	 */
 	@Override
 	public String getCssText() {
-		StringBuffer sb = new StringBuffer(length * 8);
+		StringBuilder sb = new StringBuilder(length * 8);
 		if (length > 0) {
 			sb.append(items[0].getCssText());
 		}

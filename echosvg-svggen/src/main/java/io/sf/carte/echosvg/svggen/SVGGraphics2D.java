@@ -1205,7 +1205,7 @@ public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGS
 			int start = ati.getIndex();
 			int end = ati.getRunLimit() - 1;
 
-			StringBuffer buf = new StringBuffer(end - start);
+			StringBuilder buf = new StringBuilder(end - start);
 			buf.append(ch);
 
 			for (int i = start; i < end; i++) {

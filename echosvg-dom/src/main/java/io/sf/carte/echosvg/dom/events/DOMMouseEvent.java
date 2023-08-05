@@ -162,7 +162,7 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
 		if (modifierKeys.isEmpty()) {
 			return "";
 		}
-		StringBuffer sb = new StringBuffer(modifierKeys.size() * 8);
+		StringBuilder sb = new StringBuilder(modifierKeys.size() * 8);
 		Iterator<String> i = modifierKeys.iterator();
 		sb.append(i.next());
 		while (i.hasNext()) {

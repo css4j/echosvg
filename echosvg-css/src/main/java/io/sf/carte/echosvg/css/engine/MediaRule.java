@@ -66,7 +66,7 @@ public class MediaRule extends StyleSheet implements Rule {
 	 */
 	@Override
 	public String toString(CSSEngine eng) {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append("@media");
 		if (mediaList != null) {
 			for (int i = 0; i < mediaList.getLength(); i++) {

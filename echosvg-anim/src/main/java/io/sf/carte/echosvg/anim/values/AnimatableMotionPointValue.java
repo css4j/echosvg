@@ -157,7 +157,7 @@ public class AnimatableMotionPointValue extends AnimatableValue {
 	 */
 	@Override
 	public String toStringRep() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append(formatNumber(x));
 		sb.append(',');
 		sb.append(formatNumber(y));

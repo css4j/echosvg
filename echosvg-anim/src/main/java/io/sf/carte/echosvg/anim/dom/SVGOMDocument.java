@@ -170,7 +170,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 	 */
 	@Override
 	public String getTitle() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		boolean preserve = false;
 
 		for (Node n = getDocumentElement().getFirstChild(); n != null; n = n.getNextSibling()) {

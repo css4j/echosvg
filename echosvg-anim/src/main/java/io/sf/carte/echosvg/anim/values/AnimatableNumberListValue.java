@@ -141,7 +141,7 @@ public class AnimatableNumberListValue extends AnimatableValue {
 	 */
 	@Override
 	public String getCssText() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append(numbers[0]);
 		for (int i = 1; i < numbers.length; i++) {
 			sb.append(' ');

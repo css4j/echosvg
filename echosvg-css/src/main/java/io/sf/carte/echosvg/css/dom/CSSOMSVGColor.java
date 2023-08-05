@@ -821,7 +821,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 			Value value = getValue();
 			switch (getColorType()) {
 			case SVG_COLORTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuffer sb = new StringBuffer(value.item(0).getCssText());
+				StringBuilder sb = new StringBuilder(value.item(0).getCssText());
 				sb.append(" icc-color(");
 				sb.append(cp);
 				ICCColor iccc = (ICCColor) value.item(1);
@@ -846,7 +846,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 			Value value = getValue();
 			switch (getColorType()) {
 			case SVG_COLORTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuffer sb = new StringBuffer(value.item(0).getCssText());
+				StringBuilder sb = new StringBuilder(value.item(0).getCssText());
 				sb.append(" icc-color(");
 				ICCColor iccc = (ICCColor) value.item(1);
 				sb.append(iccc.getColorProfile());
@@ -867,7 +867,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 			Value value = getValue();
 			switch (getColorType()) {
 			case SVG_COLORTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuffer sb = new StringBuffer(value.item(0).getCssText());
+				StringBuilder sb = new StringBuilder(value.item(0).getCssText());
 				sb.append(" icc-color(");
 				ICCColor iccc = (ICCColor) value.item(1);
 				sb.append(iccc.getColorProfile());
@@ -890,7 +890,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 			Value value = getValue();
 			switch (getColorType()) {
 			case SVG_COLORTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuffer sb = new StringBuffer(value.item(0).getCssText());
+				StringBuilder sb = new StringBuilder(value.item(0).getCssText());
 				sb.append(" icc-color(");
 				ICCColor iccc = (ICCColor) value.item(1);
 				sb.append(iccc.getColorProfile());
@@ -921,7 +921,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 			Value value = getValue();
 			switch (getColorType()) {
 			case SVG_COLORTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuffer sb = new StringBuffer(value.item(0).getCssText());
+				StringBuilder sb = new StringBuilder(value.item(0).getCssText());
 				sb.append(" icc-color(");
 				ICCColor iccc = (ICCColor) value.item(1);
 				sb.append(iccc.getColorProfile());
@@ -952,7 +952,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 			Value value = getValue();
 			switch (getColorType()) {
 			case SVG_COLORTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuffer sb = new StringBuffer(value.item(0).getCssText());
+				StringBuilder sb = new StringBuilder(value.item(0).getCssText());
 				sb.append(" icc-color(");
 				ICCColor iccc = (ICCColor) value.item(1);
 				sb.append(iccc.getColorProfile());
@@ -981,7 +981,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 			Value value = getValue();
 			switch (getColorType()) {
 			case SVG_COLORTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuffer sb = new StringBuffer(value.item(0).getCssText());
+				StringBuilder sb = new StringBuilder(value.item(0).getCssText());
 				sb.append(" icc-color(");
 				ICCColor iccc = (ICCColor) value.item(1);
 				sb.append(iccc.getColorProfile());

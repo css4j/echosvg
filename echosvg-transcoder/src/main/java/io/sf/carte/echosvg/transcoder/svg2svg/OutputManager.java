@@ -719,7 +719,7 @@ public class OutputManager {
 				startsWithSpace = true;
 				i++;
 			}
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			for (;;) {
 				if (i >= text.length || XMLUtilities.isXMLSpace(text[i])) {
 					break;
