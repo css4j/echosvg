@@ -461,7 +461,7 @@ public class GraphicsUtil {
 		boolean warn = true;
 		try {
 			String s = System.getProperty("io.sf.carte.echosvg.warn_destination", "true");
-			warn = Boolean.valueOf(s);
+			warn = Boolean.parseBoolean(s);
 		} catch (SecurityException se) {
 		} catch (NumberFormatException nfe) {
 		} finally {
