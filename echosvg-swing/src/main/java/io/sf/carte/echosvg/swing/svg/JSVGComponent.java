@@ -1010,8 +1010,7 @@ public class JSVGComponent extends JGVTComponent {
 					} catch (NoninvertibleTransformException e) {
 					}
 				}
-				if (at != null)
-					pt = at.transform(pt, null);
+				pt = at.transform(pt, null);
 				if (rendAT != null)
 					pt = rendAT.transform(pt, null);
 
