@@ -161,7 +161,7 @@ public abstract class XMLAbstractTranscoder extends AbstractTranscoder {
 		DocumentFactory f;
 		DOMImplementation domImpl = (DOMImplementation) hints.get(KEY_DOM_IMPLEMENTATION);
 		if (domImpl == null) {
-			if (documentElement.equals("html")) {
+			if ("html".equalsIgnoreCase(documentElement)) {
 				domImpl = GenericDOMImplementation.getDOMImplementation();
 				f = new SAXDocumentFactory(domImpl);
 			} else {
