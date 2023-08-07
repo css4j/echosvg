@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.WeakHashMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.transform.TransformerException;
@@ -180,6 +181,15 @@ public abstract class AbstractDocument extends AbstractParentNode
 	 * more than one element owned by this document with a particular 'id').
 	 */
 	protected transient Map<String, Object> elementsById;
+
+	/**
+	 * The ID lock.
+	 * <p>
+	 * A lock is used to handle elementsById instead of using a
+	 * {@code ConcurrentHashMap} because we have to operate inside the Map values.
+	 * </p>
+	 */
+	private transient ReentrantLock idLock = new ReentrantLock();
 
 	/**
 	 * Creates a new document.
@@ -459,7 +469,7 @@ public abstract class AbstractDocument extends AbstractParentNode
 	 * has 'id'.
 	 */
 	public Element getChildElementById(Node requestor, String id) {
-		if ((id == null) || (id.length() == 0))
+		if (id == null || id.length() == 0)
 			return null;
 		if (elementsById == null)
 			return null;
@@ -472,7 +482,12 @@ public abstract class AbstractDocument extends AbstractParentNode
 		if (o instanceof IdSoftRef) {
 			o = ((IdSoftRef) o).get();
 			if (o == null) {
-				elementsById.remove(id);
+				idLock.lock();
+				try {
+					elementsById.remove(id);
+				} finally {
+					idLock.unlock();
+				}
 				return null;
 			}
 			Element e = (Element) o;
@@ -489,7 +504,11 @@ public abstract class AbstractDocument extends AbstractParentNode
 			IdSoftRef sr = li.next();
 			o = sr.get();
 			if (o == null) {
-				li.remove();
+				try {
+					li.remove();
+				} catch (IllegalStateException e) {
+					// Prevent (unlikely) race condition
+				}
 			} else {
 				Element e = (Element) o;
 				if (getRoot(e) == root)
@@ -531,7 +550,8 @@ public abstract class AbstractDocument extends AbstractParentNode
 		public void cleared() {
 			if (elementsById == null)
 				return;
-			synchronized (elementsById) {
+			idLock.lock();
+			try {
 				if (list != null)
 					list.remove(this);
 				else {
@@ -539,6 +559,8 @@ public abstract class AbstractDocument extends AbstractParentNode
 					if (o != this) // oops not us!
 						elementsById.put(id, o);
 				}
+			} finally {
+				idLock.unlock();
 			}
 		}
 	}
@@ -553,7 +575,8 @@ public abstract class AbstractDocument extends AbstractParentNode
 		if (elementsById == null)
 			return;
 
-		synchronized (elementsById) {
+		idLock.lock();
+		try {
 			Object o = elementsById.get(id);
 			if (o == null)
 				return;
@@ -570,15 +593,25 @@ public abstract class AbstractDocument extends AbstractParentNode
 				IdSoftRef ip = li.next();
 				o = ip.get();
 				if (o == null) {
-					li.remove();
+					try {
+						li.remove();
+					} catch (IllegalStateException ex) {
+						/*
+						 * Prevent unlikely race condition: void soft refs in lists can be modified
+						 * outside of the lock.
+						 */
+					}
 				} else if (e == o) {
 					li.remove();
 					break;
 				}
 			}
 
-			if (l.size() == 0)
+			if (l.size() == 0) {
 				elementsById.remove(id);
+			}
+		} finally {
+			idLock.unlock();
 		}
 	}
 
@@ -586,14 +619,14 @@ public abstract class AbstractDocument extends AbstractParentNode
 		if (id == null)
 			return;
 
-		if (elementsById == null) {
-			Map<String, Object> tmp = new HashMap<>();
-			tmp.put(id, new IdSoftRef(e, id));
-			elementsById = tmp;
-			return;
-		}
+		idLock.lock();
+		try {
+			if (elementsById == null) {
+				elementsById = new HashMap<>();
+				elementsById.put(id, new IdSoftRef(e, id));
+				return;
+			}
 
-		synchronized (elementsById) {
 			// Add new Id mapping.
 			Object o = elementsById.get(id);
 			if (o == null) {
@@ -620,11 +653,13 @@ public abstract class AbstractDocument extends AbstractParentNode
 			@SuppressWarnings("unchecked")
 			List<IdSoftRef> l = (List<IdSoftRef>) o;
 			l.add(new IdSoftRef(e, id, l));
+		} finally {
+			idLock.unlock();
 		}
 	}
 
 	public void updateIdEntry(Element e, String oldId, String newId) {
-		if ((oldId == newId) || ((oldId != null) && (oldId.equals(newId))))
+		if (oldId == newId || (oldId != null && oldId.equals(newId)))
 			return;
 
 		removeIdEntry(e, oldId);
@@ -639,8 +674,7 @@ public abstract class AbstractDocument extends AbstractParentNode
 		if (elementsByTagNames == null) {
 			return null;
 		}
-		SoftDoublyIndexedTable<String, String> t;
-		t = elementsByTagNames.get(n);
+		SoftDoublyIndexedTable<String, String> t = elementsByTagNames.get(n);
 		if (t == null) {
 			return null;
 		}

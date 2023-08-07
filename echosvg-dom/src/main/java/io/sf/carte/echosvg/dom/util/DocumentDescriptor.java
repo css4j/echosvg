@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.dom.util;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.util.CleanerThread;
@@ -35,6 +37,11 @@ public class DocumentDescriptor {
 	 * The table initial capacity
 	 */
 	protected static final int INITIAL_CAPACITY = 101;
+
+	/**
+	 * The table lock
+	 */
+	private final ReentrantLock tableLock = new ReentrantLock();
 
 	/**
 	 * The underlying array
@@ -57,9 +64,7 @@ public class DocumentDescriptor {
 	 * Returns the number of elements in the document.
 	 */
 	public int getNumberOfElements() {
-		synchronized (this) {
-			return count;
-		}
+		return count;
 	}
 
 	/**
@@ -68,7 +73,8 @@ public class DocumentDescriptor {
 	 * @return zero if the information is unknown.
 	 */
 	public int getLocationLine(Element elt) {
-		synchronized (this) {
+		tableLock.lock();
+		try {
 			int hash = elt.hashCode() & 0x7FFFFFFF;
 			int index = hash % table.length;
 
@@ -79,6 +85,8 @@ public class DocumentDescriptor {
 				if (o == elt)
 					return e.locationLine;
 			}
+		} finally {
+			tableLock.unlock();
 		}
 		return 0;
 	}
@@ -89,7 +97,8 @@ public class DocumentDescriptor {
 	 * @return zero if the information is unknown.
 	 */
 	public int getLocationColumn(Element elt) {
-		synchronized (this) {
+		tableLock.lock();
+		try {
 			int hash = elt.hashCode() & 0x7FFFFFFF;
 			int index = hash % table.length;
 
@@ -100,6 +109,8 @@ public class DocumentDescriptor {
 				if (o == elt)
 					return e.locationColumn;
 			}
+		} finally {
+			tableLock.unlock();
 		}
 		return 0;
 	}
@@ -108,7 +119,8 @@ public class DocumentDescriptor {
 	 * Sets the location in the source file of the end element.
 	 */
 	public void setLocation(Element elt, int line, int col) {
-		synchronized (this) {
+		tableLock.lock();
+		try {
 			int hash = elt.hashCode() & 0x7FFFFFFF;
 			int index = hash % table.length;
 
@@ -130,6 +142,8 @@ public class DocumentDescriptor {
 
 			Entry e = new Entry(hash, elt, line, col, table[index]);
 			table[index] = e;
+		} finally {
+			tableLock.unlock();
 		}
 	}
 
@@ -154,17 +168,19 @@ public class DocumentDescriptor {
 	}
 
 	protected void removeEntry(Entry e) {
-		synchronized (this) {
+		tableLock.lock();
+		try {
 			int hash = e.hash;
 			int index = hash % table.length;
 			Entry curr = table[index];
+			if (curr == null)
+				return; // already removed???
+
 			Entry prev = null;
 			while (curr != e) {
 				prev = curr;
 				curr = curr.next;
 			}
-			if (curr == null)
-				return; // already remove???
 
 			if (prev == null)
 				// First entry.
@@ -172,6 +188,8 @@ public class DocumentDescriptor {
 			else
 				prev.next = curr.next;
 			count--;
+		} finally {
+			tableLock.unlock();
 		}
 	}
 
