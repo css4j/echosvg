@@ -33,10 +33,6 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
 public abstract class PrefixableStylableExtensionElement extends StylableExtensionElement {
 
 	private static final long serialVersionUID = 1L;
-	/**
-	 * The element prefix.
-	 */
-	protected String prefix = null;
 
 	/**
 	 * Creates a new EchoSVGStarElement object.
