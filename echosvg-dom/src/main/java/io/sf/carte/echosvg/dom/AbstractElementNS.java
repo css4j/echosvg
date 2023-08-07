@@ -72,7 +72,7 @@ public abstract class AbstractElementNS extends AbstractElement {
 		if (prefix != null) {
 			if (nsURI == null || ("xml".equals(prefix) && !XMLConstants.XML_NAMESPACE_URI.equals(nsURI))) {
 				throw createDOMException(DOMException.NAMESPACE_ERR, "namespace.uri",
-						new Object[] { (int) getNodeType(), getNodeName(), nsURI });
+						new Object[] { (int) getNodeType(), qname, nsURI });
 			}
 		}
 	}
