@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,7 +64,9 @@ import java.util.ServiceLoader;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class ParsedURL {
+public class ParsedURL implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The data class we defer most things to.
