@@ -101,7 +101,7 @@ public class InterpreterPool {
 	 * specified language. This method can return null if no interpreter has been
 	 * found for the specified language.
 	 *
-	 * @param document the document that needs the interpreter
+	 * @param document the document that needs the interpreter. Cannot be null.
 	 * @param language the scripting language
 	 * @param imports  The set of classes/packages to import (if the interpreter
 	 *                 supports that).
@@ -127,8 +127,7 @@ public class InterpreterPool {
 		if (interpreter == null)
 			return null;
 
-		if (document != null)
-			interpreter.bindObject(BIND_NAME_DOCUMENT, document);
+		interpreter.bindObject(BIND_NAME_DOCUMENT, document);
 
 		return interpreter;
 	}
