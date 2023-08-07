@@ -22,6 +22,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -48,7 +49,7 @@ public class AWTGlyphGeometryCache {
 	/**
 	 * The number of entries
 	 */
-	private volatile int count;
+	private AtomicInteger count = new AtomicInteger();
 
 	/**
 	 * The reference queue.
@@ -80,7 +81,7 @@ public class AWTGlyphGeometryCache {
 	 * Returns the size of this table.
 	 */
 	public int size() {
-		return count;
+		return count.get();
 	}
 
 	/**
@@ -140,7 +141,7 @@ public class AWTGlyphGeometryCache {
 
 			// The key is not in the hash table
 			int len = table.length;
-			if (count++ >= (len - (len >> 2))) {
+			if (count.getAndIncrement() >= (len - (len >> 2))) {
 				// more than 75% loaded: grow
 				rehash();
 				index = hash % table.length;
@@ -163,7 +164,11 @@ public class AWTGlyphGeometryCache {
 		} finally {
 			tableLock.unlock();
 		}
-		count = 0;
+		/*
+		 * The clear() method is intended to help GC AFAIK and is currently never used,
+		 * so let's use a lazySet.
+		 */
+		count.lazySet(0);
 		referenceQueue = new ReferenceQueue<>();
 	}
 
@@ -214,7 +219,7 @@ public class AWTGlyphGeometryCache {
 					t = c;
 				}
 			}
-			count--;
+			count.decrementAndGet();
 		}
 	}
 
