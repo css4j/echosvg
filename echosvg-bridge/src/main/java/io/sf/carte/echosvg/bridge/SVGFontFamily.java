@@ -105,8 +105,10 @@ public class SVGFontFamily implements GVTFontFamily {
 	 */
 	@Override
 	public GVTFont deriveFont(float size, Map<Attribute, ?> attrs) {
-		SVGFontElementBridge fontBridge;
-		fontBridge = (SVGFontElementBridge) ctx.getBridge(fontElement);
+		SVGFontElementBridge fontBridge = (SVGFontElementBridge) ctx.getBridge(fontElement);
+		if (fontBridge == null) {
+			return null;
+		}
 		@SuppressWarnings("unchecked")
 		SoftReference<Element> sr = (SoftReference<Element>) attrs.get(TEXT_COMPOUND_ID);
 		Element textElement = sr.get();

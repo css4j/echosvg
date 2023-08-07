@@ -83,7 +83,7 @@ public class DefaultScriptSecurity implements ScriptSecurity {
 					Messages.formatMessage(ERROR_CANNOT_ACCESS_DOCUMENT_URL, new Object[] { scriptURL }));
 		} else {
 			String docHost = docURL.getHost();
-			String scriptHost = scriptURL.getHost();
+			String scriptHost = scriptURL != null ? scriptURL.getHost() : null;
 
 			String externalPath;
 			if (scriptHost == null && !DATA_PROTOCOL.equals(scriptURL.getProtocol())
