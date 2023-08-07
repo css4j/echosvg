@@ -190,7 +190,7 @@ public class SVGTransform extends AbstractSVGConverter {
 	 * Converts an AffineTransform to an SVG transform string
 	 */
 	final String convertTransform(TransformStackElement transformElement) {
-		StringBuffer transformString = new StringBuffer();
+		StringBuilder transformString = new StringBuilder();
 		double[] transformParameters = transformElement.getTransformParameters();
 		switch (transformElement.getType().toInt()) {
 		case TransformType.TRANSFORM_TRANSLATE:

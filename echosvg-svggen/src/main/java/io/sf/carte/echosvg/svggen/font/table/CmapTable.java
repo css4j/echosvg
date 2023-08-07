@@ -72,7 +72,7 @@ public class CmapTable implements Table {
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer(numTables * 8).append("cmap\n");
+		StringBuilder sb = new StringBuilder(numTables * 8).append("cmap\n");
 
 		// Get each of the index entries
 		for (int i = 0; i < numTables; i++) {

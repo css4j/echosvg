@@ -117,7 +117,7 @@ public class PathParserTest {
 
 	private class TestHandler extends DefaultPathHandler {
 
-		StringBuffer buffer;
+		StringBuilder buffer;
 		String resultPath;
 
 		TestHandler() {
@@ -125,7 +125,7 @@ public class PathParserTest {
 
 		@Override
 		public void startPath() throws ParseException {
-			buffer = new StringBuffer();
+			buffer = new StringBuilder();
 		}
 
 		@Override

@@ -839,7 +839,7 @@ public class PrettyPrinter {
 				char valueDelim = scanner.getStringDelimiter();
 				boolean hasEntityRef = false;
 
-				StringBuffer sb = new StringBuffer();
+				StringBuilder sb = new StringBuilder();
 				sb.append(getCurrentValue());
 				loop: for (;;) {
 					scanner.clearBuffer();

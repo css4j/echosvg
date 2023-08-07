@@ -126,7 +126,7 @@ public class SVGTexturePaint extends AbstractSVGConverter {
 			patternDef.setAttributeNS(null, SVG_ID_ATTRIBUTE,
 					getGeneratorContext().getIDGenerator().generateID(ID_PREFIX_PATTERN));
 
-//            StringBuffer patternAttrBuf = new StringBuffer(URL_PREFIX);
+//            StringBuilder patternAttrBuf = new StringBuilder(URL_PREFIX);
 //            patternAttrBuf.append(SIGN_POUND);
 //            patternAttrBuf.append(patternDef.getAttributeNS(null, SVG_ID_ATTRIBUTE));
 //            patternAttrBuf.append(URL_SUFFIX);

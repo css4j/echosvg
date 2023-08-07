@@ -64,7 +64,7 @@ public class ParsedURLDataTest {
 		InputStream is = purl.openStream();
 		num = is.read(data);
 
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < num; i++) {
 			int val = data[i] & 0xFF;
 			if (val < 16) {

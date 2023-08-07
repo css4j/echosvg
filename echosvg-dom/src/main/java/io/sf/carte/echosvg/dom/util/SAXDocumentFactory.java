@@ -100,7 +100,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	/**
 	 * Contains collected string data. May be Text, CDATA or Comment.
 	 */
-	private StringBuffer stringBuffer = new StringBuffer();
+	private StringBuilder stringBuffer = new StringBuilder();
 
 	/**
 	 * The DTD to use when the document is created.

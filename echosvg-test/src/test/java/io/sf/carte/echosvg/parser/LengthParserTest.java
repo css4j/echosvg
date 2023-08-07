@@ -72,7 +72,7 @@ public class LengthParserTest {
 	}
 
 	private class TestHandler extends DefaultLengthHandler {
-		private StringBuffer buffer;
+		private StringBuilder buffer;
 		String resultLength;
 
 		TestHandler() {
@@ -80,7 +80,7 @@ public class LengthParserTest {
 
 		@Override
 		public void startLength() throws ParseException {
-			buffer = new StringBuffer();
+			buffer = new StringBuilder();
 		}
 
 		@Override

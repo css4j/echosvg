@@ -276,7 +276,7 @@ public class IndexImage {
 //            if ( flagChangedLo || flagChangedHi ){
 //                System.out.println("old min:" + min[ splitChannel ] + "/max:" + max[ splitChannel ]
 //                + " new: " + loBound + "/" + hiBound );
-//                StringBuffer buff = new StringBuffer( 100 );
+//                StringBuilder buff = new StringBuilder( 100 );
 //                for( int i= min[ splitChannel ]; i <= max[ splitChannel]; i++ ){
 //                    buff.append( counts[ i ] );
 //                    buff.append( ',' );

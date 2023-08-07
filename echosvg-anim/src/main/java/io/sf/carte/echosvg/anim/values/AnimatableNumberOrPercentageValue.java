@@ -144,7 +144,7 @@ public class AnimatableNumberOrPercentageValue extends AnimatableNumberValue {
 	 */
 	@Override
 	public String getCssText() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append(formatNumber(value));
 		if (isPercentage) {
 			sb.append('%');

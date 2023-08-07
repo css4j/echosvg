@@ -72,7 +72,7 @@ public class TransformListParserTest {
 	}
 
 	private class TestHandler extends DefaultTransformListHandler {
-		private StringBuffer buffer;
+		private StringBuilder buffer;
 		String resultTransform;
 
 		private boolean first;
@@ -82,7 +82,7 @@ public class TransformListParserTest {
 
 		@Override
 		public void startTransformList() throws ParseException {
-			buffer = new StringBuffer();
+			buffer = new StringBuilder();
 			first = true;
 		}
 

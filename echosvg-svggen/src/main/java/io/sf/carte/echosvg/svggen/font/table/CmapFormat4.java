@@ -129,7 +129,7 @@ public class CmapFormat4 extends CmapFormat {
 
 	@Override
 	public String toString() {
-		return new StringBuffer(80).append(super.toString()).append(", segCountX2: ").append(segCountX2)
+		return new StringBuilder(80).append(super.toString()).append(", segCountX2: ").append(segCountX2)
 				.append(", searchRange: ").append(searchRange).append(", entrySelector: ").append(entrySelector)
 				.append(", rangeShift: ").append(rangeShift).append(", endCode: ").append(intToStr(endCode))
 				.append(", startCode: ").append(intToStr(startCode)).append(", idDelta: ").append(intToStr(idDelta))

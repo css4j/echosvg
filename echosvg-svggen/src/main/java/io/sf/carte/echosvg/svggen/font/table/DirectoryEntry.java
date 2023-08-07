@@ -59,7 +59,7 @@ public class DirectoryEntry {
 
 	@Override
 	public String toString() {
-		return new StringBuffer().append((char) ((tag >> 24) & 0xff)).append((char) ((tag >> 16) & 0xff))
+		return new StringBuilder().append((char) ((tag >> 24) & 0xff)).append((char) ((tag >> 16) & 0xff))
 				.append((char) ((tag >> 8) & 0xff)).append((char) ((tag) & 0xff)).append(", offset: ").append(offset)
 				.append(", length: ").append(length).append(", checksum: 0x").append(Integer.toHexString(checksum))
 				.toString();

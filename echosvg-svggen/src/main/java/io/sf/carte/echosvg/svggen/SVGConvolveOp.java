@@ -88,7 +88,7 @@ public class SVGConvolveOp extends AbstractSVGFilterConverter {
 
 			// Convert the kernel values
 			float[] data = kernel.getKernelData(null);
-			StringBuffer kernelMatrixBuf = new StringBuffer(data.length * 8);
+			StringBuilder kernelMatrixBuf = new StringBuilder(data.length * 8);
 			for (float aData : data) {
 				kernelMatrixBuf.append(doubleString(aData));
 				kernelMatrixBuf.append(SPACE);
@@ -112,7 +112,7 @@ public class SVGConvolveOp extends AbstractSVGFilterConverter {
 			//
 
 			// Process filter attribute
-			StringBuffer filterAttrBuf = new StringBuffer(URL_PREFIX);
+			StringBuilder filterAttrBuf = new StringBuilder(URL_PREFIX);
 			filterAttrBuf.append(SIGN_POUND);
 			filterAttrBuf.append(filterDef.getAttributeNS(null, SVG_ID_ATTRIBUTE));
 			filterAttrBuf.append(URL_SUFFIX);

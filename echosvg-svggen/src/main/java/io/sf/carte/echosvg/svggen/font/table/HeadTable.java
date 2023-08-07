@@ -138,7 +138,7 @@ public class HeadTable implements Table {
 
 	@Override
 	public String toString() {
-		return new StringBuffer().append("head\n\tversionNumber: ").append(versionNumber).append("\n\tfontRevision: ")
+		return new StringBuilder().append("head\n\tversionNumber: ").append(versionNumber).append("\n\tfontRevision: ")
 				.append(fontRevision).append("\n\tcheckSumAdjustment: ").append(checkSumAdjustment)
 				.append("\n\tmagicNumber: ").append(magicNumber).append("\n\tflags: ").append(flags)
 				.append("\n\tunitsPerEm: ").append(unitsPerEm).append("\n\tcreated: ").append(created)

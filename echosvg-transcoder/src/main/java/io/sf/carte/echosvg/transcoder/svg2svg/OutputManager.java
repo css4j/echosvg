@@ -53,7 +53,7 @@ public class OutputManager {
 	/**
 	 * The margin.
 	 */
-	protected StringBuffer margin = new StringBuffer();
+	protected StringBuilder margin = new StringBuilder();
 
 	/**
 	 * The current line.
