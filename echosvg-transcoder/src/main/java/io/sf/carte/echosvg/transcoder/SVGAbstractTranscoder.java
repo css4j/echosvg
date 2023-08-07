@@ -429,10 +429,17 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 * @param rroot  result's document element.
 	 */
 	private static void appendHeadStyleElements(Document doc, Document result, Element rroot) {
-		for (Node n = doc.getDocumentElement().getFirstChild(); n != null; n = n.getNextSibling()) {
+		Element docElm = doc.getDocumentElement();
+		for (Node n = docElm.getFirstChild(); n != null; n = n.getNextSibling()) {
 			if (n.getNodeType() == Node.ELEMENT_NODE) {
 				if ("head".equals(n.getNodeName()) || "head".equals(n.getLocalName())) {
-					NodeList styleList = ((Element) n).getElementsByTagNameNS("*", "style");
+					Element head = (Element) n;
+					NodeList styleList;
+					if (docElm.getNamespaceURI() != null) {
+						styleList = head.getElementsByTagNameNS("*", "style");
+					} else {
+						styleList = head.getElementsByTagName("style");
+					}
 					int len = styleList.getLength();
 					for (int i = 0; i < len; i++) {
 						Node style = styleList.item(i);

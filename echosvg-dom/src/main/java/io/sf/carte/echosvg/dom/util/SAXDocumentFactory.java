@@ -471,7 +471,8 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	 * @param is   The document input source.
 	 * @exception IOException if an error occurred while reading the document.
 	 */
-	protected Document createDocument(String ns, String root, String uri, InputSource is) throws IOException {
+	protected Document createDocument(String ns, String root, String uri, InputSource is)
+			throws IOException {
 		checkRootElement(ns, root);
 
 		Document ret = createDocument(is);
@@ -489,18 +490,19 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 		}
 
 		String docElemNS = docElem.getNamespaceURI();
-		if ((docElemNS != nsURI) && ((docElemNS == null) || (!docElemNS.equals(nsURI))))
-			throw new IOException("Root element namespace does not match that requested:\n" + "Requested: " + nsURI
-					+ "\n" + "Found: " + docElemNS);
+		if (docElemNS != nsURI && docElemNS != null && !docElemNS.equals(nsURI)) {
+			throw new IOException("Root element namespace does not match that requested:\n"
+					+ "Requested: " + nsURI + "\n" + "Found: " + docElemNS);
+		}
 
 		if (docElemNS != null) {
 			if (!docElem.getLocalName().equals(lname))
-				throw new IOException("Root element does not match that requested:\n" + "Requested: " + lname + "\n"
-						+ "Found: " + docElem.getLocalName());
+				throw new IOException("Root element does not match that requested:\n"
+						+ "Requested: " + lname + "\n" + "Found: " + docElem.getLocalName());
 		} else {
 			if (!docElem.getNodeName().equals(lname))
-				throw new IOException("Root element does not match that requested:\n" + "Requested: " + lname + "\n"
-						+ "Found: " + docElem.getNodeName());
+				throw new IOException("Root element does not match that requested:\n"
+						+ "Requested: " + lname + "\n" + "Found: " + docElem.getNodeName());
 		}
 
 		return ret;
