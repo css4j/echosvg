@@ -103,8 +103,8 @@ public class PadRed extends AbstractRed {
 		}
 
 		public void zeroRect(Rectangle r) {
-			synchronized (this) {
-				if ((zeros == null) || (zeros.length < r.width * bands))
+			synchronized (ZeroRecter.class) {
+				if (zeros == null || zeros.length < r.width * bands)
 					zeros = new int[r.width * bands];
 			}
 
