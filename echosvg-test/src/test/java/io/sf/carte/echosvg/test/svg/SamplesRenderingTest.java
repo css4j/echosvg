@@ -942,6 +942,11 @@ public class SamplesRenderingTest {
 	}
 
 	@Test
+	public void testDefaultFontFamily() throws TranscoderException, IOException {
+		test("samples/tests/spec/styling/defaultFontFamily.svg");
+	}
+
+	@Test
 	public void testHTMLEmbed() throws TranscoderException, IOException {
 		testHTML("samples/tests/spec/styling/css2.html");
 	}
