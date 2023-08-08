@@ -46,17 +46,19 @@ cd /path/to/echosvg
 ```
 
 5) For convenience, now copy all the produced _jar_ files into a new `jar`
-directory:
+directory and create a Zip archive of them:
 
 ```shell
-./gradlew copyJars
+./gradlew copyJars -x test
+mv jar echosvg-0.3.3-bin
+7z a -mx7 echosvg-0.3.3-binaries.zip echosvg-0.3.3-bin
 ```
 
 6) Use `changes.sh <new-version>` to create a `CHANGES.txt` file with the
-changes from the latest tag. For example if you are releasing `0.3.1`:
+changes from the latest tag. For example if you are releasing `0.3.3`:
 
 ```shell
-./changes.sh 0.3.1
+./changes.sh 0.3.3
 ```
 
 Edit the resulting `CHANGES.txt` as convenient, to use it as the basis for the
@@ -96,9 +98,9 @@ archiver):
 cd /path/to/echosvg
 ./gradlew modularJavadoc
 cd echosvg-all/build/docs
-mv modular echosvg-modular-javadocs-0.3.1
-7z a echosvg-modular-javadocs-0.3.1.7z echosvg-modular-javadocs-0.3.1
-7z a -mx7 echosvg-modular-javadocs-0.3.1.zip echosvg-modular-javadocs-0.3.1
+mv modular echosvg-modular-javadocs-0.3.3
+7z a echosvg-modular-javadocs-0.3.3.7z echosvg-modular-javadocs-0.3.3
+7z a -mx7 echosvg-modular-javadocs-0.3.3.zip echosvg-modular-javadocs-0.3.3
 ```
 
 The compressed archives will be part of the published release. Notice that the
@@ -108,8 +110,8 @@ The compressed archives will be part of the published release. Notice that the
 
 ```shell
 cd /path/to/echosvg
-git tag -s v0.3.1 -m "Milestone Release 0.3.1"
-git push origin v0.3.1
+git tag -s v0.3.3 -m "Milestone Release 0.3.3"
+git push origin v0.3.3
 ```
 
 or `git tag -a` instead of `-s` if you do not plan to sign the tag. But it is
@@ -126,7 +128,7 @@ under it.
 
 Add to the Github release the _jar_ files from the `jar` directory in your copy
 of the EchoSVG release code, and also the modular javadoc archives
-(`echosvg-modular-javadocs-0.3.1.7z` and `echosvg-modular-javadocs-0.3.1.zip`).
+(`echosvg-modular-javadocs-0.3.3.7z` and `echosvg-modular-javadocs-0.3.3.zip`).
 
 13) Verify that the new [Github packages](https://github.com/orgs/css4j/packages?repo_name=echosvg)
 were created successfully by the [Gradle Package](https://github.com/css4j/echosvg/actions/workflows/gradle-publish.yml)
