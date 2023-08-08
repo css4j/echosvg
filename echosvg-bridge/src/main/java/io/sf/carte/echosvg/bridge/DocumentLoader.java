@@ -20,8 +20,7 @@ package io.sf.carte.echosvg.bridge;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -53,7 +52,7 @@ public class DocumentLoader {
 	 * WARNING: tagged private as no element of this Map should be referenced outise
 	 * of this class
 	 */
-	protected Map<String, DocumentState> cacheMap = new ConcurrentHashMap<>();
+	protected HashMap<String, DocumentState> cacheMap = new HashMap<>();
 
 	/**
 	 * The user agent.
@@ -85,7 +84,10 @@ public class DocumentLoader {
 		if (n != -1) {
 			uri = uri.substring(0, n);
 		}
-		DocumentState state = cacheMap.get(uri);
+		DocumentState state;
+		synchronized (cacheMap) {
+			state = cacheMap.get(uri);
+		}
 		if (state != null)
 			return state.getDocument();
 		return null;
@@ -106,7 +108,9 @@ public class DocumentLoader {
 
 		DocumentDescriptor desc = documentFactory.getDocumentDescriptor();
 		DocumentState state = new DocumentState(uri, document, desc);
-		cacheMap.put(uri, state);
+		synchronized (cacheMap) {
+			cacheMap.put(uri, state);
+		}
 
 		return state.getDocument();
 	}
@@ -126,7 +130,9 @@ public class DocumentLoader {
 
 		DocumentDescriptor desc = documentFactory.getDocumentDescriptor();
 		DocumentState state = new DocumentState(uri, document, desc);
-		cacheMap.put(uri, state);
+		synchronized (cacheMap) {
+			cacheMap.put(uri, state);
+		}
 
 		return state.getDocument();
 	}
@@ -143,7 +149,9 @@ public class DocumentLoader {
 	 */
 	public void dispose() {
 		// new Exception("purge the cache").printStackTrace();
-		cacheMap.clear();
+		synchronized (cacheMap) {
+			cacheMap.clear();
+		}
 	}
 
 	/**
@@ -156,7 +164,10 @@ public class DocumentLoader {
 	 */
 	public int getLineNumber(Element e) {
 		String uri = ((SVGDocument) e.getOwnerDocument()).getURL();
-		DocumentState state = cacheMap.get(uri);
+		DocumentState state;
+		synchronized (cacheMap) {
+			state = cacheMap.get(uri);
+		}
 		if (state == null) {
 			return -1;
 		} else {
@@ -180,7 +191,9 @@ public class DocumentLoader {
 
 		@Override
 		public void cleared() {
-			cacheMap.remove(uri);
+			synchronized (cacheMap) {
+				cacheMap.remove(uri);
+			}
 		}
 
 		public DocumentDescriptor getDocumentDescriptor() {
