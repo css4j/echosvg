@@ -33,6 +33,12 @@ jobs:
         languages: ${{ matrix.language }}
         config-file: ./.github/workflows/codeql/codeql-config.yml
 
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+
     - name: Build
       run: ./gradlew build -x test
 
