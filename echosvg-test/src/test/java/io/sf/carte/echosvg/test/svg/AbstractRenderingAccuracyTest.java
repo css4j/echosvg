@@ -165,7 +165,13 @@ public abstract class AbstractRenderingAccuracyTest {
 				throw new RuntimeException();
 			}
 
-			tempDirectory = new File(tmpDir);
+			synchronized (AbstractRenderingAccuracyTest.class) {
+				// Double-check for null to prevent race
+				if (tempDirectory == null) {
+					tempDirectory = new File(tmpDir);
+				}
+			}
+
 			if (!tempDirectory.exists()) {
 				throw new RuntimeException();
 			}
