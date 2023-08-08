@@ -1333,20 +1333,23 @@ public abstract class AbstractDocument extends AbstractParentNode
 		HashMap<String, String> names = new HashMap<>(); // todo names is not used ?
 		for (int i = 0; i < nnm.getLength(); i++) {
 			Attr a = (Attr) nnm.item(i);
-			String prefix = a.getPrefix(); // todo : this breaks when a is null
-			if (a != null && XMLConstants.XMLNS_PREFIX.equals(prefix)
-					|| a.getNodeName().equals(XMLConstants.XMLNS_PREFIX)) {
-				if (!namespaceDeclarations) {
-					// remove namespace declarations
-					toRemove.add(a);
-				} else {
-					// namespace normalization
-					String ns = a.getNodeValue();
-					if (a.getNodeValue().equals(XMLConstants.XMLNS_NAMESPACE_URI)
-							|| !ns.equals(XMLConstants.XMLNS_NAMESPACE_URI)) {
-						// XXX report error
+			// Check for possible race with 'a'
+			if (a != null) {
+				String prefix = a.getPrefix();
+				if (XMLConstants.XMLNS_PREFIX.equals(prefix)
+						|| a.getNodeName().equals(XMLConstants.XMLNS_PREFIX)) {
+					if (!namespaceDeclarations) {
+						// remove namespace declarations
+						toRemove.add(a);
 					} else {
-						names.put(prefix, ns);
+						// namespace normalization
+						String ns = a.getNodeValue();
+						if (a.getNodeValue().equals(XMLConstants.XMLNS_NAMESPACE_URI)
+								|| !ns.equals(XMLConstants.XMLNS_NAMESPACE_URI)) {
+							// XXX report error
+						} else {
+							names.put(prefix, ns);
+						}
 					}
 				}
 			}
