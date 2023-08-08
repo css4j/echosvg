@@ -624,7 +624,7 @@ public class CSSTranscodingHelper {
 		}
 
 		// The svg root must be a SVG element
-		if (!"svg".equals(svgRoot.getLocalName())) {
+		if (!SVGConstants.SVG_SVG_TAG.equals(svgRoot.getLocalName())) {
 			docType = null;
 			if (selector == null) {
 				svgRoot = document.getElementsByTagNameNS("*", "svg").item(0);
