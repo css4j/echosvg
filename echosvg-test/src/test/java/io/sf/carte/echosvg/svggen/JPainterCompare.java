@@ -96,7 +96,7 @@ public class JPainterCompare extends JPanel implements SVGConstants {
 	}
 
 	private static class LoaderListener extends SVGDocumentLoaderAdapter {
-		public final String sem = "sem";
+		public final String sem = "sem-echo";
 		boolean success = false;
 
 		@Override
