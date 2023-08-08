@@ -33,8 +33,8 @@ jobs:
         languages: ${{ matrix.language }}
         config-file: ./.github/workflows/codeql/codeql-config.yml
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+    - name: Build
+      run: ./gradlew build -x test
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
