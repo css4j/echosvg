@@ -27,6 +27,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.XMLConstants;
+
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -220,6 +222,10 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 			svgDoc = (SVGOMDocument) document;
 		}
 
+		if (svgDoc == null) {
+			throw new TranscoderException("Document contains no valid SVG element.");
+		}
+
 		if (hints.containsKey(KEY_WIDTH))
 			width = (Float) hints.get(KEY_WIDTH);
 		if (hints.containsKey(KEY_HEIGHT))
@@ -337,10 +343,28 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 		// Obtain the document element and DocumentType
 		Element docElm = document.getDocumentElement();
 		// Check whether the document element is a SVG element anyway
-		if (docElm.getNamespaceURI() != SVGDOMImplementation.SVG_NAMESPACE_URI
-				&& !"SVG".equalsIgnoreCase(docElm.getTagName())) {
+		if (docElm.getNamespaceURI() != SVGConstants.SVG_NAMESPACE_URI
+				&& !"svg".equalsIgnoreCase(docElm.getTagName())) {
 			// Not a SVG document, get the first SVG element
-			docElm = (Element) document.getElementsByTagNameNS("*", SVGConstants.SVG_SVG_TAG).item(0);
+			docElm = (Element) document.getElementsByTagNameNS(SVGConstants.SVG_NAMESPACE_URI,
+					SVGConstants.SVG_SVG_TAG).item(0);
+			if (docElm == null) {
+				// If we are we in XHTML instead of plain HTML, we are done
+				if (document.getDocumentElement().getNamespaceURI() != null) {
+					return null;
+				}
+				// Check for namespaceless <svg> (acceptable inside plain HTML)
+				docElm = (Element) document.getElementsByTagName(SVGConstants.SVG_SVG_TAG).item(0);
+				if (docElm == null) {
+					// No SVG elements at all
+					return null;
+				}
+				docElm.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+						XMLConstants.XMLNS_ATTRIBUTE, SVGConstants.SVG_NAMESPACE_URI);
+				Element newRoot = replaceNamespace(docElm);
+				docElm.getParentNode().replaceChild(newRoot, docElm);
+				docElm = newRoot;
+			}
 		}
 
 		// Obtain a DOM implementation
@@ -364,6 +388,53 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 		}
 
 		return svgDocument;
+	}
+
+	private Element replaceNamespace(Element elm) {
+		Element svgElm;
+		if (elm.getNamespaceURI() == null) {
+			svgElm = elm.getOwnerDocument().createElementNS(SVGConstants.SVG_NAMESPACE_URI,
+					elm.getTagName());
+			if (elm.hasAttributes()) {
+				NamedNodeMap attrMap = elm.getAttributes();
+				for (int i = 0; i < attrMap.getLength(); i++) {
+					Node attr = attrMap.item(i);
+					svgElm.setAttributeNode((Attr) attr.cloneNode(true));
+				}
+			}
+			if (elm.hasChildNodes()) {
+				NodeList nodeList = elm.getChildNodes();
+				Node node;
+				int i = 0;
+				while ((node = nodeList.item(i)) != null) {
+					if (node.getNodeType() == Node.ELEMENT_NODE) {
+						Element newNode = replaceNamespace((Element) node);
+						if (newNode != node) {
+							// node won't be removed from list
+							i++;
+							node = newNode;
+						}
+					}
+					svgElm.appendChild(node);
+				}
+			}
+		} else {
+			// Preserve this element but check child elements
+			svgElm = elm;
+			if (elm.hasChildNodes()) {
+				NodeList nodeList = elm.getChildNodes();
+				for (int i = 0; i < nodeList.getLength(); i++) {
+					Node node = nodeList.item(i);
+					if (node.getNodeType() == Node.ELEMENT_NODE) {
+						Element newNode = replaceNamespace((Element) node);
+						if (newNode != node) {
+							elm.replaceChild(newNode, node);
+						}
+					}
+				}
+			}
+		}
+		return svgElm;
 	}
 
 	/**
