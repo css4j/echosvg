@@ -39,7 +39,11 @@ class HTMLRenderingAccuracyTest extends XHTMLRenderingAccuracyTest {
 	private final HtmlParser parser;
 
 	public HTMLRenderingAccuracyTest() {
-		super();
+		this(null);
+	}
+
+	public HTMLRenderingAccuracyTest(String selector) {
+		super(selector);
 		setValidating(false);
 		parser = new HtmlParser(XmlViolationPolicy.ALTER_INFOSET);
 		parser.setCommentPolicy(XmlViolationPolicy.ALLOW);
