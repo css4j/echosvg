@@ -19,12 +19,18 @@
 package io.sf.carte.echosvg.dom;
 
 import java.io.Serializable;
+import java.io.StringReader;
 
 import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.MutationEvent;
 
+import io.sf.carte.doc.style.css.nsac.CSSNamespaceParseException;
+import io.sf.carte.doc.style.css.nsac.Parser;
+import io.sf.carte.doc.style.css.nsac.SelectorList;
+import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
 
@@ -290,6 +296,89 @@ public abstract class AbstractParentNode extends AbstractNode {
 			ad.putElementsByTagNameNS(this, namespaceURI, localName, result);
 		}
 		return result;
+	}
+
+	/**
+	 * Returns the first element that is a descendant of this node and matches the
+	 * given selector list.
+	 * 
+	 * @param selectors the selector list.
+	 * @return the first element that is a descendant of this node and matches
+	 *         selectors.
+	 */
+	public Element querySelector(String selectors) {
+		SelectorList selist = parseSelectors(selectors);
+		Node firstChild = getFirstChild();
+		return matchQuerySelector(selist, firstChild);
+	}
+
+	/**
+	 * Returns all the element descendants of this node that match selectors.
+	 * 
+	 * @param selectors the selector list.
+	 * @return a node list with all the element descendants of this node that match
+	 *         the given selector list.
+	 */
+	public NodeList querySelectorAll(String selectors) {
+		SelectorList selist = parseSelectors(selectors);
+		Node firstChild = getFirstChild();
+		ArrayNodeList list = new ArrayNodeList(8);
+		fillQuerySelectorList(list, selist, firstChild);
+		return list;
+	}
+
+	static SelectorList parseSelectors(String selectors) {
+		Parser parser = new CSSParser();
+		SelectorList selist;
+		try {
+			selist = parser.parseSelectors(new StringReader(selectors));
+		} catch (CSSNamespaceParseException e) {
+			throw createDOMException(DOMException.NAMESPACE_ERR,
+					"Namespaces inside the selectors are not supported: " + selectors, e);
+		} catch (Exception e) {
+			throw createDOMException(DOMException.SYNTAX_ERR,
+					"Unable to parse selector in: " + selectors, e);
+		}
+		return selist;
+	}
+
+	private static DOMException createDOMException(short type, String message, Exception cause) {
+		DOMException ex = new DOMException(type, message);
+		ex.initCause(cause);
+		return ex;
+	}
+
+	private static Element matchQuerySelector(SelectorList selist, Node firstChild) {
+		Node node = firstChild;
+		while (node != null) {
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				AbstractElement element = (AbstractElement) node;
+				if (element.matches(selist, null)) {
+					return element;
+				}
+				Element elt = matchQuerySelector(selist, element.getFirstChild());
+				if (elt != null) {
+					return elt;
+				}
+			}
+			node = node.getNextSibling();
+		}
+		return null;
+	}
+
+	private static void fillQuerySelectorList(ArrayNodeList list, SelectorList selist,
+			Node firstChild) {
+		Node node = firstChild;
+		while (node != null) {
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				AbstractElement element = (AbstractElement) node;
+				if (element.matches(selist, null)) {
+					list.nodes.add(element);
+				}
+				fillQuerySelectorList(list, selist, element.getFirstChild());
+			}
+			node = node.getNextSibling();
+		}
 	}
 
 	/**

@@ -35,6 +35,7 @@ import org.w3c.dom.xpath.XPathException;
 
 import io.sf.carte.echosvg.anim.dom.XBLOMContentElement;
 import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.ArrayNodeList;
 
 /**
  * A class to handle the XPath Pattern syntax for XBL content elements.
@@ -120,12 +121,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
 	 * Implementation of NodeList that contains the nodes that matched this
 	 * selector.
 	 */
-	protected class SelectedNodes implements NodeList {
-
-		/**
-		 * The selected nodes.
-		 */
-		protected ArrayList<Node> nodes = new ArrayList<>(10);
+	protected class SelectedNodes extends ArrayNodeList {
 
 		/**
 		 * Creates a new SelectedNodes object.
@@ -184,26 +180,9 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
 							"xpath.error", new Object[] { expression, te.getMessage() });
 				}
 			}
+
 		}
 
-		/**
-		 * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#item(int)}.
-		 */
-		@Override
-		public Node item(int index) {
-			if (index < 0 || index >= nodes.size()) {
-				return null;
-			}
-			return nodes.get(index);
-		}
-
-		/**
-		 * <b>DOM</b>: Implements {@link org.w3c.dom.NodeList#getLength()}.
-		 */
-		@Override
-		public int getLength() {
-			return nodes.size();
-		}
 	}
 
 	/**

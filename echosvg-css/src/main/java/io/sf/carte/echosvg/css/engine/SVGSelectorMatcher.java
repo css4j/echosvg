@@ -15,19 +15,29 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import org.w3c.dom.Element;
+
 import io.sf.carte.doc.style.css.SelectorMatcher;
 import io.sf.carte.doc.style.css.om.BaseSelectorMatcher;
 
-class SVGSelectorMatcher extends BaseSelectorMatcher<CSSStylableElement> {
+/**
+ * Used for CSS selector matching.
+ */
+public class SVGSelectorMatcher extends BaseSelectorMatcher<Element> {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
-	SVGSelectorMatcher(CSSStylableElement elt) {
+	/**
+	 * Construct a new matcher.
+	 * 
+	 * @param elt the element to check for matches.
+	 */
+	public SVGSelectorMatcher(Element elt) {
 		super(elt);
 	}
 
 	@Override
-	protected SelectorMatcher obtainSelectorMatcher(CSSStylableElement element) {
+	protected SelectorMatcher obtainSelectorMatcher(Element element) {
 		return new SVGSelectorMatcher(element);
 	}
 
