@@ -28,7 +28,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.TypeInfo;
 import org.w3c.dom.events.MutationEvent;
 
+import io.sf.carte.doc.style.css.SelectorMatcher;
+import io.sf.carte.doc.style.css.nsac.Condition;
+import io.sf.carte.doc.style.css.nsac.SelectorList;
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.engine.SVGSelectorMatcher;
 import io.sf.carte.echosvg.dom.events.DOMMutationEvent;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.w3c.dom.ElementTraversal;
@@ -747,6 +751,30 @@ public abstract class AbstractElement extends AbstractParentChildNode implements
 	public int getChildElementCount() {
 		getChildNodes();
 		return childNodes.elementChildren;
+	}
+
+	/**
+	 * Match the given selectors.
+	 * 
+	 * @param selectors the selector list.
+	 * @return true if this element matches the selectors.
+	 */
+	public boolean matches(String selectors) {
+		SelectorList selist = parseSelectors(selectors);
+		return matches(selist, null);
+	}
+
+	/**
+	 * Match the given selectors.
+	 * 
+	 * @param selist        the selector list.
+	 * @param pseudoElement the pseudo-element, or {@code null} if none.
+	 * @return true if this element matches the selector list.
+	 */
+	boolean matches(SelectorList selist, Condition pseudoElement) {
+		SelectorMatcher matcher = new SVGSelectorMatcher(this);
+		matcher.setPseudoElement(pseudoElement);
+		return matcher.matches(selist) != -1;
 	}
 
 	/**
