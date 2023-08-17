@@ -615,6 +615,10 @@ public class CSSTranscodingHelper {
 
 		// Determine the SVG root element
 		DOMElement svgRoot = null;
+		if (selector == null) {
+			selector = (String) transcoder.getTranscodingHints()
+					.get(SVGAbstractTranscoder.KEY_SVG_SELECTOR);
+		}
 		if (selector != null && (selector = selector.trim()).length() != 0) {
 			svgRoot = document.querySelector(selector);
 		}

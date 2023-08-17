@@ -57,6 +57,7 @@ import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
 import io.sf.carte.echosvg.bridge.ViewBox;
 import io.sf.carte.echosvg.bridge.svg12.SVG12BridgeContext;
+import io.sf.carte.echosvg.dom.AbstractParentNode;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.gvt.CanvasGraphicsNode;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
@@ -338,32 +339,52 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 * @param document the document to import.
 	 * @param uri      the document URI.
 	 * @return the imported SVG document.
+	 * @throws TranscoderException if an error occurred while importing the SVG.
 	 */
-	private SVGOMDocument importAsSVGDocument(Document document, String uri) {
+	private SVGOMDocument importAsSVGDocument(Document document, String uri)
+			throws TranscoderException {
 		// Obtain the document element and DocumentType
 		Element docElm = document.getDocumentElement();
 		// Check whether the document element is a SVG element anyway
 		if (docElm.getNamespaceURI() != SVGConstants.SVG_NAMESPACE_URI
 				&& !"svg".equalsIgnoreCase(docElm.getTagName())) {
-			// Not a SVG document, get the first SVG element
-			docElm = (Element) document.getElementsByTagNameNS(SVGConstants.SVG_NAMESPACE_URI,
-					SVGConstants.SVG_SVG_TAG).item(0);
-			if (docElm == null) {
-				// If we are we in XHTML instead of plain HTML, we are done
-				if (document.getDocumentElement().getNamespaceURI() != null) {
-					return null;
+			// Not a SVG document, either locate KEY_SVG_SELECTOR
+			// or get the first SVG element
+			String selector = (String) hints.get(KEY_SVG_SELECTOR);
+			if (selector != null && !(selector = selector.trim()).isEmpty()) {
+				docElm = ((AbstractParentNode) docElm).querySelector(selector);
+				if (docElm == null || (!"svg".equals(docElm.getLocalName())
+						&& !"svg".equals(docElm.getTagName()))) {
+					// No SVG element with that selector
+					throw new TranscoderException(
+							"Selector " + selector + " points to no valid SVG element.");
 				}
-				// Check for namespaceless <svg> (acceptable inside plain HTML)
-				docElm = (Element) document.getElementsByTagName(SVGConstants.SVG_SVG_TAG).item(0);
+				String namespaceURI = docElm.getNamespaceURI();
+				if (namespaceURI == null) {
+					// Set the right namespace
+					docElm = replaceSVGRoot(docElm);
+				} else if (!SVGConstants.SVG_NAMESPACE_URI.equals(namespaceURI)) {
+					throw new TranscoderException("Selector " + selector + " points to element in "
+							+ namespaceURI + " namespace.");
+				}
+			} else {
+				docElm = (Element) document.getElementsByTagNameNS(SVGConstants.SVG_NAMESPACE_URI,
+						SVGConstants.SVG_SVG_TAG).item(0);
 				if (docElm == null) {
-					// No SVG elements at all
-					return null;
+					// If we are we in XHTML instead of plain HTML, we are done
+					if (document.getDocumentElement().getNamespaceURI() != null) {
+						return null;
+					}
+					// Check for namespaceless <svg> (acceptable inside plain HTML)
+					docElm = (Element) document.getElementsByTagName(SVGConstants.SVG_SVG_TAG)
+							.item(0);
+					if (docElm == null) {
+						// No SVG elements at all
+						return null;
+					}
+					// Set the right namespace
+					docElm = replaceSVGRoot(docElm);
 				}
-				docElm.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
-						XMLConstants.XMLNS_ATTRIBUTE, SVGConstants.SVG_NAMESPACE_URI);
-				Element newRoot = replaceNamespace(docElm);
-				docElm.getParentNode().replaceChild(newRoot, docElm);
-				docElm = newRoot;
 			}
 		}
 
@@ -388,6 +409,14 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 		}
 
 		return svgDocument;
+	}
+
+	private Element replaceSVGRoot(Element docElm) {
+		docElm.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+				XMLConstants.XMLNS_ATTRIBUTE, SVGConstants.SVG_NAMESPACE_URI);
+		Element newRoot = replaceNamespace(docElm);
+		docElm.getParentNode().replaceChild(newRoot, docElm);
+		return newRoot;
 	}
 
 	private Element replaceNamespace(Element elm) {
@@ -845,6 +874,35 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 * </table>
 	 */
 	public static final TranscodingHints.Key KEY_MEDIA = new StringKey();
+
+	/**
+	 * The CSS selector key.
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_SVG_SELECTOR</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">null</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">If the document is HTML, use this CSS
+	 * selector to locate the desired SVG element.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_SVG_SELECTOR = new StringKey();
 
 	/**
 	 * The default font-family key.

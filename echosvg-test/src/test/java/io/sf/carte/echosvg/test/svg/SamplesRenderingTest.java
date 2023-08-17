@@ -952,6 +952,11 @@ public class SamplesRenderingTest {
 	}
 
 	@Test
+	public void testHTMLEmbedSelector() throws TranscoderException, IOException {
+		testHTML("samples/tests/spec/styling/css2.html", "#theSVG");
+	}
+
+	@Test
 	public void testXHTMLEmbed() throws TranscoderException, IOException {
 		testXHTML("samples/tests/spec/styling/css2.xhtml");
 	}
@@ -1643,7 +1648,24 @@ public class SamplesRenderingTest {
 	 * @throws IOException
 	 */
 	private void testHTML(String file) throws TranscoderException, IOException {
-		RenderingTest runner = new HTMLRenderingAccuracyTest();
+		testHTML(file, null);
+	}
+
+	/**
+	 * Test the rendering of a SVG image inside an HTML document.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file the HTML file to test.
+	 * @param the selector that locates the desired SVG element.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	private void testHTML(String file, String selector) throws TranscoderException, IOException {
+		RenderingTest runner = new HTMLRenderingAccuracyTest(selector);
 		runner.setFile(file);
 		runner.runTest(0.000001f, 0.000001f);
 	}

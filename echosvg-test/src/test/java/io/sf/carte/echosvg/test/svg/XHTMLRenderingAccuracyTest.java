@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 
@@ -29,8 +30,15 @@ import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
  */
 public class XHTMLRenderingAccuracyTest extends RenderingTest {
 
+	private final String selector;
+
 	public XHTMLRenderingAccuracyTest() {
+		this(null);
+	}
+
+	public XHTMLRenderingAccuracyTest(String selector) {
 		super();
+		this.selector = selector;
 		setValidating(false);
 	}
 
@@ -43,6 +51,9 @@ public class XHTMLRenderingAccuracyTest extends RenderingTest {
 		t.addTranscodingHint(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI,
 				"http://www.w3.org/1999/xhtml");
 		t.addTranscodingHint(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "html");
+		if (selector != null) {
+			t.addTranscodingHint(SVGAbstractTranscoder.KEY_SVG_SELECTOR, selector);
+		}
 		return t;
 	}
 
