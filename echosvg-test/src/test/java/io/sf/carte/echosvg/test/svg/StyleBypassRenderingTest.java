@@ -489,7 +489,8 @@ public class StyleBypassRenderingTest {
 
 	@Test
 	public void testMissingRef_All() throws TranscoderException, IOException {
-		testAllInputSources("samples/tests/spec/linking/missingRef.svg", null, false, false, 16);
+		testAllInputSources("samples/tests/spec/linking/missingRef.svg", null, false, null, false,
+				16);
 	}
 
 	@Test
@@ -1344,7 +1345,7 @@ public class StyleBypassRenderingTest {
 	 */
 	@Test
 	public void testCSS3_All() throws TranscoderException, IOException {
-		testAllInputSources("samples/tests/spec2/styling/css3.html", null, false, false, 5);
+		testAllInputSources("samples/tests/spec2/styling/css3.html", null, false, null, false, 5);
 	}
 
 	@Test
@@ -1358,6 +1359,12 @@ public class StyleBypassRenderingTest {
 	}
 
 	@Test
+	public void testCSS3_Selector() throws TranscoderException, IOException {
+		test("samples/tests/spec2/styling/css3.html", SVGRenderingAccuracyTest.DEFAULT_MEDIUM,
+				false, "#theSVG", true, 5);
+	}
+
+	@Test
 	public void testMermaid() throws TranscoderException, IOException {
 		testNV("samples/tests/spec2/foreign/mermaid.svg");
 	}
@@ -1367,7 +1374,7 @@ public class StyleBypassRenderingTest {
 	}
 
 	private void test(String file, int expectedErrorCount) throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, true, expectedErrorCount);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, null, true, expectedErrorCount);
 	}
 
 	/**
@@ -1380,20 +1387,20 @@ public class StyleBypassRenderingTest {
 	 */
 	private void testPrint(String file, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		test(file, PRINT_MEDIUM, false, true, expectedErrorCount);
+		test(file, PRINT_MEDIUM, false, null, true, expectedErrorCount);
 	}
 
 	/**
 	 * A dark mode test.
 	 * 
-	 * @param file the SVG file to test.
+	 * @param file               the SVG file to test.
 	 * @param expectedErrorCount the expected error count.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
 	private void testDark(String file, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, true, true, expectedErrorCount);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, true, null, true, expectedErrorCount);
 	}
 
 	/**
@@ -1418,7 +1425,7 @@ public class StyleBypassRenderingTest {
 	 */
 	private void testNV(String file, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, false, expectedErrorCount);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, null, false, expectedErrorCount);
 	}
 
 	/**
@@ -1457,20 +1464,22 @@ public class StyleBypassRenderingTest {
 	 * @param medium             the target medium ({@code screen}, {@code print},
 	 *                           etc).
 	 * @param darkMode           if true, dark mode is enabled in CSS.
+	 * @param selector           the selector to find the SVG element.
 	 * @param validating         if true, the SVG is validated.
 	 * @param expectedErrorCount the expected number of errors.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	private void test(String file, String medium, boolean darkMode, boolean validating,
-			int expectedErrorCount) throws TranscoderException, IOException {
+	private void test(String file, String medium, boolean darkMode, String selector,
+			boolean validating, int expectedErrorCount) throws TranscoderException, IOException {
 		BypassRenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
-		configureAndRun(runner, file, darkMode, validating);
+		configureAndRun(runner, file, darkMode, selector, validating);
 	}
 
 	private void configureAndRun(BypassRenderingTest runner, String file, boolean darkMode,
-			boolean validating) throws TranscoderException, IOException {
+			String selector, boolean validating) throws TranscoderException, IOException {
 		runner.setDarkMode(darkMode);
+		runner.setSelector(selector);
 		runner.setValidating(validating);
 		runner.setFile(file);
 		runner.runTest(0.00001f, 0.00001f);
@@ -1489,33 +1498,34 @@ public class StyleBypassRenderingTest {
 	 * @param medium             the target medium ({@code screen}, {@code print},
 	 *                           etc).
 	 * @param darkMode           if true, dark mode is enabled in CSS.
+	 * @param selector           the selector to find the SVG element.
 	 * @param validating         if true, the SVG is validated.
 	 * @param expectedErrorCount the expected number of errors.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
 	private void testAllInputSources(String file, String medium, boolean darkMode,
-			boolean validating, int expectedErrorCount) throws TranscoderException, IOException {
+			String selector, boolean validating, int expectedErrorCount) throws TranscoderException, IOException {
 		BypassRenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
-		configureAndRun(runner, file, darkMode, validating);
+		configureAndRun(runner, file, darkMode, selector, validating);
 
 		Document doc = runner.getRenderDocument();
 		runner = new DocumentInputHelperRenderingTest(medium, expectedErrorCount);
 		runner.setRenderDocument(doc);
-		configureAndRun(runner, file, darkMode, validating);
+		configureAndRun(runner, file, darkMode, selector, validating);
 
 		runner = new TIDocumentInputHelperRenderingTest(medium, expectedErrorCount);
 		runner.setRenderDocument(doc);
-		configureAndRun(runner, file, darkMode, validating);
+		configureAndRun(runner, file, darkMode, selector, validating);
 
 		runner = new TIInputStreamHelperRenderingTest(medium, expectedErrorCount);
-		configureAndRun(runner, file, darkMode, validating);
+		configureAndRun(runner, file, darkMode, selector, validating);
 
 		runner = new TIReaderInputHelperRenderingTest(medium, expectedErrorCount);
-		configureAndRun(runner, file, darkMode, validating);
+		configureAndRun(runner, file, darkMode, selector, validating);
 
 		runner = new TIURIInputHelperRenderingTest(medium, expectedErrorCount);
-		configureAndRun(runner, file, darkMode, validating);
+		configureAndRun(runner, file, darkMode, selector, validating);
 	}
 
 	private class BypassRenderingTest extends RenderingTest {
@@ -1526,6 +1536,11 @@ public class StyleBypassRenderingTest {
 		 * dark mode toggle.
 		 */
 		private boolean darkMode = false;
+
+		/**
+		 * Selector to locate SVG element
+		 */
+		String selector = null;
 
 		private transient Document renderDocument;
 
@@ -1542,6 +1557,10 @@ public class StyleBypassRenderingTest {
 		 */
 		public void setDarkMode(boolean darkMode) {
 			this.darkMode = darkMode;
+		}
+
+		public void setSelector(String selector) {
+			this.selector = selector;
 		}
 
 		public Document getRenderDocument() {
@@ -1586,7 +1605,7 @@ public class StyleBypassRenderingTest {
 			InputStream is = con.getInputStream();
 			Reader re = new InputStreamReader(is, StandardCharsets.UTF_8);
 
-			helper.transcode(re, uri, dst, null);
+			helper.transcode(re, uri, dst, selector);
 
 			renderDocument = dst.getDocument();
 		}
@@ -1620,7 +1639,7 @@ public class StyleBypassRenderingTest {
 		@Override
 		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
 				throws TranscoderException, IOException {
-			helper.transcodeDocument(getRenderDocument(), dst, null);
+			helper.transcodeDocument(getRenderDocument(), dst, selector);
 		}
 
 	}
@@ -1644,7 +1663,7 @@ public class StyleBypassRenderingTest {
 
 			TranscoderInput input = new TranscoderInput(re);
 			input.setURI(uri);
-			helper.transcode(input, dst, null);
+			helper.transcode(input, dst, selector);
 		}
 
 	}
@@ -1668,7 +1687,7 @@ public class StyleBypassRenderingTest {
 			TranscoderInput input = new TranscoderInput(is);
 			input.setEncoding("utf-8");
 			input.setURI(uri);
-			helper.transcode(input, dst, null);
+			helper.transcode(input, dst, selector);
 		}
 
 	}
@@ -1684,7 +1703,7 @@ public class StyleBypassRenderingTest {
 				throws TranscoderException, IOException {
 			String uri = getURI();
 			TranscoderInput input = new TranscoderInput(uri);
-			helper.transcode(input, dst, null);
+			helper.transcode(input, dst, selector);
 		}
 
 	}
@@ -1699,7 +1718,7 @@ public class StyleBypassRenderingTest {
 		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
 				throws TranscoderException, IOException {
 			TranscoderInput input = new TranscoderInput(getRenderDocument());
-			helper.transcode(input, dst, null);
+			helper.transcode(input, dst, selector);
 		}
 
 	}
