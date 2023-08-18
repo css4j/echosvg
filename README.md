@@ -211,13 +211,13 @@ please use that repository **only** for the artifact groups that it supplies
 Then, in your `build.gradle` file you can list the dependencies, for example:
 ```groovy
 dependencies {
-    api "io.sf.carte:echosvg-transcoder:${echosvgVersion}"
+    implementation "io.sf.carte:echosvg-transcoder:${echosvgVersion}"
 }
 ```
 or, if you want all of the main modules:
 ```groovy
 dependencies {
-    api "io.sf.carte:echosvg-all:${echosvgVersion}"
+    implementation "io.sf.carte:echosvg-all:${echosvgVersion}"
 }
 ```
 where `echosvgVersion` would be defined in a `gradle.properties` file (current
