@@ -1603,9 +1603,9 @@ public class StyleBypassRenderingTest {
 			con.setConnectTimeout(5000);
 			con.connect();
 			InputStream is = con.getInputStream();
-			Reader re = new InputStreamReader(is, StandardCharsets.UTF_8);
-
-			helper.transcode(re, uri, dst, selector);
+			try (Reader re = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+				helper.transcode(re, uri, dst, selector);
+			}
 
 			renderDocument = dst.getDocument();
 		}
@@ -1658,12 +1658,12 @@ public class StyleBypassRenderingTest {
 			URLConnection con = url.openConnection();
 			con.setConnectTimeout(5000);
 			con.connect();
-			InputStream is = con.getInputStream();
-			Reader re = new InputStreamReader(is, StandardCharsets.UTF_8);
-
-			TranscoderInput input = new TranscoderInput(re);
-			input.setURI(uri);
-			helper.transcode(input, dst, selector);
+			try (InputStream is = con.getInputStream();
+					Reader re = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+				TranscoderInput input = new TranscoderInput(re);
+				input.setURI(uri);
+				helper.transcode(input, dst);
+			}
 		}
 
 	}
@@ -1682,12 +1682,12 @@ public class StyleBypassRenderingTest {
 			URLConnection con = url.openConnection();
 			con.setConnectTimeout(5000);
 			con.connect();
-			InputStream is = con.getInputStream();
-
-			TranscoderInput input = new TranscoderInput(is);
-			input.setEncoding("utf-8");
-			input.setURI(uri);
-			helper.transcode(input, dst, selector);
+			try (InputStream is = con.getInputStream()) {
+				TranscoderInput input = new TranscoderInput(is);
+				input.setEncoding("utf-8");
+				input.setURI(uri);
+				helper.transcode(input, dst);
+			}
 		}
 
 	}
@@ -1703,7 +1703,7 @@ public class StyleBypassRenderingTest {
 				throws TranscoderException, IOException {
 			String uri = getURI();
 			TranscoderInput input = new TranscoderInput(uri);
-			helper.transcode(input, dst, selector);
+			helper.transcode(input, dst);
 		}
 
 	}
@@ -1718,7 +1718,7 @@ public class StyleBypassRenderingTest {
 		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)
 				throws TranscoderException, IOException {
 			TranscoderInput input = new TranscoderInput(getRenderDocument());
-			helper.transcode(input, dst, selector);
+			helper.transcode(input, dst);
 		}
 
 	}

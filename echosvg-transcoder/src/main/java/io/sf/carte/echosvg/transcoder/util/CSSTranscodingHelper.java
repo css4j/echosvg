@@ -323,15 +323,8 @@ public class CSSTranscodingHelper {
 	 * If the {@code input} contains a {@code Reader} or a stream, it is closed. The
 	 * reason is that this method was created to address a specific use case where
 	 * it is called from a method that does not know what the input object has, and
-	 * that does other things before returning.
-	 * </p>
-	 * <p>
-	 * If you want to close your own {@code Reader} or stream, by all means use the
-	 * {@link #transcode(Reader, String, TranscoderOutput, String)} method with a
-	 * {@code Reader} argument. For more information, see
-	 * <a href="https://github.com/css4j/echosvg/discussions/64">Multi-input
-	 * wrappers like <code>InputSource</code> or <code>TranscoderInput</code>
-	 * considered harmful</a>.
+	 * that does other things before returning. But that use case was a bad idea so
+	 * this method is now deprecated.
 	 * </p>
 	 * 
 	 * @param input    the transcoder input document. If its {@code URI} (or the
@@ -349,7 +342,9 @@ public class CSSTranscodingHelper {
 	 * @throws NullPointerException     If {@code input} is {@code null}.
 	 * @throws IllegalArgumentException If the {@code input} contains no input
 	 *                                  sources.
+	 * @deprecated use {@link #transcode(TranscoderInput, TranscoderOutput)}
 	 */
+	@Deprecated
 	public void transcode(TranscoderInput input, TranscoderOutput output, String selector)
 			throws TranscoderException, IOException {
 		XMLReader oldXmlReader = xmlReader;
@@ -421,6 +416,75 @@ public class CSSTranscodingHelper {
 				throw new IllegalArgumentException("No inputs found.");
 			}
 			transcode(null, input.getURI(), output, selector);
+		} finally {
+			if (inpXmlReader != null) {
+				xmlReader = oldXmlReader;
+			}
+		}
+	}
+
+	/**
+	 * Transcode a SVG document styled with CSS 3 using the given transcoder.
+	 * 
+	 * <p>
+	 * This method attempts to convert advanced CSS into something that EchoSVG can
+	 * understand. It may or may not succeed.
+	 * </p>
+	 * <p>
+	 * Streams inside {@code input} or {@code output} aren't closed.
+	 * </p>
+	 * 
+	 * @param input  the transcoder input document. If its {@code URI} (or the
+	 *               {@code documentURI} of the document) ends with {@code .html},
+	 *               HTML processing is enabled.
+	 * @param output the {@code TranscoderOutput} to write the result.
+	 * 
+	 * @throws TranscoderException      If an error occured while transcoding.
+	 * @throws IOException              If any I/O error occurs.
+	 * @throws NullPointerException     If {@code input} is {@code null}.
+	 * @throws IllegalArgumentException If the {@code input} contains no input
+	 *                                  sources.
+	 */
+	public void transcode(TranscoderInput input, TranscoderOutput output)
+			throws TranscoderException, IOException {
+		XMLReader oldXmlReader = xmlReader;
+
+		XMLReader inpXmlReader = input.getXMLReader();
+		if (inpXmlReader != null) {
+			xmlReader = input.getXMLReader();
+		}
+
+		try {
+			Document doc = input.getDocument();
+			if (doc != null) {
+				if (doc.getDocumentURI() == null) {
+					doc.setDocumentURI(input.getURI());
+				}
+				transcodeDocument(doc, output, null);
+				return;
+			}
+
+			final Reader reader = input.getReader();
+			if (reader != null) {
+				transcode(reader, input.getURI(), output, null);
+				return;
+			}
+
+			InputStream is = input.getInputStream();
+			if (is != null) {
+				InputStreamReader re;
+				if (input.getEncoding() != null) {
+					re = new InputStreamReader(is, input.getEncoding());
+				} else {
+					re = new InputStreamReader(is);
+				}
+				transcode(re, input.getURI(), output, null);
+				return;
+			}
+			if (input.getURI() == null) {
+				throw new IllegalArgumentException("No inputs found.");
+			}
+			transcode(null, input.getURI(), output, null);
 		} finally {
 			if (inpXmlReader != null) {
 				xmlReader = oldXmlReader;

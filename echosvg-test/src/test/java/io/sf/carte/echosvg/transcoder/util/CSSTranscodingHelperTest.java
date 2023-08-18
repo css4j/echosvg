@@ -83,7 +83,7 @@ public class CSSTranscodingHelperTest {
 		CSSTranscodingHelper helper = new CSSTranscodingHelper();
 		TranscoderOutput output = new TranscoderOutput();
 
-		assertThrows(NullPointerException.class, () -> helper.transcode(null, output, null));
+		assertThrows(NullPointerException.class, () -> helper.transcode(null, output));
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class CSSTranscodingHelperTest {
 		TranscoderInput input = new TranscoderInput();
 		TranscoderOutput output = new TranscoderOutput();
 
-		assertThrows(IllegalArgumentException.class, () -> helper.transcode(input, output, null));
+		assertThrows(IllegalArgumentException.class, () -> helper.transcode(input, output));
 	}
 
 	@Test
@@ -103,7 +103,7 @@ public class CSSTranscodingHelperTest {
 		Document document = newDocument();
 		input.setDocument(document);
 
-		assertThrows(IllegalArgumentException.class, () -> helper.transcode(input, output, null));
+		assertThrows(IllegalArgumentException.class, () -> helper.transcode(input, output));
 	}
 
 	private Document newDocument() throws ParserConfigurationException {
