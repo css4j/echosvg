@@ -221,7 +221,7 @@ dependencies {
 }
 ```
 where `echosvgVersion` would be defined in a `gradle.properties` file (current
-version is `0.3.2`).
+version is `0.3.3`).
 
 <br/>
 
