@@ -21,12 +21,14 @@ package io.sf.carte.echosvg.dom;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.URL;
 
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -101,6 +103,22 @@ public class QuerySelectorTest {
 	public void testChild() throws IOException {
 		testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "elt3>elt4", "elt4", "",
 				1);
+	}
+
+	@Test
+	public void testSyntaxError() throws IOException {
+		DOMException ex = assertThrows(DOMException.class,
+				() -> testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "! . !", "",
+						"", 0));
+		assertEquals(DOMException.SYNTAX_ERR, ex.code);
+	}
+
+	@Test
+	public void testNSError() throws IOException {
+		DOMException ex = assertThrows(DOMException.class,
+				() -> testQuerySelector("io/sf/carte/echosvg/dom/dummyXML4.xml", "doc", "n|doc", "",
+						"", 0));
+		assertEquals(DOMException.NAMESPACE_ERR, ex.code);
 	}
 
 	void testQuerySelector(String testFileName, String rootTag, String selector, String tagName,

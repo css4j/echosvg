@@ -30,6 +30,7 @@ import java.util.Objects;
 import javax.xml.XMLConstants;
 
 import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -352,7 +353,11 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 			// or get the first SVG element
 			String selector = (String) hints.get(KEY_SVG_SELECTOR);
 			if (selector != null && !(selector = selector.trim()).isEmpty()) {
-				docElm = ((AbstractParentNode) docElm).querySelector(selector);
+				try {
+					docElm = ((AbstractParentNode) docElm).querySelector(selector);
+				} catch (DOMException e) {
+					throw new TranscoderException("Invalid selector: " + selector + '.', e);
+				}
 				if (docElm == null || (!"svg".equals(docElm.getLocalName())
 						&& !"svg".equals(docElm.getTagName()))) {
 					// No SVG element with that selector

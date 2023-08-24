@@ -305,8 +305,11 @@ public abstract class AbstractParentNode extends AbstractNode {
 	 * @param selectors the selector list.
 	 * @return the first element that is a descendant of this node and matches
 	 *         selectors.
+	 * @throws DOMException NAMESPACE_ERR if the selector contains a namespace
+	 *                      prefix.
+	 * @throws DOMException SYNTAX_ERR if the selector syntax is wrong.
 	 */
-	public Element querySelector(String selectors) {
+	public Element querySelector(String selectors) throws DOMException {
 		SelectorList selist = parseSelectors(selectors);
 		Node firstChild = getFirstChild();
 		return matchQuerySelector(selist, firstChild);
@@ -318,8 +321,11 @@ public abstract class AbstractParentNode extends AbstractNode {
 	 * @param selectors the selector list.
 	 * @return a node list with all the element descendants of this node that match
 	 *         the given selector list.
+	 * @throws DOMException NAMESPACE_ERR if the selector contains a namespace
+	 *                      prefix.
+	 * @throws DOMException SYNTAX_ERR if the selector syntax is wrong.
 	 */
-	public NodeList querySelectorAll(String selectors) {
+	public NodeList querySelectorAll(String selectors) throws DOMException {
 		SelectorList selist = parseSelectors(selectors);
 		Node firstChild = getFirstChild();
 		ArrayNodeList list = new ArrayNodeList(8);
@@ -327,7 +333,16 @@ public abstract class AbstractParentNode extends AbstractNode {
 		return list;
 	}
 
-	static SelectorList parseSelectors(String selectors) {
+	/**
+	 * Parses a list of selectors.
+	 * 
+	 * @param selectors the serialized selector list.
+	 * @return the selector list.
+	 * @throws DOMException NAMESPACE_ERR if the selector contains a namespace
+	 *                      prefix.
+	 * @throws DOMException SYNTAX_ERR if the selector syntax is wrong.
+	 */
+	static SelectorList parseSelectors(String selectors) throws DOMException {
 		Parser parser = new CSSParser();
 		SelectorList selist;
 		try {
