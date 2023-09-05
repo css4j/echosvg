@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -56,6 +57,7 @@ import io.sf.carte.doc.style.css.CSSCanvas;
 import io.sf.carte.doc.style.css.CSSComputedProperties;
 import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSMediaException;
+import io.sf.carte.doc.style.css.CSSStyleSheetFactory;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSUnit;
 import io.sf.carte.doc.style.css.CSSValue;
@@ -81,7 +83,9 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
+import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
+import io.sf.carte.util.agent.AgentUtil;
 
 /**
  * Utility for transcoding documents that use modern CSS, bypassing the EchoSVG
@@ -741,6 +745,10 @@ public class CSSTranscodingHelper {
 		String alt = (String) transcoder.getTranscodingHints()
 				.get(SVGAbstractTranscoder.KEY_ALTERNATE_STYLESHEET);
 
+		// Check for user style sheet
+		String userSheetUri = (String) transcoder.getTranscodingHints()
+				.get(SVGAbstractTranscoder.KEY_USER_STYLESHEET_URI);
+
 		// Check for a target medium
 		String medium = (String) transcoder.getTranscodingHints()
 				.get(SVGAbstractTranscoder.KEY_MEDIA);
@@ -757,6 +765,18 @@ public class CSSTranscodingHelper {
 		MyDeviceFactory devFactory = new MyDeviceFactory();
 		devFactory.setHints(svgRoot);
 		document.getImplementation().setDeviceFactory(devFactory);
+
+		// Set the user style sheet, if any
+		if (userSheetUri != null) {
+			ParsedURL purl = new ParsedURL(userSheetUri);
+			try (InputStream is = purl.openStream()) {
+				String conType = purl.getContentType();
+				String conEnc = purl.getContentEncoding();
+				Reader userRe = AgentUtil.inputStreamToReader(is, conType, conEnc,
+						StandardCharsets.UTF_8);
+				((CSSStyleSheetFactory) document.getImplementation()).setUserStyleSheet(userRe);
+			}
+		}
 
 		// If there is an alternate style sheet, set it
 		if (alt != null && (alt = alt.trim()).length() != 0) {

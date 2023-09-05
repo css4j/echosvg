@@ -36,6 +36,7 @@ import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.DummyErrorHandler;
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
@@ -881,6 +882,11 @@ public class StyleBypassRenderingTest {
 		test("samples/tests/spec/styling/styleElement.svg");
 	}
 
+	@Test
+	public void testUserSheet() throws TranscoderException, IOException {
+		testUserSheet("samples/tests/spec/styling/userStylesheet.svg", true, 0);
+	}
+
 	/*
 	 * Text
 	 */
@@ -1453,6 +1459,45 @@ public class StyleBypassRenderingTest {
 	}
 
 	/**
+	 * Test rendering with a user style sheet.
+	 * 
+	 * @param file               the SVG file to test.
+	 * @param alt                the alternate style sheet name.
+	 * @param validating         validate if true.
+	 * @param expectedErrorCount the expected error count.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	private void testAlternate(String file, String alt, boolean validating, int expectedErrorCount)
+			throws TranscoderException, IOException {
+		BypassRenderingTest runner = new BypassRenderingTest(
+				SVGRenderingAccuracyTest.DEFAULT_MEDIUM, expectedErrorCount);
+		runner.setValidating(validating);
+		runner.setAlternateSheet(alt);
+		runner.setFile(file);
+		runner.runTest(0.00001f, 0.000001f);
+	}
+
+	/**
+	 * Test rendering with a user style sheet.
+	 * 
+	 * @param file               the SVG file to test.
+	 * @param validating         validate if true.
+	 * @param expectedErrorCount the expected error count.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	private void testUserSheet(String file, boolean validating, int expectedErrorCount)
+			throws TranscoderException, IOException {
+		BypassRenderingTest runner = new BypassRenderingTest(
+				SVGRenderingAccuracyTest.DEFAULT_MEDIUM, expectedErrorCount);
+		runner.setValidating(validating);
+		runner.setUserSheetClasspath(AltUserSheetRenderingTest.DEFAULT_USER_SHEET);
+		runner.setFile(file);
+		runner.runTest(0.00001f, 0.000001f);
+	}
+
+	/**
 	 * Test the rendering of a SVG file.
 	 * 
 	 * <p>
@@ -1542,6 +1587,16 @@ public class StyleBypassRenderingTest {
 		 */
 		String selector = null;
 
+		/**
+		 * Alternate sheet name.
+		 */
+		private String altSheet = null;
+
+		/**
+		 * Classpath to user sheet.
+		 */
+		private String userSheetClasspath = null;
+
 		private transient Document renderDocument;
 
 		BypassRenderingTest(String medium, int expectedErrorCount) {
@@ -1569,6 +1624,24 @@ public class StyleBypassRenderingTest {
 
 		public void setRenderDocument(Document renderDocument) {
 			this.renderDocument = renderDocument;
+		}
+
+		/**
+		 * Set the name of the alternate style sheet.
+		 * 
+		 * @param altSheet the name of the alternate style sheet.
+		 */
+		public void setAlternateSheet(String altSheet) {
+			this.altSheet = altSheet;
+		}
+
+		/**
+		 * Set the classpath for the user style sheet.
+		 * 
+		 * @param userSheetClasspath the location of the user style sheet in classpath.
+		 */
+		public void setUserSheetClasspath(String userSheetClasspath) {
+			this.userSheetClasspath = userSheetClasspath;
 		}
 
 		@Override
@@ -1610,6 +1683,26 @@ public class StyleBypassRenderingTest {
 			renderDocument = dst.getDocument();
 		}
 
+		/**
+		 * Returns the <code>ImageTranscoder</code> the Test should use
+		 */
+		@Override
+		ImageTranscoder getTestImageTranscoder() {
+			ImageTranscoder t = super.getTestImageTranscoder();
+
+			if (userSheetClasspath != null) {
+				URL userSheet = AltUserSheetRenderingTest.class.getResource(userSheetClasspath);
+				t.addTranscodingHint(SVGAbstractTranscoder.KEY_USER_STYLESHEET_URI,
+						userSheet.toExternalForm());
+			}
+
+			if (altSheet != null) {
+				t.addTranscodingHint(SVGAbstractTranscoder.KEY_ALTERNATE_STYLESHEET, altSheet);
+			}
+
+			return t;
+		}
+
 		@Override
 		ImageTranscoder createTestImageTranscoder() {
 			return new NoStackTraceTranscoder();
@@ -1617,15 +1710,32 @@ public class StyleBypassRenderingTest {
 
 		@Override
 		protected String getImageSuffix() {
+			StringBuilder buf = null;
+
+			if (altSheet != null) {
+				buf = new StringBuilder();
+				buf.append('_').append(altSheet);
+			}
+
 			String medium = getMedia();
 			if (medium != null && !DEFAULT_MEDIUM.equals(medium)) {
-				return '-' + medium + getDarkModeSuffix();
+				if (buf == null) {
+					buf = new StringBuilder();
+				}
+				buf.append('-').append(medium);
 			}
-			return getDarkModeSuffix();
-		}
 
-		private String getDarkModeSuffix() {
-			return darkMode ? "-dark" : "";
+			if (darkMode) {
+				if (buf == null) {
+					buf = new StringBuilder();
+				}
+				buf.append("-dark");
+			}
+
+			if (buf == null) {
+				return "";
+			}
+			return buf.toString();
 		}
 
 	}

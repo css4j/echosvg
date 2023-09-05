@@ -907,6 +907,16 @@ public class SamplesRenderingTest {
 	}
 
 	@Test
+	public void testAlternateStylesheet_Hot() throws TranscoderException, IOException {
+		testAlternateSheet("samples/tests/spec/styling/alternateStylesheet.svg", "Hot", true);
+	}
+
+	@Test
+	public void testAlternateStylesheet_Cold() throws TranscoderException, IOException {
+		testAlternateSheet("samples/tests/spec/styling/alternateStylesheet.svg", "Cold", true);
+	}
+
+	@Test
 	public void testCssMedia() throws TranscoderException, IOException {
 		test("samples/tests/spec/styling/cssMedia.svg");
 	}
@@ -944,6 +954,11 @@ public class SamplesRenderingTest {
 	@Test
 	public void testDefaultFontFamily() throws TranscoderException, IOException {
 		test("samples/tests/spec/styling/defaultFontFamily.svg");
+	}
+
+	@Test
+	public void testUserSheet() throws TranscoderException, IOException {
+		testUserSheet("samples/tests/spec/styling/userStylesheet.svg", true);
 	}
 
 	@Test
@@ -1592,6 +1607,24 @@ public class SamplesRenderingTest {
 		runner.setMedia(media);
 		runner.setFile(file);
 		runner.runTest(0.000001f, 0.000001f);
+	}
+
+	private void testAlternateSheet(String file, String alt, boolean validating)
+			throws TranscoderException, IOException {
+		AltUserSheetRenderingTest runner = new AltUserSheetRenderingTest();
+		runner.setValidating(validating);
+		runner.setAlternateSheet(alt);
+		runner.setFile(file);
+		runner.runTest(0.00001f, 0.000001f);
+	}
+
+	private void testUserSheet(String file, boolean validating)
+			throws TranscoderException, IOException {
+		AltUserSheetRenderingTest runner = new AltUserSheetRenderingTest();
+		runner.setValidating(validating);
+		runner.setUserSheetClasspath(AltUserSheetRenderingTest.DEFAULT_USER_SHEET);
+		runner.setFile(file);
+		runner.runTest(0.00001f, 0.000001f);
 	}
 
 	/**
