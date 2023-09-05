@@ -235,10 +235,13 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 		ImportRecord[] irs = new ImportRecord[nSlots];
 		imports.values().toArray(irs);
 		for (ImportRecord ir : irs) {
-			if (ir.importElement.getLocalName().equals(XBL_DEFINITION_TAG)) {
-				removeDefinitionRef(ir.importElement);
-			} else {
-				removeImport(ir.importElement);
+			Element importElm = ir.importElement;
+			if (importElm != null) {
+				if (XBL_DEFINITION_TAG.equals(importElm.getLocalName())) {
+					removeDefinitionRef(importElm);
+				} else {
+					removeImport(importElm);
+				}
 			}
 		}
 
