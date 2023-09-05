@@ -148,7 +148,7 @@ public class PathLength {
 				pi.next();
 				break;
 			case PathIterator.SEG_LINETO:
-				pathLength += Point2D.distance(currentX, currentY, seg[0], seg[1]);
+				pathLength += (float) Point2D.distance(currentX, currentY, seg[0], seg[1]);
 				segments.add(new PathSegment(segType, seg[0], seg[1], pathLength, origIndex));
 				currentX = seg[0];
 				currentY = seg[1];
@@ -156,7 +156,7 @@ public class PathLength {
 				pi.next();
 				break;
 			case PathIterator.SEG_CLOSE:
-				pathLength += Point2D.distance(currentX, currentY, lastMoveX, lastMoveY);
+				pathLength += (float) Point2D.distance(currentX, currentY, lastMoveX, lastMoveY);
 				segments.add(new PathSegment(PathIterator.SEG_LINETO, lastMoveX, lastMoveY, pathLength, origIndex));
 				currentX = lastMoveX;
 				currentY = lastMoveY;
@@ -169,7 +169,7 @@ public class PathLength {
 				while (!fpi.isDone()) {
 					segType = fpi.currentSegment(seg);
 					if (segType == PathIterator.SEG_LINETO) {
-						pathLength += Point2D.distance(currentX, currentY, seg[0], seg[1]);
+						pathLength += (float) Point2D.distance(currentX, currentY, seg[0], seg[1]);
 						segments.add(new PathSegment(segType, seg[0], seg[1], pathLength, origIndex));
 						currentX = seg[0];
 						currentY = seg[1];

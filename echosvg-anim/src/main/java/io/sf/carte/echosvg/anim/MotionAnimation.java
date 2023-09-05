@@ -257,7 +257,7 @@ public class MotionAnimation extends InterpolatingAnimation {
 			if (rotateAuto) {
 				ang = pathLength.angleAtLength(point);
 				if (rotateAutoReverse) {
-					ang += Math.PI;
+					ang += (float) Math.PI;
 				}
 			} else {
 				ang = rotateAngle;
@@ -269,7 +269,7 @@ public class MotionAnimation extends InterpolatingAnimation {
 			if (rotateAuto) {
 				ang = pathLength.angleAtLength(pathLength.lengthOfPath());
 				if (rotateAutoReverse) {
-					ang += Math.PI;
+					ang += (float) Math.PI;
 				}
 			} else {
 				ang = rotateAngle;
@@ -282,7 +282,7 @@ public class MotionAnimation extends InterpolatingAnimation {
 			if (rotateAuto) {
 				ang = pathLength.angleAtLength(pathLength.lengthOfPath());
 				if (rotateAutoReverse) {
-					ang += Math.PI;
+					ang += (float) Math.PI;
 				}
 			} else {
 				ang = rotateAngle;

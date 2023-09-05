@@ -620,7 +620,7 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 	protected static Rectangle2D extendRegion(String dxStr, String dyStr, String dwStr, String dhStr, short unitsType,
 			GraphicsNode filteredNode, Rectangle2D region, UnitProcessor.Context uctx) {
 
-		float dx, dy, dw, dh;
+		double dx, dy, dw, dh;
 		switch (unitsType) {
 		case USER_SPACE_ON_USE:
 			dx = UnitProcessor.svgHorizontalCoordinateToUserSpace(dxStr, SVG12Constants.SVG_MX_ATRIBUTE, uctx);

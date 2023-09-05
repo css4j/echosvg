@@ -342,7 +342,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 		// estimate the size of the entire gradients array.
 		// This is to prevent a tiny interval from causing the size of array to
 		// explode. If the estimated size is too large, break to using
-		// seperate arrays for each interval, and using an indexing scheme at
+		// separate arrays for each interval, and using an indexing scheme at
 		// look-up time.
 		int estimatedSize = 0;
 
@@ -351,7 +351,7 @@ abstract class MultipleGradientPaintContext implements PaintContext {
 			hasDiscontinuity = true;
 		} else {
 			for (float aWorkTbl : workTbl) {
-				estimatedSize += (aWorkTbl / Imin) * GRADIENT_SIZE;
+				estimatedSize += (int) (aWorkTbl / Imin * GRADIENT_SIZE);
 			}
 		}
 

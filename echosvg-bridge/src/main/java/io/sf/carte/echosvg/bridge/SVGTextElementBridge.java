@@ -2311,8 +2311,8 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			// apply the glyph transformation to the start point
 			glyphTransform.transform(result, result);
 
-		result.x += b.getX();
-		result.y += b.getY();
+		result.x += (float) b.getX();
+		result.y += (float) b.getY();
 		return result;
 	}
 
@@ -2362,8 +2362,8 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		if (glyphTransform != null)
 			glyphTransform.transform(result, result);
 
-		result.x += b.getX();
-		result.y += b.getY();
+		result.x += (float) b.getX();
+		result.y += (float) b.getY();
 		return result;
 	}
 

@@ -1,4 +1,0 @@
-name: "My CodeQL config"
-disable-default-queries: true
-queries:
-  - uses: ./.github/workflows/codeql/custom-queries.qls

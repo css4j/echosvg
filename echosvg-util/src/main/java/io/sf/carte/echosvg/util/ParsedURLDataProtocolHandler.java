@@ -217,7 +217,7 @@ public class ParsedURLDataProtocolHandler extends AbstractParsedURLProtocolHandl
 							b = (byte) (c1 - 'A' + 10);
 						else
 							break;
-						b *= 16;
+						b *= (byte) 16;
 
 						char c2 = s.charAt(i);
 						if (c2 >= '0' && c2 <= '9')

@@ -1,5 +1,0 @@
-- import: codeql-suites/java-code-scanning.qls
-  from: codeql-java
-- exclude:
-    id:
-      - java/implicit-cast-in-compound-assignment

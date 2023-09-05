@@ -763,8 +763,8 @@ public class StrokingTextPainter extends BasicTextPainter {
 				layout.setOffset(new Point2D.Float(absX, absY));
 
 				Point2D ladv = layout.getAdvance2D();
-				absX += ladv.getX();
-				absY += ladv.getY();
+				absX += (float) ladv.getX();
+				absY += (float) ladv.getY();
 			} else {
 				layout.setOffset(new Point2D.Float(tpShiftX, tpShiftY));
 

@@ -245,7 +245,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 							pixels[off++] = grad[idx >> 16];
 							idx += step;
 						}
-						g += dgdX * stepsD;
+						g += (float) (dgdX * stepsD);
 						gradIdx++;
 					}
 				} else {
@@ -278,7 +278,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 							pixels[off++] = grad[idx >> 16];
 							idx += step;
 						}
-						g += dgdX * stepsD;
+						g += (float) (dgdX * stepsD);
 						gradIdx--;
 					}
 				}
@@ -303,7 +303,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 			// initialize current value to be start.
 			float g = initConst + dgdY * (y + i);
 			g *= fastGradientArraySize;
-			g += 0.5; // rounding factor...
+			g += 0.5f; // rounding factor...
 
 			final int rowLimit = off + w; // end of row iteration
 
@@ -399,7 +399,7 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 
 			// scale for gradient array...
 			g *= fastGradientArraySize;
-			g += 0.5; // rounding factor
+			g += 0.5f; // rounding factor
 			final int rowLimit = off + w; // end of row iteration
 			while (off < rowLimit) {
 				int idx = (int) g;
@@ -441,14 +441,14 @@ final class LinearGradientPaintContext extends MultipleGradientPaintContext {
 			// (which has no affect due to the cylcle) to move
 			// all negative step values into the positive
 			// side.
-			step = step - 2 * ((int) step / 2.0f);
-			if (step < 0)
-				step += 2.0;
+			step = step - 2f * ((int) step / 2f);
+			if (step < 0f)
+				step += 2f;
 			final int reflectMax = 2 * fastGradientArraySize;
 
 			// Scale for gradient array.
 			g *= fastGradientArraySize;
-			g += 0.5;
+			g += 0.5f;
 			step *= fastGradientArraySize;
 			final int rowLimit = off + w; // end of row iteration
 			while (off < rowLimit) {

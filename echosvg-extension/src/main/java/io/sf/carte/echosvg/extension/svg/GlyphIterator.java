@@ -387,7 +387,7 @@ public class GlyphIterator {
 			nextLSI = idx + 1;
 		for (int ci = lineIdx; ci <= idx; ci++) {
 			if (ci == nextLSI) {
-				leftShift += leftShiftAmt[lsi++];
+				leftShift += (int) leftShiftAmt[lsi++];
 				if (lsi < leftShiftIdx.length)
 					nextLSI = leftShiftIdx[lsi];
 			}
