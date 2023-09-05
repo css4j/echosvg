@@ -1360,6 +1360,11 @@ public class StyleBypassRenderingTest {
 	}
 
 	@Test
+	public void testCSS3AlternateStylesheet() throws TranscoderException, IOException {
+		testAlternate("samples/tests/spec2/styling/css3.html", "Gray", false, 5);
+	}
+
+	@Test
 	public void testCSS3Dark() throws TranscoderException, IOException {
 		testDark("samples/tests/spec2/styling/css3.html", 5);
 	}

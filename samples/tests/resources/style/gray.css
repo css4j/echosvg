@@ -1,0 +1,11 @@
+circle {
+  fill: #9a9a9a60 ! important;
+  stroke-width: 8px ! important;
+}
+ellipse {
+  fill: #7070704f ! important;
+  stroke-width: calc(2px + 0.2em) ! important;
+}
+text {
+  font-size: calc(2*5pt + .36em) ! important;
+}

@@ -780,7 +780,7 @@ public class CSSTranscodingHelper {
 
 		// If there is an alternate style sheet, set it
 		if (alt != null && (alt = alt.trim()).length() != 0) {
-			document.enableStyleSheetsForSet(alt);
+			document.setSelectedStyleSheetSet(alt);
 		}
 
 		// Now fill the SVG document with computed styles
