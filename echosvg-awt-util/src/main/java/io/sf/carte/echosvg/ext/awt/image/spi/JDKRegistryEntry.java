@@ -100,7 +100,7 @@ public class JDKRegistryEntry extends AbstractRegistryEntry implements URLRegist
 
 		final DeferRable dr = new DeferRable();
 		final String errCode = ERR_URL_FORMAT_UNREADABLE;
-		final Object[] errParam = new Object[] { "JDK", url };
+		final Object[] errParam = { "JDK", url };
 
 		Thread t = new Thread() {
 			@Override

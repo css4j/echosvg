@@ -133,7 +133,7 @@ public abstract class AbstractCharacterData extends AbstractChildNode implements
 			throw createDOMException(DOMException.INDEX_SIZE_ERR, "offset", new Object[] { offset });
 		}
 		String v = getNodeValue();
-		setNodeValue(v.substring(0, offset) + arg + v.substring(offset, v.length()));
+		setNodeValue(v.substring(0, offset) + arg + v.substring(offset));
 	}
 
 	/**
@@ -148,7 +148,7 @@ public abstract class AbstractCharacterData extends AbstractChildNode implements
 		checkOffsetCount(offset, count);
 
 		String v = getNodeValue();
-		setNodeValue(v.substring(0, offset) + v.substring(Math.min(v.length(), offset + count), v.length()));
+		setNodeValue(v.substring(0, offset) + v.substring(Math.min(v.length(), offset + count)));
 	}
 
 	/**
@@ -164,7 +164,7 @@ public abstract class AbstractCharacterData extends AbstractChildNode implements
 		checkOffsetCount(offset, count);
 
 		String v = getNodeValue();
-		setNodeValue(v.substring(0, offset) + arg + v.substring(Math.min(v.length(), offset + count), v.length()));
+		setNodeValue(v.substring(0, offset) + arg + v.substring(Math.min(v.length(), offset + count)));
 	}
 
 	/**

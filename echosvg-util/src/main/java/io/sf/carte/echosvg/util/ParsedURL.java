@@ -115,10 +115,7 @@ public class ParsedURL {
 
 		ServiceLoader<ParsedURLProtocolHandler> loader = ServiceLoader.load(ParsedURLProtocolHandler.class);
 
-		Iterator<ParsedURLProtocolHandler> iter = loader.iterator();
-		while (iter.hasNext()) {
-			ParsedURLProtocolHandler handler = iter.next();
-
+		for (ParsedURLProtocolHandler handler : loader) {
 			registerHandler(handler);
 		}
 

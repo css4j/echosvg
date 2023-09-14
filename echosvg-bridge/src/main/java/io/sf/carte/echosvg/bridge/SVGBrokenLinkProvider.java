@@ -69,7 +69,7 @@ public class SVGBrokenLinkProvider extends DefaultBrokenLinkProvider implements 
 		shapeNode.setShape(new java.awt.Rectangle(100, 100));
 		TextNode textNode = new TextNode();
 		AttributedString atts = new AttributedString(message);
-		atts.addAttribute(StrokingTextPainter.GVT_FONTS, new LinkedList<GVTFont>());
+		atts.addAttribute(StrokingTextPainter.GVT_FONTS, new LinkedList<>());
 		atts.addAttribute(TextAttribute.SIZE, 14f);
 		textNode.setAttributedCharacterIterator(atts.getIterator());
 		cgn.add(shapeNode);

@@ -142,7 +142,7 @@ public abstract class RectManager extends LengthManager {
 	}
 
 	private DOMException createMalformedRectDOMException() {
-		Object[] p = new Object[] { getPropertyName() };
+		Object[] p = { getPropertyName() };
 		String s = Messages.formatMessage("malformed.rect", p);
 		return new DOMException(DOMException.SYNTAX_ERR, s);
 	}

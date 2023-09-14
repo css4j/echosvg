@@ -101,7 +101,7 @@ public class IndexImage {
 	 * in half to generate two cubes.
 	 */
 	private static class Cube {
-		static final byte[] RGB_BLACK = new byte[] { 0, 0, 0 };
+		static final byte[] RGB_BLACK = { 0, 0, 0 };
 
 		int[] min = { 0, 0, 0 }, max = { 255, 255, 255 };
 
@@ -666,7 +666,7 @@ public class IndexImage {
 	static Counter[][] convertColorList(List<Counter>[] colors) {
 
 		// used to fill empty slots
-		final Counter[] EMPTY_COUNTER = new Counter[0];
+		final Counter[] EMPTY_COUNTER = {};
 
 		Counter[][] colorTbl = new Counter[1 << 12][];
 		for (int i = 0; i < colors.length; i++) {

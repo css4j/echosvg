@@ -221,10 +221,7 @@ public abstract class ExtensibleDOMImplementation extends AbstractDOMImplementat
 
 		ServiceLoader<DomExtension> loader = ServiceLoader.load(DomExtension.class);
 
-		Iterator<DomExtension> iter = loader.iterator();
-
-		while (iter.hasNext()) {
-			DomExtension de = iter.next();
+		for (DomExtension de : loader) {
 			float priority = de.getPriority();
 			ListIterator<DomExtension> li = extensions.listIterator();
 			for (;;) {

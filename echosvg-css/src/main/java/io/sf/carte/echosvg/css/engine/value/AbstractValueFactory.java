@@ -48,7 +48,7 @@ public abstract class AbstractValueFactory {
 	 * Creates a DOM exception, given an invalid identifier.
 	 */
 	protected DOMException createInvalidIdentifierDOMException(String ident) {
-		Object[] p = new Object[] { getPropertyName(), ident };
+		Object[] p = { getPropertyName(), ident };
 		String s = Messages.formatMessage("invalid.identifier", p);
 		return new DOMException(DOMException.SYNTAX_ERR, s);
 	}
@@ -57,7 +57,7 @@ public abstract class AbstractValueFactory {
 	 * Creates a DOM exception, given an invalid lexical unit type.
 	 */
 	protected DOMException createInvalidLexicalUnitDOMException(LexicalUnit.LexicalType type) {
-		Object[] p = new Object[] { getPropertyName(), type.toString() };
+		Object[] p = { getPropertyName(), type.toString() };
 		String s = Messages.formatMessage("invalid.lexical.unit", p);
 		return new DOMException(DOMException.NOT_SUPPORTED_ERR, s);
 	}
@@ -66,7 +66,7 @@ public abstract class AbstractValueFactory {
 	 * Creates a DOM exception, given an invalid float type.
 	 */
 	protected DOMException createInvalidFloatTypeDOMException(short t) {
-		Object[] p = new Object[] { getPropertyName(), (int) t };
+		Object[] p = { getPropertyName(), (int) t };
 		String s = Messages.formatMessage("invalid.float.type", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
 	}
@@ -75,7 +75,7 @@ public abstract class AbstractValueFactory {
 	 * Creates a DOM exception, given an invalid float value.
 	 */
 	protected DOMException createInvalidFloatValueDOMException(float f) {
-		Object[] p = new Object[] { getPropertyName(), f };
+		Object[] p = { getPropertyName(), f };
 		String s = Messages.formatMessage("invalid.float.value", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
 	}
@@ -84,19 +84,19 @@ public abstract class AbstractValueFactory {
 	 * Creates a DOM exception, given an invalid string type.
 	 */
 	protected DOMException createInvalidStringTypeDOMException(short t) {
-		Object[] p = new Object[] { getPropertyName(), (int) t };
+		Object[] p = { getPropertyName(), (int) t };
 		String s = Messages.formatMessage("invalid.string.type", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
 	}
 
 	protected DOMException createMalformedLexicalUnitDOMException() {
-		Object[] p = new Object[] { getPropertyName() };
+		Object[] p = { getPropertyName() };
 		String s = Messages.formatMessage("malformed.lexical.unit", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
 	}
 
 	protected DOMException createDOMException() {
-		Object[] p = new Object[] { getPropertyName() };
+		Object[] p = { getPropertyName() };
 		String s = Messages.formatMessage("invalid.access", p);
 		return new DOMException(DOMException.NOT_SUPPORTED_ERR, s);
 	}

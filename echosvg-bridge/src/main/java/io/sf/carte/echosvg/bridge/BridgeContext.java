@@ -2017,9 +2017,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 
 		ServiceLoader<BridgeExtension> loader = ServiceLoader.load(BridgeExtension.class);
 
-		Iterator<BridgeExtension> iter = loader.iterator();
-		while (iter.hasNext()) {
-			BridgeExtension be = iter.next();
+		for (BridgeExtension be : loader) {
 			float priority = be.getPriority();
 			ListIterator<BridgeExtension> li = globalExtensions.listIterator();
 			for (;;) {

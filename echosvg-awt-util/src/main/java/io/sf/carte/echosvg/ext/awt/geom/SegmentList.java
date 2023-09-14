@@ -111,11 +111,9 @@ public class SegmentList {
 	}
 
 	public SegmentList.SplitResults split(double y) {
-		Iterator<Segment> iter = segments.iterator();
 		SegmentList above = new SegmentList();
 		SegmentList below = new SegmentList();
-		while (iter.hasNext()) {
-			Segment seg = iter.next();
+		for (Segment seg : segments) {
 			Segment.SplitResults results = seg.split(y);
 			if (results == null) {
 				Rectangle2D bounds = seg.getBounds2D();

@@ -107,9 +107,7 @@ public abstract class AnimationEngine {
 				}
 			}
 
-			Iterator<Entry<String, Sandwich>> cssIt = info.cssAnimations.entrySet().iterator();
-			while (cssIt.hasNext()) {
-				Entry<String, Sandwich> e2 = cssIt.next();
+			for (Entry<String, Sandwich> e2 : info.cssAnimations.entrySet()) {
 				String propertyName = e2.getKey();
 				Sandwich sandwich = e2.getValue();
 				if (sandwich.listenerRegistered) {

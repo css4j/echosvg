@@ -36,7 +36,7 @@ public class JDKRegistryEntryTest {
 		ImageTagRegistry.setBrokenLinkProvider(null);
 		JDKRegistryEntry re = new JDKRegistryEntry();
 
-		Object[] errParam = new Object[] { "JDK", "foo" };
+		Object[] errParam = { "JDK", "foo" };
 		Filter filt = ImageTagRegistry.getBrokenLinkImage(re, ErrorConstants.ERR_URL_FORMAT_UNREADABLE, errParam);
 		RenderedImage red = filt.createDefaultRendering();
 		assertNotNull(red);
@@ -52,7 +52,7 @@ public class JDKRegistryEntryTest {
 		ImageTagRegistry.setBrokenLinkProvider(new SVGBrokenLinkProvider());
 		JDKRegistryEntry re = new JDKRegistryEntry();
 
-		Object[] errParam = new Object[] { "JDK", "foo" };
+		Object[] errParam = { "JDK", "foo" };
 		Filter filt = ImageTagRegistry.getBrokenLinkImage(re, ErrorConstants.ERR_URL_FORMAT_UNREADABLE, errParam);
 		assertNotNull(filt);
 		assertEquals(100d, filt.getWidth(), 1e-7);

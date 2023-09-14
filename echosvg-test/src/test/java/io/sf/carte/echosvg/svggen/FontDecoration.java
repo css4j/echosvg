@@ -51,7 +51,7 @@ public class FontDecoration implements Painter {
 		Color fontColor = Color.black;
 
 		//
-		Map<TextAttribute, Object> attributes = new Hashtable<TextAttribute, Object>();
+		Map<TextAttribute, Object> attributes = new Hashtable<>();
 		attributes.put(TextAttribute.FAMILY, TestFonts.FONT_FAMILY_SANS1);
 		attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_EXTRABOLD);
 		attributes.put(TextAttribute.SIZE, 20);
@@ -63,7 +63,7 @@ public class FontDecoration implements Painter {
 		g.drawString("Strike Through", 10, 40);
 		g.setPaint(fontColor);
 		g.translate(0, 30);
-		Map<TextAttribute, Object> attributes2 = new Hashtable<TextAttribute, Object>(attributes);
+		Map<TextAttribute, Object> attributes2 = new Hashtable<>(attributes);
 		attributes2.remove(TextAttribute.STRIKETHROUGH);
 		attributes2.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		font = new Font(attributes2);

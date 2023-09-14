@@ -67,10 +67,8 @@ public class RectListManager implements Collection<Rectangle> {
 	 */
 	public RectListManager(Collection<?> rects) {
 		this.rects = new Rectangle[rects.size()];
-		Iterator<?> i = rects.iterator();
 		int j = 0;
-		while (i.hasNext()) { // todo can be replaced by rects.toArray()
-			Object o = i.next();
+		for (Object o : rects) { // todo can be replaced by rects.toArray()
 			if (!(o instanceof Rectangle)) {
 				throw new IllegalArgumentException("Collection must have only rectangles.");
 			}

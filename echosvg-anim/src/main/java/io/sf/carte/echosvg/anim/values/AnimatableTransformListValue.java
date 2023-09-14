@@ -515,7 +515,7 @@ public class AnimatableTransformListValue extends AnimatableValue {
 	 */
 	@Override
 	public AnimatableValue getZeroValue() {
-		return new AnimatableTransformListValue(target, new Vector<SVGTransform>(5));
+		return new AnimatableTransformListValue(target, new Vector<>(5));
 	}
 
 	/**

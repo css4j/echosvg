@@ -270,9 +270,7 @@ public abstract class AbstractRable implements Filter {
 			ret[i++] = iter.next();
 		}
 
-		Iterator<RenderableImage> rIter = srcs.iterator();
-		while (rIter.hasNext()) {
-			RenderableImage ri = rIter.next();
+		for (RenderableImage ri : srcs) {
 			String[] srcProps = ri.getPropertyNames();
 			if (srcProps.length != 0) {
 				String[] tmp = new String[ret.length + srcProps.length];

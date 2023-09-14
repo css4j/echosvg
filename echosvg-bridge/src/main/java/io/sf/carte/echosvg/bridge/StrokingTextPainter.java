@@ -1377,12 +1377,10 @@ public class StrokingTextPainter extends BasicTextPainter {
 
 		// get the list of text runs
 		List<TextRun> textRuns = getTextRuns(textNode, aci);
-		Iterator<TextRun> trI = textRuns.iterator();
 		int startGlyphIndex = -1;
 		int endGlyphIndex = -1;
 		TextSpanLayout startLayout = null, endLayout = null;
-		while (trI.hasNext()) {
-			TextRun tr = trI.next();
+		for (TextRun tr : textRuns) {
 			TextSpanLayout tsl = tr.getLayout();
 			if (startGlyphIndex == -1) {
 				startGlyphIndex = tsl.getGlyphIndex(result[0]);

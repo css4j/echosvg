@@ -248,7 +248,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	}
 
 	private DOMException createInvalidRGBComponentUnitDOMException(LexicalType lexicalType) {
-		Object[] p = new Object[] { getPropertyName(), lexicalType.toString() };
+		Object[] p = { getPropertyName(), lexicalType.toString() };
 		String s = Messages.formatMessage("invalid.rgb.component.unit", p);
 		return new DOMException(DOMException.NOT_SUPPORTED_ERR, s);
 	}

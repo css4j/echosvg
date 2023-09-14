@@ -299,7 +299,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 			return new AffineTransform();
 		}
 		SVGRect viewBox = aViewBox.getAnimVal();
-		float[] vb = new float[] { viewBox.getX(), viewBox.getY(), viewBox.getWidth(), viewBox.getHeight() };
+		float[] vb = { viewBox.getX(), viewBox.getY(), viewBox.getWidth(), viewBox.getHeight() };
 
 		return getPreserveAspectRatioTransform(e, vb, w, h, aPAR, ctx);
 	}

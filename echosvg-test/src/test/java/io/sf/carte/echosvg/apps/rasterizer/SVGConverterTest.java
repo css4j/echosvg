@@ -32,7 +32,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -555,10 +554,8 @@ abstract class AbstractConfigTest implements SVGConverterController {
 	}
 
 	private String makeHintsString(Map<Object, Object> map) {
-		Iterator<Object> iter = map.keySet().iterator();
 		StringBuilder sb = new StringBuilder();
-		while (iter.hasNext()) {
-			Object key = iter.next();
+		for (Object key : map.keySet()) {
 			sb.append(key.toString());
 			sb.append('(');
 			sb.append(map.get(key).toString());

@@ -20,7 +20,6 @@ package io.sf.carte.echosvg.svggen;
 
 import java.awt.Font;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.w3c.dom.CDATASection;
@@ -57,13 +56,11 @@ public class GeneratorContext extends SVGAccuracyTest {
 
 		@Override
 		public void setStyle(Element element, Map<String, String> styleMap, SVGGeneratorContext generatorContext) {
-			Iterator<String> iter = styleMap.keySet().iterator();
 			// create a new class id in the style sheet
 			String id = generatorContext.getIDGenerator().generateID("C");
 			styleSheet.appendData("." + id + " {");
 			// append each key/value pairs
-			while (iter.hasNext()) {
-				String key = iter.next();
+			for (String key : styleMap.keySet()) {
 				String value = styleMap.get(key);
 				styleSheet.appendData(key + ":" + value + ";");
 			}

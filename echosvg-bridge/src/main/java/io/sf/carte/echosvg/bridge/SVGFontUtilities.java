@@ -19,7 +19,6 @@
 package io.sf.carte.echosvg.bridge;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -118,11 +117,8 @@ public abstract class SVGFontUtilities implements SVGConstants {
 			fontFamilyMap.put(doc, fontFaces);
 		}
 
-		Iterator<FontFace> iter = fontFaces.iterator();
 		List<GVTFontFamily> svgFontFamilies = new LinkedList<>();
-		while (iter.hasNext()) {
-			FontFace fontFace = iter.next();
-
+		for (FontFace fontFace : fontFaces) {
 			if (!fontFace.hasFamilyName(fontFamilyName)) {
 				continue;
 			}

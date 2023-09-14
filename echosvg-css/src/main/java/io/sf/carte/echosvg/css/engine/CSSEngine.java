@@ -331,7 +331,7 @@ public abstract class CSSEngine {
 	/**
 	 * The listeners.
 	 */
-	protected List<CSSEngineListener> listeners = Collections.synchronizedList(new LinkedList<CSSEngineListener>());
+	protected List<CSSEngineListener> listeners = Collections.synchronizedList(new LinkedList<>());
 
 	/**
 	 * The attributes found in stylesheets selectors.
@@ -1919,7 +1919,7 @@ public abstract class CSSEngine {
 
 	// CSS events /////////////////////////////////////////////////////////
 
-	protected static final CSSEngineListener[] LISTENER_ARRAY = new CSSEngineListener[0];
+	protected static final CSSEngineListener[] LISTENER_ARRAY = {};
 
 	/**
 	 * Adds a CSS engine listener.

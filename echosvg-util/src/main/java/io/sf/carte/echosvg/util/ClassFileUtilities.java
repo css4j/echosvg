@@ -168,9 +168,7 @@ public class ClassFileUtilities {
 			}
 			Collections.sort(triples);
 
-			Iterator<Triple> ti = triples.iterator();
-			while (ti.hasNext()) {
-				Triple t = ti.next();
+			for (Triple t : triples) {
 				System.out.println(t.count + "," + t.from.name + "," + t.to.name);
 				if (showFiles) {
 					for (ClassFile fromFile : t.from.files) {

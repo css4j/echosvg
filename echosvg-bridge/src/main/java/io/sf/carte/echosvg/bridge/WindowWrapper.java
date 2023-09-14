@@ -45,7 +45,7 @@ public class WindowWrapper extends ImporterTopLevel {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Object[] EMPTY_ARGUMENTS = new Object[0];
+	private static final Object[] EMPTY_ARGUMENTS = {};
 
 	/**
 	 * The rhino interpreter.

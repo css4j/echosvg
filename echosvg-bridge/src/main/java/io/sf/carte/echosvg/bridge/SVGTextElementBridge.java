@@ -1154,17 +1154,13 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 
 			// Set the attributes
 
-			Iterator<String> sit = strings.iterator();
 			Iterator<Map<Attribute, Object>> ait = attributes.iterator();
 			int idx = 0;
-			while (sit.hasNext()) {
-				String s = sit.next();
+			for (String s : strings) {
 				int nidx = idx + s.length();
 				Map<Attribute, Object> m = ait.next();
-				Iterator<Attribute> kit = m.keySet().iterator();
 				Iterator<?> vit = m.values().iterator();
-				while (kit.hasNext()) {
-					Attribute attr = kit.next();
+				for (Attribute attr : m.keySet()) {
 					Object val = vit.next();
 					result.addAttribute(attr, val, idx, nidx);
 				}

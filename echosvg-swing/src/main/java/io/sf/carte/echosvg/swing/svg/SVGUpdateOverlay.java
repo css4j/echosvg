@@ -21,7 +21,6 @@ package io.sf.carte.echosvg.swing.svg;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,15 +72,13 @@ public class SVGUpdateOverlay implements Overlay {
 
 	@Override
 	public void paint(Graphics g) {
-		Iterator<Rectangle> i = rects.iterator();
 		int count = 0;
 		int idx = 0;
 		int group = 0;
 		while ((group < counts.length - 1) && (idx == counts[group]))
 			group++;
 		int cmax = counts.length - 1;
-		while (i.hasNext()) {
-			Rectangle r = i.next();
+		for (Rectangle r : rects) {
 			Color c;
 			c = new Color(1.0f, (cmax - group) / (float) cmax, 0, (count + 1.0f) / rects.size());
 			g.setColor(c);

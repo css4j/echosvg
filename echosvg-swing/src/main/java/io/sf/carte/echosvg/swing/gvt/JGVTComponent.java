@@ -46,7 +46,6 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.image.BufferedImage;
 import java.text.CharacterIterator;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -104,7 +103,7 @@ public class JGVTComponent extends JComponent {
 	 * The GVT tree renderer listeners.
 	 */
 	protected List<GVTTreeRendererListener> gvtTreeRendererListeners = Collections
-			.synchronizedList(new LinkedList<GVTTreeRendererListener>());
+			.synchronizedList(new LinkedList<>());
 
 	/**
 	 * Whether a render was requested.
@@ -610,10 +609,8 @@ public class JGVTComponent extends JComponent {
 			}
 		}
 		if (jgvtListeners != null) {
-			Iterator<JGVTComponentListener> iter = jgvtListeners.iterator();
 			ComponentEvent ce = new ComponentEvent(this, JGVTComponentListener.COMPONENT_TRANSFORM_CHANGED);
-			while (iter.hasNext()) {
-				JGVTComponentListener l = iter.next();
+			for (JGVTComponentListener l : jgvtListeners) {
 				l.componentTransformChanged(ce);
 			}
 		}

@@ -186,9 +186,7 @@ public class ContentManager {
 	public void dispose() {
 		xblManager.setContentManager(shadowTree, null);
 
-		Iterator<Entry<Node, NodeList>> i = selectedNodes.entrySet().iterator();
-		while (i.hasNext()) {
-			Entry<Node, NodeList> e = i.next();
+		for (Entry<Node, NodeList> e : selectedNodes.entrySet()) {
 			NodeList nl = e.getValue();
 			for (int j = 0; j < nl.getLength(); j++) {
 				Node n = nl.item(j);
@@ -196,9 +194,7 @@ public class ContentManager {
 			}
 		}
 
-		Iterator<SVGOMElement> celIt = contentElementList.iterator();
-		while (celIt.hasNext()) {
-			NodeEventTarget n = celIt.next();
+		for (NodeEventTarget n : contentElementList) {
 			n.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified",
 					contentElementDomAttrModifiedEventListener, false);
 		}
@@ -296,9 +292,7 @@ public class ContentManager {
 			}
 		}
 
-		Iterator<SVGOMElement> netIt = contentElementList.iterator();
-		while (netIt.hasNext()) {
-			NodeEventTarget n = netIt.next();
+		for (NodeEventTarget n : contentElementList) {
 			n.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrModified",
 					contentElementDomAttrModifiedEventListener, false);
 		}
@@ -325,8 +319,7 @@ public class ContentManager {
 				}
 			}
 
-			HashSet<Node> removed = new HashSet<>();
-			removed.addAll(previouslySelectedNodes);
+			HashSet<Node> removed = new HashSet<>(previouslySelectedNodes);
 			removed.removeAll(newlySelectedNodes);
 
 			HashSet<Node> added = new HashSet<>();
