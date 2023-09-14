@@ -31,6 +31,6 @@ public class BooleanKey extends TranscodingHints.Key {
 
 	@Override
 	public boolean isCompatibleValue(Object v) {
-		return (v != null && v instanceof Boolean);
+		return (v instanceof Boolean);
 	}
 }
