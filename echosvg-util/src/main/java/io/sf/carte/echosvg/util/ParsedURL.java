@@ -315,8 +315,6 @@ public class ParsedURL {
 	 * ':'.
 	 */
 	public String getProtocol() {
-		if (data.protocol == null)
-			return null;
 		return data.protocol;
 	}
 
@@ -325,8 +323,6 @@ public class ParsedURL {
 	 * or it doesn't make sense for the protocol.
 	 */
 	public String getHost() {
-		if (data.host == null)
-			return null;
 		return data.host;
 	}
 
@@ -344,8 +340,6 @@ public class ParsedURL {
 	 * in JDK 1.3 as a synonym for getFile from JDK 1.2.
 	 */
 	public String getPath() {
-		if (data.path == null)
-			return null;
 		return data.path;
 	}
 
@@ -353,8 +347,6 @@ public class ParsedURL {
 	 * Returns the 'fragment' reference in the URL.
 	 */
 	public String getRef() {
-		if (data.ref == null)
-			return null;
 		return data.ref;
 	}
 
