@@ -417,7 +417,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 			r.parse(uri);
 		} catch (SAXException e) {
 			Exception ex = e.getException();
-			if (ex != null && ex instanceof InterruptedIOException) {
+			if (ex instanceof InterruptedIOException) {
 				throw (InterruptedIOException) ex;
 			}
 			throw new SAXIOException(e);
@@ -555,7 +555,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 			parser.parse(is);
 		} catch (SAXException e) {
 			Exception ex = e.getException();
-			if (ex != null && ex instanceof InterruptedIOException) {
+			if (ex instanceof InterruptedIOException) {
 				throw (InterruptedIOException) ex;
 			}
 			throw new SAXIOException(e);
