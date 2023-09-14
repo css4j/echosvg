@@ -1396,7 +1396,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			GVTFontFamily fontFamily;
 			fontFamily = SVGFontUtilities.getFontFamily(element, ctx, fontFamilyName, fontWeightString,
 					fontStyleString);
-			if (fontFamily != null && fontFamily instanceof UnresolvedFontFamily) {
+			if (fontFamily instanceof UnresolvedFontFamily) {
 				fontFamily = ctx.getFontFamilyResolver().resolve(fontFamily.getFamilyName());
 			}
 			if (fontFamily == null) {
