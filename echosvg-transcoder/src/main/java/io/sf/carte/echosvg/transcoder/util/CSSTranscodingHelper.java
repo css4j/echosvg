@@ -774,7 +774,8 @@ public class CSSTranscodingHelper {
 				String conEnc = purl.getContentEncoding();
 				Reader userRe = AgentUtil.inputStreamToReader(is, conType, conEnc,
 						StandardCharsets.UTF_8);
-				((CSSStyleSheetFactory) document.getImplementation()).setUserStyleSheet(userRe);
+				((CSSStyleSheetFactory) document.getImplementation())
+						.setUserStyleSheet(purl.getPostConnectionURL(), userRe);
 			}
 		}
 
