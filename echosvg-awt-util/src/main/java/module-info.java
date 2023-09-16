@@ -33,6 +33,9 @@ module io.sf.carte.echosvg.awt {
 	exports io.sf.carte.echosvg.ext.awt.g2d;
 
 	requires transitive io.sf.carte.echosvg.util;
+	// xmlgraphics.commons should be a transitive dependency due to
+	// ICCColorSpaceWithIntent from commons being used in this module's
+	// API, but it declares no module name.
 	requires xmlgraphics.commons;
 	requires io.sf.carte.echosvg.i18n;
 	requires java.desktop;
