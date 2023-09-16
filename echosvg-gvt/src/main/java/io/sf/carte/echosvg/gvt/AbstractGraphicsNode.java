@@ -460,7 +460,7 @@ public abstract class AbstractGraphicsNode implements GraphicsNode {
 	public void paint(Graphics2D g2d) {
 		if ((composite != null) && (composite instanceof AlphaComposite)) {
 			AlphaComposite ac = (AlphaComposite) composite;
-			if (ac.getAlpha() < 0.001)
+			if (ac.getAlpha() < 0.001f)
 				return; // No point in drawing
 		}
 		Rectangle2D bounds = getBounds();

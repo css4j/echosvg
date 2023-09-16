@@ -97,8 +97,8 @@ public abstract class ImageTranscoder extends SVGAbstractTranscoder {
 		super.transcode(document, uri, output);
 
 		// prepare the image to be painted
-		int w = (int) (width + 0.5);
-		int h = (int) (height + 0.5);
+		int w = (int) (width + 0.5f);
+		int h = (int) (height + 0.5f);
 
 		// paint the SVG document using the bridge package
 		// create the appropriate renderer

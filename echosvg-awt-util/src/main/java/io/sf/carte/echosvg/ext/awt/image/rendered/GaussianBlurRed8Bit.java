@@ -110,23 +110,23 @@ public class GaussianBlurRed8Bit extends AbstractRed {
 		if ((xinset != 0) && ((stdDevX < 2) || highQuality))
 			convOp[0] = new ConvolveOp(makeQualityKernelX(xinset * 2 + 1));
 		else
-			dX = (int) Math.floor(DSQRT2PI * stdDevX + 0.5f);
+			dX = (int) Math.floor(DSQRT2PI * stdDevX + 0.5);
 
 		if ((yinset != 0) && ((stdDevY < 2) || highQuality))
 			convOp[1] = new ConvolveOp(makeQualityKernelY(yinset * 2 + 1));
 		else
-			dY = (int) Math.floor(DSQRT2PI * stdDevY + 0.5f);
+			dY = (int) Math.floor(DSQRT2PI * stdDevY + 0.5);
 	}
 
 	/**
 	 * Constant: sqrt(2*PI)
 	 */
-	static final float SQRT2PI = (float) Math.sqrt(2 * Math.PI);
+	static final double SQRT2PI = Math.sqrt(2 * Math.PI);
 
 	/**
 	 * Constant: 3*sqrt(2*PI)/4
 	 */
-	static final float DSQRT2PI = SQRT2PI * 3f / 4f;
+	static final double DSQRT2PI = SQRT2PI * 3d / 4d;
 
 	/**
 	 * Constant: precision used in computation of the Kernel radius
@@ -162,7 +162,7 @@ public class GaussianBlurRed8Bit extends AbstractRed {
 		}
 
 		// compute d
-		int diam = (int) Math.floor(DSQRT2PI * stdDev + 0.5f);
+		int diam = (int) Math.floor(DSQRT2PI * stdDev + 0.5);
 		if (diam % 2 == 0)
 			return diam - 1 + diam / 2; // even case
 		else
