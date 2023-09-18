@@ -241,11 +241,11 @@ public class FontSizeManager extends LengthManager {
 			break;
 
 		case 's':
-			fs = (float) (fs / 1.2);
+			fs = fs / 1.2f;
 			break;
 
 		case 'l':
-			fs = (float) (fs * 1.2);
+			fs = fs * 1.2f;
 			break;
 
 		default: // 'x'
@@ -253,22 +253,22 @@ public class FontSizeManager extends LengthManager {
 			case 'x':
 				switch (s.charAt(3)) {
 				case 's':
-					fs = (float) (((fs / 1.2) / 1.2) / 1.2);
+					fs = fs / (float) (1.2 * 1.2 * 1.2);
 					break;
 
 				default: // 'l'
-					fs = (float) (fs * 1.2 * 1.2 * 1.2);
+					fs = fs * (float) (1.2 * 1.2 * 1.2);
 				}
 				break;
 
 			default: // '-'
 				switch (s.charAt(2)) {
 				case 's':
-					fs = (float) ((fs / 1.2) / 1.2);
+					fs = fs / (float) (1.2 * 1.2);
 					break;
 
 				default: // 'l'
-					fs = (float) (fs * 1.2 * 1.2);
+					fs = fs * (float) (1.2 * 1.2);
 				}
 			}
 		}

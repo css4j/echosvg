@@ -127,7 +127,7 @@ public class SVGTextPathElementBridge extends AnimatableGenericSVGBridge impleme
 					throw new BridgeException(ctx, textPathElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
 							new Object[] { SVG_START_OFFSET_ATTRIBUTE, s });
 				}
-				startOffset = (float) (startOffsetPercent * pathLength / 100.0);
+				startOffset = startOffsetPercent * pathLength / 100f;
 
 			} else {
 				// its an absolute length

@@ -1019,8 +1019,8 @@ public class JSVGComponent extends JGVTComponent {
 				float dx = (float) ((d.width / 2.0f) - pt.getX());
 				float dy = (float) ((d.height / 2.0f) - pt.getY());
 				// Round the values to nearest integer.
-				dx = (int) ((dx < 0) ? (dx - .5) : (dx + .5));
-				dy = (int) ((dy < 0) ? (dy - .5) : (dy + .5));
+				dx = (int) ((dx < 0) ? (dx - .5f) : (dx + .5f));
+				dy = (int) ((dy < 0) ? (dy - .5f) : (dy + .5f));
 				if ((dx != 0) || (dy != 0)) {
 					rendAT.preConcatenate(AffineTransform.getTranslateInstance(dx, dy));
 					setRenderingTransform(rendAT, false);
