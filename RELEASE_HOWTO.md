@@ -110,7 +110,7 @@ The compressed archives will be part of the published release. Notice that the
 
 ```shell
 cd /path/to/echosvg
-git tag -s v1.0.1 -m "Milestone Release 1.0.1"
+git tag -s v1.0.1 -m "Release 1.0.1"
 git push origin v1.0.1
 ```
 
