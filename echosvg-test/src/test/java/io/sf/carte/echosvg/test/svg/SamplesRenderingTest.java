@@ -321,6 +321,12 @@ public class SamplesRenderingTest {
 	 * Coordinates
 	 */
 	@Test
+	public void testAnimRotateOrigin() throws TranscoderException, IOException {
+		float[] times = {0.5f, 1.5f, 1.52f, 3.5f};
+		testAnim("samples/tests/spec/coordinates/animRotateOrigin.svg", times);
+	}
+
+	@Test
 	public void testPercentagesAndUnits() throws TranscoderException, IOException {
 		test("samples/tests/spec/coordinates/percentagesAndUnits.svg");
 	}
@@ -1708,6 +1714,14 @@ public class SamplesRenderingTest {
 		RenderingTest runner = new ResolutionPxMmRenderingTest(pxToMM);
 		runner.setFile(file);
 		runner.runTest(0.000001f, 0.000001f);
+	}
+
+	private void testAnim(String file, float[] times) throws TranscoderException, IOException {
+		for (float time : times) {
+			RenderingTest runner = new SVGAnimationRenderingAccuracyTest(time);
+			runner.setFile(file);
+			runner.runTest(0.000001f, 0.000001f);
+		}
 	}
 
 	/**
