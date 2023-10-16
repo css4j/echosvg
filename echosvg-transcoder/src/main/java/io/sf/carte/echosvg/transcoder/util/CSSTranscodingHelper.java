@@ -64,6 +64,13 @@ import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.StyleDatabase;
 import io.sf.carte.doc.style.css.awt.AWTHelper;
+import io.sf.carte.doc.style.css.nsac.ArgumentCondition;
+import io.sf.carte.doc.style.css.nsac.CombinatorCondition;
+import io.sf.carte.doc.style.css.nsac.CombinatorSelector;
+import io.sf.carte.doc.style.css.nsac.Condition;
+import io.sf.carte.doc.style.css.nsac.ConditionalSelector;
+import io.sf.carte.doc.style.css.nsac.Selector;
+import io.sf.carte.doc.style.css.nsac.SelectorList;
 import io.sf.carte.doc.style.css.om.AbstractCSSCanvas;
 import io.sf.carte.doc.style.css.om.AbstractStyleDatabase;
 import io.sf.carte.doc.style.css.om.ComputedCSSStyle;
@@ -1101,19 +1108,66 @@ public class CSSTranscodingHelper {
 			private boolean supportsColor(CSSValue value) {
 				switch (value.getPrimitiveType()) {
 				case COLOR:
+				case COLOR_MIX:
 					return true;
 				case IDENT:
 					return ColorIdentifiers.getInstance()
 							.isColorIdentifier(value.getCssText().toLowerCase(Locale.ROOT));
 				default:
+					return false;
 				}
-				return false;
 			}
 
 			private boolean isSupportedType(CSSTypedValue value) {
 				short unit = value.getUnitType();
-				return (CSSUnit.isLengthUnitType(unit) && !CSSUnit.isRelativeLengthUnitType(unit))
+				/*
+				 * Supported units are: absolute lengths, em, ex, angles and times
+				 */
+				return (unit >= CSSUnit.CSS_PX && unit <= CSSUnit.CSS_EX)
 						|| CSSUnit.isAngleUnitType(unit) || CSSUnit.isTimeUnitType(unit);
+			}
+
+			@Override
+			public boolean supports(SelectorList selectors) {
+				for (Selector selector : selectors) {
+					if (!supports(selector)) {
+						return false;
+					}
+				}
+				return true;
+			}
+
+			private boolean supports(Selector selector) {
+				switch (selector.getSelectorType()) {
+				case CHILD:
+				case DESCENDANT:
+				case DIRECT_ADJACENT:
+				case SUBSEQUENT_SIBLING:
+					CombinatorSelector combSel = (CombinatorSelector) selector;
+					return supports(combSel.getSelector()) && supports(combSel.getSecondSelector());
+				case CONDITIONAL:
+					ConditionalSelector condSel = (ConditionalSelector) selector;
+					return supports(condSel.getSimpleSelector())
+							&& supports(condSel.getCondition());
+				case COLUMN_COMBINATOR:
+					return false;
+				default:
+					return true;
+				}
+			}
+
+			private boolean supports(Condition condition) {
+				switch (condition.getConditionType()) {
+				case AND:
+					CombinatorCondition combCond = (CombinatorCondition) condition;
+					return supports(combCond.getFirstCondition())
+							&& supports(combCond.getSecondCondition());
+				case SELECTOR_ARGUMENT:
+					ArgumentCondition argCond = (ArgumentCondition) condition;
+					return supports(argCond.getSelectors());
+				default:
+					return true;
+				}
 			}
 
 		}

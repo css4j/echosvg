@@ -116,8 +116,10 @@ ellipse {
   }
 }
 
-text.itemdesc {
-  fill: var(--textColor);
+@supports (not selector(div col.foo||td)) {
+  text.itemdesc {
+    fill: var(--textColor);
+  }
 }
 
 /*]]>*/

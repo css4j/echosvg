@@ -1351,28 +1351,28 @@ public class StyleBypassRenderingTest {
 	 */
 	@Test
 	public void testCSS3_All() throws TranscoderException, IOException {
-		testAllInputSources("samples/tests/spec2/styling/css3.html", null, false, null, false, 5);
+		testAllInputSources("samples/tests/spec2/styling/css3.html", null, false, null, false, 4);
 	}
 
 	@Test
 	public void testCSS3Print() throws TranscoderException, IOException {
-		testPrint("samples/tests/spec2/styling/css3.html", 5);
+		testPrint("samples/tests/spec2/styling/css3.html", 4);
 	}
 
 	@Test
 	public void testCSS3AlternateStylesheet() throws TranscoderException, IOException {
-		testAlternate("samples/tests/spec2/styling/css3.html", "Gray", false, 5);
+		testAlternate("samples/tests/spec2/styling/css3.html", "Gray", false, 4);
 	}
 
 	@Test
 	public void testCSS3Dark() throws TranscoderException, IOException {
-		testDark("samples/tests/spec2/styling/css3.html", 5);
+		testDark("samples/tests/spec2/styling/css3.html", 4);
 	}
 
 	@Test
 	public void testCSS3_Selector() throws TranscoderException, IOException {
 		test("samples/tests/spec2/styling/css3.html", SVGRenderingAccuracyTest.DEFAULT_MEDIUM,
-				false, "#theSVG", true, 5);
+				false, "#theSVG", true, 4);
 	}
 
 	@Test
