@@ -1138,22 +1138,25 @@ public class CSSTranscodingHelper {
 			}
 
 			private boolean supports(Selector selector) {
-				switch (selector.getSelectorType()) {
-				case CHILD:
-				case DESCENDANT:
-				case DIRECT_ADJACENT:
-				case SUBSEQUENT_SIBLING:
-					CombinatorSelector combSel = (CombinatorSelector) selector;
-					return supports(combSel.getSelector()) && supports(combSel.getSecondSelector());
-				case CONDITIONAL:
-					ConditionalSelector condSel = (ConditionalSelector) selector;
-					return supports(condSel.getSimpleSelector())
-							&& supports(condSel.getCondition());
-				case COLUMN_COMBINATOR:
-					return false;
-				default:
-					return true;
+				if (selector != null) {
+					switch (selector.getSelectorType()) {
+					case CHILD:
+					case DESCENDANT:
+					case DIRECT_ADJACENT:
+					case SUBSEQUENT_SIBLING:
+						CombinatorSelector combSel = (CombinatorSelector) selector;
+						return supports(combSel.getSelector())
+								&& supports(combSel.getSecondSelector());
+					case CONDITIONAL:
+						ConditionalSelector condSel = (ConditionalSelector) selector;
+						return supports(condSel.getSimpleSelector())
+								&& supports(condSel.getCondition());
+					case COLUMN_COMBINATOR:
+						return false;
+					default:
+					}
 				}
+				return true;
 			}
 
 			private boolean supports(Condition condition) {
@@ -1164,7 +1167,8 @@ public class CSSTranscodingHelper {
 							&& supports(combCond.getSecondCondition());
 				case SELECTOR_ARGUMENT:
 					ArgumentCondition argCond = (ArgumentCondition) condition;
-					return supports(argCond.getSelectors());
+					SelectorList selist = argCond.getSelectors();
+					return selist == null || supports(selist);
 				default:
 					return true;
 				}
