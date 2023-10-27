@@ -3,7 +3,6 @@ plugins {
 }
 
 dependencies {
-	api project(':echosvg-util')
 	api project(':echosvg-xml')
 }
 

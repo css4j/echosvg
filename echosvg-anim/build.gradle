@@ -3,7 +3,6 @@ plugins {
 }
 
 dependencies {
-	api project(':echosvg-parser')
 	api project(':echosvg-svg-dom')
 	implementation "xml-apis:xml-apis:$xmlApisVersion"
 }
