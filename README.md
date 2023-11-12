@@ -43,7 +43,6 @@ git clone https://github.com/css4j/echosvg.git
 cd echosvg
 ./gradlew build
 ```
-or just `gradlew build` (without the `./`) on a Windows command prompt.
 
 <br/>
 
