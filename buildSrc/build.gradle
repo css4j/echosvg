@@ -9,5 +9,5 @@ repositories {
 }
 
 dependencies {
-	implementation('org.owasp:dependency-check-gradle:8.2.1')
+	implementation('org.owasp:dependency-check-gradle:8.4.2')
 }
