@@ -122,6 +122,9 @@ build.dependsOn jarCheckPermissionsDeniedJar
 build.dependsOn jarCheckPermissionsGrantedJar
 build.dependsOn copyScriptJars, copyPolicyJar
 
-tasks.withType(PublishToMavenRepository).configureEach {
+/*
+ * Maven repository deployments (disabled)
+ */
+tasks.withType(AbstractPublishToMaven).configureEach {
 	it.enabled = false
 }

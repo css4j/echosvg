@@ -1,8 +1,5 @@
 plugins {
 	id 'java-library'
-	/*
-	 * Use 'gradle publishToMavenLocal' to install in local Maven repo
-	 */
 	id 'maven-publish'
 	id 'org.owasp.dependencycheck'
 }
@@ -142,12 +139,17 @@ publishing {
 		maven(MavenPublication) {
 			from(components.java)
 			pom {
-				url = "https://github.com/css4j/echosvg/"
+				url = "https://github.com/css4j/echosvg/wiki"
 				licenses {
 					license {
 						name = "The Apache License, Version 2.0"
 						url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
 					}
+				}
+				scm {
+					connection = "scm:git:https://github.com/css4j/echosvg.git"
+					developerConnection = "scm:git:git://git@github.com:css4j/echosvg.git"
+					url = "https://github.com/css4j/echosvg"
 				}
 			}
 		}

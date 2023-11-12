@@ -12,6 +12,9 @@ publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG Swing Tests"
 }
 
-tasks.withType(PublishToMavenRepository).configureEach {
+/*
+ * Maven repository deployments (disabled)
+ */
+tasks.withType(AbstractPublishToMaven).configureEach {
 	it.enabled = false
 }

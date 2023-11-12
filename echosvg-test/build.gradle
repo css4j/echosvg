@@ -173,6 +173,6 @@ task runJmh(type: JavaExec) {
  */
 // Disable Maven publication (shipped security policies are not
 // adequate for running tests from a jar)
-tasks.withType(PublishToMavenRepository).configureEach {
+tasks.withType(AbstractPublishToMaven).configureEach {
 	it.enabled = false
 }
