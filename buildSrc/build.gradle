@@ -10,4 +10,5 @@ repositories {
 
 dependencies {
 	implementation('org.owasp:dependency-check-gradle:8.4.2')
+	implementation('com.github.jk1:gradle-license-report:2.5')
 }

@@ -2,6 +2,7 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	id 'org.owasp.dependencycheck'
+	id 'com.github.jk1.dependency-license-report'
 }
 
 repositories {
@@ -87,7 +88,7 @@ tasks.register('checkLegacyJava') {
 	}
 }
 
-classes.dependsOn jvmVersionAttribute
+classes.dependsOn jvmVersionAttribute, checkLicense
 classes.finalizedBy checkLegacyJava
 jar.dependsOn checkLegacyJava
 
@@ -132,6 +133,11 @@ tasks.withType(AbstractArchiveTask).configureEach {
 	from ("$buildDir/tmp/crlf/NOTICE") {
 		into 'META-INF'
 	}
+}
+
+// Check licenses
+licenseReport {
+	allowedLicensesFile = new File("$rootDir/buildSrc/allowed-licenses.json")
 }
 
 publishing {

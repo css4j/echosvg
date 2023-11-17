@@ -100,7 +100,7 @@ java -jar echosvg-test/build/libs/echosvg-<version>-jmh.jar <regexp>
 
 Use:
 
-- `./gradlew build publishToMavenLocal` to install in your local Maven repository.
+- `./gradlew publishToMavenLocal` to install in your local Maven repository.
 
 - `./gradlew publish` to deploy to a (generally remote) Maven repository.
 
@@ -155,12 +155,30 @@ to you, please open an issue so it is preserved.
 
 <br/>
 
-### Dependency check
+### Other common tasks
 
-The OWASP Dependency Check plugin can be run with:
+#### OWASP Dependency Check
+
+Check for known vulnerable dependencies that are used in the build.
+
 ```shell
 ./gradlew dependencyCheckAnalyze
 ```
+
+#### Dependency Licensing
+
+Generate a report about the licenses of the dependencies:
+
+```shell
+./gradlew generateLicenseReport
+```
+
+Check that the licenses of all the dependencies are allowed, fail otherwise:
+
+```shell
+./gradlew checkLicense
+```
+(the above task is executed on each build)
 
 <br/>
 
