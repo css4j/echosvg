@@ -95,7 +95,7 @@ jar.dependsOn checkLegacyJava
 // Copy jar files to 'jar' directory
 tasks.register('copyJars', Copy) {
 	description = 'Copy jar files to \'jar\' directory'
-	dependsOn tasks.build
+	dependsOn jar,sourcesJar
 	dependsOn ':echosvg-all:jar'
 	include '**/*.jar'
 	excludes = ['IWasLoaded*.jar', 'JarCheckPermissions*.jar',

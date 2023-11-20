@@ -46,16 +46,17 @@ cd /path/to/echosvg
 ```
 
 5) For convenience, now copy all the produced _jar_ files into a new `jar`
-directory and create a Zip archive of them:
+directory and create a Zip archive of them. For example if you are releasing
+`1.0.1`:
 
 ```shell
-./gradlew copyJars -x test
+./gradlew copyJars
 mv jar echosvg-1.0.1-bin
 7z a -mx7 echosvg-1.0.1-binaries.zip echosvg-1.0.1-bin
 ```
 
-6) Use `changes.sh <new-version>` to create a `CHANGES.txt` file with the
-changes from the latest tag. For example if you are releasing `1.0.1`:
+6) Use `changes.sh <new-version>` to create a `CHANGES.txt` file for the new
+version, with the changes from the latest tag:
 
 ```shell
 ./changes.sh 1.0.1
