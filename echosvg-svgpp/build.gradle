@@ -11,3 +11,9 @@ description = 'io.sf.carte:echosvg-svgpp'
 publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG SVG Pretty Printer Application"
 }
+
+jar {
+	manifest {
+		attributes('Main-Class': 'io.sf.echosvg.apps.svgpp.Main')
+	}
+}

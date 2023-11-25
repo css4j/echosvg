@@ -13,3 +13,9 @@ description = 'io.sf.carte:echosvg-svgrasterizer'
 publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG SVG Rasterizer Library"
 }
+
+jar {
+	manifest {
+		attributes('Main-Class': 'io.sf.echosvg.apps.rasterizer.Main')
+	}
+}

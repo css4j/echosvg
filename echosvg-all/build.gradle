@@ -262,4 +262,7 @@ tasks.register('uberjar', Jar) {
 	duplicatesStrategy = 'exclude'
 	exclude 'javax/**'
 	exclude 'org/w3c/css/**'
+	manifest {
+		attributes('Main-Class': 'io.sf.echosvg.apps.rasterizer.Main')
+	}
 }

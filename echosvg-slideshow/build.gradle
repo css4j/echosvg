@@ -11,3 +11,9 @@ description = 'io.sf.carte:echosvg-slideshow'
 publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG SVG Slideshow Application"
 }
+
+jar {
+	manifest {
+		attributes('Main-Class': 'io.sf.echosvg.apps.slideshow.Main')
+	}
+}

@@ -11,3 +11,9 @@ description = 'io.sf.carte:echosvg-ttf2svg'
 publishing.publications.maven(MavenPublication).pom {
 	description = "EchoSVG Truetype Font to SVG Font Converter Application"
 }
+
+jar {
+	manifest {
+		attributes('Main-Class': 'io.sf.echosvg.apps.ttf2svg.Main')
+	}
+}
