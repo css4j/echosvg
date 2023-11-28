@@ -16,6 +16,6 @@ publishing.publications.maven(MavenPublication).pom {
 
 jar {
 	manifest {
-		attributes('Main-Class': 'io.sf.echosvg.apps.rasterizer.Main')
+		attributes('Main-Class': 'io.sf.carte.echosvg.apps.rasterizer.Main')
 	}
 }
