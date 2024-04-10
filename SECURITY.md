@@ -9,12 +9,12 @@ and privacy.
 ## Security
 
 SVG documents can be complex and can drive any rendering software to its limits.
-In general, if a SVG document can cause issues to a web browser that attempts to
-render it, that image will also cause problems to Batik.
+In general, if an SVG document can cause issues to a web browser that attempts to
+render it, that image will also cause problems to EchoSVG or Batik.
 
 Unfortunately, this library can also be less secure than web browsers, especially
 in scripting security. To execute scripts, EchoSVG relies on the Mozilla Rhino
-javascript library, which is embedded via a feature called LiveConnect. [It is well
+javascript library, which is embedded with a feature called LiveConnect. [It is well
 known that it is almost impossible to secure a Rhino environment that uses
 LiveConnect](https://github.com/mozilla/rhino/discussions/1045), so users are
 advised against running untrusted scripts, or any trusted script that could somehow
