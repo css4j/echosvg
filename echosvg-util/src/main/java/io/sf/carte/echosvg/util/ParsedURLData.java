@@ -108,6 +108,9 @@ public class ParsedURLData {
 		return is;
 	}
 
+	private static int connectTimeout = 10000;
+	private static int readTimeout = 240000;
+
 	/**
 	 * Since the Data instance is 'hidden' in the ParsedURL instance we make all our
 	 * methods public. This makes it easy for the various Protocol Handlers to
@@ -190,6 +193,53 @@ public class ParsedURLData {
 		}
 
 		return new URL(toString());
+	}
+
+	/**
+	 * Gets the connect timeout.
+	 * 
+	 * @return the connect timeout.
+	 */
+	public static int getConnectTimeout() {
+		return connectTimeout;
+	}
+
+	/**
+	 * Sets the connect timeout.
+	 * <p>
+	 * Default is 10 seconds.
+	 * </p>
+	 * 
+	 * @param connectTimeout the connect timeout.
+	 * @throws IllegalArgumentException if the argument is negative.
+	 */
+	public static void setConnectTimeout(int connectTimeout) {
+		if (connectTimeout < 0) {
+			throw new IllegalArgumentException("Cannot set negative timeout.");
+		}
+		ParsedURLData.connectTimeout = connectTimeout;
+	}
+
+	/**
+	 * Gets the read timeout.
+	 * 
+	 * @return the read timeout.
+	 */
+	public static int getReadTimeout() {
+		return readTimeout;
+	}
+
+	/**
+	 * Sets the read timeout.
+	 * 
+	 * @param readTimeout the read timeout.
+	 * @throws IllegalArgumentException if the argument is negative.
+	 */
+	public static void setReadTimeout(int readTimeout) {
+		if (readTimeout < 0) {
+			throw new IllegalArgumentException("Cannot set negative timeout.");
+		}
+		ParsedURLData.readTimeout = readTimeout;
 	}
 
 	/**
@@ -545,6 +595,9 @@ public class ParsedURLData {
 				}
 				urlC.setRequestProperty(HTTP_ACCEPT_ENCODING_HEADER, encodingHeader);
 			}
+
+			urlC.setConnectTimeout(connectTimeout);
+			urlC.setReadTimeout(readTimeout);
 
 			contentType = urlC.getContentType();
 			contentEncoding = urlC.getContentEncoding();
