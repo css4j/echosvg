@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -215,7 +216,7 @@ public class ClassFileUtilities {
 	}
 
 	private static void collectJars(File dir, Map<String, Jar> jars, Map<String, ClassFile> classFiles)
-			throws IOException {
+			throws IOException, SecurityException {
 		File[] files = dir.listFiles();
 		if (files != null) {
 			for (File file : files) {
@@ -227,11 +228,13 @@ public class ClassFileUtilities {
 					j.jarFile = new JarFile(file);
 					jars.put(j.name, j);
 
+					Path dirPath = dir.toPath();
 					Enumeration<JarEntry> entries = j.jarFile.entries();
 					while (entries.hasMoreElements()) {
 						ZipEntry ze = entries.nextElement();
 						String name = ze.getName();
 						if (name.endsWith(".class")) {
+							sanitizeName(dir, dirPath, name);
 							ClassFile cf = new ClassFile();
 							cf.name = name;
 							cf.jar = j;
@@ -243,6 +246,13 @@ public class ClassFileUtilities {
 					collectJars(file, jars, classFiles);
 				}
 			}
+		}
+	}
+
+	private static void sanitizeName(File dir, Path dirPath, String name) throws SecurityException {
+		File file = new File(dir, name);
+		if (!file.toPath().normalize().startsWith(dirPath)) {
+			throw new SecurityException("Possibly malicious zip entry.");
 		}
 	}
 
