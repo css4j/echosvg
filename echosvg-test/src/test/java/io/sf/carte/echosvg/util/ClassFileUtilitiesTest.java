@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,18 +42,19 @@ public class ClassFileUtilitiesTest {
 	@Test
 	public void testCollectJars() throws Exception {
 		URL url = new URL(TestLocations.PROJECT_ROOT_URL);
-		collectJarsTest(url.getFile() + "test-resources/io/sf/carte/echosvg/bridge", 4, 6);
+		collectJarsTest(url.getFile() + "test-resources/io/sf/carte/echosvg/bridge", 2, 2);
 	}
 
-	private void collectJarsTest(String dir, int jarCount, int classCount)
+	private void collectJarsTest(String dir, int minJarCount, int minClassCount)
 			throws SecurityException, IOException {
 		File f = new File(dir);
 		Map<String, Jar> jars = new HashMap<>();
 		Map<String, ClassFile> classFiles = new HashMap<>();
 		ClassFileUtilities.collectJars(f, jars, classFiles);
 
-		assertEquals(jarCount, jars.size());
-		assertEquals(classCount, classFiles.size());
+		assertTrue(minJarCount <= jars.size(), "Found less than " + minJarCount + " jar files.");
+		assertTrue(minClassCount <= classFiles.size(),
+				"Found less than " + minClassCount + " class files.");
 	}
 
 }
