@@ -215,7 +215,7 @@ public class ClassFileUtilities {
 		}
 	}
 
-	private static void collectJars(File dir, Map<String, Jar> jars, Map<String, ClassFile> classFiles)
+	static void collectJars(File dir, Map<String, Jar> jars, Map<String, ClassFile> classFiles)
 			throws IOException, SecurityException {
 		File[] files = dir.listFiles();
 		if (files != null) {
