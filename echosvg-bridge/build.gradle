@@ -13,7 +13,7 @@ dependencies {
 
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
-	automaticModule('org.apache.xmlgraphics:xmlgraphics-commons', 'xmlgraphics.commons')
+	automaticModule('org.apache.xmlgraphics:xmlgraphics-commons', 'org.apache.xmlgraphics.commons')
 }
 
 description = 'io.sf.carte:echosvg-bridge'

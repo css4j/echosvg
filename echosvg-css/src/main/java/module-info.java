@@ -32,5 +32,5 @@ module io.sf.carte.echosvg.css {
 	requires java.xml;
 	requires jdk.xml.dom;
 	requires transitive org.w3c.dom.svg;
-	requires xmlgraphics.commons;
+	requires org.apache.xmlgraphics.commons;
 }

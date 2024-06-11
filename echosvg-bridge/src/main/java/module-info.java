@@ -32,7 +32,7 @@ module io.sf.carte.echosvg.bridge {
 	requires io.sf.carte.echosvg.xml;
 	requires io.sf.carte.echosvg.constants;
 	requires io.sf.carte.echosvg.i18n;
-	requires xmlgraphics.commons;
+	requires org.apache.xmlgraphics.commons;
 
 	provides io.sf.carte.echosvg.script.InterpreterFactory
 	with io.sf.carte.echosvg.bridge.RhinoInterpreterFactory;
