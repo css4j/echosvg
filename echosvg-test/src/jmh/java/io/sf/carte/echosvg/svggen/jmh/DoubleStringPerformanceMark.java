@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.svggen;
+package io.sf.carte.echosvg.svggen.jmh;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
@@ -27,6 +27,7 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
+import io.sf.carte.echosvg.svggen.SVGGeneratorContext;
 
 /**
  * This test checks that there is no performance degradation in the doubleString
@@ -49,13 +50,19 @@ public class DoubleStringPerformanceMark {
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		Document doc = impl.createDocument(svgNS, "svg", null);
-		final SVGGeneratorContext gc = new SVGGeneratorContext(doc);
+		final SVGGeneratorContext gc = new MarkGeneratorContext(doc);
 
 		int maxLength = 0;
 		for (int i = 0; i < 1000; i++) {
 			for (double testValue : testValues) {
 				maxLength = Math.max((gc.doubleString(testValue)).length(), maxLength);
 			}
+		}
+	}
+
+	static class MarkGeneratorContext extends SVGGeneratorContext {
+		MarkGeneratorContext (Document doc) {
+			super(doc);
 		}
 	}
 
