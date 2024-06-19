@@ -23,6 +23,7 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -55,6 +56,7 @@ public class PermissionsTest {
 	 * function. Note that scripts loaded with the 'Script()' object are disallowed
 	 * completely in secure mode.
 	 */
+	@Tag("SecMan")
 	@Test
 	public void testECMAPermissionsDenied() throws Exception {
 		String scripts = "text/ecmascript";
@@ -82,6 +84,7 @@ public class PermissionsTest {
 		runTest(scripts, scriptSource, scriptOrigin, secure);
 	}
 
+	@Tag("SecMan")
 	@Test
 	public void testJarPermissionsDenied() throws Exception {
 		String scripts = "application/java-archive";

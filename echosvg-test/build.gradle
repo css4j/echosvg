@@ -58,12 +58,9 @@ publishing.publications.maven(MavenPublication).pom {
 }
 
 test {
-	useJUnitPlatform()
-
-	exclude 'io/sf/carte/echosvg/apps/rasterizer/MainTest.class'
-	exclude 'io/sf/carte/echosvg/bridge/*LoadTest.class'
-	exclude 'io/sf/carte/echosvg/bridge/*PermissionsTest.class'
-	exclude 'io/sf/carte/echosvg/script/rhino/RhinoTest.class'
+	useJUnitPlatform() {
+		excludeTags 'SecMan'
+	}
 
 	// Exclude tests via gradlew test -PexcludeTests="SamplesRenderingTest.testVerticalText,..."
 	if (project.hasProperty('excludeTests')) {

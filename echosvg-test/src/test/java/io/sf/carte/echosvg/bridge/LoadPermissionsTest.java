@@ -24,6 +24,7 @@ import java.security.PrivilegedExceptionAction;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
@@ -60,6 +61,7 @@ public class LoadPermissionsTest {
 	}
 
 	@Test
+	@Tag("SecMan")
 	public void testPermissionsDeniedScript() throws Exception {
 		runTest("application/java-archive", "bridge/ecmaCheckPermissionsDeniedScript", "NONE", true, false,
 				"java.lang.SecurityException");
@@ -98,13 +100,14 @@ public class LoadPermissionsTest {
 	}
 
 	/*
-	 * This should generate only a warning, according to Batik (bridge/unitTesting.xml)
+	 * This should generate only a warning, see also bridge/unitTesting.xml
 	 */
+	// FIXME: No exception should be thrown here
 	@Disabled
 	@Test
 	public void testBridgeExceptionInvalidCSS() throws Exception {
-		runTest("application/java-archive", "bridge/error/css-invalid", "ANY", false, false,
-				null);
+		runTest("text/ecmascript", "bridge/error/css-invalid", "ANY", false, false,
+				"org.w3c.dom.DOMException");
 	}
 
 	@Test
@@ -205,14 +208,14 @@ public class LoadPermissionsTest {
 
 	@Test
 	public void testBridgeExceptionFeImageBadURL() throws Exception {
-		runTest("application/java-archive", "bridge/error/feImage-badurl", "ANY", false, false,
+		runTest("text/ecmascript", "bridge/error/feImage-badurl", "ANY", false, false,
 				"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
 	public void testBridgeExceptionInvalidMergeNode() throws Exception {
-		runTest("application/java-archive", "bridge/error/feMerge-feMergeNode-invalid", "ANY", false, false,
-				"io.sf.carte.echosvg.bridge.BridgeException");
+		runTest("text/ecmascript", "bridge/error/feMerge-feMergeNode-invalid", "ANY", false, false,
+				null);
 	}
 
 	@Test
@@ -247,14 +250,14 @@ public class LoadPermissionsTest {
 
 	@Test
 	public void testBridgeExceptionEmptyFilter() throws Exception {
-		runTest("application/java-archive", "bridge/error/filter-empty", "ANY", false, false,
-				"io.sf.carte.echosvg.bridge.BridgeException");
+		runTest("text/ecmascript", "bridge/error/filter-empty", "ANY", false, false,
+				null);
 	}
 
 	@Test
 	public void testBridgeExceptionInvalidFilterPrimitive() throws Exception {
-		runTest("application/java-archive", "bridge/error/filter-filterPrimitive-invalid", "ANY", false, false,
-				"io.sf.carte.echosvg.bridge.BridgeException");
+		runTest("text/ecmascript", "bridge/error/filter-filterPrimitive-invalid", "ANY", false, false,
+				null);
 	}
 
 	@Test
@@ -282,11 +285,12 @@ public class LoadPermissionsTest {
 	}
 
 	// This should display a broken-image image, no exception
+	// FIXME: No exception should be thrown here
 	@Disabled
 	@Test
 	public void testBridgeExceptionImageBadURL() throws Exception {
-		runTest("application/java-archive", "bridge/error/image-badurl", "ANY", false, false,
-				null);
+		runTest("text/ecmascript", "bridge/error/image-badurl", "ANY", false, false,
+				"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
@@ -313,13 +317,10 @@ public class LoadPermissionsTest {
 				"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
-	/*
-	 * A comment in Batik (bridge/unitTesting.xml) claims that this gives no error there.
-	 */
 	@Test
 	public void testBridgeExceptionEmptyLinearGradient() throws Exception {
-		runTest("application/java-archive", "bridge/error/linearGradient-empty", "ANY", false, false,
-				"io.sf.carte.echosvg.bridge.BridgeException");
+		runTest("text/ecmascript", "bridge/error/linearGradient-empty", "ANY", false, false,
+				null);
 	}
 
 	@Test
@@ -330,8 +331,8 @@ public class LoadPermissionsTest {
 
 	@Test
 	public void testBridgeExceptionMissingGradientOffset() throws Exception {
-		runTest("application/java-archive", "bridge/error/linearGradient-missing-offset", "ANY", false, false,
-				"io.sf.carte.echosvg.bridge.BridgeException");
+		runTest("text/ecmascript", "bridge/error/linearGradient-missing-offset", "ANY", false, false,
+				null);
 	}
 
 	@Test
@@ -348,8 +349,8 @@ public class LoadPermissionsTest {
 
 	@Test
 	public void testBridgeExceptionEmptyMask() throws Exception {
-		runTest("application/java-archive", "bridge/error/mask-empty", "ANY", false, false,
-				"io.sf.carte.echosvg.bridge.BridgeException");
+		runTest("text/ecmascript", "bridge/error/mask-empty", "ANY", false, false,
+				null);
 	}
 
 	@Test
@@ -378,8 +379,8 @@ public class LoadPermissionsTest {
 
 	@Test
 	public void testBridgeExceptionEmptyPattern() throws Exception {
-		runTest("application/java-archive", "bridge/error/pattern-empty", "ANY", false, false,
-				"io.sf.carte.echosvg.bridge.BridgeException");
+		runTest("text/ecmascript", "bridge/error/pattern-empty", "ANY", false, false,
+				null);
 	}
 
 	@Test
@@ -407,10 +408,9 @@ public class LoadPermissionsTest {
 	}
 
 	// This is not an error according to 13.2.4
-	@Disabled
 	@Test
 	public void testBridgeExceptionEmptyRadialGradient() throws Exception {
-		runTest("application/java-archive", "bridge/error/radialGradient-empty", "ANY", false, false,
+		runTest("text/ecmascript", "bridge/error/radialGradient-empty", "ANY", false, false,
 				null);
 	}
 
@@ -422,8 +422,8 @@ public class LoadPermissionsTest {
 
 	@Test
 	public void testBridgeExceptionMissingRadialGradientOffset() throws Exception {
-		runTest("application/java-archive", "bridge/error/radialGradient-missing-offset", "ANY", false, false,
-				"io.sf.carte.echosvg.bridge.BridgeException");
+		runTest("text/ecmascript", "bridge/error/radialGradient-missing-offset", "ANY", false, false,
+				null);
 	}
 
 	@Test
@@ -433,10 +433,9 @@ public class LoadPermissionsTest {
 	}
 
 	// This is not an error according to 13.2.3
-	@Disabled
 	@Test
 	public void testBridgeExceptionRadialGradientRZero() throws Exception {
-		runTest("application/java-archive", "bridge/error/radialGradient-r-zero", "ANY", false, false,
+		runTest("text/ecmascript", "bridge/error/radialGradient-r-zero", "ANY", false, false,
 				null);
 	}
 

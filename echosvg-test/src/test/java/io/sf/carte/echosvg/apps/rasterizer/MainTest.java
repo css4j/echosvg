@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestLocations;
@@ -48,6 +49,7 @@ import io.sf.carte.echosvg.test.TestLocations;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@Tag("SecMan")
 @SuppressWarnings({ "deprecation", "removal" })
 public class MainTest {
 

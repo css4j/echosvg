@@ -23,6 +23,7 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -32,6 +33,7 @@ import org.junit.jupiter.api.Test;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@Tag("SecMan")
 @SuppressWarnings({ "deprecation", "removal" })
 public class EcmaLoadTest {
 

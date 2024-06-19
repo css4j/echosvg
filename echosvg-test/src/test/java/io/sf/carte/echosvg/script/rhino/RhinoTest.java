@@ -19,6 +19,7 @@
 package io.sf.carte.echosvg.script.rhino;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,6 +36,7 @@ public class RhinoTest {
 	}
 
 	@Test
+	@Tag("SecMan")
 	public void testECMAPermissionsDenied() throws Exception {
 		runTest("script/rhino/eval", true);
 	}

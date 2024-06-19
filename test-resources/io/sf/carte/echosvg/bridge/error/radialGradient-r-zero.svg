@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
-"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 
 <!--
 
@@ -37,7 +37,10 @@
     <!-- ============================================================= -->
     <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="./batikMark.svg#EchoSVGTag" />
+    <use xlink:href="./echosvgMark.svg#EchoSVGTag" />
+
+    <test:testResult id="testResult" result="failed" errorCode="ecmascript.not.loaded"/>
+    <script type="text/ecmascript" xlink:href="ran.js" />
 
     <!-- ============================================================= -->
     <!-- Test content                                                  -->

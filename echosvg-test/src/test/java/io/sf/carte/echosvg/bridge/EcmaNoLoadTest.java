@@ -23,6 +23,7 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
@@ -34,6 +35,7 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
+@Tag("SecMan")
 @SuppressWarnings({ "deprecation", "removal" })
 public class EcmaNoLoadTest {
 
