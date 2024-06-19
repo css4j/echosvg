@@ -64,20 +64,27 @@ import io.sf.carte.echosvg.util.ParsedURL;
 /**
  * This test takes an SVG file as an input. It processes the input SVG (meaning
  * it turns it into a GVT tree) and then dispatches the 'onload' event.
- *
+ * <p>
  * In that process, the test checks for the occurence of a specific exception
  * type and, for BridgeExceptions, for a given error code.
- *
+ * </p>
+ * <p>
  * If an exception of the given type (and, optionally, code) happens, then the
  * test passes. If an exception of an unexpected type (or code, for
  * BridgeExceptions) happens, or if no exception happens, the test fails.
- *
- * The following properties control the test's operation: - Scripts: list of
- * allowed script types (e.g., "application/java-archive") - ScriptOrigin:
- * "ANY", "DOCUMENT", "EMBEDED", "NONE" - ResourceOrigin: "ANY", "DOCUMENT",
- * "EMBEDED", "NONE" - ExpectedExceptionClass (e.g.,
- * "java.lang.SecurityException") - ExpectedErrorCode (e.g., "err.uri.unsecure")
- * - Validate (e.g., "true")
+ * </p>
+ * <p>
+ * The following properties control the test's operation:
+ * </p>
+ * <ul>
+ * <li>Scripts: list of allowed script types (e.g.,
+ * "application/java-archive")</li>
+ * <li>ScriptOrigin: "ANY", "DOCUMENT", "EMBEDED", "NONE"</li>
+ * <li>ResourceOrigin: "ANY", "DOCUMENT", "EMBEDED", "NONE"</li>
+ * <li>ExpectedExceptionClass (e.g., "java.lang.SecurityException")</li>
+ * <li>ExpectedErrorCode (e.g., "err.uri.unsecure")</li>
+ * <li>Validate (e.g., "true")</li>
+ * </ul>
  *
  * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
  * @author For later modifications, see Git history.
