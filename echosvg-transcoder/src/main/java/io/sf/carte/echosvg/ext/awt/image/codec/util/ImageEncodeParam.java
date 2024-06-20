@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.codec.util;
 
-import java.io.Serializable;
-
 /**
  * An empty (marker) interface to be implemented by all image encoder parameter
  * classes.
@@ -31,5 +29,5 @@ import java.io.Serializable;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public interface ImageEncodeParam extends ImageDecodeParam, Cloneable, Serializable {
+public interface ImageEncodeParam extends ImageDecodeParam {
 }

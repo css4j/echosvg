@@ -88,7 +88,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @see io.sf.carte.echosvg.svggen.ExtensionHandler
  * @see org.w3c.dom.Document
  */
-public class SVGGraphics2D extends AbstractGraphics2D implements Cloneable, SVGSyntax, ErrorConstants {
+public class SVGGraphics2D extends AbstractGraphics2D implements SVGSyntax, ErrorConstants {
 
 	/*
 	 * Constants definitions

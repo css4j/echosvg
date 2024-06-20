@@ -24,7 +24,6 @@ import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.svggen.font.table.CmapFormat;
 import io.sf.carte.echosvg.svggen.font.table.Feature;
 import io.sf.carte.echosvg.svggen.font.table.FeatureTags;
@@ -47,7 +46,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @version $Id$
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  */
-public class SVGFont implements XMLConstants, SVGConstants, ScriptTags, FeatureTags {
+public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 	static final String EOL;
 
 	static final String PROPERTY_LINE_SEPARATOR = "line.separator";

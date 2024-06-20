@@ -24,8 +24,6 @@ import java.awt.image.renderable.RenderableImage;
 
 import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.constants.XMLConstants;
-
 /**
  * This class provides a default implementation of the ImageHandler interface
  * simply puts a place holder in the xlink:href attribute and sets the width and
@@ -36,7 +34,7 @@ import io.sf.carte.echosvg.constants.XMLConstants;
  * @version $Id$
  * @see io.sf.carte.echosvg.svggen.SVGGraphics2D
  */
-public class DefaultImageHandler implements ImageHandler, ErrorConstants, XMLConstants {
+public class DefaultImageHandler implements ImageHandler, ErrorConstants {
 
 	/**
 	 * Build a <code>DefaultImageHandler</code>.

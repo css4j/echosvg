@@ -24,7 +24,7 @@ import org.w3c.dom.svg.SVGPathSegClosePath;
 /**
  * Internal representation of the item SVGPathSeg.
  */
-public class SVGPathSegItem extends AbstractSVGItem implements SVGPathSeg, SVGPathSegClosePath {
+public class SVGPathSegItem extends AbstractSVGItem implements SVGPathSegClosePath {
 
 	protected short type;
 

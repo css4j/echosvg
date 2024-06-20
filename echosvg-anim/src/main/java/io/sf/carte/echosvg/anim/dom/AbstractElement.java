@@ -27,7 +27,6 @@ import org.w3c.dom.events.MutationEvent;
 import io.sf.carte.echosvg.css.engine.CSSNavigableNode;
 import io.sf.carte.echosvg.dom.AbstractAttr;
 import io.sf.carte.echosvg.dom.AbstractDocument;
-import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeValue;
 import io.sf.carte.echosvg.util.DoublyIndexedTable;
 import io.sf.carte.echosvg.util.SVGConstants;
@@ -41,7 +40,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @version $Id$
  */
 public abstract class AbstractElement extends io.sf.carte.echosvg.dom.AbstractElement
-		implements NodeEventTarget, CSSNavigableNode, SVGConstants {
+		implements CSSNavigableNode, SVGConstants {
 
 	private static final long serialVersionUID = 1L;
 

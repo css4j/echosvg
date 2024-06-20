@@ -26,7 +26,6 @@ import org.w3c.dom.svg.SVGLength;
 import io.sf.carte.echosvg.anim.values.AnimatableLengthValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
-import io.sf.carte.echosvg.dom.svg.LiveAttributeValue;
 import io.sf.carte.echosvg.parser.UnitProcessor;
 
 /**
@@ -38,7 +37,7 @@ import io.sf.carte.echosvg.parser.UnitProcessor;
  * @version $Id$
  */
 public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
-		implements SVGAnimatedLength, LiveAttributeValue {
+		implements SVGAnimatedLength {
 
 	/**
 	 * This constant represents horizontal lengths.
