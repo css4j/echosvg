@@ -23,7 +23,6 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -99,11 +98,12 @@ public class LoadPermissionsTest {
 				"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
-	/*
-	 * This should generate only a warning, see also bridge/unitTesting.xml
+	/**
+	 * The rendering can proceed despite the CSS error, but the exception is
+	 * reported to the user agent and is detected by this test.
+	 * 
+	 * @throws Exception
 	 */
-	// FIXME: No exception should be thrown here
-	@Disabled
 	@Test
 	public void testBridgeExceptionInvalidCSS() throws Exception {
 		runTest("text/ecmascript", "bridge/error/css-invalid", "ANY", false, false,
@@ -284,9 +284,14 @@ public class LoadPermissionsTest {
 				"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
-	// This should display a broken-image image, no exception
-	// FIXME: No exception should be thrown here
-	@Disabled
+	/**
+	 * There is a method intended to supply broken-link images but the user agent
+	 * used here just throws an exception. For an actual broken link image test, see
+	 * {@link io.sf.carte.echosvg.test.svg.SamplesRenderingTest#testImageBadUrl
+	 * SamplesRenderingTest.testImageBadUrl}.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testBridgeExceptionImageBadURL() throws Exception {
 		runTest("text/ecmascript", "bridge/error/image-badurl", "ANY", false, false,

@@ -1,0 +1,55 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ========================================================================= -->
+<!-- Broken image link                                                         -->
+<!--                                                                           -->
+<!-- @author for later modifications, see Git history                          -->
+<!-- @version $Id$  -->
+<!-- ========================================================================= -->
+
+<?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     id="body" width="450" height="500" viewBox="0 0 450 500">
+<title>Error: attribute "xlink:href" on &lt;image> has a bad URI</title>
+
+    <!-- ============================================================= -->
+    <!-- Test content                                                  -->
+    <!-- ============================================================= -->
+    <g id="testContent">
+
+    <text x="220" y="40" class="title">
+      Attribute "xlink:href" on &lt;image&gt; has a bad URI
+    </text>
+
+
+    <text x="205" y="240" class="legend">An &lt;image> element</text>
+    <text x="205" y="450" class="legend">An &lt;image> element with an invalid URI</text>
+
+    <image xlink:href="../structure/switch.svg" x="60" y="60" width="300" height="170" viewBox="0 0 210 170"/>
+
+    <image xlink:href="svg.svgX" x="60" y="260" width="300" height="170" viewBox="0 0 210 170"/>
+
+    </g>
+</svg>

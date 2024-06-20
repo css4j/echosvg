@@ -20,9 +20,24 @@ package io.sf.carte.echosvg.test.svg;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGDocument;
+
+import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
+import io.sf.carte.echosvg.bridge.BridgeException;
+import io.sf.carte.echosvg.bridge.ErrorConstants;
+import io.sf.carte.echosvg.bridge.UserAgent;
+import io.sf.carte.echosvg.dom.util.DocumentFactory;
+import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.transcoder.DummyErrorHandler;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
+import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
+import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * Checks for regressions in rendering of SVG, ignoring reported errors.
@@ -52,13 +67,75 @@ public class ErrIgnoreTest extends RenderingTest {
 
 	@Override
 	ImageTranscoder createTestImageTranscoder() {
-		return new NoStackTraceTranscoder();
+		return new ErrIgnoreTranscoder();
 	}
 
 	@Override
 	protected void checkErrorHandler(ErrorHandler errorHandler) {
 		DummyErrorHandler handler = (DummyErrorHandler) errorHandler;
 		assertEquals(expectedErrorCount, handler.getErrorCount(), "Unmatched error count");
+	}
+
+	class ErrIgnoreTranscoder extends NoStackTraceTranscoder {
+
+		@Override
+		protected UserAgent createUserAgent() {
+			return new TestTranscoderUserAgent();
+		}
+
+		class TestTranscoderUserAgent extends SVGAbstractTranscoder.SVGAbstractTranscoderUserAgent {
+
+			public TestTranscoderUserAgent() {
+				super();
+			}
+
+			/**
+			 * Load a broken link document.
+			 *
+			 * @param elem    The &lt;image&gt; element that can't be loaded.
+			 * @param url     The resolved url that can't be loaded.
+			 * @param message As best as can be determined the reason it can't be loaded
+			 *                (not available, corrupt, unknown format,...).
+			 */
+			@Override
+			public SVGDocument getBrokenLinkDocument(Element elem, String url, String message) {
+				// Report the exception
+				BridgeException be = new BridgeException(ctx, elem,
+						ErrorConstants.ERR_URI_IMAGE_BROKEN, new Object[] { url, message });
+				displayError(be);
+
+				// Retrieve the broken link document
+				String templateUri;
+				try {
+					templateUri = AbstractRenderingAccuracyTest.resolveURL("samples/ref-me.svg")
+							.toExternalForm();
+				} catch (MalformedURLException ex) {
+					templateUri = "file:samples/ref-me.svg";
+				}
+
+				// Obtain a document factory
+				DOMImplementation domImpl = SVGDOMImplementation.getDOMImplementation();
+				DocumentFactory factory = new SAXDocumentFactory(domImpl);
+
+				// Load the template
+				SVGDocument doc;
+				try {
+					doc = (SVGDocument) factory.createDocument(SVGConstants.SVG_NAMESPACE_URI,
+							SVGConstants.SVG_SVG_TAG, templateUri, "utf-8");
+				} catch (IOException ex) {
+					return super.getBrokenLinkDocument(elem, url, message);
+				}
+
+				/*
+				 * In the future an actual template could be used, eventually filled with the
+				 * message.
+				 */
+
+				return doc;
+			}
+
+		}
+
 	}
 
 }

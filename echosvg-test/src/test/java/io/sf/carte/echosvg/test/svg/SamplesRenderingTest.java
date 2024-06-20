@@ -532,6 +532,23 @@ public class SamplesRenderingTest {
 		test("samples/tests/spec/linking/anchor.svg");
 	}
 
+	/**
+	 * Render a document which contains an image with a broken link.
+	 * <p>
+	 * Another image is used as a broken link image.
+	 * </p>
+	 * 
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	@Test
+	public void testImageBadUrl() throws TranscoderException, IOException {
+		/*
+		 * Admits one error (the broken link being reported).
+		 */
+		testNVErrIgnore("samples/tests/spec/linking/imageBadUrl.svg", null, 1);
+	}
+
 	@Test
 	public void testLinkingTransform() throws TranscoderException, IOException {
 		test("samples/tests/spec/linking/linkingTransform.svg");
