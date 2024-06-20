@@ -29,7 +29,6 @@ import io.sf.carte.echosvg.ext.awt.image.spi.DefaultBrokenLinkProvider;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.gvt.filter.GraphicsNodeRable8Bit;
-import io.sf.carte.echosvg.gvt.font.GVTFont;
 
 /**
  * This interface is to be used to provide alternate ways of generating a
