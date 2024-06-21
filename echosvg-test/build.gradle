@@ -58,6 +58,11 @@ publishing.publications.maven(MavenPublication).pom {
 }
 
 test {
+	minHeapSize = '128m'
+	maxHeapSize = '512m'
+
+	jvmArgs '-Xmx2G'
+
 	useJUnitPlatform() {
 		excludeTags 'SecMan'
 	}
@@ -69,6 +74,10 @@ test {
 				excludeTestsMatching "*.${it}"
 			}
 		}
+	}
+
+	testLogging {
+		exceptionFormat 'full'
 	}
 }
 
