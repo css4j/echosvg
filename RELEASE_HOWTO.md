@@ -107,6 +107,9 @@ mv modular echosvg-modular-javadocs-1.0.1
 The compressed archives will be part of the published release. Notice that the
 `.7z` archive is much smaller than the `.zip`.
 
+_Currently, the javadocs are online at the https://carte.sourceforge.io/api/echosvg/ website.
+Provided that you have the required credentials, you could update it via_ `rsync`.
+
 11) Create a `v<version>` tag in the EchoSVG Git repository. For example:
 
 ```shell
