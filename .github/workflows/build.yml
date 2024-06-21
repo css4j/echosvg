@@ -50,7 +50,7 @@ jobs:
       - name: Build with Gradle
         run: >-
           ./gradlew build
-          -PexcludeTests="SamplesRenderingTest.testFontArabic,SamplesRenderingTest.testVerticalText,StyleBypassRenderingTest.testVerticalText"
+          -PexcludeTests="SamplesSpec11RenderingTest.testFontArabic,SamplesSpec11RenderingTest.testVerticalText,StyleBypassRenderingTest.testVerticalText"
 
       # Generate modular javadocs
       - name: Modular javadocs
