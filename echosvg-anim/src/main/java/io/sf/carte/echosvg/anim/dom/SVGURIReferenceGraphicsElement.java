@@ -33,21 +33,27 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public abstract class SVGURIReferenceGraphicsElement extends SVGGraphicsElement {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	/**
 	 * Table mapping XML attribute names to TraitInformation objects.
 	 */
 	protected static DoublyIndexedTable<String, String> xmlTraitInformation;
 	static {
 		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(SVGGraphicsElement.xmlTraitInformation);
+		t.put(null, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
 		t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
 		xmlTraitInformation = t;
 	}
 
 	/**
+	 * The namespaceless 'href' attribute value.
+	 */
+	private SVGOMAnimatedString href;
+
+	/**
 	 * The 'xlink:href' attribute value.
 	 */
-	protected SVGOMAnimatedString href;
+	private SVGOMAnimatedString xlinkhref;
 
 	/**
 	 * Creates a new SVGURIReferenceGraphicsElement object.
@@ -79,14 +85,15 @@ public abstract class SVGURIReferenceGraphicsElement extends SVGGraphicsElement 
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		href = createLiveAnimatedString(null, XLINK_HREF_ATTRIBUTE);
+		xlinkhref = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
 	}
 
 	/**
 	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
 	 */
 	public SVGAnimatedString getHref() {
-		return href;
+		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	/**

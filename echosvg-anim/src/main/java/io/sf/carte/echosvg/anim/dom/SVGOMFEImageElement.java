@@ -39,7 +39,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class SVGOMFEImageElement extends SVGOMFilterPrimitiveStandardAttributes implements SVGFEImageElement {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	/**
 	 * Table mapping XML attribute names to TraitInformation objects.
@@ -51,6 +51,7 @@ public class SVGOMFEImageElement extends SVGOMFilterPrimitiveStandardAttributes 
 		t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
 		t.put(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE,
 				new TraitInformation(true, SVGTypes.TYPE_PRESERVE_ASPECT_RATIO_VALUE));
+		t.put(null, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
 		t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
 		xmlTraitInformation = t;
 	}
@@ -69,9 +70,14 @@ public class SVGOMFEImageElement extends SVGOMFilterPrimitiveStandardAttributes 
 	}
 
 	/**
+	 * The namespaceless 'href' attribute value.
+	 */
+	private SVGOMAnimatedString href;
+
+	/**
 	 * The 'xlink:href' attribute value.
 	 */
-	protected SVGOMAnimatedString href;
+	private SVGOMAnimatedString xlinkhref;
 
 	/**
 	 * The 'preserveAspectRatio' attribute value.
@@ -113,7 +119,8 @@ public class SVGOMFEImageElement extends SVGOMFilterPrimitiveStandardAttributes 
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		href = createLiveAnimatedString(null, XLINK_HREF_ATTRIBUTE);
+		xlinkhref = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
 		preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
 		externalResourcesRequired = createLiveAnimatedBoolean(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
 	}
@@ -131,7 +138,7 @@ public class SVGOMFEImageElement extends SVGOMFilterPrimitiveStandardAttributes 
 	 */
 	@Override
 	public SVGAnimatedString getHref() {
-		return href;
+		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	/**

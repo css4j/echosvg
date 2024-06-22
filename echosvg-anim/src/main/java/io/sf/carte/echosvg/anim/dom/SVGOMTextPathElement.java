@@ -38,7 +38,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class SVGOMTextPathElement extends SVGOMTextContentElement implements SVGTextPathElement {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	/**
 	 * Table mapping XML attribute names to TraitInformation objects.
@@ -49,6 +49,7 @@ public class SVGOMTextPathElement extends SVGOMTextContentElement implements SVG
 		t.put(null, SVG_METHOD_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
 		t.put(null, SVG_SPACING_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
 		t.put(null, SVG_START_OFFSET_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_LENGTH));
+		t.put(null, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
 		t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
 		xmlTraitInformation = t;
 	}
@@ -92,9 +93,15 @@ public class SVGOMTextPathElement extends SVGOMTextContentElement implements SVG
 	protected SVGOMAnimatedLength startOffset;
 
 	/**
-	 * The 'xlink:href' attribute value.
+	 * The namespaceless 'href' attribute value.
 	 */
-	protected SVGOMAnimatedString href;
+	private SVGOMAnimatedString href;
+
+	/**
+	 * The 'xlink:href' attribute value. Note that this attribute not actually
+	 * animatable, according to SVG 1.1.
+	 */
+	private SVGOMAnimatedString xlinkhref;
 
 	/**
 	 * Creates a new SVGOMTextPathElement object.
@@ -130,7 +137,8 @@ public class SVGOMTextPathElement extends SVGOMTextContentElement implements SVG
 		spacing = createLiveAnimatedEnumeration(null, SVG_SPACING_ATTRIBUTE, SPACING_VALUES, (short) 2);
 		startOffset = createLiveAnimatedLength(null, SVG_START_OFFSET_ATTRIBUTE,
 				SVG_TEXT_PATH_START_OFFSET_DEFAULT_VALUE, AbstractSVGAnimatedLength.OTHER_LENGTH, false);
-		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		href = createLiveAnimatedString(null, XLINK_HREF_ATTRIBUTE);
+		xlinkhref = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
 	}
 
 	/**
@@ -172,7 +180,7 @@ public class SVGOMTextPathElement extends SVGOMTextContentElement implements SVG
 	 */
 	@Override
 	public SVGAnimatedString getHref() {
-		return href;
+		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	/**

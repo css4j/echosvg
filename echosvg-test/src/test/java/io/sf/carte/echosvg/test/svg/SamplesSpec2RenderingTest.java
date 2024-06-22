@@ -46,6 +46,14 @@ public class SamplesSpec2RenderingTest extends AbstractSamplesRendering {
 	}
 
 	/*
+	 * Namespaceless href
+	 */
+	@Test
+	public void testHref() throws TranscoderException, IOException {
+		testNV("samples/tests/spec2/linking/href.svg");
+	}
+
+	/*
 	 * CSS3 Styling
 	 */
 	@Test

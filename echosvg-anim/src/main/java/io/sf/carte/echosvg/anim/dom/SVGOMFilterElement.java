@@ -41,7 +41,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class SVGOMFilterElement extends SVGStylableElement implements SVGFilterElement {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	/**
 	 * Table mapping XML attribute names to TraitInformation objects.
@@ -108,9 +108,14 @@ public class SVGOMFilterElement extends SVGStylableElement implements SVGFilterE
 	protected SVGOMAnimatedLength height;
 
 	/**
+	 * The namespaceless 'href' attribute value.
+	 */
+	private SVGOMAnimatedString href;
+
+	/**
 	 * The 'xlink:href' attribute value.
 	 */
-	protected SVGOMAnimatedString href;
+	private SVGOMAnimatedString xlinkhref;
 
 	/**
 	 * The 'externalResourcesRequired' attribute value.
@@ -157,7 +162,8 @@ public class SVGOMFilterElement extends SVGStylableElement implements SVGFilterE
 				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
 		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, SVG_FILTER_HEIGHT_DEFAULT_VALUE,
 				AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
-		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		href = createLiveAnimatedString(null, XLINK_HREF_ATTRIBUTE);
+		xlinkhref = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
 		externalResourcesRequired = createLiveAnimatedBoolean(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
 	}
 
@@ -248,7 +254,7 @@ public class SVGOMFilterElement extends SVGStylableElement implements SVGFilterE
 	 */
 	@Override
 	public SVGAnimatedString getHref() {
-		return href;
+		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	// SVGExternalResourcesRequired support /////////////////////////////

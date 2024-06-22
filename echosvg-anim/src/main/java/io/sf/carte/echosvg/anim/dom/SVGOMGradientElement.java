@@ -39,7 +39,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public abstract class SVGOMGradientElement extends SVGStylableElement implements SVGGradientElement {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	/**
 	 * Table mapping XML attribute names to TraitInformation objects.
@@ -51,6 +51,7 @@ public abstract class SVGOMGradientElement extends SVGStylableElement implements
 		t.put(null, SVG_SPREAD_METHOD_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_IDENT));
 		t.put(null, SVG_GRADIENT_TRANSFORM_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_TRANSFORM_LIST));
 		t.put(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_BOOLEAN));
+		t.put(null, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
 		t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
 		xmlTraitInformation = t;
 	}
@@ -89,9 +90,15 @@ public abstract class SVGOMGradientElement extends SVGStylableElement implements
 	protected SVGOMAnimatedEnumeration spreadMethod;
 
 	/**
-	 * The 'xlink:href' attribute value.
+	 * The namespaceless 'href' attribute value.
 	 */
-	protected SVGOMAnimatedString href;
+	private SVGOMAnimatedString href;
+
+	/**
+	 * The 'xlink:href' attribute value. Note that this attribute not actually
+	 * animatable, according to SVG 1.1.
+	 */
+	private SVGOMAnimatedString xlinkhref;
 
 	/**
 	 * The 'externalResourcesRequired' attribute value.
@@ -131,7 +138,8 @@ public abstract class SVGOMGradientElement extends SVGStylableElement implements
 		gradientUnits = createLiveAnimatedEnumeration(null, SVG_GRADIENT_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 2);
 		spreadMethod = createLiveAnimatedEnumeration(null, SVG_SPREAD_METHOD_ATTRIBUTE, SPREAD_METHOD_VALUES,
 				(short) 1);
-		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		href = createLiveAnimatedString(null, XLINK_HREF_ATTRIBUTE);
+		xlinkhref = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
 		externalResourcesRequired = createLiveAnimatedBoolean(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
 	}
 
@@ -167,7 +175,7 @@ public abstract class SVGOMGradientElement extends SVGStylableElement implements
 	 */
 	@Override
 	public SVGAnimatedString getHref() {
-		return href;
+		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	// SVGExternalResourcesRequired support /////////////////////////////

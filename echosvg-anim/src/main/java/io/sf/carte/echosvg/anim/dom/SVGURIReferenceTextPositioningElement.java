@@ -36,7 +36,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
 public abstract class SVGURIReferenceTextPositioningElement extends SVGOMTextPositioningElement
 		implements SVGURIReference {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	/**
 	 * Table mapping XML attribute names to TraitInformation objects.
 	 */
@@ -44,14 +44,21 @@ public abstract class SVGURIReferenceTextPositioningElement extends SVGOMTextPos
 	static {
 		DoublyIndexedTable<String, String> t = new DoublyIndexedTable<>(
 				SVGOMTextPositioningElement.xmlTraitInformation);
+		t.put(null, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
 		t.put(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE, new TraitInformation(true, SVGTypes.TYPE_URI));
 		xmlTraitInformation = t;
 	}
 
 	/**
-	 * The 'xlink:href' attribute value.
+	 * The namespaceless 'href' attribute value.
 	 */
-	protected SVGOMAnimatedString href;
+	private SVGOMAnimatedString href;
+
+	/**
+	 * The 'xlink:href' attribute value. Note that this attribute not actually
+	 * animatable, according to SVG 1.1.
+	 */
+	private SVGOMAnimatedString xlinkhref;
 
 	/**
 	 * Creates a new SVGURIReferenceTextPositioningElement object.
@@ -83,7 +90,8 @@ public abstract class SVGURIReferenceTextPositioningElement extends SVGOMTextPos
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		href = createLiveAnimatedString(null, XLINK_HREF_ATTRIBUTE);
+		xlinkhref = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
 	}
 
 	/**
@@ -91,7 +99,7 @@ public abstract class SVGURIReferenceTextPositioningElement extends SVGOMTextPos
 	 */
 	@Override
 	public SVGAnimatedString getHref() {
-		return href;
+		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	/**

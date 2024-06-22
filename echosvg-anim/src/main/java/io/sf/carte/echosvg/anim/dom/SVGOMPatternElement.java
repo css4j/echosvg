@@ -45,7 +45,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class SVGOMPatternElement extends SVGStylableElement implements SVGPatternElement {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	/**
 	 * Table mapping XML attribute names to TraitInformation objects.
@@ -117,9 +117,15 @@ public class SVGOMPatternElement extends SVGStylableElement implements SVGPatter
 	protected SVGOMAnimatedEnumeration patternContentUnits;
 
 	/**
-	 * The 'xlink:href' attribute value.
+	 * The namespaceless 'href' attribute value.
 	 */
-	protected SVGOMAnimatedString href;
+	private SVGOMAnimatedString href;
+
+	/**
+	 * The 'xlink:href' attribute value. Note that this attribute not actually
+	 * animatable, according to SVG 1.1.
+	 */
+	private SVGOMAnimatedString xlinkhref;
 
 	/**
 	 * The 'externalResourcesRequired' attribute value.
@@ -172,7 +178,8 @@ public class SVGOMPatternElement extends SVGStylableElement implements SVGPatter
 		patternUnits = createLiveAnimatedEnumeration(null, SVG_PATTERN_UNITS_ATTRIBUTE, UNITS_VALUES, (short) 2);
 		patternContentUnits = createLiveAnimatedEnumeration(null, SVG_PATTERN_CONTENT_UNITS_ATTRIBUTE, UNITS_VALUES,
 				(short) 1);
-		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		href = createLiveAnimatedString(null, XLINK_HREF_ATTRIBUTE);
+		xlinkhref = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
 		externalResourcesRequired = createLiveAnimatedBoolean(null, SVG_EXTERNAL_RESOURCES_REQUIRED_ATTRIBUTE, false);
 		preserveAspectRatio = createLiveAnimatedPreserveAspectRatio();
 	}
@@ -256,7 +263,7 @@ public class SVGOMPatternElement extends SVGStylableElement implements SVGPatter
 	 */
 	@Override
 	public SVGAnimatedString getHref() {
-		return href;
+		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	// SVGFitToViewBox support ////////////////////////////////////////////

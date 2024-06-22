@@ -58,7 +58,8 @@ public class SVGOMGlyphRefElement extends SVGStylableElement implements SVGGlyph
 //         xmlTraitInformation = t;
 //     }
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
+
 	/**
 	 * The attribute initializer.
 	 */
@@ -73,10 +74,15 @@ public class SVGOMGlyphRefElement extends SVGStylableElement implements SVGGlyph
 	}
 
 	/**
+	 * The namespaceless 'href' attribute value.
+	 */
+	private SVGOMAnimatedString href;
+
+	/**
 	 * The 'xlink:href' attribute value. Note that this attribute not actually
 	 * animatable, according to SVG 1.1.
 	 */
-	protected SVGOMAnimatedString href;
+	private SVGOMAnimatedString xlinkhref;
 
 	/**
 	 * Creates a new SVGOMGlyphRefElement object.
@@ -108,7 +114,8 @@ public class SVGOMGlyphRefElement extends SVGStylableElement implements SVGGlyph
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		href = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
+		href = createLiveAnimatedString(null, XLINK_HREF_ATTRIBUTE);
+		xlinkhref = createLiveAnimatedString(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE);
 	}
 
 	/**
@@ -124,7 +131,7 @@ public class SVGOMGlyphRefElement extends SVGStylableElement implements SVGGlyph
 	 */
 	@Override
 	public SVGAnimatedString getHref() {
-		return href;
+		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	/**
