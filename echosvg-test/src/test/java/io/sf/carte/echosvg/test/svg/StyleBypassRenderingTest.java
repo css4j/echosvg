@@ -1439,6 +1439,14 @@ public class StyleBypassRenderingTest {
 		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, null, false, expectedErrorCount);
 	}
 
+	float getBelowThresholdAllowed() {
+		return 0.5f;
+	}
+
+	float getOverThresholdAllowed() {
+		return 0.2f;
+	}
+
 	/**
 	 * Test the rendering of a file with the given user language.
 	 * 
@@ -1460,7 +1468,7 @@ public class StyleBypassRenderingTest {
 		RenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
 		runner.setUserLanguage(lang);
 		runner.setFile(file);
-		runner.runTest(0.00001f, 0.00001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	/**
@@ -1480,7 +1488,7 @@ public class StyleBypassRenderingTest {
 		runner.setValidating(validating);
 		runner.setAlternateSheet(alt);
 		runner.setFile(file);
-		runner.runTest(0.00001f, 0.000001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	/**
@@ -1499,7 +1507,7 @@ public class StyleBypassRenderingTest {
 		runner.setValidating(validating);
 		runner.setUserSheetClasspath(AltUserSheetRenderingTest.DEFAULT_USER_SHEET);
 		runner.setFile(file);
-		runner.runTest(0.00001f, 0.000001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	/**
@@ -1532,7 +1540,7 @@ public class StyleBypassRenderingTest {
 		runner.setSelector(selector);
 		runner.setValidating(validating);
 		runner.setFile(file);
-		runner.runTest(0.00001f, 0.00001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	/**

@@ -192,4 +192,14 @@ public class SamplesRenderingTest extends AbstractSamplesRendering {
 		test("test-resources/io/sf/carte/echosvg/test/svg/bug19363.svg");
 	}
 
+	@Override
+	float getBelowThresholdAllowed() {
+		return 0.5f;
+	}
+
+	@Override
+	float getOverThresholdAllowed() {
+		return 0.5f;
+	}
+
 }

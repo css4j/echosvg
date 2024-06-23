@@ -201,6 +201,47 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 			SVGRenderingAccuracyTest.this.manipulateSVGDocument(document);
 			super.transcode(document, uri, output);
 		}
+
+		@Override
+		protected UserAgent createUserAgent() {
+			return new FailOnErrorTranscoderUserAgent();
+		}
+
+		/**
+		 * A Transcoder user agent that does not print a stack trace.
+		 */
+		class FailOnErrorTranscoderUserAgent
+				extends SVGAbstractTranscoder.SVGAbstractTranscoderUserAgent {
+
+			@Override
+			public void displayError(String message) {
+				TranscoderException ex = new TranscoderException(message);
+				try {
+					InternalPNGTranscoder.this.handler.error(ex);
+				} catch (TranscoderException e) {
+					throw new RuntimeException(e);
+				}
+				throw new RuntimeException(message);
+			}
+
+			/**
+			 * Displays the specified error using the <code>ErrorHandler</code>.
+			 * <p>
+			 * And does not print a stack trace.
+			 * </p>
+			 */
+			@Override
+			public void displayError(Exception e) {
+				try {
+					InternalPNGTranscoder.this.handler.error(new TranscoderException(e));
+				} catch (TranscoderException ex) {
+					throw new RuntimeException(ex);
+				}
+				throw new RuntimeException(e);
+			}
+
+		}
+
 	}
 
 	/**

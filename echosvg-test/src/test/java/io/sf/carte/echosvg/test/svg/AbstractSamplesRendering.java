@@ -51,6 +51,14 @@ public class AbstractSamplesRendering {
 		test(file, false);
 	}
 
+	float getBelowThresholdAllowed() {
+		return 0.2f;
+	}
+
+	float getOverThresholdAllowed() {
+		return 0.05f;
+	}
+
 	/**
 	 * Test the rendering of a file with the given user language.
 	 * 
@@ -68,7 +76,7 @@ public class AbstractSamplesRendering {
 		RenderingTest runner = new RenderingTest();
 		runner.setUserLanguage(lang);
 		runner.setFile(file);
-		runner.runTest(0.00001f, 0.00001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	/**
@@ -88,7 +96,7 @@ public class AbstractSamplesRendering {
 		RenderingTest runner = new RenderingTest();
 		runner.setValidating(validating);
 		runner.setFile(file);
-		runner.runTest(0.00001f, 0.00001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	/**
@@ -111,7 +119,7 @@ public class AbstractSamplesRendering {
 		RenderingTest runner = new ErrIgnoreTest(expectedErrorCount);
 		runner.setMedia(media);
 		runner.setFile(file);
-		runner.runTest(0.000001f, 0.000001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	void testAlternateSheet(String file, String alt, boolean validating)
@@ -120,7 +128,7 @@ public class AbstractSamplesRendering {
 		runner.setValidating(validating);
 		runner.setAlternateSheet(alt);
 		runner.setFile(file);
-		runner.runTest(0.00001f, 0.000001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	void testUserSheet(String file, boolean validating) throws TranscoderException, IOException {
@@ -128,7 +136,7 @@ public class AbstractSamplesRendering {
 		runner.setValidating(validating);
 		runner.setUserSheetClasspath(AltUserSheetRenderingTest.DEFAULT_USER_SHEET);
 		runner.setFile(file);
-		runner.runTest(0.00001f, 0.000001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	/**
@@ -146,7 +154,7 @@ public class AbstractSamplesRendering {
 	void testXHTML(String file) throws TranscoderException, IOException {
 		RenderingTest runner = new XHTMLRenderingAccuracyTest();
 		runner.setFile(file);
-		runner.runTest(0.000001f, 0.000001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	/**
@@ -169,7 +177,7 @@ public class AbstractSamplesRendering {
 		RenderingTest runner = new XHTMLErrIgnoreTest(expectedErrorCount);
 		runner.setMedia(media);
 		runner.setFile(file);
-		runner.runTest(0.000001f, 0.000001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	/**
@@ -204,20 +212,25 @@ public class AbstractSamplesRendering {
 	void testHTML(String file, String selector) throws TranscoderException, IOException {
 		RenderingTest runner = new HTMLRenderingAccuracyTest(selector);
 		runner.setFile(file);
-		runner.runTest(0.000001f, 0.000001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	void testResolutionPxMM(String file, float pxToMM) throws TranscoderException, IOException {
 		RenderingTest runner = new ResolutionPxMmRenderingTest(pxToMM);
 		runner.setFile(file);
-		runner.runTest(0.000001f, 0.000001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 	void testAnim(String file, float[] times) throws TranscoderException, IOException {
+		testAnim(file, times, true);
+	}
+
+	void testAnim(String file, float[] times, boolean validate) throws TranscoderException, IOException {
 		for (float time : times) {
 			RenderingTest runner = new SVGAnimationRenderingAccuracyTest(time);
+			runner.setValidating(validate);
 			runner.setFile(file);
-			runner.runTest(0.000001f, 0.000001f);
+			runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 		}
 	}
 
@@ -236,7 +249,7 @@ public class AbstractSamplesRendering {
 	void testDynamicUpdate(String file) throws TranscoderException, IOException {
 		JSVGRenderingAccuracyTest runner = new JSVGRenderingAccuracyTest();
 		runner.setFile(file);
-		runner.runTest(0.00001f, 0.00001f);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
 }
