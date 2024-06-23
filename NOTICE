@@ -19,3 +19,7 @@ https://web.archive.org/web/20201024165718/http://tango-project.org/).
 
 This product includes images from the Pasodoble Icon Theme
 (https://www.jesusda.com/projects/pasodoble).
+
+This product's test suite includes images from the Canvg Project
+(https://canvg.js.org/, https://github.com/canvg/canvg), which uses a MIT
+license. See samples/canvg/LICENSE.

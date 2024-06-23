@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+<text x="50" y="50"><tspan>First Line</tspan><tspan x="340"
+dy="14.4">Second Line</tspan><tspan x="340" dy="14.4">Third
+Line</tspan></text></svg>
