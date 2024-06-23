@@ -35,7 +35,6 @@ import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
 import io.sf.carte.echosvg.transcoder.DummyErrorHandler;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
-import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.util.SVGConstants;
 
@@ -83,7 +82,8 @@ public class ErrIgnoreTest extends RenderingTest {
 			return new TestTranscoderUserAgent();
 		}
 
-		class TestTranscoderUserAgent extends SVGAbstractTranscoder.SVGAbstractTranscoderUserAgent {
+		class TestTranscoderUserAgent
+				extends NoStackTraceTranscoder.NoStackTraceTranscoderUserAgent {
 
 			public TestTranscoderUserAgent() {
 				super();

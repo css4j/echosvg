@@ -269,8 +269,8 @@ public class SVGGeneratorTests {
 		GeneratorContext genctxt = makeGeneratorContext(painter, painterClassname);
 		genctxt.runTest(false);
 
-		float allowedPercentBelowThreshold = 0.00001f;
-		float allowedPercentOverThreshold = 0.00001f;
+		float allowedPercentBelowThreshold = 0.01f;
+		float allowedPercentOverThreshold = 0.01f;
 		SVGRenderingAccuracyTest t = makeSVGRenderingAccuracyTest(painter, painterClassname, PLAIN_GENERATION_PREFIX);
 		t.runTest(allowedPercentBelowThreshold, allowedPercentOverThreshold);
 

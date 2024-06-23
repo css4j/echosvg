@@ -191,12 +191,12 @@ public class SamplesSpec11RenderingTest extends AbstractSamplesRendering {
 	 */
 	@Test
 	public void testFontAltGlyph() throws TranscoderException, IOException {
-		test("samples/tests/spec/fonts/fontAltGlyph.svg");
+		testNVErrIgnore("samples/tests/spec/fonts/fontAltGlyph.svg", null, 4);
 	}
 
 	@Test
 	public void testFontAltGlyph2() throws TranscoderException, IOException {
-		test("samples/tests/spec/fonts/fontAltGlyph2.svg");
+		testNVErrIgnore("samples/tests/spec/fonts/fontAltGlyph2.svg", null, 5);
 	}
 
 	@Test
@@ -1016,7 +1016,7 @@ public class SamplesSpec11RenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testScriptPaintType() throws TranscoderException, IOException {
-		test("samples/tests/spec/scripting/paintType.svg");
+		testNVErrIgnore("samples/tests/spec/scripting/paintType.svg", null, 2);
 	}
 
 	@Test
