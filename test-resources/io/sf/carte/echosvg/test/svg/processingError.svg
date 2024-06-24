@@ -22,10 +22,9 @@
 -->
 <!-- ========================================================================= -->
 <!-- This file is used by SelfContainedSVGOnLoadTestValidator to validate      -->
-<!-- handling of processing error in SVG test cases. Here, the fill value on   -->
+<!-- handling of processing error in SVG test cases. Here, the rx value on    -->
 <!-- the rectangle should cause the test to fail.                              -->
 <!--                                                                           -->
-<!-- @author vincent.hardy@sun.com                                             -->
 <!-- @author for later modifications, see Git history                          -->
 <!-- @version $Id$            -->
 <!-- ========================================================================= -->
@@ -38,6 +37,6 @@
     <script type="text/ecmascript"><![CDATA[
     ]]></script>
 
-    <rect fill="thisIsAnIncorrectFillValueThatWillCauseAProcessingError" />
+    <rect rx="1Hz" />
 </svg>
 

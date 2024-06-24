@@ -37,7 +37,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class SVGOMRectElement extends SVGGraphicsElement implements SVGRectElement {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	/**
 	 * Table mapping XML attribute names to TraitInformation objects.
@@ -118,10 +118,10 @@ public class SVGOMRectElement extends SVGGraphicsElement implements SVGRectEleme
 				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
 		y = createLiveAnimatedLength(null, SVG_Y_ATTRIBUTE, SVG_RECT_Y_DEFAULT_VALUE,
 				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-		width = createLiveAnimatedLength(null, SVG_WIDTH_ATTRIBUTE, null, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
-				true);
-		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, null, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
-				true);
+		width = createLiveAnimatedLength(null, SVG_WIDTH_ATTRIBUTE, SVG_RECT_WIDTH_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
+		height = createLiveAnimatedLength(null, SVG_HEIGHT_ATTRIBUTE, SVG_RECT_HEIGHT_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
 		rx = new AbstractSVGAnimatedLength(this, null, SVG_RX_ATTRIBUTE, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
 				true) {
 			@Override

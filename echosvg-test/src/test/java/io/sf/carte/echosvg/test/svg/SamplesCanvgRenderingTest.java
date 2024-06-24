@@ -1218,10 +1218,6 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 		testNV("samples/canvg/issue977.svg");
 	}
 
-	/*
-	 * TODO: investigate possible enhancement.
-	 */
-	@Disabled
 	@Test
 	public void testIssue1001() throws TranscoderException, IOException {
 		testNV("samples/canvg/issue1001.svg");

@@ -881,6 +881,8 @@ public interface SVGConstants extends CSSConstants, XMLConstants {
 	String SVG_RADIAL_GRADIENT_R_DEFAULT_VALUE = "50%";
 	String SVG_RECT_X_DEFAULT_VALUE = "0";
 	String SVG_RECT_Y_DEFAULT_VALUE = "0";
+	String SVG_RECT_WIDTH_DEFAULT_VALUE = "0";
+	String SVG_RECT_HEIGHT_DEFAULT_VALUE = "0";
 	String SVG_SCRIPT_TYPE_ECMASCRIPT = "text/ecmascript";
 	String SVG_SCRIPT_TYPE_APPLICATION_ECMASCRIPT = "application/ecmascript";
 	String SVG_SCRIPT_TYPE_JAVASCRIPT = "text/javascript";

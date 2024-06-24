@@ -451,14 +451,14 @@ public class LoadPermissionsTest {
 	}
 
 	@Test
-	public void testBridgeExceptionMissingRectHeight() throws Exception {
-		runTest("application/java-archive", "bridge/error/rect-missing-height", "ANY", false, false,
+	public void testBridgeExceptionInvalidRectHeight() throws Exception {
+		runTest("text/javascript", "bridge/error/rect-invalid-height", "ANY", false, false,
 				"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionMissingRectWidth() throws Exception {
-		runTest("application/java-archive", "bridge/error/rect-missing-width", "ANY", false, false,
+	public void testBridgeExceptionInvalidRectWidth() throws Exception {
+		runTest("text/javascript", "bridge/error/rect-invalid-width", "ANY", false, false,
 				"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
