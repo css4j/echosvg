@@ -51,7 +51,7 @@ public class ErrIgnoreTest extends RenderingTest {
 	public ErrIgnoreTest(int expectedErrorCount) {
 		super();
 		this.expectedErrorCount = expectedErrorCount;
-		setValidating(false);
+		setValidating(Boolean.FALSE);
 	}
 
 	/**

@@ -449,11 +449,13 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 
 	/*
 	 * TODO: investigate.
+	 * 
+	 * Beware that uses fonts that aren't available to tests
 	 */
 	@Disabled
 	@Test
 	public void testIssue82() throws TranscoderException, IOException {
-		test("samples/canvg/issue82.svg");
+		testErrIgnore("samples/canvg/issue82.svg", BROWSER_MEDIA, 1, true);
 	}
 
 	@Test

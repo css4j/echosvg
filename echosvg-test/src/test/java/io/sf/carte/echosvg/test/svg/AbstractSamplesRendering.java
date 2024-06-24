@@ -100,7 +100,7 @@ public class AbstractSamplesRendering {
 	}
 
 	/**
-	 * Test the rendering of a SVG image, ignoring reported errors.
+	 * Test the non-validating rendering of an SVG image, ignoring reported errors.
 	 * 
 	 * <p>
 	 * A small percentage of different pixels is allowed during the comparison to a
@@ -116,7 +116,29 @@ public class AbstractSamplesRendering {
 	 */
 	void testNVErrIgnore(String file, String media, int expectedErrorCount)
 			throws TranscoderException, IOException {
+		testErrIgnore(file, media, expectedErrorCount, false);
+	}
+
+	/**
+	 * Test the rendering of an SVG image, ignoring reported errors.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file               the SVG file to test.
+	 * @param media              the media to test, or {@code null} if default
+	 *                           media.
+	 * @param expectedErrorCount the expected error count.
+	 * @param validate           whether to validate or not.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	void testErrIgnore(String file, String media, int expectedErrorCount, boolean validate)
+			throws TranscoderException, IOException {
 		RenderingTest runner = new ErrIgnoreTest(expectedErrorCount);
+		runner.setValidating(validate);
 		runner.setMedia(media);
 		runner.setFile(file);
 		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
