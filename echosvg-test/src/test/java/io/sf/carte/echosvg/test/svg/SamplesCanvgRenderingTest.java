@@ -1222,7 +1222,6 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 		testNV("samples/canvg/issue1045.svg");
 	}
 
-	@Disabled
 	@Test
 	public void testIssue1063() throws TranscoderException, IOException {
 		testNV("samples/canvg/issue1063.svg");

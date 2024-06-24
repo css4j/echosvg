@@ -1,6 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="640" height="480">
+<?xml version="1.0" standalone="no"?>
+
+<?xml-stylesheet type="text/css" href="../tests/resources/style/test.css" ?>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="450" height="500">
+ <title>Blank image due to opacity</title>
  <defs>
-  <symbol id="svg_1" height="402px" width="501px">
+  <symbol id="svg_1" height="452px" width="401px">
    <rect height="120" width="165" y="93" x="130" stroke-width="5" stroke="#000" fill="#FF0000"></rect>
   </symbol>
  </defs>
@@ -8,4 +13,5 @@
   <g opacity="0">
     <use x="0" y="0" xlink:href="#svg_1"></use>
   </g>
+  <text x="60" y="40" style="font-size: 14pt">Blank image due to opacity</text>
 </svg>
