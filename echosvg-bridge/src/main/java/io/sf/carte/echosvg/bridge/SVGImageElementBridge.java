@@ -128,7 +128,15 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 		if (node == null) {
 			SVGImageElement ie = (SVGImageElement) e;
 			String uriStr = ie.getHref().getAnimVal();
-			throw new BridgeException(ctx, e, ERR_URI_IMAGE_INVALID, new Object[] { uriStr });
+			if (!uriStr.isEmpty() && uriStr.indexOf('#') == -1) {
+				BridgeException be = new BridgeException(ctx, e, ERR_URI_IMAGE_INVALID,
+						new Object[] { uriStr });
+				if (ctx.userAgent == null) {
+					throw be;
+				}
+				ctx.userAgent.displayError(be);
+			}
+			return null;
 		}
 
 		imageNode.setImage(node);
@@ -157,13 +165,25 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 
 		SVGImageElement ie = (SVGImageElement) e;
 
-		// 'xlink:href' attribute - required
+		// 'href' attribute - required
 		String uriStr = ie.getHref().getAnimVal();
-		if (uriStr.length() == 0) {
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING, new Object[] { "xlink:href" });
+		if (uriStr.isEmpty()) {
+			BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING,
+					new Object[] { "href" });
+			if (ctx.userAgent != null) {
+				ctx.userAgent.displayError(be);
+				return null;
+			}
+			throw be;
 		}
 		if (uriStr.indexOf('#') != -1) {
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { "xlink:href", uriStr });
+			BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
+					new Object[] { "xlink:href", uriStr });
+			if (ctx.userAgent != null) {
+				ctx.userAgent.displayError(be);
+				return null;
+			}
+			throw be;
 		}
 
 		// Build the URL.
