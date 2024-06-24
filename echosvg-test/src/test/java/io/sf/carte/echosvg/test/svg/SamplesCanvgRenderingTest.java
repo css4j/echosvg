@@ -1056,10 +1056,6 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 		testNVErrIgnore("samples/canvg/issue690.svg", BROWSER_MEDIA, 4);
 	}
 
-	/*
-	 * TODO: investigate.
-	 */
-	@Disabled
 	@Test
 	public void testIssue694() throws TranscoderException, IOException {
 		testNV("samples/canvg/issue694.svg");
@@ -1137,7 +1133,7 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 	}
 
 	/*
-	 * TODO: investigate possible enhancement.
+	 * TODO: investigate possible bug.
 	 */
 	@Disabled
 	@Test
@@ -1210,7 +1206,7 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 	}
 
 	/*
-	 * FIXME: investigate possible bug.
+	 * Involves foreignObject.
 	 */
 	@Disabled
 	@Test
@@ -1272,10 +1268,6 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 		testNV("samples/canvg/issue1364.svg");
 	}
 
-	/*
-	 * TODO: investigate possible enhancement.
-	 */
-	@Disabled
 	@Test
 	public void testIssue1439() throws TranscoderException, IOException {
 		testNV("samples/canvg/issue1439.svg");
