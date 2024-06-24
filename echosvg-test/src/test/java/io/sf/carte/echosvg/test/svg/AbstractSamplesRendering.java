@@ -52,7 +52,7 @@ public class AbstractSamplesRendering {
 	}
 
 	float getBelowThresholdAllowed() {
-		return 0.2f;
+		return 0.1f;
 	}
 
 	float getOverThresholdAllowed() {

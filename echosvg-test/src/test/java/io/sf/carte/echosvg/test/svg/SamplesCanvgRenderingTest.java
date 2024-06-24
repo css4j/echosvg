@@ -1313,7 +1313,7 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 	 */
 	@Override
 	float getBelowThresholdAllowed() {
-		return 0.5f;
+		return 0.3f;
 	}
 
 	@Override

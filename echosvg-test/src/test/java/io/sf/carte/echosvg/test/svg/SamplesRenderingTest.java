@@ -194,12 +194,12 @@ public class SamplesRenderingTest extends AbstractSamplesRendering {
 
 	@Override
 	float getBelowThresholdAllowed() {
-		return 0.5f;
+		return 0.3f;
 	}
 
 	@Override
 	float getOverThresholdAllowed() {
-		return 0.5f;
+		return 0.3f;
 	}
 
 }
