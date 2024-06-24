@@ -476,13 +476,9 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 		test("samples/canvg/issue91.svg");
 	}
 
-	/*
-	 * TODO: investigate.
-	 */
-	@Disabled
 	@Test
 	public void testIssue94() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/canvg/issue94.svg", BROWSER_MEDIA, 1);
+		testNVErrIgnore("samples/canvg/issue94.svg", BROWSER_MEDIA, 17);
 	}
 
 	@Test

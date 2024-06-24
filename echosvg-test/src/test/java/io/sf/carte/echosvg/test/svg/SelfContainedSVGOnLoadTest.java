@@ -280,7 +280,27 @@ public class SelfContainedSVGOnLoadTest {
 	 * Give subclasses a chance to build their own UserAgent
 	 */
 	protected UserAgent buildUserAgent() {
-		return new UserAgentAdapter();
+		return new OnLoadUserAgent();
+	}
+
+	class OnLoadUserAgent extends UserAgentAdapter {
+
+		@Override
+		public void displayMessage(String message) {
+			throw new RuntimeException(message);
+		}
+
+		/**
+		 * Display the specified error (forwards call to displayError(String))
+		 */
+		@Override
+		public void displayError(Exception e) {
+			if (e instanceof RuntimeException) {
+				throw (RuntimeException) e;
+			}
+			throw new RuntimeException(e);
+		}
+
 	}
 
 }

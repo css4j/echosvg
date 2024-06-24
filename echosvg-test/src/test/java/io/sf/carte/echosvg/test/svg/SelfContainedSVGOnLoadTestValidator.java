@@ -64,7 +64,7 @@ public class SelfContainedSVGOnLoadTestValidator {
 	 * URLs for children tests
 	 */
 	public static final String invalidURL = "invalidURL";
-	public static final String processingErrorURL = "io/sf/carte/echosvg/test/svg/processingError.svg";
+	public static final String invalidRectRxUnitURL = "io/sf/carte/echosvg/test/svg/invalidRectRxUnit.svg";
 	public static final String invalidTestResultElementsNumberURL = "io/sf/carte/echosvg/test/svg/invalidTestResultElementsNumber.svg";
 	public static final String unexpectedResultValueURL = "io/sf/carte/echosvg/test/svg/unexpectedResultValue.svg";
 	public static final String missingOrEmptyErrorCodeURL = "io/sf/carte/echosvg/test/svg/missingOrEmptyErrorCode.svg";
@@ -83,8 +83,8 @@ public class SelfContainedSVGOnLoadTestValidator {
 	}
 
 	@Test
-	public void testProcessingError() throws Exception {
-		new ProcessingError().runTest();
+	public void testInvalidRectRxUnit() throws Exception {
+		new InvalidRectRxUnit().runTest();
 	}
 
 	@Test
@@ -164,9 +164,9 @@ public class SelfContainedSVGOnLoadTestValidator {
 		}
 	}
 
-	static class ProcessingError extends DefaultErrorTest {
-		public ProcessingError() {
-			super(processingErrorURL, SelfContainedSVGOnLoadTest.ERROR_WHILE_PROCESSING_SVG_DOCUMENT,
+	static class InvalidRectRxUnit extends DefaultErrorTest {
+		public InvalidRectRxUnit() {
+			super(invalidRectRxUnitURL, SelfContainedSVGOnLoadTest.ERROR_WHILE_PROCESSING_SVG_DOCUMENT,
 					"io.sf.carte.echosvg.bridge.BridgeException");
 		}
 	}

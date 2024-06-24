@@ -85,24 +85,76 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 
 			// 'width' attribute - required
 			AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) re.getWidth();
-			float w = _width.getCheckedValue();
+			float w;
+			try {
+				w = _width.getCheckedValue();
+			} catch (LiveAttributeException ex) {
+				w = 0;
+				BridgeException be = new BridgeException(ctx, ex);
+				if (ctx.userAgent == null) {
+					throw be;
+				}
+				ctx.userAgent.displayError(be);
+			}
 
 			// 'height' attribute - required
 			AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) re.getHeight();
-			float h = _height.getCheckedValue();
+			float h;
+			try {
+				h = _height.getCheckedValue();
+			} catch (LiveAttributeException ex) {
+				h = 0;
+				BridgeException be = new BridgeException(ctx, ex);
+				if (ctx.userAgent == null) {
+					throw be;
+				}
+				ctx.userAgent.displayError(be);
+			}
 
 			// 'rx' attribute - default is 0
+			boolean rxAuto = false;
 			AbstractSVGAnimatedLength _rx = (AbstractSVGAnimatedLength) re.getRx();
-			float rx = _rx.getCheckedValue();
+			float rx;
+			try {
+				rx = _rx.getCheckedValue();
+			} catch (LiveAttributeException ex) {
+				rx = 0;
+				rxAuto = true;
+				BridgeException be = new BridgeException(ctx, ex);
+				if (ctx.userAgent == null) {
+					throw be;
+				}
+				ctx.userAgent.displayError(be);
+			}
 			if (rx > w / 2) {
 				rx = w / 2;
 			}
 
 			// 'ry' attribute - default is rx
 			AbstractSVGAnimatedLength _ry = (AbstractSVGAnimatedLength) re.getRy();
-			float ry = _ry.getCheckedValue();
+			float ry;
+			try {
+				ry = _ry.getCheckedValue();
+			} catch (LiveAttributeException ex) {
+				ry = rx;
+				BridgeException be = new BridgeException(ctx, ex);
+				if (ctx.userAgent == null) {
+					throw be;
+				}
+				ctx.userAgent.displayError(be);
+			}
 			if (ry > h / 2) {
 				ry = h / 2;
+			}
+
+			// Check whether rx was auto
+			/*
+			 * SVG2 §7.4: "When the computed value of ‘rx’ is auto, the used radius is equal
+			 * to the absolute length used for ry, creating a circular arc. If both ‘rx’ and
+			 * ‘ry’ have a computed value of auto, the used value is 0."
+			 */
+			if (rxAuto) {
+				rx = ry;
 			}
 
 			Shape shape;
@@ -113,6 +165,10 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 			}
 			shapeNode.setShape(shape);
 		} catch (LiveAttributeException ex) {
+			/*
+			 * Just logging the exception and then continuing may give unexpected results,
+			 * so it is better to be conservative and throw it.
+			 */
 			throw new BridgeException(ctx, ex);
 		}
 	}
