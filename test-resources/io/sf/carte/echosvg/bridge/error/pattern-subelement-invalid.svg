@@ -30,7 +30,7 @@
 
 <?xml-stylesheet type="text/css" href="test.css" ?>
 
-<svg xmlns="http://www.w3.org/2000/svg"
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      id="body" width="450" height="500" viewBox="0 0 450 500">
 <title>Error: &lt;pattern> has an invalid subelement</title>
 
@@ -54,7 +54,7 @@
             <rect x="10" y="10" width="15" height="15" style="fill:green"/>
         </pattern>
         <pattern id="bad" x="0" y="0" width=".75" height="50%">
-            <circle/>
+            <circle r="1Hz"/>
             <rect x="10" y="10" width="15" height="15" style="fill:green"/>
         </pattern>
 

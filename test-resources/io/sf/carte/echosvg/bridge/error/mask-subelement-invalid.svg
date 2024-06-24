@@ -30,7 +30,7 @@
 
 <?xml-stylesheet type="text/css" href="test.css" ?>
 
-<svg xmlns="http://www.w3.org/2000/svg"
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      id="body" width="450" height="500" viewBox="0 0 450 500">
 <title>Error: &lt;mask> has an invalid subelement</title>
 
@@ -63,7 +63,7 @@
         <mask id="bad" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
             <circle cx=".25" cy=".25" r=".25" fill="#ffffff" />
             <circle cx="25%" cy="75%" r=".25" fill="#ffffff" />
-            <circle/>
+            <circle r="1Hz"/>
             <circle cx=".75" cy="75%" r=".25" fill="#ffffff" />
          </mask>
 

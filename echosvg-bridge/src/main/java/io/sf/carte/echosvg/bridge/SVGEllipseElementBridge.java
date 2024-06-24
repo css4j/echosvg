@@ -81,13 +81,45 @@ public class SVGEllipseElementBridge extends SVGShapeElementBridge {
 			AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ee.getCy();
 			float cy = _cy.getCheckedValue();
 
-			// 'rx' attribute - required
+			// 'rx' attribute - default is auto (SVG2)
+			boolean rxAuto = false;
 			AbstractSVGAnimatedLength _rx = (AbstractSVGAnimatedLength) ee.getRx();
-			float rx = _rx.getCheckedValue();
+			float rx;
+			try {
+				rx = _rx.getCheckedValue();
+			} catch (LiveAttributeException ex) {
+				rx = 0f;
+				rxAuto = true;
+				BridgeException be = new BridgeException(ctx, ex);
+				if (ctx.userAgent == null) {
+					throw be;
+				}
+				ctx.userAgent.displayError(be);
+			}
 
-			// 'ry' attribute - required
+			// 'ry' attribute - default is auto (SVG2)
 			AbstractSVGAnimatedLength _ry = (AbstractSVGAnimatedLength) ee.getRy();
-			float ry = _ry.getCheckedValue();
+			float ry;
+			try {
+				ry = _ry.getCheckedValue();
+			} catch (LiveAttributeException ex) {
+				ry = rx;
+				BridgeException be = new BridgeException(ctx, ex);
+				if (ctx.userAgent == null) {
+					throw be;
+				}
+				ctx.userAgent.displayError(be);
+			}
+
+			// Check whether rx was auto
+			/*
+			 * SVG2 §7.4: "When the computed value of ‘rx’ is auto, the used radius is equal
+			 * to the absolute length used for ry, creating a circular arc. If both ‘rx’ and
+			 * ‘ry’ have a computed value of auto, the used value is 0."
+			 */
+			if (rxAuto) {
+				rx = ry;
+			}
 
 			shapeNode.setShape(new Ellipse2D.Float(cx - rx, cy - ry, rx * 2, ry * 2));
 		} catch (LiveAttributeException ex) {

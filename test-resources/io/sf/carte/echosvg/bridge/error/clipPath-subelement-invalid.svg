@@ -30,7 +30,7 @@
 
 <?xml-stylesheet type="text/css" href="test.css" ?>
 
-<svg xmlns="http://www.w3.org/2000/svg"
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      id="body" width="450" height="500" viewBox="0 0 450 500">
 <title>Error: &lt;clipPath> has an invalid subelement</title>
 
@@ -55,7 +55,7 @@
         </clipPath>
         <clipPath id="bad" clipPathUnits="objectBoundingBox">
             <circle cx=".3" cy=".5" r=".3"/>
-            <circle/>
+            <circle r="1Hz"/>
         </clipPath>
 
     </defs>

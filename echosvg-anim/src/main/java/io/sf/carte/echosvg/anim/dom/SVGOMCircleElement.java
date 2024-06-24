@@ -101,7 +101,8 @@ public class SVGOMCircleElement extends SVGGraphicsElement implements SVGCircleE
 				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
 		cy = createLiveAnimatedLength(null, SVG_CY_ATTRIBUTE, SVG_CIRCLE_CY_DEFAULT_VALUE,
 				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-		r = createLiveAnimatedLength(null, SVG_R_ATTRIBUTE, null, AbstractSVGAnimatedLength.OTHER_LENGTH, true);
+		r = createLiveAnimatedLength(null, SVG_R_ATTRIBUTE, SVG_CIRCLE_R_DEFAULT_VALUE,
+				AbstractSVGAnimatedLength.OTHER_LENGTH, true);
 	}
 
 	/**

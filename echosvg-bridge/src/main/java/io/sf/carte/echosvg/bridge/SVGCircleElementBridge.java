@@ -81,9 +81,19 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
 			AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ce.getCy();
 			float cy = _cy.getCheckedValue();
 
-			// 'r' attribute - required
+			// 'r' attribute - default is 0 (SVG2)
 			AbstractSVGAnimatedLength _r = (AbstractSVGAnimatedLength) ce.getR();
-			float r = _r.getCheckedValue();
+			float r;
+			try {
+				r = _r.getCheckedValue();
+			} catch (LiveAttributeException ex) {
+				r = 0f;
+				BridgeException be = new BridgeException(ctx, ex);
+				if (ctx.userAgent == null) {
+					throw be;
+				}
+				ctx.userAgent.displayError(be);
+			}
 
 			float x = cx - r;
 			float y = cy - r;
