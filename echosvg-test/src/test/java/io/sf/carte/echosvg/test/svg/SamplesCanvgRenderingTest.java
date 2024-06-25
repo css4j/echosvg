@@ -1308,17 +1308,14 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 		testNV("samples/canvg/swz721b-webfont.svg");
 	}
 
-	/*
-	 * Put larger thresholds due to smaller file sizes.
-	 */
 	@Override
 	float getBelowThresholdAllowed() {
-		return 0.3f;
+		return 0.15f;
 	}
 
 	@Override
 	float getOverThresholdAllowed() {
-		return 0.1f;
+		return 0.05f;
 	}
 
 }

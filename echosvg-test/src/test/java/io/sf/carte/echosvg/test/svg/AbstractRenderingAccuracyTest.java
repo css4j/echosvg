@@ -430,7 +430,8 @@ public abstract class AbstractRenderingAccuracyTest {
 			tmpFile.delete();
 		}
 
-		fail("Rendering not accurate [code " + result + "], see generated images: " + diffFile.getAbsolutePath() + ", "
+		fail("Rendering not accurate [" + ImageComparator.getResultDescription(result)
+				+ "], see generated images: " + diffFile.getAbsolutePath() + ", "
 				+ cmpFile.getAbsolutePath());
 	}
 

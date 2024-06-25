@@ -148,8 +148,8 @@ public class ImageCompareTest {
 		File tmpDiff = imageToFile(diff, IMAGE_TYPE_DIFFERENCE);
 		File tmpCmp = imageToFile(cmp, IMAGE_TYPE_COMPARISON);
 
-		return "Images are different [code " + result + "]. Comp: " + tmpCmp.getAbsolutePath() + " diff: "
-				+ tmpDiff.getAbsolutePath();
+		return "Images are different [" + ImageComparator.getResultDescription(result) + "]. Comp: "
+				+ tmpCmp.getAbsolutePath() + " diff: " + tmpDiff.getAbsolutePath();
 
 	}
 

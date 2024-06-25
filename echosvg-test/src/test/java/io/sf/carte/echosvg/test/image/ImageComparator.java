@@ -85,6 +85,28 @@ public class ImageComparator {
 	 */
 	private static final int diffPixelFactor = 10;
 
+	private static int minDiffPixelsForNonzeroAllowance = 30;
+
+	/**
+	 * Set the bare minimum number of accepted different pixels, to apply when the
+	 * allowance is greater than zero but less than 1%, and when it is smaller than
+	 * the smallest of the image sides.
+	 * <p>
+	 * Applies independently to pixels above and below the threshold.
+	 * </p>
+	 * <p>
+	 * This is useful for small images. Default value is 30.
+	 * </p>
+	 * 
+	 * @param minDiffPixelsForNonzeroAllowance a positive integer.
+	 */
+	public static void setMinDiffPixelsForNonzeroAllowance(int minDiffPixelsForNonzeroAllowance) {
+		if (minDiffPixelsForNonzeroAllowance < 0) {
+			throw new IllegalArgumentException("Number of pixels must be at least 0.");
+		}
+		ImageComparator.minDiffPixelsForNonzeroAllowance = minDiffPixelsForNonzeroAllowance;
+	}
+
 	/**
 	 * Compare two images, allowing a percentage of different pixels according to a
 	 * threshold value.
@@ -151,8 +173,9 @@ public class ImageComparator {
 
 		final int numBands = ref.getSampleModel().getNumBands();
 		final float numpxFrac = w * h * numBands * 0.01f;
-		final int maxDiffPx = Math.round(numpxFrac * allowedPercentOverThreshold);
-		final int maxDiffPxBelow = Math.round(numpxFrac * allowedPercentBelowThreshold);
+		final int maxDiffPx = computeMaxDiffPixels(numpxFrac, allowedPercentOverThreshold, w, h);
+		final int maxDiffPxBelow = computeMaxDiffPixels(numpxFrac, allowedPercentBelowThreshold, w,
+				h);
 
 		WritableRaster refWR = ref.getRaster();
 		WritableRaster canWR = can.getRaster();
@@ -215,6 +238,29 @@ public class ImageComparator {
 		}
 
 		return result;
+	}
+
+	private static int computeMaxDiffPixels(float numpxFrac, float allowedPercent, int width,
+			int height) {
+		int maxDiffPx;
+
+		if (allowedPercent == 0f) {
+			maxDiffPx = 0;
+		} else {
+			maxDiffPx = Math.round(numpxFrac * allowedPercent);
+			// If allowedPercent is small but nonzero, maybe there are too few accepted misses.
+			if (maxDiffPx < minDiffPixelsForNonzeroAllowance && allowedPercent < 1f) {
+				// We want to accept at most the number of pixels in a side, minus one.
+				int minDiff = Math.min(width, height) - 1;
+				minDiff = Math.min(minDiff, minDiffPixelsForNonzeroAllowance);
+				if (maxDiffPx < minDiff) {
+					// Allow at least minDiff pixels for (0 < allowedPercent < 1).
+					maxDiffPx = minDiff;
+				}
+			}
+		}
+
+		return maxDiffPx;
 	}
 
 	/**
@@ -288,8 +334,9 @@ public class ImageComparator {
 
 		final int numBands = ref.getSampleModel().getNumBands();
 		final float numpxFrac = w * h * numBands * 0.01f;
-		final int maxDiffPx = Math.round(numpxFrac * allowedPercentOverThreshold);
-		final int maxDiffPxBelow = Math.round(numpxFrac * allowedPercentBelowThreshold);
+		final int maxDiffPx = computeMaxDiffPixels(numpxFrac, allowedPercentOverThreshold, w, h);
+		final int maxDiffPxBelow = computeMaxDiffPixels(numpxFrac, allowedPercentBelowThreshold, w,
+				h);
 
 		WritableRaster refWR = ref.getRaster();
 		WritableRaster canWR = can.getRaster();
@@ -519,6 +566,42 @@ public class ImageComparator {
 		 * @return the variant image, or {@code null} if there is no such image.
 		 */
 		BufferedImage getVariantImage(int index);
+	}
+
+	public static String getResultDescription(short code) {
+		String desc;
+		switch (code) {
+		case MATCH:
+			desc = "Match";
+			break;
+		case DIFFERENT_SIZES:
+			desc = "The images have different sizes";
+			break;
+		case DIFFERENT_TRANSPARENCIES:
+			desc = "The images have different sizes";
+			break;
+		case DIFFERENT_TYPES:
+			desc = "The images are of different types";
+			break;
+		case DIFFERENT_COLOR_SPACES:
+			desc = "The images have different color spaces";
+			break;
+		case DIFFERENT_PIXELS_BELOW_THRESHOLD:
+			desc = "The images have have too many below-threshold different pixels";
+			break;
+		case DIFFERENT_PIXELS_OVER_THRESHOLD:
+			desc = "The images have have too many over-threshold different pixels";
+			break;
+		case NO_VARIANTS:
+			desc = "A variant comparison was executed but no variants were found";
+			break;
+		case VARIANT_ERROR:
+			desc = "At least one of the image variants is wrong (wrong size, etc)";
+			break;
+		default:
+			desc = "unknown code";
+		}
+		return desc;
 	}
 
 	/**
