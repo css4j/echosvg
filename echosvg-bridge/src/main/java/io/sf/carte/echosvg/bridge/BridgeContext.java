@@ -1979,7 +1979,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 		Element root = ((SVGOMDocument) doc).getRootElement();
 		String ver = root.getAttributeNS(null, SVGConstants.SVG_VERSION_ATTRIBUTE);
 		BridgeExtension svgBE;
-		if ((ver.length() == 0) || ver.equals("1.0") || ver.equals("1.1"))
+		if (!"1.2".equals(ver))
 			svgBE = new SVGBridgeExtension();
 		else
 			svgBE = new SVG12BridgeExtension();

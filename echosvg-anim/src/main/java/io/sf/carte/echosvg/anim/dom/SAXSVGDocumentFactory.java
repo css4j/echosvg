@@ -348,12 +348,11 @@ public class SAXSVGDocumentFactory extends SAXDocumentFactory implements SVGDocu
 
 	@Override
 	public DOMImplementation getDOMImplementation(String ver) {
-		if (ver == null || ver.length() == 0 || ver.equals("1.0") || ver.equals("1.1")) {
+		if (!"1.2".equals(ver)) {
 			return SVGDOMImplementation.getDOMImplementation();
-		} else if (ver.equals("1.2")) {
+		} else {
 			return SVG12DOMImplementation.getDOMImplementation();
 		}
-		throw new RuntimeException("Unsupport SVG version '" + ver + "'");
 	}
 
 	/**
