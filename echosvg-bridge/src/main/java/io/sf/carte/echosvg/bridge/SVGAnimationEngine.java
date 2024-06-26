@@ -727,6 +727,11 @@ public class SVGAnimationEngine extends AnimationEngine {
 		@Override
 		public void run() {
 			SVGAnimationEngine eng = getAnimationEngine();
+			if (eng == null) {
+				System.err.println("Animation engine was collected.");
+				return;
+			}
+
 			synchronized (eng) {
 				try {
 					try {
@@ -860,6 +865,11 @@ public class SVGAnimationEngine extends AnimationEngine {
 		@Override
 		public void run() {
 			SVGAnimationEngine eng = getAnimationEngine();
+			if (eng == null) {
+				// Animation engine was collected
+				return;
+			}
+
 			synchronized (eng) {
 				int animationLimitingMode = eng.animationLimitingMode;
 				float animationLimitingAmount = eng.animationLimitingAmount;

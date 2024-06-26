@@ -62,7 +62,7 @@ test {
 
 	useJUnitPlatform() {
 		excludeTags 'SecMan'
-		excludeTags 'perf'
+		excludeTags 'memleak'
 	}
 
 	// Exclude tests via gradlew test -PexcludeTests="SamplesRenderingTest.testVerticalText,..."
@@ -109,23 +109,24 @@ tasks.register('iTest', Test) {
 	dependsOn configurations.itestCompileClasspath
 }
 
-tasks.register('perfTest', Test) {
+tasks.register('memleakTest', Test) {
 	description = 'Run memory leak tests'
 	group = JavaBasePlugin.VERIFICATION_GROUP
 
 	shouldRunAfter 'test'
 
-	minHeapSize = '256m'
+	minHeapSize = '512m'
+	maxHeapSize = '4G'
 
 	useJUnitPlatform() {
-		includeTags 'perf'
+		includeTags 'memleak'
 	}
 
 	testClassesDirs = testing.suites.test.sources.output.classesDirs
 	classpath = testing.suites.test.sources.runtimeClasspath
 }
 
-check.dependsOn perfTest
+check.dependsOn memleakTest
 
 /*
  * JMH benchmarks

@@ -35,7 +35,7 @@ import io.sf.carte.echosvg.test.svg.AbstractRenderingAccuracyTest;
  * @author see Git history.
  * @version $Id$
  */
-@Tag("perf")
+@Tag("memleak")
 public class SwingMemoryLeakTest {
 
 	@BeforeAll
