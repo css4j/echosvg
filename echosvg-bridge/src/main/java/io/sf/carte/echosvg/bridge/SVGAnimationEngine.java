@@ -20,7 +20,7 @@ package io.sf.carte.echosvg.bridge;
 
 import java.awt.Color;
 import java.awt.Paint;
-import java.lang.ref.WeakReference;
+import java.lang.ref.SoftReference;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -804,11 +804,11 @@ public class SVGAnimationEngine extends AnimationEngine {
 		protected int timeIndex;
 
 		/**
-		 * A weak reference to the SVGAnimationEngine this AnimationTickRunnable is for.
-		 * We make this a WeakReference so that a ticking animation engine does not
+		 * A soft reference to the SVGAnimationEngine this AnimationTickRunnable is for.
+		 * We make this a SoftReference so that a ticking animation engine does not
 		 * prevent from being GCed.
 		 */
-		protected WeakReference<SVGAnimationEngine> engRef;
+		protected SoftReference<SVGAnimationEngine> engRef;
 
 		/**
 		 * The maximum number of consecutive exceptions to allow before stopping the
@@ -828,7 +828,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 */
 		public AnimationTickRunnable(RunnableQueue q, SVGAnimationEngine eng) {
 			this.q = q;
-			this.engRef = new WeakReference<>(eng);
+			this.engRef = new SoftReference<>(eng);
 			// Initialize the past times to 100ms.
 			Arrays.fill(times, 100);
 			sumTime = 100 * NUM_TIMES;
