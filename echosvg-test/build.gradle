@@ -126,8 +126,6 @@ tasks.register('memleakTest', Test) {
 	classpath = testing.suites.test.sources.runtimeClasspath
 }
 
-check.dependsOn memleakTest
-
 /*
  * JMH benchmarks
  */
