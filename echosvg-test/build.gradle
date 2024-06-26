@@ -58,11 +58,11 @@ publishing.publications.maven(MavenPublication).pom {
 }
 
 test {
-	minHeapSize = '512m'
-	maxHeapSize = '4G'
+	minHeapSize = '128m'
 
 	useJUnitPlatform() {
 		excludeTags 'SecMan'
+		excludeTags 'perf'
 	}
 
 	// Exclude tests via gradlew test -PexcludeTests="SamplesRenderingTest.testVerticalText,..."
@@ -101,13 +101,31 @@ sourcesJar.enabled = false
  */
 tasks.register('iTest', Test) {
 	description = 'Run interactive tests'
-	group = 'verification'
+	group = JavaBasePlugin.VERIFICATION_GROUP
 
 	useJUnitPlatform()
 	testClassesDirs = sourceSets.itest.output.classesDirs
 	classpath = sourceSets.itest.runtimeClasspath
 	dependsOn configurations.itestCompileClasspath
 }
+
+tasks.register('perfTest', Test) {
+	description = 'Run memory leak tests'
+	group = JavaBasePlugin.VERIFICATION_GROUP
+
+	shouldRunAfter 'test'
+
+	minHeapSize = '256m'
+
+	useJUnitPlatform() {
+		includeTags 'perf'
+	}
+
+	testClassesDirs = testing.suites.test.sources.output.classesDirs
+	classpath = testing.suites.test.sources.runtimeClasspath
+}
+
+check.dependsOn perfTest
 
 /*
  * JMH benchmarks

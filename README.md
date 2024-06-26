@@ -56,11 +56,12 @@ test involves an image comparison, you may want to read [IMAGE_COMPARISONS](IMAG
 
 To build without running the tests:
 ```shell
-./gradlew build -x test
+./gradlew build -x check
 ```
-The full test suite can be executed from the Eclipse IDE, and most of it runs
-satisfactorily from _IntelliJ IDEA_; please open an issue if you find issues
-executing the tests from other IDEs.
+In the past, the full test suite could be executed from the Eclipse IDE, but that
+is not the case anymore. Tests run satisfactorily from _IntelliJ IDEA_, except
+for the security tests (that do not run on Gradle either, see  #19); please open
+an issue if you find problems executing the tests from other IDEs.
 
 _Note_: when running tests from the Eclipse IDE, it is recommended to run them
 as a "JUnit Test" in the "Run As" menu option. If you run them as "Gradle Test"
