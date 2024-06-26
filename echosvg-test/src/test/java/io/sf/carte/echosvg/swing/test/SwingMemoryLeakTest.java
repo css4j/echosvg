@@ -21,9 +21,12 @@ package io.sf.carte.echosvg.swing.test;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
 import io.sf.carte.echosvg.test.svg.AbstractRenderingAccuracyTest;
 
 /**
@@ -32,7 +35,15 @@ import io.sf.carte.echosvg.test.svg.AbstractRenderingAccuracyTest;
  * @author see Git history.
  * @version $Id$
  */
+@Tag("perf")
 public class SwingMemoryLeakTest {
+
+	@BeforeAll
+	public static void setUpBeforeAll() {
+		RhinoClassShutter.addToWhitelist("java.lang.System");
+		RhinoClassShutter.addToWhitelist("org.gradle.*");
+		RhinoClassShutter.addToWhitelist("io.sf.carte.echosvg.swing.test.*");
+	}
 
 	@Test
 	public void test() throws Exception {
