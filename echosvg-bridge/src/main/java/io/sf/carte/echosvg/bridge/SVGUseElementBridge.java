@@ -34,7 +34,6 @@ import org.w3c.dom.svg.SVGUseElement;
 
 import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
-import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.anim.dom.SVGOMUseElement;
 import io.sf.carte.echosvg.constants.XMLConstants;
@@ -173,11 +172,11 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 			// on the 'use' element, then these values will override the
 			// corresponding attributes on the 'svg' in the generated tree.
 			try {
-				SVGOMAnimatedLength al = (SVGOMAnimatedLength) ue.getWidth();
+				AbstractSVGAnimatedLength al = (AbstractSVGAnimatedLength) ue.getWidth();
 				if (al.isSpecified()) {
 					localRefElement.setAttributeNS(null, SVG_WIDTH_ATTRIBUTE, al.getAnimVal().getValueAsString());
 				}
-				al = (SVGOMAnimatedLength) ue.getHeight();
+				al = (AbstractSVGAnimatedLength) ue.getHeight();
 				if (al.isSpecified()) {
 					localRefElement.setAttributeNS(null, SVG_HEIGHT_ATTRIBUTE, al.getAnimVal().getValueAsString());
 				}

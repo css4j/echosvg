@@ -35,7 +35,7 @@ import io.sf.carte.echosvg.util.SVGTypes;
  */
 public class SVGOMEllipseElement extends SVGGraphicsElement implements SVGEllipseElement {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	/**
 	 * Table mapping XML attribute names to TraitInformation objects.
@@ -63,12 +63,12 @@ public class SVGOMEllipseElement extends SVGGraphicsElement implements SVGEllips
 	/**
 	 * The 'rx' attribute value.
 	 */
-	protected SVGOMAnimatedLength rx;
+	protected AbstractSVGAnimatedLength rx;
 
 	/**
 	 * The 'ry' attribute value.
 	 */
-	protected SVGOMAnimatedLength ry;
+	protected AbstractSVGAnimatedLength ry;
 
 	/**
 	 * Creates a new SVGOMEllipseElement object.
@@ -104,8 +104,52 @@ public class SVGOMEllipseElement extends SVGGraphicsElement implements SVGEllips
 				AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, false);
 		cy = createLiveAnimatedLength(null, SVG_CY_ATTRIBUTE, SVG_ELLIPSE_CY_DEFAULT_VALUE,
 				AbstractSVGAnimatedLength.VERTICAL_LENGTH, false);
-		rx = createLiveAnimatedLength(null, SVG_RX_ATTRIBUTE, null, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH, true);
-		ry = createLiveAnimatedLength(null, SVG_RY_ATTRIBUTE, null, AbstractSVGAnimatedLength.VERTICAL_LENGTH, true);
+		rx = new AbstractSVGAnimatedLength(this, null, SVG_RX_ATTRIBUTE, AbstractSVGAnimatedLength.HORIZONTAL_LENGTH,
+				true) {
+			@Override
+			protected String getDefaultValue() {
+				String defval = getAttribute(SVG_RY_ATTRIBUTE).trim();
+				if (defval.isEmpty() || SVG_AUTO_VALUE.equalsIgnoreCase(defval)) {
+					defval = "0";
+				}
+				return defval;
+			}
+
+			@Override
+			protected void attrChanged() {
+				super.attrChanged();
+				AbstractSVGAnimatedLength ry = (AbstractSVGAnimatedLength) getRy();
+				if (isSpecified() && !ry.isSpecified()) {
+					ry.attrChanged();
+				}
+			}
+		};
+		ry = new AbstractSVGAnimatedLength(this, null, SVG_RY_ATTRIBUTE, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
+				true) {
+			@Override
+			protected String getDefaultValue() {
+				String defval = getAttribute(SVG_RX_ATTRIBUTE).trim();
+				if (defval.isEmpty() || SVG_AUTO_VALUE.equalsIgnoreCase(defval)) {
+					defval = "0";
+				}
+				return defval;
+			}
+
+			@Override
+			protected void attrChanged() {
+				super.attrChanged();
+				AbstractSVGAnimatedLength rx = (AbstractSVGAnimatedLength) getRx();
+				if (isSpecified() && !rx.isSpecified()) {
+					rx.attrChanged();
+				}
+			}
+		};
+
+		liveAttributeValues.put(null, SVG_RX_ATTRIBUTE, rx);
+		liveAttributeValues.put(null, SVG_RY_ATTRIBUTE, ry);
+		AnimatedAttributeListener l = ((SVGOMDocument) ownerDocument).getAnimatedAttributeListener();
+		rx.addAnimatedAttributeListener(l);
+		ry.addAnimatedAttributeListener(l);
 	}
 
 	/**

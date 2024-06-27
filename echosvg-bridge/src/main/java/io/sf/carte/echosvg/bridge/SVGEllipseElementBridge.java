@@ -75,11 +75,11 @@ public class SVGEllipseElementBridge extends SVGShapeElementBridge {
 
 			// 'cx' attribute - default is 0
 			AbstractSVGAnimatedLength _cx = (AbstractSVGAnimatedLength) ee.getCx();
-			float cx = _cx.getCheckedValue();
+			float cx = safeAnimatedCheckedValue(_cx, 0f);
 
 			// 'cy' attribute - default is 0
 			AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ee.getCy();
-			float cy = _cy.getCheckedValue();
+			float cy = safeAnimatedCheckedValue(_cy, 0f);
 
 			// 'rx' attribute - default is auto (SVG2)
 			boolean rxAuto = false;
@@ -121,7 +121,7 @@ public class SVGEllipseElementBridge extends SVGShapeElementBridge {
 				rx = ry;
 			}
 
-			shapeNode.setShape(new Ellipse2D.Float(cx - rx, cy - ry, rx * 2, ry * 2));
+			shapeNode.setShape(new Ellipse2D.Float(cx - rx, cy - ry, rx * 2f, ry * 2f));
 		} catch (LiveAttributeException ex) {
 			throw new BridgeException(ctx, ex);
 		}

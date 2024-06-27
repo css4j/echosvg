@@ -32,12 +32,12 @@
 
 <svg xmlns="http://www.w3.org/2000/svg"
      id="body" width="450" height="500" viewBox="0 0 450 500">
-<title>Error: attribute "ry" is missing on &lt;ellipse></title>
+<title>Error: wrong unit in attribute "ry" on &lt;ellipse></title>
 
     <!-- ============================================================= -->
     <!-- EchoSVG sample mark                                             -->
     <!-- ============================================================= -->
-    <use xlink:href="./echosvgMark.svg#EchoSVGTag" />
+    <use href="./echosvgMark.svg#EchoSVGTag" />
 
     <!-- ============================================================= -->
     <!-- Test content                                                  -->
@@ -45,15 +45,15 @@
     <g id="testContent">
 
     <text x="225" y="40" class="title">
-      Error: attribute "ry" is missing on &lt;ellipse>
+      Error: wrong unit in attribute "ry" on &lt;ellipse>
     </text>
 
 
     <text x="225" y="240" class="legend">A green &lt;ellipse> element</text>
-    <text x="225" y="400" class="legend">A red &lt;ellipse> element without the "ry" attribute</text>
+    <text x="225" y="400" class="legend">A red &lt;ellipse>element with wrong unit in the "ry" attribute</text>
 
     <ellipse cx="220" cy="140" rx="150" ry="50" style="fill:green"/>
-    <ellipse cx="220" cy="320" rx="150"         style="fill:red"/>
+    <ellipse cx="220" cy="320" rx="150" ry="1s" style="fill:red"/>
 
     </g>
 </svg>

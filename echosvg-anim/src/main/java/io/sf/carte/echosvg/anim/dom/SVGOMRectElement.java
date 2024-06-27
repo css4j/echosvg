@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGRectElement;
@@ -126,11 +125,11 @@ public class SVGOMRectElement extends SVGGraphicsElement implements SVGRectEleme
 				true) {
 			@Override
 			protected String getDefaultValue() {
-				Attr attr = getAttributeNodeNS(null, SVG_RY_ATTRIBUTE);
-				if (attr == null) {
-					return "0";
+				String defval = getAttribute(SVG_RY_ATTRIBUTE).trim();
+				if (defval.isEmpty() || SVG_AUTO_VALUE.equalsIgnoreCase(defval)) {
+					defval = "0";
 				}
-				return attr.getValue();
+				return defval;
 			}
 
 			@Override
@@ -146,11 +145,11 @@ public class SVGOMRectElement extends SVGGraphicsElement implements SVGRectEleme
 				true) {
 			@Override
 			protected String getDefaultValue() {
-				Attr attr = getAttributeNodeNS(null, SVG_RX_ATTRIBUTE);
-				if (attr == null) {
-					return "0";
+				String defval = getAttribute(SVG_RX_ATTRIBUTE).trim();
+				if (defval.isEmpty() || SVG_AUTO_VALUE.equalsIgnoreCase(defval)) {
+					defval = "0";
 				}
-				return attr.getValue();
+				return defval;
 			}
 
 			@Override

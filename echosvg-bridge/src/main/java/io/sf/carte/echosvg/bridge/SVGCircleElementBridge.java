@@ -75,29 +75,19 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
 
 			// 'cx' attribute - default is 0
 			AbstractSVGAnimatedLength _cx = (AbstractSVGAnimatedLength) ce.getCx();
-			float cx = _cx.getCheckedValue();
+			float cx = safeAnimatedCheckedValue(_cx, 0f);
 
 			// 'cy' attribute - default is 0
 			AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ce.getCy();
-			float cy = _cy.getCheckedValue();
+			float cy = safeAnimatedCheckedValue(_cy, 0f);
 
 			// 'r' attribute - default is 0 (SVG2)
 			AbstractSVGAnimatedLength _r = (AbstractSVGAnimatedLength) ce.getR();
-			float r;
-			try {
-				r = _r.getCheckedValue();
-			} catch (LiveAttributeException ex) {
-				r = 0f;
-				BridgeException be = new BridgeException(ctx, ex);
-				if (ctx.userAgent == null) {
-					throw be;
-				}
-				ctx.userAgent.displayError(be);
-			}
+			float r = safeAnimatedCheckedValue(_r, 0f);
 
 			float x = cx - r;
 			float y = cy - r;
-			float w = r * 2;
+			float w = r * 2f;
 			shapeNode.setShape(new Ellipse2D.Float(x, y, w, w));
 		} catch (LiveAttributeException ex) {
 			throw new BridgeException(ctx, ex);

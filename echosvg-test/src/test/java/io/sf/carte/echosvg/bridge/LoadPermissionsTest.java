@@ -111,14 +111,14 @@ public class LoadPermissionsTest {
 	}
 
 	@Test
-	public void testBridgeExceptionEllipseMissingRx() throws Exception {
-		runTest("application/java-archive", "bridge/error/ellipse-missing-rx", "ANY", false, false,
+	public void testBridgeExceptionEllipseWrongUnitRx() throws Exception {
+		runTest("text/javascript", "bridge/error/ellipse-wrong-unit-rx", "ANY", false, false,
 				"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 
 	@Test
-	public void testBridgeExceptionEllipseMissingRy() throws Exception {
-		runTest("application/java-archive", "bridge/error/ellipse-missing-ry", "ANY", false, false,
+	public void testBridgeExceptionEllipseWrongUnitRy() throws Exception {
+		runTest("text/javascript", "bridge/error/ellipse-wrong-unit-ry", "ANY", false, false,
 				"io.sf.carte.echosvg.bridge.BridgeException");
 	}
 

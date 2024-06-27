@@ -519,8 +519,13 @@ public class SamplesSpec11RenderingTest extends AbstractSamplesRendering {
 	 * Shapes
 	 */
 	@Test
+	public void testShapesWrongAttr() throws TranscoderException, IOException {
+		testNVErrIgnore("samples/tests/spec/shapes/wrongAttr.svg", null, 10);
+	}
+
+	@Test
 	public void testShapesMissingAttr() throws TranscoderException, IOException {
-		testNVErrIgnore("samples/tests/spec/shapes/missingAttr.svg", null, 5);
+		testNVErrIgnore("samples/tests/spec/shapes/missingAttr.svg", null, 1);
 	}
 
 	@Test

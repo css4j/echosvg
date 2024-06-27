@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAnimatedLength;
 import org.w3c.dom.svg.SVGRadialGradientElement;
@@ -117,22 +116,22 @@ public class SVGOMRadialGradientElement extends SVGOMGradientElement implements 
 				false) {
 			@Override
 			protected String getDefaultValue() {
-				Attr attr = getAttributeNodeNS(null, SVG_CX_ATTRIBUTE);
-				if (attr == null) {
-					return SVG_RADIAL_GRADIENT_CX_DEFAULT_VALUE;
+				String defval = getAttribute(SVG_CX_ATTRIBUTE).trim();
+				if (defval.isEmpty()) {
+					defval = SVG_RADIAL_GRADIENT_CX_DEFAULT_VALUE;
 				}
-				return attr.getValue();
+				return defval;
 			}
 		};
 		fy = new AbstractSVGAnimatedLength(this, null, SVG_FY_ATTRIBUTE, AbstractSVGAnimatedLength.VERTICAL_LENGTH,
 				false) {
 			@Override
 			protected String getDefaultValue() {
-				Attr attr = getAttributeNodeNS(null, SVG_CY_ATTRIBUTE);
-				if (attr == null) {
-					return SVG_RADIAL_GRADIENT_CY_DEFAULT_VALUE;
+				String defval = getAttribute(SVG_CY_ATTRIBUTE).trim();
+				if (defval.isEmpty()) {
+					defval = SVG_RADIAL_GRADIENT_CY_DEFAULT_VALUE;
 				}
-				return attr.getValue();
+				return defval;
 			}
 		};
 

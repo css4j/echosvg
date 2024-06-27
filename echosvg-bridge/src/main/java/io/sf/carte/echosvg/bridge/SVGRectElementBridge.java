@@ -77,39 +77,19 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 
 			// 'x' attribute - default is 0
 			AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) re.getX();
-			float x = _x.getCheckedValue();
+			float x = safeAnimatedCheckedValue(_x, 0f);
 
 			// 'y' attribute - default is 0
 			AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) re.getY();
-			float y = _y.getCheckedValue();
+			float y = safeAnimatedCheckedValue(_y, 0f);
 
-			// 'width' attribute - required
+			// 'width' attribute - default is 0
 			AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) re.getWidth();
-			float w;
-			try {
-				w = _width.getCheckedValue();
-			} catch (LiveAttributeException ex) {
-				w = 0;
-				BridgeException be = new BridgeException(ctx, ex);
-				if (ctx.userAgent == null) {
-					throw be;
-				}
-				ctx.userAgent.displayError(be);
-			}
+			float w = safeAnimatedCheckedValue(_width, 0f);
 
-			// 'height' attribute - required
+			// 'height' attribute - default is 0
 			AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) re.getHeight();
-			float h;
-			try {
-				h = _height.getCheckedValue();
-			} catch (LiveAttributeException ex) {
-				h = 0;
-				BridgeException be = new BridgeException(ctx, ex);
-				if (ctx.userAgent == null) {
-					throw be;
-				}
-				ctx.userAgent.displayError(be);
-			}
+			float h = safeAnimatedCheckedValue(_height, 0f);
 
 			// 'rx' attribute - default is 0
 			boolean rxAuto = false;
@@ -118,7 +98,7 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 			try {
 				rx = _rx.getCheckedValue();
 			} catch (LiveAttributeException ex) {
-				rx = 0;
+				rx = 0f;
 				rxAuto = true;
 				BridgeException be = new BridgeException(ctx, ex);
 				if (ctx.userAgent == null) {
@@ -126,8 +106,8 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 				}
 				ctx.userAgent.displayError(be);
 			}
-			if (rx > w / 2) {
-				rx = w / 2;
+			if (rx > w / 2f) {
+				rx = w / 2f;
 			}
 
 			// 'ry' attribute - default is rx
@@ -143,8 +123,8 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 				}
 				ctx.userAgent.displayError(be);
 			}
-			if (ry > h / 2) {
-				ry = h / 2;
+			if (ry > h / 2f) {
+				ry = h / 2f;
 			}
 
 			// Check whether rx was auto
@@ -158,10 +138,10 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 			}
 
 			Shape shape;
-			if (rx == 0 || ry == 0) {
+			if (rx == 0f || ry == 0f) {
 				shape = new Rectangle2D.Float(x, y, w, h);
 			} else {
-				shape = new RoundRectangle2D.Float(x, y, w, h, rx * 2, ry * 2);
+				shape = new RoundRectangle2D.Float(x, y, w, h, rx * 2f, ry * 2f);
 			}
 			shapeNode.setShape(shape);
 		} catch (LiveAttributeException ex) {
