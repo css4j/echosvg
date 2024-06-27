@@ -42,7 +42,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  * with {@link #testNV(String)}.
  * </p>
  */
-public class SamplesSpec11RenderingTest extends AbstractSamplesRendering {
+public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
