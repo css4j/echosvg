@@ -20,7 +20,7 @@ package io.sf.carte.echosvg.bridge;
 
 import java.awt.Color;
 import java.awt.Paint;
-import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -728,8 +728,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public void run() {
 			SVGAnimationEngine eng = getAnimationEngine();
 			if (eng == null) {
-				System.err.println("Animation engine was collected.");
-				return;
+				throw new NullPointerException("Animation engine was collected.");
 			}
 
 			synchronized (eng) {
@@ -804,11 +803,11 @@ public class SVGAnimationEngine extends AnimationEngine {
 		protected int timeIndex;
 
 		/**
-		 * A soft reference to the SVGAnimationEngine this AnimationTickRunnable is for.
-		 * We make this a SoftReference so that a ticking animation engine does not
+		 * A weak reference to the SVGAnimationEngine this AnimationTickRunnable is for.
+		 * We make this a WeakReference so that a ticking animation engine does not
 		 * prevent from being GCed.
 		 */
-		protected SoftReference<SVGAnimationEngine> engRef;
+		protected WeakReference<SVGAnimationEngine> engRef;
 
 		/**
 		 * The maximum number of consecutive exceptions to allow before stopping the
@@ -828,7 +827,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 */
 		public AnimationTickRunnable(RunnableQueue q, SVGAnimationEngine eng) {
 			this.q = q;
-			this.engRef = new SoftReference<>(eng);
+			this.engRef = new WeakReference<>(eng);
 			// Initialize the past times to 100ms.
 			Arrays.fill(times, 100);
 			sumTime = 100 * NUM_TIMES;
@@ -867,7 +866,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			SVGAnimationEngine eng = getAnimationEngine();
 			if (eng == null) {
 				// Animation engine was collected
-				return;
+				throw new NullPointerException("Animation engine was collected.");
 			}
 
 			synchronized (eng) {

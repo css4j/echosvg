@@ -116,7 +116,7 @@ tasks.register('memleakTest', Test) {
 	shouldRunAfter 'test'
 
 	minHeapSize = '512m'
-	maxHeapSize = '4G'
+	maxHeapSize = '1G'
 
 	useJUnitPlatform() {
 		includeTags 'memleak'
