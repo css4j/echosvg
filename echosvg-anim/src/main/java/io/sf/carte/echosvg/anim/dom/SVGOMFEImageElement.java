@@ -138,7 +138,7 @@ public class SVGOMFEImageElement extends SVGOMFilterPrimitiveStandardAttributes 
 	 */
 	@Override
 	public SVGAnimatedString getHref() {
-		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
+		return hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	/**

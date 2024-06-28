@@ -95,7 +95,7 @@ public abstract class SVGOMURIReferenceElement extends SVGOMElement implements S
 	 */
 	@Override
 	public SVGAnimatedString getHref() {
-		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
+		return hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	/**

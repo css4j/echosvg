@@ -93,7 +93,7 @@ public abstract class SVGURIReferenceGraphicsElement extends SVGGraphicsElement 
 	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGURIReference#getHref()}.
 	 */
 	public SVGAnimatedString getHref() {
-		return href.element.hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
+		return hasAttribute(XLINK_HREF_ATTRIBUTE) ? href : xlinkhref;
 	}
 
 	/**
