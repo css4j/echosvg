@@ -76,22 +76,24 @@ public class ColorSwitchBridge extends AbstractSVGBridge implements PaintBridge,
 			float opacity) {
 		Element clrDef = null;
 		for (Node n = paintElement.getFirstChild(); n != null; n = n.getNextSibling()) {
-			if ((n.getNodeType() != Node.ELEMENT_NODE))
-				continue;
-			Element ref = (Element) n;
-			if ( // (ref instanceof SVGTests) &&
-			SVGUtilities.matchUserAgent(ref, ctx.getUserAgent())) {
-				clrDef = ref;
-				break;
+			if (n.getNodeType() == Node.ELEMENT_NODE) {
+				Element ref = (Element) n;
+				// ref is supposed to be an instance of org.w3c.dom.svg.SVGTests
+				if (SVGUtilities.matchUserAgent(ref, ctx.getUserAgent())) {
+					clrDef = ref;
+					break;
+				}
 			}
 		}
 
-		if (clrDef == null)
+		if (clrDef == null) {
 			return Color.black;
+		}
 
 		Bridge bridge = ctx.getBridge(clrDef);
-		if (bridge == null || !(bridge instanceof PaintBridge))
+		if (!(bridge instanceof PaintBridge)) {
 			return Color.black;
+		}
 
 		return ((PaintBridge) bridge).createPaint(ctx, clrDef, paintedElement, paintedNode, opacity);
 	}
