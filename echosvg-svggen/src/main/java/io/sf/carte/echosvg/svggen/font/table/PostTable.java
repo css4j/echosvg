@@ -30,7 +30,7 @@ import java.io.RandomAccessFile;
 public class PostTable implements Table {
 
 	/**
-	 * TODO: Mac Glyph names for 210 & 257
+	 * Mac Glyph names
 	 */
 	private static final String[] macGlyphName = { ".notdef", // 0
 			"null", // 1
@@ -242,7 +242,7 @@ public class PostTable implements Table {
 			"Igrave", // 207
 			"Oacute", // 208
 			"Ocircumflex", // 209
-			"", // 210
+			"apple", // 210
 			"Ograve", // 211
 			"Uacute", // 212
 			"Ucircumflex", // 213
@@ -289,7 +289,7 @@ public class PostTable implements Table {
 			"cacute", // 254
 			"Ccaron", // 255
 			"ccaron", // 256
-			"" // 257
+			"dcroat" // 257
 	};
 
 	private int version;
