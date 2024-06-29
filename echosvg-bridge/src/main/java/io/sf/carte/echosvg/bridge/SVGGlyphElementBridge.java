@@ -302,4 +302,5 @@ public class SVGGlyphElementBridge extends AbstractSVGBridge implements ErrorCon
 		return new Glyph(unicode, names, orientation, arabicForm, lang, horizOrigin, vertOrigin, horizAdvX, vertAdvY,
 				glyphCode, tpi, dShape, glyphContentNode);
 	}
+
 }

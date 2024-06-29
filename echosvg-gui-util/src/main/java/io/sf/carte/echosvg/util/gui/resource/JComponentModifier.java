@@ -29,10 +29,12 @@ import javax.swing.JComponent;
  * @version $Id$
  */
 public interface JComponentModifier {
+
 	/**
 	 * Gives a reference to a component to this object
 	 * 
 	 * @param comp the component associed with this object
 	 */
 	void addJComponent(JComponent comp);
+
 }

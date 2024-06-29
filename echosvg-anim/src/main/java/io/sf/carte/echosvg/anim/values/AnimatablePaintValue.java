@@ -267,4 +267,5 @@ public class AnimatablePaintValue extends AnimatableColorValue {
 			return "inherit";
 		}
 	}
+
 }

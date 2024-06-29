@@ -255,4 +255,5 @@ public class BindableElementBridge extends AbstractGraphicsNodeBridge implements
 		idx++;
 		gn.add(idx, childNode);
 	}
+
 }

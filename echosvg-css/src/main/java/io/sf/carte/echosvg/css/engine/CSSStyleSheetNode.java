@@ -33,4 +33,5 @@ public interface CSSStyleSheetNode {
 	 * style-sheet is available.
 	 */
 	StyleSheet getCSSStyleSheet();
+
 }

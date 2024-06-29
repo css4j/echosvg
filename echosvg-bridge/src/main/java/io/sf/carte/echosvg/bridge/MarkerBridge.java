@@ -39,4 +39,5 @@ public interface MarkerBridge extends Bridge {
 	 * @param paintedElement the element that references the marker element
 	 */
 	Marker createMarker(BridgeContext ctx, Element markerElement, Element paintedElement);
+
 }

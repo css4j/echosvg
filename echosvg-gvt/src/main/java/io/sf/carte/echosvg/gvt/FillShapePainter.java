@@ -170,4 +170,5 @@ public class FillShapePainter implements ShapePainter {
 	public Shape getShape() {
 		return shape;
 	}
+
 }

@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.gvt.event;
  * @version $Id$
  */
 public class SelectionAdapter implements SelectionListener {
+
 	/**
 	 * Invoked when a selection has changed.
 	 * 
@@ -62,4 +63,5 @@ public class SelectionAdapter implements SelectionListener {
 	@Override
 	public void selectionStarted(SelectionEvent evt) {
 	}
+
 }

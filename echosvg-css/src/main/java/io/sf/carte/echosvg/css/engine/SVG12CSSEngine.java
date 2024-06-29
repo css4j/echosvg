@@ -100,4 +100,5 @@ public class SVG12CSSEngine extends SVGCSSEngine {
 	public static final int SOLID_OPACITY_INDEX = SOLID_COLOR_INDEX + 1;
 	public static final int TEXT_ALIGN_INDEX = SOLID_OPACITY_INDEX + 1;
 	public static final int FINAL_INDEX = TEXT_ALIGN_INDEX;
+
 }

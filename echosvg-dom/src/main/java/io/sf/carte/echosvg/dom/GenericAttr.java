@@ -78,4 +78,5 @@ public class GenericAttr extends AbstractAttr {
 	protected Node newNode() {
 		return new GenericAttr();
 	}
+
 }

@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.TransformStackElement;
  * @version $Id$
  */
 public class SVGGraphicContextConverter {
+
 	private static final int GRAPHIC_CONTEXT_CONVERTER_COUNT = 6;
 
 	private SVGTransform transformConverter;
@@ -139,4 +140,5 @@ public class SVGGraphicContextConverter {
 
 		return defSet;
 	}
+
 }

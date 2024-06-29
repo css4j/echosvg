@@ -106,4 +106,5 @@ public class WritingModeManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

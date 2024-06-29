@@ -162,4 +162,5 @@ public class ProxyGraphicsNode extends AbstractGraphicsNode {
 
 		return source.getOutline();
 	}
+
 }

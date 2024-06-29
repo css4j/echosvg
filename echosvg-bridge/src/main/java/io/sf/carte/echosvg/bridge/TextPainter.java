@@ -111,4 +111,5 @@ public interface TextPainter {
 	 * @param node the TextNode to measure
 	 */
 	Rectangle2D getGeometryBounds(TextNode node);
+
 }

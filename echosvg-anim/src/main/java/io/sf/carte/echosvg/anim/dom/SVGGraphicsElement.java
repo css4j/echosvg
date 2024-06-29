@@ -287,4 +287,5 @@ public abstract class SVGGraphicsElement extends SVGStylableElement implements S
 			super.updateOtherValue(type, val);
 		}
 	}
+
 }

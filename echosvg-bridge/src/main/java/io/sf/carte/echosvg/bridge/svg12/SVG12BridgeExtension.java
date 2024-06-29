@@ -137,4 +137,5 @@ public class SVG12BridgeExtension extends SVGBridgeExtension {
 		}
 		return false;
 	}
+
 }

@@ -145,4 +145,5 @@ public class SVGFeBlendElementBridge extends AbstractSVGFilterPrimitiveElementBr
 		throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
 				new Object[] { SVG_MODE_ATTRIBUTE, rule });
 	}
+
 }

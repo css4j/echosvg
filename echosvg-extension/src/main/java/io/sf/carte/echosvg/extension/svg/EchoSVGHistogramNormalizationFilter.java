@@ -49,4 +49,5 @@ public interface EchoSVGHistogramNormalizationFilter extends FilterColorInterpol
 	 * Sets the trim percent for this normalization.
 	 */
 	void setTrim(float trim);
+
 }

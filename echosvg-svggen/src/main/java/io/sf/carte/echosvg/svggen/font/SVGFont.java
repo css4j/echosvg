@@ -47,6 +47,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  */
 public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
+
 	static final String EOL;
 
 	static final String PROPERTY_LINE_SEPARATOR = "line.separator";
@@ -740,4 +741,5 @@ public class SVGFont implements SVGConstants, ScriptTags, FeatureTags {
 	private static void usage() {
 		System.err.println(Messages.formatMessage(CONFIG_USAGE, null));
 	}
+
 }

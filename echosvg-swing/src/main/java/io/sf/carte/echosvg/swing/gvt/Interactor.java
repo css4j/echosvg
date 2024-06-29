@@ -41,4 +41,5 @@ public interface Interactor extends KeyListener, MouseListener, MouseMotionListe
 	 * Tells whether the interaction has finished.
 	 */
 	boolean endInteraction();
+
 }

@@ -252,5 +252,7 @@ public class AbstractZoomInteractor extends InteractorAdapter {
 				g2d.draw(markerRight);
 			}
 		}
+
 	}
+
 }

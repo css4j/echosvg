@@ -330,6 +330,7 @@ public class SVGOMAnimatedNumberList extends AbstractSVGAnimatedValue implements
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -511,5 +512,7 @@ public class SVGOMAnimatedNumberList extends AbstractSVGAnimatedValue implements
 		protected void revalidate() {
 			valid = true;
 		}
+
 	}
+
 }

@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @see io.sf.carte.echosvg.svggen.SVGAlphaComposite
  */
 public class SVGAlphaComposite extends AbstractSVGConverter {
+
 	/**
 	 * Map of all possible AlphaComposite filter equivalents
 	 */
@@ -253,4 +254,5 @@ public class SVGAlphaComposite extends AbstractSVGConverter {
 
 		return compositeFilter;
 	}
+
 }

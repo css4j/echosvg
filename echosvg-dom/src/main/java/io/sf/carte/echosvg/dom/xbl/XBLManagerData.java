@@ -36,4 +36,5 @@ public interface XBLManagerData {
 	 * Sets the XBL manager associated data for this node.
 	 */
 	void setManagerData(Object data);
+
 }

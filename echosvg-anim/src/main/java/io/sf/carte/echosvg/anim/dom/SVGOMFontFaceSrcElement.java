@@ -65,4 +65,5 @@ public class SVGOMFontFaceSrcElement extends SVGOMElement implements SVGFontFace
 	protected Node newNode() {
 		return new SVGOMFontFaceSrcElement();
 	}
+
 }

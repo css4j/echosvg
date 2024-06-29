@@ -82,8 +82,10 @@ public class CleanerThread extends Thread {
 	 * reference is queued.
 	 */
 	public interface ReferenceCleared {
+
 		/* Called when the reference is cleared */
 		void cleared();
+
 	}
 
 	/**
@@ -91,9 +93,11 @@ public class CleanerThread extends Thread {
 	 * ReferenceQueue.
 	 */
 	public abstract static class SoftReferenceCleared<T> extends SoftReference<T> implements ReferenceCleared {
+
 		public SoftReferenceCleared(T o) {
 			super(o, CleanerThread.getReferenceQueue());
 		}
+
 	}
 
 	/**
@@ -101,9 +105,11 @@ public class CleanerThread extends Thread {
 	 * ReferenceQueue.
 	 */
 	public abstract static class WeakReferenceCleared<T> extends WeakReference<T> implements ReferenceCleared {
+
 		public WeakReferenceCleared(T o) {
 			super(o, CleanerThread.getReferenceQueue());
 		}
+
 	}
 
 	/**
@@ -111,9 +117,11 @@ public class CleanerThread extends Thread {
 	 * ReferenceQueue.
 	 */
 	public abstract static class PhantomReferenceCleared<T> extends PhantomReference<T> implements ReferenceCleared {
+
 		public PhantomReferenceCleared(T o) {
 			super(o, CleanerThread.getReferenceQueue());
 		}
+
 	}
 
 	protected CleanerThread() {

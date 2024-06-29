@@ -221,4 +221,5 @@ public class SVGOMFESpotLightElement extends SVGOMElement implements SVGFESpotLi
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

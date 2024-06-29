@@ -102,4 +102,5 @@ public class AttributeInitializer {
 		elt.setUnspecifiedAttribute(ns, ln, val);
 		return true;
 	}
+
 }

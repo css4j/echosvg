@@ -129,4 +129,5 @@ public class SVGMaskElementBridge extends AnimatableGenericSVGBridge implements 
 
 		return new MaskRable8Bit(filter, maskNode, maskRegion);
 	}
+
 }

@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @version $Id$
  */
 public class SVGLinearGradient extends AbstractSVGConverter {
+
 	/**
 	 * @param generatorContext used to build Elements
 	 */
@@ -141,4 +142,5 @@ public class SVGLinearGradient extends AbstractSVGConverter {
 
 		return gradientDesc;
 	}
+
 }

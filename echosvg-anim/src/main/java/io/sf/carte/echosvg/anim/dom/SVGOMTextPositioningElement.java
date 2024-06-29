@@ -178,4 +178,5 @@ public abstract class SVGOMTextPositioningElement extends SVGOMTextContentElemen
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

@@ -355,6 +355,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 	}
 
 	public static class ProtectedStream extends BufferedInputStream {
+
 		static final int BUFFER_SIZE = 8192;
 
 		ProtectedStream(InputStream is) {
@@ -422,6 +423,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 
 		boolean wasClosed = false;
 		boolean isTied = false;
+
 	}
 
 	protected ProtectedStream openStream(Element e, ParsedURL purl) throws IOException {
@@ -813,6 +815,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 					evt.getModifiersString());
 			((EventTarget) imgElement).dispatchEvent(newMouseEvent);
 		}
+
 	}
 
 	/**
@@ -949,4 +952,5 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 	static {
 		ImageTagRegistry.setBrokenLinkProvider(brokenLinkProvider);
 	}
+
 }

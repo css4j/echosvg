@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
  * @version $Id$
  */
 public class CachedImageHandlerJPEGEncoder extends DefaultCachedImageHandler {
+
 	public static final String CACHED_JPEG_PREFIX = "jpegImage";
 	public static final String CACHED_JPEG_SUFFIX = ".jpg";
 
@@ -71,4 +72,5 @@ public class CachedImageHandlerJPEGEncoder extends DefaultCachedImageHandler {
 	public String getRefPrefix() {
 		return refPrefix;
 	}
+
 }

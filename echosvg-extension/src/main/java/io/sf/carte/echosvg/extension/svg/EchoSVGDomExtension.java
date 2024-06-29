@@ -124,6 +124,7 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 	 * To create a 'regularPolygon' element.
 	 */
 	protected static class EchoSVGRegularPolygonElementFactory implements ExtensibleDOMImplementation.ElementFactory {
+
 		public EchoSVGRegularPolygonElementFactory() {
 		}
 
@@ -134,12 +135,14 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new EchoSVGRegularPolygonElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'star' element.
 	 */
 	protected static class EchoSVGStarElementFactory implements ExtensibleDOMImplementation.ElementFactory {
+
 		public EchoSVGStarElementFactory() {
 		}
 
@@ -150,6 +153,7 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new EchoSVGStarElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
@@ -157,6 +161,7 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 	 */
 	protected static class EchoSVGHistogramNormalizationElementFactory
 			implements ExtensibleDOMImplementation.ElementFactory {
+
 		public EchoSVGHistogramNormalizationElementFactory() {
 		}
 
@@ -167,12 +172,14 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new EchoSVGHistogramNormalizationElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'colorSwitch' element.
 	 */
 	protected static class ColorSwitchElementFactory implements ExtensibleDOMImplementation.ElementFactory {
+
 		public ColorSwitchElementFactory() {
 		}
 
@@ -183,12 +190,14 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new ColorSwitchElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowText' element.
 	 */
 	protected static class FlowTextElementFactory implements SVGDOMImplementation.ElementFactory {
+
 		public FlowTextElementFactory() {
 		}
 
@@ -199,12 +208,14 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new FlowTextElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowDiv' element.
 	 */
 	protected static class FlowDivElementFactory implements SVGDOMImplementation.ElementFactory {
+
 		public FlowDivElementFactory() {
 		}
 
@@ -215,12 +226,14 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new FlowDivElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowPara' element.
 	 */
 	protected static class FlowParaElementFactory implements SVGDOMImplementation.ElementFactory {
+
 		public FlowParaElementFactory() {
 		}
 
@@ -231,12 +244,14 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new FlowParaElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowRegionBreak' element.
 	 */
 	protected static class FlowRegionBreakElementFactory implements SVGDOMImplementation.ElementFactory {
+
 		public FlowRegionBreakElementFactory() {
 		}
 
@@ -247,12 +262,14 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new FlowRegionBreakElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowRegion' element.
 	 */
 	protected static class FlowRegionElementFactory implements SVGDOMImplementation.ElementFactory {
+
 		public FlowRegionElementFactory() {
 		}
 
@@ -263,12 +280,14 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new FlowRegionElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowLine' element.
 	 */
 	protected static class FlowLineElementFactory implements SVGDOMImplementation.ElementFactory {
+
 		public FlowLineElementFactory() {
 		}
 
@@ -279,12 +298,14 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new FlowLineElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowSpan' element.
 	 */
 	protected static class FlowSpanElementFactory implements SVGDOMImplementation.ElementFactory {
+
 		public FlowSpanElementFactory() {
 		}
 
@@ -295,5 +316,7 @@ public class EchoSVGDomExtension implements DomExtension, EchoSVGExtConstants {
 		public Element create(String prefix, Document doc) {
 			return new FlowSpanElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
+
 }

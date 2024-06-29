@@ -65,4 +65,5 @@ public class SVGOMFlowRootElement extends SVGGraphicsElement {
 	protected Node newNode() {
 		return new SVGOMFlowRootElement();
 	}
+
 }

@@ -31,6 +31,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public interface StyleHandler {
+
 	/**
 	 * Sets the style described by <code>styleMap</code> on the given
 	 * <code>element</code>.
@@ -40,4 +41,5 @@ public interface StyleHandler {
 	 *                 names, style values.
 	 */
 	void setStyle(Element element, Map<String, String> styleMap, SVGGeneratorContext generatorContext);
+
 }

@@ -79,4 +79,5 @@ public class SVGOMSubImageRefElement extends SVGStylableElement {
 	protected Node newNode() {
 		return new SVGOMSubImageRefElement();
 	}
+
 }

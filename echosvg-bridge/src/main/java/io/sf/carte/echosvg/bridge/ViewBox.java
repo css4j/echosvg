@@ -691,5 +691,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 		public void endPreserveAspectRatio() throws ParseException {
 			hasPreserveAspectRatio = true;
 		}
+
 	}
+
 }

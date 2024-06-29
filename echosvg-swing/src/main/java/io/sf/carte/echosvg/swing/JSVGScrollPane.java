@@ -73,6 +73,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @version $Id$
  */
 public class JSVGScrollPane extends JPanel {
+
 	private static final long serialVersionUID = 1L;
 
 	protected JSVGCanvas canvas;
@@ -175,6 +176,7 @@ public class JSVGScrollPane extends JPanel {
 	}
 
 	class SVGScrollDocumentLoaderListener extends SVGDocumentLoaderAdapter {
+
 		@Override
 		public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
 			NodeEventTarget root = (NodeEventTarget) e.getSVGDocument().getRootElement();
@@ -191,6 +193,7 @@ public class JSVGScrollPane extends JPanel {
 						} // handleEvent()
 					}, false, null);
 		}// documentLoadingCompleted()
+
 	}
 
 	/**
@@ -246,6 +249,7 @@ public class JSVGScrollPane extends JPanel {
 	 * displayed, the mouse wheel will only scroll the vertical scrollbar.
 	 */
 	protected class WheelListener implements MouseWheelListener {
+
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent e) {
 			final JScrollBar sb = (vertical.isVisible()) ? vertical : horizontal; // vertical is preferred
@@ -259,6 +263,7 @@ public class JSVGScrollPane extends JPanel {
 			}
 
 		}// mouseWheelMoved()
+
 	}// inner class WheelListener
 
 	/**
@@ -274,6 +279,7 @@ public class JSVGScrollPane extends JPanel {
 	 * </p>
 	 */
 	protected class SBListener implements ChangeListener {
+
 		// 'true' if we are in a drag (versus a click)
 		protected boolean inDrag = false;
 		protected int startValue;
@@ -322,11 +328,13 @@ public class JSVGScrollPane extends JPanel {
 				setScrollPosition();
 			}
 		}// stateChanged()
+
 	}// inner class SBListener
 
 	/** Handle scroll, zoom, and resize events */
 	protected class ScrollListener extends ComponentAdapter
 			implements JGVTComponentListener, GVTTreeBuilderListener, GVTTreeRendererListener, UpdateManagerListener {
+
 		protected boolean isReady = false;
 
 		@Override
@@ -635,4 +643,5 @@ public class JSVGScrollPane extends JPanel {
 	public void scaleChange(float scale) {
 		// do nothing
 	}
+
 }// class JSVGScrollPane

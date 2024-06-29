@@ -210,4 +210,5 @@ public class SVGOMRadialGradientElement extends SVGOMGradientElement implements 
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

@@ -153,6 +153,7 @@ public class Main {
 	 * This interface represents an option handler.
 	 */
 	protected interface OptionHandler {
+
 		/**
 		 * Handles the current option.
 		 */
@@ -162,12 +163,14 @@ public class Main {
 		 * Returns the option description.
 		 */
 		String getDescription();
+
 	}
 
 	/**
 	 * To handle the '-doctype' option.
 	 */
 	protected class DoctypeHandler implements OptionHandler {
+
 		protected final Map<String, Object> values = new HashMap<>(6);
 		{
 			values.put("remove", SVGTranscoder.VALUE_DOCTYPE_REMOVE);
@@ -191,12 +194,14 @@ public class Main {
 		public String getDescription() {
 			return localizableSupport.formatMessage("doctype.description", null);
 		}
+
 	}
 
 	/**
 	 * To handle the '-newline' option.
 	 */
 	protected class NewlineHandler implements OptionHandler {
+
 		protected final Map<String, Object> values = new HashMap<>(6);
 		{
 			values.put("cr", SVGTranscoder.VALUE_NEWLINE_CR);
@@ -221,12 +226,14 @@ public class Main {
 		public String getDescription() {
 			return localizableSupport.formatMessage("newline.description", null);
 		}
+
 	}
 
 	/**
 	 * To handle the '-no-format' option.
 	 */
 	protected class NoFormatHandler implements OptionHandler {
+
 		@Override
 		public void handleOption() {
 			index++;
@@ -237,12 +244,14 @@ public class Main {
 		public String getDescription() {
 			return localizableSupport.formatMessage("no-format.description", null);
 		}
+
 	}
 
 	/**
 	 * To handle the '-public-id' option.
 	 */
 	protected class PublicIdHandler implements OptionHandler {
+
 		@Override
 		public void handleOption() {
 			index++;
@@ -257,12 +266,14 @@ public class Main {
 		public String getDescription() {
 			return localizableSupport.formatMessage("public-id.description", null);
 		}
+
 	}
 
 	/**
 	 * To handle the '-system-id' option.
 	 */
 	protected class SystemIdHandler implements OptionHandler {
+
 		@Override
 		public void handleOption() {
 			index++;
@@ -277,12 +288,14 @@ public class Main {
 		public String getDescription() {
 			return localizableSupport.formatMessage("system-id.description", null);
 		}
+
 	}
 
 	/**
 	 * To handle the '-xml-decl' option.
 	 */
 	protected class XMLDeclHandler implements OptionHandler {
+
 		@Override
 		public void handleOption() {
 			index++;
@@ -297,12 +310,14 @@ public class Main {
 		public String getDescription() {
 			return localizableSupport.formatMessage("xml-decl.description", null);
 		}
+
 	}
 
 	/**
 	 * To handle the '-tab-width' option.
 	 */
 	protected class TabWidthHandler implements OptionHandler {
+
 		@Override
 		public void handleOption() {
 			index++;
@@ -316,12 +331,14 @@ public class Main {
 		public String getDescription() {
 			return localizableSupport.formatMessage("tab-width.description", null);
 		}
+
 	}
 
 	/**
 	 * To handle the '-doc-width' option.
 	 */
 	protected class DocWidthHandler implements OptionHandler {
+
 		@Override
 		public void handleOption() {
 			index++;
@@ -335,5 +352,7 @@ public class Main {
 		public String getDescription() {
 			return localizableSupport.formatMessage("doc-width.description", null);
 		}
+
 	}
+
 }

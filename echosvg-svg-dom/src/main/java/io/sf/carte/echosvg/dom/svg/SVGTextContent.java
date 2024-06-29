@@ -30,6 +30,7 @@ import java.awt.geom.Rectangle2D;
  * @version $Id$
  */
 public interface SVGTextContent {
+
 	/**
 	 * Returns the total number of characters to be rendered within the current
 	 * element. Includes characters which are included via a &lt;tref&gt; reference.
@@ -124,4 +125,5 @@ public interface SVGTextContent {
 	float getSubStringLength(int charnum, int nchars);
 
 	int getCharNumAtPosition(float x, float y);
+
 }

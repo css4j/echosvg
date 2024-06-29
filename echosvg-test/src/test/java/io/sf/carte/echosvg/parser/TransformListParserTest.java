@@ -72,6 +72,7 @@ public class TransformListParserTest {
 	}
 
 	private class TestHandler extends DefaultTransformListHandler {
+
 		private StringBuilder buffer;
 		String resultTransform;
 
@@ -197,5 +198,7 @@ public class TransformListParserTest {
 		public void endTransformList() throws ParseException {
 			resultTransform = buffer.toString();
 		}
+
 	}
+
 }

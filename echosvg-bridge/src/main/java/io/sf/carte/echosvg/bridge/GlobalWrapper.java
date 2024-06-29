@@ -89,4 +89,5 @@ public class GlobalWrapper extends WindowWrapper {
 		SVGGlobal global = (SVGGlobal) gw.window;
 		global.stopMouseCapture();
 	}
+
 }

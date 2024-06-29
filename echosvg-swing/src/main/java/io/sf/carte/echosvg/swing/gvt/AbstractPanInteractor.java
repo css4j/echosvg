@@ -155,4 +155,5 @@ public abstract class AbstractPanInteractor extends InteractorAdapter {
 		AffineTransform at = AffineTransform.getTranslateInstance(xCurrent - xStart, yCurrent - yStart);
 		c.setPaintingTransform(at);
 	}
+
 }

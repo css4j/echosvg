@@ -65,4 +65,5 @@ public class SVGOMFlowRegionElement extends SVGStylableElement {
 	protected Node newNode() {
 		return new SVGOMFlowRegionElement();
 	}
+
 }

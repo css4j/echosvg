@@ -36,6 +36,7 @@ import java.awt.image.BufferedImage;
  * @version $Id$
  */
 public class Paints implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -82,4 +83,5 @@ public class Paints implements Painter {
 		g.setPaint(fillTexture);
 		g.fill(rect);
 	}
+
 }

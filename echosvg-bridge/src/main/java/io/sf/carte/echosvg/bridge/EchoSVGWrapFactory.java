@@ -33,6 +33,7 @@ import org.w3c.dom.events.EventTarget;
  * @version $Id$
  */
 class EchoSVGWrapFactory extends WrapFactory {
+
 	private RhinoInterpreter interpreter;
 
 	public EchoSVGWrapFactory(RhinoInterpreter interp) {
@@ -47,4 +48,5 @@ class EchoSVGWrapFactory extends WrapFactory {
 		}
 		return super.wrap(ctx, scope, obj, staticType);
 	}
+
 }

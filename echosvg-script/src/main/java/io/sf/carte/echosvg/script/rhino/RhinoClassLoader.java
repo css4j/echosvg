@@ -40,6 +40,7 @@ import org.mozilla.javascript.GeneratedClassLoader;
  * @version $Id$
  */
 public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLoader {
+
 	/**
 	 * URL for the document referencing the script.
 	 */
@@ -163,4 +164,5 @@ public class RhinoClassLoader extends URLClassLoader implements GeneratedClassLo
 
 		return perms;
 	}
+
 }

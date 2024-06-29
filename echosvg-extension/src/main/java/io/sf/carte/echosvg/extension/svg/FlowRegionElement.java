@@ -73,4 +73,5 @@ public class FlowRegionElement extends PrefixableStylableExtensionElement implem
 	protected Node newNode() {
 		return new FlowRegionElement();
 	}
+
 }

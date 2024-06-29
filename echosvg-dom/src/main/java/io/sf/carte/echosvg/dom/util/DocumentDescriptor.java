@@ -197,6 +197,7 @@ public class DocumentDescriptor {
 	 * To manage collisions
 	 */
 	protected class Entry extends CleanerThread.WeakReferenceCleared<Element> {
+
 		/**
 		 * The hash code
 		 */
@@ -232,5 +233,7 @@ public class DocumentDescriptor {
 		public void cleared() {
 			removeEntry(this);
 		}
+
 	}
+
 }

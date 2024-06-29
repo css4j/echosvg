@@ -30,6 +30,7 @@ import java.util.MissingResourceException;
  * @version $Id$
  */
 public interface Localizable {
+
 	/**
 	 * Provides a way to the user to specify a locale which override the default
 	 * one. If null is passed to this method, the used locale becomes the global
@@ -56,4 +57,5 @@ public interface Localizable {
 	 * @exception MissingResourceException if the key is not in the bundle.
 	 */
 	String formatMessage(String key, Object[] args) throws MissingResourceException;
+
 }

@@ -165,4 +165,5 @@ public class SVGOMLineElement extends SVGGraphicsElement implements SVGLineEleme
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

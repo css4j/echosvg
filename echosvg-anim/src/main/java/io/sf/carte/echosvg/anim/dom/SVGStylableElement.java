@@ -433,6 +433,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 				value = null;
 			}
 		}
+
 	}
 
 	/**
@@ -535,6 +536,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 				value = null;
 			}
 		}
+
 	}
 
 	/**
@@ -637,6 +639,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 				value = null;
 			}
 		}
+
 	}
 
 	/**
@@ -755,6 +758,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 			else
 				declaration.append(v, idx, important);
 		}
+
 	}
 
 	/**
@@ -795,5 +799,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 		public void propertyChanged(String name, String value, String prio) throws DOMException {
 			((SVGOMDocument) ownerDocument).overrideStylePropertyChanged(SVGStylableElement.this, name, value, prio);
 		}
+
 	}
+
 }

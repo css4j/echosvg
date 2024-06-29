@@ -783,4 +783,5 @@ public class AWTEventDispatcher
 	protected static boolean isMetaDown(int modifiers) {
 		return (modifiers & GraphicsNodeInputEvent.META_MASK) != 0;
 	}
+
 }

@@ -123,4 +123,5 @@ public class MaxpTable implements Table {
 	public int getType() {
 		return maxp;
 	}
+
 }

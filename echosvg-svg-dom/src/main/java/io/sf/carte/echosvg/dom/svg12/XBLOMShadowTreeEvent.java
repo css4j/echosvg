@@ -63,4 +63,5 @@ public class XBLOMShadowTreeEvent extends AbstractEvent implements ShadowTreeEve
 		initEventNS(namespaceURIArg, typeArg, canBubbleArg, cancelableArg);
 		xblShadowTree = xblShadowTreeArg;
 	}
+
 }

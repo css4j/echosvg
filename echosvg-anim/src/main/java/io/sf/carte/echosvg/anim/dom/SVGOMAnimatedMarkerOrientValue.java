@@ -263,6 +263,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -361,6 +362,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
 		protected void setAnimatedValue(int type, float val) {
 			super.newValueSpecifiedUnits((short) type, val);
 		}
+
 	}
 
 	/**
@@ -389,6 +391,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
 			}
 			return animAngleVal;
 		}
+
 	}
 
 	/**
@@ -444,5 +447,7 @@ public class SVGOMAnimatedMarkerOrientValue extends AbstractSVGAnimatedValue {
 			baseAngleVal.revalidate();
 			return baseEnumerationVal;
 		}
+
 	}
+
 }

@@ -120,6 +120,7 @@ public class Main extends JComponent {
 	}
 
 	class RenderThread extends Thread {
+
 		RenderThread() {
 			super("RenderThread");
 			setDaemon(true);
@@ -171,6 +172,7 @@ public class Main extends JComponent {
 			}
 
 		}
+
 	}
 
 	volatile Thread transitionThread = null;
@@ -211,6 +213,7 @@ public class Main extends JComponent {
 	}
 
 	class TransitionThread extends Thread {
+
 		BufferedImage src;
 		int blockw = 75;
 		int blockh = 75;

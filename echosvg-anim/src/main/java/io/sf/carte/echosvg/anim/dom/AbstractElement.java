@@ -347,5 +347,7 @@ public abstract class AbstractElement extends io.sf.carte.echosvg.dom.AbstractEl
 			}
 			return n;
 		}
+
 	}
+
 }

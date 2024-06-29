@@ -80,4 +80,5 @@ public interface TimingSpecifierHandler {
 	 * Invoked when an indefinite value timing specifier is parsed.
 	 */
 	void indefinite();
+
 }

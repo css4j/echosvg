@@ -383,4 +383,5 @@ public class SVGOMPatternElement extends SVGStylableElement implements SVGPatter
 	protected Node newNode() {
 		return new SVGOMPatternElement();
 	}
+
 }

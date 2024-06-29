@@ -47,7 +47,7 @@ public interface SVGContext {
 	 * 
 	 * @see #getPixelUnitToMillimeter()
 	 */
-	@Deprecated(forRemoval=true)
+	@Deprecated(forRemoval = true)
 	default float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 	}
@@ -98,4 +98,5 @@ public interface SVGContext {
 	 * Returns the font-size on the associated element.
 	 */
 	float getFontSize();
+
 }

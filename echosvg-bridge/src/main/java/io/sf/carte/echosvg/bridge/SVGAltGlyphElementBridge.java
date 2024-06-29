@@ -313,4 +313,5 @@ public class SVGAltGlyphElementBridge extends AbstractSVGBridge implements Error
 
 		return glyphBridge.createGlyph(ctx, localGlyphElement, altGlyphElement, -1, fontSize, fontFace, tpi);
 	}
+
 }

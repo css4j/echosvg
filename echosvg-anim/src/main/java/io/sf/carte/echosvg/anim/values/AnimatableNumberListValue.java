@@ -149,4 +149,5 @@ public class AnimatableNumberListValue extends AnimatableValue {
 		}
 		return sb.toString();
 	}
+
 }

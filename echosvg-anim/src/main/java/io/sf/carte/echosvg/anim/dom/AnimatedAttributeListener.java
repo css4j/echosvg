@@ -46,4 +46,5 @@ public interface AnimatedAttributeListener {
 	 * @param type the type of animation whose value changed
 	 */
 	void otherAnimationChanged(Element e, String type);
+
 }

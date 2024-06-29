@@ -35,4 +35,5 @@ public interface AnimatableElement {
 	 * of additive animations.
 	 */
 	AnimatableValue getUnderlyingValue();
+
 }

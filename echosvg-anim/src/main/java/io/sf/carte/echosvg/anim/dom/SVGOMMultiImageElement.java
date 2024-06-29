@@ -79,4 +79,5 @@ public class SVGOMMultiImageElement extends SVGStylableElement {
 	protected Node newNode() {
 		return new SVGOMMultiImageElement();
 	}
+
 }

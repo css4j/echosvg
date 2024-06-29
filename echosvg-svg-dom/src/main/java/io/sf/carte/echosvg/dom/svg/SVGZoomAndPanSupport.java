@@ -67,4 +67,5 @@ public class SVGZoomAndPanSupport implements SVGConstants {
 		}
 		return SVGZoomAndPan.SVG_ZOOMANDPAN_DISABLE;
 	}
+
 }

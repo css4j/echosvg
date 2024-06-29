@@ -220,4 +220,5 @@ public abstract class LengthManager extends AbstractValueManager {
 	 * Indicates the orientation of the property associated with this manager.
 	 */
 	protected abstract int getOrientation();
+
 }

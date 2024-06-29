@@ -161,4 +161,5 @@ public class SVGDocumentLoader extends HaltingThread {
 			((SVGDocumentLoaderListener) listener).documentLoadingFailed((SVGDocumentLoaderEvent) event);
 		}
 	};
+
 }

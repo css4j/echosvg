@@ -115,4 +115,5 @@ public class SVGOMStopElement extends SVGStylableElement implements SVGStopEleme
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

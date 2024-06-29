@@ -1093,6 +1093,7 @@ public class SVGConverter {
 	 * Convenience class to filter svg files
 	 */
 	public static class SVGFileFilter implements FileFilter {
+
 		public static final String SVG_EXTENSION = ".svg";
 
 		@Override
@@ -1103,6 +1104,7 @@ public class SVGConverter {
 
 			return false;
 		}
+
 	}
 
 }

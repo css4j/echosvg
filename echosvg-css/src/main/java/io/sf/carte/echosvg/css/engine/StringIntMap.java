@@ -145,5 +145,7 @@ public class StringIntMap {
 			this.value = value;
 			this.next = next;
 		}
+
 	}
+
 }

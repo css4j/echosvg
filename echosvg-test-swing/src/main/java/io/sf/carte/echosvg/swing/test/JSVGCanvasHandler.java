@@ -55,6 +55,7 @@ import io.sf.carte.echosvg.util.RunnableQueue;
 public class JSVGCanvasHandler {
 
 	public interface Delegate {
+
 		String getName();
 
 		// Returns true if a load event was triggered. In this case
@@ -70,6 +71,7 @@ public class JSVGCanvasHandler {
 		void canvasDone(JSVGCanvas canvas) throws IOException;
 
 		void failure(String cause);
+
 	}
 
 	public static final String REGARD_TEST_INSTANCE = "regardTestInstance";
@@ -325,6 +327,7 @@ public class JSVGCanvasHandler {
 	}
 
 	class UpdateRenderListener implements UpdateManagerListener {
+
 		@Override
 		public void updateCompleted(UpdateManagerEvent e) {
 			synchronized (renderMonitor) {
@@ -360,9 +363,11 @@ public class JSVGCanvasHandler {
 		@Override
 		public void updateStarted(UpdateManagerEvent e) {
 		}
+
 	}
 
 	class InitialRenderListener extends GVTTreeRendererAdapter {
+
 		@Override
 		public void gvtRenderingCompleted(GVTTreeRendererEvent e) {
 			synchronized (renderMonitor) {
@@ -384,9 +389,11 @@ public class JSVGCanvasHandler {
 				renderMonitor.notifyAll();
 			}
 		}
+
 	}
 
 	class LoadListener extends SVGDocumentLoaderAdapter {
+
 		@Override
 		public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
 			synchronized (loadMonitor) {
@@ -408,9 +415,11 @@ public class JSVGCanvasHandler {
 				loadMonitor.notifyAll();
 			}
 		}
+
 	}
 
 	class SVGLoadEventListener extends SVGLoadEventDispatcherAdapter {
+
 		@Override
 		public void svgLoadEventDispatchStarted(SVGLoadEventDispatcherEvent e) {
 			SVGLoadEventDispatcher dispatcher;
@@ -420,6 +429,7 @@ public class JSVGCanvasHandler {
 			url = new UpdateRenderListener();
 			um.addUpdateManagerListener(url);
 		}
+
 	}
 
 }

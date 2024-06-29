@@ -35,4 +35,5 @@ public interface IdContainer {
 	 * Returns the element with the given ID that exists in this subtree.
 	 */
 	Element getElementById(String id);
+
 }

@@ -284,5 +284,7 @@ public class IntTable implements Serializable {
 			this.value = value;
 			this.next = next;
 		}
+
 	}
+
 }

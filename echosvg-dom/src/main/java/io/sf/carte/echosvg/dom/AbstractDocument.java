@@ -528,6 +528,7 @@ public abstract class AbstractDocument extends AbstractParentNode
 	}
 
 	protected class IdSoftRef extends CleanerThread.SoftReferenceCleared<Object> {
+
 		String id;
 		List<IdSoftRef> list;
 
@@ -563,6 +564,7 @@ public abstract class AbstractDocument extends AbstractParentNode
 				idLock.unlock();
 			}
 		}
+
 	}
 
 	/**
@@ -1773,7 +1775,9 @@ public abstract class AbstractDocument extends AbstractParentNode
 				AbstractDocument doc = (AbstractDocument) node.getOwnerDocument();
 				return doc.getDocumentURI();
 			}
+
 		}
+
 	}
 
 	/**
@@ -1995,7 +1999,9 @@ public abstract class AbstractDocument extends AbstractParentNode
 				}
 				return false;
 			}
+
 		}
+
 	}
 
 	/**
@@ -2307,6 +2313,7 @@ public abstract class AbstractDocument extends AbstractParentNode
 				}
 				return iterator.item(i);
 			}
+
 		}
 
 		/**
@@ -2364,6 +2371,7 @@ public abstract class AbstractDocument extends AbstractParentNode
 		public String lookupNamespaceURI(String prefix) {
 			return contextNode.lookupNamespaceURI(prefix);
 		}
+
 	}
 
 	// NodeXBL //////////////////////////////////////////////////////////////
@@ -2514,4 +2522,5 @@ public abstract class AbstractDocument extends AbstractParentNode
 			}
 		}
 	}
+
 }

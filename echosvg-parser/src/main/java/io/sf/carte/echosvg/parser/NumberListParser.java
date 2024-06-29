@@ -28,6 +28,7 @@ import java.io.IOException;
  * @version $Id$
  */
 public class NumberListParser extends NumberParser {
+
 	/**
 	 * The number list handler used to report parse events.
 	 */
@@ -89,4 +90,5 @@ public class NumberListParser extends NumberParser {
 		}
 		numberListHandler.endNumberList();
 	}
+
 }

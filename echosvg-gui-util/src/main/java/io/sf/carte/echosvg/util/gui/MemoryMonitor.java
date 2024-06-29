@@ -70,6 +70,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * @version $Id$
  */
 public class MemoryMonitor extends JFrame implements ActionMap {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -178,18 +179,21 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 	 * The action associated with the 'Collect' button of the memory monitor.
 	 */
 	protected static class CollectButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.gc();
 		}
+
 	}
 
 	/**
 	 * The action associated with the 'Close' button of the memory monitor.
 	 */
 	protected class CloseButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -197,12 +201,14 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 			panel.getRepaintThread().safeSuspend();
 			dispose();
 		}
+
 	}
 
 	/**
 	 * A panel composed of a Usage instance and a History instance.
 	 */
 	public static class Panel extends JPanel {
+
 		private static final long serialVersionUID = 1L;
 		/**
 		 * The repaint thread.
@@ -259,12 +265,14 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 		public RepaintThread getRepaintThread() {
 			return repaintThread;
 		}
+
 	}
 
 	/**
 	 * Displays the current memory usage.
 	 */
 	public static class Usage extends JPanel implements MemoryChangeListener {
+
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -479,12 +487,14 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 			g2d.drawString(totalText, 10, 10);
 			g2d.drawString(usedText, 10, PREFERRED_HEIGHT - 3);
 		}
+
 	}
 
 	/**
 	 * Displays the memory usage history in a chart.
 	 */
 	public static class History extends JPanel implements MemoryChangeListener {
+
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -635,6 +645,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 			g2d.draw(new Rectangle2D.Double(5, 5, PREFERRED_WIDTH - 10, PREFERRED_HEIGHT - 10));
 
 		}
+
 	}
 
 	/**
@@ -642,6 +653,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 	 * memory state has changed.
 	 */
 	public interface MemoryChangeListener {
+
 		/**
 		 * Indicates that the memory state has changed.
 		 * 
@@ -649,12 +661,14 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 		 * @param free  The free memory.
 		 */
 		void memoryStateChanged(long total, long free);
+
 	}
 
 	/**
 	 * This thread repaints a list of components.
 	 */
 	public static class RepaintThread extends Thread {
+
 		/**
 		 * The repaint timeout
 		 */
@@ -721,6 +735,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 		}
 
 		protected class UpdateRunnable implements Runnable {
+
 			public boolean inEventQueue = false;
 
 			@Override
@@ -735,6 +750,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 					inEventQueue = false;
 				}
 			}
+
 		}
 
 		/**
@@ -755,5 +771,7 @@ public class MemoryMonitor extends JFrame implements ActionMap {
 				notify();
 			}
 		}
+
 	}
+
 }

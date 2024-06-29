@@ -190,4 +190,5 @@ public class AnimatablePathDataValue extends AnimatableValue {
 		}
 		return sb.toString();
 	}
+
 }

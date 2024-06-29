@@ -93,4 +93,5 @@ public class DefaultStyleHandler implements StyleHandler, SVGConstants {
 			return !s.contains(styleName);
 		}
 	}
+
 }

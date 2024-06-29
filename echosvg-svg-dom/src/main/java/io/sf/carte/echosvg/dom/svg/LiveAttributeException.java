@@ -99,4 +99,5 @@ public class LiveAttributeException extends RuntimeException {
 	public String getValue() {
 		return value;
 	}
+
 }

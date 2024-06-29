@@ -150,4 +150,5 @@ public class ImageNode extends CompositeGraphicsNode {
 			return null;
 		}
 	}
+
 }

@@ -31,10 +31,12 @@ import org.w3c.dom.stylesheets.StyleSheet;
  * @version $Id$
  */
 public interface StyleSheetFactory {
+
 	/**
 	 * Creates a stylesheet from the data of the xml-stylesheet processing
 	 * instruction or return null when it is not possible to create the given
 	 * stylesheet.
 	 */
 	StyleSheet createStyleSheet(Node node, HashMap<String, String> pseudoAttrs);
+
 }

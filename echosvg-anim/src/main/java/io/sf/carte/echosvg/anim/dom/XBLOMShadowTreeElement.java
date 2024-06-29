@@ -103,4 +103,5 @@ public class XBLOMShadowTreeElement extends XBLOMElement implements XBLShadowTre
 	public Node getCSSParentNode() {
 		return ownerDocument.getXBLManager().getXblBoundElement(this);
 	}
+
 }

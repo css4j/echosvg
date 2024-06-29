@@ -409,4 +409,5 @@ public interface GVTAttributedCharacterIterator extends AttributedCharacterItera
 		AttributedCharacterIterator mutateAttributes(AttributedCharacterIterator aci);
 
 	}
+
 }

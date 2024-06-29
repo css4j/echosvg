@@ -87,4 +87,5 @@ public class SVGOMTransform extends AbstractSVGTransform {
 			}
 		};
 	}
+
 }

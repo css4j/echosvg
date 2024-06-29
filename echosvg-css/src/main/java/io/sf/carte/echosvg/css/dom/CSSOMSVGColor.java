@@ -514,6 +514,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 				handler.colorReplaced(f, idx);
 			}
 		}
+
 	}
 
 	/**
@@ -525,6 +526,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 		 * Returns the current value associated with this object.
 		 */
 		Value getValue();
+
 	}
 
 	/**
@@ -626,6 +628,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 		 * Called when the ICC color has been append.
 		 */
 		void colorAppend(float f) throws DOMException;
+
 	}
 
 	/**
@@ -999,6 +1002,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
 			}
 		}
+
 	}
 
 	/**
@@ -1096,6 +1100,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 		public CSSValue item(int index) {
 			throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
 		}
+
 	}
 
 	/**
@@ -1111,6 +1116,7 @@ public class CSSOMSVGColor implements SVGColor, RGBColor, SVGICCColor, SVGNumber
 		public void setStringValue(short stringType, String stringValue) throws DOMException {
 			throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
 		}
+
 	}
 
 	/**

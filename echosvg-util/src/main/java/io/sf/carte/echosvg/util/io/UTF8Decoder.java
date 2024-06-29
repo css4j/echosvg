@@ -142,4 +142,5 @@ public class UTF8Decoder extends AbstractCharDecoder {
 			return (c - 0x10000) / 0x400 + 0xd800;
 		}
 	}
+
 }

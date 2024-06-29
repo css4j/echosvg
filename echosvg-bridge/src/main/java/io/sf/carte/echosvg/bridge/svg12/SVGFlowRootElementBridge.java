@@ -906,6 +906,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 		public FlowContentBridge(BridgeContext ctx, SVGTextElementBridge parent, Element e) {
 			super(ctx, parent, e);
 		}
+
 	}
 
 	/**
@@ -922,5 +923,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 			laidoutText = null;
 			computeLaidoutText(ctx, e, getTextNode());
 		}
+
 	}
+
 }

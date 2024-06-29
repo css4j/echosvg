@@ -48,6 +48,7 @@ import io.sf.carte.echosvg.util.ApplicationSecurityEnforcer;
  */
 @SuppressWarnings("deprecation")
 public class Main implements SVGConverterController {
+
 	/**
 	 * URL for this browser's security policy file
 	 */
@@ -57,6 +58,7 @@ public class Main implements SVGConverterController {
 	 * Interface for handling one command line option
 	 */
 	public interface OptionHandler {
+
 		/**
 		 * The <code>OptionHandler</code> should configure the <code>SVGConverter</code>
 		 * according to the value of the option.
@@ -77,6 +79,7 @@ public class Main implements SVGConverterController {
 		 * Returns the description for this option
 		 */
 		String getOptionDescription();
+
 	}
 
 	/**
@@ -100,6 +103,7 @@ public class Main implements SVGConverterController {
 		}
 
 		public abstract void safeHandleOption(String[] optionValues, SVGConverter c);
+
 	}
 
 	/**
@@ -109,6 +113,7 @@ public class Main implements SVGConverterController {
 	 * <code>SVGConverter</code> as a parameter.
 	 */
 	public abstract static class NoValueOptionHandler extends AbstractOptionHandler {
+
 		@Override
 		public void safeHandleOption(String[] optionValues, SVGConverter c) {
 			handleOption(c);
@@ -120,6 +125,7 @@ public class Main implements SVGConverterController {
 		}
 
 		public abstract void handleOption(SVGConverter c);
+
 	}
 
 	/**
@@ -128,6 +134,7 @@ public class Main implements SVGConverterController {
 	 * <code>String</code> and an <code>SVGConverter</code> as parameters.
 	 */
 	public abstract static class SingleValueOptionHandler extends AbstractOptionHandler {
+
 		@Override
 		public void safeHandleOption(String[] optionValues, SVGConverter c) {
 			handleOption(optionValues[0], c);
@@ -139,6 +146,7 @@ public class Main implements SVGConverterController {
 		}
 
 		public abstract void handleOption(String optionValue, SVGConverter c);
+
 	}
 
 	/**
@@ -147,6 +155,7 @@ public class Main implements SVGConverterController {
 	 * a float and an <code>SVGConverter</code> as parameters.
 	 */
 	public abstract static class FloatOptionHandler extends SingleValueOptionHandler {
+
 		@Override
 		public void handleOption(String optionValue, SVGConverter c) {
 			try {
@@ -157,6 +166,7 @@ public class Main implements SVGConverterController {
 		}
 
 		public abstract void handleOption(float optionValue, SVGConverter c);
+
 	}
 
 	/**
@@ -165,6 +175,7 @@ public class Main implements SVGConverterController {
 	 * takes a float and an <code>SVGConverter</code> as parameters.
 	 */
 	public abstract static class TimeOptionHandler extends FloatOptionHandler {
+
 		@Override
 		public void handleOption(String optionValue, final SVGConverter c) {
 			try {
@@ -183,6 +194,7 @@ public class Main implements SVGConverterController {
 
 		@Override
 		public abstract void handleOption(float optionValue, SVGConverter c);
+
 	}
 
 	/**
@@ -191,6 +203,7 @@ public class Main implements SVGConverterController {
 	 * a <code>Rectangle</code> and an <code>SVGConverter</code> as parameters.
 	 */
 	public abstract static class RectangleOptionHandler extends SingleValueOptionHandler {
+
 		@Override
 		public void handleOption(String optionValue, SVGConverter c) {
 			Rectangle2D r = parseRect(optionValue);
@@ -234,6 +247,7 @@ public class Main implements SVGConverterController {
 			}
 			return rect;
 		}
+
 	}
 
 	/**
@@ -242,6 +256,7 @@ public class Main implements SVGConverterController {
 	 * a <code>Color</code> and an <code>SVGConverter</code> as parameters.
 	 */
 	public abstract static class ColorOptionHandler extends SingleValueOptionHandler {
+
 		@Override
 		public void handleOption(String optionValue, SVGConverter c) {
 			Color color = parseARGB(optionValue);
@@ -287,6 +302,7 @@ public class Main implements SVGConverterController {
 			}
 			return c;
 		}
+
 	}
 
 	/**
@@ -1008,4 +1024,5 @@ public class Main implements SVGConverterController {
 	public void onSourceTranscodingSuccess(SVGConverterSource source, File dest) {
 		System.out.println(Messages.formatMessage(MESSAGE_CONVERSION_SUCCESS, null));
 	}
+
 }

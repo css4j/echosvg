@@ -217,5 +217,7 @@ public abstract class AbstractSVGNumberList extends AbstractSVGList implements S
 		public void endNumberList() throws ParseException {
 			listHandler.endList();
 		}
+
 	}
+
 }

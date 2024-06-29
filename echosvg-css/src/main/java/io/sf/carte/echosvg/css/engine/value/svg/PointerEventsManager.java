@@ -111,4 +111,5 @@ public class PointerEventsManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

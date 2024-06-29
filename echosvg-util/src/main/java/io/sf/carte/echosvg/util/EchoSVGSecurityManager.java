@@ -27,8 +27,9 @@ package io.sf.carte.echosvg.util;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-@Deprecated(forRemoval=true)
+@Deprecated(forRemoval = true)
 public class EchoSVGSecurityManager extends SecurityManager {
+
 	/**
 	 * Returns the current execution stack as an array of classes.
 	 * <p>

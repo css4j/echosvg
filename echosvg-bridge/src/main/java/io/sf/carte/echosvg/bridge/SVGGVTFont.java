@@ -780,4 +780,5 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
 	public String toString() {
 		return fontFace.getFamilyName() + " " + fontFace.getFontWeight() + " " + fontFace.getFontStyle();
 	}
+
 }

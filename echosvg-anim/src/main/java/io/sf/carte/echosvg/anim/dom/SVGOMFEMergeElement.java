@@ -65,4 +65,5 @@ public class SVGOMFEMergeElement extends SVGOMFilterPrimitiveStandardAttributes 
 	protected Node newNode() {
 		return new SVGOMFEMergeElement();
 	}
+
 }

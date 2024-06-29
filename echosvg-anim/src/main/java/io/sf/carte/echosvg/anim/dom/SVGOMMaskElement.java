@@ -202,4 +202,5 @@ public class SVGOMMaskElement extends SVGGraphicsElement implements SVGMaskEleme
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

@@ -34,4 +34,5 @@ public interface AnimationTargetListener {
 	 * has changed.
 	 */
 	void baseValueChanged(AnimationTarget t, String ns, String ln, boolean isCSS);
+
 }

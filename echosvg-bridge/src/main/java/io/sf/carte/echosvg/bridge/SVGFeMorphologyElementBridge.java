@@ -167,4 +167,5 @@ public class SVGFeMorphologyElementBridge extends AbstractSVGFilterPrimitiveElem
 		throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
 				new Object[] { SVG_OPERATOR_ATTRIBUTE, s });
 	}
+
 }

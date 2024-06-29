@@ -52,4 +52,5 @@ public abstract class AbstractSVGBridge implements Bridge, SVGConstants {
 		// System.out.println("use static bridge for: "+getLocalName());
 		return this;
 	}
+
 }

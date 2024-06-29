@@ -44,4 +44,5 @@ public interface Bridge {
 	 * Returns a new instance of this bridge.
 	 */
 	Bridge getInstance();
+
 }

@@ -142,4 +142,5 @@ public class AnimatableColorValue extends AnimatableValue {
 	public String getCssText() {
 		return "rgb(" + Math.round(red * 255) + ',' + Math.round(green * 255) + ',' + Math.round(blue * 255) + ')';
 	}
+
 }

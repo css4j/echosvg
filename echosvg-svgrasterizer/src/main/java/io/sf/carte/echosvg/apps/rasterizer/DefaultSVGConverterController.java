@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  * @version $Id$
  */
 public class DefaultSVGConverterController implements SVGConverterController {
+
 	/**
 	 * Invoked when the rasterizer has computed the exact description of what it
 	 * should do. The controller should return true if the transcoding process
@@ -77,4 +78,5 @@ public class DefaultSVGConverterController implements SVGConverterController {
 	@Override
 	public void onSourceTranscodingSuccess(SVGConverterSource source, File dest) {
 	}
+
 }

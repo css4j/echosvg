@@ -111,4 +111,5 @@ public interface SVG12Constants extends SVGConstants {
 
 	/** Default value for filter mh */
 	String SVG_FILTER_MH_DEFAULT_VALUE = "0";
+
 }

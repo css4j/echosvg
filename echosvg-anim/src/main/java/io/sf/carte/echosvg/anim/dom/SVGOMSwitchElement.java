@@ -65,4 +65,5 @@ public class SVGOMSwitchElement extends SVGGraphicsElement implements SVGSwitchE
 	protected Node newNode() {
 		return new SVGOMSwitchElement();
 	}
+
 }

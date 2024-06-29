@@ -65,4 +65,5 @@ public class SVGOMPolygonElement extends SVGPointShapeElement implements SVGPoly
 	protected Node newNode() {
 		return new SVGOMPolygonElement();
 	}
+
 }

@@ -565,4 +565,5 @@ public class StaticRenderer implements ImageRenderer {
 			currentRaster = workingRaster;
 		}
 	}
+
 }

@@ -147,9 +147,10 @@ public class WMFAccuracyTest {
 
 		String[] dirNfile = breakWMFFile(wmfFile);
 
-		wmfURL = new URL(TestLocations.PROJECT_ROOT_URL + dirNfile[0]+ dirNfile[1] + dirNfile[2]);
+		wmfURL = new URL(TestLocations.PROJECT_ROOT_URL + dirNfile[0] + dirNfile[1] + dirNfile[2]);
 		refURL = new URL(GENERATOR_REFERENCE_BASE + '/' + dirNfile[1] + SVG_EXTENSION);
-		String saveURL = new URL(GENERATOR_REFERENCE_BASE + '/' + CANDIDATE_REF_DIR + "/" + dirNfile[1] + SVG_EXTENSION).getFile();
+		String saveURL = new URL(GENERATOR_REFERENCE_BASE + '/' + CANDIDATE_REF_DIR + "/" + dirNfile[1] + SVG_EXTENSION)
+				.getFile();
 		saveSVG = new File(saveURL);
 	}
 

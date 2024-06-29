@@ -35,6 +35,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.svggen.SVGDescriptor
  */
 public class SVGClipDescriptor implements SVGDescriptor, SVGSyntax {
+
 	private String clipPathValue;
 	private Element clipPathDef;
 
@@ -87,4 +88,5 @@ public class SVGClipDescriptor implements SVGDescriptor, SVGSyntax {
 
 		return defSet;
 	}
+
 }

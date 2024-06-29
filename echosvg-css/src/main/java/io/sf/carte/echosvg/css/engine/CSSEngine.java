@@ -953,6 +953,7 @@ public abstract class CSSEngine {
 		 * Called with a non-shorthand property name and it's value.
 		 */
 		void setMainProperty(String name, Value v, boolean important);
+
 	}
 
 	public void setMainProperties(CSSStylableElement elt, final MainPropertyReceiver dst, String pname, String value,
@@ -1396,6 +1397,7 @@ public abstract class CSSEngine {
 	 */
 	protected class StyleDeclarationDocumentHandler extends DocumentAdapter
 			implements ShorthandManager.PropertyHandler {
+
 		public StyleMap styleMap;
 
 		@Override
@@ -1427,12 +1429,14 @@ public abstract class CSSEngine {
 				putAuthorProperty(styleMap, i, v, important, StyleMap.INLINE_AUTHOR_ORIGIN);
 			}
 		}
+
 	}
 
 	/**
 	 * To build a StyleDeclaration object.
 	 */
 	protected class StyleDeclarationBuilder extends DocumentAdapter implements ShorthandManager.PropertyHandler {
+
 		public StyleDeclaration styleDeclaration;
 
 		@Override
@@ -1450,12 +1454,14 @@ public abstract class CSSEngine {
 				styleDeclaration.append(v, i, important);
 			}
 		}
+
 	}
 
 	/**
 	 * To parse a style sheet.
 	 */
 	protected class StyleSheetDocumentHandler extends DocumentAdapter implements ShorthandManager.PropertyHandler {
+
 		public StyleSheet styleSheet;
 		protected StyleRule styleRule;
 		protected StyleDeclaration styleDeclaration;
@@ -1735,6 +1741,7 @@ public abstract class CSSEngine {
 				styleDeclaration.append(v, i, important);
 			}
 		}
+
 	}
 
 	/**
@@ -1915,6 +1922,7 @@ public abstract class CSSEngine {
 		private void throwUnsupportedEx() {
 			throw new UnsupportedOperationException("you try to use an empty method in Adapter-class");
 		}
+
 	}
 
 	// CSS events /////////////////////////////////////////////////////////
@@ -2229,6 +2237,7 @@ public abstract class CSSEngine {
 	 * To parse a style declaration and update a StyleMap.
 	 */
 	protected class StyleDeclarationUpdateHandler extends DocumentAdapter implements ShorthandManager.PropertyHandler {
+
 		public StyleMap styleMap;
 		public boolean[] updatedProperties = new boolean[getNumberOfProperties()];
 
@@ -2261,6 +2270,7 @@ public abstract class CSSEngine {
 				styleMap.putOrigin(i, StyleMap.INLINE_AUTHOR_ORIGIN);
 			}
 		}
+
 	}
 
 	/**
@@ -2628,57 +2638,69 @@ public abstract class CSSEngine {
 				declaration.append(v, idx, important);
 			}
 		}
+
 	}
 
 	/**
 	 * To handle the insertion of a CSSStyleSheetNode in the associated document.
 	 */
 	protected class DOMNodeInsertedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			handleNodeInserted((Node) evt.getTarget());
 		}
+
 	}
 
 	/**
 	 * To handle the removal of a CSSStyleSheetNode from the associated document.
 	 */
 	protected class DOMNodeRemovedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			handleNodeRemoved((Node) evt.getTarget());
 		}
+
 	}
 
 	/**
 	 * To handle the removal of a CSSStyleSheetNode from the associated document.
 	 */
 	protected class DOMSubtreeModifiedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			handleSubtreeModified((Node) evt.getTarget());
 		}
+
 	}
 
 	/**
 	 * To handle the modification of a CSSStyleSheetNode.
 	 */
 	protected class DOMCharacterDataModifiedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			handleCharacterDataModified((Node) evt.getTarget());
 		}
+
 	}
 
 	/**
 	 * To handle the element attributes modification in the associated document.
 	 */
 	protected class DOMAttrModifiedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			MutationEvent mevt = (MutationEvent) evt;
 			handleAttrModified((Element) evt.getTarget(), (Attr) mevt.getRelatedNode(), mevt.getAttrChange(),
 					mevt.getPrevValue(), mevt.getNewValue());
 		}
+
 	}
+
 }

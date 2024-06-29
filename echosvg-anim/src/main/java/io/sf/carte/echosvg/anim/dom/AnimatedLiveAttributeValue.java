@@ -55,4 +55,5 @@ public interface AnimatedLiveAttributeValue extends LiveAttributeValue {
 	 * Removes a listener for changes to the animated value.
 	 */
 	void removeAnimatedAttributeListener(AnimatedAttributeListener aal);
+
 }

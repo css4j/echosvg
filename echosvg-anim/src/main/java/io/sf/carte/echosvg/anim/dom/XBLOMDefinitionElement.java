@@ -88,4 +88,5 @@ public class XBLOMDefinitionElement extends XBLOMElement {
 		String qname = getAttributeNS(null, "element");
 		return DOMUtilities.getLocalName(qname);
 	}
+
 }

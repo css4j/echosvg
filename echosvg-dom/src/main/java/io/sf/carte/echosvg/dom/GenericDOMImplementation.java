@@ -88,4 +88,5 @@ public class GenericDOMImplementation extends AbstractDOMImplementation {
 		}
 		return new GenericDocumentType(qualifiedName, publicId, systemId);
 	}
+
 }

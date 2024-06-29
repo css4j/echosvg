@@ -74,4 +74,5 @@ public abstract class CmapFormat {
 		return new StringBuilder().append("format: ").append(format).append(", length: ").append(length)
 				.append(", version: ").append(version).toString();
 	}
+
 }

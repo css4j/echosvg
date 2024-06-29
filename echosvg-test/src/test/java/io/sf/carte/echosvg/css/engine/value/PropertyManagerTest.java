@@ -354,134 +354,165 @@ public class PropertyManagerTest {
 	 * Manager for 'fill'.
 	 */
 	public static class FillManager extends SVGPaintManager {
+
 		public FillManager() {
 			super(CSSConstants.CSS_FILL_PROPERTY);
 		}
+
 	}
 
 	/**
 	 * Manager for 'fill-opacity'.
 	 */
 	public static class FillOpacityManager extends OpacityManager {
+
 		public FillOpacityManager() {
 			super(CSSConstants.CSS_FILL_OPACITY_PROPERTY, true);
 		}
+
 	}
 
 	/**
 	 * Manager for 'flood-color'.
 	 */
 	public static class FloodColorManager extends SVGColorManager {
+
 		public FloodColorManager() {
 			super(CSSConstants.CSS_FLOOD_COLOR_PROPERTY);
 		}
+
 	}
 
 	/**
 	 * Manager for 'flood-opacity'.
 	 */
 	public static class FloodOpacityManager extends OpacityManager {
+
 		public FloodOpacityManager() {
 			super(CSSConstants.CSS_FLOOD_OPACITY_PROPERTY, false);
 		}
+
 	}
 
 	/**
 	 * Manager for 'letter-spacing'.
 	 */
 	public static class LetterSpacingManager extends SpacingManager {
+
 		public LetterSpacingManager() {
 			super(CSSConstants.CSS_LETTER_SPACING_PROPERTY);
 		}
+
 	}
 
 	/**
 	 * Manager for 'lighting-color'.
 	 */
 	public static class LightingColorManager extends SVGColorManager {
+
 		public LightingColorManager() {
 			super(CSSConstants.CSS_LIGHTING_COLOR_PROPERTY, ValueConstants.WHITE_RGB_VALUE);
 		}
+
 	}
 
 	/**
 	 * Manager for 'marker-end'.
 	 */
 	public static class MarkerEndManager extends MarkerManager {
+
 		public MarkerEndManager() {
 			super(CSSConstants.CSS_MARKER_END_PROPERTY);
 		}
+
 	}
 
 	/**
 	 * Manager for 'marker-mid'.
 	 */
 	public static class MarkerMidManager extends MarkerManager {
+
 		public MarkerMidManager() {
 			super(CSSConstants.CSS_MARKER_MID_PROPERTY);
 		}
+
 	}
 
 	/**
 	 * Manager for 'marker-start'.
 	 */
 	public static class MarkerStartManager extends MarkerManager {
+
 		public MarkerStartManager() {
 			super(CSSConstants.CSS_MARKER_START_PROPERTY);
 		}
+
 	}
 
 	/**
 	 * Manager for 'opacity'.
 	 */
 	public static class DefaultOpacityManager extends OpacityManager {
+
 		public DefaultOpacityManager() {
 			super(CSSConstants.CSS_OPACITY_PROPERTY, false);
 		}
+
 	}
 
 	/**
 	 * Manager for 'stop-color'.
 	 */
 	public static class StopColorManager extends SVGColorManager {
+
 		public StopColorManager() {
 			super(CSSConstants.CSS_STOP_COLOR_PROPERTY);
 		}
+
 	}
 
 	/**
 	 * Manager for 'stop-opacity'.
 	 */
 	public static class StopOpacityManager extends OpacityManager {
+
 		public StopOpacityManager() {
 			super(CSSConstants.CSS_STOP_OPACITY_PROPERTY, false);
 		}
+
 	}
 
 	/**
 	 * Manager for 'stroke'.
 	 */
 	public static class StrokeManager extends SVGPaintManager {
+
 		public StrokeManager() {
 			super(CSSConstants.CSS_STROKE_PROPERTY, ValueConstants.NONE_VALUE);
 		}
+
 	}
 
 	/**
 	 * Manager for 'stroke-opacity'.
 	 */
 	public static class StrokeOpacityManager extends OpacityManager {
+
 		public StrokeOpacityManager() {
 			super(CSSConstants.CSS_STROKE_OPACITY_PROPERTY, true);
 		}
+
 	}
 
 	/**
 	 * Manager for 'word-spacing'.
 	 */
 	public static class WordSpacingManager extends SpacingManager {
+
 		public WordSpacingManager() {
 			super(CSSConstants.CSS_WORD_SPACING_PROPERTY);
 		}
+
 	}
+
 }

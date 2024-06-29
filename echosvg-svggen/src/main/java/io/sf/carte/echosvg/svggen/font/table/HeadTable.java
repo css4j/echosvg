@@ -148,4 +148,5 @@ public class HeadTable implements Table {
 				.append(fontDirectionHint).append("\n\tindexToLocFormat: ").append(indexToLocFormat)
 				.append("\n\tglyphDataFormat: ").append(glyphDataFormat).toString();
 	}
+
 }

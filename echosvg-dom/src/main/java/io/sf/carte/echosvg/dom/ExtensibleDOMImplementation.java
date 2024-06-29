@@ -203,10 +203,12 @@ public abstract class ExtensibleDOMImplementation extends AbstractDOMImplementat
 	 * This interface represents a factory for elements.
 	 */
 	public interface ElementFactory {
+
 		/**
 		 * Creates an instance of the associated element type.
 		 */
 		Element create(String prefix, Document doc);
+
 	}
 
 	// Service /////////////////////////////////////////////////////////
@@ -240,4 +242,5 @@ public abstract class ExtensibleDOMImplementation extends AbstractDOMImplementat
 
 		return extensions;
 	}
+
 }

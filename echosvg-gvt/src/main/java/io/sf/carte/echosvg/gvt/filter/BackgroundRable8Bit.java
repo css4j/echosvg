@@ -399,4 +399,5 @@ public class BackgroundRable8Bit extends AbstractRable {
 		// org.ImageDisplay.showImage("BG: ", ri);
 		return ri;
 	}
+
 }

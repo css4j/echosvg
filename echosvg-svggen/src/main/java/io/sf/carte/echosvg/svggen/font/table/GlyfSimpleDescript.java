@@ -151,4 +151,5 @@ public class GlyfSimpleDescript extends GlyfDescript {
 			System.out.println("error: array index out of bounds");
 		}
 	}
+
 }

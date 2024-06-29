@@ -69,4 +69,5 @@ public class SVGAttribute {
 		else
 			return !tagInMap;
 	}
+
 }

@@ -91,4 +91,5 @@ public class TextPath {
 	public Point2D pointAtLength(float length) {
 		return pathLength.pointAtLength(length);
 	}
+
 }

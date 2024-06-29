@@ -226,5 +226,7 @@ public class EventListenerList {
 		public String getNamespaceURI() {
 			return namespaceURI;
 		}
+
 	}
+
 }

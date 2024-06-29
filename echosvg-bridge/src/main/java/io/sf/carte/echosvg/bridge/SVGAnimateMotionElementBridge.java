@@ -93,6 +93,7 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 				rotateAutoReverse = true;
 			} else {
 				class Handler implements AngleHandler {
+
 					float theAngle;
 					short theUnit = SVGAngle.SVG_ANGLETYPE_UNSPECIFIED;
 
@@ -123,6 +124,7 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 					@Override
 					public void endAngle() throws ParseException {
 					}
+
 				}
 				AngleParser ap = new AngleParser();
 				Handler h = new Handler();
@@ -297,6 +299,7 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 	/**
 	 * Parses the animation element's target attributes and adds it to the
 	 * document's AnimationEngine.
+	 * 
 	 * @param ctx the bridge context to use in error reporting.
 	 * @return true if the initialization was successful.
 	 */
@@ -343,4 +346,5 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 				animation);
 		return true;
 	}
+
 }

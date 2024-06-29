@@ -70,4 +70,5 @@ public class LocaTable implements Table {
 	public int getType() {
 		return loca;
 	}
+
 }

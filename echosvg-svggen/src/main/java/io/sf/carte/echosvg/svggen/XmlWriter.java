@@ -66,6 +66,7 @@ class XmlWriter implements SVGConstants {
 	}
 
 	static class IndentWriter extends Writer {
+
 		protected Writer proxied;
 		protected int indentLevel;
 		protected int column;
@@ -148,6 +149,7 @@ class XmlWriter implements SVGConstants {
 			column = -1;
 			proxied.close();
 		}
+
 	}
 
 	private static void writeXml(Attr attr, IndentWriter out, boolean escaped) throws IOException {
@@ -563,4 +565,5 @@ class XmlWriter implements SVGConstants {
 			throw new SVGGraphics2DIOException(io);
 		}
 	}
+
 }

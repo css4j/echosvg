@@ -160,4 +160,5 @@ public class SVGOMScriptElement extends SVGOMURIReferenceElement implements SVGS
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

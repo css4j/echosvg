@@ -574,6 +574,7 @@ public class UpdateManager {
 	}
 
 	protected static class SuspensionInfo {
+
 		/**
 		 * The index of this redraw suspension
 		 */
@@ -596,9 +597,11 @@ public class UpdateManager {
 		public long getResumeMilli() {
 			return resumeMilli;
 		}
+
 	}
 
 	protected static class RepaintTimerTask extends TimerTask {
+
 		UpdateManager um;
 
 		RepaintTimerTask(UpdateManager um) {
@@ -877,5 +880,7 @@ public class UpdateManager {
 				}
 			}
 		}
+
 	}
+
 }

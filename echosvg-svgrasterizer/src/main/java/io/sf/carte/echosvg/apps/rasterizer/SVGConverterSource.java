@@ -29,6 +29,7 @@ import java.io.InputStream;
  * @version $Id$
  */
 public interface SVGConverterSource {
+
 	/**
 	 * Returns the name of the source. That would be the name for a File or URL
 	 */
@@ -53,4 +54,5 @@ public interface SVGConverterSource {
 	 * Returns a URI string corresponding to this source
 	 */
 	String getURI();
+
 }

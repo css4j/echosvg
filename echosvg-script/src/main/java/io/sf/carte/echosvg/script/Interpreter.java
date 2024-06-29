@@ -93,4 +93,5 @@ public interface Interpreter extends io.sf.carte.echosvg.i18n.Localizable {
 	 * calling this method.
 	 */
 	void dispose();
+
 }

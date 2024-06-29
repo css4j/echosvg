@@ -55,4 +55,5 @@ public class SVGLoadEventDispatcherAdapter implements SVGLoadEventDispatcherList
 	@Override
 	public void svgLoadEventDispatchFailed(SVGLoadEventDispatcherEvent e) {
 	}
+
 }

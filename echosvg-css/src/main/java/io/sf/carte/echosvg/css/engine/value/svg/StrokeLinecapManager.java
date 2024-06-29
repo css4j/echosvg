@@ -102,4 +102,5 @@ public class StrokeLinecapManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

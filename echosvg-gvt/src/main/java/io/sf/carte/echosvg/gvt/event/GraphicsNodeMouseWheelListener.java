@@ -35,4 +35,5 @@ public interface GraphicsNodeMouseWheelListener extends EventListener {
 	 * @param evt the graphics node mouse event
 	 */
 	void mouseWheelMoved(GraphicsNodeMouseWheelEvent evt);
+
 }

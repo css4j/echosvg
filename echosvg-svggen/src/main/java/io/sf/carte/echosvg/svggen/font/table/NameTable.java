@@ -66,4 +66,5 @@ public class NameTable implements Table {
 	public int getType() {
 		return name;
 	}
+
 }

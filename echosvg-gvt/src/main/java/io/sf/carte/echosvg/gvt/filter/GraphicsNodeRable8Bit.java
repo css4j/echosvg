@@ -300,4 +300,5 @@ public class GraphicsNodeRable8Bit extends AbstractRable implements GraphicsNode
 		cachedRed = null;
 		return null;
 	}
+
 }

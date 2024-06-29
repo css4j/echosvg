@@ -54,6 +54,7 @@ import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
  * @version $Id$
  */
 public class FlowTextPainter extends StrokingTextPainter {
+
 	/**
 	 * A unique instance of this class.
 	 */

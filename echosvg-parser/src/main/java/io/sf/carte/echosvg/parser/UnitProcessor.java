@@ -401,6 +401,7 @@ public abstract class UnitProcessor {
 		@Override
 		public void endLength() throws ParseException {
 		}
+
 	}
 
 	/**
@@ -424,7 +425,7 @@ public abstract class UnitProcessor {
 		 * 
 		 * @see #getPixelUnitToMillimeter()
 		 */
-		@Deprecated(forRemoval=true)
+		@Deprecated(forRemoval = true)
 		default float getPixelToMM() {
 			return getPixelUnitToMillimeter();
 		}
@@ -448,5 +449,7 @@ public abstract class UnitProcessor {
 		 * Returns the viewport height used to compute units.
 		 */
 		float getViewportHeight();
+
 	}
+
 }

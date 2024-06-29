@@ -65,4 +65,5 @@ public class SVGOMAltGlyphItemElement extends SVGOMElement implements SVGAltGlyp
 	protected Node newNode() {
 		return new SVGOMAltGlyphItemElement();
 	}
+
 }

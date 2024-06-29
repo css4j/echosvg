@@ -30,6 +30,7 @@ import java.io.Reader;
  * @version $Id$
  */
 public class AWTTransformProducer implements TransformListHandler {
+
 	/**
 	 * The value of the current affine transform.
 	 */
@@ -164,4 +165,5 @@ public class AWTTransformProducer implements TransformListHandler {
 	@Override
 	public void endTransformList() throws ParseException {
 	}
+
 }

@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.swing.gvt.Overlay;
  * @version $Id$
  */
 public class SVGUpdateOverlay implements Overlay {
+
 	List<Rectangle> rects = new LinkedList<>();
 	int size, updateCount;
 	int[] counts;
@@ -91,4 +92,5 @@ public class SVGUpdateOverlay implements Overlay {
 			}
 		}
 	}
+
 }

@@ -55,4 +55,5 @@ public class ElementSetIdAttributeNSTest extends DOM3Test {
 			return e == null;
 		}
 	}
+
 }

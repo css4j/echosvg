@@ -77,6 +77,7 @@ import java.util.StringTokenizer;
  * @version $Id$
  */
 public class PreferenceManager {
+
 	protected Properties internal = null;
 	protected Map<String, Object> defaults = null;
 	protected String prefFileName = null;
@@ -797,4 +798,5 @@ public class PreferenceManager {
 			internal.remove(key);
 		}
 	}
+
 }

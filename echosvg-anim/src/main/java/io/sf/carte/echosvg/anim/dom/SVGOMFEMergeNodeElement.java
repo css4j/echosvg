@@ -115,4 +115,5 @@ public class SVGOMFEMergeNodeElement extends SVGOMElement implements SVGFEMergeN
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

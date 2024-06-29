@@ -110,4 +110,5 @@ public class BackgroundColorTest extends AbstractImageTranscoderTest {
 			throw new RuntimeException("BackgroundColorTest error");
 		}
 	}
+
 }

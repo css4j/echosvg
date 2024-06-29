@@ -111,4 +111,5 @@ public class AlignmentBaselineManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

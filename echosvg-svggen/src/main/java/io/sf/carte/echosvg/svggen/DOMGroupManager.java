@@ -328,4 +328,5 @@ public class DOMGroupManager implements SVGSyntax, ErrorConstants {
 		}
 		return mapDelta;
 	}
+
 }

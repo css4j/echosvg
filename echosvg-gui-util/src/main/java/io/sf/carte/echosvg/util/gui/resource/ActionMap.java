@@ -28,6 +28,7 @@ import javax.swing.Action;
  * @version $Id$
  */
 public interface ActionMap {
+
 	/**
 	 * Returns the action associated with the given string or null on error
 	 * 
@@ -35,4 +36,5 @@ public interface ActionMap {
 	 * @throws MissingListenerException if the action is not found
 	 */
 	Action getAction(String key) throws MissingListenerException;
+
 }

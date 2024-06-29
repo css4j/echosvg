@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
  * @version $Id$
  */
 public interface SVGConverterController {
+
 	/**
 	 * Invoked when the rasterizer has computed the exact description of what it
 	 * should do. The controller should return true if the transcoding process

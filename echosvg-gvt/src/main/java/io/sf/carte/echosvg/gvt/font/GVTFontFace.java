@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @version $Id$
  */
 public class GVTFontFace implements SVGConstants {
+
 	protected String familyName;
 	protected float unitsPerEm;
 	protected String fontWeight;
@@ -242,4 +243,5 @@ public class GVTFontFace implements SVGConstants {
 	public float getOverlineThickness() {
 		return overlineThickness;
 	}
+
 }

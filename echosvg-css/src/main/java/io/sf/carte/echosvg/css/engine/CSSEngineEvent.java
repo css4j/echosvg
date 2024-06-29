@@ -65,4 +65,5 @@ public class CSSEngineEvent extends EventObject {
 	public int[] getProperties() {
 		return properties;
 	}
+
 }

@@ -194,4 +194,5 @@ public abstract class GraphicsNodeInputEvent extends GraphicsNodeEvent {
 	public int getLockState() {
 		return lockState;
 	}
+
 }

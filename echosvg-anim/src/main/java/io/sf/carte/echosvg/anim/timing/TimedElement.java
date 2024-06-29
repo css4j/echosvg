@@ -1547,4 +1547,5 @@ public abstract class TimedElement implements SMILConstants {
 			return Float.toString(time);
 		}
 	}
+
 }

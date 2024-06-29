@@ -42,6 +42,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SVGShape extends SVGGraphicObjectConverter {
+
 	/*
 	 * Subconverts, for each type of Shape class
 	 */
@@ -84,4 +85,5 @@ public class SVGShape extends SVGGraphicObjectConverter {
 		else
 			return svgPath.toSVG(shape);
 	}
+
 }

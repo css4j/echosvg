@@ -255,4 +255,5 @@ public class AttributedCharacterSpanIterator implements AttributedCharacterItera
 		}
 		return c;
 	}
+
 }

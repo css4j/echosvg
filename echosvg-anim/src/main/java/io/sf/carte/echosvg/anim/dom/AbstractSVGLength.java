@@ -281,5 +281,7 @@ public abstract class AbstractSVGLength implements SVGLength {
 		public float getViewportHeight() {
 			return getAssociatedElement().getSVGContext().getViewportHeight();
 		}
+
 	}
+
 }

@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.svggen;
  * @version $Id$
  */
 public class DefaultErrorHandler implements ErrorHandler {
+
 	/**
 	 * This method handles the <code>SVGGraphics2DIOException</code>. The default
 	 * implementation re-throws the exception.
@@ -44,4 +45,5 @@ public class DefaultErrorHandler implements ErrorHandler {
 	public void handleError(SVGGraphics2DRuntimeException ex) throws SVGGraphics2DRuntimeException {
 		System.err.println(ex.getMessage());
 	}
+
 }

@@ -53,4 +53,5 @@ public interface DocumentBridge extends Bridge {
 	 * @param node the graphics node to build
 	 */
 	void buildGraphicsNode(BridgeContext ctx, Document doc, RootGraphicsNode node);
+
 }

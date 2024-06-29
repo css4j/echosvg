@@ -282,4 +282,5 @@ public class FontSizeManager extends LengthManager {
 	protected int getOrientation() {
 		return VERTICAL_ORIENTATION; // Not used
 	}
+
 }

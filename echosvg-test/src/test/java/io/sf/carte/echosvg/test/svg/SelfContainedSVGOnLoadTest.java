@@ -75,6 +75,7 @@ import io.sf.carte.echosvg.test.TestLocations;
  */
 @SuppressWarnings({ "removal" })
 public class SelfContainedSVGOnLoadTest {
+
 	/**
 	 * Error when the input file cannot be loaded into a Document object {0} =
 	 * IOException message

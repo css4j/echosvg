@@ -146,4 +146,5 @@ public class SVGOMFEPointLightElement extends SVGOMElement implements SVGFEPoint
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

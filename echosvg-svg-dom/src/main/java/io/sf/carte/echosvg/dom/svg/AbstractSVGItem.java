@@ -89,4 +89,5 @@ public abstract class AbstractSVGItem implements SVGItem {
 		}
 		return itemStringValue;
 	}
+
 }

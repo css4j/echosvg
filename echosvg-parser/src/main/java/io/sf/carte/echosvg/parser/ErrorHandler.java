@@ -27,8 +27,10 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public interface ErrorHandler {
+
 	/**
 	 * Called when a parse error occurs.
 	 */
 	void error(ParseException e) throws ParseException;
+
 }

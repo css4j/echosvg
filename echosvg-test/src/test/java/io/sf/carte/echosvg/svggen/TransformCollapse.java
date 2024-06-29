@@ -29,6 +29,7 @@ import java.awt.Graphics2D;
  * @version $Id$
  */
 public class TransformCollapse implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.translate(10, 10);
@@ -54,4 +55,5 @@ public class TransformCollapse implements Painter {
 		// Should get identity
 		g.drawString("identity", 0, 80);
 	}
+
 }

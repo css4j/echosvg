@@ -190,5 +190,7 @@ public class SVGFeMergeElementBridge extends AbstractSVGFilterPrimitiveElementBr
 				GraphicsNode filteredNode, Filter inputFilter, Map<String, Filter> filterMap) {
 			return getIn(filterElement, filteredElement, filteredNode, inputFilter, filterMap, ctx);
 		}
+
 	}
+
 }

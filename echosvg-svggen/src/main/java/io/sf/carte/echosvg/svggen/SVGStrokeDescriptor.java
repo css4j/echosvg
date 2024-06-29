@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SVGStrokeDescriptor implements SVGDescriptor, SVGSyntax {
+
 	private String strokeWidth;
 	private String capStyle;
 	private String joinStyle;
@@ -101,4 +102,5 @@ public class SVGStrokeDescriptor implements SVGDescriptor, SVGSyntax {
 
 		return defSet;
 	}
+
 }

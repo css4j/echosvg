@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.i18n.Localizable;
  * @version $Id$
  */
 public interface Parser extends Localizable {
+
 	/**
 	 * Parses the given reader
 	 */
@@ -55,4 +56,5 @@ public interface Parser extends Localizable {
 	 * @param handler The error handler.
 	 */
 	void setErrorHandler(ErrorHandler handler);
+
 }

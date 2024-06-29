@@ -138,4 +138,5 @@ public abstract class TimeContainer extends TimedElement {
 	 * Returns the default begin time for the given child timed element.
 	 */
 	public abstract float getDefaultBegin(TimedElement child);
+
 }

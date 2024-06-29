@@ -62,6 +62,9 @@ public interface ShorthandManager {
 	 * To handle a property value created by a ShorthandManager.
 	 */
 	interface PropertyHandler {
+
 		void property(String name, LexicalUnit value, boolean important);
+
 	}
+
 }

@@ -29,6 +29,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class SVGAttributeMap {
+
 	/**
 	 * Map of attribute name to SVGAttribute objects
 	 */
@@ -41,4 +42,5 @@ public class SVGAttributeMap {
 	public static SVGAttribute get(String attrName) {
 		return attrMap.get(attrName);
 	}
+
 }

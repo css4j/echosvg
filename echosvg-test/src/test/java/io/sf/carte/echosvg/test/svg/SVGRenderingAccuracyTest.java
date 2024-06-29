@@ -188,6 +188,7 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	 * manipulateSVGDocument just before encoding happens.
 	 */
 	protected class InternalPNGTranscoder extends PNGTranscoder {
+
 		/**
 		 * Transcodes the specified Document as an image in the specified output.
 		 *

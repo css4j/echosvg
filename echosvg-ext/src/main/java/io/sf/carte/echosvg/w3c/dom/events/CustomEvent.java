@@ -31,6 +31,7 @@ import org.w3c.dom.events.Event;
  * @since DOM Level 3
  */
 public interface CustomEvent extends Event {
+
 	/**
 	 * Specifies some detail information about the <code>Event</code>.
 	 */

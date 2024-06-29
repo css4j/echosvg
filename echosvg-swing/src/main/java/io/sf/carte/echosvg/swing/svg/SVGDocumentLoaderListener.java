@@ -46,4 +46,5 @@ public interface SVGDocumentLoaderListener {
 	 * Called when the loading of a document has failed.
 	 */
 	void documentLoadingFailed(SVGDocumentLoaderEvent e);
+
 }

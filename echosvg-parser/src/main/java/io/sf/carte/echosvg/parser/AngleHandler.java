@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public interface AngleHandler {
+
 	/**
 	 * Invoked when the angle attribute parsing starts.
 	 * 
@@ -68,4 +69,5 @@ public interface AngleHandler {
 	 * @exception ParseException if an error occured while processing the angle
 	 */
 	void endAngle() throws ParseException;
+
 }

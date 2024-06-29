@@ -33,6 +33,7 @@ import java.awt.image.BufferedImageOp;
  * @version $Id$
  */
 public interface ExtensionHandler {
+
 	/**
 	 * @param paint            Custom Paint to be converted to SVG
 	 * @param generatorContext allows the handler to build DOM objects as needed.
@@ -60,4 +61,5 @@ public interface ExtensionHandler {
 	 */
 	SVGFilterDescriptor handleFilter(BufferedImageOp filter, Rectangle filterRect,
 			SVGGeneratorContext generatorContext);
+
 }

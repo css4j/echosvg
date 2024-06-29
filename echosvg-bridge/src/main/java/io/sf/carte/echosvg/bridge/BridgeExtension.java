@@ -89,4 +89,5 @@ public interface BridgeExtension {
 	 * @param e The element to check.
 	 */
 	boolean isDynamicElement(Element e);
+
 }

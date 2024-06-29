@@ -43,4 +43,5 @@ public class DocumentAdoptNodeTest extends DOM3Test {
 		assertTrue(e.getOwnerDocument() == doc1
 				&& e.getAttributeNodeNS(EX_NAMESPACE_URI, "test").getOwnerDocument() == doc1);
 	}
+
 }

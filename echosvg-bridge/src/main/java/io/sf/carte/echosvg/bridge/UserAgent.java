@@ -93,7 +93,7 @@ public interface UserAgent {
 	 * 
 	 * @see #getPixelUnitToMillimeter()
 	 */
-	@Deprecated(forRemoval=true)
+	@Deprecated(forRemoval = true)
 	default float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 	}
@@ -285,4 +285,5 @@ public interface UserAgent {
 
 	/** Returns the Font Family Resolver */
 	FontFamilyResolver getFontFamilyResolver();
+
 }

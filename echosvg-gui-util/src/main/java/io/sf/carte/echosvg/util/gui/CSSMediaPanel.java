@@ -285,6 +285,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 	 * The action associated with the 'Add' button
 	 */
 	protected class AddButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -316,12 +317,14 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 				listModel.addElement(medium);
 			}
 		}
+
 	}
 
 	/**
 	 * The action associated with the 'Remove' button
 	 */
 	protected class RemoveButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -332,12 +335,14 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 				listModel.removeElementAt(index);
 			}
 		}
+
 	}
 
 	/**
 	 * The action associated with the 'Clear' button
 	 */
 	protected class ClearButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -345,6 +350,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 			mediaList.clearSelection();
 			listModel.removeAllElements();
 		}
+
 	}
 
 	/**
@@ -356,6 +362,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 		public void valueChanged(ListSelectionEvent e) {
 			updateButtons();
 		}
+
 	}
 
 	/**
@@ -377,6 +384,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 		public void intervalRemoved(ListDataEvent e) {
 			updateButtons();
 		}
+
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -489,6 +497,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 		 * The action associated with the 'OK' button
 		 */
 		protected class OKButtonAction extends AbstractAction {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -496,12 +505,14 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 				returnCode = OK_OPTION;
 				dispose();
 			}
+
 		}
 
 		/**
 		 * The action associated with the 'Cancel' button
 		 */
 		protected class CancelButtonAction extends AbstractAction {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -509,7 +520,9 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 				returnCode = CANCEL_OPTION;
 				dispose();
 			}
+
 		}
+
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -620,6 +633,7 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 		 * The action associated with the 'OK' button
 		 */
 		protected class OKButtonAction extends AbstractAction {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -627,12 +641,14 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 				returnCode = OK_OPTION;
 				dispose();
 			}
+
 		}
 
 		/**
 		 * The action associated with the 'Cancel' button
 		 */
 		protected class CancelButtonAction extends AbstractAction {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -640,7 +656,9 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 				returnCode = CANCEL_OPTION;
 				dispose();
 			}
+
 		}
+
 	}
 
 	/**
@@ -652,4 +670,5 @@ public class CSSMediaPanel extends JPanel implements ActionMap {
 		System.out.println(code);
 		System.exit(0);
 	}
+
 }

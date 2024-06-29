@@ -57,4 +57,5 @@ public class ParsedURLJarProtocolHandler extends ParsedURLDefaultProtocolHandler
 			return super.parseURL(baseURL, urlStr);
 		}
 	}
+
 }

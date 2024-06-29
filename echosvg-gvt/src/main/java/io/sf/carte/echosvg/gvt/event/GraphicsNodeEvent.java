@@ -78,4 +78,5 @@ public class GraphicsNodeEvent extends EventObject {
 	public boolean isConsumed() {
 		return consumed;
 	}
+
 }

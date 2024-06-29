@@ -74,4 +74,5 @@ public class WallclockTimingSpecifier extends TimingSpecifier {
 	public boolean isEventCondition() {
 		return false;
 	}
+
 }

@@ -60,4 +60,5 @@ public interface XBLConstants {
 	String XBL_ELEMENT_ATTRIBUTE = "element";
 	String XBL_INCLUDES_ATTRIBUTE = "includes";
 	String XBL_REF_ATTRIBUTE = "ref";
+
 }

@@ -77,6 +77,7 @@ import java.util.ResourceBundle;
  * @version $Id$
  */
 public class LocalizableSupport implements Localizable {
+
 	/**
 	 * The locale group to which this object belongs.
 	 */
@@ -353,4 +354,5 @@ public class LocalizableSupport implements Localizable {
 
 		return s.charAt(0);
 	}
+
 }

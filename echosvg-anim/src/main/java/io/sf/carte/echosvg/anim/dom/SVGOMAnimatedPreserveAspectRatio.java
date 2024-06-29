@@ -216,6 +216,7 @@ public class SVGOMAnimatedPreserveAspectRatio extends AbstractSVGAnimatedValue
 			String s = element.getAttributeNS(null, SVGConstants.SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE);
 			setValueAsString(s);
 		}
+
 	}
 
 	/**
@@ -287,5 +288,7 @@ public class SVGOMAnimatedPreserveAspectRatio extends AbstractSVGAnimatedValue
 			this.align = align;
 			this.meetOrSlice = meetOrSlice;
 		}
+
 	}
+
 }

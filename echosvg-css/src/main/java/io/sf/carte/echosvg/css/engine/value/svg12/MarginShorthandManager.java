@@ -101,4 +101,5 @@ public class MarginShorthandManager extends AbstractValueFactory implements Shor
 		ph.property(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, lus[2], imp);
 		ph.property(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY, lus[3], imp);
 	}
+
 }

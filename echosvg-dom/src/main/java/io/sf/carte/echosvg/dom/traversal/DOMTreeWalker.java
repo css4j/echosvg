@@ -393,4 +393,5 @@ public class DOMTreeWalker implements TreeWalker {
 			return NodeFilter.FILTER_SKIP;
 		}
 	}
+
 }

@@ -402,4 +402,5 @@ public class DOMTreeManager implements SVGSyntax, ErrorConstants {
 	StyleHandler getStyleHandler() {
 		return generatorContext.getStyleHandler();
 	}
+
 }

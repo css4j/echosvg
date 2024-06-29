@@ -172,4 +172,5 @@ public class SVGRescaleOp extends AbstractSVGFilterConverter {
 
 		return filterDesc;
 	}
+
 }

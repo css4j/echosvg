@@ -101,4 +101,5 @@ public class FillRuleManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

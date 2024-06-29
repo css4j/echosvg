@@ -148,4 +148,5 @@ public class SVGOMFEOffsetElement extends SVGOMFilterPrimitiveStandardAttributes
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

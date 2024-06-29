@@ -119,4 +119,5 @@ public class DOMUIEvent extends AbstractEvent implements UIEvent {
 		}
 		return a.toArray(new String[a.size()]);
 	}
+
 }

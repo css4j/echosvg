@@ -144,4 +144,5 @@ public class XLinkSupport implements XMLConstants {
 	public static void setXLinkHref(Element elt, String str) {
 		elt.setAttributeNS(XLINK_NAMESPACE_URI, XLINK_HREF_ATTRIBUTE, str);
 	}
+
 }

@@ -47,4 +47,5 @@ public class FlowTextLayoutFactory implements TextLayoutFactory {
 			FontRenderContext frc) {
 		return new FlowGlyphLayout(aci, charMap, offset, frc);
 	}
+
 }

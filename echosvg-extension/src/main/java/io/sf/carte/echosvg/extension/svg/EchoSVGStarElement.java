@@ -73,4 +73,5 @@ public class EchoSVGStarElement extends GraphicsExtensionElement implements Echo
 	protected Node newNode() {
 		return new EchoSVGStarElement();
 	}
+
 }

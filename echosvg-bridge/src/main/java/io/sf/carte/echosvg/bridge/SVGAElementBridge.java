@@ -128,6 +128,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
 	}
 
 	public static class CursorHolder {
+
 		Cursor cursor = null;
 
 		public CursorHolder(Cursor c) {
@@ -141,12 +142,14 @@ public class SVGAElementBridge extends SVGGElementBridge {
 		public Cursor getCursor() {
 			return cursor;
 		}
+
 	}
 
 	/**
 	 * To handle a click on an anchor.
 	 */
 	public static class AnchorListener implements EventListener {
+
 		protected UserAgent userAgent;
 		protected CursorHolder holder;
 
@@ -172,6 +175,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
 			SVGAElement elt = (SVGAElement) evt.getCurrentTarget();
 			ae.addDefaultAction(new AnchorDefaultActionable(elt, userAgent, holder));
 		}
+
 	}
 
 	public static class AnchorDefaultActionable implements Runnable {
@@ -211,6 +215,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
 			}
 			userAgent.openLink(elt);
 		}
+
 	}
 
 	/**
@@ -245,6 +250,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
 
 			ae.addDefaultAction(new MouseOverDefaultActionable(target, elt, userAgent, holder));
 		}
+
 	}
 
 	public static class MouseOverDefaultActionable implements Runnable {
@@ -294,6 +300,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
 				userAgent.displayMessage(href);
 			}
 		}
+
 	}
 
 	/**
@@ -326,6 +333,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
 			SVGAElement elt = (SVGAElement) evt.getCurrentTarget();
 			ae.addDefaultAction(new MouseOutDefaultActionable(elt, userAgent, holder));
 		}
+
 	}
 
 	public static class MouseOutDefaultActionable implements Runnable {
@@ -350,5 +358,7 @@ public class SVGAElementBridge extends SVGGElementBridge {
 				userAgent.displayMessage("");
 			}
 		}
+
 	}
+
 }

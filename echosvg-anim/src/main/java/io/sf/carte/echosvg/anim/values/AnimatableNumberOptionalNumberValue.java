@@ -170,4 +170,5 @@ public class AnimatableNumberOptionalNumberValue extends AnimatableValue {
 		}
 		return sb.toString();
 	}
+
 }

@@ -119,4 +119,5 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
 			return null;
 		return super.createShapePainter(ctx, e, shapeNode);
 	}
+
 }

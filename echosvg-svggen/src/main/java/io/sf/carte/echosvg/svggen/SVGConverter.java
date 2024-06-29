@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @see io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
  */
 public interface SVGConverter extends SVGSyntax {
+
 	/**
 	 * Converts part or all of the input GraphicContext into a set of
 	 * attribute/value pairs and related definitions
@@ -51,4 +52,5 @@ public interface SVGConverter extends SVGSyntax {
 	 *         null. If no definition is needed, an empty set should be returned.
 	 */
 	List<Element> getDefinitionSet();
+
 }

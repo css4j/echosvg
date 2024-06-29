@@ -175,4 +175,5 @@ public class EchoSVGHistogramNormalizationElementBridge extends AbstractSVGFilte
 			return ret;
 		}
 	}
+
 }

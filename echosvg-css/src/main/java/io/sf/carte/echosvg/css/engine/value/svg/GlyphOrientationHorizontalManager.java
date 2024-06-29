@@ -48,4 +48,5 @@ public class GlyphOrientationHorizontalManager extends GlyphOrientationManager {
 	public Value getDefaultValue() {
 		return SVGValueConstants.ZERO_DEGREE;
 	}
+
 }

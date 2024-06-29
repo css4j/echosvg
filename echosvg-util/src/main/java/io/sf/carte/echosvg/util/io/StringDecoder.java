@@ -72,4 +72,5 @@ public class StringDecoder implements CharDecoder {
 	public void dispose() throws IOException {
 		string = null;
 	}
+
 }

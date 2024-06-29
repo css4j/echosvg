@@ -103,4 +103,5 @@ public class UTF16Decoder extends AbstractCharDecoder {
 		}
 		return c;
 	}
+
 }

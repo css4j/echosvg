@@ -66,4 +66,5 @@ public class SVGOMFlowDivElement extends SVGOMTextContentElement implements SVGT
 	protected Node newNode() {
 		return new SVGOMFlowDivElement();
 	}
+
 }

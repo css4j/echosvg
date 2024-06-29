@@ -31,6 +31,7 @@ import java.awt.geom.AffineTransform;
  * @version $Id$
  */
 public class Bug4945 implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		Font origFont = g.getFont();
@@ -58,4 +59,5 @@ public class Bug4945 implements Painter {
 		g.setFont(font);
 		g.drawString("Rotated Font", 220, 120);
 	}
+
 }

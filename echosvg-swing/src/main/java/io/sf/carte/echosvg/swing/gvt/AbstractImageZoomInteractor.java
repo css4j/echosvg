@@ -131,4 +131,5 @@ public class AbstractImageZoomInteractor extends InteractorAdapter {
 		at.translate(-xStart, -yStart);
 		c.setPaintingTransform(at);
 	}
+
 }

@@ -57,4 +57,5 @@ public class ASCIIDecoder extends AbstractCharDecoder {
 		}
 		return result;
 	}
+
 }

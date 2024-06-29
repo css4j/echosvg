@@ -73,4 +73,5 @@ public class EchoSVGRegularPolygonElement extends GraphicsExtensionElement imple
 	protected Node newNode() {
 		return new EchoSVGRegularPolygonElement();
 	}
+
 }

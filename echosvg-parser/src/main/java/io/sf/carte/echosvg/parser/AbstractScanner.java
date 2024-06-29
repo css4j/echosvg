@@ -234,4 +234,5 @@ public abstract class AbstractScanner {
 
 		return buffer[position++] = (char) current;
 	}
+
 }

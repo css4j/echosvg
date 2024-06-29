@@ -219,4 +219,5 @@ public class SVGOMFEImageElement extends SVGOMFilterPrimitiveStandardAttributes 
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

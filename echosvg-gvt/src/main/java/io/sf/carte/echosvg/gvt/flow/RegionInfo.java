@@ -84,4 +84,5 @@ public class RegionInfo {
 	public void setVerticalAlignment(float verticalAlignment) {
 		this.verticalAlignment = verticalAlignment;
 	}
+
 }

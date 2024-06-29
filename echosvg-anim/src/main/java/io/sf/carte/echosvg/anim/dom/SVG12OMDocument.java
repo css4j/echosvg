@@ -121,4 +121,5 @@ public class SVG12OMDocument extends SVGOMDocument {
 
 		cssNavigableDocumentListeners.remove(l);
 	}
+
 }

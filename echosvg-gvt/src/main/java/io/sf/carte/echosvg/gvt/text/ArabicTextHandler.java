@@ -625,4 +625,5 @@ public final class ArabicTextHandler {
 					{ 0x0640, -1, -1, -1, 0xFE7D } },
 			{ { 0x0020, 0xFE7E, -1, -1, -1 }, // 0x0652
 					{ 0x0640, -1, -1, -1, 0xFE7F } } };
+
 }

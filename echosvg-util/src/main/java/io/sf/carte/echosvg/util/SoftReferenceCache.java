@@ -187,6 +187,7 @@ public class SoftReferenceCache {
 	}
 
 	class SoftRefKey extends CleanerThread.SoftReferenceCleared<Object> {
+
 		Object key;
 
 		public SoftRefKey(Object o, Object key) {
@@ -213,5 +214,7 @@ public class SoftReferenceCache {
 
 			}
 		}
+
 	}
+
 }

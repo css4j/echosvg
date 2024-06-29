@@ -62,4 +62,5 @@ public interface Selectable {
 	 * Return a shape in user coords which encloses the current selection.
 	 */
 	Shape getHighlightShape();
+
 }

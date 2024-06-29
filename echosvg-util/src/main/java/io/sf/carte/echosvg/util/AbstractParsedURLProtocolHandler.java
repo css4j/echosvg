@@ -45,4 +45,5 @@ public abstract class AbstractParsedURLProtocolHandler implements ParsedURLProto
 	public String getProtocolHandled() {
 		return protocol;
 	}
+
 }

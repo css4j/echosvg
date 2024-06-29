@@ -279,4 +279,5 @@ public class SVGLookupOp extends AbstractSVGFilterConverter {
 
 		return lookupTables;
 	}
+
 }

@@ -300,4 +300,5 @@ public class SVGAnimateElementBridge extends SVGAnimationElementBridge {
 	protected boolean canAnimateType(int type) {
 		return true;
 	}
+
 }

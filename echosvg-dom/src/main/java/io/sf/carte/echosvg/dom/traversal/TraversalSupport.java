@@ -95,4 +95,5 @@ public class TraversalSupport {
 	public void detachNodeIterator(NodeIterator it) {
 		iterators.remove(it);
 	}
+
 }

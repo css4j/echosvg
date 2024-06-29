@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
  * @version $Id$
  */
 public class Messages {
+
 	/**
 	 * This class does not need to be instantiated.
 	 */
@@ -70,4 +71,5 @@ public class Messages {
 	public static String formatMessage(String key, Object[] args) throws MissingResourceException {
 		return localizableSupport.formatMessage(key, args);
 	}
+
 }

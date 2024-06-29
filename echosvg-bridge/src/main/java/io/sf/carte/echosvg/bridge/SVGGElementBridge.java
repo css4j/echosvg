@@ -153,4 +153,5 @@ public class SVGGElementBridge extends AbstractGraphicsNodeBridge {
 		idx++;
 		gn.add(idx, childNode);
 	}
+
 }

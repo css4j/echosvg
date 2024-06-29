@@ -28,5 +28,7 @@ import java.io.RandomAccessFile;
  * @version $Id$
  */
 public interface LookupSubtableFactory {
+
 	LookupSubtable read(int type, RandomAccessFile raf, int offset) throws IOException;
+
 }

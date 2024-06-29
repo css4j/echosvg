@@ -71,4 +71,5 @@ public class DoublyIndexedSet<K, L> {
 	public void clear() {
 		table.clear();
 	}
+
 }

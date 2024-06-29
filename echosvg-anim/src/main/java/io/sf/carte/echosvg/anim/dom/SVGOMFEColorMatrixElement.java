@@ -156,4 +156,5 @@ public class SVGOMFEColorMatrixElement extends SVGOMFilterPrimitiveStandardAttri
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

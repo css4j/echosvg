@@ -58,4 +58,5 @@ public class HasChildNodesTest {
 			e.removeChild(e.getFirstChild());
 		}
 	}
+
 }

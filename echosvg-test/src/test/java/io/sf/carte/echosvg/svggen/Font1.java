@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.test.TestFonts;
  * @version $Id$
  */
 public class Font1 implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -135,4 +136,5 @@ public class Font1 implements Painter {
 			g.drawString(font.getName(), 10, 0);
 		}
 	}
+
 }

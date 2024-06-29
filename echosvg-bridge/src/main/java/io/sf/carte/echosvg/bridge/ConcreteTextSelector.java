@@ -328,4 +328,5 @@ public class ConcreteTextSelector implements Selector {
 		}
 		System.out.println("Mouse " + message + " in " + label);
 	}
+
 }

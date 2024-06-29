@@ -40,6 +40,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.svggen.SVGConvolveOp
  */
 public class SVGBufferedImageOp extends AbstractSVGFilterConverter {
+
 	/**
 	 * All LookupOp convertion is handed to svgLookupOp
 	 */
@@ -126,4 +127,5 @@ public class SVGBufferedImageOp extends AbstractSVGFilterConverter {
 
 		return filterDesc;
 	}
+
 }

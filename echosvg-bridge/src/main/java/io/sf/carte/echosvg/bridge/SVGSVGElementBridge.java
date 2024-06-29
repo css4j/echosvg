@@ -165,6 +165,7 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 				final double dh = h;
 				// <!> FIXME: hack to compute the original document's size
 				ctx.setDocumentSize(new Dimension2D() {
+
 					double w = dw;
 					double h = dh;
 
@@ -183,6 +184,7 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 						this.w = w;
 						this.h = h;
 					}
+
 				});
 			}
 			// Set the viewing transform, this is often updated when the
@@ -403,6 +405,7 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 	 * A viewport defined an &lt;svg&gt; element.
 	 */
 	public static class SVGSVGElementViewport implements Viewport {
+
 		private float width;
 		private float height;
 
@@ -432,6 +435,7 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 		public float getHeight() {
 			return height;
 		}
+
 	}
 
 	@Override
@@ -922,4 +926,5 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 	public void setCurrentTime(float t) {
 		ctx.getAnimationEngine().setCurrentTime(t);
 	}
+
 }

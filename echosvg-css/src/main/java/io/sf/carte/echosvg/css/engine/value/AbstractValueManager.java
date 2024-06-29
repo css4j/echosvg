@@ -66,4 +66,5 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 		}
 		return value;
 	}
+
 }

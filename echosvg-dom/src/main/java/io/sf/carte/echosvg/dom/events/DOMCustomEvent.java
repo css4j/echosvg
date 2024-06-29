@@ -51,4 +51,5 @@ public class DOMCustomEvent extends DOMEvent implements CustomEvent {
 		initEventNS(namespaceURIArg, typeArg, canBubbleArg, cancelableArg);
 		detail = detailArg;
 	}
+
 }

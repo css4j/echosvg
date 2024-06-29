@@ -916,5 +916,7 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 		public float getViewportHeight() {
 			return getSVGContext().getViewportHeight();
 		}
+
 	}
+
 }

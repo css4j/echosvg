@@ -118,4 +118,5 @@ public class SVGFontElementBridge extends AbstractSVGBridge {
 		return new SVGGVTFont(size, fontFace, glyphCodes, glyphNames, glyphLangs, glyphOrientations, glyphForms, ctx,
 				glyphElementArray, missingGlyphElement, hkernElementArray, vkernElementArray, textElement);
 	}
+
 }

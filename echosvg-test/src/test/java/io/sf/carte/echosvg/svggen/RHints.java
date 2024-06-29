@@ -34,6 +34,7 @@ import java.awt.image.BufferedImage;
  * @version $Id$
  */
 public class RHints implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		java.awt.RenderingHints.Key antialiasKey = java.awt.RenderingHints.KEY_ANTIALIASING;
@@ -104,4 +105,5 @@ public class RHints implements Painter {
 		g.drawImage(image, 60, 50, 40, 40, null);
 
 	}
+
 }

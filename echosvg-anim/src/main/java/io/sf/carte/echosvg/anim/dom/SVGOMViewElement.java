@@ -201,4 +201,5 @@ public class SVGOMViewElement extends SVGOMElement implements SVGViewElement {
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

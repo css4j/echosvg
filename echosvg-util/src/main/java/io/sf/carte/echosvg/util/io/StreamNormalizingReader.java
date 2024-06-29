@@ -185,46 +185,57 @@ public class StreamNormalizingReader extends NormalizingReader {
 	 * Represents a CharDecoder factory.
 	 */
 	protected interface CharDecoderFactory {
+
 		CharDecoder createCharDecoder(InputStream is) throws IOException;
+
 	}
 
 	/**
 	 * To create an ASCIIDecoder.
 	 */
 	protected static class ASCIIDecoderFactory implements CharDecoderFactory {
+
 		@Override
 		public CharDecoder createCharDecoder(InputStream is) throws IOException {
 			return new ASCIIDecoder(is);
 		}
+
 	}
 
 	/**
 	 * To create an ISO_8859_1Decoder.
 	 */
 	protected static class ISO_8859_1DecoderFactory implements CharDecoderFactory {
+
 		@Override
 		public CharDecoder createCharDecoder(InputStream is) throws IOException {
 			return new ISO_8859_1Decoder(is);
 		}
+
 	}
 
 	/**
 	 * To create a UTF8Decoder.
 	 */
 	protected static class UTF8DecoderFactory implements CharDecoderFactory {
+
 		@Override
 		public CharDecoder createCharDecoder(InputStream is) throws IOException {
 			return new UTF8Decoder(is);
 		}
+
 	}
 
 	/**
 	 * To create a UTF16Decoder.
 	 */
 	protected static class UTF16DecoderFactory implements CharDecoderFactory {
+
 		@Override
 		public CharDecoder createCharDecoder(InputStream is) throws IOException {
 			return new UTF16Decoder(is);
 		}
+
 	}
+
 }

@@ -80,4 +80,5 @@ public class RhinoInterpreterFactory implements InterpreterFactory {
 		}
 		return new RhinoInterpreter(documentURL, imports);
 	}
+
 }

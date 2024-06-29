@@ -28,6 +28,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public interface PreserveAspectRatioHandler {
+
 	/**
 	 * Invoked when the PreserveAspectRatio parsing starts.
 	 * 
@@ -139,4 +140,5 @@ public interface PreserveAspectRatioHandler {
 	 *                           PreserveAspectRatio
 	 */
 	void endPreserveAspectRatio() throws ParseException;
+
 }

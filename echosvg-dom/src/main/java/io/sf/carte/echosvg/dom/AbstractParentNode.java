@@ -667,6 +667,7 @@ public abstract class AbstractParentNode extends AbstractNode {
 				initialize(n);
 			}
 		}
+
 	}
 
 	/**
@@ -785,12 +786,14 @@ public abstract class AbstractParentNode extends AbstractNode {
 			}
 			return s1.equals(s2);
 		}
+
 	}
 
 	/**
 	 * To manage the children of this node.
 	 */
 	protected class ChildNodes implements NodeList, Serializable {
+
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -1032,5 +1035,7 @@ public abstract class AbstractParentNode extends AbstractNode {
 			throw createDOMException(DOMException.NOT_FOUND_ERR, "child.missing",
 					new Object[] { (int) n.getNodeType(), n.getNodeName() });
 		}
+
 	}
+
 }

@@ -510,5 +510,7 @@ public class XPathSubsetContentSelector extends AbstractContentSelector {
 			}
 			return NUMBER;
 		}
+
 	}
+
 }

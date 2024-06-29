@@ -124,4 +124,5 @@ public interface NodeEventTarget extends EventTarget {
 	 * @since DOM Level 3
 	 */
 	void removeEventListenerNS(String namespaceURI, String type, EventListener listener, boolean useCapture);
+
 }

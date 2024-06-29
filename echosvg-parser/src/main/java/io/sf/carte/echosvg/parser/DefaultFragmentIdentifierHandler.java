@@ -197,4 +197,5 @@ public class DefaultFragmentIdentifierHandler extends DefaultPreserveAspectRatio
 	@Override
 	public void endFragmentIdentifier() throws ParseException {
 	}
+
 }

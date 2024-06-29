@@ -163,6 +163,7 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
 			}
 			return null;
 		}
+
 	}
 
 	/**
@@ -934,4 +935,5 @@ public class DOMUtilities extends XMLUtilities implements XMLConstants {
 		Attr a = e.getAttributeNodeNS(namespaceURI, localName);
 		return a != null && a.getSpecified();
 	}
+
 }

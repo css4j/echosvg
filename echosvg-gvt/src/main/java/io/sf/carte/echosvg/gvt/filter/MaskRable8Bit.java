@@ -170,4 +170,5 @@ public class MaskRable8Bit extends AbstractRable implements Mask {
 
 		return ret;
 	}
+
 }

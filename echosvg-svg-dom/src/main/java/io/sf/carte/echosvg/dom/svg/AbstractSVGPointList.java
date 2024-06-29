@@ -179,5 +179,7 @@ public abstract class AbstractSVGPointList extends AbstractSVGList implements SV
 		public void endPoints() throws ParseException {
 			listHandler.endList();
 		}
+
 	}
+
 }

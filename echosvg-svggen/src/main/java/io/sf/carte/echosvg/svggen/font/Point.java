@@ -37,4 +37,5 @@ public class Point {
 		this.onCurve = onCurve;
 		this.endOfContour = endOfContour;
 	}
+
 }

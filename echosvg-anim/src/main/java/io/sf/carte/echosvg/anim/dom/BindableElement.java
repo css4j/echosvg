@@ -136,4 +136,5 @@ public class BindableElement extends SVGGraphicsElement {
 	public Node getCSSLastChild() {
 		return getCSSFirstChild();
 	}
+
 }

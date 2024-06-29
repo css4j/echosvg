@@ -166,4 +166,5 @@ public interface Value {
 	 *                         contain a Counter value.
 	 */
 	String getSeparator() throws DOMException;
+
 }

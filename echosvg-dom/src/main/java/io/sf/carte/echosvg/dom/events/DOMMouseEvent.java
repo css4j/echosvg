@@ -251,4 +251,5 @@ public class DOMMouseEvent extends DOMUIEvent implements MouseEvent {
 			modifierKeys.add(modifier);
 		}
 	}
+
 }

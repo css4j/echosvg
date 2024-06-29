@@ -34,6 +34,7 @@ import java.awt.image.RescaleOp;
  * @version $Id$
  */
 public class DrawImage implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -92,4 +93,5 @@ public class DrawImage implements Painter {
 		g.drawImage(image, 5, 10, 50, 40, Color.gray, null);
 
 	}
+
 }

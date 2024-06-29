@@ -64,4 +64,5 @@ public class IndefiniteTimingSpecifier extends TimingSpecifier {
 	public boolean isEventCondition() {
 		return false;
 	}
+
 }

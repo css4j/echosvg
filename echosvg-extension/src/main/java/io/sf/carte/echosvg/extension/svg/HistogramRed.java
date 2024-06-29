@@ -114,4 +114,5 @@ public class HistogramRed extends AbstractRed {
 		computed[idx] = true;
 		return r;
 	}
+
 }

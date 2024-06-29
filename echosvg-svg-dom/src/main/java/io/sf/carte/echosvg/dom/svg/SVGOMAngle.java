@@ -207,4 +207,5 @@ public class SVGOMAngle implements SVGAngle {
 	public void setUnitType(short unitType) {
 		this.unitType = unitType;
 	}
+
 }

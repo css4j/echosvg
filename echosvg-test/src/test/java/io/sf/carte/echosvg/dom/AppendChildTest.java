@@ -66,4 +66,5 @@ public class AppendChildTest {
 		} catch (DOMException ex) {
 		}
 	}
+
 }

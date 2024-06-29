@@ -46,6 +46,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.svggen.ImageHandlerPNGEncoder
  */
 public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
+
 	private static final AffineTransform IDENTITY = new AffineTransform();
 
 	/**
@@ -231,4 +232,5 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
 	 * derived class.
 	 */
 	public abstract BufferedImage buildBufferedImage(Dimension size);
+
 }

@@ -73,4 +73,5 @@ public interface ExtendedNode extends Node, NodeEventTarget {
 	 * objects.
 	 */
 	void setSpecified(boolean v);
+
 }

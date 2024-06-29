@@ -93,4 +93,5 @@ public class SVGPointItem extends AbstractSVGItem implements SVGPoint {
 	public SVGPoint matrixTransform(SVGMatrix matrix) {
 		return SVGOMPoint.matrixTransform(this, matrix);
 	}
+
 }

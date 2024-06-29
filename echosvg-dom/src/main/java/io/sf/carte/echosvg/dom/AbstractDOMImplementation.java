@@ -174,4 +174,5 @@ public abstract class AbstractDOMImplementation implements DOMImplementation, Lo
 	public String formatMessage(String key, Object[] args) throws MissingResourceException {
 		return localizableSupport.formatMessage(key, args);
 	}
+
 }

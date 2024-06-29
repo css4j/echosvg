@@ -233,4 +233,5 @@ public abstract class GraphicsExtensionElement extends StylableExtensionElement 
 	public boolean hasExtension(String extension) {
 		return SVGTestsSupport.hasExtension(this, extension);
 	}
+
 }

@@ -138,4 +138,5 @@ public class JSVGRenderingAccuracyTest extends RenderingTest implements JSVGCanv
 		bi.copyData(ret.getRaster());
 		return ret;
 	}
+
 }

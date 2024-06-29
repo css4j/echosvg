@@ -65,4 +65,5 @@ public class SVGOMTitleElement extends SVGDescriptiveElement implements SVGTitle
 	protected Node newNode() {
 		return new SVGOMTitleElement();
 	}
+
 }

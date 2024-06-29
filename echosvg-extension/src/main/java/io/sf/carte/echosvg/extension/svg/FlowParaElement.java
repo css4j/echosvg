@@ -73,4 +73,5 @@ public class FlowParaElement extends SVGOMTextPositioningElement implements Echo
 	protected Node newNode() {
 		return new FlowParaElement();
 	}
+
 }

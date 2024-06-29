@@ -37,6 +37,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.svggen.SVGGraphics2D
  */
 public interface ImageHandler extends SVGSyntax {
+
 	/**
 	 * The handler should set the xlink:href tag and the width and height
 	 * attributes.
@@ -54,4 +55,5 @@ public interface ImageHandler extends SVGSyntax {
 	 * attributes.
 	 */
 	void handleImage(RenderableImage image, Element imageElement, SVGGeneratorContext generatorContext);
+
 }

@@ -674,6 +674,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 				animationTickRunnable.resume();
 			}
 		}
+
 	}
 
 	/**
@@ -747,6 +748,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -947,6 +949,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		protected SVGAnimationEngine getAnimationEngine() {
 			return engRef.get();
 		}
+
 	}
 
 	/**
@@ -1018,7 +1021,9 @@ public class SVGAnimationEngine extends AnimationEngine {
 			public void run() {
 				tick(t, false);
 			}
+
 		}
+
 	}
 
 	// AnimatableValue factories
@@ -1037,6 +1042,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 * Creates a new AnimatableValue from a CSS {@link Value}.
 		 */
 		AnimatableValue createValue(AnimationTarget target, String pn, Value v);
+
 	}
 
 	/**
@@ -1092,6 +1098,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			}
 			return v;
 		}
+
 	}
 
 	/**
@@ -1114,6 +1121,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return new AnimatableBooleanValue(target, "true".equals(v.getCssText()));
 		}
+
 	}
 
 	/**
@@ -1136,6 +1144,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return new AnimatableIntegerValue(target, Math.round(v.getFloatValue()));
 		}
+
 	}
 
 	/**
@@ -1158,6 +1167,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return new AnimatableNumberValue(target, v.getFloatValue());
 		}
+
 	}
 
 	/**
@@ -1196,6 +1206,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			// XXX Do something better than returning null.
 			return null;
 		}
+
 	}
 
 	/**
@@ -1327,6 +1338,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			public void slice() throws ParseException {
 				meetOrSlice = SVGPreserveAspectRatio.SVG_MEETORSLICE_SLICE;
 			}
+
 		};
 
 		/**
@@ -1358,6 +1370,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return null;
 		}
+
 	}
 
 	/**
@@ -1384,6 +1397,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 * Handler for the length parser.
 		 */
 		protected LengthHandler handler = new DefaultLengthHandler() {
+
 			@Override
 			public void startLength() throws ParseException {
 				type = SVGLength.SVG_LENGTHTYPE_NUMBER;
@@ -1442,6 +1456,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			@Override
 			public void endLength() throws ParseException {
 			}
+
 		};
 
 		/**
@@ -1473,6 +1488,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return new AnimatableIntegerValue(target, Math.round(v.getFloatValue()));
 		}
+
 	}
 
 	/**
@@ -1521,6 +1537,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return null;
 		}
+
 	}
 
 	/**
@@ -1567,6 +1584,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return null;
 		}
+
 	}
 
 	/**
@@ -1618,6 +1636,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return null;
 		}
+
 	}
 
 	/**
@@ -1664,6 +1683,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return null;
 		}
+
 	}
 
 	/**
@@ -1710,6 +1730,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return null;
 		}
+
 	}
 
 	/**
@@ -1726,6 +1747,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
 			return new AnimatableStringValue(target, v.getCssText());
 		}
+
 	}
 
 	/**
@@ -1742,6 +1764,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			FloatValue fv = (FloatValue) v;
 			return new AnimatableLengthOrIdentValue(target, fv.getPrimitiveType(), fv.getFloatValue(), pcInterp);
 		}
+
 	}
 
 	/**
@@ -1767,6 +1790,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			FloatValue fv = (FloatValue) v;
 			return new AnimatableNumberOrIdentValue(target, fv.getFloatValue(), numericIdents);
 		}
+
 	}
 
 	/**
@@ -1795,6 +1819,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			}
 			return new AnimatableAngleValue(target, fv.getFloatValue(), unit);
 		}
+
 	}
 
 	/**
@@ -1826,6 +1851,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			}
 			return new AnimatableAngleOrIdentValue(target, fv.getFloatValue(), unit);
 		}
+
 	}
 
 	/**
@@ -1843,6 +1869,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			// XXX Indicate that the parsed value wasn't a Color?
 			return null;
 		}
+
 	}
 
 	/**
@@ -1895,6 +1922,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			// XXX Indicate that the specified Value wasn't a Color?
 			return null;
 		}
+
 	}
 
 	/**
@@ -1906,5 +1934,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		protected AnimatableValue createAnimatableValue(AnimationTarget target, String pn, Value v) {
 			return new AnimatableStringValue(target, v.getCssText());
 		}
+
 	}
+
 }

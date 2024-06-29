@@ -64,4 +64,5 @@ public class XBLOMHandlerGroupElement extends XBLOMElement {
 	protected Node newNode() {
 		return new XBLOMHandlerGroupElement();
 	}
+
 }

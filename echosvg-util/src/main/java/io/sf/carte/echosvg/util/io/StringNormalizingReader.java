@@ -113,4 +113,5 @@ public class StringNormalizingReader extends NormalizingReader {
 	public void close() throws IOException {
 		string = null;
 	}
+
 }

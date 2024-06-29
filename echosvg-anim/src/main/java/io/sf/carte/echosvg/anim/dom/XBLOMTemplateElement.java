@@ -64,4 +64,5 @@ public class XBLOMTemplateElement extends XBLOMElement {
 	protected Node newNode() {
 		return new XBLOMTemplateElement();
 	}
+
 }

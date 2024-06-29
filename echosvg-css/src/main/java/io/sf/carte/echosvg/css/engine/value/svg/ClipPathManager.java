@@ -127,4 +127,5 @@ public class ClipPathManager extends AbstractValueManager {
 		}
 		throw createInvalidStringTypeDOMException(type);
 	}
+
 }

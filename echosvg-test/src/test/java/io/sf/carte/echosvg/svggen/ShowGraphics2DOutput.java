@@ -97,11 +97,14 @@ public class ShowGraphics2DOutput {
 	}
 
 	static class TestUserAgent extends UserAgentAdapter {
+
 		boolean failed;
 
 		@Override
 		public void displayError(Exception e) {
 			failed = true;
 		}
+
 	}
+
 }

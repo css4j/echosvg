@@ -70,4 +70,5 @@ public class AnimatablePercentageValue extends AnimatableNumberValue {
 	public String getCssText() {
 		return super.getCssText() + "%";
 	}
+
 }

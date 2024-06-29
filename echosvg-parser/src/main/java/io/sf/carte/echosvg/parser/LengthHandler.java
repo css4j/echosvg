@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public interface LengthHandler {
+
 	/**
 	 * Invoked when the length attribute starts.
 	 * 
@@ -110,4 +111,5 @@ public interface LengthHandler {
 	 * @exception ParseException if an error occures while processing the length
 	 */
 	void endLength() throws ParseException;
+
 }

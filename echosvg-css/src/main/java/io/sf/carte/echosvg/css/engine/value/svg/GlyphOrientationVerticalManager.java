@@ -81,4 +81,5 @@ public class GlyphOrientationVerticalManager extends GlyphOrientationManager {
 		}
 		throw createInvalidIdentifierDOMException(value);
 	}
+
 }

@@ -65,4 +65,5 @@ public class SetAnimation extends AbstractAnimation {
 			markDirty();
 		}
 	}
+
 }

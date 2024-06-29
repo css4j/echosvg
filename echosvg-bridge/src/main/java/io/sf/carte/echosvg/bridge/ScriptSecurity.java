@@ -37,4 +37,5 @@ public interface ScriptSecurity {
 	 * @throws SecurityException if the script should not be loaded.
 	 */
 	void checkLoadScript();
+
 }

@@ -250,4 +250,5 @@ public class SVGDocumentBridge implements DocumentBridge, BridgeUpdateHandler, S
 	public float getFontSize() {
 		return 0;
 	}
+
 }

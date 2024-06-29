@@ -58,6 +58,7 @@ class EventTargetWrapper extends NativeJavaObject {
 	 * The Java function object calling the Rhino function.
 	 */
 	static class FunctionEventListener implements EventListener {
+
 		protected Function function;
 		protected RhinoInterpreter interpreter;
 
@@ -76,9 +77,11 @@ class EventTargetWrapper extends NativeJavaObject {
 			}
 			interpreter.callHandler(function, event);
 		}
+
 	}
 
 	static class HandleEventListener implements EventListener {
+
 		public static final String HANDLE_EVENT = "handleEvent";
 
 		public Scriptable scriptable;
@@ -98,17 +101,21 @@ class EventTargetWrapper extends NativeJavaObject {
 				array[0] = evt;
 			}
 			ContextAction<Object> handleEventAction = new ContextAction<Object>() {
+
 				@Override
 				public Object run(Context cx) {
 					ScriptableObject.callMethod(scriptable, HANDLE_EVENT, array);
 					return null;
 				}
+
 			};
 			interpreter.call(handleEventAction);
 		}
+
 	}
 
 	abstract static class FunctionProxy implements Function {
+
 		protected Function delegate;
 
 		public FunctionProxy(Function delegate) {
@@ -199,6 +206,7 @@ class EventTargetWrapper extends NativeJavaObject {
 		public boolean hasInstance(Scriptable instance) {
 			return this.delegate.hasInstance(instance);
 		}
+
 	}
 
 	/**
@@ -208,6 +216,7 @@ class EventTargetWrapper extends NativeJavaObject {
 	 * "addEventListener" it redefines the call method to deal with these cases.
 	 */
 	static class FunctionAddProxy extends FunctionProxy {
+
 		protected Map<Object, SoftReference<EventListener>> listenerMap;
 		protected RhinoInterpreter interpreter;
 
@@ -256,9 +265,11 @@ class EventTargetWrapper extends NativeJavaObject {
 			}
 			return delegate.call(ctx, scope, thisObj, args);
 		}
+
 	}
 
 	static class FunctionRemoveProxy extends FunctionProxy {
+
 		public Map<Object, SoftReference<EventListener>> listenerMap;
 
 		FunctionRemoveProxy(Function delegate, Map<Object, SoftReference<EventListener>> listenerMap) {
@@ -300,9 +311,11 @@ class EventTargetWrapper extends NativeJavaObject {
 			}
 			return delegate.call(ctx, scope, thisObj, args);
 		}
+
 	}
 
 	static class FunctionAddNSProxy extends FunctionProxy {
+
 		protected Map<Object, SoftReference<EventListener>> listenerMap;
 		protected RhinoInterpreter interpreter;
 
@@ -340,9 +353,11 @@ class EventTargetWrapper extends NativeJavaObject {
 			}
 			return delegate.call(ctx, scope, thisObj, args);
 		}
+
 	}
 
 	static class FunctionRemoveNSProxy extends FunctionProxy {
+
 		protected Map<Object, SoftReference<EventListener>> listenerMap;
 
 		FunctionRemoveNSProxy(Function delegate, Map<Object, SoftReference<EventListener>> listenerMap) {
@@ -386,6 +401,7 @@ class EventTargetWrapper extends NativeJavaObject {
 			}
 			return delegate.call(ctx, scope, thisObj, args);
 		}
+
 	}
 
 	// the keys are the underlying Java object, in order
@@ -440,4 +456,5 @@ class EventTargetWrapper extends NativeJavaObject {
 		}
 		return map;
 	}
+
 }

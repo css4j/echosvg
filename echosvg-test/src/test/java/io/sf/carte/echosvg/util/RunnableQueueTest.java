@@ -78,6 +78,7 @@ public class RunnableQueueTest {
 	}
 
 	private class SwitchFlicker implements Runnable {
+
 		@Override
 		public void run() {
 			boolean suspendp, waitp;
@@ -105,6 +106,7 @@ public class RunnableQueueTest {
 				}
 			}
 		}
+
 	}
 
 	private static final int INVOKE_LATER = 1;
@@ -174,9 +176,11 @@ public class RunnableQueueTest {
 				RunnableQueueTest.this.notify();
 			}
 		}
+
 	}
 
 	private class RQRable implements Runnable {
+
 		int idx;
 		long dur;
 
@@ -197,6 +201,7 @@ public class RunnableQueueTest {
 			} catch (InterruptedException ie) {
 			}
 		}
+
 	}
 
 }

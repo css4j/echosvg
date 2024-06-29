@@ -199,4 +199,5 @@ public class SimpleAnimation extends InterpolatingAnimation {
 			markDirty();
 		}
 	}
+
 }

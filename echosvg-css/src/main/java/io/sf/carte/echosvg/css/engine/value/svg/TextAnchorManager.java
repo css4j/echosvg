@@ -102,4 +102,5 @@ public class TextAnchorManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

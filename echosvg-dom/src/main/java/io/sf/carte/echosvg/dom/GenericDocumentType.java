@@ -146,4 +146,5 @@ public class GenericDocumentType extends AbstractChildNode implements DocumentTy
 	protected Node newNode() {
 		return new GenericDocumentType(qualifiedName, publicId, systemId);
 	}
+
 }

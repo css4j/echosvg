@@ -155,4 +155,5 @@ public class SVGOMFEBlendElement extends SVGOMFilterPrimitiveStandardAttributes 
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

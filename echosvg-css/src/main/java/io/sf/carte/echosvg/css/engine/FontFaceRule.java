@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class FontFaceRule implements Rule {
+
 	/**
 	 * The type constant.
 	 */
@@ -77,4 +78,5 @@ public class FontFaceRule implements Rule {
 		sb.append(" }\n");
 		return sb.toString();
 	}
+
 }

@@ -261,6 +261,7 @@ public class URIChooser extends JDialog implements ActionMap {
 	 * To listen to the document changes
 	 */
 	protected class DocumentAdapter implements DocumentListener {
+
 		@Override
 		public void changedUpdate(DocumentEvent e) {
 			updateOKButtonAction();
@@ -278,12 +279,14 @@ public class URIChooser extends JDialog implements ActionMap {
 			updateOKButtonAction();
 			updateClearButtonAction();
 		}
+
 	}
 
 	/**
 	 * The action associated with the 'browse' button
 	 */
 	protected class BrowseButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -304,12 +307,14 @@ public class URIChooser extends JDialog implements ActionMap {
 				}
 			}
 		}
+
 	}
 
 	/**
 	 * The action associated with the 'OK' button of the URI chooser
 	 */
 	protected class OKButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -318,12 +323,14 @@ public class URIChooser extends JDialog implements ActionMap {
 			chosenPath = textField.getText();
 			dispose();
 		}
+
 	}
 
 	/**
 	 * The action associated with the 'Cancel' button of the URI chooser
 	 */
 	protected class CancelButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -332,18 +339,21 @@ public class URIChooser extends JDialog implements ActionMap {
 			dispose();
 			textField.setText(chosenPath);
 		}
+
 	}
 
 	/**
 	 * The action associated with the 'Clear' button of the URI chooser
 	 */
 	protected class ClearButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			textField.setText("");
 		}
+
 	}
 
 	// ActionMap implementation
@@ -363,4 +373,5 @@ public class URIChooser extends JDialog implements ActionMap {
 	public Action getAction(String key) throws MissingListenerException {
 		return listeners.get(key);
 	}
+
 }

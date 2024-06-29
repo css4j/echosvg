@@ -144,4 +144,5 @@ public abstract class AbstractResetTransformInteractor implements Interactor {
 		c.resetRenderingTransform();
 		finished = true;
 	}
+
 }

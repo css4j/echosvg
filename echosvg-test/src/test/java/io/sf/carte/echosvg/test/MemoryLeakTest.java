@@ -265,6 +265,7 @@ public abstract class MemoryLeakTest {
 	public abstract String doSomething() throws Exception;
 
 	public class WeakRef extends CleanerThread.WeakReferenceCleared<Object> {
+
 		String desc;
 
 		public WeakRef(Object o) {

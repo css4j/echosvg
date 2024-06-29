@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * @version $Id$
  */
 public interface GraphicsNodeRable extends Filter {
+
 	/**
 	 * Returns the <code>GraphicsNode</code> for which a rendering can be obtained
 	 * 
@@ -56,4 +57,5 @@ public interface GraphicsNodeRable extends Filter {
 	 * on the associated <code>GraphicsNode</code> or false if it should use paint.
 	 */
 	void setUsePrimitivePaint(boolean usePrimitivePaint);
+
 }

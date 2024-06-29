@@ -166,4 +166,5 @@ public class AnimatableMotionPointValue extends AnimatableValue {
 		sb.append("rad");
 		return sb.toString();
 	}
+
 }

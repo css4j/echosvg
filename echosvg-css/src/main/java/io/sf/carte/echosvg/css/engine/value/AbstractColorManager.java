@@ -146,7 +146,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 					throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 				}
 				rgbSerialization = ((CSSTypedValue) css4jValue).toRGBColor().toString();
-			} catch(DOMException e) {
+			} catch (DOMException e) {
 				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 			}
 			// Now re-parse the result

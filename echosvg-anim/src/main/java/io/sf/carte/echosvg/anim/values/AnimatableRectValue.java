@@ -175,4 +175,5 @@ public class AnimatableRectValue extends AnimatableValue {
 		sb.append(height);
 		return sb.toString();
 	}
+
 }

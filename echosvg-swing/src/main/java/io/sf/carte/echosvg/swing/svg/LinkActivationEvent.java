@@ -56,4 +56,5 @@ public class LinkActivationEvent extends EventObject {
 	public String getReferencedURI() {
 		return referencedURI;
 	}
+
 }

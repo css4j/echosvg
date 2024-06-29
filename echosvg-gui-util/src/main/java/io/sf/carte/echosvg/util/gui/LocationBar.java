@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * @version $Id$
  */
 public class LocationBar extends JPanel {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -114,4 +115,5 @@ public class LocationBar extends JPanel {
 		comboBox.addItem(text);
 		comboBox.setPreferredSize(new Dimension(0, comboBox.getPreferredSize().height));
 	}
+
 }

@@ -1968,4 +1968,5 @@ public class GlyphLayout implements TextSpanLayout {
 	public void maybeReverse(boolean mirror) {
 		gv.maybeReverse(mirror);
 	}
+
 }

@@ -135,4 +135,5 @@ public class SVGArc extends SVGGraphicObjectConverter {
 		svgPath.setAttributeNS(null, SVG_D_ATTRIBUTE, d.toString());
 		return svgPath;
 	}
+
 }

@@ -29,6 +29,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SVGFilterDescriptor {
+
 	private Element def;
 	private String filterValue;
 
@@ -48,4 +49,5 @@ public class SVGFilterDescriptor {
 	public Element getDef() {
 		return def;
 	}
+
 }

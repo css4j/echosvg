@@ -207,6 +207,7 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 	 * To create a 'flowDiv' element.
 	 */
 	protected static class FlowDivElementFactory implements ElementFactory {
+
 		public FlowDivElementFactory() {
 		}
 
@@ -217,12 +218,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFlowDivElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowLine' element.
 	 */
 	protected static class FlowLineElementFactory implements ElementFactory {
+
 		public FlowLineElementFactory() {
 		}
 
@@ -233,12 +236,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFlowLineElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowPara' element.
 	 */
 	protected static class FlowParaElementFactory implements ElementFactory {
+
 		public FlowParaElementFactory() {
 		}
 
@@ -249,12 +254,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFlowParaElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowRegionBreak' element.
 	 */
 	protected static class FlowRegionBreakElementFactory implements ElementFactory {
+
 		public FlowRegionBreakElementFactory() {
 		}
 
@@ -265,12 +272,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFlowRegionBreakElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowRegion' element.
 	 */
 	protected static class FlowRegionElementFactory implements ElementFactory {
+
 		public FlowRegionElementFactory() {
 		}
 
@@ -281,12 +290,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFlowRegionElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowRegion' element.
 	 */
 	protected static class FlowRegionExcludeElementFactory implements ElementFactory {
+
 		public FlowRegionExcludeElementFactory() {
 		}
 
@@ -297,12 +308,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFlowRegionExcludeElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowRoot' element.
 	 */
 	protected static class FlowRootElementFactory implements ElementFactory {
+
 		public FlowRootElementFactory() {
 		}
 
@@ -313,12 +326,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFlowRootElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'flowSpan' element.
 	 */
 	protected static class FlowSpanElementFactory implements ElementFactory {
+
 		public FlowSpanElementFactory() {
 		}
 
@@ -329,12 +344,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFlowSpanElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'handler' element.
 	 */
 	protected static class HandlerElementFactory implements ElementFactory {
+
 		public HandlerElementFactory() {
 		}
 
@@ -345,12 +362,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMHandlerElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'multiImage' element.
 	 */
 	protected static class MultiImageElementFactory implements ElementFactory {
+
 		public MultiImageElementFactory() {
 		}
 
@@ -361,12 +380,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMMultiImageElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'solidColor' element.
 	 */
 	protected static class SolidColorElementFactory implements ElementFactory {
+
 		public SolidColorElementFactory() {
 		}
 
@@ -377,12 +398,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMSolidColorElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'subImage' element.
 	 */
 	protected static class SubImageElementFactory implements ElementFactory {
+
 		public SubImageElementFactory() {
 		}
 
@@ -393,12 +416,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMSubImageElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'SubImageRef' element.
 	 */
 	protected static class SubImageRefElementFactory implements ElementFactory {
+
 		public SubImageRefElementFactory() {
 		}
 
@@ -409,6 +434,7 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new SVGOMSubImageRefElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
@@ -436,6 +462,7 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 	 * To create a 'xbl:xbl' element.
 	 */
 	protected static class XBLXBLElementFactory implements ElementFactory {
+
 		public XBLXBLElementFactory() {
 		}
 
@@ -446,12 +473,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new XBLOMXBLElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'xbl:definition' element.
 	 */
 	protected static class XBLDefinitionElementFactory implements ElementFactory {
+
 		public XBLDefinitionElementFactory() {
 		}
 
@@ -462,12 +491,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new XBLOMDefinitionElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'xbl:template' element.
 	 */
 	protected static class XBLTemplateElementFactory implements ElementFactory {
+
 		public XBLTemplateElementFactory() {
 		}
 
@@ -478,12 +509,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new XBLOMTemplateElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'xbl:content' element.
 	 */
 	protected static class XBLContentElementFactory implements ElementFactory {
+
 		public XBLContentElementFactory() {
 		}
 
@@ -494,12 +527,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new XBLOMContentElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'xbl:handlerGroup' element.
 	 */
 	protected static class XBLHandlerGroupElementFactory implements ElementFactory {
+
 		public XBLHandlerGroupElementFactory() {
 		}
 
@@ -510,12 +545,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new XBLOMHandlerGroupElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'xbl:import' element.
 	 */
 	protected static class XBLImportElementFactory implements ElementFactory {
+
 		public XBLImportElementFactory() {
 		}
 
@@ -526,12 +563,14 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new XBLOMImportElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'xbl:shadowTree' element.
 	 */
 	protected static class XBLShadowTreeElementFactory implements ElementFactory {
+
 		public XBLShadowTreeElementFactory() {
 		}
 
@@ -542,6 +581,7 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 		public Element create(String prefix, Document doc) {
 			return new XBLOMShadowTreeElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
@@ -555,4 +595,5 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 	public static DOMImplementation getDOMImplementation() {
 		return DOM_IMPLEMENTATION;
 	}
+
 }

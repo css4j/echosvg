@@ -103,4 +103,5 @@ public class ColorRenderingManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

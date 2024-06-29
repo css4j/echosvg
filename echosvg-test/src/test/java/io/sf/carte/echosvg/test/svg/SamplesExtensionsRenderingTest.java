@@ -21,7 +21,6 @@ package io.sf.carte.echosvg.test.svg;
 import java.io.IOException;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.test.TestFonts;

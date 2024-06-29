@@ -29,6 +29,7 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public class GenericElementNS extends AbstractElementNS {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -156,4 +157,5 @@ public class GenericElementNS extends AbstractElementNS {
 	protected Node newNode() {
 		return new GenericElementNS();
 	}
+
 }

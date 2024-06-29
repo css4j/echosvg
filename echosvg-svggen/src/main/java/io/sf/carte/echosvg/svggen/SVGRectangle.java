@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SVGRectangle extends SVGGraphicObjectConverter {
+
 	/**
 	 * Line converter used for degenerate cases
 	 */
@@ -95,4 +96,5 @@ public class SVGRectangle extends SVGGraphicObjectConverter {
 			return null;
 		}
 	}
+
 }

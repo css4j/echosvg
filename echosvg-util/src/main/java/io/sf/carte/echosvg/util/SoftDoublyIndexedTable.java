@@ -251,5 +251,7 @@ public class SoftDoublyIndexedTable<K, L> {
 			}
 			return o2 == null;
 		}
+
 	}
+
 }

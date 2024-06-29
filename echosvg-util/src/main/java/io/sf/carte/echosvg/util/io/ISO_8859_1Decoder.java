@@ -53,4 +53,5 @@ public class ISO_8859_1Decoder extends AbstractCharDecoder {
 		}
 		return buffer[position++] & 0xff;
 	}
+
 }

@@ -170,4 +170,5 @@ public class AnimatableAngleOrIdentValue extends AnimatableAngleValue {
 
 		return res;
 	}
+
 }

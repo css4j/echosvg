@@ -138,4 +138,5 @@ public class SyncbaseTimingSpecifier extends OffsetTimingSpecifier {
 		return owner.instanceTimeChanged(instanceTime, isBegin);
 		// } finally { Trace.exit(); }
 	}
+
 }

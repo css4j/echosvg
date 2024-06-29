@@ -76,4 +76,5 @@ public class SVGSetElementBridge extends SVGAnimationElementBridge {
 	protected boolean isConstantAnimation() {
 		return true;
 	}
+
 }

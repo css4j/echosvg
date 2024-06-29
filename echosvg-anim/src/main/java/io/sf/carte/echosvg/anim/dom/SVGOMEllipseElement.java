@@ -207,4 +207,5 @@ public class SVGOMEllipseElement extends SVGGraphicsElement implements SVGEllips
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

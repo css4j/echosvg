@@ -215,6 +215,7 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 				parentList.itemChanged();
 			}
 		}
+
 	}
 
 	/**
@@ -357,5 +358,7 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 		public void endLengthList() throws ParseException {
 			listHandler.endList();
 		}
+
 	}
+
 }

@@ -43,4 +43,5 @@ public interface GraphicsNodeChangeListener extends EventListener {
 	 * @param gnce the graphics node change event
 	 */
 	void changeCompleted(GraphicsNodeChangeEvent gnce);
+
 }

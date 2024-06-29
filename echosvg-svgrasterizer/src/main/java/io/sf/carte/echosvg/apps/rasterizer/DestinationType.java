@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.transcoder.image.TIFFTranscoder;
  * @version $Id$
  */
 public final class DestinationType {
+
 	public static final String PNG_STR = "image/png";
 	public static final String JPEG_STR = "image/jpeg";
 	public static final String TIFF_STR = "image/tiff";
@@ -112,4 +113,5 @@ public final class DestinationType {
 			throw new RuntimeException("unknown code:" + code);
 		}
 	}
+
 }

@@ -63,4 +63,5 @@ public class SVGTestsSupport {
 	public static boolean hasExtension(Element elt, String extension) {
 		throw new UnsupportedOperationException("SVGTests.hasExtension is not implemented"); // XXX
 	}
+
 }

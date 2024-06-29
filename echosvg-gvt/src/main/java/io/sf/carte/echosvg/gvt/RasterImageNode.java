@@ -154,4 +154,5 @@ public class RasterImageNode extends AbstractGraphicsNode {
 			return null;
 		return image.getBounds2D();
 	}
+
 }

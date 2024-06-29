@@ -100,4 +100,5 @@ public abstract class AbstractValueFactory {
 		String s = Messages.formatMessage("invalid.access", p);
 		return new DOMException(DOMException.NOT_SUPPORTED_ERR, s);
 	}
+
 }

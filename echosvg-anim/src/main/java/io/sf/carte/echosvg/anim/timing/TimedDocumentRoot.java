@@ -277,4 +277,5 @@ public abstract class TimedDocumentRoot extends TimeContainer {
 	 * @return either "repeat" or "repeatEvent"
 	 */
 	protected abstract String getRepeatEventName();
+
 }

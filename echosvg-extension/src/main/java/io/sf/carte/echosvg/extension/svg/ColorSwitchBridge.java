@@ -95,4 +95,5 @@ public class ColorSwitchBridge extends AbstractSVGBridge implements PaintBridge,
 
 		return ((PaintBridge) bridge).createPaint(ctx, clrDef, paintedElement, paintedNode, opacity);
 	}
+
 }

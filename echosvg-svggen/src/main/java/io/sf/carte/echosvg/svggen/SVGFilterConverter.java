@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.svggen.SVGFilterDescriptor
  */
 public interface SVGFilterConverter extends SVGSyntax {
+
 	/**
 	 * Converts a Java 2D API BufferedImageOp into a set of attribute/value pairs
 	 * and related definitions
@@ -53,4 +54,5 @@ public interface SVGFilterConverter extends SVGSyntax {
 	 *         null. If no definition is needed, an empty set should be returned.
 	 */
 	List<Element> getDefinitionSet();
+
 }

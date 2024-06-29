@@ -240,4 +240,5 @@ public class SVGOMAnimatedEnumeration extends AbstractSVGAnimatedValue implement
 			fireAnimatedAttributeListeners();
 		}
 	}
+
 }

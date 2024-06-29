@@ -46,6 +46,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class ImageCompareTest {
+
 	private static final String ERROR_COULD_NOT_LOAD_IMAGE = "ImageCompareTest error: could not load image ";
 
 	private static final String IMAGE_TYPE_DIFFERENCE = "_diff";

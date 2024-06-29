@@ -109,4 +109,5 @@ public class GraphicsNodeKeyEvent extends GraphicsNodeInputEvent {
 	public int getKeyLocation() {
 		return keyLocation;
 	}
+
 }

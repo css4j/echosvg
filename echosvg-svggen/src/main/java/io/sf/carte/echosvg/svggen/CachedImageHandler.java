@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.svggen;
  * @version $Id$
  */
 public interface CachedImageHandler extends GenericImageHandler {
+
 	/**
 	 * Returns the image cache instance in use by this handler
 	 *

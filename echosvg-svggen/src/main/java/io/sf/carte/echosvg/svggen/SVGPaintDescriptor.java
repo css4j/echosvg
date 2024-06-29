@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SVGPaintDescriptor implements SVGDescriptor, SVGSyntax {
+
 	private Element def;
 	private String paintValue;
 	private String opacityValue;
@@ -83,4 +84,5 @@ public class SVGPaintDescriptor implements SVGDescriptor, SVGSyntax {
 
 		return defSet;
 	}
+
 }

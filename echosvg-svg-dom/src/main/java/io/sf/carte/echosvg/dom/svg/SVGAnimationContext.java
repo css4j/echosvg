@@ -62,4 +62,5 @@ public interface SVGAnimationContext extends SVGContext, ElementTimeControl {
 	 * were hyperlinked to, or <code>NaN</code> if there is no such begin time.
 	 */
 	float getHyperlinkBeginTime();
+
 }

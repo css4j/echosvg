@@ -28,6 +28,7 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public class GenericComment extends AbstractComment {
+
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Is this element immutable?
@@ -71,4 +72,5 @@ public class GenericComment extends AbstractComment {
 	protected Node newNode() {
 		return new GenericComment();
 	}
+
 }

@@ -31,6 +31,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SVGPolygon extends SVGGraphicObjectConverter {
+
 	/**
 	 * @param generatorContext used to build Elements
 	 */
@@ -79,4 +80,5 @@ public class SVGPolygon extends SVGGraphicObjectConverter {
 		points.append(doubleString(y));
 		points.append(SPACE);
 	}
+
 }

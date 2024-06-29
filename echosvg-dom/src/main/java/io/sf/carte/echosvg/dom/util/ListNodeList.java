@@ -34,6 +34,7 @@ import org.w3c.dom.NodeList;
  * @version $Id$
  */
 public class ListNodeList implements NodeList {
+
 	protected List<Element> list;
 
 	public ListNodeList(List<Element> list) {
@@ -57,4 +58,5 @@ public class ListNodeList implements NodeList {
 	public int getLength() {
 		return list.size();
 	}
+
 }

@@ -118,4 +118,5 @@ public class AnimatableStringValue extends AnimatableValue {
 	public String getCssText() {
 		return string;
 	}
+
 }

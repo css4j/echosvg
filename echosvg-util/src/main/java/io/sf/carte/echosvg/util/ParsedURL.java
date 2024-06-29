@@ -574,4 +574,5 @@ public class ParsedURL {
 		ParsedURLProtocolHandler handler = getHandler(protocol);
 		return handler.parseURL(baseURL, urlStr);
 	}
+
 }

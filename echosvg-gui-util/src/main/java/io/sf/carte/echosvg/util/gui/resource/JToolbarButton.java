@@ -32,6 +32,7 @@ import javax.swing.JButton;
  * @version $Id$
  */
 public class JToolbarButton extends JButton {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -68,6 +69,7 @@ public class JToolbarButton extends JButton {
 	 * To manage the mouse interactions.
 	 */
 	protected class MouseListener extends MouseAdapter {
+
 		@Override
 		public void mouseEntered(MouseEvent ev) {
 			setBorderPainted(true);
@@ -77,5 +79,7 @@ public class JToolbarButton extends JButton {
 		public void mouseExited(MouseEvent ev) {
 			setBorderPainted(false);
 		}
+
 	}
+
 }

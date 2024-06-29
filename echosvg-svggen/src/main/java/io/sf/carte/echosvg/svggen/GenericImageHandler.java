@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public interface GenericImageHandler {
+
 	/**
 	 * Sets the DomTreeManager this image handler may need to interact with.
 	 */

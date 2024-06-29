@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @version $Id$
  */
 public class SetSVGDocumentTest extends JSVGRenderingAccuracyTest {
+
 	public SetSVGDocumentTest() {
 	}
 
@@ -83,4 +84,5 @@ public class SetSVGDocumentTest extends JSVGRenderingAccuracyTest {
 	public boolean canvasUpdated(JSVGCanvas canvas) {
 		return true;
 	}
+
 }

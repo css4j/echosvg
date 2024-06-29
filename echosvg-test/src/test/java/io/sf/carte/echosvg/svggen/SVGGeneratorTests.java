@@ -49,6 +49,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  * @version $Id$
  */
 public class SVGGeneratorTests {
+
 	private static final String GENERATOR_REFERENCE_BASE;
 
 	private static final String RENDERING_DIR = "rendering";

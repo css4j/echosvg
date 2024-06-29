@@ -63,4 +63,5 @@ public class DOMTextEvent extends DOMUIEvent implements TextEvent {
 		initUIEventNS(namespaceURIArg, typeArg, canBubbleArg, cancelableArg, viewArg, 0);
 		data = dataArg;
 	}
+
 }

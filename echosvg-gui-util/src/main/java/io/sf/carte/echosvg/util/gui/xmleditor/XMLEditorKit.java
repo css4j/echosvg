@@ -120,10 +120,13 @@ public class XMLEditorKit extends DefaultEditorKit {
 	 * A simple view factory implementation.
 	 */
 	protected class XMLViewFactory implements ViewFactory {
+
 		// Creates the XML View.
 		@Override
 		public View create(Element elem) {
 			return new XMLView(context, elem);
 		}
+
 	}
+
 }

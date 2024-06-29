@@ -156,4 +156,5 @@ public class SVGFeDisplacementMapElementBridge extends AbstractSVGFilterPrimitiv
 		}
 		throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attrName, s });
 	}
+
 }

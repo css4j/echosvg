@@ -167,4 +167,5 @@ public class EchoSVGStarElementBridge extends SVGDecoratedShapeElementBridge imp
 			return ret;
 		}
 	}
+
 }

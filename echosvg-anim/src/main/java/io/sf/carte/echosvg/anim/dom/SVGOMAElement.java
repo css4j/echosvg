@@ -140,4 +140,5 @@ public class SVGOMAElement extends SVGURIReferenceGraphicsElement implements SVG
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

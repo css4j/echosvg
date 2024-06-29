@@ -167,4 +167,5 @@ public class PatternPaintContext implements PaintContext {
 
 		return wr.createTranslatedChild(0, 0);
 	}
+
 }

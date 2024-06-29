@@ -65,4 +65,5 @@ public class CmapFormat0 extends CmapFormat {
 			return 0;
 		}
 	}
+
 }

@@ -30,6 +30,7 @@ import java.net.MalformedURLException;
  * @version $Id$
  */
 public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTest {
+
 	/**
 	 * Generic constants
 	 */
@@ -48,7 +49,8 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	/**
 	 * For preconfigured tests, the configuration has to be derived from the test
 	 * identifier. The identifier should characterize the SVG file to be tested.
-	 * @throws MalformedURLException 
+	 * 
+	 * @throws MalformedURLException
 	 */
 	@Override
 	public void setConfig(String svgURL, String refImgURL) throws MalformedURLException {

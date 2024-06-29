@@ -106,20 +106,24 @@ public class SVG12TextElementBridge extends SVGTextElementBridge implements SVG1
 	 * The DOM EventListener invoked when a node is removed.
 	 */
 	protected class DOMChildNodeRemovedEventListener extends SVGTextElementBridge.DOMChildNodeRemovedEventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
 		}
+
 	}
 
 	/**
 	 * The DOM EventListener invoked when the subtree is modified.
 	 */
 	protected class DOMSubtreeModifiedEventListener extends SVGTextElementBridge.DOMSubtreeModifiedEventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
 		}
+
 	}
 
 	// Tree navigation ------------------------------------------------------
@@ -187,4 +191,5 @@ public class SVG12TextElementBridge extends SVGTextElementBridge implements SVG1
 	public void handleContentSelectionChangedEvent(ContentSelectionChangedEvent csce) {
 		computeLaidoutText(ctx, e, node);
 	}
+
 }

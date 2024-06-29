@@ -73,4 +73,5 @@ public interface CSSNavigableDocumentListener {
 	 * A property in the override style declaration has been changed.
 	 */
 	void overrideStylePropertyChanged(CSSStylableElement e, String name, String val, String prio);
+
 }

@@ -342,4 +342,5 @@ public class DOMNodeIterator implements NodeIterator {
 
 		referenceNode = n;
 	}
+
 }

@@ -297,4 +297,5 @@ public class MotionAnimation extends InterpolatingAnimation {
 			markDirty();
 		}
 	}
+
 }

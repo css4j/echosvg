@@ -226,4 +226,5 @@ public abstract class SVGOMAnimationElement extends SVGOMElement implements SVGA
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

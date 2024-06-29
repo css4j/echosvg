@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.extension.svg;
  * @version $Id$
  */
 public class MarginInfo {
+
 	public static final int JUSTIFY_START = 0;
 	public static final int JUSTIFY_MIDDLE = 1;
 	public static final int JUSTIFY_END = 2;
@@ -93,4 +94,5 @@ public class MarginInfo {
 	public boolean isFlowRegionBreak() {
 		return flowRegionBreak;
 	}
+
 }

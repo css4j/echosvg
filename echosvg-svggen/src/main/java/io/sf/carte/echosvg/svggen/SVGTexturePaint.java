@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @version $Id$
  */
 public class SVGTexturePaint extends AbstractSVGConverter {
+
 	/**
 	 * @param generatorContext used to build Elements
 	 */
@@ -140,4 +141,5 @@ public class SVGTexturePaint extends AbstractSVGConverter {
 
 		return patternDesc;
 	}
+
 }

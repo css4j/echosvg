@@ -573,4 +573,5 @@ public class AnimatableTransformListValue extends AnimatableValue {
 		}
 		return sb.toString();
 	}
+
 }

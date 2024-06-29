@@ -28,6 +28,7 @@ package io.sf.carte.echosvg.test;
  * @version $Id$
  */
 public class MemoryLeakTestValidator extends MemoryLeakTest {
+
 	public MemoryLeakTestValidator() {
 	}
 
@@ -54,6 +55,7 @@ public class MemoryLeakTestValidator extends MemoryLeakTest {
 	}
 
 	public static class Pair {
+
 		Pair myMate;
 
 		public Pair() {
@@ -63,14 +65,17 @@ public class MemoryLeakTestValidator extends MemoryLeakTest {
 			this.myMate = p;
 			p.myMate = this;
 		}
+
 	}
 
 	public static class Link {
+
 		public Link prev;
 
 		public Link(Link prev) {
 			this.prev = prev;
 		}
+
 	}
 
 }

@@ -64,7 +64,7 @@ public interface CSSContext {
 	 * 
 	 * @see #getPixelUnitToMillimeter()
 	 */
-	@Deprecated(forRemoval=true)
+	@Deprecated(forRemoval = true)
 	default float getPixelToMillimeter() {
 		return getPixelUnitToMillimeter();
 	}
@@ -109,4 +109,5 @@ public interface CSSContext {
 	 * Returns the CSS engine associated with given element.
 	 */
 	CSSEngine getCSSEngineForElement(Element e);
+
 }

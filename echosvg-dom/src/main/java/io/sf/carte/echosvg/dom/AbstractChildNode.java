@@ -29,6 +29,7 @@ import org.w3c.dom.Node;
  * @version $Id$
  */
 public abstract class AbstractChildNode extends AbstractNode {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -99,4 +100,5 @@ public abstract class AbstractChildNode extends AbstractNode {
 	public Node getNextSibling() {
 		return nextSibling;
 	}
+
 }

@@ -1193,6 +1193,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 			}
 			return 0;
 		}
+
 	}
 
 	/**
@@ -1261,6 +1262,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 			importSubtreeListener = new ImportSubtreeListener(imp, importRemovedListener);
 			templateMutationListener = new TemplateMutationListener(imp);
 		}
+
 	}
 
 	/**
@@ -1291,6 +1293,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 				addDefinition(def.getElementNamespaceURI(), def.getElementLocalName(), def, importElement);
 			}
 		}
+
 	}
 
 	/**
@@ -1310,6 +1313,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 		public void handleEvent(Event evt) {
 			toBeRemoved.add(evt.getTarget());
 		}
+
 	}
 
 	/**
@@ -1348,6 +1352,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 				removeDefinition(defRec);
 			}
 		}
+
 	}
 
 	/**
@@ -1397,6 +1402,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -1442,6 +1448,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 				nodesToBeInvalidated.add(parent);
 			}
 		}
+
 	}
 
 	/**
@@ -1478,6 +1485,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 				invalidateChildNodes((Node) node);
 			}
 		}
+
 	}
 
 	/**
@@ -1514,6 +1522,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 
 			rebind(defRec.namespaceURI, defRec.localName, document.getDocumentElement());
 		}
+
 	}
 
 	/**
@@ -1563,6 +1572,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -1622,6 +1632,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 			addTemplateElementListeners(template, ir);
 			rebind(defRec.namespaceURI, defRec.localName, document.getDocumentElement());
 		}
+
 	}
 
 	/**
@@ -1678,6 +1689,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 			addTemplateElementListeners(defRec.template, ir);
 			rebind(defRec.namespaceURI, defRec.localName, document.getDocumentElement());
 		}
+
 	}
 
 	/**
@@ -1702,6 +1714,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 				addImport(imp);
 			}
 		}
+
 	}
 
 	/**
@@ -1733,6 +1746,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -1785,6 +1799,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 		 * The previous sibling in the flattened tree.
 		 */
 		public Node previousSibling;
+
 	}
 
 	/**
@@ -1930,6 +1945,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 			}
 			return size;
 		}
+
 	}
 
 	/**
@@ -1983,5 +1999,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 				size++;
 			}
 		}
+
 	}
+
 }

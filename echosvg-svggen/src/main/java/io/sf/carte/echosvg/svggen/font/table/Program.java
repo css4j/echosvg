@@ -48,4 +48,5 @@ public abstract class Program {
 			instructions[i] = (short) bais.read();
 		}
 	}
+
 }

@@ -156,6 +156,7 @@ public abstract class AbstractSVGPreserveAspectRatio implements SVGPreserveAspec
 	}
 
 	protected static class PreserveAspectRatioParserHandler extends DefaultPreserveAspectRatioHandler {
+
 		public short align = SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMIDYMID;
 		public short meetOrSlice = SVGPreserveAspectRatio.SVG_MEETORSLICE_MEET;
 
@@ -286,5 +287,7 @@ public abstract class AbstractSVGPreserveAspectRatio implements SVGPreserveAspec
 		public void slice() throws ParseException {
 			meetOrSlice = SVGPreserveAspectRatio.SVG_MEETORSLICE_SLICE;
 		}
+
 	}
+
 }

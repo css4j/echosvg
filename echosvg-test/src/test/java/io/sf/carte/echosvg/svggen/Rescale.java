@@ -37,6 +37,7 @@ import java.net.URL;
  * @version $Id$
  */
 public class Rescale implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -94,4 +95,5 @@ public class Rescale implements Painter {
 		g.drawImage(bi, greenStress, 10 + bi.getWidth() + 10, 30);
 		g.drawImage(bi, blueStress, 10 + 2 * (bi.getWidth() + 10), 30);
 	}
+
 }

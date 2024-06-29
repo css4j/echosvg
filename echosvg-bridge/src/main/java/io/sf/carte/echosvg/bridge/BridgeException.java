@@ -199,4 +199,5 @@ public class BridgeException extends RuntimeException {
 	public String getCode() {
 		return code;
 	}
+
 }

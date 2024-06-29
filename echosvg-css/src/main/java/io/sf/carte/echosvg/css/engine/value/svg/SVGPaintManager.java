@@ -168,4 +168,5 @@ public class SVGPaintManager extends SVGColorManager {
 		}
 		return super.computeValue(elt, pseudo, engine, idx, sm, value);
 	}
+
 }

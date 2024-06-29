@@ -46,6 +46,7 @@ import io.sf.carte.echosvg.test.MemoryLeakTest;
  * @version $Id$
  */
 public class JSVGMemoryLeakTest extends MemoryLeakTest implements JSVGCanvasHandler.Delegate {
+
 	public JSVGMemoryLeakTest() {
 	}
 
@@ -249,4 +250,5 @@ public class JSVGMemoryLeakTest extends MemoryLeakTest implements JSVGCanvasHand
 			failReport = cause;
 		}
 	}
+
 }

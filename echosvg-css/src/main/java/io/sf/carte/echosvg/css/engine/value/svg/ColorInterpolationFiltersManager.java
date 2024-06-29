@@ -47,4 +47,5 @@ public class ColorInterpolationFiltersManager extends ColorInterpolationManager 
 	public Value getDefaultValue() {
 		return SVGValueConstants.LINEARRGB_VALUE;
 	}
+
 }

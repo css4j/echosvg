@@ -76,6 +76,7 @@ public class JToolbarToggleButton extends JToggleButton {
 	 * To manage the mouse interactions.
 	 */
 	protected class MouseListener extends MouseAdapter {
+
 		@Override
 		public void mouseEntered(MouseEvent ev) {
 			setBorderPainted(true);
@@ -85,5 +86,7 @@ public class JToolbarToggleButton extends JToggleButton {
 		public void mouseExited(MouseEvent ev) {
 			setBorderPainted(false);
 		}
+
 	}
+
 }

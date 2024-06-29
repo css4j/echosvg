@@ -175,4 +175,5 @@ public class GVTTreeBuilder extends HaltingThread {
 			((GVTTreeBuilderListener) listener).gvtBuildFailed((GVTTreeBuilderEvent) event);
 		}
 	};
+
 }

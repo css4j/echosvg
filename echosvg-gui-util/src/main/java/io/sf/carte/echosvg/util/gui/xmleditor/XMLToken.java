@@ -49,4 +49,5 @@ public class XMLToken {
 	public int getEndOffset() {
 		return endOffset;
 	}
+
 }

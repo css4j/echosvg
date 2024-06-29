@@ -317,6 +317,7 @@ public class Base64Test {
 	}
 
 	static class StreamCopier extends Thread {
+
 		InputStream src;
 		OutputStream dst;
 
@@ -345,6 +346,7 @@ public class Base64Test {
 				// Nothing
 			}
 		}
+
 	}
 
 }

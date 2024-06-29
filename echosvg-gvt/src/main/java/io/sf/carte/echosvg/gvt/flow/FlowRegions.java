@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.ext.awt.geom.SegmentList;
  * @version $Id$
  */
 public class FlowRegions {
+
 	Shape flowShape;
 	SegmentList sl;
 	SegmentList.SplitResults sr;
@@ -181,6 +182,7 @@ public class FlowRegions {
 	}
 
 	static class Transition {
+
 		public double loc;
 		public boolean up;
 
@@ -188,9 +190,11 @@ public class FlowRegions {
 			this.loc = loc;
 			this.up = up;
 		}
+
 	}
 
 	static class TransitionComp implements Comparator<Transition> {
+
 		public static Comparator<Transition> COMP = new TransitionComp();
 
 		TransitionComp() {
@@ -217,5 +221,7 @@ public class FlowRegions {
 		public boolean equals(Object comp) {
 			return (this == comp);
 		}
+
 	}
+
 }

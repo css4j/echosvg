@@ -95,4 +95,5 @@ public class Glyph {
 		points[gd.getPointCount()] = new Point(0, 0, true, true);
 		points[gd.getPointCount() + 1] = new Point(advanceWidth, 0, true, true);
 	}
+
 }

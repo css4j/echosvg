@@ -186,4 +186,5 @@ public class XMLContext extends StyleContext {
 		}
 		return name;
 	}
+
 }

@@ -32,4 +32,5 @@ public interface XBLShadowTreeElement extends Element {
 	 * Returns the Element that has an ID attribute with the given value.
 	 */
 	Element getElementById(String elementId);
+
 }

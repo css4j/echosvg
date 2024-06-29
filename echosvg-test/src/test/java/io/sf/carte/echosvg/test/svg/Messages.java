@@ -69,4 +69,5 @@ public class Messages {
 	public static String formatMessage(String key, Object[] args) throws MissingResourceException {
 		return localizableSupport.formatMessage(key, args);
 	}
+
 }

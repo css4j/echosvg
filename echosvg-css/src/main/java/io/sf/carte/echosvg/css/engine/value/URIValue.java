@@ -46,4 +46,5 @@ public class URIValue extends StringValue {
 	public String getCssText() {
 		return "url(" + cssText + ')';
 	}
+
 }

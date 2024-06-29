@@ -104,4 +104,5 @@ public class ShapeRenderingManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

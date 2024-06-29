@@ -32,6 +32,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SVGEllipse extends SVGGraphicObjectConverter {
+
 	/**
 	 * Line converter used for degenerate cases
 	 */
@@ -98,4 +99,5 @@ public class SVGEllipse extends SVGGraphicObjectConverter {
 		}
 		return null;
 	}
+
 }

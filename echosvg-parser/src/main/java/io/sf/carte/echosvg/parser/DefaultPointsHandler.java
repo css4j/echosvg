@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public class DefaultPointsHandler implements PointsHandler {
+
 	/**
 	 * The only instance of this class.
 	 */
@@ -57,4 +58,5 @@ public class DefaultPointsHandler implements PointsHandler {
 	@Override
 	public void endPoints() throws ParseException {
 	}
+
 }

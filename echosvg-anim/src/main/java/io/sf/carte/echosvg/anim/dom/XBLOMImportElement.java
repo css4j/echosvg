@@ -64,4 +64,5 @@ public class XBLOMImportElement extends XBLOMElement {
 	protected Node newNode() {
 		return new XBLOMImportElement();
 	}
+
 }

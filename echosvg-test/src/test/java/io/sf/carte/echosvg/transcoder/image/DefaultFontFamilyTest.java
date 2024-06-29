@@ -121,6 +121,7 @@ public class DefaultFontFamilyTest {
 		protected byte[] getReferenceImageData() {
 			return createBufferedImageData(resolveURI(refImageURI));
 		}
+
 	}
 
 }

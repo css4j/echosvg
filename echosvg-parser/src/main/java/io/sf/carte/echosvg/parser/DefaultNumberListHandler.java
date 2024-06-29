@@ -25,6 +25,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public class DefaultNumberListHandler implements NumberListHandler {
+
 	/**
 	 * The only instance of this class.
 	 */

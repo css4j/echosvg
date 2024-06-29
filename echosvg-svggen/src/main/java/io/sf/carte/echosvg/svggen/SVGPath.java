@@ -42,6 +42,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SVGPath extends SVGGraphicObjectConverter {
+
 	/**
 	 * @param generatorContext used to build Elements
 	 */
@@ -137,4 +138,5 @@ public class SVGPath extends SVGGraphicObjectConverter {
 		d.append(gc.doubleString(y));
 		d.append(SPACE);
 	}
+
 }

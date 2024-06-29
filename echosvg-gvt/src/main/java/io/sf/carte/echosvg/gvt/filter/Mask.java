@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * @version $Id$
  */
 public interface Mask extends Filter {
+
 	/**
 	 * The region to which this mask applies
 	 */
@@ -73,4 +74,5 @@ public interface Mask extends Filter {
 	 * @return The graphics node that defines the mask image.
 	 */
 	GraphicsNode getMaskNode();
+
 }

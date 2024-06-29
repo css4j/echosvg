@@ -206,4 +206,5 @@ public abstract class AbstractText extends AbstractCharacterData implements Text
 	 * Creates a text node of the current type.
 	 */
 	protected abstract Text createTextNode(String text);
+
 }

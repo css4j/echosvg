@@ -117,4 +117,5 @@ public abstract class CSSOMStoredStyleDeclaration extends CSSOMSVGStyleDeclarati
 	public String item(int idx) {
 		return cssEngine.getPropertyName(declaration.getIndex(idx));
 	}
+
 }

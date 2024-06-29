@@ -34,4 +34,5 @@ public interface SVGMotionAnimatableElement {
 	 * for this element.
 	 */
 	AffineTransform getMotionTransform();
+
 }

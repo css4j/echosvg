@@ -49,6 +49,7 @@ import io.sf.carte.echosvg.test.TestFonts;
  * @version $Id$
  */
 public class AttributedCharacterIterator implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		String fontName = TestFonts.FONT_FAMILY_SANS2;
@@ -152,7 +153,7 @@ public class AttributedCharacterIterator implements Painter {
 		g2.draw(aShape);
 		g2.dispose();
 
-		float k[] = new float[blurWidth * blurWidth];
+		float[] k = new float[blurWidth * blurWidth];
 		for (int i = 0; i < k.length; i++)
 			k[i] = 1 / (float) k.length;
 		Kernel kernel = new Kernel(blurWidth, blurWidth, k);
@@ -171,15 +172,14 @@ public class AttributedCharacterIterator implements Painter {
 				blurWidth, blurWidth + bounds.height);
 		styledText.addAttribute(TextAttribute.CHAR_REPLACEMENT, aImageReplacement, 0, 1);
 
-
 		iter = styledText.getIterator();
 
 		TextLayout layout = new TextLayout(iter, frc);
-		
+
 		bounds = layout.getBounds().getBounds();
 		bounds.width += 50;
 		bounds.height += 50;
-		
+
 		layout.draw(g, 20, layout.getAscent() + 25);
 
 		g.drawString(iter, 10, 160);

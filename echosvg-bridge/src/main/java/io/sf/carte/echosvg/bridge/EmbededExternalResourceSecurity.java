@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class EmbededExternalResourceSecurity implements ExternalResourceSecurity {
+
 	public static final String DATA_PROTOCOL = "data";
 
 	/**
@@ -69,4 +70,5 @@ public class EmbededExternalResourceSecurity implements ExternalResourceSecurity
 
 		}
 	}
+
 }

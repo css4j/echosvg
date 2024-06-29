@@ -768,4 +768,5 @@ public class BidiAttributedCharacterIterator implements AttributedCharacterItera
 		}
 		return c;
 	}
+
 }

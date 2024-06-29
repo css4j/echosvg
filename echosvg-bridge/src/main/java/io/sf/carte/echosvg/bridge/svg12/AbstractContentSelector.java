@@ -120,6 +120,7 @@ public abstract class AbstractContentSelector {
 		 */
 		AbstractContentSelector createSelector(ContentManager cm, XBLOMContentElement content, Element bound,
 				String selector);
+
 	}
 
 	/**
@@ -135,6 +136,7 @@ public abstract class AbstractContentSelector {
 				String selector) {
 			return new XPathSubsetContentSelector(cm, content, bound, selector);
 		}
+
 	}
 
 	/**
@@ -150,5 +152,7 @@ public abstract class AbstractContentSelector {
 				String selector) {
 			return new XPathPatternContentSelector(cm, content, bound, selector);
 		}
+
 	}
+
 }

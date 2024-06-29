@@ -123,4 +123,5 @@ public class SVGOMClipPathElement extends SVGGraphicsElement implements SVGClipP
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

@@ -32,4 +32,5 @@ public interface ScriptEventWrapper {
 	 * Returns the event object this object is wrapping.
 	 */
 	Object getEventObject();
+
 }

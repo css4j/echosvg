@@ -47,4 +47,5 @@ public class CvtTable implements Table {
 	public short[] getValues() {
 		return values;
 	}
+
 }

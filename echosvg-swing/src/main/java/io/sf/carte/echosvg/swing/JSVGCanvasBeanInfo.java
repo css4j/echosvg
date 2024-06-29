@@ -70,4 +70,5 @@ public class JSVGCanvasBeanInfo extends SimpleBeanInfo {
 			return null;
 		}
 	}
+
 }

@@ -224,4 +224,5 @@ public class SVGMarkerElementBridge extends AnimatableGenericSVGBridge implement
 
 		return marker;
 	}
+
 }

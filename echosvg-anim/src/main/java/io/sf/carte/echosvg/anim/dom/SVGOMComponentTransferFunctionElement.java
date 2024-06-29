@@ -208,4 +208,5 @@ public abstract class SVGOMComponentTransferFunctionElement extends SVGOMElement
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

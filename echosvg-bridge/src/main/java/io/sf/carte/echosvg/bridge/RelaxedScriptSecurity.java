@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class RelaxedScriptSecurity implements ScriptSecurity {
+
 	/**
 	 * Controls whether the script should be loaded or not.
 	 *
@@ -52,4 +53,5 @@ public class RelaxedScriptSecurity implements ScriptSecurity {
 	public RelaxedScriptSecurity(String scriptType, ParsedURL scriptURL, ParsedURL docURL) {
 		/* do nothing */
 	}
+
 }

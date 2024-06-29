@@ -167,4 +167,5 @@ public class SVGOMFESpecularLightingElement extends SVGOMFilterPrimitiveStandard
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

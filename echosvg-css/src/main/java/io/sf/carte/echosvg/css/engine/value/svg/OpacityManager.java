@@ -136,4 +136,5 @@ public class OpacityManager extends AbstractValueManager {
 		}
 		throw createInvalidFloatTypeDOMException(type);
 	}
+
 }

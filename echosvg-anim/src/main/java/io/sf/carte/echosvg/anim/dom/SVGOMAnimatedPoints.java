@@ -307,6 +307,7 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 				malformed = true;
 			}
 		}
+
 	}
 
 	/**
@@ -480,5 +481,7 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 		protected void revalidate() {
 			valid = true;
 		}
+
 	}
+
 }

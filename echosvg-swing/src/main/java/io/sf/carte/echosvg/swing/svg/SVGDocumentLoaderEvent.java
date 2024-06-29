@@ -57,4 +57,5 @@ public class SVGDocumentLoaderEvent extends EventObject {
 	public SVGDocument getSVGDocument() {
 		return svgDocument;
 	}
+
 }

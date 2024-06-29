@@ -208,4 +208,5 @@ public class SVGOMTextPathElement extends SVGOMTextContentElement implements SVG
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

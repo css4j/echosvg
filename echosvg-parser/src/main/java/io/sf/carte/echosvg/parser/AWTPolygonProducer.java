@@ -30,6 +30,7 @@ import java.io.Reader;
  * @version $Id$
  */
 public class AWTPolygonProducer extends AWTPolylineProducer {
+
 	/**
 	 * Utility method for creating an ExtendedGeneralPath.
 	 * 
@@ -54,4 +55,5 @@ public class AWTPolygonProducer extends AWTPolylineProducer {
 	public void endPoints() throws ParseException {
 		path.closePath();
 	}
+
 }

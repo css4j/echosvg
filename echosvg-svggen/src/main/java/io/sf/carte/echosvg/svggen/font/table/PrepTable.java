@@ -37,4 +37,5 @@ public class PrepTable extends Program implements Table {
 	public int getType() {
 		return prep;
 	}
+
 }

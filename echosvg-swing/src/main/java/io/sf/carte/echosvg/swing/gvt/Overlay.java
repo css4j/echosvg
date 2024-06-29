@@ -34,4 +34,5 @@ public interface Overlay {
 	 * Paints this overlay.
 	 */
 	void paint(Graphics g);
+
 }

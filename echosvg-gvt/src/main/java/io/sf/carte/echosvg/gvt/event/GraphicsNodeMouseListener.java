@@ -77,4 +77,5 @@ public interface GraphicsNodeMouseListener extends EventListener {
 	 * @param evt the graphics node mouse event
 	 */
 	void mouseMoved(GraphicsNodeMouseEvent evt);
+
 }

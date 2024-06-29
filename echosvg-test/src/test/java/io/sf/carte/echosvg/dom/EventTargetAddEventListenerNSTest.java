@@ -57,6 +57,7 @@ public class EventTargetAddEventListenerNSTest extends DOM3Test {
 	}
 
 	private static class Listener1 implements EventListener {
+
 		int count = 0;
 
 		@Override
@@ -69,9 +70,11 @@ public class EventTargetAddEventListenerNSTest extends DOM3Test {
 			count = 0;
 			return c;
 		}
+
 	}
 
 	private static class Listener2 implements EventListener {
+
 		int count = 0;
 
 		@Override
@@ -85,6 +88,7 @@ public class EventTargetAddEventListenerNSTest extends DOM3Test {
 			count = 0;
 			return c;
 		}
+
 	}
 
 }

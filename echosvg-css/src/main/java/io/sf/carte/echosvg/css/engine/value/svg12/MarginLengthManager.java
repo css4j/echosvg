@@ -111,4 +111,5 @@ public class MarginLengthManager extends LengthManager {
 		// Margins are always wrt to block width, event for top/bottom.
 		return HORIZONTAL_ORIENTATION;
 	}
+
 }

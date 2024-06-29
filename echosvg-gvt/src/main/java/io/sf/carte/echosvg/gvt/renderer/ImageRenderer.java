@@ -103,4 +103,5 @@ public interface ImageRenderer extends Renderer {
 	 * flush(Rectangle) is called.
 	 */
 	void flush(Collection<Shape> areas);
+
 }

@@ -48,6 +48,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @see io.sf.carte.echosvg.svggen.SVGAlphaComposite
  */
 public class SVGComposite implements SVGConverter {
+
 	/**
 	 * All AlphaComposite convertion is handed to svgAlphaComposite
 	 */
@@ -111,4 +112,5 @@ public class SVGComposite implements SVGConverter {
 		else
 			return svgCustomComposite.toSVG(composite);
 	}
+
 }

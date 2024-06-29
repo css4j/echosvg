@@ -28,6 +28,7 @@ package io.sf.carte.echosvg.xml;
  */
 
 public class XMLCharacters {
+
 	/**
 	 * The bit array representing the first character of an XML name.
 	 */
@@ -441,4 +442,5 @@ public class XMLCharacters {
 	 */
 	protected XMLCharacters() {
 	}
+
 }

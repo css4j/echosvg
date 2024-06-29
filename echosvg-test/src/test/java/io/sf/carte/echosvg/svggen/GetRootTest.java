@@ -82,4 +82,5 @@ public class GetRootTest {
 		// Compare the two output: they should be identical
 		assertEquals(swA.toString(), swB.toString());
 	}
+
 }

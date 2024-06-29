@@ -74,4 +74,5 @@ public class Messages {
 	public static String getMessage(String key) throws MissingResourceException {
 		return formatMessage(key, null);
 	}
+
 }

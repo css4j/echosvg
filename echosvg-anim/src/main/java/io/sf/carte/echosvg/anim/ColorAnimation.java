@@ -40,4 +40,5 @@ public class ColorAnimation extends SimpleAnimation {
 		super(timedElement, animatableElement, calcMode, keyTimes, keySplines, additive, cumulative, values, from, to,
 				by);
 	}
+
 }

@@ -100,4 +100,5 @@ public class SVGFeatureStrings {
 		features.add(SVGConstants.SVG_SVG11_BASIC_FONT_FEATURE);
 		features.add(SVGConstants.SVG_SVG11_EXTENSIBILITY_FEATURE);
 	}
+
 }

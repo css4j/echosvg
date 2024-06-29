@@ -146,4 +146,5 @@ public abstract class RectManager extends LengthManager {
 		String s = Messages.formatMessage("malformed.rect", p);
 		return new DOMException(DOMException.SYNTAX_ERR, s);
 	}
+
 }

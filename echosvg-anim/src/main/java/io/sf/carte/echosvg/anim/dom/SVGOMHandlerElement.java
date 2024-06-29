@@ -66,4 +66,5 @@ public class SVGOMHandlerElement extends SVGOMElement {
 	protected Node newNode() {
 		return new SVGOMHandlerElement();
 	}
+
 }

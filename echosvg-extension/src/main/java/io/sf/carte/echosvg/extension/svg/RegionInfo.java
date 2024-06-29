@@ -30,6 +30,7 @@ import java.awt.geom.Rectangle2D;
  * @version $Id$
  */
 public class RegionInfo extends Rectangle2D.Float {
+
 	private static final long serialVersionUID = 1L;
 	private float verticalAlignment = 0.0f;
 
@@ -57,4 +58,5 @@ public class RegionInfo extends Rectangle2D.Float {
 	public void setVerticalAlignment(float verticalAlignment) {
 		this.verticalAlignment = verticalAlignment;
 	}
+
 }

@@ -257,6 +257,7 @@ public abstract class AbstractSVGGradientElementBridge extends AnimatableGeneric
 			this.color = color;
 			this.offset = offset;
 		}
+
 	}
 
 	/**
@@ -299,5 +300,7 @@ public abstract class AbstractSVGGradientElementBridge extends AnimatableGeneric
 
 			return new Stop(color, offset);
 		}
+
 	}
+
 }

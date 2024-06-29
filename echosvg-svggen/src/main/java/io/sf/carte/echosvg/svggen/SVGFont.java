@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @version $Id$
  */
 public class SVGFont extends AbstractSVGConverter {
+
 	public static final float EXTRA_LIGHT = TextAttribute.WEIGHT_EXTRA_LIGHT;
 	public static final float LIGHT = TextAttribute.WEIGHT_LIGHT;
 	public static final float DEMILIGHT = TextAttribute.WEIGHT_DEMILIGHT;

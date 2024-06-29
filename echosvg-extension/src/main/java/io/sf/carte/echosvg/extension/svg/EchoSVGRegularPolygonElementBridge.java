@@ -152,4 +152,5 @@ public class EchoSVGRegularPolygonElementBridge extends SVGDecoratedShapeElement
 			return ret;
 		}
 	}
+
 }

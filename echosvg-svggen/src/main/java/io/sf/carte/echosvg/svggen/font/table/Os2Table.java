@@ -231,4 +231,5 @@ public class Os2Table implements Table {
 	public int getType() {
 		return OS_2;
 	}
+
 }

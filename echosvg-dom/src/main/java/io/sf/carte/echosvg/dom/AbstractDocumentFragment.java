@@ -73,4 +73,5 @@ public abstract class AbstractDocumentFragment extends AbstractParentNode implem
 					new Object[] { (int) getNodeType(), getNodeName(), (int) n.getNodeType(), n.getNodeName() });
 		}
 	}
+
 }

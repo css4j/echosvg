@@ -256,6 +256,7 @@ public class SVGTextContentSupport {
 	}
 
 	public static class SVGTextPoint extends SVGOMPoint {
+
 		SVGOMElement svgelt;
 
 		SVGTextPoint(SVGOMElement elem) {
@@ -271,5 +272,7 @@ public class SVGTextContentSupport {
 		public void setY(float y) throws DOMException {
 			throw svgelt.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.point", null);
 		}
+
 	}
+
 }

@@ -31,4 +31,5 @@ public interface ElementTraversal {
 	Element getPreviousElementSibling();
 
 	int getChildElementCount();
+
 }

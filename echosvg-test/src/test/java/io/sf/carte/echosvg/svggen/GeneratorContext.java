@@ -40,14 +40,18 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @version $Id$
  */
 public class GeneratorContext extends SVGAccuracyTest {
+
 	public static class TestIDGenerator extends SVGIDGenerator {
+
 		@Override
 		public String generateID(String prefix) {
 			return "test" + super.generateID(prefix);
 		}
+
 	}
 
 	public static class TestStyleHandler extends DefaultStyleHandler {
+
 		private CDATASection styleSheet;
 
 		public TestStyleHandler(CDATASection styleSheet) {
@@ -68,6 +72,7 @@ public class GeneratorContext extends SVGAccuracyTest {
 			// reference the class id of the style sheet on the element to be styled
 			element.setAttribute("class", id);
 		}
+
 	}
 
 	private Element topLevelGroup = null;
@@ -131,4 +136,5 @@ public class GeneratorContext extends SVGAccuracyTest {
 		topLevelGroup.appendChild(g2d.getTopLevelGroup());
 		g2d.setTopLevelGroup(topLevelGroup);
 	}
+
 }

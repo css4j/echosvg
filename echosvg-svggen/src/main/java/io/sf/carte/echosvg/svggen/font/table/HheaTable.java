@@ -108,4 +108,5 @@ public class HheaTable implements Table {
 	public short getXMaxExtent() {
 		return xMaxExtent;
 	}
+
 }

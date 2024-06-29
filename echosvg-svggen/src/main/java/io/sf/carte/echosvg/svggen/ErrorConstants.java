@@ -79,4 +79,5 @@ public interface ErrorConstants {
 	String ERR_ID_GENERATOR_NULL = "idGenerator should not be null";
 	String ERR_STYLE_HANDLER_NULL = "styleHandler should not be null";
 	String ERR_ERROR_HANDLER_NULL = "errorHandler should not be null";
+
 }

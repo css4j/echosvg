@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.gvt.font.GVTGlyphVector;
  * @version $Id$
  */
 public class LineInfo {
+
 	FlowRegions fr;
 	double lineHeight = -1;
 	double ascent = -1;
@@ -452,4 +453,5 @@ public class LineInfo {
 			nsz = sz;
 		return new GlyphGroupInfo[nsz];
 	}
+
 }

@@ -243,4 +243,5 @@ public class SVGOMTextElement extends SVGOMTextPositioningElement
 			super.updateOtherValue(type, val);
 		}
 	}
+
 }

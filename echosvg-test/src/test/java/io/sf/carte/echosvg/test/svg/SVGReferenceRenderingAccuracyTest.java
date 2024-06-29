@@ -32,6 +32,7 @@ import org.junit.jupiter.api.Test;
  * @version $Id$
  */
 public class SVGReferenceRenderingAccuracyTest extends ParameterizedRenderingAccuracyTest {
+
 	protected String alias;
 
 	@Test
@@ -70,7 +71,8 @@ public class SVGReferenceRenderingAccuracyTest extends ParameterizedRenderingAcc
 	 * &lt;fileName&gt;#reference-alias <br>
 	 * For example: <br>
 	 * samples/anne.svg#svgView(viewBox(0,0,100,100))-viewBox1
-	 * @throws MalformedURLException 
+	 * 
+	 * @throws MalformedURLException
 	 */
 	public void runTest(String uri, String parameter, String alias) throws MalformedURLException {
 

@@ -29,9 +29,11 @@ import java.util.List;
  * @version $Id$
  */
 public interface MimeTypeConstants {
+
 	//
 	// Mime Type Constants
 	//
 	String[] MIME_TYPES_SVG = { "image/svg+xml", "application/xml", "text/xml" };
 	List<String> MIME_TYPES_SVG_LIST = Arrays.asList(MIME_TYPES_SVG);
+
 }

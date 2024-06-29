@@ -54,4 +54,5 @@ public class CmapFormat6 extends CmapFormat {
 	public int mapCharCode(int charCode) {
 		return 0;
 	}
+
 }

@@ -57,4 +57,5 @@ public class ExtendedGridBagConstraints extends GridBagConstraints {
 		this.weightx = weightx;
 		this.weighty = weighty;
 	}
+
 }

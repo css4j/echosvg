@@ -61,4 +61,5 @@ public interface SVGValue extends Value {
 	 * Returns the color at the given index, if this object represents a SVGColor.
 	 */
 	float getColor(int i) throws DOMException;
+
 }

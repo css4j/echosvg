@@ -378,4 +378,5 @@ public class Glyph {
 			glyphChildrenNode.paint(graphics2D);
 		}
 	}
+
 }

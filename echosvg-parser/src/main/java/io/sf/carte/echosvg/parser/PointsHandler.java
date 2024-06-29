@@ -50,4 +50,5 @@ public interface PointsHandler {
 	 * @exception ParseException if an error occured while processing the points
 	 */
 	void endPoints() throws ParseException;
+
 }

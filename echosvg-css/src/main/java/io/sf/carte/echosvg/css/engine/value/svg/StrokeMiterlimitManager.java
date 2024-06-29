@@ -118,4 +118,5 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
 		}
 		throw createInvalidFloatTypeDOMException(unitType);
 	}
+
 }

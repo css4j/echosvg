@@ -41,6 +41,7 @@ import java.awt.geom.RoundRectangle2D;
  * @version $Id$
  */
 public class NegativeLengths implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -277,4 +278,5 @@ public class NegativeLengths implements Painter {
 		g.clip(rect);
 		g.drawString("Hello There", 10, 25);
 	}
+
 }

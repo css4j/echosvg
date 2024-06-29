@@ -569,4 +569,5 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 	public float getFontSize() {
 		return CSSUtilities.getComputedStyle(e, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
 	}
+
 }

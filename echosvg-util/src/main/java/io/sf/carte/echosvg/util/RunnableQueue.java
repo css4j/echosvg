@@ -50,6 +50,7 @@ public class RunnableQueue implements Runnable {
 		public String toString() {
 			return "[RunnableQueueState: " + value + ']';
 		}
+
 	}
 
 	/**
@@ -586,6 +587,7 @@ public class RunnableQueue implements Runnable {
 		 *         again at this time
 		 */
 		long getWaitTime();
+
 	}
 
 	/**
@@ -613,6 +615,7 @@ public class RunnableQueue implements Runnable {
 		 * Called when the execution of the queue has been resumed.
 		 */
 		void executionResumed(RunnableQueue rq);
+
 	}
 
 	/**
@@ -648,6 +651,7 @@ public class RunnableQueue implements Runnable {
 		@Override
 		public void executionResumed(RunnableQueue rq) {
 		}
+
 	}
 
 	/**
@@ -673,6 +677,7 @@ public class RunnableQueue implements Runnable {
 		public void unlock() {
 			return;
 		}
+
 	}
 
 	/**
@@ -724,5 +729,7 @@ public class RunnableQueue implements Runnable {
 			// Wake the locking thread...
 			notify();
 		}
+
 	}
+
 }

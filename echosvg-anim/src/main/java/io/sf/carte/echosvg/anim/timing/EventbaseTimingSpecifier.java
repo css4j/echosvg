@@ -125,4 +125,5 @@ public class EventbaseTimingSpecifier extends EventLikeTimingSpecifier implement
 		InstanceTime instance = new InstanceTime(this, time + offset, true);
 		owner.addInstanceTime(instance, isBegin);
 	}
+
 }

@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.gvt.renderer;
  * @version $Id$
  */
 public interface ImageRendererFactory extends RendererFactory {
+
 	/**
 	 * Creates a new static renderer.
 	 */
@@ -35,4 +36,5 @@ public interface ImageRendererFactory extends RendererFactory {
 	 * Creates a new dynamic renderer.
 	 */
 	ImageRenderer createDynamicImageRenderer();
+
 }

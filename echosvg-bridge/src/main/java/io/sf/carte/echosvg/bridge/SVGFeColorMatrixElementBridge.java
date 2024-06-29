@@ -226,4 +226,5 @@ public class SVGFeColorMatrixElementBridge extends AbstractSVGFilterPrimitiveEle
 		throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
 				new Object[] { SVG_TYPE_ATTRIBUTE, s });
 	}
+
 }

@@ -387,4 +387,5 @@ public class MacRenderer implements ImageRenderer {
 			damagedAreas = devRLM;
 		}
 	}
+
 }

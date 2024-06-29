@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
  * @version $Id$
  */
 public class CachedImageHandlerPNGEncoder extends DefaultCachedImageHandler {
+
 	public static final String CACHED_PNG_PREFIX = "pngImage";
 	public static final String CACHED_PNG_SUFFIX = ".png";
 
@@ -68,4 +69,5 @@ public class CachedImageHandlerPNGEncoder extends DefaultCachedImageHandler {
 	public String getRefPrefix() {
 		return refPrefix;
 	}
+
 }

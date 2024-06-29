@@ -130,4 +130,5 @@ public class SVGOMRect implements SVGRect {
 	public void setHeight(float height) throws DOMException {
 		this.h = height;
 	}
+
 }

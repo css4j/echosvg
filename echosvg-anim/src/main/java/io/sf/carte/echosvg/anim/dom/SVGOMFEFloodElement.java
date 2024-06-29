@@ -116,4 +116,5 @@ public class SVGOMFEFloodElement extends SVGOMFilterPrimitiveStandardAttributes 
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

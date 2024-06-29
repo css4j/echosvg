@@ -94,4 +94,5 @@ public class SVGCSSStyler implements SVGSyntax {
 		}
 
 	}
+
 }

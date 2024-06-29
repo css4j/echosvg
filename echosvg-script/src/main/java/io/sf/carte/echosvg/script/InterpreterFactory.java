@@ -54,4 +54,5 @@ public interface InterpreterFactory {
 	 * @param svg12       whether the document is an SVG 1.2 document
 	 */
 	Interpreter createInterpreter(URL documentURL, boolean svg12);
+
 }

@@ -131,4 +131,5 @@ public class SVGOMAnimatedString extends AbstractSVGAnimatedValue implements SVG
 			fireAnimatedAttributeListeners();
 		}
 	}
+
 }

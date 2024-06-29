@@ -156,4 +156,5 @@ public class CmapFormat4 extends CmapFormat {
 		workBuff.append(']');
 		return workBuff.toString();
 	}
+
 }

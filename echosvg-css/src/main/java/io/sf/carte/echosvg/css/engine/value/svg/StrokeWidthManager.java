@@ -104,4 +104,5 @@ public class StrokeWidthManager extends LengthManager {
 	protected int getOrientation() {
 		return BOTH_ORIENTATION;
 	}
+
 }

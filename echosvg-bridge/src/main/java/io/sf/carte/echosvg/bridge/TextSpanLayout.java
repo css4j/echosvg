@@ -231,4 +231,5 @@ public interface TextSpanLayout {
 	 * Reverse (and optionally mirror) glyphs if not already reversed.
 	 */
 	void maybeReverse(boolean mirror);
+
 }

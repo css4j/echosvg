@@ -67,6 +67,7 @@ import io.sf.carte.echosvg.w3c.dom.Location;
  * @version $Id$
  */
 public class BaseScriptingEnvironment {
+
 	/**
 	 * Constant used to describe inline scripts.
 	 * 
@@ -603,6 +604,7 @@ public class BaseScriptingEnvironment {
 				new Object[] { d.getURL(), SVGConstants.SVG_ONLOAD_ATTRIBUTE, line });
 
 		EventListener l = new EventListener() {
+
 			@Override
 			public void handleEvent(Event evt) {
 				try {
@@ -620,6 +622,7 @@ public class BaseScriptingEnvironment {
 					handleInterpreterException(e);
 				}
 			}
+
 		};
 		t.addEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, type, l, false, null);
 		t.dispatchEvent(ev);
@@ -883,4 +886,5 @@ public class BaseScriptingEnvironment {
 		}
 
 	}
+
 }

@@ -36,4 +36,5 @@ public interface CSSNavigableDocument {
 	 * Removes an event listener for mutations on the CSSNavigableDocument tree.
 	 */
 	void removeCSSNavigableDocumentListener(CSSNavigableDocumentListener l);
+
 }

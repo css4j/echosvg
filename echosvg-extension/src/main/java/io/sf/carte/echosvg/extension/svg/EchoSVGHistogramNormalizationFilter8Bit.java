@@ -150,4 +150,5 @@ public class EchoSVGHistogramNormalizationFilter8Bit extends AbstractColorInterp
 
 		return new ComponentTransferRed(convertSourceCS(srcRI), tfs, null);
 	}
+
 }

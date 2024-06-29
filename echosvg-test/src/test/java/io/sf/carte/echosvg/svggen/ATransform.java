@@ -34,6 +34,7 @@ import java.awt.Shape;
  * @version $Id$
  */
 public class ATransform implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -85,4 +86,5 @@ public class ATransform implements Painter {
 		g.setPaint(new Color(0, 0, 0, 128));
 		g.fill(shearBounds);
 	}
+
 }

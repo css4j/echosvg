@@ -128,4 +128,5 @@ public class InteractorAdapter implements Interactor {
 	@Override
 	public void mouseMoved(MouseEvent e) {
 	}
+
 }

@@ -66,4 +66,5 @@ public class SVGOMDefinitionSrcElement extends SVGOMElement implements SVGDefini
 	protected Node newNode() {
 		return new SVGOMDefinitionSrcElement();
 	}
+
 }

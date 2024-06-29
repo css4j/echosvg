@@ -40,4 +40,5 @@ public class SVGOMException extends SVGException {
 	public SVGOMException(short code, String message) {
 		super(code, message);
 	}
+
 }

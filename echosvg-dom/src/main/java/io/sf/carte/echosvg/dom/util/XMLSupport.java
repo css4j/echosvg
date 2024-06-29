@@ -129,4 +129,5 @@ public final class XMLSupport implements XMLConstants {
 		}
 		return result.toString();
 	}
+
 }

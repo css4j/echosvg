@@ -73,4 +73,5 @@ public class ColorSwitchElement extends PrefixableStylableExtensionElement imple
 	protected Node newNode() {
 		return new ColorSwitchElement();
 	}
+
 }

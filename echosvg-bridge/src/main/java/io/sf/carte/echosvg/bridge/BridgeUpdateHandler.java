@@ -72,4 +72,5 @@ public interface BridgeUpdateHandler {
 	 * Disposes this BridgeUpdateHandler and releases all resources.
 	 */
 	void dispose();
+
 }

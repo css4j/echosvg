@@ -30,6 +30,7 @@ import org.w3c.dom.Node;
  */
 
 public class GenericProcessingInstruction extends AbstractProcessingInstruction {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -153,4 +154,5 @@ public class GenericProcessingInstruction extends AbstractProcessingInstruction 
 	protected Node newNode() {
 		return new GenericProcessingInstruction();
 	}
+
 }

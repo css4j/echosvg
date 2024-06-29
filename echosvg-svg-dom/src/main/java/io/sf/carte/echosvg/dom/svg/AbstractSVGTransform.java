@@ -186,4 +186,5 @@ public abstract class AbstractSVGTransform implements SVGTransform {
 		affineTransform = AffineTransform.getShearInstance(0.0, Math.tan(Math.toRadians(angle)));
 		this.angle = angle;
 	}
+
 }

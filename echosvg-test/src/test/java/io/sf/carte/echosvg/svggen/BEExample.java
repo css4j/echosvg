@@ -33,6 +33,7 @@ import java.awt.RenderingHints;
  * @version $Id$
  */
 public class BEExample implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -44,4 +45,5 @@ public class BEExample implements Painter {
 		g.setFont(new Font("SunSansCondensed-Heavy", Font.PLAIN, 20));
 		g.drawString("Hello Java 2D to SVG", 40, 40);
 	}
+
 }

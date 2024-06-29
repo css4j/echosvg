@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.script;
  * @version $Id$
  */
 public class InterpreterException extends RuntimeException {
+
 	private static final long serialVersionUID = 1L;
 	private int line = -1; // -1 when unknown
 	private int column = -1; // -1 when unknown
@@ -98,4 +99,5 @@ public class InterpreterException extends RuntimeException {
 			return null;
 		}
 	}
+
 }

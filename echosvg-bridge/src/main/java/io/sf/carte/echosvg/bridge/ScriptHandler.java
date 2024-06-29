@@ -45,4 +45,5 @@ public interface ScriptHandler {
 	 * @param win An object which represents the current viewer.
 	 */
 	void run(Document doc, Window win);
+
 }

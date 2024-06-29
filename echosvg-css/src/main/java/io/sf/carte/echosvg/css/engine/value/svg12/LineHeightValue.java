@@ -49,4 +49,5 @@ public class LineHeightValue extends FloatValue {
 	public boolean getFontSizeRelative() {
 		return fontSizeRelative;
 	}
+
 }

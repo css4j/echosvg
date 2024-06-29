@@ -153,4 +153,5 @@ public class SVGFeCompositeElementBridge extends AbstractSVGFilterPrimitiveEleme
 		throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_VALUE_MALFORMED,
 				new Object[] { SVG_OPERATOR_ATTRIBUTE, s });
 	}
+
 }

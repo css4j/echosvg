@@ -92,4 +92,5 @@ public class AnimationException extends RuntimeException {
 	public String getMessage() {
 		return TimedElement.formatMessage(code, params);
 	}
+
 }

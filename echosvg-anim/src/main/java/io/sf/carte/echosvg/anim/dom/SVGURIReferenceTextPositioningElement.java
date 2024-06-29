@@ -109,4 +109,5 @@ public abstract class SVGURIReferenceTextPositioningElement extends SVGOMTextPos
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

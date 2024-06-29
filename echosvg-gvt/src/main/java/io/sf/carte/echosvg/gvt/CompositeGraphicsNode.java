@@ -1081,6 +1081,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode implements List<
 				throw new ConcurrentModificationException();
 			}
 		}
+
 	}
 
 	/**
@@ -1145,5 +1146,7 @@ public class CompositeGraphicsNode extends AbstractGraphicsNode implements List<
 				throw new ConcurrentModificationException();
 			}
 		}
+
 	}
+
 }

@@ -236,5 +236,7 @@ public class ParsedURLDataProtocolHandler extends AbstractParsedURLProtocolHandl
 			}
 			return new ByteArrayInputStream(data, 0, j);
 		}
+
 	}
+
 }

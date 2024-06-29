@@ -31,6 +31,7 @@ import java.awt.RenderingHints;
  * @version $Id$
  */
 public class TextSpacePreserve implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -47,4 +48,5 @@ public class TextSpacePreserve implements Painter {
 				legendY + 40);
 		g.drawString("Should have no trailing spaces", legendX, legendY + 60);
 	}
+
 }

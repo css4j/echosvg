@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public class DefaultPreserveAspectRatioHandler implements PreserveAspectRatioHandler {
+
 	/**
 	 * The only instance of this class.
 	 */
@@ -134,4 +135,5 @@ public class DefaultPreserveAspectRatioHandler implements PreserveAspectRatioHan
 	@Override
 	public void endPreserveAspectRatio() throws ParseException {
 	}
+
 }

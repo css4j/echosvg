@@ -194,4 +194,5 @@ public class GenericXBLManager implements XBLManager {
 	public NodeList getXblDefinitions(Node n) {
 		return AbstractNode.EMPTY_NODE_LIST;
 	}
+
 }

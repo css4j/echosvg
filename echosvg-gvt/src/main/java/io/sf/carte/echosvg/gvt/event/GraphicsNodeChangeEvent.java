@@ -69,4 +69,5 @@ public class GraphicsNodeChangeEvent extends GraphicsNodeEvent {
 	public GraphicsNode getChangeSrc() {
 		return changeSource;
 	}
+
 }

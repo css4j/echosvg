@@ -196,6 +196,7 @@ public abstract class ImageCacher implements SVGSyntax, ErrorConstants {
 			this.src = src;
 			this.href = href;
 		}
+
 	}
 
 	/**

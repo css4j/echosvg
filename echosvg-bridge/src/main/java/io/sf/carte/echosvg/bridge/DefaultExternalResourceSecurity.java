@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class DefaultExternalResourceSecurity implements ExternalResourceSecurity {
+
 	public static final String DATA_PROTOCOL = "data";
 	/**
 	 * Message when trying to load a external resource file and the Document does

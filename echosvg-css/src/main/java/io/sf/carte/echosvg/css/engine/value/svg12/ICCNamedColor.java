@@ -93,4 +93,5 @@ public class ICCNamedColor extends AbstractValue {
 	public String toString() {
 		return getCssText();
 	}
+
 }

@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.test.TestFonts;
  * @version $Id$
  */
 public class Bug17965 implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
@@ -47,4 +48,5 @@ public class Bug17965 implements Painter {
 		g.setFont(font);
 		g.fillRect(50, 50, 50, 50);
 	}
+
 }

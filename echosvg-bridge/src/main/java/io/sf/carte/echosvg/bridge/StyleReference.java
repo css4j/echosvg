@@ -59,4 +59,5 @@ public class StyleReference {
 	public String getStyleAttribute() {
 		return styleAttribute;
 	}
+
 }

@@ -179,4 +179,5 @@ public class Base64DecodeStream extends InputStream {
 
 		return false;
 	}
+
 }

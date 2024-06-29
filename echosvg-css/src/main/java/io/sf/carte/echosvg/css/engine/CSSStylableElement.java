@@ -67,4 +67,5 @@ public interface CSSStylableElement extends Element {
 	 * {@link StyleDeclaration} for the override style of this element.
 	 */
 	StyleDeclarationProvider getOverrideStyleDeclarationProvider();
+
 }

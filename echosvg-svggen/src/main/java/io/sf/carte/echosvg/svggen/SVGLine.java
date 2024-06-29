@@ -31,6 +31,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SVGLine extends SVGGraphicObjectConverter {
+
 	/**
 	 * @param generatorContext used to build Elements
 	 */
@@ -49,4 +50,5 @@ public class SVGLine extends SVGGraphicObjectConverter {
 		svgLine.setAttributeNS(null, SVG_Y2_ATTRIBUTE, doubleString(line.getY2()));
 		return svgLine;
 	}
+
 }

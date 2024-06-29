@@ -117,4 +117,5 @@ public class SVGOMFEComponentTransferElement extends SVGOMFilterPrimitiveStandar
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

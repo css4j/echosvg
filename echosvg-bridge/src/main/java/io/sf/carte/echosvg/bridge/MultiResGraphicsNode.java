@@ -232,4 +232,5 @@ public class MultiResGraphicsNode extends AbstractGraphicsNode implements SVGCon
 
 		return null;
 	}
+
 }

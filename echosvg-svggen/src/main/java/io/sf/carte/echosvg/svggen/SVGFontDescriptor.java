@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.svggen.SVGFont
  */
 public class SVGFontDescriptor implements SVGDescriptor, SVGSyntax {
+
 	private Element def;
 	private String fontSize;
 	private String fontWeight;
@@ -81,4 +82,5 @@ public class SVGFontDescriptor implements SVGDescriptor, SVGSyntax {
 
 		return defSet;
 	}
+
 }

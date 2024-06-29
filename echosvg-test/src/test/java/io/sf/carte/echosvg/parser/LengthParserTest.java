@@ -72,6 +72,7 @@ public class LengthParserTest {
 	}
 
 	private class TestHandler extends DefaultLengthHandler {
+
 		private StringBuilder buffer;
 		String resultLength;
 
@@ -137,5 +138,7 @@ public class LengthParserTest {
 		public void endLength() throws ParseException {
 			resultLength = buffer.toString();
 		}
+
 	}
+
 }

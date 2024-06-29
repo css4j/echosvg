@@ -102,4 +102,5 @@ public class UpdateManagerEvent extends EventObject {
 	public boolean getClearPaintingTransform() {
 		return clearPaintingTransform;
 	}
+
 }

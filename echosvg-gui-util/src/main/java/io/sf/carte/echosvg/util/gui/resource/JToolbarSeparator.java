@@ -32,6 +32,7 @@ import javax.swing.JComponent;
  * @version $Id$
  */
 public class JToolbarSeparator extends JComponent {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -54,4 +55,5 @@ public class JToolbarSeparator extends JComponent {
 		g.drawLine(pos + 1, 3, pos + 1, size.height - 5);
 		g.drawLine(pos, size.height - 4, pos + 1, size.height - 4);
 	}
+
 }

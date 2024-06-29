@@ -36,6 +36,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.svggen.SVGBufferedImageOp
  */
 public class SVGConvolveOp extends AbstractSVGFilterConverter {
+
 	/**
 	 * @param generatorContext used to build Elements
 	 */
@@ -125,4 +126,5 @@ public class SVGConvolveOp extends AbstractSVGFilterConverter {
 
 		return filterDesc;
 	}
+
 }

@@ -169,4 +169,5 @@ public abstract class StylableExtensionElement extends ExtensionElement implemen
 	public SVGAnimatedString getClassName() {
 		throw new UnsupportedOperationException("Not implemented");
 	}
+
 }

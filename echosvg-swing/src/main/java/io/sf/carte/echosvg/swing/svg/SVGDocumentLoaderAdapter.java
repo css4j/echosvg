@@ -55,4 +55,5 @@ public abstract class SVGDocumentLoaderAdapter implements SVGDocumentLoaderListe
 	@Override
 	public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
 	}
+
 }

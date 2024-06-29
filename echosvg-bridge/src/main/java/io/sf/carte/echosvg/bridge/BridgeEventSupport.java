@@ -117,6 +117,7 @@ public abstract class BridgeEventSupport implements SVGConstants {
 			NodeEventTarget et = (NodeEventTarget) evt.getTarget();
 			et.removeEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "SVGUnload", this, false);
 		}
+
 	}
 
 	/**
@@ -391,5 +392,7 @@ public abstract class BridgeEventSupport implements SVGConstants {
 			}
 			return target;
 		}
+
 	}
+
 }

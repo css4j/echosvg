@@ -98,4 +98,5 @@ public abstract class AbstractCharDecoder implements CharDecoder {
 	protected void endOfStreamError(String encoding) throws IOException {
 		throw new IOException(Messages.formatMessage("end.of.stream", new Object[] { encoding }));
 	}
+
 }

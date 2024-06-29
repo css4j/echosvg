@@ -346,6 +346,7 @@ public class SVGOMAnimatedLengthList extends AbstractSVGAnimatedValue implements
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -530,5 +531,7 @@ public class SVGOMAnimatedLengthList extends AbstractSVGAnimatedValue implements
 		protected void revalidate() {
 			valid = true;
 		}
+
 	}
+
 }

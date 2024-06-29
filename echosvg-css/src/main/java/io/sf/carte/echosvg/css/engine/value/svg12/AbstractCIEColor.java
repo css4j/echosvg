@@ -104,4 +104,5 @@ public abstract class AbstractCIEColor extends AbstractValue {
 	public String toString() {
 		return getCssText();
 	}
+
 }

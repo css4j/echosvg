@@ -194,4 +194,5 @@ public interface GVTGlyphVector {
 	 * Draws the glyph vector.
 	 */
 	void draw(Graphics2D graphics2D, AttributedCharacterIterator aci);
+
 }

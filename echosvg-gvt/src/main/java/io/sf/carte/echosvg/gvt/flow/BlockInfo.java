@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.gvt.font.GVTLineMetrics;
  * @version $Id$
  */
 public class BlockInfo {
+
 	public static final int ALIGN_START = 0;
 	public static final int ALIGN_MIDDLE = 1;
 	public static final int ALIGN_END = 2;

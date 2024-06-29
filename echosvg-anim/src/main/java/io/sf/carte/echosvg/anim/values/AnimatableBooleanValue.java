@@ -118,4 +118,5 @@ public class AnimatableBooleanValue extends AnimatableValue {
 	public String getCssText() {
 		return (value) ? "true" : "false";
 	}
+
 }

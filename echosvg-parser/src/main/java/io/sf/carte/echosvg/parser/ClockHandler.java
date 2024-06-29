@@ -32,4 +32,5 @@ public interface ClockHandler {
 	 * Invoked when a clock value is parsed.
 	 */
 	void clockValue(float clockValue);
+
 }

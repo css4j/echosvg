@@ -32,6 +32,7 @@ import java.awt.Stroke;
  * @version $Id$
  */
 public class TextPaintInfo {
+
 	public boolean visible;
 	public Paint fillPaint;
 	public Paint strokePaint;
@@ -122,4 +123,5 @@ public class TextPaintInfo {
 		return (tpi1Stroke == tpi2Stroke);
 
 	}
+
 }

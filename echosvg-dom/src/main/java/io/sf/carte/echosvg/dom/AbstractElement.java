@@ -1063,6 +1063,7 @@ public abstract class AbstractElement extends AbstractParentChildNode implements
 			int result = (ns == null) ? 0 : ns.hashCode();
 			return result ^ nm.hashCode();
 		}
+
 	}
 
 	/**
@@ -1122,6 +1123,7 @@ public abstract class AbstractElement extends AbstractParentChildNode implements
 			}
 			return name.equals(nm);
 		}
+
 	}
 
 	/**
@@ -1152,5 +1154,7 @@ public abstract class AbstractElement extends AbstractParentChildNode implements
 		public boolean isDerivedFrom(String ns, String name, int method) {
 			return false;
 		}
+
 	}
+
 }

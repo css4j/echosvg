@@ -71,6 +71,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * @version $Id$
  */
 public class MenuFactory extends ResourceManager {
+
 	// Constants
 	//
 	private static final String TYPE_MENU = "MENU";
@@ -482,4 +483,5 @@ public class MenuFactory extends ResourceManager {
 		} catch (MissingResourceException e) {
 		}
 	}
+
 }

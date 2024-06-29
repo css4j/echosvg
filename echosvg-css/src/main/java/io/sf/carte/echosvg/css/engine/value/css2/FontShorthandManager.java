@@ -331,4 +331,5 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 			ph.property(CSSConstants.CSS_LINE_HEIGHT_PROPERTY, lineHeight, imp);
 		}
 	}
+
 }

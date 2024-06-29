@@ -127,4 +127,5 @@ public class PathParserFailureTest {
 
 		testPathParserFailure("m 1.5,6.7 A A 4,4 0 1 1 2 2");
 	}
+
 }

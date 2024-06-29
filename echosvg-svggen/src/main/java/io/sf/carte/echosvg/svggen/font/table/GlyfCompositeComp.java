@@ -172,4 +172,5 @@ public class GlyfCompositeComp {
 	public int scaleY(int x, int y) {
 		return Math.round((float) (x * scale01 + y * yscale));
 	}
+
 }

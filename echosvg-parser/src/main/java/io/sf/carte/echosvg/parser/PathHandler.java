@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public interface PathHandler {
+
 	/**
 	 * Invoked when the path starts.
 	 * 
@@ -281,4 +282,5 @@ public interface PathHandler {
 	 */
 	void arcAbs(float rx, float ry, float xAxisRotation, boolean largeArcFlag, boolean sweepFlag, float x, float y)
 			throws ParseException;
+
 }

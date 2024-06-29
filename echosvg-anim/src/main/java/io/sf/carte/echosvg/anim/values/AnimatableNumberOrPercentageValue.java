@@ -151,4 +151,5 @@ public class AnimatableNumberOrPercentageValue extends AnimatableNumberValue {
 		}
 		return sb.toString();
 	}
+
 }

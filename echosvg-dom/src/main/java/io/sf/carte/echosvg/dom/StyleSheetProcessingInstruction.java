@@ -150,4 +150,5 @@ public class StyleSheetProcessingInstruction extends AbstractProcessingInstructi
 	protected Node newNode() {
 		return new StyleSheetProcessingInstruction();
 	}
+
 }

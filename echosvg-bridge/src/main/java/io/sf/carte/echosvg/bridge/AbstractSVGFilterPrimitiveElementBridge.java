@@ -250,4 +250,5 @@ public abstract class AbstractSVGFilterPrimitiveElementBridge extends Animatable
 			}
 		}
 	}
+
 }

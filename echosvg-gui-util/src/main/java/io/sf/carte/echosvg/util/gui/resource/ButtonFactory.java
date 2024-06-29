@@ -56,6 +56,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * @version $Id$
  */
 public class ButtonFactory extends ResourceManager {
+
 	// Constants
 	//
 	private static final String ICON_SUFFIX = ".icon";
@@ -261,4 +262,5 @@ public class ButtonFactory extends ResourceManager {
 		} catch (MissingResourceException e) {
 		}
 	}
+
 }

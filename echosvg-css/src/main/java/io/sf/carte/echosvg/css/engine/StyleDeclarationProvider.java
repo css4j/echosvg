@@ -38,4 +38,5 @@ public interface StyleDeclarationProvider {
 	 * Sets the object storing the properties of this style declaration.
 	 */
 	void setStyleDeclaration(StyleDeclaration sd);
+
 }

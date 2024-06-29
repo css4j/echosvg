@@ -98,4 +98,5 @@ public interface AnimationTarget {
 	 * Removes a listener for changes to the given attribute value.
 	 */
 	void removeTargetListener(String ns, String an, boolean isCSS, AnimationTargetListener l);
+
 }

@@ -134,4 +134,5 @@ public abstract class AbstractElementNS extends AbstractElement {
 		ae.namespaceURI = namespaceURI;
 		return n;
 	}
+
 }

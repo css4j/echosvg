@@ -142,4 +142,5 @@ public class SVGOMMPathElement extends SVGOMURIReferenceElement implements SVGMP
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

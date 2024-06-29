@@ -175,4 +175,5 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge impleme
 		PathLength pl = getPathLengthObj();
 		return pl.segmentAtLength(distance);
 	}
+
 }

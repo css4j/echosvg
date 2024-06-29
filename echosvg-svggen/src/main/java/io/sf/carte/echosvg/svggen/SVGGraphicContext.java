@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @version $Id$
  */
 public class SVGGraphicContext implements SVGConstants, ErrorConstants {
+
 	// this properties can only be set of leaf nodes =>
 	// if they have default values they can be ignored
 	private static final String[] leafOnlyAttributes = { SVG_OPACITY_ATTRIBUTE, SVG_FILTER_ATTRIBUTE,
@@ -133,4 +134,5 @@ public class SVGGraphicContext implements SVGConstants, ErrorConstants {
 			}
 		}
 	}
+
 }

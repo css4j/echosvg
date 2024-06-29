@@ -105,4 +105,5 @@ public class SVGOMPoint implements SVGPoint {
 		float newY = matrix.getB() * point.getX() + matrix.getD() * point.getY() + matrix.getF();
 		return new SVGOMPoint(newX, newY);
 	}
+
 }

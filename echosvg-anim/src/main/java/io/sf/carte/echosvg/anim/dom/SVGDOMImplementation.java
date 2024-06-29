@@ -422,6 +422,7 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 	 * To create a 'a' element.
 	 */
 	protected static class AElementFactory implements ElementFactory {
+
 		public AElementFactory() {
 		}
 
@@ -432,12 +433,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMAElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'altGlyph' element.
 	 */
 	protected static class AltGlyphElementFactory implements ElementFactory {
+
 		public AltGlyphElementFactory() {
 		}
 
@@ -448,12 +451,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMAltGlyphElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'altGlyphDef' element.
 	 */
 	protected static class AltGlyphDefElementFactory implements ElementFactory {
+
 		public AltGlyphDefElementFactory() {
 		}
 
@@ -464,12 +469,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMAltGlyphDefElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'altGlyphItem' element.
 	 */
 	protected static class AltGlyphItemElementFactory implements ElementFactory {
+
 		public AltGlyphItemElementFactory() {
 		}
 
@@ -480,12 +487,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMAltGlyphItemElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'animate' element.
 	 */
 	protected static class AnimateElementFactory implements ElementFactory {
+
 		public AnimateElementFactory() {
 		}
 
@@ -496,12 +505,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMAnimateElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'animateColor' element.
 	 */
 	protected static class AnimateColorElementFactory implements ElementFactory {
+
 		public AnimateColorElementFactory() {
 		}
 
@@ -512,12 +523,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMAnimateColorElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'animateMotion' element.
 	 */
 	protected static class AnimateMotionElementFactory implements ElementFactory {
+
 		public AnimateMotionElementFactory() {
 		}
 
@@ -528,12 +541,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMAnimateMotionElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'animateTransform' element.
 	 */
 	protected static class AnimateTransformElementFactory implements ElementFactory {
+
 		public AnimateTransformElementFactory() {
 		}
 
@@ -544,12 +559,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMAnimateTransformElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'circle' element.
 	 */
 	protected static class CircleElementFactory implements ElementFactory {
+
 		public CircleElementFactory() {
 		}
 
@@ -560,12 +577,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMCircleElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'clip-path' element.
 	 */
 	protected static class ClipPathElementFactory implements ElementFactory {
+
 		public ClipPathElementFactory() {
 		}
 
@@ -576,12 +595,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMClipPathElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'color-profile' element.
 	 */
 	protected static class ColorProfileElementFactory implements ElementFactory {
+
 		public ColorProfileElementFactory() {
 		}
 
@@ -592,12 +613,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMColorProfileElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'cursor' element.
 	 */
 	protected static class CursorElementFactory implements ElementFactory {
+
 		public CursorElementFactory() {
 		}
 
@@ -608,12 +631,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMCursorElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'definition-src' element.
 	 */
 	protected static class DefinitionSrcElementFactory implements ElementFactory {
+
 		public DefinitionSrcElementFactory() {
 		}
 
@@ -624,12 +649,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMDefinitionSrcElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'defs' element.
 	 */
 	protected static class DefsElementFactory implements ElementFactory {
+
 		public DefsElementFactory() {
 		}
 
@@ -640,12 +667,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMDefsElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'desc' element.
 	 */
 	protected static class DescElementFactory implements ElementFactory {
+
 		public DescElementFactory() {
 		}
 
@@ -656,12 +685,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMDescElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create an 'ellipse' element.
 	 */
 	protected static class EllipseElementFactory implements ElementFactory {
+
 		public EllipseElementFactory() {
 		}
 
@@ -672,12 +703,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMEllipseElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feBlend' element.
 	 */
 	protected static class FeBlendElementFactory implements ElementFactory {
+
 		public FeBlendElementFactory() {
 		}
 
@@ -688,12 +721,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEBlendElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feColorMatrix' element.
 	 */
 	protected static class FeColorMatrixElementFactory implements ElementFactory {
+
 		public FeColorMatrixElementFactory() {
 		}
 
@@ -704,12 +739,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEColorMatrixElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feComponentTransfer' element.
 	 */
 	protected static class FeComponentTransferElementFactory implements ElementFactory {
+
 		public FeComponentTransferElementFactory() {
 		}
 
@@ -720,12 +757,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEComponentTransferElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feComposite' element.
 	 */
 	protected static class FeCompositeElementFactory implements ElementFactory {
+
 		public FeCompositeElementFactory() {
 		}
 
@@ -736,12 +775,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFECompositeElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feConvolveMatrix' element.
 	 */
 	protected static class FeConvolveMatrixElementFactory implements ElementFactory {
+
 		public FeConvolveMatrixElementFactory() {
 		}
 
@@ -752,12 +793,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEConvolveMatrixElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feDiffuseLighting' element.
 	 */
 	protected static class FeDiffuseLightingElementFactory implements ElementFactory {
+
 		public FeDiffuseLightingElementFactory() {
 		}
 
@@ -768,12 +811,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEDiffuseLightingElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feDisplacementMap' element.
 	 */
 	protected static class FeDisplacementMapElementFactory implements ElementFactory {
+
 		public FeDisplacementMapElementFactory() {
 		}
 
@@ -784,12 +829,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEDisplacementMapElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feDistantLight' element.
 	 */
 	protected static class FeDistantLightElementFactory implements ElementFactory {
+
 		public FeDistantLightElementFactory() {
 		}
 
@@ -800,12 +847,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEDistantLightElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feFlood' element.
 	 */
 	protected static class FeFloodElementFactory implements ElementFactory {
+
 		public FeFloodElementFactory() {
 		}
 
@@ -816,12 +865,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEFloodElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feFuncA' element.
 	 */
 	protected static class FeFuncAElementFactory implements ElementFactory {
+
 		public FeFuncAElementFactory() {
 		}
 
@@ -832,12 +883,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEFuncAElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feFuncR' element.
 	 */
 	protected static class FeFuncRElementFactory implements ElementFactory {
+
 		public FeFuncRElementFactory() {
 		}
 
@@ -848,12 +901,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEFuncRElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feFuncG' element.
 	 */
 	protected static class FeFuncGElementFactory implements ElementFactory {
+
 		public FeFuncGElementFactory() {
 		}
 
@@ -864,12 +919,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEFuncGElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feFuncB' element.
 	 */
 	protected static class FeFuncBElementFactory implements ElementFactory {
+
 		public FeFuncBElementFactory() {
 		}
 
@@ -880,12 +937,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEFuncBElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feGaussianBlur' element.
 	 */
 	protected static class FeGaussianBlurElementFactory implements ElementFactory {
+
 		public FeGaussianBlurElementFactory() {
 		}
 
@@ -896,12 +955,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEGaussianBlurElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feImage' element.
 	 */
 	protected static class FeImageElementFactory implements ElementFactory {
+
 		public FeImageElementFactory() {
 		}
 
@@ -912,12 +973,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEImageElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feMerge' element.
 	 */
 	protected static class FeMergeElementFactory implements ElementFactory {
+
 		public FeMergeElementFactory() {
 		}
 
@@ -928,12 +991,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEMergeElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feMergeNode' element.
 	 */
 	protected static class FeMergeNodeElementFactory implements ElementFactory {
+
 		public FeMergeNodeElementFactory() {
 		}
 
@@ -944,12 +1009,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEMergeNodeElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feMorphology' element.
 	 */
 	protected static class FeMorphologyElementFactory implements ElementFactory {
+
 		public FeMorphologyElementFactory() {
 		}
 
@@ -960,12 +1027,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEMorphologyElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feOffset' element.
 	 */
 	protected static class FeOffsetElementFactory implements ElementFactory {
+
 		public FeOffsetElementFactory() {
 		}
 
@@ -976,12 +1045,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEOffsetElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'fePointLight' element.
 	 */
 	protected static class FePointLightElementFactory implements ElementFactory {
+
 		public FePointLightElementFactory() {
 		}
 
@@ -992,12 +1063,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFEPointLightElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feSpecularLighting' element.
 	 */
 	protected static class FeSpecularLightingElementFactory implements ElementFactory {
+
 		public FeSpecularLightingElementFactory() {
 		}
 
@@ -1008,12 +1081,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFESpecularLightingElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feSpotLight' element.
 	 */
 	protected static class FeSpotLightElementFactory implements ElementFactory {
+
 		public FeSpotLightElementFactory() {
 		}
 
@@ -1024,12 +1099,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFESpotLightElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feTile' element.
 	 */
 	protected static class FeTileElementFactory implements ElementFactory {
+
 		public FeTileElementFactory() {
 		}
 
@@ -1040,12 +1117,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFETileElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'feTurbulence' element
 	 */
 	protected static class FeTurbulenceElementFactory implements ElementFactory {
+
 		public FeTurbulenceElementFactory() {
 		}
 
@@ -1056,12 +1135,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFETurbulenceElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'filter' element.
 	 */
 	protected static class FilterElementFactory implements ElementFactory {
+
 		public FilterElementFactory() {
 		}
 
@@ -1072,12 +1153,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFilterElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'font' element.
 	 */
 	protected static class FontElementFactory implements ElementFactory {
+
 		public FontElementFactory() {
 		}
 
@@ -1088,12 +1171,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFontElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'font-face' element.
 	 */
 	protected static class FontFaceElementFactory implements ElementFactory {
+
 		public FontFaceElementFactory() {
 		}
 
@@ -1104,12 +1189,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFontFaceElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'font-face-format' element.
 	 */
 	protected static class FontFaceFormatElementFactory implements ElementFactory {
+
 		public FontFaceFormatElementFactory() {
 		}
 
@@ -1120,12 +1207,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFontFaceFormatElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'font-face-name' element.
 	 */
 	protected static class FontFaceNameElementFactory implements ElementFactory {
+
 		public FontFaceNameElementFactory() {
 		}
 
@@ -1136,12 +1225,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFontFaceNameElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'font-face-src' element.
 	 */
 	protected static class FontFaceSrcElementFactory implements ElementFactory {
+
 		public FontFaceSrcElementFactory() {
 		}
 
@@ -1152,12 +1243,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFontFaceSrcElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'font-face-uri' element.
 	 */
 	protected static class FontFaceUriElementFactory implements ElementFactory {
+
 		public FontFaceUriElementFactory() {
 		}
 
@@ -1168,12 +1261,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMFontFaceUriElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'foreignObject' element.
 	 */
 	protected static class ForeignObjectElementFactory implements ElementFactory {
+
 		public ForeignObjectElementFactory() {
 		}
 
@@ -1184,12 +1279,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMForeignObjectElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'g' element.
 	 */
 	protected static class GElementFactory implements ElementFactory {
+
 		public GElementFactory() {
 		}
 
@@ -1200,12 +1297,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMGElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'glyph' element.
 	 */
 	protected static class GlyphElementFactory implements ElementFactory {
+
 		public GlyphElementFactory() {
 		}
 
@@ -1216,12 +1315,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMGlyphElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'glyphRef' element.
 	 */
 	protected static class GlyphRefElementFactory implements ElementFactory {
+
 		public GlyphRefElementFactory() {
 		}
 
@@ -1232,12 +1333,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMGlyphRefElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'hkern' element.
 	 */
 	protected static class HkernElementFactory implements ElementFactory {
+
 		public HkernElementFactory() {
 		}
 
@@ -1248,12 +1351,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMHKernElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'image' element.
 	 */
 	protected static class ImageElementFactory implements ElementFactory {
+
 		public ImageElementFactory() {
 		}
 
@@ -1264,12 +1369,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMImageElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'line' element.
 	 */
 	protected static class LineElementFactory implements ElementFactory {
+
 		public LineElementFactory() {
 		}
 
@@ -1280,12 +1387,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMLineElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'linearGradient' element.
 	 */
 	protected static class LinearGradientElementFactory implements ElementFactory {
+
 		public LinearGradientElementFactory() {
 		}
 
@@ -1296,12 +1405,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMLinearGradientElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'marker' element.
 	 */
 	protected static class MarkerElementFactory implements ElementFactory {
+
 		public MarkerElementFactory() {
 		}
 
@@ -1312,12 +1423,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMMarkerElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'mask' element.
 	 */
 	protected static class MaskElementFactory implements ElementFactory {
+
 		public MaskElementFactory() {
 		}
 
@@ -1328,12 +1441,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMMaskElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'metadata' element.
 	 */
 	protected static class MetadataElementFactory implements ElementFactory {
+
 		public MetadataElementFactory() {
 		}
 
@@ -1344,12 +1459,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMMetadataElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'missing-glyph' element.
 	 */
 	protected static class MissingGlyphElementFactory implements ElementFactory {
+
 		public MissingGlyphElementFactory() {
 		}
 
@@ -1360,12 +1477,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMMissingGlyphElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'mpath' element.
 	 */
 	protected static class MpathElementFactory implements ElementFactory {
+
 		public MpathElementFactory() {
 		}
 
@@ -1376,12 +1495,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMMPathElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'path' element.
 	 */
 	protected static class PathElementFactory implements ElementFactory {
+
 		public PathElementFactory() {
 		}
 
@@ -1392,12 +1513,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMPathElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'pattern' element.
 	 */
 	protected static class PatternElementFactory implements ElementFactory {
+
 		public PatternElementFactory() {
 		}
 
@@ -1408,12 +1531,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMPatternElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'polygon' element.
 	 */
 	protected static class PolygonElementFactory implements ElementFactory {
+
 		public PolygonElementFactory() {
 		}
 
@@ -1424,12 +1549,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMPolygonElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'polyline' element.
 	 */
 	protected static class PolylineElementFactory implements ElementFactory {
+
 		public PolylineElementFactory() {
 		}
 
@@ -1440,12 +1567,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMPolylineElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'radialGradient' element.
 	 */
 	protected static class RadialGradientElementFactory implements ElementFactory {
+
 		public RadialGradientElementFactory() {
 		}
 
@@ -1456,12 +1585,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMRadialGradientElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'rect' element.
 	 */
 	protected static class RectElementFactory implements ElementFactory {
+
 		public RectElementFactory() {
 		}
 
@@ -1472,12 +1603,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMRectElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'script' element.
 	 */
 	protected static class ScriptElementFactory implements ElementFactory {
+
 		public ScriptElementFactory() {
 		}
 
@@ -1488,12 +1621,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMScriptElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'set' element.
 	 */
 	protected static class SetElementFactory implements ElementFactory {
+
 		public SetElementFactory() {
 		}
 
@@ -1504,12 +1639,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMSetElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'stop' element.
 	 */
 	protected static class StopElementFactory implements ElementFactory {
+
 		public StopElementFactory() {
 		}
 
@@ -1520,12 +1657,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMStopElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'style' element.
 	 */
 	protected static class StyleElementFactory implements ElementFactory {
+
 		public StyleElementFactory() {
 		}
 
@@ -1536,12 +1675,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMStyleElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create an 'svg' element.
 	 */
 	protected static class SvgElementFactory implements ElementFactory {
+
 		public SvgElementFactory() {
 		}
 
@@ -1552,12 +1693,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMSVGElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'switch' element.
 	 */
 	protected static class SwitchElementFactory implements ElementFactory {
+
 		public SwitchElementFactory() {
 		}
 
@@ -1568,12 +1711,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMSwitchElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'symbol' element.
 	 */
 	protected static class SymbolElementFactory implements ElementFactory {
+
 		public SymbolElementFactory() {
 		}
 
@@ -1584,12 +1729,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMSymbolElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'text' element.
 	 */
 	protected static class TextElementFactory implements ElementFactory {
+
 		public TextElementFactory() {
 		}
 
@@ -1600,12 +1747,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMTextElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'textPath' element.
 	 */
 	protected static class TextPathElementFactory implements ElementFactory {
+
 		public TextPathElementFactory() {
 		}
 
@@ -1616,12 +1765,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMTextPathElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'title' element.
 	 */
 	protected static class TitleElementFactory implements ElementFactory {
+
 		public TitleElementFactory() {
 		}
 
@@ -1632,12 +1783,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMTitleElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'tref' element.
 	 */
 	protected static class TrefElementFactory implements ElementFactory {
+
 		public TrefElementFactory() {
 		}
 
@@ -1648,12 +1801,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMTRefElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'tspan' element.
 	 */
 	protected static class TspanElementFactory implements ElementFactory {
+
 		public TspanElementFactory() {
 		}
 
@@ -1664,12 +1819,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMTSpanElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'use' element.
 	 */
 	protected static class UseElementFactory implements ElementFactory {
+
 		public UseElementFactory() {
 		}
 
@@ -1680,12 +1837,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMUseElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'view' element.
 	 */
 	protected static class ViewElementFactory implements ElementFactory {
+
 		public ViewElementFactory() {
 		}
 
@@ -1696,12 +1855,14 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMViewElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**
 	 * To create a 'vkern' element.
 	 */
 	protected static class VkernElementFactory implements ElementFactory {
+
 		public VkernElementFactory() {
 		}
 
@@ -1712,6 +1873,7 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		public Element create(String prefix, Document doc) {
 			return new SVGOMVKernElement(prefix, (AbstractDocument) doc);
 		}
+
 	}
 
 	/**

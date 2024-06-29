@@ -318,4 +318,5 @@ public abstract class SVGOMTextContentElement extends SVGStylableElement {
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

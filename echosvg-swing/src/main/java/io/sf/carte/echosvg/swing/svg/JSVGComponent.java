@@ -1084,6 +1084,7 @@ public class JSVGComponent extends JGVTComponent {
 			s = inv.createTransformedShape(visRect);
 
 		class UpdateRenderingRunnable implements Runnable {
+
 			AffineTransform at;
 			boolean doubleBuf;
 			boolean clearPaintTrans;
@@ -1121,6 +1122,7 @@ public class JSVGComponent extends JGVTComponent {
 
 				updateManager.updateRendering(at, doubleBuf, clearPaintTrans, aoi, width, height);
 			}
+
 		}
 		RunnableQueue rq = updateManager.getUpdateRunnableQueue();
 
@@ -1330,6 +1332,7 @@ public class JSVGComponent extends JGVTComponent {
 	protected JSVGComponentListener jsvgComponentListener = new JSVGComponentListener();
 
 	protected class JSVGComponentListener extends ComponentAdapter implements JGVTComponentListener {
+
 		float prevScale = 0;
 		float prevTransX = 0;
 		float prevTransY = 0;
@@ -1383,6 +1386,7 @@ public class JSVGComponent extends JGVTComponent {
 			prevTransX = (float) at.getTranslateX();
 			prevTransY = (float) at.getTranslateY();
 		}
+
 	}
 
 	/**
@@ -2183,6 +2187,7 @@ public class JSVGComponent extends JGVTComponent {
 			}
 
 			class MouseDraggedRunnable implements Runnable {
+
 				MouseEvent event;
 
 				MouseDraggedRunnable(MouseEvent evt) {
@@ -2193,6 +2198,7 @@ public class JSVGComponent extends JGVTComponent {
 				public void run() {
 					eventDispatcher.mouseDragged(event);
 				}
+
 			}
 
 			if (updateManager != null && updateManager.isRunning()) {
@@ -2230,6 +2236,7 @@ public class JSVGComponent extends JGVTComponent {
 			}
 
 			class MouseMovedRunnable implements Runnable {
+
 				MouseEvent event;
 
 				MouseMovedRunnable(MouseEvent evt) {
@@ -2240,6 +2247,7 @@ public class JSVGComponent extends JGVTComponent {
 				public void run() {
 					eventDispatcher.mouseMoved(event);
 				}
+
 			}
 
 			if (updateManager != null && updateManager.isRunning()) {
@@ -2286,6 +2294,7 @@ public class JSVGComponent extends JGVTComponent {
 				});
 			}
 		}
+
 	}
 
 	/**
@@ -3114,6 +3123,7 @@ public class JSVGComponent extends JGVTComponent {
 		public FontFamilyResolver getFontFamilyResolver() {
 			return userAgent.getFontFamilyResolver();
 		}
+
 	}
 
 	/**
@@ -3713,10 +3723,12 @@ public class JSVGComponent extends JGVTComponent {
 		public FontFamilyResolver getFontFamilyResolver() {
 			return DefaultFontFamilyResolver.SINGLETON;
 		}
+
 	}
 
 	protected static final Set<String> FEATURES = new HashSet<>();
 	static {
 		SVGFeatureStrings.addSupportedFeatureStrings(FEATURES);
 	}
+
 }

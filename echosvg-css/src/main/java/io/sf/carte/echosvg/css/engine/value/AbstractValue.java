@@ -174,4 +174,5 @@ public abstract class AbstractValue implements Value {
 		String s = Messages.formatMessage("invalid.value.access", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
 	}
+
 }

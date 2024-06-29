@@ -116,4 +116,5 @@ public class ParsedURLTest {
 
 		assertEquals(ref, url.toString(), "Bad URL: ");
 	}
+
 }

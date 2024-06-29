@@ -324,4 +324,5 @@ public class XMLScanner {
 
 		return CDATA_CONTEXT;
 	}
+
 }

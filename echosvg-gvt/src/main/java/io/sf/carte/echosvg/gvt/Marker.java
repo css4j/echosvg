@@ -90,4 +90,5 @@ public class Marker {
 	public GraphicsNode getMarkerNode() {
 		return markerNode;
 	}
+
 }

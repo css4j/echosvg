@@ -30,7 +30,9 @@ import io.sf.carte.echosvg.svggen.font.SVGFont;
  * @version $Id$
  */
 public class Main {
+
 	public static void main(String[] args) {
 		SVGFont.main(args);
 	}
+
 }

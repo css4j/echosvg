@@ -174,4 +174,5 @@ public class SVGAccuracyTest {
 	 */
 	protected void configureSVGGraphics2D(SVGGraphics2D g2d) {
 	}
+
 }

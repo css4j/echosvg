@@ -148,4 +148,5 @@ public abstract class InterpolatingAnimation extends AbstractAnimation {
 	 * {@link #value} of the animation if active.
 	 */
 	protected abstract void sampledAtUnitTime(float unitTime, int repeatIteration);
+
 }

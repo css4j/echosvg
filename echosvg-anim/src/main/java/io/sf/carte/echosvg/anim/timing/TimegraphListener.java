@@ -90,4 +90,5 @@ public interface TimegraphListener {
 	 * element has been updated.
 	 */
 	void elementInstanceTimesChanged(TimedElement e, float isBegin);
+
 }

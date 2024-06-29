@@ -137,4 +137,5 @@ public class SVGLineElementBridge extends SVGDecoratedShapeElementBridge {
 		}
 		super.handleAnimatedAttributeChanged(alav);
 	}
+
 }

@@ -32,6 +32,7 @@ import java.util.Random;
  * random order) and notifying each thread.
  */
 public class ThreadPounder {
+
 	List<Runnable> runnables;
 	Object[] threads;
 	Object lock = new Object();
@@ -65,6 +66,7 @@ public class ThreadPounder {
 	}
 
 	class SyncThread extends Thread {
+
 		Runnable toRun;
 		public long runTime;
 
@@ -87,6 +89,7 @@ public class ThreadPounder {
 			} catch (InterruptedException ie) {
 			}
 		}
+
 	}
 
 }

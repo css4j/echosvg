@@ -185,6 +185,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
 	 * The language selection panel.
 	 */
 	public static class Panel extends JPanel implements ActionMap {
+
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -477,6 +478,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
 		 * The action associated with the 'add' button
 		 */
 		protected class AddLanguageButtonAction extends AbstractAction {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -487,12 +489,14 @@ public class LanguageDialog extends JDialog implements ActionMap {
 				userListModel.addElement(o);
 				userList.setSelectedValue(o, true);
 			}
+
 		}
 
 		/**
 		 * The action associated with the 'remove' button
 		 */
 		protected class RemoveLanguageButtonAction extends AbstractAction {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -514,12 +518,14 @@ public class LanguageDialog extends JDialog implements ActionMap {
 				languageList.setSelectedValue(o, true);
 				updateButtons();
 			}
+
 		}
 
 		/**
 		 * The action associated with the 'up' button
 		 */
 		protected class UpLanguageButtonAction extends AbstractAction {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -530,12 +536,14 @@ public class LanguageDialog extends JDialog implements ActionMap {
 				userListModel.insertElementAt(o, i - 1);
 				userList.setSelectedIndex(i - 1);
 			}
+
 		}
 
 		/**
 		 * The action associated with the 'down' button
 		 */
 		protected class DownLanguageButtonAction extends AbstractAction {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -546,12 +554,14 @@ public class LanguageDialog extends JDialog implements ActionMap {
 				userListModel.insertElementAt(o, i + 1);
 				userList.setSelectedIndex(i + 1);
 			}
+
 		}
 
 		/**
 		 * The action associated with the 'clear' button
 		 */
 		protected class ClearLanguageButtonAction extends AbstractAction {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -575,12 +585,14 @@ public class LanguageDialog extends JDialog implements ActionMap {
 				}
 				updateButtons();
 			}
+
 		}
 
 		/**
 		 * To manage selection modifications
 		 */
 		protected class LanguageListSelectionListener implements ListSelectionListener {
+
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				int i = languageList.getSelectedIndex();
@@ -588,12 +600,14 @@ public class LanguageDialog extends JDialog implements ActionMap {
 				languageList.setSelectedIndex(i);
 				updateButtons();
 			}
+
 		}
 
 		/**
 		 * To manage selection modifications
 		 */
 		protected class UserListSelectionListener implements ListSelectionListener {
+
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				int i = userList.getSelectedIndex();
@@ -601,12 +615,14 @@ public class LanguageDialog extends JDialog implements ActionMap {
 				userList.setSelectedIndex(i);
 				updateButtons();
 			}
+
 		}
 
 		/**
 		 * To display icons and text in the lists.
 		 */
 		protected class IconAndTextCellRenderer extends JLabel implements ListCellRenderer<Object> {
+
 			private static final long serialVersionUID = 1L;
 
 			public IconAndTextCellRenderer() {
@@ -631,13 +647,16 @@ public class LanguageDialog extends JDialog implements ActionMap {
 				}
 				return this;
 			}
+
 		}
+
 	}
 
 	/**
 	 * The action associated with the 'OK' button
 	 */
 	protected class OKButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -645,12 +664,14 @@ public class LanguageDialog extends JDialog implements ActionMap {
 			returnCode = OK_OPTION;
 			dispose();
 		}
+
 	}
 
 	/**
 	 * The action associated with the 'Cancel' button
 	 */
 	protected class CancelButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -658,5 +679,7 @@ public class LanguageDialog extends JDialog implements ActionMap {
 			returnCode = CANCEL_OPTION;
 			dispose();
 		}
+
 	}
+
 }

@@ -128,5 +128,7 @@ public abstract class BasicTextPainter implements TextPainter {
 		public int getCharIndex() {
 			return hit.getCharIndex();
 		}
+
 	}
+
 }

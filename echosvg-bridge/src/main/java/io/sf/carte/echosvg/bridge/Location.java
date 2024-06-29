@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.bridge;
  * @version $Id: Location.java$
  */
 public class Location implements io.sf.carte.echosvg.w3c.dom.Location {
+
 	private BridgeContext bridgeContext;
 
 	/**
@@ -65,4 +66,5 @@ public class Location implements io.sf.carte.echosvg.w3c.dom.Location {
 	public String toString() {
 		return bridgeContext.getDocument().getDocumentURI();
 	}
+
 }

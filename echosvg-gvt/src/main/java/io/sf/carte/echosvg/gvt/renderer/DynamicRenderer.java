@@ -266,4 +266,5 @@ public class DynamicRenderer extends StaticRenderer {
 
 		damagedAreas = devRLM;
 	}
+
 }

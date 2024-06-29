@@ -187,6 +187,7 @@ public class ClassFileUtilities {
 	}
 
 	protected static class ClassFile {
+
 		public String name;
 		public List<ClassFile> deps = new ArrayList<>(10);
 		public Jar jar;
@@ -194,17 +195,21 @@ public class ClassFileUtilities {
 		public InputStream getInputStream() throws IOException {
 			return jar.jarFile.getInputStream(jar.jarFile.getEntry(name));
 		}
+
 	}
 
 	protected static class Jar {
+
 		public String name;
 		public File file;
 		public JarFile jarFile;
 		public Map<Jar, Integer> deps = new HashMap<>();
 		public Set<ClassFile> files = new HashSet<>();
+
 	}
 
 	protected static class Triple implements Comparable<Triple> {
+
 		public Jar from;
 		public Jar to;
 		public int count;
@@ -213,6 +218,7 @@ public class ClassFileUtilities {
 		public int compareTo(Triple o) {
 			return o.count - count;
 		}
+
 	}
 
 	static void collectJars(File dir, Map<String, Jar> jars, Map<String, ClassFile> classFiles)
@@ -482,4 +488,5 @@ public class ClassFileUtilities {
 
 		return result;
 	}
+
 }

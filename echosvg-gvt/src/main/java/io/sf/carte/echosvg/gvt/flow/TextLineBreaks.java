@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
  * @version $Id$
  */
 public class TextLineBreaks {
+
 	public static final AttributedCharacterIterator.Attribute WORD_LIMIT = new GVTAttributedCharacterIterator.TextAttribute(
 			"WORD_LIMIT");
 
@@ -589,4 +590,5 @@ public class TextLineBreaks {
 			CHAR_CLASS_ID, CHAR_CLASS_OP, CHAR_CLASS_CL, CHAR_CLASS_OP, CHAR_CLASS_CL, CHAR_CLASS_NS, CHAR_CLASS_AL,
 			CHAR_CLASS_NS, CHAR_CLASS_AL, CHAR_CLASS_NS, CHAR_CLASS_AL, CHAR_CLASS_PO, CHAR_CLASS_PR, CHAR_CLASS_ID,
 			CHAR_CLASS_PR, CHAR_CLASS_AL, CHAR_CLASS_CM, CHAR_CLASS_CB, CHAR_CLASS_AI };
+
 }

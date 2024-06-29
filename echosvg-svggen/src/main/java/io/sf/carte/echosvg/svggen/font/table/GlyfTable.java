@@ -94,4 +94,5 @@ public class GlyfTable implements Table {
 	public int getType() {
 		return glyf;
 	}
+
 }

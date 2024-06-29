@@ -57,6 +57,7 @@ import java.util.Set;
  * @version $Id$
  */
 public class ImportInfo {
+
 	/**
 	 * Default file to read imports from, can be overridden by setting the
 	 * '{@code io.sf.carte.echosvg.script.imports'} System property.

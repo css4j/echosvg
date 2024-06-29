@@ -196,4 +196,5 @@ public class SVGFeTurbulenceElementBridge extends AbstractSVGFilterPrimitiveElem
 		}
 		throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { SVG_TYPE_ATTRIBUTE, s });
 	}
+
 }

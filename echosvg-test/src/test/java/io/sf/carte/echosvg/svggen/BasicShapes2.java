@@ -34,6 +34,7 @@ import java.awt.geom.GeneralPath;
  * @version $Id$
  */
 public class BasicShapes2 implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -77,4 +78,5 @@ public class BasicShapes2 implements Painter {
 		curveToPath.closePath();
 		g.draw(curveToPath);
 	}
+
 }

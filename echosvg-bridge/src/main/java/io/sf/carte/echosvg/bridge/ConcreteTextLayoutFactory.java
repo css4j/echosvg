@@ -47,4 +47,5 @@ public class ConcreteTextLayoutFactory implements TextLayoutFactory {
 			FontRenderContext frc) {
 		return new GlyphLayout(aci, charMap, offset, frc);
 	}
+
 }

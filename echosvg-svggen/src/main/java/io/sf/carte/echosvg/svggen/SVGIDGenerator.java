@@ -30,6 +30,7 @@ import java.util.Map;
  * @version $Id$
  */
 public class SVGIDGenerator {
+
 	private Map<String, Integer> prefixMap = new HashMap<>();
 
 	public SVGIDGenerator() {
@@ -53,4 +54,5 @@ public class SVGIDGenerator {
 		prefixMap.put(prefix, maxId);
 		return prefix + maxId;
 	}
+
 }

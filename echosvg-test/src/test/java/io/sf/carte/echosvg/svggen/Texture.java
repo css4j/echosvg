@@ -34,6 +34,7 @@ import java.awt.image.BufferedImage;
  * @version $Id$
  */
 public class Texture implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -73,4 +74,5 @@ public class Texture implements Painter {
 			g.translate(0, texture.getHeight() * 4 + 40);
 		}
 	}
+
 }

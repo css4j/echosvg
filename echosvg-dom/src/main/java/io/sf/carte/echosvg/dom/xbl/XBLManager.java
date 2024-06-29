@@ -121,4 +121,5 @@ public interface XBLManager {
 	 * Get the xbl:definition elements currently binding an element.
 	 */
 	NodeList getXblDefinitions(Node n);
+
 }

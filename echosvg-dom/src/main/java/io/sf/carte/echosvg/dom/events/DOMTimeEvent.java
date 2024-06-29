@@ -83,4 +83,5 @@ public class DOMTimeEvent extends AbstractEvent implements TimeEvent {
 	public void setTimestamp(long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
+
 }

@@ -118,4 +118,5 @@ public class AbstractRotateInteractor extends InteractorAdapter {
 
 		return AffineTransform.getRotateInstance(angle, d.width / 2, d.height / 2);
 	}
+
 }

@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @see io.sf.carte.echosvg.svggen.SVGComposite
  */
 public class SVGCustomComposite extends AbstractSVGConverter {
+
 	/**
 	 * @param generatorContext for use by SVGCustomComposite to build Elements
 	 */
@@ -81,4 +82,5 @@ public class SVGCustomComposite extends AbstractSVGConverter {
 
 		return compositeDesc;
 	}
+
 }

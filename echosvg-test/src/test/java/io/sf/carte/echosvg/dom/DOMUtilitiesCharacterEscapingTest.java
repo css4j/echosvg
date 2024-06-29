@@ -73,4 +73,5 @@ public class DOMUtilitiesCharacterEscapingTest {
 		cdata = (CDATASection) text.getFirstChild();
 		assertEquals(cdata.getData(), unescapedContent);
 	}
+
 }

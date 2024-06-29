@@ -118,6 +118,7 @@ public abstract class AbstractSVGLightingElementBridge extends AbstractSVGFilter
 		 * @param color         the color of the light
 		 */
 		public abstract Light createLight(BridgeContext ctx, Element filterElement, Element lightElement, Color color);
+
 	}
 
 	/**
@@ -176,6 +177,7 @@ public abstract class AbstractSVGLightingElementBridge extends AbstractSVGFilter
 
 			return new SpotLight(x, y, z, px, py, pz, specularExponent, limitingConeAngle, color);
 		}
+
 	}
 
 	/**
@@ -216,6 +218,7 @@ public abstract class AbstractSVGLightingElementBridge extends AbstractSVGFilter
 
 			return new DistantLight(azimuth, elevation, color);
 		}
+
 	}
 
 	/**
@@ -259,5 +262,7 @@ public abstract class AbstractSVGLightingElementBridge extends AbstractSVGFilter
 
 			return new PointLight(x, y, z, color);
 		}
+
 	}
+
 }

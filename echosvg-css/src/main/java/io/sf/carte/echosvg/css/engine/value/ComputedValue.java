@@ -209,4 +209,5 @@ public class ComputedValue implements Value {
 	public String getSeparator() throws DOMException {
 		return computedValue.getSeparator();
 	}
+
 }

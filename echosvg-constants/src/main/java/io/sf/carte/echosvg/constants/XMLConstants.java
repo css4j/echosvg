@@ -87,4 +87,5 @@ public interface XMLConstants {
 	// XML versions
 	String XML_VERSION_10 = "1.0";
 	String XML_VERSION_11 = "1.1";
+
 }

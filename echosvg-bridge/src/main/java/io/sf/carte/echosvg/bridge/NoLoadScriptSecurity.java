@@ -61,4 +61,5 @@ public class NoLoadScriptSecurity implements ScriptSecurity {
 		se = new SecurityException(
 				Messages.formatMessage(ERROR_NO_SCRIPT_OF_TYPE_ALLOWED, new Object[] { scriptType }));
 	}
+
 }

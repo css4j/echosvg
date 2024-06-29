@@ -32,6 +32,7 @@ import java.awt.RenderingHints;
  * @version $Id$
  */
 public class Color1 implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -93,4 +94,5 @@ public class Color1 implements Painter {
 			g.translate(0, stepHeight);
 		}
 	}
+
 }

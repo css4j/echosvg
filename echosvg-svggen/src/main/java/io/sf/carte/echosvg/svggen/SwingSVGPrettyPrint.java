@@ -178,4 +178,5 @@ public abstract class SwingSVGPrettyPrint implements SVGSyntax {
 			}
 		}
 	}
+
 }

@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.svggen;
  * @version $Id$
  */
 public interface ErrorHandler {
+
 	/**
 	 * This method handles the <code>SVGGraphics2DIOException</code>.
 	 */
@@ -36,4 +37,5 @@ public interface ErrorHandler {
 	 * This method handles the <code>SVGGraphics2DRuntimeException</code>.
 	 */
 	void handleError(SVGGraphics2DRuntimeException ex) throws SVGGraphics2DRuntimeException;
+
 }

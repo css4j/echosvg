@@ -183,4 +183,5 @@ public class SVGClipPathElementBridge extends AnimatableGenericSVGBridge impleme
 
 		return new ClipRable8Bit(filter, clipPath, useAA);
 	}
+
 }

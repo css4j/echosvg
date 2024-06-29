@@ -104,4 +104,5 @@ public class TextRenderingManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

@@ -86,4 +86,5 @@ public class SVG12URIResolver extends URIResolver {
 		}
 		return super.getNodeByFragment(frag, ref);
 	}
+
 }

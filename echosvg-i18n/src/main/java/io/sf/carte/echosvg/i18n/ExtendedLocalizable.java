@@ -30,6 +30,7 @@ import java.util.ResourceBundle;
  * @version $Id$
  */
 public interface ExtendedLocalizable extends Localizable {
+
 	/**
 	 * Sets the group to which this object belongs.
 	 */
@@ -57,4 +58,5 @@ public interface ExtendedLocalizable extends Localizable {
 	 * object resources.
 	 */
 	ResourceBundle getResourceBundle();
+
 }

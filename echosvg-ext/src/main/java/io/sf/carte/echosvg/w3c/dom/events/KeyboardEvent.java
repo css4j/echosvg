@@ -38,6 +38,7 @@ import org.w3c.dom.views.AbstractView;
  * @since DOM Level 3
  */
 public interface KeyboardEvent extends UIEvent {
+
 	// KeyLocationCode
 	/**
 	 * The key activation is not distinguished as the left or right version of the

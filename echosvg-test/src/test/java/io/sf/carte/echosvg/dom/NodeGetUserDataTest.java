@@ -47,6 +47,7 @@ public class NodeGetUserDataTest extends DOM3Test {
 	}
 
 	private static class UserHandler implements UserDataHandler {
+
 		int count = 0;
 
 		@Override
@@ -57,6 +58,7 @@ public class NodeGetUserDataTest extends DOM3Test {
 		public int getCount() {
 			return count;
 		}
+
 	}
 
 }

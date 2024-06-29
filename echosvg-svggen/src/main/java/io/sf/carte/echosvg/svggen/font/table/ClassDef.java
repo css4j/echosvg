@@ -41,4 +41,5 @@ public abstract class ClassDef {
 		}
 		return c;
 	}
+
 }

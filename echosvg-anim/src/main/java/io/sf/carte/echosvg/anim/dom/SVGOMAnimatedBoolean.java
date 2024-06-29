@@ -197,4 +197,5 @@ public class SVGOMAnimatedBoolean extends AbstractSVGAnimatedValue implements SV
 			fireAnimatedAttributeListeners();
 		}
 	}
+
 }

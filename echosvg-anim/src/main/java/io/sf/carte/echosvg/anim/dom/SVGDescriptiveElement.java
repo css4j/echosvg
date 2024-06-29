@@ -78,4 +78,5 @@ public abstract class SVGDescriptiveElement extends SVGStylableElement {
 	public void setXMLspace(String space) {
 		setAttributeNS(XML_NAMESPACE_URI, XML_SPACE_QNAME, space);
 	}
+
 }

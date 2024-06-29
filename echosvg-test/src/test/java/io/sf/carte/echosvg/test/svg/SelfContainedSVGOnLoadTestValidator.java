@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Test;
  * @version $Id$
  */
 public class SelfContainedSVGOnLoadTestValidator {
+
 	/**
 	 * Error codes
 	 */
@@ -108,13 +109,16 @@ public class SelfContainedSVGOnLoadTestValidator {
 	}
 
 	static class SuccessTest {
+
 		public void runTest() throws Exception {
 			SelfContainedSVGOnLoadTest t = new SelfContainedSVGOnLoadTest();
 			t.testSVGOnLoad(successURL, "");
 		}
+
 	}
 
 	static class DefaultErrorTest extends SuccessTest {
+
 		String svgURL;
 		String expectedErrorCode;
 		String expectedException;
@@ -136,46 +140,59 @@ public class SelfContainedSVGOnLoadTestValidator {
 				assertEquals(expectedException, e.getClass().getName());
 			}
 		}
+
 	}
 
 	static class ReportErrorAndEntries extends DefaultErrorTest {
+
 		public ReportErrorAndEntries() {
 			super(errorAndEntriesURL, "can.you.read.this.error.code", null);
 		}
+
 	}
 
 	static class ReportError extends DefaultErrorTest {
+
 		public ReportError() {
 			super(errorURL, "can.you.read.this.error.code", null);
 		}
+
 	}
 
 	static class MissingOrEmptyErrorCode extends DefaultErrorTest {
+
 		public MissingOrEmptyErrorCode() {
 			super(missingOrEmptyErrorCodeURL, "", null);
 		}
+
 	}
 
 	static class InvalidTestResultElementsNumber extends DefaultErrorTest {
+
 		public InvalidTestResultElementsNumber() {
 			super(invalidTestResultElementsNumberURL,
 					SelfContainedSVGOnLoadTest.ERROR_UNEXPECTED_NUMBER_OF_TEST_RESULT_ELEMENTS,
 					null);
 		}
+
 	}
 
 	static class InvalidRectRxUnit extends DefaultErrorTest {
+
 		public InvalidRectRxUnit() {
 			super(invalidRectRxUnitURL, SelfContainedSVGOnLoadTest.ERROR_WHILE_PROCESSING_SVG_DOCUMENT,
 					"io.sf.carte.echosvg.bridge.BridgeException");
 		}
+
 	}
 
 	static class CannotLoadSVGDocument extends DefaultErrorTest {
+
 		public CannotLoadSVGDocument() {
 			super(invalidURL, SelfContainedSVGOnLoadTest.ERROR_CANNOT_LOAD_SVG_DOCUMENT,
 					null);
 		}
+
 	}
 
 }

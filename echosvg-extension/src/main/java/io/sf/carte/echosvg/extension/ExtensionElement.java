@@ -63,4 +63,5 @@ public abstract class ExtensionElement extends SVGOMElement {
 	@Override
 	public void setReadonly(boolean v) {
 	}
+
 }

@@ -43,4 +43,5 @@ public interface SVGPathContext extends SVGContext {
 	 * Returns the index of the path segment at the given distance along the path.
 	 */
 	int getPathSegAtLength(float distance);
+
 }

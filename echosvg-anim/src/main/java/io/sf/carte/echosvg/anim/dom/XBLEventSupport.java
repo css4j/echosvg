@@ -423,4 +423,5 @@ public class XBLEventSupport extends EventSupport {
 		EventListenerList.Entry[] listeners = list.getEventListeners();
 		fireEventListeners(node, e, listeners, null, null);
 	}
+
 }

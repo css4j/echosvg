@@ -123,4 +123,5 @@ public abstract class AbstractStylableDocument extends AbstractDocument implemen
 	public CSSStyleDeclaration getOverrideStyle(Element elt, String pseudoElt) {
 		throw new RuntimeException(" !!! Not implemented");
 	}
+
 }

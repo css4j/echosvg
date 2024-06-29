@@ -810,4 +810,5 @@ public class MarkerShapePainter implements ShapePainter {
 		// Should never happen: close segments are replaced with lineTo
 		}
 	}
+
 }

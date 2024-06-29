@@ -73,4 +73,5 @@ public class FlowSpanElement extends SVGOMTextPositioningElement implements Echo
 	protected Node newNode() {
 		return new FlowSpanElement();
 	}
+
 }

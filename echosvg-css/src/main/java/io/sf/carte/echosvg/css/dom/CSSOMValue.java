@@ -631,6 +631,7 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		 * Returns the current value associated with this object.
 		 */
 		Value getValue();
+
 	}
 
 	/**
@@ -994,6 +995,7 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 			}
 			textChanged(sb.toString());
 		}
+
 	}
 
 	/**
@@ -1091,6 +1093,7 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		public CSSValue item(int index) {
 			throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
 		}
+
 	}
 
 	/**
@@ -1106,6 +1109,7 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 		public void setStringValue(short stringType, String stringValue) throws DOMException {
 			throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
 		}
+
 	}
 
 	/**
@@ -1512,6 +1516,7 @@ public class CSSOMValue implements CSSPrimitiveValue, CSSValueList, Counter, Rec
 				handler.listStringValueChanged(index, stringType, stringValue);
 			}
 		}
+
 	}
 
 }

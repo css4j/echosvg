@@ -26,8 +26,10 @@ package io.sf.carte.echosvg.gvt.renderer;
  * @version $Id$
  */
 public interface RendererFactory {
+
 	/**
 	 * Creates a new renderer.
 	 */
 	Renderer createRenderer();
+
 }

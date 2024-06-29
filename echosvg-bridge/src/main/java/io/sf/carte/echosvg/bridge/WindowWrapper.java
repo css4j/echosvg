@@ -415,6 +415,7 @@ public class WindowWrapper extends ImporterTopLevel {
 		public void run() {
 			interpreter.callHandler(function, arguments);
 		}
+
 	}
 
 	/**
@@ -457,6 +458,7 @@ public class WindowWrapper extends ImporterTopLevel {
 		public void getURLDone(final boolean success, final String mime, final String content) {
 			interpreter.callHandler(function, new GetURLDoneArgBuilder(success, mime, content, windowWrapper));
 		}
+
 	}
 
 	/**
@@ -501,9 +503,11 @@ public class WindowWrapper extends ImporterTopLevel {
 		public void getURLDone(final boolean success, final String mime, final String content) {
 			interpreter.callMethod(object, COMPLETE, new GetURLDoneArgBuilder(success, mime, content, windowWrapper));
 		}
+
 	}
 
 	static class GetURLDoneArgBuilder implements RhinoInterpreter.ArgumentsBuilder {
+
 		boolean success;
 		String mime, content;
 		WindowWrapper windowWrapper;
@@ -527,5 +531,7 @@ public class WindowWrapper extends ImporterTopLevel {
 			}
 			return new Object[] { so };
 		}
+
 	}
+
 }

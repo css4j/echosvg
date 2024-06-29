@@ -154,6 +154,7 @@ public class SVGFeComponentTransferElementBridge extends AbstractSVGFilterPrimit
 		public String getLocalName() {
 			return SVG_FE_FUNC_A_TAG;
 		}
+
 	}
 
 	/**
@@ -174,6 +175,7 @@ public class SVGFeComponentTransferElementBridge extends AbstractSVGFilterPrimit
 		public String getLocalName() {
 			return SVG_FE_FUNC_R_TAG;
 		}
+
 	}
 
 	/**
@@ -194,6 +196,7 @@ public class SVGFeComponentTransferElementBridge extends AbstractSVGFilterPrimit
 		public String getLocalName() {
 			return SVG_FE_FUNC_G_TAG;
 		}
+
 	}
 
 	/**
@@ -214,6 +217,7 @@ public class SVGFeComponentTransferElementBridge extends AbstractSVGFilterPrimit
 		public String getLocalName() {
 			return SVG_FE_FUNC_B_TAG;
 		}
+
 	}
 
 	/**
@@ -334,5 +338,7 @@ public class SVGFeComponentTransferElementBridge extends AbstractSVGFilterPrimit
 			}
 			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { SVG_TYPE_ATTRIBUTE, s });
 		}
+
 	}
+
 }

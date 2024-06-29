@@ -66,4 +66,5 @@ public class OffsetTimingSpecifier extends TimingSpecifier {
 	public boolean isEventCondition() {
 		return false;
 	}
+
 }

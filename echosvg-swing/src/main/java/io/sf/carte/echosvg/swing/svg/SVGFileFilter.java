@@ -32,6 +32,7 @@ import javax.swing.filechooser.FileFilter;
  * @version $Id$
  */
 public class SVGFileFilter extends FileFilter {
+
 	/**
 	 * Returns true if <code>f</code> is an SVG file
 	 */
@@ -58,4 +59,5 @@ public class SVGFileFilter extends FileFilter {
 	public String getDescription() {
 		return ".svg, .svgz";
 	}
+
 }

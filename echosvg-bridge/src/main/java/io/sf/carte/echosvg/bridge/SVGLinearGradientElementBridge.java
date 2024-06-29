@@ -137,4 +137,5 @@ public class SVGLinearGradientElementBridge extends AbstractSVGGradientElementBr
 			return new LinearGradientPaint(p1, p2, offsets, colors, spreadMethod, colorSpace, transform);
 		}
 	}
+
 }

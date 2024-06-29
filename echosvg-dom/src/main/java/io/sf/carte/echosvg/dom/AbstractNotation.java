@@ -170,4 +170,5 @@ public abstract class AbstractNotation extends AbstractNode implements Notation 
 		an.systemId = systemId;
 		return n;
 	}
+
 }

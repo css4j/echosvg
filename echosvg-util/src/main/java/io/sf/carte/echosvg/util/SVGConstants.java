@@ -934,4 +934,5 @@ public interface SVGConstants extends CSSConstants, XMLConstants {
 	String SVG_EVENT_MOUSEOUT = "mouseout";
 	String SVG_EVENT_MOUSEOVER = "mouseover";
 	String SVG_EVENT_MOUSEUP = "mouseup";
+
 }

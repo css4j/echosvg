@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.bridge;
  * @version $Id$
  */
 public interface Mark {
+
 	/*
 	 * Return the TextNode this Mark is associated with
 	 */
@@ -38,4 +39,5 @@ public interface Mark {
 	 * @return The character index.
 	 */
 	int getCharIndex();
+
 }

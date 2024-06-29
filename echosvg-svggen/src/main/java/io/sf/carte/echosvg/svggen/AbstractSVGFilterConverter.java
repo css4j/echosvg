@@ -38,6 +38,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public abstract class AbstractSVGFilterConverter implements SVGFilterConverter, ErrorConstants {
+
 	/**
 	 * Used by converters to create Elements and other DOM objects
 	 */
@@ -81,4 +82,5 @@ public abstract class AbstractSVGFilterConverter implements SVGFilterConverter, 
 	public final String doubleString(double value) {
 		return generatorContext.doubleString(value);
 	}
+
 }

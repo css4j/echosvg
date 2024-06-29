@@ -214,4 +214,5 @@ public class StrokeShapePainter implements ShapePainter {
 	public Shape getShape() {
 		return shape;
 	}
+
 }

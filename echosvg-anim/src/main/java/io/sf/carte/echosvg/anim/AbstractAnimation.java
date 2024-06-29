@@ -203,4 +203,5 @@ public abstract class AbstractAnimation {
 	 * {@link #value} of the animation if active.
 	 */
 	protected abstract void sampledAt(float simpleTime, float simpleDur, int repeatIteration);
+
 }

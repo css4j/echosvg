@@ -574,6 +574,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 	 * To interpret a script.
 	 */
 	protected class EvaluateRunnable implements Runnable {
+
 		protected Interpreter interpreter;
 		protected String script;
 
@@ -590,12 +591,14 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 				handleInterpreterException(ie);
 			}
 		}
+
 	}
 
 	/**
 	 * To interpret a script.
 	 */
 	protected class EvaluateIntervalRunnable implements Runnable {
+
 		/**
 		 * Incremented each time this runnable is added to the queue.
 		 */
@@ -635,12 +638,14 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 				}
 			}
 		}
+
 	}
 
 	/**
 	 * To call a Runnable.
 	 */
 	protected class EvaluateRunnableRunnable implements Runnable {
+
 		/**
 		 * Incremented each time this runnable is put in the queue.
 		 */
@@ -673,6 +678,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -711,6 +717,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 						cancel();
 				}
 			}
+
 		}
 
 		/**
@@ -740,6 +747,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 						cancel();
 				}
 			}
+
 		}
 
 		/**
@@ -758,6 +766,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 			public void run() {
 				updateRunnableQueue.invokeLater(new EvaluateRunnable(script, interpreter));
 			}
+
 		}
 
 		/**
@@ -787,6 +796,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 					}
 				});
 			}
+
 		}
 
 		/**
@@ -1228,12 +1238,14 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 			}
 			return location;
 		}
+
 	}
 
 	/**
 	 * The listener class for 'DOMNodeInserted' event.
 	 */
 	protected class DOMNodeInsertedListener implements EventListener {
+
 		protected LinkedList<Node> toExecute = new LinkedList<>();
 
 		@Override
@@ -1259,25 +1271,30 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 				}
 			}
 		}
+
 	}
 
 	/**
 	 * The listener class for 'DOMNodeRemoved' event.
 	 */
 	protected class DOMNodeRemovedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			removeScriptingListeners((Node) evt.getTarget());
 		}
+
 	}
 
 	protected class DOMAttrModifiedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			MutationEvent me = (MutationEvent) evt;
 			if (me.getAttrChange() != MutationEvent.MODIFICATION)
 				updateScriptingListeners((Element) me.getTarget(), me.getAttrName());
 		}
+
 	}
 
 	/**
@@ -1327,5 +1344,7 @@ public class ScriptingEnvironment extends BaseScriptingEnvironment {
 
 			runEventHandler(script, evt, lang, desc);
 		}
+
 	}
+
 }

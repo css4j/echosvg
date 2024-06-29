@@ -87,4 +87,5 @@ public interface SMILConstants {
 	String SMIL_END_EVENT_NAME = "endEvent";
 	String SMIL_REPEAT_EVENT_NAME = "repeatEvent";
 	String SMIL_REPEAT_EVENT_ALT_NAME = "repeat";
+
 }

@@ -65,4 +65,5 @@ public class SVGOMSolidColorElement extends SVGStylableElement {
 	protected Node newNode() {
 		return new SVGOMSolidColorElement();
 	}
+
 }

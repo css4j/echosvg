@@ -99,4 +99,5 @@ public class FloatValue extends AbstractValue {
 	public String toString() {
 		return getCssText();
 	}
+
 }

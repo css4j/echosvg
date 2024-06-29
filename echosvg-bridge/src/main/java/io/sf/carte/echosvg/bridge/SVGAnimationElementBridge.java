@@ -156,6 +156,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 	/**
 	 * Parses the animation element's target attributes and adds it to the
 	 * document's AnimationEngine.
+	 * 
 	 * @param ctx the bridge context to use in error reporting.
 	 * @return true if the initialization was successful.
 	 */
@@ -697,5 +698,7 @@ public abstract class SVGAnimationElementBridge extends AbstractSVGBridge
 		protected boolean isConstantAnimation() {
 			return SVGAnimationElementBridge.this.isConstantAnimation();
 		}
+
 	}
+
 }

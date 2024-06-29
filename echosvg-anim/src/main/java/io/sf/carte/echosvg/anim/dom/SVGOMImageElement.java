@@ -206,4 +206,5 @@ public class SVGOMImageElement extends SVGURIReferenceGraphicsElement implements
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

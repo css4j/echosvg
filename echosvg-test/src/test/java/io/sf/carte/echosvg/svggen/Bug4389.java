@@ -31,6 +31,7 @@ import javax.swing.ImageIcon;
  * @version $Id$
  */
 public class Bug4389 implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		ImageIcon image = new ImageIcon(
@@ -38,4 +39,5 @@ public class Bug4389 implements Painter {
 		g.translate(40, 40);
 		g.drawImage(image.getImage(), new AffineTransform(), null);
 	}
+
 }

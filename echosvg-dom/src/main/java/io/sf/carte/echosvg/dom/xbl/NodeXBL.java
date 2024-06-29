@@ -104,4 +104,5 @@ public interface NodeXBL {
 	 * Get the xbl:definition elements currently binding this element.
 	 */
 	NodeList getXblDefinitions();
+
 }

@@ -56,4 +56,5 @@ public class GVTTreeBuilderEvent extends EventObject {
 	public GraphicsNode getGVTRoot() {
 		return gvtRoot;
 	}
+
 }

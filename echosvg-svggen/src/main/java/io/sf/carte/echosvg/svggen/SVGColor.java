@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @see io.sf.carte.echosvg.svggen.DOMTreeManager
  */
 public class SVGColor extends AbstractSVGConverter {
+
 	/**
 	 * Predefined CSS colors
 	 */
@@ -132,4 +133,5 @@ public class SVGColor extends AbstractSVGConverter {
 
 		return new SVGPaintDescriptor(cssColor, alphaString);
 	}
+
 }

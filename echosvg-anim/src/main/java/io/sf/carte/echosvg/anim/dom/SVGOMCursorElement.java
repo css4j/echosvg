@@ -214,4 +214,5 @@ public class SVGOMCursorElement extends SVGOMURIReferenceElement implements SVGC
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

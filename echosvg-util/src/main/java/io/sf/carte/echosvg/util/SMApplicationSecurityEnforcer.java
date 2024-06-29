@@ -36,6 +36,7 @@ import java.util.StringTokenizer;
  */
 @Deprecated
 class SMApplicationSecurityEnforcer extends ApplicationSecurityEnforcer {
+
 	/**
 	 * Message for the SecurityException thrown when there is already a
 	 * SecurityManager installed at the time the rasterizer tries to install its

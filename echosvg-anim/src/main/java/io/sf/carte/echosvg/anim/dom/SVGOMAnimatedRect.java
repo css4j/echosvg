@@ -309,6 +309,7 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 			this.h = height;
 			reset();
 		}
+
 	}
 
 	/**
@@ -401,5 +402,7 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 			this.w = w;
 			this.h = h;
 		}
+
 	}
+
 }

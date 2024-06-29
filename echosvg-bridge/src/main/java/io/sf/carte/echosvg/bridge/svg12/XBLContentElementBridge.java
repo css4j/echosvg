@@ -212,5 +212,7 @@ public class XBLContentElementBridge extends AbstractGraphicsNodeBridge {
 		public void contentSelectionChanged(ContentSelectionChangedEvent csce) {
 			buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
 		}
+
 	}
+
 }

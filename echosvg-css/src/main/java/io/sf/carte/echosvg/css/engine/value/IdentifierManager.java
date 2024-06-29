@@ -76,4 +76,5 @@ public abstract class IdentifierManager extends AbstractValueManager {
 	 * identifiers.
 	 */
 	public abstract StringMap getIdentifiers();
+
 }

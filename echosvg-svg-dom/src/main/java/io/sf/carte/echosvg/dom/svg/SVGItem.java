@@ -61,4 +61,5 @@ public interface SVGItem {
 	 *         value representing the list.
 	 */
 	String getValueAsString();
+
 }

@@ -192,4 +192,5 @@ public class DefaultPathHandler implements PathHandler {
 	public void arcAbs(float rx, float ry, float xAxisRotation, boolean largeArcFlag, boolean sweepFlag, float x,
 			float y) throws ParseException {
 	}
+
 }

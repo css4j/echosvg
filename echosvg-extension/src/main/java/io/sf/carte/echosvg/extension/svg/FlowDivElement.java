@@ -73,4 +73,5 @@ public class FlowDivElement extends PrefixableStylableExtensionElement implement
 	protected Node newNode() {
 		return new FlowDivElement();
 	}
+
 }

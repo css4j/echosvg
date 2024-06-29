@@ -1504,6 +1504,7 @@ public class StrokingTextPainter extends BasicTextPainter {
 			this.end = end;
 			this.advance = new Point2D.Float((float) advance.getX(), (float) advance.getY());
 		}
+
 	}
 
 	/**
@@ -1596,4 +1597,5 @@ public class StrokingTextPainter extends BasicTextPainter {
 		}
 
 	}
+
 }

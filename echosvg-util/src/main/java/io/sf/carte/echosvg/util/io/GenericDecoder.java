@@ -79,4 +79,5 @@ public class GenericDecoder implements CharDecoder {
 		reader.close();
 		reader = null;
 	}
+
 }

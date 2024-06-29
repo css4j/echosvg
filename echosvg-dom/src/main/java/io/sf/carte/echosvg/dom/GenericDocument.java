@@ -203,4 +203,5 @@ public class GenericDocument extends AbstractDocument {
 	protected Node newNode() {
 		return new GenericDocument();
 	}
+
 }

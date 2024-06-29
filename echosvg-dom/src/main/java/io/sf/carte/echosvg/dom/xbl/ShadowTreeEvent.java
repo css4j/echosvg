@@ -27,6 +27,7 @@ import org.w3c.dom.events.Event;
  * @version $Id$
  */
 public interface ShadowTreeEvent extends Event {
+
 	XBLShadowTreeElement getXblShadowTree();
 
 	void initShadowTreeEvent(String typeArg, boolean canBubbleArg, boolean cancelableArg,
@@ -34,4 +35,5 @@ public interface ShadowTreeEvent extends Event {
 
 	void initShadowTreeEventNS(String namespaceURIArg, String typeArg, boolean canBubbleArg, boolean cancelableArg,
 			XBLShadowTreeElement xblShadowTreeArg);
+
 }

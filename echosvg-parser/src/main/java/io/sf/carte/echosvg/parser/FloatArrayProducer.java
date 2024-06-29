@@ -134,4 +134,5 @@ public class FloatArrayProducer extends DefaultNumberListHandler implements Poin
 	public void endPoints() throws ParseException {
 		endNumberList();
 	}
+
 }

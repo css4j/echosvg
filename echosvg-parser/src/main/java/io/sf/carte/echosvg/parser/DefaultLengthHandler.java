@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public class DefaultLengthHandler implements LengthHandler {
+
 	/**
 	 * The only instance of this class.
 	 */
@@ -120,4 +121,5 @@ public class DefaultLengthHandler implements LengthHandler {
 	@Override
 	public void endLength() throws ParseException {
 	}
+
 }

@@ -63,4 +63,5 @@ public class GraphicsNodeMouseWheelEvent extends GraphicsNodeInputEvent {
 	public int getWheelDelta() {
 		return wheelDelta;
 	}
+
 }

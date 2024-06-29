@@ -271,6 +271,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 		protected String getStringValue() {
 			return letter + ' ' + Float.toString(getX()) + ' ' + Float.toString(getY());
 		}
+
 	}
 
 	public static class SVGPathSegCurvetoCubicItem extends SVGPathSegItem
@@ -354,6 +355,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 					+ Float.toString(getX2()) + ' ' + Float.toString(getY2()) + ' ' + Float.toString(getX()) + ' '
 					+ Float.toString(getY());
 		}
+
 	}
 
 	public static class SVGPathSegCurvetoQuadraticItem extends SVGPathSegItem
@@ -419,6 +421,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 			return letter + ' ' + Float.toString(getX1()) + ' ' + Float.toString(getY1()) + ' ' + Float.toString(getX())
 					+ ' ' + Float.toString(getY());
 		}
+
 	}
 
 	public static class SVGPathSegArcItem extends SVGPathSegItem implements SVGPathSegArcAbs, SVGPathSegArcRel {
@@ -520,6 +523,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 					+ Float.toString(getAngle()) + ' ' + ((isLargeArcFlag() ? "1" : "0")) + ' '
 					+ ((isSweepFlag() ? "1" : "0")) + (' ') + Float.toString(getX()) + ' ' + Float.toString(getY());
 		}
+
 	}
 
 	public static class SVGPathSegLinetoHorizontalItem extends SVGPathSegItem
@@ -555,6 +559,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 		protected String getStringValue() {
 			return letter + ' ' + Float.toString(getX());
 		}
+
 	}
 
 	public static class SVGPathSegLinetoVerticalItem extends SVGPathSegItem
@@ -590,6 +595,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 		protected String getStringValue() {
 			return letter + ' ' + Float.toString(getY());
 		}
+
 	}
 
 	public static class SVGPathSegCurvetoCubicSmoothItem extends SVGPathSegItem
@@ -653,6 +659,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 			return letter + ' ' + Float.toString(getX2()) + ' ' + Float.toString(getY2()) + ' ' + Float.toString(getX())
 					+ ' ' + Float.toString(getY());
 		}
+
 	}
 
 	public static class SVGPathSegCurvetoQuadraticSmoothItem extends SVGPathSegItem
@@ -697,6 +704,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 		protected String getStringValue() {
 			return letter + ' ' + Float.toString(getX()) + ' ' + Float.toString(getY());
 		}
+
 	}
 
 	protected static class PathSegListBuilder extends DefaultPathHandler {
@@ -913,5 +921,7 @@ public abstract class AbstractSVGPathSegList extends AbstractSVGList implements 
 			listHandler.item(new SVGPathSegArcItem(SVGPathSeg.PATHSEG_ARC_ABS, PATHSEG_ARC_ABS_LETTER, rx, ry,
 					xAxisRotation, largeArcFlag, sweepFlag, x, y));
 		}
+
 	}
+
 }

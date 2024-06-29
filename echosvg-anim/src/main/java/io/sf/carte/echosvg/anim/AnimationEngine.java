@@ -587,6 +587,7 @@ public abstract class AnimationEngine {
 			}
 			anim.markDirty();
 		}
+
 	}
 
 	/**
@@ -608,6 +609,7 @@ public abstract class AnimationEngine {
 		 * Map of other animation types to the corresponding {@link Sandwich} objects.
 		 */
 		public HashMap<String, Sandwich> otherAnimations = new HashMap<>();
+
 	}
 
 	/**
@@ -635,6 +637,7 @@ public abstract class AnimationEngine {
 		 * changes to the base value.
 		 */
 		public boolean listenerRegistered;
+
 	}
 
 	/**
@@ -663,5 +666,7 @@ public abstract class AnimationEngine {
 		 * The local name of the attribute or the name of the CSS property to animate.
 		 */
 		public String attributeLocalName;
+
 	}
+
 }

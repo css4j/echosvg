@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SVGCompositeDescriptor implements SVGDescriptor, SVGSyntax {
+
 	private Element def;
 	private String opacityValue;
 	private String filterValue;
@@ -81,4 +82,5 @@ public class SVGCompositeDescriptor implements SVGDescriptor, SVGSyntax {
 
 		return defSet;
 	}
+
 }

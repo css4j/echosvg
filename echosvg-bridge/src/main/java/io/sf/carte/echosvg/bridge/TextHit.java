@@ -64,4 +64,5 @@ public class TextHit {
 	public boolean isLeadingEdge() {
 		return leadingEdge;
 	}
+
 }

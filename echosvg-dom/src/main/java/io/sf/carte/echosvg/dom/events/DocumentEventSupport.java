@@ -170,16 +170,19 @@ public class DocumentEventSupport {
 	 * This interface represents an event factory.
 	 */
 	public interface EventFactory {
+
 		/**
 		 * Creates a new Event object.
 		 */
 		Event createEvent();
+
 	}
 
 	/**
 	 * To create a simple event.
 	 */
 	protected static class SimpleEventFactory implements EventFactory {
+
 		/**
 		 * Creates a new Event object.
 		 */
@@ -187,12 +190,14 @@ public class DocumentEventSupport {
 		public Event createEvent() {
 			return new DOMEvent();
 		}
+
 	}
 
 	/**
 	 * To create a mutation event.
 	 */
 	protected static class MutationEventFactory implements EventFactory {
+
 		/**
 		 * Creates a new Event object.
 		 */
@@ -200,12 +205,14 @@ public class DocumentEventSupport {
 		public Event createEvent() {
 			return new DOMMutationEvent();
 		}
+
 	}
 
 	/**
 	 * To create a mutation name event.
 	 */
 	protected static class MutationNameEventFactory implements EventFactory {
+
 		/**
 		 * Creates a new Event object.
 		 */
@@ -213,12 +220,14 @@ public class DocumentEventSupport {
 		public Event createEvent() {
 			return new DOMMutationNameEvent();
 		}
+
 	}
 
 	/**
 	 * To create a mouse event.
 	 */
 	protected static class MouseEventFactory implements EventFactory {
+
 		/**
 		 * Creates a new Event object.
 		 */
@@ -226,12 +235,14 @@ public class DocumentEventSupport {
 		public Event createEvent() {
 			return new DOMMouseEvent();
 		}
+
 	}
 
 	/**
 	 * To create a key event.
 	 */
 	protected static class KeyEventFactory implements EventFactory {
+
 		/**
 		 * Creates a new Event object.
 		 */
@@ -239,12 +250,14 @@ public class DocumentEventSupport {
 		public Event createEvent() {
 			return new DOMKeyEvent();
 		}
+
 	}
 
 	/**
 	 * To create a keyboard event.
 	 */
 	protected static class KeyboardEventFactory implements EventFactory {
+
 		/**
 		 * Creates a new Event object.
 		 */
@@ -252,12 +265,14 @@ public class DocumentEventSupport {
 		public Event createEvent() {
 			return new DOMKeyboardEvent();
 		}
+
 	}
 
 	/**
 	 * To create a UI event.
 	 */
 	protected static class UIEventFactory implements EventFactory {
+
 		/**
 		 * Creates a new Event object.
 		 */
@@ -265,12 +280,14 @@ public class DocumentEventSupport {
 		public Event createEvent() {
 			return new DOMUIEvent();
 		}
+
 	}
 
 	/**
 	 * To create a Text event.
 	 */
 	protected static class TextEventFactory implements EventFactory {
+
 		/**
 		 * Creates a new Event object.
 		 */
@@ -278,12 +295,14 @@ public class DocumentEventSupport {
 		public Event createEvent() {
 			return new DOMTextEvent();
 		}
+
 	}
 
 	/**
 	 * To create a Custom event.
 	 */
 	protected static class CustomEventFactory implements EventFactory {
+
 		/**
 		 * Creates a new Event object.
 		 */
@@ -291,5 +310,7 @@ public class DocumentEventSupport {
 		public Event createEvent() {
 			return new DOMCustomEvent();
 		}
+
 	}
+
 }

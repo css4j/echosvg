@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.svggen;
  * @version $Id$
  */
 public class SVGGraphics2DRuntimeException extends RuntimeException {
+
 	private static final long serialVersionUID = 1L;
 	/** The enclosed exception. */
 	private Exception embedded;
@@ -86,4 +87,5 @@ public class SVGGraphics2DRuntimeException extends RuntimeException {
 	public Exception getException() {
 		return embedded;
 	}
+
 }

@@ -42,4 +42,5 @@ public interface SVG12BridgeUpdateHandler extends BridgeUpdateHandler {
 	 * xbl:content element has updated its selected nodes.
 	 */
 	void handleContentSelectionChangedEvent(ContentSelectionChangedEvent csce);
+
 }

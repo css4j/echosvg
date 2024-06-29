@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.test.TestFonts;
  * @version $Id$
  */
 public class Bug6535 implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -62,4 +63,5 @@ public class Bug6535 implements Painter {
 		g.drawString("Hello, size 15", 160, 80);
 
 	}
+
 }

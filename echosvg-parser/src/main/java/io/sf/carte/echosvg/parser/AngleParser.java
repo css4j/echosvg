@@ -145,4 +145,5 @@ public class AngleParser extends NumberParser {
 		}
 		angleHandler.endAngle();
 	}
+
 }

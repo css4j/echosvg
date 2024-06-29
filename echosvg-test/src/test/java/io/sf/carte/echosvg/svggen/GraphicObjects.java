@@ -40,6 +40,7 @@ import io.sf.carte.echosvg.test.TestFonts;
  * @version $Id$
  */
 public class GraphicObjects implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -96,4 +97,5 @@ public class GraphicObjects implements Painter {
 
 		g.drawImage(image, 40, 40, null);
 	}
+
 }

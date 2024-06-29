@@ -58,4 +58,5 @@ public class GraphicsNodeFocusEvent extends GraphicsNodeEvent {
 	public GraphicsNodeFocusEvent(GraphicsNode source, int id) {
 		super(source, id);
 	}
+
 }

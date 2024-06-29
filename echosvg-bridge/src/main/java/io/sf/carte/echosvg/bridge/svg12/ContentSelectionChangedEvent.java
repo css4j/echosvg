@@ -49,4 +49,5 @@ public class ContentSelectionChangedEvent extends EventObject {
 	public XBLOMContentElement getContentElement() {
 		return (XBLOMContentElement) source;
 	}
+
 }

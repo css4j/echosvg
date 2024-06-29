@@ -909,4 +909,5 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
 			}
 		}
 	}
+
 }

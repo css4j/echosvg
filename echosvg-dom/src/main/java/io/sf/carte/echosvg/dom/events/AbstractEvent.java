@@ -365,4 +365,5 @@ public abstract class AbstractEvent implements Event, OriginalEvent, Cloneable {
 	public void setBubbleLimit(int n) {
 		bubbleLimit = n;
 	}
+
 }

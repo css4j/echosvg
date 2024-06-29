@@ -176,4 +176,5 @@ public class XBLShadowTreeElementBridge extends AbstractGraphicsNodeBridge {
 		idx++;
 		gn.add(idx, childNode);
 	}
+
 }

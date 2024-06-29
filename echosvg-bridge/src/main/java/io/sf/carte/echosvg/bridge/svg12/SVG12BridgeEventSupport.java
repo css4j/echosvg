@@ -568,5 +568,7 @@ public abstract class SVG12BridgeEventSupport extends BridgeEventSupport {
 				ctx12.stopMouseCapture();
 			}
 		}
+
 	}
+
 }

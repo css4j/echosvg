@@ -107,4 +107,5 @@ public abstract class TimingSpecifier {
 	float handleTimebaseUpdate(InstanceTime instanceTime, float newTime) {
 		return Float.POSITIVE_INFINITY;
 	}
+
 }

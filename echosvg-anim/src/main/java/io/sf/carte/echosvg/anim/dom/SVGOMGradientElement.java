@@ -214,4 +214,5 @@ public abstract class SVGOMGradientElement extends SVGStylableElement implements
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

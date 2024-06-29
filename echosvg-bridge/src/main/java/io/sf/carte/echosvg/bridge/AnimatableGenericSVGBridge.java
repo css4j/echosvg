@@ -173,4 +173,5 @@ public abstract class AnimatableGenericSVGBridge extends AnimatableSVGBridge
 	@Override
 	public void handleOtherAnimationChanged(String type) {
 	}
+
 }

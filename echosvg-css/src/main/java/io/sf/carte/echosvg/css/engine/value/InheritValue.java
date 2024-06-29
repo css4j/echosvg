@@ -28,6 +28,7 @@ import org.w3c.dom.css.CSSValue;
  * @version $Id$
  */
 public class InheritValue extends AbstractValue {
+
 	/**
 	 * The only instance of this class.
 	 */
@@ -62,4 +63,5 @@ public class InheritValue extends AbstractValue {
 	public String toString() {
 		return getCssText();
 	}
+
 }

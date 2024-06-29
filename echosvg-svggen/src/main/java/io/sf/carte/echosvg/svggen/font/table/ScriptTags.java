@@ -26,5 +26,7 @@ package io.sf.carte.echosvg.svggen.font.table;
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  */
 public interface ScriptTags {
+
 	String SCRIPT_TAG_ARAB = "arab";
+
 }

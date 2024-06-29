@@ -167,6 +167,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
 	 * The action associated with the 'OK' button
 	 */
 	protected class OKButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -194,12 +195,14 @@ public class UserStyleDialog extends JDialog implements ActionMap {
 			returnCode = OK_OPTION;
 			dispose();
 		}
+
 	}
 
 	/**
 	 * The action associated with the 'Cancel' button
 	 */
 	protected class CancelButtonAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -207,6 +210,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
 			returnCode = CANCEL_OPTION;
 			dispose();
 		}
+
 	}
 
 	/**
@@ -229,6 +233,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
 	 * This class represents the main panel of the dialog.
 	 */
 	public static class Panel extends JPanel {
+
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -328,6 +333,7 @@ public class UserStyleDialog extends JDialog implements ActionMap {
 		 * To listen to the file checkbox
 		 */
 		protected class FileCheckBoxChangeListener implements ChangeListener {
+
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				boolean selected = fileCheckBox.isSelected();
@@ -335,12 +341,14 @@ public class UserStyleDialog extends JDialog implements ActionMap {
 				fileTextField.setEnabled(selected);
 				browseButton.setEnabled(selected);
 			}
+
 		}
 
 		/**
 		 * The action associated with the 'browse' button
 		 */
 		protected class FileBrowseButtonAction extends AbstractAction {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -357,6 +365,9 @@ public class UserStyleDialog extends JDialog implements ActionMap {
 					}
 				}
 			}
+
 		}
+
 	}
+
 }

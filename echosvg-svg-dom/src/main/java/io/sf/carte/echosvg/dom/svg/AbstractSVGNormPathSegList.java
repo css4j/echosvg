@@ -358,6 +358,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
 			}
 			lastAbs.setPathSegType(SVGPathSeg.PATHSEG_ARC_ABS);
 		}
+
 	}
 
 	protected static class SVGPathSegGenericItem extends SVGPathSegItem {
@@ -390,5 +391,7 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
 		public void setPathSegType(short type) {
 			this.type = type;
 		}
+
 	}
+
 }

@@ -38,6 +38,7 @@ import org.w3c.dom.Element;
  */
 
 public abstract class AbstractSVGConverter implements SVGConverter, ErrorConstants {
+
 	/**
 	 * Used by converters to create Elements and other DOM objects
 	 */
@@ -86,4 +87,5 @@ public abstract class AbstractSVGConverter implements SVGConverter, ErrorConstan
 	public final String doubleString(double value) {
 		return generatorContext.doubleString(value);
 	}
+
 }

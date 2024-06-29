@@ -36,4 +36,5 @@ public interface ContentSelectionChangedListener extends EventListener {
 	 * @param csce the ContentSelectionChangedEvent object
 	 */
 	void contentSelectionChanged(ContentSelectionChangedEvent csce);
+
 }

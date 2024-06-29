@@ -59,4 +59,5 @@ public abstract class AbstractComment extends AbstractCharacterData implements C
 	public String getTextContent() {
 		return getNodeValue();
 	}
+
 }

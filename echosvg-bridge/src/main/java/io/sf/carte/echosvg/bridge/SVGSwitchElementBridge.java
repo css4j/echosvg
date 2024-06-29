@@ -177,4 +177,5 @@ public class SVGSwitchElementBridge extends SVGGElementBridge {
 			}
 		}
 	}
+
 }

@@ -339,6 +339,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		public void handleEvent(Event evt) {
 			handleDOMChildNodeRemovedEvent((MutationEvent) evt);
 		}
+
 	}
 
 	/**
@@ -358,6 +359,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		public void handleEvent(Event evt) {
 			handleDOMSubtreeModifiedEvent((MutationEvent) evt);
 		}
+
 	}
 
 	// BridgeUpdateHandler implementation -----------------------------------
@@ -1185,6 +1187,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			}
 			return sb.toString();
 		}
+
 	}
 
 	/**
@@ -1921,6 +1924,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		public float getFontSize() {
 			return CSSUtilities.getComputedStyle(e, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
 		}
+
 	}
 
 	/**
@@ -2003,6 +2007,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			((SVGOMElement) e).setSVGContext(null);
 			elemTPI.remove(e);
 		}
+
 	}
 
 	protected class AbstractTextChildTextContent extends AbstractTextChildBridgeUpdateHandler
@@ -2062,6 +2067,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		public int getCharNumAtPosition(float x, float y) {
 			return textBridge.getCharNumAtPosition(e, x, y);
 		}
+
 	}
 
 	/**
@@ -2091,6 +2097,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			}
 			super.handleAnimatedAttributeChanged(alav);
 		}
+
 	}
 
 	/**
@@ -2101,6 +2108,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		protected TextPathBridge(BridgeContext ctx, SVGTextElementBridge parent, Element e) {
 			super(ctx, parent, e);
 		}
+
 	}
 
 	/**
@@ -2130,6 +2138,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			}
 			super.handleAnimatedAttributeChanged(alav);
 		}
+
 	}
 
 	// Implementation of TextContent
@@ -2711,6 +2720,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 	 * Helper class to collect information about one Glyph in the GlyphVector
 	 */
 	protected static class CharacterInformation {
+
 		/// layout associated to the Glyph
 		TextSpanLayout layout;
 		/// GlyphIndex in the vector
@@ -2730,6 +2740,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		public double getComputedOrientationAngle() {
 			return layout.getComputedOrientationAngle(characterIndex);
 		}
+
 	}
 
 	public Set<Element> getTextIntersectionSet(AffineTransform at, Rectangle2D rect) {
@@ -2981,4 +2992,5 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			return false;
 		}
 	}
+
 }

@@ -252,4 +252,5 @@ public class SVGFeImageElementBridge extends AbstractSVGFilterPrimitiveElementBr
 
 		return new AffineRable8Bit(filter, scale);
 	}
+
 }

@@ -25,6 +25,7 @@ package io.sf.carte.echosvg.svggen;
  * @version $Id$
  */
 public abstract class SVGGraphicObjectConverter implements SVGSyntax {
+
 	/**
 	 * Used by converters to create Elements and other DOM objects.
 	 */
@@ -51,4 +52,5 @@ public abstract class SVGGraphicObjectConverter implements SVGSyntax {
 	public final String doubleString(double value) {
 		return generatorContext.doubleString(value);
 	}
+
 }

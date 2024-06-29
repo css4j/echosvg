@@ -120,4 +120,5 @@ public class ClipManager extends RectManager {
 		}
 		return ValueConstants.AUTO_VALUE;
 	}
+
 }

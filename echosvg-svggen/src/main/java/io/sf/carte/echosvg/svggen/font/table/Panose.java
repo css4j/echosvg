@@ -100,4 +100,5 @@ public class Panose {
 				.append(String.valueOf(bMidline)).append(" ").append(String.valueOf(bXHeight));
 		return sb.toString();
 	}
+
 }

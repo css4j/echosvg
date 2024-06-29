@@ -159,4 +159,5 @@ public class StyleDeclaration {
 		}
 		return sb.toString();
 	}
+
 }

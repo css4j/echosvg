@@ -213,4 +213,5 @@ public class SVGFilterElementBridge extends AnimatableGenericSVGBridge implement
 		}
 		return in;
 	}
+
 }

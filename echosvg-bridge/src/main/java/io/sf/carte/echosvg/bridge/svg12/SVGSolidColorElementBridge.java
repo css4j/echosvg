@@ -172,4 +172,5 @@ public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge imple
 			}
 		}
 	}
+
 }

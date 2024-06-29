@@ -29,6 +29,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class RelaxedExternalResourceSecurity implements ExternalResourceSecurity {
+
 	/**
 	 * Controls whether the externalResource should be loaded or not.
 	 *
@@ -49,4 +50,5 @@ public class RelaxedExternalResourceSecurity implements ExternalResourceSecurity
 	public RelaxedExternalResourceSecurity(ParsedURL externalResourceURL, ParsedURL docURL) {
 		/* do nothing */
 	}
+
 }

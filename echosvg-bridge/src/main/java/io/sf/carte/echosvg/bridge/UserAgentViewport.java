@@ -53,4 +53,5 @@ public class UserAgentViewport implements Viewport {
 	public float getHeight() {
 		return (float) userAgent.getViewportSize().getHeight();
 	}
+
 }

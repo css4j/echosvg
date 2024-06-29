@@ -565,4 +565,5 @@ public class FlowExtGlyphLayout extends GlyphLayout {
 		}
 		gv.setGlyphPosition(i, pos);
 	}
+
 }

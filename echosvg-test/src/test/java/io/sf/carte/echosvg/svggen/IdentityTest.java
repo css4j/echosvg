@@ -31,6 +31,7 @@ import java.awt.RenderingHints;
  * @version $Id$
  */
 public class IdentityTest implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -46,4 +47,5 @@ public class IdentityTest implements Painter {
 
 		g.fillRect(10, 10, 100, 80);
 	}
+
 }

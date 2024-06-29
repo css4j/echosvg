@@ -137,4 +137,5 @@ public class ColorProfileManager extends AbstractValueManager {
 		}
 		throw createInvalidStringTypeDOMException(type);
 	}
+
 }

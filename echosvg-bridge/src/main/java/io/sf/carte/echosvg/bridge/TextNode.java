@@ -540,5 +540,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
 				throw new RuntimeException("Unknown Anchor type");
 			}
 		}
+
 	}
+
 }

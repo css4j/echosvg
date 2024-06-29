@@ -287,6 +287,7 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge implemen
 	}
 
 	public static class PatternGraphicsNode extends AbstractGraphicsNode {
+
 		GraphicsNode pcn;
 		Rectangle2D pBounds;
 		Rectangle2D gBounds;
@@ -347,4 +348,5 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge implemen
 		}
 
 	}
+
 }

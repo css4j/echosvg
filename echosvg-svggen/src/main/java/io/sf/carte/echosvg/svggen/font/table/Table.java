@@ -204,4 +204,5 @@ public interface Table {
 	 * @return The table type
 	 */
 	int getType();
+
 }

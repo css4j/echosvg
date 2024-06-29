@@ -107,4 +107,5 @@ public interface SVGSVGContext extends SVGContext {
 	 * Sets the current document time.
 	 */
 	void setCurrentTime(float t);
+
 }

@@ -57,4 +57,5 @@ public class SVGLoadEventDispatcherEvent extends EventObject {
 	public GraphicsNode getGVTRoot() {
 		return gvtRoot;
 	}
+
 }

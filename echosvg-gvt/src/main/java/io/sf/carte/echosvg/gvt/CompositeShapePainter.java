@@ -258,4 +258,5 @@ public class CompositeShapePainter implements ShapePainter {
 	public Shape getShape() {
 		return shape;
 	}
+
 }

@@ -79,4 +79,5 @@ public interface ExtendedTraitAccess extends TraitAccess {
 	 * TYPE_* constants defined in {@link io.sf.carte.echosvg.util.SVGTypes}.
 	 */
 	int getAttributeType(String ns, String ln);
+
 }

@@ -269,4 +269,5 @@ public class SVGAnimateTransformElementBridge extends SVGAnimateElementBridge {
 	protected boolean canAnimateType(int type) {
 		return type == SVGTypes.TYPE_TRANSFORM_LIST;
 	}
+
 }

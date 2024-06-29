@@ -32,7 +32,9 @@ import java.util.List;
 public class EventDispatcher {
 
 	public interface Dispatcher {
+
 		void dispatch(Object listener, Object event);
+
 	}
 
 	public static void fireEvent(final Dispatcher dispatcher, final List<Object> listeners, final Object evt,
@@ -116,4 +118,5 @@ public class EventDispatcher {
 		if (td != null)
 			throw td;
 	}
+
 }

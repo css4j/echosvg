@@ -40,6 +40,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @see io.sf.carte.echosvg.svggen.SVGTexturePaint
  */
 public class SVGPaint implements SVGConverter {
+
 	/**
 	 * All GradientPaint convertions are handed to svgLinearGradient
 	 */
@@ -139,4 +140,5 @@ public class SVGPaint implements SVGConverter {
 
 		return paintDesc;
 	}
+
 }

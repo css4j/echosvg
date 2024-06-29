@@ -152,4 +152,5 @@ public class SVGOMCircleElement extends SVGGraphicsElement implements SVGCircleE
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

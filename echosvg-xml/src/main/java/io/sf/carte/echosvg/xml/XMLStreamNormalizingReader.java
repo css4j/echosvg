@@ -106,4 +106,5 @@ public class XMLStreamNormalizingReader extends StreamNormalizingReader {
 		encod = (encod == null) ? "UTF-8" : encod;
 		charDecoder = createCharDecoder(pbis, encod);
 	}
+
 }

@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.util.Base64EncoderStream;
  * @version $Id$
  */
 public class Base64PNGEncoderTest extends PNGEncoderTest {
+
 	/**
 	 * Template method for building the PNG output stream
 	 */

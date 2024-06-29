@@ -132,4 +132,5 @@ public abstract class AbstractSVGAnimatedValue implements AnimatedLiveAttributeV
 			listener.animatedAttributeChanged(element, this);
 		}
 	}
+
 }

@@ -396,6 +396,7 @@ public class ContentManager {
 	 * elements.
 	 */
 	protected class ContentElementDOMAttrModifiedEventListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			MutationEvent me = (MutationEvent) evt;
@@ -414,44 +415,52 @@ public class ContentManager {
 				}
 			}
 		}
+
 	}
 
 	/**
 	 * The DOM EventListener invoked when an attribute is modified.
 	 */
 	protected class DOMAttrModifiedEventListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			if (evt.getTarget() != boundElement) {
 				update(false);
 			}
 		}
+
 	}
 
 	/**
 	 * The DOM EventListener invoked when a node is added.
 	 */
 	protected class DOMNodeInsertedEventListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			update(false);
 		}
+
 	}
 
 	/**
 	 * The DOM EventListener invoked when a node is removed.
 	 */
 	protected class DOMNodeRemovedEventListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			removedNode = (Node) evt.getTarget();
 		}
+
 	}
 
 	/**
 	 * The DOM EventListener invoked when a subtree has changed.
 	 */
 	protected class DOMSubtreeModifiedEventListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			if (removedNode != null) {
@@ -467,12 +476,14 @@ public class ContentManager {
 	 * inserted.
 	 */
 	protected class ShadowTreeNodeInsertedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			if (evt.getTarget() instanceof XBLOMContentElement) {
 				update(false);
 			}
 		}
+
 	}
 
 	/**
@@ -480,6 +491,7 @@ public class ContentManager {
 	 * removed.
 	 */
 	protected class ShadowTreeNodeRemovedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			EventTarget target = evt.getTarget();
@@ -487,12 +499,14 @@ public class ContentManager {
 				removedNode = (Node) evt.getTarget();
 			}
 		}
+
 	}
 
 	/**
 	 * The DOM EventListener invoked when a subtree of the shadow tree has changed.
 	 */
 	protected class ShadowTreeSubtreeModifiedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			if (removedNode != null) {
@@ -500,5 +514,7 @@ public class ContentManager {
 				update(false);
 			}
 		}
+
 	}
+
 }

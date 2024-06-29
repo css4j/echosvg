@@ -180,4 +180,5 @@ public class Interval {
 		return minTime;
 		// } finally { Trace.exit(); }
 	}
+
 }

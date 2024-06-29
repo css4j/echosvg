@@ -88,4 +88,5 @@ public class FlowExtTextPainter extends StrokingTextPainter {
 		node.setTextRuns(textRuns);
 		return textRuns;
 	}
+
 }

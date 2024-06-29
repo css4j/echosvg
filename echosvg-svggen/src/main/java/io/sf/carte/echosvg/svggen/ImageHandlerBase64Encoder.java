@@ -46,6 +46,7 @@ import io.sf.carte.echosvg.util.Base64EncoderStream;
  * @see io.sf.carte.echosvg.svggen.ImageHandler
  */
 public class ImageHandlerBase64Encoder extends DefaultImageHandler {
+
 	/**
 	 * Build an <code>ImageHandlerBase64Encoder</code> instance.
 	 */
@@ -158,4 +159,5 @@ public class ImageHandlerBase64Encoder extends DefaultImageHandler {
 	public BufferedImage buildBufferedImage(Dimension size) {
 		return new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
 	}
+
 }

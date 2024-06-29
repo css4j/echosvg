@@ -164,4 +164,5 @@ public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge
 	public float getFontSize() {
 		return 0;
 	}
+
 }

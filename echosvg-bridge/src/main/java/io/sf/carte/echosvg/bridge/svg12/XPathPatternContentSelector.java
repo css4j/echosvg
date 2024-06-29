@@ -207,5 +207,7 @@ public class XPathPatternContentSelector extends AbstractContentSelector {
 		public Iterator<String> getPrefixes(String namespaceURI) {
 			return null;
 		}
+
 	}
+
 }

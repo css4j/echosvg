@@ -27,6 +27,7 @@ package io.sf.carte.echosvg.bridge;
  * @version $Id$
  */
 public class NoLoadExternalResourceSecurity implements ExternalResourceSecurity {
+
 	/**
 	 * Message when trying to load an external resource
 	 */
@@ -57,4 +58,5 @@ public class NoLoadExternalResourceSecurity implements ExternalResourceSecurity 
 		se = new SecurityException(Messages.formatMessage(ERROR_NO_EXTERNAL_RESOURCE_ALLOWED, null));
 
 	}
+
 }

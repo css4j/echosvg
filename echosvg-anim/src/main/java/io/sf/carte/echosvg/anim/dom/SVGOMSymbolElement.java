@@ -218,4 +218,5 @@ public class SVGOMSymbolElement extends SVGStylableElement implements SVGSymbolE
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

@@ -139,4 +139,5 @@ public class SVGTextPathElementBridge extends AnimatableGenericSVGBridge impleme
 
 		return textPath;
 	}
+
 }

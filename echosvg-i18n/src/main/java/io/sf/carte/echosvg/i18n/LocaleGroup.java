@@ -29,6 +29,7 @@ import java.util.Locale;
  * @version $Id$
  */
 public class LocaleGroup {
+
 	/**
 	 * The default group.
 	 */
@@ -53,4 +54,5 @@ public class LocaleGroup {
 	public Locale getLocale() {
 		return locale;
 	}
+
 }

@@ -74,4 +74,5 @@ public class EchoSVGHistogramNormalizationElement extends PrefixableStylableExte
 	protected Node newNode() {
 		return new EchoSVGHistogramNormalizationElement();
 	}
+
 }

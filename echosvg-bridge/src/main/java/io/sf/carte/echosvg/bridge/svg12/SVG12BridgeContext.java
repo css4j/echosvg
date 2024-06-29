@@ -413,6 +413,7 @@ public class SVG12BridgeContext extends BridgeContext {
 				BridgeContext c) {
 			super(t, n, s, l, b, c);
 		}
+
 	}
 
 	/**
@@ -448,6 +449,7 @@ public class SVG12BridgeContext extends BridgeContext {
 		public String toString() {
 			return super.toString() + " [wrapping " + listener.toString() + "]";
 		}
+
 	}
 
 	/**
@@ -470,6 +472,7 @@ public class SVG12BridgeContext extends BridgeContext {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -498,5 +501,7 @@ public class SVG12BridgeContext extends BridgeContext {
 				}
 			}
 		}
+
 	}
+
 }

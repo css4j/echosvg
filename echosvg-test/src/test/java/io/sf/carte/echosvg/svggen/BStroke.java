@@ -33,6 +33,7 @@ import java.awt.geom.GeneralPath;
  * @version $Id$
  */
 public class BStroke implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -158,4 +159,5 @@ public class BStroke implements Painter {
 		}
 
 	}
+
 }

@@ -67,6 +67,7 @@ import io.sf.carte.echosvg.util.SoftReferenceCache;
  * @version $Id$
  */
 public class CursorManager implements SVGConstants, ErrorConstants {
+
 	/**
 	 * Maps SVG Cursor Values to Java Cursors
 	 */
@@ -536,6 +537,7 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 	 * image it points to and the hot spot point coordinates.
 	 */
 	static class CursorDescriptor {
+
 		ParsedURL purl;
 		float x;
 		float y;
@@ -575,6 +577,7 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 		public int hashCode() {
 			return desc.hashCode();
 		}
+
 	}
 
 	/**
@@ -582,6 +585,7 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 	 * of needed as SoftReferenceCache mostly has protected methods).
 	 */
 	static class CursorCache extends SoftReferenceCache {
+
 		public CursorCache() {
 		}
 
@@ -596,5 +600,7 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 		public void clearCursor(CursorDescriptor desc) {
 			clearImpl(desc);
 		}
+
 	}
+
 }

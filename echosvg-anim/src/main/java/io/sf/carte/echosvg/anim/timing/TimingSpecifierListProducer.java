@@ -169,4 +169,5 @@ public class TimingSpecifierListProducer extends DefaultTimingSpecifierListHandl
 		TimingSpecifier ts = new IndefiniteTimingSpecifier(owner, isBegin);
 		timingSpecifiers.add(ts);
 	}
+
 }

@@ -194,4 +194,5 @@ public class AnimatableLengthValue extends AnimatableValue {
 	public String getCssText() {
 		return formatNumber(lengthValue) + UNITS[lengthType - 1];
 	}
+
 }

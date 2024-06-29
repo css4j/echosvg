@@ -116,4 +116,5 @@ public abstract class SVGPointShapeElement extends SVGGraphicsElement implements
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

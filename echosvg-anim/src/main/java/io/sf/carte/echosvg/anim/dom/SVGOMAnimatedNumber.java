@@ -213,4 +213,5 @@ public class SVGOMAnimatedNumber extends AbstractSVGAnimatedValue implements SVG
 			fireAnimatedAttributeListeners();
 		}
 	}
+
 }

@@ -100,4 +100,5 @@ public class StyleRule implements Rule {
 		sb.append("}\n");
 		return sb.toString();
 	}
+
 }

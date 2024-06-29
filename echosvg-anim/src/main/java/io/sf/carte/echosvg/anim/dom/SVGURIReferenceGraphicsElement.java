@@ -103,4 +103,5 @@ public abstract class SVGURIReferenceGraphicsElement extends SVGGraphicsElement 
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

@@ -56,4 +56,5 @@ public class SVGOMAnimatedLength extends AbstractSVGAnimatedLength {
 	protected String getDefaultValue() {
 		return defaultValue;
 	}
+
 }

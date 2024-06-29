@@ -148,6 +148,7 @@ public class FocusManager {
 			MouseEvent mevt = (MouseEvent) evt;
 			fireDOMActivateEvent(evt.getTarget(), mevt.getDetail());
 		}
+
 	}
 
 	/**
@@ -163,6 +164,7 @@ public class FocusManager {
 			}
 			lastFocusEventTarget = evt.getTarget();
 		}
+
 	}
 
 	/**
@@ -177,6 +179,7 @@ public class FocusManager {
 		public void handleEvent(Event evt) {
 			lastFocusEventTarget = null;
 		}
+
 	}
 
 	/**
@@ -192,6 +195,7 @@ public class FocusManager {
 			EventTarget relatedTarget = me.getRelatedTarget();
 			fireDOMFocusInEvent(target, relatedTarget);
 		}
+
 	}
 
 	/**
@@ -207,6 +211,7 @@ public class FocusManager {
 			EventTarget relatedTarget = me.getRelatedTarget();
 			fireDOMFocusOutEvent(target, relatedTarget);
 		}
+
 	}
 
 	/**
@@ -256,4 +261,5 @@ public class FocusManager {
 				0); // detailArg
 		target.dispatchEvent(uiEvt);
 	}
+
 }

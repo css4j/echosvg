@@ -329,4 +329,5 @@ public abstract class NumberParser extends AbstractParser {
 			pow10[i] = Math.pow(10, i);
 		}
 	}
+
 }

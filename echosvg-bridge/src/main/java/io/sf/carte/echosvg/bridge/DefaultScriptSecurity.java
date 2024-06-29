@@ -105,4 +105,5 @@ public class DefaultScriptSecurity implements ScriptSecurity {
 		}
 
 	}
+
 }

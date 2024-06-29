@@ -42,6 +42,7 @@ import io.sf.carte.echosvg.svggen.SVGGeneratorContext;
 @Measurement(iterations = 4, time = 10)
 @Warmup(iterations = 4, time = 10)
 public class DoubleStringPerformanceMark {
+
 	static final double[] testValues = { 0, 0.00000000001, 0.2e-14, 0.45, 123412341234e14, 987654321e-12, 234143,
 			2.3333444000044e56, 45.3456 };
 
@@ -61,9 +62,11 @@ public class DoubleStringPerformanceMark {
 	}
 
 	static class MarkGeneratorContext extends SVGGeneratorContext {
-		MarkGeneratorContext (Document doc) {
+
+		MarkGeneratorContext(Document doc) {
 			super(doc);
 		}
+
 	}
 
 }

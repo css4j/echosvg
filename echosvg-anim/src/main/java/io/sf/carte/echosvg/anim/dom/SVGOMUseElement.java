@@ -253,4 +253,5 @@ public class SVGOMUseElement extends SVGURIReferenceGraphicsElement implements S
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

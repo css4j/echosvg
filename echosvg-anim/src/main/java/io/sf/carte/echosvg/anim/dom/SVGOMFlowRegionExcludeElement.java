@@ -65,4 +65,5 @@ public class SVGOMFlowRegionExcludeElement extends SVGStylableElement {
 	protected Node newNode() {
 		return new SVGOMFlowRegionExcludeElement();
 	}
+
 }

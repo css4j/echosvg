@@ -34,6 +34,7 @@ package io.sf.carte.echosvg.test.svg;
  * @version $Id$
  */
 public class RenderingTest extends PreconfiguredRenderingTest {
+
 	private static final String SVG_URL_PREFIX = "";
 
 	private static final String REF_IMAGE_PREFIX = "test-references/";
@@ -105,4 +106,5 @@ public class RenderingTest extends PreconfiguredRenderingTest {
 	protected String getCandidateReferenceSuffix() {
 		return SAVE_CANDIDATE_REFERENCE_SUFFIX;
 	}
+
 }

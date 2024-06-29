@@ -63,4 +63,5 @@ public class Bug21259Test {
 
 		assertSame(root.getParentNode(), document);
 	}
+
 }

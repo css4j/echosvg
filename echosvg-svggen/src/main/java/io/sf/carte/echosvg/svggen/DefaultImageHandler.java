@@ -155,4 +155,5 @@ public class DefaultImageHandler implements ImageHandler, ErrorConstants {
 		// Simply write a placeholder
 		imageElement.setAttributeNS(XLINK_NAMESPACE_URI, XLINK_HREF_QNAME, image.toString());
 	}
+
 }

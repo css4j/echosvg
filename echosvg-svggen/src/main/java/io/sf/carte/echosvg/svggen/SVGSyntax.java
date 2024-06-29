@@ -76,4 +76,5 @@ public interface SVGSyntax extends SVGConstants {
 	String URL_SUFFIX = ")";
 
 	String DATA_PROTOCOL_PNG_PREFIX = "data:image/png;base64,";
+
 }

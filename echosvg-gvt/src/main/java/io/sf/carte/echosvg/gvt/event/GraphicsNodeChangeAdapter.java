@@ -54,4 +54,5 @@ public abstract class GraphicsNodeChangeAdapter implements GraphicsNodeChangeLis
 	@Override
 	public void changeCompleted(GraphicsNodeChangeEvent gnce) {
 	}
+
 }

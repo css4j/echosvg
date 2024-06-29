@@ -132,4 +132,5 @@ public class AnimatableIntegerValue extends AnimatableValue {
 	public String getCssText() {
 		return Integer.toString(value);
 	}
+
 }

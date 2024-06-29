@@ -103,4 +103,5 @@ public class ImageRenderingManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

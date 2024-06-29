@@ -145,4 +145,5 @@ public class AnimatableAngleValue extends AnimatableNumberValue {
 			return (float) Math.PI * v / 180;
 		}
 	}
+
 }

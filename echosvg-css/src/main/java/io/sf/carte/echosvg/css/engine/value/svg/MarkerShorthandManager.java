@@ -72,4 +72,5 @@ public class MarkerShorthandManager extends AbstractValueFactory implements Shor
 		ph.property(CSSConstants.CSS_MARKER_MID_PROPERTY, lu, imp);
 		ph.property(CSSConstants.CSS_MARKER_START_PROPERTY, lu, imp);
 	}
+
 }

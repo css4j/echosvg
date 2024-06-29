@@ -449,4 +449,5 @@ public interface GraphicsNode {
 	 * Returns the outline of this node.
 	 */
 	Shape getOutline();
+
 }

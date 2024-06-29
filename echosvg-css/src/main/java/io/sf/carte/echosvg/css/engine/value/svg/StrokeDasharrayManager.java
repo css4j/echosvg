@@ -161,4 +161,5 @@ public class StrokeDasharrayManager extends LengthManager {
 	protected int getOrientation() {
 		return BOTH_ORIENTATION;
 	}
+
 }

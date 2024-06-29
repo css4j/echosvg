@@ -112,7 +112,8 @@ public class SVGConverterTest {
 	@Test
 	public void testHintsConfig() throws SVGConverterException, IOException {
 		// HintsConfigTest.KEY_AOI
-		HintsConfigTest t = new HintsConfigTest(new Object[][] { { SVGAbstractTranscoder.KEY_AOI, new Rectangle(40, 50, 40, 80) } }) {
+		HintsConfigTest t = new HintsConfigTest(
+				new Object[][] { { SVGAbstractTranscoder.KEY_AOI, new Rectangle(40, 50, 40, 80) } }) {
 			@Override
 			protected void deltaConfigure(SVGConverter c) {
 				c.setArea(new Rectangle(40, 50, 40, 80));
@@ -290,7 +291,8 @@ public class SVGConverterTest {
 		// Check destination
 		//
 		// DestConfigTest.DstFile
-		DestConfigTest t = new DestConfigTest(new String[] { "samples/anne.svg" }, new String[] { "test-reports/anne.png" }) {
+		DestConfigTest t = new DestConfigTest(new String[] { "samples/anne.svg" },
+				new String[] { "test-reports/anne.png" }) {
 			@Override
 			protected void setDestination(SVGConverter c) {
 				c.setDst(SVGConverterTest.resolveFile("test-reports/anne.png"));
@@ -351,7 +353,8 @@ public class SVGConverterTest {
 			@Override
 			protected void configure(SVGConverter c) {
 				// Do not set destination file or destination directory
-				c.setSources(new String[] { "https://raw.githubusercontent.com/css4j/echosvg/master/samples/dummy.svg" });
+				c.setSources(
+						new String[] { "https://raw.githubusercontent.com/css4j/echosvg/master/samples/dummy.svg" });
 			}
 		};
 		cet.runTest();
@@ -393,9 +396,8 @@ public class SVGConverterTest {
 			@Override
 			protected void configure(SVGConverter c) {
 				String[] srcs = new String[1];
-				srcs[0] = SVGConverterTest.resolveURI(
-						"test-resources/io/sf/carte/echosvg/apps/rasterizer/notReadable.svg")
-						.getFile();
+				srcs[0] = SVGConverterTest
+						.resolveURI("test-resources/io/sf/carte/echosvg/apps/rasterizer/notReadable.svg").getFile();
 				c.setSources(srcs);
 				c.setDst(SVGConverterTest.resolveFile("test-reports"));
 			}
@@ -423,8 +425,8 @@ public class SVGConverterTest {
 			@Override
 			protected void configure(SVGConverter c) {
 				String[] srcs = new String[1];
-				srcs[0] = SVGConverterTest.resolveURI(
-						"test-resources/io/sf/carte/echosvg/apps/rasterizer/notReadable.svg").getFile();
+				srcs[0] = SVGConverterTest
+						.resolveURI("test-resources/io/sf/carte/echosvg/apps/rasterizer/notReadable.svg").getFile();
 				c.setSources(srcs);
 			}
 
@@ -516,6 +518,7 @@ public class SVGConverterTest {
  * (i.e., right set of hints).
  */
 abstract class AbstractConfigTest implements SVGConverterController {
+
 	/**
 	 * The 'proceedWithComputedTask' handler was not called
 	 */
@@ -525,10 +528,12 @@ abstract class AbstractConfigTest implements SVGConverterController {
 	 * Configuration Description
 	 */
 	static class Config {
+
 		Class<?> transcoderClass;
 		HashMap<TranscodingHints.Key, Object> hints;
 		List<SVGConverterSource> sources;
 		List<File> dest;
+
 	}
 
 	private Config expectedConfig;
@@ -592,8 +597,8 @@ abstract class AbstractConfigTest implements SVGConverterController {
 			SVGConverterSource es = expectedConfig.sources.get(i);
 			SVGConverterSource cs = computedConfig.sources.get(i);
 			if (!computedConfig.sources.contains(es)) {
-				fail("Expected source [" + i + "] = -" + es.getURI() + "- (" + es.getClass().getName() + "), computed [" + i
-						+ "] = -" + cs.getURI() + "- (" + cs.getClass().getName() + ")");
+				fail("Expected source [" + i + "] = -" + es.getURI() + "- (" + es.getClass().getName() + "), computed ["
+						+ i + "] = -" + cs.getURI() + "- (" + cs.getClass().getName() + ")");
 			}
 		}
 
@@ -659,12 +664,14 @@ abstract class AbstractConfigTest implements SVGConverterController {
 	@Override
 	public void onSourceTranscodingSuccess(SVGConverterSource source, File dest) {
 	}
+
 }
 
 /**
  * Tests that a convertion task goes without exception.
  */
-class OperationTest extends AbstractConfigTest{
+class OperationTest extends AbstractConfigTest {
+
 	@Override
 	public void runTest() throws SVGConverterException {
 		SVGConverter c = new SVGConverter();
@@ -681,6 +688,7 @@ class OperationTest extends AbstractConfigTest{
 	protected void configure(SVGConverter c) {
 		// Should be overridden by subclasses.
 	}
+
 }
 
 /**
@@ -688,6 +696,7 @@ class OperationTest extends AbstractConfigTest{
  * test to check that a specific transcoder class is used for a given mime type.
  */
 class TranscoderConfigTest extends AbstractConfigTest {
+
 	private static final String SOURCE_FILE = "samples/anne.svg";
 	private static final String DEST_FILE_NAME = "samples/anne";
 
@@ -729,6 +738,7 @@ class TranscoderConfigTest extends AbstractConfigTest {
 		c.setDst(SVGConverterTest.resolveFile(DEST_FILE_NAME + dstType.getExtension()));
 		c.setDestinationType(dstType);
 	}
+
 }
 
 /**
@@ -736,6 +746,7 @@ class TranscoderConfigTest extends AbstractConfigTest {
  * test checking for a specific hint configuration.
  */
 class HintsConfigTest extends AbstractConfigTest {
+
 	private static final String SOURCE_FILE = "samples/anne.svg";
 	private static final String DEST_FILE_NAME = "samples/anne";
 	private static final Class<?> EXPECTED_TRANSCODER_CLASS = io.sf.carte.echosvg.transcoder.image.PNGTranscoder.class;
@@ -783,6 +794,7 @@ class HintsConfigTest extends AbstractConfigTest {
 
 	protected void deltaConfigure(SVGConverter c) {
 	}
+
 }
 
 /**
@@ -793,6 +805,7 @@ class HintsConfigTest extends AbstractConfigTest {
  * be file names which ommit the ".svg" extension.
  */
 class SourcesConfigTest extends AbstractConfigTest {
+
 	private static final Class<?> EXPECTED_TRANSCODER_CLASS = io.sf.carte.echosvg.transcoder.image.PNGTranscoder.class;
 	private static final DestinationType DST_TYPE = DestinationType.PNG;
 	private static final String SVG_EXTENSION = ".svg";
@@ -830,6 +843,7 @@ class SourcesConfigTest extends AbstractConfigTest {
 
 	protected void setSources(SVGConverter c) {
 	}
+
 }
 
 /**
@@ -839,6 +853,7 @@ class SourcesConfigTest extends AbstractConfigTest {
  * which is influenced by the 'setDestination' content.
  */
 class DestConfigTest extends AbstractConfigTest {
+
 	private static final Class<?> EXPECTED_TRANSCODER_CLASS = io.sf.carte.echosvg.transcoder.image.PNGTranscoder.class;
 	private static final DestinationType DST_TYPE = DestinationType.PNG;
 	private String[] sourcesStrings;
@@ -884,6 +899,7 @@ class DestConfigTest extends AbstractConfigTest {
 
 	protected void setDestination(SVGConverter c) {
 	}
+
 }
 
 /**
@@ -893,6 +909,7 @@ class DestConfigTest extends AbstractConfigTest {
  * the SVGConverterController handler.
  */
 class ConfigErrorTest implements SVGConverterController {
+
 	String errorCode;
 
 	String foundErrorCode = null;
@@ -948,6 +965,7 @@ class ConfigErrorTest implements SVGConverterController {
 	public void onSourceTranscodingSuccess(SVGConverterSource source, File dest) {
 		// SUCCESS
 	}
+
 }
 
 /**
@@ -982,4 +1000,5 @@ class ConverterOutputTest {
 			destFile.delete();
 		}
 	}
+
 }

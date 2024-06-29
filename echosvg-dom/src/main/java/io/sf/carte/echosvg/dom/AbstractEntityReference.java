@@ -157,4 +157,5 @@ public abstract class AbstractEntityReference extends AbstractParentChildNode im
 					new Object[] { (int) getNodeType(), getNodeName(), (int) n.getNodeType(), n.getNodeName() });
 		}
 	}
+
 }

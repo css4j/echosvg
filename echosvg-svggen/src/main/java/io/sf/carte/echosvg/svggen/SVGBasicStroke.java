@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @version $Id$
  */
 public class SVGBasicStroke extends AbstractSVGConverter {
+
 	/**
 	 * @param generatorContext used by converter to handle precision or to create
 	 *                         elements.
@@ -132,4 +133,5 @@ public class SVGBasicStroke extends AbstractSVGConverter {
 			return SVG_SQUARE_VALUE;
 		}
 	}
+
 }

@@ -98,4 +98,5 @@ public class BERenderingTest extends PreconfiguredRenderingTest {
 	public BERenderingTest() {
 		setValidating(Boolean.TRUE);
 	}
+
 }

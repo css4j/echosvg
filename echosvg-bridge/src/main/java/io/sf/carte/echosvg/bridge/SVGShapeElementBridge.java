@@ -234,4 +234,5 @@ public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
 			super.handleCSSPropertyChanged(property);
 		}
 	}
+
 }

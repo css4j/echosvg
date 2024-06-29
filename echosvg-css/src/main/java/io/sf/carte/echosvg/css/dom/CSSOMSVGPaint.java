@@ -179,6 +179,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
 		 * Called when the paint value has beem modified.
 		 */
 		void paintChanged(short type, String uri, String rgb, String icc);
+
 	}
 
 	/**
@@ -781,6 +782,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
 				textChanged("url(" + uri + ") " + rgb + ' ' + icc);
 			}
 		}
+
 	}
 
 }

@@ -332,4 +332,5 @@ public class SVGColorManager extends ColorManager {
 		}
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
+
 }

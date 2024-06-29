@@ -65,4 +65,5 @@ public class SVGOMTRefElement extends SVGURIReferenceTextPositioningElement impl
 	protected Node newNode() {
 		return new SVGOMTRefElement();
 	}
+
 }

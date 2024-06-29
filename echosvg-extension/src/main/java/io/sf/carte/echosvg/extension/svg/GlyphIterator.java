@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.gvt.text.GVTAttributedCharacterIterator;
  * @version $Id$
  */
 public class GlyphIterator {
+
 	public static final AttributedCharacterIterator.Attribute PREFORMATTED = GVTAttributedCharacterIterator.TextAttribute.PREFORMATTED;
 
 	public static final AttributedCharacterIterator.Attribute FLOW_LINE_BREAK = GVTAttributedCharacterIterator.TextAttribute.FLOW_LINE_BREAK;
@@ -479,4 +480,5 @@ public class GlyphIterator {
 		Point2D lcLoc = gv.getGlyphPosition(gvIdx);
 		return (float) (lcBound.getX() + lcBound.getWidth() - lcLoc.getX());
 	}
+
 }

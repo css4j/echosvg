@@ -88,4 +88,5 @@ public class SVGFeFloodElementBridge extends AbstractSVGFilterPrimitiveElementBr
 
 		return filter;
 	}
+
 }

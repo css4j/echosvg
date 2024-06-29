@@ -28,6 +28,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public interface TransformListHandler {
+
 	/**
 	 * Invoked when the tranform starts.
 	 *
@@ -104,4 +105,5 @@ public interface TransformListHandler {
 	 * @exception ParseException if an error occured while processing the transform
 	 */
 	void endTransformList() throws ParseException;
+
 }

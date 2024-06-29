@@ -148,4 +148,5 @@ public abstract class AbstractAttrNS extends AbstractAttr {
 		aa.namespaceURI = namespaceURI;
 		return n;
 	}
+
 }

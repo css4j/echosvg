@@ -473,4 +473,5 @@ public abstract class AbstractSVGList {
 		}
 		list.clear();
 	}
+
 }

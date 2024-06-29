@@ -136,4 +136,5 @@ public abstract class XBLOMElement extends SVGOMElement implements XBLConstants 
 		e.prefix = prefix;
 		return n;
 	}
+
 }

@@ -85,4 +85,5 @@ public interface ShapePainter {
 	 * @return shape associated with this painter
 	 */
 	Shape getShape();
+
 }

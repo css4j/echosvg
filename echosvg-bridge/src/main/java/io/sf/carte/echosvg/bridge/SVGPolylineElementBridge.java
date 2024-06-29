@@ -132,4 +132,5 @@ public class SVGPolylineElementBridge extends SVGDecoratedShapeElementBridge {
 			super.handleCSSPropertyChanged(property);
 		}
 	}
+
 }

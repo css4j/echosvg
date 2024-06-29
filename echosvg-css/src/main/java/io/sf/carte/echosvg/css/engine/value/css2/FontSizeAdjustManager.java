@@ -139,4 +139,5 @@ public class FontSizeAdjustManager extends AbstractValueManager {
 		}
 		throw createInvalidFloatTypeDOMException(type);
 	}
+
 }

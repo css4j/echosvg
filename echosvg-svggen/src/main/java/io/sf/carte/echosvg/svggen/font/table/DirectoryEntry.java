@@ -64,4 +64,5 @@ public class DirectoryEntry {
 				.append(", length: ").append(length).append(", checksum: 0x").append(Integer.toHexString(checksum))
 				.toString();
 	}
+
 }

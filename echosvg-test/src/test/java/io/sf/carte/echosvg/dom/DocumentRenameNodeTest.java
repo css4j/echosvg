@@ -50,4 +50,5 @@ public class DocumentRenameNodeTest extends DOM3Test {
 		assertEquals(EX_NAMESPACE_URI, a.getNamespaceURI());
 		assertEquals("test2", a.getLocalName());
 	}
+
 }

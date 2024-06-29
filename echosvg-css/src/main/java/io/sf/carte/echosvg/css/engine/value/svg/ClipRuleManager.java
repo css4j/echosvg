@@ -101,4 +101,5 @@ public class ClipRuleManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

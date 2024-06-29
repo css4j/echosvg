@@ -93,4 +93,5 @@ public abstract class AnimatableSVGBridge extends AbstractSVGBridge implements S
 			}
 		}
 	}
+
 }

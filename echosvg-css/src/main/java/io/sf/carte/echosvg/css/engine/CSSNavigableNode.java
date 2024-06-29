@@ -60,4 +60,5 @@ public interface CSSNavigableNode {
 	 * selectors will not work across.
 	 */
 	boolean isHiddenFromSelectors();
+
 }

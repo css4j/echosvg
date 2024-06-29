@@ -48,4 +48,5 @@ public class SVGDescElementBridge extends SVGDescriptiveElementBridge {
 	public Bridge getInstance() {
 		return new SVGDescElementBridge();
 	}
+
 }

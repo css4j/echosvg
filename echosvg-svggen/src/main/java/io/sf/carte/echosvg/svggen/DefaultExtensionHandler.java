@@ -33,6 +33,7 @@ import java.awt.image.BufferedImageOp;
  * @see io.sf.carte.echosvg.svggen.ExtensionHandler
  */
 public class DefaultExtensionHandler implements ExtensionHandler {
+
 	/**
 	 * @param paint            Custom Paint to be converted to SVG
 	 * @param generatorContext allows the handler to build DOM objects as needed.
@@ -69,4 +70,5 @@ public class DefaultExtensionHandler implements ExtensionHandler {
 			SVGGeneratorContext generatorContext) {
 		return null;
 	}
+
 }

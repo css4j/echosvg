@@ -44,4 +44,5 @@ public class AttrIsIdTest extends DOM3Test {
 		Attr a = g.getAttributeNodeNS(null, "id");
 		assertTrue(a.isId());
 	}
+
 }

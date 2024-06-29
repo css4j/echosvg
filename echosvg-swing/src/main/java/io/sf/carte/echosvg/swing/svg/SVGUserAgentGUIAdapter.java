@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.util.gui.JErrorPane;
  * @version $Id$
  */
 public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter {
+
 	public Component parentComponent;
 
 	public SVGUserAgentGUIAdapter(Component parentComponent) {
@@ -110,4 +111,5 @@ public class SVGUserAgentGUIAdapter extends SVGUserAgentAdapter {
 		return JOptionPane.showConfirmDialog(parentComponent, str, "Confirm",
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 	}
+
 }

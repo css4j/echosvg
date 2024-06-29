@@ -162,6 +162,7 @@ public class RhinoInterpreter implements Interpreter {
 			rhinoClassLoader = null;
 		}
 		ContextAction<?> initAction = new ContextAction<Object>() {
+
 			@Override
 			public Object run(Context cx) {
 				Scriptable scriptable = cx.initStandardObjects(null, false);
@@ -194,6 +195,7 @@ public class RhinoInterpreter implements Interpreter {
 				cx.evaluateString(globalObject, sb.toString(), null, 0, rhinoClassLoader);
 				return null;
 			}
+
 		};
 		contextFactory.call(initAction);
 	}
@@ -286,6 +288,7 @@ public class RhinoInterpreter implements Interpreter {
 	public Object evaluate(final Reader scriptReader, final String description) throws IOException {
 
 		ContextAction<?> evaluateAction = new ContextAction<Object>() {
+
 			@Override
 			public Object run(Context cx) {
 				try {
@@ -294,6 +297,7 @@ public class RhinoInterpreter implements Interpreter {
 					throw new WrappedException(ioe);
 				}
 			}
+
 		};
 		try {
 			return contextFactory.call(evaluateAction);
@@ -329,6 +333,7 @@ public class RhinoInterpreter implements Interpreter {
 	public Object evaluate(final String scriptStr) {
 
 		ContextAction<?> evalAction = new ContextAction<Object>() {
+
 			@Override
 			public Object run(final Context cx) {
 				Script script = null;
@@ -353,6 +358,7 @@ public class RhinoInterpreter implements Interpreter {
 					// compile it and store it for future use.
 
 					PrivilegedAction<?> compile = new PrivilegedAction<Object>() {
+
 						@Override
 						public Object run() {
 							try {
@@ -363,6 +369,7 @@ public class RhinoInterpreter implements Interpreter {
 								throw new RuntimeException(ioEx.getMessage());
 							}
 						}
+
 					};
 					script = (Script) SecurityHelper.getInstance().runPrivilegedAction(compile);
 
@@ -382,6 +389,7 @@ public class RhinoInterpreter implements Interpreter {
 
 				return script.exec(cx, globalObject);
 			}
+
 		};
 		try {
 			return contextFactory.call(evalAction);
@@ -426,6 +434,7 @@ public class RhinoInterpreter implements Interpreter {
 	@Override
 	public void bindObject(final String name, final Object object) {
 		contextFactory.call(new ContextAction<Object>() {
+
 			@Override
 			public Object run(Context cx) {
 				Object o = object;
@@ -439,6 +448,7 @@ public class RhinoInterpreter implements Interpreter {
 				globalObject.put(name, globalObject, jsObject);
 				return null;
 			}
+
 		});
 	}
 
@@ -447,6 +457,7 @@ public class RhinoInterpreter implements Interpreter {
 	 */
 	void callHandler(final Function handler, final Object arg) {
 		contextFactory.call(new ContextAction<Object>() {
+
 			@Override
 			public Object run(Context cx) {
 				Object a = Context.toObject(arg, globalObject);
@@ -454,6 +465,7 @@ public class RhinoInterpreter implements Interpreter {
 				handler.call(cx, globalObject, globalObject, args);
 				return null;
 			}
+
 		});
 	}
 
@@ -462,11 +474,13 @@ public class RhinoInterpreter implements Interpreter {
 	 */
 	void callMethod(final ScriptableObject obj, final String methodName, final ArgumentsBuilder ab) {
 		contextFactory.call(new ContextAction<Object>() {
+
 			@Override
 			public Object run(Context cx) {
 				ScriptableObject.callMethod(obj, methodName, ab.buildArguments());
 				return null;
 			}
+
 		});
 	}
 
@@ -475,11 +489,13 @@ public class RhinoInterpreter implements Interpreter {
 	 */
 	void callHandler(final Function handler, final Object[] args) {
 		contextFactory.call(new ContextAction<Object>() {
+
 			@Override
 			public Object run(Context cx) {
 				handler.call(cx, globalObject, globalObject, args);
 				return null;
 			}
+
 		});
 	}
 
@@ -488,12 +504,14 @@ public class RhinoInterpreter implements Interpreter {
 	 */
 	void callHandler(final Function handler, final ArgumentsBuilder ab) {
 		contextFactory.call(new ContextAction<Object>() {
+
 			@Override
 			public Object run(Context cx) {
 				Object[] args = ab.buildArguments();
 				handler.call(cx, handler.getParentScope(), globalObject, args);
 				return null;
 			}
+
 		});
 	}
 
@@ -508,7 +526,9 @@ public class RhinoInterpreter implements Interpreter {
 	 * To build an argument list.
 	 */
 	public interface ArgumentsBuilder {
+
 		Object[] buildArguments();
+
 	}
 
 	/**
@@ -590,6 +610,7 @@ public class RhinoInterpreter implements Interpreter {
 			this.str = str;
 			this.script = script;
 		}
+
 	}
 
 	/**
@@ -611,5 +632,7 @@ public class RhinoInterpreter implements Interpreter {
 			}
 			return cx;
 		}
+
 	}
+
 }

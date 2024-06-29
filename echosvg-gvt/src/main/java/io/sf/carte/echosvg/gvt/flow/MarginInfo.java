@@ -24,6 +24,7 @@ package io.sf.carte.echosvg.gvt.flow;
  * @version $Id$
  */
 public class MarginInfo {
+
 	public static final int ALIGN_START = 0;
 	public static final int ALIGN_MIDDLE = 1;
 	public static final int ALIGN_END = 2;
@@ -109,4 +110,5 @@ public class MarginInfo {
 	public boolean isFlowRegionBreak() {
 		return flowRegionBreak;
 	}
+
 }

@@ -32,6 +32,7 @@ import java.awt.image.ColorModel;
  * @version $Id$
  */
 class NullOp implements BufferedImageOp {
+
 	@Override
 	public BufferedImage filter(BufferedImage src, BufferedImage dest) {
 		java.awt.Graphics2D g = dest.createGraphics();
@@ -81,4 +82,5 @@ class NullOp implements BufferedImageOp {
 	public RenderingHints getRenderingHints() {
 		return null;
 	}
+
 }

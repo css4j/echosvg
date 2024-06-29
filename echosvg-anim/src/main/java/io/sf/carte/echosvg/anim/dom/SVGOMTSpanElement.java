@@ -65,4 +65,5 @@ public class SVGOMTSpanElement extends SVGOMTextPositioningElement implements SV
 	protected Node newNode() {
 		return new SVGOMTSpanElement();
 	}
+
 }

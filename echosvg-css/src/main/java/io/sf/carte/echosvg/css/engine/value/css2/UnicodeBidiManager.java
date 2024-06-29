@@ -103,4 +103,5 @@ public class UnicodeBidiManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

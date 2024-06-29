@@ -81,4 +81,5 @@ public class AnimatablePointListValue extends AnimatableNumberListValue {
 		float[] ns = new float[numbers.length];
 		return new AnimatablePointListValue(target, ns);
 	}
+
 }

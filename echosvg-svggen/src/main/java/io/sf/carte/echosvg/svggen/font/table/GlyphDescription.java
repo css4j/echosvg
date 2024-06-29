@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.svggen.font.table;
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  */
 public interface GlyphDescription {
+
 	int getEndPtOfContours(int i);
 
 	byte getFlags(int i);
@@ -47,6 +48,7 @@ public interface GlyphDescription {
 	int getPointCount();
 
 	int getContourCount();
+
 	// public int getComponentIndex(int c);
 	// public int getComponentCount();
 }

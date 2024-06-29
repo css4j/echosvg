@@ -65,4 +65,5 @@ public class SVGOMDescElement extends SVGDescriptiveElement implements SVGDescEl
 	protected Node newNode() {
 		return new SVGOMDescElement();
 	}
+
 }

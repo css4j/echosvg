@@ -191,4 +191,5 @@ public abstract class SVGKernElementBridge extends AbstractSVGBridge {
 		// return the new Kern object
 		return new Kern(firstGlyphs, secondGlyphs, firstRanges, secondRanges, kernValue);
 	}
+
 }

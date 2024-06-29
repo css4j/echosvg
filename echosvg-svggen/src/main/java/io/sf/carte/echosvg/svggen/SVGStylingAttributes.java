@@ -30,6 +30,7 @@ import java.util.Set;
  * @version $Id$
  */
 public class SVGStylingAttributes implements SVGSyntax {
+
 	static Set<String> attrSet = new HashSet<>();
 
 	static {
@@ -68,4 +69,5 @@ public class SVGStylingAttributes implements SVGSyntax {
 	 * Attributes that represent styling properties
 	 */
 	public static final Set<String> set = attrSet;
+
 }

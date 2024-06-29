@@ -29,6 +29,7 @@ import org.w3c.dom.events.MutationEvent;
  * @since DOM Level 3
  */
 public interface MutationNameEvent extends MutationEvent {
+
 	/**
 	 * The previous value of the <code>relatedNode</code>'s
 	 * <code>namespaceURI</code>.

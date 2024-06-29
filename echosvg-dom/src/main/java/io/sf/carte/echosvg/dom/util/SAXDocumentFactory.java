@@ -154,10 +154,13 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 	protected ErrorHandler errorHandler;
 
 	protected interface PreInfo {
+
 		Node createNode(Document doc);
+
 	}
 
 	private static class ProcessingInstructionInfo implements PreInfo {
+
 		public String target, data;
 
 		public ProcessingInstructionInfo(String target, String data) {
@@ -169,9 +172,11 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 		public Node createNode(Document doc) {
 			return doc.createProcessingInstruction(target, data);
 		}
+
 	}
 
 	private static class CommentInfo implements PreInfo {
+
 		public String comment;
 
 		public CommentInfo(String comment) {
@@ -182,9 +187,11 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 		public Node createNode(Document doc) {
 			return doc.createComment(comment);
 		}
+
 	}
 
 	private static class CDataInfo implements PreInfo {
+
 		public String cdata;
 
 		public CDataInfo(String cdata) {
@@ -195,9 +202,11 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 		public Node createNode(Document doc) {
 			return doc.createCDATASection(cdata);
 		}
+
 	}
 
 	private static class TextInfo implements PreInfo {
+
 		public String text;
 
 		public TextInfo(String text) {
@@ -208,6 +217,7 @@ public class SAXDocumentFactory implements LexicalHandler, DocumentFactory, Cont
 		public Node createNode(Document doc) {
 			return doc.createTextNode(text);
 		}
+
 	}
 
 	/**

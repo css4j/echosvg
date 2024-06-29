@@ -128,4 +128,5 @@ public abstract class AnimatableValue {
 	public String toString() {
 		return getClass().getName() + "[" + toStringRep() + "]";
 	}
+
 }

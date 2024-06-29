@@ -106,4 +106,5 @@ public class DefaultTimingSpecifierHandler implements TimingSpecifierHandler {
 	@Override
 	public void indefinite() {
 	}
+
 }

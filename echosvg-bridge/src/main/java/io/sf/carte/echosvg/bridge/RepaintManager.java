@@ -39,6 +39,7 @@ import io.sf.carte.echosvg.gvt.renderer.ImageRenderer;
  * @version $Id$
  */
 public class RepaintManager {
+
 	static final int COPY_OVERHEAD = 10000;
 	static final int COPY_LINE_OVERHEAD = 10;
 
@@ -115,4 +116,5 @@ public class RepaintManager {
 	public BufferedImage getOffScreen() {
 		return renderer.getOffScreen();
 	}
+
 }

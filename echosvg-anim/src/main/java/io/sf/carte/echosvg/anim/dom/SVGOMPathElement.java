@@ -1237,4 +1237,5 @@ public class SVGOMPathElement extends SVGGraphicsElement implements SVGPathEleme
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

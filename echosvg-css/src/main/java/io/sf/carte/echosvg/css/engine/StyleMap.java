@@ -342,4 +342,5 @@ public class StyleMap {
 		}
 		return sb.toString();
 	}
+
 }

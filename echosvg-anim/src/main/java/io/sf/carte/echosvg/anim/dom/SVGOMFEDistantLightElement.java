@@ -131,4 +131,5 @@ public class SVGOMFEDistantLightElement extends SVGOMElement implements SVGFEDis
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

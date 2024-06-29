@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @see io.sf.carte.echosvg.svggen.SVGPaint
  */
 public class SVGCustomPaint extends AbstractSVGConverter {
+
 	/**
 	 * @param generatorContext the context.
 	 */
@@ -78,4 +79,5 @@ public class SVGCustomPaint extends AbstractSVGConverter {
 
 		return paintDesc;
 	}
+
 }

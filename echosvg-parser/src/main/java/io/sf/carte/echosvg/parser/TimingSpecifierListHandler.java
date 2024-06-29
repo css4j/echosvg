@@ -36,4 +36,5 @@ public interface TimingSpecifierListHandler extends TimingSpecifierHandler {
 	 * Invoked when parsing of a timing specifier list ends.
 	 */
 	void endTimingSpecifierList();
+
 }

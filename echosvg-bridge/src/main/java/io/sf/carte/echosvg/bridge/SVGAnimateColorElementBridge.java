@@ -85,4 +85,5 @@ public class SVGAnimateColorElementBridge extends SVGAnimateElementBridge {
 		}
 		return v instanceof AnimatableColorValue;
 	}
+
 }

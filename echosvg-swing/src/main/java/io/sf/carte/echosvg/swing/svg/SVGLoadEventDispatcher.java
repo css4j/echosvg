@@ -184,4 +184,5 @@ public class SVGLoadEventDispatcher extends HaltingThread {
 			((SVGLoadEventDispatcherListener) listener).svgLoadEventDispatchFailed((SVGLoadEventDispatcherEvent) event);
 		}
 	};
+
 }

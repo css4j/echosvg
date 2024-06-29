@@ -150,4 +150,5 @@ public class LineHeightManager extends LengthManager {
 			return super.computeValue(elt, pseudo, engine, idx, sm, value);
 		}
 	}
+
 }

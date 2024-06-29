@@ -79,4 +79,5 @@ public class DOMMutationNameEvent extends DOMMutationEvent implements MutationNa
 	public String getPrevNodeName() {
 		return prevNodeName;
 	}
+
 }

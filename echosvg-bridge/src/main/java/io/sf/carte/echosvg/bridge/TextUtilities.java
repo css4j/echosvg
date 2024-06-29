@@ -309,4 +309,5 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
 		}
 		return v.getFloatValue();
 	}
+
 }

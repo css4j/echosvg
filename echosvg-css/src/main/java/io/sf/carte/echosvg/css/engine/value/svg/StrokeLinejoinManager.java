@@ -102,4 +102,5 @@ public class StrokeLinejoinManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

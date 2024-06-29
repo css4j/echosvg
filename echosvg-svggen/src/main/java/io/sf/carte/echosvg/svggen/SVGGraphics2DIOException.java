@@ -29,6 +29,7 @@ import java.io.IOException;
  * @version $Id$
  */
 public class SVGGraphics2DIOException extends IOException {
+
 	private static final long serialVersionUID = 1L;
 	/** The enclosed exception. */
 	private IOException embedded;
@@ -88,4 +89,5 @@ public class SVGGraphics2DIOException extends IOException {
 	public IOException getException() {
 		return embedded;
 	}
+
 }

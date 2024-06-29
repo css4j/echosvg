@@ -114,4 +114,5 @@ public abstract class SVGDecoratedShapeElementBridge extends SVGShapeElementBrid
 			super.handleCSSPropertyChanged(property);
 		}
 	}
+
 }

@@ -101,4 +101,5 @@ public class TraitInformation {
 	public short getPercentageInterpretation() {
 		return percentageInterpretation;
 	}
+
 }

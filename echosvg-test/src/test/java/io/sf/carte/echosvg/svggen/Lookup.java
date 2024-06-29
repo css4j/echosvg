@@ -39,6 +39,7 @@ import java.net.URL;
  * @version $Id$
  */
 public class Lookup implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -86,4 +87,5 @@ public class Lookup implements Painter {
 		g.drawImage(image, 10, 30, null);
 		g.drawImage(bi, inverter, 10 + bi.getWidth() + 10, 30);
 	}
+
 }

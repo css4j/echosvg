@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.TransformType;
  * @version $Id$
  */
 public class SVGTransform extends AbstractSVGConverter {
+
 	/**
 	 * Ratio used to convert radians to degrees
 	 */
@@ -265,4 +266,5 @@ public class SVGTransform extends AbstractSVGConverter {
 
 		return transformString.toString();
 	}
+
 }

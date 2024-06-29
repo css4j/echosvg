@@ -49,4 +49,5 @@ public interface DOMConstants {
 	String DOM_CDATA_SECTIONS_SPLITTED_ERROR = "cdata-sections-splitted";
 	String DOM_INVALID_CHARACTER_ERROR = "wf-invalid-character";
 	String DOM_INVALID_CHARACTER_IN_NODE_NAME_ERROR = "wf-invalid-character-in-node-name";
+
 }

@@ -216,5 +216,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
 		public Value getValue() {
 			return cssEngine.getComputedStyle(element, pseudoElement, index);
 		}
+
 	}
+
 }

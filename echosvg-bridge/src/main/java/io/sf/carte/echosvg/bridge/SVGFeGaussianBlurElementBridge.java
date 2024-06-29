@@ -145,4 +145,5 @@ public class SVGFeGaussianBlurElementBridge extends AbstractSVGFilterPrimitiveEl
 		}
 		return stdDevs;
 	}
+
 }

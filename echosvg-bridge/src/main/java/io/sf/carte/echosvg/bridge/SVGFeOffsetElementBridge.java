@@ -108,4 +108,5 @@ public class SVGFeOffsetElementBridge extends AbstractSVGFilterPrimitiveElementB
 
 		return filter;
 	}
+
 }

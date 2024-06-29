@@ -55,6 +55,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public abstract class AbstractRenderingAccuracyTest {
+
 	/**
 	 * Messages expressing that an image could not be loaded. {0} : URL for the
 	 * reference image.

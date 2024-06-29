@@ -97,4 +97,5 @@ public class EncodingUtilities {
 	public static String javaEncoding(String encoding) {
 		return ENCODINGS.get(encoding.toUpperCase());
 	}
+
 }

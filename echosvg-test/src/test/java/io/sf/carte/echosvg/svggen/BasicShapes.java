@@ -39,6 +39,7 @@ import java.awt.geom.RoundRectangle2D;
  * @version $Id$
  */
 public class BasicShapes implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -111,4 +112,5 @@ public class BasicShapes implements Painter {
 		g.drawString("Line2D", 10, 20);
 		g.draw(new Line2D.Float(10, 30, 60, 30));
 	}
+
 }

@@ -277,4 +277,5 @@ public class GraphicsNodeMouseEvent extends GraphicsNodeInputEvent {
 	public GraphicsNode getRelatedNode() {
 		return relatedNode;
 	}
+
 }

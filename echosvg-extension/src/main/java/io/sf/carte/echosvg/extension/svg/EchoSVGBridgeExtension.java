@@ -126,4 +126,5 @@ public class EchoSVGBridgeExtension implements BridgeExtension {
 	public boolean isDynamicElement(Element e) {
 		return false;
 	}
+
 }

@@ -131,4 +131,5 @@ public class DOMMutationEvent extends AbstractEvent implements MutationEvent {
 		this.attrName = attrNameArg;
 		this.attrChange = attrChangeArg;
 	}
+
 }

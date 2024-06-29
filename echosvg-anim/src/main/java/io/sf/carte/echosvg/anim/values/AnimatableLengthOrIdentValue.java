@@ -173,4 +173,5 @@ public class AnimatableLengthOrIdentValue extends AnimatableLengthValue {
 
 		return res;
 	}
+
 }

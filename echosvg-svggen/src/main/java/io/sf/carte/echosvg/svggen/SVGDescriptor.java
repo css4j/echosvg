@@ -32,6 +32,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
  */
 public interface SVGDescriptor {
+
 	/**
 	 * @param attrMap if not null, attribute name/value pairs for this descriptor
 	 *                should be written in this Map. Otherwise, a new Map will be
@@ -50,4 +51,5 @@ public interface SVGDescriptor {
 	 *         descriptor's attribute values
 	 */
 	List<Element> getDefinitionSet(List<Element> defSet);
+
 }

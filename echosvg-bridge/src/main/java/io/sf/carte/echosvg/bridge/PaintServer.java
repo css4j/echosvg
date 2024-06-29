@@ -729,4 +729,5 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		float r = v.getFloatValue();
 		return (r < 0f) ? 0f : (r > 1.0f) ? 1.0f : r;
 	}
+
 }

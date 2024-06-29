@@ -32,6 +32,7 @@ import io.sf.carte.echosvg.gvt.font.GVTLineMetrics;
  * @version $Id$
  */
 public class WordInfo {
+
 	int index = -1;
 	float ascent = -1, descent = -1, lineHeight = -1;
 	GlyphGroupInfo[] glyphGroups = null;
@@ -112,4 +113,5 @@ public class WordInfo {
 			return null;
 		return glyphGroups[idx];
 	}
+
 }

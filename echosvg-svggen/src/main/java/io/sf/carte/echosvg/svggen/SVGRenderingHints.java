@@ -36,6 +36,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @version $Id$
  */
 public class SVGRenderingHints extends AbstractSVGConverter {
+
 	/**
 	 * @param generatorContext used by converter to handle precision or to create
 	 *                         elements.
@@ -162,4 +163,5 @@ public class SVGRenderingHints extends AbstractSVGConverter {
 		return new SVGHintsDescriptor(colorInterpolation, colorRendering, textRendering, shapeRendering,
 				imageRendering);
 	}
+
 }

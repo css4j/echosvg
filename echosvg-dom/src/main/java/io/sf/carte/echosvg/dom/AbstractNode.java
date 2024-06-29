@@ -1281,4 +1281,5 @@ public abstract class AbstractNode implements ExtendedNode, NodeXBL, XBLManagerD
 	public void setManagerData(Object data) {
 		managerData = data;
 	}
+
 }

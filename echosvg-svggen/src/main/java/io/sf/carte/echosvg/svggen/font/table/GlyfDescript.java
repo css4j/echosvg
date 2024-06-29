@@ -77,4 +77,5 @@ public abstract class GlyfDescript extends Program implements GlyphDescription {
 	public short getYMinimum() {
 		return yMin;
 	}
+
 }

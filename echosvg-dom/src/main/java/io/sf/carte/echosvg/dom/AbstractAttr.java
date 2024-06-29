@@ -397,5 +397,7 @@ public abstract class AbstractAttr extends AbstractParentNode implements Attr {
 		public boolean isDerivedFrom(String ns, String name, int method) {
 			return false;
 		}
+
 	}
+
 }

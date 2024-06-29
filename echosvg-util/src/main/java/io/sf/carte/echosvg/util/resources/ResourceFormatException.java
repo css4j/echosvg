@@ -78,4 +78,5 @@ public class ResourceFormatException extends RuntimeException {
 	public String toString() {
 		return super.toString() + " (" + getKey() + ", bundle: " + getClassName() + ")";
 	}
+
 }

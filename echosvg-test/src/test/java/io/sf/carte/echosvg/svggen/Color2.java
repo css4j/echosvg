@@ -35,6 +35,7 @@ import java.awt.RenderingHints;
  * @version $Id$
  */
 public class Color2 implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -80,4 +81,5 @@ public class Color2 implements Painter {
 		g.setPaint(transparentGreen);
 		g.draw(rect);
 	}
+
 }

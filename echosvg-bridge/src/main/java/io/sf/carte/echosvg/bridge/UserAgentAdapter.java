@@ -44,6 +44,7 @@ import io.sf.carte.echosvg.util.SVGFeatureStrings;
  * @version $Id$
  */
 public class UserAgentAdapter implements UserAgent {
+
 	protected Set<String> FEATURES = new HashSet<>();
 	protected Set<String> extensions = new HashSet<>();
 
@@ -474,4 +475,5 @@ public class UserAgentAdapter implements UserAgent {
 	public FontFamilyResolver getFontFamilyResolver() {
 		return DefaultFontFamilyResolver.SINGLETON;
 	}
+
 }

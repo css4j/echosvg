@@ -35,6 +35,7 @@ import org.w3c.dom.Element;
  * @version $Id$
  */
 public class SimpleImageHandler implements GenericImageHandler, SVGSyntax, ErrorConstants {
+
 	// duplicate the string here to remove dependencies on
 	// io.sf.carte.echosvg.dom.util.XLinkSupport
 	private static final String XLINK_NAMESPACE_URI = "http://www.w3.org/1999/xlink";

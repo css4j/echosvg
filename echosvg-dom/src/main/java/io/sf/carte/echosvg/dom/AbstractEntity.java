@@ -226,4 +226,5 @@ public abstract class AbstractEntity extends AbstractParentNode implements Entit
 					new Object[] { (int) getNodeType(), getNodeName(), (int) n.getNodeType(), n.getNodeName() });
 		}
 	}
+
 }

@@ -105,4 +105,5 @@ public class XMLTextEditor extends JEditorPane {
 		int pos = element.getStartOffset();
 		setCaretPosition(pos);
 	}
+
 }

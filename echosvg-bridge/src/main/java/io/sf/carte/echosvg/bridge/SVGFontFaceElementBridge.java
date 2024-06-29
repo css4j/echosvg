@@ -285,4 +285,5 @@ public class SVGFontFaceElementBridge extends AbstractSVGBridge implements Error
 		}
 		return ret;
 	}
+
 }

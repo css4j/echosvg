@@ -36,4 +36,5 @@ public interface Rule {
 	 * Returns a printable representation of this rule.
 	 */
 	String toString(CSSEngine eng);
+
 }

@@ -387,12 +387,14 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 				}
 			}
 		}
+
 	}
 
 	/**
 	 * Used to handle modifications to the referenced content
 	 */
 	protected class ReferencedElementMutationListener implements EventListener {
+
 		protected NodeEventTarget target;
 
 		@Override
@@ -404,6 +406,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 			// referencing <use>. However, this provides the desired behavior
 			buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
 		}
+
 	}
 
 	// BridgeUpdateHandler implementation //////////////////////////////////
@@ -431,4 +434,5 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 		}
 		super.handleAnimatedAttributeChanged(alav);
 	}
+
 }

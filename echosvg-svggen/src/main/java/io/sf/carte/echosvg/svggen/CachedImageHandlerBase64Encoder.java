@@ -38,6 +38,7 @@ import io.sf.carte.echosvg.util.Base64EncoderStream;
  * @version $Id$
  */
 public class CachedImageHandlerBase64Encoder extends DefaultCachedImageHandler {
+
 	/**
 	 * Build a <code>CachedImageHandlerBase64Encoder</code> instance.
 	 */
@@ -107,4 +108,5 @@ public class CachedImageHandlerBase64Encoder extends DefaultCachedImageHandler {
 	public int getBufferedImageType() {
 		return BufferedImage.TYPE_INT_ARGB;
 	}
+
 }

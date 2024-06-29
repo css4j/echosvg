@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.svggen.SVGRenderingHints
  */
 public class SVGHintsDescriptor implements SVGDescriptor, SVGSyntax {
+
 	private String colorInterpolation;
 	private String colorRendering;
 	private String textRendering;
@@ -77,4 +78,5 @@ public class SVGHintsDescriptor implements SVGDescriptor, SVGSyntax {
 
 		return defSet;
 	}
+
 }

@@ -65,4 +65,5 @@ public class SVGOMFEFuncBElement extends SVGOMComponentTransferFunctionElement i
 	protected Node newNode() {
 		return new SVGOMFEFuncBElement();
 	}
+
 }

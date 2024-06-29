@@ -69,4 +69,5 @@ public interface DomExtension {
 	 * @param di The DOMImplementation instance to be updated
 	 */
 	void registerTags(ExtensibleDOMImplementation di);
+
 }

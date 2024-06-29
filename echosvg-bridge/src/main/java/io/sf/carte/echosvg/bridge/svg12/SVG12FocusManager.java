@@ -102,40 +102,48 @@ public class SVG12FocusManager extends FocusManager {
 	 * The class that is responsible for tracking 'mouseclick' changes.
 	 */
 	protected class MouseClickTracker extends FocusManager.MouseClickTracker {
+
 		@Override
 		public void handleEvent(Event evt) {
 			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
 		}
+
 	}
 
 	/**
 	 * The class that is responsible for tracking 'DOMFocusIn' changes.
 	 */
 	protected class DOMFocusInTracker extends FocusManager.DOMFocusInTracker {
+
 		@Override
 		public void handleEvent(Event evt) {
 			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
 		}
+
 	}
 
 	/**
 	 * The class that is responsible for tracking 'mouseover' changes.
 	 */
 	protected class MouseOverTracker extends FocusManager.MouseOverTracker {
+
 		@Override
 		public void handleEvent(Event evt) {
 			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
 		}
+
 	}
 
 	/**
 	 * The class that is responsible for tracking 'mouseout' changes.
 	 */
 	protected class MouseOutTracker extends FocusManager.MouseOutTracker {
+
 		@Override
 		public void handleEvent(Event evt) {
 			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
 		}
+
 	}
 
 	/**
@@ -173,4 +181,5 @@ public class SVG12FocusManager extends FocusManager {
 		uiEvt.setBubbleLimit(limit);
 		target.dispatchEvent(uiEvt);
 	}
+
 }

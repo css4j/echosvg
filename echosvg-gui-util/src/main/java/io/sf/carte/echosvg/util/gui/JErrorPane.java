@@ -230,6 +230,7 @@ public class JErrorPane extends JPanel implements ActionMap {
 		public void actionPerformed(ActionEvent evt) {
 			((JDialog) getTopLevelAncestor()).dispose();
 		}
+
 	}
 
 	/**
@@ -252,5 +253,7 @@ public class JErrorPane extends JPanel implements ActionMap {
 			}
 			((JDialog) getTopLevelAncestor()).pack();
 		}
+
 	}
+
 }

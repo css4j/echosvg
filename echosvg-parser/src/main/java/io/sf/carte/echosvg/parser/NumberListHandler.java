@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public interface NumberListHandler {
+
 	/**
 	 * Invoked when the number list attribute starts.
 	 * 
@@ -62,4 +63,5 @@ public interface NumberListHandler {
 	 * @exception ParseException if an error occures while processing the number
 	 */
 	void numberValue(float v) throws ParseException;
+
 }

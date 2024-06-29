@@ -794,6 +794,7 @@ public class JGVTComponent extends JComponent {
 	 */
 	protected class Listener
 			implements GVTTreeRendererListener, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
+
 		boolean checkClick = false;
 		boolean hadDrag = false;
 		int startX, startY;
@@ -1233,6 +1234,7 @@ public class JGVTComponent extends JComponent {
 				interactor = null;
 			}
 		}
+
 	}
 
 	protected class UnixTextSelectionListener extends SelectionAdapter {

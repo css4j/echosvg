@@ -305,6 +305,7 @@ public class SVGOMAnimatedTransformList extends AbstractSVGAnimatedValue impleme
 				malformed = true;
 			}
 		}
+
 	}
 
 	/**
@@ -504,5 +505,7 @@ public class SVGOMAnimatedTransformList extends AbstractSVGAnimatedValue impleme
 		protected void revalidate() {
 			valid = true;
 		}
+
 	}
+
 }

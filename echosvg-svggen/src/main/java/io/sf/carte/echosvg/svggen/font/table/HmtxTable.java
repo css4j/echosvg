@@ -95,4 +95,5 @@ public class HmtxTable implements Table {
 	public int getType() {
 		return hmtx;
 	}
+
 }

@@ -387,4 +387,5 @@ public class XMLUtilities extends XMLCharacters {
 		String result = EncodingUtilities.javaEncoding(e);
 		return (result == null) ? de : result;
 	}
+
 }

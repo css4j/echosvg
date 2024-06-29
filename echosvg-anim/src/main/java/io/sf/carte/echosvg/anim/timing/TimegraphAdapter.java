@@ -112,4 +112,5 @@ public class TimegraphAdapter implements TimegraphListener {
 	@Override
 	public void elementInstanceTimesChanged(TimedElement e, float isBegin) {
 	}
+
 }

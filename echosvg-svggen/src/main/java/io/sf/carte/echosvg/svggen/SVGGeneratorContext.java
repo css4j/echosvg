@@ -120,6 +120,7 @@ public class SVGGeneratorContext implements ErrorConstants {
 	 * class).
 	 */
 	public static class GraphicContextDefaults {
+
 		private Paint paint;
 		private Stroke stroke;
 		private Composite composite;
@@ -183,6 +184,7 @@ public class SVGGeneratorContext implements ErrorConstants {
 		public Paint getPaint() {
 			return paint;
 		}
+
 	}
 
 	/**

@@ -49,6 +49,7 @@ import io.sf.carte.echosvg.util.resources.ResourceManager;
  * @version $Id$
  */
 public class ToolBarFactory extends ResourceManager {
+
 	// Constants
 	//
 	private static final String SEPARATOR = "-";
@@ -110,4 +111,5 @@ public class ToolBarFactory extends ResourceManager {
 			throws MissingResourceException, ResourceFormatException, MissingListenerException {
 		return buttonFactory.createJToolbarButton(name);
 	}
+
 }

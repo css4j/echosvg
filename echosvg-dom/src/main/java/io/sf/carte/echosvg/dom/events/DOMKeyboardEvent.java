@@ -363,4 +363,5 @@ public class DOMKeyboardEvent extends DOMUIEvent implements KeyboardEvent {
 			modifierKeys.add(modifier);
 		}
 	}
+
 }

@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.util.gui.resource;
  * @version $Id$
  */
 public class MissingListenerException extends RuntimeException {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -77,4 +78,5 @@ public class MissingListenerException extends RuntimeException {
 	public String toString() {
 		return super.toString() + " (" + getKey() + ", bundle: " + getClassName() + ")";
 	}
+
 }

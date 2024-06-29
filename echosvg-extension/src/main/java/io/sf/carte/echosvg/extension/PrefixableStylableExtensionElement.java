@@ -76,4 +76,5 @@ public abstract class PrefixableStylableExtensionElement extends StylableExtensi
 
 		this.prefix = prefix;
 	}
+
 }

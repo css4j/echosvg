@@ -65,4 +65,5 @@ public class SVGOMPolylineElement extends SVGPointShapeElement implements SVGPol
 	protected Node newNode() {
 		return new SVGOMPolylineElement();
 	}
+
 }

@@ -102,4 +102,5 @@ public class DirectionManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

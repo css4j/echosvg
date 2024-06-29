@@ -41,6 +41,7 @@ import java.util.Enumeration;
  * @version $Id$
  */
 public class DocumentJarClassLoader extends URLClassLoader {
+
 	/**
 	 * CodeSource for the Document which referenced the Jar file
 	 * 
@@ -97,4 +98,5 @@ public class DocumentJarClassLoader extends URLClassLoader {
 
 		return pc;
 	}
+
 }

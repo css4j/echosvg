@@ -514,6 +514,7 @@ public abstract class AbstractSVGTransformList extends AbstractSVGList implement
 			}
 			return buf.toString();
 		}
+
 	}
 
 	/**
@@ -641,5 +642,7 @@ public abstract class AbstractSVGTransformList extends AbstractSVGList implement
 		public void endTransformList() throws ParseException {
 			listHandler.endList();
 		}
+
 	}
+
 }

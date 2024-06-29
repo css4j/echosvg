@@ -117,4 +117,5 @@ public class SVGStyleSheetProcessingInstruction extends StyleSheetProcessingInst
 	protected Node newNode() {
 		return new SVGStyleSheetProcessingInstruction();
 	}
+
 }

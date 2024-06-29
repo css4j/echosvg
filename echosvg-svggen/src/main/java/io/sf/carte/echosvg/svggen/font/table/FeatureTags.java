@@ -26,7 +26,9 @@ package io.sf.carte.echosvg.svggen.font.table;
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  */
 public interface FeatureTags {
+
 	String FEATURE_TAG_INIT = "init";
 	String FEATURE_TAG_MEDI = "medi";
 	String FEATURE_TAG_FINA = "fina";
+
 }

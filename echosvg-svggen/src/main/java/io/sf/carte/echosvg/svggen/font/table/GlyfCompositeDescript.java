@@ -185,4 +185,5 @@ public class GlyfCompositeDescript extends GlyfDescript {
 		}
 		return null;
 	}
+
 }

@@ -170,4 +170,5 @@ public class SVGColorProfileElementBridge extends AbstractSVGBridge implements E
 		throw new BridgeException(ctx, profile, ERR_ATTRIBUTE_VALUE_MALFORMED,
 				new Object[] { SVG_RENDERING_INTENT_ATTRIBUTE, intent });
 	}
+
 }

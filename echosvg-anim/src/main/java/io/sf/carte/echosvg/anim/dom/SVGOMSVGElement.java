@@ -909,4 +909,5 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

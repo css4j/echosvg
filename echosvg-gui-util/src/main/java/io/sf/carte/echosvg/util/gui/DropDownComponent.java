@@ -183,6 +183,7 @@ public class DropDownComponent extends JPanel {
 	 * Shows the pop up menu when clicked.
 	 */
 	private class DropDownListener extends MouseAdapter {
+
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (popupMenu.isShowing() && isDropDownEnabled) {
@@ -201,6 +202,7 @@ public class DropDownComponent extends JPanel {
 		public void mouseExited(MouseEvent ev) {
 			dropDownButton.setBorderPainted(false);
 		}
+
 	}
 
 	/**
@@ -230,6 +232,7 @@ public class DropDownComponent extends JPanel {
 		public int getIconHeight() {
 			return 4;
 		}
+
 	}
 
 	/**
@@ -251,6 +254,7 @@ public class DropDownComponent extends JPanel {
 			g.drawLine(x + 3, y + 2, x + 4, y + 1);
 			g.drawLine(x + 3, y + 3, x + 5, y + 1);
 		}
+
 	}
 
 	/**
@@ -292,6 +296,7 @@ public class DropDownComponent extends JPanel {
 		 * @param enabled True - enables the item
 		 */
 		void setEnabled(boolean enabled);
+
 	}
 
 	/**
@@ -403,6 +408,7 @@ public class DropDownComponent extends JPanel {
 		public void setEnabled(boolean b) {
 			super.setEnabled(b);
 		}
+
 	}
 
 	/**
@@ -433,6 +439,7 @@ public class DropDownComponent extends JPanel {
 		 * menu
 		 */
 		void processAfterShowed();
+
 	}
 
 	/**
@@ -749,6 +756,7 @@ public class DropDownComponent extends JPanel {
 				}
 			}
 		}
+
 	}
 
 	// Custom event support for ScrollablePopupMenu
@@ -826,6 +834,7 @@ public class DropDownComponent extends JPanel {
 		public int getType() {
 			return type;
 		}
+
 	}
 
 	/**
@@ -847,6 +856,7 @@ public class DropDownComponent extends JPanel {
 		 * @param ev The associated event
 		 */
 		void itemsWereRemoved(ScrollablePopupMenuEvent ev);
+
 	}
 
 	/**
@@ -861,5 +871,7 @@ public class DropDownComponent extends JPanel {
 		@Override
 		public void itemsWereRemoved(ScrollablePopupMenuEvent ev) {
 		}
+
 	}
+
 }

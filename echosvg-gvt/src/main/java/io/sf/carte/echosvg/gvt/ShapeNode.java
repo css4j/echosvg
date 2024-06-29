@@ -451,4 +451,5 @@ public class ShapeNode extends AbstractGraphicsNode {
 	public Shape getOutline() {
 		return shape;
 	}
+
 }

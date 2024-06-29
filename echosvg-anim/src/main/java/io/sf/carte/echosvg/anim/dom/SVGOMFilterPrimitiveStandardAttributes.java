@@ -171,4 +171,5 @@ public abstract class SVGOMFilterPrimitiveStandardAttributes extends SVGStylable
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

@@ -154,6 +154,7 @@ public class StringMap {
 	 * To manage collisions
 	 */
 	protected static class Entry {
+
 		/**
 		 * The hash code
 		 */
@@ -183,5 +184,7 @@ public class StringMap {
 			this.value = value;
 			this.next = next;
 		}
+
 	}
+
 }

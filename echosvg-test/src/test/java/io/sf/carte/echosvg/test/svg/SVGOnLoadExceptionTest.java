@@ -92,6 +92,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  */
 @SuppressWarnings({ "deprecation", "removal" })
 public class SVGOnLoadExceptionTest {
+
 	/**
 	 * Value for the script having successfully run.
 	 */
@@ -492,6 +493,7 @@ public class SVGOnLoadExceptionTest {
 	}
 
 	class TestUserAgent extends UserAgentAdapter {
+
 		Exception e;
 
 		@Override
@@ -530,6 +532,7 @@ public class SVGOnLoadExceptionTest {
 		public void displayError(Exception e) {
 			this.e = e;
 		}
+
 	}
 
 }

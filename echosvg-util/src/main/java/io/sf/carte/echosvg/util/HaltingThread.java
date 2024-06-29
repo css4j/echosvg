@@ -29,6 +29,7 @@ package io.sf.carte.echosvg.util;
  * @version $Id$
  */
 public class HaltingThread extends Thread {
+
 	/**
 	 * Boolean indicating if this thread has ever been 'halted'.
 	 */

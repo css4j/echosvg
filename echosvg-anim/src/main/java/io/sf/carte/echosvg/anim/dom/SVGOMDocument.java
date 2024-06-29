@@ -533,6 +533,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 			evt = EventSupport.getUltimateOriginalEvent(evt);
 			listener.nodeInserted((Node) evt.getTarget());
 		}
+
 	}
 
 	/**
@@ -560,6 +561,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 			evt = EventSupport.getUltimateOriginalEvent(evt);
 			listener.nodeToBeRemoved((Node) evt.getTarget());
 		}
+
 	}
 
 	/**
@@ -587,6 +589,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 			evt = EventSupport.getUltimateOriginalEvent(evt);
 			listener.subtreeModified((Node) evt.getTarget());
 		}
+
 	}
 
 	/**
@@ -614,6 +617,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 			evt = EventSupport.getUltimateOriginalEvent(evt);
 			listener.characterDataModified((Node) evt.getTarget());
 		}
+
 	}
 
 	/**
@@ -643,6 +647,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 			listener.attrModified((Element) evt.getTarget(), (Attr) mevt.getRelatedNode(), mevt.getAttrChange(),
 					mevt.getPrevValue(), mevt.getNewValue());
 		}
+
 	}
 
 	/**
@@ -676,6 +681,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 				aal.otherAnimationChanged(e, type);
 			}
 		}
+
 	}
 
 	// DocumentCSS ////////////////////////////////////////////////////////////
@@ -757,4 +763,5 @@ public class SVGOMDocument extends AbstractStylableDocument
 
 		localizableSupport = new LocalizableSupport(RESOURCES, getClass().getClassLoader());
 	}
+
 }

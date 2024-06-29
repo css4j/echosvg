@@ -105,4 +105,5 @@ public abstract class SVGOMURIReferenceElement extends SVGOMElement implements S
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

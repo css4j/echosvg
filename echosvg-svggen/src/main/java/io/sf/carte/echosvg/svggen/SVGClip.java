@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
  * @version $Id$
  */
 public class SVGClip extends AbstractSVGConverter {
+
 	/**
 	 * Constant used for some degenerate cases
 	 */
@@ -130,6 +131,7 @@ public class SVGClip extends AbstractSVGConverter {
 			return clipDef;
 		}
 	}
+
 }
 
 /**
@@ -138,6 +140,7 @@ public class SVGClip extends AbstractSVGConverter {
  * method does not implement that behavior.
  */
 class ClipKey {
+
 	/**
 	 * This clip hash code. Based on the serialized path data
 	 */
@@ -167,4 +170,5 @@ class ClipKey {
 	public boolean equals(Object clipKey) {
 		return clipKey instanceof ClipKey && hashCodeValue == ((ClipKey) clipKey).hashCodeValue;
 	}
+
 }

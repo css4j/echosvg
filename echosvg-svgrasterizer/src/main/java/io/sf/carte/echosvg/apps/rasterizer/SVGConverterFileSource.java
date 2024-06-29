@@ -32,6 +32,7 @@ import java.net.MalformedURLException;
  * @version $Id$
  */
 public class SVGConverterFileSource implements SVGConverterSource {
+
 	File file;
 	String ref;
 
@@ -107,4 +108,5 @@ public class SVGConverterFileSource implements SVGConverterSource {
 	public boolean isReadable() {
 		return file.canRead();
 	}
+
 }

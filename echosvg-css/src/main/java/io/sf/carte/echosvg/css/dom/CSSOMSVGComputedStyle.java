@@ -96,6 +96,7 @@ public class CSSOMSVGComputedStyle extends CSSOMComputedStyle {
 		public Value getValue() {
 			return cssEngine.getComputedStyle(element, pseudoElement, index);
 		}
+
 	}
 
 	/**
@@ -124,5 +125,7 @@ public class CSSOMSVGComputedStyle extends CSSOMComputedStyle {
 		public Value getValue() {
 			return cssEngine.getComputedStyle(element, pseudoElement, index);
 		}
+
 	}
+
 }

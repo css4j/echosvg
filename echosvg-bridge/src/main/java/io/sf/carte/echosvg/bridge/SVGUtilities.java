@@ -1048,12 +1048,14 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		}
 
 		class Handler implements ClockHandler {
+
 			float time;
 
 			@Override
 			public void clockValue(float t) {
 				time = t;
 			}
+
 		}
 		ClockParser p = new ClockParser(false);
 		Handler h = new Handler();
@@ -1066,4 +1068,5 @@ public abstract class SVGUtilities implements SVGConstants, ErrorConstants {
 		}
 		return h.time;
 	}
+
 }

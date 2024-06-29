@@ -99,4 +99,5 @@ public interface FragmentIdentifierHandler extends PreserveAspectRatioHandler, T
 	 *                           identifier
 	 */
 	void endFragmentIdentifier() throws ParseException;
+
 }

@@ -302,6 +302,7 @@ public class DoublyIndexedTable<K, L> {
 			}
 			return o2 == null;
 		}
+
 	}
 
 	/**
@@ -375,5 +376,7 @@ public class DoublyIndexedTable<K, L> {
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
+
 	}
+
 }

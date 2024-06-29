@@ -68,4 +68,5 @@ public class SVG12RhinoInterpreter extends RhinoInterpreter {
 	protected ScriptableObject createGlobalObject(Context ctx) {
 		return new GlobalWrapper(ctx);
 	}
+
 }

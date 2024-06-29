@@ -152,4 +152,5 @@ public class SVGOMUseShadowRoot extends AbstractDocumentFragment implements CSSN
 	protected Node newNode() {
 		return new SVGOMUseShadowRoot();
 	}
+
 }

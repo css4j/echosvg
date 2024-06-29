@@ -54,4 +54,5 @@ public class GVTTreeRendererEvent extends EventObject {
 	public BufferedImage getImage() {
 		return image;
 	}
+
 }

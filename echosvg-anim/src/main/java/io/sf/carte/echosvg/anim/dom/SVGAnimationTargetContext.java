@@ -40,4 +40,5 @@ public interface SVGAnimationTargetContext extends SVGContext {
 	 * Removes a listener for changes to the given attribute value.
 	 */
 	void removeTargetListener(String pn, AnimationTargetListener l);
+
 }

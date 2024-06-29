@@ -248,9 +248,12 @@ public class SVGOMStyleElement extends SVGOMElement implements CSSStyleSheetNode
 	 * The DOMCharacterDataModified listener.
 	 */
 	protected class DOMCharacterDataModifiedListener implements EventListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			styleSheet = null;
 		}
+
 	}
+
 }

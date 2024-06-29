@@ -82,4 +82,5 @@ public class Messages {
 	public static int getCharacter(String key) throws MissingResourceException {
 		return localizableSupport.getCharacter(key);
 	}
+
 }

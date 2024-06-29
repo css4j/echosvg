@@ -88,7 +88,8 @@ public abstract class AbstractImageTranscoderTest {
 
 	/**
 	 * Runs this test.
-	 * @throws TranscoderException 
+	 * 
+	 * @throws TranscoderException
 	 */
 	public void runTest() throws TranscoderException {
 		DiffImageTranscoder transcoder = new DiffImageTranscoder(getReferenceImageData());
@@ -317,6 +318,7 @@ public abstract class AbstractImageTranscoderTest {
 		boolean isIdentical() {
 			return state;
 		}
+
 	}
 
 	private BufferedImage getImage(InputStream is) throws IOException {

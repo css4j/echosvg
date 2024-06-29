@@ -32,6 +32,7 @@ public class DoublyLinkedList {
 	 * Basic doubly linked list node interface.
 	 */
 	public static class Node {
+
 		private Node next = null;
 		private Node prev = null;
 
@@ -90,6 +91,7 @@ public class DoublyLinkedList {
 					getPrev().setNext(this);
 			}
 		}
+
 	}
 
 	private Node head = null;
@@ -244,4 +246,5 @@ public class DoublyLinkedList {
 		head = nde;
 		size++;
 	}
+
 }

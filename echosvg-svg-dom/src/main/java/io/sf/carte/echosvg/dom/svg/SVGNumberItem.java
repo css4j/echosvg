@@ -69,4 +69,5 @@ public class SVGNumberItem extends AbstractSVGNumber implements SVGItem {
 			parentList.itemChanged();
 		}
 	}
+
 }

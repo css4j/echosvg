@@ -84,4 +84,5 @@ public class SVGAltGlyphHandler implements AltGlyphHandler, SVGConstants {
 
 		return null;
 	}
+
 }

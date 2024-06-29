@@ -144,6 +144,7 @@ public class TriplyIndexedTable {
 	 * To manage collisions
 	 */
 	protected static class Entry {
+
 		/**
 		 * The hash code
 		 */
@@ -209,5 +210,7 @@ public class TriplyIndexedTable {
 			}
 			return o3 == null;
 		}
+
 	}
+
 }

@@ -40,4 +40,5 @@ public interface GenericBridge extends Bridge {
 	 * @param e   the element being handled
 	 */
 	void handleElement(BridgeContext ctx, Element e);
+
 }

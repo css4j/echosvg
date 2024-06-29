@@ -170,4 +170,5 @@ public class AnimatableNumberOrIdentValue extends AnimatableNumberValue {
 		}
 		return res;
 	}
+
 }

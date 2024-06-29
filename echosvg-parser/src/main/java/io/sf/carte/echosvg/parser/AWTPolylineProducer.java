@@ -31,6 +31,7 @@ import java.io.Reader;
  * @version $Id$
  */
 public class AWTPolylineProducer implements PointsHandler, ShapeProducer {
+
 	/**
 	 * The current path.
 	 */
@@ -117,4 +118,5 @@ public class AWTPolylineProducer implements PointsHandler, ShapeProducer {
 	@Override
 	public void endPoints() throws ParseException {
 	}
+
 }

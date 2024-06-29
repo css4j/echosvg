@@ -35,4 +35,5 @@ public interface ExternalResourceSecurity {
 	 * @throws SecurityException if the resource should not be loaded.
 	 */
 	void checkLoadExternalResource();
+
 }

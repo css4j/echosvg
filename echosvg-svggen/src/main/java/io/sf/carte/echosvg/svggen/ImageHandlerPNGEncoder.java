@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
  * @see io.sf.carte.echosvg.svggen.ImageHandlerPNGEncoder
  */
 public class ImageHandlerPNGEncoder extends AbstractImageHandlerEncoder {
+
 	/**
 	 * @param imageDir directory where this handler should generate images. If null,
 	 *                 an IllegalArgumentException is thrown.
@@ -92,4 +93,5 @@ public class ImageHandlerPNGEncoder extends AbstractImageHandlerEncoder {
 	public BufferedImage buildBufferedImage(Dimension size) {
 		return new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
 	}
+
 }

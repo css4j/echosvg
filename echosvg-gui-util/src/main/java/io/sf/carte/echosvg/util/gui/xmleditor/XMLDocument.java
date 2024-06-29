@@ -182,4 +182,5 @@ public class XMLDocument extends PlainDocument {
 
 		return offset;
 	}
+
 }

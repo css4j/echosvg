@@ -374,6 +374,7 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 				malformed = true;
 			}
 		}
+
 	}
 
 	/**
@@ -465,6 +466,7 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 				malformed = true;
 			}
 		}
+
 	}
 
 	/**
@@ -767,5 +769,7 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 		protected void revalidate() {
 			valid = true;
 		}
+
 	}
+
 }

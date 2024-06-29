@@ -33,6 +33,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.svggen.SVGBufferedImageOp
  */
 public class SVGCustomBufferedImageOp extends AbstractSVGFilterConverter {
+
 	private static final String ERROR_EXTENSION = "SVGCustomBufferedImageOp:: ExtensionHandler could not convert filter";
 
 	/**

@@ -73,4 +73,5 @@ public class FlowTextElement extends GraphicsExtensionElement implements EchoSVG
 	protected Node newNode() {
 		return new FlowTextElement();
 	}
+
 }

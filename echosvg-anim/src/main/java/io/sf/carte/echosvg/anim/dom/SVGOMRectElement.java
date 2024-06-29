@@ -267,4 +267,5 @@ public class SVGOMRectElement extends SVGGraphicsElement implements SVGRectEleme
 		}
 		super.updateAttributeValue(ns, ln, val);
 	}
+
 }

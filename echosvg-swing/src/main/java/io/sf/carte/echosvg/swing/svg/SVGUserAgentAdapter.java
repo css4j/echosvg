@@ -50,6 +50,7 @@ import io.sf.carte.echosvg.bridge.NoLoadScriptSecurity;
  * @version $Id$
  */
 public class SVGUserAgentAdapter implements SVGUserAgent {
+
 	public SVGUserAgentAdapter() {
 	}
 
@@ -343,4 +344,5 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
 			s.checkLoadExternalResource();
 		}
 	}
+
 }

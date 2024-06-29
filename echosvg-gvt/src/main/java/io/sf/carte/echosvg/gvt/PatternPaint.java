@@ -187,6 +187,7 @@ public class PatternPaint implements Paint {
 	}
 
 	static class PatternPaintContextWrapper implements PaintContext {
+
 		PatternPaintContext ppc;
 		int xShift, yShift;
 
@@ -209,5 +210,7 @@ public class PatternPaint implements Paint {
 		public Raster getRaster(int x, int y, int width, int height) {
 			return ppc.getRaster(x + xShift, y + yShift, width, height);
 		}
+
 	}
+
 }

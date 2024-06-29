@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class URIResolver {
+
 	/**
 	 * The reference document.
 	 */
@@ -155,4 +156,5 @@ public class URIResolver {
 	protected Node getNodeByFragment(String frag, Element ref) {
 		return ref.getOwnerDocument().getElementById(frag);
 	}
+
 }

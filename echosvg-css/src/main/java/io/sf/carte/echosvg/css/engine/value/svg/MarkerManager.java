@@ -140,4 +140,5 @@ public class MarkerManager extends AbstractValueManager {
 		}
 		throw createInvalidStringTypeDOMException(type);
 	}
+
 }

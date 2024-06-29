@@ -65,4 +65,5 @@ public class SVGOMFlowRegionBreakElement extends SVGOMTextPositioningElement {
 	protected Node newNode() {
 		return new SVGOMFlowRegionBreakElement();
 	}
+
 }

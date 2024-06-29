@@ -44,4 +44,5 @@ public interface LiveAttributeValue {
 	 * Called when an Attr node has been removed.
 	 */
 	void attrRemoved(Attr node, String oldv);
+
 }

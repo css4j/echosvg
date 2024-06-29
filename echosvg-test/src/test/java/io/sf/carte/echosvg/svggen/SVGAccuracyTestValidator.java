@@ -37,11 +37,13 @@ import org.junit.jupiter.api.Test;
  * @version $Id$
  */
 public class SVGAccuracyTestValidator {
+
 	/**
 	 * Checks that test fails if: + Rendering sequence generates an exception +
 	 * There is no reference image + Reference SVG differs from the generated SVG
 	 * Checks that test works if SVG and reference SVG are identical
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	@Test
 	public void testSVGAccuracyValidator() throws Exception {
@@ -70,6 +72,7 @@ public class SVGAccuracyTestValidator {
 			} catch (NullPointerException e) {
 			}
 		}
+
 	}
 
 	static class ValidPainterTest implements Painter {
@@ -79,9 +82,11 @@ public class SVGAccuracyTestValidator {
 			g.setPaint(Color.red);
 			g.fillRect(0, 0, 40, 40);
 		}
+
 	}
 
 	static class NullReferenceURL extends ValidPainterTest {
+
 		public void test() throws Exception {
 			SVGAccuracyTest t = new SVGAccuracyTest(this, null);
 			try {
@@ -90,9 +95,11 @@ public class SVGAccuracyTestValidator {
 			} catch (NullPointerException e) {
 			}
 		}
+
 	}
 
 	static class InexistantReferenceURL extends ValidPainterTest {
+
 		public void test() throws Exception {
 			SVGAccuracyTest t = new SVGAccuracyTest(this, new URL("http", "dummyHost", "dummyFile.svg"));
 			try {
@@ -101,9 +108,11 @@ public class SVGAccuracyTestValidator {
 			} catch (UnknownHostException e) {
 			}
 		}
+
 	}
 
 	static class DiffWithReferenceImage extends ValidPainterTest {
+
 		public void test() throws Exception {
 			File tmpFile = File.createTempFile("EmptySVGReference", null);
 			tmpFile.deleteOnExit();
@@ -111,9 +120,11 @@ public class SVGAccuracyTestValidator {
 			SVGAccuracyTest t = new SVGAccuracyTest(this, tmpFile.toURI().toURL());
 			t.runTest(true);
 		}
+
 	}
 
 	static class SameAsReferenceImage extends ValidPainterTest {
+
 		public void test() throws Exception {
 			File tmpFile = File.createTempFile("SVGReference", null);
 			tmpFile.deleteOnExit();
@@ -130,6 +141,7 @@ public class SVGAccuracyTestValidator {
 			// image should match
 			t.runTest(false);
 		}
+
 	}
 
 }

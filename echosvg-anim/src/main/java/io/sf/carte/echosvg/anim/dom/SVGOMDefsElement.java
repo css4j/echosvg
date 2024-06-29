@@ -66,4 +66,5 @@ public class SVGOMDefsElement extends SVGGraphicsElement implements SVGDefsEleme
 	protected Node newNode() {
 		return new SVGOMDefsElement();
 	}
+
 }

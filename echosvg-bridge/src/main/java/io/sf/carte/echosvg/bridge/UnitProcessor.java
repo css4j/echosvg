@@ -349,5 +349,7 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 		public float getViewportHeight() {
 			return ctx.getViewport(e).getHeight();
 		}
+
 	}
+
 }

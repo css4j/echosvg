@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.dom.util.DOMUtilities;
  */
 
 public class GenericText extends AbstractText {
+
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Is this element immutable?

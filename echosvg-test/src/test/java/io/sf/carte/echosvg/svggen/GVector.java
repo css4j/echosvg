@@ -34,6 +34,7 @@ import io.sf.carte.echosvg.test.TestFonts;
  * @version $Id$
  */
 public class GVector implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -54,4 +55,5 @@ public class GVector implements Painter {
 
 		g.drawGlyphVector(gv, 30, 30);
 	}
+
 }

@@ -188,4 +188,5 @@ public class SVGOMAnimatedInteger extends AbstractSVGAnimatedValue implements SV
 			fireAnimatedAttributeListeners();
 		}
 	}
+
 }

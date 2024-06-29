@@ -30,6 +30,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public class SVGConverterURLSource implements SVGConverterSource {
+
 	/**
 	 * SVG file extension
 	 */
@@ -132,4 +133,5 @@ public class SVGConverterURLSource implements SVGConverterSource {
 	public String getName() {
 		return name;
 	}
+
 }

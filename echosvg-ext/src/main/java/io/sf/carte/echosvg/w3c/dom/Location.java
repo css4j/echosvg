@@ -19,6 +19,7 @@
 package io.sf.carte.echosvg.w3c.dom;
 
 public interface Location {
+
 	/**
 	 * Invocation of this method causes the user agent to navigate to the supplied
 	 * location.
@@ -32,4 +33,5 @@ public interface Location {
 	 * The user agent reloads the current document.
 	 */
 	void reload();
+
 }

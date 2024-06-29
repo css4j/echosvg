@@ -32,4 +32,5 @@ public interface OriginalEvent {
 	 * Gets the event from which this event was cloned.
 	 */
 	Event getOriginalEvent();
+
 }

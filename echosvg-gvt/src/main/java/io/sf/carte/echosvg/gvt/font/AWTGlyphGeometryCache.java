@@ -261,6 +261,7 @@ public class AWTGlyphGeometryCache {
 		public Rectangle2D getOutlineBounds2D() {
 			return outlineBounds;
 		}
+
 	}
 
 	/**
@@ -299,5 +300,7 @@ public class AWTGlyphGeometryCache {
 		public boolean match(char o2) {
 			return (c == o2);
 		}
+
 	}
+
 }

@@ -65,4 +65,5 @@ public class SVGOMFlowSpanElement extends SVGOMTextPositioningElement {
 	protected Node newNode() {
 		return new SVGOMFlowSpanElement();
 	}
+
 }

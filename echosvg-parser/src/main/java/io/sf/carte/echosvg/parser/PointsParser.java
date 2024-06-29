@@ -96,4 +96,5 @@ public class PointsParser extends NumberParser {
 
 		pointsHandler.endPoints();
 	}
+
 }

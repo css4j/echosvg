@@ -1273,6 +1273,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 	}
 
 	public static class SoftReferenceMememto<T> extends CleanerThread.SoftReferenceCleared<T> {
+
 		Object mememto;
 		Set<EventListenerMememto> set;
 
@@ -1293,6 +1294,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 				set = null;
 			}
 		}
+
 	}
 
 	/**
@@ -1344,6 +1346,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 		public boolean getNamespaced() {
 			return namespaced;
 		}
+
 	}
 
 	/**
@@ -1466,6 +1469,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -1494,6 +1498,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 
 			userAgent.setSVGCursor(cursor);
 		}
+
 	}
 
 	/**
@@ -1522,6 +1527,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 				userAgent.setSVGCursor(cursor);
 			}
 		}
+
 	}
 
 	/**
@@ -1552,6 +1558,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -1580,6 +1587,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -1611,6 +1619,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -1682,6 +1691,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 				((BridgeUpdateHandler) ctx).handleCSSEngineEvent(evt);
 			}
 		}
+
 	}
 
 	/**
@@ -1731,6 +1741,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 				}
 			}
 		}
+
 	}
 
 	// CSS context ////////////////////////////////////////////////////////////
@@ -2037,6 +2048,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 	}
 
 	public static class CSSEngineUserAgentWrapper implements CSSEngineUserAgent {
+
 		UserAgent ua;
 
 		CSSEngineUserAgentWrapper(UserAgent ua) {
@@ -2058,6 +2070,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 		public void displayMessage(String message) {
 			ua.displayMessage(message);
 		}
+
 	}
 
 }

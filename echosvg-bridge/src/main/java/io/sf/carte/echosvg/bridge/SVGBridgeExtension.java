@@ -186,4 +186,5 @@ public class SVGBridgeExtension implements BridgeExtension {
 		}
 		return false;
 	}
+
 }

@@ -128,4 +128,5 @@ public class FilterManager extends AbstractValueManager {
 		}
 		throw createInvalidStringTypeDOMException(type);
 	}
+
 }

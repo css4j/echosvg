@@ -388,6 +388,7 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
 	 * A viewport defined an &lt;svg&gt; element.
 	 */
 	public static class MultiImageElementViewport implements Viewport {
+
 		private float width;
 		private float height;
 
@@ -417,5 +418,7 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
 		public float getHeight() {
 			return height;
 		}
+
 	}
+
 }

@@ -107,27 +107,33 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
 	 * The listener class for 'DOMNodeInserted' event.
 	 */
 	protected class DOMNodeInsertedListener extends ScriptingEnvironment.DOMNodeInsertedListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
 		}
+
 	}
 
 	/**
 	 * The listener class for 'DOMNodeRemoved' event.
 	 */
 	protected class DOMNodeRemovedListener extends ScriptingEnvironment.DOMNodeRemovedListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
 		}
+
 	}
 
 	protected class DOMAttrModifiedListener extends ScriptingEnvironment.DOMAttrModifiedListener {
+
 		@Override
 		public void handleEvent(Event evt) {
 			super.handleEvent(EventSupport.getUltimateOriginalEvent(evt));
 		}
+
 	}
 
 	/**
@@ -256,6 +262,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
 
 			runEventHandler(script, evt, lang, desc);
 		}
+
 	}
 
 	/**
@@ -299,5 +306,7 @@ public class SVG12ScriptingEnvironment extends ScriptingEnvironment {
 			// primary bridge context
 			((SVG12BridgeContext) bridgeContext.getPrimaryBridgeContext()).stopMouseCapture();
 		}
+
 	}
+
 }

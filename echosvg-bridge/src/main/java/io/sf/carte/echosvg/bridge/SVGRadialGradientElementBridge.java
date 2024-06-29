@@ -147,4 +147,5 @@ public class SVGRadialGradientElementBridge extends AbstractSVGGradientElementBr
 					transform);
 		}
 	}
+
 }

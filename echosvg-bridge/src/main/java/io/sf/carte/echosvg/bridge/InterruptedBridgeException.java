@@ -35,4 +35,5 @@ public class InterruptedBridgeException extends RuntimeException {
 	 */
 	public InterruptedBridgeException() {
 	}
+
 }

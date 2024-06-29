@@ -49,4 +49,5 @@ public abstract class AbstractSVGNumber implements SVGNumber {
 	public void setValue(float f) {
 		value = f;
 	}
+
 }

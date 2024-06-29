@@ -94,4 +94,5 @@ public class SVGFeTileElementBridge extends AbstractSVGFilterPrimitiveElementBri
 
 		return filter;
 	}
+
 }

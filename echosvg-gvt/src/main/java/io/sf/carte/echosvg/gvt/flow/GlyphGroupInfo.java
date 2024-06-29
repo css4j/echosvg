@@ -31,6 +31,7 @@ import io.sf.carte.echosvg.gvt.font.GVTGlyphVector;
  * @version $Id$
  */
 public class GlyphGroupInfo {
+
 	int start, end;
 	int glyphCount, lastGlyphCount;
 	boolean hideLast;
@@ -143,4 +144,5 @@ public class GlyphGroupInfo {
 	public int getRange() {
 		return this.range;
 	}
+
 }

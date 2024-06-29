@@ -35,4 +35,5 @@ public class JGVTComponentAdapter implements JGVTComponentListener {
 	@Override
 	public void componentTransformChanged(ComponentEvent event) {
 	}
+
 }

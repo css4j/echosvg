@@ -28,6 +28,7 @@ import java.awt.Shape;
  * @version $Id$
  */
 public interface ShapeProducer {
+
 	/**
 	 * Returns the Shape object initialized during the last parsing.
 	 * 
@@ -44,4 +45,5 @@ public interface ShapeProducer {
 	 * Returns the current winding rule.
 	 */
 	int getWindingRule();
+
 }

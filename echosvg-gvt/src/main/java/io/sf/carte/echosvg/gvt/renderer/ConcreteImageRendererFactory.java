@@ -56,4 +56,5 @@ public class ConcreteImageRendererFactory implements ImageRendererFactory {
 			return new MacRenderer();
 		return new DynamicRenderer();
 	}
+
 }

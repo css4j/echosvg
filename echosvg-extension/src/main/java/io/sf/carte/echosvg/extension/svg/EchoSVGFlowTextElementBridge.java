@@ -665,6 +665,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge implement
 	protected static final GVTAttributedCharacterIterator.TextAttribute KERNING = GVTAttributedCharacterIterator.TextAttribute.KERNING;
 
 	public static class LineBreakInfo {
+
 		int breakIdx;
 		float lineAdvAdj;
 		boolean relative;
@@ -691,6 +692,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge implement
 		public float getLineAdvAdj() {
 			return lineAdvAdj;
 		}
+
 	}
 
 	public MarginInfo makeMarginInfo(Element e) {
@@ -782,6 +784,7 @@ public class EchoSVGFlowTextElementBridge extends SVGTextElementBridge implement
 		public EchoSVGFlowContentBridge(BridgeContext ctx, SVGTextElementBridge parent, Element e) {
 			super(ctx, parent, e);
 		}
+
 	}
 
 }

@@ -28,6 +28,7 @@ import java.util.HashMap;
  * @version $Id$
  */
 public class HashTableStack {
+
 	/**
 	 * The current link.
 	 */
@@ -88,6 +89,7 @@ public class HashTableStack {
 	 * To store the hashtables.
 	 */
 	protected static class Link {
+
 		/**
 		 * The table.
 		 */
@@ -117,5 +119,7 @@ public class HashTableStack {
 			if (next != null)
 				defaultStr = next.defaultStr;
 		}
+
 	}
+
 }

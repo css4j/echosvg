@@ -221,6 +221,7 @@ public class TextSelectionManager {
 	 * To implement a GraphicsNodeMouseListener.
 	 */
 	protected class MouseListener implements GraphicsNodeMouseListener {
+
 		@Override
 		public void mouseClicked(GraphicsNodeMouseEvent evt) {
 			if (evt.getSource() instanceof Selectable) {
@@ -273,12 +274,14 @@ public class TextSelectionManager {
 		@Override
 		public void mouseMoved(GraphicsNodeMouseEvent evt) {
 		}
+
 	}
 
 	/**
 	 * To implements a selection listener.
 	 */
 	protected class TextSelectionListener implements SelectionListener {
+
 		@Override
 		public void selectionDone(SelectionEvent e) {
 			selectionChanged(e);
@@ -372,5 +375,7 @@ public class TextSelectionManager {
 				}
 			}
 		}
+
 	}
+
 }

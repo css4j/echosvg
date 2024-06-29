@@ -157,4 +157,5 @@ public class CanvasGraphicsNode extends CompositeGraphicsNode {
 		}
 		super.primitivePaint(g2d);
 	}
+
 }

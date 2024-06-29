@@ -120,4 +120,5 @@ public class AnimatableNumberValue extends AnimatableValue {
 	public String getCssText() {
 		return formatNumber(value);
 	}
+
 }

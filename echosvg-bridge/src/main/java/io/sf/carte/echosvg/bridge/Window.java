@@ -33,6 +33,7 @@ import io.sf.carte.echosvg.script.Interpreter;
  * @version $Id$
  */
 public interface Window extends io.sf.carte.echosvg.w3c.dom.Window {
+
 	/**
 	 * Evaluates the given string repeatedly after the given amount of time. This
 	 * method does not stall the script: the evaluation is scheduled and the script
@@ -153,6 +154,7 @@ public interface Window extends io.sf.carte.echosvg.w3c.dom.Window {
 		 * @param content The data.
 		 */
 		void getURLDone(boolean success, String mime, String content);
+
 	}
 
 	/**
@@ -194,4 +196,5 @@ public interface Window extends io.sf.carte.echosvg.w3c.dom.Window {
 	 * Returns the associated interpreter.
 	 */
 	Interpreter getInterpreter();
+
 }

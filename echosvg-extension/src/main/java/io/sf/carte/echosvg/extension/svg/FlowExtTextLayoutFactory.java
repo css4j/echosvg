@@ -50,4 +50,5 @@ public class FlowExtTextLayoutFactory implements TextLayoutFactory {
 			FontRenderContext frc) {
 		return new FlowExtGlyphLayout(aci, charMap, offset, frc);
 	}
+
 }

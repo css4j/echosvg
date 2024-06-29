@@ -303,6 +303,7 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 		protected SVGOMElement getAssociatedElement() {
 			return (SVGOMElement) element;
 		}
+
 	}
 
 	/**
@@ -422,5 +423,7 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 		protected void setAnimatedValue(int type, float val) {
 			super.newValueSpecifiedUnits((short) type, val);
 		}
+
 	}
+
 }

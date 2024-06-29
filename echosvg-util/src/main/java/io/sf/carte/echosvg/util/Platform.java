@@ -63,4 +63,5 @@ public abstract class Platform {
 			return Toolkit.getDefaultToolkit().getScreenResolution();
 		}
 	}
+
 }

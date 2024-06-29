@@ -65,4 +65,5 @@ public class SVGOMFlowLineElement extends SVGOMTextPositioningElement {
 	protected Node newNode() {
 		return new SVGOMFlowLineElement();
 	}
+
 }

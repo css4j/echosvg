@@ -26,6 +26,7 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public class DefaultAngleHandler implements AngleHandler {
+
 	/**
 	 * The only instance of this class.
 	 */
@@ -78,4 +79,5 @@ public class DefaultAngleHandler implements AngleHandler {
 	@Override
 	public void endAngle() throws ParseException {
 	}
+
 }

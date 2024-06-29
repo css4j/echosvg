@@ -226,4 +226,5 @@ public abstract class AbstractCharacterData extends AbstractChildNode implements
 		cd.nodeValue = nodeValue;
 		return n;
 	}
+
 }

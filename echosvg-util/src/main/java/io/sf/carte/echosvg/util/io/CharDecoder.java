@@ -46,4 +46,5 @@ public interface CharDecoder {
 	 * Disposes the associated resources.
 	 */
 	void dispose() throws IOException;
+
 }

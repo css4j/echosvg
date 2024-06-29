@@ -377,4 +377,5 @@ public class PathArrayProducer implements PathHandler {
 		ps.clear();
 		p = allParams;
 	}
+
 }

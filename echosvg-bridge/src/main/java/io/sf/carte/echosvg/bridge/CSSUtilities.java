@@ -874,4 +874,5 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 		return (((CSSPrimitiveValue) v).getStringValue().charAt(0) == 'n') ? Path2D.WIND_NON_ZERO
 				: Path2D.WIND_EVEN_ODD;
 	}
+
 }

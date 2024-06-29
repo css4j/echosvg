@@ -191,4 +191,5 @@ public class SVGOMFEDisplacementMapElement extends SVGOMFilterPrimitiveStandardA
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

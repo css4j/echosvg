@@ -292,4 +292,5 @@ public class AWTPathProducer implements PathHandler, ShapeProducer {
 			float y) throws ParseException {
 		path.arcTo(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, xCenter = currentX = x, yCenter = currentY = y);
 	}
+
 }

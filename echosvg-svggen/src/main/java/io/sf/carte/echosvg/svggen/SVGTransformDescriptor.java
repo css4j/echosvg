@@ -34,6 +34,7 @@ import org.w3c.dom.Element;
  * @see io.sf.carte.echosvg.ext.awt.g2d.GraphicContext
  */
 public class SVGTransformDescriptor implements SVGDescriptor, SVGSyntax {
+
 	private String transform;
 
 	public SVGTransformDescriptor(String transform) {
@@ -72,4 +73,5 @@ public class SVGTransformDescriptor implements SVGDescriptor, SVGSyntax {
 
 		return defSet;
 	}
+
 }

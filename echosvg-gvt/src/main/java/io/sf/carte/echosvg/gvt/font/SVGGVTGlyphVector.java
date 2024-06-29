@@ -733,4 +733,5 @@ public final class SVGGVTGlyphVector implements GVTGlyphVector {
 			}
 		}
 	}
+
 }

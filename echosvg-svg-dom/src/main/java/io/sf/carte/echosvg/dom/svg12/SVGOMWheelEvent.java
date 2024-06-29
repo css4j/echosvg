@@ -79,4 +79,5 @@ public class SVGOMWheelEvent extends DOMUIEvent {
 		initUIEventNS(namespaceURIArg, typeArg, canBubbleArg, cancelableArg, viewArg, 0);
 		wheelDelta = wheelDeltaArg;
 	}
+
 }

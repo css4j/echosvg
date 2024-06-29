@@ -103,4 +103,5 @@ public class ColorInterpolationManager extends IdentifierManager {
 	public StringMap getIdentifiers() {
 		return values;
 	}
+
 }

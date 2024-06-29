@@ -640,6 +640,7 @@ public class JSVGCanvas extends JSVGComponent {
 	 * A swing action to reset the rendering transform of the canvas.
 	 */
 	public class ResetTransformAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -647,6 +648,7 @@ public class JSVGCanvas extends JSVGComponent {
 			fragmentIdentifier = null;
 			resetRenderingTransform();
 		}
+
 	}
 
 	/**
@@ -656,6 +658,7 @@ public class JSVGCanvas extends JSVGComponent {
 	 * of the display.
 	 */
 	public class AffineAction extends AbstractAction {
+
 		private static final long serialVersionUID = 1L;
 		AffineTransform at;
 
@@ -680,6 +683,7 @@ public class JSVGCanvas extends JSVGComponent {
 				setRenderingTransform(t);
 			}
 		}
+
 	}
 
 	/**
@@ -687,6 +691,7 @@ public class JSVGCanvas extends JSVGComponent {
 	 * in (scale &gt; 1) and out (scale &lt;1).
 	 */
 	public class ZoomAction extends AffineAction {
+
 		private static final long serialVersionUID = 1L;
 
 		public ZoomAction(double scale) {
@@ -696,94 +701,111 @@ public class JSVGCanvas extends JSVGComponent {
 		public ZoomAction(double scaleX, double scaleY) {
 			super(AffineTransform.getScaleInstance(scaleX, scaleY));
 		}
+
 	}
 
 	/**
 	 * A swing action to zoom in the canvas.
 	 */
 	public class ZoomInAction extends ZoomAction {
+
 		private static final long serialVersionUID = 1L;
 
 		ZoomInAction() {
 			super(2);
 		}
+
 	}
 
 	/**
 	 * A swing action to zoom out the canvas.
 	 */
 	public class ZoomOutAction extends ZoomAction {
+
 		private static final long serialVersionUID = 1L;
 
 		ZoomOutAction() {
 			super(.5);
 		}
+
 	}
 
 	/**
 	 * A swing action to Rotate the canvas.
 	 */
 	public class RotateAction extends AffineAction {
+
 		private static final long serialVersionUID = 1L;
 
 		public RotateAction(double theta) {
 			super(AffineTransform.getRotateInstance(theta));
 		}
+
 	}
 
 	/**
 	 * A swing action to Pan/scroll the canvas.
 	 */
 	public class ScrollAction extends AffineAction {
+
 		private static final long serialVersionUID = 1L;
 
 		public ScrollAction(double tx, double ty) {
 			super(AffineTransform.getTranslateInstance(tx, ty));
 		}
+
 	}
 
 	/**
 	 * A swing action to scroll the canvas to the right, by a fixed amount
 	 */
 	public class ScrollRightAction extends ScrollAction {
+
 		private static final long serialVersionUID = 1L;
 
 		public ScrollRightAction(int inc) {
 			super(-inc, 0);
 		}
+
 	}
 
 	/**
 	 * A swing action to scroll the canvas to the left, by a fixed amount
 	 */
 	public class ScrollLeftAction extends ScrollAction {
+
 		private static final long serialVersionUID = 1L;
 
 		public ScrollLeftAction(int inc) {
 			super(inc, 0);
 		}
+
 	}
 
 	/**
 	 * A swing action to scroll the canvas up, by a fixed amount
 	 */
 	public class ScrollUpAction extends ScrollAction {
+
 		private static final long serialVersionUID = 1L;
 
 		public ScrollUpAction(int inc) {
 			super(0, inc);
 		}
+
 	}
 
 	/**
 	 * A swing action to scroll the canvas down, by a fixed amount
 	 */
 	public class ScrollDownAction extends ScrollAction {
+
 		private static final long serialVersionUID = 1L;
 
 		public ScrollDownAction(int inc) {
 			super(0, -inc);
 		}
+
 	}
 
 	// ----------------------------------------------------------------------
@@ -1123,6 +1145,7 @@ public class JSVGCanvas extends JSVGComponent {
 				dialog.setVisible(true); // Safe to be called from any thread
 			}
 		}
+
 	}
 
 	// ----------------------------------------------------------------------
@@ -1171,6 +1194,7 @@ public class JSVGCanvas extends JSVGComponent {
 		public int getLastY() {
 			return lastY;
 		}
+
 	}
 
 	/**
@@ -1183,6 +1207,7 @@ public class JSVGCanvas extends JSVGComponent {
 	 * make sure it will show after the <code>ToolTipManager</code>'s default delay.
 	 */
 	protected class ToolTipModifier implements EventListener {
+
 		/**
 		 * The CanvasUserAgent used to track the last tool tip event.
 		 */
@@ -1229,9 +1254,11 @@ public class JSVGCanvas extends JSVGComponent {
 					EventQueue.invokeLater(new ToolTipRunnable(theToolTip));
 			}
 		}
+
 	}
 
 	protected class ToolTipRunnable implements Runnable {
+
 		String theToolTip;
 
 		public ToolTipRunnable(String toolTip) {
@@ -1256,5 +1283,7 @@ public class JSVGCanvas extends JSVGComponent {
 				ToolTipManager.sharedInstance().mouseMoved(e);
 			}
 		}
+
 	}
+
 }

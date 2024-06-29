@@ -94,4 +94,5 @@ public class GenericAttrNS extends AbstractAttrNS {
 	protected Node newNode() {
 		return new GenericAttrNS();
 	}
+
 }

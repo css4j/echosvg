@@ -171,4 +171,5 @@ public class SVGOMForeignObjectElement extends SVGGraphicsElement implements SVG
 	protected DoublyIndexedTable<String, String> getTraitInformationTable() {
 		return xmlTraitInformation;
 	}
+
 }

@@ -29,6 +29,7 @@ package io.sf.carte.echosvg.parser;
  */
 
 public interface LengthListHandler extends LengthHandler {
+
 	/**
 	 * Invoked when the length list attribute starts.
 	 * 
@@ -44,4 +45,5 @@ public interface LengthListHandler extends LengthHandler {
 	 *                           list.
 	 */
 	void endLengthList() throws ParseException;
+
 }

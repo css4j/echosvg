@@ -36,6 +36,7 @@ import java.awt.image.BufferedImage;
  * @version $Id$
  */
 public class Clip implements Painter {
+
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -128,4 +129,5 @@ public class Clip implements Painter {
 		g.scale(.5, .5);
 		g.drawImage(image, 0, 0, null);
 	}
+
 }

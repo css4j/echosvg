@@ -301,4 +301,5 @@ public class DOMKeyEvent extends DOMUIEvent {
 		keyCode = keyCodeArg;
 		charCode = charCodeArg;
 	}
+
 }

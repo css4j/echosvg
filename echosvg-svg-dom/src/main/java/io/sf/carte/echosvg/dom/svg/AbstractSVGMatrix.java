@@ -268,4 +268,5 @@ public abstract class AbstractSVGMatrix implements SVGMatrix {
 		tr.concatenate(AffineTransform.getShearInstance(0, Math.tan(Math.toRadians(angleDeg))));
 		return new SVGOMMatrix(tr);
 	}
+
 }

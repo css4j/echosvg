@@ -49,4 +49,5 @@ public abstract class EventLikeTimingSpecifier extends OffsetTimingSpecifier {
 	 * Invoked to resolve an event-like timing specifier into an instance time.
 	 */
 	public abstract void resolve(Event e);
+
 }

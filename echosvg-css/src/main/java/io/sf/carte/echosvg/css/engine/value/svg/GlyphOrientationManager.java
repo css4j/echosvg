@@ -123,4 +123,5 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
 		}
 		throw createInvalidFloatValueDOMException(floatValue);
 	}
+
 }

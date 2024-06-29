@@ -43,4 +43,5 @@ public interface ClipBridge extends Bridge {
 	 * @param clipedNode    the graphics node to clip
 	 */
 	ClipRable createClip(BridgeContext ctx, Element clipElement, Element clipedElement, GraphicsNode clipedNode);
+
 }
