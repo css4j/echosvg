@@ -346,7 +346,8 @@ public class SVGFont extends AbstractSVGConverter {
 				AffineTransform at = AffineTransform.getScaleInstance(1, -1);
 				glyphShape = at.createTransformedShape(glyphShape);
 
-				glyphElement.setAttributeNS(null, SVG_D_ATTRIBUTE, SVGPath.toSVGPathData(glyphShape, getGeneratorContext()));
+				glyphElement.setAttributeNS(null, SVG_D_ATTRIBUTE,
+						SVGPath.toSVGPathData(glyphShape, getGeneratorContext()));
 				glyphElement.setAttributeNS(null, SVG_HORIZ_ADV_X_ATTRIBUTE, String.valueOf(gm.getAdvance()));
 				glyphElement.setAttributeNS(null, SVG_UNICODE_ATTRIBUTE, String.valueOf(c));
 

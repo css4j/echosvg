@@ -213,7 +213,8 @@ public class SVGOMFEConvolveMatrixElement extends SVGOMFilterPrimitiveStandardAt
 	 */
 	@Override
 	public SVGAnimatedNumber getKernelUnitLengthX() {
-		throw new UnsupportedOperationException("SVGFEConvolveMatrixElement.getKernelUnitLengthX is not implemented"); // XXX
+		throw new UnsupportedOperationException(
+				"SVGFEConvolveMatrixElement.getKernelUnitLengthX is not implemented"); // XXX
 	}
 
 	/**
@@ -222,7 +223,8 @@ public class SVGOMFEConvolveMatrixElement extends SVGOMFilterPrimitiveStandardAt
 	 */
 	@Override
 	public SVGAnimatedNumber getKernelUnitLengthY() {
-		throw new UnsupportedOperationException("SVGFEConvolveMatrixElement.getKernelUnitLengthY is not implemented"); // XXX
+		throw new UnsupportedOperationException(
+				"SVGFEConvolveMatrixElement.getKernelUnitLengthY is not implemented"); // XXX
 	}
 
 	/**

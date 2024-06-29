@@ -56,27 +56,27 @@ public class JPainterCompare extends JPanel implements SVGConstants {
 	 */
 	public static final Dimension CANVAS_SIZE = new Dimension(300, 400);
 
-	public static String MESSAGES_USAGE = "JPainterCompare.messages.usage";
+	public static final String MESSAGES_USAGE = "JPainterCompare.messages.usage";
 
-	public static String MESSAGES_LOADING_CLASS = "JPainterCompare.messages.loading.class";
+	public static final String MESSAGES_LOADING_CLASS = "JPainterCompare.messages.loading.class";
 
-	public static String MESSAGES_LOADED_CLASS = "JPainterCompare.messages.loaded.class";
+	public static final String MESSAGES_LOADED_CLASS = "JPainterCompare.messages.loaded.class";
 
-	public static String MESSAGES_INSTANCIATED_OBJECT = "JPainterCompare.messages.instanciated.object";
+	public static final String MESSAGES_INSTANCIATED_OBJECT = "JPainterCompare.messages.instanciated.object";
 
-	public static String ERROR_COULD_NOT_LOAD_CLASS = "JPainterCompare.error.could.not.load.class";
+	public static final String ERROR_COULD_NOT_LOAD_CLASS = "JPainterCompare.error.could.not.load.class";
 
-	public static String ERROR_COULD_NOT_INSTANCIATE_OBJECT = "JPainterCompare.error.could.not.instanciate.object";
+	public static final String ERROR_COULD_NOT_INSTANCIATE_OBJECT = "JPainterCompare.error.could.not.instanciate.object";
 
-	public static String ERROR_CLASS_NOT_PAINTER = "JPainterCompare.error.class.not.painter";
+	public static final String ERROR_CLASS_NOT_PAINTER = "JPainterCompare.error.class.not.painter";
 
-	public static String ERROR_COULD_NOT_TRANSCODE_TO_SVG = "JPainterCompare.error.could.not.transcode.to.svg";
+	public static final String ERROR_COULD_NOT_TRANSCODE_TO_SVG = "JPainterCompare.error.could.not.transcode.to.svg";
 
-	public static String ERROR_COULD_NOT_CONVERT_FILE_PATH_TO_URL = "JPainterCompare.error.could.not.convert.file.path.to.url";
+	public static final String ERROR_COULD_NOT_CONVERT_FILE_PATH_TO_URL = "JPainterCompare.error.could.not.convert.file.path.to.url";
 
-	public static String ERROR_COULD_NOT_RENDER_GENERATED_SVG = "JPainterCompare.error.could.not.render.generated.svg";
+	public static final String ERROR_COULD_NOT_RENDER_GENERATED_SVG = "JPainterCompare.error.could.not.render.generated.svg";
 
-	public static String CONFIG_TMP_FILE_PREFIX = "JPainterCompare.config.tmp.file.prefix";
+	public static final String CONFIG_TMP_FILE_PREFIX = "JPainterCompare.config.tmp.file.prefix";
 
 	/**
 	 * Builds an <code>SVGGraphics2D</code> with a default configuration.

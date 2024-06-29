@@ -29,7 +29,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
 /*
  * Test based on commits 3f937cfea7 and 905f368b5 by S. Steiner
  */
-public class DefaultScriptSecurityTestCase {
+public class DefaultScriptSecurityTest {
 
 	@Test
 	public void testSameHost() {

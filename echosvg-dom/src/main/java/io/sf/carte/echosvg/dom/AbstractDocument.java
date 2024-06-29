@@ -1158,7 +1158,8 @@ public abstract class AbstractDocument extends AbstractParentNode
 			fireUserDataHandlers(UserDataHandler.NODE_RENAMED, n, e);
 			if (getEventsEnabled()) {
 				MutationNameEvent ev = (MutationNameEvent) createEvent("MutationNameEvent");
-				ev.initMutationNameEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMElementNameChanged", true, // canBubbleArg
+				ev.initMutationNameEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMElementNameChanged",
+						true, // canBubbleArg
 						false, // cancelableArg
 						null, // relatedNodeArg
 						prevNamespaceURI, prevNodeName);
@@ -1187,7 +1188,8 @@ public abstract class AbstractDocument extends AbstractParentNode
 				fireUserDataHandlers(UserDataHandler.NODE_RENAMED, a, null);
 				if (getEventsEnabled()) {
 					MutationNameEvent ev = (MutationNameEvent) createEvent("MutationNameEvent");
-					ev.initMutationNameEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrNameChanged", true, // canBubbleArg
+					ev.initMutationNameEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrNameChanged",
+							true, // canBubbleArg
 							false, // cancelableArg
 							a, // relatedNodeArg
 							prevNamespaceURI, prevNodeName);
@@ -1220,7 +1222,8 @@ public abstract class AbstractDocument extends AbstractParentNode
 				fireUserDataHandlers(UserDataHandler.NODE_RENAMED, a, a2);
 				if (getEventsEnabled()) {
 					MutationNameEvent ev = (MutationNameEvent) createEvent("MutationNameEvent");
-					ev.initMutationNameEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrNameChanged", true, // canBubbleArg
+					ev.initMutationNameEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMAttrNameChanged",
+							true, // canBubbleArg
 							false, // cancelableArg
 							a2, // relatedNodeArg
 							prevNamespaceURI, prevNodeName);

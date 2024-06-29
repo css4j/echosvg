@@ -142,7 +142,8 @@ public class SVGOMFEDiffuseLightingElement extends SVGOMFilterPrimitiveStandardA
 	 */
 	@Override
 	public SVGAnimatedNumber getKernelUnitLengthX() {
-		throw new UnsupportedOperationException("SVGFEDiffuseLightingElement.getKernelUnitLengthX is not implemented"); // XXX
+		throw new UnsupportedOperationException(
+				"SVGFEDiffuseLightingElement.getKernelUnitLengthX is not implemented"); // XXX
 	}
 
 	/**
@@ -151,7 +152,8 @@ public class SVGOMFEDiffuseLightingElement extends SVGOMFilterPrimitiveStandardA
 	 */
 	@Override
 	public SVGAnimatedNumber getKernelUnitLengthY() {
-		throw new UnsupportedOperationException("SVGFEDiffuseLightingElement.getKernelUnitLengthY is not implemented"); // XXX
+		throw new UnsupportedOperationException(
+				"SVGFEDiffuseLightingElement.getKernelUnitLengthY is not implemented"); // XXX
 	}
 
 	/**

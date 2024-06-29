@@ -1036,7 +1036,8 @@ public abstract class AbstractNode implements ExtendedNode, NodeXBL, XBLManagerD
 		AbstractDocument doc = getCurrentDocument();
 		if (doc.getEventsEnabled()) {
 			DOMMutationEvent ev = (DOMMutationEvent) doc.createEvent("MutationEvents");
-			ev.initMutationEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInsertedIntoDocument", true, // canBubbleArg
+			ev.initMutationEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeInsertedIntoDocument",
+					true, // canBubbleArg
 					false, // cancelableArg
 					null, // relatedNodeArg
 					null, // prevValueArg
@@ -1054,7 +1055,8 @@ public abstract class AbstractNode implements ExtendedNode, NodeXBL, XBLManagerD
 		AbstractDocument doc = getCurrentDocument();
 		if (doc.getEventsEnabled()) {
 			DOMMutationEvent ev = (DOMMutationEvent) doc.createEvent("MutationEvents");
-			ev.initMutationEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemovedFromDocument", true, // canBubbleArg
+			ev.initMutationEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMNodeRemovedFromDocument",
+					true, // canBubbleArg
 					false, // cancelableArg
 					null, // relatedNodeArg
 					null, // prevValueArg
@@ -1072,7 +1074,8 @@ public abstract class AbstractNode implements ExtendedNode, NodeXBL, XBLManagerD
 		AbstractDocument doc = getCurrentDocument();
 		if (doc.getEventsEnabled()) {
 			DOMMutationEvent ev = (DOMMutationEvent) doc.createEvent("MutationEvents");
-			ev.initMutationEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified", true, // canBubbleArg
+			ev.initMutationEventNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified",
+					true, // canBubbleArg
 					false, // cancelableArg
 					null, // relatedNodeArg
 					oldv, // prevValueArg

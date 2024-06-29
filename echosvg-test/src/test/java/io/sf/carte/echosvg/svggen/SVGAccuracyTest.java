@@ -121,7 +121,7 @@ public class SVGAccuracyTest {
 		if (failMessage != null) {
 			save(bos.toByteArray());
 			if (!expectError) {
-				fail("File: " + refURL.toExternalForm() + '\n' +  failMessage);
+				fail("File: " + refURL.toExternalForm() + '\n' + failMessage);
 			}
 		} else if (expectError) {
 			fail("Expected accuracy error but found no error, on file: " + refURL.toExternalForm());

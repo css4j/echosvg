@@ -48,7 +48,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class SVGGeneratorTests {
+public class SVGGeneratorTest {
 
 	private static final String GENERATOR_REFERENCE_BASE;
 
@@ -238,7 +238,7 @@ public class SVGGeneratorTests {
 	 * 
 	 * @throws IOException
 	 * @throws TranscoderException
-	 * @throws FontFormatException 
+	 * @throws FontFormatException
 	 */
 	void runTests(String painterClassname) throws IOException, TranscoderException, FontFormatException {
 		String clName = getClass().getPackage().getName() + "." + painterClassname;
@@ -297,7 +297,8 @@ public class SVGGeneratorTests {
 		return t;
 	}
 
-	private SVGRenderingAccuracyTest makeSVGRenderingAccuracyTest(Painter painter, String id, String prefix) throws MalformedURLException {
+	private SVGRenderingAccuracyTest makeSVGRenderingAccuracyTest(Painter painter, String id, String prefix)
+			throws MalformedURLException {
 		String cl = prefix + getNonQualifiedClassName(painter);
 		String testSource = GENERATOR_REFERENCE_BASE + cl + SVG_EXTENSION;
 		String testReference = GENERATOR_REFERENCE_BASE + RENDERING_DIR + "/" + cl + PNG_EXTENSION;

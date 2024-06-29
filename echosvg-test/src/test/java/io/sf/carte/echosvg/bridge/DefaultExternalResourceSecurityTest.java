@@ -26,7 +26,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
 /*
  * Test adapted from commit bfbccb6ad2 by S. Steiner
  */
-public class DefaultExternalResourceSecurityTestCase {
+public class DefaultExternalResourceSecurityTest {
 
 	@Test
 	public void testJarURL() {

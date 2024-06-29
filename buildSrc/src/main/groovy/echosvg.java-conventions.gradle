@@ -2,6 +2,7 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	id 'org.owasp.dependencycheck'
+	id 'checkstyle'
 	id 'com.github.jk1.dependency-license-report'
 }
 
@@ -136,6 +137,10 @@ tasks.withType(AbstractArchiveTask).configureEach {
 // Check licenses
 licenseReport {
 	allowedLicensesFile = new File("$rootDir/buildSrc/allowed-licenses.json")
+}
+
+checkstyle {
+	toolVersion = "${checkstyleVersion}"
 }
 
 publishing {

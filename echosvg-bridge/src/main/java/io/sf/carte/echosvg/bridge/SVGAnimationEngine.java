@@ -130,17 +130,20 @@ public class SVGAnimationEngine extends AnimationEngine {
 	/**
 	 * The factory for unparsed string values.
 	 */
-	protected UncomputedAnimatableStringValueFactory uncomputedAnimatableStringValueFactory = new UncomputedAnimatableStringValueFactory();
+	protected UncomputedAnimatableStringValueFactory uncomputedAnimatableStringValueFactory =
+			new UncomputedAnimatableStringValueFactory();
 
 	/**
 	 * The factory for length-or-ident values.
 	 */
-	protected AnimatableLengthOrIdentFactory animatableLengthOrIdentFactory = new AnimatableLengthOrIdentFactory();
+	protected AnimatableLengthOrIdentFactory animatableLengthOrIdentFactory =
+			new AnimatableLengthOrIdentFactory();
 
 	/**
 	 * The factory for number-or-ident values.
 	 */
-	protected AnimatableNumberOrIdentFactory animatableNumberOrIdentFactory = new AnimatableNumberOrIdentFactory(false);
+	protected AnimatableNumberOrIdentFactory animatableNumberOrIdentFactory =
+			new AnimatableNumberOrIdentFactory(false);
 
 	/**
 	 * Factories for {@link AnimatableValue} parsing.

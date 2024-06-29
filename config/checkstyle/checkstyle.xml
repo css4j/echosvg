@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN" "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<module name="Checker">
+  <property name="severity" value="warning"/>
+  <property name="tabWidth" value="4"/>
+  <property name="fileExtensions" value="java"/>
+
+  <module name="BeforeExecutionExclusionFileFilter">
+    <property name="fileNamePattern" value="module\-info\.java$"/>
+  </module>
+
+  <module name="LineLength">
+    <!--
+      Recommended line length is up to 120 characters, but only 130 are enforced.
+      In the end, readability is more important than arbitrary limits; if you
+      believe that some file should be allowed more, please use the suppressions
+      configuration file (under the 'Line length' comment).
+    -->
+    <property name="max" value="130"/>
+    <property name="ignorePattern" value="^\t(public |protected |private )?static final"/>
+  </module>
+
+  <!-- Files must end with a line separator -->
+  <module name="NewlineAtEndOfFile"/>
+
+  <module name="RegexpHeader">
+    <property name="severity" value="error"/>
+
+    <!-- Check for a header, and support also the version with asterisks -->
+    <property name="header" value="\/\*\n( \*)?\n ( |\*) See the NOTICE file distributed with this work for additional\n ( |\*) information regarding copyright ownership.\n( \*)?\n ( |\*) Licensed under the Apache License, Version 2.0 \(the &quot;License&quot;\);\n ( |\*) you may not use this file except in compliance with the License.\n ( |\*) You may obtain a copy of the License at\n( \*)?\n ( |\*)     http://www.apache.org/licenses/LICENSE-2.0\n( \*)?\n ( |\*) Unless required by applicable law or agreed to in writing, software\n ( |\*) distributed under the License is distributed on an &quot;AS IS&quot; BASIS,\n ( |\*) WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n ( |\*) See the License for the specific language governing permissions and\n ( |\*) limitations under the License.\n( \*)?\n \*\/\n"/>    
+  </module>
+
+  <!-- Look for trailing whitespace except in single-line comments,
+       yet allow one if it comes after an asterisk or a javadoc @throws
+       (the latter is commonly found in tests) -->
+  <module name="RegexpSingleline">
+    <property name="format" value="^[^/](?! \* @throws [a-zA-Z]+).*([^*]\s+|\*\s{2,})$"/>
+    <property name="message" value="Line has trailing spaces."/>
+  </module>
+
+  <module name="SuppressionFilter">
+    <property name="file" value="${config_loc}/suppressions.xml"/>
+  </module>
+
+  <module name="TreeWalker">
+
+    <module name="OuterTypeFilename"/>
+
+    <!-- Enforce the use of tabs for indentation in Java files -->
+    <module name="RegexpSinglelineJava">
+      <property name="format" value="^\t* "/>
+      <property name="message" value="Indent must use tab characters"/>
+      <property name="ignoreComments" value="true"/>
+    </module>
+
+    <!-- Use Java-style array declarations -->
+    <module name="ArrayTypeStyle"/>
+
+    <module name="AvoidStarImport">
+      <property name="severity" value="error"/>
+    </module>
+
+    <!-- Check for a common mistake overriding equals() -->
+    <module name="CovariantEquals"/>
+
+    <module name="EmptyBlock">
+      <property name="tokens" value="LITERAL_DO,LITERAL_ELSE,LITERAL_FINALLY,LITERAL_IF,LITERAL_TRY,STATIC_INIT"/>
+      <property name="option" value="text"/>
+    </module>
+
+    <!-- Detect standalone ";" semicolon -->
+    <module name="EmptyStatement"/>
+
+    <!-- Checks the whitespace around "<" and ">" -->
+    <module name="GenericWhitespace"/> 
+
+    <!-- <module name="HideUtilityClassConstructor"/> -->
+
+    <!-- Do not import sun.* packages -->
+    <module name="IllegalImport"/>
+
+    <module name="IllegalInstantiation"/>
+
+    <!-- <module name="ImportOrder">
+      <property name="groups" value="java,javax,org,org.apache,io.sf.carte.echosvg,org.apache.xmlgraphics,org.apache.fop,com"/>
+      <property name="separated" value="true"/>
+    </module> -->
+
+    <module name="LeftCurly"/>
+
+    <!-- Checks that local variable names conform to a specified pattern -->
+    <module name="LocalVariableName">
+      <property name="format" value="[a-z](_?[a-zA-Z0-9]+)*$"/>
+    </module>
+
+    <!-- Enforce that instance variable names conform to a specified pattern -->
+    <module name="MemberName">
+      <property name="format" value="[a-z](_?[a-zA-Z0-9]+)*$"/>
+      <property name="applyToPrivate" value="false"/>
+    </module>
+
+    <!-- Verify that method names conform to a specified pattern -->
+    <module name="MethodName">
+      <property name="format" value="^_?[a-z](_?[a-zA-Z0-9]+)*$"/>
+    </module>
+
+    <module name="MethodParamPad"/>
+
+    <!-- The order of modifiers conforms to the suggestions in the
+         JLS § 8.1.1, 8.3.1, 8.4.3 and 9.4 -->
+    <module name="ModifierOrder"/>
+
+    <!-- Checks that there is no method finalize with zero parameters -->
+    <module name="NoFinalizer"/>
+
+    <!-- Checks that there is no whitespace after a token -->
+    <module name="NoWhitespaceAfter">
+      <property name="allowLineBreaks" value="false"/>
+      <property name="tokens" value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS"/>
+    </module>
+
+    <!-- Checks that there is no whitespace before a token -->
+    <module name="NoWhitespaceBefore"/>
+
+    <module name="WhitespaceAround">
+      <property name="tokens" value="ASSIGN,BAND,BAND_ASSIGN,BOR,BOR_ASSIGN,BSR,BSR_ASSIGN,BXOR,BXOR_ASSIGN,DIV,DIV_ASSIGN,EQUAL,GE,GT,LAND,LCURLY,LE,LITERAL_ASSERT,LITERAL_CATCH,LITERAL_DO,LITERAL_ELSE,LITERAL_FINALLY,LITERAL_FOR,LITERAL_IF,LITERAL_RETURN,LITERAL_SYNCHRONIZED,LITERAL_TRY,LITERAL_WHILE,LOR,LT,MINUS,MINUS_ASSIGN,MOD,MOD_ASSIGN,NOT_EQUAL,PLUS,PLUS_ASSIGN,SL,SLIST,SL_ASSIGN,SR,SR_ASSIGN,STAR,STAR_ASSIGN,TYPE_EXTENSION_AND"/>
+      <property name="ignoreEnhancedForColon" value="false"/>
+    </module>
+
+    <module name="OneStatementPerLine"/>
+
+    <!-- Checks that package names conform to a pattern -->
+    <module name="PackageName"/>
+
+    <module name="ParameterName">
+      <!-- For readability, names starting with '_' are not allowed -->
+      <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
+    </module>
+
+    <!-- Verify the padding of parentheses -->
+    <module name="ParenPad"/>
+
+    <!-- Look for redundant imports -->
+    <module name="RedundantImport"/>
+
+    <!-- Checks for redundant modifiers (e.g. 'public' in interface methods) -->
+    <module name="RedundantModifier">
+      <property name="tokens" value="INTERFACE_DEF,ENUM_DEF"/>
+    </module>
+
+    <module name="RightCurly">
+      <property name="tokens" value="LITERAL_ELSE,LITERAL_FOR,LITERAL_WHILE,LITERAL_DO,METHOD_DEF,STATIC_INIT,INTERFACE_DEF,RECORD_DEF,LITERAL_SWITCH"/>
+    </module>
+
+    <!-- Checks for over-complicated boolean expressions -->
+    <module name="SimplifyBooleanExpression"/>
+
+    <module name="SimplifyBooleanReturn"/>
+
+    <module name="SingleSpaceSeparator"/>
+
+    <!-- Checks that static, non-final variable names conform to a pattern -->
+    <!-- <module name="StaticVariableName"/> -->
+
+    <module name="SuppressionCommentFilter">
+      <property name="offCommentFormat" value="CSOFF\: ([\w\|]+)"/>
+      <property name="onCommentFormat" value="CSON\: ([\w\|]+)"/>
+      <property name="checkFormat" value="$1"/>
+    </module>
+
+    <!-- parentheses for typecasts -->
+    <module name="TypecastParenPad">
+      <property name="tokens" value="RPAREN,TYPECAST"/>
+    </module>
+
+    <module name="TypeName">
+      <property name="format" value="^[A-Z](_?[a-zA-Z0-9]+)*$"/>
+    </module>
+
+    <module name="UnusedImports">
+      <property name="processJavadoc" value="true"/>
+    </module>
+
+    <!-- Checks that long constants are defined with an 'L' -->
+    <module name="UpperEll"/>    
+
+  </module> 
+
+</module>
