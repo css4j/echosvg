@@ -222,7 +222,7 @@ public class JSVGInterruptTest extends JSVGMemoryLeakTest {
 				if (state == 0) {
 					throw new IllegalArgumentException("Timed out - proabably indicates failure");
 				}
-				delay += delayInc + (curr - start - delay) / 8;
+				delay += delayInc + (int) (curr - start - delay) / 8;
 				delayInc += delayIncInc;
 			}
 			ret |= state;
