@@ -17,7 +17,7 @@
       configuration file (under the 'Line length' comment).
     -->
     <property name="max" value="130"/>
-    <property name="ignorePattern" value="^\t(public |protected |private )?static final"/>
+    <property name="ignorePattern" value="^\t(?:public |protected |private )?static final"/>
   </module>
 
   <!-- Files must end with a line separator -->
@@ -34,7 +34,7 @@
        yet allow one if it comes after an asterisk or a javadoc @throws
        (the latter is commonly found in tests) -->
   <module name="RegexpSingleline">
-    <property name="format" value="^[^/](?! \* @throws [a-zA-Z]+).*([^*]\s+|\*\s{2,})$"/>
+    <property name="format" value="^[^/](?! \* @throws [a-zA-Z]+).*(?:[^*]\s+|\*\s{2,})$"/>
     <property name="message" value="Line has trailing spaces."/>
   </module>
 
