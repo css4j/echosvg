@@ -23,9 +23,11 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
 
 /**
@@ -35,6 +37,11 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
  */
 @SuppressWarnings({ "deprecation", "removal" })
 public class LoadPermissionsTest {
+
+	@BeforeAll
+	public static void setUpBeforeAll() {
+		TestUtil.defaultRhinoShutter();
+	}
 
 	@AfterEach
 	public void tearDown() throws Exception {

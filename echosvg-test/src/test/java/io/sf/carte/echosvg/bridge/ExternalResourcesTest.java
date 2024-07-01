@@ -27,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.StringTokenizer;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -35,6 +36,7 @@ import org.w3c.dom.Node;
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
@@ -149,6 +151,11 @@ public class ExternalResourcesTest implements ErrorConstants {
 			throw new IllegalArgumentException(resName);
 		}
 		return url.toExternalForm();
+	}
+
+	@BeforeAll
+	public static void setUpBeforeAll() {
+		TestUtil.defaultRhinoShutter();
 	}
 
 	/**

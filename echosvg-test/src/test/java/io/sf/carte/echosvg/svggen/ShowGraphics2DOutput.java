@@ -25,7 +25,7 @@ import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Element;
@@ -36,7 +36,7 @@ import io.sf.carte.echosvg.bridge.BaseScriptingEnvironment;
 import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.GVTBuilder;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
-import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
+import io.sf.carte.echosvg.test.TestUtil;
 
 /**
  * Checks that the content generated from the SVGGraphics2D and to which an
@@ -48,10 +48,9 @@ import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
  */
 public class ShowGraphics2DOutput {
 
-	@BeforeEach
-	public void setUpBeforeEach() {
-		RhinoClassShutter.addToWhitelist("java.*");
-		RhinoClassShutter.addToWhitelist("org.gradle.*");
+	@BeforeAll
+	public static void setUpBeforeAll() {
+		TestUtil.defaultRhinoShutter();
 	}
 
 	@Test

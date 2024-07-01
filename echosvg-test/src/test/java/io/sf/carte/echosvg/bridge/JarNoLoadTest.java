@@ -18,9 +18,11 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
 
 /**
@@ -32,6 +34,11 @@ import io.sf.carte.echosvg.test.svg.SVGOnLoadExceptionTest;
  */
 @Tag("SecMan")
 public class JarNoLoadTest {
+
+	@BeforeAll
+	public static void setUpBeforeAll() {
+		TestUtil.defaultRhinoShutter();
+	}
 
 	/*
 	 * Check conditions under which Jar script should not be loaded and generate a

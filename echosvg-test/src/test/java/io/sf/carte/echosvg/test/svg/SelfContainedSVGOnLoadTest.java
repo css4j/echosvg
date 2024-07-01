@@ -38,8 +38,8 @@ import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.bridge.GVTBuilder;
 import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.bridge.UserAgentAdapter;
-import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
 import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.TestUtil;
 
 /**
  * This test takes an SVG file as an input. It processes the input SVG (meaning
@@ -138,9 +138,7 @@ public class SelfContainedSVGOnLoadTest {
 	public static final String TEST_RESULT_FAILED = "failed";
 
 	static {
-		RhinoClassShutter.addToWhitelist("java.*");
-		RhinoClassShutter.addToWhitelist("javax.*");
-		RhinoClassShutter.addToWhitelist("org.gradle.*");
+		TestUtil.defaultRhinoShutter();
 	}
 
 	/**

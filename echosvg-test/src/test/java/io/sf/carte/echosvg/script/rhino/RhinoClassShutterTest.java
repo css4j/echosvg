@@ -107,16 +107,16 @@ public class RhinoClassShutterTest {
 
 	@Test
 	public void testLoadWhitelistReader() throws IOException, PatternSyntaxException {
-		String s = "+io.sf.carte.echosvg.test.svg.*\n" + "+io.sf.carte.echosvg.test.image.*\n"
-				+ "io.sf.carte.echosvg.swing.test.*\n" + "io.sf.carte.chart.ChartInfo\n"
+		String s = "+io.sf.carte.echosvg.foo.*\n" + "+io.sf.carte.echosvg.bar.*\n"
+				+ "org.apache.xmlgraphics.image.*\n" + "io.sf.carte.chart.ChartInfo\n"
 				+ "-io.sf.carte.chart.ChartInfo\n" + "#io.sf.carte.chart.ChartInfo\n";
 		StringReader re = new StringReader(s);
 		RhinoClassShutter.loadWhitelist(re);
 
 		assertTrue(shutter
-				.visibleToScripts("io.sf.carte.echosvg.test.svg.SelfContainedSVGOnLoadTest"));
-		assertTrue(shutter.visibleToScripts("io.sf.carte.echosvg.test.image.ImageComparatorTest"));
-		assertTrue(shutter.visibleToScripts("io.sf.carte.echosvg.swing.test.SetSVGDocumentTest"));
+				.visibleToScripts("io.sf.carte.echosvg.foo.FooTest"));
+		assertTrue(shutter.visibleToScripts("io.sf.carte.echosvg.bar.BarTest"));
+		assertTrue(shutter.visibleToScripts("org.apache.xmlgraphics.image.GraphicsUtil"));
 		assertFalse(shutter.visibleToScripts("io.sf.carte.chart.ChartInfo"));
 	}
 

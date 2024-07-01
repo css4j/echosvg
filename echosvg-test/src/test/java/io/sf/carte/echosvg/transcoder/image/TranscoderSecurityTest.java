@@ -25,16 +25,23 @@ import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.bridge.BridgeException;
 import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.transcoder.Transcoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 
 class TranscoderSecurityTest {
+
+	@BeforeAll
+	public static void setUpBeforeAll() {
+		TestUtil.defaultRhinoShutter();
+	}
 
 	@Test
 	void testLinkStyleJar() {

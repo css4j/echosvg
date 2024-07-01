@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
+import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.test.svg.AbstractRenderingAccuracyTest;
 
 /**
@@ -40,8 +41,7 @@ public class SwingMemoryLeakTest {
 
 	@BeforeAll
 	public static void setUpBeforeAll() {
-		RhinoClassShutter.addToWhitelist("java.lang.System");
-		RhinoClassShutter.addToWhitelist("org.gradle.*");
+		TestUtil.defaultRhinoShutter();
 		RhinoClassShutter.addToWhitelist("io.sf.carte.echosvg.swing.test.*");
 	}
 

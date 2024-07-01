@@ -23,8 +23,11 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import io.sf.carte.echosvg.test.TestUtil;
 
 /**
  * Checks the permissions applied to ECMA and Jar Scripts.
@@ -33,6 +36,11 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings({ "deprecation", "removal" })
 public class PermissionsTest {
+
+	@BeforeAll
+	public static void setUpBeforeAll() {
+		TestUtil.defaultRhinoShutter();
+	}
 
 	@AfterEach
 	public void tearDown() throws Exception {

@@ -23,8 +23,11 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import io.sf.carte.echosvg.test.TestUtil;
 
 /**
  * Checks that JAR Scripts which should be loaded are indeed loaded.
@@ -38,6 +41,11 @@ import org.junit.jupiter.api.Test;
 public class JarLoadTest {
 
 	private static final String scriptsType = "application/java-archive";
+
+	@BeforeAll
+	public static void setUpBeforeAll() {
+		TestUtil.defaultRhinoShutter();
+	}
 
 	@AfterEach
 	public void tearDown() throws Exception {

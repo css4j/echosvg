@@ -22,6 +22,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.test.TestUtil;
+
 /**
  * Checks the permissions applied to Rhino Scripts.
  *
@@ -31,8 +33,7 @@ public class RhinoTest {
 
 	@BeforeAll
 	public static void setUpBeforeAll() {
-		RhinoClassShutter.addToWhitelist("java.lang.System");
-		RhinoClassShutter.addToWhitelist("org.gradle.*");
+		TestUtil.defaultRhinoShutter();
 	}
 
 	@Test

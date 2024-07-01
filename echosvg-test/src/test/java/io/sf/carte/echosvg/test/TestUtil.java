@@ -36,9 +36,27 @@ import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
 
 import io.sf.carte.echosvg.anim.dom.SAXSVGDocumentFactory;
+import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
 import io.sf.jclf.text.TokenParser;
 
 public class TestUtil {
+
+	private static volatile boolean shutterRan = false;
+
+	/**
+	 * Add a default set of allowed hierarchies to the Rhino class shutter.
+	 */
+	public static void defaultRhinoShutter() {
+		if (!shutterRan) {
+			RhinoClassShutter.addToWhitelist("java.*");
+			RhinoClassShutter.addToWhitelist("javax.*");
+			RhinoClassShutter.addToWhitelist("org.gradle.*");
+			RhinoClassShutter.addToWhitelist("io.sf.carte.echosvg.test.svg.*");
+			RhinoClassShutter.addToWhitelist("io.sf.carte.echosvg.test.image.*");
+			RhinoClassShutter.addToWhitelist("io.sf.carte.echosvg.swing.test.*");
+			shutterRan = true;
+		}
+	}
 
 	/**
 	 * Compare the XML file at {@code refURL} with the data in {@code data}.
