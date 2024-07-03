@@ -50,6 +50,7 @@ public class RhinoClassShutterTest {
 		assertFalse(shutter.visibleToScripts("io.sf.carte.echosvg.script.rhino.RhinoClassShutter"));
 		assertTrue(shutter.visibleToScripts("io.sf.carte.echosvg.dom.SVGOMDocument"));
 		assertTrue(shutter.visibleToScripts("org.w3c.dom.Document"));
+		assertTrue(shutter.visibleToScripts("org.mozilla.javascript.EcmaError"));
 		assertTrue(shutter.visibleToScripts(
 				"io.sf.carte.echosvg.bridge.ScriptingEnvironment$Window$IntervalScriptTimerTask"));
 		assertTrue(shutter.visibleToScripts(

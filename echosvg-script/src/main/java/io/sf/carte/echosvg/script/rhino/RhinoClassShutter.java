@@ -151,7 +151,7 @@ public class RhinoClassShutter implements ClassShutter {
 	public boolean visibleToScripts(String fullClassName) {
 		// Don't let them mess with script engine's internals.
 		if (fullClassName.startsWith("org.mozilla.javascript"))
-			return false;
+			return "org.mozilla.javascript.EcmaError".equals(fullClassName);
 
 		if (fullClassName.startsWith("io.sf.carte.echosvg.")) {
 			// Just get package within this implementation.
