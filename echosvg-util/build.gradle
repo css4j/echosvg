@@ -3,13 +3,6 @@ plugins {
 	id "java-test-fixtures"
 }
 
-sourceSets {
-	// The class file utility test needs access to echosvg-bridge resources
-	test {
-		resources.srcDirs += ["$rootDir/test-resources"]
-	}
-}
-
 dependencies {
 	api project(':echosvg-constants')
 	api project(':echosvg-i18n')

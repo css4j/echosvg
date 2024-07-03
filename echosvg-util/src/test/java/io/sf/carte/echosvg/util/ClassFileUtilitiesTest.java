@@ -40,9 +40,9 @@ public class ClassFileUtilitiesTest {
 
 	@Test
 	public void testCollectJars() throws Exception {
-		URL url = ClassFileUtilitiesTest.class.getResource("/io/sf/carte/echosvg/bridge/IWasLoaded.jar");
+		URL url = ClassFileUtilitiesTest.class.getResource("/io/sf/carte/echosvg/util/IWasLoaded.jar");
 		String s = new File(url.toURI()).getParent();
-		collectJarsTest(s, 2, 2);
+		collectJarsTest(s, 4, 6);
 	}
 
 	private void collectJarsTest(String dir, int minJarCount, int minClassCount)

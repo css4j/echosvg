@@ -81,6 +81,10 @@ test {
 	}
 }
 
+tasks.withType(ProcessResources).configureEach {
+	dependsOn ':echosvg-test-scripts:copyPolicyJar'
+}
+
 /*
  * Interactive tests runner
  */

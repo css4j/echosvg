@@ -116,11 +116,11 @@ tasks.register('copyPolicyJar', Copy) {
 	into "${rootDir}/test-resources/io/sf/carte/echosvg/css"
 }
 
-build.dependsOn iWasLoadedJar
-build.dependsOn iWasLoadedTooJar
-build.dependsOn jarCheckPermissionsDeniedJar
-build.dependsOn jarCheckPermissionsGrantedJar
-build.dependsOn copyScriptJars, copyPolicyJar
+check.dependsOn iWasLoadedJar
+check.dependsOn iWasLoadedTooJar
+check.dependsOn jarCheckPermissionsDeniedJar
+check.dependsOn jarCheckPermissionsGrantedJar
+check.dependsOn copyScriptJars, copyPolicyJar
 
 /*
  * Maven repository deployments (disabled)

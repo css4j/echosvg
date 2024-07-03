@@ -22,6 +22,10 @@ test {
 	useJUnitPlatform()
 }
 
+tasks.processTestResources{
+	dependsOn ':echosvg-test-scripts:copyScriptJars', ':echosvg-test-scripts:copyPolicyJar'
+}
+
 description = 'io.sf.carte:echosvg-svgrasterizer'
 
 publishing.publications.maven(MavenPublication).pom {
