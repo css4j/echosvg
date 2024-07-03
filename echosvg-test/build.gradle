@@ -82,7 +82,7 @@ test {
 }
 
 tasks.withType(ProcessResources).configureEach {
-	dependsOn ':echosvg-test-scripts:copyPolicyJar'
+	dependsOn ':echosvg-test-scripts:copyScriptJars',':echosvg-test-scripts:copyPolicyJar'
 }
 
 /*
