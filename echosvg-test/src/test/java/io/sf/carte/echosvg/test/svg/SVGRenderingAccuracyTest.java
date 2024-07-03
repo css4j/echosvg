@@ -159,6 +159,7 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		TranscoderOutput dst = new TranscoderOutput(fos);
 		transcoder.transcode(src, dst);
 		checkErrorHandler(transcoder.getErrorHandler());
+		fos.getChannel().force(false);
 	}
 
 	protected void checkErrorHandler(ErrorHandler errorHandler) {

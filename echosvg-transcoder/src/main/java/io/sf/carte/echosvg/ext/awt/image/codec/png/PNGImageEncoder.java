@@ -844,9 +844,11 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 	}
 
 	/**
-	 * This method encodes a <code>RenderedImage</code> into PNG. The stream into
-	 * which the PNG is dumped is not closed at the end of the operation, this
-	 * should be done if needed by the caller of this method.
+	 * Encodes a <code>RenderedImage</code> into PNG. The stream into which the PNG
+	 * is dumped is not closed at the end of the operation, this must be done by the
+	 * caller of this method.
+	 * 
+	 * @param im the image to encode.
 	 */
 	@Override
 	public void encode(RenderedImage im) throws IOException {
@@ -1030,6 +1032,8 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 		writeIEND();
 
 		dataOutput.flush();
-		dataOutput.close();
+
+		// The next line is uncommented in Batik
+		//dataOutput.close();
 	}
 }

@@ -93,8 +93,14 @@ public abstract class ImageEncoderImpl implements ImageEncoder {
 	}
 
 	/**
-	 * Encodes a RenderedImage and writes the output to the OutputStream associated
-	 * with this ImageEncoder.
+	 * Encodes a <code>RenderedImage</code> and writes the output to the
+	 * <code>OutputStream</code> associated with this <code>ImageEncoder</code>.
+	 * <p>
+	 * The stream into which the image is dumped is not closed at the end of the
+	 * operation, this must be done by the caller of this method.
+	 * </p>
+	 * 
+	 * @param im the image to encode.
 	 */
 	@Override
 	public abstract void encode(RenderedImage im) throws IOException;

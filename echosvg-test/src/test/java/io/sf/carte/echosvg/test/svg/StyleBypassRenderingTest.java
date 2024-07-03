@@ -1677,6 +1677,8 @@ public class StyleBypassRenderingTest {
 			encode(helper, dst);
 
 			errorHandler.assertErrorCount(expectedErrorCount);
+
+			fos.getChannel().force(false);
 		}
 
 		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)

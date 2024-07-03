@@ -120,6 +120,9 @@ public class JSVGRenderingAccuracyTest extends RenderingTest implements JSVGCanv
 			}
 
 			saveImage(theImage, fos);
+
+			fos.getChannel().force(false);
+			fos.close();
 		}
 	}
 
