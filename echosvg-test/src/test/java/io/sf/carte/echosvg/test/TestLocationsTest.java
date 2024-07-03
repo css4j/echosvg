@@ -38,7 +38,7 @@ public class TestLocationsTest {
 
 	@Test
 	public void testGetTestProjectBuildPath() throws IOException {
-		String path = TestLocations.getTestProjectBuildPath();
+		String path = TestLocations.getTestProjectBuildURL();
 		assertNotNull(path);
 		assertTrue(path.length() > 8);
 	}

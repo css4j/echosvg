@@ -24,7 +24,7 @@ import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 /**
  * Checks for regressions in rendering of SVG with varying resolution.
  * 
- * @see io.sf.carte.echosvg.transcoder.image.PixelToMMTest
+ * @see io.sf.carte.echosvg.transcoder.image.test.PixelToMMTest
  *
  * @author See Git history.
  * @version $Id$

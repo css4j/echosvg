@@ -2,10 +2,24 @@ plugins {
 	id 'echosvg.java-conventions'
 }
 
+sourceSets {
+	// Tests
+	test {
+		resources.srcDirs = ["$rootDir/test-resources"]
+	}
+}
+
 dependencies {
 	api project(':echosvg-parser')
 	api project(':echosvg-transcoder')
 	api project(':echosvg-util')
+	testImplementation project(':echosvg-test')
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	useJUnitPlatform()
 }
 
 description = 'io.sf.carte:echosvg-svgrasterizer'

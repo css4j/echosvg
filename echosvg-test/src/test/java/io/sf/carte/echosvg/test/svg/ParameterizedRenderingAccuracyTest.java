@@ -51,7 +51,7 @@ public class ParameterizedRenderingAccuracyTest extends RenderingTest {
 
 		String[] dirNfile = breakSVGFile(svgFile);
 
-		setConfig(buildSVGURL(dirNfile[0], dirNfile[1], dirNfile[2]), buildRefImgURL(dirNfile[0], dirNfile[1]));
+		setInputAndRefURL(buildSVGURL(dirNfile[0], dirNfile[1], dirNfile[2]), buildRefImgURL(dirNfile[0], dirNfile[1]));
 
 		String[] variationURLs = buildVariationURLs(dirNfile[0], dirNfile[1]);
 		for (String variationURL : variationURLs) {

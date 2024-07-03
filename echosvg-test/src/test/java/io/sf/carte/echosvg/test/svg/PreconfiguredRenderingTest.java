@@ -21,6 +21,8 @@ package io.sf.carte.echosvg.test.svg;
 import java.io.File;
 import java.net.MalformedURLException;
 
+import io.sf.carte.echosvg.test.ScriptUtil;
+
 /**
  * Convenience class for creating a SVGRenderingAccuracyTest with predefined
  * rules for the various configuration parameters.
@@ -46,15 +48,19 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	public static final String PLATFORM_VARIATION_SUFFIX = "_platform";
 	public static final String[] DEFAULT_VARIATION_PLATFORMS = { "xfce", "win10Light" };
 
+	static {
+		ScriptUtil.defaultRhinoShutter();
+	}
+
 	/**
 	 * For preconfigured tests, the configuration has to be derived from the test
 	 * identifier. The identifier should characterize the SVG file to be tested.
 	 * 
-	 * @throws MalformedURLException
+	 * @throws MalformedURLException if any of the URLs are malformed.
 	 */
 	@Override
-	public void setConfig(String svgURL, String refImgURL) throws MalformedURLException {
-		super.setConfig(svgURL, refImgURL);
+	public void setInputAndRefURL(String svgURL, String refImgURL) throws MalformedURLException {
+		super.setInputAndRefURL(svgURL, refImgURL);
 		setFile(getURL().getFile());
 	}
 
@@ -63,7 +69,8 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 
 		String[] dirNfile = breakSVGFile(svgFile);
 
-		super.setConfig(buildSVGURL(dirNfile[0], dirNfile[1], dirNfile[2]), buildRefImgURL(dirNfile[0], dirNfile[1]));
+		super.setInputAndRefURL(buildSVGURL(dirNfile[0], dirNfile[1], dirNfile[2]),
+				buildRefImgURL(dirNfile[0], dirNfile[1]));
 
 		String[] variationURLs = buildVariationURLs(dirNfile[0], dirNfile[1]);
 		for (String variationURL : variationURLs) {

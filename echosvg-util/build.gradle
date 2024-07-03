@@ -1,10 +1,26 @@
 plugins {
 	id 'echosvg.java-conventions'
+	id "java-test-fixtures"
+}
+
+sourceSets {
+	// The class file utility test needs access to echosvg-bridge resources
+	test {
+		resources.srcDirs += ["$rootDir/test-resources"]
+	}
 }
 
 dependencies {
 	api project(':echosvg-constants')
 	api project(':echosvg-i18n')
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	useJUnitPlatform()
+
+	maxHeapSize = '1G'
 }
 
 description = 'io.sf.carte:echosvg-util'

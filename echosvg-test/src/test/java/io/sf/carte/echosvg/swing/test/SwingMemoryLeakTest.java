@@ -27,8 +27,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.script.rhino.RhinoClassShutter;
-import io.sf.carte.echosvg.test.TestUtil;
-import io.sf.carte.echosvg.test.svg.AbstractRenderingAccuracyTest;
+import io.sf.carte.echosvg.test.ScriptUtil;
+import io.sf.carte.echosvg.test.TestLocations;
 
 /**
  * Swing Memory Leak Tests
@@ -41,7 +41,7 @@ public class SwingMemoryLeakTest {
 
 	@BeforeAll
 	public static void setUpBeforeAll() {
-		TestUtil.defaultRhinoShutter();
+		ScriptUtil.defaultRhinoShutter();
 		RhinoClassShutter.addToWhitelist("io.sf.carte.echosvg.swing.test.*");
 	}
 
@@ -89,7 +89,7 @@ public class SwingMemoryLeakTest {
 	public void testNullSetSVGDocument() throws Exception {
 		URL svgURL;
 		try {
-			svgURL = AbstractRenderingAccuracyTest.resolveURL("samples/anne.svg");
+			svgURL = TestLocations.resolveURL("samples/anne.svg");
 		} catch (MalformedURLException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -101,7 +101,7 @@ public class SwingMemoryLeakTest {
 	public void testNullURI() throws Exception {
 		URL svgURL;
 		try {
-			svgURL = AbstractRenderingAccuracyTest.resolveURL("samples/anne.svg");
+			svgURL = TestLocations.resolveURL("samples/anne.svg");
 		} catch (MalformedURLException e) {
 			throw new IllegalArgumentException(e);
 		}

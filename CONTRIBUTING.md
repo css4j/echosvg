@@ -87,10 +87,10 @@ However, even one test is better than nothing.
 annotation(s)) must end with `Test`. This makes easier to tell the actual tests
 apart from their helper classes.
 
-2) It is acceptable to mix tests and main source code in the same commit, as it
-is immediately obvious to the reviewers which are which, and the tests offer an
-insight of what the commit is trying to achieve. You do not need to mention the
-tests in the commit message.
+2) If the test requires access to package-visible elements, it should go into
+the `src/tests` source set of that module. Otherwise, it probably belongs to the
+`echosvg-test` project. In general, if the test actually checks stuff that
+belongs to several modules, it should go into `echosvg-test`.
 
 3) Tests should not involve remote network connections, unless the subject of
 that test is to check the connection or its security.

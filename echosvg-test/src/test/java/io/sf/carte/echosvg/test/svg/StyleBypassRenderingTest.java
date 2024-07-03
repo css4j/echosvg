@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,12 +33,12 @@ import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.test.TestFonts;
-import io.sf.carte.echosvg.transcoder.DummyErrorHandler;
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
+import io.sf.carte.echosvg.transcoder.test.DummyErrorHandler;
 import io.sf.carte.echosvg.transcoder.util.CSSTranscodingHelper;
 
 /**
@@ -1678,7 +1676,7 @@ public class StyleBypassRenderingTest {
 
 			encode(helper, dst);
 
-			assertEquals(expectedErrorCount, errorHandler.getErrorCount(), "Unmatched error count");
+			errorHandler.assertErrorCount(expectedErrorCount);
 		}
 
 		void encode(CSSTranscodingHelper helper, TranscoderOutput dst)

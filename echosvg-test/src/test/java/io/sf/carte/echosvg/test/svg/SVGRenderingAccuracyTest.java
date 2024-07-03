@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,6 +29,8 @@ import java.net.URL;
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.bridge.UserAgent;
+import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.image.ImageComparator;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
@@ -52,6 +56,12 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	static final String DEFAULT_MEDIUM = SVGConstants.SVG_SCREEN_VALUE;
 
 	/**
+	 * Threshold to apply when comparing different pixels with
+	 * {@link ImageComparator}.
+	 */
+	private static final int PIXEL_THRESHOLD = 8;
+
+	/**
 	 * Controls whether or not the SVG file should be validated. By default, no
 	 * validation is used.
 	 */
@@ -75,13 +85,14 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	 * @throws MalformedURLException 
 	 */
 	public SVGRenderingAccuracyTest(String svgURL, String refImgURL) throws MalformedURLException {
-		super(svgURL, refImgURL);
+		super(PIXEL_THRESHOLD, svgURL, refImgURL);
 	}
 
 	/**
 	 * For subclasses
 	 */
 	protected SVGRenderingAccuracyTest() {
+		super(PIXEL_THRESHOLD);
 	}
 
 	/**
@@ -120,6 +131,16 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	@Override
 	protected String getImageSuffix() {
 		return media != null && !DEFAULT_MEDIUM.equals(media) ? '-' + media : "";
+	}
+
+	@Override
+	protected void failTest(String message) {
+		fail(message);
+	}
+
+	@Override
+	protected String getProjectName() {
+		return TestLocations.TEST_DIRNAME;
 	}
 
 	/**

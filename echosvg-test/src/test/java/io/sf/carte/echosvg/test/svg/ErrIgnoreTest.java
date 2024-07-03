@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -33,9 +31,10 @@ import io.sf.carte.echosvg.bridge.ErrorConstants;
 import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.dom.util.SAXDocumentFactory;
-import io.sf.carte.echosvg.transcoder.DummyErrorHandler;
+import io.sf.carte.echosvg.test.TestLocations;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
+import io.sf.carte.echosvg.transcoder.test.DummyErrorHandler;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
@@ -72,7 +71,7 @@ public class ErrIgnoreTest extends RenderingTest {
 	@Override
 	protected void checkErrorHandler(ErrorHandler errorHandler) {
 		DummyErrorHandler handler = (DummyErrorHandler) errorHandler;
-		assertEquals(expectedErrorCount, handler.getErrorCount(), "Unmatched error count");
+		handler.assertErrorCount(expectedErrorCount);
 	}
 
 	class ErrIgnoreTranscoder extends NoStackTraceTranscoder {
@@ -107,7 +106,7 @@ public class ErrIgnoreTest extends RenderingTest {
 				// Retrieve the broken link document
 				String templateUri;
 				try {
-					templateUri = AbstractRenderingAccuracyTest.resolveURL("samples/ref-me.svg")
+					templateUri = TestLocations.resolveURL("samples/ref-me.svg")
 							.toExternalForm();
 				} catch (MalformedURLException ex) {
 					templateUri = "file:samples/ref-me.svg";

@@ -18,11 +18,9 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import io.sf.carte.echosvg.transcoder.DummyErrorHandler;
 import io.sf.carte.echosvg.transcoder.ErrorHandler;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
+import io.sf.carte.echosvg.transcoder.test.DummyErrorHandler;
 
 /**
  * Checks for regressions in rendering of SVG inside an XHTML document, ignoring
@@ -59,7 +57,7 @@ public class XHTMLErrIgnoreTest extends XHTMLRenderingAccuracyTest {
 	@Override
 	protected void checkErrorHandler(ErrorHandler errorHandler) {
 		DummyErrorHandler handler = (DummyErrorHandler) errorHandler;
-		assertEquals(expectedErrorCount, handler.getErrorCount(), "Unmatched error count");
+		handler.assertErrorCount(expectedErrorCount);
 	}
 
 }

@@ -18,34 +18,29 @@
  */
 package io.sf.carte.echosvg.test;
 
-import java.io.File;
-import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class TestLocations {
 
 	/**
+	 * The name of this project
+	 */
+	public static final String TEST_DIRNAME = "echosvg-test";
+
+	/**
 	 * The project's root directory URL, with the last '/' included.
 	 */
-	public static final String PROJECT_ROOT_URL = getRootBuildURL();
+	public static final String PROJECT_ROOT_URL = TestUtil.getRootProjectURL(TestLocations.class, TEST_DIRNAME);
 
-	public static final String TEST_IMAGES_PATH = "/reports/tests/test/images";
-
-	private static final String TEST_DIRNAME = "echosvg-test";
-
-	private static String getRootBuildURL() {
-		String resName = TestLocations.class.getName().replace(".", "/") + ".class";
-		URL url = ResourceLoader.getInstance().getResource(TestLocations.class, resName);
-		if (url == null) {
-			return null;
-		}
-		String classUrl = url.toExternalForm();
-		int testDirIdx = classUrl.lastIndexOf(TEST_DIRNAME);
-		String rootDirUrl = classUrl.substring(0, testDirIdx);
-		return rootDirUrl;
+	/**
+	 * Test location utility.
+	 */
+	private TestLocations() {
+		super();
 	}
 
-	public static String getTestProjectBuildPath() {
+	public static String getTestProjectBuildURL() {
 		String resName = TestLocations.class.getName().replace(".", "/") + ".class";
 		URL url = ResourceLoader.getInstance().getResource(TestLocations.class, resName);
 		if (url == null) {
@@ -55,32 +50,6 @@ public class TestLocations {
 		int testDirIdx = classUrl.lastIndexOf(TEST_DIRNAME);
 		String buildDir = classUrl.substring(5, testDirIdx + TEST_DIRNAME.length()) + "/build/";
 		return buildDir;
-	}
-
-	public static File getTempFilename(URL svgUrl, String filePrefix, String fileSuffix, String imageType,
-			String dotExtension) throws IOException {
-		String path = svgUrl.getPath();
-		int idx = path.lastIndexOf('/');
-		if (idx != -1) {
-			int dotIndex = path.lastIndexOf('.');
-			if (dotIndex == -1) {
-				dotIndex = path.length();
-			}
-			String buildPath = getTestProjectBuildPath();
-			if (buildPath != null) {
-				File buildDir = new File(buildPath);
-				if (buildDir.exists()) {
-					File imgDir = new File(buildDir + TEST_IMAGES_PATH);
-					if (imgDir.exists() || imgDir.mkdirs()) {
-						return new File(imgDir, path.subSequence(idx + 1, dotIndex) + imageType + dotExtension);
-					}
-				}
-			}
-			return File.createTempFile(filePrefix,
-					fileSuffix + path.subSequence(idx + 1, dotIndex) + imageType + dotExtension, null);
-		}
-
-		return File.createTempFile(filePrefix, fileSuffix + imageType + dotExtension, null);
 	}
 
 	public static String getProjectClassURL(Class<?> projectClass) {
@@ -97,6 +66,18 @@ public class TestLocations {
 			classdir = null;
 		}
 		return classdir;
+	}
+
+	/**
+	 * Resolves the input string as  a URL.
+	 * 
+	 * @throws MalformedURLException if the argument is not recognized as a URL.
+	 */
+	public static URL resolveURL(String url) throws MalformedURLException {
+		if (url.startsWith("file:")) {
+			return new URL(url);
+		}
+		return new URL(PROJECT_ROOT_URL + url);
 	}
 
 }

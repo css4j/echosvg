@@ -5,7 +5,7 @@ plugins {
 sourceSets {
 	// Tests
 	test {
-		resources.srcDirs = ["$rootDir/test-resources"]
+		resources.srcDirs += ["$rootDir/test-resources"]
 	}
 	// Interactive tests
 	itest {
@@ -28,18 +28,20 @@ configurations {
 }
 
 dependencies {
-	testImplementation project(':echosvg-i18n')
+	implementation project(':echosvg-i18n')
+	implementation project(':echosvg-extension')
+	implementation project(':echosvg-transcoder')
+	implementation "io.sf.jclf:jclf-text:${jclfTextVersion}"
 	testImplementation project(':echosvg-test-swing')
-	testImplementation project(':echosvg-extension')
-	testImplementation project(':echosvg-svgrasterizer')
+	testImplementation testFixtures(project(':echosvg-util'))
 	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation "org.mozilla:rhino:${rhinoVersion}"
 	testImplementation "nu.validator:htmlparser:${htmlParserVersion}"
-	testImplementation "io.sf.jclf:jclf-text:${jclfTextVersion}"
 	if (!project.getPluginManager().hasPlugin('eclipse')) {
 		testImplementation ("xml-apis:xml-apis:$xmlApisVersion")
 	}
+	itestImplementation project(':echosvg-test')
 	jmhImplementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
 	jmhAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
 	jmhImplementation project(':echosvg-anim')
@@ -54,7 +56,7 @@ if (project.getPluginManager().hasPlugin('eclipse')) {
 description = 'io.sf.carte:echosvg-test'
 
 publishing.publications.maven(MavenPublication).pom {
-	description = "EchoSVG Test Suite"
+	description = "EchoSVG Testing"
 }
 
 test {
@@ -65,7 +67,7 @@ test {
 		excludeTags 'memleak'
 	}
 
-	// Exclude tests via gradlew test -PexcludeTests="SamplesRenderingTest.testVerticalText,..."
+	// Exclude tests via gradlew test -PexcludeTests="SamplesSpecRenderingTest.testVerticalText,..."
 	if (project.hasProperty('excludeTests')) {
 		filter {
 			project.properties['excludeTests']?.replaceAll('\s', '')?.split(',').each {
@@ -78,23 +80,6 @@ test {
 		exceptionFormat 'full'
 	}
 }
-
-compileTestJava {
-	// Rhino scripting may not work correctly if JDK is modular
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
-	dependsOn ':echosvg-all:classes'
-}
-
-// We have no 'main' set here, so disable main compilations
-compileLegacyJava.enabled = false
-compileJava.enabled = false
-checkLegacyJava.enabled = false
-
-// Some tests do not work when the classes are in a testJar
-// And the main jar is empty
-jar.enabled = false
-sourcesJar.enabled = false
 
 /*
  * Interactive tests runner
@@ -109,6 +94,9 @@ tasks.register('iTest', Test) {
 	dependsOn configurations.itestCompileClasspath
 }
 
+/*
+ * Memory leak tests
+ */
 tasks.register('memleakTest', Test) {
 	description = 'Run memory leak tests'
 	group = JavaBasePlugin.VERIFICATION_GROUP
@@ -187,13 +175,4 @@ task runJmh(type: JavaExec) {
 	args '-rf', format
 	args '-rff', resultFile
 	jvmArgs '-Dfile.encoding=UTF-8'
-}
-
-/*
- * Maven repository deployments (disabled)
- */
-// Disable Maven publication (shipped security policies are not
-// adequate for running tests from a jar)
-tasks.withType(AbstractPublishToMaven).configureEach {
-	it.enabled = false
 }

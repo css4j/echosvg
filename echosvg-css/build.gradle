@@ -8,11 +8,17 @@ dependencies {
 	api "io.sf.carte:svgom-api:${svgomVersion}"
 	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
 	api "io.sf.carte:css4j:${css4jVersion}"
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 extraJavaModuleInfo {
 	failOnMissingModuleInfo.set(false)
 	automaticModule('org.apache.xmlgraphics:xmlgraphics-commons', 'org.apache.xmlgraphics.commons')
+}
+
+test {
+	useJUnitPlatform()
 }
 
 description = 'io.sf.carte:echosvg-css'
