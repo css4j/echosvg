@@ -85,7 +85,7 @@ import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
  */
 public class PNGDecodeParam implements ImageDecodeParam {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	/**
 	 * Constructs a default instance of <code>PNGDecodeParam</code>.
@@ -315,6 +315,74 @@ public class PNGDecodeParam implements ImageDecodeParam {
 	 */
 	public void setExpandGrayAlpha(boolean expandGrayAlpha) {
 		this.expandGrayAlpha = expandGrayAlpha;
+	}
+
+	// iCCP chunk
+
+	private String iccProfileName = null;
+	private byte[] iccProfileData = null;
+	private boolean iccProfileDataSet = false;
+
+	public String getIccProfileName() {
+		if (!iccProfileDataSet) {
+			throw new IllegalStateException("ICC Profile not set");
+		}
+		return iccProfileName;
+	}
+
+	/**
+	 * Sets the ICC profile data to be stored with this image. The profile is
+	 * represented in raw binary form.
+	 *
+	 * <p>
+	 * The 'iCCP' chunk will encode this information.
+	 */
+	public void setICCProfileData(String iccProfileName, byte[] iccProfileData) {
+		if (iccProfileName == null) {
+			throw new NullPointerException("Null profile name, use an empty String instead.");
+		}
+		this.iccProfileName = iccProfileName;
+		if (this.iccProfileName.length() > 79) {
+			this.iccProfileName = this.iccProfileName.substring(0, 79);
+		}
+
+		if (iccProfileData != null) {
+			this.iccProfileData = iccProfileData.clone();
+		} // If no data is provided, maybe is a predefined space.
+
+		iccProfileDataSet = true;
+	}
+
+	/**
+	 * Returns the ICC profile data to be stored with this image.
+	 *
+	 * <p>
+	 * If the ICC profile has not previously been set, or has been unset, an
+	 * <code>IllegalStateException</code> will be thrown.
+	 *
+	 * @throws IllegalStateException if the ICC profile is not set.
+	 */
+	public byte[] getICCProfileData() {
+		if (!iccProfileDataSet) {
+			throw new IllegalStateException(PropertyUtil.getString("PNGDecodeParam.iCCP.not.set"));
+		}
+		return iccProfileData.clone();
+	}
+
+	/**
+	 * Suppresses the 'iCCP' chunk from being output.
+	 */
+	public void unsetICCProfileData() {
+		iccProfileName = null;
+		iccProfileData = null;
+		iccProfileDataSet = false;
+	}
+
+	/**
+	 * Returns true if a 'iCCP' chunk will be output.
+	 */
+	public boolean isICCProfileDataSet() {
+		return iccProfileDataSet;
 	}
 
 	private boolean generateEncodeParam = false;

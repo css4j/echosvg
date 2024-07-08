@@ -28,7 +28,7 @@ import io.sf.carte.echosvg.i18n.LocalizableSupport;
  * @version $Id$
  */
 public class PropertyUtil {
-	protected static final String RESOURCES = "io.sf.carte.echosvg.bridge.resources.properties";
+	protected static final String RESOURCES = "io.sf.carte.echosvg.ext.awt.image.codec.Messages";
 
 	protected static LocalizableSupport localizableSupport = new LocalizableSupport(RESOURCES,
 			PropertyUtil.class.getClassLoader());
@@ -40,4 +40,17 @@ public class PropertyUtil {
 			return key;
 		}
 	}
+
+	/**
+	 * Implements
+	 * {@link io.sf.carte.echosvg.i18n.Localizable#formatMessage(String,Object[])}.
+	 */
+	public static String formatMessage(String key, Object[] args) throws MissingResourceException {
+		try {
+			return localizableSupport.formatMessage(key, args);
+		} catch (MissingResourceException e) {
+			return key;
+		}
+	}
+
 }

@@ -29,6 +29,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -38,6 +41,13 @@ import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGDecodeParam;
 import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGEncodeParam;
 import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGImageDecoder;
 import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGImageEncoder;
+import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
+import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
+import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.TestUtil;
+import io.sf.carte.echosvg.test.image.ImageComparator;
+import io.sf.carte.echosvg.test.image.ImageFileBuilder;
+import io.sf.carte.echosvg.test.image.TempImageFiles;
 
 /**
  * This test validates the PNGEncoder operation. It creates a BufferedImage,
@@ -51,9 +61,13 @@ import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGImageEncoder;
 public class PNGEncoderTest {
 
 	@Test
-	public void test() throws Exception {
+	public void testRGBa() throws Exception {
+		BufferedImage image = drawImage(new BufferedImage(100, 75, BufferedImage.TYPE_INT_ARGB));
+		testEncoding(image);
+	}
+
+	BufferedImage drawImage(BufferedImage image) {
 		// Create a BufferedImage to be encoded
-		BufferedImage image = new BufferedImage(100, 75, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D ig = image.createGraphics();
 		ig.scale(.5, .5);
 		ig.setPaint(new Color(128, 0, 0));
@@ -70,24 +84,26 @@ public class PNGEncoderTest {
 		ig.draw(new Rectangle2D.Double(0.5, 0.5, 199, 149));
 		ig.dispose();
 
-		image = image.getSubimage(50, 0, 50, 25);
+		return image.getSubimage(50, 0, 50, 25);
+	}
 
+	public void testEncoding(final BufferedImage image) throws Exception {
 		// Create an output stream where the PNG data
 		// will be stored.
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(256);
-		OutputStream os = buildOutputStream(bos);
+		try (OutputStream os = buildOutputStream(bos)) {
+			// Now, try to encode image
+			PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(image);
+			PNGImageEncoder pngImageEncoder = new PNGImageEncoder(os, params);
 
-		// Now, try to encode image
-		PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(image);
-		PNGImageEncoder pngImageEncoder = new PNGImageEncoder(os, params);
-
-		pngImageEncoder.encode(image);
-		os.close();
+			pngImageEncoder.encode(image);
+		}
 
 		// Now, try to decode image
 		InputStream is = buildInputStream(bos);
 
-		PNGImageDecoder pngImageDecoder = new PNGImageDecoder(is, new PNGDecodeParam());
+		PNGDecodeParam param = new PNGDecodeParam();
+		PNGImageDecoder pngImageDecoder = new PNGImageDecoder(is, param);
 
 		RenderedImage decodedRenderedImage = pngImageDecoder.decodeAsRenderedImage(0);
 
@@ -97,7 +113,7 @@ public class PNGEncoderTest {
 		} else {
 			decodedImage = new BufferedImage(decodedRenderedImage.getWidth(), decodedRenderedImage.getHeight(),
 					BufferedImage.TYPE_INT_ARGB);
-			ig = decodedImage.createGraphics();
+			Graphics2D ig = decodedImage.createGraphics();
 			ig.drawRenderedImage(decodedRenderedImage, new AffineTransform());
 			ig.dispose();
 		}
@@ -124,26 +140,53 @@ public class PNGEncoderTest {
 
 	/**
 	 * Compares the data for the two images
+	 * @throws IOException 
 	 */
-	private static boolean checkIdentical(BufferedImage imgA, BufferedImage imgB) {
-		boolean identical = true;
-		if (imgA.getWidth() == imgB.getWidth() && imgA.getHeight() == imgB.getHeight()) {
-			int w = imgA.getWidth();
-			int h = imgA.getHeight();
-			for (int i = 0; i < h; i++) {
-				for (int j = 0; j < w; j++) {
-					if (imgA.getRGB(j, i) != imgB.getRGB(j, i)) {
-						identical = false;
-						break;
-					}
-				}
-				if (!identical) {
-					break;
-				}
-			}
+	private boolean checkIdentical(BufferedImage imgA, BufferedImage imgB) throws IOException {
+		short result = ImageComparator.compareImages(imgA, imgB, 8, 0, 0);
+
+		if (result == ImageComparator.MATCH) {
+			return true;
 		}
 
-		return identical;
+		// We are in error (images are different: produce an image
+		// with the two images side by side as well as a diff image)
+		BufferedImage diff = ImageComparator.createDiffImage(imgA, imgB);
+		BufferedImage cmp = ImageComparator.createCompareImage(imgA, imgB);
+
+		ImageFileBuilder tmpUtil = new TempImageFiles(
+				TestUtil.getProjectBuildURL(getClass(), TestLocations.TEST_DIRNAME));
+
+		imageToFile(diff, tmpUtil, "PNGEncoderTest", "_diff");
+		imageToFile(cmp, tmpUtil, "PNGEncoderTest", "_cmp");
+
+		return false;
+	}
+
+	/**
+	 * Creates a temporary File into which the input image is saved.
+	 */
+	private File imageToFile(BufferedImage img, ImageFileBuilder fileBuilder, String name, String imageType)
+			throws IOException {
+
+		File imageFile = obtainDiffCmpFilename(fileBuilder, name, imageType);
+
+		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
+
+		try (OutputStream out = new FileOutputStream(imageFile)) {
+			writer.writeImage(img, out);
+		}
+
+		return imageFile;
+
+	}
+
+	/**
+	 * Creates a temporary File into which the input image is saved.
+	 */
+	private File obtainDiffCmpFilename(ImageFileBuilder fileBuilder, String name, String imageType)
+			throws IOException {
+		return fileBuilder.createImageFile(name + imageType + ".png");
 	}
 
 }

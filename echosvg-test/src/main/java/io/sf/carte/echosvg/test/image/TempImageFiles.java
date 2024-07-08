@@ -66,8 +66,8 @@ public class TempImageFiles implements ImageFileBuilder {
 	}
 
 	@Override
-	public File createImageFile(URL imageUrl, String filePrefix, String fileSuffix, String imageType,
-			String dotExtension) throws IOException {
+	public File createImageFile(URL imageUrl, CharSequence fileSuffix, CharSequence dotExtension)
+			throws IOException {
 		String path = imageUrl.getPath();
 		int idx = path.lastIndexOf('/');
 		if (idx != -1) {
@@ -75,20 +75,32 @@ public class TempImageFiles implements ImageFileBuilder {
 			if (dotIndex == -1) {
 				dotIndex = path.length();
 			}
-			if (projectBuildURL != null) {
-				File buildDir = new File(projectBuildURL);
-				if (buildDir.exists()) {
-					File imgDir = new File(buildDir + imageSubpath);
-					if (imgDir.exists() || imgDir.mkdirs()) {
-						return new File(imgDir, path.subSequence(idx + 1, dotIndex) + imageType + dotExtension);
-					}
+			CharSequence imageName = path.subSequence(idx + 1, dotIndex);
+			StringBuilder buf = new StringBuilder(
+					imageName.length() + fileSuffix.length() + dotExtension.length());
+			buf.append(imageName).append(fileSuffix).append(dotExtension);
+			return createImageFile(buf.toString());
+		}
+
+		StringBuilder buf = new StringBuilder(path.length() + fileSuffix.length() + dotExtension.length());
+		buf.append(path).append(fileSuffix).append(dotExtension);
+
+		return File.createTempFile("TempImageFiles", buf.toString(), null);
+	}
+
+	@Override
+	public File createImageFile(String imageNameWithExtension) throws IOException {
+		if (projectBuildURL != null) {
+			File buildDir = new File(projectBuildURL);
+			if (buildDir.exists()) {
+				File imgDir = new File(buildDir + imageSubpath);
+				if (imgDir.exists() || imgDir.mkdirs()) {
+					return new File(imgDir, imageNameWithExtension);
 				}
 			}
-			return File.createTempFile(filePrefix,
-					fileSuffix + path.subSequence(idx + 1, dotIndex) + imageType + dotExtension, null);
 		}
-	
-		return File.createTempFile(filePrefix, fileSuffix + imageType + dotExtension, null);
+
+		return File.createTempFile("TempImageFiles", imageNameWithExtension, null);
 	}
 
 }

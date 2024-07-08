@@ -81,9 +81,9 @@ public abstract class AbstractRenderingAccuracyTest {
 	private static final String IMAGE_TYPE_DIFF = "_diff";
 
 	/**
-	 * Suffix used for saved images (e.g., comparison and diff images)
+	 * Suffix used for saved images (e.g., ".png")
 	 */
-	private static final String IMAGE_FILE_EXTENSION = ".png";
+	private static final String IMAGE_FILE_DOT_EXTENSION = ".png";
 
 	/**
 	 * The configuration resource bundle
@@ -93,16 +93,6 @@ public abstract class AbstractRenderingAccuracyTest {
 	static {
 		configuration = ResourceBundle.getBundle(CONFIGURATION_RESOURCES, Locale.getDefault());
 	}
-
-	/**
-	 * Prefix for the temporary files created by Tests of this class
-	 */
-	public static final String TEMP_FILE_PREFIX = configuration.getString("temp.file.prefix");
-
-	/**
-	 * Suffix for the temporary files created by Tests of this class
-	 */
-	public static final String TEMP_FILE_SUFFIX = configuration.getString("temp.file.suffix");
 
 	private final String PROJECT_ROOT_URL = TestUtil.getRootProjectURL(getClass(), getProjectName());
 
@@ -349,8 +339,7 @@ public abstract class AbstractRenderingAccuracyTest {
 				}
 			}
 		} else {
-			tmpFile = tmpUtil.createImageFile(svgURL, TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, getImageSuffix(),
-					".png");
+			tmpFile = tmpUtil.createImageFile(svgURL, getImageSuffix(), IMAGE_FILE_DOT_EXTENSION);
 		}
 
 		try (FileOutputStream tmpFileOS = new FileOutputStream(tmpFile)) {
@@ -614,8 +603,7 @@ public abstract class AbstractRenderingAccuracyTest {
 	 * the imageType suffix in the temp directory of the test-reports directory.
 	 */
 	private File imageToFile(BufferedImage img, String imageType) throws IOException {
-		File imageFile = tmpUtil.createImageFile(svgURL, TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX,
-				getImageSuffix() + imageType, IMAGE_FILE_EXTENSION);
+		File imageFile = tmpUtil.createImageFile(svgURL, getImageSuffix() + imageType, IMAGE_FILE_DOT_EXTENSION);
 
 		saveImage(img, imageFile);
 

@@ -42,7 +42,7 @@ import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
  */
 public abstract class PNGEncodeParam implements ImageEncodeParam {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	/** Constant for use with the sRGB chunk. */
 	public static final int INTENT_PERCEPTUAL = 0;
@@ -809,54 +809,6 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 	 */
 	public boolean isPaletteHistogramSet() {
 		return paletteHistogramSet;
-	}
-
-	// iCCP chunk
-
-	private byte[] ICCProfileData = null;
-	private boolean ICCProfileDataSet = false;
-
-	/**
-	 * Sets the ICC profile data to be stored with this image. The profile is
-	 * represented in raw binary form.
-	 *
-	 * <p>
-	 * The 'iCCP' chunk will encode this information.
-	 */
-	public void setICCProfileData(byte[] ICCProfileData) {
-		this.ICCProfileData = ICCProfileData.clone();
-		ICCProfileDataSet = true;
-	}
-
-	/**
-	 * Returns the ICC profile data to be stored with this image.
-	 *
-	 * <p>
-	 * If the ICC profile has not previously been set, or has been unset, an
-	 * <code>IllegalStateException</code> will be thrown.
-	 *
-	 * @throws IllegalStateException if the ICC profile is not set.
-	 */
-	public byte[] getICCProfileData() {
-		if (!ICCProfileDataSet) {
-			throw new IllegalStateException(PropertyUtil.getString("PNGEncodeParam15"));
-		}
-		return ICCProfileData.clone();
-	}
-
-	/**
-	 * Suppresses the 'iCCP' chunk from being output.
-	 */
-	public void unsetICCProfileData() {
-		ICCProfileData = null;
-		ICCProfileDataSet = false;
-	}
-
-	/**
-	 * Returns true if a 'iCCP' chunk will be output.
-	 */
-	public boolean isICCProfileDataSet() {
-		return ICCProfileDataSet;
 	}
 
 	// pHYS chunk

@@ -53,16 +53,6 @@ public class ImageCompareUtil {
 	private static final String IMAGE_TYPE_COMPARISON = "_cmp";
 
 	/**
-	 * Prefix for the temporary files created by Tests of this class
-	 */
-	private static final String TEMP_FILE_PREFIX = "ImageCompareUtil";
-
-	/**
-	 * Suffix for the temporary files created by Tests of this class
-	 */
-	private static final String TEMP_FILE_SUFFIX = "";
-
-	/**
 	 * URL for the first image to be compared.
 	 */
 	private String urlAStr;
@@ -233,7 +223,7 @@ public class ImageCompareUtil {
 	 * Creates a temporary File into which the input image is saved.
 	 */
 	private File obtainDiffCmpFilename(URL pngURL, String imageType) throws IOException {
-		return filenameUtil.createImageFile(pngURL, TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, imageType, ".png");
+		return filenameUtil.createImageFile(pngURL, imageType, ".png");
 	}
 
 	/**

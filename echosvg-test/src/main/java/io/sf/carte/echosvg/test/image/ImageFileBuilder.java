@@ -33,16 +33,25 @@ public interface ImageFileBuilder {
 	 * given prefixes and suffixes.
 	 * 
 	 * @param imageUrl     the base file URL.
-	 * @param filePrefix   the file prefix.
-	 * @param fileSuffix   the file suffix.
-	 * @param imageType    the image type (for example <code>_diff</code>).
+	 * @param fileSuffix   the file suffix (for example <code>_diff</code>).
 	 * @param dotExtension the file extension, preceded by a dot (example:
 	 *                     <code>.png</code>)
 	 * @return the file.
 	 * @throws IOException if it was determined that a file could not be created at
 	 *                     the given place.
 	 */
-	File createImageFile(URL imageUrl, String filePrefix, String fileSuffix, String imageType,
-			String dotExtension) throws IOException;
+	File createImageFile(URL imageUrl, CharSequence fileSuffix, CharSequence dotExtension)
+			throws IOException;
+
+	/**
+	 * Create a file with a name derived from a file (base) name, according to the
+	 * given prefixes and suffixes.
+	 * 
+	 * @param imageNameWithExtension the image file name with the extension. Must
+	 *                               not contain any path separator.
+	 * @throws IOException if it was determined that a file could not be created at
+	 *                     the given place.
+	 */
+	File createImageFile(String imageNameWithExtension) throws IOException;
 
 }

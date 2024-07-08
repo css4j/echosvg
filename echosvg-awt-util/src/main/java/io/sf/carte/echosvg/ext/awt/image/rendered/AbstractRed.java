@@ -445,12 +445,6 @@ public abstract class AbstractRed implements CachableRed {
 		String[] ret = new String[keys.size()];
 		keys.toArray(ret);
 
-//        Iterator iter = keys.iterator();
-//        int i=0;
-//        while (iter.hasNext()) {
-//            ret[i++] = (String)iter.next();
-//        }
-
 		for (RenderedImage ri : srcs) {
 			String[] srcProps = ri.getPropertyNames();
 			if (srcProps.length != 0) {

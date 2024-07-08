@@ -19,6 +19,9 @@
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
 import java.awt.Rectangle;
+import java.awt.color.ColorSpace;
+import java.awt.color.ICC_ColorSpace;
+import java.awt.color.ICC_Profile;
 import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.Raster;
@@ -30,6 +33,8 @@ import java.io.DataOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -138,6 +143,25 @@ class ChunkStream extends OutputStream implements DataOutput {
 		dos.writeInt(v);
 	}
 
+	/**
+	 * Write a string formed by printable single-byte Latin1 characters.
+	 * <p>
+	 * From §11.3.3.1 of the PNG spec: "Keywords shall contain only printable
+	 * Latin-1 [ISO_8859-1] characters and spaces; that is, only code points 0x20-7E
+	 * and 0xA1-FF are allowed."
+	 * </p>
+	 * 
+	 * @param s the string to write.
+	 * @throws IOException 
+	 */
+	void writeLatin1(String s) throws IOException {
+		int len = s.length();
+		for (int i = 0; i < len; i++) {
+			char c = s.charAt(i);
+			dos.write(c);
+		}
+	}
+
 	@Override
 	public void writeLong(long v) throws IOException {
 		dos.writeLong(v);
@@ -194,6 +218,7 @@ class ChunkStream extends OutputStream implements DataOutput {
 			dos = null;
 		}
 	}
+
 }
 
 class IDATOutputStream extends FilterOutputStream {
@@ -272,6 +297,7 @@ class IDATOutputStream extends FilterOutputStream {
 			flush();
 		}
 	}
+
 }
 
 /**
@@ -313,6 +339,9 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 	private byte[] greenPalette = null;
 	private byte[] bluePalette = null;
 	private byte[] alphaPalette = null;
+
+	private String iccProfileName = null;
+	private byte[] iccProfileData = null;
 
 	private DataOutputStream dataOutput;
 
@@ -561,12 +590,31 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 	}
 
 	private void writeICCP() throws IOException {
-		if (param.isICCProfileDataSet()) {
-			ChunkStream cs = new ChunkStream("iCCP");
-			byte[] ICCProfileData = param.getICCProfileData();
-			cs.write(ICCProfileData);
-			cs.writeToStream(dataOutput);
-			cs.close();
+		if (iccProfileData != null) {
+			byte[] iccArray = iccProfileData;
+			try (ChunkStream cs = new ChunkStream("iCCP")) {
+				cs.writeLatin1(iccProfileName); // Write profile name
+				cs.writeByte(0); // Separator
+				cs.writeByte(0); // Compression method
+
+				// Compress profile
+				ByteArrayOutputStream out = new ByteArrayOutputStream(iccArray.length + 16);
+				// Buffer size should be at least 6
+				byte[] buffer = new byte[Math.min(iccArray.length + 5, 1024)];
+				Deflater defl = new Deflater(Deflater.BEST_COMPRESSION);
+				defl.setInput(iccArray);
+				defl.finish();
+				do {
+					int cmprLen = defl.deflate(buffer);
+					out.write(buffer, 0, cmprLen);
+				} while (!defl.finished());
+				defl.end();
+				cs.write(out.toByteArray());
+
+				cs.writeToStream(dataOutput);
+			} catch (IOException e) {
+				throw new RuntimeException("Error writing the ICC profile.", e);
+			}
 		}
 	}
 
@@ -884,29 +932,38 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 			// Ensure all channels have the same bit depth
 			for (int i = 1; i < sampleSize.length; i++) {
 				if (sampleSize[i] != bitDepth) {
-					throw new RuntimeException();
+					throw new RuntimeException("Channel " + i + " has a different bit depth.");
 				}
 			}
 
-			// Round bit depth up to a power of 2
+			// Round bit depth up to a power of 2, unless > 16
 			if (bitDepth > 2 && bitDepth < 4) {
 				bitDepth = 4;
 			} else if (bitDepth > 4 && bitDepth < 8) {
 				bitDepth = 8;
 			} else if (bitDepth > 8 && bitDepth < 16) {
 				bitDepth = 16;
-			} else if (bitDepth > 16) {
-				throw new RuntimeException();
+			} else if (bitDepth > 16 && bitDepth < 24) {
+				bitDepth = 24;
+			} else if (bitDepth > 24 && bitDepth < 32) {
+				bitDepth = 32;
+			} else if (bitDepth > 32) {
+				throw new RuntimeException("Bit depth too large: " + bitDepth);
 			}
 		}
 
 		this.numBands = sampleModel.getNumBands();
-		this.bpp = numBands * ((bitDepth == 16) ? 2 : 1);
+
+		if (bitDepth < 16) {
+			this.bpp = numBands;
+		} else {
+			this.bpp = numBands * bitDepth / 8;
+		}
 
 		ColorModel colorModel = image.getColorModel();
 		if (colorModel instanceof IndexColorModel) {
 			if (bitDepth < 1 || bitDepth > 8) {
-				throw new RuntimeException();
+				throw new RuntimeException("Bit depth cannot be " + bitDepth);
 			}
 			if (sampleModel.getNumBands() != 1) {
 				throw new RuntimeException();
@@ -994,12 +1051,20 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 			if (param.isTransparencySet()) {
 				skipAlpha = true;
 				numBands = 3;
-				bpp = (bitDepth == 16) ? 6 : 3;
+				if (bitDepth == 16) {
+					bpp = 6;
+				} else if (bitDepth < 16) {
+					bpp = 3;
+				} else {
+					bpp = numBands * bitDepth / 8;
+				}
 				this.colorType = PNG_COLOR_RGB;
 			} else {
 				this.colorType = PNG_COLOR_RGB_ALPHA;
 			}
 		}
+
+		setICCProfileInfo(colorModel);
 
 		interlace = param.getInterlacing();
 
@@ -1036,4 +1101,50 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 		// The next line is uncommented in Batik
 		//dataOutput.close();
 	}
+
+	private void setICCProfileInfo(ColorModel colorModel) {
+		ColorSpace cs = colorModel.getColorSpace();
+		if (!cs.isCS_sRGB() && cs instanceof ICC_ColorSpace) {
+			ICC_Profile profile = ((ICC_ColorSpace) cs).getProfile();
+			byte[] bdesc = profile.getData(ICC_Profile.icSigProfileDescriptionTag);
+			/*
+			 * The profile description tag is of type multiLocalizedUnicodeType which starts
+			 * with a 'mluc' (see paragraph 10.15 of ICC specification
+			 * https://www.color.org/specification/ICC.1-2022-05.pdf).
+			 */
+			final byte[] mluc = { 'm', 'l', 'u', 'c' };
+			if (bdesc != null && Arrays.equals(bdesc, 0, 4, mluc, 0, 4)) {
+				int numrec = uInt32Number(bdesc, 8);
+				if (numrec > 0) {
+					int len = uInt32Number(bdesc, 20);
+					int offset = uInt32Number(bdesc, 24);
+					int maxlen = bdesc.length - offset;
+					if (maxlen > 0) {
+						len = Math.min(len, maxlen);
+						String desc = new String(bdesc, offset, len, StandardCharsets.UTF_16BE).trim();
+						iccProfileName = desc;
+						iccProfileData = profile.getData();
+					}
+				}
+			}
+		} else {
+			iccProfileName = null;
+			iccProfileData = null;
+		}
+	}
+
+	/**
+	 * Convert four bytes into a big-endian unsigned 32-bit integer.
+	 * 
+	 * @param bytes the array of bytes.
+	 * @param offset the offset at which to start the conversion.
+	 * @return the 32-bit integer.
+	 */
+	static int uInt32Number(byte[] bytes, int offset) {
+		// Computation is carried out as a long integer, to avoid potential overflows
+		long value = (bytes[offset + 3] & 0xFF) | ((bytes[offset + 2] & 0xFF) << 8)
+				| ((bytes[offset + 1] & 0xFF) << 16) | ((long) (bytes[offset] & 0xFF) << 24);
+		return (int) value;
+	}
+
 }
