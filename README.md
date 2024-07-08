@@ -123,12 +123,32 @@ read the `publishing.repositories.maven` block of
 
 Sometimes, in non-modular projects it is useful to have a single Jar file
 bundled with all the dependencies, often called a _uber Jar_ or _fat Jar_.
-Execute the `uberjar` task to create it:
+Execute the `uberjar` task to create one with _all_ the EchoSVG modules:
 ```shell
 ./gradlew uberjar
 ```
 The file is to be found at
 `echosvg-all/build/libs/echosvg-all-<version>-alldeps.jar`.
+
+However, that archive is big and you may only want the classes that are needed
+to run a specific module. In that case, run:
+```shell
+./gradlew <subproject-name>-jar-with-deps
+```
+and the archive shall be available at `<subproject-name>/build/libs/<subproject-name>-<version>-with-deps.jar`.
+
+For example, to create an _all-deps_ jar for `echosvg-svggen`:
+```shell
+./gradlew echosvg-svggen-jar-with-deps
+```
+and the it will be located at `echosvg-svggen/build/libs/echosvg-svggen-<version>-with-deps.jar`.
+
+Note that if you execute
+```shell
+./gradlew echosvg-all-jar-with-deps
+```
+the resulting jar will be very similar to `echosvg-all-<version>-alldeps.jar`,
+with the difference that the `Main-Class` attribute won't be set in the Manifest.
 
 <br/>
 

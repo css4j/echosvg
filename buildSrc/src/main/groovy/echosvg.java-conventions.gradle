@@ -91,6 +91,47 @@ classes.dependsOn jvmVersionAttribute, checkLicense
 classes.finalizedBy checkLegacyJava
 jar.dependsOn checkLegacyJava
 
+//create a project Jar with all dependencies
+tasks.register("${project.name}-jar-with-deps", Jar) {
+	archiveClassifier = 'with-deps'
+
+	dependsOn configurations.compileClasspath
+	dependsOn configurations.runtimeClasspath
+
+	doFirst {
+		from sourceSets.main.output
+		from {
+			configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+		}
+		from {
+			configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+		}
+	}
+
+	with jar
+
+	duplicatesStrategy = 'exclude'
+
+	// Exclusions
+	// ----------
+	exclude 'overview.html'
+	// Provided by Java SE
+	exclude 'javax/**'
+	// Not used by EchoSVG
+	exclude 'org/w3c/css/**'
+	// The next ones are provided by java.xml module
+	exclude 'org/w3c/dom/*'
+	exclude 'org/w3c/dom/bootstrap/**'
+	exclude 'org/w3c/dom/events/**'
+	exclude 'org/w3c/dom/ls/**'
+	exclude 'org/w3c/dom/ranges/**'
+	exclude 'org/w3c/dom/traversal/**'
+	exclude 'org/w3c/dom/views/**'
+	exclude 'org/xml/**'
+	// Modularity does not apply here
+	exclude 'module-info.class'
+}
+
 // Copy jar files to 'jar' directory
 tasks.register('copyJars', Copy) {
 	description = 'Copy jar files to \'jar\' directory'

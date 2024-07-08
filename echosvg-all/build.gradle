@@ -247,8 +247,10 @@ tasks.register('modularJavadoc', Javadoc) {
 //create a single Jar with all dependencies
 tasks.register('uberjar', Jar) {
 	archiveClassifier = "alldeps"
+
 	dependsOn configurations.compileClasspath
 	dependsOn configurations.runtimeClasspath
+
 	doFirst {
 		from sourceSets.main.output
 		from {
@@ -258,10 +260,30 @@ tasks.register('uberjar', Jar) {
 			configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
 		}
 	}
+
 	with jar
+
 	duplicatesStrategy = 'exclude'
+
+	// Exclusions
+	// ----------
+	exclude 'overview.html'
+	// Provided by Java SE
 	exclude 'javax/**'
+	// Not used by EchoSVG
 	exclude 'org/w3c/css/**'
+	// The next ones are provided by java.xml module
+	exclude 'org/w3c/dom/*'
+	exclude 'org/w3c/dom/bootstrap/**'
+	exclude 'org/w3c/dom/events/**'
+	exclude 'org/w3c/dom/ls/**'
+	exclude 'org/w3c/dom/ranges/**'
+	exclude 'org/w3c/dom/traversal/**'
+	exclude 'org/w3c/dom/views/**'
+	exclude 'org/xml/**'
+	// Modularity does not apply here
+	exclude 'module-info.class'
+
 	manifest {
 		attributes('Main-Class': 'io.sf.carte.echosvg.apps.rasterizer.Main')
 	}
