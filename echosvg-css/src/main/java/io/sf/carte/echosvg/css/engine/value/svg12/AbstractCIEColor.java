@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
-import org.apache.xmlgraphics.java2d.color.ColorSpaces;
 import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.echosvg.css.engine.value.AbstractValue;
@@ -34,8 +33,13 @@ public abstract class AbstractCIEColor extends AbstractValue {
 	/** The three color values. */
 	protected float[] values = new float[3];
 
-	/** The white point, initialized to D50. */
-	protected float[] whitepoint = ColorSpaces.getCIELabColorSpaceD50().getWhitePoint();
+	/**
+	 * The white point in XYZ coordinates, initialized to D50.
+	 * <p>
+	 * Data from CIE Publication 15.2 - 1986 Page 55 Table 1.4.
+	 * </p>
+	 */
+	protected float[] whitepoint = new float[] {96.42f, 100f, 82.49f};
 
 	/**
 	 * Creates a new CIE-based color.
