@@ -19,6 +19,7 @@
 
 package io.sf.carte.echosvg.ext.awt.image.codec.png.test;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
@@ -34,6 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
@@ -60,10 +62,32 @@ import io.sf.carte.echosvg.test.image.TempImageFiles;
  */
 public class PNGEncoderTest {
 
+	private static final String[] loremIpsum = { "LoremIpsum 1",
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, ", "LoremIpsum 2",
+			"sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "LoremIpsum 3",
+			" Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi", "LoremIpsum 4",
+			" ut aliquip ex ea commodo consequat." };
+
+	private static final String[] grouchoContract = { "Groucho contract scene 1",
+			"The first part of the party of the first part shall be known in this contract",
+			"Groucho contract scene 2", " as the first part of the party of the first part.",
+			"Groucho contract scene 3",
+			"The party of the second part shall be know in this contract as the party of the second part." };
+
 	@Test
 	public void testRGBa() throws Exception {
 		BufferedImage image = drawImage(new BufferedImage(100, 75, BufferedImage.TYPE_INT_ARGB));
-		testEncoding(image);
+		PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(image);
+		testEncoding(image, params);
+	}
+
+	@Test
+	public void testTEXtZTEXt() throws Exception {
+		BufferedImage image = drawImage(new BufferedImage(100, 75, BufferedImage.TYPE_INT_ARGB));
+		PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(image);
+		params.setText(loremIpsum);
+		params.setCompressedText(grouchoContract);
+		testEncoding(image, params);
 	}
 
 	BufferedImage drawImage(BufferedImage image) {
@@ -87,22 +111,34 @@ public class PNGEncoderTest {
 		return image.getSubimage(50, 0, 50, 25);
 	}
 
-	public void testEncoding(final BufferedImage image) throws Exception {
+	void testEncoding(final BufferedImage image, PNGEncodeParam params) throws Exception {
 		// Create an output stream where the PNG data
 		// will be stored.
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(256);
 		try (OutputStream os = buildOutputStream(bos)) {
 			// Now, try to encode image
-			PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(image);
 			PNGImageEncoder pngImageEncoder = new PNGImageEncoder(os, params);
 
 			pngImageEncoder.encode(image);
 		}
 
+		PNGDecodeParam param = new PNGDecodeParam();
+
+		String[] text = null;
+		if (params.isTextSet()) {
+			text = params.getText();
+			param.setGenerateEncodeParam(true);
+		}
+
+		String[] zText = null;
+		if (params.isCompressedTextSet()) {
+			zText = params.getCompressedText();
+			param.setGenerateEncodeParam(true);
+		}
+
 		// Now, try to decode image
 		InputStream is = buildInputStream(bos);
 
-		PNGDecodeParam param = new PNGDecodeParam();
 		PNGImageDecoder pngImageDecoder = new PNGImageDecoder(is, param);
 
 		RenderedImage decodedRenderedImage = pngImageDecoder.decodeAsRenderedImage(0);
@@ -116,6 +152,24 @@ public class PNGEncoderTest {
 			Graphics2D ig = decodedImage.createGraphics();
 			ig.drawRenderedImage(decodedRenderedImage, new AffineTransform());
 			ig.dispose();
+		}
+
+		// Check text
+		if (text != null) {
+			PNGEncodeParam encodeParams = param.getEncodeParam();
+			assertNotNull(encodeParams, "EncodeParam should be generated.");
+			assertTrue(encodeParams.isTextSet());
+			String[] decText = encodeParams.getText();
+			assertTrue(Arrays.equals(text, decText), "tEXt does not match.");
+		}
+
+		// Check zText
+		if (zText != null) {
+			PNGEncodeParam encodeParams = param.getEncodeParam();
+			assertNotNull(encodeParams, "EncodeParam should be generated.");
+			assertTrue(encodeParams.isCompressedTextSet());
+			String[] decZText = encodeParams.getCompressedText();
+			assertTrue(Arrays.equals(zText, decZText), "zTXt does not match.");
 		}
 
 		// Compare images

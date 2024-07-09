@@ -833,10 +833,10 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 				DeflaterOutputStream dos = new DeflaterOutputStream(cs);
 				dos.write(value);
 				dos.finish();
-				dos.close();
 
 				cs.writeToStream(dataOutput);
-				cs.close();
+				dos.close();
+				// cs.close(); cs is now closed
 			}
 		}
 	}
