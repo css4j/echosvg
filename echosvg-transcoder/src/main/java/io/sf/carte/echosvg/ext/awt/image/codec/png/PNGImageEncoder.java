@@ -43,6 +43,7 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncoderImpl;
+import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
 
 class CRC {
 
@@ -152,13 +153,12 @@ class ChunkStream extends OutputStream implements DataOutput {
 	 * </p>
 	 * 
 	 * @param s the string to write.
-	 * @throws IOException 
+	 * @throws IOException if an I/O error occurs.
 	 */
 	void writeLatin1(String s) throws IOException {
-		int len = s.length();
-		for (int i = 0; i < len; i++) {
-			char c = s.charAt(i);
-			dos.write(c);
+		final byte[] b = s.getBytes(StandardCharsets.ISO_8859_1);
+		for (int i = 0; i < b.length; i++) {
+			dos.writeByte(b[i]);
 		}
 	}
 
@@ -612,8 +612,6 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 				cs.write(out.toByteArray());
 
 				cs.writeToStream(dataOutput);
-			} catch (IOException e) {
-				throw new RuntimeException("Error writing the ICC profile.", e);
 			}
 		}
 	}
@@ -932,38 +930,35 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 			// Ensure all channels have the same bit depth
 			for (int i = 1; i < sampleSize.length; i++) {
 				if (sampleSize[i] != bitDepth) {
-					throw new RuntimeException("Channel " + i + " has a different bit depth.");
+					String msg = PropertyUtil.formatMessage("PNGImageEncoder.bitdepth.mismatch",
+							new Object[] { i, bitDepth });
+					throw new RuntimeException(msg);
 				}
 			}
 
-			// Round bit depth up to a power of 2, unless > 16
+			// Round bit depth up to a power of 2
 			if (bitDepth > 2 && bitDepth < 4) {
 				bitDepth = 4;
 			} else if (bitDepth > 4 && bitDepth < 8) {
 				bitDepth = 8;
 			} else if (bitDepth > 8 && bitDepth < 16) {
 				bitDepth = 16;
-			} else if (bitDepth > 16 && bitDepth < 24) {
-				bitDepth = 24;
-			} else if (bitDepth > 24 && bitDepth < 32) {
-				bitDepth = 32;
-			} else if (bitDepth > 32) {
-				throw new RuntimeException("Bit depth too large: " + bitDepth);
+			} else if (bitDepth > 16) {
+				String msg = PropertyUtil.formatMessage("PNGImage.unsupported.bit.depth",
+						new Object[] { bitDepth });
+				throw new RuntimeException(msg);
 			}
 		}
 
 		this.numBands = sampleModel.getNumBands();
-
-		if (bitDepth < 16) {
-			this.bpp = numBands;
-		} else {
-			this.bpp = numBands * bitDepth / 8;
-		}
+		this.bpp = numBands * ((bitDepth == 16) ? 2 : 1);
 
 		ColorModel colorModel = image.getColorModel();
 		if (colorModel instanceof IndexColorModel) {
 			if (bitDepth < 1 || bitDepth > 8) {
-				throw new RuntimeException("Bit depth cannot be " + bitDepth);
+				String msg = PropertyUtil.formatMessage("PNGImage.wrong.indexed.bit.depth",
+						new Object[] { bitDepth });
+				throw new RuntimeException(msg);
 			}
 			if (sampleModel.getNumBands() != 1) {
 				throw new RuntimeException();
@@ -1013,7 +1008,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 				redPalette = greenPalette = bluePalette = alphaPalette = null;
 				this.colorType = PNG_COLOR_GRAY;
 			} else {
-				throw new RuntimeException();
+				throw new RuntimeException("Unknown palette.");
 			}
 		} else if (numBands == 1) {
 			if (param == null) {
@@ -1051,13 +1046,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 			if (param.isTransparencySet()) {
 				skipAlpha = true;
 				numBands = 3;
-				if (bitDepth == 16) {
-					bpp = 6;
-				} else if (bitDepth < 16) {
-					bpp = 3;
-				} else {
-					bpp = numBands * bitDepth / 8;
-				}
+				bpp = (bitDepth == 16) ? 6 : 3;
 				this.colorType = PNG_COLOR_RGB;
 			} else {
 				this.colorType = PNG_COLOR_RGB_ALPHA;

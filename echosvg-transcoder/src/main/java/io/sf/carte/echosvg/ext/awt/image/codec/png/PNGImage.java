@@ -427,41 +427,47 @@ class PNGImage extends SimpleRenderedImage {
 
 		bitDepth = chunk.getInt1(8);
 
-		int validMask = (1 << 1) | (1 << 2) | (1 << 4) | (1 << 8) | (1 << 16) | (1 << 32);
+		int validMask = (1 << 1) | (1 << 2) | (1 << 4) | (1 << 8) | (1 << 16);
 		if (((1 << bitDepth) & validMask) == 0) {
-			// bitDepth is not one of { 1, 2, 4, 8, 16, 32 }: Error -- bad bit depth
-			String msg = PropertyUtil.getString("PNGImage.bad.bit.depth");
+			// bitDepth is not one of { 1, 2, 4, 8, 16 }: Error -- bad bit depth
+			String msg = PropertyUtil.getString("PNGImage.unsupported.bit.depth");
 			throw new RuntimeException(msg);
 		}
 		maxOpacity = (1 << bitDepth) - 1;
 
 		colorType = chunk.getInt1(9);
-		if ((colorType != PNG_COLOR_GRAY) && (colorType != PNG_COLOR_RGB) && (colorType != PNG_COLOR_PALETTE)
-				&& (colorType != PNG_COLOR_GRAY_ALPHA) && (colorType != PNG_COLOR_RGB_ALPHA)) {
-			System.out.println(PropertyUtil.getString("PNGImageDecoder4"));
+		if ((colorType != PNG_COLOR_GRAY) && (colorType != PNG_COLOR_RGB)
+				&& (colorType != PNG_COLOR_PALETTE) && (colorType != PNG_COLOR_GRAY_ALPHA)
+				&& (colorType != PNG_COLOR_RGB_ALPHA)) {
+			System.out.println(PropertyUtil.formatMessage("PNGImage.unknown.color.type",
+					new Object[] { colorType }));
 		}
 
 		if ((colorType == PNG_COLOR_RGB) && (bitDepth < 8)) {
 			// Error -- RGB images must have 8 or 16 bits
-			String msg = PropertyUtil.getString("PNGImageDecoder5");
+			String msg = PropertyUtil.formatMessage("PNGImage.unsupported.rgb.bit.depth",
+					new Object[] { bitDepth });
 			throw new RuntimeException(msg);
 		}
 
 		if ((colorType == PNG_COLOR_PALETTE) && (bitDepth == 16)) {
 			// Error -- palette images must have < 16 bits
-			String msg = PropertyUtil.getString("PNGImageDecoder6");
+			String msg = PropertyUtil.formatMessage("PNGImage.wrong.palette.bit.depth",
+					new Object[] { bitDepth });
 			throw new RuntimeException(msg);
 		}
 
 		if ((colorType == PNG_COLOR_GRAY_ALPHA) && (bitDepth < 8)) {
 			// Error -- gray/alpha images must have >= 8 bits
-			String msg = PropertyUtil.getString("PNGImageDecoder7");
+			String msg = PropertyUtil.formatMessage("PNGImage.wrong.gray.alpha.bit.depth",
+					new Object[] { bitDepth });
 			throw new RuntimeException(msg);
 		}
 
 		if ((colorType == PNG_COLOR_RGB_ALPHA) && (bitDepth < 8)) {
 			// Error -- RGB/alpha images must have >= 8 bits
-			String msg = PropertyUtil.getString("PNGImageDecoder8");
+			String msg = PropertyUtil.formatMessage("PNGImage.wrong.rgb.alpha.bit.depth",
+					new Object[] { bitDepth });
 			throw new RuntimeException(msg);
 		}
 
@@ -501,14 +507,14 @@ class PNGImage extends SimpleRenderedImage {
 		compressionMethod = chunk.getInt1(10);
 		if (compressionMethod != 0) {
 			// Error -- only know about compression method 0
-			String msg = PropertyUtil.getString("PNGImageDecoder9");
+			String msg = PropertyUtil.getString("PNGImage.unknown.compression.method");
 			throw new RuntimeException(msg);
 		}
 
 		filterMethod = chunk.getInt1(11);
 		if (filterMethod != 0) {
 			// Error -- only know about filter method 0
-			String msg = PropertyUtil.getString("PNGImageDecoder10");
+			String msg = PropertyUtil.getString("PNGImage.unknown.filter");
 			throw new RuntimeException(msg);
 		}
 
@@ -529,19 +535,11 @@ class PNGImage extends SimpleRenderedImage {
 			}
 		} else {
 			// Error -- only know about Adam7 interlacing
-			String msg = PropertyUtil.getString("PNGImageDecoder11");
+			String msg = PropertyUtil.getString("PNGImage.unknown.interlacing");
 			throw new RuntimeException(msg);
 		}
 
-		if (bitDepth == 16) {
-			bytesPerPixel = 2;
-		} else if (bitDepth < 16) {
-			bytesPerPixel = 1;
-		} else if (bitDepth == 24) {
-			bytesPerPixel = 3;
-		} else {
-			bytesPerPixel = 4;
-		}
+		bytesPerPixel = (bitDepth == 16) ? 2 : 1;
 
 		switch (colorType) {
 		case PNG_COLOR_GRAY:
@@ -705,10 +703,10 @@ class PNGImage extends SimpleRenderedImage {
 			colorModel = createComponentColorModel(sampleModel);
 		}
 
-		onEnd();
+		onIEnd();
 	}
 
-	protected void onEnd() {
+	protected void onIEnd() {
 	}
 
 	// RenderedImage stuff
@@ -1060,7 +1058,7 @@ class PNGImage extends SimpleRenderedImage {
 
 	private void parse_hIST_chunk(PNGChunk chunk) {
 		if (redPalette == null) {
-			String msg = PropertyUtil.getString("PNGImageDecoder18");
+			String msg = PropertyUtil.getString("PNGImage.palette.not.set");
 			throw new RuntimeException(msg);
 		}
 
@@ -1099,14 +1097,13 @@ class PNGImage extends SimpleRenderedImage {
 					pdataLen + 64)) {
 				iccArray = infStream.readAllBytes();
 			} catch (IOException e) {
-				throw new RuntimeException("Error decompressing the ICC profile.", e);
+				throw new RuntimeException(PropertyUtil.getString("PNGImage.error.decomp.icc.profile."), e);
 			}
+			decodeParam.setICCProfileData(profileName.toString(), iccArray);
 		} else {
 			// Batik won't crash if there is no profile data, neither we.
 			iccArray = null;
 		}
-
-		decodeParam.setICCProfileData(profileName.toString(), iccArray);
 	}
 
 	private void parse_pHYs_chunk(PNGChunk chunk) {
@@ -1125,7 +1122,7 @@ class PNGImage extends SimpleRenderedImage {
 				properties.put("pixel_units", "Meters");
 			} else if (unitSpecifier != 0) {
 				// Error -- unit specifier must be 0 or 1
-				String msg = PropertyUtil.getString("PNGImageDecoder12");
+				String msg = PropertyUtil.getString("PNGImage.wrong.unit.specifier");
 				throw new RuntimeException(msg);
 			}
 		}
@@ -1143,7 +1140,7 @@ class PNGImage extends SimpleRenderedImage {
 			if (bits <= 0 || bits > depth) {
 				// Error -- significant bits must be between 0 and
 				// image bit depth.
-				String msg = PropertyUtil.getString("PNGImageDecoder13");
+				String msg = PropertyUtil.getString("PNGImage.wrong.significant.bits");
 				throw new RuntimeException(msg);
 			}
 			significantBits[i] = bits;
@@ -1239,7 +1236,7 @@ class PNGImage extends SimpleRenderedImage {
 			int entries = chunk.getLength();
 			if (entries > paletteEntries) {
 				// Error -- mustn't have more alpha than RGB palette entries
-				String msg = PropertyUtil.getString("PNGImageDecoder14");
+				String msg = PropertyUtil.getString("PNGImage.too.many.alphas");
 				throw new RuntimeException(msg);
 			}
 
@@ -1304,7 +1301,7 @@ class PNGImage extends SimpleRenderedImage {
 			}
 		} else if (colorType == PNG_COLOR_GRAY_ALPHA || colorType == PNG_COLOR_RGB_ALPHA) {
 			// Error -- GA or RGBA image can't have a tRNS chunk.
-			String msg = PropertyUtil.getString("PNGImageDecoder15");
+			String msg = PropertyUtil.getString("PNGImage.unexpected.trns");
 			throw new RuntimeException(msg);
 		}
 	}
@@ -1692,12 +1689,7 @@ class PNGImage extends SimpleRenderedImage {
 		}
 
 		int bytesPerRow = (inputBands * passWidth * bitDepth + 7) / 8;
-		int eltsPerRow;
-		if (bitDepth < 16) {
-			eltsPerRow = bytesPerRow;
-		} else {
-			eltsPerRow = bytesPerRow * 8 / bitDepth;
-		}
+		int eltsPerRow = bitDepth == 16 ? bytesPerRow / 2 : bytesPerRow;
 
 		byte[] curr = new byte[bytesPerRow];
 		byte[] prior = new byte[bytesPerRow];
@@ -1745,31 +1737,18 @@ class PNGImage extends SimpleRenderedImage {
 				break;
 			default:
 				// Error -- unknown filter type
-				String msg = PropertyUtil.getString("PNGImageDecoder16");
+				String msg = PropertyUtil.getString("PNGImage.unknown.filter");
 				throw new RuntimeException(msg);
 			}
 
 			// Copy data into passRow byte by byte
 			if (bitDepth < 16) {
 				System.arraycopy(curr, 0, byteData, 0, bytesPerRow);
-			} else if (bitDepth == 16) {
+			} else {
 				int idx = 0;
 				for (int j = 0; j < eltsPerRow; j++) {
 					shortData[j] = (short) ((curr[idx] << 8) | (curr[idx + 1] & 0xff));
 					idx += 2;
-				}
-			} else if (bitDepth == 24) {
-				int idx = 0;
-				for (int j = 0; j < eltsPerRow; j++) {
-					shortData[j] = (short) ((curr[idx + 1] << 16) | ((curr[idx + 2] & 0xff) << 8) | (curr[idx + 3] & 0xff));
-					idx += 3;
-				}
-			} else {
-				int idx = 0;
-				for (int j = 0; j < eltsPerRow; j++) {
-					shortData[j] = (short) ((curr[idx] << 24) | ((curr[idx + 1] & 0xff) << 16) | ((curr[idx + 2] & 0xff) << 8)
-							| (curr[idx + 3] & 0xff));
-					idx += 4;
 				}
 			}
 

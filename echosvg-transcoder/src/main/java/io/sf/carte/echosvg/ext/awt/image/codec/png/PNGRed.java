@@ -53,7 +53,7 @@ public class PNGRed extends AbstractRed {
 		}
 
 		@Override
-		protected void onEnd() {
+		protected void onIEnd() {
 			Rectangle bounds = new Rectangle(0, 0, width, height);
 			init((CachableRed) null, bounds, colorModel, sampleModel, 0, 0, properties);
 		}
