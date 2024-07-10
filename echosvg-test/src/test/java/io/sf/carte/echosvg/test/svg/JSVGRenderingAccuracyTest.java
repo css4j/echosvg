@@ -29,7 +29,7 @@ import java.util.List;
 
 import io.sf.carte.echosvg.swing.JSVGCanvas;
 import io.sf.carte.echosvg.swing.gvt.Overlay;
-import io.sf.carte.echosvg.swing.test.JSVGCanvasHandler;
+import io.sf.carte.echosvg.test.swing.JSVGCanvasHandler;
 
 /**
  * One line Class Desc

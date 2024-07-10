@@ -30,8 +30,8 @@ import org.w3c.dom.svg.SVGTextContentElement;
 
 import io.sf.carte.echosvg.swing.JSVGCanvas;
 import io.sf.carte.echosvg.swing.svg.JSVGComponent;
-import io.sf.carte.echosvg.swing.test.JSVGCanvasHandler;
 import io.sf.carte.echosvg.test.svg.JSVGRenderingAccuracyTest;
+import io.sf.carte.echosvg.test.swing.JSVGCanvasHandler;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
 /**

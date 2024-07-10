@@ -17,7 +17,7 @@
 
  */
 
-package io.sf.carte.echosvg.swing.test;
+package io.sf.carte.echosvg.test.swing;
 
 import java.util.Locale;
 import java.util.MissingResourceException;

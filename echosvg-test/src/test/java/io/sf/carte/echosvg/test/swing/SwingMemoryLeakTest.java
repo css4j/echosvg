@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.swing.test;
+package io.sf.carte.echosvg.test.swing;
 
 import java.net.MalformedURLException;
 import java.net.URL;

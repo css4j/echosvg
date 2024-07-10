@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.swing.test;
+package io.sf.carte.echosvg.test.swing;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
