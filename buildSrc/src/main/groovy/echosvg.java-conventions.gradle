@@ -93,6 +93,10 @@ jar.dependsOn checkLegacyJava
 
 //create a project Jar with all dependencies
 tasks.register("${project.name}-jar-with-deps", Jar) {
+	description = "Create a ${project.name} fat jar with all dependencies."
+
+	group = 'Fat jar'
+
 	archiveClassifier = 'with-deps'
 
 	dependsOn configurations.compileClasspath

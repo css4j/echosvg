@@ -246,6 +246,10 @@ tasks.register('modularJavadoc', Javadoc) {
 
 //create a single Jar with all dependencies
 tasks.register('uberjar', Jar) {
+	description = 'Create a single Uber Jar with all modules and dependencies.'
+
+	group = 'Fat jar'
+
 	archiveClassifier = "alldeps"
 
 	dependsOn configurations.compileClasspath
