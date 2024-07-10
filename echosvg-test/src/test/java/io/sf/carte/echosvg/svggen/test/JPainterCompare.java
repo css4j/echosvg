@@ -24,6 +24,7 @@ import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -140,15 +141,16 @@ public class JPainterCompare extends JPanel implements SVGConstants {
 		try {
 			tmpFile = File.createTempFile(CONFIG_TMP_FILE_PREFIX, ".svg");
 
-			OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(tmpFile), "UTF-8");
+			OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(tmpFile),
+					StandardCharsets.UTF_8);
 
 			painter.paint(g2d);
 			g2d.stream(osw);
 			osw.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new IllegalArgumentException(
-					Messages.formatMessage(ERROR_COULD_NOT_TRANSCODE_TO_SVG, new Object[] { e.getClass().getName() }));
+			throw new IllegalArgumentException(Messages.formatMessage(
+					ERROR_COULD_NOT_TRANSCODE_TO_SVG, new Object[] { e.getClass().getName() }));
 		}
 
 		//
@@ -165,8 +167,8 @@ public class JPainterCompare extends JPanel implements SVGConstants {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Error(
-					Messages.formatMessage(ERROR_COULD_NOT_CONVERT_FILE_PATH_TO_URL, new Object[] { e.getMessage() }));
+			throw new Error(Messages.formatMessage(
+					ERROR_COULD_NOT_CONVERT_FILE_PATH_TO_URL, new Object[] { e.getMessage() }));
 		}
 
 		if (l.success) {

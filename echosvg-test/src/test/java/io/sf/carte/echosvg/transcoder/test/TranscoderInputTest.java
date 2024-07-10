@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -92,7 +93,7 @@ public class TranscoderInputTest {
 		{
 			URL uri = new URL(TEST_URI);
 			InputStream is = uri.openStream();
-			Reader r = new InputStreamReader(is, "utf-8");
+			Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
 			TranscoderInput ti = new TranscoderInput(r);
 			ti.setURI(TEST_URI);
 			t = new TestTranscoder();

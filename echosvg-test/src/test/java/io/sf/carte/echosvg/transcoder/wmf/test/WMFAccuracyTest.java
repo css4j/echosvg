@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
@@ -129,7 +130,7 @@ public class WMFAccuracyTest {
 		input = new TranscoderInput(wmfURL.toString());
 
 		OutputStreamWriter outW;
-		outW = new OutputStreamWriter(out, "UTF-8");
+		outW = new OutputStreamWriter(out, StandardCharsets.UTF_8);
 		TranscoderOutput output = new TranscoderOutput(outW);
 
 		wmft.transcode(input, output);
