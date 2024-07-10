@@ -51,7 +51,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  */
 public class SVGGeneratorTest {
 
-	private static final String GENERATOR_REFERENCE_BASE;
+	static final String GENERATOR_REFERENCE_BASE;
 
 	private static final String RENDERING_DIR = "rendering";
 
@@ -65,15 +65,15 @@ public class SVGGeneratorTest {
 
 	private static final String PLATFORM_VARIATION_SUFFIX = io.sf.carte.echosvg.test.svg.PreconfiguredRenderingTest.PLATFORM_VARIATION_SUFFIX;
 
-	private static final String CANDIDATE_REF_DIR = "candidate-ref";
+	static final String CANDIDATE_REF_DIR = "candidate-ref";
 
 	private static final String RENDERING_CANDIDATE_REF_DIR = "candidate-reference";
 
 	private static final String PNG_EXTENSION = ".png";
 
-	private static final String SVG_EXTENSION = ".svg";
+	static final String SVG_EXTENSION = ".svg";
 
-	private static final String PLAIN_GENERATION_PREFIX = "";
+	static final String PLAIN_GENERATION_PREFIX = "";
 
 	private static final String CUSTOM_CONTEXT_GENERATION_PREFIX = "Context";
 
@@ -93,72 +93,72 @@ public class SVGGeneratorTest {
 	}
 
 	@Test
-	public void testATransform() throws Exception {
+	public void testATransform() throws TranscoderException, IOException {
 		runTests("ATransform");
 	}
 
 	@Test
-	public void testAttributedCharacterIterator() throws Exception {
+	public void testAttributedCharacterIterator() throws TranscoderException, IOException {
 		runTests("AttributedCharacterIterator");
 	}
 
 	@Test
-	public void testBasicShapes() throws Exception {
+	public void testBasicShapes() throws TranscoderException, IOException {
 		runTests("BasicShapes");
 	}
 
 	@Test
-	public void testBasicShapes2() throws Exception {
+	public void testBasicShapes2() throws TranscoderException, IOException {
 		runTests("BasicShapes2");
 	}
 
 	@Test
-	public void testBStroke() throws Exception {
+	public void testBStroke() throws TranscoderException, IOException {
 		runTests("BStroke");
 	}
 
 	@Test
-	public void testBug4389() throws Exception {
+	public void testBug4389() throws TranscoderException, IOException {
 		runTests("Bug4389");
 	}
 
 	@Test
-	public void testBug4945() throws Exception {
+	public void testBug4945() throws TranscoderException, IOException {
 		runTests("Bug4945");
 	}
 
 	@Test
-	public void testBug6535() throws Exception {
+	public void testBug6535() throws TranscoderException, IOException {
 		runTests("Bug6535");
 	}
 
 	@Test
-	public void testBug17965() throws Exception {
+	public void testBug17965() throws TranscoderException, IOException {
 		runTests("Bug17965");
 	}
 
 	@Test
-	public void testClip() throws Exception {
+	public void testClip() throws TranscoderException, IOException {
 		runTests("Clip");
 	}
 
 	@Test
-	public void testColor1() throws Exception {
+	public void testColor1() throws TranscoderException, IOException {
 		runTests("Color1");
 	}
 
 	@Test
-	public void testColor2() throws Exception {
+	public void testColor2() throws TranscoderException, IOException {
 		runTests("Color2");
 	}
 
 	@Test
-	public void testDrawImage() throws Exception {
+	public void testDrawImage() throws TranscoderException, IOException {
 		runTests("DrawImage");
 	}
 
 	@Test
-	public void testFont1() throws Exception {
+	public void testFont1() throws TranscoderException, IOException {
 		assumeTrue(isWindows(), "Test uses logical fonts, reference data is for Windows");
 		runTests("Font1");
 	}
@@ -169,73 +169,73 @@ public class SVGGeneratorTest {
 	}
 
 	@Test
-	public void testFontDecoration() throws Exception {
+	public void testFontDecoration() throws TranscoderException, IOException {
 		runTests("FontDecoration");
 	}
 
 	@Test
-	public void testGVector() throws Exception {
+	public void testGVector() throws TranscoderException, IOException {
 		runTests("GVector");
 	}
 
 	@Test
-	public void testGradient() throws Exception {
+	public void testGradient() throws TranscoderException, IOException {
 		runTests("Gradient");
 	}
 
 	@Test
-	public void testGraphicObjects() throws Exception {
+	public void testGraphicObjects() throws TranscoderException, IOException {
 		runTests("GraphicObjects");
 	}
 
 	@Test
-	public void testIdentityTest() throws Exception {
+	public void testIdentityTest() throws TranscoderException, IOException {
 		runTests("IdentityTest");
 	}
 
 	@Test
-	public void testLookup() throws Exception {
+	public void testLookup() throws TranscoderException, IOException {
 		runTests("Lookup");
 	}
 
 	@Test
-	public void testNegativeLengths() throws Exception {
+	public void testNegativeLengths() throws TranscoderException, IOException {
 		runTests("NegativeLengths");
 	}
 
 	@Test
-	public void testPaints() throws Exception {
+	public void testPaints() throws TranscoderException, IOException {
 		runTests("Paints");
 	}
 
 	@Test
-	public void testRHints() throws Exception {
+	public void testRHints() throws TranscoderException, FontFormatException, IOException {
 		TestFonts.registerFont(Font.TRUETYPE_FONT, "Anton-Regular.ttf");
 		runTests("RHints");
 	}
 
 	@Test
-	public void testRescale() throws Exception {
+	public void testRescale() throws TranscoderException, IOException {
 		runTests("Rescale");
 	}
 
 	@Test
-	public void testShearTest() throws Exception {
+	public void testShearTest() throws TranscoderException, IOException {
 		runTests("ShearTest");
 	}
 
 	@Test
-	public void testTexture() throws Exception {
+	public void testTexture() throws TranscoderException, IOException {
 		runTests("Texture");
 	}
 
 	@Test
-	public void testTextSpacePreserve() throws Exception {
+	public void testTextSpacePreserve() throws TranscoderException, IOException {
 		runTests("TextSpacePreserve");
 	}
 
 	@Test
-	public void testTransformCollapse() throws Exception {
+	public void testTransformCollapse() throws TranscoderException, IOException {
 		runTests("TransformCollapse");
 	}
 
@@ -243,11 +243,10 @@ public class SVGGeneratorTest {
 	 * The id should be the Painter's class name prefixed with the package name
 	 * defined in getPackageName
 	 * 
-	 * @throws IOException
+	 * @throws IOException If an I/O error occurs
 	 * @throws TranscoderException
-	 * @throws FontFormatException
 	 */
-	void runTests(String painterClassname) throws IOException, TranscoderException, FontFormatException {
+	void runTests(String painterClassname) throws IOException, TranscoderException {
 		String clName = getClass().getPackage().getName() + "." + painterClassname;
 		Class<?> cl = null;
 
@@ -357,13 +356,13 @@ public class SVGGeneratorTest {
 		return test;
 	}
 
-	private String getNonQualifiedClassName(Painter painter) {
+	static String getNonQualifiedClassName(Painter painter) {
 		String cl = painter.getClass().getName();
 		int n = cl.lastIndexOf('.');
 		return cl.substring(n + 1);
 	}
 
-	private URL getReferenceURL(Painter painter, String prefix) throws MalformedURLException {
+	static URL getReferenceURL(Painter painter, String prefix) throws MalformedURLException {
 		String suffix = prefix + getNonQualifiedClassName(painter) + SVG_EXTENSION;
 		URL refUrl = new URL(GENERATOR_REFERENCE_BASE + ACCEPTED_REF_DIR + '/' + suffix);
 		File acceptedReference = new File(refUrl.getFile());

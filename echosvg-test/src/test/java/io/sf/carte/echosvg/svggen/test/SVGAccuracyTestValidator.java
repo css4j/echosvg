@@ -46,7 +46,7 @@ public class SVGAccuracyTestValidator {
 	 * @throws IOException
 	 */
 	@Test
-	public void testSVGAccuracyValidator() throws Exception {
+	public void testSVGAccuracyValidator() throws IOException {
 		new PainterWithException().test();
 		new NullReferenceURL().test();
 		new InexistantReferenceURL().test();
@@ -62,7 +62,7 @@ public class SVGAccuracyTestValidator {
 			g.fillRect(0, 0, 20, 20);
 		}
 
-		public void test() throws Exception {
+		public void test() throws IOException {
 			Painter painter = this;
 			URL refURL = new URL("http", "dummyHost", "dummyFile.svg");
 			SVGAccuracyTest t = new SVGAccuracyTest(painter, refURL);
@@ -87,7 +87,7 @@ public class SVGAccuracyTestValidator {
 
 	static class NullReferenceURL extends ValidPainterTest {
 
-		public void test() throws Exception {
+		public void test() throws IOException {
 			SVGAccuracyTest t = new SVGAccuracyTest(this, null);
 			try {
 				t.runTest(true);
@@ -100,7 +100,7 @@ public class SVGAccuracyTestValidator {
 
 	static class InexistantReferenceURL extends ValidPainterTest {
 
-		public void test() throws Exception {
+		public void test() throws IOException {
 			SVGAccuracyTest t = new SVGAccuracyTest(this, new URL("http", "dummyHost", "dummyFile.svg"));
 			try {
 				t.runTest(true);
@@ -113,7 +113,7 @@ public class SVGAccuracyTestValidator {
 
 	static class DiffWithReferenceImage extends ValidPainterTest {
 
-		public void test() throws Exception {
+		public void test() throws IOException {
 			File tmpFile = File.createTempFile("EmptySVGReference", null);
 			tmpFile.deleteOnExit();
 
@@ -125,7 +125,7 @@ public class SVGAccuracyTestValidator {
 
 	static class SameAsReferenceImage extends ValidPainterTest {
 
-		public void test() throws Exception {
+		public void test() throws IOException {
 			File tmpFile = File.createTempFile("SVGReference", null);
 			tmpFile.deleteOnExit();
 

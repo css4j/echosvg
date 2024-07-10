@@ -23,7 +23,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.font.TextAttribute;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 import io.sf.carte.echosvg.test.TestFonts;
@@ -39,36 +39,41 @@ public class FontDecoration implements Painter {
 
 	@Override
 	public void paint(Graphics2D g) {
+		// Set anti-aliasing
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+		// Set a background color
 		Color backgroundColor = new Color(0x08081a);
 		g.setBackground(backgroundColor);
 
 		// Set default font
 		g.setFont(new Font(TestFonts.FONT_FAMILY_SANS1, Font.BOLD, 12));
 
-		// Colors used for labels and test output
-		Color labelColor = new Color(0x666699);
-		Color fontColor = Color.black;
-
-		//
-		Map<TextAttribute, Object> attributes = new Hashtable<>();
+		// Create a font with the desired attributes, including STRIKETHROUGH
+		Map<TextAttribute, Object> attributes = new HashMap<>();
 		attributes.put(TextAttribute.FAMILY, TestFonts.FONT_FAMILY_SANS1);
 		attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_EXTRABOLD);
 		attributes.put(TextAttribute.SIZE, 20);
 		attributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
-		Font font = new Font(attributes);
-		g.setFont(font);
-		g.setPaint(labelColor);
+		Font fontST = new Font(attributes);
 
-		g.drawString("Strike Through", 10, 40);
-		g.setPaint(fontColor);
-		g.translate(0, 30);
-		Map<TextAttribute, Object> attributes2 = new Hashtable<>(attributes);
+		// A similar font but with UNDERLINE instead of STRIKETHROUGH
+		Map<TextAttribute, Object> attributes2 = new HashMap<>(attributes);
 		attributes2.remove(TextAttribute.STRIKETHROUGH);
 		attributes2.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-		font = new Font(attributes2);
-		g.setFont(font);
+		Font fontUL = new Font(attributes2);
+
+		// Set the STRIKETHROUGH font and a color
+		g.setFont(fontST);
+		g.setPaint(new Color(0x666699));
+		// Draw a string
+		g.drawString("Strike Through", 10, 40);
+
+		// Now draw with a different color and the UNDERLINE font
+		g.setPaint(Color.black);
+		g.setFont(fontUL);
+		g.translate(0, 30);
+		// Draw a new string
 		g.drawString("Underline", 10, 70);
 	}
 

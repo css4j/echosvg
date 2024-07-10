@@ -22,21 +22,21 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
 import io.sf.carte.echosvg.dom.GenericDOMImplementation;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext;
-import io.sf.carte.echosvg.svggen.SVGGraphics2D;
 import io.sf.carte.echosvg.svggen.SVGGeneratorContext.GraphicContextDefaults;
+import io.sf.carte.echosvg.svggen.SVGGraphics2D;
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.test.TestUtil;
 import io.sf.carte.echosvg.util.SVGConstants;
@@ -94,9 +94,9 @@ public class SVGAccuracyTest {
 	 * operation fails.
 	 * 
 	 * @param expectError false if no error expected
-	 * @throws FontFormatException 
+	 * @throws IOException If an I/O error occurs
 	 */
-	void runTest(boolean expectError) throws IOException, FontFormatException {
+	void runTest(boolean expectError) throws IOException {
 
 		SVGGraphics2D g2d = buildSVGGraphics2D();
 		g2d.setSVGCanvasSize(CANVAS_SIZE);
@@ -105,7 +105,7 @@ public class SVGAccuracyTest {
 		// Generate SVG content
 		//
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(2048);
-		OutputStreamWriter osw = new OutputStreamWriter(bos, "UTF-8");
+		OutputStreamWriter osw = new OutputStreamWriter(bos, StandardCharsets.UTF_8);
 		painter.paint(g2d);
 		configureSVGGraphics2D(g2d);
 		g2d.stream(osw);
@@ -153,9 +153,10 @@ public class SVGAccuracyTest {
 
 	/**
 	 * Builds an <code>SVGGraphics2D</code> with a default configuration.
-	 * @throws FontFormatException 
+	 * 
+	 * @return the <code>SVGGraphics2D</code>.
 	 */
-	protected SVGGraphics2D buildSVGGraphics2D() throws IOException, FontFormatException {
+	protected SVGGraphics2D buildSVGGraphics2D() {
 		DOMImplementation impl = GenericDOMImplementation.getDOMImplementation();
 		String namespaceURI = SVGConstants.SVG_NAMESPACE_URI;
 		Document domFactory = impl.createDocument(namespaceURI, SVGConstants.SVG_SVG_TAG, null);
