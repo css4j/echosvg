@@ -147,8 +147,7 @@ Note that if you execute
 ```shell
 ./gradlew echosvg-all-jar-with-deps
 ```
-the resulting jar will be very similar to `echosvg-all-<version>-alldeps.jar`,
-with the difference that the `Main-Class` attribute won't be set in the Manifest.
+the resulting jar will be identical to `echosvg-all-<version>-alldeps.jar`.
 
 <br/>
 

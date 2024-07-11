@@ -17,3 +17,9 @@ jar {
 		attributes('Main-Class': 'io.sf.carte.echosvg.apps.ttf2svg.Main')
 	}
 }
+
+tasks.named('echosvg-ttf2svg-jar-with-deps') {
+	manifest {
+		attributes('Main-Class': 'io.sf.carte.echosvg.apps.ttf2svg.Main')
+	}
+}

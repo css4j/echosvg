@@ -17,3 +17,9 @@ jar {
 		attributes('Main-Class': 'io.sf.carte.echosvg.apps.slideshow.Main')
 	}
 }
+
+tasks.named('echosvg-slideshow-jar-with-deps') {
+	manifest {
+		attributes('Main-Class': 'io.sf.carte.echosvg.apps.slideshow.Main')
+	}
+}

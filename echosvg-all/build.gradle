@@ -246,7 +246,7 @@ tasks.register('modularJavadoc', Javadoc) {
 
 //create a single Jar with all dependencies
 tasks.register('uberjar', Jar) {
-	description = 'Create a single Uber Jar with all modules and dependencies.'
+	description = 'Create a single Uber Jar with all of EchoSVG modules and dependencies.'
 
 	group = 'Fat jar'
 
@@ -288,6 +288,12 @@ tasks.register('uberjar', Jar) {
 	// Modularity does not apply here
 	exclude 'module-info.class'
 
+	manifest {
+		attributes('Main-Class': 'io.sf.carte.echosvg.apps.rasterizer.Main')
+	}
+}
+
+tasks.named('echosvg-all-jar-with-deps') {
 	manifest {
 		attributes('Main-Class': 'io.sf.carte.echosvg.apps.rasterizer.Main')
 	}

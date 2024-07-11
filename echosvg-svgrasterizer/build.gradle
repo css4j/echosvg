@@ -37,3 +37,9 @@ jar {
 		attributes('Main-Class': 'io.sf.carte.echosvg.apps.rasterizer.Main')
 	}
 }
+
+tasks.named('echosvg-svgrasterizer-jar-with-deps') {
+	manifest {
+		attributes('Main-Class': 'io.sf.carte.echosvg.apps.rasterizer.Main')
+	}
+}
