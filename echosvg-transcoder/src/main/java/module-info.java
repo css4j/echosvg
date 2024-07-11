@@ -16,9 +16,6 @@
 
 /**
  * SVG transcoder.
- * 
- * @provides io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter
- * @provides io.sf.carte.echosvg.ext.awt.image.spi.RegistryEntry
  */
 module io.sf.carte.echosvg.transcoder {
 	exports io.sf.carte.echosvg.transcoder;
@@ -31,26 +28,11 @@ module io.sf.carte.echosvg.transcoder {
 	exports io.sf.carte.echosvg.transcoder.wmf;
 	exports io.sf.carte.echosvg.transcoder.wmf.tosvg;
 
-	exports io.sf.carte.echosvg.ext.awt.image.codec.imageio;
-	exports io.sf.carte.echosvg.ext.awt.image.codec.png;
-	exports io.sf.carte.echosvg.ext.awt.image.codec.util;
-
 	requires transitive io.sf.carte.echosvg.bridge;
 	requires transitive io.sf.carte.echosvg.svggen;
+	requires io.sf.carte.echosvg.codec;
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.xml;
 	requires io.sf.carte.xml.dtd;
 	requires io.sf.carte.css4j.awt;
-
-	provides io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter
-			with io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOPNGImageWriter,
-			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOTIFFImageWriter,
-			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGImageWriter;
-
-	provides io.sf.carte.echosvg.ext.awt.image.spi.RegistryEntry
-			with io.sf.carte.echosvg.ext.awt.image.codec.png.PNGRegistryEntry,
-			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGRegistryEntry,
-			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOPNGRegistryEntry,
-			io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOTIFFRegistryEntry;
-
 }

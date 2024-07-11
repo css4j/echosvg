@@ -21,11 +21,11 @@ package io.sf.carte.echosvg.transcoder.image;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.SinglePixelPackedSampleModel;
-import java.lang.reflect.InvocationTargetException;
 
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
+import io.sf.carte.echosvg.transcoder.imageio.TIFFTranscoderImageIOWriteAdapter;
 import io.sf.carte.echosvg.transcoder.keys.StringKey;
 
 /**
@@ -55,25 +55,6 @@ public class TIFFTranscoder extends ImageTranscoder {
 		return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 	}
 
-	private WriteAdapter getWriteAdapter(String className) {
-		WriteAdapter adapter;
-		try {
-			Class<?> clazz = Class.forName(className);
-			adapter = (WriteAdapter) clazz.getDeclaredConstructor().newInstance();
-			return adapter;
-		} catch (ClassNotFoundException e) {
-			return null;
-		} catch (InstantiationException e) {
-			return null;
-		} catch (IllegalAccessException e) {
-			return null;
-		} catch (NoSuchMethodException e) {
-			return null;
-		} catch (InvocationTargetException e) {
-			return null;
-		}
-	}
-
 	/**
 	 * Writes the specified image to the specified output.
 	 * 
@@ -100,15 +81,8 @@ public class TIFFTranscoder extends ImageTranscoder {
 			forceTransparentWhite(img, sppsm);
 		}
 
-		WriteAdapter adapter = getWriteAdapter(
-				"io.sf.carte.echosvg.ext.awt.image.codec.tiff.TIFFTranscoderInternalCodecWriteAdapter");
-		if (adapter == null) {
-			adapter = getWriteAdapter(
-					"io.sf.carte.echosvg.ext.awt.image.codec.imageio.TIFFTranscoderImageIOWriteAdapter");
-		}
-		if (adapter == null) {
-			throw new TranscoderException("Could not write TIFF file because no WriteAdapter is availble");
-		}
+		WriteAdapter adapter = new TIFFTranscoderImageIOWriteAdapter();
+
 		adapter.writeImage(this, img, output);
 	}
 

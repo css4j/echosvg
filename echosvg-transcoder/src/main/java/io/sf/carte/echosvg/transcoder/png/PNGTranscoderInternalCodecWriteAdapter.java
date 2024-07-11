@@ -16,12 +16,14 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.ext.awt.image.codec.png;
+package io.sf.carte.echosvg.transcoder.png;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGEncodeParam;
+import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGImageEncoder;
 import io.sf.carte.echosvg.ext.awt.image.rendered.IndexImage;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;

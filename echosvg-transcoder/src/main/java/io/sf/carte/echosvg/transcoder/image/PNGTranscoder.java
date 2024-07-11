@@ -21,7 +21,6 @@ package io.sf.carte.echosvg.transcoder.image;
 import java.awt.image.BufferedImage;
 import java.awt.image.SinglePixelPackedSampleModel;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
@@ -29,6 +28,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.image.resources.Messages;
 import io.sf.carte.echosvg.transcoder.keys.FloatKey;
 import io.sf.carte.echosvg.transcoder.keys.IntegerKey;
+import io.sf.carte.echosvg.transcoder.png.PNGTranscoderInternalCodecWriteAdapter;
 
 /**
  * This class is an <code>ImageTranscoder</code> that produces a PNG image.
@@ -55,25 +55,6 @@ public class PNGTranscoder extends ImageTranscoder {
 	@Override
 	public BufferedImage createImage(int width, int height) {
 		return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-	}
-
-	private WriteAdapter getWriteAdapter(String className) {
-		WriteAdapter adapter;
-		try {
-			Class<?> clazz = Class.forName(className);
-			adapter = (WriteAdapter) clazz.getDeclaredConstructor().newInstance();
-			return adapter;
-		} catch (ClassNotFoundException e) {
-			return null;
-		} catch (InstantiationException e) {
-			return null;
-		} catch (IllegalAccessException e) {
-			return null;
-		} catch (NoSuchMethodException e) {
-			return null;
-		} catch (InvocationTargetException e) {
-			return null;
-		}
 	}
 
 	/**
@@ -107,15 +88,9 @@ public class PNGTranscoder extends ImageTranscoder {
 			forceTransparentWhite(img, sppsm);
 		}
 
-		WriteAdapter adapter = getWriteAdapter(
-				"io.sf.carte.echosvg.ext.awt.image.codec.png.PNGTranscoderInternalCodecWriteAdapter");
-		if (adapter == null) {
-			adapter = getWriteAdapter(
-				"io.sf.carte.echosvg.ext.awt.image.codec.imageio.PNGTranscoderImageIOWriteAdapter");
-		}
-		if (adapter == null) {
-			throw new TranscoderException("Could not write PNG file because no WriteAdapter is available");
-		}
+		WriteAdapter adapter = new PNGTranscoderInternalCodecWriteAdapter();
+		//WriteAdapter adapter = new io.sf.carte.echosvg.transcoder.imageio.PNGTranscoderImageIOWriteAdapter();
+
 		adapter.writeImage(this, img, output);
 	}
 

@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.ext.awt.image.codec.imageio;
+package io.sf.carte.echosvg.transcoder.imageio;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;

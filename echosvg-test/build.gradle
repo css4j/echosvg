@@ -34,6 +34,7 @@ dependencies {
 	api project(':echosvg-swing')
 	implementation "io.sf.jclf:jclf-text:${jclfTextVersion}"
 	// Required by tests
+	implementation project(':echosvg-codec')
 	testImplementation testFixtures(project(':echosvg-util'))
 	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

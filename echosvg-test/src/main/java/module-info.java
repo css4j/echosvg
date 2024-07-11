@@ -33,5 +33,6 @@ module io.sf.carte.echosvg.test {
 	/*
 	 * Required by tests.
 	 */
+	requires io.sf.carte.echosvg.codec;
 	requires io.sf.carte.echosvg.constants;
 }

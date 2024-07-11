@@ -1,6 +1,5 @@
 plugins {
 	id 'echosvg.java-conventions'
-	id 'org.gradlex.extra-java-module-info'
 }
 
 dependencies {

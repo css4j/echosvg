@@ -4,11 +4,10 @@ plugins {
 
 dependencies {
 	api project(':echosvg-awt-util')
-	runtimeOnly project(':echosvg-codec')
 }
 
-description = 'io.sf.carte:echosvg-svggen'
+description = 'io.sf.carte:echosvg-codec'
 
 publishing.publications.maven(MavenPublication).pom {
-	description = "EchoSVG Java2D SVG generator"
+	description = "EchoSVG AWT image codecs"
 }
