@@ -77,7 +77,7 @@ public class FontDecoration implements Painter {
 			ICC_Profile profile = ICC_Profile.getInstance(is);
 			ICC_ColorSpace cs = new ICC_ColorSpace(profile);
 			float[] comps = { 0.33f, 0.34f, 0.43f };
-			stColor = new Color(cs, comps , 1f);
+			stColor = new Color(cs, comps, 1f);
 		} catch (IOException e) {
 			stColor = new Color(0x666699);
 		}
@@ -99,7 +99,7 @@ public class FontDecoration implements Painter {
 			ICC_Profile profile = ICC_Profile.getInstance(is);
 			ICC_ColorSpace cs = new ICC_ColorSpace(profile);
 			float[] comps = { .55f, .6f, .34f };
-			lColor = new Color(cs, comps , 1f);
+			lColor = new Color(cs, comps, 1f);
 		} catch (IOException e) {
 			lColor = Color.magenta;
 		}
@@ -117,7 +117,7 @@ public class FontDecoration implements Painter {
 			ICC_Profile profile = ICC_Profile.getInstance(is);
 			ICC_ColorSpace cs = new ICC_ColorSpace(profile);
 			float[] comps = { .36f, .35f, .33f };
-			ulColor = new Color(cs, comps , 1f);
+			ulColor = new Color(cs, comps, 1f);
 		} catch (IOException e) {
 			ulColor = Color.black;
 		}
