@@ -20,8 +20,19 @@ package io.sf.carte.echosvg.svggen;
 
 import java.awt.Color;
 import java.awt.Paint;
+import java.awt.color.ColorSpace;
+import java.awt.color.ICC_ColorSpace;
+import java.awt.color.ICC_Profile;
+import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import io.sf.carte.echosvg.ext.awt.g2d.GraphicContext;
 
@@ -56,6 +67,8 @@ public class SVGColor extends AbstractSVGConverter {
 	public static final Color white = Color.white;
 	public static final Color yellow = Color.yellow;
 
+	private static final Set<String> cssProfileNames;
+
 	/**
 	 * Color map maps Color values to HTML 4.0 color names
 	 */
@@ -78,6 +91,15 @@ public class SVGColor extends AbstractSVGConverter {
 		colorMap.put(blue, "blue");
 		colorMap.put(teal, "teal");
 		colorMap.put(aqua, "aqua");
+
+		/*
+		 * CSS standard color spaces. A98-rgb and Prophoto-rgb are never going to match
+		 * in practice and probably should be removed; they are left for now, just in
+		 * case they are useful.
+		 */
+		String[] knownProfiles = { "display-p3", "a98-rgb", "prophoto-rgb", "rec2020" };
+		cssProfileNames = new HashSet<>(knownProfiles.length);
+		Collections.addAll(cssProfileNames, knownProfiles);
 	}
 
 	/**
@@ -114,14 +136,7 @@ public class SVGColor extends AbstractSVGConverter {
 		String cssColor = colorMap.get(color);
 		if (cssColor == null) {
 			// color is not one of the predefined colors
-			StringBuilder cssColorBuffer = new StringBuilder(RGB_PREFIX);
-			cssColorBuffer.append(color.getRed());
-			cssColorBuffer.append(COMMA);
-			cssColorBuffer.append(color.getGreen());
-			cssColorBuffer.append(COMMA);
-			cssColorBuffer.append(color.getBlue());
-			cssColorBuffer.append(RGB_SUFFIX);
-			cssColor = cssColorBuffer.toString();
+			cssColor = serializeColor(color);
 		}
 
 		//
@@ -132,6 +147,87 @@ public class SVGColor extends AbstractSVGConverter {
 		String alphaString = gc.doubleString(alpha);
 
 		return new SVGPaintDescriptor(cssColor, alphaString);
+	}
+
+	private static String serializeColor(Color color) {
+		StringBuilder cssColorBuffer;
+		ColorSpace cs = color.getColorSpace();
+		if (!cs.isCS_sRGB()) {
+			float[] comps = color.getColorComponents(null);
+			String csName;
+			if (!(cs instanceof ICC_ColorSpace) || (csName = lcColorProfileName((ICC_ColorSpace) cs)) == null
+					|| !cssProfileNames.contains(csName)) {
+				// Not a known CSS color profile, let's use XYZ
+				csName = "xyz-d50";
+				comps = cs.toCIEXYZ(comps);
+			}
+			DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.ROOT);
+			DecimalFormat df = new DecimalFormat("#.#", dfs);
+			df.setMaximumFractionDigits(6);
+			cssColorBuffer = new StringBuilder(csName.length() + 34);
+			cssColorBuffer.append("color(").append(csName);
+			for (float comp : comps) {
+				cssColorBuffer.append(' ').append(df.format(comp));
+			}
+			cssColorBuffer.append(')');
+		} else {
+			cssColorBuffer = new StringBuilder(RGB_PREFIX);
+			cssColorBuffer.append(color.getRed());
+			cssColorBuffer.append(COMMA);
+			cssColorBuffer.append(color.getGreen());
+			cssColorBuffer.append(COMMA);
+			cssColorBuffer.append(color.getBlue());
+			cssColorBuffer.append(RGB_SUFFIX);
+		}
+		return cssColorBuffer.toString();
+	}
+
+	private static String lcColorProfileName(ICC_ColorSpace cs) {
+		ICC_Profile profile = cs.getProfile();
+		byte[] bdesc = profile.getData(ICC_Profile.icSigProfileDescriptionTag);
+		/*
+		 * The profile description tag is of type multiLocalizedUnicodeType which starts
+		 * with a 'mluc' (see paragraph 10.15 of ICC specification
+		 * https://www.color.org/specification/ICC.1-2022-05.pdf).
+		 */
+		final byte[] mluc = { 'm', 'l', 'u', 'c' };
+		String iccProfileName = null;
+		if (bdesc != null && Arrays.equals(bdesc, 0, 4, mluc, 0, 4)) {
+			int numrec = uInt32Number(bdesc, 8);
+			if (numrec > 0) {
+				int len = uInt32Number(bdesc, 20);
+				int offset = uInt32Number(bdesc, 24);
+				int maxlen = bdesc.length - offset;
+				if (maxlen > 0) {
+					len = Math.min(len, maxlen);
+					// This isn't always the name of the color space, but let's try
+					iccProfileName = new String(bdesc, offset, len, StandardCharsets.UTF_16BE).trim();
+					iccProfileName = iccProfileName.toLowerCase(Locale.ROOT).replace(' ', '-');
+					if (iccProfileName.contains("bt.2020")) {
+						// recommendation 2020
+						iccProfileName = "rec2020";
+					} else if ("adobe-rgb-(1998)".equals(iccProfileName)) {
+						// A98
+						iccProfileName = "a98-rgb";
+					}
+				}
+			}
+		}
+		return iccProfileName;
+	}
+
+	/**
+	 * Convert four bytes into a big-endian unsigned 32-bit integer.
+	 * 
+	 * @param bytes the array of bytes.
+	 * @param offset the offset at which to start the conversion.
+	 * @return the 32-bit integer.
+	 */
+	private static int uInt32Number(byte[] bytes, int offset) {
+		// Computation is carried out as a long integer, to avoid potential overflows
+		long value = (bytes[offset + 3] & 0xFF) | ((bytes[offset + 2] & 0xFF) << 8)
+				| ((bytes[offset + 1] & 0xFF) << 16) | ((long) (bytes[offset] & 0xFF) << 24);
+		return (int) value;
 	}
 
 }

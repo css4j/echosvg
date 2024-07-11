@@ -1,0 +1,7 @@
+The files that have "elle" in the filename are licensed as shown in the
+'ElleStone-legalcode.txt' file.
+
+The Display P3 profile was made by Apple and was obtained from color.org (ICC).
+
+The profile for the ITU-R Recommendation BT.2020 was also obtained from
+color.org (ICC).
