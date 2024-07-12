@@ -33,6 +33,7 @@ module io.sf.carte.echosvg.transcoder {
 	requires io.sf.carte.echosvg.codec;
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.xml;
+
 	requires io.sf.carte.xml.dtd;
 	requires io.sf.carte.css4j.awt;
 }

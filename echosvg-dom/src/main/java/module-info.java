@@ -28,14 +28,16 @@ module io.sf.carte.echosvg.dom {
 	exports io.sf.carte.echosvg.dom.xbl;
 	exports io.sf.carte.echosvg.dom.events;
 
-	requires io.sf.carte.echosvg.constants;
 	requires transitive io.sf.carte.echosvg.css;
+	requires io.sf.carte.echosvg.constants;
 	requires io.sf.carte.echosvg.external;
-	requires io.sf.carte.echosvg.xml;
 	requires io.sf.carte.echosvg.i18n;
+	requires io.sf.carte.echosvg.xml;
+
+	requires io.sf.carte.xml.dtd;
+
 	requires transitive java.xml;
 	requires transitive jdk.xml.dom;
-	requires io.sf.carte.xml.dtd;
 
 	uses org.xml.sax.XMLReader;
 	uses io.sf.carte.echosvg.dom.DomExtension;

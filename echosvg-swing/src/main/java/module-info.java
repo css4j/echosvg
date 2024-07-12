@@ -25,9 +25,10 @@ module io.sf.carte.echosvg.swing {
 
 	requires transitive io.sf.carte.echosvg.bridge;
 	requires io.sf.carte.echosvg.constants;
-	requires io.sf.carte.echosvg.util.gui;
-	requires io.sf.carte.echosvg.gvt;
 	requires io.sf.carte.echosvg.dom.svg;
+	requires io.sf.carte.echosvg.gvt;
 	requires io.sf.carte.echosvg.i18n;
+	requires io.sf.carte.echosvg.util.gui;
+
 	requires java.datatransfer;
 }

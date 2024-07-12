@@ -19,7 +19,9 @@
  * Truetype font to SVG font converter application.
  */
 module io.sf.carte.echosvg.ttf2svg {
-    exports io.sf.carte.echosvg.apps.ttf2svg;
 
-    requires io.sf.carte.echosvg.svggen;
+	exports io.sf.carte.echosvg.apps.ttf2svg;
+
+	requires io.sf.carte.echosvg.svggen;
+
 }

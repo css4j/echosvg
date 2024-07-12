@@ -21,8 +21,9 @@
 module io.sf.carte.echosvg.svgrasterizer {
 	exports io.sf.carte.echosvg.apps.rasterizer;
 
-	requires io.sf.carte.echosvg.i18n;
 	requires transitive io.sf.carte.echosvg.transcoder;
+	requires io.sf.carte.echosvg.i18n;
+
 	requires transitive java.desktop;
 	requires java.xml;
 }

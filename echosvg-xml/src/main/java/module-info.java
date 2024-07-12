@@ -19,8 +19,10 @@
  * XML utilities.
  */
 module io.sf.carte.echosvg.xml {
-    exports io.sf.carte.echosvg.xml;
 
-    requires io.sf.carte.echosvg.util;
+	exports io.sf.carte.echosvg.xml;
+
 	requires io.sf.carte.echosvg.i18n;
+	requires io.sf.carte.echosvg.util;
+
 }

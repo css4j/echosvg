@@ -19,5 +19,5 @@
  * Constants library.
  */
 module io.sf.carte.echosvg.constants {
-    exports io.sf.carte.echosvg.constants;
+	exports io.sf.carte.echosvg.constants;
 }

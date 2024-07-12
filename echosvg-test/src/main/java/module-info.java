@@ -25,9 +25,11 @@ module io.sf.carte.echosvg.test {
 	exports io.sf.carte.echosvg.test.swing;
 
 	requires transitive io.sf.carte.echosvg.swing;
-	requires io.sf.carte.echosvg.transcoder;
 	requires io.sf.carte.echosvg.i18n;
+	requires io.sf.carte.echosvg.transcoder;
+
 	requires io.sf.jclf.text;
+
 	requires transitive java.desktop;
 
 	/*

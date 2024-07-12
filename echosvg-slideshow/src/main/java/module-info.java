@@ -23,5 +23,6 @@ module io.sf.carte.echosvg.apps.slideshow {
 
 	requires transitive io.sf.carte.echosvg.bridge;
 	requires io.sf.carte.echosvg.gvt;
+
 	requires transitive org.w3c.dom.svg;
 }

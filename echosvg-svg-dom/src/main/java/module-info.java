@@ -22,8 +22,8 @@ module io.sf.carte.echosvg.dom.svg {
 	exports io.sf.carte.echosvg.dom.svg12;
 	exports io.sf.carte.echosvg.dom.svg;
 
-	requires io.sf.carte.echosvg.awt;
 	requires transitive io.sf.carte.echosvg.css;
-	requires transitive io.sf.carte.echosvg.parser;
 	requires transitive io.sf.carte.echosvg.dom;
+	requires transitive io.sf.carte.echosvg.parser;
+	requires io.sf.carte.echosvg.awt;
 }

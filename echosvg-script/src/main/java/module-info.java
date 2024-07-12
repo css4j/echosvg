@@ -26,8 +26,10 @@ module io.sf.carte.echosvg.script {
 
 	requires io.sf.carte.echosvg.anim;
 	requires io.sf.carte.echosvg.i18n;
-	requires transitive java.xml;
+
 	requires transitive org.mozilla.rhino;
+
+	requires transitive java.xml;
 
 	uses io.sf.carte.echosvg.script.InterpreterFactory;
 }

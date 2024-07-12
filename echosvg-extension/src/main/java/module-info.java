@@ -28,8 +28,9 @@ module io.sf.carte.echosvg.extension {
 	requires transitive io.sf.carte.echosvg.bridge;
 	requires io.sf.carte.echosvg.constants;
 
-	requires jdk.xml.dom;
 	requires transitive org.w3c.dom.svg;
+
+	requires jdk.xml.dom;
 
 	provides io.sf.carte.echosvg.bridge.BridgeExtension
 	with io.sf.carte.echosvg.extension.svg.EchoSVGBridgeExtension;

@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
 	api project(':echosvg-awt-util')
+	implementation project(':echosvg-i18n')
 }
 
 description = 'io.sf.carte:echosvg-codec'

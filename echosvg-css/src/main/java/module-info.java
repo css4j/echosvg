@@ -28,9 +28,11 @@ module io.sf.carte.echosvg.css {
 
 	requires transitive io.sf.carte.echosvg.util;
 	requires io.sf.carte.echosvg.i18n;
+
 	requires transitive io.sf.carte.css4j;
 	requires io.sf.carte.util;
+	requires transitive org.w3c.dom.svg;
+
 	requires java.xml;
 	requires jdk.xml.dom;
-	requires transitive org.w3c.dom.svg;
 }

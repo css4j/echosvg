@@ -19,6 +19,7 @@
  * Aggregate module.
  */
 module io.sf.carte.echosvg {
+	requires transitive io.sf.carte.echosvg.apps.slideshow;
 	requires transitive io.sf.carte.echosvg.anim;
 	requires transitive io.sf.carte.echosvg.awt;
 	requires transitive io.sf.carte.echosvg.bridge;
@@ -26,8 +27,8 @@ module io.sf.carte.echosvg {
 	requires transitive io.sf.carte.echosvg.css;
 	requires transitive io.sf.carte.echosvg.dom;
 	requires transitive io.sf.carte.echosvg.dom.svg;
-	requires transitive io.sf.carte.echosvg.external;
 	requires transitive io.sf.carte.echosvg.extension;
+	requires transitive io.sf.carte.echosvg.external;
 	requires transitive io.sf.carte.echosvg.gvt;
 	requires transitive io.sf.carte.echosvg.i18n;
 	requires transitive io.sf.carte.echosvg.parser;
@@ -40,6 +41,6 @@ module io.sf.carte.echosvg {
 	requires transitive io.sf.carte.echosvg.util;
 	requires transitive io.sf.carte.echosvg.util.gui;
 	requires transitive io.sf.carte.echosvg.xml;
-	requires transitive io.sf.carte.echosvg.apps.slideshow;
+
 	requires transitive org.w3c.dom.svg;
 }

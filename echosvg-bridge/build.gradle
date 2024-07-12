@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
+	api project(':echosvg-anim')
 	api project(':echosvg-gvt')
 	api project(':echosvg-script')
-	api project(':echosvg-svg-dom')
 	implementation "xml-apis:xml-apis:$xmlApisVersion"
 	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
 }

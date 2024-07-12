@@ -19,5 +19,7 @@
  * i18n library.
  */
 module io.sf.carte.echosvg.i18n {
-    exports io.sf.carte.echosvg.i18n;
+
+	exports io.sf.carte.echosvg.i18n;
+
 }

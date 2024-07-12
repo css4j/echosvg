@@ -19,8 +19,10 @@
  * Interfaces to be used by external code.
  */
 module io.sf.carte.echosvg.external {
-    exports io.sf.carte.echosvg.w3c.dom;
-    exports io.sf.carte.echosvg.w3c.dom.events;
 
-    requires transitive java.xml;
+	exports io.sf.carte.echosvg.w3c.dom;
+	exports io.sf.carte.echosvg.w3c.dom.events;
+
+	requires transitive java.xml;
+
 }

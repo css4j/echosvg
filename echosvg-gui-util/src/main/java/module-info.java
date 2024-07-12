@@ -19,11 +19,14 @@
  * GUI utilities.
  */
 module io.sf.carte.echosvg.util.gui {
-    exports io.sf.carte.echosvg.util.gui.resource;
-    exports io.sf.carte.echosvg.util.gui.xmleditor;
-    exports io.sf.carte.echosvg.util.gui;
 
-    requires io.sf.carte.echosvg.util;
-    requires io.sf.carte.echosvg.xml;
-    requires transitive java.desktop;
+	exports io.sf.carte.echosvg.util.gui.resource;
+	exports io.sf.carte.echosvg.util.gui.xmleditor;
+	exports io.sf.carte.echosvg.util.gui;
+
+	requires io.sf.carte.echosvg.util;
+	requires io.sf.carte.echosvg.xml;
+
+	requires transitive java.desktop;
+
 }

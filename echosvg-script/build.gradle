@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-	api project(':echosvg-anim')
+	implementation project(':echosvg-anim')
 	api "org.mozilla:rhino:${rhinoVersion}"
 	implementation "xml-apis:xml-apis:$xmlApisVersion"
 }

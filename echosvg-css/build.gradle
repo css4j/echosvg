@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
 	api project(':echosvg-util')
+	implementation project(':echosvg-i18n')
 	api "io.sf.carte:svgom-api:${svgomVersion}"
 	api "io.sf.carte:css4j:${css4jVersion}"
 	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"

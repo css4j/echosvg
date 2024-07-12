@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
 	api project(':echosvg-util')
+	implementation project(':echosvg-i18n')
 	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
 }
 

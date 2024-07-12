@@ -19,14 +19,16 @@
  * Graphics Vector Tree (GVT).
  */
 module io.sf.carte.echosvg.gvt {
-    exports io.sf.carte.echosvg.gvt.font;
-    exports io.sf.carte.echosvg.gvt.flow;
-    exports io.sf.carte.echosvg.gvt.event;
-    exports io.sf.carte.echosvg.gvt;
-    exports io.sf.carte.echosvg.gvt.renderer;
-    exports io.sf.carte.echosvg.gvt.text;
-    exports io.sf.carte.echosvg.gvt.filter;
 
-    requires transitive io.sf.carte.echosvg.awt;
-    requires transitive io.sf.carte.echosvg.util;
+	exports io.sf.carte.echosvg.gvt.font;
+	exports io.sf.carte.echosvg.gvt.flow;
+	exports io.sf.carte.echosvg.gvt.event;
+	exports io.sf.carte.echosvg.gvt;
+	exports io.sf.carte.echosvg.gvt.renderer;
+	exports io.sf.carte.echosvg.gvt.text;
+	exports io.sf.carte.echosvg.gvt.filter;
+
+	requires transitive io.sf.carte.echosvg.awt;
+	requires transitive io.sf.carte.echosvg.util;
+
 }

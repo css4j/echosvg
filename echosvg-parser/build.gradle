@@ -6,6 +6,7 @@ plugins {
 dependencies {
 	api project(':echosvg-awt-util')
 	api project(':echosvg-xml')
+	api project(':echosvg-i18n')
 	api "io.sf.carte:svgom-api:${svgomVersion}"
 	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
 }

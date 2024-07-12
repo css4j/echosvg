@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-	api project(':echosvg-svggen')
+	implementation project(':echosvg-svggen')
 }
 
 description = 'io.sf.carte:echosvg-ttf2svg'

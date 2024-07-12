@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-	api project(':echosvg-transcoder')
+	implementation project(':echosvg-transcoder')
 }
 
 description = 'io.sf.carte:echosvg-svgpp'
