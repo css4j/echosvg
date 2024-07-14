@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.transcoder.png;
+package io.sf.carte.echosvg.transcoder.image;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -28,7 +28,6 @@ import io.sf.carte.echosvg.ext.awt.image.rendered.IndexImage;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
-import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
 
 /**
  * This class is a helper to <code>PNGTranscoder</code> that writes PNG images
@@ -37,7 +36,7 @@ import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class PNGTranscoderInternalCodecWriteAdapter implements PNGTranscoder.WriteAdapter {
+class PNGTranscoderInternalCodecWriteAdapter implements PNGTranscoder.WriteAdapter {
 
 	/**
 	 * @throws TranscoderException

@@ -28,7 +28,6 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.image.resources.Messages;
 import io.sf.carte.echosvg.transcoder.keys.FloatKey;
 import io.sf.carte.echosvg.transcoder.keys.IntegerKey;
-import io.sf.carte.echosvg.transcoder.png.PNGTranscoderInternalCodecWriteAdapter;
 
 /**
  * This class is an <code>ImageTranscoder</code> that produces a PNG image.
@@ -89,7 +88,7 @@ public class PNGTranscoder extends ImageTranscoder {
 		}
 
 		WriteAdapter adapter = new PNGTranscoderInternalCodecWriteAdapter();
-		//WriteAdapter adapter = new io.sf.carte.echosvg.transcoder.imageio.PNGTranscoderImageIOWriteAdapter();
+		//WriteAdapter adapter = new PNGTranscoderImageIOWriteAdapter();
 
 		adapter.writeImage(this, img, output);
 	}

@@ -25,7 +25,6 @@ import java.awt.image.SinglePixelPackedSampleModel;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
-import io.sf.carte.echosvg.transcoder.imageio.TIFFTranscoderImageIOWriteAdapter;
 import io.sf.carte.echosvg.transcoder.keys.StringKey;
 
 /**

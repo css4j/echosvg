@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.transcoder.imageio;
+package io.sf.carte.echosvg.transcoder.image;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
@@ -35,7 +35,6 @@ import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
-import io.sf.carte.echosvg.transcoder.image.TIFFTranscoder;
 
 /**
  * This class is a helper to <code>TIFFTranscoder</code> that writes TIFF images
@@ -44,7 +43,7 @@ import io.sf.carte.echosvg.transcoder.image.TIFFTranscoder;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class TIFFTranscoderImageIOWriteAdapter implements TIFFTranscoder.WriteAdapter {
+class TIFFTranscoderImageIOWriteAdapter implements TIFFTranscoder.WriteAdapter {
 
 	/**
 	 * @throws TranscoderException
