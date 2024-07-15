@@ -40,7 +40,8 @@ public class TestLocationsTest {
 	public void testGetTestProjectBuildPath() throws IOException {
 		String path = TestLocations.getTestProjectBuildURL();
 		assertNotNull(path);
-		assertTrue(path.length() > 8);
+		assertTrue(path.contains(TestLocations.TEST_DIRNAME), "Path must contain "
+				+ TestLocations.TEST_DIRNAME);
 	}
 
 }

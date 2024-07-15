@@ -44,7 +44,8 @@ class SMResourceLoader extends ResourceLoader {
 		return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<URL>() {
 			@Override
 			public URL run() {
-				return cl.getClassLoader().getResource(resourceName);
+				ClassLoader loader = cl.getClassLoader();
+				return loader != null ? loader.getResource(resourceName) : null;
 			}
 		});
 	}

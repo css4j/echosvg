@@ -59,8 +59,6 @@ public class SVGGeneratorTest {
 
 	private static final String[] VARIATION_PLATFORMS = io.sf.carte.echosvg.test.svg.PreconfiguredRenderingTest.DEFAULT_VARIATION_PLATFORMS;
 
-	private static final String ACCEPTED_REF_DIR = "accepted-ref";
-
 	private static final String CANDIDATE_VARIATION_DIR = "candidate-variation";
 
 	private static final String PLATFORM_VARIATION_SUFFIX = io.sf.carte.echosvg.test.svg.PreconfiguredRenderingTest.PLATFORM_VARIATION_SUFFIX;
@@ -364,11 +362,7 @@ public class SVGGeneratorTest {
 
 	static URL getReferenceURL(Painter painter, String prefix) throws MalformedURLException {
 		String suffix = prefix + getNonQualifiedClassName(painter) + SVG_EXTENSION;
-		URL refUrl = new URL(GENERATOR_REFERENCE_BASE + ACCEPTED_REF_DIR + '/' + suffix);
-		File acceptedReference = new File(refUrl.getFile());
-		if (!acceptedReference.exists()) {
-			refUrl = new URL(GENERATOR_REFERENCE_BASE + suffix);
-		}
+		URL refUrl = new URL(GENERATOR_REFERENCE_BASE + suffix);
 		return refUrl;
 	}
 

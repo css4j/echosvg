@@ -45,6 +45,14 @@ public class TestUtil {
 	private TestUtil() {
 	}
 
+	/**
+	 * Get the URL of the root project directory.
+	 * 
+	 * @param cl             a class provided by the project.
+	 * @param projectDirname the directory name of the subproject from which this is
+	 *                       executed.
+	 * @return the URL.
+	 */
 	public static String getRootProjectURL(Class<?> cl, String projectDirname) {
 		String resName = cl.getName().replace(".", "/") + ".class";
 		URL url = ResourceLoader.getInstance().getResource(cl, resName);
@@ -67,13 +75,39 @@ public class TestUtil {
 		}
 	}
 
+	/**
+	 * Get the URL of the Gradle-style project build directory.
+	 * 
+	 * @param cl             a class provided by the project.
+	 * @param projectDirname the directory name of the subproject from which this is
+	 *                       executed.
+	 * @return the URL.
+	 */
 	public static String getProjectBuildURL(Class<?> cl, String projectDirname) {
 		String resName = cl.getName().replace(".", "/") + ".class";
 		URL url = ResourceLoader.getInstance().getResource(cl, resName);
+		String classUrl;
 		if (url == null) {
-			return null;
+			url = cwdURL();
+			File f =  new File(url.getFile(), projectDirname);
+			if (f.exists()) {
+				// CWD is root directory
+				try {
+					url = new URL(url.getProtocol(), url.getHost(), url.getPort(), f.getAbsolutePath());
+				} catch (MalformedURLException e) {
+					return null;
+				}
+				classUrl = url.toExternalForm();
+			} else {
+				// CWD is the project directory instead of root
+				classUrl = url.toExternalForm();
+				if (classUrl.lastIndexOf(projectDirname) == -1) {
+					return null;
+				}
+			}
+		} else {
+			classUrl = url.toExternalForm();
 		}
-		String classUrl = url.toExternalForm();
 		int testDirIdx = classUrl.lastIndexOf(projectDirname);
 		String buildDir = classUrl.substring(5, testDirIdx + projectDirname.length()) + "/build/";
 		return buildDir;
