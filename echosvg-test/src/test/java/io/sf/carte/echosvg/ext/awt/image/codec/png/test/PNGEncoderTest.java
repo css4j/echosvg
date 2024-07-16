@@ -24,10 +24,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Transparency;
+import java.awt.color.ICC_ColorSpace;
+import java.awt.color.ICC_Profile;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.ComponentColorModel;
+import java.awt.image.ComponentSampleModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
+import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -77,8 +87,7 @@ public class PNGEncoderTest {
 	@Test
 	public void testRGBa() throws Exception {
 		BufferedImage image = drawImage(new BufferedImage(100, 75, BufferedImage.TYPE_INT_ARGB));
-		PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(image);
-		testEncoding(image, params);
+		testEncoding(image);
 	}
 
 	@Test
@@ -88,6 +97,29 @@ public class PNGEncoderTest {
 		params.setText(loremIpsum);
 		params.setCompressedText(grouchoContract);
 		testEncoding(image, params);
+	}
+
+	@Test
+	public void testICC() throws Exception {
+		ICC_Profile prof;
+		try (InputStream iccStream = PNGEncoderTest.class.getResourceAsStream(
+				"/io/sf/carte/echosvg/css/color/profiles/Display P3.icc")) {
+			prof = ICC_Profile.getInstance(iccStream);
+		}
+		ICC_ColorSpace cs = new ICC_ColorSpace(prof);
+
+		int[] bits = { 16, 16, 16, 16 };
+		ComponentColorModel cm = new ComponentColorModel(cs, bits, true, false,
+				Transparency.TRANSLUCENT, DataBuffer.TYPE_USHORT);
+		ComponentSampleModel sm = new ComponentSampleModel(DataBuffer.TYPE_USHORT, 100, 75, 4, 100 * 4,
+				new int[] { 0, 1, 2, 3 });
+		Point loc = new Point(0, 0);
+		WritableRaster raster = Raster.createWritableRaster(sm, loc);
+
+		BufferedImage raw = new BufferedImage(cm, raster, false, null);
+		BufferedImage image = drawImage(raw);
+
+		testEncoding(image);
 	}
 
 	BufferedImage drawImage(BufferedImage image) {
@@ -109,6 +141,11 @@ public class PNGEncoderTest {
 		ig.dispose();
 
 		return image.getSubimage(50, 0, 50, 25);
+	}
+
+	void testEncoding(final BufferedImage image) throws Exception {
+		PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(image);
+		testEncoding(image, params);
 	}
 
 	void testEncoding(final BufferedImage image, PNGEncodeParam params) throws Exception {
@@ -147,8 +184,16 @@ public class PNGEncoderTest {
 		if (decodedRenderedImage instanceof BufferedImage) {
 			decodedImage = (BufferedImage) decodedRenderedImage;
 		} else {
-			decodedImage = new BufferedImage(decodedRenderedImage.getWidth(), decodedRenderedImage.getHeight(),
-					BufferedImage.TYPE_INT_ARGB);
+			ColorModel cm = decodedRenderedImage.getColorModel();
+			if (cm.getColorSpace().isCS_sRGB()) {
+				decodedImage = new BufferedImage(decodedRenderedImage.getWidth(),
+						decodedRenderedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			} else {
+				Point loc = new Point(0, 0);
+				WritableRaster raster = Raster.createWritableRaster(decodedRenderedImage.getSampleModel(),
+						loc);
+				decodedImage = new BufferedImage(cm, raster, false, null);
+			}
 			Graphics2D ig = decodedImage.createGraphics();
 			ig.drawRenderedImage(decodedRenderedImage, new AffineTransform());
 			ig.dispose();
@@ -214,16 +259,18 @@ public class PNGEncoderTest {
 		imageToFile(diff, tmpUtil, "PNGEncoderTest", "_diff");
 		imageToFile(cmp, tmpUtil, "PNGEncoderTest", "_cmp");
 
+		System.err.println(ImageComparator.getResultDescription(result));
+
 		return false;
 	}
 
 	/**
 	 * Creates a temporary File into which the input image is saved.
 	 */
-	private File imageToFile(BufferedImage img, ImageFileBuilder fileBuilder, String name, String imageType)
+	private File imageToFile(BufferedImage img, ImageFileBuilder fileBuilder, String name, String imageSuffix)
 			throws IOException {
 
-		File imageFile = obtainDiffCmpFilename(fileBuilder, name, imageType);
+		File imageFile = obtainDiffCmpFilename(fileBuilder, name, imageSuffix);
 
 		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
 
@@ -238,9 +285,9 @@ public class PNGEncoderTest {
 	/**
 	 * Creates a temporary File into which the input image is saved.
 	 */
-	private File obtainDiffCmpFilename(ImageFileBuilder fileBuilder, String name, String imageType)
+	private File obtainDiffCmpFilename(ImageFileBuilder fileBuilder, String name, String imageSuffix)
 			throws IOException {
-		return fileBuilder.createImageFile(name + imageType + ".png");
+		return fileBuilder.createImageFile(name + imageSuffix + ".png");
 	}
 
 }
