@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.codec.imageio;
 
+import java.awt.color.ColorSpace;
 import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -93,8 +94,11 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
 					// Handle metadata
 					IIOMetadata meta = iiowriter.getDefaultImageMetadata(type, iwParam);
 					// meta might be null for some JAI codecs as they don't support metadata
-					if (params != null && meta != null) {
-						meta = updateMetadata(meta, params);
+					if (meta != null) {
+						updateColorMetadata(meta, image.getColorModel().getColorSpace());
+						if (params != null) {
+							meta = updateMetadata(meta, params);
+						}
 					}
 
 					// Write image
@@ -129,6 +133,15 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
 			param.setCompressionType(params.getCompressionMethod());
 		}
 		return param;
+	}
+
+	/**
+	 * Updates the metadata information based on the parameters to this writer.
+	 * 
+	 * @param meta       the metadata
+	 * @param colorSpace the color space
+	 */
+	protected void updateColorMetadata(IIOMetadata meta, ColorSpace colorSpace) {
 	}
 
 	/**
