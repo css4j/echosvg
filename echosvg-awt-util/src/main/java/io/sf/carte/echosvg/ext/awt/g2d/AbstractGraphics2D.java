@@ -41,7 +41,10 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
+import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
+import java.awt.image.RenderedImage;
+import java.awt.image.WritableRaster;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
@@ -748,14 +751,32 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
 	@Override
 	public boolean drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2,
 			ImageObserver observer) {
-		BufferedImage src = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage src = createSourceImage(img);
 		Graphics2D g = src.createGraphics();
+
 		g.drawImage(img, 0, 0, null);
 		g.dispose();
 
 		src = src.getSubimage(sx1, sy1, sx2 - sx1, sy2 - sy1);
 
 		return drawImage(src, dx1, dy1, dx2 - dx1, dy2 - dy1, observer);
+	}
+
+	private BufferedImage createSourceImage(Image img) {
+		int width = img.getWidth(null);
+		int height = img.getHeight(null);
+
+		BufferedImage src;
+		ColorModel cm;
+		if (img instanceof RenderedImage && !(cm = ((RenderedImage) img).getColorModel())
+				.getColorSpace().isCS_sRGB()) {
+			WritableRaster raster = cm.createCompatibleWritableRaster(width, height);
+			src = new BufferedImage(cm, raster, false, null);
+		} else {
+			src = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		}
+
+		return src;
 	}
 
 	/**

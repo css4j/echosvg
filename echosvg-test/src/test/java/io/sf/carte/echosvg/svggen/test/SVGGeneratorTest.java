@@ -156,6 +156,11 @@ public class SVGGeneratorTest {
 	}
 
 	@Test
+	public void testDrawImageICC() throws TranscoderException, IOException {
+		runTests("DrawImageICC");
+	}
+
+	@Test
 	public void testFont1() throws TranscoderException, IOException {
 		assumeTrue(isWindows(), "Test uses logical fonts, reference data is for Windows");
 		runTests("Font1");

@@ -20,6 +20,8 @@ package io.sf.carte.echosvg.svggen;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -90,8 +92,15 @@ public class ImageHandlerPNGEncoder extends AbstractImageHandlerEncoder {
 	 * supported by PNG.
 	 */
 	@Override
-	public BufferedImage buildBufferedImage(Dimension size) {
-		return new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
+	public BufferedImage buildBufferedImage(Dimension size, ColorModel cm) {
+		BufferedImage image;
+		if (cm == null || cm.getColorSpace().isCS_sRGB()) {
+			image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
+		} else {
+			WritableRaster raster = cm.createCompatibleWritableRaster(size.width, size.height);
+			image = new BufferedImage(cm, raster, false, null);
+		}
+		return image;
 	}
 
 }

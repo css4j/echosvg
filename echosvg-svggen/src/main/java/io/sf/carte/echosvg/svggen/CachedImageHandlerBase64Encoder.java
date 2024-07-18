@@ -18,8 +18,11 @@
  */
 package io.sf.carte.echosvg.svggen;
 
+import java.awt.Dimension;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -104,8 +107,24 @@ public class CachedImageHandlerBase64Encoder extends DefaultCachedImageHandler {
 		b64Encoder.close();
 	}
 
+	/**
+	 * This method creates a BufferedImage with an alpha channel, as this is
+	 * supported by PNG.
+	 */
 	@Override
-	public int getBufferedImageType() {
+	public BufferedImage buildBufferedImage(Dimension size, ColorModel cm) {
+		BufferedImage image;
+		if (cm == null || cm.getColorSpace().isCS_sRGB()) {
+			image = new BufferedImage(size.width, size.height, getDefaultBufferedImageType());
+		} else {
+			WritableRaster raster = cm.createCompatibleWritableRaster(size.width, size.height);
+			image = new BufferedImage(cm, raster, false, null);
+		}
+		return image;
+	}
+
+	@Override
+	protected int getDefaultBufferedImageType() {
 		return BufferedImage.TYPE_INT_ARGB;
 	}
 

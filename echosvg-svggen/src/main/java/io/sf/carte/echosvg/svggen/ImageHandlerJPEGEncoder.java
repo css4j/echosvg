@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.svggen;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -93,7 +94,7 @@ public class ImageHandlerJPEGEncoder extends AbstractImageHandlerEncoder {
 	 * derived class.
 	 */
 	@Override
-	public BufferedImage buildBufferedImage(Dimension size) {
+	public BufferedImage buildBufferedImage(Dimension size, ColorModel cm) {
 		return new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
 	}
 

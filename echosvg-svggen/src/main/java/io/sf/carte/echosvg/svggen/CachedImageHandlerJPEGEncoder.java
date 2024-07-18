@@ -64,7 +64,7 @@ public class CachedImageHandlerJPEGEncoder extends DefaultCachedImageHandler {
 	}
 
 	@Override
-	public int getBufferedImageType() {
+	protected int getDefaultBufferedImageType() {
 		return BufferedImage.TYPE_INT_RGB;
 	}
 

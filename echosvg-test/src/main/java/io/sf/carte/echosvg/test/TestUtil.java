@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.test;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -133,6 +134,9 @@ public class TestUtil {
 			InputStream is = refURL.openStream();
 			Reader r = new InputStreamReader(is);
 			refReader = new BufferedReader(r);
+		} catch (FileNotFoundException e) {
+			save(data, candidateFile);
+			return e.getMessage();
 		} catch (IOException e) {
 			save(data, candidateFile);
 			throw e;

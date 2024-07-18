@@ -23,6 +23,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
 import java.io.File;
@@ -134,7 +135,7 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
 			throws SVGGraphics2DIOException {
 		// Create an buffered image where the image will be drawn
 		Dimension size = new Dimension(image.getWidth(null), image.getHeight(null));
-		BufferedImage buf = buildBufferedImage(size);
+		BufferedImage buf = buildBufferedImage(size, null);
 
 		Graphics2D g = createGraphics(buf);
 
@@ -154,7 +155,7 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
 			throws SVGGraphics2DIOException {
 		// Create an buffered image where the image will be drawn
 		Dimension size = new Dimension(image.getWidth(), image.getHeight());
-		BufferedImage buf = buildBufferedImage(size);
+		BufferedImage buf = buildBufferedImage(size, image.getColorModel());
 
 		Graphics2D g = createGraphics(buf);
 
@@ -174,7 +175,7 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
 			throws SVGGraphics2DIOException {
 		// Create an buffered image where the image will be drawn
 		Dimension size = new Dimension((int) Math.ceil(image.getWidth()), (int) Math.ceil(image.getHeight()));
-		BufferedImage buf = buildBufferedImage(size);
+		BufferedImage buf = buildBufferedImage(size, null);
 
 		Graphics2D g = createGraphics(buf);
 
@@ -231,6 +232,6 @@ public abstract class AbstractImageHandlerEncoder extends DefaultImageHandler {
 	 * This method creates a BufferedImage of the right size and type for the
 	 * derived class.
 	 */
-	public abstract BufferedImage buildBufferedImage(Dimension size);
+	public abstract BufferedImage buildBufferedImage(Dimension size, ColorModel cm);
 
 }

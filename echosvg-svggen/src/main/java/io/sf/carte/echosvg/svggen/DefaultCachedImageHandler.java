@@ -23,6 +23,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
 import java.io.ByteArrayOutputStream;
@@ -290,7 +291,7 @@ public abstract class DefaultCachedImageHandler implements CachedImageHandler, S
 			if (image instanceof RenderedImage) {
 				handleHREF((RenderedImage) image, imageElement, generatorContext);
 			} else {
-				BufferedImage buf = buildBufferedImage(new Dimension(width, height));
+				BufferedImage buf = buildBufferedImage(new Dimension(width, height), null);
 				Graphics2D g = createGraphics(buf);
 				g.drawImage(image, 0, 0, null);
 				g.dispose();
@@ -303,8 +304,8 @@ public abstract class DefaultCachedImageHandler implements CachedImageHandler, S
 	 * This method creates a BufferedImage of the right size and type for the
 	 * derived class.
 	 */
-	public BufferedImage buildBufferedImage(Dimension size) {
-		return new BufferedImage(size.width, size.height, getBufferedImageType());
+	public BufferedImage buildBufferedImage(Dimension size, ColorModel cm) {
+		return new BufferedImage(size.width, size.height, getDefaultBufferedImageType());
 	}
 
 	/**
@@ -314,14 +315,14 @@ public abstract class DefaultCachedImageHandler implements CachedImageHandler, S
 	protected void handleHREF(RenderedImage image, Element imageElement, SVGGeneratorContext generatorContext)
 			throws SVGGraphics2DIOException {
 		//
-		// Create an buffered image if necessary
+		// Create a buffered image if necessary
 		//
 		BufferedImage buf = null;
-		if (image instanceof BufferedImage && ((BufferedImage) image).getType() == getBufferedImageType()) {
+		if (image instanceof BufferedImage && ((BufferedImage) image).getType() == getDefaultBufferedImageType()) {
 			buf = (BufferedImage) image;
 		} else {
 			Dimension size = new Dimension(image.getWidth(), image.getHeight());
-			buf = buildBufferedImage(size);
+			buf = buildBufferedImage(size, image.getColorModel());
 
 			Graphics2D g = createGraphics(buf);
 
@@ -343,7 +344,8 @@ public abstract class DefaultCachedImageHandler implements CachedImageHandler, S
 			throws SVGGraphics2DIOException {
 		// Create an buffered image where the image will be drawn
 		Dimension size = new Dimension((int) Math.ceil(image.getWidth()), (int) Math.ceil(image.getHeight()));
-		BufferedImage buf = buildBufferedImage(size);
+
+		BufferedImage buf = buildBufferedImage(size, null);
 
 		Graphics2D g = createGraphics(buf);
 
@@ -393,8 +395,8 @@ public abstract class DefaultCachedImageHandler implements CachedImageHandler, S
 
 	/**
 	 * This template method should be overridden by derived classes to declare the
-	 * image type they need for saving to file.
+	 * default image type that they want for saving to file.
 	 */
-	public abstract int getBufferedImageType();
+	protected abstract int getDefaultBufferedImageType();
 
 }

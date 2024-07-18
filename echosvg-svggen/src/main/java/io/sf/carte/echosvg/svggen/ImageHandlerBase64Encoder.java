@@ -22,7 +22,9 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.awt.image.RenderedImage;
+import java.awt.image.WritableRaster;
 import java.awt.image.renderable.RenderableImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -156,8 +158,15 @@ public class ImageHandlerBase64Encoder extends DefaultImageHandler {
 	 * This method creates a BufferedImage with an alpha channel, as this is
 	 * supported by Base64.
 	 */
-	public BufferedImage buildBufferedImage(Dimension size) {
-		return new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
+	public BufferedImage buildBufferedImage(Dimension size, ColorModel cm) {
+		BufferedImage image;
+		if (cm == null || cm.getColorSpace().isCS_sRGB()) {
+			image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
+		} else {
+			WritableRaster raster = cm.createCompatibleWritableRaster(size.width, size.height);
+			image = new BufferedImage(cm, raster, false, null);
+		}
+		return image;
 	}
 
 }
