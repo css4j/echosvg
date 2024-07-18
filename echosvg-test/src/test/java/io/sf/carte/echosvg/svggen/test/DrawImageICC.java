@@ -34,8 +34,6 @@ import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.io.InputStream;
 
-import io.sf.carte.echosvg.ext.awt.image.codec.png.test.PNGEncoderTest;
-
 /**
  * This test validates drawImage conversions with profiled colors.
  *
@@ -52,7 +50,7 @@ public class DrawImageICC implements Painter {
 	public void paint(Graphics2D g) {
 		// Load a profile
 		ICC_Profile prof;
-		try (InputStream iccStream = PNGEncoderTest.class.getResourceAsStream(
+		try (InputStream iccStream = DrawImageICC.class.getResourceAsStream(
 				"/io/sf/carte/echosvg/css/color/profiles/Display P3.icc")) {
 			prof = ICC_Profile.getInstance(iccStream);
 		} catch (IOException e) {
