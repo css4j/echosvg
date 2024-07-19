@@ -2122,7 +2122,7 @@ public abstract class AbstractDocument extends AbstractParentNode
 				case XPathResult.UNORDERED_NODE_ITERATOR_TYPE:
 				case XPathResult.ORDERED_NODE_SNAPSHOT_TYPE:
 				case XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE:
-					return new Result((Node) xpath.evaluate(contextNode, XPathConstants.NODE), type);
+					return new Result((NodeList) xpath.evaluate(contextNode, XPathConstants.NODESET), type);
 				case XPathResult.STRING_TYPE:
 					return new Result((String) xpath.evaluate(contextNode, XPathConstants.STRING));
 				}
