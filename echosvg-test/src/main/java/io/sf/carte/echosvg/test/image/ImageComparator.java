@@ -34,6 +34,10 @@ import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
  * comparisons with an arbitrary number of variants to match. See
  * {@link ImageVariants} for a description of the variants mechanism.
  * </p>
+ * <p>
+ * This software was written for image comparisons in the context of the EchoSVG
+ * project. Usage outside of that context is not supported.
+ * </p>
  */
 public class ImageComparator {
 
@@ -619,7 +623,7 @@ public class ImageComparator {
 	 * @return an image comparing the two given images, one on each side.
 	 */
 	public static BufferedImage createCompareImage(BufferedImage ref, BufferedImage gen) {
-		BufferedImage cmp = new BufferedImage(ref.getWidth() * 2, ref.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage cmp = createImageOfType(ref.getWidth() * 2, ref.getHeight(), ref);
 
 		Graphics2D g = cmp.createGraphics();
 		g.setPaint(Color.white);
@@ -650,7 +654,8 @@ public class ImageComparator {
 		final int w = ref.getWidth();
 		final int h = ref.getHeight();
 
-		BufferedImage diff = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage diff = createImageOfType(w, h, ref);
+
 		WritableRaster refWR = ref.getRaster();
 		WritableRaster genWR = gen.getRaster();
 		WritableRaster dstWR = diff.getRaster();
@@ -701,6 +706,21 @@ public class ImageComparator {
 		return diff;
 	}
 
+	private static BufferedImage createImageOfType(int width, int height, BufferedImage ref) {
+		BufferedImage image;
+
+		int type = ref.getType();
+		if (type != BufferedImage.TYPE_CUSTOM) {
+			image = new BufferedImage(width, height, type);
+		} else {
+			ColorModel cm = ref.getColorModel();
+			WritableRaster raster = cm.createCompatibleWritableRaster(width, height);
+			image = new BufferedImage(cm, raster, false, null);
+		}
+
+		return image;
+	}
+
 	/**
 	 * Creates a new image that is the exact difference between the two input
 	 * images.
@@ -722,7 +742,8 @@ public class ImageComparator {
 					"Ref. image has height " + h + " but generated image is " + gen.getHeight());
 		}
 
-		BufferedImage diff = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage diff = createImageOfType(w, h, ref);
+
 		WritableRaster refWR = ref.getRaster();
 		WritableRaster genWR = gen.getRaster();
 		WritableRaster dstWR = diff.getRaster();
@@ -782,7 +803,8 @@ public class ImageComparator {
 		final int w = ref.getWidth();
 		final int h = ref.getHeight();
 
-		BufferedImage diff = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage diff = createImageOfType(w, h, ref);
+
 		WritableRaster refWR = ref.getRaster();
 		WritableRaster genWR = gen.getRaster();
 		WritableRaster rangeWR = rangeDiff.getRaster();

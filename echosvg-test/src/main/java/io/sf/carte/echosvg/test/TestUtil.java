@@ -90,7 +90,7 @@ public class TestUtil {
 		String classUrl;
 		if (url == null) {
 			url = cwdURL();
-			File f =  new File(url.getFile(), projectDirname);
+			File f = new File(url.getFile(), projectDirname);
 			if (f.exists()) {
 				// CWD is root directory
 				try {

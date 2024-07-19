@@ -127,13 +127,16 @@ public class ImageIOJPEGImageWriter extends ImageIOImageWriter {
 	protected ImageWriteParam getDefaultWriteParam(ImageWriter iiowriter, RenderedImage image,
 			ImageWriterParams params) {
 		JPEGImageWriteParam param = new JPEGImageWriteParam(iiowriter.getLocale());
-		param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-		param.setCompressionQuality(params.getJPEGQuality());
-		if (params.getCompressionMethod() != null && !"JPEG".equals(params.getCompressionMethod())) {
-			throw new IllegalArgumentException("No compression method other than JPEG is supported for JPEG output!");
-		}
-		if (params.getJPEGForceBaseline()) {
-			param.setProgressiveMode(ImageWriteParam.MODE_DISABLED);
+		if (params != null) {
+			param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			param.setCompressionQuality(params.getJPEGQuality());
+			if (params.getCompressionMethod() != null && !"JPEG".equals(params.getCompressionMethod())) {
+				throw new IllegalArgumentException(
+						"No compression method other than JPEG is supported for JPEG output!");
+			}
+			if (params.getJPEGForceBaseline()) {
+				param.setProgressiveMode(ImageWriteParam.MODE_DISABLED);
+			}
 		}
 		return param;
 	}

@@ -30,6 +30,8 @@ import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 
+import io.sf.carte.echosvg.ext.awt.image.codec.impl.ColorUtil;
+
 /**
  * ImageWriter that encodes PNG images using Image I/O.
  *
@@ -47,7 +49,7 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 
 	@Override
 	protected void updateColorMetadata(IIOMetadata meta, ColorSpace colorSpace) {
-		if (!colorSpace.isCS_sRGB() && colorSpace instanceof ICC_ColorSpace
+		if (!ColorUtil.isBuiltInColorSpace(colorSpace) && colorSpace instanceof ICC_ColorSpace
 				&& meta.isStandardMetadataFormatSupported()) {
 			final String metaName = "javax_imageio_png_1.0";
 			IIOMetadataNode root = (IIOMetadataNode) meta.getAsTree(metaName);

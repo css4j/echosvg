@@ -42,6 +42,7 @@ import java.util.TimeZone;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
+import io.sf.carte.echosvg.ext.awt.image.codec.impl.ColorUtil;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncoderImpl;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
 
@@ -1093,7 +1094,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 
 	private void setICCProfileInfo(ColorModel colorModel) {
 		ColorSpace cs = colorModel.getColorSpace();
-		if (!cs.isCS_sRGB() && cs instanceof ICC_ColorSpace) {
+		if (!ColorUtil.isBuiltInColorSpace(cs) && cs instanceof ICC_ColorSpace) {
 			ICC_Profile profile = ((ICC_ColorSpace) cs).getProfile();
 			byte[] bdesc = profile.getData(ICC_Profile.icSigProfileDescriptionTag);
 			/*
@@ -1113,13 +1114,13 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 						String desc = new String(bdesc, offset, len, StandardCharsets.UTF_16BE).trim();
 						iccProfileName = desc;
 						iccProfileData = profile.getData();
+						return;
 					}
 				}
 			}
-		} else {
-			iccProfileName = null;
-			iccProfileData = null;
 		}
+		iccProfileName = null;
+		iccProfileData = null;
 	}
 
 	/**

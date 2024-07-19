@@ -59,19 +59,11 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
 		this.targetMIME = mime;
 	}
 
-	/**
-	 * @see ImageWriter#writeImage(java.awt.image.RenderedImage,
-	 *      java.io.OutputStream)
-	 */
 	@Override
 	public void writeImage(RenderedImage image, OutputStream out) throws IOException {
 		writeImage(image, out, null);
 	}
 
-	/**
-	 * @see ImageWriter#writeImage(java.awt.image.RenderedImage,
-	 *      java.io.OutputStream, ImageWriterParams)
-	 */
 	@Override
 	public void writeImage(RenderedImage image, OutputStream out, ImageWriterParams params) throws IOException {
 		Iterator<javax.imageio.ImageWriter> iter = ImageIO.getImageWritersByMIMEType(getMIMEType());
