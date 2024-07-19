@@ -156,13 +156,6 @@ public class ImageIOJPEGImageWriterTest {
 	}
 
 	/**
-	 * Template method for building the JPEG input stream.
-	 */
-	protected InputStream buildInputStream(ByteArrayOutputStream bos) {
-		return new ByteArrayInputStream(bos.toByteArray());
-	}
-
-	/**
 	 * Compares the streams of the two images
 	 * 
 	 * @param cand     byte array with the candidate image.
