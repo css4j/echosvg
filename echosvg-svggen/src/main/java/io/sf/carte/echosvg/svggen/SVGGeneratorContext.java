@@ -113,6 +113,11 @@ public class SVGGeneratorContext implements ErrorConstants {
 	private DecimalFormat decimalFormat = decimalFormats[precision];
 
 	/**
+	 * Compression level to use in embedded PNG images.
+	 */
+	private Integer compressionLevel = null;
+
+	/**
 	 * Class to describe the GraphicContext defaults to be used. Note that this
 	 * class does *not* contain a default for the initial transform, as this
 	 * transform *has to be identity* for the SVGGraphics2D to operate (the
@@ -413,6 +418,25 @@ public class SVGGeneratorContext implements ErrorConstants {
 			this.precision = precision;
 		}
 		decimalFormat = decimalFormats[this.precision];
+	}
+
+	/**
+	 * Get the compression level to use in embedded PNG images.
+	 * 
+	 * @return the compression level, or {@code null} if defaults shall be applied.
+	 */
+	public Integer getCompressionLevel() {
+		return compressionLevel;
+	}
+
+	/**
+	 * Sets the compression level which will be used in embedded PNG images.
+	 * 
+	 * @param compressionLevel the compression level (0-9), or {@code null} for
+	 *                         default behavior.
+	 */
+	public void setCompressionLevel(Integer compressionLevel) {
+		this.compressionLevel = compressionLevel;
 	}
 
 	/**

@@ -51,7 +51,7 @@ public class XPathTest {
 		Document doc = createDocument(SVG_DOCUMENT);
 
 		XPathResult res = (XPathResult) ((XPathEvaluator) doc).evaluate(".//*[local-name()=\"text\"]",
-	            doc.getDocumentElement(), null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+				doc.getDocumentElement(), null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 
 		Node node = res.iterateNext();
 
@@ -70,7 +70,7 @@ public class XPathTest {
 		Document doc = createDocument(SVG_DOCUMENT);
 
 		XPathResult res = (XPathResult) ((XPathEvaluator) doc).evaluate(".//*[local-name()=\"text\"]",
-	            doc.getDocumentElement(), null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				doc.getDocumentElement(), null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 
 		assertEquals(2, res.getSnapshotLength());
 

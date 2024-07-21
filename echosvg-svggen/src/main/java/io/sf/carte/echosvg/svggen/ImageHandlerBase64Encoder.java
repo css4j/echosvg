@@ -33,6 +33,7 @@ import java.io.OutputStream;
 import org.w3c.dom.Element;
 
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
+import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
 import io.sf.carte.echosvg.util.Base64EncoderStream;
 
@@ -128,7 +129,7 @@ public class ImageHandlerBase64Encoder extends DefaultImageHandler {
 			//
 			// Now, encode the input image to the base 64 stream.
 			//
-			encodeImage(image, b64Encoder);
+			encodeImage(image, b64Encoder, generatorContext.getCompressionLevel());
 
 			// Close the b64 encoder stream (terminates the b64 streams).
 			b64Encoder.close();
@@ -145,9 +146,19 @@ public class ImageHandlerBase64Encoder extends DefaultImageHandler {
 	}
 
 	public void encodeImage(RenderedImage buf, OutputStream os) throws SVGGraphics2DIOException {
+		// Pass a null compression level which will be ignored.
+		encodeImage(buf, os, null);
+	}
+
+	public void encodeImage(RenderedImage buf, OutputStream os, Integer compressionLevel) throws SVGGraphics2DIOException {
 		try {
+			ImageWriterParams params = null;
+			if (compressionLevel != null) {
+				params = new ImageWriterParams();
+				params.setCompressionLevel(compressionLevel.intValue());
+			}
 			ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
-			writer.writeImage(buf, os);
+			writer.writeImage(buf, os, params);
 		} catch (IOException e) {
 			// We are doing in-memory processing. This should not happen.
 			throw new SVGGraphics2DIOException(ERR_UNEXPECTED);
