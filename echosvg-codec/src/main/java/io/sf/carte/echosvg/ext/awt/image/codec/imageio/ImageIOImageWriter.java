@@ -87,7 +87,7 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
 					IIOMetadata meta = iiowriter.getDefaultImageMetadata(type, iwParam);
 					// meta might be null for some JAI codecs as they don't support metadata
 					if (meta != null) {
-						updateColorMetadata(meta, image.getColorModel().getColorSpace());
+						updateColorMetadata(meta, params, image.getColorModel().getColorSpace());
 						if (params != null) {
 							meta = updateMetadata(meta, params);
 						}
@@ -131,9 +131,10 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
 	 * Updates the metadata information based on the parameters to this writer.
 	 * 
 	 * @param meta       the metadata
+	 * @param params     the parameters for this writer instance
 	 * @param colorSpace the color space
 	 */
-	protected void updateColorMetadata(IIOMetadata meta, ColorSpace colorSpace) {
+	protected void updateColorMetadata(IIOMetadata meta, ImageWriterParams params, ColorSpace colorSpace) {
 	}
 
 	/**
@@ -162,11 +163,12 @@ public class ImageIOImageWriter implements ImageWriter, IIOWriteWarningListener 
 					dim.appendChild(child);
 				}
 				child.setAttribute("value", Double.toString(params.getResolution().doubleValue() / 25.4));
-			}
-			try {
-				meta.mergeTree(stdmeta, root);
-			} catch (IIOInvalidTreeException e) {
-				throw new RuntimeException("Cannot update image metadata: " + e.getMessage());
+
+				try {
+					meta.mergeTree(stdmeta, root);
+				} catch (IIOInvalidTreeException e) {
+					throw new RuntimeException("Cannot update image metadata: " + e.getMessage());
+				}
 			}
 		}
 		return meta;

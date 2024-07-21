@@ -31,6 +31,7 @@ public class ImageWriterParams {
 	private Float jpegQuality;
 	private Boolean jpegForceBaseline;
 	private String compressionMethod;
+	private Integer compressionLevel;
 
 	/**
 	 * Default constructor.
@@ -52,6 +53,17 @@ public class ImageWriterParams {
 	 */
 	public Float getJPEGQuality() {
 		return this.jpegQuality;
+	}
+
+	/**
+	 * Get the level to be used for lossless compression. Only applies to lossless
+	 * formats.
+	 * 
+	 * @return the compression level, or {@code null} if the default should be
+	 *         applied.
+	 */
+	public Integer getCompressionLevel() {
+		return compressionLevel;
 	}
 
 	/**
@@ -88,6 +100,18 @@ public class ImageWriterParams {
 	}
 
 	/**
+	 * Sets the level used in lossless compression. Only applies to lossless
+	 * formats.
+	 * 
+	 * @param level the level. The interpretation of the value depends on the
+	 *              compression algorithm (for PNG images, {@code Deflate} is used
+	 *              and the value must be in the range [0-9]).
+	 */
+	public void setCompressionLevel(int level) {
+		this.compressionLevel = Integer.valueOf(level);
+	}
+
+	/**
 	 * Set the compression method that shall be used to encode the image.
 	 * 
 	 * @param method the compression method
@@ -95,4 +119,5 @@ public class ImageWriterParams {
 	public void setCompressionMethod(String method) {
 		this.compressionMethod = method;
 	}
+
 }

@@ -34,43 +34,43 @@ import java.io.InputStream;
 
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGImageWriter;
+import io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOPNGImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
-import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
+import io.sf.carte.echosvg.ext.awt.image.spi.PNGImageWriterParams;
 
 /**
- * This test validates the ImageIOJPEGImageWriter operation.
+ * This test validates the ImageIOPNGImageWriter operation.
  * 
  * @version $Id$
  */
-public class ImageIOJPEGImageWriterTest extends AbstractImageWriterCheck {
+public class ImageIOPNGImageWriterTest extends AbstractImageWriterCheck {
 
 	private static final int width = 200;
 
 	private static final int height = 150;
 
 	@Test
-	public void test3B_BGR() throws IOException {
-		BufferedImage image = drawImage(new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR));
-		testEncoding(image, "3bBgr");
+	public void testRGBa() throws Exception {
+		BufferedImage image = drawImage(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
+		testEncoding(image, "rgba");
 	}
 
 	@Test
 	public void testICC() throws IOException {
 		ICC_Profile prof;
-		try (InputStream iccStream = ImageIOJPEGImageWriterTest.class.getResourceAsStream(
+		try (InputStream iccStream = ImageIOPNGImageWriterTest.class.getResourceAsStream(
 				"/io/sf/carte/echosvg/css/color/profiles/Display P3.icc")) {
 			prof = ICC_Profile.getInstance(iccStream);
 		}
 		ICC_ColorSpace cs = new ICC_ColorSpace(prof);
 
-		int[] bits = { 8, 8, 8 };
-		int[] offsets = { 2, 1, 0 };
+		int[] bits = { 16, 16, 16, 16 };
+		int[] offsets = { 0, 1, 2, 3 };
 
-		ComponentColorModel cm = new ComponentColorModel(cs, bits, false, false,
-				Transparency.OPAQUE, DataBuffer.TYPE_BYTE);
-		ComponentSampleModel sm = new ComponentSampleModel(DataBuffer.TYPE_BYTE, width, height,
-				3, width * 3, offsets);
+		ComponentColorModel cm = new ComponentColorModel(cs, bits, true, false,
+				Transparency.TRANSLUCENT, DataBuffer.TYPE_USHORT);
+		ComponentSampleModel sm = new ComponentSampleModel(DataBuffer.TYPE_USHORT, width, height,
+				bits.length, width * bits.length, offsets);
 		Point loc = new Point(0, 0);
 		WritableRaster raster = Raster.createWritableRaster(sm, loc);
 
@@ -81,23 +81,23 @@ public class ImageIOJPEGImageWriterTest extends AbstractImageWriterCheck {
 	}
 
 	@Override
-	protected ImageWriter createImageWriter() {
-		return new ImageIOJPEGImageWriter();
+	protected PNGImageWriterParams createImageWriterParams() {
+		return new PNGImageWriterParams();
 	}
 
 	@Override
-	protected void configureImageWriterParams(ImageWriterParams params) {
-		params.setJPEGQuality(1f, false);
+	protected ImageWriter createImageWriter() {
+		return new ImageIOPNGImageWriter();
 	}
 
 	@Override
 	protected String getDotExtension() {
-		return ".jpg";
+		return ".png";
 	}
 
 	@Override
 	protected String getMIMEType() {
-		return "image/jpeg";
+		return "image/png";
 	}
 
 }

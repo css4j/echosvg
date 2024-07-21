@@ -66,7 +66,7 @@ import io.sf.carte.echosvg.test.image.TempImageFiles;
  * then encodes it with the PNGEncoder, then decodes it and compares the decoded
  * image with the original one.
  *
- * @author <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>
+ * Original author: <a href="mailto:vhardy@eng.sun.com">Vincent Hardy</a>.
  * @author For later modifications, see Git history.
  * @version $Id$
  */
@@ -84,6 +84,10 @@ public class PNGEncoderTest {
 			"Groucho contract scene 3",
 			"The party of the second part shall be know in this contract as the party of the second part." };
 
+	private static final String[] iTXt = { "Foo", "la-VAT", "LoremIpsum",
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+					+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." };
+
 	@Test
 	public void testRGBa() throws Exception {
 		BufferedImage image = drawImage(new BufferedImage(100, 75, BufferedImage.TYPE_INT_ARGB));
@@ -95,6 +99,7 @@ public class PNGEncoderTest {
 		BufferedImage image = drawImage(new BufferedImage(100, 75, BufferedImage.TYPE_INT_ARGB));
 		PNGEncodeParam params = PNGEncodeParam.getDefaultEncodeParam(image);
 		params.setText(loremIpsum);
+		params.setInternationalText(iTXt);
 		params.setCompressedText(grouchoContract);
 		testEncoding(image, params);
 	}
@@ -167,6 +172,12 @@ public class PNGEncoderTest {
 			param.setGenerateEncodeParam(true);
 		}
 
+		String[] iText = null;
+		if (params.isInternationalTextSet()) {
+			iText = params.getInternationalText();
+			param.setGenerateEncodeParam(true);
+		}
+
 		String[] zText = null;
 		if (params.isCompressedTextSet()) {
 			zText = params.getCompressedText();
@@ -206,6 +217,15 @@ public class PNGEncoderTest {
 			assertTrue(encodeParams.isTextSet());
 			String[] decText = encodeParams.getText();
 			assertTrue(Arrays.equals(text, decText), "tEXt does not match.");
+		}
+
+		// Check iText
+		if (iText != null) {
+			PNGEncodeParam encodeParams = param.getEncodeParam();
+			assertNotNull(encodeParams, "EncodeParam should be generated.");
+			assertTrue(encodeParams.isInternationalTextSet());
+			String[] decIText = encodeParams.getInternationalText();
+			assertTrue(Arrays.equals(iText, decIText), "iTXt does not match.");
 		}
 
 		// Check zText

@@ -341,6 +341,8 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 	private byte[] bluePalette = null;
 	private byte[] alphaPalette = null;
 
+	private int compressionLevel = 9; // Value used in Batik
+
 	private String iccProfileName = null;
 	private byte[] iccProfileData = null;
 
@@ -489,7 +491,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 
 	private void writeIDAT() throws IOException {
 		IDATOutputStream ios = new IDATOutputStream(dataOutput, 8192);
-		DeflaterOutputStream dos = new DeflaterOutputStream(ios, new Deflater(9));
+		DeflaterOutputStream dos = new DeflaterOutputStream(ios, new Deflater(compressionLevel));
 
 		// Future work - don't convert entire image to a Raster It
 		// might seem that you could just call image.getData() but
@@ -602,7 +604,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 				ByteArrayOutputStream out = new ByteArrayOutputStream(iccArray.length + 16);
 				// Buffer size should be at least 6
 				byte[] buffer = new byte[Math.min(iccArray.length + 5, 1024)];
-				Deflater defl = new Deflater(Deflater.BEST_COMPRESSION);
+				Deflater defl = new Deflater(compressionLevel);
 				defl.setInput(iccArray);
 				defl.finish();
 				do {
@@ -800,8 +802,8 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 			String[] text = param.getText();
 
 			for (int i = 0; i < text.length / 2; i++) {
-				byte[] keyword = text[2 * i].getBytes();
-				byte[] value = text[2 * i + 1].getBytes();
+				byte[] keyword = text[2 * i].getBytes(StandardCharsets.ISO_8859_1);
+				byte[] value = text[2 * i + 1].getBytes(StandardCharsets.ISO_8859_1);
 
 				ChunkStream cs = new ChunkStream("tEXt");
 
@@ -815,13 +817,43 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 		}
 	}
 
+	private void writeITXT() throws IOException {
+		if (param.isInternationalTextSet()) {
+			String[] text = param.getInternationalText();
+
+			for (int i = 0; i < text.length / 4; i++) {
+				byte[] keyword = text[4 * i].getBytes(StandardCharsets.ISO_8859_1);
+				byte[] langTag = text[4 * i + 1].getBytes(StandardCharsets.ISO_8859_1);
+				byte[] keywordTranslated = text[4 * i + 2].getBytes(StandardCharsets.UTF_8);
+				byte[] value = text[4 * i + 3].getBytes(StandardCharsets.UTF_8);
+
+				ChunkStream cs = new ChunkStream("iTXt");
+
+				cs.write(keyword, 0, Math.min(keyword.length, 79));
+				cs.write(0);
+				cs.write(1); // Compressed text
+				cs.write(0); // Compression method: deflate
+				cs.write(langTag);
+				cs.write(0);
+				cs.write(keywordTranslated);
+				cs.write(0);
+
+				try (DeflaterOutputStream dos = new DeflaterOutputStream(cs, new Deflater(compressionLevel))) {
+					dos.write(value);
+					dos.finish();
+					cs.writeToStream(dataOutput);
+				}
+			}
+		}
+	}
+
 	private void writeZTXT() throws IOException {
 		if (param.isCompressedTextSet()) {
 			String[] text = param.getCompressedText();
 
 			for (int i = 0; i < text.length / 2; i++) {
-				byte[] keyword = text[2 * i].getBytes();
-				byte[] value = text[2 * i + 1].getBytes();
+				byte[] keyword = text[2 * i].getBytes(StandardCharsets.ISO_8859_1);
+				byte[] value = text[2 * i + 1].getBytes(StandardCharsets.ISO_8859_1);
 
 				ChunkStream cs = new ChunkStream("zTXt");
 
@@ -829,7 +861,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 				cs.write(0);
 				cs.write(0);
 
-				DeflaterOutputStream dos = new DeflaterOutputStream(cs);
+				DeflaterOutputStream dos = new DeflaterOutputStream(cs, new Deflater(compressionLevel));
 				dos.write(value);
 				dos.finish();
 
@@ -1054,6 +1086,8 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 			}
 		}
 
+		setCompressionLevel();
+
 		setICCProfileInfo(colorModel);
 
 		interlace = param.getInterlacing();
@@ -1078,6 +1112,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 		writeSPLT();
 		writeTIME();
 		writeTEXT();
+		writeITXT();
 		writeZTXT();
 
 		writePrivateChunks();
@@ -1090,6 +1125,21 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 
 		// The next line is uncommented in Batik
 		//dataOutput.close();
+	}
+
+	private void setCompressionLevel() {
+		Integer level = param.getCompressionLevel();
+
+		if (level != null) {
+			int lvl = level.intValue();
+			if (lvl < -1) {
+				lvl = -1; // Default
+			} else if (lvl > 9) {
+				lvl = 9;
+			}
+
+			compressionLevel = lvl;
+		}
 	}
 
 	private void setICCProfileInfo(ColorModel colorModel) {

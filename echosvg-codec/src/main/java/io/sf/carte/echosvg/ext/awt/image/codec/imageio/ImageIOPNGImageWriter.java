@@ -21,16 +21,21 @@ package io.sf.carte.echosvg.ext.awt.image.codec.imageio;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
+import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.zip.Deflater;
 
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
 import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 
 import io.sf.carte.echosvg.ext.awt.image.codec.impl.ColorUtil;
+import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
+import io.sf.carte.echosvg.ext.awt.image.spi.PNGImageWriterParams;
 
 /**
  * ImageWriter that encodes PNG images using Image I/O.
@@ -40,6 +45,8 @@ import io.sf.carte.echosvg.ext.awt.image.codec.impl.ColorUtil;
  */
 public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 
+	private static final String PNG_NATIVE_FORMAT = "javax_imageio_png_1.0";
+
 	/**
 	 * Main constructor.
 	 */
@@ -48,11 +55,10 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 	}
 
 	@Override
-	protected void updateColorMetadata(IIOMetadata meta, ColorSpace colorSpace) {
+	protected void updateColorMetadata(IIOMetadata meta, ImageWriterParams params, ColorSpace colorSpace) {
 		if (!ColorUtil.isBuiltInColorSpace(colorSpace) && colorSpace instanceof ICC_ColorSpace
 				&& meta.isStandardMetadataFormatSupported()) {
-			final String metaName = "javax_imageio_png_1.0";
-			IIOMetadataNode root = (IIOMetadataNode) meta.getAsTree(metaName);
+			IIOMetadataNode root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
 			IIOMetadataNode iCCP = getChildNode(root, "iCCP");
 			if (iCCP == null) {
 				iCCP = new IIOMetadataNode("iCCP");
@@ -61,16 +67,16 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 			ICC_Profile profile = ((ICC_ColorSpace) colorSpace).getProfile();
 			iCCP.setAttribute("profileName", profileName(profile));
 			iCCP.setAttribute("compressionMethod", "deflate");
-			iCCP.setUserObject(compressProfile(profile.getData()));
+			iCCP.setUserObject(compressProfile(profile.getData(), params));
 			try {
-				meta.mergeTree(metaName, root);
+				meta.mergeTree(PNG_NATIVE_FORMAT, root);
 			} catch (IIOInvalidTreeException e) {
 				throw new RuntimeException("Cannot update image metadata.", e);
 			}
 		}
 	}
 
-	static String profileName(ICC_Profile profile) {
+	private static String profileName(ICC_Profile profile) {
 		byte[] bdesc = profile.getData(ICC_Profile.icSigProfileDescriptionTag);
 		/*
 		 * The profile description tag is of type multiLocalizedUnicodeType which starts
@@ -107,13 +113,26 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 		return (int) value;
 	}
 
-	private static byte[] compressProfile(byte[] data) {
+	private static byte[] compressProfile(byte[] data, ImageWriterParams params) {
+		// Determine the compression level
+		int lvl = Deflater.DEFAULT_COMPRESSION;
+		if (params != null) {
+			Integer level = params.getCompressionLevel();
+			if (level != null) {
+				lvl = level.intValue();
+				if (lvl < -1) {
+					lvl = Deflater.DEFAULT_COMPRESSION;
+				} else if (lvl > Deflater.BEST_COMPRESSION) {
+					lvl = Deflater.BEST_COMPRESSION;
+				}
+			}
+		}
 		// ByteArrayOutputStream for the compressed output
 		ByteArrayOutputStream out = new ByteArrayOutputStream(data.length + 16);
 		// Compress profile
 		// Buffer size should be at least 6
 		byte[] buffer = new byte[Math.min(data.length + 5, 1024)];
-		Deflater defl = new Deflater(Deflater.BEST_COMPRESSION);
+		Deflater defl = new Deflater(lvl);
 		defl.setInput(data);
 		defl.finish();
 		do {
@@ -123,6 +142,142 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 		defl.end();
 
 		return out.toByteArray();
+	}
+
+	@Override
+	protected ImageWriteParam getDefaultWriteParam(ImageWriter iiowriter, RenderedImage image,
+			ImageWriterParams params) {
+		ImageWriteParam param = iiowriter.getDefaultWriteParam();
+
+		if (params != null) {
+			/*
+			 * Compression
+			 */
+			String comprMethod = params.getCompressionMethod();
+			Integer level = params.getCompressionLevel();
+			if (level != null) {
+				param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+				param.setCompressionType(comprMethod != null ? comprMethod : "Deflate");
+				int lvl = level.intValue();
+				if (lvl >= 0 && lvl < 10) {
+					// ImageIO sets the compression level from a quality in the 0-1 range...
+					float quality = 1f - lvl / 9f;
+					param.setCompressionQuality(quality);
+				}
+			} else if (comprMethod != null) {
+				param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+				param.setCompressionType(comprMethod);
+			}
+		}
+
+		return param;
+	}
+
+	@Override
+	protected IIOMetadata updateMetadata(IIOMetadata meta, ImageWriterParams params) {
+		meta = super.updateMetadata(meta, params);
+
+		if (meta.isStandardMetadataFormatSupported() && params instanceof PNGImageWriterParams) {
+			IIOMetadataNode root = null;
+
+			PNGImageWriterParams pngParams = (PNGImageWriterParams) params;
+
+			boolean needsMerge = false;
+
+			if (pngParams.isTextSet()) {
+				String[] text = pngParams.getText();
+
+				if (text.length % 2 > 0) {
+					throw new RuntimeException("Wrong tEXt data: array must have length multiple of 2.");
+				}
+
+				root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
+
+				IIOMetadataNode tEXt = getChildNode(root, "tEXt");
+				if (tEXt == null) {
+					tEXt = new IIOMetadataNode("tEXt");
+					root.appendChild(tEXt);
+				}
+
+				for (int i = 0; i < text.length; i += 2) {
+					IIOMetadataNode tEXtEntry = new IIOMetadataNode("tEXtEntry");
+					tEXt.appendChild(tEXtEntry);
+					tEXtEntry.setAttribute("keyword", text[i]);
+					tEXtEntry.setAttribute("value", text[i + 1]);
+				}
+
+				needsMerge = true;
+			}
+
+			if (pngParams.isInternationalTextSet()) {
+				String[] text = pngParams.getInternationalText();
+
+				if (text.length % 4 > 0) {
+					throw new RuntimeException("Wrong iTXt data: array must have length multiple of 4.");
+				}
+
+				if (root == null) {
+					root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
+				}
+
+				IIOMetadataNode iTXt = getChildNode(root, "iTXt");
+				if (iTXt == null) {
+					iTXt = new IIOMetadataNode("iTXt");
+					root.appendChild(iTXt);
+				}
+
+				for (int i = 0; i < text.length; i += 4) {
+					IIOMetadataNode entry = new IIOMetadataNode("iTXtEntry");
+					iTXt.appendChild(entry);
+					entry.setAttribute("keyword", text[i]);
+					entry.setAttribute("compressionFlag", "TRUE");
+					entry.setAttribute("compressionMethod", "1");
+					entry.setAttribute("languageTag", text[i + 1]);
+					entry.setAttribute("translatedKeyword", text[i + 2]);
+					entry.setAttribute("text", text[i + 3]);
+				}
+
+				needsMerge = true;
+			}
+
+			if (pngParams.isCompressedTextSet()) {
+				String[] text = pngParams.getCompressedText();
+
+				if (text.length % 2 > 0) {
+					throw new RuntimeException("Wrong zTXt data: array must have length multiple of 2.");
+				}
+
+				if (root == null) {
+					root = (IIOMetadataNode) meta.getAsTree(PNG_NATIVE_FORMAT);
+				}
+
+				IIOMetadataNode zTXt = getChildNode(root, "zTXt");
+				if (zTXt == null) {
+					zTXt = new IIOMetadataNode("zTXt");
+					root.appendChild(zTXt);
+				}
+
+				for (int i = 0; i < text.length; i += 2) {
+					IIOMetadataNode entry = new IIOMetadataNode("zTXtEntry");
+					zTXt.appendChild(entry);
+					entry.setAttribute("keyword", text[i]);
+					entry.setAttribute("compressionMethod", "deflate");
+					entry.setAttribute("text", text[i + 1]);
+				}
+
+				needsMerge = true;
+			}
+
+			if (needsMerge) {
+				try {
+					meta.mergeTree(PNG_NATIVE_FORMAT, root);
+				} catch (IIOInvalidTreeException e) {
+					throw new RuntimeException("Cannot update image metadata.", e);
+				}
+			}
+		}
+
+		return meta;
 	}
 
 }

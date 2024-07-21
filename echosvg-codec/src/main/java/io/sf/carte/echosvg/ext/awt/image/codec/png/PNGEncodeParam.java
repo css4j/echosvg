@@ -559,6 +559,27 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 		}
 	}
 
+	private Integer deflateLevel;
+
+	/**
+	 * Get the level to be used in compression.
+	 * 
+	 * @return the compression level, or {@code null} if the default should be
+	 *         applied.
+	 */
+	public Integer getCompressionLevel() {
+		return deflateLevel;
+	}
+
+	/**
+	 * Sets the level used in compression.
+	 * 
+	 * @param level the level (for <code>Deflate</code>, in the range 0-9).
+	 */
+	public void setCompressionLevel(int level) {
+		this.deflateLevel = Integer.valueOf(level);
+	}
+
 	protected int bitDepth;
 	protected boolean bitDepthSet = false;
 
@@ -1054,7 +1075,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 	 */
 	public String[] getText() {
 		if (!textSet) {
-			throw new IllegalStateException(PropertyUtil.getString("PNGEncodeParam20"));
+			throw new IllegalStateException(PropertyUtil.getString("PNGEncodeParam.tEXt.not.set"));
 		}
 		return text;
 	}
@@ -1141,7 +1162,60 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 		return transparencySet;
 	}
 
-	// zTXT chunk
+	// iTXt chunk
+
+	private String[] iText = null;
+	private boolean iTextSet = false;
+
+	/**
+	 * Sets an array of <code>String</code>s containing, in this order, the keyword,
+	 * the language tag, the translated keyword and the internationalized text.
+	 * <p>
+	 * Therefore, the array must be multiple of 4.
+	 * </p>
+	 * <p>
+	 * The 'iTXt' chunk will encode this information.
+	 * </p>
+	 */
+	public void setInternationalText(String[] text) {
+		this.iText = text;
+		iTextSet = true;
+	}
+
+	/**
+	 * Returns the internationalized text strings to be stored in compressed form
+	 * with this image as an array of <code>String</code>s.
+	 *
+	 * <p>
+	 * If the internationalized text strings have not previously been set, or have
+	 * been unset, an <code>IllegalStateException</code> will be thrown.
+	 *
+	 * @throws IllegalStateException if the internationalized text strings are not
+	 *                               set.
+	 */
+	public String[] getInternationalText() {
+		if (!iTextSet) {
+			throw new IllegalStateException(PropertyUtil.getString("PNGEncodeParam.iTXt.not.set"));
+		}
+		return iText;
+	}
+
+	/**
+	 * Suppresses the 'iTXt' chunk from being output.
+	 */
+	public void unsetInternationalText() {
+		iText = null;
+		iTextSet = false;
+	}
+
+	/**
+	 * Returns true if an 'iTXt' chunk will be output.
+	 */
+	public boolean isInternationalTextSet() {
+		return iTextSet;
+	}
+
+	// zTXt chunk
 
 	private String[] zText = null;
 	private boolean zTextSet = false;
@@ -1170,7 +1244,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 	 */
 	public String[] getCompressedText() {
 		if (!zTextSet) {
-			throw new IllegalStateException(PropertyUtil.getString("PNGEncodeParam22"));
+			throw new IllegalStateException(PropertyUtil.getString("PNGEncodeParam.zTXt.not.set"));
 		}
 		return zText;
 	}
@@ -1184,7 +1258,7 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 	}
 
 	/**
-	 * Returns true if a 'zTXT' chunk will be output.
+	 * Returns true if a 'zTXt' chunk will be output.
 	 */
 	public boolean isCompressedTextSet() {
 		return zTextSet;
@@ -1471,4 +1545,5 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 
 		return filterType;
 	}
+
 }

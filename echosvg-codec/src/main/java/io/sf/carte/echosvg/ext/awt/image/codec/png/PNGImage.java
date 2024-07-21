@@ -35,10 +35,12 @@ import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -209,6 +211,11 @@ class PNGImage extends SimpleRenderedImage {
 	private List<String> textKeys = new ArrayList<>();
 	private List<String> textStrings = new ArrayList<>();
 
+	private List<String> itextKeys = new ArrayList<>();
+	private List<String> itextLangTags = new ArrayList<>();
+	private List<String> itextTransKeys = new ArrayList<>();
+	private List<String> itextStrings = new ArrayList<>();
+
 	private List<String> ztextKeys = new ArrayList<>();
 	private List<String> ztextStrings = new ArrayList<>();
 
@@ -350,6 +357,9 @@ class PNGImage extends SimpleRenderedImage {
 				} else if (chunkType.equals("tRNS")) {
 					chunk = readChunk(distream);
 					parse_tRNS_chunk(chunk);
+				} else if (chunkType.equals("iTXt")) {
+					chunk = readChunk(distream);
+					parse_iTXt_chunk(chunk);
 				} else if (chunkType.equals("zTXt")) {
 					chunk = readChunk(distream);
 					parse_zTXt_chunk(chunk);
@@ -633,6 +643,31 @@ class PNGImage extends SimpleRenderedImage {
 		}
 		if (encodeParam != null) {
 			encodeParam.setText(textArray);
+		}
+
+		// Store international text strings
+		int itextLen = itextKeys.size();
+		String[] itextArray = new String[4 * itextLen];
+		for (int i = 0; i < itextLen; i++) {
+			String key = itextKeys.get(i);
+			String langTag = itextLangTags.get(i);
+			String transKey = itextTransKeys.get(i);
+			String val = itextStrings.get(i);
+			itextArray[2 * i] = key;
+			itextArray[2 * i + 1] = langTag;
+			itextArray[2 * i + 2] = transKey;
+			itextArray[2 * i + 3] = val;
+			if (emitProperties) {
+				String uniqueKey = "itext_" + i + ':' + key;
+				String[] itextVal = new String[3];
+				itextVal[0] = langTag;
+				itextVal[1] = transKey;
+				itextVal[2] = val;
+				properties.put(uniqueKey.toLowerCase(), itextVal);
+			}
+		}
+		if (encodeParam != null) {
+			encodeParam.setInternationalText(itextArray);
 		}
 
 		// Store compressed text strings
@@ -1304,6 +1339,66 @@ class PNGImage extends SimpleRenderedImage {
 			String msg = PropertyUtil.getString("PNGImage.unexpected.trns");
 			throw new RuntimeException(msg);
 		}
+	}
+
+	private void parse_iTXt_chunk(PNGChunk chunk) {
+		StringBuilder buf = new StringBuilder();
+
+		int textIndex = readString(buf, chunk, 0);
+		String key = buf.toString();
+		buf.setLength(0);
+
+		boolean compressed = chunk.getByte(textIndex++) != 0;
+
+		/* int method = */ chunk.getByte(textIndex++);
+
+		textIndex = readString(buf, chunk, textIndex);
+		String langTag = buf.toString();
+		buf.setLength(0);
+
+		textIndex = readString(buf, chunk, textIndex);
+		String transkey = buf.toString();
+		//buf.setLength(0);
+
+		// Now read the text
+		int length = chunk.getLength() - textIndex;
+		byte[] data = chunk.getData();
+
+		String text;
+		if (!compressed) {
+			text = new String(data, textIndex, length, StandardCharsets.UTF_8);
+		} else {
+			ByteArrayOutputStream out = new ByteArrayOutputStream((int) (length * 1.6f) + 16);
+			try {
+				InputStream is = new ByteArrayInputStream(data, textIndex, length);
+				if (compressed) {
+					is = new InflaterInputStream(is);
+				}
+
+				int c;
+				while ((c = is.read()) != -1) {
+					out.write(c);
+				}
+				text = new String(out.toByteArray(), StandardCharsets.UTF_8);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+
+		itextKeys.add(key);
+		itextLangTags.add(langTag);
+		itextTransKeys.add(transkey);
+		itextStrings.add(text);
+	}
+
+	private int readString(StringBuilder buf, PNGChunk chunk, final int index) {
+		int textIndex = index;
+		byte b;
+		while ((b = chunk.getByte(textIndex++)) != 0) {
+			buf.append((char) b);
+		}
+		return textIndex;
 	}
 
 	private void parse_zTXt_chunk(PNGChunk chunk) {
