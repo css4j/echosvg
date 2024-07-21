@@ -1722,20 +1722,13 @@ public class StyleBypassRenderingTest {
 		}
 
 		@Override
-		protected String getImageSuffix() {
+		protected CharSequence getImageSuffix() {
+			CharSequence suf = super.getImageSuffix();
+
 			StringBuilder buf = null;
-
 			if (altSheet != null) {
-				buf = new StringBuilder();
-				buf.append('_').append(altSheet);
-			}
-
-			String medium = getMedia();
-			if (medium != null && !DEFAULT_MEDIUM.equals(medium)) {
-				if (buf == null) {
-					buf = new StringBuilder();
-				}
-				buf.append('-').append(medium);
+				buf = new StringBuilder(suf.length() + altSheet.length() + 6);
+				buf.append(suf).append('_').append(altSheet);
 			}
 
 			if (darkMode) {
@@ -1746,8 +1739,9 @@ public class StyleBypassRenderingTest {
 			}
 
 			if (buf == null) {
-				return "";
+				return suf;
 			}
+
 			return buf.toString();
 		}
 

@@ -36,6 +36,31 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  */
 public class AbstractSamplesRendering {
 
+	/**
+	 * To test the tEXt chunk.
+	 */
+	private static final String[] tEXt = { "Software", "EchoSVG", "LoremIpsum 1",
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, ", "LoremIpsum 2",
+			"sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "LoremIpsum 3",
+			" Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi", "LoremIpsum 4",
+			" ut aliquip ex ea commodo consequat." };
+
+	/**
+	 * To test the zTXt chunk.
+	 */
+	private static final String[] zTXt = { "Groucho contract scene 1",
+			"The first part of the party of the first part shall be known in this contract",
+			"Groucho contract scene 2", " as the first part of the party of the first part.",
+			"Groucho contract scene 3",
+			"The party of the second part shall be know in this contract as the party of the second part." };
+
+	/**
+	 * To test the iTXt chunk.
+	 */
+	private static final String[] iTXt = { "Foo", "la-VAT", "LoremIpsum",
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+					+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." };
+
 	void test(String file) throws TranscoderException, IOException {
 		test(file, true);
 	}
@@ -45,7 +70,7 @@ public class AbstractSamplesRendering {
 	 * 
 	 * @param file the SVG file to test.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testNV(String file) throws TranscoderException, IOException {
 		test(file, false);
@@ -70,7 +95,7 @@ public class AbstractSamplesRendering {
 	 * @param file the SVG file to test.
 	 * @param lang the language.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 */
 	void test(String file, String lang) throws TranscoderException, IOException {
 		RenderingTest runner = new RenderingTest();
@@ -90,7 +115,7 @@ public class AbstractSamplesRendering {
 	 * @param file       the SVG file to test.
 	 * @param validating if true, the SVG is validated.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 */
 	void test(String file, boolean validating) throws TranscoderException, IOException {
 		RenderingTest runner = new RenderingTest();
@@ -112,7 +137,7 @@ public class AbstractSamplesRendering {
 	 *                           media.
 	 * @param expectedErrorCount the expected error count.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testNVErrIgnore(String file, String media, int expectedErrorCount)
 			throws TranscoderException, IOException {
@@ -133,7 +158,7 @@ public class AbstractSamplesRendering {
 	 * @param expectedErrorCount the expected error count.
 	 * @param validate           whether to validate or not.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testErrIgnore(String file, String media, int expectedErrorCount, boolean validate)
 			throws TranscoderException, IOException {
@@ -162,6 +187,89 @@ public class AbstractSamplesRendering {
 	}
 
 	/**
+	 * Test the rendering of a SVG file with varying compression levels.
+	 * 
+	 * @param file       the SVG file to test.
+	 * @param validating if true, the SVG is validated.
+	 * @param comprLevel the PNG compression level.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testCompress(String file, boolean validating, int comprLevel) throws TranscoderException, IOException {
+		RenderingTest runner = new RenderingTest();
+		runner.setValidating(validating);
+		runner.setCompressionLevel(comprLevel);
+		runner.setFile(file);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
+	}
+
+	/**
+	 * Test the rendering of a SVG file with embedded text.
+	 * 
+	 * @param file       the SVG file to test.
+	 * @param validating if true, the SVG is validated.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testText(String file, boolean validating) throws TranscoderException, IOException {
+		RenderingTest runner = new RenderingTest();
+		runner.setValidating(validating);
+		runner.setText(tEXt);
+		runner.setInternationalText(iTXt);
+		runner.setCompressedText(zTXt);
+		runner.setFile(file);
+		runner.compareStreams();
+	}
+
+	/**
+	 * Test the rendering of a SVG file with the ImageIO encoder and the default
+	 * compression level.
+	 * 
+	 * @param file       the SVG file to test.
+	 * @param validating if true, the SVG is validated.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testImageIO(String file, boolean validating) throws TranscoderException, IOException {
+		testImageIO(file, validating, 4);
+	}
+
+	/**
+	 * Test the rendering of a SVG file with the ImageIO encoder.
+	 * 
+	 * @param file       the SVG file to test.
+	 * @param validating if true, the SVG is validated.
+	 * @param comprLevel the PNG compression level.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testImageIO(String file, boolean validating, int comprLevel) throws TranscoderException, IOException {
+		RenderingTest runner = new ImageIORenderingCheck();
+		runner.setCompressionLevel(comprLevel);
+		runner.setValidating(validating);
+		runner.setFile(file);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
+	}
+
+	/**
+	 * Test the rendering of a SVG file with the ImageIO encoder and with embedded text.
+	 * 
+	 * @param file       the SVG file to test.
+	 * @param validating if true, the SVG is validated.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testImageIOText(String file, boolean validating) throws TranscoderException, IOException {
+		RenderingTest runner = new ImageIORenderingCheck();
+		runner.setValidating(validating);
+		runner.setText(tEXt);
+		runner.setInternationalText(iTXt);
+		runner.setCompressedText(zTXt);
+		runner.setFile(file);
+		runner.compareStreams();
+	}
+
+	/**
 	 * Test the rendering of a SVG image inside an XHTML document.
 	 * 
 	 * <p>
@@ -171,7 +279,7 @@ public class AbstractSamplesRendering {
 	 * 
 	 * @param file the XHTML file to test.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testXHTML(String file) throws TranscoderException, IOException {
 		RenderingTest runner = new XHTMLRenderingAccuracyTest();
@@ -192,7 +300,7 @@ public class AbstractSamplesRendering {
 	 *                           media.
 	 * @param expectedErrorCount the expected error count.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testXHTMLErrIgnore(String file, String media, int expectedErrorCount)
 			throws TranscoderException, IOException {
@@ -212,7 +320,7 @@ public class AbstractSamplesRendering {
 	 * 
 	 * @param file the HTML file to test.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testHTML(String file) throws TranscoderException, IOException {
 		testHTML(file, null);
@@ -229,7 +337,7 @@ public class AbstractSamplesRendering {
 	 * @param file the HTML file to test.
 	 * @param the  selector that locates the desired SVG element.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testHTML(String file, String selector) throws TranscoderException, IOException {
 		RenderingTest runner = new HTMLRenderingAccuracyTest(selector);
@@ -266,7 +374,7 @@ public class AbstractSamplesRendering {
 	 * 
 	 * @param file the SVG file to test.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testDynamicUpdate(String file) throws TranscoderException, IOException {
 		JSVGRenderingAccuracyTest runner = new JSVGRenderingAccuracyTest();

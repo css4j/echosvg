@@ -18,44 +18,51 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
+import io.sf.carte.echosvg.transcoder.image.PNGTranscoderImageIOWriteAdapter;
 
 /**
- * Checks for regressions in rendering of a document with animations.
- *
- * @author For later modifications, see Git history.
+ * Checks for regressions in rendering of SVG with ImageIO writer.
+ * 
  * @version $Id$
  */
-public class SVGAnimationRenderingAccuracyTest extends RenderingTest {
+class ImageIORenderingCheck extends RenderingTest {
 
-	private float time;
+	// ImageIO default is 4
+	private static final int IMAGEIO_DEFAULT_COMPRESSION_LEVEL = 4;
 
-	public SVGAnimationRenderingAccuracyTest(float time) {
+	/**
+	 * Construct a new test.
+	 */
+	public ImageIORenderingCheck() {
 		super();
-		this.time = time;
+	}
+
+	@Override
+	protected int getDefaultCompressionLevel() {
+		return IMAGEIO_DEFAULT_COMPRESSION_LEVEL;
 	}
 
 	@Override
 	protected CharSequence getImageSuffix() {
-		CharSequence up = super.getImageSuffix();
-		if (time == 0f) {
-			return up;
-		}
-		String stime = Float.toString(time);
-		StringBuilder buf = new StringBuilder(up.length() + stime.length() + 2);
-		buf.append(up).append("-t").append(stime);
+		CharSequence suf = super.getImageSuffix();
+		StringBuilder buf = new StringBuilder(suf.length() + 3);
+		buf.append("-io").append(suf);
 		return buf;
 	}
 
-	/**
-	 * Returns the <code>ImageTranscoder</code> the Test should use
-	 */
 	@Override
-	ImageTranscoder getTestImageTranscoder() {
-		ImageTranscoder t = super.getTestImageTranscoder();
-		t.addTranscodingHint(SVGAbstractTranscoder.KEY_SNAPSHOT_TIME, time);
-		return t;
+	ImageTranscoder createTestImageTranscoder() {
+		return new ImageIOTestTranscoder();
+	}
+
+	class ImageIOTestTranscoder extends InternalPNGTranscoder {
+
+		@Override
+		protected WriteAdapter createWriteAdapter() {
+			return new PNGTranscoderImageIOWriteAdapter();
+		}
+
 	}
 
 }

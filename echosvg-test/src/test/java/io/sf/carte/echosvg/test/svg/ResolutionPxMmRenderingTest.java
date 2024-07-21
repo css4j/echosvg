@@ -44,8 +44,12 @@ class ResolutionPxMmRenderingTest extends RenderingTest {
 	}
 
 	@Override
-	protected String getImageSuffix() {
-		return '-' + Float.toString(pxToMM) + "pxmm";
+	protected CharSequence getImageSuffix() {
+		String pxmm = Float.toString(pxToMM);
+		CharSequence up = super.getImageSuffix();
+		StringBuilder buf = new StringBuilder(up.length() + pxmm.length() + 5);
+		buf.append(up).append('-').append(pxmm).append("pxmm");
+		return buf;
 	}
 
 	/**

@@ -110,7 +110,7 @@ public abstract class PreconfiguredRenderingTest extends SVGRenderingAccuracyTes
 	protected String buildRefImgURL(String svgDir, String svgFile) {
 		String refPrefix = getRefImagePrefix();
 		String refSuffix = getRefImageSuffix();
-		String imgSuffix = getImageSuffix();
+		CharSequence imgSuffix = getImageSuffix();
 
 		StringBuilder buf = new StringBuilder(refPrefix.length() + refSuffix.length() + imgSuffix.length()
 				+ svgDir.length() + svgFile.length() + 4);

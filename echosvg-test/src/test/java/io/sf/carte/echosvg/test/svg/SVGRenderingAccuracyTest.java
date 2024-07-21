@@ -77,6 +77,30 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	 */
 	private String media;
 
+
+	// Batik uses 9
+	private static final int DEFAULT_COMPRESSION_LEVEL = 9;
+
+	/**
+	 * The PNG compression level.
+	 */
+	private int comprLevel = getDefaultCompressionLevel();
+
+	/**
+	 * To set the tEXt chunk.
+	 */
+	private String[] tEXt;
+
+	/**
+	 * To set the iTXt chunk.
+	 */
+	private String[] iTXt;
+
+	/**
+	 * To set the zTXt chunk.
+	 */
+	private String[] zTXt;
+
 	/**
 	 * Constructor.
 	 * 
@@ -128,9 +152,89 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		this.media = media;
 	}
 
+	/**
+	 * Set the compression level.
+	 * 
+	 * @param comprLevel the compression level.
+	 */
+	public void setCompressionLevel(int comprLevel) {
+		this.comprLevel = comprLevel;
+	}
+
+	/**
+	 * 
+	 * @return the compression level.
+	 */
+	protected int getCompressionLevel() {
+		return comprLevel;
+	}
+
+	protected int getDefaultCompressionLevel() {
+		return DEFAULT_COMPRESSION_LEVEL;
+	}
+
+	public void setText(String[] tEXt) {
+		this.tEXt = tEXt;
+	}
+
+	protected String[] getText() {
+		return tEXt;
+	}
+
+	public void setInternationalText(String[] iTXt) {
+		this.iTXt = iTXt;
+	}
+
+	protected String[] getInternationalText() {
+		return iTXt;
+	}
+
+	public void setCompressedText(String[] zTXt) {
+		this.zTXt = zTXt;
+	}
+
+	protected String[] getCompressedText() {
+		return zTXt;
+	}
+
 	@Override
-	protected String getImageSuffix() {
-		return media != null && !DEFAULT_MEDIUM.equals(media) ? '-' + media : "";
+	protected CharSequence getImageSuffix() {
+		boolean nonDefCompr = getCompressionLevel() != getDefaultCompressionLevel();
+		boolean nonDefMedia = media != null && !DEFAULT_MEDIUM.equals(media);
+
+		if (nonDefCompr && nonDefMedia && tEXt == null && iTXt == null && zTXt == null) {
+			return "";
+		}
+
+		StringBuilder buf = new StringBuilder();
+		if (nonDefMedia) {
+			buf.append("-").append(media);
+		}
+		if (nonDefCompr) {
+			buf.append("-z").append(getCompressionLevel());
+		}
+
+		if (tEXt != null) {
+			buf.append("-text");
+			if (iTXt != null) {
+				buf.append("-i");
+			}
+			if (zTXt != null) {
+				buf.append("-z");
+			}
+		} else {
+			if (iTXt != null) {
+				if (zTXt != null) {
+					buf.append("-iztext");
+				} else {
+					buf.append("-itext");
+				}
+			} else if (zTXt != null) {
+				buf.append("-ztext");
+			}
+		}
+
+		return buf;
 	}
 
 	@Override
@@ -184,6 +288,22 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 
 		if (media != null) {
 			t.addTranscodingHint(SVGAbstractTranscoder.KEY_MEDIA, media);
+		}
+
+		if (getCompressionLevel() != getDefaultCompressionLevel()) {
+			t.addTranscodingHint(PNGTranscoder.KEY_COMPRESSION_LEVEL, getCompressionLevel());
+		}
+
+		if (tEXt != null) {
+			t.addTranscodingHint(PNGTranscoder.KEY_KEYWORD_TEXT, tEXt);
+		}
+
+		if (iTXt != null) {
+			t.addTranscodingHint(PNGTranscoder.KEY_INTERNATIONAL_TEXT, iTXt);
+		}
+
+		if (zTXt != null) {
+			t.addTranscodingHint(PNGTranscoder.KEY_COMPRESSED_TEXT, zTXt);
 		}
 
 		return t;

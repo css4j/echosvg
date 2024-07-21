@@ -79,6 +79,30 @@ class PNGTranscoderInternalCodecWriteAdapter implements PNGTranscoder.WriteAdapt
 			params.setSRGBIntent(PNGEncodeParam.INTENT_PERCEPTUAL);
 		}
 
+		// Compression level
+		Integer level = (Integer) hints.get(PNGTranscoder.KEY_COMPRESSION_LEVEL);
+		if (level != null) {
+			params.setCompressionLevel(level);
+		}
+
+		// tEXt
+		String[] text = (String[]) hints.get(PNGTranscoder.KEY_KEYWORD_TEXT);
+		if (text != null) {
+			params.setText(text);
+		}
+
+		// iTXt
+		text = (String[]) hints.get(PNGTranscoder.KEY_INTERNATIONAL_TEXT);
+		if (text != null) {
+			params.setInternationalText(text);
+		}
+
+		// zTXt
+		text = (String[]) hints.get(PNGTranscoder.KEY_COMPRESSED_TEXT);
+		if (text != null) {
+			params.setCompressedText(text);
+		}
+
 		float PixSzMM = transcoder.getUserAgent().getPixelUnitToMillimeter();
 		// num Pixs in 1 Meter
 		int numPix = (int) ((1000 / PixSzMM) + 0.5);

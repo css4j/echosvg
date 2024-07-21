@@ -24,8 +24,8 @@ import java.io.OutputStream;
 
 import io.sf.carte.echosvg.ext.awt.image.rendered.IndexImage;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
-import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterRegistry;
+import io.sf.carte.echosvg.ext.awt.image.spi.PNGImageWriterParams;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
@@ -37,7 +37,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-class PNGTranscoderImageIOWriteAdapter implements PNGTranscoder.WriteAdapter {
+public class PNGTranscoderImageIOWriteAdapter implements PNGTranscoder.WriteAdapter {
 
 	/**
 	 * @throws TranscoderException
@@ -61,7 +61,30 @@ class PNGTranscoderImageIOWriteAdapter implements PNGTranscoder.WriteAdapter {
 		}
 
 		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/png");
-		ImageWriterParams params = new ImageWriterParams();
+		PNGImageWriterParams params = new PNGImageWriterParams();
+
+		Integer level = (Integer) hints.get(PNGTranscoder.KEY_COMPRESSION_LEVEL);
+		if (level != null) {
+			params.setCompressionLevel(level);
+		}
+
+		// tEXt
+		String[] text = (String[]) hints.get(PNGTranscoder.KEY_KEYWORD_TEXT);
+		if (text != null) {
+			params.setText(text);
+		}
+
+		// iTXt
+		text = (String[]) hints.get(PNGTranscoder.KEY_INTERNATIONAL_TEXT);
+		if (text != null) {
+			params.setInternationalText(text);
+		}
+
+		// zTXt
+		text = (String[]) hints.get(PNGTranscoder.KEY_COMPRESSED_TEXT);
+		if (text != null) {
+			params.setCompressedText(text);
+		}
 
 		float PixSzMM = transcoder.getUserAgent().getPixelUnitToMillimeter();
 		int PixSzInch = (int) (25.4 / PixSzMM + 0.5);

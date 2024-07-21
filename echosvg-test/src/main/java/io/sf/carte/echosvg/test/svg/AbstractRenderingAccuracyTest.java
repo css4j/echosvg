@@ -20,13 +20,17 @@ package io.sf.carte.echosvg.test.svg;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -281,7 +285,7 @@ public abstract class AbstractRenderingAccuracyTest {
 	 * 
 	 * @return the image suffix, generally the empty string.
 	 */
-	protected String getImageSuffix() {
+	protected CharSequence getImageSuffix() {
 		return "";
 	}
 
@@ -296,6 +300,88 @@ public abstract class AbstractRenderingAccuracyTest {
 		return svgURL;
 	}
 
+	public void compareStreams() throws TranscoderException, IOException {
+		//
+		// First, do clean-up
+		//
+		if (candidateReference != null) {
+			if (candidateReference.exists()) {
+				candidateReference.delete();
+			}
+		}
+
+		//
+		// Render the SVG image into a raster. We call an
+		// abstract method to convert the src into a raster in
+		// a temporary file.
+		File tmpFile = null;
+
+		if (candidateReference != null) {
+			tmpFile = candidateReference;
+			if (!tmpFile.exists()) {
+				File parentDir = tmpFile.getParentFile();
+				if (!parentDir.exists()) {
+					if (!parentDir.mkdir()) {
+						throw new IOException("Could not create directory: " + parentDir.getAbsolutePath());
+					}
+				}
+			}
+		} else {
+			tmpFile = tmpUtil.createImageFile(svgURL, getImageSuffix(), IMAGE_FILE_DOT_EXTENSION);
+		}
+
+		try (FileOutputStream tmpFileOS = new FileOutputStream(tmpFile)) {
+			// Call abstract method to encode svgURL to tmpFileOS as a
+			// raster.
+			encode(svgURL, tmpFileOS);
+		}
+
+		int result;
+		try (FileInputStream isCand = new FileInputStream(tmpFile);
+				InputStream refIS = refImgURL.openStream()) {
+			result = equalStreams(isCand, refIS);
+		} catch (FileNotFoundException e) {
+			result = 3;
+		}
+
+		switch (result) {
+		case 1:
+			failTest("File at " + tmpFile.getAbsolutePath() + " has different length than reference.");
+			break;
+		case 2:
+			failTest("File " + tmpFile.getAbsolutePath() + " is different from reference.");
+			break;
+		case 3:
+			failTest("No reference file at: " + refImgURL.getFile());
+			break;
+		case 0:
+			tmpFile.delete();
+		}
+	}
+
+	private int equalStreams(InputStream isCand, InputStream isRef) throws IOException {
+		byte[] cand = readFile(isCand);
+		byte[] ref = readFile(isRef);
+
+		if (cand.length != ref.length) {
+			return 1;
+		}
+		if (!Arrays.equals(ref, 0, cand.length, cand, 0, cand.length)) {
+			return 2;
+		}
+		return 0;
+	}
+
+	private byte[] readFile(InputStream is) throws IOException {
+		byte[] buffer = new byte[512];
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(2048);
+		int count;
+		while ((count = is.read(buffer)) != -1) {
+			bos.write(buffer, 0, count);
+		}
+		return bos.toByteArray();
+	}
+
 	/**
 	 * Requests this <code>Test</code> to run.
 	 * 
@@ -308,7 +394,7 @@ public abstract class AbstractRenderingAccuracyTest {
 	 *                                     fixed threshold of
 	 *                                     {@code PIXEL_THRESHOLD}.
 	 * @throws TranscoderException
-	 * @throws IOException
+	 * @throws IOException         if an I/O error occurs.
 	 *
 	 */
 	public void runTest(float allowedPercentBelowThreshold, float allowedPercentOverThreshold)

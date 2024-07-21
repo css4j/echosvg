@@ -87,26 +87,16 @@ class AltUserSheetRenderingTest extends RenderingTest {
 	}
 
 	@Override
-	protected String getImageSuffix() {
-		StringBuilder buf = null;
+	protected CharSequence getImageSuffix() {
+		CharSequence suf = super.getImageSuffix();
 
 		if (altSheet != null) {
-			buf = new StringBuilder();
-			buf.append('_').append(altSheet);
+			StringBuilder buf = new StringBuilder(suf.length() + altSheet.length() + 1);
+			buf.append(suf).append('_').append(altSheet);
+			return buf;
 		}
 
-		String medium = getMedia();
-		if (medium != null && !DEFAULT_MEDIUM.equals(medium)) {
-			if (buf == null) {
-				buf = new StringBuilder();
-			}
-			buf.append('-').append(medium);
-		}
-
-		if (buf == null) {
-			return "";
-		}
-		return buf.toString();
+		return suf;
 	}
 
 }

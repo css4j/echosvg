@@ -57,6 +57,31 @@ public class SamplesRenderingTest extends AbstractSamplesRendering {
 	}
 
 	@Test
+	public void testBarChart_Compress_6() throws TranscoderException, IOException {
+		testCompress("samples/barChart.svg", true, 6);
+	}
+
+	@Test
+	public void testBarChart_Text() throws TranscoderException, IOException {
+		testText("samples/barChart.svg", true);
+	}
+
+	@Test
+	public void testBarChart_ImageIO() throws TranscoderException, IOException {
+		testImageIO("samples/barChart.svg", true);
+	}
+
+	@Test
+	public void testBarChart_ImageIO_Compress_6() throws TranscoderException, IOException {
+		testImageIO("samples/barChart.svg", true, 6);
+	}
+
+	@Test
+	public void testBarChart_ImageIO_Text() throws TranscoderException, IOException {
+		testImageIOText("samples/barChart.svg", true);
+	}
+
+	@Test
 	public void test3D() throws TranscoderException, IOException {
 		test("samples/batik3D.svg");
 	}

@@ -28,6 +28,7 @@ import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.image.resources.Messages;
 import io.sf.carte.echosvg.transcoder.keys.FloatKey;
 import io.sf.carte.echosvg.transcoder.keys.IntegerKey;
+import io.sf.carte.echosvg.transcoder.keys.StringArrayKey;
 
 /**
  * This class is an <code>ImageTranscoder</code> that produces a PNG image.
@@ -87,10 +88,14 @@ public class PNGTranscoder extends ImageTranscoder {
 			forceTransparentWhite(img, sppsm);
 		}
 
-		WriteAdapter adapter = new PNGTranscoderInternalCodecWriteAdapter();
-		//WriteAdapter adapter = new PNGTranscoderImageIOWriteAdapter();
+		WriteAdapter adapter = createWriteAdapter();
 
 		adapter.writeImage(this, img, output);
+	}
+
+	protected WriteAdapter createWriteAdapter() {
+		return new PNGTranscoderInternalCodecWriteAdapter();
+		// return new PNGTranscoderImageIOWriteAdapter();
 	}
 
 	// --------------------------------------------------------------------
@@ -159,6 +164,38 @@ public class PNGTranscoder extends ImageTranscoder {
 	public static final float[] DEFAULT_CHROMA = { 0.31270F, 0.329F, 0.64F, 0.33F, 0.3F, 0.6F, 0.15F, 0.06F };
 
 	/**
+	 * The compression level.
+	 *
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption>Compression level hint</caption>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_COMPRESSION_LEVEL</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Integer</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">Depends on the encoder. The default one uses
+	 * <code>9</code> (the maximum) for compatibility with Batik, but the ImageIO
+	 * <code>WriteAdapter</code> uses <code>4</code>.</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specifies the compression level used by the
+	 * encoder (in the range 0-9, 9 being the maximum).</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_COMPRESSION_LEVEL = new IntegerKey();
+
+	/**
 	 * The color indexed image key to specify number of colors used in palette.
 	 *
 	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
@@ -188,4 +225,117 @@ public class PNGTranscoder extends ImageTranscoder {
 	 * </table>
 	 */
 	public static final TranscodingHints.Key KEY_INDEXED = new IntegerKey();
+
+	/**
+	 * An array of even length, specifying keyword-text pairs.
+	 * <p>
+	 * Intended for PNG's {@code tEXt} chunks.
+	 * </p>
+	 *
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption>Keyword-text hint</caption>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_KEYWORD_TEXT</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String[]</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">null</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">An array of even length, specifying
+	 * keyword-text pairs. Strings at index {@code 0} and even indexes are
+	 * <a href="https://w3c.github.io/png/#11keywords">keywords</a> like "Title" or
+	 * "Description", while the strings that follow at odd indexes are text that
+	 * will be embedded without compression.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_KEYWORD_TEXT = new StringArrayKey();
+
+	/**
+	 * Internationalized text to embed in the image.
+	 * <p>
+	 * Intended for PNG's {@code iTXt} chunks.
+	 * </p>
+	 *
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption>Internationalized text hint</caption>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_INTERNATIONAL_TEXT</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String[]</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">null</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">An array of length multiple of 4, specifying
+	 * chunks consisting of a keyword, an
+	 * <a href="https://www.rfc-editor.org/rfc/rfc5646">RFC 5646</a> language tag, a
+	 * translation of the keyword according to that language, and then a text.
+	 * Strings at index {@code 0} are
+	 * <a href="https://w3c.github.io/png/#11keywords">keywords</a>, at {@code 1}
+	 * are the language tag, at {@code 2} the translation, at {@code 3} the text,
+	 * and so on. The text will be compressed.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_INTERNATIONAL_TEXT = new StringArrayKey();
+
+	/**
+	 * An array of even length, specifying keyword-text pairs. The text will be
+	 * compressed.
+	 * <p>
+	 * Intended for PNG's {@code zTXt} chunks.
+	 * </p>
+	 *
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption>Compressed text hint</caption>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_COMPRESSED_TEXT</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String[]</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">null</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">An array of even length, specifying
+	 * keyword-text pairs. Strings at index {@code 0} and even indexes are
+	 * <a href="https://w3c.github.io/png/#11keywords">keywords</a>, while the
+	 * strings that follow at odd indexes are text that will be embedded with
+	 * compression.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_COMPRESSED_TEXT = new StringArrayKey();
+
 }
