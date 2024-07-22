@@ -77,7 +77,7 @@ public class SVGGraphics2DDOMTest {
 
 		SVGAccuracyTest acctest = makeSVGAccuracyTest(painter, painterClassname);
 
-		acctest.runTest(false);
+		acctest.runTest(SVGAccuracyTest.FAIL_ON_ERROR);
 	}
 
 	private SVGAccuracyTest makeSVGAccuracyTest(Painter painter, String id) throws MalformedURLException {

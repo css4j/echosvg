@@ -46,11 +46,20 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * <code>Painter</code> is properly converted to an SVG document by comparing
  * the generated SVG document to a known, valid SVG reference.
  *
- * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:vhardy@apache.org">Vincent Hardy</a>. For
+ * later modifications, see Git history.
+ * </p>
+ * 
  * @version $Id$
  */
 public class SVGAccuracyTest {
+
+	public static final int FAIL_ON_ERROR = 0;
+
+	public static final int WARN_ON_ERROR = 1;
+
+	public static final int FAIL_IF_NO_ERROR = 2;
 
 	/**
 	 * Canvas size for all tests
@@ -73,6 +82,11 @@ public class SVGAccuracyTest {
 	private File saveSVG;
 
 	/**
+	 * The compression level
+	 */
+	private Integer compressionLevel;
+
+	/**
 	 * Constructor
 	 * 
 	 * @param painter the <code>Painter</code> object which will perform an
@@ -85,6 +99,25 @@ public class SVGAccuracyTest {
 		this.refURL = refURL;
 	}
 
+	/**
+	 * Get the compression level to use in embedded PNG images.
+	 * 
+	 * @return the compression level, or {@code null} if defaults shall be applied.
+	 */
+	public Integer getCompressionLevel() {
+		return compressionLevel;
+	}
+
+	/**
+	 * Sets the compression level which will be used in embedded PNG images.
+	 * 
+	 * @param compressionLevel the compression level (0-9), or {@code null} for
+	 *                         default behavior.
+	 */
+	public void setCompressionLevel(Integer compressionLevel) {
+		this.compressionLevel = compressionLevel;
+	}
+
 	void setSaveSVG(File saveSVG) {
 		this.saveSVG = saveSVG;
 	}
@@ -93,10 +126,12 @@ public class SVGAccuracyTest {
 	 * This method will only throw exceptions if some aspect of the test's internal
 	 * operation fails.
 	 * 
-	 * @param expectError false if no error expected
+	 * @param errorHandling {@code 0} if no error is accepted, {@code 1} if error
+	 *                      may happen but only a warning should be printed (flaky
+	 *                      test), {@code 2} to fail if no error is produced.
 	 * @throws IOException If an I/O error occurs
 	 */
-	void runTest(boolean expectError) throws IOException {
+	void runTest(int errorHandling) throws IOException {
 
 		SVGGraphics2D g2d = buildSVGGraphics2D();
 		g2d.setSVGCanvasSize(CANVAS_SIZE);
@@ -122,13 +157,23 @@ public class SVGAccuracyTest {
 
 		if (failMessage != null) {
 			save(bos.toByteArray());
-			if (!expectError) {
-				fail("File: " + refURL.toExternalForm() + '\n' + failMessage);
+			if (errorHandling == 0) {
+				failTest("File: " + refURL.toExternalForm() + '\n' + failMessage);
+			} else if (errorHandling == 1) {
+				debug(failMessage);
 			}
-		} else if (expectError) {
-			fail("Expected accuracy error but found no error, on file: " + refURL.toExternalForm());
+		} else if (errorHandling == 2) {
+			failTest("Expected accuracy error but found no error, on file: " + refURL.toExternalForm());
 		}
 
+	}
+
+	protected void failTest(String message) {
+		fail(message);
+	}
+
+	protected void debug(String message) {
+		System.err.println(message);
 	}
 
 	/**
@@ -167,6 +212,7 @@ public class SVGAccuracyTest {
 		defaults.setFont(new Font(TestFonts.FONT_FAMILY_SANS1, Font.PLAIN, 12));
 		ctx.setGraphicContextDefaults(defaults);
 		ctx.setPrecision(12);
+		ctx.setCompressionLevel(compressionLevel);
 
 		return new SVGGraphics2D(ctx, false);
 	}

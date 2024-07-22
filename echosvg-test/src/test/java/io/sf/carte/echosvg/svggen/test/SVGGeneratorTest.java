@@ -45,8 +45,10 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  * ImageComparisonTest between the rendering of the generated SVG for various
  * configurations.
  *
- * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:vhardy@apache.org">Vincent Hardy</a>. For
+ * later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGGeneratorTest {
@@ -157,7 +159,7 @@ public class SVGGeneratorTest {
 
 	@Test
 	public void testDrawImageICC() throws TranscoderException, IOException {
-		runTests("DrawImageICC");
+		runTests("DrawImageICC", SVGAccuracyTest.WARN_ON_ERROR, 7);
 	}
 
 	@Test
@@ -246,10 +248,22 @@ public class SVGGeneratorTest {
 	 * The id should be the Painter's class name prefixed with the package name
 	 * defined in getPackageName
 	 * 
-	 * @throws IOException If an I/O error occurs
+	 * @throws IOException         If an I/O error occurs
 	 * @throws TranscoderException
 	 */
 	void runTests(String painterClassname) throws IOException, TranscoderException {
+		runTests(painterClassname, SVGAccuracyTest.FAIL_ON_ERROR, null);
+	}
+
+	/**
+	 * The id should be the Painter's class name prefixed with the package name
+	 * defined in getPackageName
+	 * 
+	 * @throws IOException         If an I/O error occurs
+	 * @throws TranscoderException
+	 */
+	void runTests(String painterClassname, int accuracyTestErrorHandling, Integer compressionLevel)
+			throws IOException, TranscoderException {
 		String clName = getClass().getPackage().getName() + "." + painterClassname;
 		Class<?> cl = null;
 
@@ -274,10 +288,12 @@ public class SVGGeneratorTest {
 		Painter painter = (Painter) o;
 
 		SVGAccuracyTest acctest = makeSVGAccuracyTest(painter, painterClassname);
-		acctest.runTest(false);
+		acctest.setCompressionLevel(compressionLevel);
+		acctest.runTest(accuracyTestErrorHandling);
 
 		GeneratorContext genctxt = makeGeneratorContext(painter, painterClassname);
-		genctxt.runTest(false);
+		genctxt.setCompressionLevel(compressionLevel);
+		genctxt.runTest(accuracyTestErrorHandling);
 
 		float allowedPercentBelowThreshold = 0.01f;
 		float allowedPercentOverThreshold = 0.01f;

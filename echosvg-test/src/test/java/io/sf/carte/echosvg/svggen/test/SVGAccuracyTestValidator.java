@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.svggen.test;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -32,8 +32,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Validates the operation of the <code>SVGAccuractyTest</code> class
  *
- * @author <a href="mailto:vhardy@apache.org">Vincent Hardy</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:vhardy@apache.org">Vincent Hardy</a>. For
+ * later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGAccuracyTestValidator {
@@ -66,11 +68,7 @@ public class SVGAccuracyTestValidator {
 			Painter painter = this;
 			URL refURL = new URL("http", "dummyHost", "dummyFile.svg");
 			SVGAccuracyTest t = new SVGAccuracyTest(painter, refURL);
-			try {
-				t.runTest(true);
-				fail("Must throw exception.");
-			} catch (NullPointerException e) {
-			}
+			assertThrows(NullPointerException.class, () -> t.runTest(SVGAccuracyTest.FAIL_IF_NO_ERROR));
 		}
 
 	}
@@ -89,11 +87,7 @@ public class SVGAccuracyTestValidator {
 
 		public void test() throws IOException {
 			SVGAccuracyTest t = new SVGAccuracyTest(this, null);
-			try {
-				t.runTest(true);
-				fail("Must throw exception.");
-			} catch (NullPointerException e) {
-			}
+			assertThrows(NullPointerException.class, () -> t.runTest(SVGAccuracyTest.FAIL_IF_NO_ERROR));
 		}
 
 	}
@@ -102,11 +96,7 @@ public class SVGAccuracyTestValidator {
 
 		public void test() throws IOException {
 			SVGAccuracyTest t = new SVGAccuracyTest(this, new URL("http", "dummyHost", "dummyFile.svg"));
-			try {
-				t.runTest(true);
-				fail("Must throw exception.");
-			} catch (UnknownHostException e) {
-			}
+			assertThrows(UnknownHostException.class, () -> t.runTest(SVGAccuracyTest.FAIL_IF_NO_ERROR));
 		}
 
 	}
@@ -118,7 +108,7 @@ public class SVGAccuracyTestValidator {
 			tmpFile.deleteOnExit();
 
 			SVGAccuracyTest t = new SVGAccuracyTest(this, tmpFile.toURI().toURL());
-			t.runTest(true);
+			t.runTest(SVGAccuracyTest.FAIL_IF_NO_ERROR);
 		}
 
 	}
@@ -135,11 +125,11 @@ public class SVGAccuracyTestValidator {
 
 			// This first run should fail but it should
 			// have created the reference image in tmpFile
-			t.runTest(true);
+			t.runTest(SVGAccuracyTest.FAIL_IF_NO_ERROR);
 
 			// Second run should work because the reference
 			// image should match
-			t.runTest(false);
+			t.runTest(SVGAccuracyTest.FAIL_ON_ERROR);
 		}
 
 	}
