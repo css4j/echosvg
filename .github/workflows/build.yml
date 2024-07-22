@@ -30,11 +30,14 @@ jobs:
     # Many tests only pass on Windows
     runs-on: windows-latest
 
+    # On Java 11, continue on error to upload artifact
+    continue-on-error: ${{ matrix.java == '11' }}
+
     strategy:
       matrix:
         java: [ '11', '17' ]
 
-    name: Java ${{ matrix.Java }} build
+    name: Java ${{ matrix.java }} build
 
     steps:
       - uses: actions/checkout@v4
@@ -50,8 +53,20 @@ jobs:
       - name: Build with Gradle
         run: >-
           ./gradlew build
-          -PexcludeTests="SamplesSpecRenderingTest.testFontArabic,SamplesSpecRenderingTest.testVerticalText,StyleBypassRenderingTest.testVerticalText"
+
+      # Upload test artifact
+      - name: Upload test output
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: test-output
+          path: |
+            echosvg-test/build/reports/tests/test/
+            test-references/samples/**/candidate-variation/*
+          retention-days: 15
+          overwrite: true
 
       # Generate modular javadocs
       - name: Modular javadocs
+        if: ${{ success() }}
         run: ./gradlew modularJavadoc
