@@ -208,6 +208,54 @@ class PNGImage extends SimpleRenderedImage {
 	// Number of private chunks
 	private int chunkIndex = 0;
 
+	// iCCP chunk data
+
+	private String iccProfileName = null;
+	private byte[] iccProfileData = null;
+
+	/**
+	 * Sets the ICC profile data that was stored with this image. The profile is
+	 * represented in raw binary form.
+	 */
+	void setICCProfileData(String iccProfileName, byte[] iccProfileData) {
+		if (iccProfileName == null) {
+			throw new NullPointerException("Null profile name, use an empty String instead.");
+		}
+		this.iccProfileName = iccProfileName;
+		if (this.iccProfileName.length() > 79) {
+			this.iccProfileName = this.iccProfileName.substring(0, 79);
+		}
+
+		this.iccProfileData = iccProfileData;
+
+		if (encodeParam != null) {
+			encodeParam.setICCProfileName(iccProfileName);
+		}
+	}
+
+	/**
+	 * Returns the ICC profile data to be stored with this image.
+	 *
+	 * <p>
+	 * If the ICC profile has not previously been set, or has been unset, an
+	 * <code>IllegalStateException</code> will be thrown.
+	 *
+	 * @throws IllegalStateException if the ICC profile is not set.
+	 */
+	byte[] getICCProfileData() {
+		if (iccProfileData == null) {
+			throw new IllegalStateException(PropertyUtil.getString("PNGDecodeParam.iCCP.not.set"));
+		}
+		return iccProfileData.clone();
+	}
+
+	/**
+	 * Returns true if a 'iCCP' chunk was parsed.
+	 */
+	boolean isICCProfileDataSet() {
+		return iccProfileName != null;
+	}
+
 	private List<String> textKeys = new ArrayList<>();
 	private List<String> textStrings = new ArrayList<>();
 
@@ -825,8 +873,8 @@ class PNGImage extends SimpleRenderedImage {
 	 * rgb+alpha <code>ColorModel</code> is returned.
 	 */
 	public ColorModel createComponentColorModel(SampleModel sm) {
-		if (decodeParam.isICCProfileDataSet()) {
-			return createComponentColorModel(sm, decodeParam.getICCProfileData());
+		if (isICCProfileDataSet()) {
+			return createComponentColorModel(sm, getICCProfileData());
 		}
 
 		int type = sm.getDataType();
@@ -1134,7 +1182,7 @@ class PNGImage extends SimpleRenderedImage {
 			} catch (IOException e) {
 				throw new RuntimeException(PropertyUtil.getString("PNGImage.error.decomp.icc.profile."), e);
 			}
-			decodeParam.setICCProfileData(profileName.toString(), iccArray);
+			setICCProfileData(profileName.toString(), iccArray);
 		} else {
 			// Batik won't crash if there is no profile data, neither we.
 			iccArray = null;

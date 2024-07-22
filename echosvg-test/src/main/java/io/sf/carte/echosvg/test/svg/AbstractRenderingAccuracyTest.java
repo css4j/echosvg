@@ -18,12 +18,15 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
+import java.awt.image.WritableRaster;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +39,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGDecodeParam;
+import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGEncodeParam;
+import io.sf.carte.echosvg.ext.awt.image.codec.png.PNGImageDecoder;
 import io.sf.carte.echosvg.ext.awt.image.renderable.Filter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageTagRegistry;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
@@ -177,7 +183,8 @@ public abstract class AbstractRenderingAccuracyTest {
 	 * @param refImgURL the URL for the reference image.
 	 * @throws MalformedURLException 
 	 */
-	public AbstractRenderingAccuracyTest(int pixelThreshold, String svgURL, String refImgURL) throws MalformedURLException {
+	public AbstractRenderingAccuracyTest(int pixelThreshold, String svgURL, String refImgURL)
+			throws MalformedURLException {
 		this.pixelThreshold = pixelThreshold;
 		setInputAndRefURL(svgURL, refImgURL);
 	}
@@ -300,88 +307,6 @@ public abstract class AbstractRenderingAccuracyTest {
 		return svgURL;
 	}
 
-	public void compareStreams() throws TranscoderException, IOException {
-		//
-		// First, do clean-up
-		//
-		if (candidateReference != null) {
-			if (candidateReference.exists()) {
-				candidateReference.delete();
-			}
-		}
-
-		//
-		// Render the SVG image into a raster. We call an
-		// abstract method to convert the src into a raster in
-		// a temporary file.
-		File tmpFile = null;
-
-		if (candidateReference != null) {
-			tmpFile = candidateReference;
-			if (!tmpFile.exists()) {
-				File parentDir = tmpFile.getParentFile();
-				if (!parentDir.exists()) {
-					if (!parentDir.mkdir()) {
-						throw new IOException("Could not create directory: " + parentDir.getAbsolutePath());
-					}
-				}
-			}
-		} else {
-			tmpFile = tmpUtil.createImageFile(svgURL, getImageSuffix(), IMAGE_FILE_DOT_EXTENSION);
-		}
-
-		try (FileOutputStream tmpFileOS = new FileOutputStream(tmpFile)) {
-			// Call abstract method to encode svgURL to tmpFileOS as a
-			// raster.
-			encode(svgURL, tmpFileOS);
-		}
-
-		int result;
-		try (FileInputStream isCand = new FileInputStream(tmpFile);
-				InputStream refIS = refImgURL.openStream()) {
-			result = equalStreams(isCand, refIS);
-		} catch (FileNotFoundException e) {
-			result = 3;
-		}
-
-		switch (result) {
-		case 1:
-			failTest("File at " + tmpFile.getAbsolutePath() + " has different length than reference.");
-			break;
-		case 2:
-			failTest("File " + tmpFile.getAbsolutePath() + " is different from reference.");
-			break;
-		case 3:
-			failTest("No reference file at: " + refImgURL.getFile());
-			break;
-		case 0:
-			tmpFile.delete();
-		}
-	}
-
-	private int equalStreams(InputStream isCand, InputStream isRef) throws IOException {
-		byte[] cand = readFile(isCand);
-		byte[] ref = readFile(isRef);
-
-		if (cand.length != ref.length) {
-			return 1;
-		}
-		if (!Arrays.equals(ref, 0, cand.length, cand, 0, cand.length)) {
-			return 2;
-		}
-		return 0;
-	}
-
-	private byte[] readFile(InputStream is) throws IOException {
-		byte[] buffer = new byte[512];
-		ByteArrayOutputStream bos = new ByteArrayOutputStream(2048);
-		int count;
-		while ((count = is.read(buffer)) != -1) {
-			bos.write(buffer, 0, count);
-		}
-		return bos.toByteArray();
-	}
-
 	/**
 	 * Requests this <code>Test</code> to run.
 	 * 
@@ -399,6 +324,27 @@ public abstract class AbstractRenderingAccuracyTest {
 	 */
 	public void runTest(float allowedPercentBelowThreshold, float allowedPercentOverThreshold)
 			throws TranscoderException, IOException {
+		runTest(allowedPercentBelowThreshold, allowedPercentOverThreshold, false);
+	}
+
+	/**
+	 * Requests this <code>Test</code> to run.
+	 * 
+	 * @param allowedPercentBelowThreshold the allowed percentage of different
+	 *                                     pixels where the difference does not
+	 *                                     exceed a fixed threshold of
+	 *                                     {@code PIXEL_THRESHOLD}.
+	 * @param allowedPercentOverThreshold  the allowed percentage of different
+	 *                                     pixels where the difference exceeds a
+	 *                                     fixed threshold of
+	 *                                     {@code PIXEL_THRESHOLD}.
+	 * @param checkMetadata                check the PNG metadata.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 *
+	 */
+	public void runTest(float allowedPercentBelowThreshold, float allowedPercentOverThreshold,
+			boolean checkMetadata) throws TranscoderException, IOException {
 		//
 		// First, do clean-up
 		//
@@ -442,6 +388,9 @@ public abstract class AbstractRenderingAccuracyTest {
 		short result = compareImages(ref, gen, allowedPercentBelowThreshold, allowedPercentOverThreshold);
 
 		if (result == ImageComparator.MATCH) {
+			if (checkMetadata) {
+				matchDecodeMetadata(tmpFile);
+			}
 			//
 			// Everything worked out well.
 			//
@@ -463,6 +412,9 @@ public abstract class AbstractRenderingAccuracyTest {
 					allowedPercentBelowThreshold, allowedPercentOverThreshold, variants);
 
 			if (variantResult == ImageComparator.MATCH) {
+				if (checkMetadata) {
+					matchDecodeMetadata(tmpFile);
+				}
 				// Everything worked out well, at least with variation.
 				tmpFile.delete();
 				return;
@@ -514,6 +466,94 @@ public abstract class AbstractRenderingAccuracyTest {
 		failTest("Rendering not accurate [" + ImageComparator.getResultDescription(result)
 				+ "], see generated images: " + diffFile.getAbsolutePath() + ", "
 				+ cmpFile.getAbsolutePath());
+	}
+
+	private void matchDecodeMetadata(File candFile) throws IOException {
+		PNGDecodeParam refParam = new PNGDecodeParam();
+		PNGDecodeParam candParam = new PNGDecodeParam();
+		refParam.setGenerateEncodeParam(true);
+		candParam.setGenerateEncodeParam(true);
+
+		decodeNative(refImgURL, refParam);
+		decodeNative(candFile.toURI().toURL(), candParam);
+
+		PNGEncodeParam refEnc = refParam.getEncodeParam();
+		PNGEncodeParam candEnc = candParam.getEncodeParam();
+
+		if (refEnc.getICCProfileName() != null) {
+			if (candEnc.getICCProfileName() == null) {
+				failTest("Candidate is missing ICC profile data.");
+			}
+			if (!refEnc.getICCProfileName().equals(candEnc.getICCProfileName())) {
+				failTest("ICC profile name mismatch: expected '" + refEnc.getICCProfileName() + "' but got '"
+						+ candEnc.getICCProfileName() + "'.");
+			}
+		} else if (candEnc.getICCProfileName() != null) {
+			failTest("Candidate has unexpected ICC profile data.");
+		}
+
+		if (refEnc.isTextSet()) {
+			if (!candEnc.isTextSet()) {
+				failTest("Candidate is missing tEXt chunk.");
+			}
+			if (!Arrays.equals(refEnc.getText(), candEnc.getText())) {
+				failTest("tEXt data mismatch.");
+			}
+		} else if (candEnc.isTextSet()) {
+			failTest("Candidate has unexpected tEXt data.");
+		}
+
+		if (refEnc.isInternationalTextSet()) {
+			if (!candEnc.isInternationalTextSet()) {
+				failTest("Candidate is missing iTXt chunk.");
+			}
+			if (!Arrays.equals(refEnc.getInternationalText(), candEnc.getInternationalText())) {
+				failTest("iTXt data mismatch.");
+			}
+		} else if (candEnc.isInternationalTextSet()) {
+			failTest("Candidate has unexpected iTXt data.");
+		}
+
+		if (refEnc.isCompressedTextSet()) {
+			if (!candEnc.isCompressedTextSet()) {
+				failTest("Candidate is missing zTXt chunk.");
+			}
+			if (!Arrays.equals(refEnc.getCompressedText(), candEnc.getCompressedText())) {
+				failTest("zTXt data mismatch.");
+			}
+		} else if (candEnc.isCompressedTextSet()) {
+			failTest("Candidate has unexpected zTXt data.");
+		}
+	}
+
+	private BufferedImage decodeNative(URL url, PNGDecodeParam decParam) throws IOException {
+		RenderedImage decodedRenderedImage;
+
+		try (InputStream is = url.openStream()) {
+			PNGImageDecoder pngImageDecoder = new PNGImageDecoder(is, decParam);
+			decodedRenderedImage = pngImageDecoder.decodeAsRenderedImage(0);
+		}
+
+		BufferedImage decodedImage = null;
+		if (decodedRenderedImage instanceof BufferedImage) {
+			decodedImage = (BufferedImage) decodedRenderedImage;
+		} else {
+			ColorModel cm = decodedRenderedImage.getColorModel();
+			if (cm.getColorSpace().isCS_sRGB()) {
+				decodedImage = new BufferedImage(decodedRenderedImage.getWidth(),
+						decodedRenderedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			} else {
+				Point loc = new Point(0, 0);
+				WritableRaster raster = Raster.createWritableRaster(decodedRenderedImage.getSampleModel(),
+						loc);
+				decodedImage = new BufferedImage(cm, raster, false, null);
+			}
+			Graphics2D ig = decodedImage.createGraphics();
+			ig.drawRenderedImage(decodedRenderedImage, new AffineTransform());
+			ig.dispose();
+		}
+
+		return decodedImage;
 	}
 
 	/**

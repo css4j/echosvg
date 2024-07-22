@@ -832,6 +832,33 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 		return paletteHistogramSet;
 	}
 
+	// iCCP chunk
+
+	private String iccProfileName = null;
+
+	/**
+	 * Sets the name of the ICC profile, to be used in case it cannot be obtained
+	 * from the profile itself.
+	 * 
+	 * @param name the profile name, up to 79 characters.
+	 */
+	public void setICCProfileName(String name) {
+		if (name != null && name.length() > 79) {
+			name = name.substring(0, 79);
+		}
+		this.iccProfileName = name;
+	}
+
+	/**
+	 * Gets the ICC profile name, to be used in case it cannot be obtained from the
+	 * profile itself.
+	 * 
+	 * @return the profile name, or {@code null} if no name was set.
+	 */
+	public String getICCProfileName() {
+		return iccProfileName;
+	}
+
 	// pHYS chunk
 
 	private int[] physicalDimension = null;

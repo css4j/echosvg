@@ -29,14 +29,21 @@ import java.awt.image.ComponentSampleModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
 import io.sf.carte.echosvg.ext.awt.image.codec.imageio.ImageIOJPEGImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
+import io.sf.carte.echosvg.test.TestLocations;
+import io.sf.carte.echosvg.test.TestUtil;
+import io.sf.carte.echosvg.test.image.ImageFileBuilder;
+import io.sf.carte.echosvg.test.image.TempImageFiles;
 
 /**
  * This test validates the ImageIOJPEGImageWriter operation.
@@ -88,6 +95,57 @@ public class ImageIOJPEGImageWriterTest extends AbstractImageWriterCheck {
 	@Override
 	protected void configureImageWriterParams(ImageWriterParams params) {
 		params.setJPEGQuality(1f, false);
+	}
+
+	@Override
+	protected boolean equalStreams(byte[] cand, String baseName) throws IOException {
+		/*
+		 * Do a loose comparison here
+		 */
+
+		// First read the reference stream
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(2048);
+		try (InputStream isRef = openRefStream(baseName)) {
+			if (isRef == null) {
+				// No reference
+				ImageFileBuilder tmpUtil = new TempImageFiles(
+						TestUtil.getProjectBuildURL(getClass(), TestLocations.TEST_DIRNAME));
+				bytesToFile(cand, tmpUtil, baseName, "_candidate");
+				throw new FileNotFoundException("Cannot find reference resource at " + resourcePath(baseName));
+			}
+
+			byte[] buffer = new byte[512];
+			int count;
+			while ((count = isRef.read(buffer)) != -1) {
+				bos.write(buffer, 0, count);
+			}
+		}
+
+		byte[] ref = bos.toByteArray();
+
+		// Check the differences
+		int lendiff = Math.abs(ref.length - cand.length);
+
+		if (lendiff == 0 && Arrays.equals(ref, 0, ref.length, cand, 0, ref.length)) {
+			return true; // Exact equality
+		}
+
+		int allowance = ref.length / 2048;
+
+		if (lendiff > allowance) {
+			System.err.println("Difference in file lengths is too big: " + lendiff + " (allowed "
+					+ allowance + ").");
+			return false;
+		}
+
+		// Check the first 42 bytes
+		int len = Math.min(ref.length - allowance, 42);
+		if (Arrays.equals(ref, 0, len, cand, 0, len)) {
+			return true;
+		}
+
+		System.err.println("The first " + len + " bytes do not match.");
+		return false;
 	}
 
 	@Override

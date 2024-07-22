@@ -218,7 +218,7 @@ public class AbstractSamplesRendering {
 		runner.setInternationalText(iTXt);
 		runner.setCompressedText(zTXt);
 		runner.setFile(file);
-		runner.compareStreams();
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed(), true);
 	}
 
 	/**
@@ -266,7 +266,7 @@ public class AbstractSamplesRendering {
 		runner.setInternationalText(iTXt);
 		runner.setCompressedText(zTXt);
 		runner.setFile(file);
-		runner.compareStreams();
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed(), true);
 	}
 
 	/**

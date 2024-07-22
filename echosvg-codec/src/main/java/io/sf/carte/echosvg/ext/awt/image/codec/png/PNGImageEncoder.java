@@ -1146,31 +1146,46 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 		ColorSpace cs = colorModel.getColorSpace();
 		if (!ColorUtil.isBuiltInColorSpace(cs) && cs instanceof ICC_ColorSpace) {
 			ICC_Profile profile = ((ICC_ColorSpace) cs).getProfile();
-			byte[] bdesc = profile.getData(ICC_Profile.icSigProfileDescriptionTag);
-			/*
-			 * The profile description tag is of type multiLocalizedUnicodeType which starts
-			 * with a 'mluc' (see paragraph 10.15 of ICC specification
-			 * https://www.color.org/specification/ICC.1-2022-05.pdf).
-			 */
-			final byte[] mluc = { 'm', 'l', 'u', 'c' };
-			if (bdesc != null && Arrays.equals(bdesc, 0, 4, mluc, 0, 4)) {
-				int numrec = uInt32Number(bdesc, 8);
-				if (numrec > 0) {
-					int len = uInt32Number(bdesc, 20);
-					int offset = uInt32Number(bdesc, 24);
-					int maxlen = bdesc.length - offset;
-					if (maxlen > 0) {
-						len = Math.min(len, maxlen);
-						String desc = new String(bdesc, offset, len, StandardCharsets.UTF_16BE).trim();
-						iccProfileName = desc;
-						iccProfileData = profile.getData();
-						return;
+			// Obtain the name
+			String name = profileName(profile);
+			if (name == null) {
+				name = param.getICCProfileName();
+				if (name == null) {
+					name = profile.getClass().getSimpleName();
+					if (name.length() > 79) {
+						name = name.substring(0, 79);
 					}
 				}
 			}
+			iccProfileName = name;
+			iccProfileData = profile.getData().clone();
+		} else {
+			iccProfileName = null;
+			iccProfileData = null;
 		}
-		iccProfileName = null;
-		iccProfileData = null;
+	}
+
+	private String profileName(ICC_Profile profile) {
+		byte[] bdesc = profile.getData(ICC_Profile.icSigProfileDescriptionTag);
+		/*
+		 * The profile description tag is of type multiLocalizedUnicodeType which starts
+		 * with a 'mluc' (see paragraph 10.15 of ICC specification
+		 * https://www.color.org/specification/ICC.1-2022-05.pdf).
+		 */
+		final byte[] mluc = { 'm', 'l', 'u', 'c' };
+		if (bdesc != null && Arrays.equals(bdesc, 0, 4, mluc, 0, 4)) {
+			int numrec = uInt32Number(bdesc, 8);
+			if (numrec > 0) {
+				int len = uInt32Number(bdesc, 20);
+				int offset = uInt32Number(bdesc, 24);
+				int maxlen = bdesc.length - offset;
+				if (maxlen > 0) {
+					len = Math.min(len, maxlen);
+					return new String(bdesc, offset, len, StandardCharsets.UTF_16BE).trim();
+				}
+			}
+		}
+		return null;
 	}
 
 	/**

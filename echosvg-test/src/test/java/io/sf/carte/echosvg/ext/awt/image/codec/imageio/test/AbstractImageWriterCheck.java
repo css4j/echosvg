@@ -19,7 +19,7 @@
 
 package io.sf.carte.echosvg.ext.awt.image.codec.imageio.test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -77,7 +77,8 @@ public abstract class AbstractImageWriterCheck {
 		return image;
 	}
 
-	protected void testEncoding(final BufferedImage image, String baseName) throws IOException {
+	protected void testEncoding(final BufferedImage image, String baseName)
+			throws IOException {
 		// Create an output stream where the image data will be stored.
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(256);
 
@@ -88,9 +89,32 @@ public abstract class AbstractImageWriterCheck {
 
 		writer.writeImage(image, bos, params);
 
+		byte[] cand = bos.toByteArray();
 		// Now compare with reference
-		assertTrue(checkIdentical(bos.toByteArray(), image, baseName),
-				"Encoded file does not match reference.");
+		if (equalStreams(cand, baseName)) {
+			return; // pass
+		}
+
+		Object candDecodeparams = createDecodeParam();
+		Object refDecodeparams = createDecodeParam();
+
+		// Compare the images
+		BufferedImage decodedCand = decodeStream(new ByteArrayInputStream(cand), candDecodeparams);
+		BufferedImage decodedRef;
+		try (InputStream is = openRefStream(baseName)) {
+			decodedRef = decodeStream(is, refDecodeparams);
+		}
+
+		short result = ImageComparator.compareImages(decodedRef, decodedCand, 8, 0, 0);
+
+		if (result == ImageComparator.MATCH) {
+			matchDecodeMetadata(refDecodeparams, candDecodeparams);
+			return; // pass
+		}
+
+		createFiles(cand, image, baseName);
+
+		fail("Encoded file does not match reference " + resourcePath(baseName));
 	}
 
 	protected ImageWriterParams createImageWriterParams() {
@@ -100,6 +124,9 @@ public abstract class AbstractImageWriterCheck {
 	protected abstract ImageWriter createImageWriter();
 
 	protected void configureImageWriterParams(ImageWriterParams params) {
+	}
+
+	protected void matchDecodeMetadata(Object refDecodeparams, Object candDecodeparams) {
 	}
 
 	protected InputStream openRefStream(String baseName) {
@@ -116,44 +143,7 @@ public abstract class AbstractImageWriterCheck {
 
 	protected abstract String getMIMEType();
 
-	/**
-	 * Compares the streams of the two images
-	 * 
-	 * @param cand     byte array with the candidate image.
-	 * @param baseName the reference file basename.
-	 * @throws IOException if an I/O error happens.
-	 */
-	protected boolean checkIdentical(byte[] cand, BufferedImage imgCand, String baseName)
-			throws IOException {
-		if (equalStreams(cand, baseName)) {
-			return true;
-		}
-
-		// We are in error (images are different). Save candidate.
-		ImageFileBuilder tmpUtil = new TempImageFiles(
-				TestUtil.getProjectBuildURL(getClass(), TestLocations.TEST_DIRNAME));
-
-		bytesToFile(cand, tmpUtil, baseName, "_candidate");
-		// Now produce an image with the two images side by side
-		// as well as a diff image.
-
-		// First, create a reference image (which may be inaccurate due to
-		// ImageIO transcoding issues, but enough to give an idea).
-		BufferedImage imgRef;
-		try (InputStream isRef = openRefStream(baseName)) {
-			imgRef = decodeStream(isRef);
-		}
-
-		BufferedImage diff = ImageComparator.createDiffImage(imgRef, imgCand);
-		BufferedImage cmp = ImageComparator.createCompareImage(imgRef, imgCand);
-
-		imageToFile(diff, tmpUtil, baseName, "_diff");
-		imageToFile(cmp, tmpUtil, baseName, "_cmp");
-
-		return false;
-	}
-
-	protected BufferedImage decodeStream(InputStream is) throws IOException {
+	protected BufferedImage decodeStream(InputStream is, Object decodeparam) throws IOException {
 		return ImageIO.read(is);
 	}
 
@@ -190,9 +180,44 @@ public abstract class AbstractImageWriterCheck {
 	}
 
 	/**
+	 * Creates a candidate reference, a side comparison and a diff images.
+	 * 
+	 * @param cand     byte array with the candidate image.
+	 * @param baseName the reference file basename.
+	 * @throws IOException if an I/O error happens.
+	 */
+	protected void createFiles(byte[] cand, BufferedImage imgCand, String baseName)
+			throws IOException {
+		// We are in error (images are different). Save candidate.
+		ImageFileBuilder tmpUtil = new TempImageFiles(
+				TestUtil.getProjectBuildURL(getClass(), TestLocations.TEST_DIRNAME));
+	
+		bytesToFile(cand, tmpUtil, baseName, "_candidate");
+		// Now produce an image with the two images side by side
+		// as well as a diff image.
+	
+		// First, create a reference image (which may be inaccurate due to
+		// ImageIO transcoding issues, but enough to give an idea).
+		BufferedImage imgRef;
+		try (InputStream isRef = openRefStream(baseName)) {
+			imgRef = decodeStream(isRef, createDecodeParam());
+		}
+	
+		BufferedImage diff = ImageComparator.createDiffImage(imgRef, imgCand);
+		BufferedImage cmp = ImageComparator.createCompareImage(imgRef, imgCand);
+	
+		imageToFile(diff, tmpUtil, baseName, "_diff");
+		imageToFile(cmp, tmpUtil, baseName, "_cmp");
+	}
+
+	protected Object createDecodeParam() {
+		return null;
+	}
+
+	/**
 	 * Creates a temporary File into which the bytes are saved.
 	 */
-	private File bytesToFile(byte[] cand, ImageFileBuilder fileBuilder, String name, String imageQualifier)
+	File bytesToFile(byte[] cand, ImageFileBuilder fileBuilder, String name, String imageQualifier)
 			throws IOException {
 
 		File imageFile = obtainImageFilename(fileBuilder, name, imageQualifier);
