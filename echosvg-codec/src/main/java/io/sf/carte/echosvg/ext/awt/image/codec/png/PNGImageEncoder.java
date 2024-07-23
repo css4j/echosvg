@@ -1180,6 +1180,9 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 				int offset = uInt32Number(bdesc, 24);
 				int maxlen = bdesc.length - offset;
 				if (maxlen > 0) {
+					if (maxlen > 79) {
+						maxlen = 79;
+					}
 					len = Math.min(len, maxlen);
 					return new String(bdesc, offset, len, StandardCharsets.UTF_16BE).trim();
 				}
