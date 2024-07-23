@@ -83,6 +83,12 @@ test {
 	}
 }
 
+tasks.withType(Test) {
+	if (JavaVersion.current() > JavaVersion.VERSION_11) {
+		systemProperty('java.security.manager', 'allow')
+	}
+}
+
 tasks.withType(ProcessResources).configureEach {
 	dependsOn ':echosvg-test-scripts:copyScriptJars',':echosvg-test-scripts:copyPolicyJar'
 }
