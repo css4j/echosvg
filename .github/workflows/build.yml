@@ -30,12 +30,9 @@ jobs:
     # Many tests only pass on Windows
     runs-on: windows-latest
 
-    # On Java 11, continue on error to upload artifact
-    continue-on-error: ${{ matrix.java == '11' }}
-
     strategy:
       matrix:
-        java: [ '11', '17' ]
+        java: [ '11', '21' ]
 
     name: Java ${{ matrix.java }} build
 
@@ -59,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ failure() }}
         with:
-          name: test-output
+          name: test-output-${{ matrix.java }}
           path: |
             echosvg-test/build/reports/tests/test/
             test-references/samples/**/candidate-variation/*

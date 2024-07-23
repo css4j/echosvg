@@ -18,6 +18,9 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	if (JavaVersion.current() > JavaVersion.VERSION_11) {
+		systemProperty('java.security.manager', 'allow')
+	}
 }
 
 tasks.processTestResources{
