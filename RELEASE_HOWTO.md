@@ -47,19 +47,19 @@ cd /path/to/echosvg
 
 5) For convenience, now copy all the produced _jar_ files into a new `jar`
 directory and create a Zip archive of them. For example if you are releasing
-`1.0.1`:
+`1.2.1`:
 
 ```shell
 ./gradlew copyJars
-mv jar echosvg-1.0.1-bin
-7z a -mx7 echosvg-1.0.1-binaries.zip echosvg-1.0.1-bin
+mv jar echosvg-1.2.1-bin
+7z a -mx7 echosvg-1.2.1-binaries.zip echosvg-1.2.1-bin
 ```
 
 6) Use `changes.sh <new-version>` to create a `CHANGES.txt` file for the new
 version, with the changes from the latest tag:
 
 ```shell
-./changes.sh 1.0.1
+./changes.sh 1.2.1
 ```
 
 Edit the resulting `CHANGES.txt` as convenient, to use it as the basis for the
@@ -99,9 +99,9 @@ archiver):
 cd /path/to/echosvg
 ./gradlew modularJavadoc
 cd echosvg-all/build/docs
-mv modular echosvg-modular-javadocs-1.0.1
-7z a echosvg-modular-javadocs-1.0.1.7z echosvg-modular-javadocs-1.0.1
-7z a -mx7 echosvg-modular-javadocs-1.0.1.zip echosvg-modular-javadocs-1.0.1
+mv modular echosvg-1.2.1-modular-javadocs
+7z a echosvg-1.2.1-modular-javadocs.7z echosvg-1.2.1-modular-javadocs
+7z a -mx9 echosvg-1.2.1-modular-javadocs.zip echosvg-1.2.1-modular-javadocs
 ```
 
 The compressed archives will be part of the published release. Notice that the
@@ -114,8 +114,8 @@ Provided that you have the required credentials, you could update it via_ `rsync
 
 ```shell
 cd /path/to/echosvg
-git tag -s v1.0.1 -m "Release 1.0.1"
-git push origin v1.0.1
+git tag -s v1.2.1 -m "Release 1.2.1"
+git push origin v1.2.1
 ```
 
 or `git tag -a` instead of `-s` if you do not plan to sign the tag. But it is
@@ -132,7 +132,7 @@ under it.
 
 Add to the Github release the _jar_ files from the `jar` directory in your copy
 of the EchoSVG release code, and also the modular javadoc archives
-(`echosvg-modular-javadocs-1.0.1.7z` and `echosvg-modular-javadocs-1.0.1.zip`).
+(`echosvg-1.2.1-modular-javadocs.7z` and `echosvg-1.2.1-modular-javadocs.zip`).
 
 13) Verify that the new [Github packages](https://github.com/orgs/css4j/packages?repo_name=echosvg)
 were created successfully by the [Gradle Package](https://github.com/css4j/echosvg/actions/workflows/gradle-publish.yml)
