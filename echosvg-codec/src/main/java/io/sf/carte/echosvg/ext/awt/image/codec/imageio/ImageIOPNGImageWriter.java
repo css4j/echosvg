@@ -155,14 +155,17 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 			 */
 			String comprMethod = params.getCompressionMethod();
 			Integer level = params.getCompressionLevel();
-			if (level != null) {
-				param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-				param.setCompressionType(comprMethod != null ? comprMethod : "Deflate");
-				int lvl = level.intValue();
-				if (lvl >= 0 && lvl < 10) {
+			int lvl;
+			if (level != null && (lvl = level.intValue()) >= 0 && lvl < 10) {
+				try {
+					param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+					param.setCompressionType(comprMethod != null ? comprMethod : "Deflate");
 					// ImageIO sets the compression level from a quality in the 0-1 range...
 					float quality = 1f - lvl / 9f;
 					param.setCompressionQuality(quality);
+				} catch (UnsupportedOperationException e) {
+					// The inability to set a compression level isn't a critical failure
+					e.printStackTrace();
 				}
 			} else if (comprMethod != null) {
 				param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
