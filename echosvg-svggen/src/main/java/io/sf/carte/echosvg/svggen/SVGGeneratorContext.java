@@ -431,6 +431,9 @@ public class SVGGeneratorContext implements ErrorConstants {
 
 	/**
 	 * Sets the compression level which will be used in embedded PNG images.
+	 * <p>
+	 * Requires Java 11 or higher.
+	 * </p>
 	 * 
 	 * @param compressionLevel the compression level (0-9), or {@code null} for
 	 *                         default behavior.
