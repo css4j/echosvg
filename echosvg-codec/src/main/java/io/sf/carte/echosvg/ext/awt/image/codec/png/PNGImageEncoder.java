@@ -34,7 +34,6 @@ import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -42,6 +41,7 @@ import java.util.TimeZone;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
+import io.sf.carte.echosvg.ext.awt.image.codec.impl.CodecUtil;
 import io.sf.carte.echosvg.ext.awt.image.codec.impl.ColorUtil;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncoderImpl;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
@@ -1173,7 +1173,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 		 * https://www.color.org/specification/ICC.1-2022-05.pdf).
 		 */
 		final byte[] mluc = { 'm', 'l', 'u', 'c' };
-		if (bdesc != null && Arrays.equals(bdesc, 0, 4, mluc, 0, 4)) {
+		if (bdesc != null && CodecUtil.arrayStartsWith(mluc, bdesc, 0)) {
 			int numrec = uInt32Number(bdesc, 8);
 			if (numrec > 0) {
 				int len = uInt32Number(bdesc, 20);

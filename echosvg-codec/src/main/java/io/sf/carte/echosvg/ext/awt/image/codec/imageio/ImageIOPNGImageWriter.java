@@ -24,7 +24,6 @@ import java.awt.color.ICC_Profile;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.zip.Deflater;
 
 import javax.imageio.ImageWriteParam;
@@ -33,6 +32,7 @@ import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 
+import io.sf.carte.echosvg.ext.awt.image.codec.impl.CodecUtil;
 import io.sf.carte.echosvg.ext.awt.image.codec.impl.ColorUtil;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
 import io.sf.carte.echosvg.ext.awt.image.spi.PNGImageWriterParams;
@@ -84,7 +84,7 @@ public class ImageIOPNGImageWriter extends ImageIOImageWriter {
 		 * https://www.color.org/specification/ICC.1-2022-05.pdf).
 		 */
 		final byte[] mluc = { 'm', 'l', 'u', 'c' };
-		if (bdesc != null && Arrays.equals(bdesc, 0, 4, mluc, 0, 4)) {
+		if (bdesc != null && CodecUtil.arrayStartsWith(mluc, bdesc, 0)) {
 			int numrec = uInt32Number(bdesc, 8);
 			if (numrec > 0) {
 				int len = uInt32Number(bdesc, 20);
