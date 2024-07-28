@@ -61,7 +61,7 @@ public class AbstractBypassRenderingCheck {
 	}
 
 	void test(String file, int expectedErrorCount) throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, null, true, expectedErrorCount);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, null, null, true, expectedErrorCount);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class AbstractBypassRenderingCheck {
 	 */
 	void testPrint(String file, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		test(file, PRINT_MEDIUM, false, null, true, expectedErrorCount);
+		test(file, PRINT_MEDIUM, false, null, null, true, expectedErrorCount);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class AbstractBypassRenderingCheck {
 	 */
 	void testDark(String file, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, true, null, true, expectedErrorCount);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, true, null, null, true, expectedErrorCount);
 	}
 
 	/**
@@ -112,7 +112,23 @@ public class AbstractBypassRenderingCheck {
 	 */
 	void testNV(String file, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, null, false, expectedErrorCount);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, null, null, false, expectedErrorCount);
+	}
+
+	/**
+	 * A non-validating test.
+	 * 
+	 * @param file               the SVG file to test.
+	 * @param expectedErrorCount the expected error count.
+	 * @param backgroundColor    the background color, or {@code null} if
+	 *                           transparent.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	void testNV(String file, int expectedErrorCount, Color backgroundColor) throws TranscoderException,
+			IOException {
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, backgroundColor, null, false,
+				expectedErrorCount);
 	}
 
 	float getBelowThresholdAllowed() {
@@ -204,15 +220,16 @@ public class AbstractBypassRenderingCheck {
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	void test(String file, String medium, boolean darkMode, String selector,
+	void test(String file, String medium, boolean darkMode, Color backgroundColor, String selector,
 			boolean validating, int expectedErrorCount) throws TranscoderException, IOException {
 		BypassRenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
-		configureAndRun(runner, file, darkMode, selector, validating);
+		configureAndRun(runner, file, darkMode, backgroundColor, selector, validating);
 	}
 
-	void configureAndRun(BypassRenderingTest runner, String file, boolean darkMode,
+	void configureAndRun(BypassRenderingTest runner, String file, boolean darkMode, Color backgroundColor,
 			String selector, boolean validating) throws TranscoderException, IOException {
 		runner.setDarkMode(darkMode);
+		runner.setBackgroundColor(backgroundColor);
 		runner.setSelector(selector);
 		runner.setValidating(validating);
 		runner.setFile(file);
@@ -232,34 +249,36 @@ public class AbstractBypassRenderingCheck {
 	 * @param medium             the target medium ({@code screen}, {@code print},
 	 *                           etc).
 	 * @param darkMode           if true, dark mode is enabled in CSS.
+	 * @param backgroundColor    the background color, or {@code null} if
+	 *                           transparent.
 	 * @param selector           the selector to find the SVG element.
 	 * @param validating         if true, the SVG is validated.
 	 * @param expectedErrorCount the expected number of errors.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	void testAllInputSources(String file, String medium, boolean darkMode,
+	void testAllInputSources(String file, String medium, boolean darkMode, Color backgroundColor,
 			String selector, boolean validating, int expectedErrorCount) throws TranscoderException, IOException {
 		BypassRenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
-		configureAndRun(runner, file, darkMode, selector, validating);
+		configureAndRun(runner, file, darkMode, backgroundColor, selector, validating);
 
 		Document doc = runner.getRenderDocument();
 		runner = new DocumentInputHelperRenderingTest(medium, expectedErrorCount);
 		runner.setRenderDocument(doc);
-		configureAndRun(runner, file, darkMode, selector, validating);
+		configureAndRun(runner, file, darkMode, backgroundColor, selector, validating);
 
 		runner = new TIDocumentInputHelperRenderingTest(medium, expectedErrorCount);
 		runner.setRenderDocument(doc);
-		configureAndRun(runner, file, darkMode, selector, validating);
+		configureAndRun(runner, file, darkMode, backgroundColor, selector, validating);
 
 		runner = new TIInputStreamHelperRenderingTest(medium, expectedErrorCount);
-		configureAndRun(runner, file, darkMode, selector, validating);
+		configureAndRun(runner, file, darkMode, backgroundColor, selector, validating);
 
 		runner = new TIReaderInputHelperRenderingTest(medium, expectedErrorCount);
-		configureAndRun(runner, file, darkMode, selector, validating);
+		configureAndRun(runner, file, darkMode, backgroundColor, selector, validating);
 
 		runner = new TIURIInputHelperRenderingTest(medium, expectedErrorCount);
-		configureAndRun(runner, file, darkMode, selector, validating);
+		configureAndRun(runner, file, darkMode, backgroundColor, selector, validating);
 	}
 
 	private class BypassRenderingTest extends RenderingTest {
@@ -270,6 +289,8 @@ public class AbstractBypassRenderingCheck {
 		 * dark mode toggle.
 		 */
 		private boolean darkMode = false;
+
+		private Color backgroundColor;
 
 		/**
 		 * Selector to locate SVG element
@@ -292,6 +313,10 @@ public class AbstractBypassRenderingCheck {
 			super();
 			this.expectedErrorCount = expectedErrorCount;
 			setMedia(medium);
+		}
+
+		public void setBackgroundColor(Color backgroundColor) {
+			this.backgroundColor = backgroundColor;
 		}
 
 		/**
@@ -348,6 +373,9 @@ public class AbstractBypassRenderingCheck {
 				// Opaque background for dark mode
 				transcoder.addTranscodingHint(ImageTranscoder.KEY_BACKGROUND_COLOR,
 						new Color(0, 0, 0, 255));
+			} else if (backgroundColor != null) {
+				transcoder.addTranscodingHint(ImageTranscoder.KEY_BACKGROUND_COLOR,
+						backgroundColor);
 			}
 
 			TranscoderOutput dst = new TranscoderOutput(fos);

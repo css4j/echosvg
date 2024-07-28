@@ -471,8 +471,8 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 
 	@Test
 	public void testMissingRef_All() throws TranscoderException, IOException {
-		testAllInputSources("samples/tests/spec/linking/missingRef.svg", null, false, null, false,
-				16);
+		testAllInputSources("samples/tests/spec/linking/missingRef.svg", null, false, null, null,
+				false, 16);
 	}
 
 	@Test
@@ -1332,7 +1332,8 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	 */
 	@Test
 	public void testCSS3_All() throws TranscoderException, IOException {
-		testAllInputSources("samples/tests/spec2/styling/css3.html", null, false, null, false, 4);
+		testAllInputSources("samples/tests/spec2/styling/css3.html", null, false, null, null,
+				false, 4);
 	}
 
 	@Test
@@ -1353,7 +1354,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	@Test
 	public void testCSS3_Selector() throws TranscoderException, IOException {
 		test("samples/tests/spec2/styling/css3.html", SVGRenderingAccuracyTest.DEFAULT_MEDIUM,
-				false, "#theSVG", true, 4);
+				false, null, "#theSVG", true, 4);
 	}
 
 }
