@@ -23,6 +23,14 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGAnimatedRect;
 import org.w3c.dom.svg.SVGRect;
 
+import io.sf.carte.doc.style.css.CSSUnit;
+import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.property.ExpressionValue;
+import io.sf.carte.doc.style.css.property.PercentageEvaluator;
+import io.sf.carte.doc.style.css.property.StyleValue;
+import io.sf.carte.doc.style.css.property.TypedValue;
+import io.sf.carte.doc.style.css.property.ValueFactory;
+import io.sf.carte.doc.style.css.property.ValueList;
 import io.sf.carte.echosvg.anim.values.AnimatableRectValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
@@ -228,14 +236,72 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 					}
 					count++;
 				}
+
+				@Override
+				public void calcValue(int line, int column) throws ParseException {
+					throw new CalcParseException("Cannot handle calc().", line, column);
+				}
 			});
-			p.parse(s);
+			try {
+				p.parse(s);
+			} catch (CalcParseException cpe) {
+				StyleValue value;
+				ValueFactory factory = new ValueFactory();
+				try {
+					value = factory.parseProperty(s);
+				} catch (Exception e) {
+					LiveAttributeException ex = new LiveAttributeException(element, localName,
+							LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, s);
+					ex.initCause(e);
+					throw ex;
+				}
+				if (!computeRectangle(value, numbers)) {
+					throw new LiveAttributeException(element, localName,
+							LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, s);
+				}
+			}
 			x = numbers[0];
 			y = numbers[1];
 			w = numbers[2];
 			h = numbers[3];
 
 			valid = true;
+		}
+
+		private boolean computeRectangle(StyleValue value, float[] numbers) throws LiveAttributeException {
+			if (value.getCssValueType() != CssType.LIST) {
+				return false;
+			}
+			ValueList list = (ValueList) value;
+			if (list.getLength() != 4) {
+				return false;
+			}
+
+			for (int i = 0; i < 4; i++) {
+				StyleValue item = list.item(i);
+				if (item.getCssValueType() != CssType.TYPED) {
+					return false;
+				}
+				TypedValue typed = (TypedValue) item;
+				switch (item.getPrimitiveType()) {
+				case NUMERIC:
+					if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
+						return false;
+					}
+					break;
+				case EXPRESSION:
+					PercentageEvaluator eval = new PercentageEvaluator();
+					typed = eval.evaluateExpression((ExpressionValue) typed);
+					if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
+						return false;
+					}
+					break;
+				default:
+					return false;
+				}
+				numbers[i] = typed.getFloatValue(CSSUnit.CSS_NUMBER);
+			}
+			return true;
 		}
 
 		/**
@@ -401,6 +467,16 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 			this.y = y;
 			this.w = w;
 			this.h = h;
+		}
+
+	}
+
+	static class CalcParseException extends ParseException {
+
+		private static final long serialVersionUID = 1L;
+
+		public CalcParseException(String message, int line, int column) {
+			super(message, line, column);
 		}
 
 	}

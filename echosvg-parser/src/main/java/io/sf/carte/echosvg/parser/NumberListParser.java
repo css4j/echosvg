@@ -91,4 +91,9 @@ public class NumberListParser extends NumberParser {
 		numberListHandler.endNumberList();
 	}
 
+	@Override
+	protected void handleCalc(int line, int column) {
+		numberListHandler.calcValue(line, column);
+	}
+
 }
