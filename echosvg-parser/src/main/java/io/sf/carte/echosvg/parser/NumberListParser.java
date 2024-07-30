@@ -23,8 +23,10 @@ import java.io.IOException;
 /**
  * This class implements an event-based parser for the SVG Number list values.
  *
- * @author tonny@kiyut.com
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: tonny@kiyut.com. For later modifications, see Git history.
+ * </p>
+ * 
  * @version $Id$
  */
 public class NumberListParser extends NumberParser {
