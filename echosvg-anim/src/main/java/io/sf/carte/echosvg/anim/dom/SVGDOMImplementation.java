@@ -109,7 +109,7 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 			ShorthandManager[] sms) {
 
 		ParsedURL durl = ((SVGOMDocument) doc).getParsedURL();
-		CSSEngine result = new SVGCSSEngine(doc, durl, p, vms, sms, ctx);
+		CSSEngine result = createCSSEngine(doc, durl, p, vms, sms, ctx);
 
 		URL url = getResource("resources/UserAgentStyleSheet.css");
 		if (url != null) {
@@ -118,21 +118,23 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 			try {
 				is = openStream(purl);
 			} catch (IOException e) {
+				e.printStackTrace();
 				return result;
 			}
-			InputStreamReader re = new InputStreamReader(is, StandardCharsets.UTF_8);
-			InputSource source = new InputSource(re);
-			try {
+			try (InputStreamReader re = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+				InputSource source = new InputSource(re);
 				result.setUserAgentStyleSheet(result.parseStyleSheet(source, purl, "all"));
-			} finally {
-				try {
-					re.close();
-				} catch (IOException e) {
-				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 
 		return result;
+	}
+
+	CSSEngine createCSSEngine(AbstractStylableDocument doc, ParsedURL durl, Parser p, ValueManager[] vms,
+			ShorthandManager[] sms, CSSContext ctx) {
+		return new SVGCSSEngine(doc, durl, p, vms, sms, ctx);
 	}
 
 	protected URL getResource(String resourceName) {

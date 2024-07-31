@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import java.net.URL;
 import java.util.HashMap;
 
 import org.w3c.dom.DOMException;
@@ -28,7 +27,6 @@ import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 
-import io.sf.carte.doc.style.css.nsac.InputSource;
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -73,19 +71,9 @@ public class SVG12DOMImplementation extends SVGDOMImplementation {
 	}
 
 	@Override
-	public CSSEngine createCSSEngine(AbstractStylableDocument doc, CSSContext ctx, Parser p, ValueManager[] vms,
-			ShorthandManager[] sms) {
-		ParsedURL durl = ((SVGOMDocument) doc).getParsedURL();
-		CSSEngine result = new SVG12CSSEngine(doc, durl, p, vms, sms, ctx);
-
-		URL url = getClass().getResource("resources/UserAgentStyleSheet.css");
-		if (url != null) {
-			ParsedURL purl = new ParsedURL(url);
-			InputSource is = new InputSource(purl.toString());
-			result.setUserAgentStyleSheet(result.parseStyleSheet(is, purl, "all"));
-		}
-
-		return result;
+	CSSEngine createCSSEngine(AbstractStylableDocument doc, ParsedURL durl, Parser p, ValueManager[] vms,
+			ShorthandManager[] sms, CSSContext ctx) {
+		return new SVG12CSSEngine(doc, durl, p, vms, sms, ctx);
 	}
 
 	/**
