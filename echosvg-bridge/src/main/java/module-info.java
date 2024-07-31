@@ -35,7 +35,7 @@ module io.sf.carte.echosvg.bridge {
 	requires io.sf.carte.echosvg.parser;
 	requires io.sf.carte.echosvg.xml;
 
-	requires org.apache.xmlgraphics.commons;
+	requires io.sf.graphics.legacy.colors;
 
 	provides io.sf.carte.echosvg.script.InterpreterFactory
 	with io.sf.carte.echosvg.bridge.RhinoInterpreterFactory;

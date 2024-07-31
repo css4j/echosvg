@@ -37,9 +37,9 @@ module io.sf.carte.echosvg.awt {
 	requires transitive io.sf.carte.echosvg.util;
 	requires io.sf.carte.echosvg.i18n;
 
-	// org.apache.xmlgraphics.commons should be a transitive dependency due to
-	// ICCColorSpaceWithIntent from commons being used in this module's API.
-	requires org.apache.xmlgraphics.commons;
+	// It is a transitive dependency due to
+	// ICCColorSpaceWithIntent being used in this module's API.
+	requires transitive io.sf.graphics.legacy.colors;
 
 	requires java.desktop;
 

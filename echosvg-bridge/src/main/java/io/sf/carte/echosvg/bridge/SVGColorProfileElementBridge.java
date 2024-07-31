@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.color.ICC_Profile;
 import java.io.IOException;
 
-import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
-import org.apache.xmlgraphics.java2d.color.RenderingIntent;
+import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
+import io.sf.graphics.java2d.color.RenderingIntent;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

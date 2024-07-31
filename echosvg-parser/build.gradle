@@ -1,6 +1,5 @@
 plugins {
 	id 'echosvg.java-conventions'
-	id 'org.gradlex.extra-java-module-info'
 }
 
 dependencies {
@@ -8,12 +7,6 @@ dependencies {
 	api project(':echosvg-xml')
 	api project(':echosvg-i18n')
 	api "io.sf.carte:svgom-api:${svgomVersion}"
-	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
-}
-
-extraJavaModuleInfo {
-	failOnMissingModuleInfo.set(false)
-	automaticModule('org.apache.xmlgraphics:xmlgraphics-commons', 'org.apache.xmlgraphics.commons')
 }
 
 description = 'io.sf.carte:echosvg-parser'

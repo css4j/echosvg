@@ -28,6 +28,9 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ColorModel;
 
+import io.sf.carte.echosvg.ext.awt.MultipleGradientPaint.ColorSpaceEnum;
+import io.sf.carte.echosvg.ext.awt.MultipleGradientPaint.CycleMethodEnum;
+
 /**
  * The <code>LinearGradientPaint</code> class provides a way to fill a
  * {@link java.awt.Shape} with a linear color gradient pattern. The user may

@@ -21,11 +21,10 @@ package io.sf.carte.echosvg.ext.awt.image.renderable;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderContext;
 
-import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
-
 import io.sf.carte.echosvg.ext.awt.image.GraphicsUtil;
 import io.sf.carte.echosvg.ext.awt.image.rendered.CachableRed;
 import io.sf.carte.echosvg.ext.awt.image.rendered.ProfileRed;
+import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
 
 /**
  * Implements the interface expected from a color matrix operation

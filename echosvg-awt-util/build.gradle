@@ -1,17 +1,11 @@
 plugins {
 	id 'echosvg.java-conventions'
-	id 'org.gradlex.extra-java-module-info'
 }
 
 dependencies {
 	api project(':echosvg-util')
+	api "io.sf.graphics:legacy-colors:${legacyColorsVersion}"
 	implementation project(':echosvg-i18n')
-	api "org.apache.xmlgraphics:xmlgraphics-commons:${xmlgraphicsCommonsVersion}"
-}
-
-extraJavaModuleInfo {
-	failOnMissingModuleInfo.set(false)
-	automaticModule('org.apache.xmlgraphics:xmlgraphics-commons', 'org.apache.xmlgraphics.commons')
 }
 
 description = 'io.sf.carte:echosvg-awt-util'

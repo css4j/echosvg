@@ -19,9 +19,8 @@
 
 package io.sf.carte.echosvg.ext.awt.color;
 
-import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
-
 import io.sf.carte.echosvg.util.SoftReferenceCache;
+import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
 
 /**
  * This class manages a cache of soft references to named profiles that we have

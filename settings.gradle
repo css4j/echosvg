@@ -3,7 +3,6 @@ pluginManagement {
 		/*
 		 * plugin versions are declared at gradle.properties file
 		 */
-		id 'org.gradlex.extra-java-module-info' version "${extraJavaModuleInfoVersion}"
 		id 'org.ajoberstar.grgit' version "${grGitVersion}"
 	}
 }

@@ -235,9 +235,9 @@ repositories {
             releasesOnly()
         }
         content {
-            includeGroup 'com.github.css4j'
             includeGroup 'io.sf.carte'
             includeGroup 'io.sf.jclf'
+            includeGroup 'io.sf.graphics'
         }
     }
 }

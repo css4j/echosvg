@@ -16,8 +16,9 @@ repositories {
 			releasesOnly()
 		}
 		content {
-			includeGroup "io.sf.carte"
-			includeGroup "io.sf.jclf"
+			includeGroup 'io.sf.carte'
+			includeGroup 'io.sf.graphics'
+			includeGroup 'io.sf.jclf'
 		}
 	}
 }

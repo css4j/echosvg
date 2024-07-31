@@ -1,5 +1,4 @@
 plugins {
-	id 'org.gradlex.extra-java-module-info'
 	id 'org.ajoberstar.grgit'
 	id 'echosvg.java-conventions'
 }
@@ -16,11 +15,6 @@ dependencies {
 	api project(':echosvg-svgpp')
 	api project(':echosvg-ttf2svg')
 	api project(':echosvg-svgrasterizer')
-}
-
-extraJavaModuleInfo {
-	failOnMissingModuleInfo.set(false)
-	automaticModule('org.apache.xmlgraphics:xmlgraphics-commons', 'org.apache.xmlgraphics.commons')
 }
 
 publishing.publications.maven(MavenPublication).pom {

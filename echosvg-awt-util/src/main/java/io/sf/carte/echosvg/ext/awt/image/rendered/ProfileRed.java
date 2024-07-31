@@ -35,7 +35,7 @@ import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
 
-import org.apache.xmlgraphics.java2d.color.ICCColorSpaceWithIntent;
+import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
 
 /**
  * This implementation of rendered image forces a color profile on its source
