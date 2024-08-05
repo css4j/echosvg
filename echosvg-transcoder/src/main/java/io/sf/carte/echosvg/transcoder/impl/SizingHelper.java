@@ -23,8 +23,8 @@ import org.w3c.dom.Element;
 
 import io.sf.carte.doc.style.css.CSSUnit;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.property.Evaluator;
 import io.sf.carte.doc.style.css.property.ExpressionValue;
-import io.sf.carte.doc.style.css.property.PercentageEvaluator;
 import io.sf.carte.doc.style.css.property.StyleValue;
 import io.sf.carte.doc.style.css.property.TypedValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
@@ -148,7 +148,7 @@ public class SizingHelper {
 				}
 				break;
 			case EXPRESSION:
-				PercentageEvaluator eval = new PercentageEvaluator();
+				Evaluator eval = new Evaluator();
 				typed = eval.evaluateExpression((ExpressionValue) item);
 				if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
 					return false;
@@ -183,7 +183,7 @@ public class SizingHelper {
 			}
 			break;
 		case EXPRESSION:
-			PercentageEvaluator eval = new PercentageEvaluator();
+			Evaluator eval = new Evaluator();
 			typed = eval.evaluateExpression((ExpressionValue) value);
 			if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
 				if (CSSUnit.isRelativeLengthUnitType(typed.getUnitType())) {

@@ -305,11 +305,11 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 			// XXX Update this to use the animated value of 'viewBox' and
 			// 'preserveAspectRatio'.
-			String viewBox = root.getAttributeNS(null, SVGConstants.SVG_VIEW_BOX_ATTRIBUTE);
+			String viewBox = root.getAttributeNS(null, SVGConstants.SVG_VIEW_BOX_ATTRIBUTE).trim();
 
-			if ((ref != null) && (ref.length() != 0)) {
+			if (ref != null && !ref.isEmpty()) {
 				Px = ViewBox.getViewTransform(ref, root, width, height, ctx);
-			} else if ((viewBox != null) && (viewBox.length() != 0)) {
+			} else if (!viewBox.isEmpty()) {
 				String aspectRatio = root.getAttributeNS(null, SVGConstants.SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE);
 				Px = ViewBox.getPreserveAspectRatioTransform(root, viewBox, aspectRatio, width, height, ctx);
 			} else {

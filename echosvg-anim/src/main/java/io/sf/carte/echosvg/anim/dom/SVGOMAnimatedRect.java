@@ -25,8 +25,8 @@ import org.w3c.dom.svg.SVGRect;
 
 import io.sf.carte.doc.style.css.CSSUnit;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.property.Evaluator;
 import io.sf.carte.doc.style.css.property.ExpressionValue;
-import io.sf.carte.doc.style.css.property.PercentageEvaluator;
 import io.sf.carte.doc.style.css.property.StyleValue;
 import io.sf.carte.doc.style.css.property.TypedValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
@@ -290,7 +290,7 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 					}
 					break;
 				case EXPRESSION:
-					PercentageEvaluator eval = new PercentageEvaluator();
+					Evaluator eval = new Evaluator();
 					typed = eval.evaluateExpression((ExpressionValue) typed);
 					if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
 						return false;

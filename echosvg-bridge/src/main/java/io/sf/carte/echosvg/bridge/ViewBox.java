@@ -19,8 +19,8 @@
 package io.sf.carte.echosvg.bridge;
 
 import java.awt.geom.AffineTransform;
-import java.util.StringTokenizer;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -29,6 +29,14 @@ import org.w3c.dom.svg.SVGAnimatedRect;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
 import org.w3c.dom.svg.SVGRect;
 
+import io.sf.carte.doc.style.css.CSSUnit;
+import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.property.Evaluator;
+import io.sf.carte.doc.style.css.property.ExpressionValue;
+import io.sf.carte.doc.style.css.property.StyleValue;
+import io.sf.carte.doc.style.css.property.TypedValue;
+import io.sf.carte.doc.style.css.property.ValueFactory;
+import io.sf.carte.doc.style.css.property.ValueList;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedRect;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.dom.util.DOMUtilities;
@@ -106,7 +114,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 			} else {
 				elt = ancestorSVG;
 			}
-			String viewBoxStr = elt.getAttributeNS(null, SVG_VIEW_BOX_ATTRIBUTE);
+			String viewBoxStr = elt.getAttributeNS(null, SVG_VIEW_BOX_ATTRIBUTE).trim();
 			vb = parseViewBoxAttribute(elt, viewBoxStr, ctx);
 		}
 
@@ -316,32 +324,64 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 		if (value.length() == 0) {
 			return null;
 		}
-		int i = 0;
+
 		float[] vb = new float[4];
-		StringTokenizer st = new StringTokenizer(value, " ,");
-		try {
-			while (i < 4 && st.hasMoreTokens()) {
-				vb[i] = Float.parseFloat(st.nextToken());
-				i++;
-			}
-		} catch (NumberFormatException nfEx) {
-			throw new BridgeException(ctx, e, nfEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
-					new Object[] { SVG_VIEW_BOX_ATTRIBUTE, value, nfEx });
-		}
-		if (i != 4) {
+		ValueFactory factory = new ValueFactory();
+		StyleValue sv = factory.parseProperty(value);
+		if (!computeRectangle(sv, vb)) {
 			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
 					new Object[] { SVG_VIEW_BOX_ATTRIBUTE, value });
 		}
+
 		// A negative value for <width> or <height> is an error
 		if (vb[2] < 0 || vb[3] < 0) {
 			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_VALUE_MALFORMED,
 					new Object[] { SVG_VIEW_BOX_ATTRIBUTE, value });
 		}
+
 		// A value of zero for width or height disables rendering of the element
 		if (vb[2] == 0 || vb[3] == 0) {
 			return null; // <!> FIXME : must disable !
 		}
+
 		return vb;
+	}
+
+	static boolean computeRectangle(StyleValue value, float[] numbers) throws DOMException {
+		if (value.getCssValueType() != CssType.LIST) {
+			return false;
+		}
+		ValueList list = (ValueList) value;
+		if (list.getLength() != 4) {
+			return false;
+		}
+
+		for (int i = 0; i < 4; i++) {
+			StyleValue item = list.item(i);
+			if (item.getCssValueType() != CssType.TYPED) {
+				return false;
+			}
+			TypedValue typed;
+			switch (item.getPrimitiveType()) {
+			case NUMERIC:
+				typed = (TypedValue) item;
+				if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
+					return false;
+				}
+				break;
+			case EXPRESSION:
+				Evaluator eval = new Evaluator();
+				typed = eval.evaluateExpression((ExpressionValue) item);
+				if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
+					return false;
+				}
+				break;
+			default:
+				return false;
+			}
+			numbers[i] = typed.getFloatValue(CSSUnit.CSS_NUMBER);
+		}
+		return true;
 	}
 
 	/**
