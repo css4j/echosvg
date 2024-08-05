@@ -63,6 +63,7 @@ import io.sf.carte.echosvg.dom.util.DocumentFactory;
 import io.sf.carte.echosvg.gvt.CanvasGraphicsNode;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
+import io.sf.carte.echosvg.transcoder.impl.SizingHelper;
 import io.sf.carte.echosvg.transcoder.keys.BooleanKey;
 import io.sf.carte.echosvg.transcoder.keys.FloatKey;
 import io.sf.carte.echosvg.transcoder.keys.LengthKey;
@@ -389,6 +390,9 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 					}
 					// Set the right namespace
 					docElm = replaceSVGRoot(docElm);
+				} else {
+					// We are in CSS context
+					SizingHelper.defaultDimensions(docElm);
 				}
 			}
 		}
@@ -421,6 +425,11 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 				XMLConstants.XMLNS_ATTRIBUTE, SVGConstants.SVG_NAMESPACE_URI);
 		Element newRoot = replaceNamespace(docElm);
 		docElm.getParentNode().replaceChild(newRoot, docElm);
+
+		// We are in CSS context and need to apply some rules
+		// see https://svgwg.org/specs/integration/#svg-css-sizing
+		SizingHelper.defaultDimensions(newRoot);
+
 		return newRoot;
 	}
 

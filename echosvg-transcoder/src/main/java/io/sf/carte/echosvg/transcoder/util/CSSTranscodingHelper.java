@@ -90,6 +90,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
+import io.sf.carte.echosvg.transcoder.impl.SizingHelper;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
 import io.sf.carte.util.agent.AgentUtil;
@@ -720,6 +721,10 @@ public class CSSTranscodingHelper {
 				throw new TranscoderException(msg);
 			}
 		}
+
+		// We are in CSS context, need to apply some rules
+		// see https://svgwg.org/specs/integration/#svg-css-sizing
+		SizingHelper.defaultDimensions(svgRoot);
 
 		boolean isSVG12;
 		String version = svgRoot.getAttribute("version");

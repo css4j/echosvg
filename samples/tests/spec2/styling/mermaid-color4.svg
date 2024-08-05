@@ -26,7 +26,7 @@
 <!-- ====================================================================== -->
 
 <svg aria-roledescription="sequence" role="graphics-document document"
- viewBox="-50 -10 497 363" height="363" xmlns="http://www.w3.org/2000/svg" width="497" id="container">
+ viewBox="-50 -10 497 363" width="500" height="363" xmlns="http://www.w3.org/2000/svg" id="container">
  <style>
  #container{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}
  #container .error-icon{fill:#552222;}
