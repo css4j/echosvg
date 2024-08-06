@@ -459,8 +459,13 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 			// Handle the viewBox transform
 			AffineTransform at = ViewBox.getPreserveAspectRatioTransform(rootElement, cursorSize.width,
 					cursorSize.height, ctx);
-			Filter filter = node.getGraphicsNodeRable(true);
-			f = new AffineRable8Bit(filter, at);
+			if (at == null) {
+				// disable the rendering of the element
+				return null;
+			} else {
+				Filter filter = node.getGraphicsNodeRable(true);
+				f = new AffineRable8Bit(filter, at);
+			}
 		} catch (BridgeException ex) {
 			throw ex;
 		} catch (SecurityException ex) {
@@ -493,6 +498,9 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 							new float[] { 0, 0, preferredSize.width, preferredSize.height },
 							SVGPreserveAspectRatio.SVG_PRESERVEASPECTRATIO_XMINYMIN, true, cursorSize.width,
 							cursorSize.height);
+					if (at == null) {
+						return null;
+					}
 				}
 				f = new AffineRable8Bit(filter, at);
 			} else {

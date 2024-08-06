@@ -204,7 +204,7 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 		/**
 		 * Initializes the length, if needed.
 		 */
-		protected void revalidate() {
+		protected void revalidate() throws LiveAttributeException {
 			if (valid) {
 				return;
 			}
@@ -245,19 +245,18 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 			try {
 				p.parse(s);
 			} catch (CalcParseException cpe) {
-				StyleValue value;
 				ValueFactory factory = new ValueFactory();
 				try {
-					value = factory.parseProperty(s);
+					StyleValue value = factory.parseProperty(s);
+					if (!computeRectangle(value, numbers)) {
+						throw new LiveAttributeException(element, localName,
+								LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, s);
+					}
 				} catch (Exception e) {
 					LiveAttributeException ex = new LiveAttributeException(element, localName,
 							LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, s);
 					ex.initCause(e);
 					throw ex;
-				}
-				if (!computeRectangle(value, numbers)) {
-					throw new LiveAttributeException(element, localName,
-							LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, s);
 				}
 			}
 			x = numbers[0];
@@ -268,7 +267,7 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 			valid = true;
 		}
 
-		private boolean computeRectangle(StyleValue value, float[] numbers) throws LiveAttributeException {
+		private boolean computeRectangle(StyleValue value, float[] numbers) throws DOMException {
 			if (value.getCssValueType() != CssType.LIST) {
 				return false;
 			}
@@ -376,6 +375,12 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 			reset();
 		}
 
+		@Override
+		public float[] toArray() throws LiveAttributeException {
+			revalidate();
+			return super.toArray();
+		}
+
 	}
 
 	/**
@@ -467,6 +472,14 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 			this.y = y;
 			this.w = w;
 			this.h = h;
+		}
+
+		@Override
+		public float[] toArray() throws LiveAttributeException {
+			if (hasAnimVal) {
+				return super.toArray();
+			}
+			return ((SVGOMRect) getBaseVal()).toArray();
 		}
 
 	}

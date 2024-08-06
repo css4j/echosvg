@@ -150,6 +150,14 @@ public class SVGOMAnimatedRectTest {
 		assertEquals(450f, rect.getHeight(), TOL);
 	}
 
+	@Test
+	public void testCalcValueUnitError() throws LiveAttributeException {
+		SVGOMAnimatedRect animRect = createAnimatedRect("0 0 calc(10mm) 500");
+		SVGRect rect = animRect.getBaseVal();
+
+		assertThrows(LiveAttributeException.class, () -> rect.getX());
+	}
+
 	private SVGOMAnimatedRect createAnimatedRect(String attrValue) {
 		element.setAttributeNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_VIEW_BOX_ATTRIBUTE,
 				attrValue);

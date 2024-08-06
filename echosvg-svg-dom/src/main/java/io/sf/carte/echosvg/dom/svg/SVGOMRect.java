@@ -25,8 +25,10 @@ import org.w3c.dom.svg.SVGRect;
  * An implementation of {@link SVGRect} that is not associated with an
  * attribute.
  *
- * @author <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:thomas.deweese@kodak.com">Thomas DeWeese</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGOMRect implements SVGRect {
@@ -129,6 +131,18 @@ public class SVGOMRect implements SVGRect {
 	@Override
 	public void setHeight(float height) throws DOMException {
 		this.h = height;
+	}
+
+	/**
+	 * Convert this rectangle to an array of {@code x}, {@code y}, {@code width} and
+	 * {@code height} values.
+	 * 
+	 * @return the array of values.
+	 * @throws LiveAttributeException if one or more of the values are wrong.
+	 */
+	public float[] toArray() throws LiveAttributeException {
+		float[] a = { x, y, w, h };
+		return a;
 	}
 
 }

@@ -165,7 +165,12 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge implemen
 			AffineTransform preserveAspectRatioTransform = ViewBox.getPreserveAspectRatioTransform(patternElement,
 					viewBoxStr, aspectRatioStr, w, h, ctx);
 
-			patternContentTransform.concatenate(preserveAspectRatioTransform);
+			if (preserveAspectRatioTransform == null) {
+				// disable the rendering of the element
+				return null;
+			} else {
+				patternContentTransform.concatenate(preserveAspectRatioTransform);
+			}
 		} else {
 			//
 			// Process patternContentUnitsTransform

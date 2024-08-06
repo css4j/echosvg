@@ -36,6 +36,8 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  */
 public class AbstractSamplesRendering {
 
+	static final String BROWSER_MEDIA = "screen";
+
 	/**
 	 * To test the tEXt chunk.
 	 */

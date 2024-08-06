@@ -312,6 +312,10 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 			} else if (!viewBox.isEmpty()) {
 				String aspectRatio = root.getAttributeNS(null, SVGConstants.SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE);
 				Px = ViewBox.getPreserveAspectRatioTransform(root, viewBox, aspectRatio, width, height, ctx);
+				// check for null, which means zero width or height
+				if (Px == null) {
+					Px = AffineTransform.getTranslateInstance(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+				}
 			} else {
 				// no viewBox has been specified, create a scale transform
 				float xscale, yscale;

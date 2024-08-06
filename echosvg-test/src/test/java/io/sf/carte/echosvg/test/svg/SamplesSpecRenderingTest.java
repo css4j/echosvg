@@ -497,6 +497,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	 * Rendering
 	 */
 	@Test
+	public void testRenderingInvalidViewbox() throws TranscoderException, IOException {
+		testErrIgnore("samples/tests/spec/rendering/invalidViewbox.svg", BROWSER_MEDIA, 3, true);
+	}
+
+	@Test
 	public void testRenderingOpacity() throws TranscoderException, IOException {
 		test("samples/tests/spec/rendering/opacity.svg");
 	}
@@ -513,6 +518,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 
 	public void testRenderingResolutionPxMM() throws TranscoderException, IOException {
 		testResolutionPxMM("samples/tests/spec/rendering/resolution.svg", 0.25f);
+	}
+
+	@Test
+	public void testRenderingZeroWidthViewbox() throws TranscoderException, IOException {
+		test("samples/tests/spec/rendering/zeroWidthViewbox.svg");
 	}
 
 	/*

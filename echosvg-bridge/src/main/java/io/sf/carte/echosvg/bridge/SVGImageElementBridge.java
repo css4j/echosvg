@@ -844,7 +844,12 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			_par.check();
 
 			AffineTransform at = ViewBox.getPreserveAspectRatioTransform(e, vb, w, h, _par, ctx);
-			at.preConcatenate(AffineTransform.getTranslateInstance(x, y));
+			if (at == null) {
+				// disable the rendering of the element
+				return;
+			} else {
+				at.preConcatenate(AffineTransform.getTranslateInstance(x, y));
+			}
 			node.setTransform(at);
 
 			// 'overflow' and 'clip'

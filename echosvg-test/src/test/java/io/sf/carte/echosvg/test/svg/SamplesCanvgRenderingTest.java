@@ -41,8 +41,6 @@ import io.sf.carte.echosvg.transcoder.TranscoderException;
  */
 public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 
-	private static final String BROWSER_MEDIA = "screen";
-
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		TestFonts.loadTestFonts();

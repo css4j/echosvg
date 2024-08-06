@@ -622,7 +622,13 @@ public class JSVGScrollPane extends JPanel {
 		String viewBoxStr = el.getAttributeNS(null, SVGConstants.SVG_VIEW_BOX_ATTRIBUTE).trim();
 		if (viewBoxStr.length() != 0) {
 			float[] rect = ViewBox.parseViewBoxAttribute(el, viewBoxStr, null);
-			return new Rectangle2D.Float(rect[0], rect[1], rect[2], rect[3]);
+			Rectangle2D rect2d;
+			if (rect != null) {
+				rect2d = new Rectangle2D.Float(rect[0], rect[1], rect[2], rect[3]);
+			} else {
+				rect2d = new Rectangle2D.Float(0f, 0f, 0f, 0f);
+			}
+			return rect2d;
 		}
 		GraphicsNode gn = canvas.getGraphicsNode();
 		if (gn == null)

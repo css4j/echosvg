@@ -148,9 +148,14 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 			float actualWidth = w;
 			float actualHeight = h;
 			try {
-				AffineTransform vtInv = viewingTransform.createInverse();
-				actualWidth = (float) (w * vtInv.getScaleX());
-				actualHeight = (float) (h * vtInv.getScaleY());
+				if (viewingTransform == null) {
+					// disable the rendering of the element
+					return null;
+				} else {
+					AffineTransform vtInv = viewingTransform.createInverse();
+					actualWidth = (float) (w * vtInv.getScaleX());
+					actualHeight = (float) (h * vtInv.getScaleY());
+				}
 			} catch (NoninvertibleTransformException ex) {
 			}
 
@@ -231,8 +236,18 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 
 			if (vb.isSpecified()) {
 				SVGRect vbr = vb.getAnimVal();
-				actualWidth = vbr.getWidth();
-				actualHeight = vbr.getHeight();
+				try {
+					// The next two lines call revalidate(),
+					// so we check for an exception.
+					actualWidth = vbr.getWidth();
+					actualHeight = vbr.getHeight();
+				} catch (RuntimeException ex) {
+					if (ctx.userAgent != null) {
+						ctx.userAgent.displayError(ex);
+					} else {
+						throw ex;
+					}
+				}
 			}
 			ctx.openViewport(e, new SVGSVGElementViewport(actualWidth, actualHeight));
 			return cgn;
@@ -344,10 +359,12 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 					AffineTransform newVT = ViewBox.getPreserveAspectRatioTransform(e, vb, par, w, h, ctx);
 
 					AffineTransform oldVT = cgn.getViewingTransform();
-					if ((newVT.getScaleX() != oldVT.getScaleX()) || (newVT.getScaleY() != oldVT.getScaleY())
-							|| (newVT.getShearX() != oldVT.getShearX()) || (newVT.getShearY() != oldVT.getShearY()))
+					if (newVT == null || (newVT.getScaleX() != oldVT.getScaleX())
+							|| (newVT.getScaleY() != oldVT.getScaleY())
+							|| (newVT.getShearX() != oldVT.getShearX())
+							|| (newVT.getShearY() != oldVT.getShearY())) {
 						rebuild = true;
-					else {
+					} else {
 						// Only differs in translate.
 						cgn.setViewingTransform(newVT);
 

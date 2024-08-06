@@ -40,6 +40,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
@@ -833,7 +834,7 @@ public class JSVGComponent extends JGVTComponent {
 		prevComponentSize = getSize();
 		AffineTransform at = calculateViewingTransform(fragmentIdentifier, elt);
 		CanvasGraphicsNode cgn = getCanvasGraphicsNode(gn);
-		if (cgn != null) {
+		if (cgn != null && at != null) {
 			cgn.setViewingTransform(at);
 		}
 		viewingTransform = null;
@@ -982,7 +983,7 @@ public class JSVGComponent extends JGVTComponent {
 				d.height = 1;
 			final AffineTransform at = calculateViewingTransform(fragmentIdentifier, elt);
 			AffineTransform vt = getViewingTransform();
-			if (at.equals(vt)) {
+			if (Objects.equals(vt, at)) {
 				// No new transform
 				// Only repaint if size really changed.
 				return ((oldD.width != d.width) || (oldD.height != d.height));
