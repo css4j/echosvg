@@ -126,8 +126,13 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 	 */
 	@Override
 	public AnimatableValue getUnderlyingValue(AnimationTarget target) {
-		SVGRect r = getBaseVal();
-		return new AnimatableRectValue(target, r.getX(), r.getY(), r.getWidth(), r.getHeight());
+		// Make sure that baseVal exists
+		getBaseVal();
+
+		// Calling SVGOMRect.toArray() revalidates only once and narrows the possibility
+		// of a race condition.
+		float[] rect = baseVal.toArray();
+		return new AnimatableRectValue(target, rect[0], rect[1], rect[2], rect[3]);
 	}
 
 	/**
