@@ -67,6 +67,16 @@ public class ImageComparator {
 	public static final short DIFFERENT_COLOR_SPACES = 4;
 
 	/**
+	 * The images have a different number of bands.
+	 */
+	public static final short DIFFERENT_BANDS = 5;
+
+	/**
+	 * The images use different buffer data types.
+	 */
+	public static final short DIFFERENT_DATA_TYPES = 6;
+
+	/**
 	 * The images have have too many below-threshold different pixels.
 	 */
 	public static final short DIFFERENT_PIXELS_BELOW_THRESHOLD = 10;
@@ -171,7 +181,9 @@ public class ImageComparator {
 
 		// Compare type
 		if (ref.getType() != can.getType()) {
-			return DIFFERENT_TYPES;
+			if (ref.getType() != BufferedImage.TYPE_CUSTOM && can.getType() != BufferedImage.TYPE_CUSTOM) {
+				return DIFFERENT_TYPES;
+			}
 		}
 
 		final int colorSpace = ref.getColorModel().getColorSpace().getType();
@@ -181,6 +193,15 @@ public class ImageComparator {
 		}
 
 		final int numBands = ref.getSampleModel().getNumBands();
+
+		if (numBands != can.getSampleModel().getNumBands()) {
+			return DIFFERENT_BANDS;
+		}
+
+		if (ref.getSampleModel().getDataType() != can.getSampleModel().getDataType()) {
+			return DIFFERENT_DATA_TYPES;
+		}
+
 		final float numpxFrac = w * h * numBands * 0.01f;
 		final int maxDiffPx = computeMaxDiffPixels(numpxFrac, allowedPercentOverThreshold, w, h);
 		final int maxDiffPxBelow = computeMaxDiffPixels(numpxFrac, allowedPercentBelowThreshold, w,
@@ -596,6 +617,12 @@ public class ImageComparator {
 			break;
 		case DIFFERENT_COLOR_SPACES:
 			desc = "The images have different color spaces";
+			break;
+		case DIFFERENT_BANDS:
+			desc = "The images have a different number of bands";
+			break;
+		case DIFFERENT_DATA_TYPES:
+			desc = "The images use different buffer data types";
 			break;
 		case DIFFERENT_PIXELS_BELOW_THRESHOLD:
 			desc = "The images have have too many below-threshold different pixels";

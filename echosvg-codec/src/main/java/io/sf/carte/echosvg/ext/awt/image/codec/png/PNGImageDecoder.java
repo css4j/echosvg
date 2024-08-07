@@ -18,10 +18,12 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
+import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageDecodeParam;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageDecoderImpl;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
 
@@ -33,6 +35,19 @@ public class PNGImageDecoder extends ImageDecoderImpl {
 
 	public PNGImageDecoder(InputStream input, PNGDecodeParam param) {
 		super(input, param);
+	}
+
+	@Override
+	public void setParam(ImageDecodeParam param) {
+		if (!(param instanceof PNGDecodeParam)) {
+			throw new IllegalArgumentException("param must be a PNGDecodeParam.");
+		}
+		super.setParam(param);
+	}
+
+	@Override
+	public PNGDecodeParam getParam() {
+		return (PNGDecodeParam) super.getParam();
 	}
 
 	@Override

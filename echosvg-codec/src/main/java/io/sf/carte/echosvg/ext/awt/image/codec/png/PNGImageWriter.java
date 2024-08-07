@@ -24,6 +24,7 @@ import java.io.OutputStream;
 
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriter;
 import io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams;
+import io.sf.carte.echosvg.ext.awt.image.spi.PNGImageWriterParams;
 
 /**
  * ImageWriter implementation that uses EchoSVG's PNG codec to write PNG files.
@@ -42,15 +43,51 @@ public class PNGImageWriter implements ImageWriter {
 		writeImage(image, out, null);
 	}
 
-	/**
-	 * @see ImageWriter#writeImage(java.awt.image.RenderedImage,
-	 *      java.io.OutputStream,
-	 *      io.sf.carte.echosvg.ext.awt.image.spi.ImageWriterParams)
-	 */
 	@Override
-	public void writeImage(RenderedImage image, OutputStream out, ImageWriterParams params) throws IOException {
-		PNGImageEncoder encoder = new PNGImageEncoder(out, null);
+	public void writeImage(RenderedImage image, OutputStream out, ImageWriterParams params)
+			throws IOException {
+		PNGEncodeParam param = null;
+
+		if (params != null) {
+			Integer level = params.getCompressionLevel();
+			if (level != null) {
+				param = PNGEncodeParam.getDefaultEncodeParam(image);
+				param.setCompressionLevel(level.intValue());
+			}
+
+			if (params instanceof PNGImageWriterParams) {
+				param = encodePNGParam(image, (PNGImageWriterParams) params, param);
+			}
+		}
+
+		PNGImageEncoder encoder = new PNGImageEncoder(out, param);
 		encoder.encode(image);
+	}
+
+	private PNGEncodeParam encodePNGParam(RenderedImage image, PNGImageWriterParams params,
+			PNGEncodeParam param) {
+		if (params.isTextSet()) {
+			if (param == null) {
+				param = PNGEncodeParam.getDefaultEncodeParam(image);
+			}
+			param.setText(params.getText());
+		}
+
+		if (params.isCompressedTextSet()) {
+			if (param == null) {
+				param = PNGEncodeParam.getDefaultEncodeParam(image);
+			}
+			param.setCompressedText(params.getCompressedText());
+		}
+
+		if (params.isInternationalTextSet()) {
+			if (param == null) {
+				param = PNGEncodeParam.getDefaultEncodeParam(image);
+			}
+			param.setInternationalText(params.getInternationalText());
+		}
+
+		return param;
 	}
 
 	/**

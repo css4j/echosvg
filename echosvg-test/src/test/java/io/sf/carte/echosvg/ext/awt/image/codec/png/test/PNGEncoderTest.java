@@ -19,6 +19,7 @@
 
 package io.sf.carte.echosvg.ext.awt.image.codec.png.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -46,6 +47,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
@@ -131,7 +133,7 @@ public class PNGEncoderTest {
 		// Create a BufferedImage to be encoded
 		Graphics2D ig = image.createGraphics();
 		ig.scale(.5, .5);
-		ig.setPaint(new Color(128, 0, 0));
+		ig.setPaint(new Color(128, 0, 0, 235));
 		ig.fillRect(0, 0, 100, 50);
 		ig.setPaint(Color.orange);
 		ig.fillRect(100, 0, 100, 50);
@@ -189,26 +191,21 @@ public class PNGEncoderTest {
 
 		PNGImageDecoder pngImageDecoder = new PNGImageDecoder(is, param);
 
+		BufferedImage decodedImage;
 		RenderedImage decodedRenderedImage = pngImageDecoder.decodeAsRenderedImage(0);
-
-		BufferedImage decodedImage = null;
-		if (decodedRenderedImage instanceof BufferedImage) {
-			decodedImage = (BufferedImage) decodedRenderedImage;
+		ColorModel cm = decodedRenderedImage.getColorModel();
+		if (cm.getColorSpace().isCS_sRGB()) {
+			decodedImage = new BufferedImage(decodedRenderedImage.getWidth(),
+					decodedRenderedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		} else {
-			ColorModel cm = decodedRenderedImage.getColorModel();
-			if (cm.getColorSpace().isCS_sRGB()) {
-				decodedImage = new BufferedImage(decodedRenderedImage.getWidth(),
-						decodedRenderedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-			} else {
-				Point loc = new Point(0, 0);
-				WritableRaster raster = Raster.createWritableRaster(decodedRenderedImage.getSampleModel(),
-						loc);
-				decodedImage = new BufferedImage(cm, raster, false, null);
-			}
-			Graphics2D ig = decodedImage.createGraphics();
-			ig.drawRenderedImage(decodedRenderedImage, new AffineTransform());
-			ig.dispose();
+			Point loc = new Point(decodedRenderedImage.getMinX(), decodedRenderedImage.getMinY());
+			WritableRaster raster = Raster.createWritableRaster(decodedRenderedImage.getSampleModel(),
+					loc);
+			decodedImage = new BufferedImage(cm, raster, false, null);
 		}
+		Graphics2D ig = decodedImage.createGraphics();
+		ig.drawRenderedImage(decodedRenderedImage, new AffineTransform());
+		ig.dispose();
 
 		// Check text
 		if (text != null) {
@@ -217,6 +214,11 @@ public class PNGEncoderTest {
 			assertTrue(encodeParams.isTextSet());
 			String[] decText = encodeParams.getText();
 			assertTrue(Arrays.equals(text, decText), "tEXt does not match.");
+
+			assertNotNull(decodedRenderedImage.getPropertyNames(), "No properties");
+			String ptyVal = (String) decodedRenderedImage
+					.getProperty("text_0:" + text[0].toLowerCase(Locale.ROOT));
+			assertEquals(text[1], ptyVal);
 		}
 
 		// Check iText
@@ -226,6 +228,14 @@ public class PNGEncoderTest {
 			assertTrue(encodeParams.isInternationalTextSet());
 			String[] decIText = encodeParams.getInternationalText();
 			assertTrue(Arrays.equals(iText, decIText), "iTXt does not match.");
+
+			assertNotNull(decodedRenderedImage.getPropertyNames(), "No properties");
+			String[] ptyVal = (String[]) decodedRenderedImage
+					.getProperty("itext_0:" + iTXt[2].toLowerCase(Locale.ROOT));
+			assertEquals(iText[0], ptyVal[0]);
+			assertEquals(iText[1], ptyVal[1]);
+			assertEquals(iText[2], ptyVal[2]);
+			assertEquals(iText[3], ptyVal[3]);
 		}
 
 		// Check zText
@@ -235,6 +245,11 @@ public class PNGEncoderTest {
 			assertTrue(encodeParams.isCompressedTextSet());
 			String[] decZText = encodeParams.getCompressedText();
 			assertTrue(Arrays.equals(zText, decZText), "zTXt does not match.");
+
+			assertNotNull(decodedRenderedImage.getPropertyNames(), "No properties");
+			String ptyVal = (String) decodedRenderedImage
+					.getProperty("ztext_0:" + zText[0].toLowerCase(Locale.ROOT));
+			assertEquals(zText[1], ptyVal);
 		}
 
 		// Compare images

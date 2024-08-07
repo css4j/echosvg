@@ -150,10 +150,10 @@ public abstract class ImageDecoderImpl implements ImageDecoder {
 	 * Returns a <code>RenderedImage</code> that contains the decoded contents of
 	 * the <code>SeekableStream</code> associated with this
 	 * <code>ImageDecoder</code>. The given page of a multi-page image is decoded.
-	 * If the page does not exist, an IOException will be thrown. Page numbering
-	 * begins at zero.
+	 * Page numbering begins at zero.
 	 *
 	 * @param page The page to be decoded.
+	 * @throws IOException if the page does not exist.
 	 */
 	@Override
 	public abstract RenderedImage decodeAsRenderedImage(int page) throws IOException;

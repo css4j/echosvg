@@ -29,11 +29,6 @@ import java.io.OutputStream;
  * A partial implementation of the ImageEncoder interface useful for
  * subclassing.
  *
- * <p>
- * <b> This class is not a committed part of the JAI API. It may be removed or
- * changed in future releases of JAI.</b>
- *
- * @author For later modifications, see Git history.
  * @version $Id$
  */
 public abstract class ImageEncoderImpl implements ImageEncoder {
@@ -41,39 +36,11 @@ public abstract class ImageEncoderImpl implements ImageEncoder {
 	/** The OutputStream associcted with this ImageEncoder. */
 	protected OutputStream output;
 
-	/** The ImageEncodeParam object associcted with this ImageEncoder. */
-	protected ImageEncodeParam param;
-
 	/**
-	 * Constructs an ImageEncoderImpl with a given OutputStream and
-	 * ImageEncoderParam instance.
+	 * Constructs an ImageEncoderImpl with a given OutputStream.
 	 */
-	public ImageEncoderImpl(OutputStream output, ImageEncodeParam param) {
+	protected ImageEncoderImpl(OutputStream output) {
 		this.output = output;
-		this.param = param;
-	}
-
-	/**
-	 * Returns the current parameters as an instance of the ImageEncodeParam
-	 * interface. Concrete implementations of this interface will return
-	 * corresponding concrete implementations of the ImageEncodeParam interface. For
-	 * example, a JPEGImageEncoder will return an instance of JPEGEncodeParam.
-	 */
-	@Override
-	public ImageEncodeParam getParam() {
-		return param;
-	}
-
-	/**
-	 * Sets the current parameters to an instance of the ImageEncodeParam interface.
-	 * Concrete implementations of ImageEncoder may throw a RuntimeException if the
-	 * params argument is not an instance of the appropriate subclass or
-	 * subinterface. For example, a JPEGImageEncoder will expect param to be an
-	 * instance of JPEGEncodeParam.
-	 */
-	@Override
-	public void setParam(ImageEncodeParam param) {
-		this.param = param;
 	}
 
 	/** Returns the OutputStream associated with this ImageEncoder. */

@@ -19,11 +19,14 @@
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Transparency;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
@@ -45,7 +48,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
@@ -422,7 +427,7 @@ class PNGImage extends SimpleRenderedImage {
 					}
 					if (emitProperties) {
 						String key = "chunk_" + chunkIndex++ + ':' + type;
-						properties.put(key.toLowerCase(), data);
+						properties.put(key.toLowerCase(Locale.ROOT), data);
 					}
 				}
 			} catch (Exception e) {
@@ -685,8 +690,8 @@ class PNGImage extends SimpleRenderedImage {
 			textArray[2 * i] = key;
 			textArray[2 * i + 1] = val;
 			if (emitProperties) {
-				String uniqueKey = "text_" + i + ':' + key;
-				properties.put(uniqueKey.toLowerCase(), val);
+				String uniqueKey = "text_" + i + ':' + key.toLowerCase(Locale.ROOT);
+				properties.put(uniqueKey, val);
 			}
 		}
 		if (encodeParam != null) {
@@ -706,12 +711,19 @@ class PNGImage extends SimpleRenderedImage {
 			itextArray[2 * i + 2] = transKey;
 			itextArray[2 * i + 3] = val;
 			if (emitProperties) {
-				String uniqueKey = "itext_" + i + ':' + key;
-				String[] itextVal = new String[3];
-				itextVal[0] = langTag;
-				itextVal[1] = transKey;
-				itextVal[2] = val;
-				properties.put(uniqueKey.toLowerCase(), itextVal);
+				Locale loc;
+				if (!langTag.isEmpty()) {
+					loc = Locale.forLanguageTag(langTag);
+				} else {
+					loc = Locale.ROOT;
+				}
+				String uniqueKey = "itext_" + i + ':' + transKey.toLowerCase(loc);
+				String[] itextVal = new String[4];
+				itextVal[0] = key;
+				itextVal[1] = langTag;
+				itextVal[2] = transKey;
+				itextVal[3] = val;
+				properties.put(uniqueKey, itextVal);
 			}
 		}
 		if (encodeParam != null) {
@@ -727,8 +739,8 @@ class PNGImage extends SimpleRenderedImage {
 			ztextArray[2 * i] = key;
 			ztextArray[2 * i + 1] = val;
 			if (emitProperties) {
-				String uniqueKey = "ztext_" + i + ':' + key;
-				properties.put(uniqueKey.toLowerCase(), val);
+				String uniqueKey = "ztext_" + i + ':' + key.toLowerCase(Locale.ROOT);
+				properties.put(uniqueKey, val);
 			}
 		}
 		if (encodeParam != null) {
@@ -1288,7 +1300,7 @@ class PNGImage extends SimpleRenderedImage {
 			value.append((char) chunk.getByte(i));
 		}
 
-		textKeys.add(key.toString());
+		textKeys.add(key.toString().trim());
 		textStrings.add(value.toString());
 	}
 
@@ -1393,7 +1405,7 @@ class PNGImage extends SimpleRenderedImage {
 		StringBuilder buf = new StringBuilder();
 
 		int textIndex = readString(buf, chunk, 0);
-		String key = buf.toString();
+		String key = buf.toString().trim();
 		buf.setLength(0);
 
 		boolean compressed = chunk.getByte(textIndex++) != 0;
@@ -1401,11 +1413,11 @@ class PNGImage extends SimpleRenderedImage {
 		/* int method = */ chunk.getByte(textIndex++);
 
 		textIndex = readString(buf, chunk, textIndex);
-		String langTag = buf.toString();
+		String langTag = buf.toString().trim();
 		buf.setLength(0);
 
 		textIndex = readString(buf, chunk, textIndex);
-		String transkey = buf.toString();
+		String transkey = buf.toString().trim();
 		//buf.setLength(0);
 
 		// Now read the text
@@ -1470,7 +1482,7 @@ class PNGImage extends SimpleRenderedImage {
 				value.append((char) c);
 			}
 
-			ztextKeys.add(key.toString());
+			ztextKeys.add(key.toString().trim());
 			ztextStrings.add(value.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1478,7 +1490,6 @@ class PNGImage extends SimpleRenderedImage {
 	}
 
 	private WritableRaster createRaster(int width, int height, int bands, int scanlineStride, int bitDepth) {
-
 		DataBuffer dataBuffer;
 		WritableRaster ras = null;
 		Point origin = new Point(0, 0);
