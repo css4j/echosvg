@@ -77,23 +77,55 @@ public abstract class PNGEncodeParam implements ImageEncodeParam {
 	 * appropriate for encoding the given image.
 	 *
 	 * <p>
-	 * If the image has an <code>IndexColorModel</code>, an instance of
-	 * <code>PNGEncodeParam.Palette</code> is returned. Otherwise, if the image has
-	 * 1 or 2 bands an instance of <code>PNGEncodeParam.Gray</code> is returned. In
-	 * all other cases an instance of <code>PNGEncodeParam.RGB</code> is returned.
-	 *
-	 * <p>
 	 * Note that this method does not provide any guarantee that the given image
-	 * will be successfully encoded by the PNG encoder, as it only performs a very
+	 * will be successfully encoded by the PNG encoder, as it only performs a
 	 * superficial analysis of the image structure.
+	 * </p>
 	 */
 	public static PNGEncodeParam getDefaultEncodeParam(RenderedImage im) {
+		SampleModel sampleModel = im.getSampleModel();
 		ColorModel colorModel = im.getColorModel();
 		if (colorModel instanceof IndexColorModel) {
+
+			// Determine the bit depth
+			// Assume it's the same for all channels
+			int bitDepth = sampleModel.getSampleSize()[0];
+			// Round bit depth up to a power of 2
+			if (bitDepth == 3) {
+				bitDepth = 4;
+			} else if (bitDepth > 4 && bitDepth < 8) {
+				bitDepth = 8;
+			} else if (bitDepth > 8 && bitDepth < 16) {
+				bitDepth = 16;
+			} else if (bitDepth > 16) {
+				String msg = PropertyUtil.formatMessage("PNGImage.unsupported.bit.depth",
+						new Object[] { bitDepth });
+				throw new RuntimeException(msg);
+			}
+
+			IndexColorModel icm = (IndexColorModel) colorModel;
+			int size = icm.getMapSize();
+
+			byte[] redPalette = new byte[size];
+			byte[] greenPalette = new byte[size];
+			byte[] bluePalette = new byte[size];
+			byte[] alphaPalette = new byte[size];
+
+			icm.getReds(redPalette);
+			icm.getGreens(greenPalette);
+			icm.getBlues(bluePalette);
+			icm.getAlphas(alphaPalette);
+
+			PNGEncodeParam param = PNGImageEncoder.createGrayParam(redPalette, greenPalette,
+					bluePalette, alphaPalette, bitDepth);
+
+			if (param != null) {
+				return param;
+			}
+
 			return new PNGEncodeParam.Palette();
 		}
 
-		SampleModel sampleModel = im.getSampleModel();
 		int numBands = sampleModel.getNumBands();
 
 		if (numBands == 1 || numBands == 2) {

@@ -43,6 +43,7 @@ import java.util.zip.DeflaterOutputStream;
 
 import io.sf.carte.echosvg.ext.awt.image.codec.impl.CodecUtil;
 import io.sf.carte.echosvg.ext.awt.image.codec.impl.ColorUtil;
+import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncodeParam;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.ImageEncoderImpl;
 import io.sf.carte.echosvg.ext.awt.image.codec.util.PropertyUtil;
 
@@ -348,13 +349,43 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 
 	private DataOutputStream dataOutput;
 
+	/**
+	 * Create a new encoder.
+	 * 
+	 * @param output the stream to write the encoded image.
+	 * @param param  the encoding parameters, or {@code null} if defaults should be
+	 *               applied.
+	 */
 	public PNGImageEncoder(OutputStream output, PNGEncodeParam param) {
-		super(output, param);
+		super(output);
 
-		if (param != null) {
-			this.param = param;
-		}
+		this.param = param;
 		this.dataOutput = new DataOutputStream(output);
+	}
+
+	/**
+	 * Get the parameters to be used for encoding.
+	 * 
+	 * @return the parameters.
+	 */
+	@Override
+	public PNGEncodeParam getParam() {
+		return param;
+	}
+
+	/**
+	 * Sets the parameters to use in the encoding.
+	 * 
+	 * @param param the encode parameters.
+	 * @throws IllegalArgumentException if {@code param} is not an instance of
+	 *                                  {@link PNGEncodeParam}.
+	 */
+	@Override
+	public void setParam(ImageEncodeParam param) throws IllegalArgumentException {
+		if (!(param instanceof PNGEncodeParam)) {
+			throw new IllegalArgumentException("param must be a PNGEncodeParam.");
+		}
+		this.param = (PNGEncodeParam) param;
 	}
 
 	private void writeMagic() throws IOException {
@@ -892,8 +923,8 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 	 * thusly, the method returns a suitable instance of PNGEncodeParam.Gray;
 	 * otherwise it returns null.
 	 */
-	private PNGEncodeParam.Gray createGrayParam(byte[] redPalette, byte[] greenPalette, byte[] bluePalette,
-			byte[] alphaPalette) {
+	static PNGEncodeParam.Gray createGrayParam(byte[] redPalette, byte[] greenPalette, byte[] bluePalette,
+			byte[] alphaPalette, int bitDepth) {
 		PNGEncodeParam.Gray param = new PNGEncodeParam.Gray();
 		int numTransparent = 0;
 
@@ -970,7 +1001,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 			}
 
 			// Round bit depth up to a power of 2
-			if (bitDepth > 2 && bitDepth < 4) {
+			if (bitDepth == 3) {
 				bitDepth = 4;
 			} else if (bitDepth > 4 && bitDepth < 8) {
 				bitDepth = 8;
@@ -1013,7 +1044,7 @@ public class PNGImageEncoder extends ImageEncoderImpl {
 			this.bpp = 1;
 
 			if (param == null) {
-				param = createGrayParam(redPalette, greenPalette, bluePalette, alphaPalette);
+				param = createGrayParam(redPalette, greenPalette, bluePalette, alphaPalette, bitDepth);
 			}
 
 			// If param is still null, it can't be expressed as gray
