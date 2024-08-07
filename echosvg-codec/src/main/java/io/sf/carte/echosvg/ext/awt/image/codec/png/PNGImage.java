@@ -1929,4 +1929,30 @@ class PNGImage extends SimpleRenderedImage {
 		}
 	}
 
+	/**
+	 * Convert to a {@code BufferedImage}.
+	 * <p>
+	 * This method is experimental and could be removed without warning.
+	 * </p>
+	 * 
+	 * @return the {@code BufferedImage}.
+	 */
+	BufferedImage toBufferedImage() {
+		ColorModel cm = getColorModel();
+		SampleModel sm = getSampleModel();
+
+		Point loc = new Point(getMinX(), getMinY());
+
+		WritableRaster raster = Raster.createWritableRaster(sm, loc);
+		Hashtable<String, Object> props = new Hashtable<>(properties);
+
+		BufferedImage img = new BufferedImage(cm, raster, cm.isAlphaPremultiplied(), props);
+
+		Graphics2D ig = img.createGraphics();
+		ig.drawRenderedImage(this, new AffineTransform());
+		ig.dispose();
+
+		return img;
+	}
+
 }
