@@ -709,7 +709,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		case CSSPrimitiveValue.CSS_PERCENTAGE:
 			f = v.getFloatValue();
 			f = (f > 100f) ? 100f : (f < 0f) ? 0f : f;
-			return f;
+			return f * 0.01f;
 		case CSSPrimitiveValue.CSS_NUMBER:
 			f = v.getFloatValue();
 			f = (f > 1f) ? 1f : (f < 0f) ? 0f : f;
