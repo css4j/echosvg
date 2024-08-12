@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
 	api project(':echosvg-svg-dom')
-	implementation "xml-apis:xml-apis:$xmlApisVersion"
+	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 }
 
 description = 'io.sf.carte:echosvg-anim'

@@ -7,7 +7,7 @@ dependencies {
 	api project(':echosvg-svggen')
 	implementation project(':echosvg-codec')
 	implementation "io.sf.carte:css4j-awt:$css4jAwtVersion"
-	implementation "xml-apis:xml-apis:$xmlApisVersion"
+	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 }
 
 description = 'io.sf.carte:echosvg-transcoder'

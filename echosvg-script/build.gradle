@@ -5,7 +5,7 @@ plugins {
 dependencies {
 	implementation project(':echosvg-anim')
 	api "org.mozilla:rhino:${rhinoVersion}"
-	implementation "xml-apis:xml-apis:$xmlApisVersion"
+	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 }
 
 description = 'io.sf.carte:echosvg-script'

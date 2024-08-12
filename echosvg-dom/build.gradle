@@ -7,7 +7,7 @@ dependencies {
 	api project(':echosvg-ext')
 	api project(':echosvg-xml')
 	implementation project(':echosvg-i18n')
-	implementation "xml-apis:xml-apis:$xmlApisVersion"
+	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 	api "io.sf.carte:xml-dtd:${xmlDtdVersion}"
 }
 

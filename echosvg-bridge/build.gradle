@@ -7,7 +7,7 @@ dependencies {
 	api project(':echosvg-gvt')
 	api project(':echosvg-script')
 	api "io.sf.graphics:legacy-colors:${legacyColorsVersion}"
-	implementation "xml-apis:xml-apis:$xmlApisVersion"
+	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
 }
 
 description = 'io.sf.carte:echosvg-bridge'
