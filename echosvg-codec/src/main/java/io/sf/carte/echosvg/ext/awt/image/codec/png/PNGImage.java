@@ -19,14 +19,11 @@
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Transparency;
 import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.ComponentColorModel;
 import java.awt.image.DataBuffer;
@@ -48,7 +45,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -1927,32 +1923,6 @@ class PNGImage extends SimpleRenderedImage {
 			decodePass(theTile, 1, 0, 2, 2, width / 2, (height + 1) / 2);
 			decodePass(theTile, 0, 1, 1, 2, width, height / 2);
 		}
-	}
-
-	/**
-	 * Convert to a {@code BufferedImage}.
-	 * <p>
-	 * This method is experimental and could be removed without warning.
-	 * </p>
-	 * 
-	 * @return the {@code BufferedImage}.
-	 */
-	BufferedImage toBufferedImage() {
-		ColorModel cm = getColorModel();
-		SampleModel sm = getSampleModel();
-
-		Point loc = new Point(getMinX(), getMinY());
-
-		WritableRaster raster = Raster.createWritableRaster(sm, loc);
-		Hashtable<String, Object> props = new Hashtable<>(properties);
-
-		BufferedImage img = new BufferedImage(cm, raster, cm.isAlphaPremultiplied(), props);
-
-		Graphics2D ig = img.createGraphics();
-		ig.drawRenderedImage(this, new AffineTransform());
-		ig.dispose();
-
-		return img;
 	}
 
 }

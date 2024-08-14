@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.ext.awt.image.codec.png;
 
-import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,29 +56,6 @@ public class PNGImageDecoder extends ImageDecoderImpl {
 					new Object[] { page }));
 		}
 		return new PNGImage(input, (PNGDecodeParam) param);
-	}
-
-	/**
-	 * Returns a <code>BufferedImage</code> that contains the decoded contents of
-	 * the <code>SeekableStream</code> associated with this
-	 * <code>ImageDecoder</code>. The given page of a multi-page image is decoded.
-	 * Page numbering begins at zero.
-	 * <p>
-	 * This method is experimental and could be removed in the future.
-	 * </p>
-	 *
-	 * @param page The page to be decoded.
-	 * @throws IOException if the page does not exist.
-	 */
-	BufferedImage decodeAsBufferedImage(int page) throws IOException {
-		if (page != 0) {
-			throw new IOException(PropertyUtil.formatMessage("PNGImageDecoder.unknown.page",
-					new Object[] { page }));
-		}
-
-		PNGImage png = new PNGImage(input, (PNGDecodeParam) param);
-
-		return png.toBufferedImage();
 	}
 
 }
