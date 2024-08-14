@@ -33,8 +33,10 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
 /**
  * Bridge class for the &lt;ellipse&gt; element.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGEllipseElementBridge extends SVGShapeElementBridge {
@@ -69,58 +71,59 @@ public class SVGEllipseElementBridge extends SVGShapeElementBridge {
 	 * @param shapeNode the shape node to initialize
 	 */
 	@Override
-	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode)
+			throws BridgeException {
+		SVGOMEllipseElement ee = (SVGOMEllipseElement) e;
+
+		// 'cx' attribute - default is 0
+		AbstractSVGAnimatedLength _cx = (AbstractSVGAnimatedLength) ee.getCx();
+		float cx = safeAnimatedLength(_cx, 0f);
+
+		// 'cy' attribute - default is 0
+		AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ee.getCy();
+		float cy = safeAnimatedLength(_cy, 0f);
+
+		// 'rx' attribute - default is auto (SVG2)
+		boolean rxAuto = false;
+		AbstractSVGAnimatedLength _rx = (AbstractSVGAnimatedLength) ee.getRx();
+		float rx;
 		try {
-			SVGOMEllipseElement ee = (SVGOMEllipseElement) e;
-
-			// 'cx' attribute - default is 0
-			AbstractSVGAnimatedLength _cx = (AbstractSVGAnimatedLength) ee.getCx();
-			float cx = safeAnimatedCheckedValue(_cx, 0f);
-
-			// 'cy' attribute - default is 0
-			AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ee.getCy();
-			float cy = safeAnimatedCheckedValue(_cy, 0f);
-
-			// 'rx' attribute - default is auto (SVG2)
-			boolean rxAuto = false;
-			AbstractSVGAnimatedLength _rx = (AbstractSVGAnimatedLength) ee.getRx();
-			float rx;
-			try {
-				rx = _rx.getCheckedValue();
-			} catch (LiveAttributeException ex) {
-				rx = 0f;
-				rxAuto = true;
-				BridgeException be = new BridgeException(ctx, ex);
-				if (ctx.userAgent == null) {
-					throw be;
-				}
-				ctx.userAgent.displayError(be);
+			rx = _rx.getCheckedValue();
+		} catch (LiveAttributeException ex) {
+			rx = 0f;
+			rxAuto = true;
+			BridgeException be = new BridgeException(ctx, ex);
+			if (ctx.userAgent == null) {
+				throw be;
 			}
+			ctx.userAgent.displayError(be);
+		}
 
-			// 'ry' attribute - default is auto (SVG2)
-			AbstractSVGAnimatedLength _ry = (AbstractSVGAnimatedLength) ee.getRy();
-			float ry;
-			try {
-				ry = _ry.getCheckedValue();
-			} catch (LiveAttributeException ex) {
-				ry = rx;
-				BridgeException be = new BridgeException(ctx, ex);
-				if (ctx.userAgent == null) {
-					throw be;
-				}
-				ctx.userAgent.displayError(be);
+		// 'ry' attribute - default is auto (SVG2)
+		AbstractSVGAnimatedLength _ry = (AbstractSVGAnimatedLength) ee.getRy();
+		float ry;
+		try {
+			ry = _ry.getCheckedValue();
+		} catch (LiveAttributeException ex) {
+			ry = rx;
+			BridgeException be = new BridgeException(ctx, ex);
+			if (ctx.userAgent == null) {
+				throw be;
 			}
+			ctx.userAgent.displayError(be);
+		}
 
-			// Check whether rx was auto
-			/*
-			 * SVG2 §7.4: "When the computed value of ‘rx’ is auto, the used radius is equal
-			 * to the absolute length used for ry, creating a circular arc. If both ‘rx’ and
-			 * ‘ry’ have a computed value of auto, the used value is 0."
-			 */
-			if (rxAuto) {
-				rx = ry;
-			}
+		// Check whether rx was auto
+		/*
+		 * SVG2 §7.4: "When the computed value of ‘rx’ is auto, the used radius is equal
+		 * to the absolute length used for ry, creating a circular arc. If both ‘rx’ and
+		 * ‘ry’ have a computed value of auto, the used value is 0."
+		 */
+		if (rxAuto) {
+			rx = ry;
+		}
 
+		try {
 			shapeNode.setShape(new Ellipse2D.Float(cx - rx, cy - ry, rx * 2f, ry * 2f));
 		} catch (LiveAttributeException ex) {
 			throw new BridgeException(ctx, ex);

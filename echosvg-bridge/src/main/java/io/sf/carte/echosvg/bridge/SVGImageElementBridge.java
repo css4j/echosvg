@@ -72,8 +72,10 @@ import io.sf.carte.echosvg.util.ParsedURL;
 /**
  * Bridge class for the &lt;image&gt; element.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
@@ -481,7 +483,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 	 * Invoked when the animated value of an animatable attribute has changed.
 	 */
 	@Override
-	public void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav) {
+	public void handleAnimatedAttributeChanged(AnimatedLiveAttributeValue alav) throws BridgeException {
 		try {
 			String ns = alav.getNamespaceURI();
 			String ln = alav.getLocalName();
@@ -921,18 +923,19 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 	 * @param ctx     the bridge context
 	 * @param element the image element
 	 */
-	protected static Rectangle2D getImageBounds(BridgeContext ctx, Element element) {
+	protected static Rectangle2D getImageBounds(BridgeContext ctx, Element element)
+			throws BridgeException {
+		SVGImageElement ie = (SVGImageElement) element;
+
+		// 'x' attribute - default is 0
+		AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) ie.getX();
+		float x = safeLength(_x, ctx);
+
+		// 'y' attribute - default is 0
+		AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) ie.getY();
+		float y = safeLength(_y, ctx);
+
 		try {
-			SVGImageElement ie = (SVGImageElement) element;
-
-			// 'x' attribute - default is 0
-			AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) ie.getX();
-			float x = _x.getCheckedValue();
-
-			// 'y' attribute - default is 0
-			AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) ie.getY();
-			float y = _y.getCheckedValue();
-
 			// 'width' attribute - required
 			AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) ie.getWidth();
 			float w = _width.getCheckedValue();
@@ -945,6 +948,29 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 		} catch (LiveAttributeException ex) {
 			throw new BridgeException(ctx, ex);
 		}
+	}
+
+	/**
+	 * Give a safe value for an animated length, regardless of exceptions.
+	 * 
+	 * @param animValue the animated length.
+	 * @param defValue  the default value.
+	 * @return the value.
+	 */
+	private static float safeLength(AbstractSVGAnimatedLength animValue, BridgeContext ctx)
+			throws BridgeException {
+		float value;
+		try {
+			value = animValue.getCheckedValue();
+		} catch (LiveAttributeException ex) {
+			BridgeException be = new BridgeException(ctx, ex);
+			if (ctx.userAgent == null) {
+				throw be;
+			}
+			ctx.userAgent.displayError(be);
+			value = 0f;
+		}
+		return value;
 	}
 
 	GraphicsNode createBrokenImageNode(BridgeContext ctx, Element e, String uri, String message) {

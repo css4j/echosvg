@@ -50,8 +50,10 @@ import io.sf.carte.echosvg.util.SVGConstants;
 /**
  * This class provides convenient methods to handle viewport.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class ViewBox implements SVGConstants, ErrorConstants {
@@ -147,7 +149,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 
 		// the additional transform that may appear on the URI
 		AffineTransform transform = getPreserveAspectRatioTransform(vb, align, meet, w, h);
-		if (transform != null && vh.hasTransform) {
+		if (vh.hasTransform && transform != null) {
 			transform.concatenate(vh.getAffineTransform());
 		}
 

@@ -869,7 +869,7 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 	 */
 	@Test
 	public void testIssue269() throws TranscoderException, IOException {
-		testNV("samples/canvg/issue269.svg");
+		testNVErrIgnore("samples/canvg/issue269.svg", BROWSER_MEDIA, 2);
 	}
 
 	@Test

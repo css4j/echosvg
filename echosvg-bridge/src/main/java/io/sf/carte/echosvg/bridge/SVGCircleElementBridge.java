@@ -33,8 +33,10 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
 /**
  * Bridge class for the &lt;circle&gt; element.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGCircleElementBridge extends SVGShapeElementBridge {
@@ -75,15 +77,15 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
 
 			// 'cx' attribute - default is 0
 			AbstractSVGAnimatedLength _cx = (AbstractSVGAnimatedLength) ce.getCx();
-			float cx = safeAnimatedCheckedValue(_cx, 0f);
+			float cx = safeAnimatedLength(_cx, 0f);
 
 			// 'cy' attribute - default is 0
 			AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ce.getCy();
-			float cy = safeAnimatedCheckedValue(_cy, 0f);
+			float cy = safeAnimatedLength(_cy, 0f);
 
 			// 'r' attribute - default is 0 (SVG2)
 			AbstractSVGAnimatedLength _r = (AbstractSVGAnimatedLength) ce.getR();
-			float r = safeAnimatedCheckedValue(_r, 0f);
+			float r = safeAnimatedLength(_r, 0f);
 
 			float x = cx - r;
 			float y = cy - r;

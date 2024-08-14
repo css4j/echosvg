@@ -21,9 +21,9 @@
 
 -->
 <!-- ========================================================================= -->
-<!-- Broken image link                                                         -->
+<!-- Broken image link, wrong x and y attributes                               -->
 <!--                                                                           -->
-<!-- @author for later modifications, see Git history                          -->
+<!-- @author see Git history                                                   -->
 <!-- @version $Id$  -->
 <!-- ========================================================================= -->
 
@@ -39,17 +39,20 @@
     <!-- ============================================================= -->
     <g id="testContent">
 
-    <text x="220" y="40" class="title">
+    <text x="220" y="50" class="title">
       Attribute "xlink:href" on &lt;image&gt; has a bad URI
     </text>
 
 
+    <text x="140" y="15" class="legend">&lt;image> element with wrong x and y attributes</text>
     <text x="205" y="240" class="legend">An &lt;image> element</text>
     <text x="205" y="450" class="legend">An &lt;image> element with an invalid URI</text>
 
-    <image xlink:href="../structure/switch.svg" x="60" y="60" width="300" height="170" viewBox="0 0 210 170"/>
+    <image xlink:href="../../../GVT.svg" x="foo" y="bar" width="30" height="25"/>
 
-    <image xlink:href="svg.svgX" x="60" y="260" width="300" height="170" viewBox="0 0 210 170"/>
+    <image xlink:href="../structure/switch.svg" x="60" y="60" width="300" height="170"/>
+
+    <image xlink:href="svg.svgX" x="60" y="260" width="300" height="170"/>
 
     </g>
 </svg>

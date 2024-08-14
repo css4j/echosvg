@@ -53,8 +53,10 @@ import io.sf.carte.echosvg.gvt.ShapeNode;
 /**
  * Bridge class for the &lt;svg&gt; element.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGContext {
@@ -97,7 +99,7 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 	 * @return a graphics node that represents the specified element
 	 */
 	@Override
-	public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) {
+	public GraphicsNode createGraphicsNode(BridgeContext ctx, Element e) throws BridgeException {
 		// 'requiredFeatures', 'requiredExtensions' and 'systemLanguage'
 		if (!SVGUtilities.matchUserAgent(e, ctx.getUserAgent())) {
 			return null;
@@ -122,20 +124,20 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 			if (!isOutermost) {
 				// 'x' attribute - default is 0
 				AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) se.getX();
-				x = _x.getCheckedValue();
+				x = safeAnimatedLength(_x, 0f);
 
 				// 'y' attribute - default is 0
 				AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) se.getY();
-				y = _y.getCheckedValue();
+				y = safeAnimatedLength(_y, 0f);
 			}
 
 			// 'width' attribute - default is 100%
 			AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) se.getWidth();
-			float w = _width.getCheckedValue();
+			float w = safeAnimatedLength(_width);
 
 			// 'height' attribute - default is 100%
 			AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) se.getHeight();
-			float h = _height.getCheckedValue();
+			float h = safeAnimatedLength(_height);
 
 			// 'visibility'
 			cgn.setVisible(CSSUtilities.convertVisibility(e));
@@ -311,11 +313,11 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 					if (!isOutermost) {
 						// 'x' attribute - default is 0
 						AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) se.getX();
-						float x = _x.getCheckedValue();
+						float x = safeAnimatedLength(_x, 0f);
 
 						// 'y' attribute - default is 0
 						AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) se.getY();
-						float y = _y.getCheckedValue();
+						float y = safeAnimatedLength(_y, 0f);
 
 						AffineTransform positionTransform = AffineTransform.getTranslateInstance(x, y);
 						CanvasGraphicsNode cgn;
@@ -335,20 +337,20 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 					if (!isOutermost) {
 						// 'x' attribute - default is 0
 						AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) se.getX();
-						x = _x.getCheckedValue();
+						x = safeAnimatedLength(_x, 0f);
 
 						// 'y' attribute - default is 0
 						AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) se.getY();
-						y = _y.getCheckedValue();
+						y = safeAnimatedLength(_y, 0f);
 					}
 
 					// 'width' attribute - default is 100%
 					AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) se.getWidth();
-					float w = _width.getCheckedValue();
+					float w = safeAnimatedLength(_width);
 
 					// 'height' attribute - default is 100%
 					AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) se.getHeight();
-					float h = _height.getCheckedValue();
+					float h = safeAnimatedLength(_height);
 
 					CanvasGraphicsNode cgn;
 					cgn = (CanvasGraphicsNode) node;

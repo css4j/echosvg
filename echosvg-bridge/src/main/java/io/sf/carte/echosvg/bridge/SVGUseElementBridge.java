@@ -46,8 +46,10 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
 /**
  * Bridge class for the &lt;use&gt; element.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
@@ -303,24 +305,23 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 	 * to the node.
 	 */
 	@Override
-	protected AffineTransform computeTransform(SVGTransformable e, BridgeContext ctx) {
+	protected AffineTransform computeTransform(SVGTransformable e, BridgeContext ctx)
+			throws BridgeException {
 		AffineTransform at = super.computeTransform(e, ctx);
 		SVGUseElement ue = (SVGUseElement) e;
-		try {
-			// 'x' attribute - default is 0
-			AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) ue.getX();
-			float x = _x.getCheckedValue();
 
-			// 'y' attribute - default is 0
-			AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) ue.getY();
-			float y = _y.getCheckedValue();
+		// 'x' attribute - default is 0
+		AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) ue.getX();
+		float x = safeAnimatedLength(_x, 0f);
 
-			AffineTransform xy = AffineTransform.getTranslateInstance(x, y);
-			xy.preConcatenate(at);
-			return xy;
-		} catch (LiveAttributeException ex) {
-			throw new BridgeException(ctx, ex);
-		}
+		// 'y' attribute - default is 0
+		AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) ue.getY();
+		float y = safeAnimatedLength(_y, 0f);
+
+		AffineTransform xy = AffineTransform.getTranslateInstance(x, y);
+		xy.preConcatenate(at);
+
+		return xy;
 	}
 
 	/**

@@ -34,8 +34,10 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
 /**
  * Bridge class for the &lt;rect&gt; element.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGRectElementBridge extends SVGShapeElementBridge {
@@ -70,85 +72,82 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 	 * @param shapeNode the shape node to initialize
 	 */
 	@Override
-	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode)
+			throws BridgeException {
+		SVGOMRectElement re = (SVGOMRectElement) e;
+
+		// 'x' attribute - default is 0
+		AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) re.getX();
+		float x = safeAnimatedLength(_x, 0f);
+
+		// 'y' attribute - default is 0
+		AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) re.getY();
+		float y = safeAnimatedLength(_y, 0f);
+
+		// 'width' attribute - default is 0
+		AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) re.getWidth();
+		float w = safeAnimatedLength(_width, 0f);
+
+		// 'height' attribute - default is 0
+		AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) re.getHeight();
+		float h = safeAnimatedLength(_height, 0f);
+
+		// 'rx' attribute - default is 0
+		boolean rxAuto = false;
+		AbstractSVGAnimatedLength _rx = (AbstractSVGAnimatedLength) re.getRx();
+		float rx;
+		try {
+			rx = _rx.getCheckedValue();
+		} catch (LiveAttributeException ex) {
+			rx = 0f;
+			rxAuto = true;
+			BridgeException be = new BridgeException(ctx, ex);
+			if (ctx.userAgent == null) {
+				throw be;
+			}
+			ctx.userAgent.displayError(be);
+		}
+		if (rx > w / 2f) {
+			rx = w / 2f;
+		}
+
+		// 'ry' attribute - default is rx
+		AbstractSVGAnimatedLength _ry = (AbstractSVGAnimatedLength) re.getRy();
+		float ry;
+		try {
+			ry = _ry.getCheckedValue();
+		} catch (LiveAttributeException ex) {
+			ry = rx;
+			BridgeException be = new BridgeException(ctx, ex);
+			if (ctx.userAgent == null) {
+				throw be;
+			}
+			ctx.userAgent.displayError(be);
+		}
+		if (ry > h / 2f) {
+			ry = h / 2f;
+		}
+
+		// Check whether rx was auto
+		/*
+		 * SVG2 §7.4: "When the computed value of ‘rx’ is auto, the used radius is equal
+		 * to the absolute length used for ry, creating a circular arc. If both ‘rx’ and
+		 * ‘ry’ have a computed value of auto, the used value is 0."
+		 */
+		if (rxAuto) {
+			rx = ry;
+		}
+
+		Shape shape;
+		if (rx == 0f || ry == 0f) {
+			shape = new Rectangle2D.Float(x, y, w, h);
+		} else {
+			shape = new RoundRectangle2D.Float(x, y, w, h, rx * 2f, ry * 2f);
+		}
 
 		try {
-			SVGOMRectElement re = (SVGOMRectElement) e;
-
-			// 'x' attribute - default is 0
-			AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) re.getX();
-			float x = safeAnimatedCheckedValue(_x, 0f);
-
-			// 'y' attribute - default is 0
-			AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) re.getY();
-			float y = safeAnimatedCheckedValue(_y, 0f);
-
-			// 'width' attribute - default is 0
-			AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) re.getWidth();
-			float w = safeAnimatedCheckedValue(_width, 0f);
-
-			// 'height' attribute - default is 0
-			AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) re.getHeight();
-			float h = safeAnimatedCheckedValue(_height, 0f);
-
-			// 'rx' attribute - default is 0
-			boolean rxAuto = false;
-			AbstractSVGAnimatedLength _rx = (AbstractSVGAnimatedLength) re.getRx();
-			float rx;
-			try {
-				rx = _rx.getCheckedValue();
-			} catch (LiveAttributeException ex) {
-				rx = 0f;
-				rxAuto = true;
-				BridgeException be = new BridgeException(ctx, ex);
-				if (ctx.userAgent == null) {
-					throw be;
-				}
-				ctx.userAgent.displayError(be);
-			}
-			if (rx > w / 2f) {
-				rx = w / 2f;
-			}
-
-			// 'ry' attribute - default is rx
-			AbstractSVGAnimatedLength _ry = (AbstractSVGAnimatedLength) re.getRy();
-			float ry;
-			try {
-				ry = _ry.getCheckedValue();
-			} catch (LiveAttributeException ex) {
-				ry = rx;
-				BridgeException be = new BridgeException(ctx, ex);
-				if (ctx.userAgent == null) {
-					throw be;
-				}
-				ctx.userAgent.displayError(be);
-			}
-			if (ry > h / 2f) {
-				ry = h / 2f;
-			}
-
-			// Check whether rx was auto
-			/*
-			 * SVG2 §7.4: "When the computed value of ‘rx’ is auto, the used radius is equal
-			 * to the absolute length used for ry, creating a circular arc. If both ‘rx’ and
-			 * ‘ry’ have a computed value of auto, the used value is 0."
-			 */
-			if (rxAuto) {
-				rx = ry;
-			}
-
-			Shape shape;
-			if (rx == 0f || ry == 0f) {
-				shape = new Rectangle2D.Float(x, y, w, h);
-			} else {
-				shape = new RoundRectangle2D.Float(x, y, w, h, rx * 2f, ry * 2f);
-			}
 			shapeNode.setShape(shape);
 		} catch (LiveAttributeException ex) {
-			/*
-			 * Just logging the exception and then continuing may give unexpected results,
-			 * so it is better to be conservative and throw it.
-			 */
 			throw new BridgeException(ctx, ex);
 		}
 	}

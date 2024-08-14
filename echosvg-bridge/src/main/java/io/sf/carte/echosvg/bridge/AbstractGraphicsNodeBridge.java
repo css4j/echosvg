@@ -31,6 +31,7 @@ import org.w3c.dom.events.MutationEvent;
 import org.w3c.dom.svg.SVGFitToViewBox;
 import org.w3c.dom.svg.SVGTransformable;
 
+import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedTransformList;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
@@ -66,8 +67,10 @@ import io.sf.carte.echosvg.gvt.GraphicsNode;
  * <li>visibility</li>
  * </ul>
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
@@ -151,6 +154,49 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 	}
 
 	/**
+	 * Give a safe value for an animated length, regardless of exceptions.
+	 * 
+	 * @param animValue the animated length.
+	 * @return the value.
+	 */
+	float safeAnimatedLength(AbstractSVGAnimatedLength animValue) throws BridgeException {
+		float value;
+		try {
+			value = animValue.getCheckedValue();
+		} catch (LiveAttributeException ex) {
+			BridgeException be = new BridgeException(ctx, ex);
+			if (ctx.userAgent == null) {
+				throw be;
+			}
+			ctx.userAgent.displayError(be);
+			value = animValue.getDefault();
+		}
+		return value;
+	}
+
+	/**
+	 * Give a safe value for an animated length, regardless of exceptions.
+	 * 
+	 * @param animValue the animated length.
+	 * @param defValue  the default value.
+	 * @return the value.
+	 */
+	float safeAnimatedLength(AbstractSVGAnimatedLength animValue, float defValue) throws BridgeException {
+		float value;
+		try {
+			value = animValue.getCheckedValue();
+		} catch (LiveAttributeException ex) {
+			BridgeException be = new BridgeException(ctx, ex);
+			if (ctx.userAgent == null) {
+				throw be;
+			}
+			ctx.userAgent.displayError(be);
+			value = defValue;
+		}
+		return value;
+	}
+
+	/**
 	 * Returns true if the graphics node has to be displayed, false otherwise.
 	 */
 	@Override
@@ -162,7 +208,8 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 	 * Returns an {@link AffineTransform} that is the transformation to be applied
 	 * to the node.
 	 */
-	protected AffineTransform computeTransform(SVGTransformable te, BridgeContext ctx) {
+	protected AffineTransform computeTransform(SVGTransformable te, BridgeContext ctx)
+			throws BridgeException {
 		try {
 			AffineTransform at = new AffineTransform();
 

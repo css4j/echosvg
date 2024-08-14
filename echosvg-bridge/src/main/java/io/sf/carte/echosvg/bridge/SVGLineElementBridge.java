@@ -32,8 +32,10 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
 /**
  * Bridge class for the &lt;line&gt; element.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGLineElementBridge extends SVGDecoratedShapeElementBridge {
@@ -92,27 +94,27 @@ public class SVGLineElementBridge extends SVGDecoratedShapeElementBridge {
 	 * @param shapeNode the shape node to initialize
 	 */
 	@Override
-	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode)
+			throws BridgeException {
+		SVGOMLineElement le = (SVGOMLineElement) e;
+
+		// 'x1' attribute - default is 0
+		AbstractSVGAnimatedLength _x1 = (AbstractSVGAnimatedLength) le.getX1();
+		float x1 = safeAnimatedLength(_x1, 0f);
+
+		// 'y1' attribute - default is 0
+		AbstractSVGAnimatedLength _y1 = (AbstractSVGAnimatedLength) le.getY1();
+		float y1 = safeAnimatedLength(_y1, 0f);
+
+		// 'x2' attribute - default is 0
+		AbstractSVGAnimatedLength _x2 = (AbstractSVGAnimatedLength) le.getX2();
+		float x2 = safeAnimatedLength(_x2, 0f);
+
+		// 'y2' attribute - default is 0
+		AbstractSVGAnimatedLength _y2 = (AbstractSVGAnimatedLength) le.getY2();
+		float y2 = safeAnimatedLength(_y2, 0f);
 
 		try {
-			SVGOMLineElement le = (SVGOMLineElement) e;
-
-			// 'x1' attribute - default is 0
-			AbstractSVGAnimatedLength _x1 = (AbstractSVGAnimatedLength) le.getX1();
-			float x1 = _x1.getCheckedValue();
-
-			// 'y1' attribute - default is 0
-			AbstractSVGAnimatedLength _y1 = (AbstractSVGAnimatedLength) le.getY1();
-			float y1 = _y1.getCheckedValue();
-
-			// 'x2' attribute - default is 0
-			AbstractSVGAnimatedLength _x2 = (AbstractSVGAnimatedLength) le.getX2();
-			float x2 = _x2.getCheckedValue();
-
-			// 'y2' attribute - default is 0
-			AbstractSVGAnimatedLength _y2 = (AbstractSVGAnimatedLength) le.getY2();
-			float y2 = _y2.getCheckedValue();
-
 			shapeNode.setShape(new Line2D.Float(x1, y1, x2, y2));
 		} catch (LiveAttributeException ex) {
 			throw new BridgeException(ctx, ex);

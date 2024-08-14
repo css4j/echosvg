@@ -101,6 +101,23 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 	protected abstract String getDefaultValue();
 
 	/**
+	 * The evaluation of the value has failed, get the default.
+	 * 
+	 * @return the default value.
+	 */
+	public float getDefault() {
+		AnimSVGLength length = new AnimSVGLength(direction);
+		length.parse(getDefaultValue());
+		try {
+			return UnitProcessor.svgToUserSpace(length.value, length.unitType, direction,
+					length.context);
+		} catch (IllegalArgumentException ex) {
+			// Only if the default is broken
+			return 0f;
+		}
+	}
+
+	/**
 	 * <b>DOM</b>: Implements {@link SVGAnimatedLength#getBaseVal()}.
 	 */
 	@Override

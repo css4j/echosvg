@@ -22,10 +22,8 @@ import java.awt.RenderingHints;
 
 import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
-import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.gvt.ShapePainter;
@@ -33,8 +31,10 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
 /**
  * The base bridge class for shapes. Subclasses bridge <code>ShapeNode</code>.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
@@ -129,29 +129,8 @@ public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
 	 * @param e    the element that describes the shape node to build
 	 * @param node the shape node to initialize
 	 */
-	protected abstract void buildShape(BridgeContext ctx, Element e, ShapeNode node);
-
-	/**
-	 * Give a safe value for an animated length, regardless of exceptions.
-	 * 
-	 * @param animValue the animated length.
-	 * @param defValue  the default value.
-	 * @return the value.
-	 */
-	float safeAnimatedCheckedValue(AbstractSVGAnimatedLength animValue, float defValue) {
-		float value;
-		try {
-			value = animValue.getCheckedValue();
-		} catch (LiveAttributeException ex) {
-			value = defValue;
-			BridgeException be = new BridgeException(ctx, ex);
-			if (ctx.userAgent == null) {
-				throw be;
-			}
-			ctx.userAgent.displayError(be);
-		}
-		return value;
-	}
+	protected abstract void buildShape(BridgeContext ctx, Element e, ShapeNode node)
+			throws BridgeException;
 
 	/**
 	 * Returns false as shapes are not a container.

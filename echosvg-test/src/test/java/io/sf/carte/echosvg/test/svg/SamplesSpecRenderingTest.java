@@ -296,7 +296,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 		/*
 		 * Admits one error (the broken link being reported).
 		 */
-		testNVErrIgnore("samples/tests/spec/linking/imageBadUrl.svg", null, 1);
+		testNVErrIgnore("samples/tests/spec/linking/imageBadUrl.svg", null, 5);
 	}
 
 	@Test
