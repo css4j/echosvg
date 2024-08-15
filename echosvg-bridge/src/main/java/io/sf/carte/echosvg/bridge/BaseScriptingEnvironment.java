@@ -361,13 +361,13 @@ public class BaseScriptingEnvironment {
 		// Java code invocation.
 		//
 		if (type.equals(SVGConstants.SVG_SCRIPT_TYPE_JAVA)) {
+			DocumentJarClassLoader cll = null;
 			try {
 				String href = XLinkSupport.getXLinkHref(script);
 				ParsedURL purl = new ParsedURL(script.getBaseURI(), href);
 
 				checkCompatibleScriptURL(type, purl);
 
-				DocumentJarClassLoader cll;
 				URL docURL = null;
 				try {
 					docURL = new URL(docPURL.toString());
@@ -410,6 +410,15 @@ public class BaseScriptingEnvironment {
 			} catch (Exception e) {
 				if (userAgent != null) {
 					userAgent.displayError(e);
+				}
+			} finally {
+				try {
+					if (cll != null)
+						cll.close();
+				} catch (IOException e) {
+					if (userAgent != null) {
+						userAgent.displayError(e);
+					}
 				}
 			}
 			return;
