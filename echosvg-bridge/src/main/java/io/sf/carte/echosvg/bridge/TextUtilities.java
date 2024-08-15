@@ -24,8 +24,8 @@ import java.util.StringTokenizer;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.util.CSSConstants;
@@ -135,7 +135,7 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
 	 */
 	public static Float convertFontStyle(Element e) {
 		Value v = CSSUtilities.getComputedStyle(e, SVGCSSEngine.FONT_STYLE_INDEX);
-		switch (v.getStringValue().charAt(0)) {
+		switch (v.getIdentifierValue().charAt(0)) {
 		case 'n':
 			return TextAttribute.POSTURE_REGULAR;
 		default:
@@ -150,7 +150,7 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
 	 */
 	public static Float convertFontStretch(Element e) {
 		Value v = CSSUtilities.getComputedStyle(e, SVGCSSEngine.FONT_STRETCH_INDEX);
-		String s = v.getStringValue();
+		String s = v.getIdentifierValue();
 		switch (s.charAt(0)) {
 		case 'u':
 			if (s.charAt(6) == 'c') {
@@ -234,7 +234,7 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
 	 */
 	public static TextNode.Anchor convertTextAnchor(Element e) {
 		Value v = CSSUtilities.getComputedStyle(e, SVGCSSEngine.TEXT_ANCHOR_INDEX);
-		switch (v.getStringValue().charAt(0)) {
+		switch (v.getIdentifierValue().charAt(0)) {
 		case 's':
 			return TextNode.Anchor.START;
 		case 'm':
@@ -252,8 +252,8 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
 	 */
 	public static Object convertBaselineShift(Element e) {
 		Value v = CSSUtilities.getComputedStyle(e, SVGCSSEngine.BASELINE_SHIFT_INDEX);
-		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
-			String s = v.getStringValue();
+		if (v.getPrimitiveType() == Type.IDENT) {
+			String s = v.getIdentifierValue();
 			switch (s.charAt(2)) {
 			case 'p': // suPerscript
 				return TextAttribute.SUPERSCRIPT_SUPER;
@@ -276,7 +276,7 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
 	 */
 	public static Float convertKerning(Element e) {
 		Value v = CSSUtilities.getComputedStyle(e, SVGCSSEngine.KERNING_INDEX);
-		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
+		if (v.getPrimitiveType() == Type.IDENT) {
 			return null;
 		}
 		return v.getFloatValue();
@@ -290,7 +290,7 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
 	 */
 	public static Float convertLetterSpacing(Element e) {
 		Value v = CSSUtilities.getComputedStyle(e, SVGCSSEngine.LETTER_SPACING_INDEX);
-		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
+		if (v.getPrimitiveType() == Type.IDENT) {
 			return null;
 		}
 		return v.getFloatValue();
@@ -304,7 +304,7 @@ public abstract class TextUtilities implements CSSConstants, ErrorConstants {
 	 */
 	public static Float convertWordSpacing(Element e) {
 		Value v = CSSUtilities.getComputedStyle(e, SVGCSSEngine.WORD_SPACING_INDEX);
-		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
+		if (v.getPrimitiveType() == Type.IDENT) {
 			return null;
 		}
 		return v.getFloatValue();

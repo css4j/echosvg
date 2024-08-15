@@ -18,25 +18,54 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.css.om.typed.CSSStringValue;
 
 /**
- * This class represents uri values.
+ * This class represents URI values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class URIValue extends StringValue {
+public class URIValue extends AbstractStringValue implements CSSStringValue {
 
-	String cssText;
+	private String cssText;
 
 	/**
-	 * Creates a new StringValue.
+	 * Creates a new URIValue.
 	 */
-	public URIValue(String cssText, String uri) {
-		super(CSSPrimitiveValue.CSS_URI, uri);
+	public URIValue(String cssText, String s) {
+		super(s);
 		this.cssText = cssText;
+	}
+
+	/**
+	 * The type of the value.
+	 */
+	@Override
+	public Type getPrimitiveType() {
+		return Type.URI;
+	}
+
+	@Override
+	public String getURIValue() {
+		return value;
+	}
+
+	/**
+	 * Indicates whether some other object is "equal to" this one.
+	 * 
+	 * @param obj the reference object with which to compare.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Value)) {
+			return false;
+		}
+		Value v = (Value) obj;
+		return v.getPrimitiveType() == Type.URI && value.equals(v.getURIValue());
 	}
 
 	/**
@@ -45,6 +74,11 @@ public class URIValue extends StringValue {
 	@Override
 	public String getCssText() {
 		return "url(" + cssText + ')';
+	}
+
+	@Override
+	public URIValue clone() {
+		return new URIValue(cssText, value);
 	}
 
 }

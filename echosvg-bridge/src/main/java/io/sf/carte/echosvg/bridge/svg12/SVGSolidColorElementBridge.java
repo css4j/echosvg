@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.bridge.AnimatableGenericSVGBridge;
@@ -34,6 +33,7 @@ import io.sf.carte.echosvg.bridge.CSSUtilities;
 import io.sf.carte.echosvg.bridge.ErrorConstants;
 import io.sf.carte.echosvg.bridge.PaintBridge;
 import io.sf.carte.echosvg.bridge.PaintServer;
+import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -48,8 +48,10 @@ import io.sf.carte.echosvg.util.SVGConstants;
 /**
  * Bridge class for a regular polygon element.
  *
- * @author <a href="mailto:thomas.deweese@kodak.com">Thomas Deweese</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:thomas.deweese@kodak.com">Thomas Deweese</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge implements PaintBridge {
@@ -143,8 +145,8 @@ public class SVGSolidColorElementBridge extends AnimatableGenericSVGBridge imple
 			StyleMap sm = ((CSSStylableElement) paintElement).getComputedStyleMap(null);
 			if (!sm.isNullCascaded(pidx)) {
 				// It was explicit...
-				if (colorDef.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
-					return PaintServer.convertColor(colorDef, opacity);
+				if (colorDef.getCssValueType() != CssType.LIST) {
+					return PaintServer.convertColor(colorDef.getColorValue(), opacity, ctx);
 				} else {
 					return PaintServer.convertRGBICCColor(paintElement, colorDef.item(0), colorDef.item(1), opacity,
 							ctx);

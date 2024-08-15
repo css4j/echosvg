@@ -19,9 +19,9 @@
 package io.sf.carte.echosvg.css.engine.value.svg;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.URIValue;
@@ -34,8 +34,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a factory for the 'filter' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class FilterManager extends AbstractValueManager {
@@ -112,18 +114,15 @@ public class FilterManager extends AbstractValueManager {
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
-	/**
-	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
-	 */
 	@Override
-	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
-		if (type == CSSPrimitiveValue.CSS_IDENT) {
+	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
+		if (type == Type.IDENT) {
 			if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
 				return ValueConstants.NONE_VALUE;
 			}
 			throw createInvalidIdentifierDOMException(value);
 		}
-		if (type == CSSPrimitiveValue.CSS_URI) {
+		if (type == Type.URI) {
 			return new URIValue(value, resolveURI(engine.getCSSBaseURI(), value));
 		}
 		throw createInvalidStringTypeDOMException(type);

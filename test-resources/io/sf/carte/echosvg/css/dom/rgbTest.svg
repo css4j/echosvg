@@ -63,14 +63,14 @@
         return;
      }
 
-     var val = decl.getPropertyCSSValue("fill");
+     var val = decl.getCSSStyleValue("fill");
 
      if ( val == null ){
-        result.setAttributeNS(null, "errorCode", "CSSStyleDeclaration.getPropertyCSSValue returned null");
+        result.setAttributeNS(null, "errorCode", "CSSStyleDeclaration.getCSSStyleValue returned null");
         return;
      }
 
-     val = val.getRGBColor()
+     val = val.getColorValue()
 
      if (val.red.cssText != "1"){
         result.setAttributeNS(null, "errorCode", "invalid red component");

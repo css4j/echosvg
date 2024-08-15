@@ -19,8 +19,6 @@
 package io.sf.carte.echosvg.css.engine.value.svg;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -37,8 +35,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a manager for the SVGPaint property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGPaintManager extends SVGColorManager {
@@ -124,10 +124,9 @@ public class SVGPaintManager extends SVGColorManager {
 			}
 		}
 		Value v = super.createValue(lu, engine);
-		if (v.getCssValueType() == CSSValue.CSS_CUSTOM) {
-			ListValue lv = (ListValue) v;
-			for (int i = 0; i < lv.getLength(); i++) {
-				result.append(lv.item(i));
+		if (v instanceof ListValue) {
+			for (int i = 0; i < v.getLength(); i++) {
+				result.append(v.item(i));
 			}
 		} else {
 			result.append(v);
@@ -145,21 +144,20 @@ public class SVGPaintManager extends SVGColorManager {
 		if (value == ValueConstants.NONE_VALUE) {
 			return value;
 		}
-		if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
-			ListValue lv = (ListValue) value;
-			Value v = lv.item(0);
-			if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_URI) {
-				v = lv.item(1);
+		if (value.getCssValueType() == Value.CssType.LIST) {
+			Value v = value.item(0);
+			if (v.getPrimitiveType() == Value.Type.URI) {
+				v = value.item(1);
 				if (v == ValueConstants.NONE_VALUE) {
 					return value;
 				}
 				Value t = super.computeValue(elt, pseudo, engine, idx, sm, v);
 				if (t != v) {
 					ListValue result = new ListValue(' ');
-					result.append(lv.item(0));
+					result.append(value.item(0));
 					result.append(t);
-					if (lv.getLength() == 3) {
-						result.append(lv.item(1));
+					if (value.getLength() == 3) {
+						result.append(value.item(1));
 					}
 					return result;
 				}

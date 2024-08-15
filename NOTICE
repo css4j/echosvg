@@ -7,11 +7,21 @@ This product includes software developed at The Apache Software Foundation
 (https://www.apache.org/) under the 'Apache Batik' project.
 
 This software contains code from the World Wide Web Consortium (W3C) for the 
-Document Object Model API (DOM API) and SVG Document Type Definition (DTD).
+Document Object Model API (DOM API).
 
 This software contains code from the International Organisation for
 Standardization for the definition of character entities used in the software's
 documentation.
+
+This software contains color profiles by Clinton Ingram, that are CC-licensed as
+shown in the 'Compact-ICC-Profiles-license' file under the color profiles
+directory (bridge module).
+
+This product contains a Display P3 color profile that was made by Apple and was
+obtained from color.org (ICC).
+
+This product contains the ITU-R Recommendation BT.2020 color profile that was
+also obtained from color.org (ICC).
 
 This product includes images from the Tango Desktop Project
 (Former website http://tango.freedesktop.org/ archived at

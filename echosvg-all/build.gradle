@@ -61,6 +61,11 @@ tasks.register('cloneRepos') {
 			refToCheckout: "v${svgomVersion}")
 		gitWebAPIs?.close()
 
+		def gitCSSAPIs = grgit.clone(dir: "$buildDir/repos/cssom-apis",
+			uri: 'https://github.com/css4j/cssom-apis.git',
+			refToCheckout: "v0.1")
+		gitCSSAPIs?.close()
+
 		def gitLegacyColors = grgit.clone(dir: "$buildDir/repos/legacy-colors",
 			uri: 'https://github.com/css4j/legacy-colors.git',
 			refToCheckout: "v${legacyColorsVersion}")
@@ -208,6 +213,18 @@ tasks.register('prepareModularSources') {
 				include(name: '**/*')
 			}
 		}
+
+		// CSSOM and DOM View APIs
+		ant.copy(todir: "$buildDir/src/org.w3c.css.om") {
+			fileset(dir: "$buildDir/repos/cssom-apis/cssom-api/src/main/java") {
+				include(name: '**/*')
+			}
+		}
+		ant.copy(todir: "$buildDir/src/org.w3c.dom.view") {
+			fileset(dir: "$buildDir/repos/cssom-apis/domview-api/src/main/java") {
+				include(name: '**/*')
+			}
+		}
 	}
 }
 
@@ -243,6 +260,8 @@ tasks.register('modularJavadoc', Javadoc) {
 		"$buildDir/src/io.sf.carte.echosvg.util.gui",
 		"$buildDir/src/io.sf.carte.echosvg.xml",
 		"$buildDir/src/io.sf.graphics.legacy.colors",
+		"$buildDir/src/org.w3c.css.om",
+		"$buildDir/src/org.w3c.dom.view",
 		"$buildDir/src/org.w3c.dom.smil",
 		"$buildDir/src/org.w3c.dom.svg" ]
 	includes += '**/*.java'
@@ -282,7 +301,7 @@ tasks.register('uberjar', Jar) {
 	// Provided by Java SE
 	exclude 'javax/**'
 	// Not used by EchoSVG
-	exclude 'org/w3c/css/**'
+	exclude 'org/w3c/css/sac/**'
 	// The next ones are provided by java.xml module
 	exclude 'org/w3c/dom/*'
 	exclude 'org/w3c/dom/bootstrap/**'
@@ -292,6 +311,11 @@ tasks.register('uberjar', Jar) {
 	exclude 'org/w3c/dom/traversal/**'
 	exclude 'org/w3c/dom/views/**'
 	exclude 'org/xml/**'
+	// Provided by jdk.xml.dom module
+	exclude 'org/w3c/dom/css/**'
+	exclude 'org/w3c/dom/html/**'
+	exclude 'org/w3c/dom/stylesheets/**'
+	exclude 'org/w3c/dom/xpath/**'
 	// Modularity does not apply here
 	exclude 'module-info.class'
 

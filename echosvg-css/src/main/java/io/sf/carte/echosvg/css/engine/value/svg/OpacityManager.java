@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -33,8 +33,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a manager for the '*-opacity' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class OpacityManager extends AbstractValueManager {
@@ -115,10 +117,10 @@ public class OpacityManager extends AbstractValueManager {
 			return ValueConstants.INHERIT_VALUE;
 
 		case INTEGER:
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getIntegerValue());
+			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue());
 
 		case REAL:
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getFloatValue());
+			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getFloatValue());
 
 		default:
 			break;
@@ -131,7 +133,7 @@ public class OpacityManager extends AbstractValueManager {
 	 */
 	@Override
 	public Value createFloatValue(short type, float floatValue) throws DOMException {
-		if (type == CSSPrimitiveValue.CSS_NUMBER) {
+		if (type == CSSUnit.CSS_NUMBER) {
 			return new FloatValue(type, floatValue);
 		}
 		throw createInvalidFloatTypeDOMException(type);

@@ -18,13 +18,15 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.css.om.typed.CSSCounterValue;
 import org.w3c.dom.DOMException;
 
 /**
  * This class represents a computed property value.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>. See Git history.
+ * </p>
  * @version $Id$
  */
 public class ComputedValue implements Value {
@@ -77,28 +79,45 @@ public class ComputedValue implements Value {
 		return computedValue.getCssText();
 	}
 
-	/**
-	 * Implements {@link Value#getCssValueType()}.
-	 */
 	@Override
-	public short getCssValueType() {
+	public CssType getCssValueType() {
 		return computedValue.getCssValueType();
 	}
 
-	/**
-	 * Implements {@link Value#getPrimitiveType()}.
-	 */
+
 	@Override
-	public short getPrimitiveType() {
+	public Type getPrimitiveType() {
 		return computedValue.getPrimitiveType();
 	}
 
-	/**
-	 * Implements {@link Value#getFloatValue()}.
-	 */
+	@Override
+	public short getCSSUnit() {
+		return computedValue.getCSSUnit();
+	}
+
+	@Override
+	public void setFloatValue(float value) throws DOMException {
+		throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "Cannot modify computed value.");
+	}
+
+	@Override
+	public void setModificationHandler(ValueModificationHandler handler) {
+		throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "Cannot modify computed value.");
+	}
+
+	@Override
+	public ValueModificationHandler getModificationHandler() {
+		return computedValue.getModificationHandler();
+	}
+
 	@Override
 	public float getFloatValue() throws DOMException {
 		return computedValue.getFloatValue();
+	}
+
+	@Override
+	public String getIdentifierValue() throws DOMException {
+		return computedValue.getIdentifierValue();
 	}
 
 	/**
@@ -109,105 +128,46 @@ public class ComputedValue implements Value {
 		return computedValue.getStringValue();
 	}
 
-	/**
-	 * Implements {@link Value#getRed()}.
-	 */
 	@Override
-	public Value getRed() throws DOMException {
-		return computedValue.getRed();
-	}
-
-	/**
-	 * Implements {@link Value#getGreen()}.
-	 */
-	@Override
-	public Value getGreen() throws DOMException {
-		return computedValue.getGreen();
-	}
-
-	/**
-	 * Implements {@link Value#getBlue()}.
-	 */
-	@Override
-	public Value getBlue() throws DOMException {
-		return computedValue.getBlue();
+	public String getURIValue() throws DOMException {
+		return computedValue.getURIValue();
 	}
 
 	@Override
-	public Value getAlpha() throws DOMException {
-		return computedValue.getAlpha();
+	public void setCssText(String cssText) throws DOMException {
+		throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "Cannot modify computed value.");
 	}
 
-	/**
-	 * Implements {@link Value#getLength()}.
-	 */
 	@Override
 	public int getLength() throws DOMException {
 		return computedValue.getLength();
 	}
 
-	/**
-	 * Implements {@link Value#item(int)}.
-	 */
 	@Override
 	public Value item(int index) throws DOMException {
 		return computedValue.item(index);
 	}
 
-	/**
-	 * Implements {@link Value#getTop()}.
-	 */
 	@Override
-	public Value getTop() throws DOMException {
-		return computedValue.getTop();
+	public CSSCounterValue getCounterValue() throws DOMException {
+		return computedValue.getCounterValue();
 	}
 
-	/**
-	 * Implements {@link Value#getRight()}.
-	 */
 	@Override
-	public Value getRight() throws DOMException {
-		return computedValue.getRight();
+	public RectValue getRectValue() throws DOMException {
+		return computedValue.getRectValue();
 	}
 
-	/**
-	 * Implements {@link Value#getBottom()}.
-	 */
 	@Override
-	public Value getBottom() throws DOMException {
-		return computedValue.getBottom();
+	public ColorValue getColorValue() throws DOMException {
+		return computedValue.getColorValue();
 	}
 
-	/**
-	 * Implements {@link Value#getLeft()}.
-	 */
 	@Override
-	public Value getLeft() throws DOMException {
-		return computedValue.getLeft();
-	}
-
-	/**
-	 * Implements {@link Value#getIdentifier()}.
-	 */
-	@Override
-	public String getIdentifier() throws DOMException {
-		return computedValue.getIdentifier();
-	}
-
-	/**
-	 * Implements {@link Value#getListStyle()}.
-	 */
-	@Override
-	public String getListStyle() throws DOMException {
-		return computedValue.getListStyle();
-	}
-
-	/**
-	 * Implements {@link Value#getSeparator()}.
-	 */
-	@Override
-	public String getSeparator() throws DOMException {
-		return computedValue.getSeparator();
+	public ComputedValue clone() {
+		ComputedValue cv = new ComputedValue(cascadedValue);
+		cv.setComputedValue(computedValue);
+		return cv;
 	}
 
 }

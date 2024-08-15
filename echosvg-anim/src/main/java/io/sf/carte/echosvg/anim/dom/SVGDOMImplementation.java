@@ -25,17 +25,17 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
+import org.w3c.css.om.CSSStyleDeclaration;
+import org.w3c.css.om.CSSStyleSheet;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.css.CSSStyleSheet;
-import org.w3c.dom.css.ViewCSS;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.stylesheets.StyleSheet;
+import org.w3c.dom.view.ViewCSS;
 
 import io.sf.carte.doc.style.css.nsac.InputSource;
 import io.sf.carte.doc.style.css.nsac.Parser;

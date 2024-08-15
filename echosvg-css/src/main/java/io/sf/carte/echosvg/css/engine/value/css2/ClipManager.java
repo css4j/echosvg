@@ -19,9 +19,9 @@
 package io.sf.carte.echosvg.css.engine.value.css2;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.InheritValue;
 import io.sf.carte.echosvg.css.engine.value.RectManager;
@@ -34,8 +34,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a manager for the 'clip' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class ClipManager extends RectManager {
@@ -107,12 +109,9 @@ public class ClipManager extends RectManager {
 		return super.createValue(lu, engine);
 	}
 
-	/**
-	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
-	 */
 	@Override
-	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
-		if (type != CSSPrimitiveValue.CSS_IDENT) {
+	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
+		if (type != Type.IDENT) {
 			throw createInvalidStringTypeDOMException(type);
 		}
 		if (!value.equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {

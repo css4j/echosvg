@@ -65,18 +65,18 @@
         return;
      }
 
-     var val = style.getPropertyCSSValue("fill");
+     var val = style.getCSSStyleValue("fill");
 
      if ( val == null ){
-        result.setAttributeNS(null, "errorCode", "CSSStyleDeclaration.getPropertyCSSValue returned null");
+        result.setAttributeNS(null, "errorCode", "CSSStyleDeclaration.getCSSStyleValue returned null");
         return;
      }
 
-     val = val.getRGBColor()
+     val = val.getColorValue()
 
-     if (val.red.getFloatValue(1) != 255 ||
-         val.green.getFloatValue(1) != 0 ||
-         val.blue.getFloatValue(1) != 0) {
+     if (val.red.getValue() != 255 ||
+         val.green.getValue() != 0 ||
+         val.blue.getValue() != 0) {
         result.setAttributeNS(null, "errorCode", "invalid color components");
         return;
      }

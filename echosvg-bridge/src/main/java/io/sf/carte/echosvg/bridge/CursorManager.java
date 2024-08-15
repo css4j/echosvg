@@ -37,11 +37,11 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
+import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.AbstractNode;
@@ -174,18 +174,17 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 		String cursorStr = SVGConstants.SVG_AUTO_VALUE;
 
 		if (cursorValue != null) {
-			if (cursorValue.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE
-					&& cursorValue.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
+			if (cursorValue.getPrimitiveType() == Type.IDENT) {
 				// Single Value : should be one of the predefined cursors or
 				// 'inherit'
-				cursorStr = cursorValue.getStringValue();
+				cursorStr = cursorValue.getIdentifierValue();
 				return convertBuiltInCursor(e, cursorStr);
-			} else if (cursorValue.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
+			} else if (cursorValue.getCssValueType() == CssType.LIST) {
 				int nValues = cursorValue.getLength();
 				if (nValues == 1) {
 					cursorValue = cursorValue.item(0);
-					if (cursorValue.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
-						cursorStr = cursorValue.getStringValue();
+					if (cursorValue.getPrimitiveType() == Type.IDENT) {
+						cursorStr = cursorValue.getIdentifierValue();
 						return convertBuiltInCursor(e, cursorStr);
 					}
 				} else if (nValues > 1) {
@@ -273,8 +272,8 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 		Element cursorElement = null;
 		for (int i = 0; i < nValues - 1; i++) {
 			Value cursorValue = l.item(i);
-			if (cursorValue.getPrimitiveType() == CSSPrimitiveValue.CSS_URI) {
-				String uri = cursorValue.getStringValue();
+			if (cursorValue.getPrimitiveType() == Type.URI) {
+				String uri = cursorValue.getURIValue();
 
 				// If the uri does not resolve to a cursor element,
 				// then, this is not a type of cursor uri we can handle:
@@ -310,8 +309,8 @@ public class CursorManager implements SVGConstants, ErrorConstants {
 		// Fallback on the built in cursor property.
 		Value cursorValue = l.item(nValues - 1);
 		String cursorStr = SVGConstants.SVG_AUTO_VALUE;
-		if (cursorValue.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
-			cursorStr = cursorValue.getStringValue();
+		if (cursorValue.getPrimitiveType() == Type.IDENT) {
+			cursorStr = cursorValue.getIdentifierValue();
 		}
 
 		return convertBuiltInCursor(e, cursorStr);

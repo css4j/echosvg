@@ -37,6 +37,8 @@ module io.sf.carte.echosvg.dom {
 
 	requires io.sf.carte.xml.dtd;
 
+	requires transitive org.w3c.dom.view;
+
 	requires transitive java.xml;
 	requires transitive jdk.xml.dom;
 

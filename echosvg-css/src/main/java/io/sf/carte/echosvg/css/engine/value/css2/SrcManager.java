@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import java.util.Locale;
+
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -38,9 +39,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * One line Class Desc
  *
  * Complete Class Desc
- *
- * @author <a href="mailto:deweese@apache.org">l449433</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:deweese@apache.org">l449433</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SrcManager extends IdentifierManager {
@@ -129,7 +131,7 @@ public class SrcManager extends IdentifierManager {
 		for (;;) {
 			switch (lu.getLexicalUnitType()) {
 			case STRING:
-				result.append(new StringValue(CSSPrimitiveValue.CSS_STRING, lu.getStringValue()));
+				result.append(new StringValue(lu.getStringValue()));
 				lu = lu.getNextLexicalUnit();
 				break;
 
@@ -159,12 +161,12 @@ public class SrcManager extends IdentifierManager {
 						sb.append(lu.getStringValue());
 						lu = lu.getNextLexicalUnit();
 					} while (lu != null && lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT);
-					result.append(new StringValue(CSSPrimitiveValue.CSS_STRING, sb.toString()));
+					result.append(new StringValue(sb.toString()));
 				} else {
 					String id = sb.toString();
-					String s = id.toLowerCase().intern();
+					String s = id.toLowerCase(Locale.ROOT).intern();
 					Value v = (Value) values.get(s);
-					result.append((v != null) ? v : new StringValue(CSSPrimitiveValue.CSS_STRING, id));
+					result.append((v != null) ? v : new StringValue(id));
 				}
 				break;
 

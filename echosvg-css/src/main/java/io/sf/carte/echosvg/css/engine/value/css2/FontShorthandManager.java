@@ -22,9 +22,11 @@ package io.sf.carte.echosvg.css.engine.value.css2;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
-import io.sf.carte.doc.style.css.CSSUnit;
+import org.w3c.css.om.unit.CSSUnit;
+
 import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.parser.CSSParser;
@@ -49,8 +51,10 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * considering the 'last' number before an 'ident' or '/' to be font-size and
  * any preceeding number to be font-weight.
  *
- * @author <a href="mailto:deweese@apache.org">deweese</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:deweese@apache.org">deweese</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class FontShorthandManager extends AbstractValueFactory implements ShorthandManager {
@@ -147,7 +151,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 		case INHERIT:
 			return;
 		case IDENT: {
-			String s = lu.getStringValue().toLowerCase();
+			String s = lu.getStringValue().toLowerCase(Locale.ROOT);
 			if (values.contains(s)) {
 				handleSystemFont(eng, ph, s, imp);
 				return;
@@ -190,7 +194,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 		while (!svwDone && (lu != null)) {
 			switch (lu.getLexicalUnitType()) {
 			case IDENT: {
-				String s = lu.getStringValue().toLowerCase().intern();
+				String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
 				if (fontStyle == null && fstSM.get(s) != null) {
 					fontStyle = lu;
 					if (intLU != null) {
@@ -248,7 +252,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 		// Now we need to get font-size
 		switch (lu.getLexicalUnitType()) {
 		case IDENT: {
-			String s = lu.getStringValue().toLowerCase().intern();
+			String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
 			if (fszSM.get(s) != null) {
 				fontSize = lu; // This is a font-size ident.
 				lu = lu.getNextLexicalUnit();

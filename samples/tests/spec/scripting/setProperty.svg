@@ -49,7 +49,7 @@
 
        e = document.getElementById("r2");
        style = e.getStyle();
-       var paint = style.getPropertyCSSValue("fill");
+       var paint = style.getCSSStyleValue("fill");
        paint.setPaint(SVGPaint.SVG_PAINTTYPE_URI, "#lg", "", "");
        if (paint.getPaintType() != SVGPaint.SVG_PAINTTYPE_URI) 
            throw ("Wrong paint type: " + paint.getPaintType());

@@ -18,32 +18,45 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.css.om.typed.CSSCounterValue;
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSValue;
 
 /**
  * This class provides an abstract implementation of the Value interface.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * </p>
  * @version $Id$
  */
-public abstract class AbstractValue implements Value {
+public abstract class AbstractValue implements Value, Cloneable {
 
-	/**
-	 * Implements {@link Value#getCssValueType()}.
-	 */
+	ValueModificationHandler handler;
+
 	@Override
-	public short getCssValueType() {
-		return CSSValue.CSS_PRIMITIVE_VALUE;
+	public CssType getCssValueType() {
+		return Value.CssType.TYPED;
 	}
 
-	/**
-	 * Implements {@link Value#getPrimitiveType()}.
-	 */
 	@Override
-	public short getPrimitiveType() {
+	public Type getPrimitiveType() {
 		throw createDOMException();
+	}
+
+	@Override
+	public short getCSSUnit() {
+		return CSSUnit.CSS_INVALID;
+	}
+
+	@Override
+	public void setCssText(String cssText) throws DOMException {
+		throw createDOMException();
+	}
+
+	@Override
+	public String toString() {
+		return getCssText();
 	}
 
 	/**
@@ -54,125 +67,89 @@ public abstract class AbstractValue implements Value {
 		throw createDOMException();
 	}
 
-	/**
-	 * Implements {@link Value#getStringValue()}.
-	 */
+	@Override
+	public void setFloatValue(float value) throws DOMException {
+		throw createDOMException();
+	}
+
 	@Override
 	public String getStringValue() throws DOMException {
 		throw createDOMException();
 	}
 
-	/**
-	 * Implements {@link Value#getRed()}.
-	 */
-	@Override
-	public Value getRed() throws DOMException {
-		throw createDOMException();
-	}
-
-	/**
-	 * Implements {@link Value#getGreen()}.
-	 */
-	@Override
-	public Value getGreen() throws DOMException {
-		throw createDOMException();
-	}
-
-	/**
-	 * Implements {@link Value#getBlue()}.
-	 */
-	@Override
-	public Value getBlue() throws DOMException {
-		throw createDOMException();
-	}
-
-	/**
-	 * Implements {@link Value#getAlpha()}.
-	 */
-	@Override
-	public Value getAlpha() throws DOMException {
-		throw createDOMException();
-	}
-
-	/**
-	 * Implements {@link Value#getLength()}.
-	 */
 	@Override
 	public int getLength() throws DOMException {
+		return 0;
+	}
+
+	@Override
+	public String getIdentifierValue() throws DOMException {
 		throw createDOMException();
 	}
 
-	/**
-	 * Implements {@link Value#item(int)}.
-	 */
 	@Override
-	public Value item(int index) throws DOMException {
+	public String getURIValue() throws DOMException {
 		throw createDOMException();
 	}
 
-	/**
-	 * Implements {@link Value#getTop()}.
-	 */
 	@Override
-	public Value getTop() throws DOMException {
+	public CSSCounterValue getCounterValue() throws DOMException {
 		throw createDOMException();
 	}
 
-	/**
-	 * Implements {@link Value#getRight()}.
-	 */
 	@Override
-	public Value getRight() throws DOMException {
+	public RectValue getRectValue() throws DOMException {
 		throw createDOMException();
 	}
 
-	/**
-	 * Implements {@link Value#getBottom()}.
-	 */
 	@Override
-	public Value getBottom() throws DOMException {
+	public ColorValue getColorValue() throws DOMException {
 		throw createDOMException();
 	}
 
-	/**
-	 * Implements {@link Value#getLeft()}.
-	 */
 	@Override
-	public Value getLeft() throws DOMException {
-		throw createDOMException();
+	public void setModificationHandler(ValueModificationHandler handler) {
+		this.handler = handler;
 	}
 
-	/**
-	 * Implements {@link Value#getIdentifier()}.
-	 */
 	@Override
-	public String getIdentifier() throws DOMException {
-		throw createDOMException();
-	}
-
-	/**
-	 * Implements {@link Value#getListStyle()}.
-	 */
-	@Override
-	public String getListStyle() throws DOMException {
-		throw createDOMException();
-	}
-
-	/**
-	 * Implements {@link Value#getSeparator()}.
-	 */
-	@Override
-	public String getSeparator() throws DOMException {
-		throw createDOMException();
+	public ValueModificationHandler getModificationHandler() {
+		return handler;
 	}
 
 	/**
 	 * Creates an INVALID_ACCESS_ERR exception.
 	 */
 	protected DOMException createDOMException() {
-		Object[] p = { (int) getCssValueType() };
+		Object[] p = { getPrimitiveType() };
 		String s = Messages.formatMessage("invalid.value.access", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
+	}
+
+	@Override
+	public int hashCode() {
+		return getPrimitiveType().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Value))
+			return false;
+		Value other = (Value) obj;
+		return getPrimitiveType() == other.getPrimitiveType();
+	}
+
+	@Override
+	public AbstractValue clone() {
+		try {
+			return (AbstractValue) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
 	}
 
 }

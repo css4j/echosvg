@@ -18,13 +18,15 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import java.util.Locale;
+
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
-import io.sf.carte.echosvg.css.engine.value.StringValue;
+import io.sf.carte.echosvg.css.engine.value.IdentValue;
 import io.sf.carte.echosvg.css.engine.value.URIValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
@@ -35,8 +37,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a manager for the 'color-interpolation' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class ColorProfileManager extends AbstractValueManager {
@@ -99,14 +103,14 @@ public class ColorProfileManager extends AbstractValueManager {
 			return ValueConstants.INHERIT_VALUE;
 
 		case IDENT:
-			String s = lu.getStringValue().toLowerCase();
+			String s = lu.getStringValue().toLowerCase(Locale.ROOT);
 			if (s.equals(CSSConstants.CSS_AUTO_VALUE)) {
 				return ValueConstants.AUTO_VALUE;
 			}
 			if (s.equals(CSSConstants.CSS_SRGB_VALUE)) {
 				return SVGValueConstants.SRGB_VALUE;
 			}
-			return new StringValue(CSSPrimitiveValue.CSS_IDENT, s);
+			return new IdentValue(s);
 
 		case URI:
 			return new URIValue(lu.getStringValue(), resolveURI(engine.getCSSBaseURI(), lu.getStringValue()));
@@ -116,24 +120,23 @@ public class ColorProfileManager extends AbstractValueManager {
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
-	/**
-	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
-	 */
 	@Override
-	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
 		switch (type) {
-		case CSSPrimitiveValue.CSS_IDENT:
-			String s = value.toLowerCase();
+		case IDENT:
+			String s = value.toLowerCase(Locale.ROOT);
 			if (s.equals(CSSConstants.CSS_AUTO_VALUE)) {
 				return ValueConstants.AUTO_VALUE;
 			}
 			if (s.equals(CSSConstants.CSS_SRGB_VALUE)) {
 				return SVGValueConstants.SRGB_VALUE;
 			}
-			return new StringValue(CSSPrimitiveValue.CSS_IDENT, s);
+			return new IdentValue(s);
 
-		case CSSPrimitiveValue.CSS_URI:
+		case URI:
 			return new URIValue(value, resolveURI(engine.getCSSBaseURI(), value));
+		default:
+			break;
 		}
 		throw createInvalidStringTypeDOMException(type);
 	}

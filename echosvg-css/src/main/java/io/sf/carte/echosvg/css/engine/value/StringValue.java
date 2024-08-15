@@ -18,64 +18,44 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
-import java.util.Objects;
+import org.w3c.css.om.typed.CSSStringValue;
 
-import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
+import io.sf.carte.doc.style.css.parser.ParseHelper;
 
 /**
  * This class represents string values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class StringValue extends AbstractValue {
-
-	/**
-	 * Returns the CSS text associated with the given type/value pair.
-	 */
-	public static String getCssText(short type, String value) {
-		switch (type) {
-		case CSSPrimitiveValue.CSS_URI:
-			return "url(" + value + ')';
-
-		case CSSPrimitiveValue.CSS_STRING:
-			char q = (value.indexOf('"') != -1) ? '\'' : '"';
-			return q + value + q;
-		}
-		return value;
-	}
-
-	/**
-	 * The value of the string
-	 */
-	protected String value;
-
-	/**
-	 * The unit type
-	 */
-	protected short unitType;
+public class StringValue extends AbstractStringValue implements CSSStringValue {
 
 	/**
 	 * Creates a new StringValue.
 	 */
-	public StringValue(short type, String s) {
-		unitType = type;
-		value = s;
+	public StringValue(String s) {
+		super(s);
 	}
 
 	/**
 	 * The type of the value.
 	 */
 	@Override
-	public short getPrimitiveType() {
-		return unitType;
+	public Type getPrimitiveType() {
+		return Type.STRING;
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(unitType, value);
+	public String getStringValue() {
+		return value;
+	}
+
+	@Override
+	public String getURIValue() {
+		return value;
 	}
 
 	/**
@@ -85,14 +65,11 @@ public class StringValue extends AbstractValue {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof StringValue)) {
+		if (obj == null || !(obj instanceof Value)) {
 			return false;
 		}
-		StringValue v = (StringValue) obj;
-		if (unitType != v.unitType) {
-			return false;
-		}
-		return value.equals(v.value);
+		Value v = (Value) obj;
+		return v.getPrimitiveType() == Type.STRING && value.equals(v.getStringValue());
 	}
 
 	/**
@@ -100,26 +77,12 @@ public class StringValue extends AbstractValue {
 	 */
 	@Override
 	public String getCssText() {
-		return getCssText(unitType, value);
+		return ParseHelper.quote(value, '\'');
 	}
 
-	/**
-	 * This method is used to get the string value.
-	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a string value.
-	 */
 	@Override
-	public String getStringValue() throws DOMException {
-		return value;
-	}
-
-	/**
-	 * Returns a printable representation of this value.
-	 */
-	@Override
-	public String toString() {
-		return getCssText();
+	public StringValue clone() {
+		return new StringValue(value);
 	}
 
 }

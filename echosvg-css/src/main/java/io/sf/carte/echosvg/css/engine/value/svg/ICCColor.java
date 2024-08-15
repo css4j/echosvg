@@ -19,7 +19,6 @@
 package io.sf.carte.echosvg.css.engine.value.svg;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.echosvg.css.engine.value.AbstractValue;
 
@@ -54,15 +53,6 @@ public class ICCColor extends AbstractValue {
 	 */
 	public ICCColor(String name) {
 		colorProfile = name;
-	}
-
-	/**
-	 * Implements
-	 * {@link io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
-	 */
-	@Override
-	public short getCssValueType() {
-		return CSSValue.CSS_CUSTOM;
 	}
 
 	/**
@@ -118,6 +108,19 @@ public class ICCColor extends AbstractValue {
 	@Override
 	public String toString() {
 		return getCssText();
+	}
+
+	@Override
+	public Type getPrimitiveType() {
+		return Type.COLOR;
+	}
+
+	@Override
+	public ICCColor clone() {
+		ICCColor icc = new ICCColor(colorProfile);
+		icc.colors = colors.clone();
+		icc.count = count;
+		return icc;
 	}
 
 }

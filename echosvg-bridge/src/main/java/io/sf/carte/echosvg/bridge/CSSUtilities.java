@@ -27,15 +27,15 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
-import io.sf.carte.echosvg.css.engine.value.ListValue;
+import io.sf.carte.echosvg.css.engine.value.RectValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.ext.awt.MultipleGradientPaint;
 import io.sf.carte.echosvg.ext.awt.image.renderable.ClipRable;
@@ -99,7 +99,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static int convertPointerEvents(Element e) {
 		Value v = getComputedStyle(e, SVGCSSEngine.POINTER_EVENTS_INDEX);
-		String s = v.getStringValue();
+		String s = v.getIdentifierValue();
 		switch (s.charAt(0)) {
 		case 'v':
 			if (s.length() == 7) {
@@ -146,11 +146,10 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	public static Rectangle2D convertEnableBackground(Element e /*
 																 * , UnitProcessor.Context uctx
 																 */) {
-		Value v = getComputedStyle(e, SVGCSSEngine.ENABLE_BACKGROUND_INDEX);
-		if (v.getCssValueType() != CSSValue.CSS_VALUE_LIST) {
+		Value lv = getComputedStyle(e, SVGCSSEngine.ENABLE_BACKGROUND_INDEX);
+		if (lv.getCssValueType() != CssType.LIST) {
 			return null; // accumulate
 		}
-		ListValue lv = (ListValue) v;
 		int length = lv.getLength();
 		switch (length) {
 		case 1:
@@ -180,7 +179,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static boolean convertColorInterpolationFilters(Element e) {
 		Value v = getComputedStyle(e, SVGCSSEngine.COLOR_INTERPOLATION_FILTERS_INDEX);
-		return CSS_LINEARRGB_VALUE == v.getStringValue();
+		return CSS_LINEARRGB_VALUE == v.getIdentifierValue();
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -195,7 +194,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static MultipleGradientPaint.ColorSpaceEnum convertColorInterpolation(Element e) {
 		Value v = getComputedStyle(e, SVGCSSEngine.COLOR_INTERPOLATION_INDEX);
-		return (CSS_LINEARRGB_VALUE == v.getStringValue()) ? MultipleGradientPaint.LINEAR_RGB
+		return (CSS_LINEARRGB_VALUE == v.getIdentifierValue()) ? MultipleGradientPaint.LINEAR_RGB
 				: MultipleGradientPaint.SRGB;
 	}
 
@@ -211,15 +210,13 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 
 		boolean isAuto = false;
 		if (cursorValue != null) {
-			if (cursorValue.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE
-					&& cursorValue.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT
-					&& cursorValue.getStringValue().charAt(0) == 'a') {
+			if (cursorValue.getPrimitiveType() == Type.IDENT
+					&& cursorValue.getIdentifierValue().charAt(0) == 'a') {
 				isAuto = true;
-			} else if (cursorValue.getCssValueType() == CSSValue.CSS_VALUE_LIST && cursorValue.getLength() == 1) {
+			} else if (cursorValue.getCssValueType() == CssType.LIST && cursorValue.getLength() == 1) {
 				Value lValue = cursorValue.item(0);
-				if (lValue != null && lValue.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE
-						&& lValue.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT
-						&& lValue.getStringValue().charAt(0) == 'a') {
+				if (lValue != null && lValue.getPrimitiveType() == Type.IDENT
+						&& lValue.getIdentifierValue().charAt(0) == 'a') {
 					isAuto = true;
 				}
 			}
@@ -281,7 +278,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static RenderingHints convertShapeRendering(Element e, RenderingHints hints) {
 		Value v = getComputedStyle(e, SVGCSSEngine.SHAPE_RENDERING_INDEX);
-		String s = v.getStringValue();
+		String s = v.getIdentifierValue();
 		int len = s.length();
 		if ((len == 4) && (s.charAt(0) == 'a')) // auto
 			return hints;
@@ -360,7 +357,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static RenderingHints convertTextRendering(Element e, RenderingHints hints) {
 		Value v = getComputedStyle(e, SVGCSSEngine.TEXT_RENDERING_INDEX);
-		String s = v.getStringValue();
+		String s = v.getIdentifierValue();
 		int len = s.length();
 		if ((len == 4) && (s.charAt(0) == 'a')) // auto
 			return hints;
@@ -428,7 +425,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static RenderingHints convertImageRendering(Element e, RenderingHints hints) {
 		Value v = getComputedStyle(e, SVGCSSEngine.IMAGE_RENDERING_INDEX);
-		String s = v.getStringValue();
+		String s = v.getIdentifierValue();
 		int len = s.length();
 		if ((len == 4) && (s.charAt(0) == 'a')) // auto
 			return hints;
@@ -483,7 +480,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static RenderingHints convertColorRendering(Element e, RenderingHints hints) {
 		Value v = getComputedStyle(e, SVGCSSEngine.COLOR_RENDERING_INDEX);
-		String s = v.getStringValue();
+		String s = v.getIdentifierValue();
 		int len = s.length();
 		if ((len == 4) && (s.charAt(0) == 'a')) // auto
 			return hints;
@@ -521,7 +518,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 			return true;
 		}
 		Value v = getComputedStyle(e, SVGCSSEngine.DISPLAY_INDEX);
-		return v.getStringValue().charAt(0) != 'n';
+		return v.getIdentifierValue().charAt(0) != 'n';
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -536,7 +533,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static boolean convertVisibility(Element e) {
 		Value v = getComputedStyle(e, SVGCSSEngine.VISIBILITY_INDEX);
-		return v.getStringValue().charAt(0) == 'v';
+		return v.getIdentifierValue().charAt(0) == 'v';
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -576,7 +573,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static boolean convertOverflow(Element e) {
 		Value v = getComputedStyle(e, SVGCSSEngine.OVERFLOW_INDEX);
-		String s = v.getStringValue();
+		String s = v.getIdentifierValue();
 		return (s.charAt(0) == 'h') || (s.charAt(0) == 's');
 	}
 
@@ -588,20 +585,20 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static float[] convertClip(Element e) {
 		Value v = getComputedStyle(e, SVGCSSEngine.CLIP_INDEX);
-		int primitiveType = v.getPrimitiveType();
-		switch (primitiveType) {
-		case CSSPrimitiveValue.CSS_RECT:
+		switch (v.getPrimitiveType()) {
+		case RECT:
 			float[] off = new float[4];
-			off[0] = v.getTop().getFloatValue();
-			off[1] = v.getRight().getFloatValue();
-			off[2] = v.getBottom().getFloatValue();
-			off[3] = v.getLeft().getFloatValue();
+			RectValue rect = v.getRectValue();
+			off[0] = rect.getTop().getFloatValue();
+			off[1] = rect.getRight().getFloatValue();
+			off[2] = rect.getBottom().getFloatValue();
+			off[3] = rect.getLeft().getFloatValue();
 			return off;
-		case CSSPrimitiveValue.CSS_IDENT:
+		case IDENT:
 			return null; // 'auto' means no offsets
 		default:
 			// can't be reached
-			throw new IllegalStateException("Unexpected primitiveType:" + primitiveType);
+			throw new IllegalStateException("Unexpected primitiveType: " + v.getPrimitiveType());
 		}
 	}
 
@@ -619,13 +616,13 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static Filter convertFilter(Element filteredElement, GraphicsNode filteredNode, BridgeContext ctx) {
 		Value v = getComputedStyle(filteredElement, SVGCSSEngine.FILTER_INDEX);
-		int primitiveType = v.getPrimitiveType();
+		Type primitiveType = v.getPrimitiveType();
 		switch (primitiveType) {
-		case CSSPrimitiveValue.CSS_IDENT:
+		case IDENT:
 			return null; // 'filter:none'
 
-		case CSSPrimitiveValue.CSS_URI:
-			String uri = v.getStringValue();
+		case URI:
+			String uri = v.getURIValue();
 			Element filter = ctx.getReferencedElement(filteredElement, uri);
 			if (filter == null) {
 				return null; // Missing reference
@@ -666,13 +663,13 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static ClipRable convertClipPath(Element clippedElement, GraphicsNode clippedNode, BridgeContext ctx) {
 		Value v = getComputedStyle(clippedElement, SVGCSSEngine.CLIP_PATH_INDEX);
-		int primitiveType = v.getPrimitiveType();
+		Type primitiveType = v.getPrimitiveType();
 		switch (primitiveType) {
-		case CSSPrimitiveValue.CSS_IDENT:
+		case IDENT:
 			return null; // 'clip-path:none'
 
-		case CSSPrimitiveValue.CSS_URI:
-			String uri = v.getStringValue();
+		case URI:
+			String uri = v.getURIValue();
 			Element cp = ctx.getReferencedElement(clippedElement, uri);
 			if (cp == null) {
 				return null; // Missing reference
@@ -706,7 +703,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static int convertClipRule(Element e) {
 		Value v = getComputedStyle(e, SVGCSSEngine.CLIP_RULE_INDEX);
-		return (v.getStringValue().charAt(0) == 'n') ? Path2D.WIND_NON_ZERO : Path2D.WIND_EVEN_ODD;
+		return (v.getIdentifierValue().charAt(0) == 'n') ? Path2D.WIND_NON_ZERO : Path2D.WIND_EVEN_ODD;
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -723,13 +720,13 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static Mask convertMask(Element maskedElement, GraphicsNode maskedNode, BridgeContext ctx) {
 		Value v = getComputedStyle(maskedElement, SVGCSSEngine.MASK_INDEX);
-		int primitiveType = v.getPrimitiveType();
+		Type primitiveType = v.getPrimitiveType();
 		switch (primitiveType) {
-		case CSSPrimitiveValue.CSS_IDENT:
+		case IDENT:
 			return null; // 'mask:none'
 
-		case CSSPrimitiveValue.CSS_URI:
-			String uri = v.getStringValue();
+		case URI:
+			String uri = v.getURIValue();
 			Element m = ctx.getReferencedElement(maskedElement, uri);
 			if (m == null) {
 				return null; // Missing reference
@@ -763,7 +760,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static int convertFillRule(Element e) {
 		Value v = getComputedStyle(e, SVGCSSEngine.FILL_RULE_INDEX);
-		return (v.getStringValue().charAt(0) == 'n') ? Path2D.WIND_NON_ZERO : Path2D.WIND_EVEN_ODD;
+		return (v.getIdentifierValue().charAt(0) == 'n') ? Path2D.WIND_NON_ZERO : Path2D.WIND_EVEN_ODD;
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -779,8 +776,8 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	 */
 	public static Color convertLightingColor(Element e, BridgeContext ctx) {
 		Value v = getComputedStyle(e, SVGCSSEngine.LIGHTING_COLOR_INDEX);
-		if (v.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
-			return PaintServer.convertColor(v, 1);
+		if (v.getCssValueType() != CssType.LIST) {
+			return PaintServer.convertColor(v.getColorValue(), 1, ctx);
 		} else {
 			return PaintServer.convertRGBICCColor(e, v.item(0), v.item(1), 1, ctx);
 		}
@@ -801,8 +798,8 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 		Value v = getComputedStyle(e, SVGCSSEngine.FLOOD_COLOR_INDEX);
 		Value o = getComputedStyle(e, SVGCSSEngine.FLOOD_OPACITY_INDEX);
 		float f = PaintServer.convertOpacity(o);
-		if (v.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
-			return PaintServer.convertColor(v, f);
+		if (v.getCssValueType() != CssType.LIST) {
+			return PaintServer.convertColor(v.getColorValue(), f, ctx);
 		} else {
 			return PaintServer.convertRGBICCColor(e, v.item(0), v.item(1), f, ctx);
 		}
@@ -824,8 +821,8 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 		Value v = getComputedStyle(e, SVGCSSEngine.STOP_COLOR_INDEX);
 		Value o = getComputedStyle(e, SVGCSSEngine.STOP_OPACITY_INDEX);
 		opacity *= PaintServer.convertOpacity(o);
-		if (v.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
-			return PaintServer.convertColor(v, opacity);
+		if (v.getCssValueType() != CssType.LIST) {
+			return PaintServer.convertColor(v.getColorValue(), opacity, ctx);
 		} else {
 			return PaintServer.convertRGBICCColor(e, v.item(0), v.item(1), opacity, ctx);
 		}
@@ -865,13 +862,13 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	/////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Returns the winding rule represented by the specified CSSValue.
+	 * Returns the winding rule represented by the specified Value.
 	 *
 	 * @param v the value that represents the rule
 	 * @return GeneralPath.WIND_NON_ZERO | GeneralPath.WIND_EVEN_ODD
 	 */
-	protected static int rule(CSSValue v) {
-		return (((CSSPrimitiveValue) v).getStringValue().charAt(0) == 'n') ? Path2D.WIND_NON_ZERO
+	protected static int rule(Value v) {
+		return v.getIdentifierValue().charAt(0) == 'n' ? Path2D.WIND_NON_ZERO
 				: Path2D.WIND_EVEN_ODD;
 	}
 

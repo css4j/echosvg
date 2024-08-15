@@ -75,6 +75,19 @@ public interface ErrorConstants {
 	String ERR_CSS_URI_BAD_TARGET = "css.uri.badTarget";
 
 	/**
+	 * The error code when a URI specified in a CSS property referenced a bad
+	 * element.
+	 * 
+	 * <pre>
+	 * {0} = the uri
+	 * {1} = the line
+	 * {2} = the local name
+	 * {3} = the exception
+	 * </pre>
+	 */
+	String ERR_CSS_VALUE_ERROR = "css.badValue";
+
+	/**
 	 * The error code when a specified URI references a bad element.
 	 * 
 	 * <pre>

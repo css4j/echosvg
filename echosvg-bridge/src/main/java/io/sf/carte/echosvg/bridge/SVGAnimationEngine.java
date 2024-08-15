@@ -28,11 +28,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.svg.SVGAngle;
 import org.w3c.dom.svg.SVGLength;
@@ -66,11 +65,11 @@ import io.sf.carte.echosvg.anim.values.AnimatableRectValue;
 import io.sf.carte.echosvg.anim.values.AnimatableStringValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
-import io.sf.carte.echosvg.css.engine.value.FloatValue;
-import io.sf.carte.echosvg.css.engine.value.StringValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.parser.DefaultLengthHandler;
@@ -93,8 +92,10 @@ import io.sf.carte.echosvg.util.SMILConstants;
 /**
  * An AnimationEngine for SVG documents.
  *
- * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGAnimationEngine extends AnimationEngine {
@@ -1090,7 +1091,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 			ValueManager[] vms = cssEngine.getValueManagers();
 			int idx = cssEngine.getPropertyIndex(pn);
 			if (idx != -1) {
-				if (v.getCssValueType() == CSSValue.CSS_INHERIT) {
+				if (v.getPrimitiveType() == Type.INHERIT) {
 					elt = CSSEngine.getParentCSSStylableElement(elt);
 					if (elt != null) {
 						return cssEngine.getComputedStyle(elt, null, idx);
@@ -1200,10 +1201,10 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 */
 		@Override
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
-			switch (v.getPrimitiveType()) {
-			case CSSPrimitiveValue.CSS_PERCENTAGE:
+			switch (v.getCSSUnit()) {
+			case CSSUnit.CSS_PERCENTAGE:
 				return new AnimatableNumberOrPercentageValue(target, v.getFloatValue(), true);
-			case CSSPrimitiveValue.CSS_NUMBER:
+			case CSSUnit.CSS_NUMBER:
 				return new AnimatableNumberOrPercentageValue(target, v.getFloatValue());
 			}
 			// XXX Do something better than returning null.
@@ -1760,12 +1761,11 @@ public class SVGAnimationEngine extends AnimationEngine {
 
 		@Override
 		protected AnimatableValue createAnimatableValue(AnimationTarget target, String pn, Value v) {
-			if (v instanceof StringValue) {
-				return new AnimatableLengthOrIdentValue(target, v.getStringValue());
+			if (v.getPrimitiveType() == Type.IDENT) {
+				return new AnimatableLengthOrIdentValue(target, v.getIdentifierValue());
 			}
 			short pcInterp = target.getPercentageInterpretation(null, pn, true);
-			FloatValue fv = (FloatValue) v;
-			return new AnimatableLengthOrIdentValue(target, fv.getPrimitiveType(), fv.getFloatValue(), pcInterp);
+			return new AnimatableLengthOrIdentValue(target, v.getCSSUnit(), v.getFloatValue(), pcInterp);
 		}
 
 	}
@@ -1787,11 +1787,10 @@ public class SVGAnimationEngine extends AnimationEngine {
 
 		@Override
 		protected AnimatableValue createAnimatableValue(AnimationTarget target, String pn, Value v) {
-			if (v instanceof StringValue) {
-				return new AnimatableNumberOrIdentValue(target, v.getStringValue());
+			if (v.getPrimitiveType() == Type.IDENT) {
+				return new AnimatableNumberOrIdentValue(target, v.getIdentifierValue());
 			}
-			FloatValue fv = (FloatValue) v;
-			return new AnimatableNumberOrIdentValue(target, fv.getFloatValue(), numericIdents);
+			return new AnimatableNumberOrIdentValue(target, v.getFloatValue(), numericIdents);
 		}
 
 	}
@@ -1803,24 +1802,23 @@ public class SVGAnimationEngine extends AnimationEngine {
 
 		@Override
 		protected AnimatableValue createAnimatableValue(AnimationTarget target, String pn, Value v) {
-			FloatValue fv = (FloatValue) v;
 			short unit;
-			switch (fv.getPrimitiveType()) {
-			case CSSPrimitiveValue.CSS_NUMBER:
-			case CSSPrimitiveValue.CSS_DEG:
+			switch (v.getCSSUnit()) {
+			case CSSUnit.CSS_NUMBER:
+			case CSSUnit.CSS_DEG:
 				unit = SVGAngle.SVG_ANGLETYPE_DEG;
 				break;
-			case CSSPrimitiveValue.CSS_RAD:
+			case CSSUnit.CSS_RAD:
 				unit = SVGAngle.SVG_ANGLETYPE_RAD;
 				break;
-			case CSSPrimitiveValue.CSS_GRAD:
+			case CSSUnit.CSS_GRAD:
 				unit = SVGAngle.SVG_ANGLETYPE_GRAD;
 				break;
 			default:
 				// XXX Do something better than returning null.
 				return null;
 			}
-			return new AnimatableAngleValue(target, fv.getFloatValue(), unit);
+			return new AnimatableAngleValue(target, v.getFloatValue(), unit);
 		}
 
 	}
@@ -1832,27 +1830,26 @@ public class SVGAnimationEngine extends AnimationEngine {
 
 		@Override
 		protected AnimatableValue createAnimatableValue(AnimationTarget target, String pn, Value v) {
-			if (v instanceof StringValue) {
-				return new AnimatableAngleOrIdentValue(target, v.getStringValue());
+			if (v.getPrimitiveType() == Type.IDENT) {
+				return new AnimatableAngleOrIdentValue(target, v.getIdentifierValue());
 			}
-			FloatValue fv = (FloatValue) v;
 			short unit;
-			switch (fv.getPrimitiveType()) {
-			case CSSPrimitiveValue.CSS_NUMBER:
-			case CSSPrimitiveValue.CSS_DEG:
+			switch (v.getCSSUnit()) {
+			case CSSUnit.CSS_NUMBER:
+			case CSSUnit.CSS_DEG:
 				unit = SVGAngle.SVG_ANGLETYPE_DEG;
 				break;
-			case CSSPrimitiveValue.CSS_RAD:
+			case CSSUnit.CSS_RAD:
 				unit = SVGAngle.SVG_ANGLETYPE_RAD;
 				break;
-			case CSSPrimitiveValue.CSS_GRAD:
+			case CSSUnit.CSS_GRAD:
 				unit = SVGAngle.SVG_ANGLETYPE_GRAD;
 				break;
 			default:
 				// XXX Do something better than returning null.
 				return null;
 			}
-			return new AnimatableAngleOrIdentValue(target, fv.getFloatValue(), unit);
+			return new AnimatableAngleOrIdentValue(target, v.getFloatValue(), unit);
 		}
 
 	}
@@ -1891,35 +1888,36 @@ public class SVGAnimationEngine extends AnimationEngine {
 
 		@Override
 		protected AnimatableValue createAnimatableValue(AnimationTarget target, String pn, Value v) {
-			if (v.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
+			if (v.getCssValueType() != CssType.LIST) {
 				switch (v.getPrimitiveType()) {
-				case CSSPrimitiveValue.CSS_IDENT:
+				case IDENT:
 					return AnimatablePaintValue.createNonePaintValue(target);
-				case CSSPrimitiveValue.CSS_RGBCOLOR: {
+				case COLOR: {
 					Paint p = PaintServer.convertPaint(target.getElement(), null, v, 1.0f, ctx);
 					return createColorPaintValue(target, (Color) p);
 				}
-				case CSSPrimitiveValue.CSS_URI:
-					return AnimatablePaintValue.createURIPaintValue(target, v.getStringValue());
+				case URI:
+					return AnimatablePaintValue.createURIPaintValue(target, v.getURIValue());
 				}
 			} else {
 				Value v1 = v.item(0);
 				switch (v1.getPrimitiveType()) {
-				case CSSPrimitiveValue.CSS_RGBCOLOR: {
+				case COLOR:
 					Paint p = PaintServer.convertPaint(target.getElement(), null, v, 1.0f, ctx);
 					return createColorPaintValue(target, (Color) p);
-				}
-				case CSSPrimitiveValue.CSS_URI: {
+				case URI:
 					Value v2 = v.item(1);
 					switch (v2.getPrimitiveType()) {
-					case CSSPrimitiveValue.CSS_IDENT:
-						return AnimatablePaintValue.createURINonePaintValue(target, v1.getStringValue());
-					case CSSPrimitiveValue.CSS_RGBCOLOR: {
-						Paint p = PaintServer.convertPaint(target.getElement(), null, v.item(1), 1.0f, ctx);
+					case IDENT:
+						return AnimatablePaintValue.createURINonePaintValue(target, v1.getIdentifierValue());
+					case COLOR:
+						p = PaintServer.convertPaint(target.getElement(), null, v.item(1), 1.0f, ctx);
 						return createColorPaintValue(target, (Color) p);
+					default:
+						break;
 					}
-					}
-				}
+				default:
+					break;
 				}
 			}
 			// XXX Indicate that the specified Value wasn't a Color?

@@ -64,15 +64,15 @@
         return;
      }
 
-     var val = style.getPropertyCSSValue("fill");
+     var val = style.getCSSStyleValue("fill");
 
      if ( val == null ){
         result.setAttributeNS(null, "errorCode",
-           "CSSStyleDeclaration.getPropertyCSSValue returned null");
+           "CSSStyleDeclaration.getCSSStyleValue returned null");
         return;
      }
 
-     val = val.getRGBColor()
+     val = val.getColorValue()
      
      if (val.red.getFloatValue(1) != 2 ||
          val.green.getFloatValue(1) != 3 ||

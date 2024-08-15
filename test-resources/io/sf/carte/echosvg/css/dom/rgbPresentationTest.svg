@@ -57,14 +57,14 @@
         return
      }
 
-     var val = elt.getPresentationAttribute("fill") 
+     var val = elt.getPresentationAttributeValue("fill")
 
      if (val == null) {
         result.setAttributeNS(null, "errorCode", "CSSStyleDeclaration.getPropertyCSSValue returned null")
         return
      }
 
-     var rgb = val.getRGBColor()
+     var rgb = val.getColorValue();
 
      if (rgb.red.cssText != "1"){
         result.setAttributeNS(null, "errorCode", "invalid red component");

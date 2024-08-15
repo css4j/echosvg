@@ -18,18 +18,22 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import java.util.Locale;
+
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 
 /**
  * This class provides a manager for the property with support for identifier
  * values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class IdentifierManager extends AbstractValueManager {
@@ -44,7 +48,7 @@ public abstract class IdentifierManager extends AbstractValueManager {
 			return ValueConstants.INHERIT_VALUE;
 
 		case IDENT:
-			String s = lu.getStringValue().toLowerCase().intern();
+			String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
 			Object v = getIdentifiers().get(s);
 			if (v == null) {
 				throw createInvalidIdentifierDOMException(lu.getStringValue());
@@ -56,15 +60,12 @@ public abstract class IdentifierManager extends AbstractValueManager {
 		}
 	}
 
-	/**
-	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
-	 */
 	@Override
-	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
-		if (type != CSSPrimitiveValue.CSS_IDENT) {
+	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
+		if (type != Type.IDENT) {
 			throw createInvalidStringTypeDOMException(type);
 		}
-		Object v = getIdentifiers().get(value.toLowerCase().intern());
+		Object v = getIdentifiers().get(value.toLowerCase(Locale.ROOT).intern());
 		if (v == null) {
 			throw createInvalidIdentifierDOMException(value);
 		}

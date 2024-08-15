@@ -23,25 +23,24 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.color.ColorSpace;
+import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
 import java.io.IOException;
 
-import io.sf.graphics.java2d.color.CIELabColorSpace;
-import io.sf.graphics.java2d.color.ColorSpaces;
-import io.sf.graphics.java2d.color.ColorWithAlternatives;
-import io.sf.graphics.java2d.color.DeviceCMYKColorSpace;
-import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
-import io.sf.graphics.java2d.color.NamedColorSpace;
-import io.sf.graphics.java2d.color.profile.NamedColorProfile;
-import io.sf.graphics.java2d.color.profile.NamedColorProfileParser;
+import org.w3c.css.om.typed.CSSStyleValueList;
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
+import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.ColorFunction;
+import io.sf.carte.echosvg.css.engine.value.ColorValue;
+import io.sf.carte.echosvg.css.engine.value.NumericValue;
+import io.sf.carte.echosvg.css.engine.value.RGBColorValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.svg.ICCColor;
-import io.sf.carte.echosvg.css.engine.value.svg12.CIELabColor;
 import io.sf.carte.echosvg.css.engine.value.svg12.DeviceColor;
 import io.sf.carte.echosvg.css.engine.value.svg12.ICCNamedColor;
 import io.sf.carte.echosvg.gvt.CompositeShapePainter;
@@ -54,6 +53,13 @@ import io.sf.carte.echosvg.gvt.ShapePainter;
 import io.sf.carte.echosvg.gvt.StrokeShapePainter;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGConstants;
+import io.sf.graphics.java2d.color.ColorSpaces;
+import io.sf.graphics.java2d.color.ColorWithAlternatives;
+import io.sf.graphics.java2d.color.DeviceCMYKColorSpace;
+import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
+import io.sf.graphics.java2d.color.NamedColorSpace;
+import io.sf.graphics.java2d.color.profile.NamedColorProfile;
+import io.sf.graphics.java2d.color.profile.NamedColorProfileParser;
 
 /**
  * A collection of utility methods to deliver <code>java.awt.Paint</code>,
@@ -61,10 +67,13 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * This class also provides additional methods the deliver SVG Paint using the
  * ShapePainter interface.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorConstants {
 
 	/**
@@ -119,10 +128,10 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 */
 	public static Marker convertMarker(Element e, Value v, BridgeContext ctx) {
 
-		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
+		if (v.getPrimitiveType() == Type.IDENT) {
 			return null; // 'none'
 		} else {
-			String uri = v.getStringValue();
+			String uri = v.getURIValue();
 			Element markerElement = ctx.getReferencedElement(e, uri);
 			if (markerElement == null) {
 				return null; // Missing reference
@@ -245,51 +254,57 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 */
 	public static Paint convertPaint(Element paintedElement, GraphicsNode paintedNode, Value paintDef, float opacity,
 			BridgeContext ctx) {
-		if (paintDef.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
+		if (paintDef.getCssValueType() == CssType.TYPED) {
 			switch (paintDef.getPrimitiveType()) {
-			case CSSPrimitiveValue.CSS_IDENT:
+			case IDENT:
 				return null; // none
-
-			case CSSPrimitiveValue.CSS_RGBCOLOR:
-				return convertColor(paintDef, opacity);
-
-			case CSSPrimitiveValue.CSS_URI:
+			case COLOR:
+				return convertColor(paintDef.getColorValue(), opacity, ctx);
+			case URI:
 				return convertURIPaint(paintedElement, paintedNode, paintDef, opacity, ctx);
-
 			default:
-				throw new IllegalArgumentException("Paint argument is not an appropriate CSS value");
+				break;
 			}
 		} else { // List
 			Value v = paintDef.item(0);
 			switch (v.getPrimitiveType()) {
-			case CSSPrimitiveValue.CSS_RGBCOLOR:
-				return convertRGBICCColor(paintedElement, v, paintDef.item(1), opacity, ctx);
+			case COLOR:
+				switch ((v.getColorValue()).getCSSColorSpace()) {
+				case ColorValue.RGB_FUNCTION:
+					return convertRGBICCColor(paintedElement, v, paintDef.item(1), opacity, ctx);
+				}
+				break;
 
-			case CSSPrimitiveValue.CSS_URI: {
+			case URI:
 				Paint result = silentConvertURIPaint(paintedElement, paintedNode, v, opacity, ctx);
-				if (result != null)
+				if (result != null) {
 					return result;
+				}
 
 				v = paintDef.item(1);
 				switch (v.getPrimitiveType()) {
-				case CSSPrimitiveValue.CSS_IDENT:
+				case IDENT:
 					return null; // none
-
-				case CSSPrimitiveValue.CSS_RGBCOLOR:
-					if (paintDef.getLength() == 2) {
-						return convertColor(v, opacity);
-					} else {
-						return convertRGBICCColor(paintedElement, v, paintDef.item(2), opacity, ctx);
+				case COLOR:
+					ColorValue color = v.getColorValue();
+					switch (color.getCSSColorSpace()) {
+					case ColorValue.RGB_FUNCTION:
+						if (paintDef.getLength() == 2) {
+							return convertColor((RGBColorValue) color, opacity);
+						} else {
+							return convertRGBICCColor(paintedElement, v, paintDef.item(2), opacity, ctx);
+						}
 					}
+					break;
 				default:
-					throw new IllegalArgumentException("Paint argument is not an appropriate CSS value");
+					break;
 				}
-			}
+
 			default:
-				// can't be reached
-				throw new IllegalArgumentException("Paint argument is not an appropriate CSS value");
+				break;
 			}
 		}
+		throw new IllegalArgumentException("Paint argument is not an appropriate CSS value");
 	}
 
 	/**
@@ -326,7 +341,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	public static Paint convertURIPaint(Element paintedElement, GraphicsNode paintedNode, Value paintDef, float opacity,
 			BridgeContext ctx) {
 
-		String uri = paintDef.getStringValue();
+		String uri = paintDef.getURIValue();
 		Element paintElement = ctx.getReferencedElement(paintedElement, uri);
 		if (paintElement == null) {
 			return null; // Missing reference
@@ -369,14 +384,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 				color = convertICCColor(paintedElement, (ICCColor) iccColor, opacity, ctx);
 			} else if (iccColor instanceof ICCNamedColor) {
 				color = convertICCNamedColor(paintedElement, (ICCNamedColor) iccColor, opacity, ctx);
-			} else if (iccColor instanceof CIELabColor) {
-				color = convertCIELabColor(paintedElement, (CIELabColor) iccColor, opacity, ctx);
 			} else if (iccColor instanceof DeviceColor) {
 				color = convertDeviceColor(paintedElement, colorDef, (DeviceColor) iccColor, opacity, ctx);
 			}
 		}
 		if (color == null) {
-			color = convertColor(colorDef, opacity);
+			color = convertColor(colorDef.getColorValue(), opacity, ctx);
 		}
 		return color;
 	}
@@ -398,13 +411,14 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			return null;
 		}
 		// Ask the bridge to map the ICC profile name to an ICC_Profile object
-		SVGColorProfileElementBridge profileBridge = (SVGColorProfileElementBridge) ctx.getBridge(SVG_NAMESPACE_URI,
-				SVG_COLOR_PROFILE_TAG);
+		SVGColorProfileElementBridge profileBridge = (SVGColorProfileElementBridge) ctx.getBridge(
+				SVG_NAMESPACE_URI, SVG_COLOR_PROFILE_TAG);
 		if (profileBridge == null) {
 			return null; // no bridge for color profile
 		}
 
-		ICCColorSpaceWithIntent profileCS = profileBridge.createICCColorSpaceWithIntent(ctx, e, iccProfileName);
+		ICCColorSpaceWithIntent profileCS = profileBridge.createICCColorSpaceWithIntent(ctx, e,
+				iccProfileName);
 		if (profileCS == null) {
 			return null; // no profile
 		}
@@ -443,8 +457,8 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			return null;
 		}
 		// Ask the bridge to map the ICC profile name to an ICC_Profile object
-		SVGColorProfileElementBridge profileBridge = (SVGColorProfileElementBridge) ctx.getBridge(SVG_NAMESPACE_URI,
-				SVG_COLOR_PROFILE_TAG);
+		SVGColorProfileElementBridge profileBridge = (SVGColorProfileElementBridge) ctx.getBridge(
+				SVG_NAMESPACE_URI, SVG_COLOR_PROFILE_TAG);
 		if (profileBridge == null) {
 			return null; // no bridge for color profile
 		}
@@ -483,22 +497,6 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	}
 
 	/**
-	 * Returns a Color object that corresponds to the input Paint's CIE Lab color
-	 * value.
-	 *
-	 * @param e       the element using the color
-	 * @param c       the CIE Lab color definition
-	 * @param opacity the opacity
-	 * @param ctx     the bridge context to use
-	 */
-	public static Color convertCIELabColor(Element e, CIELabColor c, float opacity, BridgeContext ctx) {
-		CIELabColorSpace cs = new CIELabColorSpace(c.getWhitePoint());
-		float[] lab = c.getColorValues();
-		Color specColor = cs.toColor(lab[0], lab[1], lab[2], opacity);
-		return specColor;
-	}
-
-	/**
 	 * Returns a Color object that corresponds to the input Paint's device-specific
 	 * color value.
 	 *
@@ -508,9 +506,11 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param opacity the opacity
 	 * @param ctx     the bridge context to use
 	 */
-	public static Color convertDeviceColor(Element e, Value srgb, DeviceColor c, float opacity, BridgeContext ctx) {
+	public static Color convertDeviceColor(Element e, Value srgb, DeviceColor c, float opacity,
+			BridgeContext ctx) {
+		ColorValue color = srgb.getColorValue();
 		if (c.isNChannel()) {
-			return convertColor(srgb, opacity); // NYI
+			return convertColor(color, opacity, ctx); // NYI
 		} else {
 			if (c.getNumberOfColors() == 4) {
 				DeviceCMYKColorSpace cmykCs = ColorSpaces.getDeviceCMYKColorSpace();
@@ -519,15 +519,16 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 					comps[i] = c.getColor(i);
 				}
 				Color cmyk = new ColorWithAlternatives(cmykCs, comps, opacity, null);
-				int r = resolveColorComponent(srgb.getRed());
-				int g = resolveColorComponent(srgb.getGreen());
-				int b = resolveColorComponent(srgb.getBlue());
+				RGBColorValue rgb = (RGBColorValue) color;
+				int r = resolveColorComponent(rgb.getR());
+				int g = resolveColorComponent(rgb.getG());
+				int b = resolveColorComponent(rgb.getB());
 				float a = resolveAlphaComponent(c.getAlpha());
 				Color specColor = new ColorWithAlternatives(r, g, b, Math.round(a * opacity * 255f),
 						new Color[] { cmyk });
 				return specColor;
 			} else {
-				return convertColor(srgb, opacity); // NYI
+				return convertColor(color, opacity, ctx); // NYI
 			}
 		}
 	}
@@ -537,13 +538,138 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * 
 	 * @param c       The CSS color to convert.
 	 * @param opacity The opacity value (0 &lt;= o &lt;= 1).
+	 * @param ctx     the bridge context.
 	 */
-	public static Color convertColor(Value c, float opacity) {
-		int r = resolveColorComponent(c.getRed());
-		int g = resolveColorComponent(c.getGreen());
-		int b = resolveColorComponent(c.getBlue());
+	public static Color convertColor(ColorValue c, float opacity, BridgeContext ctx) {
+		switch (c.getCSSColorSpace()) {
+		case ColorValue.RGB_FUNCTION:
+			return convertColor((RGBColorValue) c, opacity);
+		case ColorValue.LAB:
+		case ColorValue.LCH:
+			throw new UnsupportedOperationException();
+		default:
+			// Color() function
+			return convertColor((ColorFunction) c, opacity, ctx);
+		}
+	}
+
+	/**
+	 * Converts the given Value and opacity to a Color object.
+	 * 
+	 * @param c       The CSS color to convert.
+	 * @param opacity The opacity value (0 &lt;= o &lt;= 1).
+	 */
+	public static Color convertColor(RGBColorValue c, float opacity) {
+		int r = resolveColorComponent(c.getR());
+		int g = resolveColorComponent(c.getG());
+		int b = resolveColorComponent(c.getB());
 		float a = resolveAlphaComponent(c.getAlpha());
 		return new Color(r, g, b, Math.round(a * opacity * 255f));
+	}
+
+	/**
+	 * Converts the given color() function Value and opacity to a Color object.
+	 * 
+	 * @param c       The CSS color function to convert.
+	 * @param opacity The opacity value (0 &lt;= o &lt;= 1).
+	 * @param ctx     the bridge context.
+	 */
+	public static Color convertColor(ColorFunction c, float opacity, BridgeContext ctx) {
+		switch (c.getCSSColorSpace()) {
+		case ColorValue.CS_DISPLAY_P3:
+			ICC_ColorSpace space = CSSColorSpaces.getDisplayP3();
+			Color color = convert3Color(space, c, opacity);
+			ctx.updateColorSpace(color, space);
+			return color;
+		case ColorValue.CS_A98_RGB:
+			space = CSSColorSpaces.getA98RGB();
+			color = convert3Color(space, c, opacity);
+			ctx.updateColorSpace(color, space);
+			return color;
+		case ColorValue.CS_PROPHOTO_RGB:
+			space = CSSColorSpaces.getProphotoRGB();
+			color = convert3Color(space, c, opacity);
+			ctx.updateColorSpace(color, space);
+			return color;
+		case ColorValue.CS_REC2020:
+			space = CSSColorSpaces.getRec2020();
+			color = convert3Color(space, c, opacity);
+			ctx.updateColorSpace(color, space);
+			return color;
+		case ColorValue.CS_SRGB_LINEAR:
+			ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB);
+			return convert3Color(cs, c, opacity);
+		case ColorValue.CS_XYZ:
+		case ColorValue.CS_XYZ_D65:
+			CSSStyleValueList<NumericValue> chs = c.getChannels();
+			float[] ch = new float[3];
+			ch[0] = resolveColorFunctionComponent(chs.item(0));
+			ch[1] = resolveColorFunctionComponent(chs.item(1));
+			ch[2] = resolveColorFunctionComponent(chs.item(2));
+			float[] xyzd50 = d65xyzToD50(ch);
+			float a = resolveAlphaComponent(c.getAlpha());
+			cs = ColorSpace.getInstance(ColorSpace.CS_CIEXYZ);
+			color = new Color(cs, xyzd50, a * opacity);
+			cs = CSSColorSpaces.containerRGBSpace(color, ctx.getColorSpace());
+			if (cs != null) {
+				ctx.updateColorSpace(color, cs);
+			}
+			return color;
+		case ColorValue.CS_XYZ_D50:
+			cs = ColorSpace.getInstance(ColorSpace.CS_CIEXYZ);
+			color = convert3Color(cs, c, opacity);
+			cs = CSSColorSpaces.containerRGBSpace(color, ctx.getColorSpace());
+			if (cs != null) {
+				ctx.updateColorSpace(color, cs);
+			}
+			return color;
+		default:
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	private static Color convert3Color(ColorSpace space, ColorFunction c, float opacity) {
+		CSSStyleValueList<NumericValue> chs = c.getChannels();
+		float[] ch = new float[3];
+		ch[0] = resolveColorFunctionComponent(chs.item(0));
+		ch[1] = resolveColorFunctionComponent(chs.item(1));
+		ch[2] = resolveColorFunctionComponent(chs.item(2));
+		float a = resolveAlphaComponent(c.getAlpha());
+		return new Color(space, ch, a * opacity);
+	}
+
+	private static float resolveColorFunctionComponent(NumericValue item) {
+		float f = item.getFloatValue();
+		switch (item.getCSSUnit()) {
+		case CSSUnit.CSS_NUMBER:
+			if (f < 0f) {
+				f = 0f;
+			} else if (f > 1f) {
+				f = 1f;
+			}
+			return f;
+		case CSSUnit.CSS_PERCENTAGE:
+			if (f < 0f) {
+				f = 0f;
+			} else if (f > 100f) {
+				f = 100f;
+			}
+			return f * 0.01f;
+		}
+		throw new IllegalArgumentException("Invalid color component: " + item.getCssText());
+	}
+
+	private static float[] d65xyzToD50(float[] xyz) {
+		// Chromatic adjustment: D65 to D50, Bradford
+		// See http://www.brucelindbloom.com/index.html?Eqn_ChromAdapt.html
+		float[] xyzadj = new float[3];
+		xyzadj[0] = (float) (1.0478112436606313d * xyz[0] + 0.022886602481693052d * xyz[1]
+				- 0.05012697596852886d * xyz[2]);
+		xyzadj[1] = (float) (0.029542398290574905d * xyz[0] + 0.9904844034904394d * xyz[1]
+				- 0.017049095628961564d * xyz[2]);
+		xyzadj[2] = (float) (-0.009234489723309473d * xyz[0] + 0.015043616793498756d * xyz[1]
+				+ 0.7521316354746059d * xyz[2]);
+		return xyzadj;
 	}
 
 	/////////////////////////////////////////////////////////////////////////
@@ -611,7 +737,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 */
 	public static float[] convertStrokeDasharray(Value v) {
 		float[] dasharray = null;
-		if (v.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
+		if (v.getCssValueType() == CssType.LIST) {
 			int length = v.getLength();
 			dasharray = new float[length];
 			float sum = 0;
@@ -646,7 +772,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param v the CSS value describing the linecap property
 	 */
 	public static int convertStrokeLinecap(Value v) {
-		String s = v.getStringValue();
+		String s = v.getIdentifierValue();
 		switch (s.charAt(0)) {
 		case 'b':
 			return BasicStroke.CAP_BUTT;
@@ -665,7 +791,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param v the CSS value describing the linejoin property
 	 */
 	public static int convertStrokeLinejoin(Value v) {
-		String s = v.getStringValue();
+		String s = v.getIdentifierValue();
 		switch (s.charAt(0)) {
 		case 'm':
 			return BasicStroke.JOIN_MITER;
@@ -689,12 +815,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 */
 	public static int resolveColorComponent(Value v) {
 		float f;
-		switch (v.getPrimitiveType()) {
-		case CSSPrimitiveValue.CSS_PERCENTAGE:
+		switch (v.getCSSUnit()) {
+		case CSSUnit.CSS_PERCENTAGE:
 			f = v.getFloatValue();
 			f = (f > 100f) ? 100f : (f < 0f) ? 0f : f;
 			return Math.round(255f * f / 100f);
-		case CSSPrimitiveValue.CSS_NUMBER:
+		case CSSUnit.CSS_NUMBER:
 			f = v.getFloatValue();
 			f = (f > 255f) ? 255f : (f < 0f) ? 0f : f;
 			return Math.round(f);
@@ -705,12 +831,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 
 	private static float resolveAlphaComponent(Value v) {
 		float f;
-		switch (v.getPrimitiveType()) {
-		case CSSPrimitiveValue.CSS_PERCENTAGE:
+		switch (v.getCSSUnit()) {
+		case CSSUnit.CSS_PERCENTAGE:
 			f = v.getFloatValue();
 			f = (f > 100f) ? 100f : (f < 0f) ? 0f : f;
 			return f * 0.01f;
-		case CSSPrimitiveValue.CSS_NUMBER:
+		case CSSUnit.CSS_NUMBER:
 			f = v.getFloatValue();
 			f = (f > 1f) ? 1f : (f < 0f) ? 0f : f;
 			return f;

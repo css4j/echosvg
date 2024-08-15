@@ -18,10 +18,13 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import java.util.Locale;
+
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -37,8 +40,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a manager for the 'baseline-shift' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class BaselineShiftManager extends LengthManager {
@@ -111,7 +116,7 @@ public class BaselineShiftManager extends LengthManager {
 			return ValueConstants.INHERIT_VALUE;
 
 		case IDENT:
-			Object v = values.get(lu.getStringValue().toLowerCase().intern());
+			Object v = values.get(lu.getStringValue().toLowerCase(Locale.ROOT).intern());
 			if (v == null) {
 				throw createInvalidIdentifierDOMException(lu.getStringValue());
 			}
@@ -122,15 +127,12 @@ public class BaselineShiftManager extends LengthManager {
 		return super.createValue(lu, engine);
 	}
 
-	/**
-	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
-	 */
 	@Override
-	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
-		if (type != CSSPrimitiveValue.CSS_IDENT) {
-			throw createInvalidIdentifierDOMException(value);
+	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
+		if (type != Type.IDENT) {
+			throw createInvalidStringTypeDOMException(type);
 		}
-		Object v = values.get(value.toLowerCase().intern());
+		Object v = values.get(value.toLowerCase(Locale.ROOT).intern());
 		if (v == null) {
 			throw createInvalidIdentifierDOMException(value);
 		}
@@ -144,7 +146,7 @@ public class BaselineShiftManager extends LengthManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
+		if (value.getCSSUnit() == CSSUnit.CSS_PERCENTAGE) {
 			sm.putLineHeightRelative(idx, true);
 
 			int fsi = engine.getLineHeightIndex();
@@ -157,9 +159,9 @@ public class BaselineShiftManager extends LengthManager {
 				parent = elt;
 			}
 			Value fs = engine.getComputedStyle(parent, pseudo, fsi);
-			float fsv = fs.getFloatValue();
+			float fsv = lengthValue(fs);
 			float v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, (fsv * v) / 100f);
+			return new FloatValue(CSSUnit.CSS_NUMBER, (fsv * v) / 100f);
 		}
 		return super.computeValue(elt, pseudo, engine, idx, sm, value);
 	}

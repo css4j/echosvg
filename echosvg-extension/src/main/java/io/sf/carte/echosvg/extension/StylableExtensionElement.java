@@ -18,12 +18,13 @@
  */
 package io.sf.carte.echosvg.extension;
 
+import org.w3c.css.om.CSSStyleDeclaration;
+import org.w3c.css.om.typed.CSSStyleValue;
 import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.svg.SVGAnimatedString;
-import org.w3c.dom.svg.SVGStylable;
+import org.w3c.dom.svg.SVGStylableP;
 
+import io.sf.carte.echosvg.css.dom.CSSValue;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleDeclarationProvider;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -35,11 +36,14 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * usable as a foreign element within an SVGOMDocument, and the support for both
  * the 'style' attribute and the style attributes (ie: fill="red", ...).
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public abstract class StylableExtensionElement extends ExtensionElement implements CSSStylableElement, SVGStylable {
+public abstract class StylableExtensionElement extends ExtensionElement implements CSSStylableElement,
+		SVGStylableP<CSSStyleValue> {
 
 	private static final long serialVersionUID = 1L;
 

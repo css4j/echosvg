@@ -18,11 +18,12 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import java.util.Locale;
+
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -39,8 +40,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a manager for the 'cursor' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class CursorManager extends AbstractValueManager {
@@ -148,7 +151,7 @@ public class CursorManager extends AbstractValueManager {
 			// Fall through...
 
 		case IDENT:
-			String s = lu.getStringValue().toLowerCase().intern();
+			String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
 			Object v = values.get(s);
 			if (v == null) {
 				throw createInvalidIdentifierDOMException(lu.getStringValue());
@@ -165,22 +168,18 @@ public class CursorManager extends AbstractValueManager {
 		return result;
 	}
 
-	/**
-	 * Implements
-	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
-	 */
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
-			ListValue lv = (ListValue) value;
-			int len = lv.getLength();
+		if (value.getCssValueType() == Value.CssType.LIST) {
+			int len = value.getLength();
 			ListValue result = new ListValue(' ');
 			for (int i = 0; i < len; i++) {
-				Value v = lv.item(0);
-				if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_URI) {
-					// Reveal the absolute value as the cssText now.
-					result.append(new URIValue(v.getStringValue(), v.getStringValue()));
+				Value v = value.item(0);
+				if (v.getPrimitiveType() == Type.URI) {
+					// For performance, use the absolute value as the cssText now.
+					String uri = v.getURIValue();
+					result.append(new URIValue(uri, uri));
 				} else {
 					result.append(v);
 				}

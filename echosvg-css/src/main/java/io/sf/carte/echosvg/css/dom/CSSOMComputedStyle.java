@@ -21,10 +21,9 @@ package io.sf.carte.echosvg.css.dom;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.w3c.css.om.CSSRule;
+import org.w3c.css.om.CSSStyleDeclaration;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSRule;
-import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -33,8 +32,10 @@ import io.sf.carte.echosvg.css.engine.value.Value;
 /**
  * This class represents the computed style of an element.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class CSSOMComputedStyle implements CSSStyleDeclaration {
@@ -108,12 +109,12 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
 		return v.getCssText();
 	}
 
-	/**
-	 * <b>DOM</b>: Implements
-	 * {@link org.w3c.dom.css.CSSStyleDeclaration#getPropertyCSSValue(String)}.
-	 */
 	@Override
-	public CSSValue getPropertyCSSValue(String propertyName) {
+	public CSSValue getCSSStyleValue(String propertyName) {
+		return getCSSValue(propertyName);
+	}
+
+	public CSSValue getCSSValue(String propertyName) {
 		CSSValue result = values.get(propertyName);
 		if (result == null) {
 			int idx = cssEngine.getPropertyIndex(propertyName);

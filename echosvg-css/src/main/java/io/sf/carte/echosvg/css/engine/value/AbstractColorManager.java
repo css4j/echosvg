@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.css.engine.value;
 import java.io.IOException;
 import java.io.StringReader;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
@@ -32,17 +32,21 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.doc.style.css.property.StyleValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
  * This class provides a manager for the property with support for CSS color
  * values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class AbstractColorManager extends IdentifierManager {
@@ -130,13 +134,17 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	@Override
 	public Value createValue(LexicalUnit lunit, CSSEngine engine) throws DOMException {
 		switch (lunit.getLexicalUnitType()) {
+		case COLOR_FUNCTION:
+			Value colorFunction = createColorFunction(lunit);
+			if (colorFunction != null) {
+				return colorFunction;
+			}
 		case HSLCOLOR:
 		case HWBCOLOR:
 		case LABCOLOR:
 		case LCHCOLOR:
 		case OKLABCOLOR:
 		case OKLCHCOLOR:
-		case COLOR_FUNCTION:
 		case COLOR_MIX:
 			ValueFactory vf = new ValueFactory();
 			String rgbSerialization;
@@ -157,34 +165,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 			}
 		case RGBCOLOR:
-			LexicalUnit lu = lunit.getParameters();
-			Value red = createColorComponent(lu);
-			lu = lu.getNextLexicalUnit();
-			if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
-				lu = lu.getNextLexicalUnit();
-			}
-			Value green = createColorComponent(lu);
-			lu = lu.getNextLexicalUnit();
-			if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
-				lu = lu.getNextLexicalUnit();
-			}
-			Value blue = createColorComponent(lu);
-			// Alpha channel
-			lu = lu.getNextLexicalUnit();
-			Value alpha;
-			if (lu != null) {
-				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA
-						|| lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_SLASH) {
-					lu = lu.getNextLexicalUnit();
-					if (lu == null) {
-						throw new DOMException(DOMException.SYNTAX_ERR, "Invalid color: " + lunit.getCssText());
-					}
-				}
-				alpha = createColorComponent(lu);
-			} else {
-				alpha = null;
-			}
-			return createRGBColor(red, green, blue, alpha);
+			return createRGBColor(lunit);
 		default:
 			return super.createValue(lunit, engine);
 		}
@@ -197,8 +178,8 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value.getPrimitiveType() == CSSPrimitiveValue.CSS_IDENT) {
-			String ident = value.getStringValue();
+		if (value.getPrimitiveType() == Type.IDENT) {
+			String ident = ((AbstractStringValue) value).getValue();
 			// Search for a direct computed value.
 			Value v = (Value) computedValues.get(ident);
 			if (v != null) {
@@ -213,26 +194,138 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		return super.computeValue(elt, pseudo, engine, idx, sm, value);
 	}
 
+	private Value createRGBColor(LexicalUnit lunit) {
+		LexicalUnit lu = lunit.getParameters();
+
+		boolean pcntSpecified = lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
+		NumericValue red = createRGBColorComponent(lu);
+		lu = lu.getNextLexicalUnit();
+		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
+			lu = lu.getNextLexicalUnit();
+		}
+
+		pcntSpecified = pcntSpecified || lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
+		NumericValue green = createRGBColorComponent(lu);
+		lu = lu.getNextLexicalUnit();
+		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
+			lu = lu.getNextLexicalUnit();
+		}
+
+		pcntSpecified = pcntSpecified || lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
+		NumericValue blue = createRGBColorComponent(lu);
+
+		// Alpha channel
+		lu = lu.getNextLexicalUnit();
+		NumericValue alpha;
+		boolean alphaPcntSpecified = false;
+		if (lu != null) {
+			if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA
+					|| lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_SLASH) {
+				lu = lu.getNextLexicalUnit();
+				if (lu == null) {
+					throw new DOMException(DOMException.SYNTAX_ERR, "Invalid color: " + lunit.getCssText());
+				}
+			}
+			alphaPcntSpecified = lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
+			alpha = createColorComponent(lu);
+		} else {
+			alpha = null;
+		}
+		return createRGBColor(red, green, blue, pcntSpecified, alpha, alphaPcntSpecified);
+	}
+
 	/**
 	 * Creates an RGB(A) color.
 	 */
-	protected Value createRGBColor(Value r, Value g, Value b, Value a) {
-		return a == null ? new RGBColorValue(r, g, b) : new RGBColorValue(r, g, b, a);
+	protected Value createRGBColor(NumericValue r, NumericValue g, NumericValue b, boolean pcntSpecified,
+			NumericValue a, boolean alphaPcntSpecified) {
+		RGBColorValue c = a == null ? new RGBColorValue(r, g, b) : new RGBColorValue(r, g, b, a);
+		c.setSpecifiedAsPercentage(pcntSpecified);
+		c.setAlphaSpecifiedAsPercentage(alphaPcntSpecified);
+		return c;
+	}
+
+	private ColorFunction createColorFunction(LexicalUnit lunit) {
+		LexicalUnit lu = lunit.getParameters();
+		AbstractValueList<NumericValue> components = new AbstractValueList<>(' ', 4);
+
+		// Color space
+		if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.IDENT) {
+			throw new DOMException(DOMException.TYPE_MISMATCH_ERR,
+					"Color space must be identifier: " + lunit.toString());
+		}
+
+		String colorSpace = lu.getStringValue();
+		lu = lu.getNextLexicalUnit();
+		if (lu == null) {
+			throw new DOMException(DOMException.SYNTAX_ERR, "Wrong value: " + lunit.toString());
+		}
+
+		// Components
+		NumericValue alpha = null;
+		NumericValue primi;
+		while (true) {
+			primi = createColorComponent(lu);
+			components.add(primi);
+			lu = lu.getNextLexicalUnit();
+
+			if (lu == null) {
+				break;
+			}
+			if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_SLASH) {
+				lu = lu.getNextLexicalUnit(); // Alpha
+				alpha = createColorComponent(lu);
+				lu = lu.getNextLexicalUnit();
+				if (lu != null) {
+					throw new DOMException(DOMException.SYNTAX_ERR,
+							"Wrong value: " + lunit.toString());
+				}
+				break;
+			}
+		}
+
+		ColorFunction color = new ColorFunction(colorSpace, components);
+
+		if (alpha == null) {
+			alpha = SVGValueConstants.NUMBER_1;
+		}
+		color.setAlpha(alpha);
+
+		return color;
+	}
+
+	/**
+	 * Creates an RGB color component from a lexical unit.
+	 */
+	protected NumericValue createRGBColorComponent(LexicalUnit lu) throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case INTEGER:
+			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getIntegerValue() / 2.55f);
+
+		case REAL:
+			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getFloatValue() / 2.55f);
+
+		case PERCENTAGE:
+			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getFloatValue());
+
+		default:
+		}
+		throw createInvalidRGBComponentUnitDOMException(lu.getLexicalUnitType());
 	}
 
 	/**
 	 * Creates a color component from a lexical unit.
 	 */
-	protected Value createColorComponent(LexicalUnit lu) throws DOMException {
+	protected NumericValue createColorComponent(LexicalUnit lu) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
 		case INTEGER:
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getIntegerValue());
+			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue());
 
 		case REAL:
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getFloatValue());
+			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getFloatValue());
 
 		case PERCENTAGE:
-			return new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE, lu.getFloatValue());
+			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getFloatValue());
 
 		default:
 		}

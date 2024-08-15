@@ -18,11 +18,12 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.css.om.unit.CSSUnit;
 
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
+import io.sf.carte.echosvg.css.engine.value.IdentValue;
+import io.sf.carte.echosvg.css.engine.value.NumericValue;
 import io.sf.carte.echosvg.css.engine.value.RGBColorValue;
-import io.sf.carte.echosvg.css.engine.value.StringValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.util.CSSConstants;
@@ -30,8 +31,10 @@ import io.sf.carte.echosvg.util.CSSConstants;
 /**
  * This interface provides constants for SVG values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public interface SVGValueConstants extends ValueConstants {
@@ -39,1564 +42,1557 @@ public interface SVGValueConstants extends ValueConstants {
 	/**
 	 * 0 degree
 	 */
-	Value ZERO_DEGREE = new FloatValue(CSSPrimitiveValue.CSS_DEG, 0);
+	NumericValue ZERO_DEGREE = new FloatValue(CSSUnit.CSS_DEG, 0);
 
 	/**
 	 * 1
 	 */
-	Value NUMBER_1 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 1);
+	NumericValue NUMBER_1 = new FloatValue(CSSUnit.CSS_NUMBER, 1);
 
 	/**
 	 * 4
 	 */
-	Value NUMBER_4 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 4);
+	NumericValue NUMBER_4 = new FloatValue(CSSUnit.CSS_NUMBER, 4);
 
 	/**
 	 * 11
 	 */
-	Value NUMBER_11 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 11);
+	NumericValue NUMBER_11 = new FloatValue(CSSUnit.CSS_NUMBER, 11);
 
 	/**
 	 * 19
 	 */
-	Value NUMBER_19 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 19);
+	NumericValue NUMBER_19 = new FloatValue(CSSUnit.CSS_NUMBER, 19);
 
 	/**
 	 * 20
 	 */
-	Value NUMBER_20 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 20);
+	NumericValue NUMBER_20 = new FloatValue(CSSUnit.CSS_NUMBER, 20);
 
 	/**
 	 * 21
 	 */
-	Value NUMBER_21 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 21);
+	NumericValue NUMBER_21 = new FloatValue(CSSUnit.CSS_NUMBER, 21);
 
 	/**
 	 * 25
 	 */
-	Value NUMBER_25 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 25);
+	NumericValue NUMBER_25 = new FloatValue(CSSUnit.CSS_NUMBER, 25);
 
 	/**
 	 * 30
 	 */
-	Value NUMBER_30 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 30);
+	NumericValue NUMBER_30 = new FloatValue(CSSUnit.CSS_NUMBER, 30);
 
 	/**
 	 * 32
 	 */
-	Value NUMBER_32 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 32);
+	NumericValue NUMBER_32 = new FloatValue(CSSUnit.CSS_NUMBER, 32);
 
 	/**
 	 * 34
 	 */
-	Value NUMBER_34 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 34);
+	NumericValue NUMBER_34 = new FloatValue(CSSUnit.CSS_NUMBER, 34);
 
 	/**
 	 * 35
 	 */
-	Value NUMBER_35 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 35);
+	NumericValue NUMBER_35 = new FloatValue(CSSUnit.CSS_NUMBER, 35);
 
 	/**
 	 * 42
 	 */
-	Value NUMBER_42 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 42);
+	NumericValue NUMBER_42 = new FloatValue(CSSUnit.CSS_NUMBER, 42);
 
 	/**
 	 * 43
 	 */
-	Value NUMBER_43 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 43);
+	NumericValue NUMBER_43 = new FloatValue(CSSUnit.CSS_NUMBER, 43);
 
 	/**
 	 * 45
 	 */
-	Value NUMBER_45 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 45);
+	NumericValue NUMBER_45 = new FloatValue(CSSUnit.CSS_NUMBER, 45);
 
 	/**
 	 * 46
 	 */
-	Value NUMBER_46 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 46);
+	NumericValue NUMBER_46 = new FloatValue(CSSUnit.CSS_NUMBER, 46);
 
 	/**
 	 * 47
 	 */
-	Value NUMBER_47 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 47);
+	NumericValue NUMBER_47 = new FloatValue(CSSUnit.CSS_NUMBER, 47);
 
 	/**
 	 * 50
 	 */
-	Value NUMBER_50 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 50);
+	NumericValue NUMBER_50 = new FloatValue(CSSUnit.CSS_NUMBER, 50);
 
 	/**
 	 * 60
 	 */
-	Value NUMBER_60 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 60);
+	NumericValue NUMBER_60 = new FloatValue(CSSUnit.CSS_NUMBER, 60);
 
 	/**
 	 * 61
 	 */
-	Value NUMBER_61 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 61);
+	NumericValue NUMBER_61 = new FloatValue(CSSUnit.CSS_NUMBER, 61);
 
 	/**
 	 * 63
 	 */
-	Value NUMBER_63 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 63);
+	NumericValue NUMBER_63 = new FloatValue(CSSUnit.CSS_NUMBER, 63);
 
 	/**
 	 * 64
 	 */
-	Value NUMBER_64 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 64);
+	NumericValue NUMBER_64 = new FloatValue(CSSUnit.CSS_NUMBER, 64);
 
 	/**
 	 * 65
 	 */
-	Value NUMBER_65 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 65);
+	NumericValue NUMBER_65 = new FloatValue(CSSUnit.CSS_NUMBER, 65);
 
 	/**
 	 * 69
 	 */
-	Value NUMBER_69 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 69);
+	NumericValue NUMBER_69 = new FloatValue(CSSUnit.CSS_NUMBER, 69);
 
 	/**
 	 * 70
 	 */
-	Value NUMBER_70 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 70);
+	NumericValue NUMBER_70 = new FloatValue(CSSUnit.CSS_NUMBER, 70);
 
 	/**
 	 * 71
 	 */
-	Value NUMBER_71 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 71);
+	NumericValue NUMBER_71 = new FloatValue(CSSUnit.CSS_NUMBER, 71);
 
 	/**
 	 * 72
 	 */
-	Value NUMBER_72 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 72);
+	NumericValue NUMBER_72 = new FloatValue(CSSUnit.CSS_NUMBER, 72);
 
 	/**
 	 * 75
 	 */
-	Value NUMBER_75 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 75);
+	NumericValue NUMBER_75 = new FloatValue(CSSUnit.CSS_NUMBER, 75);
 
 	/**
 	 * 79
 	 */
-	Value NUMBER_79 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 79);
+	NumericValue NUMBER_79 = new FloatValue(CSSUnit.CSS_NUMBER, 79);
 
 	/**
 	 * 80
 	 */
-	Value NUMBER_80 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 80);
+	NumericValue NUMBER_80 = new FloatValue(CSSUnit.CSS_NUMBER, 80);
 
 	/**
 	 * 82
 	 */
-	Value NUMBER_82 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 82);
+	NumericValue NUMBER_82 = new FloatValue(CSSUnit.CSS_NUMBER, 82);
 
 	/**
 	 * 85
 	 */
-	Value NUMBER_85 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 85);
+	NumericValue NUMBER_85 = new FloatValue(CSSUnit.CSS_NUMBER, 85);
 
 	/**
 	 * 87
 	 */
-	Value NUMBER_87 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 87);
+	NumericValue NUMBER_87 = new FloatValue(CSSUnit.CSS_NUMBER, 87);
 
 	/**
 	 * 90
 	 */
-	Value NUMBER_90 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 90);
+	NumericValue NUMBER_90 = new FloatValue(CSSUnit.CSS_NUMBER, 90);
 
 	/**
 	 * 91
 	 */
-	Value NUMBER_91 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 91);
+	NumericValue NUMBER_91 = new FloatValue(CSSUnit.CSS_NUMBER, 91);
 
 	/**
 	 * 92
 	 */
-	Value NUMBER_92 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 92);
+	NumericValue NUMBER_92 = new FloatValue(CSSUnit.CSS_NUMBER, 92);
 
 	/**
 	 * 95
 	 */
-	Value NUMBER_95 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 95);
+	NumericValue NUMBER_95 = new FloatValue(CSSUnit.CSS_NUMBER, 95);
 
 	/**
 	 * 96
 	 */
-	Value NUMBER_96 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 96);
+	NumericValue NUMBER_96 = new FloatValue(CSSUnit.CSS_NUMBER, 96);
 
 	/**
 	 * 99
 	 */
-	Value NUMBER_99 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 99);
+	NumericValue NUMBER_99 = new FloatValue(CSSUnit.CSS_NUMBER, 99);
 
 	/**
 	 * 102
 	 */
-	Value NUMBER_102 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 102);
+	NumericValue NUMBER_102 = new FloatValue(CSSUnit.CSS_NUMBER, 102);
 
 	/**
 	 * 104
 	 */
-	Value NUMBER_104 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 104);
+	NumericValue NUMBER_104 = new FloatValue(CSSUnit.CSS_NUMBER, 104);
 
 	/**
 	 * 105
 	 */
-	Value NUMBER_105 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 105);
+	NumericValue NUMBER_105 = new FloatValue(CSSUnit.CSS_NUMBER, 105);
 
 	/**
 	 * 106
 	 */
-	Value NUMBER_106 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 106);
+	NumericValue NUMBER_106 = new FloatValue(CSSUnit.CSS_NUMBER, 106);
 
 	/**
 	 * 107
 	 */
-	Value NUMBER_107 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 107);
+	NumericValue NUMBER_107 = new FloatValue(CSSUnit.CSS_NUMBER, 107);
 
 	/**
 	 * 112
 	 */
-	Value NUMBER_112 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 112);
+	NumericValue NUMBER_112 = new FloatValue(CSSUnit.CSS_NUMBER, 112);
 
 	/**
 	 * 113
 	 */
-	Value NUMBER_113 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 113);
+	NumericValue NUMBER_113 = new FloatValue(CSSUnit.CSS_NUMBER, 113);
 
 	/**
 	 * 114
 	 */
-	Value NUMBER_114 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 114);
+	NumericValue NUMBER_114 = new FloatValue(CSSUnit.CSS_NUMBER, 114);
 
 	/**
 	 * 119
 	 */
-	Value NUMBER_119 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 119);
+	NumericValue NUMBER_119 = new FloatValue(CSSUnit.CSS_NUMBER, 119);
 
 	/**
 	 * 122
 	 */
-	Value NUMBER_122 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 122);
+	NumericValue NUMBER_122 = new FloatValue(CSSUnit.CSS_NUMBER, 122);
 
 	/**
 	 * 123
 	 */
-	Value NUMBER_123 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 123);
+	NumericValue NUMBER_123 = new FloatValue(CSSUnit.CSS_NUMBER, 123);
 
 	/**
 	 * 124
 	 */
-	Value NUMBER_124 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 124);
+	NumericValue NUMBER_124 = new FloatValue(CSSUnit.CSS_NUMBER, 124);
 
 	/**
 	 * 127
 	 */
-	Value NUMBER_127 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 127);
+	NumericValue NUMBER_127 = new FloatValue(CSSUnit.CSS_NUMBER, 127);
 
 	/**
 	 * 130
 	 */
-	Value NUMBER_130 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 130);
+	NumericValue NUMBER_130 = new FloatValue(CSSUnit.CSS_NUMBER, 130);
 
 	/**
 	 * 133
 	 */
-	Value NUMBER_133 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 133);
+	NumericValue NUMBER_133 = new FloatValue(CSSUnit.CSS_NUMBER, 133);
 
 	/**
 	 * 134
 	 */
-	Value NUMBER_134 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 134);
+	NumericValue NUMBER_134 = new FloatValue(CSSUnit.CSS_NUMBER, 134);
 
 	/**
 	 * 135
 	 */
-	Value NUMBER_135 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 135);
+	NumericValue NUMBER_135 = new FloatValue(CSSUnit.CSS_NUMBER, 135);
 
 	/**
 	 * 136
 	 */
-	Value NUMBER_136 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 136);
+	NumericValue NUMBER_136 = new FloatValue(CSSUnit.CSS_NUMBER, 136);
 
 	/**
 	 * 138
 	 */
-	Value NUMBER_138 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 138);
+	NumericValue NUMBER_138 = new FloatValue(CSSUnit.CSS_NUMBER, 138);
 
 	/**
 	 * 139
 	 */
-	Value NUMBER_139 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 139);
+	NumericValue NUMBER_139 = new FloatValue(CSSUnit.CSS_NUMBER, 139);
 
 	/**
 	 * 140
 	 */
-	Value NUMBER_140 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 140);
+	NumericValue NUMBER_140 = new FloatValue(CSSUnit.CSS_NUMBER, 140);
 
 	/**
 	 * 142
 	 */
-	Value NUMBER_142 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 142);
+	NumericValue NUMBER_142 = new FloatValue(CSSUnit.CSS_NUMBER, 142);
 
 	/**
 	 * 143
 	 */
-	Value NUMBER_143 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 143);
+	NumericValue NUMBER_143 = new FloatValue(CSSUnit.CSS_NUMBER, 143);
 
 	/**
 	 * 144
 	 */
-	Value NUMBER_144 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 144);
+	NumericValue NUMBER_144 = new FloatValue(CSSUnit.CSS_NUMBER, 144);
 
 	/**
 	 * 147
 	 */
-	Value NUMBER_147 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 147);
+	NumericValue NUMBER_147 = new FloatValue(CSSUnit.CSS_NUMBER, 147);
 
 	/**
 	 * 148
 	 */
-	Value NUMBER_148 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 148);
+	NumericValue NUMBER_148 = new FloatValue(CSSUnit.CSS_NUMBER, 148);
 
 	/**
 	 * 149
 	 */
-	Value NUMBER_149 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 149);
+	NumericValue NUMBER_149 = new FloatValue(CSSUnit.CSS_NUMBER, 149);
 
 	/**
 	 * 150
 	 */
-	Value NUMBER_150 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 150);
+	NumericValue NUMBER_150 = new FloatValue(CSSUnit.CSS_NUMBER, 150);
 
 	/**
 	 * 152
 	 */
-	Value NUMBER_152 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 152);
+	NumericValue NUMBER_152 = new FloatValue(CSSUnit.CSS_NUMBER, 152);
 
 	/**
 	 * 153
 	 */
-	Value NUMBER_153 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 153);
+	NumericValue NUMBER_153 = new FloatValue(CSSUnit.CSS_NUMBER, 153);
 
 	/**
 	 * 154
 	 */
-	Value NUMBER_154 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 154);
+	NumericValue NUMBER_154 = new FloatValue(CSSUnit.CSS_NUMBER, 154);
 
 	/**
 	 * 158
 	 */
-	Value NUMBER_158 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 158);
+	NumericValue NUMBER_158 = new FloatValue(CSSUnit.CSS_NUMBER, 158);
 
 	/**
 	 * 160
 	 */
-	Value NUMBER_160 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 160);
+	NumericValue NUMBER_160 = new FloatValue(CSSUnit.CSS_NUMBER, 160);
 
 	/**
 	 * 164
 	 */
-	Value NUMBER_164 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 164);
+	NumericValue NUMBER_164 = new FloatValue(CSSUnit.CSS_NUMBER, 164);
 
 	/**
 	 * 165
 	 */
-	Value NUMBER_165 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 165);
+	NumericValue NUMBER_165 = new FloatValue(CSSUnit.CSS_NUMBER, 165);
 
 	/**
 	 * 169
 	 */
-	Value NUMBER_169 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 169);
+	NumericValue NUMBER_169 = new FloatValue(CSSUnit.CSS_NUMBER, 169);
 
 	/**
 	 * 170
 	 */
-	Value NUMBER_170 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 170);
+	NumericValue NUMBER_170 = new FloatValue(CSSUnit.CSS_NUMBER, 170);
 
 	/**
 	 * 173
 	 */
-	Value NUMBER_173 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 173);
+	NumericValue NUMBER_173 = new FloatValue(CSSUnit.CSS_NUMBER, 173);
 
 	/**
 	 * 175
 	 */
-	Value NUMBER_175 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 175);
+	NumericValue NUMBER_175 = new FloatValue(CSSUnit.CSS_NUMBER, 175);
 
 	/**
 	 * 176
 	 */
-	Value NUMBER_176 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 176);
+	NumericValue NUMBER_176 = new FloatValue(CSSUnit.CSS_NUMBER, 176);
 
 	/**
 	 * 178
 	 */
-	Value NUMBER_178 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 178);
+	NumericValue NUMBER_178 = new FloatValue(CSSUnit.CSS_NUMBER, 178);
 
 	/**
 	 * 179
 	 */
-	Value NUMBER_179 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 179);
+	NumericValue NUMBER_179 = new FloatValue(CSSUnit.CSS_NUMBER, 179);
 
 	/**
 	 * 180
 	 */
-	Value NUMBER_180 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 180);
+	NumericValue NUMBER_180 = new FloatValue(CSSUnit.CSS_NUMBER, 180);
 
 	/**
 	 * 181
 	 */
-	Value NUMBER_181 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 181);
+	NumericValue NUMBER_181 = new FloatValue(CSSUnit.CSS_NUMBER, 181);
 
 	/**
 	 * 182
 	 */
-	Value NUMBER_182 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 182);
+	NumericValue NUMBER_182 = new FloatValue(CSSUnit.CSS_NUMBER, 182);
 
 	/**
 	 * 183
 	 */
-	Value NUMBER_183 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 183);
+	NumericValue NUMBER_183 = new FloatValue(CSSUnit.CSS_NUMBER, 183);
 
 	/**
 	 * 184
 	 */
-	Value NUMBER_184 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 184);
+	NumericValue NUMBER_184 = new FloatValue(CSSUnit.CSS_NUMBER, 184);
 
 	/**
 	 * 185
 	 */
-	Value NUMBER_185 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 185);
+	NumericValue NUMBER_185 = new FloatValue(CSSUnit.CSS_NUMBER, 185);
 
 	/**
 	 * 186
 	 */
-	Value NUMBER_186 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 186);
+	NumericValue NUMBER_186 = new FloatValue(CSSUnit.CSS_NUMBER, 186);
 
 	/**
 	 * 188
 	 */
-	Value NUMBER_188 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 188);
+	NumericValue NUMBER_188 = new FloatValue(CSSUnit.CSS_NUMBER, 188);
 
 	/**
 	 * 189
 	 */
-	Value NUMBER_189 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 189);
+	NumericValue NUMBER_189 = new FloatValue(CSSUnit.CSS_NUMBER, 189);
 
 	/**
 	 * 191
 	 */
-	Value NUMBER_191 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 191);
+	NumericValue NUMBER_191 = new FloatValue(CSSUnit.CSS_NUMBER, 191);
 
 	/**
 	 * 193
 	 */
-	Value NUMBER_193 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 193);
+	NumericValue NUMBER_193 = new FloatValue(CSSUnit.CSS_NUMBER, 193);
 
 	/**
 	 * 196
 	 */
-	Value NUMBER_196 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 196);
+	NumericValue NUMBER_196 = new FloatValue(CSSUnit.CSS_NUMBER, 196);
 
 	/**
 	 * 199
 	 */
-	Value NUMBER_199 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 199);
+	NumericValue NUMBER_199 = new FloatValue(CSSUnit.CSS_NUMBER, 199);
 
 	/**
 	 * 203
 	 */
-	Value NUMBER_203 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 203);
+	NumericValue NUMBER_203 = new FloatValue(CSSUnit.CSS_NUMBER, 203);
 
 	/**
 	 * 204
 	 */
-	Value NUMBER_204 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 204);
+	NumericValue NUMBER_204 = new FloatValue(CSSUnit.CSS_NUMBER, 204);
 
 	/**
 	 * 205
 	 */
-	Value NUMBER_205 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 205);
+	NumericValue NUMBER_205 = new FloatValue(CSSUnit.CSS_NUMBER, 205);
 
 	/**
 	 * 206
 	 */
-	Value NUMBER_206 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 206);
+	NumericValue NUMBER_206 = new FloatValue(CSSUnit.CSS_NUMBER, 206);
 
 	/**
 	 * 208
 	 */
-	Value NUMBER_208 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 208);
+	NumericValue NUMBER_208 = new FloatValue(CSSUnit.CSS_NUMBER, 208);
 
 	/**
 	 * 209
 	 */
-	Value NUMBER_209 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 209);
+	NumericValue NUMBER_209 = new FloatValue(CSSUnit.CSS_NUMBER, 209);
 
 	/**
 	 * 210
 	 */
-	Value NUMBER_210 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 210);
+	NumericValue NUMBER_210 = new FloatValue(CSSUnit.CSS_NUMBER, 210);
 
 	/**
 	 * 211
 	 */
-	Value NUMBER_211 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 211);
+	NumericValue NUMBER_211 = new FloatValue(CSSUnit.CSS_NUMBER, 211);
 
 	/**
 	 * 212
 	 */
-	Value NUMBER_212 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 212);
+	NumericValue NUMBER_212 = new FloatValue(CSSUnit.CSS_NUMBER, 212);
 
 	/**
 	 * 213
 	 */
-	Value NUMBER_213 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 213);
+	NumericValue NUMBER_213 = new FloatValue(CSSUnit.CSS_NUMBER, 213);
 
 	/**
 	 * 214
 	 */
-	Value NUMBER_214 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 214);
+	NumericValue NUMBER_214 = new FloatValue(CSSUnit.CSS_NUMBER, 214);
 
 	/**
 	 * 215
 	 */
-	Value NUMBER_215 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 215);
+	NumericValue NUMBER_215 = new FloatValue(CSSUnit.CSS_NUMBER, 215);
 
 	/**
 	 * 216
 	 */
-	Value NUMBER_216 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 216);
+	NumericValue NUMBER_216 = new FloatValue(CSSUnit.CSS_NUMBER, 216);
 
 	/**
 	 * 218
 	 */
-	Value NUMBER_218 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 218);
+	NumericValue NUMBER_218 = new FloatValue(CSSUnit.CSS_NUMBER, 218);
 
 	/**
 	 * 219
 	 */
-	Value NUMBER_219 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 219);
+	NumericValue NUMBER_219 = new FloatValue(CSSUnit.CSS_NUMBER, 219);
 
 	/**
 	 * 220
 	 */
-	Value NUMBER_220 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 220);
+	NumericValue NUMBER_220 = new FloatValue(CSSUnit.CSS_NUMBER, 220);
 
 	/**
 	 * 221
 	 */
-	Value NUMBER_221 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 221);
+	NumericValue NUMBER_221 = new FloatValue(CSSUnit.CSS_NUMBER, 221);
 
 	/**
 	 * 222
 	 */
-	Value NUMBER_222 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 222);
+	NumericValue NUMBER_222 = new FloatValue(CSSUnit.CSS_NUMBER, 222);
 
 	/**
 	 * 224
 	 */
-	Value NUMBER_224 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 224);
+	NumericValue NUMBER_224 = new FloatValue(CSSUnit.CSS_NUMBER, 224);
 
 	/**
 	 * 225
 	 */
-	Value NUMBER_225 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 225);
+	NumericValue NUMBER_225 = new FloatValue(CSSUnit.CSS_NUMBER, 225);
 
 	/**
 	 * 226
 	 */
-	Value NUMBER_226 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 226);
+	NumericValue NUMBER_226 = new FloatValue(CSSUnit.CSS_NUMBER, 226);
 
 	/**
 	 * 228
 	 */
-	Value NUMBER_228 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 228);
+	NumericValue NUMBER_228 = new FloatValue(CSSUnit.CSS_NUMBER, 228);
 
 	/**
 	 * 230
 	 */
-	Value NUMBER_230 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 230);
+	NumericValue NUMBER_230 = new FloatValue(CSSUnit.CSS_NUMBER, 230);
 
 	/**
 	 * 232
 	 */
-	Value NUMBER_232 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 232);
+	NumericValue NUMBER_232 = new FloatValue(CSSUnit.CSS_NUMBER, 232);
 
 	/**
 	 * 233
 	 */
-	Value NUMBER_233 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 233);
+	NumericValue NUMBER_233 = new FloatValue(CSSUnit.CSS_NUMBER, 233);
 
 	/**
 	 * 235
 	 */
-	Value NUMBER_235 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 235);
+	NumericValue NUMBER_235 = new FloatValue(CSSUnit.CSS_NUMBER, 235);
 
 	/**
 	 * 237
 	 */
-	Value NUMBER_237 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 237);
+	NumericValue NUMBER_237 = new FloatValue(CSSUnit.CSS_NUMBER, 237);
 
 	/**
 	 * 238
 	 */
-	Value NUMBER_238 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 238);
+	NumericValue NUMBER_238 = new FloatValue(CSSUnit.CSS_NUMBER, 238);
 
 	/**
 	 * 239
 	 */
-	Value NUMBER_239 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 239);
+	NumericValue NUMBER_239 = new FloatValue(CSSUnit.CSS_NUMBER, 239);
 
 	/**
 	 * 240
 	 */
-	Value NUMBER_240 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 240);
+	NumericValue NUMBER_240 = new FloatValue(CSSUnit.CSS_NUMBER, 240);
 
 	/**
 	 * 244
 	 */
-	Value NUMBER_244 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 244);
+	NumericValue NUMBER_244 = new FloatValue(CSSUnit.CSS_NUMBER, 244);
 
 	/**
 	 * 245
 	 */
-	Value NUMBER_245 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 245);
+	NumericValue NUMBER_245 = new FloatValue(CSSUnit.CSS_NUMBER, 245);
 
 	/**
 	 * 248
 	 */
-	Value NUMBER_248 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 248);
+	NumericValue NUMBER_248 = new FloatValue(CSSUnit.CSS_NUMBER, 248);
 
 	/**
 	 * 250
 	 */
-	Value NUMBER_250 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 250);
+	NumericValue NUMBER_250 = new FloatValue(CSSUnit.CSS_NUMBER, 250);
 
 	/**
 	 * 251
 	 */
-	Value NUMBER_251 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 251);
+	NumericValue NUMBER_251 = new FloatValue(CSSUnit.CSS_NUMBER, 251);
 
 	/**
 	 * 252
 	 */
-	Value NUMBER_252 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 252);
+	NumericValue NUMBER_252 = new FloatValue(CSSUnit.CSS_NUMBER, 252);
 
 	/**
 	 * 253
 	 */
-	Value NUMBER_253 = new FloatValue(CSSPrimitiveValue.CSS_NUMBER, 253);
+	NumericValue NUMBER_253 = new FloatValue(CSSUnit.CSS_NUMBER, 253);
 
 	/**
 	 * The 'accumulate' keyword.
 	 */
-	Value ACCUMULATE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_ACCUMULATE_VALUE);
+	Value ACCUMULATE_VALUE = new IdentValue(CSSConstants.CSS_ACCUMULATE_VALUE);
 
 	/**
 	 * The 'after-edge' keyword.
 	 */
-	Value AFTER_EDGE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_AFTER_EDGE_VALUE);
+	Value AFTER_EDGE_VALUE = new IdentValue(CSSConstants.CSS_AFTER_EDGE_VALUE);
 
 	/**
 	 * The 'alphabetic' keyword.
 	 */
-	Value ALPHABETIC_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_ALPHABETIC_VALUE);
+	Value ALPHABETIC_VALUE = new IdentValue(CSSConstants.CSS_ALPHABETIC_VALUE);
 
 	/**
 	 * The 'baseline' keyword.
 	 */
-	Value BASELINE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_BASELINE_VALUE);
+	Value BASELINE_VALUE = new IdentValue(CSSConstants.CSS_BASELINE_VALUE);
 
 	/**
 	 * The 'before-edge' keyword.
 	 */
-	Value BEFORE_EDGE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_BEFORE_EDGE_VALUE);
+	Value BEFORE_EDGE_VALUE = new IdentValue(CSSConstants.CSS_BEFORE_EDGE_VALUE);
 
 	/**
 	 * The 'bevel' keyword.
 	 */
-	Value BEVEL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_BEVEL_VALUE);
+	Value BEVEL_VALUE = new IdentValue(CSSConstants.CSS_BEVEL_VALUE);
 
 	/**
 	 * The 'butt' keyword.
 	 */
-	Value BUTT_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_BUTT_VALUE);
+	Value BUTT_VALUE = new IdentValue(CSSConstants.CSS_BUTT_VALUE);
 
 	/**
 	 * The 'central' keyword.
 	 */
-	Value CENTRAL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CENTRAL_VALUE);
+	Value CENTRAL_VALUE = new IdentValue(CSSConstants.CSS_CENTRAL_VALUE);
 
 	/**
 	 * The 'currentcolor' keyword.
 	 */
-	Value CURRENTCOLOR_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CURRENTCOLOR_VALUE);
+	Value CURRENTCOLOR_VALUE = new IdentValue(CSSConstants.CSS_CURRENTCOLOR_VALUE);
 
 	/**
 	 * The 'end' keyword.
 	 */
-	Value END_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_END_VALUE);
+	Value END_VALUE = new IdentValue(CSSConstants.CSS_END_VALUE);
 
 	/**
 	 * The 'evenodd' keyword.
 	 */
-	Value EVENODD_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_EVENODD_VALUE);
+	Value EVENODD_VALUE = new IdentValue(CSSConstants.CSS_EVENODD_VALUE);
 
 	/**
 	 * The 'fill' keyword.
 	 */
-	Value FILL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_FILL_VALUE);
+	Value FILL_VALUE = new IdentValue(CSSConstants.CSS_FILL_VALUE);
 
 	/**
 	 * The 'fillstroke' keyword.
 	 */
-	Value FILLSTROKE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_FILLSTROKE_VALUE);
+	Value FILLSTROKE_VALUE = new IdentValue(CSSConstants.CSS_FILLSTROKE_VALUE);
 
 	/**
 	 * The 'geometricprecision' keyword.
 	 */
-	Value GEOMETRICPRECISION_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT,
-			CSSConstants.CSS_GEOMETRICPRECISION_VALUE);
+	Value GEOMETRICPRECISION_VALUE = new IdentValue(CSSConstants.CSS_GEOMETRICPRECISION_VALUE);
 
 	/**
 	 * The 'hanging' keyword.
 	 */
-	Value HANGING_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_HANGING_VALUE);
+	Value HANGING_VALUE = new IdentValue(CSSConstants.CSS_HANGING_VALUE);
 
 	/**
 	 * The 'ideographic' keyword.
 	 */
-	Value IDEOGRAPHIC_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_IDEOGRAPHIC_VALUE);
+	Value IDEOGRAPHIC_VALUE = new IdentValue(CSSConstants.CSS_IDEOGRAPHIC_VALUE);
 
 	/**
 	 * The 'linearRGB' keyword.
 	 */
-	Value LINEARRGB_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LINEARRGB_VALUE);
+	Value LINEARRGB_VALUE = new IdentValue(CSSConstants.CSS_LINEARRGB_VALUE);
 
 	/**
 	 * The 'lr' keyword.
 	 */
-	Value LR_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LR_VALUE);
+	Value LR_VALUE = new IdentValue(CSSConstants.CSS_LR_VALUE);
 
 	/**
 	 * The 'lr-tb' keyword.
 	 */
-	Value LR_TB_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LR_TB_VALUE);
+	Value LR_TB_VALUE = new IdentValue(CSSConstants.CSS_LR_TB_VALUE);
 
 	/**
 	 * The 'mathematical' keyword.
 	 */
-	Value MATHEMATICAL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MATHEMATICAL_VALUE);
+	Value MATHEMATICAL_VALUE = new IdentValue(CSSConstants.CSS_MATHEMATICAL_VALUE);
 
 	/**
 	 * The 'middle' keyword.
 	 */
-	Value MIDDLE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MIDDLE_VALUE);
+	Value MIDDLE_VALUE = new IdentValue(CSSConstants.CSS_MIDDLE_VALUE);
 
 	/**
 	 * The 'new' keyword.
 	 */
-	Value NEW_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_NEW_VALUE);
+	Value NEW_VALUE = new IdentValue(CSSConstants.CSS_NEW_VALUE);
 
 	/**
 	 * The 'miter' keyword.
 	 */
-	Value MITER_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MITER_VALUE);
+	Value MITER_VALUE = new IdentValue(CSSConstants.CSS_MITER_VALUE);
 
 	/**
 	 * The 'no-change' keyword.
 	 */
-	Value NO_CHANGE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_NO_CHANGE_VALUE);
+	Value NO_CHANGE_VALUE = new IdentValue(CSSConstants.CSS_NO_CHANGE_VALUE);
 
 	/**
 	 * The 'nonzero' keyword.
 	 */
-	Value NONZERO_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_NONZERO_VALUE);
+	Value NONZERO_VALUE = new IdentValue(CSSConstants.CSS_NONZERO_VALUE);
 
 	/**
 	 * The 'optimizeLegibility' keyword.
 	 */
-	Value OPTIMIZELEGIBILITY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT,
-			CSSConstants.CSS_OPTIMIZELEGIBILITY_VALUE);
+	Value OPTIMIZELEGIBILITY_VALUE = new IdentValue(CSSConstants.CSS_OPTIMIZELEGIBILITY_VALUE);
 
 	/**
 	 * The 'optimizeQuality' keyword.
 	 */
-	Value OPTIMIZEQUALITY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_OPTIMIZEQUALITY_VALUE);
+	Value OPTIMIZEQUALITY_VALUE = new IdentValue(CSSConstants.CSS_OPTIMIZEQUALITY_VALUE);
 
 	/**
 	 * The 'optimizeSpeed' keyword.
 	 */
-	Value OPTIMIZESPEED_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_OPTIMIZESPEED_VALUE);
+	Value OPTIMIZESPEED_VALUE = new IdentValue(CSSConstants.CSS_OPTIMIZESPEED_VALUE);
 
 	/**
 	 * The 'reset-size' keyword.
 	 */
-	Value RESET_SIZE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_RESET_SIZE_VALUE);
+	Value RESET_SIZE_VALUE = new IdentValue(CSSConstants.CSS_RESET_SIZE_VALUE);
 
 	/**
 	 * The 'rl' keyword.
 	 */
-	Value RL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_RL_VALUE);
+	Value RL_VALUE = new IdentValue(CSSConstants.CSS_RL_VALUE);
 
 	/**
 	 * The 'rl-tb' keyword.
 	 */
-	Value RL_TB_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_RL_TB_VALUE);
+	Value RL_TB_VALUE = new IdentValue(CSSConstants.CSS_RL_TB_VALUE);
 
 	/**
 	 * The 'round' keyword.
 	 */
-	Value ROUND_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_ROUND_VALUE);
+	Value ROUND_VALUE = new IdentValue(CSSConstants.CSS_ROUND_VALUE);
 
 	/**
 	 * The 'square' keyword.
 	 */
-	Value SQUARE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SQUARE_VALUE);
+	Value SQUARE_VALUE = new IdentValue(CSSConstants.CSS_SQUARE_VALUE);
 
 	/**
 	 * The 'sRGB' keyword.
 	 */
-	Value SRGB_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SRGB_VALUE);
+	Value SRGB_VALUE = new IdentValue(CSSConstants.CSS_SRGB_VALUE);
 
 	/**
 	 * The 'start' keyword.
 	 */
-	Value START_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_START_VALUE);
+	Value START_VALUE = new IdentValue(CSSConstants.CSS_START_VALUE);
 
 	/**
 	 * The 'sub' keyword.
 	 */
-	Value SUB_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SUB_VALUE);
+	Value SUB_VALUE = new IdentValue(CSSConstants.CSS_SUB_VALUE);
 
 	/**
 	 * The 'super' keyword.
 	 */
-	Value SUPER_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SUPER_VALUE);
+	Value SUPER_VALUE = new IdentValue(CSSConstants.CSS_SUPER_VALUE);
 
 	/**
 	 * The 'tb' keyword.
 	 */
-	Value TB_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_TB_VALUE);
+	Value TB_VALUE = new IdentValue(CSSConstants.CSS_TB_VALUE);
 
 	/**
 	 * The 'tb-rl' keyword.
 	 */
-	Value TB_RL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_TB_RL_VALUE);
+	Value TB_RL_VALUE = new IdentValue(CSSConstants.CSS_TB_RL_VALUE);
 
 	/**
 	 * The 'text-after-edge' keyword.
 	 */
-	Value TEXT_AFTER_EDGE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_TEXT_AFTER_EDGE_VALUE);
+	Value TEXT_AFTER_EDGE_VALUE = new IdentValue(CSSConstants.CSS_TEXT_AFTER_EDGE_VALUE);
 
 	/**
 	 * The 'text-before-edge' keyword.
 	 */
-	Value TEXT_BEFORE_EDGE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT,
-			CSSConstants.CSS_TEXT_BEFORE_EDGE_VALUE);
+	Value TEXT_BEFORE_EDGE_VALUE = new IdentValue(CSSConstants.CSS_TEXT_BEFORE_EDGE_VALUE);
 
 	/**
 	 * The 'text-bottom' keyword.
 	 */
-	Value TEXT_BOTTOM_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_TEXT_BOTTOM_VALUE);
+	Value TEXT_BOTTOM_VALUE = new IdentValue(CSSConstants.CSS_TEXT_BOTTOM_VALUE);
 
 	/**
 	 * The 'text-top' keyword.
 	 */
-	Value TEXT_TOP_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_TEXT_TOP_VALUE);
+	Value TEXT_TOP_VALUE = new IdentValue(CSSConstants.CSS_TEXT_TOP_VALUE);
 
 	/**
 	 * The 'use-script' keyword.
 	 */
-	Value USE_SCRIPT_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_USE_SCRIPT_VALUE);
+	Value USE_SCRIPT_VALUE = new IdentValue(CSSConstants.CSS_USE_SCRIPT_VALUE);
 
 	/**
 	 * The 'visiblefill' keyword.
 	 */
-	Value VISIBLEFILL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_VISIBLEFILL_VALUE);
+	Value VISIBLEFILL_VALUE = new IdentValue(CSSConstants.CSS_VISIBLEFILL_VALUE);
 
 	/**
 	 * The 'visiblefillstroke' keyword.
 	 */
-	Value VISIBLEFILLSTROKE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT,
-			CSSConstants.CSS_VISIBLEFILLSTROKE_VALUE);
+	Value VISIBLEFILLSTROKE_VALUE = new IdentValue(CSSConstants.CSS_VISIBLEFILLSTROKE_VALUE);
 
 	/**
 	 * The 'visiblepainted' keyword.
 	 */
-	Value VISIBLEPAINTED_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_VISIBLEPAINTED_VALUE);
+	Value VISIBLEPAINTED_VALUE = new IdentValue(CSSConstants.CSS_VISIBLEPAINTED_VALUE);
 
 	/**
 	 * The 'visiblestroke' keyword.
 	 */
-	Value VISIBLESTROKE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_VISIBLESTROKE_VALUE);
+	Value VISIBLESTROKE_VALUE = new IdentValue(CSSConstants.CSS_VISIBLESTROKE_VALUE);
 
 	/**
 	 * The 'aliceblue' color name.
 	 */
-	Value ALICEBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_ALICEBLUE_VALUE);
+	Value ALICEBLUE_VALUE = new IdentValue(CSSConstants.CSS_ALICEBLUE_VALUE);
 
 	/**
 	 * The 'antiquewhite' color name.
 	 */
-	Value ANTIQUEWHITE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_ANTIQUEWHITE_VALUE);
+	Value ANTIQUEWHITE_VALUE = new IdentValue(CSSConstants.CSS_ANTIQUEWHITE_VALUE);
 
 	/**
 	 * The 'aquamarine' color name.
 	 */
-	Value AQUAMARINE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_AQUAMARINE_VALUE);
+	Value AQUAMARINE_VALUE = new IdentValue(CSSConstants.CSS_AQUAMARINE_VALUE);
 
 	/**
 	 * The 'azure' color name.
 	 */
-	Value AZURE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_AZURE_VALUE);
+	Value AZURE_VALUE = new IdentValue(CSSConstants.CSS_AZURE_VALUE);
 
 	/**
 	 * The 'beige' color name.
 	 */
-	Value BEIGE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_BEIGE_VALUE);
+	Value BEIGE_VALUE = new IdentValue(CSSConstants.CSS_BEIGE_VALUE);
 
 	/**
 	 * The 'bisque' color name.
 	 */
-	Value BISQUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_BISQUE_VALUE);
+	Value BISQUE_VALUE = new IdentValue(CSSConstants.CSS_BISQUE_VALUE);
 
 	/**
 	 * The 'blanchedalmond' color name.
 	 */
-	Value BLANCHEDALMOND_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_BLANCHEDALMOND_VALUE);
+	Value BLANCHEDALMOND_VALUE = new IdentValue(CSSConstants.CSS_BLANCHEDALMOND_VALUE);
 
 	/**
 	 * The 'blueviolet' color name.
 	 */
-	Value BLUEVIOLET_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_BLUEVIOLET_VALUE);
+	Value BLUEVIOLET_VALUE = new IdentValue(CSSConstants.CSS_BLUEVIOLET_VALUE);
 
 	/**
 	 * The 'brown' color name.
 	 */
-	Value BROWN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_BROWN_VALUE);
+	Value BROWN_VALUE = new IdentValue(CSSConstants.CSS_BROWN_VALUE);
 
 	/**
 	 * The 'burlywood' color name.
 	 */
-	Value BURLYWOOD_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_BURLYWOOD_VALUE);
+	Value BURLYWOOD_VALUE = new IdentValue(CSSConstants.CSS_BURLYWOOD_VALUE);
 
 	/**
 	 * The 'cadetblue' color name.
 	 */
-	Value CADETBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CADETBLUE_VALUE);
+	Value CADETBLUE_VALUE = new IdentValue(CSSConstants.CSS_CADETBLUE_VALUE);
 
 	/**
 	 * The 'chartreuse' color name.
 	 */
-	Value CHARTREUSE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CHARTREUSE_VALUE);
+	Value CHARTREUSE_VALUE = new IdentValue(CSSConstants.CSS_CHARTREUSE_VALUE);
 
 	/**
 	 * The 'chocolate' color name.
 	 */
-	Value CHOCOLATE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CHOCOLATE_VALUE);
+	Value CHOCOLATE_VALUE = new IdentValue(CSSConstants.CSS_CHOCOLATE_VALUE);
 
 	/**
 	 * The 'coral' color name.
 	 */
-	Value CORAL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CORAL_VALUE);
+	Value CORAL_VALUE = new IdentValue(CSSConstants.CSS_CORAL_VALUE);
 
 	/**
 	 * The 'cornflowerblue' color name.
 	 */
-	Value CORNFLOWERBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CORNFLOWERBLUE_VALUE);
+	Value CORNFLOWERBLUE_VALUE = new IdentValue(CSSConstants.CSS_CORNFLOWERBLUE_VALUE);
 
 	/**
 	 * The 'cornsilk' color name.
 	 */
-	Value CORNSILK_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CORNSILK_VALUE);
+	Value CORNSILK_VALUE = new IdentValue(CSSConstants.CSS_CORNSILK_VALUE);
 
 	/**
 	 * The 'crimson' color name.
 	 */
-	Value CRIMSON_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CRIMSON_VALUE);
+	Value CRIMSON_VALUE = new IdentValue(CSSConstants.CSS_CRIMSON_VALUE);
 
 	/**
 	 * The 'cyan' color name.
 	 */
-	Value CYAN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_CYAN_VALUE);
+	Value CYAN_VALUE = new IdentValue(CSSConstants.CSS_CYAN_VALUE);
 
 	/**
 	 * The 'darkblue' color name.
 	 */
-	Value DARKBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKBLUE_VALUE);
+	Value DARKBLUE_VALUE = new IdentValue(CSSConstants.CSS_DARKBLUE_VALUE);
 
 	/**
 	 * The 'darkcyan' color name.
 	 */
-	Value DARKCYAN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKCYAN_VALUE);
+	Value DARKCYAN_VALUE = new IdentValue(CSSConstants.CSS_DARKCYAN_VALUE);
 
 	/**
 	 * The 'darkgoldenrod' color name.
 	 */
-	Value DARKGOLDENROD_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKGOLDENROD_VALUE);
+	Value DARKGOLDENROD_VALUE = new IdentValue(CSSConstants.CSS_DARKGOLDENROD_VALUE);
 
 	/**
 	 * The 'darkgray' color name.
 	 */
-	Value DARKGRAY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKGRAY_VALUE);
+	Value DARKGRAY_VALUE = new IdentValue(CSSConstants.CSS_DARKGRAY_VALUE);
 
 	/**
 	 * The 'darkgreen' color name.
 	 */
-	Value DARKGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKGREEN_VALUE);
+	Value DARKGREEN_VALUE = new IdentValue(CSSConstants.CSS_DARKGREEN_VALUE);
 
 	/**
 	 * The 'darkgrey' color name.
 	 */
-	Value DARKGREY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKGREY_VALUE);
+	Value DARKGREY_VALUE = new IdentValue(CSSConstants.CSS_DARKGREY_VALUE);
 
 	/**
 	 * The 'darkkhaki' color name.
 	 */
-	Value DARKKHAKI_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKKHAKI_VALUE);
+	Value DARKKHAKI_VALUE = new IdentValue(CSSConstants.CSS_DARKKHAKI_VALUE);
 
 	/**
 	 * The 'darkmagenta' color name.
 	 */
-	Value DARKMAGENTA_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKMAGENTA_VALUE);
+	Value DARKMAGENTA_VALUE = new IdentValue(CSSConstants.CSS_DARKMAGENTA_VALUE);
 
 	/**
 	 * The 'darkolivegreen' color name.
 	 */
-	Value DARKOLIVEGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKOLIVEGREEN_VALUE);
+	Value DARKOLIVEGREEN_VALUE = new IdentValue(CSSConstants.CSS_DARKOLIVEGREEN_VALUE);
 
 	/**
 	 * The 'darkorange' color name.
 	 */
-	Value DARKORANGE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKORANGE_VALUE);
+	Value DARKORANGE_VALUE = new IdentValue(CSSConstants.CSS_DARKORANGE_VALUE);
 
 	/**
 	 * The 'darkorchid' color name.
 	 */
-	Value DARKORCHID_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKORCHID_VALUE);
+	Value DARKORCHID_VALUE = new IdentValue(CSSConstants.CSS_DARKORCHID_VALUE);
 
 	/**
 	 * The 'darkred' color name.
 	 */
-	Value DARKRED_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKRED_VALUE);
+	Value DARKRED_VALUE = new IdentValue(CSSConstants.CSS_DARKRED_VALUE);
 
 	/**
 	 * The 'darksalmon' color name.
 	 */
-	Value DARKSALMON_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKSALMON_VALUE);
+	Value DARKSALMON_VALUE = new IdentValue(CSSConstants.CSS_DARKSALMON_VALUE);
 
 	/**
 	 * The 'darkseagreen' color name.
 	 */
-	Value DARKSEAGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKSEAGREEN_VALUE);
+	Value DARKSEAGREEN_VALUE = new IdentValue(CSSConstants.CSS_DARKSEAGREEN_VALUE);
 
 	/**
 	 * The 'darkslateblue' color name.
 	 */
-	Value DARKSLATEBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKSLATEBLUE_VALUE);
+	Value DARKSLATEBLUE_VALUE = new IdentValue(CSSConstants.CSS_DARKSLATEBLUE_VALUE);
 
 	/**
 	 * The 'darkslategray' color name.
 	 */
-	Value DARKSLATEGRAY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKSLATEGRAY_VALUE);
+	Value DARKSLATEGRAY_VALUE = new IdentValue(CSSConstants.CSS_DARKSLATEGRAY_VALUE);
 
 	/**
 	 * The 'darkslategrey' color name.
 	 */
-	Value DARKSLATEGREY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKSLATEGREY_VALUE);
+	Value DARKSLATEGREY_VALUE = new IdentValue(CSSConstants.CSS_DARKSLATEGREY_VALUE);
 
 	/**
 	 * The 'darkturquoise' color name.
 	 */
-	Value DARKTURQUOISE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKTURQUOISE_VALUE);
+	Value DARKTURQUOISE_VALUE = new IdentValue(CSSConstants.CSS_DARKTURQUOISE_VALUE);
 
 	/**
 	 * The 'darkviolet' color name.
 	 */
-	Value DARKVIOLET_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DARKVIOLET_VALUE);
+	Value DARKVIOLET_VALUE = new IdentValue(CSSConstants.CSS_DARKVIOLET_VALUE);
 
 	/**
 	 * The 'deeppink' color name.
 	 */
-	Value DEEPPINK_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DEEPPINK_VALUE);
+	Value DEEPPINK_VALUE = new IdentValue(CSSConstants.CSS_DEEPPINK_VALUE);
 
 	/**
 	 * The 'deepskyblue' color name.
 	 */
-	Value DEEPSKYBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DEEPSKYBLUE_VALUE);
+	Value DEEPSKYBLUE_VALUE = new IdentValue(CSSConstants.CSS_DEEPSKYBLUE_VALUE);
 
 	/**
 	 * The 'dimgray' color name.
 	 */
-	Value DIMGRAY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DIMGRAY_VALUE);
+	Value DIMGRAY_VALUE = new IdentValue(CSSConstants.CSS_DIMGRAY_VALUE);
 
 	/**
 	 * The 'dimgrey' color name.
 	 */
-	Value DIMGREY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DIMGREY_VALUE);
+	Value DIMGREY_VALUE = new IdentValue(CSSConstants.CSS_DIMGREY_VALUE);
 
 	/**
 	 * The 'dodgerblue' color name.
 	 */
-	Value DODGERBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_DODGERBLUE_VALUE);
+	Value DODGERBLUE_VALUE = new IdentValue(CSSConstants.CSS_DODGERBLUE_VALUE);
 
 	/**
 	 * The 'firebrick' color name.
 	 */
-	Value FIREBRICK_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_FIREBRICK_VALUE);
+	Value FIREBRICK_VALUE = new IdentValue(CSSConstants.CSS_FIREBRICK_VALUE);
 
 	/**
 	 * The 'floralwhite' color name.
 	 */
-	Value FLORALWHITE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_FLORALWHITE_VALUE);
+	Value FLORALWHITE_VALUE = new IdentValue(CSSConstants.CSS_FLORALWHITE_VALUE);
 
 	/**
 	 * The 'forestgreen' color name.
 	 */
-	Value FORESTGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_FORESTGREEN_VALUE);
+	Value FORESTGREEN_VALUE = new IdentValue(CSSConstants.CSS_FORESTGREEN_VALUE);
 
 	/**
 	 * The 'gainsboro' color name.
 	 */
-	Value GAINSBORO_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_GAINSBORO_VALUE);
+	Value GAINSBORO_VALUE = new IdentValue(CSSConstants.CSS_GAINSBORO_VALUE);
 
 	/**
 	 * The 'ghostwhite' color name.
 	 */
-	Value GHOSTWHITE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_GHOSTWHITE_VALUE);
+	Value GHOSTWHITE_VALUE = new IdentValue(CSSConstants.CSS_GHOSTWHITE_VALUE);
 
 	/**
 	 * The 'gold' color name.
 	 */
-	Value GOLD_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_GOLD_VALUE);
+	Value GOLD_VALUE = new IdentValue(CSSConstants.CSS_GOLD_VALUE);
 
 	/**
 	 * The 'goldenrod' color name.
 	 */
-	Value GOLDENROD_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_GOLDENROD_VALUE);
+	Value GOLDENROD_VALUE = new IdentValue(CSSConstants.CSS_GOLDENROD_VALUE);
 
 	/**
 	 * The 'greenyellow' color name.
 	 */
-	Value GREENYELLOW_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_GREENYELLOW_VALUE);
+	Value GREENYELLOW_VALUE = new IdentValue(CSSConstants.CSS_GREENYELLOW_VALUE);
 
 	/**
 	 * The 'grey' color name.
 	 */
-	Value GREY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_GREY_VALUE);
+	Value GREY_VALUE = new IdentValue(CSSConstants.CSS_GREY_VALUE);
 
 	/**
 	 * The 'honeydew' color name.
 	 */
-	Value HONEYDEW_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_HONEYDEW_VALUE);
+	Value HONEYDEW_VALUE = new IdentValue(CSSConstants.CSS_HONEYDEW_VALUE);
 
 	/**
 	 * The 'hotpink' color name.
 	 */
-	Value HOTPINK_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_HOTPINK_VALUE);
+	Value HOTPINK_VALUE = new IdentValue(CSSConstants.CSS_HOTPINK_VALUE);
 
 	/**
 	 * The 'indianred' color name.
 	 */
-	Value INDIANRED_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_INDIANRED_VALUE);
+	Value INDIANRED_VALUE = new IdentValue(CSSConstants.CSS_INDIANRED_VALUE);
 
 	/**
 	 * The 'indigo' color name.
 	 */
-	Value INDIGO_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_INDIGO_VALUE);
+	Value INDIGO_VALUE = new IdentValue(CSSConstants.CSS_INDIGO_VALUE);
 
 	/**
 	 * The 'ivory' color name.
 	 */
-	Value IVORY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_IVORY_VALUE);
+	Value IVORY_VALUE = new IdentValue(CSSConstants.CSS_IVORY_VALUE);
 
 	/**
 	 * The 'khaki' color name.
 	 */
-	Value KHAKI_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_KHAKI_VALUE);
+	Value KHAKI_VALUE = new IdentValue(CSSConstants.CSS_KHAKI_VALUE);
 
 	/**
 	 * The 'lavender' color name.
 	 */
-	Value LAVENDER_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LAVENDER_VALUE);
+	Value LAVENDER_VALUE = new IdentValue(CSSConstants.CSS_LAVENDER_VALUE);
 
 	/**
 	 * The 'lavenderblush' color name.
 	 */
-	Value LAVENDERBLUSH_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LAVENDERBLUSH_VALUE);
+	Value LAVENDERBLUSH_VALUE = new IdentValue(CSSConstants.CSS_LAVENDERBLUSH_VALUE);
 
 	/**
 	 * The 'lawngreen' color name.
 	 */
-	Value LAWNGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LAWNGREEN_VALUE);
+	Value LAWNGREEN_VALUE = new IdentValue(CSSConstants.CSS_LAWNGREEN_VALUE);
 
 	/**
 	 * The 'lemonchiffon' color name.
 	 */
-	Value LEMONCHIFFON_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LEMONCHIFFON_VALUE);
+	Value LEMONCHIFFON_VALUE = new IdentValue(CSSConstants.CSS_LEMONCHIFFON_VALUE);
 
 	/**
 	 * The 'lightblue' color name.
 	 */
-	Value LIGHTBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTBLUE_VALUE);
+	Value LIGHTBLUE_VALUE = new IdentValue(CSSConstants.CSS_LIGHTBLUE_VALUE);
 
 	/**
 	 * The 'lightcoral' color name.
 	 */
-	Value LIGHTCORAL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTCORAL_VALUE);
+	Value LIGHTCORAL_VALUE = new IdentValue(CSSConstants.CSS_LIGHTCORAL_VALUE);
 
 	/**
 	 * The 'lightcyan' color name.
 	 */
-	Value LIGHTCYAN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTCYAN_VALUE);
+	Value LIGHTCYAN_VALUE = new IdentValue(CSSConstants.CSS_LIGHTCYAN_VALUE);
 
 	/**
 	 * The 'lightgoldenrodyellow' color name.
 	 */
-	Value LIGHTGOLDENRODYELLOW_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT,
-			CSSConstants.CSS_LIGHTGOLDENRODYELLOW_VALUE);
+	Value LIGHTGOLDENRODYELLOW_VALUE = new IdentValue(CSSConstants.CSS_LIGHTGOLDENRODYELLOW_VALUE);
 
 	/**
 	 * The 'lightgray' color name.
 	 */
-	Value LIGHTGRAY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTGRAY_VALUE);
+	Value LIGHTGRAY_VALUE = new IdentValue(CSSConstants.CSS_LIGHTGRAY_VALUE);
 
 	/**
 	 * The 'lightgreen' color name.
 	 */
-	Value LIGHTGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTGREEN_VALUE);
+	Value LIGHTGREEN_VALUE = new IdentValue(CSSConstants.CSS_LIGHTGREEN_VALUE);
 
 	/**
 	 * The 'lightgrey' color name.
 	 */
-	Value LIGHTGREY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTGREY_VALUE);
+	Value LIGHTGREY_VALUE = new IdentValue(CSSConstants.CSS_LIGHTGREY_VALUE);
 
 	/**
 	 * The 'lightpink' color name.
 	 */
-	Value LIGHTPINK_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTPINK_VALUE);
+	Value LIGHTPINK_VALUE = new IdentValue(CSSConstants.CSS_LIGHTPINK_VALUE);
 
 	/**
 	 * The 'lightsalmon' color name.
 	 */
-	Value LIGHTSALMON_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTSALMON_VALUE);
+	Value LIGHTSALMON_VALUE = new IdentValue(CSSConstants.CSS_LIGHTSALMON_VALUE);
 
 	/**
 	 * The 'lightseagreen' color name.
 	 */
-	Value LIGHTSEAGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTSEAGREEN_VALUE);
+	Value LIGHTSEAGREEN_VALUE = new IdentValue(CSSConstants.CSS_LIGHTSEAGREEN_VALUE);
 
 	/**
 	 * The 'lightskyblue' color name.
 	 */
-	Value LIGHTSKYBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTSKYBLUE_VALUE);
+	Value LIGHTSKYBLUE_VALUE = new IdentValue(CSSConstants.CSS_LIGHTSKYBLUE_VALUE);
 
 	/**
 	 * The 'lightslategray' color name.
 	 */
-	Value LIGHTSLATEGRAY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTSLATEGRAY_VALUE);
+	Value LIGHTSLATEGRAY_VALUE = new IdentValue(CSSConstants.CSS_LIGHTSLATEGRAY_VALUE);
 
 	/**
 	 * The 'lightslategrey' color name.
 	 */
-	Value LIGHTSLATEGREY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTSLATEGREY_VALUE);
+	Value LIGHTSLATEGREY_VALUE = new IdentValue(CSSConstants.CSS_LIGHTSLATEGREY_VALUE);
 
 	/**
 	 * The 'lightsteelblue' color name.
 	 */
-	Value LIGHTSTEELBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTSTEELBLUE_VALUE);
+	Value LIGHTSTEELBLUE_VALUE = new IdentValue(CSSConstants.CSS_LIGHTSTEELBLUE_VALUE);
 
 	/**
 	 * The 'lightyellow' color name.
 	 */
-	Value LIGHTYELLOW_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIGHTYELLOW_VALUE);
+	Value LIGHTYELLOW_VALUE = new IdentValue(CSSConstants.CSS_LIGHTYELLOW_VALUE);
 
 	/**
 	 * The 'limegreen' color name.
 	 */
-	Value LIMEGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LIMEGREEN_VALUE);
+	Value LIMEGREEN_VALUE = new IdentValue(CSSConstants.CSS_LIMEGREEN_VALUE);
 
 	/**
 	 * The 'linen' color name.
 	 */
-	Value LINEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_LINEN_VALUE);
+	Value LINEN_VALUE = new IdentValue(CSSConstants.CSS_LINEN_VALUE);
 
 	/**
 	 * The 'magenta' color name.
 	 */
-	Value MAGENTA_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MAGENTA_VALUE);
+	Value MAGENTA_VALUE = new IdentValue(CSSConstants.CSS_MAGENTA_VALUE);
 
 	/**
 	 * The 'mediumaquamarine' color name.
 	 */
-	Value MEDIUMAQUAMARINE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT,
-			CSSConstants.CSS_MEDIUMAQUAMARINE_VALUE);
+	Value MEDIUMAQUAMARINE_VALUE = new IdentValue(CSSConstants.CSS_MEDIUMAQUAMARINE_VALUE);
 
 	/**
 	 * The 'mediumblue' color name.
 	 */
-	Value MEDIUMBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MEDIUMBLUE_VALUE);
+	Value MEDIUMBLUE_VALUE = new IdentValue(CSSConstants.CSS_MEDIUMBLUE_VALUE);
 
 	/**
 	 * The 'mediumorchid' color name.
 	 */
-	Value MEDIUMORCHID_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MEDIUMORCHID_VALUE);
+	Value MEDIUMORCHID_VALUE = new IdentValue(CSSConstants.CSS_MEDIUMORCHID_VALUE);
 
 	/**
 	 * The 'mediumpurple' color name.
 	 */
-	Value MEDIUMPURPLE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MEDIUMPURPLE_VALUE);
+	Value MEDIUMPURPLE_VALUE = new IdentValue(CSSConstants.CSS_MEDIUMPURPLE_VALUE);
 
 	/**
 	 * The 'mediumseagreen' color name.
 	 */
-	Value MEDIUMSEAGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MEDIUMSEAGREEN_VALUE);
+	Value MEDIUMSEAGREEN_VALUE = new IdentValue(CSSConstants.CSS_MEDIUMSEAGREEN_VALUE);
 
 	/**
 	 * The 'mediumslateblue' color name.
 	 */
-	Value MEDIUMSLATEBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MEDIUMSLATEBLUE_VALUE);
+	Value MEDIUMSLATEBLUE_VALUE = new IdentValue(CSSConstants.CSS_MEDIUMSLATEBLUE_VALUE);
 
 	/**
 	 * The 'mediumspringgreen' color name.
 	 */
-	Value MEDIUMSPRINGGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT,
-			CSSConstants.CSS_MEDIUMSPRINGGREEN_VALUE);
+	Value MEDIUMSPRINGGREEN_VALUE = new IdentValue(CSSConstants.CSS_MEDIUMSPRINGGREEN_VALUE);
 
 	/**
 	 * The 'mediumturquoise' color name.
 	 */
-	Value MEDIUMTURQUOISE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MEDIUMTURQUOISE_VALUE);
+	Value MEDIUMTURQUOISE_VALUE = new IdentValue(CSSConstants.CSS_MEDIUMTURQUOISE_VALUE);
 
 	/**
 	 * The 'mediumvioletred' color name.
 	 */
-	Value MEDIUMVIOLETRED_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MEDIUMVIOLETRED_VALUE);
+	Value MEDIUMVIOLETRED_VALUE = new IdentValue(CSSConstants.CSS_MEDIUMVIOLETRED_VALUE);
 
 	/**
 	 * The 'midnightblue' color name.
 	 */
-	Value MIDNIGHTBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MIDNIGHTBLUE_VALUE);
+	Value MIDNIGHTBLUE_VALUE = new IdentValue(CSSConstants.CSS_MIDNIGHTBLUE_VALUE);
 
 	/**
 	 * The 'mintcream' color name.
 	 */
-	Value MINTCREAM_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MINTCREAM_VALUE);
+	Value MINTCREAM_VALUE = new IdentValue(CSSConstants.CSS_MINTCREAM_VALUE);
 
 	/**
 	 * The 'mistyrose' color name.
 	 */
-	Value MISTYROSE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MISTYROSE_VALUE);
+	Value MISTYROSE_VALUE = new IdentValue(CSSConstants.CSS_MISTYROSE_VALUE);
 
 	/**
 	 * The 'moccasin' color name.
 	 */
-	Value MOCCASIN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_MOCCASIN_VALUE);
+	Value MOCCASIN_VALUE = new IdentValue(CSSConstants.CSS_MOCCASIN_VALUE);
 
 	/**
 	 * The 'navajowhite' color name.
 	 */
-	Value NAVAJOWHITE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_NAVAJOWHITE_VALUE);
+	Value NAVAJOWHITE_VALUE = new IdentValue(CSSConstants.CSS_NAVAJOWHITE_VALUE);
 
 	/**
 	 * The 'oldlace' color name.
 	 */
-	Value OLDLACE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_OLDLACE_VALUE);
+	Value OLDLACE_VALUE = new IdentValue(CSSConstants.CSS_OLDLACE_VALUE);
 
 	/**
 	 * The 'olivedrab' color name.
 	 */
-	Value OLIVEDRAB_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_OLIVEDRAB_VALUE);
+	Value OLIVEDRAB_VALUE = new IdentValue(CSSConstants.CSS_OLIVEDRAB_VALUE);
 
 	/**
 	 * The 'orange' color name.
 	 */
-	Value ORANGE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_ORANGE_VALUE);
+	Value ORANGE_VALUE = new IdentValue(CSSConstants.CSS_ORANGE_VALUE);
 
 	/**
 	 * The 'orangered' color name.
 	 */
-	Value ORANGERED_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_ORANGERED_VALUE);
+	Value ORANGERED_VALUE = new IdentValue(CSSConstants.CSS_ORANGERED_VALUE);
 
 	/**
 	 * The 'orchid' color name.
 	 */
-	Value ORCHID_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_ORCHID_VALUE);
+	Value ORCHID_VALUE = new IdentValue(CSSConstants.CSS_ORCHID_VALUE);
 
 	/**
 	 * The 'palegoldenrod' color name.
 	 */
-	Value PALEGOLDENROD_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_PALEGOLDENROD_VALUE);
+	Value PALEGOLDENROD_VALUE = new IdentValue(CSSConstants.CSS_PALEGOLDENROD_VALUE);
 
 	/**
 	 * The 'palegreen' color name.
 	 */
-	Value PALEGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_PALEGREEN_VALUE);
+	Value PALEGREEN_VALUE = new IdentValue(CSSConstants.CSS_PALEGREEN_VALUE);
 
 	/**
 	 * The 'paleturquoise' color name.
 	 */
-	Value PALETURQUOISE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_PALETURQUOISE_VALUE);
+	Value PALETURQUOISE_VALUE = new IdentValue(CSSConstants.CSS_PALETURQUOISE_VALUE);
 
 	/**
 	 * The 'palevioletred' color name.
 	 */
-	Value PALEVIOLETRED_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_PALEVIOLETRED_VALUE);
+	Value PALEVIOLETRED_VALUE = new IdentValue(CSSConstants.CSS_PALEVIOLETRED_VALUE);
 
 	/**
 	 * The 'papayawhip' color name.
 	 */
-	Value PAPAYAWHIP_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_PAPAYAWHIP_VALUE);
+	Value PAPAYAWHIP_VALUE = new IdentValue(CSSConstants.CSS_PAPAYAWHIP_VALUE);
 
 	/**
 	 * The 'peachpuff' color name.
 	 */
-	Value PEACHPUFF_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_PEACHPUFF_VALUE);
+	Value PEACHPUFF_VALUE = new IdentValue(CSSConstants.CSS_PEACHPUFF_VALUE);
 
 	/**
 	 * The 'peru' color name.
 	 */
-	Value PERU_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_PERU_VALUE);
+	Value PERU_VALUE = new IdentValue(CSSConstants.CSS_PERU_VALUE);
 
 	/**
 	 * The 'pink' color name.
 	 */
-	Value PINK_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_PINK_VALUE);
+	Value PINK_VALUE = new IdentValue(CSSConstants.CSS_PINK_VALUE);
 
 	/**
 	 * The 'plum' color name.
 	 */
-	Value PLUM_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_PLUM_VALUE);
+	Value PLUM_VALUE = new IdentValue(CSSConstants.CSS_PLUM_VALUE);
 
 	/**
 	 * The 'powderblue' color name.
 	 */
-	Value POWDERBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_POWDERBLUE_VALUE);
+	Value POWDERBLUE_VALUE = new IdentValue(CSSConstants.CSS_POWDERBLUE_VALUE);
 
 	/**
 	 * The 'purple' color name.
 	 */
-	Value PURPLE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_PURPLE_VALUE);
+	Value PURPLE_VALUE = new IdentValue(CSSConstants.CSS_PURPLE_VALUE);
 
 	/**
 	 * The 'rosybrown' color name.
 	 */
-	Value ROSYBROWN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_ROSYBROWN_VALUE);
+	Value ROSYBROWN_VALUE = new IdentValue(CSSConstants.CSS_ROSYBROWN_VALUE);
 
 	/**
 	 * The 'royalblue' color name.
 	 */
-	Value ROYALBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_ROYALBLUE_VALUE);
+	Value ROYALBLUE_VALUE = new IdentValue(CSSConstants.CSS_ROYALBLUE_VALUE);
 
 	/**
 	 * The 'saddlebrown' color name.
 	 */
-	Value SADDLEBROWN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SADDLEBROWN_VALUE);
+	Value SADDLEBROWN_VALUE = new IdentValue(CSSConstants.CSS_SADDLEBROWN_VALUE);
 
 	/**
 	 * The 'salmon' color name.
 	 */
-	Value SALMON_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SALMON_VALUE);
+	Value SALMON_VALUE = new IdentValue(CSSConstants.CSS_SALMON_VALUE);
 
 	/**
 	 * The 'sandybrown' color name.
 	 */
-	Value SANDYBROWN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SANDYBROWN_VALUE);
+	Value SANDYBROWN_VALUE = new IdentValue(CSSConstants.CSS_SANDYBROWN_VALUE);
 
 	/**
 	 * The 'seagreen' color name.
 	 */
-	Value SEAGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SEAGREEN_VALUE);
+	Value SEAGREEN_VALUE = new IdentValue(CSSConstants.CSS_SEAGREEN_VALUE);
 
 	/**
 	 * The 'seashell' color name.
 	 */
-	Value SEASHELL_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SEASHELL_VALUE);
+	Value SEASHELL_VALUE = new IdentValue(CSSConstants.CSS_SEASHELL_VALUE);
 
 	/**
 	 * The 'sienna' color name.
 	 */
-	Value SIENNA_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SIENNA_VALUE);
+	Value SIENNA_VALUE = new IdentValue(CSSConstants.CSS_SIENNA_VALUE);
 
 	/**
 	 * The 'skyblue' color name.
 	 */
-	Value SKYBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SKYBLUE_VALUE);
+	Value SKYBLUE_VALUE = new IdentValue(CSSConstants.CSS_SKYBLUE_VALUE);
 
 	/**
 	 * The 'slateblue' color name.
 	 */
-	Value SLATEBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SLATEBLUE_VALUE);
+	Value SLATEBLUE_VALUE = new IdentValue(CSSConstants.CSS_SLATEBLUE_VALUE);
 
 	/**
 	 * The 'slategray' color name.
 	 */
-	Value SLATEGRAY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SLATEGRAY_VALUE);
+	Value SLATEGRAY_VALUE = new IdentValue(CSSConstants.CSS_SLATEGRAY_VALUE);
 
 	/**
 	 * The 'slategrey' color name.
 	 */
-	Value SLATEGREY_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SLATEGREY_VALUE);
+	Value SLATEGREY_VALUE = new IdentValue(CSSConstants.CSS_SLATEGREY_VALUE);
 
 	/**
 	 * The 'snow' color name.
 	 */
-	Value SNOW_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SNOW_VALUE);
+	Value SNOW_VALUE = new IdentValue(CSSConstants.CSS_SNOW_VALUE);
 
 	/**
 	 * The 'springgreen' color name.
 	 */
-	Value SPRINGGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SPRINGGREEN_VALUE);
+	Value SPRINGGREEN_VALUE = new IdentValue(CSSConstants.CSS_SPRINGGREEN_VALUE);
 
 	/**
 	 * The 'steelblue' color name.
 	 */
-	Value STEELBLUE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_STEELBLUE_VALUE);
+	Value STEELBLUE_VALUE = new IdentValue(CSSConstants.CSS_STEELBLUE_VALUE);
 
 	/**
 	 * The 'tan' color name.
 	 */
-	Value TAN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_TAN_VALUE);
+	Value TAN_VALUE = new IdentValue(CSSConstants.CSS_TAN_VALUE);
 
 	/**
 	 * The 'thistle' color name.
 	 */
-	Value THISTLE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_THISTLE_VALUE);
+	Value THISTLE_VALUE = new IdentValue(CSSConstants.CSS_THISTLE_VALUE);
 
 	/**
 	 * The 'tomato' color name.
 	 */
-	Value TOMATO_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_TOMATO_VALUE);
+	Value TOMATO_VALUE = new IdentValue(CSSConstants.CSS_TOMATO_VALUE);
 
 	/**
 	 * The 'turquoise' color name.
 	 */
-	Value TURQUOISE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_TURQUOISE_VALUE);
+	Value TURQUOISE_VALUE = new IdentValue(CSSConstants.CSS_TURQUOISE_VALUE);
 
 	/**
 	 * The 'violet' color name.
 	 */
-	Value VIOLET_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_VIOLET_VALUE);
+	Value VIOLET_VALUE = new IdentValue(CSSConstants.CSS_VIOLET_VALUE);
 
 	/**
 	 * The 'wheat' color name.
 	 */
-	Value WHEAT_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_WHEAT_VALUE);
+	Value WHEAT_VALUE = new IdentValue(CSSConstants.CSS_WHEAT_VALUE);
 
 	/**
 	 * The 'whitesmoke' color name.
 	 */
-	Value WHITESMOKE_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_WHITESMOKE_VALUE);
+	Value WHITESMOKE_VALUE = new IdentValue(CSSConstants.CSS_WHITESMOKE_VALUE);
 
 	/**
 	 * The 'yellowgreen' color name.
 	 */
-	Value YELLOWGREEN_VALUE = new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_YELLOWGREEN_VALUE);
+	Value YELLOWGREEN_VALUE = new IdentValue(CSSConstants.CSS_YELLOWGREEN_VALUE);
 
 	/**
 	 * The 'aliceblue' RGB color.

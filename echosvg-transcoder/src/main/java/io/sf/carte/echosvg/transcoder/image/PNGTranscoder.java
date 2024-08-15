@@ -18,10 +18,16 @@
  */
 package io.sf.carte.echosvg.transcoder.image;
 
+import java.awt.Transparency;
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
+import java.awt.image.ComponentColorModel;
+import java.awt.image.DataBuffer;
 import java.awt.image.SinglePixelPackedSampleModel;
+import java.awt.image.WritableRaster;
 import java.io.OutputStream;
 
+import io.sf.carte.echosvg.bridge.BridgeContext;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints;
@@ -54,7 +60,19 @@ public class PNGTranscoder extends ImageTranscoder {
 	 */
 	@Override
 	public BufferedImage createImage(int width, int height) {
-		return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage image;
+		BridgeContext ctx = getBridgeContext();
+		ColorSpace space;
+		if (ctx == null || (space = ctx.getColorSpace()) == null) {
+			image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		} else {
+			int[] bits = { 16, 16, 16, 16 };
+			ComponentColorModel cm = new ComponentColorModel(space, bits, true, false,
+					Transparency.TRANSLUCENT, DataBuffer.TYPE_USHORT);
+			WritableRaster raster = cm.createCompatibleWritableRaster(width, height);
+			image = new BufferedImage(cm, raster, false, null);
+		}
+		return image;
 	}
 
 	/**

@@ -117,7 +117,7 @@ public final class SVGGVTFont implements GVTFont, SVGConstants {
 		this.language = XMLSupport.getXMLLang(textElement);
 
 		Value v = CSSUtilities.getComputedStyle(textElement, SVGCSSEngine.WRITING_MODE_INDEX);
-		if (v.getStringValue().startsWith(CSS_TB_VALUE)) {
+		if (v.getIdentifierValue().startsWith(CSS_TB_VALUE)) {
 			// top to bottom, so set orientation to "v"
 			this.orientation = SVG_V_VALUE;
 		} else {

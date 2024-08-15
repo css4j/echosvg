@@ -21,13 +21,16 @@ package io.sf.carte.echosvg.css.engine.value;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
  * This class provides a base implementation for the value factories.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class AbstractValueFactory {
@@ -83,8 +86,8 @@ public abstract class AbstractValueFactory {
 	/**
 	 * Creates a DOM exception, given an invalid string type.
 	 */
-	protected DOMException createInvalidStringTypeDOMException(short t) {
-		Object[] p = { getPropertyName(), (int) t };
+	protected DOMException createInvalidStringTypeDOMException(Type t) {
+		Object[] p = { getPropertyName(), t };
 		String s = Messages.formatMessage("invalid.string.type", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
 	}

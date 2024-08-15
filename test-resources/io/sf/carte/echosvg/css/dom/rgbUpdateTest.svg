@@ -64,14 +64,14 @@
         return
      }
 
-     var val = decl.getPropertyCSSValue("fill")
+     var val = decl.getCSSStyleValue("fill")
 
      if (val == null) {
         result.setAttributeNS(null, "errorCode", "CSSStyleDeclaration.getPropertyCSSValue returned null")
         return
      }
 
-     val = val.getRGBColor()
+     val = val.getColorValue()
 
      val.red.cssText = 4
 
@@ -88,7 +88,7 @@
         return
      }
 
-     val = decl.getPropertyCSSValue("fill")
+     val = decl.getCSSStyleValue("fill")
 
      val.cssText = "#050607"
 

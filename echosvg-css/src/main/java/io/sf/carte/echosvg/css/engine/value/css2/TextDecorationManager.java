@@ -18,10 +18,12 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import java.util.Locale;
+
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
@@ -35,8 +37,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a manager for the 'text-decoration' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class TextDecorationManager extends AbstractValueManager {
@@ -116,7 +120,7 @@ public class TextDecorationManager extends AbstractValueManager {
 			ListValue lv = new ListValue(' ');
 			do {
 				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
-					String s = lu.getStringValue().toLowerCase().intern();
+					String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
 					Object obj = values.get(s);
 					if (obj == null) {
 						throw createInvalidIdentifierDOMException(lu.getStringValue());
@@ -136,12 +140,9 @@ public class TextDecorationManager extends AbstractValueManager {
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
-	/**
-	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
-	 */
 	@Override
-	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
-		if (type != CSSPrimitiveValue.CSS_IDENT) {
+	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
+		if (type != Type.IDENT) {
 			throw createInvalidStringTypeDOMException(type);
 		}
 		if (!value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {

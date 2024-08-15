@@ -18,13 +18,15 @@
  */
 package io.sf.carte.echosvg.dom.util;
 
-import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.css.om.CSSStyleDeclaration;
 
 /**
  * This interface represents CSSStyleDeclaration factories.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public interface CSSStyleDeclarationFactory {
