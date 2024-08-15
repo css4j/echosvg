@@ -238,6 +238,7 @@ repositories {
             includeGroup 'io.sf.carte'
             includeGroup 'io.sf.jclf'
             includeGroup 'io.sf.graphics'
+            includeGroup 'io.sf.w3'
         }
     }
 }

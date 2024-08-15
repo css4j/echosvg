@@ -67,4 +67,7 @@ Batik:
    argument and now returns a `boolean`.
 
 11) The old and deprecated `CSSValue` API was replaced by an API close to W3C's
-   Typed OM.
+   Typed OM. One of the consequences is that if your scripts call `getPresentationAttribute`
+   on `SVGStylable` objects, `getPresentationAttributeValue` should be called
+   instead, obtaining a `CSSStyleValue`. Note that modern SVGOM has neither of
+   those methods.
