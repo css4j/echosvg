@@ -18,7 +18,9 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.color.ColorSpace;
 import java.awt.geom.Dimension2D;
 import java.io.Closeable;
 import java.io.IOException;
@@ -194,6 +196,11 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 	 * will be used be text nodes.
 	 */
 	protected TextPainter textPainter;
+
+	/**
+	 * The recommended color space.
+	 */
+	private ColorSpace colorSpace = null;
 
 	/**
 	 * Indicates that no DOM listeners should be registered. In this case the
@@ -388,6 +395,33 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 	public CSSEngine getCSSEngineForElement(Element e) {
 		SVGOMDocument doc = (SVGOMDocument) e.getOwnerDocument();
 		return doc.getCSSEngine();
+	}
+
+	/**
+	 * Update the color space recommendations for this context.
+	 * <p>
+	 * Should be called whenever a non-sRGB color is created. The information shall
+	 * be used to determine the recommended color profile for a destination image.
+	 * </p>
+	 * 
+	 * @param color the color that the bridge must be able to paint.
+	 * @param csRGB the color space in the RGB color model that is able to represent
+	 *              the color.
+	 */
+	public void updateColorSpace(Color color, ColorSpace csRGB) {
+		if (colorSpace != csRGB) {
+			colorSpace = CSSColorSpaces.mergeColorSpace(colorSpace, csRGB, color);
+		}
+	}
+
+	/**
+	 * Get the recommended color space for this context.
+	 * 
+	 * @return the recommended color space, or {@code null} if the color space is
+	 *         the default sRGB.
+	 */
+	public ColorSpace getColorSpace() {
+		return colorSpace;
 	}
 
 	// properties ////////////////////////////////////////////////////////////
@@ -799,35 +833,6 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 	// Viewport //////////////////////////////////////////////////////////////
 
 	/**
-	 * Returns the viewport of the specified element.
-	 *
-	 * @param e the element interested in its viewport
-	 */
-	public Viewport getViewport(Element e) {
-		if (viewportStack != null) {
-			// building time
-			if (viewportStack.size() == 0) {
-				// outermost svg element
-				return viewportMap.get(userAgent);
-			} else {
-				// current viewport
-				return viewportStack.get(0);
-			}
-		} else {
-			// search the first parent which has defined a viewport
-			e = SVGUtilities.getParentElement(e);
-			while (e != null) {
-				Viewport viewport = viewportMap.get(e);
-				if (viewport != null) {
-					return viewport;
-				}
-				e = SVGUtilities.getParentElement(e);
-			}
-			return viewportMap.get(userAgent);
-		}
-	}
-
-	/**
 	 * Starts a new viewport from the specified element.
 	 *
 	 * @param e        the element that defines a new viewport
@@ -840,6 +845,8 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 		}
 		viewportStack.add(0, viewport);
 	}
+
+	// Viewport //////////////////////////////////////////////////////////////
 
 	public void removeViewport(Element e) {
 		viewportMap.remove(e);
@@ -1747,6 +1754,36 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 	// CSS context ////////////////////////////////////////////////////////////
 
 	/**
+	 * Returns the viewport of the specified element.
+	 *
+	 * @param e the element interested in its viewport
+	 */
+	@Override
+	public Viewport getViewport(Element e) {
+		if (viewportStack != null) {
+			// building time
+			if (viewportStack.size() == 0) {
+				// outermost svg element
+				return viewportMap.get(userAgent);
+			} else {
+				// current viewport
+				return viewportStack.get(0);
+			}
+		} else {
+			// search the first parent which has defined a viewport
+			e = SVGUtilities.getParentElement(e);
+			while (e != null) {
+				Viewport viewport = viewportMap.get(e);
+				if (viewport != null) {
+					return viewport;
+				}
+				e = SVGUtilities.getParentElement(e);
+			}
+			return viewportMap.get(userAgent);
+		}
+	}
+
+	/**
 	 * Returns the Value corresponding to the given system color.
 	 */
 	@Override
@@ -1896,11 +1933,9 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 		 * 
 		 * // Check if cursor property is set to something other than 'auto'. Value
 		 * cursorValue = CSSUtilities.getComputedStyle (e, SVGCSSEngine.CURSOR_INDEX);
-		 * if ((cursorValue != null) && (cursorValue.getCssValueType() ==
-		 * CSSValue.CSS_PRIMITIVE_VALUE) && (cursorValue.getPrimitiveType() ==
-		 * CSSPrimitiveValue.CSS_IDENT) &&
-		 * (SVGConstants.SVG_AUTO_VALUE.equals(cursorValue.getStringValue()))) return
-		 * true;
+		 * if ((cursorValue != null) && (cursorValue.getPrimitiveType() == Type.IDENT)
+		 * && (SVGConstants.SVG_AUTO_VALUE.equals(cursorValue.getIdentifierValue())))
+		 * return true;
 		 */
 
 		// Check all the child elements for any of the above.

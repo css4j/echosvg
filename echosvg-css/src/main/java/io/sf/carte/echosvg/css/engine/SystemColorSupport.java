@@ -21,9 +21,10 @@ package io.sf.carte.echosvg.css.engine;
 
 import java.awt.SystemColor;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.css.om.unit.CSSUnit;
 
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.RGBColorValue;
@@ -33,8 +34,10 @@ import io.sf.carte.echosvg.util.CSSConstants;
 /**
  * This class provides support for AWT system colors.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SystemColorSupport implements CSSConstants {
@@ -43,11 +46,11 @@ public class SystemColorSupport implements CSSConstants {
 	 * Returns the Value corresponding to the given system color.
 	 */
 	public static Value getSystemColor(String ident) {
-		ident = ident.toLowerCase(); // todo locale??
+		ident = ident.toLowerCase(Locale.ROOT);
 		SystemColor sc = factories.get(ident);
-		return new RGBColorValue(new FloatValue(CSSPrimitiveValue.CSS_NUMBER, sc.getRed()),
-				new FloatValue(CSSPrimitiveValue.CSS_NUMBER, sc.getGreen()),
-				new FloatValue(CSSPrimitiveValue.CSS_NUMBER, sc.getBlue()));
+		return new RGBColorValue(new FloatValue(CSSUnit.CSS_NUMBER, sc.getRed()),
+				new FloatValue(CSSUnit.CSS_NUMBER, sc.getGreen()),
+				new FloatValue(CSSUnit.CSS_NUMBER, sc.getBlue()));
 	}
 
 	/**

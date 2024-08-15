@@ -18,16 +18,19 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
-import org.w3c.dom.css.CSSValue;
+import org.w3c.api.DOMTypeException;
+import org.w3c.css.om.typed.CSSKeywordValue;
 
 /**
  * This singleton class represents the 'inherit' value.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class InheritValue extends AbstractValue {
+public class InheritValue extends AbstractValue implements CSSKeywordValue {
 
 	/**
 	 * The only instance of this class.
@@ -45,15 +48,35 @@ public class InheritValue extends AbstractValue {
 	 */
 	@Override
 	public String getCssText() {
+		return getValue();
+	}
+
+	@Override
+	public String getValue() {
 		return "inherit";
+	}
+
+	@Override
+	public void setValue(String value) throws DOMTypeException {
+		throw new DOMTypeException("Not supported.");
 	}
 
 	/**
 	 * A code defining the type of the value.
 	 */
 	@Override
-	public short getCssValueType() {
-		return CSSValue.CSS_INHERIT;
+	public CssType getCssValueType() {
+		return CssType.KEYWORD;
+	}
+
+	@Override
+	public Type getPrimitiveType() {
+		return Type.INHERIT;
+	}
+
+	@Override
+	public InheritValue clone() {
+		return INSTANCE;
 	}
 
 	/**

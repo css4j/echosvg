@@ -83,7 +83,7 @@ function init() {
 
   cssStyle.setProperty("cursor", "url(#cur),crosshair","");
   localStr = cssStyle.getPropertyValue("cursor");
-  absStr = computedStyle.getPropertyCSSValue("cursor");
+  absStr = computedStyle.getCSSStyleValue("cursor");
   absStr = absStr.item(0).getCssText();
   t3.firstChild.nodeValue = unifyURL(localStr);
   t4.firstChild.nodeValue = unifyURL(absStr);

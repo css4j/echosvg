@@ -29,7 +29,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.css.DOMImplementationCSS;
-import org.w3c.dom.css.ViewCSS;
+import org.w3c.dom.view.ViewCSS;
 
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.doc.style.css.parser.CSSParser;

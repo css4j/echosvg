@@ -18,10 +18,14 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import java.util.Locale;
+
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.Viewport;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -39,8 +43,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a manager for the 'font-size' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class FontSizeManager extends LengthManager {
@@ -127,7 +133,7 @@ public class FontSizeManager extends LengthManager {
 			return ValueConstants.INHERIT_VALUE;
 
 		case IDENT:
-			String s = lu.getStringValue().toLowerCase().intern();
+			String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
 			Object v = values.get(s);
 			if (v == null) {
 				throw createInvalidIdentifierDOMException(s);
@@ -139,15 +145,12 @@ public class FontSizeManager extends LengthManager {
 		return super.createValue(lu, engine);
 	}
 
-	/**
-	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
-	 */
 	@Override
-	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
-		if (type != CSSPrimitiveValue.CSS_IDENT) {
+	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
+		if (type != Type.IDENT) {
 			throw createInvalidStringTypeDOMException(type);
 		}
-		Object v = values.get(value.toLowerCase().intern());
+		Object v = values.get(value.toLowerCase(Locale.ROOT).intern());
 		if (v == null) {
 			throw createInvalidIdentifierDOMException(value);
 		}
@@ -164,48 +167,76 @@ public class FontSizeManager extends LengthManager {
 		float scale = 1.0f;
 		boolean doParentRelative = false;
 
-		switch (value.getPrimitiveType()) {
-		case CSSPrimitiveValue.CSS_NUMBER:
-		case CSSPrimitiveValue.CSS_PX:
+		switch (value.getCSSUnit()) {
+		case CSSUnit.CSS_NUMBER:
+		case CSSUnit.CSS_PX:
 			return value;
 
-		case CSSPrimitiveValue.CSS_MM:
+		case CSSUnit.CSS_MM:
 			CSSContext ctx = engine.getCSSContext();
-			float v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v / ctx.getPixelUnitToMillimeter());
+			float v = lengthValue(value);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v / ctx.getPixelUnitToMillimeter());
 
-		case CSSPrimitiveValue.CSS_CM:
+		case CSSUnit.CSS_CM:
 			ctx = engine.getCSSContext();
-			v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v * 10f / ctx.getPixelUnitToMillimeter());
+			v = lengthValue(value);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * 10f / ctx.getPixelUnitToMillimeter());
 
-		case CSSPrimitiveValue.CSS_IN:
+		case CSSUnit.CSS_IN:
 			ctx = engine.getCSSContext();
-			v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v * 25.4f / ctx.getPixelUnitToMillimeter());
+			v = lengthValue(value);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * 25.4f / ctx.getPixelUnitToMillimeter());
 
-		case CSSPrimitiveValue.CSS_PT:
+		case CSSUnit.CSS_PT:
 			ctx = engine.getCSSContext();
-			v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v * 25.4f / (72f * ctx.getPixelUnitToMillimeter()));
+			v = lengthValue(value);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * 25.4f / (72f * ctx.getPixelUnitToMillimeter()));
 
-		case CSSPrimitiveValue.CSS_PC:
+		case CSSUnit.CSS_PC:
 			ctx = engine.getCSSContext();
-			v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, (v * 25.4f / (6f * ctx.getPixelUnitToMillimeter())));
+			v = lengthValue(value);
+			return new FloatValue(CSSUnit.CSS_NUMBER, (v * 25.4f / (6f * ctx.getPixelUnitToMillimeter())));
 
-		case CSSPrimitiveValue.CSS_EMS:
+		case CSSUnit.CSS_EM:
 			doParentRelative = true;
-			scale = value.getFloatValue();
+			scale = lengthValue(value);
 			break;
-		case CSSPrimitiveValue.CSS_EXS:
+		case CSSUnit.CSS_EX:
 			doParentRelative = true;
-			scale = value.getFloatValue() * 0.5f; // !!! x-height
+			scale = lengthValue(value) * 0.5f; // !!! x-height
 			break;
-		case CSSPrimitiveValue.CSS_PERCENTAGE:
+		case CSSUnit.CSS_PERCENTAGE:
 			doParentRelative = true;
 			scale = value.getFloatValue() * 0.01f;
 			break;
+		case CSSUnit.CSS_REM:
+			scale = lengthValue(value);
+			return rootRelative(elt, engine, idx, scale);
+		case CSSUnit.CSS_REX:
+			scale = lengthValue(value) * 0.5f;
+			return rootRelative(elt, engine, idx, scale);
+		case CSSUnit.CSS_VW:
+			v = lengthValue(value);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v *
+					engine.getCSSContext().getViewport(elt).getWidth() * 0.01f);
+		case CSSUnit.CSS_VH:
+			v = lengthValue(value);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v *
+					engine.getCSSContext().getViewport(elt).getHeight() * 0.01f);
+		case CSSUnit.CSS_VMIN:
+			v = lengthValue(value);
+			Viewport vp = engine.getCSSContext().getViewport(elt);
+			float w = vp.getWidth();
+			float h = vp.getHeight();
+			float min = Math.min(w, h);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * min * 0.01f);
+		case CSSUnit.CSS_VMAX:
+			v = lengthValue(value);
+			vp = engine.getCSSContext().getViewport(elt);
+			w = vp.getWidth();
+			h = vp.getHeight();
+			float max = Math.max(w, h);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * max * 0.01f);
 		default:
 		}
 
@@ -227,15 +258,17 @@ public class FontSizeManager extends LengthManager {
 				CSSContext ctx = engine.getCSSContext();
 				fs = ctx.getMediumFontSize();
 			} else {
-				fs = engine.getComputedStyle(p, null, idx).getFloatValue();
+				Value cs = engine.getComputedStyle(p, null, idx);
+				fs = lengthValue(cs);
 			}
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, fs * scale);
+			return new FloatValue(CSSUnit.CSS_NUMBER, fs * scale);
 		}
 
 		// absolute identifiers
 		CSSContext ctx = engine.getCSSContext();
 		float fs = ctx.getMediumFontSize();
-		String s = value.getStringValue();
+
+		String s = value.getIdentifierValue();
 		switch (s.charAt(0)) {
 		case 'm':
 			break;
@@ -272,7 +305,20 @@ public class FontSizeManager extends LengthManager {
 				}
 			}
 		}
-		return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, fs);
+		return new FloatValue(CSSUnit.CSS_NUMBER, fs);
+	}
+
+	private Value rootRelative(CSSStylableElement elt, CSSEngine engine, int idx, float scale) {
+		CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
+		if (elt == root) {
+			CSSContext ctx = engine.getCSSContext();
+			float f = ctx.getMediumFontSize() * scale;
+			return new FloatValue(CSSUnit.CSS_NUMBER, f);
+		}
+
+		Value cs = engine.getComputedStyle(root, null, idx);
+		float f = lengthValue(cs) * scale;
+		return new FloatValue(CSSUnit.CSS_NUMBER, f);
 	}
 
 	/**

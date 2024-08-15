@@ -18,17 +18,22 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.api.DOMSyntaxException;
+import org.w3c.css.om.typed.CSSRectValue;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
+
+import org.w3c.css.om.unit.CSSUnit;
 
 /**
  * This class represents CSS rect values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class RectValue extends AbstractValue {
+public class RectValue extends ComponentValue implements CSSRectValue {
 
 	/**
 	 * The top value.
@@ -54,18 +59,18 @@ public class RectValue extends AbstractValue {
 	 * Creates a new Rect value.
 	 */
 	public RectValue(Value t, Value r, Value b, Value l) {
-		top = t;
-		right = r;
-		bottom = b;
-		left = l;
+		setTop(t);
+		setRight(r);
+		setBottom(b);
+		setLeft(l);
 	}
 
 	/**
 	 * The type of the value.
 	 */
 	@Override
-	public short getPrimitiveType() {
-		return CSSPrimitiveValue.CSS_RECT;
+	public Type getPrimitiveType() {
+		return Type.RECT;
 	}
 
 	/**
@@ -77,44 +82,94 @@ public class RectValue extends AbstractValue {
 				+ left.getCssText() + ')';
 	}
 
-	/**
-	 * Implements {@link Value#getTop()}.
-	 */
 	@Override
 	public Value getTop() throws DOMException {
 		return top;
 	}
 
-	/**
-	 * Implements {@link Value#getRight()}.
-	 */
 	@Override
 	public Value getRight() throws DOMException {
 		return right;
 	}
 
-	/**
-	 * Implements {@link Value#getBottom()}.
-	 */
 	@Override
 	public Value getBottom() throws DOMException {
 		return bottom;
 	}
 
-	/**
-	 * Implements {@link Value#getLeft()}.
-	 */
 	@Override
 	public Value getLeft() throws DOMException {
 		return left;
 	}
 
+	void setTop(Value top) {
+		this.top = component(top);
+	}
+
 	/**
-	 * Returns a printable representation of this value.
+	 * Initialize a component of this value.
+	 * 
+	 * @param c the component.
+	 * @return the initialized component.
+	 * @throws DOMSyntaxException if the value is inadequate for a component.
 	 */
+	Value component(Value c) throws DOMSyntaxException {
+		short unit = c.getCSSUnit();
+		if (unit != CSSUnit.CSS_PERCENTAGE && unit != CSSUnit.CSS_NUMBER
+				&& !CSSUnit.isLengthUnitType(unit) && c.getPrimitiveType() != Type.IDENT) {
+			throw new DOMSyntaxException("rect() component must be a length or percentage.");
+		}
+
+		if (c.getModificationHandler() != null) {
+			c = ((AbstractValue) c).clone();
+		}
+		componentize(c);
+
+		return c;
+	}
+
+	void setRight(Value right) {
+		this.right = component(right);
+	}
+
+	void setBottom(Value bottom) {
+		this.bottom = component(bottom);
+	}
+
+	void setLeft(Value left) {
+		this.left = component(left);
+	}
+
 	@Override
-	public String toString() {
-		return getCssText();
+	public RectValue getRectValue() throws DOMException {
+		return this;
+	}
+
+	@Override
+	public int getLength() throws DOMException {
+		return 4;
+	}
+
+	@Override
+	public Value item(int index) throws DOMException {
+		switch (index) {
+		case 0:
+			return getTop();
+		case 1:
+			return getRight();
+		case 2:
+			return getBottom();
+		case 3:
+			return getLeft();
+		default:
+			return null;
+		}
+	}
+
+	@Override
+	public RectValue clone() {
+		RectValue clon = new RectValue(top, right, bottom, left);
+		return clon;
 	}
 
 }

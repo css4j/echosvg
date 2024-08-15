@@ -54,7 +54,7 @@
 
       function getType(id, attr) {
         var e = document.getElementById(id);
-        var pa = e.getPresentationAttribute(attr);
+        var pa = e.getPresentationAttributeValue(attr);
         var pt = pa.paintType;
         var txt;
         if      (pt == UNKNOWN)               txt="UNKNOWN";

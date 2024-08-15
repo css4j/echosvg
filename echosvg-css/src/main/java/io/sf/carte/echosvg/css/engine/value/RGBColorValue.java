@@ -18,63 +18,81 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
+import org.w3c.api.DOMSyntaxException;
+import org.w3c.css.om.typed.CSSNumericValue;
+import org.w3c.css.om.typed.CSSRGB;
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 
 /**
- * This class represents RGB colors.
+ * RGB colors.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * @author See Git history.
  * @version $Id$
  */
-public class RGBColorValue extends AbstractValue {
+public class RGBColorValue extends ColorValue implements CSSRGB {
 
 	/**
 	 * The red component.
 	 */
-	protected Value red;
+	private NumericValue red;
 
 	/**
 	 * The green component.
 	 */
-	protected Value green;
+	private NumericValue green;
 
 	/**
 	 * The blue component.
 	 */
-	protected Value blue;
+	private NumericValue blue;
 
 	/**
-	 * The alpha channel.
+	 * Whether components were specified as percentages
 	 */
-	protected Value alpha;
+	private transient boolean pcntSpecified;
+
+	private transient boolean alphaPcntSpecified;
 
 	/**
 	 * Creates a new, opaque RGBColorValue.
+	 * 
+	 * @throws DOMSyntaxException if a supplied component is invalid.
 	 */
-	public RGBColorValue(Value r, Value g, Value b) {
+	public RGBColorValue(NumericValue r, NumericValue g, NumericValue b) throws DOMSyntaxException {
 		this(r, g, b, SVGValueConstants.NUMBER_1);
 	}
 
 	/**
 	 * Creates a new RGBColorValue.
+	 * 
+	 * @throws DOMSyntaxException if a supplied component is invalid.
 	 */
-	public RGBColorValue(Value r, Value g, Value b, Value a) {
-		red = r;
-		green = g;
-		blue = b;
-		alpha = a;
+	public RGBColorValue(NumericValue r, NumericValue g, NumericValue b, NumericValue a)
+			throws DOMSyntaxException {
+		super(a);
+		setR(r);
+		setG(g);
+		setB(b);
 	}
 
-	/**
-	 * The type of the value.
-	 */
+	void setSpecifiedAsPercentage(boolean spec) {
+		pcntSpecified = spec;
+	}
+
+	void setAlphaSpecifiedAsPercentage(boolean spec) {
+		alphaPcntSpecified = spec;
+	}
+
 	@Override
-	public short getPrimitiveType() {
-		return CSSPrimitiveValue.CSS_RGBCOLOR;
+	public String getCSSColorSpace() {
+		return ColorValue.RGB_FUNCTION;
 	}
 
 	/**
@@ -82,52 +100,189 @@ public class RGBColorValue extends AbstractValue {
 	 */
 	@Override
 	public String getCssText() {
-		return toString(red.getCssText(), green.getCssText(), blue.getCssText(), alpha.getCssText());
+		DecimalFormat df = null;
+		if (!pcntSpecified || !alphaPcntSpecified) {
+			DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.ROOT);
+			df = new DecimalFormat("#.#", dfs);
+			df.setMinimumFractionDigits(0);
+			df.setMaximumFractionDigits(4);
+		}
+
+		String sr = rgbComponentText(red, df);
+		String sg = rgbComponentText(green, df);
+		String sb = rgbComponentText(blue, df);
+
+		StringBuilder buf = new StringBuilder(sr.length() + sg.length() + sb.length() + 16);
+		boolean opaque = isOpaque();
+		if (opaque) {
+			buf.append("rgb(");
+		} else {
+			buf.append("rgba(");
+		}
+		buf.append(sr).append(", ").append(sg).append(", ").append(sb);
+		if (!opaque) {
+			buf.append(", ").append(alphaComponentText(alpha, df));
+		}
+		buf.append(')');
+		return buf.toString();
+	}
+
+	private String rgbComponentText(NumericValue comp, DecimalFormat df) {
+		if (pcntSpecified || comp.getCSSUnit() == CSSUnit.CSS_NUMBER) {
+			return comp.getCssText();
+		}
+
+		return df.format(comp.getFloatValue() * 2.55f);
+	}
+
+	private String alphaComponentText(NumericValue alpha, DecimalFormat df) {
+		if (alphaPcntSpecified || alpha.getCSSUnit() == CSSUnit.CSS_NUMBER) {
+			return alpha.getCssText();
+		}
+
+		return df.format(alpha.getFloatValue() * 0.01f);
+	}
+
+	@Override
+	public RGBColorValue getColorValue() {
+		return this;
+	}
+
+	@Override
+	public NumericValue getR() {
+		return red;
+	}
+
+	@Override
+	public NumericValue getG() {
+		return green;
+	}
+
+	@Override
+	public NumericValue getB() {
+		return blue;
 	}
 
 	/**
-	 * Implements {@link Value#getRed()}.
+	 * Get the red component.
+	 * 
+	 * @return the red component.
 	 */
-	@Override
-	public Value getRed() throws DOMException {
+	public Value getRed() {
 		return red;
 	}
 
 	/**
-	 * Implements {@link Value#getGreen()}.
+	 * Get the green component.
+	 * 
+	 * @return the green component.
 	 */
-	@Override
-	public Value getGreen() throws DOMException {
+	public Value getGreen() {
 		return green;
 	}
 
 	/**
-	 * Implements {@link Value#getBlue()}.
+	 * Get the blue component.
+	 * 
+	 * @return the blue component.
 	 */
-	@Override
-	public Value getBlue() throws DOMException {
+	public Value getBlue() {
 		return blue;
 	}
 
 	@Override
-	public Value getAlpha() throws DOMException {
-		return alpha;
+	public void setR(double r) {
+		red = new FloatValue(CSSUnit.CSS_PERCENTAGE, (float) r * 100);
+		pcntSpecified = true;
+		componentize(red);
+		componentChanged(red);
+	}
+
+	@Override
+	public void setR(CSSNumericValue r) throws DOMSyntaxException {
+		red = component(r);
+		componentChanged(red);
+		pcntSpecified = red.getCSSUnit() == CSSUnit.CSS_PERCENTAGE;
 	}
 
 	/**
-	 * Returns a printable representation of the color.
+	 * Initialize a component of this value.
+	 * 
+	 * @param c the component.
+	 * @return the initialized component.
+	 * @throws DOMSyntaxException if the value is inadequate for a component.
 	 */
-	@Override
-	public String toString() {
-		return getCssText();
+	private NumericValue component(CSSNumericValue c) throws DOMSyntaxException {
+		NumericValue ch = (NumericValue) c;
+		if (ch.getCSSUnit() != CSSUnit.CSS_PERCENTAGE && ch.getCSSUnit() != CSSUnit.CSS_NUMBER) {
+			throw new DOMSyntaxException("RGB component must be a number or percentage, not a "
+					+ CSSUnit.dimensionUnitString(ch.getCSSUnit()) + '.');
+		}
+		if (ch.handler != null) {
+			ch = ch.clone();
+		}
+		componentize(ch);
+		return ch;
 	}
 
-	public static String toString(String red, String green, String blue, String alpha) {
-		if ("1".equals(alpha)) {
-			return "rgb(" + red + ", " + green + ", " + blue + ')';
-		} else {
-			return "rgba(" + red + ", " + green + ", " + blue + ", " + alpha + ')';
+	@Override
+	public void setG(double g) {
+		green = new FloatValue(CSSUnit.CSS_PERCENTAGE, (float) g * 100);
+		pcntSpecified = true;
+		componentize(green);
+		componentChanged(green);
+	}
+
+	@Override
+	public void setG(CSSNumericValue g) throws DOMSyntaxException {
+		green = component(g);
+		componentChanged(green);
+	}
+
+	@Override
+	public void setB(double b) {
+		blue = new FloatValue(CSSUnit.CSS_PERCENTAGE, (float) b * 100);
+		pcntSpecified = true;
+		componentize(blue);
+		componentChanged(blue);
+	}
+
+	@Override
+	public void setB(CSSNumericValue b) throws DOMSyntaxException {
+		blue = component(b);
+		componentChanged(blue);
+	}
+
+	@Override
+	public int getLength() throws DOMException {
+		return 4;
+	}
+
+	@Override
+	public Value item(int index) throws DOMException {
+		switch (index) {
+		case 0:
+			return getR();
+		case 1:
+			return getG();
+		case 2:
+			return getB();
+		case 3:
+			return getAlpha();
+		default:
+			return null;
 		}
+	}
+
+	@Override
+	public RGBColorValue clone() {
+		RGBColorValue clon;
+		try {
+			clon = new RGBColorValue(red, green, blue, alpha);
+		} catch (DOMSyntaxException e) {
+			clon = null;
+		}
+		return clon;
 	}
 
 }

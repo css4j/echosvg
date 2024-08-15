@@ -93,9 +93,7 @@ public class SVGColor extends AbstractSVGConverter {
 		colorMap.put(aqua, "aqua");
 
 		/*
-		 * CSS standard color spaces. A98-rgb and Prophoto-rgb are never going to match
-		 * in practice and probably should be removed; they are left for now, just in
-		 * case they are useful.
+		 * CSS standard color spaces.
 		 */
 		String[] knownProfiles = { "display-p3", "a98-rgb", "prophoto-rgb", "rec2020" };
 		cssProfileNames = new HashSet<>(knownProfiles.length);
@@ -204,9 +202,17 @@ public class SVGColor extends AbstractSVGConverter {
 					iccProfileName = new String(bdesc, offset, len, StandardCharsets.UTF_16BE).trim();
 					iccProfileName = iccProfileName.toLowerCase(Locale.ROOT).replace(' ', '-');
 					if (iccProfileName.contains("bt.2020")) {
-						// recommendation 2020
+						// ITU recommendation 2020
 						iccProfileName = "rec2020";
-					} else if ("adobe-rgb-(1998)".equals(iccProfileName)) {
+					} else if ("romm".equals(iccProfileName)
+							|| "largergb-elle-v4-g18.icc".equals(iccProfileName)
+							|| "prophoto".equals(iccProfileName)) {
+						// Names used in "freely available profiles" for Prophoto
+						iccProfileName = "prophoto-rgb";
+					} else if ("a98c".equals(iccProfileName)
+							|| "adobe-rgb-(1998)".equals(iccProfileName) // the 'official' name
+							|| "clayrgb-elle-v4-g22.icc".equals(iccProfileName)
+							|| "adobe98".equals(iccProfileName)) {
 						// A98
 						iccProfileName = "a98-rgb";
 					}

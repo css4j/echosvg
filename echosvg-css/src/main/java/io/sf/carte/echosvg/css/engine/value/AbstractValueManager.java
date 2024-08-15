@@ -19,9 +19,9 @@
 package io.sf.carte.echosvg.css.engine.value;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
+import org.w3c.css.om.unit.CSSUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -29,8 +29,10 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
 /**
  * This class provides an abstract implementation of the ValueManager interface.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class AbstractValueManager extends AbstractValueFactory implements ValueManager {
@@ -43,11 +45,8 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 		throw createDOMException();
 	}
 
-	/**
-	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
-	 */
 	@Override
-	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
+	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
 		throw createDOMException();
 	}
 
@@ -59,12 +58,31 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
 
-		if ((value.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE)
-				&& (value.getPrimitiveType() == CSSPrimitiveValue.CSS_URI)) {
-			// Reveal the absolute value as the cssText now.
-			return new URIValue(value.getStringValue(), value.getStringValue());
+		if (value.getPrimitiveType() == Type.URI) {
+			// For performance, set the parsed value as the cssText now.
+			String uri = value.getURIValue();
+			return new URIValue(uri, uri);
 		}
+
 		return value;
+	}
+
+	protected float lengthValue(Value cv) {
+		short unit = cv.getCSSUnit();
+		if (!CSSUnit.isLengthUnitType(unit) && unit != CSSUnit.CSS_NUMBER) {
+			throw createDOMException(unit);
+		}
+		return cv.getFloatValue();
+	}
+
+	/**
+	 * Creates an INVALID_ACCESS_ERR exception.
+	 * @param unit the unit.
+	 */
+	protected DOMException createDOMException(int unit) {
+		Object[] p = { unit };
+		String s = Messages.formatMessage("invalid.value.access", p);
+		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
 	}
 
 }

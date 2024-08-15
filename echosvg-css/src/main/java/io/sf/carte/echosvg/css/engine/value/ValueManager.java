@@ -22,6 +22,7 @@ package io.sf.carte.echosvg.css.engine.value;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -30,8 +31,10 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
  * This interface is implemented by objects which manage the values associated
  * with a property.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public interface ValueManager {
@@ -87,12 +90,12 @@ public interface ValueManager {
 	/**
 	 * Creates and returns a new string value.
 	 * 
-	 * @param type   A string code as defined in CSSPrimitiveValue. The string code
-	 *               can only be a string unit type.
+	 * @param type   A value type as defined in Value.Type. The string code
+	 *               can only be a string-like unit type.
 	 * @param value  The new string value.
 	 * @param engine The CSS engine.
 	 */
-	Value createStringValue(short type, String value, CSSEngine engine) throws DOMException;
+	Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException;
 
 	/**
 	 * Computes the given value.

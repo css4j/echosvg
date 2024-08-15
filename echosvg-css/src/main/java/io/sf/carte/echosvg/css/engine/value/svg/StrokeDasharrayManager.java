@@ -19,10 +19,9 @@
 package io.sf.carte.echosvg.css.engine.value.svg;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -37,8 +36,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a factory for the 'stroke-dasharray' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class StrokeDasharrayManager extends LengthManager {
@@ -120,12 +121,9 @@ public class StrokeDasharrayManager extends LengthManager {
 		}
 	}
 
-	/**
-	 * Implements {@link ValueManager#createStringValue(short,String,CSSEngine)}.
-	 */
 	@Override
-	public Value createStringValue(short type, String value, CSSEngine engine) throws DOMException {
-		if (type != CSSPrimitiveValue.CSS_IDENT) {
+	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
+		if (type != Type.IDENT) {
 			throw createInvalidStringTypeDOMException(type);
 		}
 		if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
@@ -142,16 +140,18 @@ public class StrokeDasharrayManager extends LengthManager {
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
 		switch (value.getCssValueType()) {
-		case CSSValue.CSS_PRIMITIVE_VALUE:
+		case TYPED:
 			return value;
+		case LIST:
+			ListValue result = new ListValue(' ');
+			for (int i = 0; i < value.getLength(); i++) {
+				result.append(super.computeValue(elt, pseudo, engine, idx, sm, value.item(i)));
+			}
+			return result;
+		default:
+			throw createDOMException();
 		}
 
-		ListValue lv = (ListValue) value;
-		ListValue result = new ListValue(' ');
-		for (int i = 0; i < lv.getLength(); i++) {
-			result.append(super.computeValue(elt, pseudo, engine, idx, sm, lv.item(i)));
-		}
-		return result;
 	}
 
 	/**

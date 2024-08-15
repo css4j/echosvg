@@ -20,6 +20,7 @@
  * CSS support.
  */
 module io.sf.carte.echosvg.css {
+	exports io.sf.carte.echosvg.css;
 	exports io.sf.carte.echosvg.css.engine;
 	exports io.sf.carte.echosvg.css.engine.value.css2;
 	exports io.sf.carte.echosvg.css.engine.value.svg;
@@ -33,6 +34,7 @@ module io.sf.carte.echosvg.css {
 	requires transitive io.sf.carte.css4j;
 	requires io.sf.carte.util;
 	requires transitive org.w3c.dom.svg;
+	requires transitive org.w3c.dom.view;
 
 	requires java.xml;
 	requires jdk.xml.dom;

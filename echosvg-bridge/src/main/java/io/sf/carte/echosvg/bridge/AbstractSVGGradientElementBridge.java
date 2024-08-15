@@ -296,7 +296,13 @@ public abstract class AbstractSVGGradientElementBridge extends AnimatableGeneric
 				// use default value
 				offset = 0f;
 			}
-			Color color = CSSUtilities.convertStopColor(stopElement, opacity, ctx);
+			Color color;
+			try {
+				color = CSSUtilities.convertStopColor(stopElement, opacity, ctx);
+			} catch (Exception ex) {
+				throw new BridgeException(ctx, stopElement, ex, ERR_CSS_VALUE_ERROR,
+						new Object[] { ex });
+			}
 
 			return new Stop(color, offset);
 		}

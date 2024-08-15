@@ -23,8 +23,8 @@
 <!-- ====================================================================== -->
 <!-- Test of the dom SVGColor interface                                     -->
 <!--                                                                        -->
-<!-- @author deweese@apache.org                                             -->
-<!-- @author for later modifications, see Git history                       -->
+<!-- Original author: deweese@apache.org                                    -->
+<!-- For later modifications, see Git history                               -->
 <!-- @version $Id$ -->
 <!-- ====================================================================== -->
 
@@ -45,60 +45,67 @@
            test();
         }
 
-        function showFill(id, suff) {
+        function showFill(id, suff, newValue) {
            var elem = document.getElementById(id);
-           var fill = elem.style.getPropertyCSSValue("fill");
-           var tb   = document.getElementById(id+suff);
-           tb.appendChild(document.createTextNode(fill.getCssText()));
+           var st = elem.style;
+           var fill = st.getCSSStyleValue("fill");
+           var tb = document.getElementById(id+suff);
+           var text = fill.getCssText();
+           tb.appendChild(document.createTextNode(text));
+           if (newValue) {
+             st.setProperty("fill", newValue, "");
+             fill = st.getCSSStyleValue("fill");
+           }
            return fill;
         }   
 
         function test() {
            var fill, r, g, b;
 
-           fill = showFill("r1", ".b"); 
-           fill.setCssText("gold");
-           showFill("r1", ".a"); 
-
-           fill = showFill("r2", ".b"); 
-           fill.setCssText("gold");
-           showFill("r2", ".a"); 
+           fill = showFill("r1", ".b", "gold");
+           showFill("r1", ".a");
         
-           fill = showFill("r3", ".b"); 
-           r = fill.getRed(); r.setCssText("50");
-           showFill("r3", ".a"); 
+           fill = showFill("r2", ".b");
+           r = fill.getR(); r.setValue(31.4);
+           fill.b.setValue(50);
+           showFill("r2", ".a");
         
-           fill = showFill("r4", ".b"); 
-           r = fill.getRed(); r.setFloatValue(UNIT_NUMBER, 50);
-           showFill("r4", ".a"); 
+           fill = showFill("r3", ".b");
+           r = fill.getR(); r.setValue(19.6);
+           showFill("r3", ".a");
 
-           fill = showFill("r5", ".b"); 
-           r = fill.getRed(); r.setFloatValue(UNIT_NUMBER, 128);
-           showFill("r5", ".a"); 
+           fill = showFill("r4", ".b", "color(display-p3 0.94 0.55 0.31)");
+           fill.item(2).setValue(0.64);
+           showFill("r4", ".a");
 
-           fill = showFill("r6", ".b"); 
-           g = fill.getGreen(); g.setCssText("50");
-           showFill("r6", ".a"); 
+           fill = showFill("r5", ".b");
+           r = fill.getR(); r.setValue("128");
+           fill.setAlpha(0.95);
+           showFill("r5", ".a");
+
+           fill = showFill("r6", ".b");
+           g = fill.getG(); g.setValue("19.6%");
+           showFill("r6", ".a");
         
-           fill = showFill("r7", ".b"); 
-           g = fill.getGreen(); g.setFloatValue(UNIT_PERCENT, 19.6);
-           showFill("r7", ".a"); 
+           fill = showFill("r7", ".b");
+           g = fill.getG(); g.setValue(19.6);
+           showFill("r7", ".a");
 
-           fill = showFill("r8", ".b"); 
-           g = fill.getGreen(); g.setFloatValue(UNIT_NUMBER, 128);
-           showFill("r8", ".a"); 
+           fill = showFill("r8", ".b");
+           g = fill.getG(); g.setValue("50%");
+           showFill("r8", ".a");
 
-           fill = showFill("r9", ".b"); 
-           b = fill.getBlue(); b.setCssText("50");
-           showFill("r9", ".a"); 
-        
-           fill = showFill("r10", ".b"); 
-           b = fill.getBlue(); b.setFloatValue(UNIT_NUMBER, 50);
-           showFill("r10", ".a"); 
+           fill = showFill("r9", ".b");
+           b = fill.getB(); b.setValue("50");
+           showFill("r9", ".a");
 
-           fill = showFill("r11", ".b"); 
-           fill.setCssText("rgb(220, 0, 128, 0.87)");
-           showFill("r11", ".a"); 
+           fill = showFill("r10", ".b");
+           b = fill.getB(); b.setValue(19.6);
+           showFill("r10", ".a");
+
+           fill = showFill("r11", ".b", "rgba(220, 0, 128, 1)");
+           fill.setAlpha(0.87);
+           showFill("r11", ".a");
         }
     ]]></script>
 

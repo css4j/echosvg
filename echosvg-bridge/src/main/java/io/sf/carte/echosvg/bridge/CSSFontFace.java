@@ -21,9 +21,8 @@ package io.sf.carte.echosvg.bridge;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
-
+import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.FontFaceRule;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
@@ -85,10 +84,10 @@ public class CSSFontFace extends FontFace implements SVGConstants {
 
 		ParsedURL base = ffr.getURL();
 		if ((v != null) && (v != ValueConstants.NONE_VALUE)) {
-			if (v.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
+			if (v.getCssValueType() == CssType.TYPED) {
 				ret.srcs = new LinkedList<>();
 				ret.srcs.add(getSrcValue(v, base));
-			} else if (v.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
+			} else if (v.getCssValueType() == CssType.LIST) {
 				ret.srcs = new LinkedList<>();
 				for (int i = 0; i < v.getLength(); i++) {
 					ret.srcs.add(getSrcValue(v.item(i), base));
@@ -115,14 +114,12 @@ public class CSSFontFace extends FontFace implements SVGConstants {
 	}
 
 	public static Object getSrcValue(Value v, ParsedURL base) {
-		if (v.getCssValueType() != CSSValue.CSS_PRIMITIVE_VALUE)
-			return null;
-		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_URI) {
+		if (v.getPrimitiveType() == Type.URI) {
 			if (base != null)
-				return new ParsedURL(base, v.getStringValue());
-			return new ParsedURL(v.getStringValue());
+				return new ParsedURL(base, v.getURIValue());
+			return new ParsedURL(v.getURIValue());
 		}
-		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_STRING)
+		if (v.getPrimitiveType() == Type.STRING)
 			return v.getStringValue();
 		return null;
 	}
@@ -134,7 +131,7 @@ public class CSSFontFace extends FontFace implements SVGConstants {
 			ValueManager vm = vms[pidx];
 			v = vm.getDefaultValue();
 		}
-		while (v.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
+		while (v.getCssValueType() == CssType.LIST) {
 			v = v.item(0);
 		}
 		return v.getStringValue();
@@ -147,7 +144,7 @@ public class CSSFontFace extends FontFace implements SVGConstants {
 			ValueManager vm = vms[pidx];
 			v = vm.getDefaultValue();
 		}
-		while (v.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
+		while (v.getCssValueType() == CssType.LIST) {
 			v = v.item(0);
 		}
 		return v.getFloatValue();

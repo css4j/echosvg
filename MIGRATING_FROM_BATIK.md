@@ -7,7 +7,8 @@ Batik:
 
 - Improved conformance to the SVG and CSS specifications.
 
-- Better user experience (_e.g._ the `codec` classes that got merged into `transcoder`).
+- Better user experience (_e.g._ the `codec` classes that got merged into
+  `transcoder`, or the cleaner module interdependencies).
 
 - A circularity with Apache FOP. To render PDF images, Batik uses FOP which in
   turn uses Batik, so depending on FOP would imply mixing EchoSVG and Batik. See
@@ -27,9 +28,8 @@ Batik:
 2) Class names that included the name "Batik" now have "EchoSVG".
 
 3) The `codec`-`transcoder` circular dependency was removed in the following way:
-   a few classes from the `codec` module were moved to two new packages in
-  `transcoder` (that aren't exported by that module). Now `transcoder` explicitly
-   depends on `codec` (but not the other way around).
+   a few classes from the `codec` module were moved to `transcoder`. Now
+   `transcoder` explicitly depends on `codec` (but not the other way around).
 
 4) Tcl and Python 2.x scripting was removed (see issues [#12](https://github.com/css4j/echosvg/issues/12)
    and [#13](https://github.com/css4j/echosvg/issues/13)). That scripting wasn't
@@ -65,3 +65,6 @@ Batik:
 
 10) `SVGAnimationElementBridge.initializeAnimation()` gained a `BridgeContext`
    argument and now returns a `boolean`.
+
+11) The old and deprecated `CSSValue` API was replaced by an API close to W3C's
+   Typed OM.

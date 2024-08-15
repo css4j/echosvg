@@ -19,11 +19,11 @@
 package io.sf.carte.echosvg.css.engine.value;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
-import io.sf.carte.doc.style.css.CSSUnit;
+import org.w3c.css.om.unit.CSSUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.property.NumberValue;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -33,8 +33,10 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
  * This class provides a manager for the property with support for length
  * values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class LengthManager extends AbstractValueManager {
@@ -58,51 +60,22 @@ public abstract class LengthManager extends AbstractValueManager {
 			break;
 
 		case INTEGER:
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getIntegerValue());
+			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue());
 
 		case REAL:
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, lu.getFloatValue());
+			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getFloatValue());
 
 		case PERCENTAGE:
-			return new FloatValue(CSSPrimitiveValue.CSS_PERCENTAGE, lu.getFloatValue());
+			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getFloatValue());
 		default:
 			break;
 		}
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
-	static Value createLength(LexicalUnit lu) {
+	static FloatValue createLength(LexicalUnit lu) {
 		if (CSSUnit.isLengthUnitType(lu.getCssUnit())) {
-			short omUnit;
-			switch (lu.getCssUnit()) {
-			case CSSUnit.CSS_PX:
-				omUnit = CSSPrimitiveValue.CSS_PX;
-				break;
-			case CSSUnit.CSS_IN:
-				omUnit = CSSPrimitiveValue.CSS_IN;
-				break;
-			case CSSUnit.CSS_PC:
-				omUnit = CSSPrimitiveValue.CSS_PC;
-				break;
-			case CSSUnit.CSS_PT:
-				omUnit = CSSPrimitiveValue.CSS_PT;
-				break;
-			case CSSUnit.CSS_CM:
-				omUnit = CSSPrimitiveValue.CSS_CM;
-				break;
-			case CSSUnit.CSS_MM:
-				omUnit = CSSPrimitiveValue.CSS_MM;
-				break;
-			case CSSUnit.CSS_EM:
-				omUnit = CSSPrimitiveValue.CSS_EMS;
-				break;
-			case CSSUnit.CSS_EX:
-				omUnit = CSSPrimitiveValue.CSS_EXS;
-				break;
-			default:
-				return null;
-			}
-			return new FloatValue(omUnit, lu.getFloatValue());
+			return new FloatValue(lu.getCssUnit(), lu.getFloatValue());
 		}
 		return null;
 	}
@@ -113,16 +86,16 @@ public abstract class LengthManager extends AbstractValueManager {
 	@Override
 	public Value createFloatValue(short type, float floatValue) throws DOMException {
 		switch (type) {
-		case CSSPrimitiveValue.CSS_PERCENTAGE:
-		case CSSPrimitiveValue.CSS_EMS:
-		case CSSPrimitiveValue.CSS_EXS:
-		case CSSPrimitiveValue.CSS_PX:
-		case CSSPrimitiveValue.CSS_CM:
-		case CSSPrimitiveValue.CSS_MM:
-		case CSSPrimitiveValue.CSS_IN:
-		case CSSPrimitiveValue.CSS_PT:
-		case CSSPrimitiveValue.CSS_PC:
-		case CSSPrimitiveValue.CSS_NUMBER:
+		case CSSUnit.CSS_PERCENTAGE:
+		case CSSUnit.CSS_EM:
+		case CSSUnit.CSS_EX:
+		case CSSUnit.CSS_PX:
+		case CSSUnit.CSS_CM:
+		case CSSUnit.CSS_MM:
+		case CSSUnit.CSS_IN:
+		case CSSUnit.CSS_PT:
+		case CSSUnit.CSS_PC:
+		case CSSUnit.CSS_NUMBER:
 			return new FloatValue(type, floatValue);
 		}
 		throw createInvalidFloatTypeDOMException(type);
@@ -135,58 +108,59 @@ public abstract class LengthManager extends AbstractValueManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value.getCssValueType() != CSSValue.CSS_PRIMITIVE_VALUE) {
+		if (value.getPrimitiveType() != Type.NUMERIC) {
 			return value;
 		}
 
-		switch (value.getPrimitiveType()) {
-		case CSSPrimitiveValue.CSS_NUMBER:
-		case CSSPrimitiveValue.CSS_PX:
+		switch (value.getCSSUnit()) {
+		case CSSUnit.CSS_NUMBER:
+		case CSSUnit.CSS_PX:
 			return value;
 
-		case CSSPrimitiveValue.CSS_MM:
+		case CSSUnit.CSS_MM:
 			CSSContext ctx = engine.getCSSContext();
 			float v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v / ctx.getPixelUnitToMillimeter());
+			return new FloatValue(CSSUnit.CSS_NUMBER, v / ctx.getPixelUnitToMillimeter());
 
-		case CSSPrimitiveValue.CSS_CM:
+		case CSSUnit.CSS_CM:
 			ctx = engine.getCSSContext();
 			v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v * 10f / ctx.getPixelUnitToMillimeter());
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * 10f / ctx.getPixelUnitToMillimeter());
 
-		case CSSPrimitiveValue.CSS_IN:
+		case CSSUnit.CSS_IN:
 			ctx = engine.getCSSContext();
 			v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v * 25.4f / ctx.getPixelUnitToMillimeter());
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * 25.4f / ctx.getPixelUnitToMillimeter());
 
-		case CSSPrimitiveValue.CSS_PT:
+		case CSSUnit.CSS_PT:
 			ctx = engine.getCSSContext();
 			v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v * 25.4f / (72f * ctx.getPixelUnitToMillimeter()));
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * 25.4f / (72f * ctx.getPixelUnitToMillimeter()));
 
-		case CSSPrimitiveValue.CSS_PC:
+		case CSSUnit.CSS_PC:
 			ctx = engine.getCSSContext();
 			v = value.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, (v * 25.4f / (6f * ctx.getPixelUnitToMillimeter())));
+			return new FloatValue(CSSUnit.CSS_NUMBER, (v * 25.4f / (6f * ctx.getPixelUnitToMillimeter())));
 
-		case CSSPrimitiveValue.CSS_EMS:
+		case CSSUnit.CSS_EM:
 			sm.putFontSizeRelative(idx, true);
 
 			v = value.getFloatValue();
 			int fsidx = engine.getFontSizeIndex();
-			float fs;
-			fs = engine.getComputedStyle(elt, pseudo, fsidx).getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v * fs);
+			Value cv = engine.getComputedStyle(elt, pseudo, fsidx);
+			float fs = lengthValue(cv);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * fs);
 
-		case CSSPrimitiveValue.CSS_EXS:
+		case CSSUnit.CSS_EX:
 			sm.putFontSizeRelative(idx, true);
 
 			v = value.getFloatValue();
 			fsidx = engine.getFontSizeIndex();
-			fs = engine.getComputedStyle(elt, pseudo, fsidx).getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v * fs * 0.5f);
+			cv = engine.getComputedStyle(elt, pseudo, fsidx);
+			fs = lengthValue(cv);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * fs * 0.5f);
 
-		case CSSPrimitiveValue.CSS_PERCENTAGE:
+		case CSSUnit.CSS_PERCENTAGE:
 			ctx = engine.getCSSContext();
 			switch (getOrientation()) {
 			case HORIZONTAL_ORIENTATION:
@@ -204,8 +178,18 @@ public abstract class LengthManager extends AbstractValueManager {
 				double h = ctx.getBlockHeight(elt);
 				fs = (float) (value.getFloatValue() * (Math.sqrt(w * w + h * h) / SQRT2) / 100.0);
 			}
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, fs);
+			return new FloatValue(CSSUnit.CSS_NUMBER, fs);
+		case CSSUnit.CSS_INVALID:
+			break;
+		default:
+			// Maybe it is one of the new absolute length units
+			try {
+				value = new FloatValue(CSSUnit.CSS_NUMBER,
+						NumberValue.floatValueConversion(value.getFloatValue(), value.getCSSUnit(), CSSUnit.CSS_PX));
+			} catch (DOMException e) {
+			}
 		}
+
 		return value;
 	}
 

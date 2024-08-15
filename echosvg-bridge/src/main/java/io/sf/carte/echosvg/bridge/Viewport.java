@@ -22,20 +22,12 @@ package io.sf.carte.echosvg.bridge;
 /**
  * Defines a viewport.
  *
- * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public interface Viewport {
-
-	/**
-	 * Returns the width of this viewport.
-	 */
-	float getWidth();
-
-	/**
-	 * Returns the height of this viewport.
-	 */
-	float getHeight();
+public interface Viewport extends io.sf.carte.echosvg.css.Viewport {
 
 }

@@ -71,17 +71,17 @@ public class FontDecoration implements Painter {
 
 		// Prepare a color
 		Color stColor;
-		// Load a color profile that does not match a known space (although it is).
+		// Load a color profile
 		try (InputStream is = getClass().getResourceAsStream(
-				"/io/sf/carte/echosvg/css/color/profiles/LargeRGB-elle-V4-g18.icc")) {
+				"/io/sf/carte/echosvg/css/color/profiles/WideGamutPhoto-v4.icc")) {
 			ICC_Profile profile = ICC_Profile.getInstance(is);
 			ICC_ColorSpace cs = new ICC_ColorSpace(profile);
 			float[] comps = { 0.33f, 0.34f, 0.43f };
 			stColor = new Color(cs, comps, 1f);
 		} catch (IOException e) {
+			e.printStackTrace();
 			stColor = new Color(0x666699);
 		}
-		// The color will be translated to XYZ (D50)
 
 		// Set the STRIKETHROUGH font and a color
 		g.setFont(fontST);
@@ -101,6 +101,7 @@ public class FontDecoration implements Painter {
 			float[] comps = { .55f, .6f, .34f };
 			lColor = new Color(cs, comps, 1f);
 		} catch (IOException e) {
+			e.printStackTrace();
 			lColor = Color.magenta;
 		}
 
@@ -119,6 +120,7 @@ public class FontDecoration implements Painter {
 			float[] comps = { .36f, .35f, .33f };
 			ulColor = new Color(cs, comps, 1f);
 		} catch (IOException e) {
+			e.printStackTrace();
 			ulColor = Color.black;
 		}
 

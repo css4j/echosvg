@@ -18,9 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
-import org.w3c.dom.css.CSSValue;
-
-import io.sf.carte.echosvg.css.engine.value.AbstractValue;
+import io.sf.carte.echosvg.css.engine.value.ColorValue;
 
 /**
  * This is a base class for CIE Lab/LCH color values.
@@ -28,7 +26,7 @@ import io.sf.carte.echosvg.css.engine.value.AbstractValue;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractCIEColor extends AbstractValue {
+public abstract class AbstractCIEColor extends ColorValue {
 
 	/** The three color values. */
 	protected float[] values = new float[3];
@@ -77,15 +75,6 @@ public abstract class AbstractCIEColor extends AbstractValue {
 	}
 
 	public abstract String getFunctionName();
-
-	/**
-	 * Implements
-	 * {@link io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
-	 */
-	@Override
-	public short getCssValueType() {
-		return CSSValue.CSS_CUSTOM;
-	}
 
 	/**
 	 * A string representation of the current value.

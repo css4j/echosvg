@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.css.engine;
 
 import org.w3c.dom.Element;
 
+import io.sf.carte.echosvg.css.Viewport;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.util.ParsedURL;
 
@@ -27,8 +28,10 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * This interface allows the user of a CSSEngine to provide contextual
  * informations.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public interface CSSContext {
@@ -83,6 +86,13 @@ public interface CSSContext {
 	 * Returns the height of the block which directly contains the given element.
 	 */
 	float getBlockHeight(Element elt);
+
+	/**
+	 * Returns the viewport of the specified element.
+	 *
+	 * @param e the element interested in its viewport
+	 */
+	Viewport getViewport(Element e);
 
 	/**
 	 * This method should throw a SecurityException if the resource found at url and

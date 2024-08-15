@@ -21,13 +21,11 @@ package io.sf.carte.echosvg.anim.dom;
 import java.awt.geom.AffineTransform;
 import java.util.List;
 
+import org.w3c.css.om.CSSStyleDeclaration;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.css.DocumentCSS;
-import org.w3c.dom.css.ViewCSS;
 import org.w3c.dom.events.DocumentEvent;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.stylesheets.DocumentStyle;
@@ -48,6 +46,8 @@ import org.w3c.dom.svg.SVGSVGElement;
 import org.w3c.dom.svg.SVGStringList;
 import org.w3c.dom.svg.SVGTransform;
 import org.w3c.dom.svg.SVGViewSpec;
+import org.w3c.dom.view.DocumentCSS;
+import org.w3c.dom.view.ViewCSS;
 import org.w3c.dom.views.AbstractView;
 import org.w3c.dom.views.DocumentView;
 
@@ -716,10 +716,6 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 		return (DocumentView) getOwnerDocument();
 	}
 
-	/**
-	 * <b>DOM</b>: Implements
-	 * {@link org.w3c.dom.css.ViewCSS#getComputedStyle(Element,String)}.
-	 */
 	@Override
 	public CSSStyleDeclaration getComputedStyle(Element elt, String pseudoElt) {
 		AbstractView av = ((DocumentView) getOwnerDocument()).getDefaultView();
@@ -748,19 +744,11 @@ public class SVGOMSVGElement extends SVGStylableElement implements SVGSVGElement
 
 	// DocumentCSS ////////////////////////////////////////////////////////////
 
-	/**
-	 * <b>DOM</b>: Implements
-	 * {@link org.w3c.dom.stylesheets.DocumentStyle#getStyleSheets()}.
-	 */
 	@Override
 	public StyleSheetList getStyleSheets() {
 		return ((DocumentStyle) getOwnerDocument()).getStyleSheets();
 	}
 
-	/**
-	 * <b>DOM</b>: Implements
-	 * {@link org.w3c.dom.css.DocumentCSS#getOverrideStyle(Element,String)}.
-	 */
 	@Override
 	public CSSStyleDeclaration getOverrideStyle(Element elt, String pseudoElt) {
 		return ((DocumentCSS) getOwnerDocument()).getOverrideStyle(elt, pseudoElt);

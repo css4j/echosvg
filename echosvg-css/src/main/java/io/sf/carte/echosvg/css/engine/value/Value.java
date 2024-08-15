@@ -18,153 +18,98 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.css.om.typed.CSSCounterValue;
 import org.w3c.dom.DOMException;
+
+import io.sf.carte.echosvg.css.dom.CSSValue;
 
 /**
  * This interface represents a property value.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * @author See Git history.
  * @version $Id$
  */
-public interface Value {
+public interface Value extends CSSValue {
 
 	/**
-	 * A string representation of the current value.
-	 */
-	String getCssText();
-
-	/**
-	 * A code defining the type of the value.
-	 */
-	short getCssValueType();
-
-	/**
-	 * The type of the value.
-	 */
-	short getPrimitiveType();
-
-	/**
-	 * This method is used to get the float value.
+	 * Convenience method that either returns an identifier or throws an exception.
 	 * 
 	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a float value.
+	 *                         contain an identifier value.
+	 * @Deprecated use {@link #getgetIdentifierValue()} instead.
 	 */
-	float getFloatValue() throws DOMException;
+	@Deprecated
+	default String getIdentifier() throws DOMException {
+		return getIdentifierValue();
+	}
 
 	/**
-	 * This method is used to get the string value.
+	 * If this value is a list, give the item corresponding to the requested index.
+	 * If there is no item at such index, return {@code null} If this object is not
+	 * a list and the index is {@code 0}, return itself.
 	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a string value.
+	 * @param index the index on the list.
+	 * @return the item, or {@code null} if there is no item on that index.
 	 */
-	String getStringValue() throws DOMException;
+	@Override
+	default Value item(int index) {
+		return index == 0 ? this : null;
+	}
 
 	/**
-	 * The red value of the RGB color.
+	 * If this value is a counter() or counters() value, get it.
 	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a RGB color value.
+	 * @return the counter() value.
+	 * @throws DOMException INVALID_ACCESS_ERR if this is not a counter() or
+	 *                      counters() value.
 	 */
-	Value getRed() throws DOMException;
+	CSSCounterValue getCounterValue() throws DOMException;
 
 	/**
-	 * The green value of the RGB color.
+	 * If this value is a rect() value, get it.
 	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a RGB color value.
+	 * @return the rect() value.
+	 * @throws DOMException INVALID_ACCESS_ERR if this is not a rect() value.
 	 */
-	Value getGreen() throws DOMException;
+	RectValue getRectValue() throws DOMException;
 
 	/**
-	 * The blue value of the RGB color.
+	 * If this value is a color value, get it.
 	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a RGB color value.
+	 * @return the color value.
+	 * @throws DOMException INVALID_ACCESS_ERR if this is not a color value.
 	 */
-	Value getBlue() throws DOMException;
+	ColorValue getColorValue() throws DOMException;
 
 	/**
-	 * The alpha channel value of the RGBA color.
+	 * If this value is a unit value, set the float value.
 	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a RGB color value.
+	 * @param value the new value, in the current unit.
+	 * @throws DOMException if the value is not a unit value.
 	 */
-	Value getAlpha() throws DOMException;
+	void setFloatValue(float value) throws DOMException;
 
 	/**
-	 * The number of <code>CSSValues</code> in the list. The range of valid values
-	 * of the indices is <code>0</code> to <code>length-1</code> inclusive.
+	 * Set the modification handler.
 	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a list value.
+	 * @param handler the modification handler.
 	 */
-	int getLength() throws DOMException;
+	void setModificationHandler(ValueModificationHandler handler);
 
 	/**
-	 * Used to retrieve a rule by ordinal index.
+	 * Get the modification handler.
 	 * 
-	 * @return The style rule at the <code>index</code> position in the list, or
-	 *         <code>null</code> if that is not a valid index.
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a list value.
+	 * @return the modification handler, or {@code null} if there is no handler.
 	 */
-	Value item(int index) throws DOMException;
+	ValueModificationHandler getModificationHandler();
 
 	/**
-	 * The top value of the rect.
+	 * Is this value a component?
 	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a Rect value.
+	 * @return {@code true} if the value is a component.
 	 */
-	Value getTop() throws DOMException;
-
-	/**
-	 * The right value of the rect.
-	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a Rect value.
-	 */
-	Value getRight() throws DOMException;
-
-	/**
-	 * The bottom value of the rect.
-	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a Rect value.
-	 */
-	Value getBottom() throws DOMException;
-
-	/**
-	 * The left value of the rect.
-	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a Rect value.
-	 */
-	Value getLeft() throws DOMException;
-
-	/**
-	 * The identifier value of the counter.
-	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a Counter value.
-	 */
-	String getIdentifier() throws DOMException;
-
-	/**
-	 * The listStyle value of the counter.
-	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a Counter value.
-	 */
-	String getListStyle() throws DOMException;
-
-	/**
-	 * The separator value of the counter.
-	 * 
-	 * @exception DOMException INVALID_ACCESS_ERR: Raised if the value doesn't
-	 *                         contain a Counter value.
-	 */
-	String getSeparator() throws DOMException;
+	default boolean isComponent() {
+		return false;
+	}
 
 }

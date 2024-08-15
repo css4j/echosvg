@@ -19,17 +19,16 @@
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSValue;
 
-import io.sf.carte.echosvg.css.engine.value.AbstractValue;
+import io.sf.carte.echosvg.css.engine.value.ColorValue;
 
 /**
  * This class represents an device-specific color value.
  *
- * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class DeviceColor extends AbstractValue {
+@Deprecated
+public class DeviceColor extends ColorValue {
 
 	public static final String DEVICE_GRAY_COLOR_FUNCTION = "device-gray";
 	public static final String DEVICE_RGB_COLOR_FUNCTION = "device-rgb";
@@ -59,15 +58,6 @@ public class DeviceColor extends AbstractValue {
 	}
 
 	/**
-	 * Implements
-	 * {@link io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
-	 */
-	@Override
-	public short getCssValueType() {
-		return CSSValue.CSS_CUSTOM;
-	}
-
-	/**
 	 * Indicates whether this color uses an N-Channel color space.
 	 * 
 	 * @return true if N-Channel is used
@@ -88,6 +78,38 @@ public class DeviceColor extends AbstractValue {
 	 */
 	public float getColor(int i) throws DOMException {
 		return colors[i];
+	}
+
+	@Override
+	public String getCSSColorSpace() {
+		String cs;
+		if (nChannel) {
+			cs = DEVICE_NCHANNEL_COLOR_FUNCTION;
+		} else {
+			switch (count) {
+			case 1:
+				cs = DEVICE_GRAY_COLOR_FUNCTION;
+				break;
+			case 3:
+				cs = DEVICE_RGB_COLOR_FUNCTION;
+				break;
+			case 4:
+				cs = DEVICE_CMYK_COLOR_FUNCTION;
+				break;
+			default:
+				throw new IllegalStateException("Invalid number of components encountered");
+			}
+		}
+		return cs;
+	}
+
+	@Override
+	public DeviceColor clone() {
+		DeviceColor c = (DeviceColor) super.clone();
+		c.nChannel = nChannel;
+		c.count = count;
+		c.colors = colors.clone();
+		return c;
 	}
 
 	/**

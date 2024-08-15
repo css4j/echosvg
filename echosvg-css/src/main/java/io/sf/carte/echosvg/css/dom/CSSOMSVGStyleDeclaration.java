@@ -18,12 +18,12 @@
  */
 package io.sf.carte.echosvg.css.dom;
 
+import org.w3c.css.om.CSSRule;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSRule;
-import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.AbstractValueModificationHandler;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
@@ -31,8 +31,10 @@ import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
 /**
  * This class represents a SVG style declaration.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
@@ -94,14 +96,14 @@ public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
 		public StyleDeclarationColorValue(String prop) {
 			super(null);
 			valueProvider = this;
-			setModificationHandler(new AbstractModificationHandler() {
+			setModificationHandler(new AbstractValueModificationHandler() {
 				@Override
 				protected Value getValue() {
 					return StyleDeclarationColorValue.this.getValue();
 				}
 
 				@Override
-				public void textChanged(String text) throws DOMException {
+				protected void setPropertyText(String text) throws DOMException {
 					if (handler == null) {
 						throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
 					}
@@ -148,7 +150,7 @@ public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
 				}
 
 				@Override
-				public void textChanged(String text) throws DOMException {
+				protected void setPropertyText(String text) throws DOMException {
 					if (handler == null) {
 						throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
 					}

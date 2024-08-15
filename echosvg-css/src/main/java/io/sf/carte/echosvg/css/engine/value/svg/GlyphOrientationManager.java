@@ -18,10 +18,9 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
-import io.sf.carte.doc.style.css.CSSUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
@@ -34,8 +33,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a manager for the 'glyph-orientation' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class GlyphOrientationManager extends AbstractValueManager {
@@ -85,23 +86,23 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
 		case DIMENSION:
 			switch (lu.getCssUnit()) {
 			case CSSUnit.CSS_DEG:
-				return new FloatValue(CSSPrimitiveValue.CSS_DEG, lu.getFloatValue());
+				return new FloatValue(CSSUnit.CSS_DEG, lu.getFloatValue());
 			case CSSUnit.CSS_RAD:
-				return new FloatValue(CSSPrimitiveValue.CSS_RAD, lu.getFloatValue());
+				return new FloatValue(CSSUnit.CSS_RAD, lu.getFloatValue());
 			case CSSUnit.CSS_GRAD:
-				return new FloatValue(CSSPrimitiveValue.CSS_GRAD, lu.getFloatValue());
+				return new FloatValue(CSSUnit.CSS_GRAD, lu.getFloatValue());
 			case CSSUnit.CSS_TURN:
-				return new FloatValue(CSSPrimitiveValue.CSS_DEG, lu.getFloatValue() * 360f);
+				return new FloatValue(CSSUnit.CSS_DEG, lu.getFloatValue() * 360f);
 			}
 
 			// For SVG angle properties unit defaults to 'deg'.
 		case INTEGER: {
 			int n = lu.getIntegerValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_DEG, n);
+			return new FloatValue(CSSUnit.CSS_DEG, n);
 		}
 		case REAL: {
 			float n = lu.getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_DEG, n);
+			return new FloatValue(CSSUnit.CSS_DEG, n);
 		}
 		default:
 			break;
@@ -116,9 +117,9 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
 	@Override
 	public Value createFloatValue(short type, float floatValue) throws DOMException {
 		switch (type) {
-		case CSSPrimitiveValue.CSS_DEG:
-		case CSSPrimitiveValue.CSS_GRAD:
-		case CSSPrimitiveValue.CSS_RAD:
+		case CSSUnit.CSS_DEG:
+		case CSSUnit.CSS_GRAD:
+		case CSSUnit.CSS_RAD:
 			return new FloatValue(type, floatValue);
 		}
 		throw createInvalidFloatValueDOMException(floatValue);

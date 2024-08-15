@@ -18,11 +18,11 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.css.om.CSSStyleDeclaration;
+import org.w3c.css.om.typed.CSSStyleValue;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.svg.SVGAnimatedString;
 
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
@@ -35,6 +35,7 @@ import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.StyleDeclarationProvider;
 import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.AbstractValueModificationHandler;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
@@ -48,8 +49,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * This class provides a common superclass for elements which implement
  * SVGStylable.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class SVGStylableElement extends SVGOMElement implements CSSStylableElement {
@@ -227,7 +230,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 	public boolean useLinearRGBColorInterpolation() {
 		CSSEngine eng = ((SVGOMDocument) getOwnerDocument()).getCSSEngine();
 		Value v = eng.getComputedStyle(this, null, SVGCSSEngine.COLOR_INTERPOLATION_INDEX);
-		return v.getStringValue().charAt(0) == 'l';
+		return v.getIdentifierValue().charAt(0) == 'l';
 	}
 
 	/**
@@ -262,9 +265,6 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 
 	// SVGStylable support ///////////////////////////////////////////////////
 
-	/**
-	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGStylable#getStyle()}.
-	 */
 	public CSSStyleDeclaration getStyle() {
 		if (style == null) {
 			CSSEngine eng = ((SVGOMDocument) getOwnerDocument()).getCSSEngine();
@@ -274,12 +274,8 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 		return style;
 	}
 
-	/**
-	 * <b>DOM</b>: Implements
-	 * {@link org.w3c.dom.svg.SVGStylable#getPresentationAttribute(String)}.
-	 */
-	public CSSValue getPresentationAttribute(String name) {
-		CSSValue result = (CSSValue) getLiveAttributeValue(null, name);
+	public CSSStyleValue getPresentationAttributeValue(String name) {
+		CSSStyleValue result = (CSSStyleValue) getLiveAttributeValue(null, name);
 		if (result != null)
 			return result;
 
@@ -365,14 +361,14 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 		public PresentationAttributeValue(CSSEngine eng, String prop) {
 			super(null);
 			valueProvider = this;
-			setModificationHandler(new AbstractModificationHandler() {
+			setModificationHandler(new AbstractValueModificationHandler() {
 				@Override
 				protected Value getValue() {
 					return PresentationAttributeValue.this.getValue();
 				}
 
 				@Override
-				public void textChanged(String text) throws DOMException {
+				protected void setPropertyText(String text) throws DOMException {
 					value = cssEngine.parsePropertyValue(SVGStylableElement.this, property, text);
 					mutate = true;
 					setAttributeNS(null, property, text);
@@ -468,14 +464,14 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 		public PresentationAttributeColorValue(CSSEngine eng, String prop) {
 			super(null);
 			valueProvider = this;
-			setModificationHandler(new AbstractModificationHandler() {
+			setModificationHandler(new AbstractValueModificationHandler() {
 				@Override
 				protected Value getValue() {
 					return PresentationAttributeColorValue.this.getValue();
 				}
 
 				@Override
-				public void textChanged(String text) throws DOMException {
+				protected void setPropertyText(String text) throws DOMException {
 					value = cssEngine.parsePropertyValue(SVGStylableElement.this, property, text);
 					mutate = true;
 					setAttributeNS(null, property, text);
@@ -578,7 +574,7 @@ public abstract class SVGStylableElement extends SVGOMElement implements CSSStyl
 				}
 
 				@Override
-				public void textChanged(String text) throws DOMException {
+				protected void setPropertyText(String text) throws DOMException {
 					value = cssEngine.parsePropertyValue(SVGStylableElement.this, property, text);
 					mutate = true;
 					setAttributeNS(null, property, text);

@@ -27,6 +27,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.test.ScriptUtil;
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
@@ -47,6 +48,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		TestFonts.loadTestFonts();
+		ScriptUtil.defaultRhinoShutter();
 	}
 
 	/*
@@ -294,7 +296,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	@Test
 	public void testImageBadUrl() throws TranscoderException, IOException {
 		/*
-		 * Admits one error (the broken link being reported).
+		 * Admits errors (the broken link and the invalid x,y being reported).
 		 */
 		testNVErrIgnore("samples/tests/spec/linking/imageBadUrl.svg", null, 5);
 	}

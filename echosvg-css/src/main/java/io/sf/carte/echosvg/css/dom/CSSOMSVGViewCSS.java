@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.css.dom;
 
+import org.w3c.css.om.CSSStyleDeclaration;
 import org.w3c.dom.Element;
-import org.w3c.dom.css.CSSStyleDeclaration;
 
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;

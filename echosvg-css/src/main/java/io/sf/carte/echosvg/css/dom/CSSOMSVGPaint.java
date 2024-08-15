@@ -19,24 +19,25 @@
 package io.sf.carte.echosvg.css.dom;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.svg.SVGPaint;
 
-import io.sf.carte.echosvg.css.engine.value.FloatValue;
-import io.sf.carte.echosvg.css.engine.value.RGBColorValue;
+import io.sf.carte.echosvg.css.engine.value.AbstractValueModificationHandler;
+import io.sf.carte.echosvg.css.engine.value.ColorValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
-import io.sf.carte.echosvg.css.engine.value.svg.ICCColor;
+import io.sf.carte.echosvg.css.engine.value.ValueModificationHandler;
 import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
  * This class implements the {@link SVGPaint} interface.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
+@SuppressWarnings("deprecation")
+public class CSSOMSVGPaint extends CSSOMSVGColor {
 
 	/**
 	 * Creates a new CSSOMSVGPaint.
@@ -49,7 +50,7 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
 	 * Sets the modification handler of this value.
 	 */
 	@Override
-	public void setModificationHandler(ModificationHandler h) {
+	public void setModificationHandler(ValueModificationHandler h) {
 		if (!(h instanceof PaintModificationHandler)) {
 			throw new IllegalArgumentException();
 		}
@@ -67,74 +68,104 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
 	/**
 	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGPaint#getPaintType()}.
 	 */
-	@Override
 	public short getPaintType() {
 		Value value = valueProvider.getValue();
 		switch (value.getCssValueType()) {
-		case CSSValue.CSS_PRIMITIVE_VALUE:
+		case TYPED:
 			switch (value.getPrimitiveType()) {
-			case CSSPrimitiveValue.CSS_IDENT: {
-				String str = value.getStringValue();
+			case IDENT:
+				String str = value.getIdentifierValue();
 				if (str.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-					return SVG_PAINTTYPE_NONE;
+					return SVGPaint.SVG_PAINTTYPE_NONE;
 				} else if (str.equalsIgnoreCase(CSSConstants.CSS_CURRENTCOLOR_VALUE)) {
-					return SVG_PAINTTYPE_CURRENTCOLOR;
+					return SVGPaint.SVG_PAINTTYPE_CURRENTCOLOR;
 				}
-				return SVG_PAINTTYPE_RGBCOLOR;
-			}
-			case CSSPrimitiveValue.CSS_RGBCOLOR:
-				return SVG_PAINTTYPE_RGBCOLOR;
-
-			case CSSPrimitiveValue.CSS_URI:
-				return SVG_PAINTTYPE_URI;
+				return SVGPaint.SVG_PAINTTYPE_RGBCOLOR;
+			case COLOR:
+				ColorValue color = value.getColorValue();
+				switch (color.getCSSColorSpace()) {
+				case ColorValue.RGB_FUNCTION:
+					return SVGPaint.SVG_PAINTTYPE_RGBCOLOR;
+				default:
+					break;
+				}
+				break;
+			case URI:
+				return SVGPaint.SVG_PAINTTYPE_URI;
+			default:
+				break;
 			}
 			break;
 
-		case CSSValue.CSS_VALUE_LIST:
+		case LIST:
 			Value v0 = value.item(0);
 			Value v1 = value.item(1);
 			switch (v0.getPrimitiveType()) {
-			case CSSPrimitiveValue.CSS_IDENT:
-				return SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR;
-			case CSSPrimitiveValue.CSS_URI:
-				if (v1.getCssValueType() == CSSValue.CSS_VALUE_LIST)
-					// Should probably check this more deeply...
-					return SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR;
+			case IDENT:
+				return SVGPaint.SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR;
+			case URI:
+				if (v1.getCssValueType() == Value.CssType.LIST)
+					// FIXME: Should probably check this more deeply...
+					return SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR;
 
 				switch (v1.getPrimitiveType()) {
-				case CSSPrimitiveValue.CSS_IDENT: {
-					String str = v1.getStringValue();
+				case IDENT:
+					String str = v1.getIdentifierValue();
 					if (str.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-						return SVG_PAINTTYPE_URI_NONE;
+						return SVGPaint.SVG_PAINTTYPE_URI_NONE;
 					} else if (str.equalsIgnoreCase(CSSConstants.CSS_CURRENTCOLOR_VALUE)) {
-						return SVG_PAINTTYPE_URI_CURRENTCOLOR;
+						return SVGPaint.SVG_PAINTTYPE_URI_CURRENTCOLOR;
 					}
-					return SVG_PAINTTYPE_URI_RGBCOLOR;
-				}
-				case CSSPrimitiveValue.CSS_RGBCOLOR:
-					return SVG_PAINTTYPE_URI_RGBCOLOR;
+					return SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR;
+				case COLOR:
+					ColorValue color = v1.getColorValue();
+					switch (color.getCSSColorSpace()) {
+					case ColorValue.RGB_FUNCTION:
+						return SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR;
+					default:
+						break;
+					}
+				default:
+					break;
 				}
 
-			case CSSPrimitiveValue.CSS_RGBCOLOR:
-				return SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR;
+				break;
+			case COLOR:
+				ColorValue color = v0.getColorValue();
+				switch (color.getCSSColorSpace()) {
+				case ColorValue.RGB_FUNCTION:
+					return SVGPaint.SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR;
+				default:
+					break;
+				}
+			default:
+				break;
 			}
+		default:
+			break;
+
 		}
-		return SVG_PAINTTYPE_UNKNOWN;
+
+		return SVGPaint.SVG_PAINTTYPE_UNKNOWN;
+	}
+
+	@Override
+	public String getURIValue() throws DOMException {
+		return getUri();
 	}
 
 	/**
 	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGPaint#getUri()}.
 	 */
-	@Override
 	public String getUri() {
 		switch (getPaintType()) {
-		case SVG_PAINTTYPE_URI:
-			return valueProvider.getValue().getStringValue();
+		case SVGPaint.SVG_PAINTTYPE_URI:
+			return valueProvider.getValue().getURIValue();
 
-		case SVG_PAINTTYPE_URI_NONE:
-		case SVG_PAINTTYPE_URI_CURRENTCOLOR:
-		case SVG_PAINTTYPE_URI_RGBCOLOR:
-		case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
+		case SVGPaint.SVG_PAINTTYPE_URI_NONE:
+		case SVGPaint.SVG_PAINTTYPE_URI_CURRENTCOLOR:
+		case SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR:
+		case SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
 			return valueProvider.getValue().item(0).getStringValue();
 		}
 		throw new InternalError();
@@ -143,12 +174,11 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
 	/**
 	 * <b>DOM</b>: Implements {@link org.w3c.dom.svg.SVGPaint#setUri(String)}.
 	 */
-	@Override
 	public void setUri(String uri) {
 		if (handler == null) {
 			throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
 		} else {
-			((PaintModificationHandler) handler).uriChanged(uri);
+			((PaintModificationHandler) handler).uriValueChanged(uri);
 		}
 	}
 
@@ -156,7 +186,6 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
 	 * <b>DOM</b>: Implements
 	 * {@link org.w3c.dom.svg.SVGPaint#setPaint(short,String,String,String)}.
 	 */
-	@Override
 	public void setPaint(short paintType, String uri, String rgbColor, String iccColor) {
 		if (handler == null) {
 			throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
@@ -168,12 +197,12 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
 	/**
 	 * To manage the modifications on a SVGPaint value.
 	 */
-	public interface PaintModificationHandler extends ModificationHandler {
+	public interface PaintModificationHandler extends ValueModificationHandler {
 
 		/**
 		 * Called when the URI has been modified.
 		 */
-		void uriChanged(String uri);
+		void uriValueChanged(String uri);
 
 		/**
 		 * Called when the paint value has beem modified.
@@ -185,559 +214,15 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
 	/**
 	 * Provides an abstract implementation of a PaintModificationHandler.
 	 */
-	public abstract class AbstractModificationHandler implements PaintModificationHandler {
-
-		/**
-		 * Returns the associated value.
-		 */
-		protected abstract Value getValue();
-
-		/**
-		 * Called when the red value text has changed.
-		 */
-		@Override
-		public void redTextChanged(String text) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR:
-				text = RGBColorValue.toString(text, getValue().getGreen().getCssText(),
-						getValue().getBlue().getCssText(), getValue().getAlpha().getCssText());
-				break;
-
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				text = RGBColorValue.toString(text, getValue().item(0).getGreen().getCssText(),
-						getValue().item(0).getBlue().getCssText(), getValue().item(0).getAlpha().getCssText()) + ' '
-						+ getValue().item(1).getCssText();
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR:
-				text = getValue().item(0).getCssText() + ' '
-						+ RGBColorValue.toString(text, getValue().item(1).getGreen().getCssText(),
-								getValue().item(1).getBlue().getCssText(), getValue().item(1).getAlpha().getCssText());
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				text = getValue().item(0).getCssText() + ' '
-						+ RGBColorValue.toString(text, getValue().item(1).getGreen().getCssText(),
-								getValue().item(1).getBlue().getCssText(), getValue().item(1).getAlpha().getCssText())
-						+ ' ' + getValue().item(2).getCssText();
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-			textChanged(text);
-		}
-
-		/**
-		 * Called when the red float value has changed.
-		 */
-		@Override
-		public void redFloatValueChanged(short unit, float value) throws DOMException {
-			redTextChanged(FloatValue.getCssText(unit, value));
-		}
-
-		/**
-		 * Called when the green value text has changed.
-		 */
-		@Override
-		public void greenTextChanged(String text) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR:
-				text = RGBColorValue.toString(getValue().getRed().getCssText(), text, getValue().getBlue().getCssText(),
-						getValue().getAlpha().getCssText());
-				break;
-
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				text = RGBColorValue.toString(getValue().item(0).getRed().getCssText(), text,
-						getValue().item(0).getBlue().getCssText(), getValue().item(0).getAlpha().getCssText()) + ' '
-						+ getValue().item(1).getCssText();
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR:
-				text = getValue().item(0).getCssText() + ' '
-						+ RGBColorValue.toString(getValue().item(1).getRed().getCssText(), text,
-								getValue().item(1).getBlue().getCssText(), getValue().item(1).getAlpha().getCssText());
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				text = getValue().item(0).getCssText() + ' '
-						+ RGBColorValue.toString(getValue().item(1).getRed().getCssText(), text,
-								getValue().item(1).getBlue().getCssText(), getValue().item(1).getAlpha().getCssText())
-						+ ' ' + getValue().item(2).getCssText();
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-			textChanged(text);
-		}
-
-		/**
-		 * Called when the green float value has changed.
-		 */
-		@Override
-		public void greenFloatValueChanged(short unit, float value) throws DOMException {
-			greenTextChanged(FloatValue.getCssText(unit, value));
-		}
-
-		/**
-		 * Called when the blue value text has changed.
-		 */
-		@Override
-		public void blueTextChanged(String text) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR:
-				text = RGBColorValue.toString(getValue().getRed().getCssText(), getValue().getGreen().getCssText(),
-						text, getValue().getAlpha().getCssText());
-				break;
-
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				text = RGBColorValue.toString(getValue().item(0).getRed().getCssText(),
-						getValue().item(0).getGreen().getCssText(), text, getValue().item(0).getAlpha().getCssText())
-						+ ' ' + getValue().item(1).getCssText();
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR:
-				text = getValue().item(0).getCssText() + ' '
-						+ RGBColorValue.toString(getValue().item(1).getRed().getCssText(),
-								getValue().item(1).getGreen().getCssText(), text,
-								getValue().item(1).getAlpha().getCssText());
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				text = getValue().item(0).getCssText() + ' '
-						+ RGBColorValue.toString(getValue().item(1).getRed().getCssText(),
-								getValue().item(1).getGreen().getCssText(), text,
-								getValue().item(1).getAlpha().getCssText())
-						+ ' ' + getValue().item(2).getCssText();
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-			textChanged(text);
-		}
-
-		/**
-		 * Called when the blue float value has changed.
-		 */
-		@Override
-		public void blueFloatValueChanged(short unit, float value) throws DOMException {
-			blueTextChanged(FloatValue.getCssText(unit, value));
-		}
-
-		@Override
-		public void alphaTextChanged(String text) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR:
-				text = RGBColorValue.toString(getValue().getRed().getCssText(), getValue().getGreen().getCssText(),
-						getValue().getBlue().getCssText(), text);
-				break;
-
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				text = RGBColorValue.toString(getValue().item(0).getRed().getCssText(),
-						getValue().item(0).getGreen().getCssText(), getValue().item(0).getBlue().getCssText(), text)
-						+ ' ' + getValue().item(1).getCssText();
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR:
-				text = getValue().item(0).getCssText() + ' '
-						+ RGBColorValue.toString(getValue().item(1).getRed().getCssText(),
-								getValue().item(1).getGreen().getCssText(), getValue().item(1).getBlue().getCssText(),
-								text);
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				text = getValue().item(0).getCssText() + ' '
-						+ RGBColorValue.toString(getValue().item(1).getRed().getCssText(),
-								getValue().item(1).getGreen().getCssText(), getValue().item(1).getBlue().getCssText(),
-								text)
-						+ ' ' + getValue().item(2).getCssText();
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-			textChanged(text);
-		}
-
-		@Override
-		public void alphaFloatValueChanged(short unit, float value) throws DOMException {
-			alphaTextChanged(FloatValue.getCssText(unit, value));
-		}
-
-		/**
-		 * Called when the RGBColor text has changed.
-		 */
-		@Override
-		public void rgbColorChanged(String text) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR:
-				break;
-
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				text += getValue().item(1).getCssText();
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR:
-				text = getValue().item(0).getCssText() + ' ' + text;
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				text = getValue().item(0).getCssText() + ' ' + text + ' ' + getValue().item(2).getCssText();
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-			textChanged(text);
-		}
-
-		/**
-		 * Called when the RGBColor and the ICCColor text has changed.
-		 */
-		@Override
-		public void rgbColorICCColorChanged(String rgb, String icc) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				textChanged(rgb + ' ' + icc);
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				textChanged(getValue().item(0).getCssText() + ' ' + rgb + ' ' + icc);
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-		}
-
-		/**
-		 * Called when the SVGColor has changed.
-		 */
-		@Override
-		public void colorChanged(short type, String rgb, String icc) throws DOMException {
-			switch (type) {
-			case SVG_PAINTTYPE_CURRENTCOLOR:
-				textChanged("currentcolor");
-				break;
-
-			case SVG_PAINTTYPE_RGBCOLOR:
-				textChanged(rgb);
-				break;
-
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				textChanged(rgb + ' ' + icc);
-				break;
-
-			default:
-				throw new DOMException(DOMException.NOT_SUPPORTED_ERR, "");
-			}
-		}
-
-		/**
-		 * Called when the ICC color profile has changed.
-		 */
-		@Override
-		public void colorProfileChanged(String cp) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuilder sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(" icc-color(");
-				sb.append(cp);
-				ICCColor iccc = (ICCColor) getValue().item(1);
-				for (int i = 0; i < iccc.getLength(); i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(' ');
-				sb.append(getValue().item(1).getCssText());
-				sb.append(" icc-color(");
-				sb.append(cp);
-				iccc = (ICCColor) getValue().item(1);
-				for (int i = 0; i < iccc.getLength(); i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-		}
-
-		/**
-		 * Called when the ICC colors has changed.
-		 */
-		@Override
-		public void colorsCleared() throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuilder sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(" icc-color(");
-				ICCColor iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(' ');
-				sb.append(getValue().item(1).getCssText());
-				sb.append(" icc-color(");
-				iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-		}
-
-		/**
-		 * Called when the ICC colors has been initialized.
-		 */
-		@Override
-		public void colorsInitialized(float f) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuilder sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(" icc-color(");
-				ICCColor iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				sb.append(',');
-				sb.append(f);
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(' ');
-				sb.append(getValue().item(1).getCssText());
-				sb.append(" icc-color(");
-				iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				sb.append(',');
-				sb.append(f);
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-		}
-
-		/**
-		 * Called when the ICC color has been inserted.
-		 */
-		@Override
-		public void colorInsertedBefore(float f, int idx) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuilder sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(" icc-color(");
-				ICCColor iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				for (int i = 0; i < idx; i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(',');
-				sb.append(f);
-				for (int i = idx; i < iccc.getLength(); i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(' ');
-				sb.append(getValue().item(1).getCssText());
-				sb.append(" icc-color(");
-				iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				for (int i = 0; i < idx; i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(',');
-				sb.append(f);
-				for (int i = idx; i < iccc.getLength(); i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-		}
-
-		/**
-		 * Called when the ICC color has been replaced.
-		 */
-		@Override
-		public void colorReplaced(float f, int idx) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuilder sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(" icc-color(");
-				ICCColor iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				for (int i = 0; i < idx; i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(',');
-				sb.append(f);
-				for (int i = idx + 1; i < iccc.getLength(); i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(' ');
-				sb.append(getValue().item(1).getCssText());
-				sb.append(" icc-color(");
-				iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				for (int i = 0; i < idx; i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(',');
-				sb.append(f);
-				for (int i = idx + 1; i < iccc.getLength(); i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-		}
-
-		/**
-		 * Called when the ICC color has been removed.
-		 */
-		@Override
-		public void colorRemoved(int idx) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuilder sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(" icc-color(");
-				ICCColor iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				for (int i = 0; i < idx; i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				for (int i = idx + 1; i < iccc.getLength(); i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(' ');
-				sb.append(getValue().item(1).getCssText());
-				sb.append(" icc-color(");
-				iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				for (int i = 0; i < idx; i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				for (int i = idx + 1; i < iccc.getLength(); i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-		}
-
-		/**
-		 * Called when the ICC color has been append.
-		 */
-		@Override
-		public void colorAppend(float f) throws DOMException {
-			switch (getPaintType()) {
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				StringBuilder sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(" icc-color(");
-				ICCColor iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				for (int i = 0; i < iccc.getLength(); i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(',');
-				sb.append(f);
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				sb = new StringBuilder(getValue().item(0).getCssText());
-				sb.append(' ');
-				sb.append(getValue().item(1).getCssText());
-				sb.append(" icc-color(");
-				iccc = (ICCColor) getValue().item(1);
-				sb.append(iccc.getColorProfile());
-				for (int i = 0; i < iccc.getLength(); i++) {
-					sb.append(',');
-					sb.append(iccc.getColor(i));
-				}
-				sb.append(',');
-				sb.append(f);
-				sb.append(')');
-				textChanged(sb.toString());
-				break;
-
-			default:
-				throw new DOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "");
-			}
-		}
+	public abstract class AbstractModificationHandler extends AbstractValueModificationHandler
+			implements PaintModificationHandler {
 
 		/**
 		 * Called when the URI has been modified.
 		 */
 		@Override
-		public void uriChanged(String uri) {
-			textChanged("url(" + uri + ") none");
+		public void uriValueChanged(String uri) {
+			setPropertyText("url(" + uri + ") none");
 		}
 
 		/**
@@ -746,40 +231,40 @@ public class CSSOMSVGPaint extends CSSOMSVGColor implements SVGPaint {
 		@Override
 		public void paintChanged(short type, String uri, String rgb, String icc) {
 			switch (type) {
-			case SVG_PAINTTYPE_NONE:
-				textChanged("none");
+			case SVGPaint.SVG_PAINTTYPE_NONE:
+				setPropertyText("none");
 				break;
 
-			case SVG_PAINTTYPE_CURRENTCOLOR:
-				textChanged("currentcolor");
+			case SVGPaint.SVG_PAINTTYPE_CURRENTCOLOR:
+				setPropertyText("currentcolor");
 				break;
 
-			case SVG_PAINTTYPE_RGBCOLOR:
-				textChanged(rgb);
+			case SVGPaint.SVG_PAINTTYPE_RGBCOLOR:
+				setPropertyText(rgb);
 				break;
 
-			case SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
-				textChanged(rgb + ' ' + icc);
+			case SVGPaint.SVG_PAINTTYPE_RGBCOLOR_ICCCOLOR:
+				setPropertyText(rgb + ' ' + icc);
 				break;
 
-			case SVG_PAINTTYPE_URI:
-				textChanged("url(" + uri + ')');
+			case SVGPaint.SVG_PAINTTYPE_URI:
+				setPropertyText("url(" + uri + ')');
 				break;
 
-			case SVG_PAINTTYPE_URI_NONE:
-				textChanged("url(" + uri + ") none");
+			case SVGPaint.SVG_PAINTTYPE_URI_NONE:
+				setPropertyText("url(" + uri + ") none");
 				break;
 
-			case SVG_PAINTTYPE_URI_CURRENTCOLOR:
-				textChanged("url(" + uri + ") currentcolor");
+			case SVGPaint.SVG_PAINTTYPE_URI_CURRENTCOLOR:
+				setPropertyText("url(" + uri + ") currentcolor");
 				break;
 
-			case SVG_PAINTTYPE_URI_RGBCOLOR:
-				textChanged("url(" + uri + ") " + rgb);
+			case SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR:
+				setPropertyText("url(" + uri + ") " + rgb);
 				break;
 
-			case SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
-				textChanged("url(" + uri + ") " + rgb + ' ' + icc);
+			case SVGPaint.SVG_PAINTTYPE_URI_RGBCOLOR_ICCCOLOR:
+				setPropertyText("url(" + uri + ") " + rgb + ' ' + icc);
 			}
 		}
 

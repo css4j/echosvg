@@ -40,10 +40,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.MutationEvent;
@@ -52,6 +51,7 @@ import org.w3c.dom.svg.SVGNumberList;
 import org.w3c.dom.svg.SVGTextContentElement;
 import org.w3c.dom.svg.SVGTextPositioningElement;
 
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedEnumeration;
@@ -61,11 +61,11 @@ import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.SVGOMTextPositioningElement;
 import io.sf.carte.echosvg.bridge.StrokingTextPainter.TextRun;
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.StyleMap;
-import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
@@ -1379,7 +1379,8 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		String fontWeightString = v.getCssText();
 
 		// Font style
-		String fontStyleString = CSSUtilities.getComputedStyle(element, SVGCSSEngine.FONT_STYLE_INDEX).getStringValue();
+		String fontStyleString = CSSUtilities.getComputedStyle(element, SVGCSSEngine.FONT_STYLE_INDEX)
+				.getIdentifierValue();
 
 		// Needed for SVG fonts (also for dynamic documents).
 		result.put(TEXT_COMPOUND_DELIMITER, element);
@@ -1481,7 +1482,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 
 		// Unicode-bidi mode
 		Value val = CSSUtilities.getComputedStyle(element, SVGCSSEngine.UNICODE_BIDI_INDEX);
-		s = val.getStringValue();
+		s = val.getIdentifierValue();
 		if (s.charAt(0) == 'n') {
 			if (bidiLevel != null)
 				result.put(TextAttribute.BIDI_EMBEDDING, bidiLevel);
@@ -1498,7 +1499,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			// normal writing direction for a string/substring.
 
 			val = CSSUtilities.getComputedStyle(element, SVGCSSEngine.DIRECTION_INDEX);
-			String rs = val.getStringValue();
+			String rs = val.getIdentifierValue();
 			int cbidi = 0;
 			if (bidiLevel != null)
 				cbidi = bidiLevel;
@@ -1537,7 +1538,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		// Writing mode
 
 		val = CSSUtilities.getComputedStyle(element, SVGCSSEngine.WRITING_MODE_INDEX);
-		s = val.getStringValue();
+		s = val.getIdentifierValue();
 		switch (s.charAt(0)) {
 		case 'l':
 			result.put(GVTAttributedCharacterIterator.TextAttribute.WRITING_MODE,
@@ -1556,53 +1557,58 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		// glyph-orientation-vertical
 
 		val = CSSUtilities.getComputedStyle(element, SVGCSSEngine.GLYPH_ORIENTATION_VERTICAL_INDEX);
-		int primitiveType = val.getPrimitiveType();
+		Type primitiveType = val.getPrimitiveType();
 		switch (primitiveType) {
-		case CSSPrimitiveValue.CSS_IDENT: // auto
+		case IDENT: // auto
 			result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION,
 					GVTAttributedCharacterIterator.TextAttribute.ORIENTATION_AUTO);
 			break;
-		case CSSPrimitiveValue.CSS_DEG:
-			result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION,
-					GVTAttributedCharacterIterator.TextAttribute.ORIENTATION_ANGLE);
-			result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION_ANGLE, val.getFloatValue());
-			break;
-		case CSSPrimitiveValue.CSS_RAD:
-			result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION,
-					GVTAttributedCharacterIterator.TextAttribute.ORIENTATION_ANGLE);
-			result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION_ANGLE,
-					(float) Math.toDegrees(val.getFloatValue()));
-			break;
-		case CSSPrimitiveValue.CSS_GRAD:
-			result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION,
-					GVTAttributedCharacterIterator.TextAttribute.ORIENTATION_ANGLE);
-			result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION_ANGLE,
-					val.getFloatValue() * 9 / 5);
+		case NUMERIC:
+			switch (val.getCSSUnit()) {
+			case CSSUnit.CSS_DEG:
+			case CSSUnit.CSS_NUMBER:
+				result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION,
+						GVTAttributedCharacterIterator.TextAttribute.ORIENTATION_ANGLE);
+				result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION_ANGLE, val.getFloatValue());
+				break;
+			case CSSUnit.CSS_RAD:
+				result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION,
+						GVTAttributedCharacterIterator.TextAttribute.ORIENTATION_ANGLE);
+				result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION_ANGLE,
+						(float) Math.toDegrees(val.getFloatValue()));
+				break;
+			case CSSUnit.CSS_GRAD:
+				result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION,
+						GVTAttributedCharacterIterator.TextAttribute.ORIENTATION_ANGLE);
+				result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION_ANGLE,
+						val.getFloatValue() * 9 / 5);
+				break;
+			default:
+				if (CSSUnit.isAngleUnitType(val.getCSSUnit())) {
+					float f = NumberValue.floatValueConversion(val.getFloatValue(), val.getCSSUnit(), CSSUnit.CSS_DEG);
+					result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION,
+							GVTAttributedCharacterIterator.TextAttribute.ORIENTATION_ANGLE);
+					result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION_ANGLE, f);
+					break;
+				}
+				throw new IllegalStateException("unexpected value (V):" + val.getCssText());
+			}
 			break;
 		default:
-			// Cannot happen
 			throw new IllegalStateException("unexpected primitiveType (V):" + primitiveType);
 		}
 
 		// glyph-orientation-horizontal
 
 		val = CSSUtilities.getComputedStyle(element, SVGCSSEngine.GLYPH_ORIENTATION_HORIZONTAL_INDEX);
-		primitiveType = val.getPrimitiveType();
-		switch (primitiveType) {
-		case CSSPrimitiveValue.CSS_DEG:
+		short unit = val.getCSSUnit();
+		if (unit == CSSUnit.CSS_NUMBER || unit == CSSUnit.CSS_DEG) {
 			result.put(GVTAttributedCharacterIterator.TextAttribute.HORIZONTAL_ORIENTATION_ANGLE, val.getFloatValue());
-			break;
-		case CSSPrimitiveValue.CSS_RAD:
-			result.put(GVTAttributedCharacterIterator.TextAttribute.HORIZONTAL_ORIENTATION_ANGLE,
-					(float) Math.toDegrees(val.getFloatValue()));
-			break;
-		case CSSPrimitiveValue.CSS_GRAD:
-			result.put(GVTAttributedCharacterIterator.TextAttribute.HORIZONTAL_ORIENTATION_ANGLE,
-					val.getFloatValue() * 9 / 5);
-			break;
-		default:
-			// Cannot happen
-			throw new IllegalStateException("unexpected primitiveType (H):" + primitiveType);
+		} else if (CSSUnit.isAngleUnitType(unit)) {
+			float f = NumberValue.floatValueConversion(val.getFloatValue(), val.getCSSUnit(), CSSUnit.CSS_DEG);
+			result.put(GVTAttributedCharacterIterator.TextAttribute.HORIZONTAL_ORIENTATION_ANGLE, f);
+		} else {
+			throw new IllegalStateException("unexpected value (H):" + val.getCssText());
 		}
 
 		// text spacing properties...
@@ -1730,13 +1736,11 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		Value val = CSSUtilities.getComputedStyle(element, SVGCSSEngine.TEXT_DECORATION_INDEX);
 
 		switch (val.getCssValueType()) {
-		case CSSValue.CSS_VALUE_LIST:
-			ListValue lst = (ListValue) val;
-
-			int len = lst.getLength();
+		case LIST:
+			int len = val.getLength();
 			for (int i = 0; i < len; i++) {
-				Value v = lst.item(i);
-				String s = v.getStringValue();
+				Value v = val.item(i);
+				String s = v.getIdentifierValue();
 				switch (s.charAt(0)) {
 				case 'u':
 					if (pi.fillPaint != null) {

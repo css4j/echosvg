@@ -19,7 +19,6 @@
 package io.sf.carte.echosvg.css.engine.value.svg;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -29,18 +28,16 @@ import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
-import io.sf.carte.echosvg.css.engine.value.svg12.CIELCHColor;
-import io.sf.carte.echosvg.css.engine.value.svg12.CIELabColor;
-import io.sf.carte.echosvg.css.engine.value.svg12.DeviceColor;
-import io.sf.carte.echosvg.css.engine.value.svg12.ICCNamedColor;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
  * This class provides a manager for the SVGColor property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGColorManager extends ColorManager {
@@ -161,6 +158,9 @@ public class SVGColorManager extends ColorManager {
 	}
 
 	private Value parseColor12Function(LexicalUnit lu, Value v) {
+		throw new DOMException(DOMException.NOT_SUPPORTED_ERR, "Deprecated color.");
+		/*
+		 * @formatter: off
 		String functionName = lu.getFunctionName();
 		if (functionName.equalsIgnoreCase(ICCNamedColor.ICC_NAMED_COLOR_FUNCTION)) {
 			return createICCNamedColorValue(lu, v);
@@ -178,6 +178,8 @@ public class SVGColorManager extends ColorManager {
 			return createDeviceColorValue(lu, v, 0);
 		}
 		return null;
+		* @formatter: on
+		*/
 	}
 
 	private Value createICCColorValue(LexicalUnit lu, Value v) {
@@ -194,81 +196,6 @@ public class SVGColorManager extends ColorManager {
 			lu = lu.getNextLexicalUnit();
 		}
 		return icc;
-	}
-
-	private Value createICCNamedColorValue(LexicalUnit lu, Value v) {
-		lu = lu.getParameters();
-		expectIdent(lu);
-		String profileName = lu.getStringValue();
-
-		lu = lu.getNextLexicalUnit();
-		expectComma(lu);
-		lu = lu.getNextLexicalUnit();
-		expectIdent(lu);
-		String colorName = lu.getStringValue();
-
-		ICCNamedColor icc = new ICCNamedColor(profileName, colorName);
-
-		lu = lu.getNextLexicalUnit();
-		return icc;
-	}
-
-	private Value createCIELabColorValue(LexicalUnit lu, Value v) {
-		lu = lu.getParameters();
-		float l = getColorValue(lu);
-		lu = lu.getNextLexicalUnit();
-		expectComma(lu);
-		lu = lu.getNextLexicalUnit();
-		float a = getColorValue(lu);
-		lu = lu.getNextLexicalUnit();
-		expectComma(lu);
-		lu = lu.getNextLexicalUnit();
-		float b = getColorValue(lu);
-
-		CIELabColor icc = new CIELabColor(l, a, b);
-
-		lu = lu.getNextLexicalUnit();
-		return icc;
-	}
-
-	private Value createCIELCHColorValue(LexicalUnit lu, Value v) {
-		lu = lu.getParameters();
-		float l = getColorValue(lu);
-		lu = lu.getNextLexicalUnit();
-		expectComma(lu);
-		lu = lu.getNextLexicalUnit();
-		float c = getColorValue(lu);
-		lu = lu.getNextLexicalUnit();
-		expectComma(lu);
-		lu = lu.getNextLexicalUnit();
-		float h = getColorValue(lu);
-
-		CIELCHColor icc = new CIELCHColor(l, c, h);
-
-		lu = lu.getNextLexicalUnit();
-		return icc;
-	}
-
-	private Value createDeviceColorValue(LexicalUnit lu, Value v, int expectedComponents) {
-		lu = lu.getParameters();
-
-		boolean nChannel = (expectedComponents <= 0);
-		DeviceColor col = new DeviceColor(nChannel);
-
-		col.append(getColorValue(lu));
-		LexicalUnit lastUnit = lu;
-		lu = lu.getNextLexicalUnit();
-		while (lu != null) {
-			expectComma(lu);
-			lu = lu.getNextLexicalUnit();
-			col.append(getColorValue(lu));
-			lastUnit = lu;
-			lu = lu.getNextLexicalUnit();
-		}
-		if (!nChannel && expectedComponents != col.getNumberOfColors()) {
-			throw createInvalidLexicalUnitDOMException(lastUnit.getLexicalUnitType());
-		}
-		return col;
 	}
 
 	private void expectIdent(LexicalUnit lu) {
@@ -302,14 +229,13 @@ public class SVGColorManager extends ColorManager {
 			int ci = engine.getColorIndex();
 			return engine.getComputedStyle(elt, pseudo, ci);
 		}
-		if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
-			ListValue lv = (ListValue) value;
-			Value v = lv.item(0);
+		if (value.getCssValueType() == Value.CssType.LIST) {
+			Value v = value.item(0);
 			Value t = super.computeValue(elt, pseudo, engine, idx, sm, v);
 			if (t != v) {
 				ListValue result = new ListValue(' ');
 				result.append(t);
-				result.append(lv.item(1));
+				result.append(value.item(1));
 				return result;
 			}
 			return value;

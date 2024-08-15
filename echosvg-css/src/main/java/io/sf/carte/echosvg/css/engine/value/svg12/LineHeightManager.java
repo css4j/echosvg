@@ -19,9 +19,10 @@
 
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
+import java.util.Locale;
+
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
-import org.w3c.dom.css.CSSValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -39,8 +40,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a factory for the 'margin-*' properties values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class LineHeightManager extends LengthManager {
@@ -106,7 +109,7 @@ public class LineHeightManager extends LengthManager {
 		case INHERIT:
 			return ValueConstants.INHERIT_VALUE;
 		case IDENT: {
-			String s = lu.getStringValue().toLowerCase();
+			String s = lu.getStringValue().toLowerCase(Locale.ROOT);
 			if (SVG12CSSConstants.CSS_NORMAL_VALUE.equals(s))
 				return SVG12ValueConstants.NORMAL_VALUE;
 			throw createInvalidIdentifierDOMException(lu.getStringValue());
@@ -132,18 +135,18 @@ public class LineHeightManager extends LengthManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value.getCssValueType() != CSSValue.CSS_PRIMITIVE_VALUE)
+		if (value.getCssValueType() != Value.CssType.TYPED)
 			return value;
 
-		switch (value.getPrimitiveType()) {
-		case CSSPrimitiveValue.CSS_NUMBER:
-			return new LineHeightValue(CSSPrimitiveValue.CSS_NUMBER, value.getFloatValue(), true);
+		switch (value.getCSSUnit()) {
+		case CSSUnit.CSS_NUMBER:
+			return new LineHeightValue(CSSUnit.CSS_NUMBER, value.getFloatValue(), true);
 
-		case CSSPrimitiveValue.CSS_PERCENTAGE: {
+		case CSSUnit.CSS_PERCENTAGE: {
 			float v = value.getFloatValue();
 			int fsidx = engine.getFontSizeIndex();
 			float fs = engine.getComputedStyle(elt, pseudo, fsidx).getFloatValue();
-			return new FloatValue(CSSPrimitiveValue.CSS_NUMBER, v * fs * 0.01f);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * fs * 0.01f);
 		}
 
 		default:

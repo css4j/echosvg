@@ -18,8 +18,9 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import java.util.Locale;
+
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSPrimitiveValue;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
@@ -28,6 +29,7 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
+import io.sf.carte.echosvg.css.engine.value.IdentValue;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.StringValue;
@@ -40,8 +42,10 @@ import io.sf.carte.echosvg.util.SVGTypes;
 /**
  * This class provides a factory for the 'font-family' property values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class FontFamilyManager extends AbstractValueManager {
@@ -51,9 +55,9 @@ public class FontFamilyManager extends AbstractValueManager {
 	 */
 	protected static final ListValue DEFAULT_VALUE = new ListValue();
 	static {
-		DEFAULT_VALUE.append(new StringValue(CSSPrimitiveValue.CSS_STRING, "Arial"));
-		DEFAULT_VALUE.append(new StringValue(CSSPrimitiveValue.CSS_STRING, "Helvetica"));
-		DEFAULT_VALUE.append(new StringValue(CSSPrimitiveValue.CSS_IDENT, CSSConstants.CSS_SANS_SERIF_VALUE));
+		DEFAULT_VALUE.append(new StringValue("Arial"));
+		DEFAULT_VALUE.append(new StringValue("Helvetica"));
+		DEFAULT_VALUE.append(new IdentValue(CSSConstants.CSS_SANS_SERIF_VALUE));
 	}
 
 	/**
@@ -135,7 +139,7 @@ public class FontFamilyManager extends AbstractValueManager {
 		for (;;) {
 			switch (lu.getLexicalUnitType()) {
 			case STRING:
-				result.append(new StringValue(CSSPrimitiveValue.CSS_STRING, lu.getStringValue()));
+				result.append(new StringValue(lu.getStringValue()));
 				lu = lu.getNextLexicalUnit();
 				break;
 
@@ -158,12 +162,12 @@ public class FontFamilyManager extends AbstractValueManager {
 						}
 						lu = lu.getNextLexicalUnit();
 					} while (lu != null && isIdentOrNumber(lu));
-					result.append(new StringValue(CSSPrimitiveValue.CSS_STRING, sb.toString()));
+					result.append(new StringValue(sb.toString()));
 				} else {
 					String id = sb.toString();
-					String s = id.toLowerCase().intern();
+					String s = id.toLowerCase(Locale.ROOT).intern();
 					Value v = (Value) values.get(s);
-					result.append((v != null) ? v : new StringValue(CSSPrimitiveValue.CSS_STRING, id));
+					result.append((v != null) ? v : new StringValue(id));
 				}
 				break;
 			default:

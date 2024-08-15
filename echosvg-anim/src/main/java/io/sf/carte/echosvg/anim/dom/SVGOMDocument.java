@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import org.w3c.css.om.CSSStyleDeclaration;
 import org.w3c.dom.Attr;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
@@ -40,8 +41,6 @@ import org.w3c.dom.EntityReference;
 import org.w3c.dom.Node;
 import org.w3c.dom.ProcessingInstruction;
 import org.w3c.dom.Text;
-import org.w3c.dom.css.CSSStyleDeclaration;
-import org.w3c.dom.css.DocumentCSS;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.MutationEvent;
@@ -687,9 +686,9 @@ public class SVGOMDocument extends AbstractStylableDocument
 	// DocumentCSS ////////////////////////////////////////////////////////////
 
 	/**
-	 * <b>DOM</b>: Implements {@link DocumentCSS#getOverrideStyle(Element,String)}.
+	 * This does not implement {@code DocumentCSS#getOverrideStyle(Element,String)}
+	 * anymore, as it does not support Typed OM.
 	 */
-	@Override
 	public CSSStyleDeclaration getOverrideStyle(Element elt, String pseudoElt) {
 		if (elt instanceof SVGStylableElement && pseudoElt == null) {
 			return ((SVGStylableElement) elt).getOverrideStyle();

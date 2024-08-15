@@ -19,17 +19,16 @@
 package io.sf.carte.echosvg.css.engine.value.svg12;
 
 import org.w3c.dom.DOMException;
-import org.w3c.dom.css.CSSValue;
 
-import io.sf.carte.echosvg.css.engine.value.AbstractValue;
+import io.sf.carte.echosvg.css.engine.value.ColorValue;
 
 /**
  * This class represents an ICC named color value.
  *
- * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class ICCNamedColor extends AbstractValue {
+@Deprecated
+public class ICCNamedColor extends ColorValue {
 
 	public static final String ICC_NAMED_COLOR_FUNCTION = "icc-named-color";
 
@@ -51,13 +50,9 @@ public class ICCNamedColor extends AbstractValue {
 		this.colorName = colorName;
 	}
 
-	/**
-	 * Implements
-	 * {@link io.sf.carte.echosvg.css.engine.value.Value#getCssValueType()}.
-	 */
 	@Override
-	public short getCssValueType() {
-		return CSSValue.CSS_CUSTOM;
+	public String getCSSColorSpace() {
+		return colorProfile;
 	}
 
 	/**
@@ -72,6 +67,14 @@ public class ICCNamedColor extends AbstractValue {
 	 */
 	public String getColorName() throws DOMException {
 		return colorName;
+	}
+
+	@Override
+	public ColorValue clone() {
+		ICCNamedColor c = (ICCNamedColor) super.clone();
+		c.colorName = colorName;
+		c.colorProfile = colorProfile;
+		return c;
 	}
 
 	/**
