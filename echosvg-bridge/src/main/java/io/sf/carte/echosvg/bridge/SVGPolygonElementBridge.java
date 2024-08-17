@@ -36,8 +36,10 @@ import io.sf.carte.echosvg.parser.AWTPolygonProducer;
 /**
  * Bridge class for the &lt;polygon&gt; element.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
@@ -78,11 +80,23 @@ public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
 	 */
 	@Override
 	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode) {
-
 		SVGOMPolygonElement pe = (SVGOMPolygonElement) e;
+		SVGOMAnimatedPoints _points = pe.getSVGOMAnimatedPoints();
+
+		LiveAttributeException lex = _points.check();
+		if (lex != null) {
+			BridgeException be = new BridgeException(ctx, lex);
+			if (lex.getCode() == LiveAttributeException.ERR_ATTRIBUTE_MISSING) {
+				if (ctx.userAgent != null) {
+					ctx.userAgent.displayWarning(be);
+				}
+				return;
+			}
+			// Must be LiveAttributeException.ERR_ATTRIBUTE_MALFORMED:
+			displayErrorOrThrow(ctx, be);
+		}
+
 		try {
-			SVGOMAnimatedPoints _points = pe.getSVGOMAnimatedPoints();
-			_points.check();
 			SVGPointList pl = _points.getAnimatedPoints();
 			int size = pl.getNumberOfItems();
 			if (size == 0) {

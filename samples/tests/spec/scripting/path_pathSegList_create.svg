@@ -28,7 +28,7 @@
 <!-- @version $Id$ -->
 <!-- ====================================================================== -->
 <?xml-stylesheet type="text/css" href="../../resources/style/test.css"      ?>
-<svg id="body" width="450" height="500" viewBox="0 0 450 500">
+<svg id="body" width="450" height="500" viewBox="0 0 450 500" xmlns="http://www.w3.org/2000/svg">
     <title>&lt;path&gt; attributes 'onload'</title>
 
     <text text-anchor="middle" x="50%" y="25" class="title">&lt;path&gt; getPathSegList() 

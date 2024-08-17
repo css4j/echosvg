@@ -226,11 +226,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 		try {
 			vb = parseViewBoxAttribute(e, viewBox, ctx);
 		} catch (BridgeException be) {
-			if (ctx.userAgent != null) {
-				ctx.userAgent.displayError(be);
-			} else {
-				throw be;
-			}
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 			return new AffineTransform();
 		}
 
@@ -243,11 +239,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 		} catch (ParseException pEx) {
 			BridgeException be = new BridgeException(ctx, e, pEx, ERR_ATTRIBUTE_VALUE_MALFORMED,
 					new Object[] { SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE, aspectRatio, pEx });
-			if (ctx.userAgent != null) {
-				ctx.userAgent.displayError(be);
-			} else {
-				throw be;
-			}
+			AbstractSVGBridge.displayErrorOrThrow(ctx, be);
 			return new AffineTransform();
 		}
 
@@ -344,11 +336,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 		try {
 			art = getPreserveAspectRatioTransform(e, vb, w, h, aPAR, ctx);
 		} catch (BridgeException ex) {
-			if (ctx.userAgent != null) {
-				ctx.userAgent.displayError(ex);
-			} else {
-				throw ex;
-			}
+			AbstractSVGBridge.displayErrorOrThrow(ctx, ex);
 			art = new AffineTransform();
 		}
 		return art;

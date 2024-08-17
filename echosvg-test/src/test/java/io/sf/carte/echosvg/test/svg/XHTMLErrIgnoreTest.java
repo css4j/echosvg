@@ -50,14 +50,15 @@ public class XHTMLErrIgnoreTest extends XHTMLRenderingAccuracyTest {
 	}
 
 	@Override
-	ImageTranscoder createTestImageTranscoder() {
-		return new NoStackTraceTranscoder();
-	}
-
-	@Override
 	protected void checkErrorHandler(ErrorHandler errorHandler) {
 		DummyErrorHandler handler = (DummyErrorHandler) errorHandler;
 		handler.assertErrorCount(expectedErrorCount);
+		super.checkErrorHandler(errorHandler);
+	}
+
+	@Override
+	ImageTranscoder createTestImageTranscoder() {
+		return new ErrIgnoreTranscoder();
 	}
 
 }

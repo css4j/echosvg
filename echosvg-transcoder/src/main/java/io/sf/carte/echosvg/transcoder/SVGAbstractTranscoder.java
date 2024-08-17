@@ -83,8 +83,10 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * the SVG image</li>
  * </ul>
  *
- * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
@@ -1287,10 +1289,9 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 		@Override
 		public void displayError(Exception e) {
 			try {
-				e.printStackTrace();
 				SVGAbstractTranscoder.this.handler.error(new TranscoderException(e));
 			} catch (TranscoderException ex) {
-				throw new RuntimeException(ex.getMessage());
+				throw new RuntimeException(ex);
 			}
 		}
 
@@ -1303,6 +1304,15 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 				SVGAbstractTranscoder.this.handler.warning(new TranscoderException(message));
 			} catch (TranscoderException ex) {
 				throw new RuntimeException(ex.getMessage());
+			}
+		}
+
+		@Override
+		public void displayWarning(Exception ex) {
+			try {
+				SVGAbstractTranscoder.this.handler.warning(new TranscoderException(ex));
+			} catch (TranscoderException e) {
+				throw new RuntimeException(e);
 			}
 		}
 

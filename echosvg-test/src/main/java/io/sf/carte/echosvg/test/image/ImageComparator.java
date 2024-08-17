@@ -77,12 +77,12 @@ public class ImageComparator {
 	public static final short DIFFERENT_DATA_TYPES = 6;
 
 	/**
-	 * The images have have too many below-threshold different pixels.
+	 * The images have too many below-threshold different pixels.
 	 */
 	public static final short DIFFERENT_PIXELS_BELOW_THRESHOLD = 10;
 
 	/**
-	 * The images have have too many over-threshold different pixels.
+	 * The images have too many over-threshold different pixels.
 	 */
 	public static final short DIFFERENT_PIXELS_OVER_THRESHOLD = 11;
 
@@ -625,10 +625,10 @@ public class ImageComparator {
 			desc = "The images use different buffer data types";
 			break;
 		case DIFFERENT_PIXELS_BELOW_THRESHOLD:
-			desc = "The images have have too many below-threshold different pixels";
+			desc = "The images have too many below-threshold different pixels";
 			break;
 		case DIFFERENT_PIXELS_OVER_THRESHOLD:
-			desc = "The images have have too many over-threshold different pixels";
+			desc = "The images have too many over-threshold different pixels";
 			break;
 		case NO_VARIANTS:
 			desc = "A variant comparison was executed but no variants were found";

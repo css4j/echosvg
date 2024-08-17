@@ -33,3 +33,7 @@ This product includes images from the Pasodoble Icon Theme
 This product's test suite includes images from the Canvg Project
 (https://canvg.js.org/, https://github.com/canvg/canvg), which uses a MIT
 license. See samples/canvg/LICENSE.
+
+This product's test suite includes images from the Web Platform Tests
+(https://github.com/web-platform-tests/wpt), which use a 3-Clause BSD License.
+See samples/wpt/LICENSE.

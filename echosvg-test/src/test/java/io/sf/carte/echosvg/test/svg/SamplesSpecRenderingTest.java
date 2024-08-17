@@ -500,7 +500,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	 */
 	@Test
 	public void testRenderingInvalidViewbox() throws TranscoderException, IOException {
-		testErrIgnore("samples/tests/spec/rendering/invalidViewbox.svg", BROWSER_MEDIA, 3, true);
+		testErrIgnore("samples/tests/spec/rendering/invalidViewbox.svg", BROWSER_MEDIA, true, 3);
 	}
 
 	@Test
@@ -547,7 +547,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testShapesEmptyShape() throws TranscoderException, IOException {
-		test("samples/tests/spec/shapes/emptyShape.svg");
+		test("samples/tests/spec/shapes/emptyShape.svg", true, 3);
 	}
 
 	/*

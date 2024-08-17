@@ -64,7 +64,7 @@ public class AbstractSamplesRendering {
 					+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." };
 
 	void test(String file) throws TranscoderException, IOException {
-		test(file, true);
+		test(file, true, 0);
 	}
 
 	/**
@@ -75,7 +75,20 @@ public class AbstractSamplesRendering {
 	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testNV(String file) throws TranscoderException, IOException {
-		test(file, false);
+		test(file, false, 0);
+	}
+
+	/**
+	 * A non-validating test.
+	 * 
+	 * @param file                 the SVG file to test.
+	 * @param expectedWarningCount the expected warning count or {@code null} to not
+	 *                             check.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testNV(String file, Integer expectedWarningCount) throws TranscoderException, IOException {
+		test(file, false, expectedWarningCount);
 	}
 
 	float getBelowThresholdAllowed() {
@@ -114,14 +127,18 @@ public class AbstractSamplesRendering {
 	 * reference image.
 	 * </p>
 	 * 
-	 * @param file       the SVG file to test.
-	 * @param validating if true, the SVG is validated.
+	 * @param file                 the SVG file to test.
+	 * @param validating           if true, the SVG is validated.
+	 * @param expectedWarningCount the expected warning count or {@code null} to not
+	 *                             check.
 	 * @throws TranscoderException
 	 * @throws IOException         if an I/O error occurs.
 	 */
-	void test(String file, boolean validating) throws TranscoderException, IOException {
+	void test(String file, boolean validating, Integer expectedWarningCount)
+			throws TranscoderException, IOException {
 		RenderingTest runner = new RenderingTest();
 		runner.setValidating(validating);
+		runner.setExpectedWarningCount(expectedWarningCount);
 		runner.setFile(file);
 		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
@@ -143,7 +160,7 @@ public class AbstractSamplesRendering {
 	 */
 	void testNVErrIgnore(String file, String media, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		testErrIgnore(file, media, expectedErrorCount, false);
+		testErrIgnore(file, media, false, expectedErrorCount);
 	}
 
 	/**
@@ -157,15 +174,39 @@ public class AbstractSamplesRendering {
 	 * @param file               the SVG file to test.
 	 * @param media              the media to test, or {@code null} if default
 	 *                           media.
-	 * @param expectedErrorCount the expected error count.
 	 * @param validate           whether to validate or not.
+	 * @param expectedErrorCount the expected error count.
 	 * @throws TranscoderException
 	 * @throws IOException         if an I/O error occurs.
 	 */
-	void testErrIgnore(String file, String media, int expectedErrorCount, boolean validate)
+	void testErrIgnore(String file, String media, boolean validate, int expectedErrorCount)
 			throws TranscoderException, IOException {
+		testErrIgnore(file, media, validate, expectedErrorCount, 0);
+	}
+
+	/**
+	 * Test the rendering of an SVG image, ignoring reported errors.
+	 * 
+	 * <p>
+	 * A small percentage of different pixels is allowed during the comparison to a
+	 * reference image.
+	 * </p>
+	 * 
+	 * @param file                 the SVG file to test.
+	 * @param media                the media to test, or {@code null} if default
+	 *                             media.
+	 * @param validate             whether to validate or not.
+	 * @param expectedErrorCount   the expected error count.
+	 * @param expectedWarningCount the expected warning count or {@code null} to not
+	 *                             check.
+	 * @throws TranscoderException
+	 * @throws IOException         if an I/O error occurs.
+	 */
+	void testErrIgnore(String file, String media, boolean validate, int expectedErrorCount,
+			Integer expectedWarningCount) throws TranscoderException, IOException {
 		RenderingTest runner = new ErrIgnoreTest(expectedErrorCount);
 		runner.setValidating(validate);
+		runner.setExpectedWarningCount(expectedWarningCount);
 		runner.setMedia(media);
 		runner.setFile(file);
 		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());

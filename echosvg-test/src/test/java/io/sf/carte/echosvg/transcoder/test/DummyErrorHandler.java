@@ -38,8 +38,6 @@ public class DummyErrorHandler implements ErrorHandler {
 
 	private List<TranscoderException> errors = null;
 
-	private int warningCount = 0;
-
 	@Override
 	public void error(TranscoderException ex) throws TranscoderException {
 		prepareErrorList();
@@ -61,7 +59,6 @@ public class DummyErrorHandler implements ErrorHandler {
 
 	@Override
 	public void warning(TranscoderException ex) throws TranscoderException {
-		warningCount++;
 	}
 
 	/**
@@ -80,15 +77,6 @@ public class DummyErrorHandler implements ErrorHandler {
 	 */
 	public int getErrorCount() {
 		return errors == null ? 0 : errors.size();
-	}
-
-	/**
-	 * Get the warning count.
-	 * 
-	 * @return the warning count.
-	 */
-	public int getWarningCount() {
-		return warningCount;
 	}
 
 	public void assertErrorCount(int expectedErrorCount) {
