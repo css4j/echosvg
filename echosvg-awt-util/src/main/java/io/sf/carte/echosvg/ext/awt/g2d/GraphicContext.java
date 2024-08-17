@@ -858,8 +858,7 @@ public class GraphicContext implements Cloneable {
 						&& antialiasingHint != RenderingHints.VALUE_ANTIALIAS_DEFAULT) {
 					// Antialiasing was not requested. However, if it was not turned
 					// off explicitly, use it.
-					if (antialiasingHint == RenderingHints.VALUE_ANTIALIAS_OFF)
-						isAntialiased = false;
+					isAntialiased = antialiasingHint != RenderingHints.VALUE_ANTIALIAS_OFF;
 				}
 			} else
 				isAntialiased = false;
@@ -869,9 +868,8 @@ public class GraphicContext implements Cloneable {
 		//
 		// Find out whether fractional metrics should be used.
 		//
-		boolean useFractionalMetrics = true;
-		if (hints.get(RenderingHints.KEY_FRACTIONALMETRICS) == RenderingHints.VALUE_FRACTIONALMETRICS_OFF)
-			useFractionalMetrics = false;
+		boolean useFractionalMetrics = hints
+				.get(RenderingHints.KEY_FRACTIONALMETRICS) != RenderingHints.VALUE_FRACTIONALMETRICS_OFF;
 
 		FontRenderContext frc = new FontRenderContext(defaultTransform, isAntialiased, useFractionalMetrics);
 		return frc;
