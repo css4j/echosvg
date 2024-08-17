@@ -72,19 +72,20 @@ public class ErrIgnoreTest extends RenderingTest {
 	protected void checkErrorHandler(ErrorHandler errorHandler) {
 		DummyErrorHandler handler = (DummyErrorHandler) errorHandler;
 		handler.assertErrorCount(expectedErrorCount);
+		super.checkErrorHandler(errorHandler);
 	}
 
-	class ErrIgnoreTranscoder extends NoStackTraceTranscoder {
+	class ErrIgnoreTranscoder extends InternalPNGTranscoder {
 
 		@Override
 		protected UserAgent createUserAgent() {
-			return new TestTranscoderUserAgent();
+			return new BrokenLinkUserAgent();
 		}
 
-		class TestTranscoderUserAgent
-				extends NoStackTraceTranscoder.NoStackTraceTranscoderUserAgent {
+		class BrokenLinkUserAgent
+				extends InternalPNGTranscoder.TestTranscoderUserAgent {
 
-			public TestTranscoderUserAgent() {
+			public BrokenLinkUserAgent() {
 				super();
 			}
 

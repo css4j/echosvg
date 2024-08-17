@@ -101,11 +101,7 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 		} catch (LiveAttributeException ex) {
 			rx = 0f;
 			rxAuto = true;
-			BridgeException be = new BridgeException(ctx, ex);
-			if (ctx.userAgent == null) {
-				throw be;
-			}
-			ctx.userAgent.displayError(be);
+			reportLiveAttributeException(ctx, ex);
 		}
 		if (rx > w / 2f) {
 			rx = w / 2f;
@@ -118,11 +114,7 @@ public class SVGRectElementBridge extends SVGShapeElementBridge {
 			ry = _ry.getCheckedValue();
 		} catch (LiveAttributeException ex) {
 			ry = rx;
-			BridgeException be = new BridgeException(ctx, ex);
-			if (ctx.userAgent == null) {
-				throw be;
-			}
-			ctx.userAgent.displayError(be);
+			reportLiveAttributeException(ctx, ex);
 		}
 		if (ry > h / 2f) {
 			ry = h / 2f;

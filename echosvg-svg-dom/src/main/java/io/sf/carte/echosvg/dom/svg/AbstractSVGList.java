@@ -377,20 +377,28 @@ public abstract class AbstractSVGList {
 			return;
 		}
 
-		try {
-			ListBuilder builder = new ListBuilder(this);
-
-			doParse(getValueAsString(), builder);
-
-			List<SVGItem> parsedList = builder.getList();
-			if (parsedList != null) {
-				clear(itemList);
-			}
-			itemList = parsedList;
-		} catch (ParseException e) {
-			itemList = null;
-		}
 		valid = true;
+
+		String s = getValueAsString();
+		if (s == null || (s = s.trim()).isEmpty()) {
+			clear(itemList);
+			itemList = new ArrayList<>(1);
+			return;
+		}
+
+		ListBuilder builder = new ListBuilder(this);
+		try {
+			doParse(s, builder);
+		} catch (ParseException e) {
+		} finally {
+			List<SVGItem> parsedList = builder.getList();
+			clear(itemList);
+			if (parsedList != null) {
+				itemList = parsedList;
+			} else {
+				itemList = new ArrayList<>(1);
+			}
+		}
 	}
 
 	/**
@@ -472,6 +480,13 @@ public abstract class AbstractSVGList {
 			item.setParent(null);
 		}
 		list.clear();
+	}
+
+	public void copyTo(AbstractSVGList list) {
+		list.valid = valid;
+		if (itemList != null) {
+			list.itemList = new ArrayList<>(itemList);
+		}
 	}
 
 }

@@ -92,11 +92,7 @@ public class SVGEllipseElementBridge extends SVGShapeElementBridge {
 		} catch (LiveAttributeException ex) {
 			rx = 0f;
 			rxAuto = true;
-			BridgeException be = new BridgeException(ctx, ex);
-			if (ctx.userAgent == null) {
-				throw be;
-			}
-			ctx.userAgent.displayError(be);
+			reportLiveAttributeException(ctx, ex);
 		}
 
 		// 'ry' attribute - default is auto (SVG2)
@@ -106,11 +102,7 @@ public class SVGEllipseElementBridge extends SVGShapeElementBridge {
 			ry = _ry.getCheckedValue();
 		} catch (LiveAttributeException ex) {
 			ry = rx;
-			BridgeException be = new BridgeException(ctx, ex);
-			if (ctx.userAgent == null) {
-				throw be;
-			}
-			ctx.userAgent.displayError(be);
+			reportLiveAttributeException(ctx, ex);
 		}
 
 		// Check whether rx was auto

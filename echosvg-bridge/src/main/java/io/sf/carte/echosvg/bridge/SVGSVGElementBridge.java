@@ -244,11 +244,7 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 					actualWidth = vbr.getWidth();
 					actualHeight = vbr.getHeight();
 				} catch (RuntimeException ex) {
-					if (ctx.userAgent != null) {
-						ctx.userAgent.displayError(ex);
-					} else {
-						throw ex;
-					}
+					displayErrorOrThrow(ctx, ex);
 				}
 			}
 			ctx.openViewport(e, new SVGSVGElementViewport(actualWidth, actualHeight));

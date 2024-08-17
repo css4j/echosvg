@@ -23,6 +23,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.test.ScriptUtil;
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
@@ -46,6 +47,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		TestFonts.loadTestFonts();
+		ScriptUtil.defaultRhinoShutter();
 	}
 
 	@Test
@@ -388,12 +390,12 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	 */
 
 	/*
-	 * This test depends on the Batik Font, which is licensing-problematic.
+	 * This test depends on the Batik Font, which is license-problematic.
 	 * The license only allows usage of ASF trademarks for attribution purposes.
 	 */
 	@Test
 	public void testFontAltGlyph() throws TranscoderException, IOException {
-		test("samples/tests/spec/fonts/fontAltGlyph.svg", 4);
+		test("samples/tests/spec/fonts/fontAltGlyph.svg", 4, 0);
 	}
 
 	@Test
@@ -472,7 +474,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	@Test
 	public void testMissingRef_All() throws TranscoderException, IOException {
 		testAllInputSources("samples/tests/spec/linking/missingRef.svg", null, false, null, null,
-				false, 16);
+				false, 16, 0);
 	}
 
 	@Test
@@ -682,7 +684,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 
 	@Test
 	public void testShapesEmptyShape() throws TranscoderException, IOException {
-		test("samples/tests/spec/shapes/emptyShape.svg");
+		test("samples/tests/spec/shapes/emptyShape.svg", 0, 3);
 	}
 
 	/*
@@ -1333,7 +1335,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	@Test
 	public void testCSS3_All() throws TranscoderException, IOException {
 		testAllInputSources("samples/tests/spec2/styling/css3.html", null, false, null, null,
-				false, 4);
+				false, 4, 0);
 	}
 
 	@Test
@@ -1348,13 +1350,13 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 
 	@Test
 	public void testCSS3Dark() throws TranscoderException, IOException {
-		testDark("samples/tests/spec2/styling/css3.html", 4);
+		testDark("samples/tests/spec2/styling/css3.html", 4, 0);
 	}
 
 	@Test
 	public void testCSS3_Selector() throws TranscoderException, IOException {
 		test("samples/tests/spec2/styling/css3.html", SVGRenderingAccuracyTest.DEFAULT_MEDIUM,
-				false, null, "#theSVG", true, 4);
+				false, null, "#theSVG", true, 4, 0);
 	}
 
 }

@@ -25,6 +25,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.test.ScriptUtil;
 import io.sf.carte.echosvg.test.TestFonts;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
 
@@ -56,14 +57,31 @@ public class MermaidRenderingTest extends AbstractBypassRenderingCheck {
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	void testMermaid(String file, int expectedErrorCount) throws TranscoderException, IOException {
+	void testMermaid(String file, int expectedErrorCount)
+			throws TranscoderException, IOException {
+		testMermaid(file, expectedErrorCount, 0);
+	}
+
+	/**
+	 * A standard Mermaid test, with an expected error count.
+	 * 
+	 * @param file               the SVG file to test.
+	 * @param expectedErrorCount the expected error count.
+	 * @param expectedWarningCount the expected warning count or {@code null} to not
+	 *                             check.
+	 * @throws TranscoderException
+	 * @throws IOException
+	 */
+	void testMermaid(String file, int expectedErrorCount, Integer expectedWarningCount)
+			throws TranscoderException, IOException {
 		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, Color.white, null, false,
-				expectedErrorCount);
+				expectedErrorCount, expectedWarningCount);
 	}
 
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
 		TestFonts.loadTestFonts();
+		ScriptUtil.defaultRhinoShutter();
 	}
 
 	@Test

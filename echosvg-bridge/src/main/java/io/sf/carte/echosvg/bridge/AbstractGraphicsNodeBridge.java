@@ -164,11 +164,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 		try {
 			value = animValue.getCheckedValue();
 		} catch (LiveAttributeException ex) {
-			BridgeException be = new BridgeException(ctx, ex);
-			if (ctx.userAgent == null) {
-				throw be;
-			}
-			ctx.userAgent.displayError(be);
+			reportLiveAttributeException(ctx, ex);
 			value = animValue.getDefault();
 		}
 		return value;
@@ -186,11 +182,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 		try {
 			value = animValue.getCheckedValue();
 		} catch (LiveAttributeException ex) {
-			BridgeException be = new BridgeException(ctx, ex);
-			if (ctx.userAgent == null) {
-				throw be;
-			}
-			ctx.userAgent.displayError(be);
+			reportLiveAttributeException(ctx, ex);
 			value = defValue;
 		}
 		return value;

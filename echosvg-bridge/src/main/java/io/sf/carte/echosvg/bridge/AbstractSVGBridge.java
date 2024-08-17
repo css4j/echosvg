@@ -18,13 +18,16 @@
  */
 package io.sf.carte.echosvg.bridge;
 
+import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
  * The base bridge class for SVG elements.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class AbstractSVGBridge implements Bridge, SVGConstants {
@@ -51,6 +54,27 @@ public abstract class AbstractSVGBridge implements Bridge, SVGConstants {
 		// <!> FIXME: temporary fix for progressive implementation
 		// System.out.println("use static bridge for: "+getLocalName());
 		return this;
+	}
+
+	static void reportLiveAttributeException(BridgeContext ctx, LiveAttributeException ex)
+			throws RuntimeException {
+		BridgeException be = new BridgeException(ctx, ex);
+		if (ex.getCode() == LiveAttributeException.ERR_ATTRIBUTE_MISSING) {
+			if (ctx.userAgent != null) {
+				ctx.userAgent.displayWarning(be);
+			}
+		} else {
+			displayErrorOrThrow(ctx, be);
+		}
+
+	}
+
+	static void displayErrorOrThrow(BridgeContext ctx, RuntimeException ex) throws RuntimeException {
+		if (ctx.userAgent != null) {
+			ctx.userAgent.displayError(ex);
+		} else {
+			throw ex;
+		}
 	}
 
 }

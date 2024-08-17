@@ -45,6 +45,7 @@ public interface UserAgent {
 	/**
 	 * Returns the event dispatcher to use.
 	 */
+	@Deprecated
 	EventDispatcher getEventDispatcher();
 
 	/**
@@ -54,11 +55,23 @@ public interface UserAgent {
 
 	/**
 	 * Displays an error resulting from the specified Exception.
+	 * 
+	 * @param ex the exception.
 	 */
 	void displayError(Exception ex);
 
 	/**
+	 * Eventually displays a warning resulting from the specified Exception.
+	 * 
+	 * @param ex the exception.
+	 */
+	default void displayWarning(Exception ex) {
+	}
+
+	/**
 	 * Displays a message in the User Agent interface.
+	 * 
+	 * @param message the message.
 	 */
 	void displayMessage(String message);
 

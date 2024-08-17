@@ -133,10 +133,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 			if (!uriStr.isEmpty() && uriStr.indexOf('#') == -1) {
 				BridgeException be = new BridgeException(ctx, e, ERR_URI_IMAGE_INVALID,
 						new Object[] { uriStr });
-				if (ctx.userAgent == null) {
-					throw be;
-				}
-				ctx.userAgent.displayError(be);
+				displayErrorOrThrow(ctx, be);
 			}
 			return null;
 		}
@@ -951,10 +948,11 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 	}
 
 	/**
-	 * Give a safe value for an animated length, regardless of exceptions.
+	 * Give a safe value for an animated length, regardless of exceptions. Assumes a
+	 * default value of {@code 0}.
 	 * 
 	 * @param animValue the animated length.
-	 * @param defValue  the default value.
+	 * @param ctx       the bridge context.
 	 * @return the value.
 	 */
 	private static float safeLength(AbstractSVGAnimatedLength animValue, BridgeContext ctx)
@@ -963,11 +961,7 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 		try {
 			value = animValue.getCheckedValue();
 		} catch (LiveAttributeException ex) {
-			BridgeException be = new BridgeException(ctx, ex);
-			if (ctx.userAgent == null) {
-				throw be;
-			}
-			ctx.userAgent.displayError(be);
+			reportLiveAttributeException(ctx, ex);
 			value = 0f;
 		}
 		return value;

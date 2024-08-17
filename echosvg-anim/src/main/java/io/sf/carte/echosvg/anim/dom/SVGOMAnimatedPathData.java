@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.anim.dom;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
@@ -30,6 +31,7 @@ import org.w3c.dom.svg.SVGPathSegList;
 
 import io.sf.carte.echosvg.anim.values.AnimatablePathDataValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
+import io.sf.carte.echosvg.dom.svg.AbstractSVGList;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGNormPathSegList;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGPathSegList;
 import io.sf.carte.echosvg.dom.svg.ListBuilder;
@@ -160,23 +162,24 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 	}
 
 	/**
-	 * Throws an exception if the path data is malformed.
+	 * @return an exception if the path data is malformed, {@code null} otherwise.
 	 */
-	public void check() {
+	public LiveAttributeException check() {
 		if (!hasAnimVal) {
 			if (pathSegs == null) {
 				pathSegs = new BaseSVGPathSegList();
 			}
 			pathSegs.revalidate();
 			if (pathSegs.missing) {
-				throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_MISSING,
-						null);
+				return new LiveAttributeException(element, localName,
+						LiveAttributeException.ERR_ATTRIBUTE_MISSING, null);
 			}
 			if (pathSegs.malformed) {
-				throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_MALFORMED,
-						pathSegs.getValueAsString());
+				return new LiveAttributeException(element, localName,
+						LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, pathSegs.getValueAsString());
 			}
 		}
+		return null;
 	}
 
 	/**
@@ -355,24 +358,36 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 			missing = false;
 			malformed = false;
 
-			String s = getValueAsString();
-			if (s == null) {
+			String s = getValueAsString().trim(); // Default is '', not null
+			if (s.isEmpty()) {
 				missing = true;
+				clear(itemList);
+				itemList = new ArrayList<>(1);
 				return;
 			}
+
+			ListBuilder builder = new ListBuilder(this);
 			try {
-				ListBuilder builder = new ListBuilder(this);
-
 				doParse(s, builder);
-
-				if (builder.getList() != null) {
-					clear(itemList);
-				}
-				itemList = builder.getList();
 			} catch (ParseException e) {
-				itemList = new ArrayList<>(1);
 				malformed = true;
+			} finally {
+				clear(itemList);
+				List<SVGItem> parsedList = builder.getList();
+				if (parsedList != null) {
+					itemList = parsedList;
+				} else {
+					itemList = new ArrayList<>(1);
+				}
 			}
+		}
+
+		@Override
+		public void copyTo(AbstractSVGList list) {
+			super.copyTo(list);
+			BaseSVGPathSegList b = (BaseSVGPathSegList) list;
+			b.malformed = malformed;
+			b.missing = missing;
 		}
 
 	}
@@ -447,24 +462,36 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 			missing = false;
 			malformed = false;
 
-			String s = getValueAsString();
-			if (s == null) {
+			String s = getValueAsString().trim(); // Default is '', not null
+			if (s.isEmpty()) {
 				missing = true;
+				clear(itemList);
+				itemList = new ArrayList<>(1);
 				return;
 			}
+
+			ListBuilder builder = new ListBuilder(this);
 			try {
-				ListBuilder builder = new ListBuilder(this);
-
 				doParse(s, builder);
-
-				if (builder.getList() != null) {
-					clear(itemList);
-				}
-				itemList = builder.getList();
 			} catch (ParseException e) {
-				itemList = new ArrayList<>(1);
 				malformed = true;
+			} finally {
+				clear(itemList);
+				List<SVGItem> parsedList = builder.getList();
+				if (parsedList != null) {
+					itemList = parsedList;
+				} else {
+					itemList = new ArrayList<>(1);
+				}
 			}
+		}
+
+		@Override
+		public void copyTo(AbstractSVGList list) {
+			super.copyTo(list);
+			NormalizedBaseSVGPathSegList b = (NormalizedBaseSVGPathSegList) list;
+			b.malformed = malformed;
+			b.missing = missing;
 		}
 
 	}

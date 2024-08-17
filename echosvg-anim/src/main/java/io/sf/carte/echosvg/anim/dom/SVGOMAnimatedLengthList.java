@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.anim.dom;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
@@ -322,27 +323,29 @@ public class SVGOMAnimatedLengthList extends AbstractSVGAnimatedValue implements
 			malformed = false;
 
 			String s = getValueAsString();
-			boolean isEmpty = s != null && s.length() == 0;
+			boolean isEmpty = s != null && (s = s.trim()).isEmpty();
 			if (s == null || isEmpty && !emptyAllowed) {
 				missing = true;
+				clear(itemList);
+				itemList = new ArrayList<>(1);
 				return;
 			}
 			if (isEmpty) {
 				itemList = new ArrayList<>(1);
 			} else {
+				ListBuilder builder = new ListBuilder(this);
 				try {
-					ListBuilder builder = new ListBuilder(this);
-
 					doParse(s, builder);
-
-					if (builder.getList() != null) {
-						clear(itemList);
-					}
-					itemList = builder.getList();
 				} catch (ParseException e) {
-					itemList = new ArrayList<>(1);
-					valid = true;
 					malformed = true;
+				} finally {
+					clear(itemList);
+					List<SVGItem> parsedList = builder.getList();
+					if (parsedList != null) {
+						itemList = parsedList;
+					} else {
+						itemList = new ArrayList<>(1);
+					}
 				}
 			}
 		}

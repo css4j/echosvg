@@ -219,7 +219,6 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge implemen
 	 * @param ctx            the bridge context to use
 	 */
 	protected static RootGraphicsNode extractPatternContent(Element patternElement, BridgeContext ctx) {
-
 		List<ParsedURL> refs = new LinkedList<>();
 		for (;;) {
 			RootGraphicsNode content = extractLocalPatternContent(patternElement, ctx);
@@ -233,13 +232,20 @@ public class SVGPatternElementBridge extends AnimatableGenericSVGBridge implemen
 			// check if there is circular dependencies
 			SVGOMDocument doc = (SVGOMDocument) patternElement.getOwnerDocument();
 			ParsedURL purl = new ParsedURL(doc.getURL(), uri);
-			if (!purl.complete())
-				throw new BridgeException(ctx, patternElement, ERR_URI_MALFORMED, new Object[] { uri });
+			if (!purl.complete()) {
+				BridgeException be = new BridgeException(ctx, patternElement, ERR_URI_MALFORMED,
+						new Object[] { uri });
+				displayErrorOrThrow(ctx, be);
+				return null;
+			}
 
 			if (contains(refs, purl)) {
-				throw new BridgeException(ctx, patternElement, ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
-						new Object[] { uri });
+				BridgeException be = new BridgeException(ctx, patternElement,
+						ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES, new Object[] { uri });
+				displayErrorOrThrow(ctx, be);
+				return null;
 			}
+
 			patternElement = ctx.getReferencedElement(patternElement, uri);
 			if (patternElement == null) {
 				return null; // Missing reference

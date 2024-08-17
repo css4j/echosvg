@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Color;
@@ -39,6 +40,7 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
+import io.sf.carte.echosvg.transcoder.test.DummyErrorHandler;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
@@ -47,8 +49,10 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * reference image. The test passes if the rasterized SVG and the reference
  * image match exactly (i.e., all pixel values are the same).
  *
- * @author <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:vhardy@apache.lorg">Vincent Hardy</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
@@ -66,6 +70,10 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	 * validation is used.
 	 */
 	private boolean validate = false;
+
+	private Integer expectedWarningCount = null;
+
+	int warningCount = 0;
 
 	/**
 	 * The userLanguage for which the document should be tested.
@@ -131,6 +139,25 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 
 	public boolean getValidating() {
 		return validate;
+	}
+
+	/**
+	 * Set the expected warning count, to be enforced if the test supports that.
+	 * 
+	 * @param expectedWarningCount the expected warning count.
+	 */
+	public void setExpectedWarningCount(Integer expectedWarningCount) {
+		this.expectedWarningCount = expectedWarningCount;
+	}
+
+	/**
+	 * Get the expected warning count, to be enforced if the test supports that.
+	 * 
+	 * @return the expected warning count, or {@code null} if the warning count
+	 *         should not be checked.
+	 */
+	protected Integer getExpectedWarningCount() {
+		return expectedWarningCount;
 	}
 
 	/**
@@ -264,6 +291,9 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		transcoder.transcode(src, dst);
 		checkErrorHandler(transcoder.getErrorHandler());
 		fos.getChannel().force(false);
+		if (expectedWarningCount != null) {
+			assertEquals(expectedWarningCount.intValue(), warningCount, "Unexpected number of warnings.");
+		}
 	}
 
 	protected void checkErrorHandler(ErrorHandler errorHandler) {
@@ -304,6 +334,11 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 
 		if (zTXt != null) {
 			t.addTranscodingHint(PNGTranscoder.KEY_COMPRESSED_TEXT, zTXt);
+		}
+
+		if (expectedWarningCount != null && expectedWarningCount.intValue() > 0) {
+			// We expect warnings so do not print them
+			t.setErrorHandler(new DummyErrorHandler());
 		}
 
 		return t;
@@ -353,17 +388,25 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		/**
 		 * A Transcoder user agent that does not print a stack trace.
 		 */
-		class FailOnErrorTranscoderUserAgent
+		class TestTranscoderUserAgent
 				extends SVGAbstractTranscoder.SVGAbstractTranscoderUserAgent {
 
 			@Override
+			public void displayWarning(Exception ex) {
+				super.displayWarning(ex);
+				warningCount++;
+			}
+
+		}
+
+		/**
+		 * A Transcoder user agent that does not print a stack trace.
+		 */
+		class FailOnErrorTranscoderUserAgent extends TestTranscoderUserAgent {
+
+			@Override
 			public void displayError(String message) {
-				TranscoderException ex = new TranscoderException(message);
-				try {
-					InternalPNGTranscoder.this.handler.error(ex);
-				} catch (TranscoderException e) {
-					throw new RuntimeException(e);
-				}
+				super.displayError(message);
 				throw new RuntimeException(message);
 			}
 
@@ -375,11 +418,7 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 			 */
 			@Override
 			public void displayError(Exception e) {
-				try {
-					InternalPNGTranscoder.this.handler.error(new TranscoderException(e));
-				} catch (TranscoderException ex) {
-					throw new RuntimeException(ex);
-				}
+				super.displayError(e);
 				throw new RuntimeException(e);
 			}
 
@@ -387,37 +426,11 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 
 	}
 
-	/**
-	 * A PNG transcoder that does not print a stack trace.
-	 */
-	class NoStackTraceTranscoder extends InternalPNGTranscoder {
+	class ErrIgnoreTranscoder extends InternalPNGTranscoder {
 
 		@Override
 		protected UserAgent createUserAgent() {
-			return new NoStackTraceTranscoderUserAgent();
-		}
-
-		/**
-		 * A Transcoder user agent that does not print a stack trace.
-		 */
-		class NoStackTraceTranscoderUserAgent
-				extends SVGAbstractTranscoder.SVGAbstractTranscoderUserAgent {
-
-			/**
-			 * Displays the specified error using the <code>ErrorHandler</code>.
-			 * <p>
-			 * And does not print a stack trace.
-			 * </p>
-			 */
-			@Override
-			public void displayError(Exception e) {
-				try {
-					NoStackTraceTranscoder.this.handler.error(new TranscoderException(e));
-				} catch (TranscoderException ex) {
-					throw new RuntimeException(ex.getMessage());
-				}
-			}
-
+			return new InternalPNGTranscoder.TestTranscoderUserAgent();
 		}
 
 	}

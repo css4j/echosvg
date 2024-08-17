@@ -122,9 +122,12 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 	public CompositeGraphicsNode buildCompositeGraphicsNode(BridgeContext ctx, Element e, CompositeGraphicsNode gn) {
 		// get the referenced element
 		SVGOMUseElement ue = (SVGOMUseElement) e;
-		String uri = ue.getHref().getAnimVal();
-		if (uri.length() == 0) {
-			throw new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING, new Object[] { "xlink:href" });
+		String uri = ue.getHref().getAnimVal().trim();
+		if (uri.isEmpty()) {
+			BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING,
+					new Object[] { "href" });
+			displayErrorOrThrow(ctx, be);
+			return null;
 		}
 
 		Element refElement = ctx.getReferencedElement(e, uri);

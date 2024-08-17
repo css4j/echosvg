@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.anim.dom;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
@@ -40,8 +41,10 @@ import io.sf.carte.echosvg.parser.ParseException;
 /**
  * This class is the implementation of the SVGAnimatedPoints interface.
  *
- * @author <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:nicolas.socheleau@bitflash.com">Nicolas Socheleau</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVGAnimatedPoints {
@@ -102,23 +105,27 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 	}
 
 	/**
-	 * Throws an exception if the points list value is malformed.
+	 * Returns an exception if the points list value is malformed.
+	 * 
+	 * @return an exception if the points list value is malformed, or {@code null}
+	 *         otherwise.
 	 */
-	public void check() {
+	public LiveAttributeException check() {
 		if (!hasAnimVal) {
 			if (baseVal == null) {
 				baseVal = new BaseSVGPointList();
 			}
 			baseVal.revalidate();
 			if (baseVal.missing) {
-				throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_MISSING,
-						null);
+				return new LiveAttributeException(element, localName,
+						LiveAttributeException.ERR_ATTRIBUTE_MISSING, null);
 			}
 			if (baseVal.malformed) {
-				throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_MALFORMED,
-						baseVal.getValueAsString());
+				return new LiveAttributeException(element, localName,
+						LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, baseVal.getValueAsString());
 			}
 		}
+		return null;
 	}
 
 	/**
@@ -288,23 +295,27 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 			missing = false;
 			malformed = false;
 
-			String s = getValueAsString();
-			if (s == null) {
+			String s = getValueAsString().trim(); // Default is ''
+			if (s.isEmpty()) {
 				missing = true;
+				clear(itemList);
+				itemList = new ArrayList<>(1);
 				return;
 			}
+
+			ListBuilder builder = new ListBuilder(this);
 			try {
-				ListBuilder builder = new ListBuilder(this);
-
 				doParse(s, builder);
-
-				if (builder.getList() != null) {
-					clear(itemList);
-				}
-				itemList = builder.getList();
 			} catch (ParseException e) {
-				itemList = new ArrayList<>(1);
 				malformed = true;
+			} finally {
+				clear(itemList);
+				List<SVGItem> parsedList = builder.getList();
+				if (parsedList != null) {
+					itemList = parsedList;
+				} else {
+					itemList = new ArrayList<>(1);
+				}
 			}
 		}
 

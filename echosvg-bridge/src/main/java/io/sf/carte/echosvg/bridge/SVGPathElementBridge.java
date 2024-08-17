@@ -39,8 +39,10 @@ import io.sf.carte.echosvg.parser.AWTPathProducer;
 /**
  * Bridge class for the &lt;path&gt; element.
  *
- * @author <a href="mailto:tkormann@apache.org">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:tkormann@apache.org">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge implements SVGPathContext {
@@ -81,17 +83,31 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge impleme
 	 */
 	@Override
 	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode) {
-
 		SVGOMPathElement pe = (SVGOMPathElement) e;
 		AWTPathProducer app = new AWTPathProducer();
+		// 'd' attribute - ignore shape if not present
+		SVGOMAnimatedPathData _d = pe.getAnimatedPathData();
+		LiveAttributeException lex = _d.check();
+		if (lex != null) {
+			BridgeException be = new BridgeException(ctx, lex);
+			if (lex.getCode() == LiveAttributeException.ERR_ATTRIBUTE_MISSING) {
+				if (ctx.userAgent != null) {
+					ctx.userAgent.displayWarning(be);
+				}
+				return;
+			}
+			// Must be LiveAttributeException.ERR_ATTRIBUTE_MALFORMED:
+			displayErrorOrThrow(ctx, be);
+			if (_d.getPathSegList().getNumberOfItems() == 0) {
+				return;
+			}
+		}
+		SVGPathSegList p = _d.getAnimatedPathSegList();
 		try {
-			// 'd' attribute - required
-			SVGOMAnimatedPathData _d = pe.getAnimatedPathData();
-			_d.check();
-			SVGPathSegList p = _d.getAnimatedPathSegList();
 			app.setWindingRule(CSSUtilities.convertFillRule(e));
 			SVGAnimatedPathDataSupport.handlePathSegList(p, app);
 		} catch (LiveAttributeException ex) {
+			// Probably not thrown here
 			throw new BridgeException(ctx, ex);
 		} finally {
 			shapeNode.setShape(app.getShape());

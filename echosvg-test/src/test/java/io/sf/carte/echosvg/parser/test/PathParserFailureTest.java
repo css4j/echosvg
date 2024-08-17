@@ -24,6 +24,7 @@ import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
 
+import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.parser.PathParser;
 
 /**
@@ -44,7 +45,7 @@ public class PathParserFailureTest {
 		try {
 			pp.parse(new StringReader(sourcePath));
 			fail("Must throw exception for: " + sourcePath);
-		} catch (Exception e) {
+		} catch (ParseException e) {
 		}
 	}
 
