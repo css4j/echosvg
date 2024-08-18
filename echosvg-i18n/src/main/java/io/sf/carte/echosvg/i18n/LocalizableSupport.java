@@ -326,7 +326,8 @@ public class LocalizableSupport implements Localizable {
 			}
 		}
 		String classStr = (cls != null) ? cls.toString() : bundleName;
-		throw new MissingResourceException("Unable to find resource: " + key, classStr, key);
+		System.err.println("Unable to find resource: " + key + " in " + classStr);
+		return key;
 	}
 
 	/**
