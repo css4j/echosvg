@@ -48,6 +48,7 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.dom.AbstractDocument;
 import io.sf.carte.echosvg.dom.AbstractStylableDocument;
 import io.sf.carte.echosvg.dom.ExtensibleDOMImplementation;
+import io.sf.carte.echosvg.dom.GenericElement;
 import io.sf.carte.echosvg.dom.events.DOMTimeEvent;
 import io.sf.carte.echosvg.dom.events.DocumentEventSupport;
 import io.sf.carte.echosvg.dom.svg.SVGOMEvent;
@@ -215,13 +216,27 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 	 */
 	@Override
 	public Element createElementNS(AbstractDocument document, String namespaceURI, String qualifiedName) {
+		if (namespaceURI == null)
+			return new GenericElement(qualifiedName.intern(), document);
+
+		String name = DOMUtilities.getLocalName(qualifiedName);
+
 		if (SVGConstants.SVG_NAMESPACE_URI.equals(namespaceURI)) {
-			String name = DOMUtilities.getLocalName(qualifiedName);
 			ElementFactory ef = factories.get(name);
 			if (ef != null)
 				return ef.create(DOMUtilities.getPrefix(qualifiedName), document);
-			throw document.createDOMException(DOMException.NOT_FOUND_ERR, "invalid.element",
-					new Object[] { namespaceURI, qualifiedName });
+			// Typically a div inside SVG
+			if ("div".equals(name)) {
+				namespaceURI = "http://www.w3.org/1999/xhtml";
+			}
+		}
+		if (customFactories != null) {
+			ElementFactory cef;
+			cef = (ElementFactory) customFactories.get(namespaceURI, name);
+			if (cef != null) {
+				String prefix = DOMUtilities.getPrefix(qualifiedName);
+				return cef.create(prefix, document);
+			}
 		}
 
 		return super.createElementNS(document, namespaceURI, qualifiedName);
