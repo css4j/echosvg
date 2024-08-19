@@ -8,6 +8,12 @@ dependencies {
 	api project(':echosvg-script')
 	api "io.sf.graphics:legacy-colors:${legacyColorsVersion}"
 	compileOnly "xml-apis:xml-apis:$xmlApisVersion" // Required by Java 8 compat
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	useJUnitPlatform()
 }
 
 description = 'io.sf.carte:echosvg-bridge'

@@ -529,6 +529,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	 * Shapes
 	 */
 	@Test
+	public void testShapesPolygons() throws TranscoderException, IOException {
+		testNVErrIgnore("samples/tests/spec/shapes/polygons.svg", BROWSER_MEDIA, 2);
+	}
+
+	@Test
 	public void testShapesWrongAttr() throws TranscoderException, IOException {
 		testNVErrIgnore("samples/tests/spec/shapes/wrongAttr.svg", null, 10);
 	}
@@ -545,7 +550,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testShapesEmptyShape() throws TranscoderException, IOException {
-		test("samples/tests/spec/shapes/emptyShape.svg", true, 3);
+		test("samples/tests/spec/shapes/emptyShape.svg", true);
 	}
 
 	/*
@@ -1110,8 +1115,28 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	}
 
 	@Test
+	public void testScriptRemoveAttrECR() throws TranscoderException, IOException {
+		testErrIgnore("samples/tests/spec/scripting/removeAttrECR.svg", BROWSER_MEDIA, true, 3);
+	}
+
+	@Test
+	public void testScriptRemoveAttrPathPoly() throws TranscoderException, IOException {
+		testErrIgnore("samples/tests/spec/scripting/removeAttrPathPoly.svg", BROWSER_MEDIA, true, 6);
+	}
+
+	@Test
 	public void testScriptRemoveOnclick() throws TranscoderException, IOException {
 		test("samples/tests/spec/scripting/removeOnclick.svg");
+	}
+
+	@Test
+	public void testScriptSetAttributeECR() throws TranscoderException, IOException {
+		testNVErrIgnore("samples/tests/spec/scripting/setAttributeECR.svg", BROWSER_MEDIA, 3);
+	}
+
+	@Test
+	public void testScriptSetAttributePathPoly() throws TranscoderException, IOException {
+		testNVErrIgnore("samples/tests/spec/scripting/setAttributePathPoly.svg", BROWSER_MEDIA, 6);
 	}
 
 	@Test

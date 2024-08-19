@@ -358,21 +358,7 @@ public abstract class AbstractDocument extends AbstractParentNode
 		Node result;
 		switch (importedNode.getNodeType()) {
 		case ELEMENT_NODE:
-			Element e = createElementNS(importedNode.getNamespaceURI(), importedNode.getNodeName());
-			result = e;
-			if (importedNode.hasAttributes()) {
-				NamedNodeMap attr = importedNode.getAttributes();
-				int len = attr.getLength();
-				for (int i = 0; i < len; i++) {
-					Attr a = (Attr) attr.item(i);
-					if (!a.getSpecified())
-						continue;
-					AbstractAttr aa = (AbstractAttr) importNode(a, true);
-					if (trimId && aa.isId())
-						aa.setIsId(false); // don't consider this an Id.
-					e.setAttributeNodeNS(aa);
-				}
-			}
+			result = importElement(importedNode, trimId);
 			break;
 
 		case ATTRIBUTE_NODE:
@@ -433,6 +419,24 @@ public abstract class AbstractDocument extends AbstractParentNode
 			}
 		}
 		return result;
+	}
+
+	protected Element importElement(Node importMe, boolean trimId) {
+		Element e = createElementNS(importMe.getNamespaceURI(), importMe.getNodeName());
+		if (importMe.hasAttributes()) {
+			NamedNodeMap attr = importMe.getAttributes();
+			int len = attr.getLength();
+			for (int i = 0; i < len; i++) {
+				Attr a = (Attr) attr.item(i);
+				if (!a.getSpecified())
+					continue;
+				AbstractAttr aa = (AbstractAttr) importNode(a, true);
+				if (trimId && aa.isId())
+					aa.setIsId(false); // don't consider this an Id.
+				e.setAttributeNodeNS(aa);
+			}
+		}
+		return e;
 	}
 
 	/**

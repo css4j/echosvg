@@ -485,8 +485,18 @@ public abstract class AbstractSVGList {
 	public void copyTo(AbstractSVGList list) {
 		list.valid = valid;
 		if (itemList != null) {
-			list.itemList = new ArrayList<>(itemList);
+			list.itemList = new ArrayList<>(itemList.size());
+			for (SVGItem item : itemList) {
+				item = ((AbstractSVGItem) item).clone();
+				item.setParent(list);
+				list.itemList.add(item);
+			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return getValueAsString();
 	}
 
 }

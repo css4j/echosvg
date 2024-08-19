@@ -29,8 +29,10 @@ import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGNumber;
 import org.w3c.dom.svg.SVGNumberList;
 
+import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedLengthList.BaseSVGLengthList;
 import io.sf.carte.echosvg.anim.values.AnimatableNumberListValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
+import io.sf.carte.echosvg.dom.svg.AbstractSVGList;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGNumberList;
 import io.sf.carte.echosvg.dom.svg.ListBuilder;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
@@ -329,6 +331,14 @@ public class SVGOMAnimatedNumberList extends AbstractSVGAnimatedValue implements
 					malformed = true;
 				}
 			}
+		}
+
+		@Override
+		public void copyTo(AbstractSVGList list) {
+			super.copyTo(list);
+			BaseSVGLengthList other = (BaseSVGLengthList) list;
+			other.malformed = malformed;
+			other.missing = missing;
 		}
 
 	}

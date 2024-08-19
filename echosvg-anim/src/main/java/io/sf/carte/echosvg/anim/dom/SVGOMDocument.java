@@ -54,6 +54,7 @@ import io.sf.carte.echosvg.css.engine.CSSNavigableDocument;
 import io.sf.carte.echosvg.css.engine.CSSNavigableDocumentListener;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.dom.AbstractStylableDocument;
+import io.sf.carte.echosvg.dom.ExtensibleDOMImplementation.ElementFactory;
 import io.sf.carte.echosvg.dom.GenericAttr;
 import io.sf.carte.echosvg.dom.GenericAttrNS;
 import io.sf.carte.echosvg.dom.GenericCDATASection;
@@ -67,6 +68,7 @@ import io.sf.carte.echosvg.dom.StyleSheetFactory;
 import io.sf.carte.echosvg.dom.events.EventSupport;
 import io.sf.carte.echosvg.dom.svg.IdContainer;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
+import io.sf.carte.echosvg.dom.util.DOMUtilities;
 import io.sf.carte.echosvg.dom.util.XMLSupport;
 import io.sf.carte.echosvg.i18n.Localizable;
 import io.sf.carte.echosvg.i18n.LocalizableSupport;
@@ -365,6 +367,28 @@ public class SVGOMDocument extends AbstractStylableDocument
 	public Element createElementNS(String namespaceURI, String qualifiedName) throws DOMException {
 		SVGDOMImplementation impl = (SVGDOMImplementation) implementation;
 		return impl.createElementNS(this, namespaceURI, qualifiedName);
+	}
+
+	@Override
+	protected Element importElement(Node importMe, boolean trimId) {
+		SVGDOMImplementation impl = (SVGDOMImplementation) implementation;
+		String namespaceURI = importMe.getNamespaceURI();
+		if (SVGConstants.SVG_NAMESPACE_URI.equals(namespaceURI)) {
+			String qualifiedName = importMe.getNodeName();
+			String name = DOMUtilities.getLocalName(qualifiedName);
+			ElementFactory ef = impl.factories.get(name);
+			if (ef != null) {
+				Element e = ef.create(name, this);
+				ef.importAttributes(e, importMe, trimId);
+				return e;
+			}
+			// Typically a div inside SVG
+			if ("div".equals(name)) {
+				namespaceURI = "http://www.w3.org/1999/xhtml";
+			}
+		}
+
+		return super.importElement(importMe, trimId);
 	}
 
 	/**

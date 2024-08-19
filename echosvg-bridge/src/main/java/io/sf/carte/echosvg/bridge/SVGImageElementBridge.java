@@ -31,8 +31,6 @@ import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
-import io.sf.graphics.java2d.color.RenderingIntent;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.DocumentEvent;
@@ -68,6 +66,8 @@ import io.sf.carte.echosvg.gvt.ShapeNode;
 import io.sf.carte.echosvg.util.HaltingThread;
 import io.sf.carte.echosvg.util.MimeTypeConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
+import io.sf.graphics.java2d.color.ICCColorSpaceWithIntent;
+import io.sf.graphics.java2d.color.RenderingIntent;
 
 /**
  * Bridge class for the &lt;image&gt; element.

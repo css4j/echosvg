@@ -58,12 +58,8 @@ public abstract class AbstractSVGBridge implements Bridge, SVGConstants {
 
 	static void reportLiveAttributeException(BridgeContext ctx, LiveAttributeException ex)
 			throws RuntimeException {
-		BridgeException be = new BridgeException(ctx, ex);
-		if (ex.getCode() == LiveAttributeException.ERR_ATTRIBUTE_MISSING) {
-			if (ctx.userAgent != null) {
-				ctx.userAgent.displayWarning(be);
-			}
-		} else {
+		if (ex.getCode() != LiveAttributeException.ERR_ATTRIBUTE_MISSING) {
+			BridgeException be = new BridgeException(ctx, ex);
 			displayErrorOrThrow(ctx, be);
 		}
 

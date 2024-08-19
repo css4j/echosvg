@@ -72,24 +72,24 @@ public class SVGCircleElementBridge extends SVGShapeElementBridge {
 	 */
 	@Override
 	protected void buildShape(BridgeContext ctx, Element e, ShapeNode shapeNode) {
+		SVGOMCircleElement ce = (SVGOMCircleElement) e;
+
+		// 'cx' attribute - default is 0
+		AbstractSVGAnimatedLength _cx = (AbstractSVGAnimatedLength) ce.getCx();
+		float cx = safeAnimatedLength(_cx, 0f);
+
+		// 'cy' attribute - default is 0
+		AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ce.getCy();
+		float cy = safeAnimatedLength(_cy, 0f);
+
+		// 'r' attribute - default is 0 (SVG2)
+		AbstractSVGAnimatedLength _r = (AbstractSVGAnimatedLength) ce.getR();
+		float r = safeAnimatedLength(_r, 0f);
+
+		float x = cx - r;
+		float y = cy - r;
+		float w = r * 2f;
 		try {
-			SVGOMCircleElement ce = (SVGOMCircleElement) e;
-
-			// 'cx' attribute - default is 0
-			AbstractSVGAnimatedLength _cx = (AbstractSVGAnimatedLength) ce.getCx();
-			float cx = safeAnimatedLength(_cx, 0f);
-
-			// 'cy' attribute - default is 0
-			AbstractSVGAnimatedLength _cy = (AbstractSVGAnimatedLength) ce.getCy();
-			float cy = safeAnimatedLength(_cy, 0f);
-
-			// 'r' attribute - default is 0 (SVG2)
-			AbstractSVGAnimatedLength _r = (AbstractSVGAnimatedLength) ce.getR();
-			float r = safeAnimatedLength(_r, 0f);
-
-			float x = cx - r;
-			float y = cy - r;
-			float w = r * 2f;
 			shapeNode.setShape(new Ellipse2D.Float(x, y, w, w));
 		} catch (LiveAttributeException ex) {
 			throw new BridgeException(ctx, ex);

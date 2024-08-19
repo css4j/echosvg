@@ -25,7 +25,7 @@ package io.sf.carte.echosvg.dom.svg;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public abstract class AbstractSVGItem implements SVGItem {
+public abstract class AbstractSVGItem implements SVGItem, Cloneable {
 
 	/**
 	 * List the item belongs to.
@@ -88,6 +88,25 @@ public abstract class AbstractSVGItem implements SVGItem {
 			itemStringValue = getStringValue();
 		}
 		return itemStringValue;
+	}
+
+	/**
+	 * Clone this value except for the parent list.
+	 * 
+	 * @return a parentless clone of this value.
+	 */
+	@Override
+	public AbstractSVGItem clone() {
+		try {
+			return (AbstractSVGItem) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return getValueAsString();
 	}
 
 }

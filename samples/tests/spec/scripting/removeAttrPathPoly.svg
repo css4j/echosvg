@@ -1,0 +1,150 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<!--
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+   
+        http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<!-- ========================================================================= -->
+<!--  Test removing or setting invalid shape attributes with a script.         -->
+<!--                                                                           -->
+<!-- Layout based on 'shapes/zero.svg' test by tkormann@apache.org             -->
+<!-- @author see Git history                                                   -->
+<!-- @version $Id$ -->
+<!-- ========================================================================= -->
+
+<?xml-stylesheet type="text/css" href="../../resources/style/test.css" ?>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  id="body" width="450" height="500" viewBox="0 0 450 500">
+<title>Script unsets or sets invalid shape attributes</title>
+    <!-- ============================================================= -->
+    <!-- Test content                                                  -->
+    <!-- ============================================================= -->
+
+  <style type="text/css">
+/*<![CDATA[*/
+
+g {
+  stroke: none;
+}
+.shapes {
+  stroke-width: 4px;
+}
+.texts {
+  fill: black;
+  font-size: 12px;
+  font-family: 'Open Sans';
+}
+.legend {
+  text-anchor: middle;
+}
+path {
+  fill: #5cb4e8;
+}
+polygon {
+  stroke: #123f49;;
+  stroke-width: 5px;
+  fill: #3a76b6;
+}
+polyline {
+  stroke: #ff0a10;
+  stroke-width: 3px;
+  fill: #ffa7004d;
+}
+
+@media screen {
+  polygon {
+    stroke-width: 6px;
+  }
+  polyline {
+    stroke-width: 2px;
+  }
+}
+
+/*]]>*/
+  </style>
+
+<script type="text/ecmascript"><![CDATA[
+  function removeAttr(evt, attrName) {
+    evt.target.removeAttribute(attrName);
+  }
+
+  function setAttr(evt, attrName, attrValue) {
+    evt.target.setAttribute(attrName, attrValue);
+  }
+  ]]></script>
+
+<g id="testContent">
+  <text x="225" y="30" class="title">Test missing or wrong shape attributes</text>
+  <text x="225" y="50" class="title">Missing attributes may disable the rendering of the element</text>
+
+<!-- dashboard -->
+<g style="stroke:black; fill:none">
+        <rect x="40" y="80" width="360" height="120" />
+        <rect x="40" y="200" width="360" height="120" />
+        <rect x="40" y="320" width="360" height="120" />
+</g>
+<g style="fill:rgb(240, 240, 240); stroke:black;">
+        <rect x="40" y="80" width="20" height="120" />
+        <rect x="40" y="200" width="20" height="120" />
+        <rect x="40" y="320" width="20" height="120" />
+        <g class="texts" style="stroke:none; font-size:12pt">
+                <text transform="translate(55, 170) rotate(-90)">&lt;path></text>
+                <text transform="translate(55, 290) rotate(-90)">&lt;polygon></text>
+                <text transform="translate(55, 410) rotate(-90)">&lt;polyline></text>
+        </g>
+</g>
+
+<!-- ########### path ############# -->
+<g class="shapes">
+        <path transform="translate(90, 95)" d="M 5 5, 10 28, 20 8, 40 75, 60 20, 80 60" onload="removeAttr(evt, 'd')" />
+        <path transform="translate(190, 95)" d="M 5 5, 10 28, 20 8, 40 75, 60 20, 80 60" onload="setAttr(evt, 'd', 'foo')"/>
+        <path transform="translate(290, 95)" d="M 5 5, 10 28, 20 8, 40 75, 60 20, 80 60" onload="setAttr(evt, 'd', 'M 5 5, 10 28, 20 8, 40 75, 60 20 foo')"/>
+</g>
+<g class="texts legend">
+        <text x="130" y="194">missing d</text>
+        <text x="230" y="194">invalid d</text>
+        <text x="330" y="194">partly invalid d</text>
+</g>
+
+<!-- ########### polygon ############# -->
+<g class="shapes">
+  <polygon transform="translate(30,205)" points="50,90 75,25 110,75 150,0" onload="removeAttr(evt, 'points')" />
+  <polygon transform="translate(135,205)" points="50,90 75,25 110,75 150,0" onload="setAttr(evt, 'points', 'bar')" />
+  <polygon transform="translate(240,205)" points="50,90 75,25 110,75 150,0" onload="setAttr(evt, 'points', '50,90 75,25 110,75 @')" />
+</g>
+<g class="texts legend">
+        <text x="120" y="314">missing points</text>
+        <text x="230" y="314">invalid points</text>
+        <text x="340" y="314">partly invalid points</text>
+</g>
+
+<!-- ########### polyline ############# -->
+<g class="shapes">
+  <polyline transform="translate(30,325)" points="50,90 75,25 110,75 150,0" onload="removeAttr(evt, 'points')"/>
+  <polyline transform="translate(135,325)" points="50,90 75,25 110,75 150,0" onload="setAttr(evt, 'points', 'foo')"/>
+  <polyline transform="translate(240,325)" points="50,90 75,25 110,75 150,0" onload="setAttr(evt, 'points', '50,90 75,25 110,75 150')"/>
+</g>
+<g class="texts legend">
+        <text x="120" y="430">missing points</text>
+        <text x="230" y="430">invalid points</text>
+        <text x="340" y="430">partly invalid points</text>
+</g>
+
+</g>
+
+</svg>

@@ -163,4 +163,23 @@ public class SVGPathSegItem extends AbstractSVGItem implements SVGPathSegClosePa
 		this.y2 = y2;
 	}
 
+	@Override
+	public SVGPathSegItem clone() {
+		SVGPathSegItem clon = (SVGPathSegItem) super.clone();
+		clon.type = type;
+		clon.letter = letter;
+		clon.x = x;
+		clon.y = y;
+		clon.x1 = x1;
+		clon.y1 = y1;
+		clon.x2 = x2;
+		clon.y2 = y2;
+		clon.r1 = r1;
+		clon.r2 = r2;
+		clon.angle = angle;
+		clon.largeArcFlag = largeArcFlag;
+		clon.sweepFlag = sweepFlag;
+		return clon;
+	}
+
 }

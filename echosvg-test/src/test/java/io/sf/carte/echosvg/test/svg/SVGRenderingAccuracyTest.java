@@ -18,7 +18,6 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Color;
@@ -40,7 +39,6 @@ import io.sf.carte.echosvg.transcoder.TranscoderOutput;
 import io.sf.carte.echosvg.transcoder.XMLAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 import io.sf.carte.echosvg.transcoder.image.PNGTranscoder;
-import io.sf.carte.echosvg.transcoder.test.DummyErrorHandler;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
@@ -70,10 +68,6 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	 * validation is used.
 	 */
 	private boolean validate = false;
-
-	private Integer expectedWarningCount = null;
-
-	int warningCount = 0;
 
 	/**
 	 * The userLanguage for which the document should be tested.
@@ -139,25 +133,6 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 
 	public boolean getValidating() {
 		return validate;
-	}
-
-	/**
-	 * Set the expected warning count, to be enforced if the test supports that.
-	 * 
-	 * @param expectedWarningCount the expected warning count.
-	 */
-	public void setExpectedWarningCount(Integer expectedWarningCount) {
-		this.expectedWarningCount = expectedWarningCount;
-	}
-
-	/**
-	 * Get the expected warning count, to be enforced if the test supports that.
-	 * 
-	 * @return the expected warning count, or {@code null} if the warning count
-	 *         should not be checked.
-	 */
-	protected Integer getExpectedWarningCount() {
-		return expectedWarningCount;
 	}
 
 	/**
@@ -291,9 +266,6 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		transcoder.transcode(src, dst);
 		checkErrorHandler(transcoder.getErrorHandler());
 		fos.getChannel().force(false);
-		if (expectedWarningCount != null) {
-			assertEquals(expectedWarningCount.intValue(), warningCount, "Unexpected number of warnings.");
-		}
 	}
 
 	protected void checkErrorHandler(ErrorHandler errorHandler) {
@@ -334,11 +306,6 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 
 		if (zTXt != null) {
 			t.addTranscodingHint(PNGTranscoder.KEY_COMPRESSED_TEXT, zTXt);
-		}
-
-		if (expectedWarningCount != null && expectedWarningCount.intValue() > 0) {
-			// We expect warnings so do not print them
-			t.setErrorHandler(new DummyErrorHandler());
 		}
 
 		return t;
@@ -390,13 +357,6 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		 */
 		class TestTranscoderUserAgent
 				extends SVGAbstractTranscoder.SVGAbstractTranscoderUserAgent {
-
-			@Override
-			public void displayWarning(Exception ex) {
-				super.displayWarning(ex);
-				warningCount++;
-			}
-
 		}
 
 		/**

@@ -32,20 +32,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGPathSegList;
 import org.w3c.dom.svg.SVGSVGElement;
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
-import io.sf.carte.echosvg.anim.dom.SVGOMPathElement;
-import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
- * See issue #113
+ * Test circle bounding boxes.
  */
-public class PathTest {
+public class CircleTest {
 
 	BridgeContext context;
 
@@ -58,40 +55,29 @@ public class PathTest {
 	}
 
 	@Test
-	public void testPathMissingD() {
-		Element path = createDocumentWithPath();
-		Document document = path.getOwnerDocument();
-		assertBounds(document, 99.5, 99.5, 100.5, 100.5);
+	public void testMissingR() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		assertBounds(document, 40, 50, 160, 150);
 		assertEquals(0, errorCount);
 	}
 
 	@Test
-	public void testPathEmptyD() {
-		Element path = createDocumentWithPath();
-		Document document = path.getOwnerDocument();
-		Attr d = document.createAttribute(SVGConstants.SVG_D_ATTRIBUTE);
-		path.setAttributeNode(d);
-		assertBounds(document, 99.5, 99.5, 100.5, 100.5);
-		assertEquals(0, errorCount);
+	public void testEmptyR() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		Attr d = document.createAttribute(SVGConstants.SVG_R_ATTRIBUTE);
+		circle.setAttributeNode(d);
+		assertBounds(document, 40, 50, 160, 150);
+		assertEquals(1, errorCount);
 	}
 
 	@Test
-	public void testPathDNone() {
-		Element path = createDocumentWithPath();
-		Document document = path.getOwnerDocument();
-		Attr d = document.createAttribute(SVGConstants.SVG_D_ATTRIBUTE);
-		d.setValue("none");
-		path.setAttributeNode(d);
-		assertBounds(document, 99.5, 99.5, 100.5, 100.5);
-		assertEquals(0, errorCount);
-	}
-
-	@Test
-	public void testPathInvalidD() {
-		Element path = createDocumentWithPath();
-		Document document = path.getOwnerDocument();
-		path.setAttribute(SVGConstants.SVG_D_ATTRIBUTE, "M 5 5, 10 10, 20 - 1");
-		assertBounds(document, 4.65, 4.65, 195.35, 195.35);
+	public void testInvalidR() {
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.setAttribute(SVGConstants.SVG_R_ATTRIBUTE, ",");
+		assertBounds(document, 40, 50, 160, 150);
 		assertEquals(1, errorCount);
 	}
 
@@ -105,36 +91,18 @@ public class PathTest {
 	}
 
 	@Test
-	public void testPathOperations() {
+	public void testOperations() {
 		context.setDynamic(true);
-		SVGOMPathElement path = (SVGOMPathElement) createDocumentWithPath();
-		Document document = path.getOwnerDocument();
-		path.setAttribute(SVGConstants.SVG_D_ATTRIBUTE, "M 5 5, 10 10");
-		SVGPathSegList segList = path.getPathSegList();
-		assertEquals(2, segList.getNumberOfItems());
+		Element circle = createDocumentWithCircle();
+		Document document = circle.getOwnerDocument();
+		circle.setAttribute(SVGConstants.SVG_R_ATTRIBUTE, "20");
+		assertBounds(document, 20, 30, 180, 170);
 
-		segList.appendItem(path.createSVGPathSegMovetoRel(10, 5));
-		assertEquals(3, segList.getNumberOfItems());
-		assertBounds(document, 4.65, 4.65, 195.35, 195.35);
-
-		segList.insertItemBefore(path.createSVGPathSegMovetoAbs(20, 25), 2);
-		assertEquals(4, segList.getNumberOfItems());
-		assertBounds(document, 4.65, 4.65, 195.35, 195.35);
-
-		path.setAttribute(CSSConstants.CSS_VISIBILITY_PROPERTY, "hidden");
+		circle.setAttribute(CSSConstants.CSS_VISIBILITY_PROPERTY, "hidden");
 		assertBounds(document, 99.5, 99.5, 100.5, 100.5);
-		path.removeAttribute(CSSConstants.CSS_VISIBILITY_PROPERTY);
-		assertBounds(document, 4.65, 4.65, 195.35, 195.35);
+		circle.removeAttribute(CSSConstants.CSS_VISIBILITY_PROPERTY);
+		assertBounds(document, 20, 30, 180, 170);
 
-
-		segList.replaceItem(path.createSVGPathSegMovetoAbs(35, 35), 0);
-		segList.replaceItem(path.createSVGPathSegMovetoAbs(45, 45), 1);
-		segList.removeItem(2);
-		assertEquals(3, segList.getNumberOfItems());
-		assertEquals("M 35.0 35.0 M 45.0 45.0 m 10.0 5.0", segList.toString());
-
-		segList.clear();
-		assertBounds(document, 99.5, 99.5, 100.5, 100.5);
 		assertEquals(0, errorCount);
 	}
 
@@ -142,7 +110,7 @@ public class PathTest {
 		return new GVTBuilder().build(context, document);
 	}
 
-	private static Element createDocumentWithPath() {
+	private static Element createDocumentWithCircle() {
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		DocumentType dtd = impl.createDocumentType("svg", "-//W3C//DTD SVG 1.1//EN",
 				"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd");
@@ -160,12 +128,12 @@ public class PathTest {
 		rect.setAttribute(SVGConstants.SVG_STROKE_ATTRIBUTE, "#107");
 		svg.appendChild(rect);
 
-		Element path = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_PATH_TAG);
-		path.setAttribute(XMLConstants.XML_ID_ATTRIBUTE, "path1");
-		path.setAttribute(SVGConstants.SVG_STROKE_ATTRIBUTE, "#111");
-		svg.appendChild(path);
+		Element circle = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_CIRCLE_TAG);
+		circle.setAttribute(SVGConstants.SVG_CX_ATTRIBUTE, "40");
+		circle.setAttribute(SVGConstants.SVG_CY_ATTRIBUTE, "50");
+		svg.appendChild(circle);
 
-		return path;
+		return circle;
 	}
 
 	private BridgeContext createBridgeContext() {

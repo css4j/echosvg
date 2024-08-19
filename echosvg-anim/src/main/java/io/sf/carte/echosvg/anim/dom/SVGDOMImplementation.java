@@ -1531,6 +1531,27 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 			return new SVGOMPathElement(prefix, (AbstractDocument) doc);
 		}
 
+		@Override
+		public void importAttributes(Element imported, Node toImport, boolean trimId) {
+			ElementFactory.super.importAttributes(imported, toImport, trimId);
+			if (toImport instanceof SVGOMPathElement) {
+				SVGOMPathElement path = (SVGOMPathElement) imported;
+				SVGOMPathElement otherPath = (SVGOMPathElement) toImport;
+				SVGOMAnimatedPathData d = path.d;
+				// Make sure pathSegs exists
+				otherPath.d.getPathSegList();
+				boolean wasValid = otherPath.d.pathSegs.isValid();
+				if (otherPath.d.check() <= 0) {
+					// Copy only if check was successful, so the errors will be reported
+					d.getPathSegList();
+					otherPath.d.pathSegs.copyTo(d.pathSegs);
+				} else if (!wasValid) {
+					// invalidate, so the errors can be reported
+					otherPath.d.pathSegs.invalidate();
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -1567,6 +1588,26 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 			return new SVGOMPolygonElement(prefix, (AbstractDocument) doc);
 		}
 
+		@Override
+		public void importAttributes(Element imported, Node toImport, boolean trimId) {
+			ElementFactory.super.importAttributes(imported, toImport, trimId);
+			if (toImport instanceof SVGPointShapeElement) {
+				SVGPointShapeElement poly = (SVGPointShapeElement) imported;
+				SVGPointShapeElement otherPoly = (SVGPointShapeElement) toImport;
+				SVGOMAnimatedPoints points = poly.points;
+				otherPoly.points.getPoints();
+				boolean wasValid = otherPoly.points.baseVal.isValid();
+				if (otherPoly.points.check() <= 0) {
+					// Copy only if check was successful, so the errors will be reported
+					points.getPoints();
+					otherPoly.points.baseVal.copyTo(points.baseVal);
+				} else if (!wasValid) {
+					// invalidate, so the errors can be reported
+					otherPoly.points.baseVal.invalidate();
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -1583,6 +1624,26 @@ public class SVGDOMImplementation extends ExtensibleDOMImplementation implements
 		@Override
 		public Element create(String prefix, Document doc) {
 			return new SVGOMPolylineElement(prefix, (AbstractDocument) doc);
+		}
+
+		@Override
+		public void importAttributes(Element imported, Node toImport, boolean trimId) {
+			ElementFactory.super.importAttributes(imported, toImport, trimId);
+			if (toImport instanceof SVGPointShapeElement) {
+				SVGPointShapeElement poly = (SVGPointShapeElement) imported;
+				SVGPointShapeElement otherPoly = (SVGPointShapeElement) toImport;
+				SVGOMAnimatedPoints points = poly.points;
+				otherPoly.points.getPoints();
+				boolean wasValid = otherPoly.points.baseVal.isValid();
+				if (otherPoly.points.check() <= 0) {
+					// Copy only if check was successful, so the errors will be reported
+					points.getPoints();
+					otherPoly.points.baseVal.copyTo(points.baseVal);
+				} else if (!wasValid) {
+					// invalidate, so the errors can be reported
+					otherPoly.points.baseVal.invalidate();
+				}
+			}
 		}
 
 	}

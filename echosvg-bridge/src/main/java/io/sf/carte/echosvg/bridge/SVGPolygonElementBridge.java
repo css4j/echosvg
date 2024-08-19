@@ -18,9 +18,6 @@
  */
 package io.sf.carte.echosvg.bridge;
 
-import java.awt.Shape;
-import java.awt.geom.GeneralPath;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGPoint;
 import org.w3c.dom.svg.SVGPointList;
@@ -43,11 +40,6 @@ import io.sf.carte.echosvg.parser.AWTPolygonProducer;
  * @version $Id$
  */
 public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
-
-	/**
-	 * default shape for the update of 'points' when the value is the empty string.
-	 */
-	protected static final Shape DEFAULT_SHAPE = new GeneralPath();
 
 	/**
 	 * Constructs a new bridge for the &lt;polygon&gt; element.
@@ -83,16 +75,22 @@ public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
 		SVGOMPolygonElement pe = (SVGOMPolygonElement) e;
 		SVGOMAnimatedPoints _points = pe.getSVGOMAnimatedPoints();
 
-		LiveAttributeException lex = _points.check();
-		if (lex != null) {
-			BridgeException be = new BridgeException(ctx, lex);
-			if (lex.getCode() == LiveAttributeException.ERR_ATTRIBUTE_MISSING) {
-				if (ctx.userAgent != null) {
-					ctx.userAgent.displayWarning(be);
-				}
+		short check = _points.check();
+		if (check >= 0) { // Either (none) or errors detected
+			if (check == LiveAttributeException.ERR_ATTRIBUTE_MISSING) {
+				// "The initial value, (none), indicates that the polygon element
+				// is valid, but does not render."
+				//
+				// We could just return, but in case that we are updating the
+				// ShapeNode, we want to set the shape.
+				shapeNode.setShape(EMPTY_SHAPE);
+				shapeNode.setVisible(false);
 				return;
 			}
 			// Must be LiveAttributeException.ERR_ATTRIBUTE_MALFORMED:
+			LiveAttributeException lex = new LiveAttributeException(e, e.getLocalName(), check,
+					_points.getPoints().toString());
+			BridgeException be = new BridgeException(ctx, lex);
 			displayErrorOrThrow(ctx, be);
 		}
 
@@ -100,7 +98,8 @@ public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
 			SVGPointList pl = _points.getAnimatedPoints();
 			int size = pl.getNumberOfItems();
 			if (size == 0) {
-				shapeNode.setShape(DEFAULT_SHAPE);
+				shapeNode.setShape(EMPTY_SHAPE);
+				shapeNode.setVisible(false);
 			} else {
 				AWTPolygonProducer app = new AWTPolygonProducer();
 				app.setWindingRule(CSSUtilities.convertFillRule(e));
@@ -110,6 +109,7 @@ public class SVGPolygonElementBridge extends SVGDecoratedShapeElementBridge {
 					app.point(p.getX(), p.getY());
 				}
 				app.endPoints();
+				shapeNode.setVisible(CSSUtilities.convertVisibility(e));
 				shapeNode.setShape(app.getShape());
 			}
 		} catch (LiveAttributeException ex) {

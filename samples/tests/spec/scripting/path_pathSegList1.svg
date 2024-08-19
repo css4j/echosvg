@@ -40,14 +40,15 @@
   </defs>
   <script type="text/ecmascript"><![CDATA[    
         function getNumberOfItems(evt) 
-        {        
+        {
            var elt = evt.target;        
            nb = elt.getPathSegList().getNumberOfItems();        
            var text = elt.getOwnerDocument().getElementById('test1_text');        
            text.getFirstChild().appendData(" "+nb+" segments");    
         }
+
         function clear(evt) 
-        {        
+        {
            var elt = evt.target;
            elt.getPathSegList().clear()
            nb = elt.getPathSegList().getNumberOfItems();        
@@ -56,7 +57,7 @@
         }
 
         function getItem(index,evt) 
-        {        
+        {
            var elt = evt.target;        
            nb = elt.getPathSegList().getItem(index);        
            var text = elt.getOwnerDocument().getElementById('test3_text');        
@@ -64,7 +65,7 @@
         }
 
         function insertItemBefore(evt,fromIndex,index) 
-        {        
+        {
            var elt = evt.target;        
            pointProvider = elt.getOwnerDocument().getElementById('segment_provider');
            point = pointProvider.getPathSegList().getItem(fromIndex);
@@ -72,8 +73,9 @@
            var text = elt.getOwnerDocument().getElementById('test4_text');        
            text.getFirstChild().appendData(" ("+nb.getPathSegTypeAsLetter()+")");    
         }
+
         function replaceItem(evt,fromIndex,index) 
-        {        
+        {
            var elt = evt.target;        
            pointProvider = elt.getOwnerDocument().getElementById('segment_provider');
            point = pointProvider.getPathSegList().getItem(fromIndex);
@@ -83,7 +85,7 @@
         }
 
         function removeItem(evt,index) 
-        {        
+        {
            var elt = evt.target;        
            var nb = elt.getPathSegList().removeItem(index);        
            var text = elt.getOwnerDocument().getElementById('test6_text');        
@@ -91,7 +93,7 @@
         }
 
         function initializeAppendItem(evt,fromIndex1) 
-        {        
+        {
            var elt = evt.target;        
            pointProvider = elt.getOwnerDocument().getElementById('segment_provider');
            point = pointProvider.createSVGPathSegMovetoAbs(150,200);
@@ -105,7 +107,7 @@
         }
 
         function setAttribute(evt,pointsList) 
-        {        
+        {
            var elt = evt.target;
            var points = elt.getPathSegList();
            nb = points.getNumberOfItems();        
@@ -121,7 +123,7 @@
         }
 
         function setAttribute2(evt,pointsList) 
-        {        
+        {
            var elt = evt.target;
            var points = elt.getPathSegList();
            nb = points.getItem(1);        

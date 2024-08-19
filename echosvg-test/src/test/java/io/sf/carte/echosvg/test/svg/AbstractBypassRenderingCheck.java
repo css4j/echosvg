@@ -18,8 +18,6 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -65,18 +63,13 @@ public class AbstractBypassRenderingCheck {
 	}
 
 	void test(String file, int expectedErrorCount) throws TranscoderException, IOException {
-		test(file, expectedErrorCount, 0);
+		test(file, expectedErrorCount, true);
 	}
 
-	void test(String file, int expectedErrorCount, int expectedWarningCount)
-			throws TranscoderException, IOException {
-		test(file, expectedErrorCount, expectedWarningCount, true);
-	}
-
-	void test(String file, int expectedErrorCount, int expectedWarningCount, boolean validating)
+	void test(String file, int expectedErrorCount, boolean validating)
 			throws TranscoderException, IOException {
 		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, null, null, validating,
-				expectedErrorCount, expectedWarningCount);
+				expectedErrorCount);
 	}
 
 	/**
@@ -89,7 +82,7 @@ public class AbstractBypassRenderingCheck {
 	 */
 	void testPrint(String file, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		test(file, PRINT_MEDIUM, false, null, null, true, expectedErrorCount, 0);
+		test(file, PRINT_MEDIUM, false, null, null, true, expectedErrorCount);
 	}
 
 	/**
@@ -97,15 +90,12 @@ public class AbstractBypassRenderingCheck {
 	 * 
 	 * @param file               the SVG file to test.
 	 * @param expectedErrorCount the expected error count.
-	 * @param expectedWarningCount the expected warning count or {@code null} to not
-	 *                             check.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
-	void testDark(String file, int expectedErrorCount, Integer expectedWarningCount)
+	void testDark(String file, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, true, null, null, true, expectedErrorCount,
-				expectedWarningCount);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, true, null, null, true, expectedErrorCount);
 	}
 
 	/**
@@ -130,7 +120,7 @@ public class AbstractBypassRenderingCheck {
 	 */
 	void testNV(String file, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, null, null, false, expectedErrorCount, 0);
+		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, null, null, false, expectedErrorCount);
 	}
 
 	/**
@@ -146,7 +136,7 @@ public class AbstractBypassRenderingCheck {
 	void testNV(String file, int expectedErrorCount, Color backgroundColor) throws TranscoderException,
 			IOException {
 		test(file, SVGRenderingAccuracyTest.DEFAULT_MEDIUM, false, backgroundColor, null, false,
-				expectedErrorCount, 0);
+				expectedErrorCount);
 	}
 
 	float getBelowThresholdAllowed() {
@@ -236,16 +226,12 @@ public class AbstractBypassRenderingCheck {
 	 * @param selector             the selector to find the SVG element.
 	 * @param validating           if true, the SVG is validated.
 	 * @param expectedErrorCount   the expected number of errors.
-	 * @param expectedWarningCount the expected warning count or {@code null} to not
-	 *                             check.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
 	void test(String file, String medium, boolean darkMode, Color backgroundColor, String selector,
-			boolean validating, int expectedErrorCount, Integer expectedWarningCount)
-					throws TranscoderException, IOException {
+			boolean validating, int expectedErrorCount) throws TranscoderException, IOException {
 		BypassRenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
-		runner.setExpectedWarningCount(expectedWarningCount);
 		configureAndRun(runner, file, darkMode, backgroundColor, selector, validating);
 	}
 
@@ -277,16 +263,13 @@ public class AbstractBypassRenderingCheck {
 	 * @param selector           the selector to find the SVG element.
 	 * @param validating         if true, the SVG is validated.
 	 * @param expectedErrorCount the expected number of errors.
-	 * @param expectedWarningCount the expected warning count or {@code null} to not
-	 *                             check.
 	 * @throws TranscoderException
 	 * @throws IOException
 	 */
 	void testAllInputSources(String file, String medium, boolean darkMode, Color backgroundColor,
-			String selector, boolean validating, int expectedErrorCount, Integer expectedWarningCount)
+			String selector, boolean validating, int expectedErrorCount)
 					throws TranscoderException, IOException {
 		BypassRenderingTest runner = new BypassRenderingTest(medium, expectedErrorCount);
-		runner.setExpectedWarningCount(expectedWarningCount);
 		configureAndRun(runner, file, darkMode, backgroundColor, selector, validating);
 
 		Document doc = runner.getRenderDocument();
@@ -410,11 +393,6 @@ public class AbstractBypassRenderingCheck {
 			encode(helper, dst);
 
 			errorHandler.assertErrorCount(expectedErrorCount);
-
-			if (getExpectedWarningCount() != null) {
-				assertEquals(getExpectedWarningCount().intValue(), warningCount,
-						"Unexpected number of warnings.");
-			}
 
 			checkErrorHandler(errorHandler);
 

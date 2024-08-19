@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html>
+
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ====================================================================== -->
+<!-- Polygons and polylines                                                 -->
+<!--                                                                        -->
+<!-- @author github.com/carlosame                                           -->
+<!-- @version $Id$    -->
+<!-- ====================================================================== -->
+<svg xmlns="http://www.w3.org/2000/svg" height="500" viewBox="0 0 450 500">
+  <style>
+/*<![CDATA[*/
+
+g {
+    font: bold 10pt "Open Sans", sans-serif;
+}
+polygon {
+  stroke-width: 5px;
+}
+polyline {
+  stroke-width: 3px;
+}
+
+@media screen {
+  polygon {
+    stroke-width: 4px;
+  }
+  polyline {
+    stroke-width: 2px;
+  }
+}
+
+@media print {
+  text.itemdesc {
+    font-family: "Ubuntu Mono";
+    font-size: 12pt;
+  }
+}
+
+/*]]>*/
+  </style>
+  <g>
+  <polygon transform="translate(20,80)" fill="#0000cf" stroke="#000044" />
+  <polygon transform="translate(20,80)" points="50,100 75,25 110,75 150,0" fill="#0000cf" stroke="#000044" />
+  <polygon transform="translate(240,80)" points="50,100 75,25 110,75 150,0 foo bar" fill="#4f407f" stroke="#806044" />
+  <polygon transform="translate(240,80)" points="" fill="#4f407f" stroke="#806044" />
+  <polyline transform="translate(20,250)" fill="#ff00004c" stroke="#ff0000" />
+  <polyline transform="translate(20,250)" points="50,100 75,25 110,75 150,0" fill="#ff00004c" stroke="#ff0000" />
+  <polyline transform="translate(230,250)" points="50,100 75,25 110,75 150,0 foo,bar" fill="#4f73a0" stroke="#250020" />
+  <polyline transform="translate(230,250)" points="" fill="#4f73a0" stroke="#250020" />
+  <text x="100" y="60" class="itemdesc" text-anchor="middle">Polygons</text>
+  <text x="100" y="240" class="itemdesc" text-anchor="middle">Polylines</text>
+  </g>
+</svg>

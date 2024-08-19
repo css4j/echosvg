@@ -110,35 +110,35 @@ public class SVGSVGElementBridge extends SVGGElementBridge implements SVGSVGCont
 
 		associateSVGContext(ctx, e, cgn);
 
+		// In some cases we converted document fragments which didn't
+		// have a parent SVG element, this check makes sure only the
+		// real root of the SVG Document tries to do negotiation with
+		// the UA.
+		SVGDocument doc = (SVGDocument) e.getOwnerDocument();
+		SVGOMSVGElement se = (SVGOMSVGElement) e;
+		boolean isOutermost = (doc.getRootElement() == e);
+		float x = 0;
+		float y = 0;
+		// x and y have no meaning on the outermost 'svg' element
+		if (!isOutermost) {
+			// 'x' attribute - default is 0
+			AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) se.getX();
+			x = safeAnimatedLength(_x, 0f);
+
+			// 'y' attribute - default is 0
+			AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) se.getY();
+			y = safeAnimatedLength(_y, 0f);
+		}
+
+		// 'width' attribute - default is 100%
+		AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) se.getWidth();
+		float w = safeAnimatedLength(_width);
+
+		// 'height' attribute - default is 100%
+		AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) se.getHeight();
+		float h = safeAnimatedLength(_height);
+
 		try {
-			// In some cases we converted document fragments which didn't
-			// have a parent SVG element, this check makes sure only the
-			// real root of the SVG Document tries to do negotiation with
-			// the UA.
-			SVGDocument doc = (SVGDocument) e.getOwnerDocument();
-			SVGOMSVGElement se = (SVGOMSVGElement) e;
-			boolean isOutermost = (doc.getRootElement() == e);
-			float x = 0;
-			float y = 0;
-			// x and y have no meaning on the outermost 'svg' element
-			if (!isOutermost) {
-				// 'x' attribute - default is 0
-				AbstractSVGAnimatedLength _x = (AbstractSVGAnimatedLength) se.getX();
-				x = safeAnimatedLength(_x, 0f);
-
-				// 'y' attribute - default is 0
-				AbstractSVGAnimatedLength _y = (AbstractSVGAnimatedLength) se.getY();
-				y = safeAnimatedLength(_y, 0f);
-			}
-
-			// 'width' attribute - default is 100%
-			AbstractSVGAnimatedLength _width = (AbstractSVGAnimatedLength) se.getWidth();
-			float w = safeAnimatedLength(_width);
-
-			// 'height' attribute - default is 100%
-			AbstractSVGAnimatedLength _height = (AbstractSVGAnimatedLength) se.getHeight();
-			float h = safeAnimatedLength(_height);
-
 			// 'visibility'
 			cgn.setVisible(CSSUtilities.convertVisibility(e));
 
