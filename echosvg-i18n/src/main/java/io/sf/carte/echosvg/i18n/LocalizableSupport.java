@@ -326,6 +326,9 @@ public class LocalizableSupport implements Localizable {
 			}
 		}
 		String classStr = (cls != null) ? cls.toString() : bundleName;
+		if (key.isEmpty()) {
+			throw new MissingResourceException("Requested an empty resource key.", classStr, key);
+		}
 		System.err.println("Unable to find resource: " + key + " in " + classStr);
 		return key;
 	}
