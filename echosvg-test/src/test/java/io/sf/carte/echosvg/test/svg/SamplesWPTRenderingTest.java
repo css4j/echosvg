@@ -46,7 +46,7 @@ public class SamplesWPTRenderingTest extends AbstractSamplesRendering {
 	 */
 	@Test
 	public void testRenderUntilError() throws TranscoderException, IOException {
-		testErrIgnore("samples/wpt/path/error-handling/render-until-error.svg", BROWSER_MEDIA, false, 4, 4);
+		testErrIgnore("samples/wpt/path/error-handling/render-until-error.svg", BROWSER_MEDIA, false, 3);
 	}
 
 }

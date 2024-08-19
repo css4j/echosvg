@@ -26,26 +26,25 @@ import java.awt.geom.Rectangle2D;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.Attr;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGPathSegList;
+import org.w3c.dom.svg.SVGPointList;
 import org.w3c.dom.svg.SVGSVGElement;
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
-import io.sf.carte.echosvg.anim.dom.SVGOMPathElement;
-import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.anim.dom.SVGOMPolygonElement;
+import io.sf.carte.echosvg.dom.svg.SVGPointItem;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGConstants;
 
 /**
- * See issue #113
+ * Check polygon bounding boxes.
  */
-public class PathTest {
+public class PolygonTest {
 
 	BridgeContext context;
 
@@ -58,40 +57,28 @@ public class PathTest {
 	}
 
 	@Test
-	public void testPathMissingD() {
-		Element path = createDocumentWithPath();
-		Document document = path.getOwnerDocument();
+	public void testMissingPoints() {
+		Element poly = createDocumentWithPoly();
+		Document document = poly.getOwnerDocument();
 		assertBounds(document, 99.5, 99.5, 100.5, 100.5);
 		assertEquals(0, errorCount);
 	}
 
 	@Test
-	public void testPathEmptyD() {
-		Element path = createDocumentWithPath();
-		Document document = path.getOwnerDocument();
-		Attr d = document.createAttribute(SVGConstants.SVG_D_ATTRIBUTE);
-		path.setAttributeNode(d);
+	public void testEmptyPoints() {
+		Element poly = createDocumentWithPoly();
+		Document document = poly.getOwnerDocument();
+		poly.setAttribute(SVGConstants.SVG_POINTS_ATTRIBUTE, "");
 		assertBounds(document, 99.5, 99.5, 100.5, 100.5);
 		assertEquals(0, errorCount);
 	}
 
 	@Test
-	public void testPathDNone() {
-		Element path = createDocumentWithPath();
-		Document document = path.getOwnerDocument();
-		Attr d = document.createAttribute(SVGConstants.SVG_D_ATTRIBUTE);
-		d.setValue("none");
-		path.setAttributeNode(d);
-		assertBounds(document, 99.5, 99.5, 100.5, 100.5);
-		assertEquals(0, errorCount);
-	}
-
-	@Test
-	public void testPathInvalidD() {
-		Element path = createDocumentWithPath();
-		Document document = path.getOwnerDocument();
-		path.setAttribute(SVGConstants.SVG_D_ATTRIBUTE, "M 5 5, 10 10, 20 - 1");
-		assertBounds(document, 4.65, 4.65, 195.35, 195.35);
+	public void testInvalidPoints() {
+		Element poly = createDocumentWithPoly();
+		Document document = poly.getOwnerDocument();
+		poly.setAttribute(SVGConstants.SVG_POINTS_ATTRIBUTE, "5, 5 10, 10 20 - 1");
+		assertBounds(document, 5, 5, 195, 195);
 		assertEquals(1, errorCount);
 	}
 
@@ -105,35 +92,31 @@ public class PathTest {
 	}
 
 	@Test
-	public void testPathOperations() {
+	public void testPolyOperations() {
 		context.setDynamic(true);
-		SVGOMPathElement path = (SVGOMPathElement) createDocumentWithPath();
-		Document document = path.getOwnerDocument();
-		path.setAttribute(SVGConstants.SVG_D_ATTRIBUTE, "M 5 5, 10 10");
-		SVGPathSegList segList = path.getPathSegList();
-		assertEquals(2, segList.getNumberOfItems());
+		SVGOMPolygonElement poly = (SVGOMPolygonElement) createDocumentWithPoly();
+		Document document = poly.getOwnerDocument();
+		poly.setAttribute(SVGConstants.SVG_POINTS_ATTRIBUTE, "5,5 10,20");
 
-		segList.appendItem(path.createSVGPathSegMovetoRel(10, 5));
-		assertEquals(3, segList.getNumberOfItems());
-		assertBounds(document, 4.65, 4.65, 195.35, 195.35);
+		SVGPointList ptsList = poly.getPoints();
+		assertEquals(2, ptsList.getNumberOfItems());
 
-		segList.insertItemBefore(path.createSVGPathSegMovetoAbs(20, 25), 2);
-		assertEquals(4, segList.getNumberOfItems());
-		assertBounds(document, 4.65, 4.65, 195.35, 195.35);
+		SVGPointItem point = new SVGPointItem(14, 4);
+		ptsList.appendItem(point);
+		assertEquals(3, ptsList.getNumberOfItems());
+		assertBounds(document, 5, 4, 195, 196);
 
-		path.setAttribute(CSSConstants.CSS_VISIBILITY_PROPERTY, "hidden");
+		poly.setAttribute(CSSConstants.CSS_VISIBILITY_PROPERTY, "hidden");
 		assertBounds(document, 99.5, 99.5, 100.5, 100.5);
-		path.removeAttribute(CSSConstants.CSS_VISIBILITY_PROPERTY);
-		assertBounds(document, 4.65, 4.65, 195.35, 195.35);
+		poly.removeAttribute(CSSConstants.CSS_VISIBILITY_PROPERTY);
+		assertBounds(document, 5, 4, 195, 196);
 
+		ptsList.removeItem(1);
+		assertEquals(2, ptsList.getNumberOfItems());
+		assertEquals("5.0,5.0 14.0,4.0", ptsList.toString());
+		assertBounds(document, 5, 4, 195, 196);
 
-		segList.replaceItem(path.createSVGPathSegMovetoAbs(35, 35), 0);
-		segList.replaceItem(path.createSVGPathSegMovetoAbs(45, 45), 1);
-		segList.removeItem(2);
-		assertEquals(3, segList.getNumberOfItems());
-		assertEquals("M 35.0 35.0 M 45.0 45.0 m 10.0 5.0", segList.toString());
-
-		segList.clear();
+		ptsList.clear();
 		assertBounds(document, 99.5, 99.5, 100.5, 100.5);
 		assertEquals(0, errorCount);
 	}
@@ -142,7 +125,7 @@ public class PathTest {
 		return new GVTBuilder().build(context, document);
 	}
 
-	private static Element createDocumentWithPath() {
+	private static Element createDocumentWithPoly() {
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		DocumentType dtd = impl.createDocumentType("svg", "-//W3C//DTD SVG 1.1//EN",
 				"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd");
@@ -160,12 +143,10 @@ public class PathTest {
 		rect.setAttribute(SVGConstants.SVG_STROKE_ATTRIBUTE, "#107");
 		svg.appendChild(rect);
 
-		Element path = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_PATH_TAG);
-		path.setAttribute(XMLConstants.XML_ID_ATTRIBUTE, "path1");
-		path.setAttribute(SVGConstants.SVG_STROKE_ATTRIBUTE, "#111");
-		svg.appendChild(path);
+		Element poly = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_POLYGON_TAG);
+		svg.appendChild(poly);
 
-		return path;
+		return poly;
 	}
 
 	private BridgeContext createBridgeContext() {

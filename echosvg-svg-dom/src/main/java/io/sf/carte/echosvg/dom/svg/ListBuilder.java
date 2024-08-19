@@ -74,4 +74,13 @@ public class ListBuilder implements ListHandler {
 	public void endList() {
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder buf = new StringBuilder();
+		for (SVGItem item : list) {
+			buf.append(item.getValueAsString()).append('\n');
+		}
+		return buf.toString();
+	}
+
 }

@@ -161,6 +161,13 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 		}
 	}
 
+	@Override
+	public void copyTo(AbstractSVGList list) {
+		super.copyTo(list);
+		AbstractSVGLengthList other = (AbstractSVGLengthList) list;
+		other.direction = direction;
+	}
+
 	/**
 	 * An {@link SVGLength} in the list.
 	 */

@@ -29,8 +29,10 @@ import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGTransform;
 import org.w3c.dom.svg.SVGTransformList;
 
+import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedLengthList.BaseSVGLengthList;
 import io.sf.carte.echosvg.anim.values.AnimatableTransformListValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
+import io.sf.carte.echosvg.dom.svg.AbstractSVGList;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGTransformList;
 import io.sf.carte.echosvg.dom.svg.ListBuilder;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
@@ -304,6 +306,14 @@ public class SVGOMAnimatedTransformList extends AbstractSVGAnimatedValue impleme
 				itemList = new ArrayList<>(1);
 				malformed = true;
 			}
+		}
+
+		@Override
+		public void copyTo(AbstractSVGList list) {
+			super.copyTo(list);
+			BaseSVGLengthList other = (BaseSVGLengthList) list;
+			other.malformed = malformed;
+			other.missing = missing;
 		}
 
 	}

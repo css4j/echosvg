@@ -105,7 +105,7 @@ public class SVGOMPathElement extends SVGGraphicsElement implements SVGPathEleme
 	 * Initializes the live attribute values of this element.
 	 */
 	private void initializeLiveAttributes() {
-		d = createLiveAnimatedPathData(null, SVG_D_ATTRIBUTE, "");
+		d = createLiveAnimatedPathData(null, SVG_D_ATTRIBUTE, "none");
 	}
 
 	/**

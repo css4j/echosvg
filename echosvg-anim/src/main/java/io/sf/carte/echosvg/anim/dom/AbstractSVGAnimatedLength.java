@@ -301,9 +301,9 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 			Attr attr = element.getAttributeNodeNS(namespaceURI, localName);
 			String s;
 			if (attr == null) {
+				missing = true;
 				s = getDefaultValue();
 				if (s == null) {
-					missing = true;
 					return;
 				}
 			} else {

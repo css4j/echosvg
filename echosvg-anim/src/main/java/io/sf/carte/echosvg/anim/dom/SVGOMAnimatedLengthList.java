@@ -32,6 +32,7 @@ import org.w3c.dom.svg.SVGLengthList;
 
 import io.sf.carte.echosvg.anim.values.AnimatableLengthListValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
+import io.sf.carte.echosvg.dom.svg.AbstractSVGList;
 import io.sf.carte.echosvg.dom.svg.ListBuilder;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
 import io.sf.carte.echosvg.dom.svg.SVGItem;
@@ -348,6 +349,14 @@ public class SVGOMAnimatedLengthList extends AbstractSVGAnimatedValue implements
 					}
 				}
 			}
+		}
+
+		@Override
+		public void copyTo(AbstractSVGList list) {
+			super.copyTo(list);
+			BaseSVGLengthList other = (BaseSVGLengthList) list;
+			other.malformed = malformed;
+			other.missing = missing;
 		}
 
 	}

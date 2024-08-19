@@ -1307,15 +1307,6 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 			}
 		}
 
-		@Override
-		public void displayWarning(Exception ex) {
-			try {
-				SVGAbstractTranscoder.this.handler.warning(new TranscoderException(ex));
-			} catch (TranscoderException e) {
-				throw new RuntimeException(e);
-			}
-		}
-
 		/**
 		 * Returns the pixel to millimeter conversion factor specified in the
 		 * <code>TranscodingHints</code> or 0.26458333 if not specified.

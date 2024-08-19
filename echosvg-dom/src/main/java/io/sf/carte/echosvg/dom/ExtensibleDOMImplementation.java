@@ -24,10 +24,13 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.ServiceLoader;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.css.DOMImplementationCSS;
 import org.w3c.dom.view.ViewCSS;
 
@@ -208,6 +211,24 @@ public abstract class ExtensibleDOMImplementation extends AbstractDOMImplementat
 		 * Creates an instance of the associated element type.
 		 */
 		Element create(String prefix, Document doc);
+
+		default void importAttributes(Element imported, Node toImport, boolean trimId) {
+			if (toImport.hasAttributes()) {
+				NamedNodeMap attr = toImport.getAttributes();
+				int len = attr.getLength();
+				for (int i = 0; i < len; i++) {
+					Attr a = (Attr) attr.item(i);
+					if (!a.getSpecified())
+						continue;
+					AbstractAttr aa = (AbstractAttr) imported.getOwnerDocument()
+							.createAttributeNS(a.getNamespaceURI(), a.getNodeName());
+					aa.setNodeValue(a.getNodeValue());
+					if (trimId && aa.isId())
+						aa.setIsId(false); // don't consider this an Id.
+					imported.setAttributeNodeNS(aa);
+				}
+			}
+		}
 
 	}
 

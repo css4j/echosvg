@@ -31,6 +31,7 @@ import org.w3c.dom.svg.SVGPointList;
 
 import io.sf.carte.echosvg.anim.values.AnimatablePointListValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
+import io.sf.carte.echosvg.dom.svg.AbstractSVGList;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGPointList;
 import io.sf.carte.echosvg.dom.svg.ListBuilder;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
@@ -105,27 +106,28 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 	}
 
 	/**
-	 * Returns an exception if the points list value is malformed.
+	 * Checks whether the points list value is malformed.
 	 * 
-	 * @return an exception if the points list value is malformed, or {@code null}
+	 * @return LiveAttributeException.ERR_ATTRIBUTE_MISSING if the points list value is missing,
+	 * ERR_ATTRIBUTE_MALFORMED if is invalid, or {@code -1}
 	 *         otherwise.
 	 */
-	public LiveAttributeException check() {
+	public short check() {
 		if (!hasAnimVal) {
 			if (baseVal == null) {
 				baseVal = new BaseSVGPointList();
 			}
+
 			baseVal.revalidate();
-			if (baseVal.missing) {
-				return new LiveAttributeException(element, localName,
-						LiveAttributeException.ERR_ATTRIBUTE_MISSING, null);
+
+			if (baseVal.none) {
+				return LiveAttributeException.ERR_ATTRIBUTE_MISSING;
 			}
 			if (baseVal.malformed) {
-				return new LiveAttributeException(element, localName,
-						LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, baseVal.getValueAsString());
+				return LiveAttributeException.ERR_ATTRIBUTE_MALFORMED;
 			}
 		}
-		return null;
+		return -1;
 	}
 
 	/**
@@ -210,14 +212,18 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 	protected class BaseSVGPointList extends AbstractSVGPointList {
 
 		/**
-		 * Whether the attribute is missing.
+		 * Whether the attribute is missing or no value.
 		 */
-		protected boolean missing;
+		protected boolean none;
 
 		/**
 		 * Whether the attribute is malformed.
 		 */
 		protected boolean malformed;
+
+		boolean isValid() {
+			return valid;
+		}
 
 		/**
 		 * Create a DOMException.
@@ -267,7 +273,7 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 		@Override
 		protected void resetAttribute() {
 			super.resetAttribute();
-			missing = false;
+			none = false;
 			malformed = false;
 		}
 
@@ -278,7 +284,7 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 		@Override
 		protected void resetAttribute(SVGItem item) {
 			super.resetAttribute(item);
-			missing = false;
+			none = false;
 			malformed = false;
 		}
 
@@ -292,12 +298,12 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 			}
 
 			valid = true;
-			missing = false;
+			none = false;
 			malformed = false;
 
 			String s = getValueAsString().trim(); // Default is ''
 			if (s.isEmpty()) {
-				missing = true;
+				none = true;
 				clear(itemList);
 				itemList = new ArrayList<>(1);
 				return;
@@ -317,6 +323,14 @@ public class SVGOMAnimatedPoints extends AbstractSVGAnimatedValue implements SVG
 					itemList = new ArrayList<>(1);
 				}
 			}
+		}
+
+		@Override
+		public void copyTo(AbstractSVGList list) {
+			super.copyTo(list);
+			BaseSVGPointList other = (BaseSVGPointList) list;
+			other.malformed = malformed;
+			other.none = none;
 		}
 
 	}

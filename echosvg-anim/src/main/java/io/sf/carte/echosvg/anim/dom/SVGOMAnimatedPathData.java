@@ -41,6 +41,7 @@ import io.sf.carte.echosvg.dom.svg.SVGItem;
 import io.sf.carte.echosvg.dom.svg.SVGPathSegItem;
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.parser.PathArrayProducer;
+import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
  * This class is the implementation of the {@link SVGAnimatedPathData}
@@ -162,24 +163,31 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 	}
 
 	/**
-	 * @return an exception if the path data is malformed, {@code null} otherwise.
+	 * Check whether the attribute is missing, empty or malformed.
+	 * 
+	 * @return -1 if the value is present and is valid,
+	 *         LiveAttributeException.ERR_ATTRIBUTE_MISSING if the attribute is
+	 *         missing or {@code none}, ERR_ATTRIBUTE_MALFORMED if it is invalid,
+	 *         -2 if it is invalid but that was already returned.
 	 */
-	public LiveAttributeException check() {
+	public short check() {
 		if (!hasAnimVal) {
 			if (pathSegs == null) {
 				pathSegs = new BaseSVGPathSegList();
 			}
+
+			boolean wasValid = pathSegs.isValid();
+
 			pathSegs.revalidate();
-			if (pathSegs.missing) {
-				return new LiveAttributeException(element, localName,
-						LiveAttributeException.ERR_ATTRIBUTE_MISSING, null);
+
+			if (pathSegs.none) {
+				return LiveAttributeException.ERR_ATTRIBUTE_MISSING;
 			}
 			if (pathSegs.malformed) {
-				return new LiveAttributeException(element, localName,
-						LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, pathSegs.getValueAsString());
+				return wasValid ? -2 : LiveAttributeException.ERR_ATTRIBUTE_MALFORMED;
 			}
 		}
-		return null;
+		return -1;
 	}
 
 	/**
@@ -274,14 +282,18 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 	public class BaseSVGPathSegList extends AbstractSVGPathSegList {
 
 		/**
-		 * Whether the attribute is missing.
+		 * Whether the attribute is missing or 'none'.
 		 */
-		protected boolean missing;
+		protected boolean none;
 
 		/**
 		 * Whether the attribute is malformed.
 		 */
 		protected boolean malformed;
+
+		boolean isValid() {
+			return valid;
+		}
 
 		/**
 		 * Create a DOMException.
@@ -330,7 +342,7 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 		@Override
 		protected void resetAttribute() {
 			super.resetAttribute();
-			missing = false;
+			none = false;
 			malformed = false;
 		}
 
@@ -341,7 +353,7 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 		@Override
 		protected void resetAttribute(SVGItem item) {
 			super.resetAttribute(item);
-			missing = false;
+			none = false;
 			malformed = false;
 		}
 
@@ -355,12 +367,12 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 			}
 
 			valid = true;
-			missing = false;
+			none = false;
 			malformed = false;
 
-			String s = getValueAsString().trim(); // Default is '', not null
-			if (s.isEmpty()) {
-				missing = true;
+			String s = getValueAsString().trim(); // Default is 'none', not null
+			if (CSSConstants.CSS_NONE_VALUE.equalsIgnoreCase(s)) {
+				none = true;
 				clear(itemList);
 				itemList = new ArrayList<>(1);
 				return;
@@ -387,7 +399,7 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 			super.copyTo(list);
 			BaseSVGPathSegList b = (BaseSVGPathSegList) list;
 			b.malformed = malformed;
-			b.missing = missing;
+			b.none = none;
 		}
 
 	}
@@ -399,9 +411,9 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 	public class NormalizedBaseSVGPathSegList extends AbstractSVGNormPathSegList {
 
 		/**
-		 * Whether the attribute is missing.
+		 * Whether the attribute is missing or 'none'.
 		 */
-		protected boolean missing;
+		protected boolean none;
 
 		/**
 		 * Whether the attribute is malformed.
@@ -459,12 +471,12 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 			}
 
 			valid = true;
-			missing = false;
+			none = false;
 			malformed = false;
 
-			String s = getValueAsString().trim(); // Default is '', not null
-			if (s.isEmpty()) {
-				missing = true;
+			String s = getValueAsString().trim(); // Default is 'none', not null
+			if (CSSConstants.CSS_NONE_VALUE.equalsIgnoreCase(s)) {
+				none = true;
 				clear(itemList);
 				itemList = new ArrayList<>(1);
 				return;
@@ -491,7 +503,7 @@ public class SVGOMAnimatedPathData extends AbstractSVGAnimatedValue implements S
 			super.copyTo(list);
 			NormalizedBaseSVGPathSegList b = (NormalizedBaseSVGPathSegList) list;
 			b.malformed = malformed;
-			b.missing = missing;
+			b.none = none;
 		}
 
 	}

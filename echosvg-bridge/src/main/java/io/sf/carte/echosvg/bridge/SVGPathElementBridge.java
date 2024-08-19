@@ -87,24 +87,45 @@ public class SVGPathElementBridge extends SVGDecoratedShapeElementBridge impleme
 		AWTPathProducer app = new AWTPathProducer();
 		// 'd' attribute - ignore shape if not present
 		SVGOMAnimatedPathData _d = pe.getAnimatedPathData();
-		LiveAttributeException lex = _d.check();
-		if (lex != null) {
-			BridgeException be = new BridgeException(ctx, lex);
-			if (lex.getCode() == LiveAttributeException.ERR_ATTRIBUTE_MISSING) {
-				if (ctx.userAgent != null) {
-					ctx.userAgent.displayWarning(be);
-				}
+
+		short check = _d.check();
+		if (check >= 0) { // Either 'none' or new errors detected
+			if (check == LiveAttributeException.ERR_ATTRIBUTE_MISSING) {
+				// none
+				/*
+				 * SVG 2.0 § 9.3.2. "The value none indicates that there is no path data for the
+				 * element. For ‘path’ elements, this means that the element does not render or
+				 * contribute to the bounding box of ancestor container elements."
+				 */
+
+				// We could just return, but in case that we are updating the
+				// ShapeNode, we want to set the shape.
+				shapeNode.setShape(EMPTY_SHAPE);
+				shapeNode.setVisible(false);
 				return;
 			}
 			// Must be LiveAttributeException.ERR_ATTRIBUTE_MALFORMED:
+			LiveAttributeException lex = new LiveAttributeException(e, e.getLocalName(), check,
+					_d.getPathSegList().toString());
+			BridgeException be = new BridgeException(ctx, lex);
 			displayErrorOrThrow(ctx, be);
-			if (_d.getPathSegList().getNumberOfItems() == 0) {
-				return;
-			}
 		}
+
+		if (_d.getPathSegList().getNumberOfItems() == 0) {
+			// § 9.3.2. "If the path data string contains no valid commands,
+			// then the behavior is the same as the none value."
+			//
+			// We could just return, but in case that we are updating the
+			// ShapeNode, we want to set the shape.
+			shapeNode.setShape(EMPTY_SHAPE);
+			shapeNode.setVisible(false);
+			return;
+		}
+
 		SVGPathSegList p = _d.getAnimatedPathSegList();
 		try {
 			app.setWindingRule(CSSUtilities.convertFillRule(e));
+			shapeNode.setVisible(CSSUtilities.convertVisibility(e));
 			SVGAnimatedPathDataSupport.handlePathSegList(p, app);
 		} catch (LiveAttributeException ex) {
 			// Probably not thrown here

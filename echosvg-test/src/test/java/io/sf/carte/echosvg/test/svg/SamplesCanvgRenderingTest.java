@@ -483,12 +483,12 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testIssue97() throws TranscoderException, IOException {
-		test("samples/canvg/issue97.svg", false, 324);
+		test("samples/canvg/issue97.svg", false);
 	}
 
 	@Test
 	public void testIssue98() throws TranscoderException, IOException {
-		test("samples/canvg/issue98.svg", false, 1);
+		test("samples/canvg/issue98.svg", false);
 	}
 
 	@Test
@@ -555,7 +555,7 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testIssue125a() throws TranscoderException, IOException {
-		test("samples/canvg/issue125a.svg", false, 2);
+		test("samples/canvg/issue125a.svg", false);
 	}
 
 	@Test
@@ -753,13 +753,9 @@ public class SamplesCanvgRenderingTest extends AbstractSamplesRendering {
 		testNVErrIgnore("samples/canvg/issue206.svg", BROWSER_MEDIA, 66);
 	}
 
-	/*
-	 * TODO: investigate.
-	 */
-	@Disabled
 	@Test
 	public void testIssue211() throws TranscoderException, IOException {
-		testNV("samples/canvg/issue211.svg");
+		testNVErrIgnore("samples/canvg/issue211.svg", BROWSER_MEDIA, 1);
 	}
 
 	@Test

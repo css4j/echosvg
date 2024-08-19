@@ -94,4 +94,12 @@ public class SVGPointItem extends AbstractSVGItem implements SVGPoint {
 		return SVGOMPoint.matrixTransform(this, matrix);
 	}
 
+	@Override
+	public SVGPointItem clone() {
+		SVGPointItem clon = (SVGPointItem) super.clone();
+		clon.x = x;
+		clon.y = y;
+		return clon;
+	}
+
 }

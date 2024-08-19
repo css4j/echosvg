@@ -395,7 +395,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	 */
 	@Test
 	public void testFontAltGlyph() throws TranscoderException, IOException {
-		test("samples/tests/spec/fonts/fontAltGlyph.svg", 4, 0);
+		test("samples/tests/spec/fonts/fontAltGlyph.svg", 4);
 	}
 
 	@Test
@@ -474,7 +474,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	@Test
 	public void testMissingRef_All() throws TranscoderException, IOException {
 		testAllInputSources("samples/tests/spec/linking/missingRef.svg", null, false, null, null,
-				false, 16, 0);
+				false, 16);
 	}
 
 	@Test
@@ -684,7 +684,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 
 	@Test
 	public void testShapesEmptyShape() throws TranscoderException, IOException {
-		test("samples/tests/spec/shapes/emptyShape.svg", 0, 3);
+		test("samples/tests/spec/shapes/emptyShape.svg", 0);
 	}
 
 	/*
@@ -1335,7 +1335,7 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	@Test
 	public void testCSS3_All() throws TranscoderException, IOException {
 		testAllInputSources("samples/tests/spec2/styling/css3.html", null, false, null, null,
-				false, 4, 0);
+				false, 4);
 	}
 
 	@Test
@@ -1350,13 +1350,13 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 
 	@Test
 	public void testCSS3Dark() throws TranscoderException, IOException {
-		testDark("samples/tests/spec2/styling/css3.html", 4, 0);
+		testDark("samples/tests/spec2/styling/css3.html", 4);
 	}
 
 	@Test
 	public void testCSS3_Selector() throws TranscoderException, IOException {
 		test("samples/tests/spec2/styling/css3.html", SVGRenderingAccuracyTest.DEFAULT_MEDIUM,
-				false, null, "#theSVG", true, 4, 0);
+				false, null, "#theSVG", true, 4);
 	}
 
 }
