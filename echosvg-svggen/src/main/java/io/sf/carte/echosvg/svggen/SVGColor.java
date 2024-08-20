@@ -171,7 +171,8 @@ public class SVGColor extends AbstractSVGConverter {
 			}
 			cssColorBuffer.append(')');
 		} else {
-			cssColorBuffer = new StringBuilder(RGB_PREFIX);
+			cssColorBuffer = new StringBuilder(16);
+			cssColorBuffer.append(RGB_PREFIX);
 			cssColorBuffer.append(color.getRed());
 			cssColorBuffer.append(COMMA);
 			cssColorBuffer.append(color.getGreen());
