@@ -520,11 +520,11 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 				}
 				Color cmyk = new ColorWithAlternatives(cmykCs, comps, opacity, null);
 				RGBColorValue rgb = (RGBColorValue) color;
-				int r = resolveColorComponent(rgb.getR());
-				int g = resolveColorComponent(rgb.getG());
-				int b = resolveColorComponent(rgb.getB());
+				float r = resolveColorComponent(rgb.getR());
+				float g = resolveColorComponent(rgb.getG());
+				float b = resolveColorComponent(rgb.getB());
 				float a = resolveAlphaComponent(c.getAlpha());
-				Color specColor = new ColorWithAlternatives(r, g, b, Math.round(a * opacity * 255f),
+				Color specColor = new ColorWithAlternatives(r, g, b, a * opacity,
 						new Color[] { cmyk });
 				return specColor;
 			} else {
@@ -560,11 +560,11 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 * @param opacity The opacity value (0 &lt;= o &lt;= 1).
 	 */
 	public static Color convertColor(RGBColorValue c, float opacity) {
-		int r = resolveColorComponent(c.getR());
-		int g = resolveColorComponent(c.getG());
-		int b = resolveColorComponent(c.getB());
+		float r = resolveColorComponent(c.getR());
+		float g = resolveColorComponent(c.getG());
+		float b = resolveColorComponent(c.getB());
 		float a = resolveAlphaComponent(c.getAlpha());
-		return new Color(r, g, b, Math.round(a * opacity * 255f));
+		return new Color(r, g, b, a * opacity);
 	}
 
 	/**
@@ -603,9 +603,9 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		case ColorValue.CS_XYZ_D65:
 			CSSStyleValueList<NumericValue> chs = c.getChannels();
 			float[] ch = new float[3];
-			ch[0] = resolveColorFunctionComponent(chs.item(0));
-			ch[1] = resolveColorFunctionComponent(chs.item(1));
-			ch[2] = resolveColorFunctionComponent(chs.item(2));
+			ch[0] = resolveColorComponent(chs.item(0));
+			ch[1] = resolveColorComponent(chs.item(1));
+			ch[2] = resolveColorComponent(chs.item(2));
 			float[] xyzd50 = d65xyzToD50(ch);
 			float a = resolveAlphaComponent(c.getAlpha());
 			cs = ColorSpace.getInstance(ColorSpace.CS_CIEXYZ);
@@ -628,20 +628,32 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		}
 	}
 
+	/////////////////////////////////////////////////////////////////////////
+	// Color utility methods
+	/////////////////////////////////////////////////////////////////////////
+
 	private static Color convert3Color(ColorSpace space, ColorFunction c, float opacity) {
 		CSSStyleValueList<NumericValue> chs = c.getChannels();
 		float[] ch = new float[3];
-		ch[0] = resolveColorFunctionComponent(chs.item(0));
-		ch[1] = resolveColorFunctionComponent(chs.item(1));
-		ch[2] = resolveColorFunctionComponent(chs.item(2));
+		ch[0] = resolveColorComponent(chs.item(0));
+		ch[1] = resolveColorComponent(chs.item(1));
+		ch[2] = resolveColorComponent(chs.item(2));
 		float a = resolveAlphaComponent(c.getAlpha());
 		return new Color(space, ch, a * opacity);
 	}
 
-	private static float resolveColorFunctionComponent(NumericValue item) {
-		float f = item.getFloatValue();
+	/**
+	 * Returns the value of one color component (0 &lt;= result &lt;= 1).
+	 * 
+	 * @param v the value that declares the color component, either a percentage or
+	 *          a number in the range (0 &lt;= v &lt;= 1).
+	 * @return the value in the range (0 &lt;= v &lt;= 1).
+	 */
+	private static float resolveColorComponent(NumericValue item) {
+		float f;
 		switch (item.getCSSUnit()) {
 		case CSSUnit.CSS_NUMBER:
+			f = item.getFloatValue();
 			if (f < 0f) {
 				f = 0f;
 			} else if (f > 1f) {
@@ -649,6 +661,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			}
 			return f;
 		case CSSUnit.CSS_PERCENTAGE:
+			f = item.getFloatValue();
 			if (f < 0f) {
 				f = 0f;
 			} else if (f > 100f) {
@@ -809,26 +822,12 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	/////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Returns the value of one color component (0 &lt;= result &lt;= 255).
+	 * Returns the value of the alpha component (0 &lt;= result &lt;= 1).
 	 * 
-	 * @param v the value that defines the color component
+	 * @param v the value that declares the alpha component, either a percentage or
+	 *          a number in the range (0 &lt;= v &lt;= 1).
+	 * @return the value in the range (0 &lt;= v &lt;= 1).
 	 */
-	public static int resolveColorComponent(Value v) {
-		float f;
-		switch (v.getCSSUnit()) {
-		case CSSUnit.CSS_PERCENTAGE:
-			f = v.getFloatValue();
-			f = (f > 100f) ? 100f : (f < 0f) ? 0f : f;
-			return Math.round(255f * f / 100f);
-		case CSSUnit.CSS_NUMBER:
-			f = v.getFloatValue();
-			f = (f > 255f) ? 255f : (f < 0f) ? 0f : f;
-			return Math.round(f);
-		default:
-			throw new IllegalArgumentException("Color component argument is not an appropriate CSS value");
-		}
-	}
-
 	private static float resolveAlphaComponent(Value v) {
 		float f;
 		switch (v.getCSSUnit()) {

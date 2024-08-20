@@ -148,7 +148,7 @@ public abstract class AbstractValue implements Value, Cloneable {
 		try {
 			return (AbstractValue) super.clone();
 		} catch (CloneNotSupportedException e) {
-			return null;
+			throw new IllegalStateException(e);
 		}
 	}
 

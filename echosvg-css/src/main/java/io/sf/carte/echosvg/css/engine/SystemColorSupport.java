@@ -24,9 +24,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.w3c.css.om.unit.CSSUnit;
-
-import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.RGBColorValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.util.CSSConstants;
@@ -48,9 +45,7 @@ public class SystemColorSupport implements CSSConstants {
 	public static Value getSystemColor(String ident) {
 		ident = ident.toLowerCase(Locale.ROOT);
 		SystemColor sc = factories.get(ident);
-		return new RGBColorValue(new FloatValue(CSSUnit.CSS_NUMBER, sc.getRed()),
-				new FloatValue(CSSUnit.CSS_NUMBER, sc.getGreen()),
-				new FloatValue(CSSUnit.CSS_NUMBER, sc.getBlue()));
+		return new RGBColorValue(sc.getComponents(null));
 	}
 
 	/**

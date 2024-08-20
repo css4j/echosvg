@@ -38,6 +38,19 @@ public class IdentValue extends AbstractStringValue implements CSSKeywordValue {
 	}
 
 	/**
+	 * Creates a constant identifier.
+	 * <p>
+	 * If you want to have a modifiable copy of the returned value, clone it.
+	 * </p>
+	 * 
+	 * @param s the identifier.
+	 * @return an immutable identifier value.
+	 */
+	public static IdentValue createConstant(String s) {
+		return new ImmutableIdentValue(s);
+	}
+
+	/**
 	 * The type of the value.
 	 */
 	@Override

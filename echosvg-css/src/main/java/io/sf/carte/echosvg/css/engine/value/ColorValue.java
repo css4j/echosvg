@@ -83,7 +83,7 @@ public abstract class ColorValue extends ComponentValue implements CSSColorValue
 	 */
 	protected ColorValue(NumericValue a) throws DOMSyntaxException {
 		super();
-		setAlpha(a);
+		setAlphaChannel(a);
 	}
 
 	/**
@@ -129,6 +129,10 @@ public abstract class ColorValue extends ComponentValue implements CSSColorValue
 	 * @throws DOMSyntaxException if alpha is not a percentage.
 	 */
 	public void setAlpha(CSSNumericValue alpha) throws DOMSyntaxException {
+		setAlphaChannel(alpha);
+	}
+
+	private void setAlphaChannel(CSSNumericValue alpha) throws DOMSyntaxException {
 		NumericValue a = (NumericValue) alpha;
 		if (a.getCSSUnit() != CSSUnit.CSS_PERCENTAGE && a.getCSSUnit() != CSSUnit.CSS_NUMBER) {
 			throw new DOMSyntaxException("Alpha channel must be a number or percentage.");

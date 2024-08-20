@@ -57,6 +57,20 @@ public class FloatValue extends NumericValue implements CSSUnitValue {
 	}
 
 	/**
+	 * Create a constant with the given unit and value.
+	 * <p>
+	 * If you want to have a modifiable copy of the returned value, clone it.
+	 * </p>
+	 * 
+	 * @param unit  the unit.
+	 * @param value the value expressed in that unit.
+	 * @return the immutable value.
+	 */
+	public static FloatValue createConstant(short unit, float value) {
+		return new ImmutableUnitValue(unit, value);
+	}
+
+	/**
 	 * The float value
 	 */
 	private float floatValue;
@@ -68,6 +82,9 @@ public class FloatValue extends NumericValue implements CSSUnitValue {
 
 	/**
 	 * Creates a new value.
+	 *
+	 * @param unit  the unit.
+	 * @param value the value expressed in that unit.
 	 */
 	public FloatValue(short unitType, float floatValue) {
 		this.unitType = unitType;

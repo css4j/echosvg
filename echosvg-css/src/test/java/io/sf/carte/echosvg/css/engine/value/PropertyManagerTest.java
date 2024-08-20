@@ -324,7 +324,8 @@ public class PropertyManagerTest {
 		// test default value if any
 		if (!defaultValue.equals("__USER_AGENT__")) {
 			String s = manager.getDefaultValue().getCssText();
-			assertTrue(defaultValue.equalsIgnoreCase(s));
+			assertTrue(defaultValue.equalsIgnoreCase(s),
+				"Expected '" + defaultValue + "', found '" + s + '\'');
 		}
 
 		// test if the property is inherited or not

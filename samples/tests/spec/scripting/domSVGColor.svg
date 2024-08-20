@@ -79,7 +79,7 @@
            showFill("r4", ".a");
 
            fill = showFill("r5", ".b");
-           r = fill.getR(); r.setValue("128");
+           r = fill.getR(); r.setValue(".50196");
            fill.setAlpha(0.95);
            showFill("r5", ".a");
 
@@ -96,7 +96,7 @@
            showFill("r8", ".a");
 
            fill = showFill("r9", ".b");
-           b = fill.getB(); b.setValue("50");
+           b = fill.getB(); b.setValue(".1961");
            showFill("r9", ".a");
 
            fill = showFill("r10", ".b");
