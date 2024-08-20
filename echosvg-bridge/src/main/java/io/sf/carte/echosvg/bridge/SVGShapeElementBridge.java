@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.bridge;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
 
 import org.w3c.dom.Element;
 
@@ -44,7 +45,7 @@ public abstract class SVGShapeElementBridge extends AbstractGraphicsNodeBridge {
 	/**
 	 * An empty shape to use when the element cannot be displayed.
 	 */
-	protected static final Shape EMPTY_SHAPE = new GeneralPath();
+	protected static final Shape EMPTY_SHAPE = new GeneralPath(Path2D.WIND_NON_ZERO, 1);
 
 	/**
 	 * Constructs a new bridge for SVG shapes.
