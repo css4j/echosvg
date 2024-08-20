@@ -20,6 +20,9 @@ package io.sf.carte.echosvg.test.image;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.color.ColorSpace;
+import java.awt.color.ICC_ColorSpace;
+import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -186,10 +189,14 @@ public class ImageComparator {
 			}
 		}
 
-		final int colorSpace = ref.getColorModel().getColorSpace().getType();
-		// Compare color spaces
-		if (colorSpace != can.getColorModel().getColorSpace().getType()) {
-			return DIFFERENT_COLOR_SPACES;
+		if (ref.getType() == BufferedImage.TYPE_CUSTOM) {
+			ColorSpace refColorSpace = ref.getColorModel().getColorSpace();
+			ColorSpace canColorSpace = can.getColorModel().getColorSpace();
+			// Compare color spaces
+			if (refColorSpace.getType() != canColorSpace.getType()
+					|| !isSameColorSpace(refColorSpace, canColorSpace)) {
+				return DIFFERENT_COLOR_SPACES;
+			}
 		}
 
 		final int numBands = ref.getSampleModel().getNumBands();
@@ -268,6 +275,26 @@ public class ImageComparator {
 		}
 
 		return result;
+	}
+
+	private static boolean isSameColorSpace(ColorSpace refColorSpace, ColorSpace canColorSpace) {
+		if (refColorSpace == canColorSpace) {
+			return true;
+		}
+		if (!(refColorSpace instanceof ICC_ColorSpace) || !(canColorSpace instanceof ICC_ColorSpace)) {
+			// False, otherwise they would be the same object
+			return false;
+		}
+		ICC_Profile refProfile = ((ICC_ColorSpace) refColorSpace).getProfile();
+		ICC_Profile canProfile = ((ICC_ColorSpace) canColorSpace).getProfile();
+		if (refProfile.getProfileClass() != canProfile.getProfileClass()
+				|| refProfile.getMajorVersion() != canProfile.getMajorVersion()
+				|| refProfile.getMinorVersion() != canProfile.getMinorVersion()
+				|| Math.abs(refProfile.getData().length - canProfile.getData().length) > 16) {
+			// Allow up to 16 different bytes of length, to prevent potential padding issues
+			return false;
+		}
+		return true;
 	}
 
 	private static int computeMaxDiffPixels(float numpxFrac, float allowedPercent, int width,
