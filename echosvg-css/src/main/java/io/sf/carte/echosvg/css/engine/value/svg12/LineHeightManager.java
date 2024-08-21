@@ -148,6 +148,29 @@ public class LineHeightManager extends LengthManager {
 			return new FloatValue(CSSUnit.CSS_NUMBER, v * fs * 0.01f);
 		}
 
+		case CSSUnit.CSS_LH:
+			float lh;
+			float v = value.getFloatValue();
+			CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
+			if (p != null) {
+				int lhidx = engine.getLineHeightIndex();
+				lh = engine.getComputedStyle(p, null, lhidx).getFloatValue();
+			} else {
+				lh = 1.2f * engine.getCSSContext().getMediumFontSize();
+			}
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * lh);
+
+		case CSSUnit.CSS_RLH:
+			v = value.getFloatValue();
+			CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
+			if (root != elt) {
+				int lhidx = engine.getLineHeightIndex();
+				lh = engine.getComputedStyle(root, null, lhidx).getFloatValue();
+			} else {
+				lh = 1.2f * engine.getCSSContext().getMediumFontSize();
+			}
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * lh);
+
 		default:
 			return super.computeValue(elt, pseudo, engine, idx, sm, value);
 		}

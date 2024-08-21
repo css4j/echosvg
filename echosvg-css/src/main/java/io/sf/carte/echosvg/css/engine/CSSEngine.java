@@ -1249,9 +1249,9 @@ public abstract class CSSEngine {
 	/**
 	 * Puts an author property from a style-map in another style-map, if possible.
 	 */
-	protected void putAuthorProperty(StyleMap dest, int idx, Value sval, boolean imp, short origin) {
+	protected void putAuthorProperty(StyleMap dest, int idx, Value sval, boolean imp, int origin) {
 		Value dval = dest.getValue(idx);
-		short dorg = dest.getOrigin(idx);
+		int dorg = dest.getOrigin(idx);
 		boolean dimp = dest.isImportant(idx);
 
 		boolean cond = dval == null;
@@ -1313,7 +1313,7 @@ public abstract class CSSEngine {
 	/**
 	 * Adds the rules contained in the given list to a stylemap.
 	 */
-	protected void addRules(SelectorMatcher matcher, StyleMap sm, ArrayList<Rule> rules, short origin) {
+	protected void addRules(SelectorMatcher matcher, StyleMap sm, ArrayList<Rule> rules, int origin) {
 		sortRules(rules, matcher);
 
 		if (origin == StyleMap.AUTHOR_ORIGIN) {
@@ -2007,7 +2007,7 @@ public abstract class CSSEngine {
 				// come from the inline style attribute or override style.
 				for (int i = getNumberOfProperties() - 1; i >= 0; --i) {
 					if (style.isComputed(i) && !updated[i]) {
-						short origin = style.getOrigin(i);
+						int origin = style.getOrigin(i);
 						if (origin >= StyleMap.INLINE_AUTHOR_ORIGIN) { // ToDo Jlint says: always same result ??
 							removed = true;
 							updated[i] = true;
@@ -2024,12 +2024,14 @@ public abstract class CSSEngine {
 				boolean fs = (fontSizeIndex == -1) ? false : updated[fontSizeIndex];
 				boolean lh = (lineHeightIndex == -1) ? false : updated[lineHeightIndex];
 				boolean cl = (colorIndex == -1) ? false : updated[colorIndex];
+				boolean isRoot = elt.getOwnerDocument().getDocumentElement() == elt;
 
 				for (int i = getNumberOfProperties() - 1; i >= 0; --i) {
 					if (updated[i]) {
 						count++;
 					} else if ((fs && style.isFontSizeRelative(i)) || (lh && style.isLineHeightRelative(i))
-							|| (cl && style.isColorRelative(i))) {
+							|| (cl && style.isColorRelative(i)) || (fs && isRoot && style.isRootFontSizeRelative(i))
+							|| (lh && isRoot && style.isRootLineHeightRelative(i))) {
 						updated[i] = true;
 						clearComputedValue(style, i);
 						count++;
@@ -2170,13 +2172,14 @@ public abstract class CSSEngine {
 			boolean fs = (fontSizeIndex == -1) ? false : updated[fontSizeIndex];
 			boolean lh = (lineHeightIndex == -1) ? false : updated[lineHeightIndex];
 			boolean cl = (colorIndex == -1) ? false : updated[colorIndex];
+			boolean isRootFs = fs && elt.getOwnerDocument().getDocumentElement() == elt;
 
 			int count = 0;
 			for (int i = getNumberOfProperties() - 1; i >= 0; --i) {
 				if (updated[i]) {
 					count++;
 				} else if ((fs && style.isFontSizeRelative(i)) || (lh && style.isLineHeightRelative(i))
-						|| (cl && style.isColorRelative(i))) {
+						|| (cl && style.isColorRelative(i)) || (isRootFs && style.isRootFontSizeRelative(i))) {
 					updated[i] = true;
 					clearComputedValue(style, i);
 					count++;
@@ -2265,7 +2268,7 @@ public abstract class CSSEngine {
 				updatedProperties[i] = true;
 
 				Value v = valueManagers[i].createValue(value, CSSEngine.this);
-				styleMap.putMask(i, (short) 0);
+				styleMap.putMask(i, 0);
 				styleMap.putValue(i, v);
 				styleMap.putOrigin(i, StyleMap.INLINE_AUTHOR_ORIGIN);
 			}
@@ -2300,7 +2303,7 @@ public abstract class CSSEngine {
 				lu = parser.parsePropertyValue(new StringReader(newValue));
 				ValueManager vm = valueManagers[idx];
 				Value v = vm.createValue(lu, CSSEngine.this);
-				style.putMask(idx, (short) 0);
+				style.putMask(idx, 0);
 				style.putValue(idx, v);
 				style.putOrigin(idx, StyleMap.NON_CSS_ORIGIN);
 			} catch (Exception e) {
@@ -2338,13 +2341,14 @@ public abstract class CSSEngine {
 		boolean fs = idx == fontSizeIndex;
 		boolean lh = idx == lineHeightIndex;
 		boolean cl = idx == colorIndex;
+		boolean isRootFs = fs && elt.getOwnerDocument().getDocumentElement() == elt;
 		int count = 0;
 
 		for (int i = getNumberOfProperties() - 1; i >= 0; --i) {
 			if (updated[i]) {
 				count++;
 			} else if ((fs && style.isFontSizeRelative(i)) || (lh && style.isLineHeightRelative(i))
-					|| (cl && style.isColorRelative(i))) {
+					|| (cl && style.isColorRelative(i)) || (isRootFs && style.isRootFontSizeRelative(i))) {
 				updated[i] = true;
 				clearComputedValue(style, i);
 				count++;

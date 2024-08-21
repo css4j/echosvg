@@ -21,9 +21,9 @@ package io.sf.carte.echosvg.css.dom;
 import org.w3c.css.om.typed.CSSKeywordValue;
 import org.w3c.css.om.typed.CSSStringValue;
 import org.w3c.css.om.typed.CSSStyleValue;
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
-import org.w3c.css.om.unit.CSSUnit;
 import io.sf.carte.doc.style.css.property.KeywordValue;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.NumericValue;

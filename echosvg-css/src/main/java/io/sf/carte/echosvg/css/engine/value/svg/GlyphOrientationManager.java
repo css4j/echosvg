@@ -22,6 +22,7 @@ import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
@@ -121,8 +122,10 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
 		case CSSUnit.CSS_GRAD:
 		case CSSUnit.CSS_RAD:
 			return new FloatValue(type, floatValue);
+		default:
+			float f = NumberValue.floatValueConversion(floatValue, type, CSSUnit.CSS_DEG);
+			return new FloatValue(CSSUnit.CSS_DEG, f);
 		}
-		throw createInvalidFloatValueDOMException(floatValue);
 	}
 
 }

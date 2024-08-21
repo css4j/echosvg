@@ -24,6 +24,7 @@ import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.css.Viewport;
 import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSContext;
@@ -167,77 +168,117 @@ public class FontSizeManager extends LengthManager {
 		float scale = 1.0f;
 		boolean doParentRelative = false;
 
-		switch (value.getCSSUnit()) {
-		case CSSUnit.CSS_NUMBER:
-		case CSSUnit.CSS_PX:
-			return value;
+		if (value.getPrimitiveType() == Type.NUMERIC) {
+			switch (value.getCSSUnit()) {
+			case CSSUnit.CSS_NUMBER:
+			case CSSUnit.CSS_PX:
+				return value;
 
-		case CSSUnit.CSS_MM:
-			CSSContext ctx = engine.getCSSContext();
-			float v = lengthValue(value);
-			return new FloatValue(CSSUnit.CSS_NUMBER, v / ctx.getPixelUnitToMillimeter());
+			case CSSUnit.CSS_MM:
+				CSSContext ctx = engine.getCSSContext();
+				float v = lengthValue(value);
+				return new FloatValue(CSSUnit.CSS_NUMBER, v / ctx.getPixelUnitToMillimeter());
 
-		case CSSUnit.CSS_CM:
-			ctx = engine.getCSSContext();
-			v = lengthValue(value);
-			return new FloatValue(CSSUnit.CSS_NUMBER, v * 10f / ctx.getPixelUnitToMillimeter());
+			case CSSUnit.CSS_CM:
+				ctx = engine.getCSSContext();
+				v = lengthValue(value);
+				return new FloatValue(CSSUnit.CSS_NUMBER, v * 10f / ctx.getPixelUnitToMillimeter());
 
-		case CSSUnit.CSS_IN:
-			ctx = engine.getCSSContext();
-			v = lengthValue(value);
-			return new FloatValue(CSSUnit.CSS_NUMBER, v * 25.4f / ctx.getPixelUnitToMillimeter());
+			case CSSUnit.CSS_IN:
+				ctx = engine.getCSSContext();
+				v = lengthValue(value);
+				return new FloatValue(CSSUnit.CSS_NUMBER, v * 25.4f / ctx.getPixelUnitToMillimeter());
 
-		case CSSUnit.CSS_PT:
-			ctx = engine.getCSSContext();
-			v = lengthValue(value);
-			return new FloatValue(CSSUnit.CSS_NUMBER, v * 25.4f / (72f * ctx.getPixelUnitToMillimeter()));
+			case CSSUnit.CSS_PT:
+				ctx = engine.getCSSContext();
+				v = lengthValue(value);
+				return new FloatValue(CSSUnit.CSS_NUMBER, v * 25.4f / (72f * ctx.getPixelUnitToMillimeter()));
 
-		case CSSUnit.CSS_PC:
-			ctx = engine.getCSSContext();
-			v = lengthValue(value);
-			return new FloatValue(CSSUnit.CSS_NUMBER, (v * 25.4f / (6f * ctx.getPixelUnitToMillimeter())));
+			case CSSUnit.CSS_PC:
+				ctx = engine.getCSSContext();
+				v = lengthValue(value);
+				return new FloatValue(CSSUnit.CSS_NUMBER, (v * 25.4f / (6f * ctx.getPixelUnitToMillimeter())));
 
-		case CSSUnit.CSS_EM:
-			doParentRelative = true;
-			scale = lengthValue(value);
-			break;
-		case CSSUnit.CSS_EX:
-			doParentRelative = true;
-			scale = lengthValue(value) * 0.5f; // !!! x-height
-			break;
-		case CSSUnit.CSS_PERCENTAGE:
-			doParentRelative = true;
-			scale = value.getFloatValue() * 0.01f;
-			break;
-		case CSSUnit.CSS_REM:
-			scale = lengthValue(value);
-			return rootRelative(elt, engine, idx, scale);
-		case CSSUnit.CSS_REX:
-			scale = lengthValue(value) * 0.5f;
-			return rootRelative(elt, engine, idx, scale);
-		case CSSUnit.CSS_VW:
-			v = lengthValue(value);
-			return new FloatValue(CSSUnit.CSS_NUMBER, v *
-					engine.getCSSContext().getViewport(elt).getWidth() * 0.01f);
-		case CSSUnit.CSS_VH:
-			v = lengthValue(value);
-			return new FloatValue(CSSUnit.CSS_NUMBER, v *
-					engine.getCSSContext().getViewport(elt).getHeight() * 0.01f);
-		case CSSUnit.CSS_VMIN:
-			v = lengthValue(value);
-			Viewport vp = engine.getCSSContext().getViewport(elt);
-			float w = vp.getWidth();
-			float h = vp.getHeight();
-			float min = Math.min(w, h);
-			return new FloatValue(CSSUnit.CSS_NUMBER, v * min * 0.01f);
-		case CSSUnit.CSS_VMAX:
-			v = lengthValue(value);
-			vp = engine.getCSSContext().getViewport(elt);
-			w = vp.getWidth();
-			h = vp.getHeight();
-			float max = Math.max(w, h);
-			return new FloatValue(CSSUnit.CSS_NUMBER, v * max * 0.01f);
-		default:
+			case CSSUnit.CSS_EM:
+				doParentRelative = true;
+				scale = lengthValue(value);
+				break;
+			case CSSUnit.CSS_EX:
+				doParentRelative = true;
+				scale = lengthValue(value) * 0.5f; // !!! x-height
+				break;
+			case CSSUnit.CSS_PERCENTAGE:
+				doParentRelative = true;
+				scale = value.getFloatValue() * 0.01f;
+				break;
+			case CSSUnit.CSS_LH:
+				sm.putLineHeightRelative(idx, true);
+				scale = lengthValue(value);
+				int lhidx = engine.getLineHeightIndex();
+				CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
+				float lh;
+				if (p == null) {
+					lh = 1.2f * engine.getCSSContext().getMediumFontSize();
+				} else {
+					Value cs = engine.getComputedStyle(p, null, lhidx);
+					lh = lengthValue(cs);
+				}
+				return new FloatValue(CSSUnit.CSS_NUMBER, lh * scale);
+			case CSSUnit.CSS_REM:
+				sm.putRootFontSizeRelative(idx, true);
+				scale = lengthValue(value);
+				return rootRelative(elt, engine, idx, scale);
+			case CSSUnit.CSS_REX:
+				sm.putRootFontSizeRelative(idx, true);
+				scale = lengthValue(value) * 0.5f;
+				return rootRelative(elt, engine, idx, scale);
+			case CSSUnit.CSS_RLH:
+				sm.putLineHeightRelative(idx, true);
+				scale = lengthValue(value);
+				lhidx = engine.getLineHeightIndex();
+				CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
+				if (elt == root) {
+					lh = 1.2f * engine.getCSSContext().getMediumFontSize();
+				} else {
+					Value cs = engine.getComputedStyle(root, null, lhidx);
+					lh = lengthValue(cs);
+				}
+				return new FloatValue(CSSUnit.CSS_NUMBER, lh * scale);
+			case CSSUnit.CSS_VW:
+				sm.putViewportRelative(idx, true);
+				v = lengthValue(value);
+				return new FloatValue(CSSUnit.CSS_NUMBER,
+						v * engine.getCSSContext().getViewport(elt).getWidth() * 0.01f);
+			case CSSUnit.CSS_VH:
+				sm.putViewportRelative(idx, true);
+				v = lengthValue(value);
+				return new FloatValue(CSSUnit.CSS_NUMBER,
+						v * engine.getCSSContext().getViewport(elt).getHeight() * 0.01f);
+			case CSSUnit.CSS_VMIN:
+				sm.putViewportRelative(idx, true);
+				v = lengthValue(value);
+				Viewport vp = engine.getCSSContext().getViewport(elt);
+				float w = vp.getWidth();
+				float h = vp.getHeight();
+				float min = Math.min(w, h);
+				return new FloatValue(CSSUnit.CSS_NUMBER, v * min * 0.01f);
+			case CSSUnit.CSS_VMAX:
+				sm.putViewportRelative(idx, true);
+				v = lengthValue(value);
+				vp = engine.getCSSContext().getViewport(elt);
+				w = vp.getWidth();
+				h = vp.getHeight();
+				float max = Math.max(w, h);
+				return new FloatValue(CSSUnit.CSS_NUMBER, v * max * 0.01f);
+			default:
+				// Maybe it is one of the new absolute length units
+				try {
+					return new FloatValue(CSSUnit.CSS_NUMBER,
+							NumberValue.floatValueConversion(value.getFloatValue(), value.getCSSUnit(),
+									CSSUnit.CSS_MM) / engine.getCSSContext().getPixelUnitToMillimeter());
+				} catch (DOMException e) {
+				}
+			}
 		}
 
 		if (value.isIdentifier(CSSConstants.CSS_LARGER_VALUE)) {
@@ -251,8 +292,7 @@ public class FontSizeManager extends LengthManager {
 		if (doParentRelative) {
 			sm.putParentRelative(idx, true);
 
-			CSSStylableElement p;
-			p = CSSEngine.getParentCSSStylableElement(elt);
+			CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
 			float fs;
 			if (p == null) {
 				CSSContext ctx = engine.getCSSContext();

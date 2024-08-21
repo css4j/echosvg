@@ -29,34 +29,33 @@ import io.sf.carte.echosvg.css.engine.value.Value;
  */
 public class StyleMap {
 
-	//
-	// The masks, still have 2 free bits: 0x0800, & 0x1000, could also
-	// go to int if needed.
-	//
-	public static final short IMPORTANT_MASK = 0x0001;
-	public static final short COMPUTED_MASK = 0x0002;
-	public static final short NULL_CASCADED_MASK = 0x0004;
-	public static final short INHERITED_MASK = 0x0008;
+	public static final int IMPORTANT_MASK = 0x0001;
+	public static final int COMPUTED_MASK = 0x0002;
+	public static final int NULL_CASCADED_MASK = 0x0004;
+	public static final int INHERITED_MASK = 0x0008;
 
-	public static final short LINE_HEIGHT_RELATIVE_MASK = 0x0010;
-	public static final short FONT_SIZE_RELATIVE_MASK = 0x0020;
-	public static final short COLOR_RELATIVE_MASK = 0x0040;
-	public static final short PARENT_RELATIVE_MASK = 0x0080;
-	public static final short BLOCK_WIDTH_RELATIVE_MASK = 0x0100;
-	public static final short BLOCK_HEIGHT_RELATIVE_MASK = 0x0200;
-	public static final short BOX_RELATIVE_MASK = 0x0400;
+	public static final int LINE_HEIGHT_RELATIVE_MASK = 0x0010;
+	public static final int FONT_SIZE_RELATIVE_MASK = 0x0020;
+	public static final int COLOR_RELATIVE_MASK = 0x0040;
+	public static final int PARENT_RELATIVE_MASK = 0x0080;
+	public static final int BLOCK_WIDTH_RELATIVE_MASK = 0x0100;
+	public static final int BLOCK_HEIGHT_RELATIVE_MASK = 0x0200;
+	public static final int BOX_RELATIVE_MASK = 0x0400;
+	public static final int ROOT_LINE_HEIGHT_RELATIVE_MASK = 0x0800;
+	public static final int ROOT_FONT_SIZE_RELATIVE_MASK = 0x1000;
+	public static final int VIEWPORT_RELATIVE_MASK = 0x2000;
 
-	public static final short ORIGIN_MASK = (short) 0xE000; // 3 last bits
+	public static final int ORIGIN_MASK = 0xE0000000; // 3 last bits
 
 	//
 	// The origin values.
 	//
-	public static final short USER_AGENT_ORIGIN = 0;
-	public static final short USER_ORIGIN = 0x2000; // 0010
-	public static final short NON_CSS_ORIGIN = 0x4000; // 0100
-	public static final short AUTHOR_ORIGIN = 0x6000; // 0110
-	public static final short INLINE_AUTHOR_ORIGIN = (short) 0x8000; // 1000
-	public static final short OVERRIDE_ORIGIN = (short) 0xA000; // 1010
+	public static final int USER_AGENT_ORIGIN = 0;
+	public static final int USER_ORIGIN = 0x20000000; // 0010
+	public static final int NON_CSS_ORIGIN = 0x40000000; // 0100
+	public static final int AUTHOR_ORIGIN = 0x60000000; // 0110
+	public static final int INLINE_AUTHOR_ORIGIN = 0x80000000; // 1000
+	public static final int OVERRIDE_ORIGIN = 0xA0000000; // 1010
 
 	/**
 	 * The values.
@@ -66,7 +65,7 @@ public class StyleMap {
 	/**
 	 * To store the value masks.
 	 */
-	protected short[] masks;
+	protected int[] masks;
 
 	/**
 	 * Whether the values of this map cannot be re-cascaded.
@@ -78,7 +77,7 @@ public class StyleMap {
 	 */
 	public StyleMap(int size) {
 		values = new Value[size];
-		masks = new short[size];
+		masks = new int[size];
 	}
 
 	/**
@@ -105,7 +104,7 @@ public class StyleMap {
 	/**
 	 * Returns the mask of the given property value.
 	 */
-	public short getMask(int i) {
+	public int getMask(int i) {
 		return masks[i];
 	}
 
@@ -141,8 +140,8 @@ public class StyleMap {
 	/**
 	 * Returns the origin value.
 	 */
-	public short getOrigin(int i) {
-		return (short) (masks[i] & ORIGIN_MASK);
+	public int getOrigin(int i) {
+		return (masks[i] & ORIGIN_MASK);
 	}
 
 	/**
@@ -175,6 +174,22 @@ public class StyleMap {
 	}
 
 	/**
+	 * Tells whether the given property value is relative to 'line-height' of the
+	 * {@code :root} element.
+	 */
+	public boolean isRootLineHeightRelative(int i) {
+		return (masks[i] & ROOT_LINE_HEIGHT_RELATIVE_MASK) != 0;
+	}
+
+	/**
+	 * Tells whether the given property value is relative to 'font-size' of the
+	 * {@code :root} element.
+	 */
+	public boolean isRootFontSizeRelative(int i) {
+		return (masks[i] & ROOT_FONT_SIZE_RELATIVE_MASK) != 0;
+	}
+
+	/**
 	 * Tells whether the given property value is relative to the width of the
 	 * containing block.
 	 */
@@ -188,6 +203,13 @@ public class StyleMap {
 	 */
 	public boolean isBlockHeightRelative(int i) {
 		return (masks[i] & BLOCK_HEIGHT_RELATIVE_MASK) != 0;
+	}
+
+	/**
+	 * Tells whether the given property value is relative to the viewport.
+	 */
+	public boolean isViewportRelative(int i) {
+		return (masks[i] & VIEWPORT_RELATIVE_MASK) != 0;
 	}
 
 	/**
@@ -206,7 +228,7 @@ public class StyleMap {
 	 * @param i The property index.
 	 * @param m The property mask.
 	 */
-	public void putMask(int i, short m) {
+	public void putMask(int i, int m) {
 		masks[i] = m;
 	}
 
@@ -223,9 +245,9 @@ public class StyleMap {
 	/**
 	 * Sets the origin of the given value.
 	 */
-	public void putOrigin(int i, short val) {
+	public void putOrigin(int i, int val) {
 		masks[i] &= ~ORIGIN_MASK;
-		masks[i] |= (short) (val & ORIGIN_MASK);
+		masks[i] |= (val & ORIGIN_MASK);
 	}
 
 	/**
@@ -300,6 +322,26 @@ public class StyleMap {
 	}
 
 	/**
+	 * Sets the root-line-height-relative flag of a property value.
+	 */
+	public void putRootLineHeightRelative(int i, boolean b) {
+		if (b)
+			masks[i] |= ROOT_LINE_HEIGHT_RELATIVE_MASK;
+		else
+			masks[i] &= ~ROOT_LINE_HEIGHT_RELATIVE_MASK;
+	}
+
+	/**
+	 * Sets the root-font-size-relative flag of a property value.
+	 */
+	public void putRootFontSizeRelative(int i, boolean b) {
+		if (b)
+			masks[i] |= ROOT_FONT_SIZE_RELATIVE_MASK;
+		else
+			masks[i] &= ~ROOT_FONT_SIZE_RELATIVE_MASK;
+	}
+
+	/**
 	 * Sets the block-width-relative flag of a property value.
 	 */
 	public void putBlockWidthRelative(int i, boolean b) {
@@ -317,6 +359,16 @@ public class StyleMap {
 			masks[i] |= BLOCK_HEIGHT_RELATIVE_MASK;
 		else
 			masks[i] &= ~BLOCK_HEIGHT_RELATIVE_MASK;
+	}
+
+	/**
+	 * Sets the viewport-relative flag of a property value.
+	 */
+	public void putViewportRelative(int i, boolean b) {
+		if (b)
+			masks[i] |= VIEWPORT_RELATIVE_MASK;
+		else
+			masks[i] &= ~VIEWPORT_RELATIVE_MASK;
 	}
 
 	/**

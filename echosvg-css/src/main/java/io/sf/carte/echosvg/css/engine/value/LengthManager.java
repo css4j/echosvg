@@ -18,11 +18,12 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
-import org.w3c.css.om.unit.CSSUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.property.NumberValue;
+import io.sf.carte.echosvg.css.Viewport;
 import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -53,11 +54,7 @@ public abstract class LengthManager extends AbstractValueManager {
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
 		case DIMENSION:
-			Value value = createLength(lu);
-			if (value != null) {
-				return value;
-			}
-			break;
+			return createLength(lu);
 
 		case INTEGER:
 			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue());
@@ -73,11 +70,11 @@ public abstract class LengthManager extends AbstractValueManager {
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
-	static FloatValue createLength(LexicalUnit lu) {
+	FloatValue createLength(LexicalUnit lu) throws DOMException {
 		if (CSSUnit.isLengthUnitType(lu.getCssUnit())) {
 			return new FloatValue(lu.getCssUnit(), lu.getFloatValue());
 		}
-		return null;
+		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
 	/**
@@ -169,13 +166,89 @@ public abstract class LengthManager extends AbstractValueManager {
 				fs = (float) (value.getFloatValue() * (Math.sqrt(w * w + h * h) / SQRT2) / 100.0);
 			}
 			return new FloatValue(CSSUnit.CSS_NUMBER, fs);
+
+		case CSSUnit.CSS_LH:
+			sm.putLineHeightRelative(idx, true);
+
+			v = value.getFloatValue();
+			int lhidx = engine.getLineHeightIndex();
+			cv = engine.getComputedStyle(elt, pseudo, lhidx);
+			fs = lengthValue(cv);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * fs);
+
+		case CSSUnit.CSS_REM:
+			sm.putRootFontSizeRelative(idx, true);
+
+			v = value.getFloatValue();
+			fsidx = engine.getFontSizeIndex();
+			CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
+			cv = engine.getComputedStyle(root, null, fsidx);
+			fs = lengthValue(cv);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * fs);
+
+		case CSSUnit.CSS_REX:
+			sm.putRootFontSizeRelative(idx, true);
+
+			v = value.getFloatValue();
+			fsidx = engine.getFontSizeIndex();
+			root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
+			cv = engine.getComputedStyle(root, null, fsidx);
+			fs = lengthValue(cv);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * fs * 0.5f);
+
+		case CSSUnit.CSS_RLH:
+			sm.putRootLineHeightRelative(idx, true);
+
+			v = value.getFloatValue();
+			lhidx = engine.getLineHeightIndex();
+			root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
+			cv = engine.getComputedStyle(root, null, lhidx);
+			fs = lengthValue(cv);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * fs);
+
+		case CSSUnit.CSS_VW:
+			sm.putViewportRelative(idx, true);
+
+			v = lengthValue(value);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v *
+					engine.getCSSContext().getViewport(elt).getWidth() * 0.01f);
+
+		case CSSUnit.CSS_VH:
+			sm.putViewportRelative(idx, true);
+
+			v = lengthValue(value);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v *
+					engine.getCSSContext().getViewport(elt).getHeight() * 0.01f);
+
+		case CSSUnit.CSS_VMIN:
+			sm.putViewportRelative(idx, true);
+
+			v = lengthValue(value);
+			Viewport vp = engine.getCSSContext().getViewport(elt);
+			float w = vp.getWidth();
+			float h = vp.getHeight();
+			float min = Math.min(w, h);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * min * 0.01f);
+
+		case CSSUnit.CSS_VMAX:
+			sm.putViewportRelative(idx, true);
+
+			v = lengthValue(value);
+			vp = engine.getCSSContext().getViewport(elt);
+			w = vp.getWidth();
+			h = vp.getHeight();
+			float max = Math.max(w, h);
+			return new FloatValue(CSSUnit.CSS_NUMBER, v * max * 0.01f);
+
 		case CSSUnit.CSS_INVALID:
+		case CSSUnit.CSS_OTHER:
 			break;
 		default:
 			// Maybe it is one of the new absolute length units
 			try {
 				value = new FloatValue(CSSUnit.CSS_NUMBER,
-						NumberValue.floatValueConversion(value.getFloatValue(), value.getCSSUnit(), CSSUnit.CSS_PX));
+						NumberValue.floatValueConversion(value.getFloatValue(), value.getCSSUnit(), CSSUnit.CSS_MM)
+								/ engine.getCSSContext().getPixelUnitToMillimeter());
 			} catch (DOMException e) {
 			}
 		}

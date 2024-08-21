@@ -18,9 +18,9 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
-import org.w3c.css.om.unit.CSSUnit;
 import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;

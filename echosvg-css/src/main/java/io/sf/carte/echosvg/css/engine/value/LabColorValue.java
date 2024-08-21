@@ -21,9 +21,9 @@ package io.sf.carte.echosvg.css.engine.value;
 import org.w3c.api.DOMSyntaxException;
 import org.w3c.css.om.typed.CSSLab;
 import org.w3c.css.om.typed.CSSNumericValue;
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
-import org.w3c.css.om.unit.CSSUnit;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 
 /**

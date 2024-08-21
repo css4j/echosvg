@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html>
-
 <!--
 
    See the NOTICE file distributed with this work for additional
@@ -20,14 +18,14 @@
 
 -->
 <!-- ====================================================================== -->
-<!-- Illustrates SVG embedded into XHTML                                    -->
+<!-- Illustrates SVG embedded into HTML                                     -->
 <!--                                                                        -->
 <!-- @author github.com/carlosame                                           -->
 <!-- @version $Id$    -->
 <!-- ====================================================================== -->
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-<title>SVG Embedded into XHTML</title>
+<title>SVG Embedded into HTML</title>
 <style>
 text.itemdesc {
   fill: #175a9e;
@@ -35,11 +33,12 @@ text.itemdesc {
 </style>
 </head>
 <body>
-<s:svg xmlns:s="http://www.w3.org/2000/svg" height="500" viewBox="0 0 450 calc(2*250)">
-  <s:style>
+<!-- svg elements without a namespace declaration are legal in plain HTML -->
+<svg height="500" viewBox="0 0 450 500" id="theSVG">
+  <style>
 /*<![CDATA[*/
 
-g {
+svg {
     font: bold 10pt "Open Sans", sans-serif;
 }
 circle {
@@ -48,43 +47,45 @@ circle {
 ellipse {
   stroke-width: 3px;
 }
-
+text {
+    font-size: 1.05lh;
+}
 @media screen {
   circle {
-    stroke-width: 6px;
+    stroke-width: 1.2vmax;
   }
   ellipse {
-    stroke-width: 2px;
+    stroke-width: 0.45vh;
   }
 }
 
 @media print {
   text.itemdesc {
     font-family: "Ubuntu Mono";
-    font-size: 12pt;
+    font-size: 1.3rlh;
   }
 }
 
 /*]]>*/
-  </s:style>
-  <s:g>
-  <s:circle cx="250" cy="300" r="20" style="fill:#0000ff; stroke:#000044"/>
-  <s:circle cx="150" cy="150" r="20" style="fill:#ff0000; stroke:#440000"/>
-  <s:circle cx="280" cy="150" r="20" style="fill:#ffff00; stroke:#868400"/>
-  <s:circle cx="120" cy="300" r="20" style="fill:#00ff00; stroke:#027a00"/>
-  <s:ellipse cx="250" cy="300" rx="100" ry="130" transform="rotate(-20 250 300)"
+  </style>
+  <g>
+  <circle cx="250" cy="300" r="20" style="fill:#0000ff; stroke:#000044"/>
+  <circle cx="150" cy="150" r="20" style="fill:#ff0000; stroke:#440000"/>
+  <circle cx="280" cy="150" r="20" style="fill:#ffff00; stroke:#868400"/>
+  <circle cx="120" cy="300" r="20" style="fill:#00ff00; stroke:#027a00"/>
+  <ellipse cx="250" cy="300" rx="100" ry="130" transform="rotate(-20 250 300)"
 style="fill:#0000ff4c; stroke:#0000ff"/>
-  <s:ellipse cx="150" cy="150" rx="100" ry="130" transform="rotate(-20 150 150)"
+  <ellipse cx="150" cy="150" rx="100" ry="130" transform="rotate(-20 150 150)"
 style="fill:#ff00004c; stroke:#ff0000"/>
-  <s:ellipse cx="280" cy="150" rx="100" ry="130" transform="rotate(30 280 150)"
+  <ellipse cx="280" cy="150" rx="100" ry="130" transform="rotate(30 280 150)"
 style="fill:#ffff004c; stroke:#ffff00"/>
-  <s:ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)"
+  <ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)"
 style="fill:#00ff004c; stroke:#00ff00"/>
-  <s:text x="110" y="60" class="itemdesc" text-anchor="middle">SVG</s:text>
-  <s:text x="315" y="60" class="itemdesc" text-anchor="middle">HTML</s:text>
-  <s:text x="75" y="390" class="itemdesc" text-anchor="middle">XHTML</s:text>
-  <s:text x="295" y="390" class="itemdesc" text-anchor="middle">SVGZ</s:text>
-  </s:g>
-</s:svg>
+  <text x="110" y="60" class="itemdesc" text-anchor="middle">SVG</text>
+  <text x="315" y="60" class="itemdesc" text-anchor="middle">HTML</text>
+  <text x="75" y="390" class="itemdesc" text-anchor="middle">XHTML</text>
+  <text x="295" y="390" class="itemdesc" text-anchor="middle">SVGZ</text>
+  </g>
+</svg>
 </body>
 </html>

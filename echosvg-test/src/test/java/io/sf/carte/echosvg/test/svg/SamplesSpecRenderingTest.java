@@ -763,17 +763,22 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 
 	@Test
 	public void testHTMLEmbed() throws TranscoderException, IOException {
-		testHTML("samples/tests/spec/styling/css2.html");
+		testHTML("samples/tests/spec/styling/css3.html");
+	}
+
+	@Test
+	public void testHTMLEmbedPrint() throws TranscoderException, IOException {
+		testHTML("samples/tests/spec/styling/css3.html", null, PRINT_MEDIA);
 	}
 
 	@Test
 	public void testHTMLEmbedSelector() throws TranscoderException, IOException {
-		testHTML("samples/tests/spec/styling/css2.html", "#theSVG");
+		testHTML("samples/tests/spec/styling/css3.html", "#theSVG", null);
 	}
 
 	@Test
 	public void testXHTMLEmbed() throws TranscoderException, IOException {
-		testXHTML("samples/tests/spec/styling/css2.xhtml");
+		testXHTML("samples/tests/spec/styling/css3.xhtml");
 	}
 
 	@Test

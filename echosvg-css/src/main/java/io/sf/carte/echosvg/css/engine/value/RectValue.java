@@ -20,9 +20,8 @@ package io.sf.carte.echosvg.css.engine.value;
 
 import org.w3c.api.DOMSyntaxException;
 import org.w3c.css.om.typed.CSSRectValue;
-import org.w3c.dom.DOMException;
-
 import org.w3c.css.om.unit.CSSUnit;
+import org.w3c.dom.DOMException;
 
 /**
  * This class represents CSS rect values.

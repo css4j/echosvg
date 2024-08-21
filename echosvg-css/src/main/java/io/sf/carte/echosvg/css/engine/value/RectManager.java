@@ -91,11 +91,7 @@ public abstract class RectManager extends LengthManager {
 			}
 			break;
 		case DIMENSION:
-			NumericValue value = createLength(lu);
-			if (value != null) {
-				return value;
-			}
-			break;
+			return createLength(lu);
 		case INTEGER:
 			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue());
 		case REAL:

@@ -38,6 +38,8 @@ public class AbstractSamplesRendering {
 
 	static final String BROWSER_MEDIA = "screen";
 
+	static final String PRINT_MEDIA = "print";
+
 	/**
 	 * To test the tEXt chunk.
 	 */
@@ -326,7 +328,7 @@ public class AbstractSamplesRendering {
 	 * @throws IOException         if an I/O error occurs.
 	 */
 	void testHTML(String file) throws TranscoderException, IOException {
-		testHTML(file, null);
+		testHTML(file, null, null);
 	}
 
 	/**
@@ -337,13 +339,15 @@ public class AbstractSamplesRendering {
 	 * reference image.
 	 * </p>
 	 * 
-	 * @param file the HTML file to test.
-	 * @param the  selector that locates the desired SVG element.
+	 * @param file  the HTML file to test.
+	 * @param the   selector that locates the desired SVG element.
+	 * @param media the media to test, or {@code null} if default media.
 	 * @throws TranscoderException
 	 * @throws IOException         if an I/O error occurs.
 	 */
-	void testHTML(String file, String selector) throws TranscoderException, IOException {
+	void testHTML(String file, String selector, String media) throws TranscoderException, IOException {
 		RenderingTest runner = new HTMLRenderingAccuracyTest(selector);
+		runner.setMedia(media);
 		runner.setFile(file);
 		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}

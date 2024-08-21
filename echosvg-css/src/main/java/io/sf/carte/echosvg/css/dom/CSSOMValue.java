@@ -22,6 +22,7 @@ import org.w3c.css.om.typed.CSSCounterValue;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.css.engine.value.ColorValue;
 import io.sf.carte.echosvg.css.engine.value.RectValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
@@ -108,16 +109,24 @@ public class CSSOMValue implements Value {
 	 * Converts the actual float value to the given unit type.
 	 */
 	public static float convertFloatValue(short unitType, Value value) {
+		if (value.getCSSUnit() == unitType) {
+			return value.getFloatValue();
+		}
 		switch (unitType) {
 		case CSSUnit.CSS_NUMBER:
 		case CSSUnit.CSS_PERCENTAGE:
 		case CSSUnit.CSS_EM:
 		case CSSUnit.CSS_EX:
-		case CSSUnit.CSS_OTHER:
 		case CSSUnit.CSS_PX:
-			if (value.getCSSUnit() == unitType) {
-				return value.getFloatValue();
-			}
+		case CSSUnit.CSS_REM:
+		case CSSUnit.CSS_REX:
+		case CSSUnit.CSS_LH:
+		case CSSUnit.CSS_RLH:
+		case CSSUnit.CSS_VW:
+		case CSSUnit.CSS_VH:
+		case CSSUnit.CSS_VMIN:
+		case CSSUnit.CSS_VMAX:
+		case CSSUnit.CSS_OTHER:
 			break;
 		case CSSUnit.CSS_CM:
 			return toCentimeters(value);
@@ -143,6 +152,9 @@ public class CSSOMValue implements Value {
 			return toHertz(value);
 		case CSSUnit.CSS_KHZ:
 			return tokHertz(value);
+		default:
+			return NumberValue.floatValueConversion(value.getFloatValue(), value.getCSSUnit(),
+					unitType);
 		}
 		throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
 	}

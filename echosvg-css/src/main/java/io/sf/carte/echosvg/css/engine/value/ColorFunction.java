@@ -25,9 +25,8 @@ import java.util.Set;
 import org.w3c.api.DOMSyntaxException;
 import org.w3c.css.om.typed.CSSColor;
 import org.w3c.css.om.typed.CSSStyleValueList;
-import org.w3c.dom.DOMException;
-
 import org.w3c.css.om.unit.CSSUnit;
+import org.w3c.dom.DOMException;
 
 /**
  * color() function.

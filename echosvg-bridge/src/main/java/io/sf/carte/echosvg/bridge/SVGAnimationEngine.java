@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import org.w3c.css.om.unit.CSSUnit;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.css.CSSStyleDeclaration;
@@ -37,6 +38,7 @@ import org.w3c.dom.svg.SVGAngle;
 import org.w3c.dom.svg.SVGLength;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.anim.AnimationEngine;
 import io.sf.carte.echosvg.anim.AnimationException;
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
@@ -1815,8 +1817,14 @@ public class SVGAnimationEngine extends AnimationEngine {
 				unit = SVGAngle.SVG_ANGLETYPE_GRAD;
 				break;
 			default:
-				// XXX Do something better than returning null.
-				return null;
+				try {
+					float f = NumberValue.floatValueConversion(v.getFloatValue(), v.getCSSUnit(),
+							CSSUnit.CSS_DEG);
+					return new AnimatableAngleOrIdentValue(target, f, SVGAngle.SVG_ANGLETYPE_DEG);
+				} catch (DOMException e) {
+					// XXX Do something better than returning null.
+					return null;
+				}
 			}
 			return new AnimatableAngleValue(target, v.getFloatValue(), unit);
 		}
@@ -1846,8 +1854,14 @@ public class SVGAnimationEngine extends AnimationEngine {
 				unit = SVGAngle.SVG_ANGLETYPE_GRAD;
 				break;
 			default:
-				// XXX Do something better than returning null.
-				return null;
+				try {
+					float f = NumberValue.floatValueConversion(v.getFloatValue(), v.getCSSUnit(),
+							CSSUnit.CSS_DEG);
+					return new AnimatableAngleOrIdentValue(target, f, SVGAngle.SVG_ANGLETYPE_DEG);
+				} catch (DOMException e) {
+					// XXX Do something better than returning null.
+					return null;
+				}
 			}
 			return new AnimatableAngleOrIdentValue(target, v.getFloatValue(), unit);
 		}
