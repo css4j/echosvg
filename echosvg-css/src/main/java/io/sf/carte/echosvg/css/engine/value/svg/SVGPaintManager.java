@@ -141,14 +141,14 @@ public class SVGPaintManager extends SVGColorManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value == ValueConstants.NONE_VALUE) {
+		if (value.isIdentifier(CSSConstants.CSS_NONE_VALUE)) {
 			return value;
 		}
 		if (value.getCssValueType() == Value.CssType.LIST) {
 			Value v = value.item(0);
 			if (v.getPrimitiveType() == Value.Type.URI) {
 				v = value.item(1);
-				if (v == ValueConstants.NONE_VALUE) {
+				if (v.isIdentifier(CSSConstants.CSS_NONE_VALUE)) {
 					return value;
 				}
 				Value t = super.computeValue(elt, pseudo, engine, idx, sm, v);

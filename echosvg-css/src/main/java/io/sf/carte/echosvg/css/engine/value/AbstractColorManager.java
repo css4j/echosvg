@@ -167,7 +167,8 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		case RGBCOLOR:
 			return createRGBColor(lunit);
 		default:
-			return super.createValue(lunit, engine);
+			// Clone so colors can be modified
+			return super.createValue(lunit, engine).clone();
 		}
 	}
 

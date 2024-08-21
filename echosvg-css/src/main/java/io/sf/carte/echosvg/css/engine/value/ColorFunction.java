@@ -110,7 +110,7 @@ public class ColorFunction extends ColorValue implements CSSColor {
 	}
 
 	static String canonicalName(String cs) throws DOMException {
-		cs = cs.toLowerCase(Locale.ROOT);
+		cs = cs.toLowerCase(Locale.ROOT).intern();
 		if (!predefinedSpaces.contains(cs)) {
 			throw new DOMException(DOMException.NOT_SUPPORTED_ERR,
 					"Unsupported color space: " + cs);

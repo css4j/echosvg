@@ -44,10 +44,10 @@ public class TextAlignManager extends IdentifierManager {
 	protected static final StringMap values = new StringMap();
 
 	static {
-		values.put(SVG12CSSConstants.CSS_START_VALUE, SVG12ValueConstants.START_VALUE);
+		values.put(CSSConstants.CSS_START_VALUE, SVG12ValueConstants.START_VALUE);
 		values.put(CSSConstants.CSS_CENTER_VALUE, SVG12ValueConstants.CENTER_VALUE);
 		values.put(CSSConstants.CSS_MIDDLE_VALUE, SVGValueConstants.MIDDLE_VALUE);
-		values.put(SVG12CSSConstants.CSS_END_VALUE, SVG12ValueConstants.END_VALUE);
+		values.put(CSSConstants.CSS_END_VALUE, SVG12ValueConstants.END_VALUE);
 		values.put(SVG12CSSConstants.CSS_FULL_VALUE, SVG12ValueConstants.FULL_VALUE);
 	}
 

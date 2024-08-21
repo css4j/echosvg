@@ -240,12 +240,12 @@ public class FontSizeManager extends LengthManager {
 		default:
 		}
 
-		if (value == ValueConstants.LARGER_VALUE) {
+		if (value.isIdentifier(CSSConstants.CSS_LARGER_VALUE)) {
 			doParentRelative = true;
 			scale = 1.2f;
-		} else if (value == ValueConstants.SMALLER_VALUE) {
+		} else if (value.isIdentifier(CSSConstants.CSS_SMALLER_VALUE)) {
 			doParentRelative = true;
-			scale = 1 / 1.2f;
+			scale = 1f / 1.2f;
 		}
 
 		if (doParentRelative) {
@@ -268,40 +268,42 @@ public class FontSizeManager extends LengthManager {
 		CSSContext ctx = engine.getCSSContext();
 		float fs = ctx.getMediumFontSize();
 
-		String s = value.getIdentifierValue();
-		switch (s.charAt(0)) {
-		case 'm':
-			break;
-
-		case 's':
-			fs = fs / 1.2f;
-			break;
-
-		case 'l':
-			fs = fs * 1.2f;
-			break;
-
-		default: // 'x'
-			switch (s.charAt(1)) {
-			case 'x':
-				switch (s.charAt(3)) {
-				case 's':
-					fs = fs / (float) (1.2 * 1.2 * 1.2);
-					break;
-
-				default: // 'l'
-					fs = fs * (float) (1.2 * 1.2 * 1.2);
-				}
+		if (value.getPrimitiveType() == Type.IDENT) {
+			String s = value.getIdentifierValue();
+			switch (s.charAt(0)) {
+			case 'm':
 				break;
 
-			default: // '-'
-				switch (s.charAt(2)) {
-				case 's':
-					fs = fs / (float) (1.2 * 1.2);
+			case 's':
+				fs = fs / 1.2f;
+				break;
+
+			case 'l':
+				fs = fs * 1.2f;
+				break;
+
+			default: // 'x'
+				switch (s.charAt(1)) {
+				case 'x':
+					switch (s.charAt(3)) {
+					case 's':
+						fs = fs / (float) (1.2 * 1.2 * 1.2);
+						break;
+
+					default: // 'l'
+						fs = fs * (float) (1.2 * 1.2 * 1.2);
+					}
 					break;
 
-				default: // 'l'
-					fs = fs * (float) (1.2 * 1.2);
+				default: // '-'
+					switch (s.charAt(2)) {
+					case 's':
+						fs = fs / (float) (1.2 * 1.2);
+						break;
+
+					default: // 'l'
+						fs = fs * (float) (1.2 * 1.2);
+					}
 				}
 			}
 		}

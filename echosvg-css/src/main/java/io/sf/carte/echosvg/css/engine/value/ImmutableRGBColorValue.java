@@ -92,6 +92,16 @@ class ImmutableRGBColorValue extends RGBColorValue {
 	}
 
 	@Override
+	public void setAlpha(double alpha) {
+		immutable();
+	}
+
+	@Override
+	public void setAlpha(CSSNumericValue alpha) throws DOMSyntaxException {
+		immutable();
+	}
+
+	@Override
 	public RGBColorValue clone() {
 		RGBColorValue clon;
 		try {

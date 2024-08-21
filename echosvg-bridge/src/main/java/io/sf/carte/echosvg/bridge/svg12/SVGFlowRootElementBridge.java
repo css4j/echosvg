@@ -56,12 +56,12 @@ import io.sf.carte.echosvg.bridge.TextNode;
 import io.sf.carte.echosvg.bridge.TextUtilities;
 import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.ComputedValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
-import io.sf.carte.echosvg.css.engine.value.svg.SVGValueConstants;
 import io.sf.carte.echosvg.css.engine.value.svg12.LineHeightValue;
 import io.sf.carte.echosvg.css.engine.value.svg12.SVG12ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractNode;
@@ -851,20 +851,25 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 		v = CSSUtilities.getComputedStyle(element, textAlignIndex);
 		if (v == ValueConstants.INHERIT_VALUE) {
 			v = CSSUtilities.getComputedStyle(element, SVGCSSEngine.DIRECTION_INDEX);
-			if (v == ValueConstants.LTR_VALUE)
+			if (v.isIdentifier(CSSConstants.CSS_LTR_VALUE))
 				v = SVG12ValueConstants.START_VALUE;
 			else
 				v = SVG12ValueConstants.END_VALUE;
 		}
 		int textAlign;
-		if (v == SVG12ValueConstants.START_VALUE)
-			textAlign = BlockInfo.ALIGN_START;
-		else if (v == SVG12ValueConstants.CENTER_VALUE || v == SVGValueConstants.MIDDLE_VALUE)
-			textAlign = BlockInfo.ALIGN_MIDDLE;
-		else if (v == SVG12ValueConstants.END_VALUE)
-			textAlign = BlockInfo.ALIGN_END;
-		else
+		if (v != null && v.getPrimitiveType() == Type.IDENT) {
+			String s = v.getIdentifierValue();
+			if (s == CSSConstants.CSS_START_VALUE)
+				textAlign = BlockInfo.ALIGN_START;
+			else if (s == CSSConstants.CSS_CENTER_VALUE || s == CSSConstants.CSS_MIDDLE_VALUE)
+				textAlign = BlockInfo.ALIGN_MIDDLE;
+			else if (s == CSSConstants.CSS_END_VALUE)
+				textAlign = BlockInfo.ALIGN_END;
+			else
+				textAlign = BlockInfo.ALIGN_FULL;
+		} else {
 			textAlign = BlockInfo.ALIGN_FULL;
+		}
 
 		Map<Attribute, Object> fontAttrs = new HashMap<>(20);
 		List<GVTFont> fontList = getFontList(ctx, element, fontAttrs);
@@ -883,7 +888,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 			initCSSPropertyIndexes(element);
 
 		Value v = CSSUtilities.getComputedStyle(element, lineHeightIndex);
-		if ((v == ValueConstants.INHERIT_VALUE) || (v == SVG12ValueConstants.NORMAL_VALUE)) {
+		if (v == ValueConstants.INHERIT_VALUE || v.isIdentifier(CSSConstants.CSS_NORMAL_VALUE)) {
 			return fontSize * 1.1f;
 		}
 

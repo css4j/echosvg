@@ -22,6 +22,7 @@ import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -177,36 +178,38 @@ public class FontWeightManager extends IdentifierManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value == ValueConstants.BOLDER_VALUE) {
-			sm.putParentRelative(idx, true);
+		if (value != null && value.getPrimitiveType() == Type.IDENT) {
+			if (value.getIdentifierValue() == CSSConstants.CSS_BOLDER_VALUE) {
+				sm.putParentRelative(idx, true);
 
-			CSSContext ctx = engine.getCSSContext();
-			CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
-			float fw;
-			if (p == null) {
-				fw = 400;
-			} else {
-				Value v = engine.getComputedStyle(p, pseudo, idx);
-				fw = lengthValue(v);
-			}
-			return createFontWeight(ctx.getBolderFontWeight(fw));
-		} else if (value == ValueConstants.LIGHTER_VALUE) {
-			sm.putParentRelative(idx, true);
+				CSSContext ctx = engine.getCSSContext();
+				CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
+				float fw;
+				if (p == null) {
+					fw = 400;
+				} else {
+					Value v = engine.getComputedStyle(p, pseudo, idx);
+					fw = lengthValue(v);
+				}
+				return createFontWeight(ctx.getBolderFontWeight(fw));
+			} else if (value.getIdentifierValue() == CSSConstants.CSS_LIGHTER_VALUE) {
+				sm.putParentRelative(idx, true);
 
-			CSSContext ctx = engine.getCSSContext();
-			CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
-			float fw;
-			if (p == null) {
-				fw = 400;
-			} else {
-				Value v = engine.getComputedStyle(p, pseudo, idx);
-				fw = lengthValue(v);
+				CSSContext ctx = engine.getCSSContext();
+				CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
+				float fw;
+				if (p == null) {
+					fw = 400;
+				} else {
+					Value v = engine.getComputedStyle(p, pseudo, idx);
+					fw = lengthValue(v);
+				}
+				return createFontWeight(ctx.getLighterFontWeight(fw));
+			} else if (value.getIdentifierValue() == CSSConstants.CSS_NORMAL_VALUE) {
+				return ValueConstants.NUMBER_400;
+			} else if (value.getIdentifierValue() == CSSConstants.CSS_BOLD_VALUE) {
+				return ValueConstants.NUMBER_700;
 			}
-			return createFontWeight(ctx.getLighterFontWeight(fw));
-		} else if (value == ValueConstants.NORMAL_VALUE) {
-			return ValueConstants.NUMBER_400;
-		} else if (value == ValueConstants.BOLD_VALUE) {
-			return ValueConstants.NUMBER_700;
 		}
 		return value;
 	}

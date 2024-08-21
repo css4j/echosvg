@@ -63,10 +63,18 @@ public class AbstractValueList<V extends Value> extends ComponentValue implement
 		items = new ArrayList<>(initialCapacity);
 	}
 
+	/**
+	 * Returns a deep copy of this instance.
+	 * 
+	 * @return a copy of this instance.
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public AbstractValueList<V> clone() {
 		AbstractValueList<V> clon = new AbstractValueList<>(separator, items.size());
-		clon.items.addAll(items);
+		for (V item : items) {
+			clon.items.add((V) item.clone());
+		}
 		return clon;
 	}
 

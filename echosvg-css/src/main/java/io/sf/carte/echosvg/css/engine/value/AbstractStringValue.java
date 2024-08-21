@@ -53,7 +53,7 @@ public abstract class AbstractStringValue extends AbstractValue {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof AbstractStringValue)
+		if (!(obj instanceof AbstractStringValue)
 				|| getPrimitiveType() != ((AbstractStringValue) obj).getPrimitiveType()) {
 			return false;
 		}

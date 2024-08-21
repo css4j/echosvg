@@ -34,7 +34,6 @@ import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
-import io.sf.carte.echosvg.util.SVG12CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
@@ -110,7 +109,7 @@ public class LineHeightManager extends LengthManager {
 			return ValueConstants.INHERIT_VALUE;
 		case IDENT: {
 			String s = lu.getStringValue().toLowerCase(Locale.ROOT);
-			if (SVG12CSSConstants.CSS_NORMAL_VALUE.equals(s))
+			if (CSSConstants.CSS_NORMAL_VALUE.equals(s))
 				return SVG12ValueConstants.NORMAL_VALUE;
 			throw createInvalidIdentifierDOMException(lu.getStringValue());
 		}

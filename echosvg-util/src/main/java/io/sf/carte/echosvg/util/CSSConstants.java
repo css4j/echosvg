@@ -185,6 +185,7 @@ public interface CSSConstants {
 	String CSS_DIMGREY_VALUE = "dimgrey";
 	String CSS_DODGERBLUE_VALUE = "dodgerblue";
 	String CSS_EMBED_VALUE = "embed";
+	/** Value for text-align to end of region */
 	String CSS_END_VALUE = "end";
 	String CSS_EVENODD_VALUE = "evenodd";
 	String CSS_EXPANDED_VALUE = "expanded";
@@ -358,6 +359,7 @@ public interface CSSConstants {
 	String CSS_SPRINGGREEN_VALUE = "springgreen";
 	String CSS_SQUARE_VALUE = "square";
 	String CSS_SRGB_VALUE = "srgb";
+	/** Value for text-align to start of text on line */
 	String CSS_START_VALUE = "start";
 	String CSS_STATUS_BAR_VALUE = "status-bar";
 	String CSS_STEELBLUE_VALUE = "steelblue";

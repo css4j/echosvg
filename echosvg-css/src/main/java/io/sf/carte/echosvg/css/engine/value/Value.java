@@ -112,4 +112,24 @@ public interface Value extends CSSValue {
 		return false;
 	}
 
+	/**
+	 * Do this value represent the given identifier?
+	 * 
+	 * @param internedIdent the interned identifier string.
+	 * @return {@code true} if the value is a component.
+	 */
+	default boolean isIdentifier(String internedIdent) {
+		return false;
+	}
+
+	/**
+	 * Create and return a copy of this object.
+	 * <p>
+	 * If this object is unmodifiable, the clone will be modifiable.
+	 * </p>
+	 * 
+	 * @return a modifiable copy of this object.
+	 */
+	Value clone();
+
 }

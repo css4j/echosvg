@@ -382,6 +382,7 @@ public class ColorManager extends AbstractColorManager {
 	 */
 	@Override
 	public Value getDefaultValue() {
+		// Do not clone this value
 		return DEFAULT_VALUE;
 	}
 

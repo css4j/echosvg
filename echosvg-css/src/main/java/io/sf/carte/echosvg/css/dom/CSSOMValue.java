@@ -421,6 +421,11 @@ public class CSSOMValue implements Value {
 		return valueProvider.getValue().getIdentifierValue();
 	}
 
+	@Override
+	public Value clone() {
+		return valueProvider.getValue().clone();
+	}
+
 	/**
 	 * To provide the actual value.
 	 */
@@ -430,65 +435,6 @@ public class CSSOMValue implements Value {
 		 * Returns the current value associated with this object.
 		 */
 		Value getValue();
-
-	}
-
-	/**
-	 * To store a component.
-	 */
-	protected abstract class AbstractComponent implements Value {
-
-		/**
-		 * The returns the actual value of this component.
-		 */
-		protected abstract Value getValue();
-
-		@Override
-		public String getCssText() {
-			return valueProvider.getValue().getCssText();
-		}
-
-		@Override
-		public CssType getCssValueType() {
-			return valueProvider.getValue().getCssValueType();
-		}
-
-		@Override
-		public Type getPrimitiveType() {
-			return valueProvider.getValue().getPrimitiveType();
-		}
-
-		@Override
-		public float getFloatValue() throws DOMException {
-			return valueProvider.getValue().getFloatValue();
-		}
-
-		@Override
-		public String getStringValue() throws DOMException {
-			return valueProvider.getValue().getStringValue();
-		}
-
-		@Override
-		public CSSCounterValue getCounterValue() throws DOMException {
-			throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
-		}
-
-		@Override
-		public RectValue getRectValue() throws DOMException {
-			throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
-		}
-
-		@Override
-		public ColorValue getColorValue() throws DOMException {
-			throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
-		}
-
-		// CSSStyleValueList ///////////////////////////////////////////////////
-
-		@Override
-		public int getLength() {
-			throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
-		}
 
 	}
 

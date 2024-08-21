@@ -31,6 +31,8 @@ class ImmutableIdentValue extends IdentValue {
 
 	/**
 	 * Creates a new immutable IdentValue.
+	 * 
+	 * @param s an interned identifier string.
 	 */
 	public ImmutableIdentValue(String s) {
 		super(s);

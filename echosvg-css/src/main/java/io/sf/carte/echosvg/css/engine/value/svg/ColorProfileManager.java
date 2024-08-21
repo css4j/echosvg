@@ -110,7 +110,7 @@ public class ColorProfileManager extends AbstractValueManager {
 			if (s.equals(CSSConstants.CSS_SRGB_VALUE)) {
 				return SVGValueConstants.SRGB_VALUE;
 			}
-			return new IdentValue(s);
+			return new IdentValue(s.intern());
 
 		case URI:
 			return new URIValue(lu.getStringValue(), resolveURI(engine.getCSSBaseURI(), lu.getStringValue()));
@@ -124,11 +124,11 @@ public class ColorProfileManager extends AbstractValueManager {
 	public Value createStringValue(Type type, String value, CSSEngine engine) throws DOMException {
 		switch (type) {
 		case IDENT:
-			String s = value.toLowerCase(Locale.ROOT);
-			if (s.equals(CSSConstants.CSS_AUTO_VALUE)) {
+			String s = value.toLowerCase(Locale.ROOT).intern();
+			if (s == CSSConstants.CSS_AUTO_VALUE) {
 				return ValueConstants.AUTO_VALUE;
 			}
-			if (s.equals(CSSConstants.CSS_SRGB_VALUE)) {
+			if (s == CSSConstants.CSS_SRGB_VALUE) {
 				return SVGValueConstants.SRGB_VALUE;
 			}
 			return new IdentValue(s);

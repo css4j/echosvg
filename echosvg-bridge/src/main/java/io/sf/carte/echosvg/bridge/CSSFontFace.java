@@ -28,9 +28,9 @@ import io.sf.carte.echosvg.css.engine.FontFaceRule;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.Value;
-import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.gvt.font.GVTFontFamily;
+import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
 import io.sf.carte.echosvg.util.SVGConstants;
 
@@ -83,7 +83,7 @@ public class CSSFontFace extends FontFace implements SVGConstants {
 		v = sm.getValue(SVGCSSEngine.SRC_INDEX);
 
 		ParsedURL base = ffr.getURL();
-		if ((v != null) && (v != ValueConstants.NONE_VALUE)) {
+		if (v != null && !v.isIdentifier(CSSConstants.CSS_NONE_VALUE)) {
 			if (v.getCssValueType() == CssType.TYPED) {
 				ret.srcs = new LinkedList<>();
 				ret.srcs.add(getSrcValue(v, base));

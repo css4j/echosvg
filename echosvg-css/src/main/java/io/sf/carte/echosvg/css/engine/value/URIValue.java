@@ -55,20 +55,6 @@ public class URIValue extends AbstractStringValue implements CSSStringValue {
 	}
 
 	/**
-	 * Indicates whether some other object is "equal to" this one.
-	 * 
-	 * @param obj the reference object with which to compare.
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof Value)) {
-			return false;
-		}
-		Value v = (Value) obj;
-		return v.getPrimitiveType() == Type.URI && value.equals(v.getURIValue());
-	}
-
-	/**
 	 * A string representation of the current value.
 	 */
 	@Override

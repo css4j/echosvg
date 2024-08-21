@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
+import org.w3c.api.DOMTypeException;
 import org.w3c.css.om.typed.CSSKeywordValue;
 
 import io.sf.carte.doc.style.css.parser.ParseHelper;
@@ -32,6 +33,8 @@ public class IdentValue extends AbstractStringValue implements CSSKeywordValue {
 
 	/**
 	 * Creates a new IdentValue.
+	 * 
+	 * @param s an interned identifier string.
 	 */
 	public IdentValue(String s) {
 		super(s);
@@ -47,7 +50,7 @@ public class IdentValue extends AbstractStringValue implements CSSKeywordValue {
 	 * @return an immutable identifier value.
 	 */
 	public static IdentValue createConstant(String s) {
-		return new ImmutableIdentValue(s);
+		return new ImmutableIdentValue(s.intern());
 	}
 
 	/**
@@ -56,20 +59,6 @@ public class IdentValue extends AbstractStringValue implements CSSKeywordValue {
 	@Override
 	public Type getPrimitiveType() {
 		return Type.IDENT;
-	}
-
-	/**
-	 * Indicates whether some other object is "equal to" this one.
-	 * 
-	 * @param obj the reference object with which to compare.
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof Value)) {
-			return false;
-		}
-		Value v = (Value) obj;
-		return v.getPrimitiveType() == Type.IDENT && value.equals(v.getIdentifierValue());
 	}
 
 	/**
@@ -88,6 +77,23 @@ public class IdentValue extends AbstractStringValue implements CSSKeywordValue {
 	@Override
 	public String getStringValue() {
 		return value;
+	}
+
+	@Override
+	public void setValue(String value) throws DOMTypeException {
+		if (value == null || (value = value.trim()).isEmpty()) {
+			throw new DOMTypeException("Value is null or empty.");
+		}
+		this.value = value.intern();
+
+		if (handler != null) {
+			handler.valueChanged(this);
+		}
+	}
+
+	@Override
+	public boolean isIdentifier(String internedIdent) {
+		return value == internedIdent;
 	}
 
 	@Override

@@ -57,7 +57,7 @@ public class FontFamilyManager extends AbstractValueManager {
 	static {
 		DEFAULT_VALUE.append(new StringValue("Arial"));
 		DEFAULT_VALUE.append(new StringValue("Helvetica"));
-		DEFAULT_VALUE.append(new IdentValue(CSSConstants.CSS_SANS_SERIF_VALUE));
+		DEFAULT_VALUE.append(IdentValue.createConstant(CSSConstants.CSS_SANS_SERIF_VALUE));
 	}
 
 	/**
@@ -117,6 +117,7 @@ public class FontFamilyManager extends AbstractValueManager {
 	 */
 	@Override
 	public Value getDefaultValue() {
+		// Do not clone this value
 		return DEFAULT_VALUE;
 	}
 

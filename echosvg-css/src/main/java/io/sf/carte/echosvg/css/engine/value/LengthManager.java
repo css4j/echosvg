@@ -85,17 +85,7 @@ public abstract class LengthManager extends AbstractValueManager {
 	 */
 	@Override
 	public Value createFloatValue(short type, float floatValue) throws DOMException {
-		switch (type) {
-		case CSSUnit.CSS_PERCENTAGE:
-		case CSSUnit.CSS_EM:
-		case CSSUnit.CSS_EX:
-		case CSSUnit.CSS_PX:
-		case CSSUnit.CSS_CM:
-		case CSSUnit.CSS_MM:
-		case CSSUnit.CSS_IN:
-		case CSSUnit.CSS_PT:
-		case CSSUnit.CSS_PC:
-		case CSSUnit.CSS_NUMBER:
+		if (type == CSSUnit.CSS_NUMBER || type == CSSUnit.CSS_PERCENTAGE || CSSUnit.isLengthUnitType(type)) {
 			return new FloatValue(type, floatValue);
 		}
 		throw createInvalidFloatTypeDOMException(type);

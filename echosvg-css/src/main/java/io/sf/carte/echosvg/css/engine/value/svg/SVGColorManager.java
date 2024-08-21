@@ -113,7 +113,7 @@ public class SVGColorManager extends ColorManager {
 	 */
 	@Override
 	public Value getDefaultValue() {
-		return defaultValue;
+		return defaultValue.clone();
 	}
 
 	/**
@@ -223,7 +223,7 @@ public class SVGColorManager extends ColorManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value == SVGValueConstants.CURRENTCOLOR_VALUE) {
+		if (value.isIdentifier(CSSConstants.CSS_CURRENTCOLOR_VALUE)) {
 			sm.putColorRelative(idx, true);
 
 			int ci = engine.getColorIndex();

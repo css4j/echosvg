@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
+import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -108,79 +109,83 @@ public class FontStretchManager extends IdentifierManager {
 		return ValueConstants.NORMAL_VALUE;
 	}
 
-	/**
-	 * Implements
-	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
-	 */
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value == ValueConstants.NARROWER_VALUE) {
-			sm.putParentRelative(idx, true);
+		if (value != null && value.getPrimitiveType() == Type.IDENT) {
+			if (value.getIdentifierValue() == CSSConstants.CSS_NARROWER_VALUE) {
+				sm.putParentRelative(idx, true);
 
-			CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
-			if (p == null) {
-				return ValueConstants.SEMI_CONDENSED_VALUE;
-			}
-			Value v = engine.getComputedStyle(p, pseudo, idx);
-			if (v == ValueConstants.NORMAL_VALUE) {
-				return ValueConstants.SEMI_CONDENSED_VALUE;
-			}
-			if (v == ValueConstants.CONDENSED_VALUE) {
-				return ValueConstants.EXTRA_CONDENSED_VALUE;
-			}
-			if (v == ValueConstants.EXPANDED_VALUE) {
-				return ValueConstants.SEMI_EXPANDED_VALUE;
-			}
-			if (v == ValueConstants.SEMI_EXPANDED_VALUE) {
-				return ValueConstants.NORMAL_VALUE;
-			}
-			if (v == ValueConstants.SEMI_CONDENSED_VALUE) {
-				return ValueConstants.CONDENSED_VALUE;
-			}
-			if (v == ValueConstants.EXTRA_CONDENSED_VALUE) {
-				return ValueConstants.ULTRA_CONDENSED_VALUE;
-			}
-			if (v == ValueConstants.EXTRA_EXPANDED_VALUE) {
-				return ValueConstants.EXPANDED_VALUE;
-			}
-			if (v == ValueConstants.ULTRA_CONDENSED_VALUE) {
-				return ValueConstants.ULTRA_CONDENSED_VALUE;
-			}
-			return ValueConstants.EXTRA_EXPANDED_VALUE;
-		} else if (value == ValueConstants.WIDER_VALUE) {
-			sm.putParentRelative(idx, true);
-
-			CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
-			if (p == null) {
-				return ValueConstants.SEMI_CONDENSED_VALUE;
-			}
-			Value v = engine.getComputedStyle(p, pseudo, idx);
-			if (v == ValueConstants.NORMAL_VALUE) {
-				return ValueConstants.SEMI_EXPANDED_VALUE;
-			}
-			if (v == ValueConstants.CONDENSED_VALUE) {
-				return ValueConstants.SEMI_CONDENSED_VALUE;
-			}
-			if (v == ValueConstants.EXPANDED_VALUE) {
+				CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
+				if (p == null) {
+					return ValueConstants.SEMI_CONDENSED_VALUE;
+				}
+				Value v = engine.getComputedStyle(p, pseudo, idx);
+				if (v != null && v.getPrimitiveType() == Type.IDENT) {
+					String s = v.getIdentifierValue();
+					if (s == CSSConstants.CSS_NORMAL_VALUE) {
+						return ValueConstants.SEMI_CONDENSED_VALUE;
+					}
+					if (s == CSSConstants.CSS_CONDENSED_VALUE) {
+						return ValueConstants.EXTRA_CONDENSED_VALUE;
+					}
+					if (s == CSSConstants.CSS_EXPANDED_VALUE) {
+						return ValueConstants.SEMI_EXPANDED_VALUE;
+					}
+					if (s == CSSConstants.CSS_SEMI_EXPANDED_VALUE) {
+						return ValueConstants.NORMAL_VALUE;
+					}
+					if (s == CSSConstants.CSS_SEMI_CONDENSED_VALUE) {
+						return ValueConstants.CONDENSED_VALUE;
+					}
+					if (s == CSSConstants.CSS_EXTRA_CONDENSED_VALUE) {
+						return ValueConstants.ULTRA_CONDENSED_VALUE;
+					}
+					if (s == CSSConstants.CSS_EXTRA_EXPANDED_VALUE) {
+						return ValueConstants.EXPANDED_VALUE;
+					}
+					if (s == CSSConstants.CSS_ULTRA_CONDENSED_VALUE) {
+						return ValueConstants.ULTRA_CONDENSED_VALUE;
+					}
+				}
 				return ValueConstants.EXTRA_EXPANDED_VALUE;
-			}
-			if (v == ValueConstants.SEMI_EXPANDED_VALUE) {
-				return ValueConstants.EXPANDED_VALUE;
-			}
-			if (v == ValueConstants.SEMI_CONDENSED_VALUE) {
-				return ValueConstants.NORMAL_VALUE;
-			}
-			if (v == ValueConstants.EXTRA_CONDENSED_VALUE) {
-				return ValueConstants.CONDENSED_VALUE;
-			}
-			if (v == ValueConstants.EXTRA_EXPANDED_VALUE) {
+			} else if (value.getIdentifierValue() == CSSConstants.CSS_WIDER_VALUE) {
+				sm.putParentRelative(idx, true);
+
+				CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
+				if (p == null) {
+					return ValueConstants.SEMI_CONDENSED_VALUE;
+				}
+				Value v = engine.getComputedStyle(p, pseudo, idx);
+				if (v != null && v.getPrimitiveType() == Type.IDENT) {
+					String s = v.getIdentifierValue();
+					if (s == CSSConstants.CSS_NORMAL_VALUE) {
+						return ValueConstants.SEMI_EXPANDED_VALUE;
+					}
+					if (s == CSSConstants.CSS_CONDENSED_VALUE) {
+						return ValueConstants.SEMI_CONDENSED_VALUE;
+					}
+					if (s == CSSConstants.CSS_EXPANDED_VALUE) {
+						return ValueConstants.EXTRA_EXPANDED_VALUE;
+					}
+					if (s == CSSConstants.CSS_SEMI_EXPANDED_VALUE) {
+						return ValueConstants.EXPANDED_VALUE;
+					}
+					if (s == CSSConstants.CSS_SEMI_CONDENSED_VALUE) {
+						return ValueConstants.NORMAL_VALUE;
+					}
+					if (s == CSSConstants.CSS_EXTRA_CONDENSED_VALUE) {
+						return ValueConstants.CONDENSED_VALUE;
+					}
+					if (s == CSSConstants.CSS_EXTRA_EXPANDED_VALUE) {
+						return ValueConstants.ULTRA_EXPANDED_VALUE;
+					}
+					if (s == CSSConstants.CSS_ULTRA_CONDENSED_VALUE) {
+						return ValueConstants.EXTRA_CONDENSED_VALUE;
+					}
+				}
 				return ValueConstants.ULTRA_EXPANDED_VALUE;
 			}
-			if (v == ValueConstants.ULTRA_CONDENSED_VALUE) {
-				return ValueConstants.EXTRA_CONDENSED_VALUE;
-			}
-			return ValueConstants.ULTRA_EXPANDED_VALUE;
 		}
 		return value;
 	}

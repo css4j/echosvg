@@ -104,7 +104,7 @@ public class ClipPathManager extends AbstractValueManager {
 
 		case IDENT:
 			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-				return ValueConstants.NONE_VALUE;
+				return ValueConstants.NONE_VALUE.clone();
 			}
 		default:
 			break;
