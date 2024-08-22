@@ -134,18 +134,35 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	@Override
 	public Value createValue(LexicalUnit lunit, CSSEngine engine) throws DOMException {
 		switch (lunit.getLexicalUnitType()) {
-		case COLOR_FUNCTION:
-			Value colorFunction = createColorFunction(lunit);
-			if (colorFunction != null) {
-				return colorFunction;
-			}
-		case HSLCOLOR:
-		case HWBCOLOR:
 		case LABCOLOR:
 		case LCHCOLOR:
 		case OKLABCOLOR:
 		case OKLCHCOLOR:
-		case COLOR_MIX:
+		case COLOR_MIX: {
+			ValueFactory vf = new ValueFactory();
+			String xyzSerialization;
+			try {
+				StyleValue css4jValue = vf.createCSSValue(lunit);
+				if (css4jValue.getCssValueType() != CssType.TYPED) {
+					throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
+				}
+				xyzSerialization = ((io.sf.carte.doc.style.css.CSSColorValue) css4jValue).getColor()
+						.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.xyz_d50).toString();
+			} catch (DOMException e) {
+				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
+			}
+			// Now re-parse the result
+			CSSParser parser = new CSSParser();
+			try {
+				lunit = parser.parsePropertyValue(new StringReader(xyzSerialization));
+			} catch (CSSParseException | IOException e) {
+				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
+			}
+		}
+		case COLOR_FUNCTION:
+			return createColorFunction(lunit);
+		case HSLCOLOR:
+		case HWBCOLOR: {
 			ValueFactory vf = new ValueFactory();
 			String rgbSerialization;
 			try {
@@ -164,6 +181,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			} catch (CSSParseException | IOException e) {
 				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 			}
+		}
 		case RGBCOLOR:
 			return createRGBColor(lunit);
 		default:

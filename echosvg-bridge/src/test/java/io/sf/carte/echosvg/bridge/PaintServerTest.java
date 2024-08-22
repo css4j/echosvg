@@ -89,6 +89,21 @@ public class PaintServerTest {
 	}
 
 	@Test
+	public void testConvertColorFunctionLinearSRGB() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "color(srgb-linear 0.14 0.002 0.064)",
+				ColorValue.CS_SRGB_LINEAR);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(.14f, comp[0]);
+		assertEquals(.002f, comp[1]);
+		assertEquals(.064f, comp[2]);
+		assertEquals(255, color.getAlpha());
+
+		assertNull(context.getColorSpace());
+	}
+
+	@Test
 	public void testConvertColorFunctionXYZD50_P3() {
 		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "color(xyz-d50 0.07 0.08 0.19 / 0.969)",
 				ColorValue.CS_XYZ_D50);
@@ -163,6 +178,105 @@ public class PaintServerTest {
 		assertNull(context.getColorSpace());
 	}
 
+	@Test
+	public void testConvertColorFunctionXYZ() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "color(xyz 0.065 0.033 0.06 / 0.2)",
+				ColorValue.CS_XYZ);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(.06586f, comp[0], 1e-5f); // D50
+		assertEquals(.0335833f, comp[1], 1e-5f); // D50
+		assertEquals(.045024f, comp[2], 1e-5f); // D50
+		assertEquals(51, color.getAlpha());
+
+		assertNull(context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertLab() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "lab(20.6% 48.8 -13.8 / 0.2)", null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.06798f, comp[0], 1e-5f); // D50
+		assertEquals(0.03141f, comp[1], 1e-5f); // D50
+		assertEquals(0.04692f, comp[2], 1e-5f); // D50
+		assertEquals(51, color.getAlpha());
+
+		assertSame(CSSColorSpaces.getRec2020(), context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertLCh() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "lch(20.6% 50.71371 344.2098 / 0.2)", null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.06798f, comp[0], 1e-5f); // D50
+		assertEquals(0.03141f, comp[1], 1e-5f); // D50
+		assertEquals(0.046909f, comp[2], 1e-5f); // D50
+		assertEquals(51, color.getAlpha());
+
+		assertSame(CSSColorSpaces.getRec2020(), context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertOkLab() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "oklab(33.5% 0.154 -0.0386 / 0.8)", null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.068184f, comp[0], 1e-5f); // D50
+		assertEquals(0.031465f, comp[1], 1e-5f); // D50
+		assertEquals(0.04694f, comp[2], 1e-5f); // D50
+		assertEquals(204, color.getAlpha());
+
+		assertSame(CSSColorSpaces.getRec2020(), context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertOkLCh() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "oklch(33.5% 0.1588 345.93 / 0.8)", null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.0681926f, comp[0], 1e-5f); // D50
+		assertEquals(0.031464f, comp[1], 1e-5f); // D50
+		assertEquals(0.04694f, comp[2], 1e-5f); // D50
+		assertEquals(204, color.getAlpha());
+
+		assertSame(CSSColorSpaces.getRec2020(), context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertHSL() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "hsl(210 94% 29% / 0.2)", null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.0174f, comp[0], 1e-4f); // R
+		assertEquals(0.29f, comp[1], 1e-4f); // G
+		assertEquals(0.5626f, comp[2], 1e-4f); // B
+		assertEquals(51, color.getAlpha());
+
+		assertNull(context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertHWB() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "hwb(210 1.7% 43.7%)", null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.017f, comp[0], 1e-3f); // R
+		assertEquals(0.29f, comp[1], 1e-3f); // G
+		assertEquals(0.563f, comp[2], 1e-3f); // B
+		assertEquals(255, color.getAlpha());
+
+		assertNull(context.getColorSpace());
+	}
+
 	private Color convertPaint(String ptyName, String paintDef, String cssSpace) {
 		SVGDocument doc = createDocumentWithPaint(ptyName + ':' + paintDef);
 		GraphicsNode gn = createGraphicsNode(context, doc);
@@ -176,8 +290,10 @@ public class PaintServerTest {
 		assertNotNull(val);
 		assertEquals(Type.COLOR, val.getPrimitiveType());
 		ColorValue cssColor = val.getColorValue();
-		assertEquals(cssSpace, cssColor.getCSSColorSpace());
-		assertEquals(paintDef, cssColor.getCssText());
+		if (cssSpace != null) {
+			assertEquals(cssSpace, cssColor.getCSSColorSpace());
+			assertEquals(paintDef, cssColor.getCssText());
+		}
 
 		Paint paint = PaintServer.convertPaint(rect, gn, val, 1f, context);
 		assertNotNull(paint);
