@@ -85,6 +85,21 @@ public class PaintServerTest {
 		assertEquals(.7f, comp[2]);
 		assertEquals(255, color.getAlpha());
 
+		assertNull(context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertColorFunctionP3() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "color(display-p3 0.02 0.9 0.7)",
+				ColorValue.CS_DISPLAY_P3);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(.02f, comp[0]);
+		assertEquals(.9f, comp[1]);
+		assertEquals(.7f, comp[2]);
+		assertEquals(255, color.getAlpha());
+
 		assertSame(CSSColorSpaces.getDisplayP3(), context.getColorSpace());
 	}
 
