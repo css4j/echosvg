@@ -1,0 +1,79 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="500" viewBox="0 0 450 500" id="theSVG">
+  <style>
+/*<![CDATA[*/
+
+svg {
+    font: bold 10pt "Open Sans", sans-serif;
+}
+circle {
+  stroke-width: 5px;
+}
+ellipse {
+  stroke-width: 3px;
+}
+text.itemdesc {
+  fill: #12273c;
+}
+@media screen {
+  circle {
+    stroke-width: 1.3vmin;
+  }
+  ellipse {
+    stroke-width: 2px;
+  }
+}
+
+@media print {
+  text.itemdesc {
+    font-family: "Ubuntu Mono";
+    font-size: 12pt;
+  }
+}
+
+/*]]>*/
+  </style>
+  <!-- 
+  Color equivalences:
+  #090df6 color(srgb-linear 0.002732 0.004025 0.921582)
+  #01011e color(srgb-linear 0.000304 0.000304 0.012983)
+
+  #e93208 color(srgb-linear 0.814847 0.031896 0.002428)
+  #460909 color(srgb-linear 0.061246 0.002732 0.002732)
+
+  #fad615 color(srgb-linear 0.955973 0.672443 0.007499)
+  #403f06 color(srgb-linear 0.051269 0.049707 0.001821)
+
+  #3cb803 color(xyz-d65 0.190196 0.352469 0.058871)
+  #062605 color(a98-rgb 0.103543 0.166445 0.062558)
+
+  #0101feac color(srgb-linear 0.000304 0.000304 0.991102 / 0.67451)
+  #090df6 color(srgb-linear 0.002732 0.004025 0.921582)
+
+  #e90909ac color(display-p3 0.83823 0.188689 0.136286 / 0.67451)
+  #d9184e color(a98-rgb 0.728867 0.118222 0.304995)
+
+  #fefe01ac color(xyz-d50 0.813954 0.93104 0.110234 / 0.67451)
+  #fad615 color(srgb-linear 0.955973 0.672443 0.007499)
+
+  #0cf80c color(xyz-d50 0.363665 0.673972 0.093805)
+  -->
+  <g>
+  <circle cx="250" cy="300" r="20" style="fill:color(srgb-linear 0.002732 0.004025 0.921582); stroke:color(srgb-linear 0.000304 0.000304 0.012983)"/>
+  <circle cx="150" cy="150" r="20" style="fill:color(srgb-linear 0.814847 0.031896 0.002428); stroke:color(srgb-linear 0.061246 0.002732 0.002732)"/>
+  <circle cx="280" cy="150" r="20" style="fill:color(srgb-linear 0.955973 0.672443 0.007499); stroke:color(srgb-linear 0.051269 0.049707 0.001821)"/>
+  <circle cx="120" cy="300" r="20" style="fill:color(xyz-d65 0.190196 0.352469 0.058871); stroke:color(a98-rgb 0.103543 0.166445 0.062558)"/>
+  <ellipse cx="250" cy="300" rx="100" ry="130" transform="rotate(-20 250 300)"
+style="fill:color(srgb-linear 0.000304 0.000304 0.991102 / 0.67451); stroke:color(srgb-linear 0.002732 0.004025 0.921582)"/>
+  <ellipse cx="150" cy="150" rx="100" ry="130" transform="rotate(-20 150 150)"
+style="fill:color(display-p3 0.83823 0.188689 0.136286 / 0.67451); stroke:color(a98-rgb 0.728867 0.118222 0.304995)"/>
+  <ellipse cx="280" cy="150" rx="100" ry="130" transform="rotate(30 280 150)"
+style="fill:color(xyz-d50 0.813954 0.93104 0.110234 / 0.67451); stroke:color(srgb-linear 0.955973 0.672443 0.007499)"/>
+  <ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)"
+style="fill:#01fe01ac; stroke:color(xyz-d50 0.363665 0.673972 0.093805)"/>
+  <text x="110" y="60" class="itemdesc" text-anchor="middle">SVG</text>
+  <text x="315" y="60" class="itemdesc" text-anchor="middle">HTML</text>
+  <text x="75" y="390" class="itemdesc" text-anchor="middle">XHTML</text>
+  <text x="295" y="390" class="itemdesc" text-anchor="middle">SVGZ</text>
+  </g>
+</svg>

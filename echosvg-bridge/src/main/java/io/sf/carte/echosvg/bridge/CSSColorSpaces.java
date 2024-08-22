@@ -110,12 +110,20 @@ class CSSColorSpaces {
 	 *                    (check that before calling).
 	 * @param color       the color that needs to be represented by the merged
 	 *                    space.
-	 * @return the recommended merged color space.
+	 * @return the recommended merged color space, or {@code null} if sRGB is recommended.
 	 */
 	static ColorSpace mergeColorSpace(ColorSpace colorSpace1, ColorSpace colorSpace2, Color color) {
 		// For a reasoning, you may want to look at
 		// https://upload.wikimedia.org/wikipedia/commons/b/b3/CIE1931xy_gamut_comparison_of_sRGB_P3_Rec2020.svg
-		if (colorSpace1 == null || colorSpace2 == getProphotoRGB()) {
+		if (colorSpace1 == null) {
+			if (isInGamut(color, ColorSpace.getInstance(ColorSpace.CS_sRGB))
+					|| colorSpace2 == ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB)) {
+				return null;
+			}
+			return colorSpace2;
+		}
+
+		if (colorSpace2 == getProphotoRGB()) {
 			return colorSpace2;
 		}
 
