@@ -131,8 +131,38 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 		}
 
 		Element refElement = ctx.getReferencedElement(e, uri);
+
 		if (refElement == null) {
 			return null; // Missing reference
+		}
+
+		// Check for ancestor circularity
+		Node anc = e;
+		do {
+			if (refElement == anc) {
+				BridgeException be = new BridgeException(ctx, e, ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
+						new Object[] { "href" });
+				displayErrorOrThrow(ctx, be);
+				return null; // Circularity
+			}
+			anc = anc.getParentNode();
+		} while (anc != null && anc.getNodeType() == Node.ELEMENT_NODE);
+
+		// Check that the referenced element is SVG
+		if (!SVG_NAMESPACE_URI.equals(refElement.getNamespaceURI())) {
+			/* @formatter:off
+			 *
+			 *  § 5.5:
+			 * "If the referenced element that results from resolving the URL is
+			 *  not an SVG element, then the reference is invalid and the ‘use’
+			 *  element is in error."
+			 *
+			 * @formatter:on
+			 */
+			BridgeException be = new BridgeException(ctx, e, ERR_URI_BAD_TARGET,
+					new Object[] { "href" });
+			displayErrorOrThrow(ctx, be);
+			return null;
 		}
 
 		SVGOMDocument document, refDocument;

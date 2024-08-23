@@ -118,8 +118,8 @@ public class RectTest {
 				SVGConstants.SVG_SVG_TAG, dtd);
 
 		SVGSVGElement svg = doc.getRootElement();
-		svg.setAttribute("width", "200");
-		svg.setAttribute("height", "200");
+		svg.setAttribute(SVGConstants.SVG_WIDTH_ATTRIBUTE, "200");
+		svg.setAttribute(SVGConstants.SVG_HEIGHT_ATTRIBUTE, "200");
 		Element rect0 = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_RECT_TAG);
 		rect0.setAttribute(SVGConstants.SVG_X_ATTRIBUTE, "100");
 		rect0.setAttribute(SVGConstants.SVG_Y_ATTRIBUTE, "100");
