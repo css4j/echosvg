@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.bridge.test;
+package io.sf.carte.echosvg.bridge;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -38,9 +38,6 @@ import org.w3c.dom.views.DocumentView;
 
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.anim.dom.SVGStylableElement;
-import io.sf.carte.echosvg.bridge.BridgeContext;
-import io.sf.carte.echosvg.bridge.GVTBuilder;
-import io.sf.carte.echosvg.bridge.UserAgentAdapter;
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.dom.CSSValue;
 import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
@@ -86,7 +83,7 @@ public class ModificationsTest {
 		rect.getStyle().setProperty(ptyName, newValue, null);
 		String styleDecl = ptyName + ": " + newValue + ';';
 		assertEquals(styleDecl, rect.getStyle().getCssText().replace("\n", ""));
-		assertEquals(styleDecl, rect.getAttribute("style").replace("\n", ""));
+		assertEquals(styleDecl, rect.getAttribute(SVGConstants.SVG_STYLE_ATTRIBUTE).replace("\n", ""));
 
 		cs = view.getComputedStyle(rect, null);
 		CSSStyleValue modval = cs.getCSSStyleValue(ptyName);
@@ -104,8 +101,8 @@ public class ModificationsTest {
 		SVGDocument doc = (SVGDocument) impl.createDocument(SVGConstants.SVG_NAMESPACE_URI,
 				SVGConstants.SVG_SVG_TAG, dtd);
 		SVGSVGElement svg = doc.getRootElement();
-		svg.setAttribute("width", "200");
-		svg.setAttribute("height", "200");
+		svg.setAttribute(SVGConstants.SVG_WIDTH_ATTRIBUTE, "200");
+		svg.setAttribute(SVGConstants.SVG_HEIGHT_ATTRIBUTE, "200");
 		Element rect = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_RECT_TAG);
 		rect.setAttribute(XMLConstants.XML_ID_ATTRIBUTE, "rect1");
 		rect.setAttribute(SVGConstants.SVG_STYLE_ATTRIBUTE, rectStyle);

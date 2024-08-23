@@ -323,8 +323,8 @@ public class PaintServerTest {
 		SVGDocument doc = (SVGDocument) impl.createDocument(SVGConstants.SVG_NAMESPACE_URI,
 				SVGConstants.SVG_SVG_TAG, dtd);
 		SVGSVGElement svg = doc.getRootElement();
-		svg.setAttribute("width", "200");
-		svg.setAttribute("height", "200");
+		svg.setAttribute(SVGConstants.SVG_WIDTH_ATTRIBUTE, "200");
+		svg.setAttribute(SVGConstants.SVG_HEIGHT_ATTRIBUTE, "200");
 		Element rect = doc.createElementNS(SVGConstants.SVG_NAMESPACE_URI, SVGConstants.SVG_RECT_TAG);
 		rect.setAttribute(XMLConstants.XML_ID_ATTRIBUTE, "rect1");
 		rect.setAttribute(SVGConstants.SVG_STYLE_ATTRIBUTE, rectStyle);
