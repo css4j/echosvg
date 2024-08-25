@@ -22,13 +22,13 @@ import org.w3c.css.om.CSSStyleDeclaration;
 import org.w3c.css.om.typed.CSSStyleValue;
 import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGAnimatedString;
-import org.w3c.dom.svg.SVGStylableP;
+import org.w3c.dom.svg.SVGStylable;
 
-import io.sf.carte.echosvg.css.dom.CSSValue;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleDeclarationProvider;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.dom.AbstractDocument;
+import io.sf.carte.echosvg.dom.AbstractStylableDocument;
 import io.sf.carte.echosvg.util.ParsedURL;
 
 /**
@@ -43,7 +43,7 @@ import io.sf.carte.echosvg.util.ParsedURL;
  * @version $Id$
  */
 public abstract class StylableExtensionElement extends ExtensionElement implements CSSStylableElement,
-		SVGStylableP<CSSStyleValue> {
+		SVGStylable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -157,13 +157,10 @@ public abstract class StylableExtensionElement extends ExtensionElement implemen
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
-	/**
-	 * <b>DOM</b>: Implements
-	 * {@link org.w3c.dom.svg.SVGStylable#getPresentationAttribute(String)}.
-	 */
 	@Override
-	public CSSValue getPresentationAttribute(String name) {
-		throw new UnsupportedOperationException("Not implemented");
+	public CSSStyleValue getPresentationAttributeValue(String name) {
+		AbstractStylableDocument doc = (AbstractStylableDocument) getCurrentDocument();
+		return computedStyleMap.getValue(doc.getCSSEngine().getPropertyIndex(name));
 	}
 
 	/**
