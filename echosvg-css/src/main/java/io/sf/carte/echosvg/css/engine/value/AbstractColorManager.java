@@ -24,12 +24,15 @@ import java.io.StringReader;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
+import io.sf.carte.doc.style.css.CSSColor;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.RGBAColor;
 import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.doc.style.css.parser.CSSParser;
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.doc.style.css.property.StyleValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
@@ -145,7 +148,9 @@ public abstract class AbstractColorManager extends IdentifierManager {
 				if (css4jValue.getCssValueType() != CssType.TYPED) {
 					throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 				}
-				rgbSerialization = ((CSSTypedValue) css4jValue).toRGBColor().toString();
+				RGBAColor rgb = ((CSSTypedValue) css4jValue).toRGBColor();
+				setComponentsMaximumFractionDigits(rgb, 6);
+				rgbSerialization = rgb.toString();
 			} catch (DOMException e) {
 				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 			}
@@ -188,6 +193,12 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		default:
 			return super.createValue(lunit, engine);
 		}
+	}
+
+	private static void setComponentsMaximumFractionDigits(CSSColor color, int maxFractionDigits) {
+		((NumberValue) color.item(1)).setMaximumFractionDigits(maxFractionDigits);
+		((NumberValue) color.item(2)).setMaximumFractionDigits(maxFractionDigits);
+		((NumberValue) color.item(3)).setMaximumFractionDigits(maxFractionDigits);
 	}
 
 	/**
