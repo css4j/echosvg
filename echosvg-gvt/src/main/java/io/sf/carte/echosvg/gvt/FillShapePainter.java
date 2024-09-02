@@ -24,52 +24,44 @@ import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import io.sf.carte.echosvg.ext.awt.color.ColorContext;
+
 /**
  * A shape painter that can be used to fill a shape.
  *
- * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class FillShapePainter implements ShapePainter {
-
-	/**
-	 * The Shape to be painted.
-	 */
-	protected Shape shape;
-
-	/**
-	 * The paint attribute used to fill the shape.
-	 */
-	protected Paint paint;
+public class FillShapePainter extends PaintShapePainter {
 
 	/**
 	 * Constructs a new <code>FillShapePainter</code> that can be used to fill a
 	 * <code>Shape</code>.
 	 *
 	 * @param shape Shape to be painted by this painter Should not be null.
+	 * @param ctx   the color context. Cannot be {@code null}.
 	 */
-	public FillShapePainter(Shape shape) {
-		if (shape == null)
-			throw new IllegalArgumentException("Shape can not be null!");
-
-		this.shape = shape;
+	public FillShapePainter(Shape shape, ColorContext ctx) {
+		super(shape, ctx);
 	}
 
 	/**
 	 * Sets the paint used to fill a shape.
 	 *
-	 * @param newPaint the paint object used to fill the shape
+	 * @param newPaint the paint object used to fill the shape.
 	 */
 	public void setPaint(Paint newPaint) {
-		this.paint = newPaint;
+		super.setPaint(newPaint);
 	}
 
 	/**
-	 * Gets the paint used to draw the outline of the shape.
+	 * Gets the paint used to fill the shape.
 	 */
 	public Paint getPaint() {
-		return paint;
+		return super.getPaint();
 	}
 
 	/**
@@ -80,7 +72,7 @@ public class FillShapePainter implements ShapePainter {
 	@Override
 	public void paint(Graphics2D g2d) {
 		if (paint != null) {
-			g2d.setPaint(paint);
+			g2d.setPaint(getPaint());
 			g2d.fill(shape);
 		}
 	}
@@ -145,30 +137,6 @@ public class FillShapePainter implements ShapePainter {
 		if (shape == null)
 			return false;
 		return shape.contains(pt);
-	}
-
-	/**
-	 * Sets the Shape this shape painter is associated with.
-	 *
-	 * @param shape new shape this painter should be associated with. Should not be
-	 *              null.
-	 */
-	@Override
-	public void setShape(Shape shape) {
-		if (shape == null) {
-			throw new IllegalArgumentException();
-		}
-		this.shape = shape;
-	}
-
-	/**
-	 * Gets the Shape this shape painter is associated with.
-	 *
-	 * @return shape associated with this Painter.
-	 */
-	@Override
-	public Shape getShape() {
-		return shape;
 	}
 
 }

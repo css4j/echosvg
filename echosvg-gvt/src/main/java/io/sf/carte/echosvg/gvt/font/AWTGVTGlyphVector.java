@@ -793,9 +793,9 @@ public class AWTGVTGlyphVector implements GVTGlyphVector {
 		if (!tpi.visible)
 			return;
 
-		Paint fillPaint = tpi.fillPaint;
+		Paint fillPaint = tpi.getFillPaint();
 		Stroke stroke = tpi.strokeStroke;
-		Paint strokePaint = tpi.strokePaint;
+		Paint strokePaint = tpi.getStrokePaint();
 
 		if ((fillPaint == null) && ((strokePaint == null) || (stroke == null)))
 			return;

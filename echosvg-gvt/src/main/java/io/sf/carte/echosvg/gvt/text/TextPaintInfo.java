@@ -18,9 +18,13 @@
  */
 package io.sf.carte.echosvg.gvt.text;
 
+import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Paint;
 import java.awt.Stroke;
+import java.awt.color.ColorSpace;
+
+import io.sf.carte.echosvg.ext.awt.color.ColorContext;
 
 /**
  * One line Class Desc
@@ -53,7 +57,13 @@ public class TextPaintInfo {
 
 	public int startChar, endChar;
 
-	public TextPaintInfo() {
+	/**
+	 * The color context.
+	 */
+	private ColorContext context;
+
+	public TextPaintInfo(ColorContext context) {
+		this.context = context;
 	}
 
 	public TextPaintInfo(TextPaintInfo pi) {
@@ -80,6 +90,7 @@ public class TextPaintInfo {
 			this.strikethroughStroke = null;
 
 			this.visible = false;
+			this.context = null;
 		} else {
 			this.fillPaint = pi.fillPaint;
 			this.strokePaint = pi.strokePaint;
@@ -99,7 +110,88 @@ public class TextPaintInfo {
 			this.strikethroughStroke = pi.strikethroughStroke;
 
 			this.visible = pi.visible;
+			this.context = pi.context;
 		}
+	}
+
+	public Paint getFillPaint() {
+		if (fillPaint instanceof Color) {
+			Color color = (Color) fillPaint;
+			ColorSpace space = color.getColorSpace();
+			ColorSpace targetSpace = context.getColorSpace();
+			if (targetSpace == null) {
+				// sRGB
+				if (!space.isCS_sRGB()) {
+					float[] comp = color.getRGBComponents(null);
+					color = new Color(comp[0], comp[1], comp[2], comp[3]);
+				}
+			} else {
+				color = new Color(targetSpace, color.getColorComponents(targetSpace, null),
+						color.getAlpha() / 255f);
+			}
+			return color;
+		}
+		return fillPaint;
+	}
+
+	public void setFillPaint(Paint fillPaint) {
+		this.fillPaint = fillPaint;
+	}
+
+	public Paint getStrokePaint() {
+		return strokePaint;
+	}
+
+	public void setStrokePaint(Paint strokePaint) {
+		this.strokePaint = strokePaint;
+	}
+
+	public Paint getUnderlinePaint() {
+		return underlinePaint;
+	}
+
+	public void setUnderlinePaint(Paint underlinePaint) {
+		this.underlinePaint = underlinePaint;
+	}
+
+	public Paint getUnderlineStrokePaint() {
+		return underlineStrokePaint;
+	}
+
+	public void setUnderlineStrokePaint(Paint underlineStrokePaint) {
+		this.underlineStrokePaint = underlineStrokePaint;
+	}
+
+	public Paint getOverlinePaint() {
+		return overlinePaint;
+	}
+
+	public void setOverlinePaint(Paint overlinePaint) {
+		this.overlinePaint = overlinePaint;
+	}
+
+	public Paint getOverlineStrokePaint() {
+		return overlineStrokePaint;
+	}
+
+	public void setOverlineStrokePaint(Paint overlineStrokePaint) {
+		this.overlineStrokePaint = overlineStrokePaint;
+	}
+
+	public Paint getStrikethroughPaint() {
+		return strikethroughPaint;
+	}
+
+	public void setStrikethroughPaint(Paint strikethroughPaint) {
+		this.strikethroughPaint = strikethroughPaint;
+	}
+
+	public Paint getStrikethroughStrokePaint() {
+		return strikethroughStrokePaint;
+	}
+
+	public void setStrikethroughStrokePaint(Paint strikethroughStrokePaint) {
+		this.strikethroughStrokePaint = strikethroughStrokePaint;
 	}
 
 	public static boolean equivilent(TextPaintInfo tpi1, TextPaintInfo tpi2) {

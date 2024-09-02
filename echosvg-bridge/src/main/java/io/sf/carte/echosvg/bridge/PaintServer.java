@@ -43,6 +43,7 @@ import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.svg.ICCColor;
 import io.sf.carte.echosvg.css.engine.value.svg12.DeviceColor;
 import io.sf.carte.echosvg.css.engine.value.svg12.ICCNamedColor;
+import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
 import io.sf.carte.echosvg.gvt.CompositeShapePainter;
 import io.sf.carte.echosvg.gvt.FillShapePainter;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
@@ -172,7 +173,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			return null;
 
 		Paint fillPaint = convertFillPaint(e, node, ctx);
-		FillShapePainter fp = new FillShapePainter(shape);
+		FillShapePainter fp = new FillShapePainter(shape, ctx);
 		fp.setPaint(fillPaint);
 
 		Stroke stroke = convertStroke(e);
@@ -180,7 +181,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			return fp;
 
 		Paint strokePaint = convertStrokePaint(e, node, ctx);
-		StrokeShapePainter sp = new StrokeShapePainter(shape);
+		StrokeShapePainter sp = new StrokeShapePainter(shape, ctx);
 		sp.setStroke(stroke);
 		sp.setPaint(strokePaint);
 
@@ -200,7 +201,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			return null;
 
 		Paint strokePaint = convertStrokePaint(e, node, ctx);
-		StrokeShapePainter sp = new StrokeShapePainter(shape);
+		StrokeShapePainter sp = new StrokeShapePainter(shape, ctx);
 		sp.setStroke(stroke);
 		sp.setPaint(strokePaint);
 		return sp;
@@ -577,22 +578,22 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	public static Color convertColor(ColorFunction c, float opacity, BridgeContext ctx) {
 		switch (c.getCSSColorSpace()) {
 		case ColorValue.CS_DISPLAY_P3:
-			ICC_ColorSpace space = CSSColorSpaces.getDisplayP3();
+			ICC_ColorSpace space = StandardColorSpaces.getDisplayP3();
 			Color color = convert3Color(space, c, opacity);
 			ctx.updateColorSpace(color, space);
 			return color;
 		case ColorValue.CS_A98_RGB:
-			space = CSSColorSpaces.getA98RGB();
+			space = StandardColorSpaces.getA98RGB();
 			color = convert3Color(space, c, opacity);
 			ctx.updateColorSpace(color, space);
 			return color;
 		case ColorValue.CS_PROPHOTO_RGB:
-			space = CSSColorSpaces.getProphotoRGB();
+			space = StandardColorSpaces.getProphotoRGB();
 			color = convert3Color(space, c, opacity);
 			ctx.updateColorSpace(color, space);
 			return color;
 		case ColorValue.CS_REC2020:
-			space = CSSColorSpaces.getRec2020();
+			space = StandardColorSpaces.getRec2020();
 			color = convert3Color(space, c, opacity);
 			ctx.updateColorSpace(color, space);
 			return color;
@@ -610,7 +611,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			float a = resolveAlphaComponent(c.getAlpha());
 			cs = ColorSpace.getInstance(ColorSpace.CS_CIEXYZ);
 			color = new Color(cs, xyzd50, a * opacity);
-			cs = CSSColorSpaces.containerRGBSpace(color, ctx.getColorSpace());
+			cs = StandardColorSpaces.containerRGBSpace(color, ctx.getColorSpace());
 			if (cs != null) {
 				ctx.updateColorSpace(color, cs);
 			}
@@ -618,7 +619,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 		case ColorValue.CS_XYZ_D50:
 			cs = ColorSpace.getInstance(ColorSpace.CS_CIEXYZ);
 			color = convert3Color(cs, c, opacity);
-			cs = CSSColorSpaces.containerRGBSpace(color, ctx.getColorSpace());
+			cs = StandardColorSpaces.containerRGBSpace(color, ctx.getColorSpace());
 			if (cs != null) {
 				ctx.updateColorSpace(color, cs);
 			}

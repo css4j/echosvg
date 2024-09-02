@@ -24,12 +24,14 @@ import java.io.StringReader;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSColor;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.doc.style.css.parser.CSSParser;
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.doc.style.css.property.StyleValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.echosvg.css.dom.CSSValue.Type;
@@ -140,24 +142,33 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		case OKLCHCOLOR:
 		case COLOR_MIX: {
 			ValueFactory vf = new ValueFactory();
-			String xyzSerialization;
+			String colorSerialization;
 			try {
 				StyleValue css4jValue = vf.createCSSValue(lunit);
 				if (css4jValue.getCssValueType() != CssType.TYPED) {
 					throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 				}
-				xyzSerialization = ((io.sf.carte.doc.style.css.CSSColorValue) css4jValue).getColor()
-						.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.xyz_d50).toString();
+				CSSColor color = ((io.sf.carte.doc.style.css.CSSColorValue) css4jValue).getColor();
+				if (color.isInGamut(io.sf.carte.doc.style.css.ColorSpace.srgb_linear)) {
+					color = color.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.srgb);
+					setComponentsMaximumFractionDigits(color, 6);
+					colorSerialization = color.toString();
+					// Now parse the result
+					lunit = reparseColor(colorSerialization);
+					return createRGBColor(lunit);
+				} else if (color.isInGamut(io.sf.carte.doc.style.css.ColorSpace.rec2020)) {
+					color = color.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.rec2020);
+				} else {
+					// Prophoto is the largest supported RGB space
+					color = color.toColorSpace(io.sf.carte.doc.style.css.ColorSpace.prophoto_rgb);
+				}
+				setComponentsMaximumFractionDigits(color, 6);
+				colorSerialization = color.toString();
 			} catch (DOMException e) {
 				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 			}
-			// Now re-parse the result
-			CSSParser parser = new CSSParser();
-			try {
-				lunit = parser.parsePropertyValue(new StringReader(xyzSerialization));
-			} catch (CSSParseException | IOException e) {
-				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
-			}
+			// Now parse the result
+			lunit = reparseColor(colorSerialization);
 		}
 		case COLOR_FUNCTION:
 			return createColorFunction(lunit);
@@ -170,23 +181,35 @@ public abstract class AbstractColorManager extends IdentifierManager {
 				if (css4jValue.getCssValueType() != CssType.TYPED) {
 					throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 				}
-				rgbSerialization = ((CSSTypedValue) css4jValue).toRGBColor().toString();
+				CSSColor rgb = ((CSSTypedValue) css4jValue).toRGBColor();
+				setComponentsMaximumFractionDigits(rgb, 6);
+				rgbSerialization = rgb.toString();
 			} catch (DOMException e) {
 				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 			}
-			// Now re-parse the result
-			CSSParser parser = new CSSParser();
-			try {
-				lunit = parser.parsePropertyValue(new StringReader(rgbSerialization));
-			} catch (CSSParseException | IOException e) {
-				throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
-			}
+			// Now parse the result
+			lunit = reparseColor(rgbSerialization);
 		}
 		case RGBCOLOR:
 			return createRGBColor(lunit);
 		default:
 			// Clone so colors can be modified
 			return super.createValue(lunit, engine).clone();
+		}
+	}
+
+	private static void setComponentsMaximumFractionDigits(CSSColor color, int maxFractionDigits) {
+		((NumberValue) color.item(1)).setMaximumFractionDigits(maxFractionDigits);
+		((NumberValue) color.item(2)).setMaximumFractionDigits(maxFractionDigits);
+		((NumberValue) color.item(3)).setMaximumFractionDigits(maxFractionDigits);
+	}
+
+	private LexicalUnit reparseColor(String colorSerialization) throws DOMException {
+		CSSParser parser = new CSSParser();
+		try {
+			return parser.parsePropertyValue(new StringReader(colorSerialization));
+		} catch (CSSParseException | IOException e) {
+			throw createMalformedLexicalUnitDOMException();
 		}
 	}
 

@@ -84,7 +84,7 @@
            showFill("r5", ".a");
 
            fill = showFill("r6", ".b");
-           g = fill.getG(); g.setValue("19.6%");
+           g = fill.getG(); g.setValue("19.608%");
            showFill("r6", ".a");
         
            fill = showFill("r7", ".b");
@@ -96,7 +96,7 @@
            showFill("r8", ".a");
 
            fill = showFill("r9", ".b");
-           b = fill.getB(); b.setValue(".1961");
+           b = fill.getB(); b.setValue(".19608");
            showFill("r9", ".a");
 
            fill = showFill("r10", ".b");

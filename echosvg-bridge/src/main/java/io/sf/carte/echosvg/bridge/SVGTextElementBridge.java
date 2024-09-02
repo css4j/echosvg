@@ -610,7 +610,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		// Now get the real paint into - this needs to
 		// wait until the text node is laidout so we can get
 		// objectBoundingBox info.
-		TextPaintInfo pi = new TextPaintInfo();
+		TextPaintInfo pi = new TextPaintInfo(ctx);
 		setBaseTextPaintInfo(pi, e, node, ctx);
 		// This get's Overline/underline info.
 		setDecorationTextPaintInfo(pi, e);
@@ -759,7 +759,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 
 		TextPaintInfo pi, oldPI;
 		if (cssProceedElement == e) {
-			pi = new TextPaintInfo();
+			pi = new TextPaintInfo(ctx);
 			setBaseTextPaintInfo(pi, e, node, ctx);
 			setDecorationTextPaintInfo(pi, e);
 			oldPI = elemTPI.get(e);
@@ -1455,10 +1455,10 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 
 		// Add null TPI objects to the text (after we set it on the
 		// Text we will swap in the correct values.
-		TextPaintInfo pi = new TextPaintInfo();
+		TextPaintInfo pi = new TextPaintInfo(ctx);
 		// Set some basic props so we can get bounds info for complex paints.
 		pi.visible = true;
-		pi.fillPaint = Color.black;
+		pi.setFillPaint(Color.black);
 		result.put(PAINT_INFO, pi);
 		elemTPI.put(element, pi);
 
@@ -1744,10 +1744,10 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 				switch (s.charAt(0)) {
 				case 'u':
 					if (pi.fillPaint != null) {
-						pi.underlinePaint = pi.fillPaint;
+						pi.underlinePaint = pi.getFillPaint();
 					}
 					if (pi.strokePaint != null) {
-						pi.underlineStrokePaint = pi.strokePaint;
+						pi.underlineStrokePaint = pi.getStrokePaint();
 					}
 					if (pi.strokeStroke != null) {
 						pi.underlineStroke = pi.strokeStroke;
@@ -1755,10 +1755,10 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 					break;
 				case 'o':
 					if (pi.fillPaint != null) {
-						pi.overlinePaint = pi.fillPaint;
+						pi.overlinePaint = pi.getFillPaint();
 					}
 					if (pi.strokePaint != null) {
-						pi.overlineStrokePaint = pi.strokePaint;
+						pi.overlineStrokePaint = pi.getStrokePaint();
 					}
 					if (pi.strokeStroke != null) {
 						pi.overlineStroke = pi.strokeStroke;
@@ -1766,10 +1766,10 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 					break;
 				case 'l':
 					if (pi.fillPaint != null) {
-						pi.strikethroughPaint = pi.fillPaint;
+						pi.strikethroughPaint = pi.getFillPaint();
 					}
 					if (pi.strokePaint != null) {
-						pi.strikethroughStrokePaint = pi.strokePaint;
+						pi.strikethroughStrokePaint = pi.getStrokePaint();
 					}
 					if (pi.strokeStroke != null) {
 						pi.strikethroughStroke = pi.strokeStroke;

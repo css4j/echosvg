@@ -70,6 +70,8 @@ import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
 import io.sf.carte.echosvg.dom.xbl.XBLManager;
+import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
+import io.sf.carte.echosvg.ext.awt.color.ColorContext;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.script.Interpreter;
@@ -92,7 +94,7 @@ import io.sf.carte.echosvg.util.SVGConstants;
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
+public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, Closeable {
 
 	/**
 	 * The document is bridge context is dedicated to.
@@ -410,9 +412,11 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 	 */
 	public void updateColorSpace(Color color, ColorSpace csRGB) {
 		if (colorSpace != csRGB) {
-			colorSpace = CSSColorSpaces.mergeColorSpace(colorSpace, csRGB, color);
+			colorSpace = StandardColorSpaces.mergeColorSpace(colorSpace, csRGB, color);
 		}
 	}
+
+	// ColorContext //////////////////////////////////////////////////////////
 
 	/**
 	 * Get the recommended color space for this context.
@@ -420,6 +424,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, Closeable {
 	 * @return the recommended color space, or {@code null} if the color space is
 	 *         the default sRGB.
 	 */
+	@Override
 	public ColorSpace getColorSpace() {
 		return colorSpace;
 	}

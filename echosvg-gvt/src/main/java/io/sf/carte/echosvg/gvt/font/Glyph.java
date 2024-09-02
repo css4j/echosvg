@@ -19,6 +19,7 @@
 package io.sf.carte.echosvg.gvt.font;
 
 import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.font.GlyphMetrics;
 import java.awt.geom.AffineTransform;
@@ -359,15 +360,16 @@ public class Glyph {
 		// paint the dShape first
 		if ((dShape != null) && (tpi != null)) {
 			Shape tShape = tr.createTransformedShape(dShape);
-			if (tpi.fillPaint != null) {
-				graphics2D.setPaint(tpi.fillPaint);
+			Paint fillPaint = tpi.getFillPaint();
+			if (fillPaint != null) {
+				graphics2D.setPaint(fillPaint);
 				graphics2D.fill(tShape);
 			}
 
 			// check if we need to draw the outline of this glyph
 			if (tpi.strokeStroke != null && tpi.strokePaint != null) {
 				graphics2D.setStroke(tpi.strokeStroke);
-				graphics2D.setPaint(tpi.strokePaint);
+				graphics2D.setPaint(tpi.getStrokePaint());
 				graphics2D.draw(tShape);
 			}
 		}

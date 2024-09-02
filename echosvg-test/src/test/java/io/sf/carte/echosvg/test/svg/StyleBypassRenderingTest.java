@@ -280,6 +280,11 @@ public class StyleBypassRenderingTest extends AbstractBypassRenderingCheck {
 	}
 
 	@Test
+	public void testColorProfiles() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/color/colorProfiles.svg");
+	}
+
+	@Test
 	public void testColors() throws TranscoderException, IOException {
 		test("samples/tests/spec/color/colors.svg");
 	}

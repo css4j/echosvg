@@ -468,10 +468,10 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 	}
 
 	protected AttributedString gatherFlowPara(BridgeContext ctx, Element div) {
-		TextPaintInfo divTPI = new TextPaintInfo();
+		TextPaintInfo divTPI = new TextPaintInfo(ctx);
 		// Set some basic props so we can get bounds info for complex paints.
 		divTPI.visible = true;
-		divTPI.fillPaint = Color.black;
+		divTPI.setFillPaint(Color.black);
 		elemTPI.put(div, divTPI);
 
 		AttributedStringBuffer asb = new AttributedStringBuffer();

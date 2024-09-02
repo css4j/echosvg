@@ -25,19 +25,18 @@ import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import io.sf.carte.echosvg.ext.awt.color.ColorContext;
+
 /**
  * A shape painter that can be used to draw the outline of a shape.
  *
- * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class StrokeShapePainter implements ShapePainter {
-
-	/**
-	 * Shape painted by this painter.
-	 */
-	protected Shape shape;
+public class StrokeShapePainter extends PaintShapePainter {
 
 	/**
 	 * Stroked version of the shape.
@@ -50,21 +49,14 @@ public class StrokeShapePainter implements ShapePainter {
 	protected Stroke stroke;
 
 	/**
-	 * The paint attribute used to draw the outline of the shape.
-	 */
-	protected Paint paint;
-
-	/**
 	 * Constructs a new <code>ShapePainter</code> that can be used to draw the
 	 * outline of a <code>Shape</code>.
 	 *
 	 * @param shape shape to be painted by this painter. Should not be null.
+	 * @param ctx   the color context. Cannot be {@code null}.
 	 */
-	public StrokeShapePainter(Shape shape) {
-		if (shape == null) {
-			throw new IllegalArgumentException();
-		}
-		this.shape = shape;
+	public StrokeShapePainter(Shape shape, ColorContext ctx) {
+		super(shape, ctx);
 	}
 
 	/**
@@ -97,7 +89,7 @@ public class StrokeShapePainter implements ShapePainter {
 	 * Gets the paint used to draw the outline of the shape.
 	 */
 	public Paint getPaint() {
-		return paint;
+		return super.getPaint();
 	}
 
 	/**
@@ -108,7 +100,7 @@ public class StrokeShapePainter implements ShapePainter {
 	@Override
 	public void paint(Graphics2D g2d) {
 		if (stroke != null && paint != null) {
-			g2d.setPaint(paint);
+			g2d.setPaint(getPaint());
 			g2d.setStroke(stroke);
 			g2d.draw(shape);
 		}
@@ -198,21 +190,8 @@ public class StrokeShapePainter implements ShapePainter {
 	 */
 	@Override
 	public void setShape(Shape shape) {
-		if (shape == null) {
-			throw new IllegalArgumentException();
-		}
-		this.shape = shape;
+		super.setShape(shape);
 		this.strokedShape = null;
-	}
-
-	/**
-	 * Gets the Shape this shape painter is associated with.
-	 *
-	 * @return shape associated with this painter.
-	 */
-	@Override
-	public Shape getShape() {
-		return shape;
 	}
 
 }
