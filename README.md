@@ -235,10 +235,13 @@ repositories {
             releasesOnly()
         }
         content {
-            includeGroup 'io.sf.carte'
-            includeGroup 'io.sf.jclf'
-            includeGroup 'io.sf.graphics'
-            includeGroup 'io.sf.w3'
+            includeGroupByRegex 'io\\.sf\\..*'
+
+            // Alternative to the regex:
+            //includeGroup 'io.sf.carte'
+            //includeGroup 'io.sf.jclf'
+            //includeGroup 'io.sf.graphics'
+            //includeGroup 'io.sf.w3'
         }
     }
 }
