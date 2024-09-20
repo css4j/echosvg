@@ -127,12 +127,18 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 			BridgeException be = new BridgeException(ctx, e, ERR_ATTRIBUTE_MISSING,
 					new Object[] { "href" });
 			displayErrorOrThrow(ctx, be);
+			if (gn != null) {
+				clearGraphicsNode(gn);
+			}
 			return null;
 		}
 
 		Element refElement = ctx.getReferencedElement(e, uri);
 
 		if (refElement == null) {
+			if (gn != null) {
+				clearGraphicsNode(gn);
+			}
 			return null; // Missing reference
 		}
 
@@ -143,6 +149,9 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 				BridgeException be = new BridgeException(ctx, e, ERR_XLINK_HREF_CIRCULAR_DEPENDENCIES,
 						new Object[] { "href" });
 				displayErrorOrThrow(ctx, be);
+				if (gn != null) {
+					clearGraphicsNode(gn);
+				}
 				return null; // Circularity
 			}
 			anc = anc.getParentNode();
@@ -162,6 +171,9 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 			BridgeException be = new BridgeException(ctx, e, ERR_URI_BAD_TARGET,
 					new Object[] { "href" });
 			displayErrorOrThrow(ctx, be);
+			if (gn != null) {
+				clearGraphicsNode(gn);
+			}
 			return null;
 		}
 
@@ -229,9 +241,7 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 			gn = new CompositeGraphicsNode();
 			associateSVGContext(ctx, e, node);
 		} else {
-			int s = gn.size();
-			for (int i = 0; i < s; i++)
-				gn.remove(0);
+			clearGraphicsNode(gn);
 		}
 
 		Node oldRoot = ue.getCSSFirstChild();
@@ -309,6 +319,12 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 		}
 
 		return gn;
+	}
+
+	private static void clearGraphicsNode(CompositeGraphicsNode gn) {
+		int s = gn.size();
+		for (int i = 0; i < s; i++)
+			gn.remove(0);
 	}
 
 	@Override
@@ -457,10 +473,13 @@ public class SVGUseElementBridge extends AbstractGraphicsNodeBridge {
 				if (ln.equals(SVG_X_ATTRIBUTE) || ln.equals(SVG_Y_ATTRIBUTE) || ln.equals(SVG_TRANSFORM_ATTRIBUTE)) {
 					node.setTransform(computeTransform((SVGTransformable) e, ctx));
 					handleGeometryChanged();
-				} else if (ln.equals(SVG_WIDTH_ATTRIBUTE) || ln.equals(SVG_HEIGHT_ATTRIBUTE))
+				} else if (ln.equals(SVG_WIDTH_ATTRIBUTE) || ln.equals(SVG_HEIGHT_ATTRIBUTE)) {
 					buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
+				} else if (ln.equals(XLINK_HREF_ATTRIBUTE)) {
+					buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
+				}
 			} else {
-				if (ns.equals(XLINK_NAMESPACE_URI) && ln.equals(XLINK_HREF_ATTRIBUTE))
+				if (ln.equals(XLINK_HREF_ATTRIBUTE))
 					buildCompositeGraphicsNode(ctx, e, (CompositeGraphicsNode) node);
 			}
 		} catch (LiveAttributeException ex) {

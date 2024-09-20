@@ -359,9 +359,19 @@ public class AbstractSamplesRendering {
 	}
 
 	void testAnim(String file, float[] times, boolean validate) throws TranscoderException, IOException {
-		for (float time : times) {
-			RenderingTest runner = new SVGAnimationRenderingAccuracyTest(time);
+		for (int i = 0; i < times.length; i++) {
+			RenderingTest runner = new SVGAnimationRenderingAccuracyTest(times[i], 0);
 			runner.setValidating(validate);
+			runner.setFile(file);
+			runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
+		}
+	}
+
+	void testAnim(String file, float[] times, int[] expectedErrorCount)
+			throws TranscoderException, IOException {
+		for (int i = 0; i < times.length; i++) {
+			RenderingTest runner = new SVGAnimationRenderingAccuracyTest(times[i], expectedErrorCount[i]);
+			runner.setValidating(Boolean.FALSE);
 			runner.setFile(file);
 			runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 		}

@@ -18,8 +18,10 @@
  */
 package io.sf.carte.echosvg.test.svg;
 
+import io.sf.carte.echosvg.transcoder.ErrorHandler;
 import io.sf.carte.echosvg.transcoder.SVGAbstractTranscoder;
 import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
+import io.sf.carte.echosvg.transcoder.test.DummyErrorHandler;
 
 /**
  * Checks for regressions in rendering of a document with animations.
@@ -29,11 +31,14 @@ import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
  */
 public class SVGAnimationRenderingAccuracyTest extends RenderingTest {
 
+	private final int expectedErrorCount;
+
 	private float time;
 
-	public SVGAnimationRenderingAccuracyTest(float time) {
+	public SVGAnimationRenderingAccuracyTest(float time, int expectedErrorCount) {
 		super();
 		this.time = time;
+		this.expectedErrorCount = expectedErrorCount;
 	}
 
 	@Override
@@ -55,7 +60,20 @@ public class SVGAnimationRenderingAccuracyTest extends RenderingTest {
 	ImageTranscoder getTestImageTranscoder() {
 		ImageTranscoder t = super.getTestImageTranscoder();
 		t.addTranscodingHint(SVGAbstractTranscoder.KEY_SNAPSHOT_TIME, time);
+		t.setErrorHandler(new DummyErrorHandler());
 		return t;
+	}
+
+	@Override
+	ImageTranscoder createTestImageTranscoder() {
+		return new ErrIgnoreTranscoder();
+	}
+
+	@Override
+	protected void checkErrorHandler(ErrorHandler errorHandler) {
+		DummyErrorHandler handler = (DummyErrorHandler) errorHandler;
+		handler.assertErrorCount(expectedErrorCount);
+		super.checkErrorHandler(errorHandler);
 	}
 
 }

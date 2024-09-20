@@ -627,6 +627,20 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	}
 
 	@Test
+	public void testStructureUseAnimEvent() throws TranscoderException, IOException {
+		float[] times = { 0f, 0.3f };
+		int[] errors = { 4, 2 };
+		testAnim("samples/tests/spec/structure/useAnimEvent.svg", times, errors);
+	}
+
+	@Test
+	public void testStructureUseAnimEventXlink() throws TranscoderException, IOException {
+		float[] times = { 0f, 0.3f };
+		int[] errors = { 6, 4 };
+		testAnim("samples/tests/spec/structure/useAnimEventXlink.svg", times, errors);
+	}
+
+	@Test
 	public void testStructureUseMultiple() throws TranscoderException, IOException {
 		test("samples/tests/spec/structure/useMultiple.svg");
 	}
