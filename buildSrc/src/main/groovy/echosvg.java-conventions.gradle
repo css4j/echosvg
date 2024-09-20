@@ -3,6 +3,7 @@ plugins {
 	id 'maven-publish'
 	id 'org.owasp.dependencycheck'
 	id 'checkstyle'
+	id 'jacoco'
 	id 'com.github.jk1.dependency-license-report'
 }
 
@@ -182,6 +183,11 @@ tasks.withType(AbstractArchiveTask).configureEach {
 	from ("$buildDir/tmp/crlf/NOTICE") {
 		into 'META-INF'
 	}
+}
+
+// jacoco
+jacocoTestReport {
+	dependsOn test
 }
 
 // Check licenses

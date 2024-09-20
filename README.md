@@ -77,6 +77,21 @@ Note that several of those tests are failing (a few being unfinished).
 
 <br/>
 
+#### Code coverage
+
+Generate a JaCoCo code coverage report with:
+```shell
+./gradlew testCodeCoverageReport
+```
+The XML and HTML reports can be found under the `echosvg-all/build/reports/jacoco/testCodeCoverageReport`
+directory, with the index file for the HTML report being at
+```
+echosvg-all/build/reports/jacoco/testCodeCoverageReport/html/index.html
+```
+Pull Requests aimed to increase the code coverage would be welcome.
+
+<br/>
+
 ### Benchmarks
 
 This project uses [JMH](https://github.com/openjdk/jmh) for benchmarking. To run

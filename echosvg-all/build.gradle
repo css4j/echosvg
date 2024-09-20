@@ -1,5 +1,6 @@
 plugins {
 	id 'org.ajoberstar.grgit'
+	id 'jacoco-report-aggregation'
 	id 'echosvg.java-conventions'
 }
 
@@ -15,6 +16,33 @@ dependencies {
 	api project(':echosvg-svgpp')
 	api project(':echosvg-ttf2svg')
 	api project(':echosvg-svgrasterizer')
+
+	// JaCoCo
+	jacocoAggregation project(':echosvg-anim')
+	jacocoAggregation project(':echosvg-awt-util')
+	jacocoAggregation project(':echosvg-bridge')
+	jacocoAggregation project(':echosvg-codec')
+	jacocoAggregation project(':echosvg-constants')
+	jacocoAggregation project(':echosvg-css')
+	jacocoAggregation project(':echosvg-dom')
+	jacocoAggregation project(':echosvg-ext')
+	jacocoAggregation project(':echosvg-extension')
+	jacocoAggregation project(':echosvg-gui-util')
+	jacocoAggregation project(':echosvg-gvt')
+	jacocoAggregation project(':echosvg-i18n')
+	jacocoAggregation project(':echosvg-parser')
+	jacocoAggregation project(':echosvg-script')
+	jacocoAggregation project(':echosvg-slideshow')
+	jacocoAggregation project(':echosvg-svg-dom')
+	jacocoAggregation project(':echosvg-svggen')
+	jacocoAggregation project(':echosvg-svgpp')
+	jacocoAggregation project(':echosvg-svgrasterizer')
+	jacocoAggregation project(':echosvg-swing')
+	jacocoAggregation project(':echosvg-test')
+	jacocoAggregation project(':echosvg-transcoder')
+	jacocoAggregation project(':echosvg-ttf2svg')
+	jacocoAggregation project(':echosvg-util')
+	jacocoAggregation project(':echosvg-xml')
 }
 
 publishing.publications.maven(MavenPublication).pom {
