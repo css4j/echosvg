@@ -507,8 +507,11 @@ public class SVGImageElementBridge extends AbstractGraphicsNodeBridge {
 				} else if (ln.equals(SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE)) {
 					updateImageBounds();
 					return;
+				} else if (ln.equals(XLINK_HREF_ATTRIBUTE)) {
+					rebuildImageNode();
+					return;
 				}
-			} else if (ns.equals(XLINK_NAMESPACE_URI) && ln.equals(XLINK_HREF_ATTRIBUTE)) {
+			} else if (ln.equals(XLINK_HREF_ATTRIBUTE)) {
 				rebuildImageNode();
 				return;
 			}
