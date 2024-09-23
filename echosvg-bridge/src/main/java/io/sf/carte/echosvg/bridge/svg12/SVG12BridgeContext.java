@@ -281,29 +281,30 @@ public class SVG12BridgeContext extends BridgeContext {
 
 	@Override
 	public void removeUIEventListeners(Document doc) {
-		EventTarget evtTarget = (EventTarget) doc.getDocumentElement();
-		AbstractNode n = (AbstractNode) evtTarget;
-		XBLEventSupport es = (XBLEventSupport) n.initializeEventSupport();
+		AbstractNode evtTarget = (AbstractNode) doc.getDocumentElement();
+		if (evtTarget != null) {
+			XBLEventSupport es = (XBLEventSupport) evtTarget.initializeEventSupport();
 
-		synchronized (eventListenerSet) {
-			for (EventListenerMememto elm : eventListenerSet) {
-				NodeEventTarget et = elm.getTarget();
-				if (et == evtTarget) {
-					EventListener el = elm.getListener();
-					boolean uc = elm.getUseCapture();
-					String t = elm.getEventType();
-					boolean in = elm.getNamespaced();
-					if (et == null || el == null || t == null) {
-						continue;
-					}
-					if (elm instanceof ImplementationEventListenerMememto) {
-						String ns = elm.getNamespaceURI();
-						es.removeImplementationEventListenerNS(ns, t, el, uc);
-					} else if (in) {
-						String ns = elm.getNamespaceURI();
-						et.removeEventListenerNS(ns, t, el, uc);
-					} else {
-						et.removeEventListener(t, el, uc);
+			synchronized (eventListenerSet) {
+				for (EventListenerMememto elm : eventListenerSet) {
+					NodeEventTarget et = elm.getTarget();
+					if (et == evtTarget) {
+						EventListener el = elm.getListener();
+						boolean uc = elm.getUseCapture();
+						String t = elm.getEventType();
+						boolean in = elm.getNamespaced();
+						if (el == null || t == null) {
+							continue;
+						}
+						if (elm instanceof ImplementationEventListenerMememto) {
+							String ns = elm.getNamespaceURI();
+							es.removeImplementationEventListenerNS(ns, t, el, uc);
+						} else if (in) {
+							String ns = elm.getNamespaceURI();
+							et.removeEventListenerNS(ns, t, el, uc);
+						} else {
+							et.removeEventListener(t, el, uc);
+						}
 					}
 				}
 			}

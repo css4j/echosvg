@@ -1184,23 +1184,25 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 	}
 
 	public void removeUIEventListeners(Document doc) {
-		EventTarget evtTarget = (EventTarget) doc.getDocumentElement();
-		synchronized (eventListenerSet) {
-			for (EventListenerMememto elm : eventListenerSet) {
-				NodeEventTarget et = elm.getTarget();
-				if (et == evtTarget) {
-					EventListener el = elm.getListener();
-					boolean uc = elm.getUseCapture();
-					String t = elm.getEventType();
-					boolean n = elm.getNamespaced();
-					if (et == null || el == null || t == null) {
-						continue;
-					}
-					if (n) {
-						String ns = elm.getNamespaceURI();
-						et.removeEventListenerNS(ns, t, el, uc);
-					} else {
-						et.removeEventListener(t, el, uc);
+		Element evtTarget = doc.getDocumentElement();
+		if (evtTarget != null) {
+			synchronized (eventListenerSet) {
+				for (EventListenerMememto elm : eventListenerSet) {
+					NodeEventTarget et = elm.getTarget();
+					if (et == evtTarget) {
+						EventListener el = elm.getListener();
+						boolean uc = elm.getUseCapture();
+						String t = elm.getEventType();
+						boolean n = elm.getNamespaced();
+						if (el == null || t == null) {
+							continue;
+						}
+						if (n) {
+							String ns = elm.getNamespaceURI();
+							et.removeEventListenerNS(ns, t, el, uc);
+						} else {
+							et.removeEventListener(t, el, uc);
+						}
 					}
 				}
 			}
