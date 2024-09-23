@@ -75,6 +75,14 @@ public class ParsedURLTest {
 				"jar:file:dir/file.jar!/p/a/t/c/h/new.svg");
 		runTest("jar:file:dir/file.jar!/p/a/t/h/init.svg", "../c/h/new.svg#foo",
 				"jar:file:dir/file.jar!/p/a/t/c/h/new.svg#foo");
+		runTest("jar:file:dir/file.jar!/p/a/t/h/init.svg", "#id",
+				"jar:file:dir/file.jar!/p/a/t/h/init.svg#id");
+		runTest("JAR:file:dir/file.jar!/p/a/t/h/init.svg", "#id",
+				"jar:file:dir/file.jar!/p/a/t/h/init.svg#id");
+		runTest("jaR:file:dir/file.jar!/p/a/t/h/init.svg", "#id",
+				"jar:file:dir/file.jar!/p/a/t/h/init.svg#id");
+		runTest("JAr:file:dir/file.jar!/p/a/t/h/init.svg", "#",
+				"jar:file:dir/file.jar!/p/a/t/h/init.svg");
 	}
 
 	@Test
