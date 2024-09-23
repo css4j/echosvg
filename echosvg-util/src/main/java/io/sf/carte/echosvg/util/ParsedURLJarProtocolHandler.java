@@ -25,8 +25,10 @@ import java.net.URL;
  * Protocol Handler for the 'jar' protocol. This appears to have the format:
  * jar:&lt;URL for jar file&gt;!&lt;path in jar file&gt;
  *
- * @author <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:deweese@apache.org">Thomas DeWeese</a>
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class ParsedURLJarProtocolHandler extends ParsedURLDefaultProtocolHandler {
@@ -42,10 +44,8 @@ public class ParsedURLJarProtocolHandler extends ParsedURLDefaultProtocolHandler
 	// is an absolute URL.
 	@Override
 	public ParsedURLData parseURL(ParsedURL baseURL, String urlStr) {
-		String start = urlStr.substring(0, JAR.length() + 1).toLowerCase();
-
-		// urlStr is absolute...
-		if (start.equals(JAR + ":"))
+		// Check whether urlStr is absolute...
+		if (startsWithJarColon(urlStr))
 			return parseURL(urlStr);
 
 		// It's relative so base it off baseURL.
@@ -56,6 +56,13 @@ public class ParsedURLJarProtocolHandler extends ParsedURLDefaultProtocolHandler
 		} catch (MalformedURLException mue) {
 			return super.parseURL(baseURL, urlStr);
 		}
+	}
+
+	private boolean startsWithJarColon(String url) {
+		char c;
+		return url.length() > 3 && ((c = url.charAt(0)) == 'j' || c == 'J')
+				&& ((c = url.charAt(1)) == 'a' || c == 'A')
+				&& ((c = url.charAt(2)) == 'r' || c == 'R') && url.charAt(3) == ':';
 	}
 
 }
