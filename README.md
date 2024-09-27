@@ -242,7 +242,7 @@ repositories {
     }
 }
 ```
-please use that repository **only** for the artifact groups that it supplies
+please use that repository only for the artifact groups that it supplies
 (basically those listed in the above `includeGroup` statements).
 
 Then, in your `build.gradle` file you can list the dependencies, for example:
@@ -258,7 +258,7 @@ dependencies {
 }
 ```
 where `echosvgVersion` would be defined in a `gradle.properties` file (current
-version is `1.2.2`).
+version is `1.2.3`).
 
 <br/>
 
