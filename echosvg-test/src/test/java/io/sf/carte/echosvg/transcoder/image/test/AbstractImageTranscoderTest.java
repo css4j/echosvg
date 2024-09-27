@@ -275,6 +275,10 @@ public abstract class AbstractImageTranscoderTest {
 			ByteArrayOutputStream out = new ByteArrayOutputStream(2048);
 			TranscoderOutput output = new TranscoderOutput(out);
 			PNGTranscoder t = new PNGTranscoder();
+			Map<Key, Object> hints = createTranscodingHints();
+			if (hints != null) {
+				t.setTranscodingHints(hints);
+			}
 			t.writeImage(img, output);
 			byte[] imgData = out.toByteArray();
 
