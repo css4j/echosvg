@@ -896,6 +896,35 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	public static final TranscodingHints.Key KEY_MEDIA = new StringKey();
 
 	/**
+	 * The preferred color scheme key.
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_PREFERS_COLOR_SCHEME</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">String</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">"light"</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">Specify the preferred color scheme to use in
+	 * CSS media queries.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_PREFERS_COLOR_SCHEME = new StringKey();
+
+	/**
 	 * The CSS selector key.
 	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
 	 * <caption></caption>
@@ -1012,29 +1041,38 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 
 	/**
 	 * The number of millimeters in each pixel key.
-	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
-	 * <caption></caption>
-	 * <tr>
-	 * <th style="text-align: end; vertical-align: top">Key:</th>
-	 * <td style="vertical-align: top">KEY_PIXEL_UNIT_TO_MILLIMETER</td>
-	 * </tr>
-	 * <tr>
-	 * <th style="text-align: end; vertical-align: top">Value:</th>
-	 * <td style="vertical-align: top">Float</td>
-	 * </tr>
-	 * <tr>
-	 * <th style="text-align: end; vertical-align: top">Default:</th>
-	 * <td style="vertical-align: top">0.264583</td>
-	 * </tr>
-	 * <tr>
-	 * <th style="text-align: end; vertical-align: top">Required:</th>
-	 * <td style="vertical-align: top">No</td>
-	 * </tr>
-	 * <tr>
-	 * <th style="text-align: end; vertical-align: top">Description:</th>
-	 * <td style="vertical-align: top">Specify the size of a px CSS unit in millimeters.</td>
-	 * </tr>
-	 * </table>
+	 * <p>
+	 * Using a concept of physical pixels instead of CSS pixels is a bad idea which
+	 * leads to distorted shapes, unexpected font sizes and wrong aspect ratios.
+	 * Physical pixels were removed from Web standards decades ago, please use
+	 * {@code KEY_RESOLUTION_DPI} instead.
+	 * </p>
+	 * @deprecated as of EchoSVG 2.0
+	 * @see #KEY_RESOLUTION_DPI
+	 *      <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 *      <caption></caption>
+	 *      <tr>
+	 *      <th style="text-align: end; vertical-align: top">Key:</th>
+	 *      <td style="vertical-align: top">KEY_PIXEL_UNIT_TO_MILLIMETER</td>
+	 *      </tr>
+	 *      <tr>
+	 *      <th style="text-align: end; vertical-align: top">Value:</th>
+	 *      <td style="vertical-align: top">Float</td>
+	 *      </tr>
+	 *      <tr>
+	 *      <th style="text-align: end; vertical-align: top">Default:</th>
+	 *      <td style="vertical-align: top">0.264583</td>
+	 *      </tr>
+	 *      <tr>
+	 *      <th style="text-align: end; vertical-align: top">Required:</th>
+	 *      <td style="vertical-align: top">No</td>
+	 *      </tr>
+	 *      <tr>
+	 *      <th style="text-align: end; vertical-align: top">Description:</th>
+	 *      <td style="vertical-align: top">Specify the size of a px CSS unit in
+	 *      millimeters.</td>
+	 *      </tr>
+	 *      </table>
 	 */
 	public static final TranscodingHints.Key KEY_PIXEL_UNIT_TO_MILLIMETER = new FloatKey();
 
@@ -1070,6 +1108,36 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 	 */
 	@Deprecated
 	public static final TranscodingHints.Key KEY_PIXEL_TO_MM = KEY_PIXEL_UNIT_TO_MILLIMETER;
+
+	/**
+	 * The resolution expressed in {@code dpi} key.
+	 * <table style="border: 0; border-collapse: collapse; padding: 1px;">
+	 * <caption></caption>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Key:</th>
+	 * <td style="vertical-align: top">KEY_RESOLUTION_DPI</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Value:</th>
+	 * <td style="vertical-align: top">Float</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Default:</th>
+	 * <td style="vertical-align: top">96</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Required:</th>
+	 * <td style="vertical-align: top">No</td>
+	 * </tr>
+	 * <tr>
+	 * <th style="text-align: end; vertical-align: top">Description:</th>
+	 * <td style="vertical-align: top">The resolution expressed in {@code dpi}. If
+	 * not set, implementations may check for {@code KEY_PIXEL_UNIT_TO_MILLIMETER}
+	 * and compute the resolution from that value.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final TranscodingHints.Key KEY_RESOLUTION_DPI = new FloatKey();
 
 	/**
 	 * The 'onload' execution key.
@@ -1318,7 +1386,30 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 				return (Float) obj;
 			}
 
+			obj = SVGAbstractTranscoder.this.hints.get(KEY_RESOLUTION_DPI);
+			if (obj != null) {
+				return 25.4f / ((Float) obj).floatValue();
+			}
+
 			return super.getPixelUnitToMillimeter();
+		}
+
+		/**
+		 * Returns the resolution in dpi.
+		 */
+		@Override
+		public float getResolution() {
+			Object obj = SVGAbstractTranscoder.this.hints.get(KEY_RESOLUTION_DPI);
+			if (obj != null) {
+				return (Float) obj;
+			}
+
+			obj = SVGAbstractTranscoder.this.hints.get(KEY_PIXEL_UNIT_TO_MILLIMETER);
+			if (obj != null) {
+				return 25.4f / ((Float) obj).floatValue();
+			}
+
+			return 96f;
 		}
 
 		/**
@@ -1344,6 +1435,15 @@ public abstract class SVGAbstractTranscoder extends XMLAbstractTranscoder {
 				return s;
 
 			return super.getMedia();
+		}
+
+		@Override
+		public String getPrefersColorScheme() {
+			String s = (String) hints.get(KEY_PREFERS_COLOR_SCHEME);
+			if (s != null)
+				return s;
+
+			return super.getPrefersColorScheme();
 		}
 
 		/**

@@ -182,6 +182,10 @@ public class ImageCompareUtil {
 			return null;
 		}
 
+		if (result < ImageComparator.DIFFERENT_PIXELS_BELOW_THRESHOLD) {
+			return ImageComparator.getResultDescription(result);
+		}
+
 		// We are in error (images are different: produce an image
 		// with the two images side by side as well as a diff image)
 		BufferedImage diff = ImageComparator.createDiffImage(imageA, imageB);

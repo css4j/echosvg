@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+/*
 
-<!--
    See the NOTICE file distributed with this work for additional
    information regarding copyright ownership.
 
@@ -16,12 +14,21 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
--->
 
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="450" height="500">
+ */
+package io.sf.carte.echosvg.css.engine;
 
-<rect x="25" y="25" width="200pt" height="100" fill="crimson" />
+import io.sf.carte.echosvg.css.CSSSecurityException;
 
-<rect x="25" y="150" width="200px" height="100" fill="orange" />
+/**
+ * A circularity was detected.
+ */
+public class CSSCircularityException extends CSSSecurityException {
 
-</svg>
+	private static final long serialVersionUID = 1L;
+
+	public CSSCircularityException(String message) {
+		super(message);
+	}
+
+}

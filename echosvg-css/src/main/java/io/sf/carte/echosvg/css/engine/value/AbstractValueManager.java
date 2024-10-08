@@ -21,7 +21,11 @@ package io.sf.carte.echosvg.css.engine.value;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
+import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSValue.Type;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.property.StyleValue;
+import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -50,6 +54,41 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 		throw createDOMException();
 	}
 
+	protected Value createCalc(LexicalUnit lu) throws DOMException {
+		LexicalUnit lunit;
+		if (lu.getNextLexicalUnit() != null) {
+			lunit = lu.shallowClone();
+		} else {
+			lunit = lu;
+		}
+		ValueFactory vf = new ValueFactory();
+		StyleValue cssValue = vf.createCSSValue(lunit);
+
+		Type pType = cssValue.getPrimitiveType();
+		if (pType != Type.EXPRESSION) {
+			if (pType == Type.LEXICAL) {
+				if (lunit.getPreviousLexicalUnit() != null || lunit.isParameter()) {
+					throw new CSSProxyValueException();
+				}
+				return createLexicalValue(lunit);
+			}
+			createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+		}
+
+		CalcValue calc = new CalcValue((CSSExpressionValue) cssValue) {
+
+			@Override
+			protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo, CSSEngine engine,
+					int idx, StyleMap sm, FloatValue relative) {
+				return (FloatValue) AbstractValueManager.this.computeValue(elt, pseudo, engine, idx, sm,
+						relative);
+			}
+
+		};
+
+		return calc;
+	}
+
 	/**
 	 * Implements
 	 * {@link ValueManager#computeValue(CSSStylableElement,String,CSSEngine,int,StyleMap,Value)}.
@@ -68,7 +107,7 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 	}
 
 	protected float lengthValue(Value cv) {
-		short unit = cv.getCSSUnit();
+		short unit = cv.getUnitType();
 		if (!CSSUnit.isLengthUnitType(unit) && unit != CSSUnit.CSS_NUMBER) {
 			throw createDOMException(unit);
 		}
@@ -83,6 +122,13 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 		Object[] p = { unit };
 		String s = Messages.formatMessage("invalid.value.access", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
+	}
+
+	protected Value createLexicalValue(LexicalUnit lu) throws CSSProxyValueException {
+		if (lu.getPreviousLexicalUnit() != null || lu.isParameter()) {
+			throw new CSSProxyValueException();
+		}
+		return new LexicalValue(lu);
 	}
 
 }

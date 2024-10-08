@@ -28,10 +28,11 @@ import org.w3c.css.om.typed.CSSUnitValue;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSNumberValue;
+import io.sf.carte.doc.style.css.UnitStringToId;
 import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.parser.CSSParser;
-import io.sf.carte.doc.style.css.parser.ParseHelper;
 import io.sf.carte.doc.style.css.property.NumberValue;
 
 /**
@@ -40,7 +41,7 @@ import io.sf.carte.doc.style.css.property.NumberValue;
  * @author See Git history.
  * @version $Id$
  */
-public class FloatValue extends NumericValue implements CSSUnitValue {
+public class FloatValue extends NumericValue implements CSSNumberValue, CSSUnitValue {
 
 	/**
 	 * Returns the CSS text associated with the given type/value pair.
@@ -81,6 +82,16 @@ public class FloatValue extends NumericValue implements CSSUnitValue {
 	private short unitType;
 
 	/**
+	 * True if this value is the result of a calculation
+	 */
+	private boolean calculated = false;
+
+	/**
+	 * True if this number is in the same unit as was specified.
+	 */
+	private boolean specified = true;
+
+	/**
 	 * Creates a new value.
 	 *
 	 * @param unit  the unit.
@@ -100,7 +111,7 @@ public class FloatValue extends NumericValue implements CSSUnitValue {
 	}
 
 	@Override
-	public short getCSSUnit() {
+	public short getUnitType() {
 		return unitType;
 	}
 
@@ -181,12 +192,51 @@ public class FloatValue extends NumericValue implements CSSUnitValue {
 		}
 	}
 
+	@Override
+	public boolean isCalculatedNumber() {
+		return calculated;
+	}
+
 	/**
-	 * Returns a printable representation of this value.
+	 * Sets whether this number is the result of a calculation.
+	 * 
+	 * @param calculated {@code true} if this number was calculated.
 	 */
 	@Override
-	public String toString() {
-		return getCssText();
+	public void setCalculatedNumber(boolean calculated) {
+		this.calculated = calculated;
+		this.specified = this.specified && !calculated;
+	}
+
+	@Override
+	public void setExpectInteger() throws DOMException {
+		if (getUnitType() != CSSUnit.CSS_NUMBER) {
+			super.setExpectInteger();
+		} else if (calculated) {
+			floatValue = Math.round(floatValue);
+		} else if (!isInteger()) {
+			super.setExpectInteger();
+		}
+	}
+
+	private boolean isInteger() {
+		return Math.rint(floatValue) == floatValue;
+	}
+
+	@Override
+	public void roundToInteger() throws DOMException {
+		setExpectInteger();
+		floatValue = Math.round(floatValue);
+	}
+
+	@Override
+	public boolean isNegativeNumber() {
+		return floatValue < 0f;
+	}
+
+	@Override
+	public boolean isNumberZero() {
+		return floatValue == 0f;
 	}
 
 	@Override
@@ -206,81 +256,21 @@ public class FloatValue extends NumericValue implements CSSUnitValue {
 		if (!(obj instanceof Value))
 			return false;
 		Value other = (Value) obj;
-		return other.getCSSUnit() == unitType
+		return other.getUnitType() == unitType
 				&& Float.floatToIntBits(floatValue) == Float.floatToIntBits(other.getFloatValue());
 	}
 
 	@Override
 	public CSSUnitValue to(String unit) {
-		short destUnit = ParseHelper.unitFromString(unit);
+		short destUnit = UnitStringToId.unitFromString(unit);
 		float destValue = NumberValue.floatValueConversion(floatValue, unitType, destUnit);
 		FloatValue toVal = new FloatValue(destUnit, destValue);
 		return toVal;
 	}
 
 	@Override
-	public CSSNumericType type() {
-		return new NumericType();
-	}
-
-	class NumericType implements CSSNumericType {
-
-		@Override
-		public int getLength() {
-			return CSSUnit.isLengthUnitType(unitType) ? 1 : 0;
-		}
-
-		@Override
-		public int getAngle() {
-			return CSSUnit.isAngleUnitType(unitType) ? 1 : 0;
-		}
-
-		@Override
-		public int getTime() {
-			return CSSUnit.isTimeUnitType(unitType) ? 1 : 0;
-		}
-
-		@Override
-		public int getFrequency() {
-			return unitType == CSSUnit.CSS_HZ || unitType == CSSUnit.CSS_KHZ ? 1 : 0;
-		}
-
-		@Override
-		public int getResolution() {
-			return CSSUnit.isResolutionUnitType(unitType) ? 1 : 0;
-		}
-
-		@Override
-		public int getFlex() {
-			return unitType == CSSUnit.CSS_FR ? 1 : 0;
-		}
-
-		@Override
-		public int getPercent() {
-			return unitType == CSSUnit.CSS_PERCENTAGE ? 1 : 0;
-		}
-
-		@Override
-		public CSSNumericBaseType getPercentHint() {
-			CSSNumericBaseType baseType = null;
-			if (CSSUnit.isLengthUnitType(unitType)) {
-				baseType = CSSNumericBaseType.length;
-			} else if (unitType == CSSUnit.CSS_PERCENTAGE) {
-				baseType = CSSNumericBaseType.percent;
-			} else if (CSSUnit.isTimeUnitType(unitType)) {
-				baseType = CSSNumericBaseType.time;
-			} else if (CSSUnit.isAngleUnitType(unitType)) {
-				baseType = CSSNumericBaseType.angle;
-			} else if (CSSUnit.isResolutionUnitType(unitType)) {
-				baseType = CSSNumericBaseType.resolution;
-			} else if (unitType == CSSUnit.CSS_HZ || unitType == CSSUnit.CSS_KHZ) {
-				baseType = CSSNumericBaseType.frequency;
-			} else if (unitType == CSSUnit.CSS_FR) {
-				baseType = CSSNumericBaseType.flex;
-			}
-			return baseType;
-		}
-
+	short getCSSUnit() {
+		return unitType;
 	}
 
 	@Override

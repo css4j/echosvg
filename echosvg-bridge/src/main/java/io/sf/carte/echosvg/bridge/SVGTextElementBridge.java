@@ -51,6 +51,7 @@ import org.w3c.dom.svg.SVGNumberList;
 import org.w3c.dom.svg.SVGTextContentElement;
 import org.w3c.dom.svg.SVGTextPositioningElement;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
@@ -61,7 +62,6 @@ import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.SVGOMTextPositioningElement;
 import io.sf.carte.echosvg.bridge.StrokingTextPainter.TextRun;
 import io.sf.carte.echosvg.constants.XMLConstants;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
@@ -1564,7 +1564,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 					GVTAttributedCharacterIterator.TextAttribute.ORIENTATION_AUTO);
 			break;
 		case NUMERIC:
-			switch (val.getCSSUnit()) {
+			switch (val.getUnitType()) {
 			case CSSUnit.CSS_DEG:
 			case CSSUnit.CSS_NUMBER:
 				result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION,
@@ -1584,8 +1584,8 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 						val.getFloatValue() * 9 / 5);
 				break;
 			default:
-				if (CSSUnit.isAngleUnitType(val.getCSSUnit())) {
-					float f = NumberValue.floatValueConversion(val.getFloatValue(), val.getCSSUnit(), CSSUnit.CSS_DEG);
+				if (CSSUnit.isAngleUnitType(val.getUnitType())) {
+					float f = NumberValue.floatValueConversion(val.getFloatValue(), val.getUnitType(), CSSUnit.CSS_DEG);
 					result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION,
 							GVTAttributedCharacterIterator.TextAttribute.ORIENTATION_ANGLE);
 					result.put(GVTAttributedCharacterIterator.TextAttribute.VERTICAL_ORIENTATION_ANGLE, f);
@@ -1601,11 +1601,11 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 		// glyph-orientation-horizontal
 
 		val = CSSUtilities.getComputedStyle(element, SVGCSSEngine.GLYPH_ORIENTATION_HORIZONTAL_INDEX);
-		short unit = val.getCSSUnit();
+		short unit = val.getUnitType();
 		if (unit == CSSUnit.CSS_NUMBER || unit == CSSUnit.CSS_DEG) {
 			result.put(GVTAttributedCharacterIterator.TextAttribute.HORIZONTAL_ORIENTATION_ANGLE, val.getFloatValue());
 		} else if (CSSUnit.isAngleUnitType(unit)) {
-			float f = NumberValue.floatValueConversion(val.getFloatValue(), val.getCSSUnit(), CSSUnit.CSS_DEG);
+			float f = NumberValue.floatValueConversion(val.getFloatValue(), val.getUnitType(), CSSUnit.CSS_DEG);
 			result.put(GVTAttributedCharacterIterator.TextAttribute.HORIZONTAL_ORIENTATION_ANGLE, f);
 		} else {
 			throw new IllegalStateException("unexpected value (H):" + val.getCssText());
@@ -1843,12 +1843,9 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			return textBridge;
 		}
 
-		/**
-		 * Returns the size of a px CSS unit in millimeters.
-		 */
 		@Override
-		public float getPixelUnitToMillimeter() {
-			return ctx.getUserAgent().getPixelUnitToMillimeter();
+		public float getResolution() {
+			return ctx.getUserAgent().getResolution();
 		}
 
 		/**

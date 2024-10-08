@@ -22,8 +22,8 @@ import java.util.Locale;
 
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 
 /**
@@ -44,9 +44,6 @@ public abstract class IdentifierManager extends AbstractValueManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
 		case IDENT:
 			String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
 			Object v = getIdentifiers().get(s);
@@ -54,6 +51,22 @@ public abstract class IdentifierManager extends AbstractValueManager {
 				throw createInvalidIdentifierDOMException(lu.getStringValue());
 			}
 			return (Value) v;
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+		case ATTR:
+			return createLexicalValue(lu);
 
 		default:
 			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());

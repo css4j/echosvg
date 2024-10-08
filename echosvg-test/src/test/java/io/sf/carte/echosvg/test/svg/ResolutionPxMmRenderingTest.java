@@ -24,7 +24,7 @@ import io.sf.carte.echosvg.transcoder.image.ImageTranscoder;
 /**
  * Checks for regressions in rendering of SVG with varying resolution.
  * 
- * @see io.sf.carte.echosvg.transcoder.image.test.PixelToMMTest
+ * @see io.sf.carte.echosvg.transcoder.image.test.ResolutionTest
  *
  * @author See Git history.
  * @version $Id$
@@ -55,6 +55,7 @@ class ResolutionPxMmRenderingTest extends RenderingTest {
 	/**
 	 * Returns the <code>ImageTranscoder</code> the Test should use
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	ImageTranscoder getTestImageTranscoder() {
 		ImageTranscoder t = super.getTestImageTranscoder();

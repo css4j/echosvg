@@ -21,6 +21,7 @@ package io.sf.carte.echosvg.css.dom;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.CSSVal;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
@@ -45,7 +46,7 @@ public class CSSOMSVGComputedStyle extends CSSOMComputedStyle {
 	 * Creates a CSSValue to manage the value at the given index.
 	 */
 	@Override
-	protected CSSValue createCSSValue(int idx) {
+	protected CSSVal createCSSValue(int idx) {
 		if (idx > SVGCSSEngine.FINAL_INDEX) {
 			if (cssEngine.getValueManagers()[idx] instanceof SVGPaintManager) {
 				return new ComputedCSSPaintValue(idx);

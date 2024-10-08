@@ -21,10 +21,16 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
+import io.sf.carte.echosvg.css.engine.value.CSSProxyValueException;
+import io.sf.carte.echosvg.css.engine.value.CalcValue;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
+import io.sf.carte.echosvg.css.engine.value.RevertValue;
+import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -113,14 +119,36 @@ public class OpacityManager extends AbstractValueManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
 		case INTEGER:
 			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue());
 
 		case REAL:
 			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getFloatValue());
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+		case ATTR:
+			return createLexicalValue(lu);
+
+		case CALC:
+			Value calc = createCalc(lu);
+			if (calc.getCssValueType() == CSSValue.CssType.PROXY) {
+				throw new CSSProxyValueException();
+			} else if (calc.getPrimitiveType() != Type.EXPRESSION) {
+				break;
+			}
+			return ((CalcValue) calc).evaluate(null, null, engine, -1, null, CSSUnit.CSS_NUMBER);
 
 		default:
 			break;

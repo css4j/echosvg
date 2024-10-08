@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.css.engine.value.css2;
 
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;

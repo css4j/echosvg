@@ -18,6 +18,14 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import io.sf.carte.doc.style.css.CSSValue.Type;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.engine.value.PendingValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 
 /**
@@ -50,6 +58,11 @@ public class StyleDeclaration {
 	 * The number of values in the declaration.
 	 */
 	protected int count;
+
+	/**
+	 * Custom property map.
+	 */
+	private Map<String, LexicalUnit> customProperties = null;
 
 	/**
 	 * Returns the number of values in the declaration.
@@ -129,6 +142,7 @@ public class StyleDeclaration {
 			indexes = newidx;
 			priorities = newprio;
 		}
+
 		for (int i = 0; i < count; i++) {
 			if (indexes[i] == idx) {
 				// Replace existing property values,
@@ -140,6 +154,7 @@ public class StyleDeclaration {
 				return;
 			}
 		}
+
 		values[count] = v;
 		indexes[count] = idx;
 		priorities[count] = prio;
@@ -147,16 +162,67 @@ public class StyleDeclaration {
 	}
 
 	/**
+	 * Set a custom property value in the declaration.
+	 * 
+	 * @param name      the custom property name.
+	 * @param value     the custom property value.
+	 * @param important the priority.
+	 */
+	public void setCustomProperty(String name, LexicalUnit value, boolean important) {
+		if (customProperties == null) {
+			customProperties = new HashMap<>();
+		}
+
+		customProperties.put(name, value);
+	}
+
+	/**
+	 * Get the map of custom properties.
+	 * 
+	 * @return the custom property map, or {@code null} if there are no custom
+	 *         properties.
+	 */
+	public Map<String, LexicalUnit> getCustomProperties() {
+		return customProperties;
+	}
+
+	/**
 	 * Returns a printable representation of this style rule.
 	 */
 	public String toString(CSSEngine eng) {
-		StringBuilder sb = new StringBuilder(count * 8);
+		Set<String> pendingShorthands = null;
+		StringBuilder sb = new StringBuilder(count * 8 + 32);
 		for (int i = 0; i < count; i++) {
-			sb.append(eng.getPropertyName(indexes[i]));
-			sb.append(": ");
-			sb.append(values[i]);
-			sb.append(";\n");
+			Value value = values[i];
+			if (value.getPrimitiveType() != Type.INTERNAL) {
+				sb.append(eng.getPropertyName(indexes[i]));
+				sb.append(": ");
+				sb.append(value);
+				sb.append(";\n");
+			} else {
+				if (pendingShorthands == null) {
+					pendingShorthands = new HashSet<>();
+				}
+				PendingValue pending = (PendingValue) value;
+				String name = pending.getShorthandName();
+				if (pendingShorthands.add(name)) {
+					sb.append(name);
+					sb.append(": ");
+					sb.append(pending.getLexicalUnit().toString());
+					sb.append(";\n");
+				}
+			}
 		}
+
+		if (customProperties != null) {
+			for (Map.Entry<String, LexicalUnit> entry : customProperties.entrySet()) {
+				sb.append(entry.getKey());
+				sb.append(": ");
+				sb.append(entry.getValue().toString());
+				sb.append(";\n");
+			}
+		}
+
 		return sb.toString();
 	}
 

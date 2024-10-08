@@ -34,7 +34,7 @@ public class AbstractValueList<V extends Value> extends ComponentValue implement
 	/**
 	 * The items.
 	 */
-	private ArrayList<V> items;
+	ArrayList<V> items;
 
 	/**
 	 * The list separator.
@@ -50,6 +50,8 @@ public class AbstractValueList<V extends Value> extends ComponentValue implement
 
 	/**
 	 * Creates a ListValue with the given separator.
+	 * 
+	 * @param s the separator.
 	 */
 	public AbstractValueList(char s) {
 		this(s, 5);
@@ -57,6 +59,9 @@ public class AbstractValueList<V extends Value> extends ComponentValue implement
 
 	/**
 	 * Creates a ListValue with the given separator and an initial capacity.
+	 * 
+	 * @param s               the separator.
+	 * @param initialCapacity the initial capacity.
 	 */
 	public AbstractValueList(char s, int initialCapacity) {
 		separator = s;

@@ -26,9 +26,11 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
+import io.sf.carte.echosvg.css.engine.value.RevertValue;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.StringValue;
 import io.sf.carte.echosvg.css.engine.value.URIValue;
+import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -83,6 +85,11 @@ public class SrcManager extends IdentifierManager {
 		return false;
 	}
 
+	@Override
+	public boolean allowsURL() {
+		return true;
+	}
+
 	/**
 	 * Implements {@link ValueManager#getPropertyType()}.
 	 */
@@ -113,14 +120,26 @@ public class SrcManager extends IdentifierManager {
 	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
 	 */
 	@Override
-	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+	public Value createValue(final LexicalUnit lunit, CSSEngine engine) throws DOMException {
 
-		switch (lu.getLexicalUnitType()) {
+		switch (lunit.getLexicalUnitType()) {
 		case INHERIT:
 			return ValueConstants.INHERIT_VALUE;
 
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+			return createLexicalValue(lunit);
+
 		default:
-			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+			throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 
 		case IDENT:
 		case STRING:
@@ -128,6 +147,7 @@ public class SrcManager extends IdentifierManager {
 		}
 
 		ListValue result = new ListValue();
+		LexicalUnit lu = lunit;
 		for (;;) {
 			switch (lu.getLexicalUnitType()) {
 			case STRING:
@@ -140,35 +160,50 @@ public class SrcManager extends IdentifierManager {
 
 				result.append(new URIValue(lu.getStringValue(), uri));
 				lu = lu.getNextLexicalUnit();
-				if ((lu != null) && (lu.getLexicalUnitType() == LexicalUnit.LexicalType.FUNCTION)) {
-					if (!lu.getFunctionName().equalsIgnoreCase("format")) {
+				if (lu != null) {
+					switch (lu.getLexicalUnitType()) {
+					case FUNCTION:
+						if (!lu.getFunctionName().equalsIgnoreCase("format")) {
+							break;
+						}
+						// Format really does us no good so just ignore it.
+
+						// TODO: Should probably turn this into a ListValue
+						// and append the format function CSS Value.
+						lu = lu.getNextLexicalUnit();
+						break;
+					case VAR:
+						return createLexicalValue(lunit);
+					default:
 						break;
 					}
-					// Format really does us no good so just ignore it.
-
-					// TODO: Should probably turn this into a ListValue
-					// and append the format function CSS Value.
-					lu = lu.getNextLexicalUnit();
 				}
 				break;
 
 			case IDENT:
 				StringBuilder sb = new StringBuilder(lu.getStringValue());
 				lu = lu.getNextLexicalUnit();
-				if (lu != null && lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
-					do {
-						sb.append(' ');
-						sb.append(lu.getStringValue());
-						lu = lu.getNextLexicalUnit();
-					} while (lu != null && lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT);
-					result.append(new StringValue(sb.toString()));
-				} else {
-					String id = sb.toString();
-					String s = id.toLowerCase(Locale.ROOT).intern();
-					Value v = (Value) values.get(s);
-					result.append((v != null) ? v : new StringValue(id));
+				if (lu != null) {
+					if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
+						do {
+							sb.append(' ');
+							sb.append(lu.getStringValue());
+							lu = lu.getNextLexicalUnit();
+						} while (lu != null && lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT);
+						result.append(new StringValue(sb.toString()));
+					} else if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
+						return createLexicalValue(lunit);
+					} else {
+						String id = sb.toString();
+						String s = id.toLowerCase(Locale.ROOT).intern();
+						Value v = (Value) values.get(s);
+						result.append(v != null ? v : new StringValue(id));
+					}
 				}
 				break;
+
+			case VAR:
+				return createLexicalValue(lunit);
 
 			default:
 				break;
@@ -178,6 +213,9 @@ public class SrcManager extends IdentifierManager {
 				return result;
 			}
 			if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
+					return createLexicalValue(lunit);
+				}
 				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 			}
 			lu = lu.getNextLexicalUnit();

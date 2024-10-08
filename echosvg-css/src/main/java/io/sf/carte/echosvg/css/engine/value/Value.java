@@ -19,9 +19,9 @@
 package io.sf.carte.echosvg.css.engine.value;
 
 import org.w3c.css.om.typed.CSSCounterValue;
+import org.w3c.css.om.typed.CSSStyleValue;
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
-
-import io.sf.carte.echosvg.css.dom.CSSValue;
 
 /**
  * This interface represents a property value.
@@ -29,7 +29,52 @@ import io.sf.carte.echosvg.css.dom.CSSValue;
  * @author See Git history.
  * @version $Id$
  */
-public interface Value extends CSSValue {
+public interface Value extends CSSVal, CSSStyleValue {
+
+	/**
+	 * Gets the css unit as in CSS4J's {@code CSSUnit}.
+	 * <p>
+	 * If the value has no valid CSS unit, returns {@code CSSUnit.CSS_INVALID}.
+	 * </p>
+	 * 
+	 * @return the css unit as in CSS4J's {@code CSSUnit}.
+	 */
+	default short getUnitType() {
+		return CSSUnit.CSS_INVALID;
+	}
+
+	/**
+	 * Set the modification handler.
+	 * 
+	 * @param handler the modification handler.
+	 */
+	void setModificationHandler(ValueModificationHandler handler);
+
+	/**
+	 * Get the modification handler.
+	 * 
+	 * @return the modification handler, or {@code null} if there is no handler.
+	 */
+	ValueModificationHandler getModificationHandler();
+
+	/**
+	 * Is this value a component?
+	 * 
+	 * @return {@code true} if the value is a component.
+	 */
+	default boolean isComponent() {
+		return false;
+	}
+
+	/**
+	 * Do this value represent the given identifier?
+	 * 
+	 * @param internedIdent the interned identifier string.
+	 * @return {@code true} if the value is a component.
+	 */
+	default boolean isIdentifier(String internedIdent) {
+		return false;
+	}
 
 	/**
 	 * Convenience method that either returns an identifier or throws an exception.
@@ -42,6 +87,14 @@ public interface Value extends CSSValue {
 	default String getIdentifier() throws DOMException {
 		return getIdentifierValue();
 	}
+
+	/**
+	 * If this value is a unit value, set the float value.
+	 * 
+	 * @param value the new value, in the current unit.
+	 * @throws DOMException if the value is not a unit value.
+	 */
+	void setFloatValue(float value) throws DOMException;
 
 	/**
 	 * If this value is a list, give the item corresponding to the requested index.
@@ -82,47 +135,6 @@ public interface Value extends CSSValue {
 	ColorValue getColorValue() throws DOMException;
 
 	/**
-	 * If this value is a unit value, set the float value.
-	 * 
-	 * @param value the new value, in the current unit.
-	 * @throws DOMException if the value is not a unit value.
-	 */
-	void setFloatValue(float value) throws DOMException;
-
-	/**
-	 * Set the modification handler.
-	 * 
-	 * @param handler the modification handler.
-	 */
-	void setModificationHandler(ValueModificationHandler handler);
-
-	/**
-	 * Get the modification handler.
-	 * 
-	 * @return the modification handler, or {@code null} if there is no handler.
-	 */
-	ValueModificationHandler getModificationHandler();
-
-	/**
-	 * Is this value a component?
-	 * 
-	 * @return {@code true} if the value is a component.
-	 */
-	default boolean isComponent() {
-		return false;
-	}
-
-	/**
-	 * Do this value represent the given identifier?
-	 * 
-	 * @param internedIdent the interned identifier string.
-	 * @return {@code true} if the value is a component.
-	 */
-	default boolean isIdentifier(String internedIdent) {
-		return false;
-	}
-
-	/**
 	 * Create and return a copy of this object.
 	 * <p>
 	 * If this object is unmodifiable, the clone will be modifiable.
@@ -130,6 +142,7 @@ public interface Value extends CSSValue {
 	 * 
 	 * @return a modifiable copy of this object.
 	 */
+	@Override
 	Value clone();
 
 }

@@ -19,6 +19,7 @@
 package io.sf.carte.echosvg.css.engine.value;
 
 import org.w3c.css.om.typed.CSSNumericValue;
+import org.w3c.css.om.unit.CSSUnit;
 
 /**
  * Base class for numeric values.
@@ -26,7 +27,7 @@ import org.w3c.css.om.typed.CSSNumericValue;
  * @author See Git history.
  * @version $Id$
  */
-public abstract class NumericValue extends AbstractValue implements CSSNumericValue {
+public abstract class NumericValue extends AbstractValue implements TypedValue, CSSNumericValue {
 
 	/**
 	 * Creates a new value.
@@ -36,6 +37,77 @@ public abstract class NumericValue extends AbstractValue implements CSSNumericVa
 	}
 
 	@Override
-	public abstract NumericValue clone();
+	public NumericValue clone() {
+		return (NumericValue) super.clone();
+	}
+
+	abstract short getCSSUnit();
+
+	@Override
+	public CSSNumericType type() {
+		return new NumericType();
+	}
+
+	class NumericType implements CSSNumericType {
+
+		@Override
+		public int getLength() {
+			return CSSUnit.isLengthUnitType(getCSSUnit()) ? 1 : 0;
+		}
+
+		@Override
+		public int getAngle() {
+			return CSSUnit.isAngleUnitType(getCSSUnit()) ? 1 : 0;
+		}
+
+		@Override
+		public int getTime() {
+			return CSSUnit.isTimeUnitType(getCSSUnit()) ? 1 : 0;
+		}
+
+		@Override
+		public int getFrequency() {
+			short unit = getCSSUnit();
+			return unit == CSSUnit.CSS_HZ || unit == CSSUnit.CSS_KHZ ? 1 : 0;
+		}
+
+		@Override
+		public int getResolution() {
+			return CSSUnit.isResolutionUnitType(getCSSUnit()) ? 1 : 0;
+		}
+
+		@Override
+		public int getFlex() {
+			return getCSSUnit() == CSSUnit.CSS_FR ? 1 : 0;
+		}
+
+		@Override
+		public int getPercent() {
+			return getCSSUnit() == CSSUnit.CSS_PERCENTAGE ? 1 : 0;
+		}
+
+		@Override
+		public CSSNumericBaseType getPercentHint() {
+			short unitType = getCSSUnit();
+			CSSNumericBaseType baseType = null;
+			if (CSSUnit.isLengthUnitType(unitType)) {
+				baseType = CSSNumericBaseType.length;
+			} else if (unitType == CSSUnit.CSS_PERCENTAGE) {
+				baseType = CSSNumericBaseType.percent;
+			} else if (CSSUnit.isTimeUnitType(unitType)) {
+				baseType = CSSNumericBaseType.time;
+			} else if (CSSUnit.isAngleUnitType(unitType)) {
+				baseType = CSSNumericBaseType.angle;
+			} else if (CSSUnit.isResolutionUnitType(unitType)) {
+				baseType = CSSNumericBaseType.resolution;
+			} else if (unitType == CSSUnit.CSS_HZ || unitType == CSSUnit.CSS_KHZ) {
+				baseType = CSSNumericBaseType.frequency;
+			} else if (unitType == CSSUnit.CSS_FR) {
+				baseType = CSSNumericBaseType.flex;
+			}
+			return baseType;
+		}
+
+	}
 
 }

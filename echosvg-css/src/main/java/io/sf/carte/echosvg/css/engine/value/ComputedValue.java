@@ -91,8 +91,8 @@ public class ComputedValue implements Value {
 	}
 
 	@Override
-	public short getCSSUnit() {
-		return computedValue.getCSSUnit();
+	public short getUnitType() {
+		return computedValue.getUnitType();
 	}
 
 	@Override

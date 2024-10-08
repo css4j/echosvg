@@ -20,13 +20,15 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
+import io.sf.carte.echosvg.css.engine.value.RevertValue;
+import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -96,25 +98,48 @@ public class StrokeDasharrayManager extends LengthManager {
 	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
 	 */
 	@Override
-	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
-		switch (lu.getLexicalUnitType()) {
+	public Value createValue(final LexicalUnit lunit, CSSEngine engine) throws DOMException {
+		switch (lunit.getLexicalUnitType()) {
+		case IDENT:
+			if (lunit.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+				return ValueConstants.NONE_VALUE;
+			}
+			throw createInvalidIdentifierDOMException(lunit.getStringValue());
+
 		case INHERIT:
 			return ValueConstants.INHERIT_VALUE;
 
-		case IDENT:
-			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
-				return ValueConstants.NONE_VALUE;
-			}
-			throw createInvalidIdentifierDOMException(lu.getStringValue());
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+		case ATTR:
+			return createLexicalValue(lunit);
 
 		default:
+			/*
+			 * "A list of comma and/or white space separated <length>s and <percentage>s
+			 * that specify the lengths of alternating dashes and gaps."
+			 */
 			ListValue lv = new ListValue(' ');
+			LexicalUnit lu = lunit;
 			do {
 				Value v = super.createValue(lu, engine);
 				lv.append(v);
 				lu = lu.getNextLexicalUnit();
-				if (lu != null && lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
-					lu = lu.getNextLexicalUnit();
+				if (lu != null) {
+					if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
+						lu = lu.getNextLexicalUnit();
+					}
+					if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
+						return createLexicalValue(lunit);
+					}
 				}
 			} while (lu != null);
 			return lv;

@@ -119,6 +119,11 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
 		return 0.26458333333333333333333333333333f; // 96dpi
 	}
 
+	@Override
+	public float getResolution() {
+		return 96f;
+	}
+
 	/**
 	 * Returns the default font family.
 	 */
@@ -132,8 +137,8 @@ public class SVGUserAgentAdapter implements SVGUserAgent {
 	 */
 	@Override
 	public float getMediumFontSize() {
-		// 9pt (72pt == 1in)
-		return 9f * 25.4f / (72f * getPixelUnitToMillimeter());
+		// 9pt (72pt = 1in)
+		return 9f * getResolution() / 72f;
 	}
 
 	/**

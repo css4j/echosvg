@@ -84,6 +84,11 @@ public class SVGPaintManager extends SVGColorManager {
 		return true;
 	}
 
+	@Override
+	public boolean allowsURL() {
+		return true;
+	}
+
 	/**
 	 * Implements {@link ValueManager#getPropertyType()}.
 	 */

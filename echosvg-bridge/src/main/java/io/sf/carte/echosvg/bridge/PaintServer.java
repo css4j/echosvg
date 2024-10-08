@@ -32,8 +32,8 @@ import org.w3c.css.om.typed.CSSStyleValueList;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Element;
 
-import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
+import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.ColorFunction;
 import io.sf.carte.echosvg.css.engine.value.ColorValue;
@@ -305,7 +305,8 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 				break;
 			}
 		}
-		throw new IllegalArgumentException("Paint argument is not an appropriate CSS value");
+		throw new IllegalArgumentException(
+				"Paint argument is not an appropriate CSS value (" + paintDef.getCssText() + ").");
 	}
 
 	/**
@@ -652,7 +653,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 */
 	private static float resolveColorComponent(NumericValue item) {
 		float f;
-		switch (item.getCSSUnit()) {
+		switch (item.getUnitType()) {
 		case CSSUnit.CSS_NUMBER:
 			f = item.getFloatValue();
 			if (f < 0f) {
@@ -831,7 +832,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 	 */
 	private static float resolveAlphaComponent(Value v) {
 		float f;
-		switch (v.getCSSUnit()) {
+		switch (v.getUnitType()) {
 		case CSSUnit.CSS_PERCENTAGE:
 			f = v.getFloatValue();
 			f = (f > 100f) ? 100f : (f < 0f) ? 0f : f;

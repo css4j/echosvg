@@ -58,8 +58,13 @@ public interface CSSContext {
 
 	/**
 	 * Returns the size of a px CSS unit in millimeters.
+	 * 
+	 * @deprecated Use {@link #getResolution()}.
 	 */
-	float getPixelUnitToMillimeter();
+	@Deprecated
+	default float getPixelUnitToMillimeter() {
+		return 25.4f / getResolution();
+	}
 
 	/**
 	 * Returns the size of a px CSS unit in millimeters. This will be removed after
@@ -71,6 +76,11 @@ public interface CSSContext {
 	default float getPixelToMillimeter() {
 		return getPixelUnitToMillimeter();
 	}
+
+	/**
+	 * Returns the resolution in dpi.
+	 */
+	float getResolution();
 
 	/**
 	 * Returns the medium font size.
@@ -104,6 +114,11 @@ public interface CSSContext {
 	 * @param docURL      url for the document into which the resource was found.
 	 */
 	void checkLoadExternalResource(ParsedURL resourceURL, ParsedURL docURL) throws SecurityException;
+
+	/**
+	 * Get prefers-color-scheme.
+	 */
+	String getPrefersColorScheme();
 
 	/**
 	 * Returns true if the document is dynamic, false otherwise.

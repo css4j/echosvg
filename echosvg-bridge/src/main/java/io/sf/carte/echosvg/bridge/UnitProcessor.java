@@ -310,12 +310,9 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 			return e;
 		}
 
-		/**
-		 * Returns the size of a px CSS unit in millimeters.
-		 */
 		@Override
-		public float getPixelUnitToMillimeter() {
-			return ctx.getUserAgent().getPixelUnitToMillimeter();
+		public float getResolution() {
+			return ctx.getUserAgent().getResolution();
 		}
 
 		/**

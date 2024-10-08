@@ -79,6 +79,10 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	 */
 	private String media;
 
+	/*
+	 * Enable or disable dark mode.
+	 */
+	private boolean darkMode = false;
 
 	// Batik uses 9
 	private static final int DEFAULT_COMPRESSION_LEVEL = 9;
@@ -155,6 +159,15 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	}
 
 	/**
+	 * Enable or disable the dark mode.
+	 * 
+	 * @param darkMode {@code true} to enable the dark mode.
+	 */
+	public void setDarkMode(boolean darkMode) {
+		this.darkMode = darkMode;
+	}
+
+	/**
 	 * Set the compression level.
 	 * 
 	 * @param comprLevel the compression level.
@@ -204,7 +217,7 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		boolean nonDefCompr = getCompressionLevel() != getDefaultCompressionLevel();
 		boolean nonDefMedia = media != null && !DEFAULT_MEDIUM.equals(media);
 
-		if (nonDefCompr && nonDefMedia && tEXt == null && iTXt == null && zTXt == null) {
+		if (nonDefCompr && nonDefMedia && !darkMode && tEXt == null && iTXt == null && zTXt == null) {
 			return "";
 		}
 
@@ -212,6 +225,11 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 		if (nonDefMedia) {
 			buf.append("-").append(media);
 		}
+
+		if (darkMode) {
+			buf.append("-dark");
+		}
+
 		if (nonDefCompr) {
 			buf.append("-z").append(getCompressionLevel());
 		}
@@ -277,7 +295,14 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 	ImageTranscoder getTestImageTranscoder() {
 		ImageTranscoder t = createTestImageTranscoder();
 		t.addTranscodingHint(ImageTranscoder.KEY_FORCE_TRANSPARENT_WHITE, Boolean.FALSE);
-		t.addTranscodingHint(ImageTranscoder.KEY_BACKGROUND_COLOR, new Color(0, 0, 0, 0));
+
+		if (darkMode) {
+			// Opaque background for dark mode
+			t.addTranscodingHint(ImageTranscoder.KEY_BACKGROUND_COLOR, new Color(0, 0, 0, 255));
+		} else {
+			t.addTranscodingHint(ImageTranscoder.KEY_BACKGROUND_COLOR, new Color(0, 0, 0, 0));
+		}
+
 		t.addTranscodingHint(SVGAbstractTranscoder.KEY_EXECUTE_ONLOAD, Boolean.TRUE);
 
 		if (validate) {
@@ -290,6 +315,10 @@ public class SVGRenderingAccuracyTest extends AbstractRenderingAccuracyTest {
 
 		if (media != null) {
 			t.addTranscodingHint(SVGAbstractTranscoder.KEY_MEDIA, media);
+		}
+
+		if (darkMode) {
+			t.addTranscodingHint(SVGAbstractTranscoder.KEY_PREFERS_COLOR_SCHEME, "dark");
 		}
 
 		if (getCompressionLevel() != getDefaultCompressionLevel()) {

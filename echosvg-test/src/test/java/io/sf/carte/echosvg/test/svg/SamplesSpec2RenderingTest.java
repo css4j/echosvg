@@ -57,6 +57,31 @@ public class SamplesSpec2RenderingTest extends AbstractSamplesRendering {
 	 * CSS3 Styling
 	 */
 	@Test
+	public void testAttrValues() throws TranscoderException, IOException {
+		testNV("samples/tests/spec2/styling/attrValues.svg");
+	}
+
+	@Test
+	public void testConditionalRules() throws TranscoderException, IOException {
+		testNV("samples/tests/spec2/styling/conditionalRules.svg");
+	}
+
+	@Test
+	public void testConditionalRulesDark() throws TranscoderException, IOException {
+		testDarkMode("samples/tests/spec2/styling/conditionalRules.svg");
+	}
+
+	@Test
+	public void testConditionalRulesAlternate() throws TranscoderException, IOException {
+		testAlternateSheet("samples/tests/spec2/styling/conditionalRules.svg", "Gray", false);
+	}
+
+	@Test
+	public void testConditionalRulesPrint() throws TranscoderException, IOException {
+		testNVErrIgnore("samples/tests/spec2/styling/conditionalRules.svg", PRINT_MEDIA, 0);
+	}
+
+	@Test
 	public void testMermaidColor4() throws TranscoderException, IOException {
 		testNV("samples/tests/spec2/styling/mermaid-color4.svg");
 	}

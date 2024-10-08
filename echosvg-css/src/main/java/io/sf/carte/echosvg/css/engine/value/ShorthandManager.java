@@ -27,8 +27,10 @@ import io.sf.carte.echosvg.css.engine.CSSEngine;
  * This interface represents the objects which provide support for shorthand
  * properties.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public interface ShorthandManager {
@@ -53,7 +55,7 @@ public interface ShorthandManager {
 	 * 
 	 * @param eng The current CSSEngine.
 	 * @param ph  The property handler to use.
-	 * @param lu  The SAC lexical unit used to create the value.
+	 * @param lu  The NSAC lexical unit used to create the value.
 	 * @param imp The property priority.
 	 */
 	void setValues(CSSEngine eng, PropertyHandler ph, LexicalUnit lu, boolean imp) throws DOMException;
@@ -64,6 +66,17 @@ public interface ShorthandManager {
 	interface PropertyHandler {
 
 		void property(String name, LexicalUnit value, boolean important);
+
+		/**
+		 * Process a longhand value that points to a shorthand that is pending lexical
+		 * substitution.
+		 * 
+		 * @param name      the longhand property name.
+		 * @param value     the pending value that contains the shorthand's lexical
+		 *                  value.
+		 * @param important the priority.
+		 */
+		void pendingValue(String name, PendingValue value, boolean important);
 
 	}
 

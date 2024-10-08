@@ -36,11 +36,11 @@ import org.w3c.dom.svg.SVGSVGElement;
 import org.w3c.dom.view.ViewCSS;
 import org.w3c.dom.views.DocumentView;
 
+import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.anim.dom.SVGStylableElement;
 import io.sf.carte.echosvg.constants.XMLConstants;
-import io.sf.carte.echosvg.css.dom.CSSValue;
-import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
+import io.sf.carte.echosvg.css.engine.value.CSSVal;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGConstants;
@@ -74,7 +74,7 @@ public class ModificationsTest {
 
 		ViewCSS view = (ViewCSS) ((DocumentView) doc).getDefaultView();
 		CSSStyleDeclaration cs = view.getComputedStyle(rect, null);
-		CSSValue val = (CSSValue) cs.getCSSStyleValue(ptyName);
+		CSSVal val = (CSSVal) cs.getCSSStyleValue(ptyName);
 
 		assertNotNull(val);
 		assertEquals(CssType.TYPED, val.getCssValueType());

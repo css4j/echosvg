@@ -26,15 +26,30 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.w3c.css.om.unit.CSSUnit;
+import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSValue;
+import io.sf.carte.doc.style.css.CSSValue.Type;
+import io.sf.carte.doc.style.css.CSSValueSyntax.Match;
 import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.parser.CSSParser;
+import io.sf.carte.doc.style.css.parser.SyntaxParser;
+import io.sf.carte.doc.style.css.property.StyleValue;
+import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueFactory;
+import io.sf.carte.echosvg.css.engine.value.CSSProxyValueException;
+import io.sf.carte.echosvg.css.engine.value.CalcValue;
+import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
+import io.sf.carte.echosvg.css.engine.value.PendingValue;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 
@@ -146,17 +161,29 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 	 * {@link ShorthandManager#setValues(CSSEngine,ShorthandManager.PropertyHandler,LexicalUnit,boolean)}.
 	 */
 	@Override
-	public void setValues(CSSEngine eng, ShorthandManager.PropertyHandler ph, LexicalUnit lu, boolean imp) {
-		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return;
+	public void setValues(CSSEngine eng, ShorthandManager.PropertyHandler ph, final LexicalUnit lunit,
+			boolean imp) {
+		switch (lunit.getLexicalUnitType()) {
 		case IDENT: {
-			String s = lu.getStringValue().toLowerCase(Locale.ROOT);
+			String s = lunit.getStringValue().toLowerCase(Locale.ROOT);
 			if (values.contains(s)) {
 				handleSystemFont(eng, ph, s, imp);
 				return;
 			}
+			break;
 		}
+
+		case INHERIT:
+		case UNSET:
+		case REVERT:
+			return;
+
+		case VAR:
+		case ATTR:
+			setPendingLonghands(eng, ph, lunit, imp,
+					eng.getPropertyIndex(CSSConstants.CSS_LINE_HEIGHT_PROPERTY));
+			return;
+
 		default:
 			break;
 		}
@@ -190,6 +217,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 		// These are all optional.
 
 		boolean svwDone = false;
+		LexicalUnit lu = lunit;
 		LexicalUnit intLU = null;
 		while (!svwDone && (lu != null)) {
 			switch (lu.getLexicalUnitType()) {
@@ -237,6 +265,11 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 				svwDone = true;
 				break;
 
+			case VAR:
+			case ATTR:
+				setPendingLonghands(eng, ph, lunit, imp, lh);
+				return;
+
 			default: // All other must be size,'/line-height', family
 				svwDone = true;
 				break;
@@ -270,6 +303,23 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 			fontSize = lu;
 			lu = lu.getNextLexicalUnit();
 			break;
+
+		case VAR:
+		case ATTR:
+			setPendingLonghands(eng, ph, lunit, imp, lh);
+			return;
+
+		case CALC:
+			Value calc = createFontSizeCalc(lu);
+			if (calc.getCssValueType() == CSSValue.CssType.PROXY) {
+				throw new CSSProxyValueException();
+			} else if (calc.getPrimitiveType() != Type.EXPRESSION || ((CalcValue) calc).getExpressionDelegate()
+					.matches(new SyntaxParser().parseSyntax("<length-percentage>")) != Match.TRUE) {
+				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+			}
+			fontSize = lu;
+			lu = lu.getNextLexicalUnit();
+
 		default:
 			break;
 		}
@@ -308,6 +358,12 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 			lineHeight = lu;
 			lu = lu.getNextLexicalUnit();
 			break;
+
+		case VAR:
+		case ATTR:
+			setPendingLonghands(eng, ph, lunit, imp, lh);
+			return;
+
 		default:
 			break;
 		}
@@ -333,6 +389,42 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 		ph.property(CSSConstants.CSS_FONT_SIZE_PROPERTY, fontSize, imp);
 		if (lh != -1) {
 			ph.property(CSSConstants.CSS_LINE_HEIGHT_PROPERTY, lineHeight, imp);
+		}
+	}
+
+	private Value createFontSizeCalc(LexicalUnit lu) throws DOMException {
+		ValueFactory vf = new ValueFactory();
+		StyleValue cssValue = vf.createCSSValue(lu.shallowClone());
+
+		Type pType = cssValue.getPrimitiveType();
+		if (pType != Type.EXPRESSION) {
+			createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+		}
+
+		CalcValue calc = new CalcValue((CSSExpressionValue) cssValue) {
+
+			@Override
+			protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo, CSSEngine engine,
+					int idx, StyleMap sm, FloatValue relative) {
+				return (FloatValue) new FontSizeManager().computeValue(elt, pseudo, engine, idx, sm,
+						relative);
+			}
+
+		};
+
+		return calc;
+	}
+
+	private void setPendingLonghands(CSSEngine eng, PropertyHandler ph, LexicalUnit lunit, boolean imp,
+			int lh) {
+		PendingValue pending = new PendingValue(getPropertyName(), lunit);
+		ph.pendingValue(CSSConstants.CSS_FONT_FAMILY_PROPERTY, pending, imp);
+		ph.pendingValue(CSSConstants.CSS_FONT_STYLE_PROPERTY, pending, imp);
+		ph.pendingValue(CSSConstants.CSS_FONT_VARIANT_PROPERTY, pending, imp);
+		ph.pendingValue(CSSConstants.CSS_FONT_WEIGHT_PROPERTY, pending, imp);
+		ph.pendingValue(CSSConstants.CSS_FONT_SIZE_PROPERTY, pending, imp);
+		if (lh != -1) {
+			ph.pendingValue(CSSConstants.CSS_LINE_HEIGHT_PROPERTY, pending, imp);
 		}
 	}
 

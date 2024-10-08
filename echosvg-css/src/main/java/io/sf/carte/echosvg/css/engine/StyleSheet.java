@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import org.w3c.dom.DOMException;
+
 import io.sf.carte.doc.style.css.MediaQueryList;
 
 /**
@@ -127,6 +129,24 @@ public class StyleSheet {
 	 */
 	public Rule getRule(int i) {
 		return rules[i];
+	}
+
+	/**
+	 * Removes a CSS rule from the CSS rule list at <code>index</code>.
+	 * 
+	 * @param index the rule list index at which the rule must be removed.
+	 * @throws DOMException INDEX_SIZE_ERR if <code>index</code> is greater than or
+	 *                      equal to {@link #getSize()}.
+	 */
+	public void deleteRule(int index) throws DOMException {
+		if (index < 0 || index >= size) {
+			throw new DOMException(DOMException.INDEX_SIZE_ERR, "Invalid index: " + index + '.');
+		}
+		for (int i = index; i < size - 1; i++) {
+			rules[i] = rules[i + 1];
+		}
+		size--;
+		rules[size] = null;
 	}
 
 	/**

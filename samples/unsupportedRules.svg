@@ -19,16 +19,17 @@
 
 -->
 <!-- ====================================================================== -->
-<!-- A SVG file with unsupported CSS rules in the STYLE element.            -->
+<!-- An SVG file with unsupported CSS rules in the STYLE element.           -->
 <!--                                                                        -->
 <!-- @version $Id$    -->
 <!-- ====================================================================== -->
 
 <svg xmlns="http://www.w3.org/2000/svg" width="320" height="320">
   <style>
-@supports ( display: flex ) {
-  body.grid, div.grid { display: flex; }
-  #mygrid { background: blue; color: white; }
+@counter-style bw {
+  system: alphabetic;
+  symbols: url(white.svg) url(black.svg);
+  suffix: " ";
 }
 @keyframes slidein {
   from {

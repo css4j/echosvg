@@ -23,8 +23,8 @@ import java.util.Locale;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -112,18 +112,20 @@ public class BaselineShiftManager extends LengthManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
 		case IDENT:
 			Object v = values.get(lu.getStringValue().toLowerCase(Locale.ROOT).intern());
 			if (v == null) {
 				throw createInvalidIdentifierDOMException(lu.getStringValue());
 			}
 			return (Value) v;
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
 		default:
 			break;
 		}
+
 		return super.createValue(lu, engine);
 	}
 
@@ -146,7 +148,7 @@ public class BaselineShiftManager extends LengthManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value.getCSSUnit() == CSSUnit.CSS_PERCENTAGE) {
+		if (value.getUnitType() == CSSUnit.CSS_PERCENTAGE) {
 			sm.putLineHeightRelative(idx, true);
 
 			int fsi = engine.getLineHeightIndex();

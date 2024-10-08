@@ -138,6 +138,14 @@ public class UserAgentAdapter implements UserAgent {
 	}
 
 	/**
+	 * Returns the resolution in {@code dpi}.
+	 */
+	@Override
+	public float getResolution() {
+		return 96f;
+	}
+
+	/**
 	 * Returns the default font family.
 	 */
 	@Override
@@ -151,7 +159,7 @@ public class UserAgentAdapter implements UserAgent {
 	@Override
 	public float getMediumFontSize() {
 		// 9pt (72pt = 1in)
-		return 9f * 25.4f / (72f * getPixelUnitToMillimeter());
+		return 9f * getResolution() / 72f;
 	}
 
 	/**

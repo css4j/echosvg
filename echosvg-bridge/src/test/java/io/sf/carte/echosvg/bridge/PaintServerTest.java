@@ -38,9 +38,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGSVGElement;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.echosvg.anim.dom.SVGDOMImplementation;
 import io.sf.carte.echosvg.constants.XMLConstants;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.value.ColorValue;
@@ -321,6 +321,35 @@ public class PaintServerTest {
 		assertEquals(51, color.getAlpha());
 
 		assertSame(StandardColorSpaces.getRec2020(), context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertLCh_sRGB() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "lch(48% 77 33)", null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.835736f, comp[0], 1e-5f); // sRGB
+		assertEquals(0.17189053f, comp[1], 1e-5f); // sRGB
+		assertEquals(0.18918473f, comp[2], 1e-5f); // sRGB
+		assertEquals(255, color.getAlpha());
+
+		assertNull(context.getColorSpace());
+	}
+
+	@Test
+	public void testConvertLCh_var() {
+		Color color = convertPaint(CSSConstants.CSS_FILL_PROPERTY, "var(--color);--color:lch(48% 77 33)",
+				null);
+		assertNotNull(color);
+		float[] comp = new float[3];
+		color.getColorComponents(comp);
+		assertEquals(0.835736f, comp[0], 1e-5f); // sRGB
+		assertEquals(0.17189053f, comp[1], 1e-5f); // sRGB
+		assertEquals(0.18918473f, comp[2], 1e-5f); // sRGB
+		assertEquals(255, color.getAlpha());
+
+		assertNull(context.getColorSpace());
 	}
 
 	@Test

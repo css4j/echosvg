@@ -35,7 +35,7 @@ import org.w3c.dom.css.DOMImplementationCSS;
 import org.w3c.dom.view.ViewCSS;
 
 import io.sf.carte.doc.style.css.nsac.Parser;
-import io.sf.carte.doc.style.css.parser.CSSParser;
+import io.sf.carte.doc.style.css.om.CSSOMParser;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
@@ -117,7 +117,7 @@ public abstract class ExtensibleDOMImplementation extends AbstractDOMImplementat
 	 * Creates new CSSEngine and attach it to the document.
 	 */
 	public CSSEngine createCSSEngine(AbstractStylableDocument doc, CSSContext ctx) {
-		Parser p = new CSSParser();
+		Parser p = new CSSOMParser();
 
 		ValueManager[] vms;
 		if (customValueManagers == null) {

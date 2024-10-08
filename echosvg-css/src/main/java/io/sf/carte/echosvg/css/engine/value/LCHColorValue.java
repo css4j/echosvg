@@ -124,7 +124,7 @@ public class LCHColorValue extends ColorValue implements CSSLCH {
 	 */
 	private NumericValue component(CSSNumericValue c) throws DOMSyntaxException {
 		NumericValue ch = (NumericValue) c;
-		if (ch.getCSSUnit() != CSSUnit.CSS_PERCENTAGE && ch.getCSSUnit() != CSSUnit.CSS_NUMBER) {
+		if (ch.getUnitType() != CSSUnit.CSS_PERCENTAGE && ch.getUnitType() != CSSUnit.CSS_NUMBER) {
 			throw new DOMSyntaxException("LC component must be a number or percentage.");
 		}
 		if (ch.handler != null) {
@@ -162,7 +162,7 @@ public class LCHColorValue extends ColorValue implements CSSLCH {
 
 	private NumericValue hueComponent(CSSNumericValue h) {
 		NumericValue ch = (NumericValue) h;
-		if (ch.getCSSUnit() != CSSUnit.CSS_NUMBER && !CSSUnit.isAngleUnitType(ch.getCSSUnit())) {
+		if (ch.getUnitType() != CSSUnit.CSS_NUMBER && !CSSUnit.isAngleUnitType(ch.getUnitType())) {
 			throw new DOMSyntaxException("Hue component must be a number or angle.");
 		}
 		if (ch.handler != null) {

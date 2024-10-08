@@ -70,8 +70,8 @@ import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
 import io.sf.carte.echosvg.dom.svg.SVGContext;
 import io.sf.carte.echosvg.dom.xbl.XBLManager;
-import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
 import io.sf.carte.echosvg.ext.awt.color.ColorContext;
+import io.sf.carte.echosvg.ext.awt.color.StandardColorSpaces;
 import io.sf.carte.echosvg.gvt.CompositeGraphicsNode;
 import io.sf.carte.echosvg.gvt.GraphicsNode;
 import io.sf.carte.echosvg.script.Interpreter;
@@ -1830,10 +1830,21 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 
 	/**
 	 * Returns the size of a px CSS unit in millimeters.
+	 * 
+	 * @deprecated Use {@link #getResolution()}.
 	 */
+	@Deprecated
 	@Override
 	public float getPixelUnitToMillimeter() {
 		return userAgent.getPixelUnitToMillimeter();
+	}
+
+	/**
+	 * Returns the resolution in dpi.
+	 */
+	@Override
+	public float getResolution() {
+		return userAgent.getResolution();
 	}
 
 	/**
@@ -1875,6 +1886,14 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 	@Override
 	public void checkLoadExternalResource(ParsedURL resourceURL, ParsedURL docURL) throws SecurityException {
 		userAgent.checkLoadExternalResource(resourceURL, docURL);
+	}
+
+	/**
+	 * Get prefers-color-scheme.
+	 */
+	@Override
+	public String getPrefersColorScheme() {
+		return userAgent.getPrefersColorScheme();
 	}
 
 	/**

@@ -38,6 +38,8 @@ import org.w3c.dom.svg.SVGAngle;
 import org.w3c.dom.svg.SVGLength;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
+import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.anim.AnimationEngine;
 import io.sf.carte.echosvg.anim.AnimationException;
@@ -67,8 +69,6 @@ import io.sf.carte.echosvg.anim.values.AnimatableRectValue;
 import io.sf.carte.echosvg.anim.values.AnimatableStringValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.constants.XMLConstants;
-import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -1203,7 +1203,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 */
 		@Override
 		public AnimatableValue createValue(AnimationTarget target, String pn, Value v) {
-			switch (v.getCSSUnit()) {
+			switch (v.getUnitType()) {
 			case CSSUnit.CSS_PERCENTAGE:
 				return new AnimatableNumberOrPercentageValue(target, v.getFloatValue(), true);
 			case CSSUnit.CSS_NUMBER:
@@ -1767,7 +1767,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 				return new AnimatableLengthOrIdentValue(target, v.getIdentifierValue());
 			}
 			short pcInterp = target.getPercentageInterpretation(null, pn, true);
-			return new AnimatableLengthOrIdentValue(target, v.getCSSUnit(), v.getFloatValue(), pcInterp);
+			return new AnimatableLengthOrIdentValue(target, v.getUnitType(), v.getFloatValue(), pcInterp);
 		}
 
 	}
@@ -1805,7 +1805,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		@Override
 		protected AnimatableValue createAnimatableValue(AnimationTarget target, String pn, Value v) {
 			short unit;
-			switch (v.getCSSUnit()) {
+			switch (v.getUnitType()) {
 			case CSSUnit.CSS_NUMBER:
 			case CSSUnit.CSS_DEG:
 				unit = SVGAngle.SVG_ANGLETYPE_DEG;
@@ -1818,7 +1818,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 				break;
 			default:
 				try {
-					float f = NumberValue.floatValueConversion(v.getFloatValue(), v.getCSSUnit(),
+					float f = NumberValue.floatValueConversion(v.getFloatValue(), v.getUnitType(),
 							CSSUnit.CSS_DEG);
 					return new AnimatableAngleOrIdentValue(target, f, SVGAngle.SVG_ANGLETYPE_DEG);
 				} catch (DOMException e) {
@@ -1842,7 +1842,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 				return new AnimatableAngleOrIdentValue(target, v.getIdentifierValue());
 			}
 			short unit;
-			switch (v.getCSSUnit()) {
+			switch (v.getUnitType()) {
 			case CSSUnit.CSS_NUMBER:
 			case CSSUnit.CSS_DEG:
 				unit = SVGAngle.SVG_ANGLETYPE_DEG;
@@ -1855,7 +1855,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 				break;
 			default:
 				try {
-					float f = NumberValue.floatValueConversion(v.getFloatValue(), v.getCSSUnit(),
+					float f = NumberValue.floatValueConversion(v.getFloatValue(), v.getUnitType(),
 							CSSUnit.CSS_DEG);
 					return new AnimatableAngleOrIdentValue(target, f, SVGAngle.SVG_ANGLETYPE_DEG);
 				} catch (DOMException e) {

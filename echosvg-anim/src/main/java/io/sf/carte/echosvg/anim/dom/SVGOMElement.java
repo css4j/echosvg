@@ -877,12 +877,9 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 			return SVGOMElement.this;
 		}
 
-		/**
-		 * Returns the size of a px CSS unit in millimeters.
-		 */
 		@Override
-		public float getPixelUnitToMillimeter() {
-			return getSVGContext().getPixelUnitToMillimeter();
+		public float getResolution() {
+			return getSVGContext().getResolution();
 		}
 
 		/**

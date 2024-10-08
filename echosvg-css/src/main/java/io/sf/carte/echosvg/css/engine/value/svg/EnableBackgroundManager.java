@@ -22,8 +22,8 @@ import java.util.Locale;
 
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -105,12 +105,6 @@ public class EnableBackgroundManager extends LengthManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
-		default:
-			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
-
 		case IDENT:
 			String id = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
 			if (id == CSSConstants.CSS_ACCUMULATE_VALUE) {
@@ -134,6 +128,12 @@ public class EnableBackgroundManager extends LengthManager {
 				result.append(super.createValue(lu, engine));
 			}
 			return result;
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
+		default:
+			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 		}
 	}
 

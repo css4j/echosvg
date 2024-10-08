@@ -29,14 +29,17 @@ import io.sf.carte.echosvg.transcoder.TranscoderInput;
 import io.sf.carte.echosvg.transcoder.TranscodingHints.Key;
 
 /**
- * Test the ImageTranscoder with the KEY_PIXEL_UNIT_TO_MILLIMETER transcoding
- * hint.
+ * Test the ImageTranscoder with the KEY_RESOLUTION_DPI transcoding hint.
  *
- * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Based on PixelToMM test by
+ * <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>. For
+ * later modifications, see Git history.
+ * </p>
+ * 
  * @version $Id$
  */
-public class PixelToMMTest extends AbstractImageTranscoderTest {
+public class ResolutionTest extends AbstractImageTranscoderTest {
 
 	/** The URI of the input image. */
 	private String inputURI;
@@ -44,33 +47,33 @@ public class PixelToMMTest extends AbstractImageTranscoderTest {
 	/** The URI of the reference image. */
 	private String refImageURI;
 
-	/** The pixel to mm factor. */
-	private float px2mm;
+	/** The resolution. */
+	private float resolution;
 
 	@Test
 	public void test96dpi() throws TranscoderException {
-		testPixelToMM("test-resources/io/sf/carte/echosvg/transcoder/image/resources/px2mm.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/px2mm96dpi.png", 0.2645833f);
+		testResolution("test-resources/io/sf/carte/echosvg/transcoder/image/resources/resolution.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/resolution96dpi.png", 96f);
 	}
 
 	@Test
 	public void test72dpi() throws TranscoderException {
-		testPixelToMM("test-resources/io/sf/carte/echosvg/transcoder/image/resources/px2mm.svg",
-				"test-references/io/sf/carte/echosvg/transcoder/image/px2mm72dpi.png", 0.3528f);
+		testResolution("test-resources/io/sf/carte/echosvg/transcoder/image/resources/resolution.svg",
+				"test-references/io/sf/carte/echosvg/transcoder/image/resolution72dpi.png", 72f);
 	}
 
 	/**
-	 * Runs a new <code>PixelToMMTest</code>.
+	 * Runs a new <code>ResolutionTest</code>.
 	 *
 	 * @param inputURI    the URI of the input image
 	 * @param refImageURI the URI of the reference image
-	 * @param px2mm       the pixel to mm conversion factor
-	 * @throws TranscoderException 
+	 * @param resolution  the resolution
+	 * @throws TranscoderException
 	 */
-	private void testPixelToMM(String inputURI, String refImageURI, float px2mm) throws TranscoderException {
+	private void testResolution(String inputURI, String refImageURI, float resolution) throws TranscoderException {
 		this.inputURI = inputURI;
 		this.refImageURI = refImageURI;
-		this.px2mm = px2mm;
+		this.resolution = resolution;
 		runTest();
 	}
 
@@ -88,7 +91,7 @@ public class PixelToMMTest extends AbstractImageTranscoderTest {
 	@Override
 	protected Map<Key, Object> createTranscodingHints() {
 		Map<Key, Object> hints = new HashMap<>(3);
-		hints.put(SVGAbstractTranscoder.KEY_PIXEL_UNIT_TO_MILLIMETER, px2mm);
+		hints.put(SVGAbstractTranscoder.KEY_RESOLUTION_DPI, resolution);
 		return hints;
 	}
 

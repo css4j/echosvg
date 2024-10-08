@@ -490,12 +490,9 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 
 	// SVGContext implementation ///////////////////////////////////////////
 
-	/**
-	 * Returns the size of a px CSS unit in millimeters.
-	 */
 	@Override
-	public float getPixelUnitToMillimeter() {
-		return ctx.getUserAgent().getPixelUnitToMillimeter();
+	public float getResolution() {
+		return ctx.getUserAgent().getResolution();
 	}
 
 	protected SoftReference<Shape> bboxShape = null;

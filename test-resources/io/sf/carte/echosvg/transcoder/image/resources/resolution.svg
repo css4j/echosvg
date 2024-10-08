@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<!--
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="450" height="500">
+<style>
+  svg {
+    font: 10pt Roboto;
+  }
+</style>
+
+<rect x="25" y="25" width="150pt" height="35" fill="crimson" />
+<text x="250" y="45">pt</text>
+
+<rect x="25" y="65" width="12.5pc" height="35" fill="#f86005" />
+<text x="250" y="85" style="font-size: 0.83333pc">pc</text>
+
+<rect x="25" y="105" width="2.0833in" height="35" fill="orange" />
+<text x="250" y="125" style="font-size: 0.13888in">in</text>
+
+<rect x="25" y="145" width="52.917mm" height="35" fill="#f8d205" />
+<text x="250" y="165" style="font-size: 3.5278mm">mm</text>
+
+<rect x="25" y="185" width="5.2917cm" height="35" fill="#c3f805" />
+<text x="250" y="205" style="font-size: 0.35278cm">cm</text>
+
+<rect x="25" y="225" width="15em" height="35" fill="#8af805" />
+<text x="250" y="245">em</text>
+
+<rect x="25" y="265" width="200px" height="35" fill="#05f891" />
+<text x="250" y="285" style="font-size: 13.333px">px</text>
+
+</svg>

@@ -144,15 +144,15 @@ public abstract class UnitProcessor {
 		case SVGLength.SVG_LENGTHTYPE_PX:
 			return v;
 		case SVGLength.SVG_LENGTHTYPE_MM:
-			return (v / ctx.getPixelUnitToMillimeter());
+			return v * 3.779527559055f; // 96 / 25.4
 		case SVGLength.SVG_LENGTHTYPE_CM:
-			return (v * 10f / ctx.getPixelUnitToMillimeter());
+			return v * 37.79527559055f; // 96 / 2.54
 		case SVGLength.SVG_LENGTHTYPE_IN:
-			return (v * 25.4f / ctx.getPixelUnitToMillimeter());
+			return v * 96f;
 		case SVGLength.SVG_LENGTHTYPE_PT:
-			return (v * 25.4f / (72f * ctx.getPixelUnitToMillimeter()));
+			return v / 0.75f; // Mult. by 96 / 72
 		case SVGLength.SVG_LENGTHTYPE_PC:
-			return (v * 25.4f / (6f * ctx.getPixelUnitToMillimeter()));
+			return v * 16f; // 96 / 6
 		case SVGLength.SVG_LENGTHTYPE_EMS:
 			return emsToPixels(v, d, ctx);
 		case SVGLength.SVG_LENGTHTYPE_EXS:
@@ -179,15 +179,15 @@ public abstract class UnitProcessor {
 		case SVGLength.SVG_LENGTHTYPE_PX:
 			return v;
 		case SVGLength.SVG_LENGTHTYPE_MM:
-			return (v * ctx.getPixelUnitToMillimeter());
+			return v * 0.26458333333333f; // 25.4/96
 		case SVGLength.SVG_LENGTHTYPE_CM:
-			return (v * ctx.getPixelUnitToMillimeter() / 10f);
+			return v * 0.026458333333333f; // 2.54/96
 		case SVGLength.SVG_LENGTHTYPE_IN:
-			return (v * ctx.getPixelUnitToMillimeter() / 25.4f);
+			return v / 96f;
 		case SVGLength.SVG_LENGTHTYPE_PT:
-			return (v * (72f * ctx.getPixelUnitToMillimeter()) / 25.4f);
+			return v * 0.75f; // 72/96
 		case SVGLength.SVG_LENGTHTYPE_PC:
-			return (v * (6f * ctx.getPixelUnitToMillimeter()) / 25.4f);
+			return v / 16f;
 		case SVGLength.SVG_LENGTHTYPE_EMS:
 			return pixelsToEms(v, d, ctx);
 		case SVGLength.SVG_LENGTHTYPE_EXS:
@@ -415,20 +415,9 @@ public abstract class UnitProcessor {
 		Element getElement();
 
 		/**
-		 * Returns the size of a px CSS unit in millimeters.
+		 * Returns the resolution in {@code dpi}.
 		 */
-		float getPixelUnitToMillimeter();
-
-		/**
-		 * Returns the size of a px CSS unit in millimeters. This will be removed after
-		 * next release.
-		 * 
-		 * @see #getPixelUnitToMillimeter()
-		 */
-		@Deprecated(forRemoval = true)
-		default float getPixelToMM() {
-			return getPixelUnitToMillimeter();
-		}
+		float getResolution();
 
 		/**
 		 * Returns the font-size value.

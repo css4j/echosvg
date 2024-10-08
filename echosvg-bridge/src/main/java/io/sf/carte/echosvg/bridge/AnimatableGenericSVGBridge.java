@@ -59,12 +59,9 @@ public abstract class AnimatableGenericSVGBridge extends AnimatableSVGBridge
 
 	// SVGContext ////////////////////////////////////////////////////////////
 
-	/**
-	 * Returns the size of a px CSS unit in millimeters.
-	 */
 	@Override
-	public float getPixelUnitToMillimeter() {
-		return ctx.getUserAgent().getPixelUnitToMillimeter();
+	public float getResolution() {
+		return ctx.getUserAgent().getResolution();
 	}
 
 	/**

@@ -113,7 +113,7 @@ public class RectValue extends ComponentValue implements CSSRectValue {
 	 * @throws DOMSyntaxException if the value is inadequate for a component.
 	 */
 	Value component(Value c) throws DOMSyntaxException {
-		short unit = c.getCSSUnit();
+		short unit = c.getUnitType();
 		if (unit != CSSUnit.CSS_PERCENTAGE && unit != CSSUnit.CSS_NUMBER
 				&& !CSSUnit.isLengthUnitType(unit) && c.getPrimitiveType() != Type.IDENT) {
 			throw new DOMSyntaxException("rect() component must be a length or percentage.");
