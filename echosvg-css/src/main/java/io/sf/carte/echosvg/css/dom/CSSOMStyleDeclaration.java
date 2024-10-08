@@ -26,6 +26,7 @@ import org.w3c.css.om.CSSStyleDeclaration;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.echosvg.css.engine.value.AbstractValueModificationHandler;
+import io.sf.carte.echosvg.css.engine.value.CSSVal;
 import io.sf.carte.echosvg.css.engine.value.Value;
 
 /**
@@ -57,7 +58,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
 	/**
 	 * The values.
 	 */
-	protected Map<String, CSSValue> values;
+	protected Map<String, CSSVal> values;
 
 	/**
 	 * Creates a new style declaration.
@@ -99,7 +100,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
 	}
 
 	@Override
-	public CSSValue getCSSStyleValue(String propertyName) {
+	public CSSVal getCSSStyleValue(String propertyName) {
 		Value value = valueProvider.getValue(propertyName);
 		if (value == null) {
 			return null;
@@ -158,8 +159,8 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
 	/**
 	 * Gets the CSS value associated with the given property.
 	 */
-	protected CSSValue getCSSValue(String name) {
-		CSSValue result = null;
+	protected CSSVal getCSSValue(String name) {
+		CSSVal result = null;
 		if (values != null) {
 			result = values.get(name);
 		}
@@ -176,7 +177,7 @@ public class CSSOMStyleDeclaration implements CSSStyleDeclaration {
 	/**
 	 * Creates the CSS value associated with the given property.
 	 */
-	protected CSSValue createCSSValue(String name) {
+	protected CSSVal createCSSValue(String name) {
 		return new StyleDeclarationValue(name);
 	}
 

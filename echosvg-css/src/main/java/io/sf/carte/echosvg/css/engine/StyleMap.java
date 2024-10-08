@@ -18,6 +18,14 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import io.sf.carte.doc.style.css.CSSValue.Type;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.echosvg.css.engine.value.PendingValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 
 /**
@@ -66,6 +74,11 @@ public class StyleMap {
 	 * To store the value masks.
 	 */
 	protected int[] masks;
+
+	/**
+	 * Custom property map.
+	 */
+	private Map<String, LexicalUnit> customProperties = null;
 
 	/**
 	 * Whether the values of this map cannot be re-cascaded.
@@ -372,26 +385,78 @@ public class StyleMap {
 	}
 
 	/**
+	 * Set a custom property value.
+	 * 
+	 * @param name  the custom property name.
+	 * @param value the custom property value.
+	 */
+	public void putCustomProperty(String name, LexicalUnit value) {
+		if (customProperties == null) {
+			customProperties = new HashMap<>();
+		}
+
+		customProperties.put(name, value);
+	}
+
+	/**
+	 * Get the value of a custom property.
+	 * 
+	 * @param name the custom property name.
+	 * @return the custom property value, or {@code null} if there is no value
+	 *         defined for that custom property.
+	 */
+	public LexicalUnit getCustomProperty(String name) {
+		return customProperties != null ? customProperties.get(name) : null;
+	}
+
+	/**
 	 * Returns a printable representation of this style map.
 	 */
 	public String toString(CSSEngine eng) {
+		Set<String> pendingShorthands = null;
 		// Note that values.length should always be equal to
 		// eng.getNumberOfProperties() for StyleMaps that were created
 		// by that CSSEngine.
 		int nSlots = values.length;
-		StringBuilder sb = new StringBuilder(nSlots * 8);
+		StringBuilder sb = new StringBuilder(nSlots * 8 + 32);
 		for (int i = 0; i < nSlots; i++) {
 			Value v = values[i];
 			if (v == null)
 				continue;
 
-			sb.append(eng.getPropertyName(i));
-			sb.append(": ");
-			sb.append(v);
-			if (isImportant(i))
-				sb.append(" !important");
-			sb.append(";\n");
+			if (v.getPrimitiveType() != Type.INTERNAL) {
+				sb.append(eng.getPropertyName(i));
+				sb.append(": ");
+				sb.append(v);
+				if (isImportant(i))
+					sb.append(" !important");
+				sb.append(";\n");
+			} else {
+				if (pendingShorthands == null) {
+					pendingShorthands = new HashSet<>();
+				}
+				PendingValue pending = (PendingValue) v;
+				String name = pending.getShorthandName();
+				if (pendingShorthands.add(name)) {
+					sb.append(name);
+					sb.append(": ");
+					sb.append(pending.getLexicalUnit().toString());
+					if (isImportant(i))
+						sb.append(" !important");
+					sb.append(";\n");
+				}
+			}
 		}
+
+		if (customProperties != null) {
+			for (Map.Entry<String, LexicalUnit> entry : customProperties.entrySet()) {
+				sb.append(entry.getKey());
+				sb.append(": ");
+				sb.append(entry.getValue().toString());
+				sb.append(";\n");
+			}
+		}
+
 		return sb.toString();
 	}
 

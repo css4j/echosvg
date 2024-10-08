@@ -24,6 +24,7 @@ import org.w3c.dom.DOMException;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueModificationHandler;
+import io.sf.carte.echosvg.css.engine.value.CSSVal;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGPaintManager;
@@ -56,7 +57,7 @@ public class CSSOMSVGStyleDeclaration extends CSSOMStyleDeclaration {
 	 * Creates the CSS value associated with the given property.
 	 */
 	@Override
-	protected CSSValue createCSSValue(String name) {
+	protected CSSVal createCSSValue(String name) {
 		int idx = cssEngine.getPropertyIndex(name);
 		if (idx > SVGCSSEngine.FINAL_INDEX) {
 			if (cssEngine.getValueManagers()[idx] instanceof SVGPaintManager) {

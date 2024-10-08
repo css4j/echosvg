@@ -167,7 +167,7 @@ public class ColorFunction extends ColorValue implements CSSColor {
 	 * @throws DOMSyntaxException if the value is inadequate for a component.
 	 */
 	private NumericValue numericComponent(NumericValue ch) throws DOMSyntaxException {
-		if (ch.getCSSUnit() != CSSUnit.CSS_PERCENTAGE && ch.getCSSUnit() != CSSUnit.CSS_NUMBER) {
+		if (ch.getUnitType() != CSSUnit.CSS_PERCENTAGE && ch.getUnitType() != CSSUnit.CSS_NUMBER) {
 			throw new DOMSyntaxException("color() component must be a number or percentage.");
 		}
 		componentize(ch);

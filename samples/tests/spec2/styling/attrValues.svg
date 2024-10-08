@@ -1,0 +1,76 @@
+<?xml version="1.0" standalone="no"?>
+<!--
+
+   See the NOTICE file distributed with this work for additional
+   information regarding copyright ownership.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+<!-- ====================================================================== -->
+<!-- Illustrates SVG with CSS attribute values and custom properties.       -->
+<!--                                                                        -->
+<!-- @author github.com/carlosame                                           -->
+<!-- @version $Id$    -->
+<!-- ====================================================================== -->
+
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">
+
+  <style type="text/css">
+/*<![CDATA[*/
+
+g {
+  --textColor: #975a6e;
+}
+
+circle, ellipse {
+  fill: oklch(44.93% 0.311 264.1 / 0.3);
+  stroke: oklch(55.859% 0.117 234.07);
+  stroke-width: 1px;
+}
+
+@media screen and (100px <= width <= 900px) {
+  circle {
+    stroke-width: attr(stroke-width length);
+  }
+  g {
+    fill: attr(data-color color); /* Has no effect, fill can't take attr() */
+    stroke: attr(data-color color); /* Has no effect, stroke can't take attr() */
+    stroke-width: attr(stroke-width length);
+  }
+}
+
+text.itemdesc {
+  font: bold attr(data-font-size length) "Open Sans", sans-serif;
+  fill: var(--textColor);
+}
+
+/*]]>*/
+  </style>
+
+  <g>
+  <circle cx="250" cy="300" r="20"/>
+  <circle cx="150" cy="150" r="20"/>
+  <circle cx="280" cy="150" r="20"/>
+  <circle cx="120" cy="300" r="20"/>
+  <ellipse cx="250" cy="300" rx="100" ry="130" transform="rotate(-20 250 300)" data-color="#406080"/>
+  <ellipse cx="150" cy="150" rx="100" ry="130" transform="rotate(-20 150 150)" data-color="#406080"/>
+  <ellipse cx="280" cy="150" rx="100" ry="130" transform="rotate(30 280 150)" data-color="#406080"/>
+  <ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)" data-color="#406080"/>
+  <text x="80" y="50" class="itemdesc" text-anchor="middle" data-font-size="10pt">Media Queries</text>
+  <text x="320" y="50" class="itemdesc" text-anchor="middle" data-font-size="11pt">Conditional rules</text>
+  <text x="91" y="400" class="itemdesc" text-anchor="middle" data-font-size="14pt">Color Level 4 / calc()</text>
+  <text x="300" y="400" class="itemdesc" text-anchor="middle" data-font-size="16pt">Custom Properties</text>
+  </g>
+
+</svg>

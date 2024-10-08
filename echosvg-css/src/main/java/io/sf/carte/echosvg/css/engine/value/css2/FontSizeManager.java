@@ -23,14 +23,15 @@ import java.util.Locale;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.css.Viewport;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.CalcValue;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
@@ -130,9 +131,6 @@ public class FontSizeManager extends LengthManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
 		case IDENT:
 			String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
 			Object v = values.get(s);
@@ -140,9 +138,14 @@ public class FontSizeManager extends LengthManager {
 				throw createInvalidIdentifierDOMException(s);
 			}
 			return (Value) v;
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
 		default:
 			break;
 		}
+
 		return super.createValue(lu, engine);
 	}
 
@@ -168,36 +171,32 @@ public class FontSizeManager extends LengthManager {
 		float scale = 1.0f;
 		boolean doParentRelative = false;
 
-		if (value.getPrimitiveType() == Type.NUMERIC) {
-			switch (value.getCSSUnit()) {
+		Type pType = value.getPrimitiveType();
+		if (pType == Type.NUMERIC) {
+			switch (value.getUnitType()) {
 			case CSSUnit.CSS_NUMBER:
 			case CSSUnit.CSS_PX:
 				return value;
 
 			case CSSUnit.CSS_MM:
-				CSSContext ctx = engine.getCSSContext();
 				float v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v / ctx.getPixelUnitToMillimeter());
+				return new FloatValue(CSSUnit.CSS_NUMBER, v * 3.779527559055f);
 
 			case CSSUnit.CSS_CM:
-				ctx = engine.getCSSContext();
 				v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v * 10f / ctx.getPixelUnitToMillimeter());
+				return new FloatValue(CSSUnit.CSS_NUMBER, v * 37.79527559055f);
 
 			case CSSUnit.CSS_IN:
-				ctx = engine.getCSSContext();
 				v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v * 25.4f / ctx.getPixelUnitToMillimeter());
+				return new FloatValue(CSSUnit.CSS_NUMBER, v * 96f);
 
 			case CSSUnit.CSS_PT:
-				ctx = engine.getCSSContext();
 				v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v * 25.4f / (72f * ctx.getPixelUnitToMillimeter()));
+				return new FloatValue(CSSUnit.CSS_NUMBER, v / 0.75f);
 
 			case CSSUnit.CSS_PC:
-				ctx = engine.getCSSContext();
 				v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER, (v * 25.4f / (6f * ctx.getPixelUnitToMillimeter())));
+				return new FloatValue(CSSUnit.CSS_NUMBER, v * 16f);
 
 			case CSSUnit.CSS_EM:
 				doParentRelative = true;
@@ -272,12 +271,16 @@ public class FontSizeManager extends LengthManager {
 				return new FloatValue(CSSUnit.CSS_NUMBER, v * max * 0.01f);
 			default:
 				// Maybe it is one of the new absolute length units
-				try {
-					return new FloatValue(CSSUnit.CSS_NUMBER,
-							NumberValue.floatValueConversion(value.getFloatValue(), value.getCSSUnit(),
-									CSSUnit.CSS_MM) / engine.getCSSContext().getPixelUnitToMillimeter());
-				} catch (DOMException e) {
-				}
+				return new FloatValue(CSSUnit.CSS_NUMBER,
+						NumberValue.floatValueConversion(value.getFloatValue(), value.getUnitType(),
+								CSSUnit.CSS_PX));
+			}
+		} else if (pType == Type.EXPRESSION) {
+			try {
+				Value calc = evaluateCalc((CalcValue) value, elt, pseudo, engine, idx, sm, CSSUnit.CSS_PX);
+				return new FloatValue(CSSUnit.CSS_NUMBER, calc.getFloatValue());
+			} catch (Exception e) {
+				return isInheritedProperty() ? null : getDefaultValue();
 			}
 		}
 

@@ -26,15 +26,17 @@ import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.CSSColor;
 import io.sf.carte.doc.style.css.CSSTypedValue;
+import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.doc.style.css.property.NumberValue;
+import io.sf.carte.doc.style.css.property.PercentageEvaluator;
 import io.sf.carte.doc.style.css.property.StyleValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -192,9 +194,11 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		}
 		case RGBCOLOR:
 			return createRGBColor(lunit);
-		default:
+		case IDENT:
 			// Clone so colors can be modified
 			return super.createValue(lunit, engine).clone();
+		default:
+			return super.createValue(lunit, engine);
 		}
 	}
 
@@ -220,7 +224,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value.getPrimitiveType() == Type.IDENT) {
+		if (value.getPrimitiveType() == CSSValue.Type.IDENT) {
 			String ident = ((AbstractStringValue) value).getValue();
 			// Search for a direct computed value.
 			Value v = (Value) computedValues.get(ident);
@@ -350,6 +354,19 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		case PERCENTAGE:
 			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getFloatValue());
 
+		case VAR:
+		case ATTR:
+			throw new CSSProxyValueException();
+
+		case CALC:
+			Value calc = createCalc(lu);
+			if (calc.getCssValueType() == CSSValue.CssType.PROXY) {
+				throw new CSSProxyValueException();
+			} else if (calc.getPrimitiveType() != Type.EXPRESSION) {
+				break;
+			}
+			return evaluateComponentExpression((CalcValue) calc);
+
 		default:
 		}
 		throw createInvalidRGBComponentUnitDOMException(lu.getLexicalUnitType());
@@ -369,9 +386,28 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		case PERCENTAGE:
 			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getFloatValue());
 
+		case VAR:
+		case ATTR:
+			throw new CSSProxyValueException();
+
+		case CALC:
+			Value calc = createCalc(lu);
+			if (calc.getCssValueType() == CSSValue.CssType.PROXY) {
+				throw new CSSProxyValueException();
+			} else if (calc.getPrimitiveType() != Type.EXPRESSION) {
+				break;
+			}
+			return evaluateComponentExpression((CalcValue) calc);
+
 		default:
 		}
-		throw createInvalidRGBComponentUnitDOMException(lu.getLexicalUnitType());
+		throw createInvalidComponentUnitDOMException(lu.getLexicalUnitType());
+	}
+
+	private FloatValue evaluateComponentExpression(CalcValue calc) {
+		PercentageEvaluator eval = new PercentageEvaluator();
+		CSSTypedValue result = eval.evaluateExpression(calc.getExpressionDelegate());
+		return new FloatValue(CSSUnit.CSS_NUMBER, result.getFloatValue(CSSUnit.CSS_NUMBER));
 	}
 
 	/**
@@ -385,6 +421,12 @@ public abstract class AbstractColorManager extends IdentifierManager {
 	private DOMException createInvalidRGBComponentUnitDOMException(LexicalType lexicalType) {
 		Object[] p = { getPropertyName(), lexicalType.toString() };
 		String s = Messages.formatMessage("invalid.rgb.component.unit", p);
+		return new DOMException(DOMException.NOT_SUPPORTED_ERR, s);
+	}
+
+	private DOMException createInvalidComponentUnitDOMException(LexicalType lexicalType) {
+		Object[] p = { getPropertyName(), lexicalType.toString() };
+		String s = Messages.formatMessage("invalid.color.component.unit", p);
 		return new DOMException(DOMException.NOT_SUPPORTED_ERR, s);
 	}
 

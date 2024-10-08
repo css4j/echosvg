@@ -103,10 +103,10 @@ class PNGTranscoderInternalCodecWriteAdapter implements PNGTranscoder.WriteAdapt
 			params.setCompressedText(text);
 		}
 
-		float PixSzMM = transcoder.getUserAgent().getPixelUnitToMillimeter();
-		// num Pixs in 1 Meter
-		int numPix = (int) ((1000 / PixSzMM) + 0.5);
-		params.setPhysicalDimension(numPix, numPix, 1); // 1 means 'pix/meter'
+		float resol = transcoder.getUserAgent().getResolution();
+		// number of pixels in 1 Meter
+		int numPix = Math.round(resol / 0.0254f);
+		params.setPhysicalDimension(numPix, numPix, 1); // 1 means 'pixels/meter'
 
 		try {
 			OutputStream ostream = output.getOutputStream();

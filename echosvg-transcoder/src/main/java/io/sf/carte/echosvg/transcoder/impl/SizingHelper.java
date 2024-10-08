@@ -18,15 +18,15 @@
  */
 package io.sf.carte.echosvg.transcoder.impl;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
-import io.sf.carte.doc.style.css.CSSUnit;
+import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.property.Evaluator;
-import io.sf.carte.doc.style.css.property.ExpressionValue;
 import io.sf.carte.doc.style.css.property.StyleValue;
-import io.sf.carte.doc.style.css.property.TypedValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.doc.style.css.property.ValueList;
 import io.sf.carte.echosvg.transcoder.TranscoderException;
@@ -139,17 +139,17 @@ public class SizingHelper {
 			if (item.getCssValueType() != CssType.TYPED) {
 				return false;
 			}
-			TypedValue typed;
+			CSSTypedValue typed;
 			switch (item.getPrimitiveType()) {
 			case NUMERIC:
-				typed = (TypedValue) item;
+				typed = (CSSTypedValue) item;
 				if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
 					return false;
 				}
 				break;
 			case EXPRESSION:
-				Evaluator eval = new Evaluator();
-				typed = eval.evaluateExpression((ExpressionValue) item);
+				Evaluator eval = new Evaluator(CSSUnit.CSS_NUMBER);
+				typed = eval.evaluateExpression((CSSExpressionValue) item);
 				if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
 					return false;
 				}
@@ -170,10 +170,10 @@ public class SizingHelper {
 			throw new TranscoderException("Leave value unchanged.");
 		}
 
-		TypedValue typed;
+		CSSTypedValue typed;
 		switch (value.getPrimitiveType()) {
 		case NUMERIC:
-			typed = (TypedValue) value;
+			typed = (CSSTypedValue) value;
 			if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
 				if (CSSUnit.isRelativeLengthUnitType(typed.getUnitType())) {
 					throw new TranscoderException("Leave value unchanged.");
@@ -183,8 +183,8 @@ public class SizingHelper {
 			}
 			break;
 		case EXPRESSION:
-			Evaluator eval = new Evaluator();
-			typed = eval.evaluateExpression((ExpressionValue) value);
+			Evaluator eval = new Evaluator(CSSUnit.CSS_NUMBER);
+			typed = eval.evaluateExpression((CSSExpressionValue) value);
 			if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
 				if (CSSUnit.isRelativeLengthUnitType(typed.getUnitType())) {
 					throw new TranscoderException("Leave value unchanged.");

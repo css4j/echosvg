@@ -40,6 +40,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 
+import io.sf.carte.doc.style.css.CSSValue;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
 import io.sf.carte.echosvg.anim.dom.SVGOMFlowRegionElement;
 import io.sf.carte.echosvg.anim.dom.XBLEventSupport;
@@ -56,12 +58,10 @@ import io.sf.carte.echosvg.bridge.TextNode;
 import io.sf.carte.echosvg.bridge.TextUtilities;
 import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.constants.XMLConstants;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.ComputedValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
-import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.svg12.LineHeightValue;
 import io.sf.carte.echosvg.css.engine.value.svg12.SVG12ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractNode;
@@ -849,7 +849,8 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 		float indent = v.getFloatValue();
 
 		v = CSSUtilities.getComputedStyle(element, textAlignIndex);
-		if (v == ValueConstants.INHERIT_VALUE) {
+		if (v.getCssValueType() == CSSValue.CssType.KEYWORD) {
+			// inherit, unset, revert
 			v = CSSUtilities.getComputedStyle(element, SVGCSSEngine.DIRECTION_INDEX);
 			if (v.isIdentifier(CSSConstants.CSS_LTR_VALUE))
 				v = SVG12ValueConstants.START_VALUE;
@@ -888,7 +889,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 			initCSSPropertyIndexes(element);
 
 		Value v = CSSUtilities.getComputedStyle(element, lineHeightIndex);
-		if (v == ValueConstants.INHERIT_VALUE || v.isIdentifier(CSSConstants.CSS_NORMAL_VALUE)) {
+		if (v.getCssValueType() == CSSValue.CssType.KEYWORD || v.isIdentifier(CSSConstants.CSS_NORMAL_VALUE)) {
 			return fontSize * 1.1f;
 		}
 

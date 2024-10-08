@@ -27,6 +27,7 @@ import org.w3c.dom.DOMException;
 
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.value.CSSVal;
 import io.sf.carte.echosvg.css.engine.value.Value;
 
 /**
@@ -58,7 +59,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
 	/**
 	 * The CSS values.
 	 */
-	protected Map<String, CSSValue> values = new HashMap<>();
+	protected Map<String, CSSVal> values = new HashMap<>();
 
 	/**
 	 * Creates a new computed style.
@@ -110,12 +111,12 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
 	}
 
 	@Override
-	public CSSValue getCSSStyleValue(String propertyName) {
+	public CSSVal getCSSStyleValue(String propertyName) {
 		return getCSSValue(propertyName);
 	}
 
-	public CSSValue getCSSValue(String propertyName) {
-		CSSValue result = values.get(propertyName);
+	public CSSVal getCSSValue(String propertyName) {
+		CSSVal result = values.get(propertyName);
 		if (result == null) {
 			int idx = cssEngine.getPropertyIndex(propertyName);
 			if (idx != -1) {
@@ -187,7 +188,7 @@ public class CSSOMComputedStyle implements CSSStyleDeclaration {
 	/**
 	 * Creates a CSSValue to manage the value at the given index.
 	 */
-	protected CSSValue createCSSValue(int idx) {
+	protected CSSVal createCSSValue(int idx) {
 		return new ComputedCSSValue(idx);
 	}
 

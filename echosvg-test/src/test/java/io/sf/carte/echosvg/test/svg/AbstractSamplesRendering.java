@@ -183,6 +183,15 @@ public class AbstractSamplesRendering {
 		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
 
+	void testDarkMode(String file)
+			throws TranscoderException, IOException {
+		RenderingTest runner = new RenderingTest();
+		runner.setValidating(Boolean.FALSE);
+		runner.setDarkMode(true);
+		runner.setFile(file);
+		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
+	}
+
 	void testUserSheet(String file, boolean validating) throws TranscoderException, IOException {
 		AltUserSheetRenderingTest runner = new AltUserSheetRenderingTest();
 		runner.setValidating(validating);

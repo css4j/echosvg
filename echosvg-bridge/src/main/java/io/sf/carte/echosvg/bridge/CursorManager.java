@@ -40,8 +40,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
-import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
+import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.AbstractNode;

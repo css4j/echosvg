@@ -19,15 +19,11 @@
 package io.sf.carte.echosvg.css.engine.value;
 
 import org.w3c.css.om.typed.CSSCounterValue;
-import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
 /**
- * This class provides an abstract implementation of the Value interface.
+ * This class provides an abstract implementation of the CSSValue interface.
  *
- * <p>
- * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
- * </p>
  * @version $Id$
  */
 public abstract class AbstractValue implements Value, Cloneable {
@@ -37,16 +33,6 @@ public abstract class AbstractValue implements Value, Cloneable {
 	@Override
 	public CssType getCssValueType() {
 		return Value.CssType.TYPED;
-	}
-
-	@Override
-	public Type getPrimitiveType() {
-		throw createDOMException();
-	}
-
-	@Override
-	public short getCSSUnit() {
-		return CSSUnit.CSS_INVALID;
 	}
 
 	@Override
@@ -137,9 +123,9 @@ public abstract class AbstractValue implements Value, Cloneable {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Value))
+		if (!(obj instanceof CSSVal))
 			return false;
-		Value other = (Value) obj;
+		CSSVal other = (CSSVal) obj;
 		return getPrimitiveType() == other.getPrimitiveType();
 	}
 

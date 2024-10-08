@@ -21,11 +21,14 @@ package io.sf.carte.echosvg.css.engine.value.css2;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
+import io.sf.carte.echosvg.css.engine.value.CalcValue;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
+import io.sf.carte.echosvg.css.engine.value.RevertValue;
+import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -97,9 +100,6 @@ public class FontSizeAdjustManager extends AbstractValueManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
 		case INTEGER:
 			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue());
 
@@ -111,6 +111,30 @@ public class FontSizeAdjustManager extends AbstractValueManager {
 				return ValueConstants.NONE_VALUE;
 			}
 			throw createInvalidIdentifierDOMException(lu.getStringValue());
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+		case ATTR:
+			return createLexicalValue(lu);
+
+		case CALC:
+			Value calc = createCalc(lu);
+			if (calc.getPrimitiveType() != Type.EXPRESSION) {
+				// In principle this means that a var() was found
+				return calc;
+			}
+			return ((CalcValue) calc).evaluate(null, null, engine, -1, null, CSSUnit.CSS_NUMBER);
 
 		default:
 			break;

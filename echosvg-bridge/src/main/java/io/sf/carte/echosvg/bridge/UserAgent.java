@@ -88,8 +88,13 @@ public interface UserAgent {
 
 	/**
 	 * Returns the size of a px CSS unit in millimeters.
+	 * 
+	 * @deprecated Use {@link #getResolution()}.
 	 */
-	float getPixelUnitToMillimeter();
+	@Deprecated
+	default float getPixelUnitToMillimeter() {
+		return 25.4f / getResolution();
+	}
 
 	/**
 	 * Returns the size of a px CSS unit in millimeters. This will be removed after
@@ -101,6 +106,11 @@ public interface UserAgent {
 	default float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 	}
+
+	/**
+	 * Returns the resolution in {@code dpi}.
+	 */
+	float getResolution();
 
 	/**
 	 * Returns the medium font size.
@@ -182,6 +192,13 @@ public interface UserAgent {
 	 * Returns this user agent's CSS media.
 	 */
 	String getMedia();
+
+	/**
+	 * Get prefers-color-scheme.
+	 */
+	default String getPrefersColorScheme() {
+		return "light";
+	}
 
 	/**
 	 * Returns this user agent's alternate style-sheet title.

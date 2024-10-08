@@ -47,7 +47,7 @@ class ImmutableUnitValue extends FloatValue {
 
 	@Override
 	public FloatValue clone() {
-		return new FloatValue(getCSSUnit(), getFloatValue());
+		return new FloatValue(getUnitType(), getFloatValue());
 	}
 
 }

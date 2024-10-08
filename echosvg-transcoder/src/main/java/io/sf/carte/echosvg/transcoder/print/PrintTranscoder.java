@@ -676,6 +676,7 @@ public class PrintTranscoder extends SVGAbstractTranscoder implements Printable 
 
 	public static final String USAGE = "java io.sf.carte.echosvg.transcoder.print.PrintTranscoder <svgFileToPrint>";
 
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Exception {
 		if (args.length < 1) {
 			System.err.println(USAGE);

@@ -72,8 +72,13 @@ public interface SVGUserAgent {
 
 	/**
 	 * Returns the size of a px CSS unit in millimeters.
+	 * 
+	 * @deprecated Use {@link #getResolution()}.
 	 */
-	float getPixelUnitToMillimeter();
+	@Deprecated
+	default float getPixelUnitToMillimeter() {
+		return 25.4f / getResolution();
+	}
 
 	/**
 	 * Returns the size of a px CSS unit in millimeters. This will be removed after
@@ -85,6 +90,11 @@ public interface SVGUserAgent {
 	default float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 	}
+
+	/**
+	 * Returns the resolution in {@code dpi}.
+	 */
+	float getResolution();
 
 	/**
 	 * Returns the default font family.

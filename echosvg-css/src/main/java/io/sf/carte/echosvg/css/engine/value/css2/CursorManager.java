@@ -22,15 +22,17 @@ import java.util.Locale;
 
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
+import io.sf.carte.echosvg.css.engine.value.RevertValue;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.URIValue;
+import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -95,6 +97,11 @@ public class CursorManager extends AbstractValueManager {
 		return false;
 	}
 
+	@Override
+	public boolean allowsURL() {
+		return true;
+	}
+
 	/**
 	 * Implements {@link ValueManager#getPropertyType()}.
 	 */
@@ -123,12 +130,10 @@ public class CursorManager extends AbstractValueManager {
 	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
 	 */
 	@Override
-	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
+	public Value createValue(final LexicalUnit lunit, CSSEngine engine) throws DOMException {
 		ListValue result = new ListValue();
-		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
+		LexicalUnit lu = lunit;
+		switch (lunit.getLexicalUnitType()) {
 		case URI:
 			do {
 				result.append(
@@ -138,6 +143,9 @@ public class CursorManager extends AbstractValueManager {
 					throw createMalformedLexicalUnitDOMException();
 				}
 				if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+					if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
+						return createLexicalValue(lunit);
+					}
 					throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 				}
 				lu = lu.getNextLexicalUnit();
@@ -146,6 +154,9 @@ public class CursorManager extends AbstractValueManager {
 				}
 			} while (lu.getLexicalUnitType() == LexicalUnit.LexicalType.URI);
 			if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.IDENT) {
+				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
+					return createLexicalValue(lunit);
+				}
 				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 			}
 			// Fall through...
@@ -159,6 +170,22 @@ public class CursorManager extends AbstractValueManager {
 			result.append((Value) v);
 			lu = lu.getNextLexicalUnit();
 			break;
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+			return createLexicalValue(lunit);
+
 		default:
 			break;
 		}

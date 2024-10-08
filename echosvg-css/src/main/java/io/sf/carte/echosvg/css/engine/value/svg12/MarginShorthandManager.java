@@ -21,9 +21,12 @@ package io.sf.carte.echosvg.css.engine.value.svg12;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueFactory;
+import io.sf.carte.echosvg.css.engine.value.PendingValue;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
+import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.SVG12CSSConstants;
 
@@ -31,8 +34,10 @@ import io.sf.carte.echosvg.util.SVG12CSSConstants;
  * This class represents an object which provide support for the 'margin'
  * shorthand property.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class MarginShorthandManager extends AbstractValueFactory implements ShorthandManager {
@@ -69,14 +74,40 @@ public class MarginShorthandManager extends AbstractValueFactory implements Shor
 	 * {@link ShorthandManager#setValues(CSSEngine,ShorthandManager.PropertyHandler,LexicalUnit,boolean)}.
 	 */
 	@Override
-	public void setValues(CSSEngine eng, ShorthandManager.PropertyHandler ph, LexicalUnit lu, boolean imp)
-			throws DOMException {
-		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.INHERIT)
+	public void setValues(CSSEngine eng, ShorthandManager.PropertyHandler ph, final LexicalUnit lunit,
+			boolean imp) throws DOMException {
+		switch (lunit.getLexicalUnitType()) {
+		case INHERIT:
 			return;
 
+		case UNSET:
+		case REVERT:
+		case INITIAL:
+			// Set defaults
+			LexicalUnit luZero = ValueConstants.ZERO_LEXICAL_UNIT;
+			ph.property(SVG12CSSConstants.CSS_MARGIN_TOP_PROPERTY, luZero, imp);
+			ph.property(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, luZero, imp);
+			ph.property(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, luZero, imp);
+			ph.property(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY, luZero, imp);
+			break;
+
+		case VAR:
+		case ATTR:
+			setPendingLonghands(eng, ph, lunit, imp);
+			return;
+
+		default:
+			break;
+		}
+
+		LexicalUnit lu = lunit;
 		LexicalUnit[] lus = new LexicalUnit[4];
 		int cnt = 0;
 		while (lu != null) {
+			if (lu.getLexicalUnitType() == LexicalType.VAR) {
+				setPendingLonghands(eng, ph, lunit, imp);
+				return;
+			}
 			if (cnt == 4)
 				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 			lus[cnt++] = lu;
@@ -100,6 +131,14 @@ public class MarginShorthandManager extends AbstractValueFactory implements Shor
 		ph.property(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, lus[1], imp);
 		ph.property(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, lus[2], imp);
 		ph.property(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY, lus[3], imp);
+	}
+
+	private void setPendingLonghands(CSSEngine eng, PropertyHandler ph, LexicalUnit lunit, boolean imp) {
+		PendingValue pending = new PendingValue(getPropertyName(), lunit);
+		ph.pendingValue(SVG12CSSConstants.CSS_MARGIN_TOP_PROPERTY, pending, imp);
+		ph.pendingValue(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, pending, imp);
+		ph.pendingValue(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, pending, imp);
+		ph.pendingValue(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY, pending, imp);
 	}
 
 }

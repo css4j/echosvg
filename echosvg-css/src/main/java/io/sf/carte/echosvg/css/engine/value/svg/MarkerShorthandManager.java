@@ -18,11 +18,17 @@
  */
 package io.sf.carte.echosvg.css.engine.value.svg;
 
+import java.io.IOException;
+import java.io.StringReader;
+
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.nsac.CSSParseException;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.parser.CSSParser;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueFactory;
+import io.sf.carte.echosvg.css.engine.value.PendingValue;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
@@ -31,8 +37,10 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * This class represents an object which provide support for the 'marker'
  * shorthand properties.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class MarkerShorthandManager extends AbstractValueFactory implements ShorthandManager {
@@ -68,9 +76,33 @@ public class MarkerShorthandManager extends AbstractValueFactory implements Shor
 	@Override
 	public void setValues(CSSEngine eng, ShorthandManager.PropertyHandler ph, LexicalUnit lu, boolean imp)
 			throws DOMException {
+		switch (lu.getLexicalUnitType()) {
+		case VAR:
+			setPendingLonghands(eng, ph, lu, imp);
+			/* fall-through */
+		case INHERIT:
+		case UNSET:
+			return;
+		case INITIAL:
+			// none
+			try {
+				lu = new CSSParser().parsePropertyValue(new StringReader(CSSConstants.CSS_NONE_VALUE));
+			} catch (CSSParseException | IOException e) {
+			}
+		default:
+			break;
+		}
+
 		ph.property(CSSConstants.CSS_MARKER_END_PROPERTY, lu, imp);
 		ph.property(CSSConstants.CSS_MARKER_MID_PROPERTY, lu, imp);
 		ph.property(CSSConstants.CSS_MARKER_START_PROPERTY, lu, imp);
+	}
+
+	private void setPendingLonghands(CSSEngine eng, PropertyHandler ph, LexicalUnit lu, boolean imp) {
+		PendingValue pending = new PendingValue(getPropertyName(), lu);
+		ph.pendingValue(CSSConstants.CSS_MARKER_END_PROPERTY, pending, imp);
+		ph.pendingValue(CSSConstants.CSS_MARKER_MID_PROPERTY, pending, imp);
+		ph.pendingValue(CSSConstants.CSS_MARKER_START_PROPERTY, pending, imp);
 	}
 
 }

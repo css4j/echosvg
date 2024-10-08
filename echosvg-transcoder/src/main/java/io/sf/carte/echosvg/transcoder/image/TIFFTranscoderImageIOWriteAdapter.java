@@ -60,9 +60,8 @@ class TIFFTranscoderImageIOWriteAdapter implements TIFFTranscoder.WriteAdapter {
 		ImageWriter writer = ImageWriterRegistry.getInstance().getWriterFor("image/tiff");
 		ImageWriterParams params = new ImageWriterParams();
 
-		float PixSzMM = transcoder.getUserAgent().getPixelUnitToMillimeter();
-		int PixSzInch = (int) (25.4 / PixSzMM + 0.5);
-		params.setResolution(PixSzInch);
+		float resol = transcoder.getUserAgent().getResolution();
+		params.setResolution(Math.round(resol));
 
 		if (hints.containsKey(TIFFTranscoder.KEY_COMPRESSION_METHOD)) {
 			String method = (String) hints.get(TIFFTranscoder.KEY_COMPRESSION_METHOD);

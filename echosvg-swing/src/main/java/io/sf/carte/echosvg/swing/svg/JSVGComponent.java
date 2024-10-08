@@ -2505,6 +2505,25 @@ public class JSVGComponent extends JGVTComponent {
 			}
 		}
 
+		@Override
+		public float getResolution() {
+			if (EventQueue.isDispatchThread()) {
+				return userAgent.getResolution();
+			} else {
+				class Query implements Runnable {
+					float result;
+
+					@Override
+					public void run() {
+						result = userAgent.getResolution();
+					}
+				}
+				Query q = new Query();
+				invokeAndWait(q);
+				return q.result;
+			}
+		}
+
 		/**
 		 * Returns the default font family.
 		 */
@@ -3229,15 +3248,12 @@ public class JSVGComponent extends JGVTComponent {
 			return JSVGComponent.this.showConfirm(message);
 		}
 
-		/**
-		 * Returns the size of a px CSS unit in millimeters.
-		 */
 		@Override
-		public float getPixelUnitToMillimeter() {
+		public float getResolution() {
 			if (svgUserAgent != null) {
-				return svgUserAgent.getPixelUnitToMillimeter();
+				return svgUserAgent.getResolution();
 			}
-			return 0.264583333333333333333f; // 96 dpi
+			return 96f; // 96 dpi
 		}
 
 		/**
@@ -3260,7 +3276,7 @@ public class JSVGComponent extends JGVTComponent {
 				return svgUserAgent.getMediumFontSize();
 			}
 			// 9pt (72pt = 1in)
-			return 9f * 25.4f / (72f * getPixelUnitToMillimeter());
+			return 9f * getResolution() / 72f;
 		}
 
 		/**

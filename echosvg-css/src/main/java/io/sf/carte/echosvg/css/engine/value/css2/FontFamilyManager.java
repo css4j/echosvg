@@ -31,8 +31,10 @@ import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.IdentValue;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
+import io.sf.carte.echosvg.css.engine.value.RevertValue;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.StringValue;
+import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -53,11 +55,14 @@ public class FontFamilyManager extends AbstractValueManager {
 	/**
 	 * The default value.
 	 */
-	protected static final ListValue DEFAULT_VALUE = new ListValue();
-	static {
-		DEFAULT_VALUE.append(new StringValue("Arial"));
-		DEFAULT_VALUE.append(new StringValue("Helvetica"));
-		DEFAULT_VALUE.append(IdentValue.createConstant(CSSConstants.CSS_SANS_SERIF_VALUE));
+	protected static final ListValue DEFAULT_VALUE = createDefaultValue();
+
+	private static ListValue createDefaultValue() {
+		ListValue def = new ListValue(',', 4);
+		def.append(new StringValue("Arial"));
+		def.append(new StringValue("Helvetica"));
+		def.append(IdentValue.createConstant(CSSConstants.CSS_SANS_SERIF_VALUE));
+		return def.createUnmodifiableView();
 	}
 
 	/**
@@ -117,7 +122,6 @@ public class FontFamilyManager extends AbstractValueManager {
 	 */
 	@Override
 	public Value getDefaultValue() {
-		// Do not clone this value
 		return DEFAULT_VALUE;
 	}
 
@@ -125,18 +129,32 @@ public class FontFamilyManager extends AbstractValueManager {
 	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
 	 */
 	@Override
-	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
-		switch (lu.getLexicalUnitType()) {
+	public Value createValue(final LexicalUnit lunit, CSSEngine engine) throws DOMException {
+		switch (lunit.getLexicalUnitType()) {
 		case INHERIT:
 			return ValueConstants.INHERIT_VALUE;
 
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+		case ATTR:
+			return createLexicalValue(lunit);
+
 		default:
-			throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+			throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 
 		case IDENT:
 		case STRING:
 		}
 		ListValue result = new ListValue();
+		LexicalUnit lu = lunit;
 		for (;;) {
 			switch (lu.getLexicalUnitType()) {
 			case STRING:
@@ -171,12 +189,22 @@ public class FontFamilyManager extends AbstractValueManager {
 					result.append((v != null) ? v : new StringValue(id));
 				}
 				break;
+
+			case VAR:
+			case ATTR:
+				return createLexicalValue(lunit);
+
 			default:
 			}
-			if (lu == null)
+			if (lu == null) {
 				return result;
-			if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA)
+			}
+			if (lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.VAR) {
+					return createLexicalValue(lunit);
+				}
 				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+			}
 			lu = lu.getNextLexicalUnit();
 			if (lu == null)
 				throw createMalformedLexicalUnitDOMException();
@@ -185,13 +213,7 @@ public class FontFamilyManager extends AbstractValueManager {
 
 	private boolean isIdentOrNumber(LexicalUnit lu) {
 		LexicalType type = lu.getLexicalUnitType();
-		switch (type) {
-		case IDENT:
-		case INTEGER:
-			return true;
-		default:
-			return false;
-		}
+		return type == LexicalType.IDENT || type == LexicalType.INTEGER;
 	}
 
 	/**

@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
+import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.bridge.AnimatableGenericSVGBridge;
 import io.sf.carte.echosvg.bridge.BridgeContext;
@@ -33,7 +34,6 @@ import io.sf.carte.echosvg.bridge.CSSUtilities;
 import io.sf.carte.echosvg.bridge.ErrorConstants;
 import io.sf.carte.echosvg.bridge.PaintBridge;
 import io.sf.carte.echosvg.bridge.PaintServer;
-import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;

@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.css.engine.value;
 
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -58,6 +58,19 @@ public interface ValueManager {
 	 * Whether the handled property can be additively animated.
 	 */
 	boolean isAdditiveProperty();
+
+	/**
+	 * Allows URL values.
+	 * <p>
+	 * If this property accepts URL values, then {@code attr()} values cannot be
+	 * used.
+	 * </p>
+	 * 
+	 * @return {@code true} if URL values are allowed by this property.
+	 */
+	default boolean allowsURL() {
+		return false;
+	}
 
 	/**
 	 * Returns the type of value this manager handles. This should be one of the

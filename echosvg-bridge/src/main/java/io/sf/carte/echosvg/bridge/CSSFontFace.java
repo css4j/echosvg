@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.bridge;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.sf.carte.echosvg.css.dom.CSSValue.CssType;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
+import io.sf.carte.doc.style.css.CSSValue.CssType;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.FontFaceRule;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;

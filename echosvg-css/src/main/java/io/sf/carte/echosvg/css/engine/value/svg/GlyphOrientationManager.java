@@ -21,11 +21,15 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
+import io.sf.carte.echosvg.css.engine.value.CalcValue;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
+import io.sf.carte.echosvg.css.engine.value.RevertValue;
+import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -81,9 +85,6 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
 		case DIMENSION:
 			switch (lu.getCssUnit()) {
 			case CSSUnit.CSS_DEG:
@@ -95,16 +96,46 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
 			case CSSUnit.CSS_TURN:
 				return new FloatValue(CSSUnit.CSS_DEG, lu.getFloatValue() * 360f);
 			}
+			break;
 
-			// For SVG angle properties unit defaults to 'deg'.
+		// For SVG angle properties unit defaults to 'deg'.
 		case INTEGER: {
 			int n = lu.getIntegerValue();
 			return new FloatValue(CSSUnit.CSS_DEG, n);
 		}
+
 		case REAL: {
 			float n = lu.getFloatValue();
 			return new FloatValue(CSSUnit.CSS_DEG, n);
 		}
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+		case ATTR:
+			return createLexicalValue(lu);
+
+		case CALC:
+			Value calc = createCalc(lu);
+			if (calc.getPrimitiveType() != Type.EXPRESSION) {
+				return calc;
+			}
+			FloatValue f = ((CalcValue) calc).evaluate(null, null, engine, -1, null, CSSUnit.CSS_DEG);
+			if (f.getUnitType() == CSSUnit.CSS_NUMBER) {
+				f = new FloatValue(CSSUnit.CSS_DEG, f.getFloatValue());
+			}
+			return f;
+
 		default:
 			break;
 		}

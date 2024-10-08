@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.bridge;
 
 import java.awt.geom.AffineTransform;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,12 +29,11 @@ import org.w3c.dom.svg.SVGAnimatedPreserveAspectRatio;
 import org.w3c.dom.svg.SVGAnimatedRect;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
-import io.sf.carte.doc.style.css.CSSUnit;
+import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.property.Evaluator;
-import io.sf.carte.doc.style.css.property.ExpressionValue;
 import io.sf.carte.doc.style.css.property.StyleValue;
-import io.sf.carte.doc.style.css.property.TypedValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.doc.style.css.property.ValueList;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedRect;
@@ -400,17 +400,17 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 			if (item.getCssValueType() != CssType.TYPED) {
 				return false;
 			}
-			TypedValue typed;
+			CSSTypedValue typed;
 			switch (item.getPrimitiveType()) {
 			case NUMERIC:
-				typed = (TypedValue) item;
+				typed = (CSSTypedValue) item;
 				if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
 					return false;
 				}
 				break;
 			case EXPRESSION:
-				Evaluator eval = new Evaluator();
-				typed = eval.evaluateExpression((ExpressionValue) item);
+				Evaluator eval = new Evaluator(CSSUnit.CSS_NUMBER);
+				typed = eval.evaluateExpression((CSSExpressionValue) item);
 				if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
 					return false;
 				}

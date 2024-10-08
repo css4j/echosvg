@@ -56,7 +56,7 @@ public class AbstractBypassRenderingCheck {
 
 	static final String BROWSER_MEDIA = "screen";
 
-	static final String PRINT_MEDIUM = "print";
+	static final String PRINT_MEDIA = "print";
 
 	void test(String file) throws TranscoderException, IOException {
 		test(file, 0);
@@ -82,7 +82,7 @@ public class AbstractBypassRenderingCheck {
 	 */
 	void testPrint(String file, int expectedErrorCount)
 			throws TranscoderException, IOException {
-		test(file, PRINT_MEDIUM, false, null, null, true, expectedErrorCount);
+		test(file, PRINT_MEDIA, false, null, null, true, expectedErrorCount);
 	}
 
 	/**

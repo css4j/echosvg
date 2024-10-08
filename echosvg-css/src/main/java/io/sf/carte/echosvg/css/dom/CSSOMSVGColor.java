@@ -26,6 +26,7 @@ import org.w3c.dom.svg.SVGICCColor;
 import org.w3c.dom.svg.SVGNumber;
 import org.w3c.dom.svg.SVGNumberList;
 
+import io.sf.carte.echosvg.css.engine.value.CSSVal;
 import io.sf.carte.echosvg.css.engine.value.ColorFunction;
 import io.sf.carte.echosvg.css.engine.value.ColorValue;
 import io.sf.carte.echosvg.css.engine.value.NumericValue;
@@ -44,7 +45,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * @version $Id$
  */
 @SuppressWarnings("removal")
-public class CSSOMSVGColor implements CSSValue, CSSColorValue, SVGICCColor, SVGNumberList {
+public class CSSOMSVGColor implements CSSVal, CSSColorValue, SVGICCColor, SVGNumberList {
 
 	/**
 	 * The associated value.
@@ -124,6 +125,11 @@ public class CSSOMSVGColor implements CSSValue, CSSColorValue, SVGICCColor, SVGN
 	@Override
 	public String getURIValue() throws DOMException {
 		return valueProvider.getValue().getURIValue();
+	}
+
+	@Override
+	public Value clone() {
+		return valueProvider.getValue().clone();
 	}
 
 	/**

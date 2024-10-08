@@ -21,8 +21,8 @@ package io.sf.carte.echosvg.css.engine.value;
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
@@ -49,34 +49,53 @@ public abstract class RectManager extends LengthManager {
 	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
 	 */
 	@Override
-	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
-		switch (lu.getLexicalUnitType()) {
+	public Value createValue(final LexicalUnit lunit, CSSEngine engine) throws DOMException {
+		switch (lunit.getLexicalUnitType()) {
 		case FUNCTION:
-			if (!lu.getFunctionName().equalsIgnoreCase("rect")) {
+			// This case could be removed
+			if (!lunit.getFunctionName().equalsIgnoreCase("rect")) {
 				break;
 			}
 		case RECT_FUNCTION:
-			lu = lu.getParameters();
-			Value top = createRectComponent(lu);
-			lu = lu.getNextLexicalUnit();
-			if (lu == null || lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-				throw createMalformedRectDOMException();
+			LexicalUnit lu = lunit.getParameters();
+			try {
+				Value top = createRectComponent(lu);
+				lu = lu.getNextLexicalUnit();
+				if (lu == null || lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+					throw createMalformedRectDOMException();
+				}
+				lu = lu.getNextLexicalUnit();
+				Value right = createRectComponent(lu);
+				lu = lu.getNextLexicalUnit();
+				if (lu == null || lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+					throw createMalformedRectDOMException();
+				}
+				lu = lu.getNextLexicalUnit();
+				Value bottom = createRectComponent(lu);
+				lu = lu.getNextLexicalUnit();
+				if (lu == null || lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
+					throw createMalformedRectDOMException();
+				}
+				lu = lu.getNextLexicalUnit();
+				Value left = createRectComponent(lu);
+				return new RectValue(top, right, bottom, left);
+			} catch (CSSProxyValueException e) {
+				return createLexicalValue(lunit);
 			}
-			lu = lu.getNextLexicalUnit();
-			Value right = createRectComponent(lu);
-			lu = lu.getNextLexicalUnit();
-			if (lu == null || lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-				throw createMalformedRectDOMException();
-			}
-			lu = lu.getNextLexicalUnit();
-			Value bottom = createRectComponent(lu);
-			lu = lu.getNextLexicalUnit();
-			if (lu == null || lu.getLexicalUnitType() != LexicalUnit.LexicalType.OPERATOR_COMMA) {
-				throw createMalformedRectDOMException();
-			}
-			lu = lu.getNextLexicalUnit();
-			Value left = createRectComponent(lu);
-			return new RectValue(top, right, bottom, left);
+
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+		case ATTR:
+			return createLexicalValue(lunit);
+
 		default:
 			break;
 		}
@@ -90,14 +109,26 @@ public abstract class RectManager extends LengthManager {
 				return ValueConstants.AUTO_VALUE;
 			}
 			break;
+
 		case DIMENSION:
 			return createLength(lu);
+
 		case INTEGER:
 			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue());
+
 		case REAL:
 			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getFloatValue());
+
 		case PERCENTAGE:
 			return new FloatValue(CSSUnit.CSS_PERCENTAGE, lu.getFloatValue());
+
+		case VAR:
+		case ATTR:
+			throw new CSSProxyValueException();
+
+		case CALC:
+			return createCalc(lu);
+
 		default:
 			break;
 		}

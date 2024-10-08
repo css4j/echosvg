@@ -38,8 +38,13 @@ public interface SVGContext {
 
 	/**
 	 * Returns the size of a px CSS unit in millimeters.
+	 * 
+	 * @deprecated Use {@link #getResolution()} instead.
 	 */
-	float getPixelUnitToMillimeter();
+	@Deprecated
+	default float getPixelUnitToMillimeter() {
+		return 25.4f / getResolution();
+	}
 
 	/**
 	 * Returns the size of a px CSS unit in millimeters. This will be removed after
@@ -51,6 +56,11 @@ public interface SVGContext {
 	default float getPixelToMM() {
 		return getPixelUnitToMillimeter();
 	}
+
+	/**
+	 * Returns the resolution in dpi.
+	 */
+	float getResolution();
 
 	/**
 	 * Returns the tight bounding box in current user space (i.e., after application

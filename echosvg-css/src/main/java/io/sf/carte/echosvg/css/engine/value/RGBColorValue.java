@@ -173,9 +173,9 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 		g = legacyRange(g);
 		b = legacyRange(b);
 		RGBColorValue rgb = new RGBColorValue(r, g, b);
-		rgb.pcntSpecified = r.getCSSUnit() == CSSUnit.CSS_PERCENTAGE
-				|| g.getCSSUnit() == CSSUnit.CSS_PERCENTAGE
-				|| b.getCSSUnit() == CSSUnit.CSS_PERCENTAGE;
+		rgb.pcntSpecified = r.getUnitType() == CSSUnit.CSS_PERCENTAGE
+				|| g.getUnitType() == CSSUnit.CSS_PERCENTAGE
+				|| b.getUnitType() == CSSUnit.CSS_PERCENTAGE;
 		return rgb;
 	}
 
@@ -189,18 +189,18 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	 */
 	private static NumericValue constantLegacyRange(NumericValue ch)
 			throws DOMSyntaxException, IllegalArgumentException {
-		if (ch.getCSSUnit() == CSSUnit.CSS_NUMBER) {
+		if (ch.getUnitType() == CSSUnit.CSS_NUMBER) {
 			if (ch.getPrimitiveType() == Type.NUMERIC) {
 				ch = new ImmutableUnitValue(CSSUnit.CSS_NUMBER, ch.getFloatValue() / 255f);
 			} else {
 				throw new IllegalArgumentException("Cannot normalize value to [0,1] now: " + ch.getCssText());
 			}
-		} else if (ch.getCSSUnit() != CSSUnit.CSS_PERCENTAGE) {
+		} else if (ch.getUnitType() != CSSUnit.CSS_PERCENTAGE) {
 			throw new DOMSyntaxException("RGB component must be a number or percentage, not a "
-					+ CSSUnit.dimensionUnitString(ch.getCSSUnit()) + '.');
+					+ CSSUnit.dimensionUnitString(ch.getUnitType()) + '.');
 		}
 		if (ch.handler != null) {
-			ch = new ImmutableUnitValue(ch.getCSSUnit(), ch.getFloatValue());
+			ch = new ImmutableUnitValue(ch.getUnitType(), ch.getFloatValue());
 		}
 		return ch;
 	}
@@ -215,15 +215,15 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	 */
 	private static NumericValue legacyRange(NumericValue ch)
 			throws DOMSyntaxException, IllegalArgumentException {
-		if (ch.getCSSUnit() == CSSUnit.CSS_NUMBER) {
+		if (ch.getUnitType() == CSSUnit.CSS_NUMBER) {
 			if (ch.getPrimitiveType() == Type.NUMERIC) {
 				ch.setFloatValue(ch.getFloatValue() / 255f);
 			} else {
 				throw new IllegalArgumentException("Cannot normalize value to [0,1] now: " + ch.getCssText());
 			}
-		} else if (ch.getCSSUnit() != CSSUnit.CSS_PERCENTAGE) {
+		} else if (ch.getUnitType() != CSSUnit.CSS_PERCENTAGE) {
 			throw new DOMSyntaxException("RGB component must be a number or percentage, not a "
-					+ CSSUnit.dimensionUnitString(ch.getCSSUnit()) + '.');
+					+ CSSUnit.dimensionUnitString(ch.getUnitType()) + '.');
 		}
 		return ch;
 	}
@@ -279,7 +279,7 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 		}
 
 		float f;
-		if (comp.getCSSUnit() == CSSUnit.CSS_NUMBER) {
+		if (comp.getUnitType() == CSSUnit.CSS_NUMBER) {
 			f = comp.getFloatValue() * 255f;
 		} else {
 			f = comp.getFloatValue() * 2.55f;
@@ -288,7 +288,7 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	}
 
 	private String alphaComponentText(NumericValue alpha, DecimalFormat df) {
-		if (alphaPcntSpecified || alpha.getCSSUnit() == CSSUnit.CSS_NUMBER) {
+		if (alphaPcntSpecified || alpha.getUnitType() == CSSUnit.CSS_NUMBER) {
 			return alpha.getCssText();
 		}
 
@@ -320,7 +320,7 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	 * 
 	 * @return the red component.
 	 */
-	public Value getRed() {
+	public NumericValue getRed() {
 		return red;
 	}
 
@@ -329,7 +329,7 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	 * 
 	 * @return the green component.
 	 */
-	public Value getGreen() {
+	public NumericValue getGreen() {
 		return green;
 	}
 
@@ -338,7 +338,7 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	 * 
 	 * @return the blue component.
 	 */
-	public Value getBlue() {
+	public NumericValue getBlue() {
 		return blue;
 	}
 
@@ -354,7 +354,7 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	public void setR(CSSNumericValue r) throws DOMSyntaxException {
 		red = component(r);
 		componentChanged(red);
-		pcntSpecified = red.getCSSUnit() == CSSUnit.CSS_PERCENTAGE;
+		pcntSpecified = red.getUnitType() == CSSUnit.CSS_PERCENTAGE;
 	}
 
 	/**
@@ -366,9 +366,9 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	 */
 	private NumericValue component(CSSNumericValue c) throws DOMSyntaxException {
 		NumericValue ch = (NumericValue) c;
-		if (ch.getCSSUnit() != CSSUnit.CSS_PERCENTAGE && ch.getCSSUnit() != CSSUnit.CSS_NUMBER) {
+		if (ch.getUnitType() != CSSUnit.CSS_PERCENTAGE && ch.getUnitType() != CSSUnit.CSS_NUMBER) {
 			throw new DOMSyntaxException("RGB component must be a number or percentage, not a "
-					+ CSSUnit.dimensionUnitString(ch.getCSSUnit()) + '.');
+					+ CSSUnit.dimensionUnitString(ch.getUnitType()) + '.');
 		}
 		if (ch.handler != null) {
 			ch = ch.clone();
@@ -411,7 +411,7 @@ public class RGBColorValue extends ColorValue implements CSSRGB {
 	}
 
 	@Override
-	public Value item(int index) throws DOMException {
+	public NumericValue item(int index) throws DOMException {
 		switch (index) {
 		case 0:
 			return getR();

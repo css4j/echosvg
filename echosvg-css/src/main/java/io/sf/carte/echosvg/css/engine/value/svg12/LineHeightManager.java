@@ -105,14 +105,16 @@ public class LineHeightManager extends LengthManager {
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 
 		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
 		case IDENT: {
 			String s = lu.getStringValue().toLowerCase(Locale.ROOT);
 			if (CSSConstants.CSS_NORMAL_VALUE.equals(s))
 				return SVG12ValueConstants.NORMAL_VALUE;
 			throw createInvalidIdentifierDOMException(lu.getStringValue());
 		}
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
 		default:
 			return super.createValue(lu, engine);
 		}
@@ -137,7 +139,7 @@ public class LineHeightManager extends LengthManager {
 		if (value.getCssValueType() != Value.CssType.TYPED)
 			return value;
 
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_NUMBER:
 			return new LineHeightValue(CSSUnit.CSS_NUMBER, value.getFloatValue(), true);
 

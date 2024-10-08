@@ -18,13 +18,19 @@
  */
 package io.sf.carte.echosvg.css.engine;
 
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.w3c.dom.Attr;
@@ -39,24 +45,53 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MutationEvent;
 
 import io.sf.carte.doc.style.css.BooleanCondition;
+import io.sf.carte.doc.style.css.CSSCanvas;
+import io.sf.carte.doc.style.css.CSSDocument;
 import io.sf.carte.doc.style.css.CSSRule;
+import io.sf.carte.doc.style.css.CSSTypedValue;
+import io.sf.carte.doc.style.css.CSSUnit;
+import io.sf.carte.doc.style.css.CSSValue;
+import io.sf.carte.doc.style.css.CSSValue.Type;
+import io.sf.carte.doc.style.css.CSSValueSyntax;
+import io.sf.carte.doc.style.css.CSSValueSyntax.Match;
 import io.sf.carte.doc.style.css.MediaQueryList;
 import io.sf.carte.doc.style.css.SelectorMatcher;
+import io.sf.carte.doc.style.css.StyleDatabase;
+import io.sf.carte.doc.style.css.UnitStringToId;
+import io.sf.carte.doc.style.css.nsac.ArgumentCondition;
 import io.sf.carte.doc.style.css.nsac.AttributeCondition;
+import io.sf.carte.doc.style.css.nsac.CSSBudgetException;
 import io.sf.carte.doc.style.css.nsac.CSSHandler;
+import io.sf.carte.doc.style.css.nsac.CSSParseException;
+import io.sf.carte.doc.style.css.nsac.CombinatorCondition;
+import io.sf.carte.doc.style.css.nsac.CombinatorSelector;
 import io.sf.carte.doc.style.css.nsac.Condition;
+import io.sf.carte.doc.style.css.nsac.ConditionalSelector;
+import io.sf.carte.doc.style.css.nsac.DeclarationCondition;
 import io.sf.carte.doc.style.css.nsac.InputSource;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.doc.style.css.nsac.PageSelectorList;
 import io.sf.carte.doc.style.css.nsac.Parser;
 import io.sf.carte.doc.style.css.nsac.ParserControl;
 import io.sf.carte.doc.style.css.nsac.Selector;
+import io.sf.carte.doc.style.css.nsac.SelectorFunction;
 import io.sf.carte.doc.style.css.nsac.SelectorList;
+import io.sf.carte.doc.style.css.om.AbstractCSSCanvas;
+import io.sf.carte.doc.style.css.om.AbstractStyleDatabase;
+import io.sf.carte.doc.style.css.om.CSSOMParser;
 import io.sf.carte.doc.style.css.om.Specificity;
 import io.sf.carte.doc.style.css.parser.AttributeConditionVisitor;
-import io.sf.carte.doc.style.css.parser.CSSParser;
+import io.sf.carte.doc.style.css.parser.ParseHelper;
+import io.sf.carte.doc.style.css.parser.SyntaxParser;
+import io.sf.carte.doc.style.css.property.ValueFactory;
+import io.sf.carte.echosvg.css.CSSSecurityException;
+import io.sf.carte.echosvg.css.engine.value.CSSProxyValueException;
 import io.sf.carte.echosvg.css.engine.value.ComputedValue;
 import io.sf.carte.echosvg.css.engine.value.InheritValue;
+import io.sf.carte.echosvg.css.engine.value.LexicalValue;
+import io.sf.carte.echosvg.css.engine.value.PendingValue;
+import io.sf.carte.echosvg.css.engine.value.PropertyDefinition;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -66,8 +101,10 @@ import io.sf.carte.echosvg.util.ParsedURL;
 /**
  * This is the base class for all the CSS engines.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class CSSEngine {
@@ -135,6 +172,10 @@ public abstract class CSSEngine {
 	 * The CSS context.
 	 */
 	protected CSSContext cssContext;
+
+	private EngineStyleDatabase styleDb;
+
+	private CSSCanvas csscanvas;
 
 	/**
 	 * The associated document.
@@ -209,7 +250,7 @@ public abstract class CSSEngine {
 	/**
 	 * The media to use to cascade properties.
 	 */
-	protected MediaQueryList media;
+	private String medium;
 
 	/**
 	 * The DOM nodes which contains StyleSheets.
@@ -339,6 +380,13 @@ public abstract class CSSEngine {
 	protected Set<String> selectorAttributes;
 
 	/**
+	 * The map from custom property names to their definitions.
+	 */
+	private HashMap<String, PropertyDefinition> propertyDefinitionMap = null;
+
+	private static final int INITIAL_CUSTOM_PTY_SET_SIZE = 1; // Initial set is never used
+
+	/**
 	 * Used to fire a change event for all the properties.
 	 */
 	protected final int[] ALL_PROPERTIES;
@@ -374,6 +422,8 @@ public abstract class CSSEngine {
 		classNamespaceURI = cns;
 		classLocalName = cln;
 		cssContext = ctx;
+		styleDb = new EngineStyleDatabase();
+		csscanvas = new EngineCSSCanvas();
 
 		isCSSNavigableDocument = doc instanceof CSSNavigableDocument;
 
@@ -427,6 +477,177 @@ public abstract class CSSEngine {
 		for (int i = getNumberOfProperties() - 1; i >= 0; --i) {
 			ALL_PROPERTIES[i] = i;
 		}
+	}
+
+	private class EngineStyleDatabase extends AbstractStyleDatabase {
+
+		private static final long serialVersionUID = 1L;
+
+		private final List<String> fonts = getAvailableFontList();
+
+		private List<String> getAvailableFontList() {
+			return Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment()
+					.getAvailableFontFamilyNames());
+		}
+
+		@Override
+		public String getDefaultGenericFontFamily() {
+			return cssContext.getDefaultFontFamily().getStringValue();
+		}
+
+		@Override
+		public String getDefaultGenericFontFamily(String genericFamily) {
+			return genericFamily;
+		}
+
+		@Override
+		public boolean isFontFaceName(String requestedFamily) {
+			for (FontFaceRule ffRule : fontFaces) {
+				StyleMap sm = ffRule.getStyleMap();
+				int pidx = getPropertyIndex(CSSConstants.CSS_FONT_FAMILY_PROPERTY);
+				Value fontFamily = sm.getValue(pidx);
+				if (fontFamily != null && fontFamily.getStringValue().equalsIgnoreCase(requestedFamily)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		@Override
+		public int getColorDepth() {
+			// We do not have the actual Graphics2D here, but we try
+			GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			java.awt.GraphicsConfiguration gConfiguration = genv.getDefaultScreenDevice()
+					.getDefaultConfiguration();
+			int bpc = 255;
+			if (gConfiguration != null) {
+				int[] comp = gConfiguration.getColorModel().getComponentSize();
+				for (int i = 0; i < 3; i++) {
+					if (bpc > comp[i]) {
+						bpc = comp[i];
+					}
+				}
+			}
+			return bpc;
+		}
+
+		@Override
+		public float getDeviceHeight() {
+			return cssContext.getViewport(element).getHeight();
+		}
+
+		@Override
+		public float getDeviceWidth() {
+			return cssContext.getViewport(element).getWidth();
+		}
+
+		@Override
+		protected boolean isFontFamilyAvailable(String fontFamily) {
+			return fonts.contains(fontFamily);
+		}
+
+		@Override
+		public CSSTypedValue getInitialColor() {
+			String pcs = cssContext.getPrefersColorScheme();
+			return pcs != null && "dark".equals(pcs) ?
+					darkmodeInitialColor() : super.getInitialColor();
+		}
+
+		private CSSTypedValue darkmodeInitialColor() {
+			return (CSSTypedValue) new ValueFactory().parseProperty("#fff");
+		}
+
+		@Override
+		public boolean supports(SelectorList selectors) {
+			for (Selector selector : selectors) {
+				if (!supports(selector)) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		private boolean supports(Selector selector) {
+			if (selector != null) {
+				switch (selector.getSelectorType()) {
+				case CHILD:
+				case DESCENDANT:
+				case DIRECT_ADJACENT:
+				case SUBSEQUENT_SIBLING:
+					CombinatorSelector combSel = (CombinatorSelector) selector;
+					return supports(combSel.getSelector())
+							&& supports(combSel.getSecondSelector());
+				case CONDITIONAL:
+					ConditionalSelector condSel = (ConditionalSelector) selector;
+					return supports(condSel.getSimpleSelector())
+							&& supports(condSel.getCondition());
+				case COLUMN_COMBINATOR:
+					return false;
+				default:
+				}
+			}
+			return true;
+		}
+
+		private boolean supports(Condition condition) {
+			switch (condition.getConditionType()) {
+			case AND:
+				CombinatorCondition combCond = (CombinatorCondition) condition;
+				return supports(combCond.getFirstCondition())
+						&& supports(combCond.getSecondCondition());
+			case SELECTOR_ARGUMENT:
+				ArgumentCondition argCond = (ArgumentCondition) condition;
+				SelectorList selist = argCond.getSelectors();
+				return selist == null || supports(selist);
+			default:
+				return true;
+			}
+		}
+
+	}
+
+	private class EngineCSSCanvas extends AbstractCSSCanvas {
+
+		@Override
+		public CSSDocument getDocument() {
+			return null;
+		}
+
+		@Override
+		public StyleDatabase getStyleDatabase() {
+			return styleDb;
+		}
+
+		@Override
+		protected String getOverflowBlock() {
+			return "none";
+		}
+
+		@Override
+		protected String getOverflowInline() {
+			return "none";
+		}
+
+		@Override
+		protected String getPointerAccuracy() {
+			return "none";
+		}
+
+		/**
+		 * The desire for light or dark color schemes.
+		 * 
+		 * @return the {@code prefers-color-scheme} feature
+		 */
+		@Override
+		protected String getPrefersColorScheme() {
+			return cssContext.getPrefersColorScheme();
+		}
+
+		@Override
+		protected float getResolution() {
+			return cssContext.getResolution();
+		}
+
 	}
 
 	/**
@@ -604,15 +825,7 @@ public abstract class CSSEngine {
 	 * Sets the media to use to compute the styles.
 	 */
 	public void setMedia(String str) {
-		try {
-			media = parser.parseMediaQueryList(str, null);
-		} catch (Exception e) {
-			String m = e.getMessage();
-			if (m == null)
-				m = "";
-			String s = Messages.formatMessage("media.error", new Object[] { str, m });
-			throw new DOMException(DOMException.SYNTAX_ERR, s);
-		}
+		medium = str != null ? str.toLowerCase(Locale.ROOT) : null;
 	}
 
 	/**
@@ -673,7 +886,7 @@ public abstract class CSSEngine {
 
 		SelectorMatcher matcher = new SVGSelectorMatcher(elt);
 		if (pseudo != null) {
-			CSSParser parser = new CSSParser();
+			Parser parser = createCSSParser();
 			Condition pseCond = parser.parsePseudoElement(pseudo);
 			matcher.setPseudoElement(pseCond);
 		}
@@ -702,7 +915,12 @@ public abstract class CSSEngine {
 						int idx = getPropertyIndex(pname);
 						if (idx != -1) {
 							ValueManager vm = valueManagers[idx];
-							Value v = vm.createValue(lu, CSSEngine.this);
+							Value v;
+							try {
+								v = vm.createValue(lu, CSSEngine.this);
+							} catch (CSSProxyValueException e) {
+								v = new LexicalValue(lu);
+							}
 							putAuthorProperty(result, idx, v, important, StyleMap.NON_CSS_ORIGIN);
 							return;
 						}
@@ -711,6 +929,14 @@ public abstract class CSSEngine {
 							return; // Unknown property...
 						// Shorthand value
 						shorthandManagers[idx].setValues(CSSEngine.this, this, lu, important);
+					}
+
+					@Override
+					public void pendingValue(String pname, PendingValue v, boolean important) {
+						int idx = getPropertyIndex(pname);
+						if (idx != -1) { // line-height can be -1
+							putAuthorProperty(result, idx, v, important, StyleMap.NON_CSS_ORIGIN);
+						}
 					}
 				};
 
@@ -800,6 +1026,14 @@ public abstract class CSSEngine {
 							result.putOrigin(idx, StyleMap.OVERRIDE_ORIGIN);
 						}
 					}
+
+					// Custom properties
+					Map<String, LexicalUnit> customProp = over.getCustomProperties();
+					if (customProp != null) {
+						for (Map.Entry<String, LexicalUnit> entry : customProp.entrySet()) {
+							result.putCustomProperty(entry.getKey(), entry.getValue());
+						}
+					}
 				}
 			}
 		} finally {
@@ -810,11 +1044,16 @@ public abstract class CSSEngine {
 		return result;
 	}
 
+	private Parser createCSSParser() {
+		return new CSSOMParser();
+	}
+
 	/**
 	 * Returns the computed style of the given element/pseudo for the property
 	 * corresponding to the given index.
 	 */
-	public Value getComputedStyle(CSSStylableElement elt, String pseudo, int propidx) {
+	public Value getComputedStyle(CSSStylableElement elt, String pseudo, int propidx)
+			throws CSSSecurityException {
 		StyleMap sm = elt.getComputedStyleMap(pseudo);
 		if (sm == null) {
 			sm = getCascadedStyleMap(elt, pseudo);
@@ -829,21 +1068,48 @@ public abstract class CSSEngine {
 		ValueManager vm = valueManagers[propidx];
 		CSSStylableElement p = getParentCSSStylableElement(elt);
 		if (value == null) {
-			if ((p == null) || !vm.isInheritedProperty())
+			if (p == null || !vm.isInheritedProperty()) {
 				result = vm.getDefaultValue();
-		} else if ((p != null) && (value == InheritValue.INSTANCE)) {
-			result = null;
+			}
+		} else if (value.getPrimitiveType() == Type.LEXICAL) {
+			LexicalValue var = (LexicalValue) value;
+			LexicalUnit lunit = replaceLexicalValue(sm, var.getLexicalUnit(), elt, p, propidx);
+			if (lunit != null) {
+				result = vm.createValue(lunit, this);
+				if (result == null || result.getCssValueType() == CSSValue.CssType.KEYWORD) {
+					result = initialOrNull(p != null, vm, result);
+				}
+			} else {
+				result = initialOrNull(p != null, vm, null);
+			}
+		} else if (value.getPrimitiveType() == Type.INTERNAL) {
+			PendingValue pending = (PendingValue) value;
+			if (substitutePendingShorthand(sm, pending, elt, p, propidx)) {
+				result = sm.getValue(propidx);
+			} else {
+				result = initialOrNull(p != null, vm, null);
+			}
+		} else if (value.getCssValueType() == CSSValue.CssType.KEYWORD) {
+			result = initialOrNull(p != null, vm, value);
 		}
+
+		if (result != null) {
+			// Maybe it is a relative value.
+			result = vm.computeValue(elt, pseudo, this, propidx, sm, result);
+			if (result == null) {
+				// calc() gave invalid result
+				result = initialOrNull(p != null, vm, null);
+			}
+		}
+
 		if (result == null) {
 			// Value is 'inherit' and p != null.
 			// The pseudo class is not propagated.
 			result = getComputedStyle(p, null, propidx);
 			sm.putParentRelative(propidx, true);
 			sm.putInherited(propidx, true);
-		} else {
-			// Maybe is it a relative value.
-			result = vm.computeValue(elt, pseudo, this, propidx, sm, result);
 		}
+
 		if (value == null) {
 			sm.putValue(propidx, result);
 			sm.putNullCascaded(propidx, true);
@@ -856,6 +1122,563 @@ public abstract class CSSEngine {
 
 		sm.putComputed(propidx, true);
 		return result;
+	}
+
+	private static Value initialOrNull(boolean hasParent, ValueManager vm, Value value) {
+		Value result;
+		if (hasParent && (vm.isInheritedProperty() || value == InheritValue.getInstance())) {
+			result = null;
+		} else {
+			result = vm.getDefaultValue();
+		}
+		return result;
+	}
+
+	/**
+	 * Substitute the {@code PROXY} values in a lexical value.
+	 * 
+	 * @param sm          the style map.
+	 * @param lexicalUnit the lexical value.
+	 * @param elt         the element for which the value is computed.
+	 * @param parent      the parent element, or {@code null} if no parent.
+	 * @param propIdx     the property index.
+	 * @return the replaced lexical unit.
+	 * @throws DOMException
+	 * @throws CSSCircularityException   if a circularity was found while evaluating
+	 *                                   custom properties.
+	 * @throws CSSResourceLimitException if the limit of recursions or allowed
+	 *                                   substitutions was exceeded.
+	 */
+	private LexicalUnit replaceLexicalValue(StyleMap sm, LexicalUnit lexicalUnit, CSSStylableElement elt,
+			CSSStylableElement parent, int propIdx) throws CSSSecurityException {
+		HashSet<String> customPropertySet = new HashSet<>(INITIAL_CUSTOM_PTY_SET_SIZE);
+
+		CounterRef counter = new CounterRef();
+
+		LexicalUnit lunit = lexicalUnit.clone();
+		LexicalUnit replUnit;
+		try {
+			replUnit = replaceLexicalProxy(sm, lunit, elt, parent, counter, customPropertySet, propIdx);
+		} catch (CSSSecurityException e) {
+			throw e;
+		} catch (DOMException e) {
+			displayOrThrowError(e);
+			return null;
+		}
+
+		if (replUnit != null && replUnit.getLexicalUnitType() == LexicalType.EMPTY) {
+			replUnit = null;
+		}
+
+		return replUnit;
+	}
+
+	/**
+	 * Given a lexical value, replace all occurrences of the {@code VAR} and
+	 * {@code ATTR} lexical types with the values of the corresponding custom
+	 * properties or attributes, and incrementing the supplied counter.
+	 * 
+	 * @param sm           the style map.
+	 * @param lexval       the lexical value.
+	 * @param elt          the element for which the value is computed.
+	 * @param parent       the parent element, or {@code null} if no parent.
+	 * @param counter      the substitution and recursion counter.
+	 * @param customPtySet the set of custom property names, to prevent circular
+	 *                     dependencies.
+	 * @param propIdx      the property index.
+	 * @return the replaced lexical unit.
+	 * @throws DOMException
+	 * @throws CSSCircularityException   if a circularity was found while evaluating
+	 *                                   custom properties.
+	 * @throws CSSResourceLimitException if the limit of recursions or allowed
+	 *                                   substitutions was exceeded.
+	 */
+	private LexicalUnit replaceLexicalProxy(StyleMap sm, LexicalUnit lexval, CSSStylableElement elt,
+			CSSStylableElement parent, CounterRef counter, Set<String> customPtySet, int propIdx)
+					throws DOMException, CSSSecurityException {
+		final int REPLACE_COUNT_LIMIT = 0x20000; // Number of allowed lexical substitutions
+
+		/*
+		 * Prepare a working set of traversed custom properties
+		 */
+		Set<String> ptySet = new HashSet<>(customPtySet.size() + 8);
+		ptySet.addAll(customPtySet);
+
+		/*
+		 * Replace the PROXY (var(), attr()) values in the lexical chain
+		 */
+		LexicalUnit lu = lexval;
+		do {
+			if (lu.getLexicalUnitType() == LexicalType.VAR) {
+				LexicalUnit newlu;
+				LexicalUnit param = lu.getParameters();
+				String propertyName = param.getStringValue(); // Property name
+				param = param.getNextLexicalUnit(); // Comma?
+				if (param != null) {
+					param = param.getNextLexicalUnit(); // Fallback
+				}
+
+				/*
+				 * Obtain a value and replace this var() in the lexical chain
+				 */
+				newlu = getCustomPropertyValueOrFallback(sm, propertyName, param, parent, counter, ptySet);
+
+				boolean isLexval = lu == lexval;
+				if (newlu == null) {
+					// The current lexical unit can be removed
+					lu = lu.remove();
+					if (isLexval) {
+						// We are processing the first in the lexical chain, re-assign
+						lexval = lu;
+					}
+					continue;
+				}
+
+				if (newlu.getLexicalUnitType() != LexicalType.EMPTY) {
+					// We do not want to mess with a declared value, so clone it
+					newlu = newlu.clone();
+					try {
+						counter.replaceCounter += lu.countReplaceBy(newlu);
+					} catch (CSSBudgetException e) {
+						throw createVarResourceLimitException(propertyName, e);
+					}
+					if (counter.replaceCounter >= REPLACE_COUNT_LIMIT) {
+						throw createVarResourceLimitException(propertyName);
+					}
+					lu = newlu;
+					if (isLexval) {
+						// We are processing the first in the lexical chain, re-assign
+						lexval = newlu;
+					}
+					// Can we reset the circularity safeguard?
+					LexicalType ltype = lu.getLexicalUnitType();
+					if (ltype != LexicalType.VAR && ltype != LexicalType.ATTR) {
+						ptySet.clear();
+						ptySet.addAll(customPtySet);
+					}
+				} else {
+					// The current lexical unit can be removed
+					lu = lu.remove();
+					if (isLexval) {
+						// We are processing the first in the lexical chain, re-assign
+						lexval = lu;
+					}
+				}
+				continue;
+			} else if (lu.getLexicalUnitType() == LexicalType.ATTR) {
+				if (valueManagers[propIdx].allowsURL()) {
+					return null;
+				}
+				boolean isLexval = lu == lexval;
+				LexicalUnit newlu = replacementAttrUnit(sm, lu, elt, parent, counter, ptySet, propIdx);
+				try {
+					counter.replaceCounter += lu.countReplaceBy(newlu);
+				} catch (CSSBudgetException e) {
+					throw createAttrResourceLimitException(e);
+				}
+				if (counter.replaceCounter >= REPLACE_COUNT_LIMIT) {
+					throw createAttrResourceLimitException();
+				}
+
+				if (newlu == null) {
+					// The current lexical unit can be removed
+					lu = lu.remove();
+					if (isLexval) {
+						// We are processing the first in the lexical chain, re-assign
+						lexval = lu;
+					}
+					continue;
+				}
+
+				if (newlu.getLexicalUnitType() != LexicalType.EMPTY) {
+					// We do not want to mess with a declared value, so clone it
+					newlu = newlu.clone();
+					try {
+						counter.replaceCounter += lu.countReplaceBy(newlu);
+					} catch (CSSBudgetException e) {
+						throw createAttrResourceLimitException(e);
+					}
+					if (counter.replaceCounter >= REPLACE_COUNT_LIMIT) {
+						throw createAttrResourceLimitException();
+					}
+					lu = newlu;
+					if (isLexval) {
+						// We are processing the first in the lexical chain, re-assign
+						lexval = newlu;
+					}
+				} else {
+					// The current lexical unit can be removed
+					lu = lu.remove();
+					if (isLexval) {
+						// We are processing the first in the lexical chain, re-assign
+						lexval = lu;
+					}
+				}
+				continue;
+			} else {
+				LexicalUnit param = lu.getParameters();
+				if (param != null || (param = lu.getSubValues()) != null) {
+					// Ignore return value (it is a parameter or a sub-value)
+					replaceLexicalProxy(sm, param, elt, parent, counter, ptySet, propIdx);
+				}
+			}
+			lu = lu.getNextLexicalUnit();
+		} while (lu != null);
+
+		return lexval;
+	}
+
+	/**
+	 * Obtain the (lexical) value of a custom property and replace any {@code VAR}
+	 * unit in it, applying the fallback if necessary.
+	 * 
+	 * @param sm
+	 * @param customProperty the custom property name.
+	 * @param fallbackLU     the custom property fallback.
+	 * @param parent         the parent element, or {@code null} if no parent.
+	 * @param counter        the counter.
+	 * @param customPtySet   the set of custom property names, to prevent circular
+	 *                       dependencies.
+	 * @return the value of {@code customProperty} or the fallback if there is no
+	 *         value.
+	 * @throws DOMException
+	 * @throws CSSCircularityException   if a circularity was found while evaluating
+	 *                                   custom properties.
+	 * @throws CSSResourceLimitException if the limit of recursions or allowed
+	 *                                   substitutions was exceeded.
+	 */
+	private LexicalUnit getCustomPropertyValueOrFallback(StyleMap sm, String customProperty, LexicalUnit fallbackLU,
+			CSSStylableElement parent, CounterRef counter, Set<String> customPtySet)
+			throws DOMException, CSSSecurityException {
+		if (!customPtySet.add(customProperty)) {
+			throw new CSSCircularityException(
+					"Circularity evaluating custom property " + customProperty + ": " + customPtySet.toString());
+		}
+
+		LexicalUnit custom = getCustomProperty(sm, customProperty, parent);
+
+		if (custom != null) {
+			if (counter.increment()) {
+				return custom;
+			} else {
+				throw createVarResourceLimitException(customProperty);
+			}
+		}
+
+		// customProperty is null, no circularity.
+		customPtySet.remove(customProperty);
+
+		// Fallback
+		return fallbackLU;
+	}
+
+	private LexicalUnit getCustomProperty(StyleMap sm, String name, CSSStylableElement parent) {
+		// First, try to obtain a possible property definition from a @property rule
+		PropertyDefinition definition = getPropertyDefinition(name);
+		boolean inherits = definition == null || definition.inherits();
+
+		LexicalUnit custom;
+		while ((custom = sm.getCustomProperty(name)) == null && inherits) {
+			if (parent != null) {
+				sm = parent.getComputedStyleMap(null);
+				if (sm == null) {
+					sm = getCascadedStyleMap(parent, null);
+					parent.setComputedStyleMap(null, sm);
+				}
+				parent = getParentCSSStylableElement(parent);
+			} else {
+				break;
+			}
+		}
+
+		if (custom == null) {
+			if (definition != null) {
+				custom = definition.getInitialValue();
+			}
+		} else if (definition != null) {
+			CSSValueSyntax syntax = definition.getSyntax();
+			// syntax is never null
+			if (custom.matches(syntax) == Match.FALSE) {
+				custom = definition.getInitialValue();
+			}
+		}
+
+		return custom;
+	}
+
+	private PropertyDefinition getPropertyDefinition(String name) {
+		return propertyDefinitionMap == null ? null : propertyDefinitionMap.get(name);
+	}
+
+	/**
+	 * Perform a lexical substitution on a pending shorthand value.
+	 * 
+	 * @param sm      the style map.
+	 * @param pending the pending longhand value.
+	 * @param elt     the element for which the value is computed.
+	 * @param parent  the parent element, or {@code null} if no parent.
+	 * @param propIdx the property index.
+	 * @return {@code true} if the shorthand was replaced successfully.
+	 * @throws DOMException
+	 * @throws CSSCircularityException   if a circularity was found while evaluating
+	 *                                   custom properties.
+	 * @throws CSSResourceLimitException if the limit of recursions or allowed
+	 *                                   substitutions was exceeded.
+	 */
+	private boolean substitutePendingShorthand(StyleMap sm, PendingValue pending, CSSStylableElement elt,
+			CSSStylableElement parent, int propIdx) throws DOMException, CSSSecurityException {
+		LexicalUnit lunit = replaceLexicalProxy(sm, pending.getLexicalUnit().clone(), elt, parent,
+				new CounterRef(), new HashSet<>(INITIAL_CUSTOM_PTY_SET_SIZE), propIdx);
+		boolean ret = lunit != null ?
+				setShorthandLonghands(sm, pending.getShorthandName(), lunit, sm.isImportant(propIdx)) : false;
+		return ret;
+	}
+
+	private boolean setShorthandLonghands(StyleMap sm, String propertyName, LexicalUnit value,
+			boolean important) throws DOMException {
+		try {
+			int idx = getShorthandIndex(propertyName);
+			if (idx == -1)
+				return false; // Unknown property...
+			// Shorthand value
+			shorthandManagers[idx].setValues(CSSEngine.this, new ShorthandManager.PropertyHandler() {
+
+				@Override
+				public void property(String pname, LexicalUnit value, boolean important) {
+					int idx = getPropertyIndex(pname);
+					if (idx != -1) {
+						Value oldv = sm.getValue(idx);
+						if (oldv == null || oldv.getPrimitiveType() == Type.INTERNAL) {
+							ValueManager vm = valueManagers[idx];
+							Value v = vm.createValue(value, CSSEngine.this);
+							sm.putValue(idx, v);
+							// sm.putImportant(idx, important); // already done
+						} // else the value was set later
+					} else {
+						// This can be removed
+						throw new IllegalStateException("Unknown pending value.");
+					}
+				}
+
+				@Override
+				public void pendingValue(String name, PendingValue value, boolean important) {
+					throw new IllegalStateException("Cannot set pending values after replacement.");
+				}
+
+			}, value, important);
+			return true;
+		} catch (DOMException e) {
+			// Report error
+			DOMException ex = new DOMException(e.code, "Error setting shorthand " + propertyName);
+			ex.initCause(e);
+			displayOrThrowError(ex);
+			return false;
+		}
+	}
+
+	private LexicalUnit replacementAttrUnit(StyleMap sm, LexicalUnit attr, CSSStylableElement elt,
+			CSSStylableElement parent, CounterRef counter, Set<String> ptySet, int propIdx) {
+		// Obtain attribute name and type (if set)
+		LexicalUnit lu = attr.getParameters();
+		if (lu.getLexicalUnitType() != LexicalType.IDENT) {
+			valueSyntaxError("Unexpected attribute name (" + lu.getCssText() + ") in " + attr.getCssText());
+			return null;
+		}
+		String attrname = lu.getStringValue();
+		String attrtype;
+		lu = lu.getNextLexicalUnit();
+		if (lu != null) {
+			if (lu.getLexicalUnitType() != LexicalType.OPERATOR_COMMA) {
+				switch (lu.getLexicalUnitType()) {
+				case IDENT:
+					attrtype = lu.getStringValue().toLowerCase(Locale.ROOT);
+					break;
+				case OPERATOR_MOD:
+					attrtype = "%";
+					break;
+				default:
+					valueSyntaxError(
+							"Unexpected attribute type (" + lu.getCssText() + ") in " + attr.getCssText());
+					return null;
+				}
+				lu = lu.getNextLexicalUnit();
+				if (lu != null) {
+					if (lu.getLexicalUnitType() != LexicalType.OPERATOR_COMMA) {
+						valueSyntaxError(
+								"Expected comma, found: " + lu.getCssText() + " in " + attr.getCssText());
+						return null;
+					}
+					lu = lu.getNextLexicalUnit();
+				}
+			} else {
+				lu = lu.getNextLexicalUnit();
+				if (lu == null) {
+					// Ending with comma is wrong syntax
+					valueSyntaxError("Unexpected end after comma in value " + attr.getCssText());
+					return null;
+				}
+				attrtype = null;
+			}
+		} else {
+			attrtype = null;
+		}
+
+		// Obtain the attribute value
+		String attrvalue = elt.getAttribute(attrname);
+
+		Parser parser = createCSSParser();
+
+		/*
+		 * string type is a special case
+		 */
+		if (attrtype == null || "string".equalsIgnoreCase(attrtype)) {
+			String s = ParseHelper.quote(attrvalue, '"');
+			LexicalUnit substValue;
+			try {
+				substValue = parser.parsePropertyValue(new StringReader(s));
+			} catch (IOException e) {
+				// This won't happen
+				substValue = null;
+			} catch (CSSParseException e) {
+				// Possibly a budget error
+				valueSyntaxError("Unexpected error parsing: " + s.substring(0, Math.min(s.length(), 255)), e);
+				// Process fallback
+				substValue = lu;
+				if (substValue != null) {
+					substValue = substValue.clone();
+				} else {
+					try {
+						return parser.parsePropertyValue(new StringReader(""));
+					} catch (CSSParseException | IOException e1) {
+					}
+				}
+			}
+			// No further processing required
+			return replaceLexicalProxy(sm, substValue, elt, parent, counter, ptySet, propIdx);
+		}
+
+		if (!attrvalue.isEmpty()) {
+			/*
+			 * Non-string types
+			 */
+			attrvalue = attrvalue.trim();
+
+			// Let's see if the type is an actual type or an unit suffix
+			if (attrtype.length() <= 2 || UnitStringToId.unitFromString(attrtype) != CSSUnit.CSS_OTHER) {
+				attrvalue += attrtype;
+			}
+
+			LexicalUnit substValue;
+			try {
+				substValue = parser.parsePropertyValue(new StringReader(attrvalue));
+			} catch (IOException e) {
+				// This won't happen
+				substValue = null;
+			} catch (CSSParseException e) {
+				valueSyntaxError("Error parsing attribute '" + attrname + "', value: " + attrvalue, e);
+				// Return fallback
+				if (lu != null) {
+					return replaceLexicalProxy(sm, lu.clone(), elt, parent, counter, ptySet, propIdx);
+				}
+				return null;
+			}
+			try {
+				substValue = replaceLexicalProxy(sm, substValue, elt, parent, counter, ptySet, propIdx);
+			} catch (Exception e) {
+				valueSyntaxError("Circularity: " + attr.getCssText() + " references " + substValue.getCssText(), e);
+				// Return fallback
+				substValue = null;
+			}
+			if (substValue != null) {
+				substValue = replaceLexicalProxy(sm, substValue, elt, parent, counter, ptySet, propIdx);
+				// Now check that the value is of the correct type.
+				//
+				// If the attribute type length is 1 or 2, type can only be a unit suffix
+				// and there is no need to check.
+				if (attrtype.length() > 2 && !unitMatchesAttrType(substValue, attrtype)) {
+					substValue = null;
+					valueSyntaxError("Attribute value does not match type (" + attrtype + ").");
+				} else {
+					return substValue;
+				}
+			} else {
+				// Fallback
+				if (lu != null) {
+					substValue = replaceLexicalProxy(sm, lu.clone(), elt, parent, counter, ptySet, propIdx);
+				}
+				return substValue;
+			}
+		}
+
+		// Return fallback
+		return lu == null ? null : replaceLexicalProxy(sm, lu, elt, parent, counter, ptySet, propIdx);
+	}
+
+	private static boolean unitMatchesAttrType(LexicalUnit lunit, String attrtype) {
+		int len = attrtype.length();
+		if (len == 1) {
+			return "%".equals(attrtype) && lunit.getCssUnit() == CSSUnit.CSS_PERCENTAGE;
+		} else if (len == 2) {
+			return attrtype.equalsIgnoreCase(lunit.getDimensionUnitText());
+		}
+		if ("ident".equalsIgnoreCase(attrtype)) {
+			attrtype = "custom-ident";
+		}
+		CSSValueSyntax syn = SyntaxParser.createSimpleSyntax(attrtype);
+		if (syn == null) {
+			// Could be a 3-4 letter unit suffix, or an error
+			return attrtype.equalsIgnoreCase(lunit.getDimensionUnitText());
+		}
+		if (syn.getCategory() == CSSValueSyntax.Category.url) {
+			// There is no <url> syntax for security reasons
+			return false;
+		}
+		return lunit.matches(syn) == Match.TRUE;
+	}
+
+	private void valueSyntaxError(String message) {
+		DOMException ex = new DOMException(DOMException.SYNTAX_ERR, message);
+		displayOrThrowError(ex);
+	}
+
+	private void valueSyntaxError(String message, Throwable cause) {
+		DOMException ex = new DOMException(DOMException.SYNTAX_ERR, message);
+		ex.initCause(cause);
+		displayOrThrowError(ex);
+	}
+
+	private CSSResourceLimitException createVarResourceLimitException(String propertyName) {
+		return createResourceLimitException(
+				"Resource limit hit while replacing custom property: " + propertyName);
+	}
+
+	private CSSResourceLimitException createVarResourceLimitException(String propertyName, Throwable cause) {
+		return createResourceLimitException(
+				"Resource limit hit while replacing custom property " + propertyName, cause);
+	}
+
+	private CSSResourceLimitException createAttrResourceLimitException() {
+		return createResourceLimitException("Resource limit hit while replacing attr() property.");
+	}
+
+	private CSSResourceLimitException createAttrResourceLimitException(Throwable e) {
+		return createResourceLimitException(
+				"Resource limit hit while replacing attr() property.", e);
+	}
+
+	private CSSResourceLimitException createResourceLimitException(String message) {
+		return new CSSResourceLimitException(message);
+	}
+
+	private CSSResourceLimitException createResourceLimitException(String message, Throwable e) {
+		return new CSSResourceLimitException(message, e);
+	}
+
+	private void displayOrThrowError(RuntimeException ex) {
+		if (userAgent == null) {
+			throw ex;
+		}
+		userAgent.displayError(ex);
 	}
 
 	/**
@@ -977,6 +1800,11 @@ public abstract class CSSEngine {
 					// Shorthand value
 					shorthandManagers[idx].setValues(CSSEngine.this, this, lu, important);
 				}
+
+				@Override
+				public void pendingValue(String name, PendingValue value, boolean important) {
+					dst.setMainProperty(name, value, important);
+				}
 			};
 			ph.property(pname, lu, important);
 		} catch (Exception e) {
@@ -1005,8 +1833,9 @@ public abstract class CSSEngine {
 	 */
 	public Value parsePropertyValue(CSSStylableElement elt, String prop, String value) {
 		int idx = getPropertyIndex(prop);
-		if (idx == -1)
+		if (idx == -1) {
 			return null;
+		}
 		ValueManager vm = valueManagers[idx];
 		try {
 			element = elt;
@@ -1306,8 +2135,124 @@ public abstract class CSSEngine {
 					addMatchingRules(rules, mr, matcher);
 				}
 				break;
+
+			case SupportsRule.TYPE:
+				SupportsRule sr = (SupportsRule) r;
+				if (sr.supports) {
+					addMatchingRules(rules, sr, matcher);
+				}
+				break;
 			}
 		}
+	}
+
+	/**
+	 * Whether the given media list matches the media list of this CSSEngine object.
+	 */
+	protected boolean mediaMatch(MediaQueryList ml) {
+		if (medium == null || ml == null || ml.isAllMedia()) {
+			return true;
+		}
+		return ml.matches(medium, csscanvas);
+	}
+
+	private void setSupports(SupportsRule sr) {
+		BooleanCondition condition = sr.getCondition();
+		if (condition != null) {
+			try {
+				sr.supports = supports(condition);
+				return;
+			} catch (Exception e) {
+			}
+		}
+		sr.supports = false;
+	}
+
+	private boolean supports(BooleanCondition condition) {
+		switch (condition.getType()) {
+		case PREDICATE:
+			DeclarationCondition declCond = (DeclarationCondition) condition;
+			return supports(declCond.getName(), declCond.getValue());
+		case AND:
+			List<BooleanCondition> subcond = condition.getSubConditions();
+			if (subcond == null) {
+				// No conditions inside and()
+				DOMException ex = new DOMException(DOMException.SYNTAX_ERR, "No conditions inside and().");
+				userAgent.displayError(ex);
+				return false;
+			}
+			Iterator<BooleanCondition> it = subcond.iterator();
+			while (it.hasNext()) {
+				if (!supports(it.next())) {
+					return false;
+				}
+			}
+			return true;
+		case NOT:
+			BooleanCondition nested = condition.getNestedCondition();
+			if (nested == null) {
+				// No condition inside not()
+				DOMException ex = new DOMException(DOMException.SYNTAX_ERR, "No condition inside not().");
+				userAgent.displayError(ex);
+				return false;
+			}
+			return !supports(nested);
+		case OR:
+			subcond = condition.getSubConditions();
+			if (subcond == null) {
+				// No conditions inside or()
+				DOMException ex = new DOMException(DOMException.SYNTAX_ERR, "No conditions inside or().");
+				userAgent.displayError(ex);
+				return false;
+			}
+			it = subcond.iterator();
+			while (it.hasNext()) {
+				if (supports(it.next())) {
+					return true;
+				}
+			}
+			break;
+		case SELECTOR_FUNCTION:
+			SelectorFunction selCond = (SelectorFunction) condition;
+			return styleDb.supports(selCond.getSelectors());
+		case OTHER:
+			break;
+		}
+
+		return false;
+	}
+
+	private boolean supports(String property, LexicalUnit value) {
+		int idx = getPropertyIndex(property);
+		if (idx != -1) {
+			try {
+				valueManagers[idx].createValue(value, CSSEngine.this);
+				return true;
+			} catch (Exception e) {
+			}
+			return false;
+		}
+
+		idx = getShorthandIndex(property);
+		if (idx != -1) {
+			try {
+				shorthandManagers[idx].setValues(this, new ShorthandManager.PropertyHandler() {
+
+					@Override
+					public void property(String name, LexicalUnit value, boolean important) {
+					}
+
+					@Override
+					public void pendingValue(String name, PendingValue value, boolean important) {
+					}
+
+				}, value, false);
+				return true;
+			} catch (Exception e) {
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -1323,6 +2268,14 @@ public abstract class CSSEngine {
 				int len = sd.size();
 				for (int i = 0; i < len; i++) {
 					putAuthorProperty(sm, sd.getIndex(i), sd.getValue(i), sd.getPriority(i), origin);
+				}
+
+				// Custom properties
+				Map<String, LexicalUnit> customProp = sd.getCustomProperties();
+				if (customProp != null) {
+					for (Map.Entry<String, LexicalUnit> entry : customProp.entrySet()) {
+						sm.putCustomProperty(entry.getKey(), entry.getValue());
+					}
 				}
 			}
 		} else {
@@ -1383,16 +2336,6 @@ public abstract class CSSEngine {
 	}
 
 	/**
-	 * Whether the given media list matches the media list of this CSSEngine object.
-	 */
-	protected boolean mediaMatch(MediaQueryList ml) {
-		if (media == null || ml == null || media.isAllMedia()) {
-			return true;
-		}
-		return ml.matches(media);
-	}
-
-	/**
 	 * To parse a style declaration.
 	 */
 	protected class StyleDeclarationDocumentHandler extends DocumentAdapter
@@ -1430,6 +2373,19 @@ public abstract class CSSEngine {
 			}
 		}
 
+		@Override
+		public void lexicalProperty(String name, LexicalUnit value, boolean important) {
+			styleMap.putCustomProperty(name, value);
+		}
+
+		@Override
+		public void pendingValue(String name, PendingValue v, boolean important) {
+			int idx = getPropertyIndex(name);
+			if (idx != -1) { // line-height can be -1
+				putAuthorProperty(styleMap, idx, v, important, StyleMap.INLINE_AUTHOR_ORIGIN);
+			}
+		}
+
 	}
 
 	/**
@@ -1455,6 +2411,19 @@ public abstract class CSSEngine {
 			}
 		}
 
+		@Override
+		public void lexicalProperty(String name, LexicalUnit value, boolean important) {
+			styleDeclaration.setCustomProperty(name, value, important);
+		}
+
+		@Override
+		public void pendingValue(String name, PendingValue value, boolean important) {
+			int idx = getPropertyIndex(name);
+			if (idx != -1) { // line-height can be -1
+				styleDeclaration.append(value, idx, important);
+			}
+		}
+
 	}
 
 	/**
@@ -1465,6 +2434,8 @@ public abstract class CSSEngine {
 		public StyleSheet styleSheet;
 		protected StyleRule styleRule;
 		protected StyleDeclaration styleDeclaration;
+
+		private PropertyDefinitionImpl currentPropertyDefinition = null;
 
 		private int ignoredForRule = 0;
 
@@ -1651,28 +2622,53 @@ public abstract class CSSEngine {
 		public void startProperty(String name) {
 			if (ignoredForRule == 0) {
 				ignoredForRule = CSSRule.PROPERTY_RULE;
+			} else {
+				return;
 			}
+
+			if (propertyDefinitionMap == null) {
+				propertyDefinitionMap = new HashMap<>();
+			}
+
+			currentPropertyDefinition = new PropertyDefinitionImpl(name);
 		}
 
 		@Override
 		public void endProperty(boolean discard) {
-			if (ignoredForRule == CSSRule.PROPERTY_RULE) {
-				ignoredForRule = 0;
+			if (ignoredForRule != CSSRule.PROPERTY_RULE) {
+				return;
 			}
+
+			if (!discard) {
+				propertyDefinitionMap.put(currentPropertyDefinition.getName(), currentPropertyDefinition);
+			}
+
+			currentPropertyDefinition = null;
+			ignoredForRule = 0;
 		}
 
 		@Override
 		public void startSupports(BooleanCondition condition) {
-			if (ignoredForRule == 0) {
-				ignoredForRule = CSSRule.SUPPORTS_RULE;
+			if (ignoredForRule > 0) {
+				return;
 			}
+
+			SupportsRule sr = new SupportsRule(condition);
+
+			setSupports(sr);
+
+			sr.setParent(styleSheet);
+			styleSheet.append(sr);
+			styleSheet = sr;
 		}
 
 		@Override
 		public void endSupports(BooleanCondition condition) {
-			if (ignoredForRule == CSSRule.SUPPORTS_RULE) {
-				ignoredForRule = 0;
+			if (ignoredForRule > 0) {
+				return;
 			}
+
+			styleSheet = styleSheet.getParent();
 		}
 
 		@Override
@@ -1738,6 +2734,55 @@ public abstract class CSSEngine {
 					userAgent.displayError(e);
 					return;
 				}
+				styleDeclaration.append(v, i, important);
+			}
+		}
+
+		@Override
+		public void lexicalProperty(String name, LexicalUnit value, boolean important) {
+			if (ignoredForRule == CSSRule.PROPERTY_RULE) {
+				propertyRuleDescriptor(name, value, important);
+				return;
+			} else if (ignoredForRule > 0) {
+				return;
+			}
+
+			styleDeclaration.setCustomProperty(name, value, important);
+		}
+
+		private void propertyRuleDescriptor(String name, LexicalUnit value, boolean important) {
+			switch (name) {
+			case "inherits":
+				currentPropertyDefinition.setInherits(!"false".equalsIgnoreCase(value.getStringValue()));
+				break;
+			case "initial-value":
+				currentPropertyDefinition.setInitialValue(value);
+				break;
+			case "syntax":
+				String s = value.getStringValue();
+				if (s == null) {
+					s = "*";
+				}
+				SyntaxParser synParser = new SyntaxParser();
+				CSSValueSyntax syn;
+				try {
+					syn = synParser.parseSyntax(s);
+				} catch (Exception e) {
+					syn = synParser.parseSyntax("*");
+				}
+				currentPropertyDefinition.setSyntax(syn);
+				break;
+			}
+		}
+
+		@Override
+		public void pendingValue(String name, PendingValue v, boolean important) {
+			if (ignoredForRule > 0) {
+				return;
+			}
+
+			int i = getPropertyIndex(name);
+			if (i != -1) { // line-height can be -1
 				styleDeclaration.append(v, i, important);
 			}
 		}
@@ -2274,6 +3319,22 @@ public abstract class CSSEngine {
 			}
 		}
 
+		@Override
+		public void pendingValue(String name, PendingValue v, boolean important) {
+			int i = getPropertyIndex(name);
+			if (styleMap.isImportant(i)) {
+				// The previous value is important, and a value
+				// from a style attribute cannot be important...
+				return;
+			}
+
+			updatedProperties[i] = true;
+
+			styleMap.putMask(i, 0);
+			styleMap.putValue(i, v);
+			styleMap.putOrigin(i, StyleMap.INLINE_AUTHOR_ORIGIN);
+		}
+
 	}
 
 	/**
@@ -2299,8 +3360,7 @@ public abstract class CSSEngine {
 		case MutationEvent.MODIFICATION:
 			element = elt;
 			try {
-				LexicalUnit lu;
-				lu = parser.parsePropertyValue(new StringReader(newValue));
+				LexicalUnit lu = parser.parsePropertyValue(new StringReader(newValue));
 				ValueManager vm = valueManagers[idx];
 				Value v = vm.createValue(lu, CSSEngine.this);
 				style.putMask(idx, 0);

@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.css.engine.value;
 
 import org.w3c.css.om.unit.CSSUnit;
 
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
@@ -101,7 +102,7 @@ public interface ValueConstants {
 	/**
 	 * The 'inherit' value.
 	 */
-	Value INHERIT_VALUE = InheritValue.INSTANCE;
+	Value INHERIT_VALUE = InheritValue.getInstance();
 
 	/**
 	 * The 'all' keyword.
@@ -827,5 +828,10 @@ public interface ValueConstants {
 	 * The 'transparent' RGB color.
 	 */
 	Value TRANSPARENT_RGB_VALUE = RGBColorValue.createConstant(NUMBER_0, NUMBER_0, NUMBER_0, NUMBER_0);
+
+	/**
+	 * A lexical unit with value zero.
+	 */
+	LexicalUnit ZERO_LEXICAL_UNIT = LexicalHelper.parsePropertyValue("0");
 
 }

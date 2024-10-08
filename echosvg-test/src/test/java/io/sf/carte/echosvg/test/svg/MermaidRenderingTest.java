@@ -112,7 +112,7 @@ public class MermaidRenderingTest extends AbstractBypassRenderingCheck {
 
 	@Test
 	public void testClass() throws TranscoderException, IOException {
-		testMermaid("samples/tests/spec2/foreign/mermaid-class.svg", 1);
+		testMermaid("samples/tests/spec2/foreign/mermaid-class.svg");
 	}
 
 	@Test
@@ -137,17 +137,17 @@ public class MermaidRenderingTest extends AbstractBypassRenderingCheck {
 
 	@Test
 	public void testGantt() throws TranscoderException, IOException {
-		testMermaid("samples/tests/spec2/foreign/mermaid-gantt.svg", 6);
+		testMermaid("samples/tests/spec2/foreign/mermaid-gantt.svg", 1);
 	}
 
 	@Test
 	public void testGitGraph() throws TranscoderException, IOException {
-		testMermaid("samples/tests/spec2/foreign/mermaid-git-graph.svg", 1);
+		testMermaid("samples/tests/spec2/foreign/mermaid-git-graph.svg");
 	}
 
 	@Test
 	public void testJourney() throws TranscoderException, IOException {
-		testMermaid("samples/tests/spec2/foreign/mermaid-journey.svg", 9);
+		testMermaid("samples/tests/spec2/foreign/mermaid-journey.svg", 7);
 	}
 
 	@Test

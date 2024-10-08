@@ -109,7 +109,7 @@ public class CSSOMValue implements Value {
 	 * Converts the actual float value to the given unit type.
 	 */
 	public static float convertFloatValue(short unitType, Value value) {
-		if (value.getCSSUnit() == unitType) {
+		if (value.getUnitType() == unitType) {
 			return value.getFloatValue();
 		}
 		switch (unitType) {
@@ -153,7 +153,7 @@ public class CSSOMValue implements Value {
 		case CSSUnit.CSS_KHZ:
 			return tokHertz(value);
 		default:
-			return NumberValue.floatValueConversion(value.getFloatValue(), value.getCSSUnit(),
+			return NumberValue.floatValueConversion(value.getFloatValue(), value.getUnitType(),
 					unitType);
 		}
 		throw new DOMException(DOMException.INVALID_ACCESS_ERR, "");
@@ -163,7 +163,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into centimeters.
 	 */
 	protected static float toCentimeters(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_CM:
 			return value.getFloatValue();
 		case CSSUnit.CSS_MM:
@@ -183,7 +183,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into inches.
 	 */
 	protected static float toInches(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_CM:
 			return (value.getFloatValue() / 2.54f);
 		case CSSUnit.CSS_MM:
@@ -203,7 +203,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into millimeters.
 	 */
 	protected static float toMillimeters(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_CM:
 			return (value.getFloatValue() * 10);
 		case CSSUnit.CSS_MM:
@@ -223,7 +223,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into points.
 	 */
 	protected static float toPoints(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_CM:
 			return (value.getFloatValue() * 72 / 2.54f);
 		case CSSUnit.CSS_MM:
@@ -243,7 +243,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into picas.
 	 */
 	protected static float toPicas(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_CM:
 			return (value.getFloatValue() * 6 / 2.54f);
 		case CSSUnit.CSS_MM:
@@ -263,7 +263,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into degrees.
 	 */
 	protected static float toDegrees(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_DEG:
 			return value.getFloatValue();
 		case CSSUnit.CSS_RAD:
@@ -279,7 +279,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into radians.
 	 */
 	protected static float toRadians(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_DEG:
 			return (value.getFloatValue() * 5 / 9); // todo ??
 		case CSSUnit.CSS_RAD:
@@ -295,7 +295,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into gradians.
 	 */
 	protected static float toGradians(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_DEG:
 			return (float) (value.getFloatValue() * Math.PI / 180); // todo ????
 		case CSSUnit.CSS_RAD:
@@ -311,7 +311,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into milliseconds.
 	 */
 	protected static float toMilliseconds(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_MS:
 			return value.getFloatValue();
 		case CSSUnit.CSS_S:
@@ -325,7 +325,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into seconds.
 	 */
 	protected static float toSeconds(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_MS:
 			return (value.getFloatValue() / 1000);
 		case CSSUnit.CSS_S:
@@ -339,7 +339,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into Hertz.
 	 */
 	protected static float toHertz(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_HZ:
 			return value.getFloatValue();
 		case CSSUnit.CSS_KHZ:
@@ -353,7 +353,7 @@ public class CSSOMValue implements Value {
 	 * Converts the current value into kHertz.
 	 */
 	protected static float tokHertz(Value value) {
-		switch (value.getCSSUnit()) {
+		switch (value.getUnitType()) {
 		case CSSUnit.CSS_HZ:
 			return (value.getFloatValue() * 1000);
 		case CSSUnit.CSS_KHZ:
@@ -369,8 +369,8 @@ public class CSSOMValue implements Value {
 	}
 
 	@Override
-	public short getCSSUnit() {
-		return valueProvider.getValue().getCSSUnit();
+	public short getUnitType() {
+		return valueProvider.getValue().getUnitType();
 	}
 
 	@Override

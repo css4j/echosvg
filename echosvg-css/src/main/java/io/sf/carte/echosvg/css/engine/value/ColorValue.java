@@ -29,7 +29,7 @@ import org.w3c.css.om.unit.CSSUnit;
  * @author See Git history.
  * @version $Id$
  */
-public abstract class ColorValue extends ComponentValue implements CSSColorValue {
+public abstract class ColorValue extends ComponentValue implements TypedValue, CSSColorValue {
 
 	public static final String RGB_FUNCTION = "rgb";
 
@@ -134,7 +134,7 @@ public abstract class ColorValue extends ComponentValue implements CSSColorValue
 
 	private void setAlphaChannel(CSSNumericValue alpha) throws DOMSyntaxException {
 		NumericValue a = (NumericValue) alpha;
-		if (a.getCSSUnit() != CSSUnit.CSS_PERCENTAGE && a.getCSSUnit() != CSSUnit.CSS_NUMBER) {
+		if (a.getUnitType() != CSSUnit.CSS_PERCENTAGE && a.getUnitType() != CSSUnit.CSS_NUMBER) {
 			throw new DOMSyntaxException("Alpha channel must be a number or percentage.");
 		}
 		componentize(a);
@@ -144,7 +144,7 @@ public abstract class ColorValue extends ComponentValue implements CSSColorValue
 	}
 
 	boolean isOpaque() {
-		switch (alpha.getCSSUnit()) {
+		switch (alpha.getUnitType()) {
 		case CSSUnit.CSS_NUMBER:
 			return alpha.getFloatValue() == 1f;
 		case CSSUnit.CSS_PERCENTAGE:

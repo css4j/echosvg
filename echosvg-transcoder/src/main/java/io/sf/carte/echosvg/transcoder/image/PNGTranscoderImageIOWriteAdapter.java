@@ -86,9 +86,8 @@ public class PNGTranscoderImageIOWriteAdapter implements PNGTranscoder.WriteAdap
 			params.setCompressedText(text);
 		}
 
-		float PixSzMM = transcoder.getUserAgent().getPixelUnitToMillimeter();
-		int PixSzInch = (int) (25.4 / PixSzMM + 0.5);
-		params.setResolution(PixSzInch);
+		float resol = transcoder.getUserAgent().getResolution();
+		params.setResolution(Math.round(resol));
 
 		try {
 			OutputStream ostream = output.getOutputStream();

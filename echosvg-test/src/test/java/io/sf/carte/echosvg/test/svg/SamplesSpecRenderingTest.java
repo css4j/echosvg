@@ -422,6 +422,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 		test("samples/tests/spec/painting/visibility.svg");
 	}
 
+	@Test
+	public void testPaintMarkersVisibilityUnset() throws TranscoderException, IOException {
+		test("samples/tests/spec/painting/visibilityUnset.svg");
+	}
+
 	/*
 	 * Paints
 	 */
@@ -523,6 +528,7 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 		test("samples/tests/spec/rendering/paintOpacity.svg");
 	}
 
+	@Test
 	public void testRenderingResolutionPxMM() throws TranscoderException, IOException {
 		testResolutionPxMM("samples/tests/spec/rendering/resolution.svg", 0.25f);
 	}

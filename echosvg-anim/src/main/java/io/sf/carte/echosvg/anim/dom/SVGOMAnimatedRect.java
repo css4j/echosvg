@@ -18,17 +18,17 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGAnimatedRect;
 import org.w3c.dom.svg.SVGRect;
 
-import io.sf.carte.doc.style.css.CSSUnit;
+import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.property.Evaluator;
-import io.sf.carte.doc.style.css.property.ExpressionValue;
 import io.sf.carte.doc.style.css.property.StyleValue;
-import io.sf.carte.doc.style.css.property.TypedValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.doc.style.css.property.ValueList;
 import io.sf.carte.echosvg.anim.values.AnimatableRectValue;
@@ -286,7 +286,7 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 				if (item.getCssValueType() != CssType.TYPED) {
 					return false;
 				}
-				TypedValue typed = (TypedValue) item;
+				CSSTypedValue typed = (CSSTypedValue) item;
 				switch (item.getPrimitiveType()) {
 				case NUMERIC:
 					if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
@@ -294,8 +294,8 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 					}
 					break;
 				case EXPRESSION:
-					Evaluator eval = new Evaluator();
-					typed = eval.evaluateExpression((ExpressionValue) typed);
+					Evaluator eval = new Evaluator(CSSUnit.CSS_NUMBER);
+					typed = eval.evaluateExpression((CSSExpressionValue) typed);
 					if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
 						return false;
 					}

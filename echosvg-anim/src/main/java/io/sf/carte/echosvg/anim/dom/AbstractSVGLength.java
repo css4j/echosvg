@@ -242,12 +242,9 @@ public abstract class AbstractSVGLength implements SVGLength {
 			return getAssociatedElement();
 		}
 
-		/**
-		 * Returns the size of a px CSS unit in millimeters.
-		 */
 		@Override
-		public float getPixelUnitToMillimeter() {
-			return getAssociatedElement().getSVGContext().getPixelUnitToMillimeter();
+		public float getResolution() {
+			return getAssociatedElement().getSVGContext().getResolution();
 		}
 
 		/**

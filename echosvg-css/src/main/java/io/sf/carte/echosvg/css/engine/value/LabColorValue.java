@@ -124,7 +124,7 @@ public class LabColorValue extends ColorValue implements CSSLab {
 	 */
 	private NumericValue component(CSSNumericValue c) throws DOMSyntaxException {
 		NumericValue ch = (NumericValue) c;
-		if (ch.getCSSUnit() != CSSUnit.CSS_PERCENTAGE && ch.getCSSUnit() != CSSUnit.CSS_NUMBER) {
+		if (ch.getUnitType() != CSSUnit.CSS_PERCENTAGE && ch.getUnitType() != CSSUnit.CSS_NUMBER) {
 			throw new DOMSyntaxException("Lab component must be a number or percentage.");
 		}
 		if (ch.handler != null) {

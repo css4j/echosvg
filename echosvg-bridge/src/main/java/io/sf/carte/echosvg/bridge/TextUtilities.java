@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.util.CSSConstants;

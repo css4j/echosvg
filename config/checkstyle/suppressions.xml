@@ -49,6 +49,7 @@
   <suppress files="Test\.java$" checks="LineLength"/>
 
   <!-- Header -->
+  <suppress files="[\\/]PropertyDefinition\.java$" checks="RegexpHeader"/>
   <suppress files="[\\/]NodeXBL\.java$" checks="RegexpHeader"/>
   <suppress files="[\\/]OriginalEvent\.java$" checks="RegexpHeader"/>
   <suppress files="[\\/]ShadowTreeEvent\.java$" checks="RegexpHeader"/>

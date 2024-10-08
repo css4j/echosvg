@@ -22,12 +22,14 @@ import java.util.Locale;
 
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.IdentValue;
+import io.sf.carte.echosvg.css.engine.value.RevertValue;
 import io.sf.carte.echosvg.css.engine.value.URIValue;
+import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
@@ -77,6 +79,11 @@ public class ColorProfileManager extends AbstractValueManager {
 		return false;
 	}
 
+	@Override
+	public boolean allowsURL() {
+		return true;
+	}
+
 	/**
 	 * Implements {@link ValueManager#getPropertyType()}.
 	 */
@@ -99,9 +106,6 @@ public class ColorProfileManager extends AbstractValueManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
 		case IDENT:
 			String s = lu.getStringValue().toLowerCase(Locale.ROOT);
 			if (s.equals(CSSConstants.CSS_AUTO_VALUE)) {
@@ -114,6 +118,22 @@ public class ColorProfileManager extends AbstractValueManager {
 
 		case URI:
 			return new URIValue(lu.getStringValue(), resolveURI(engine.getCSSBaseURI(), lu.getStringValue()));
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+			return createLexicalValue(lu);
+
 		default:
 			break;
 		}

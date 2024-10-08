@@ -22,15 +22,18 @@ import java.util.Locale;
 
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
+import io.sf.carte.echosvg.css.engine.value.RevertValue;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
+import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
+import io.sf.carte.echosvg.css.engine.value.LexicalValue;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
@@ -108,18 +111,17 @@ public class TextDecorationManager extends AbstractValueManager {
 	 * Implements {@link ValueManager#createValue(LexicalUnit,CSSEngine)}.
 	 */
 	@Override
-	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
-		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
+	public Value createValue(final LexicalUnit lunit, CSSEngine engine) throws DOMException {
+		switch (lunit.getLexicalUnitType()) {
 		case IDENT:
-			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+			if (lunit.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
 				return ValueConstants.NONE_VALUE;
 			}
 			ListValue lv = new ListValue(' ');
+			LexicalUnit lu = lunit;
 			do {
-				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.IDENT) {
+				switch (lu.getLexicalUnitType()) {
+				case IDENT:
 					String s = lu.getStringValue().toLowerCase(Locale.ROOT).intern();
 					Object obj = values.get(s);
 					if (obj == null) {
@@ -127,17 +129,36 @@ public class TextDecorationManager extends AbstractValueManager {
 					}
 					lv.append((Value) obj);
 					lu = lu.getNextLexicalUnit();
-				} else {
-					throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+					break;
+				case VAR:
+				case ATTR:
+					return new LexicalValue(lunit);
+				default:
+					throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 				}
-
 			} while (lu != null);
 			return lv;
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
+		case UNSET:
+			return UnsetValue.getInstance();
+
+		case REVERT:
+			return RevertValue.getInstance();
+
+		case INITIAL:
+			return getDefaultValue();
+
+		case VAR:
+		case ATTR:
+			return new LexicalValue(lunit);
 
 		default:
 			break;
 		}
-		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+		throw createInvalidLexicalUnitDOMException(lunit.getLexicalUnitType());
 	}
 
 	@Override

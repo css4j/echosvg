@@ -20,8 +20,8 @@ package io.sf.carte.echosvg.css.engine.value.svg;
 
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
-import io.sf.carte.echosvg.css.dom.CSSValue.Type;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
 import io.sf.carte.echosvg.css.engine.value.Value;
@@ -95,14 +95,15 @@ public class KerningManager extends LengthManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
-		case INHERIT:
-			return ValueConstants.INHERIT_VALUE;
-
 		case IDENT:
 			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
 				return ValueConstants.AUTO_VALUE;
 			}
 			throw createInvalidIdentifierDOMException(lu.getStringValue());
+
+		case INHERIT:
+			return ValueConstants.INHERIT_VALUE;
+
 		default:
 			break;
 		}
