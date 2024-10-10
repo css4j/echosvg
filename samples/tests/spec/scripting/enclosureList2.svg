@@ -44,7 +44,7 @@
     var root;
     var rect;
     function onLoad() {
-      root = document.getRootElement();
+      root = document.rootElement;
       rect = root.createSVGRect();
       doCheck("painted");
       doCheck("fill");
@@ -70,7 +70,7 @@
       var chkE = root.getElementById(base+"-chk");
 
       var lst = svg.getEnclosureList(rect, null);
-      if ((lst.getLength() != 0) && (lst.item(0) == elem))
+      if ((lst.length != 0) && (lst.item(0) == elem))
            lstE.setAttribute("fill", "gold");
       else lstE.setAttribute("fill", "crimson");
 
