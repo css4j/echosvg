@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.css.engine.value.svg12;
+package io.sf.carte.echosvg.css.engine.value.css2;
 
 import org.w3c.dom.DOMException;
 
@@ -28,7 +28,7 @@ import io.sf.carte.echosvg.css.engine.value.PendingValue;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
-import io.sf.carte.echosvg.util.SVG12CSSConstants;
+import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
  * This class represents an object which provide support for the 'margin'
@@ -50,7 +50,7 @@ public class MarginShorthandManager extends AbstractValueFactory implements Shor
 	 */
 	@Override
 	public String getPropertyName() {
-		return SVG12CSSConstants.CSS_MARGIN_PROPERTY;
+		return CSSConstants.CSS_MARGIN_PROPERTY;
 	}
 
 	/**
@@ -85,10 +85,10 @@ public class MarginShorthandManager extends AbstractValueFactory implements Shor
 		case INITIAL:
 			// Set defaults
 			LexicalUnit luZero = ValueConstants.ZERO_LEXICAL_UNIT;
-			ph.property(SVG12CSSConstants.CSS_MARGIN_TOP_PROPERTY, luZero, imp);
-			ph.property(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, luZero, imp);
-			ph.property(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, luZero, imp);
-			ph.property(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY, luZero, imp);
+			ph.property(CSSConstants.CSS_MARGIN_TOP_PROPERTY, luZero, imp);
+			ph.property(CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, luZero, imp);
+			ph.property(CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, luZero, imp);
+			ph.property(CSSConstants.CSS_MARGIN_LEFT_PROPERTY, luZero, imp);
 			break;
 
 		case VAR:
@@ -127,18 +127,18 @@ public class MarginShorthandManager extends AbstractValueFactory implements Shor
 		default:
 		}
 
-		ph.property(SVG12CSSConstants.CSS_MARGIN_TOP_PROPERTY, lus[0], imp);
-		ph.property(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, lus[1], imp);
-		ph.property(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, lus[2], imp);
-		ph.property(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY, lus[3], imp);
+		ph.property(CSSConstants.CSS_MARGIN_TOP_PROPERTY, lus[0], imp);
+		ph.property(CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, lus[1], imp);
+		ph.property(CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, lus[2], imp);
+		ph.property(CSSConstants.CSS_MARGIN_LEFT_PROPERTY, lus[3], imp);
 	}
 
 	private void setPendingLonghands(CSSEngine eng, PropertyHandler ph, LexicalUnit lunit, boolean imp) {
 		PendingValue pending = new PendingValue(getPropertyName(), lunit);
-		ph.pendingValue(SVG12CSSConstants.CSS_MARGIN_TOP_PROPERTY, pending, imp);
-		ph.pendingValue(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, pending, imp);
-		ph.pendingValue(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, pending, imp);
-		ph.pendingValue(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY, pending, imp);
+		ph.pendingValue(CSSConstants.CSS_MARGIN_TOP_PROPERTY, pending, imp);
+		ph.pendingValue(CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, pending, imp);
+		ph.pendingValue(CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, pending, imp);
+		ph.pendingValue(CSSConstants.CSS_MARGIN_LEFT_PROPERTY, pending, imp);
 	}
 
 }

@@ -37,6 +37,7 @@ import io.sf.carte.echosvg.css.engine.value.css2.FontStyleManager;
 import io.sf.carte.echosvg.css.engine.value.css2.FontVariantManager;
 import io.sf.carte.echosvg.css.engine.value.css2.FontWeightManager;
 import io.sf.carte.echosvg.css.engine.value.css2.LineHeightManager;
+import io.sf.carte.echosvg.css.engine.value.css2.MarginShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.css2.OverflowManager;
 import io.sf.carte.echosvg.css.engine.value.css2.SrcManager;
 import io.sf.carte.echosvg.css.engine.value.css2.TextDecorationManager;
@@ -77,6 +78,7 @@ import io.sf.carte.echosvg.css.engine.value.svg.StrokeWidthManager;
 import io.sf.carte.echosvg.css.engine.value.svg.TextAnchorManager;
 import io.sf.carte.echosvg.css.engine.value.svg.TextRenderingManager;
 import io.sf.carte.echosvg.css.engine.value.svg.WritingModeManager;
+import io.sf.carte.echosvg.css.engine.value.svg12.MarginLengthManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.ParsedURL;
 
@@ -173,8 +175,14 @@ public class SVGCSSEngine extends CSSEngine {
 			new ImageRenderingManager(), new KerningManager(),
 			new SpacingManager(CSSConstants.CSS_LETTER_SPACING_PROPERTY),
 			new SVGColorManager(CSSConstants.CSS_LIGHTING_COLOR_PROPERTY, ValueConstants.WHITE_RGB_VALUE),
-			new LineHeightManager(), new MarkerManager(CSSConstants.CSS_MARKER_END_PROPERTY),
+			new LineHeightManager(),
 
+			new MarginLengthManager(CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY),
+			new MarginLengthManager(CSSConstants.CSS_MARGIN_LEFT_PROPERTY),
+			new MarginLengthManager(CSSConstants.CSS_MARGIN_RIGHT_PROPERTY),
+			new MarginLengthManager(CSSConstants.CSS_MARGIN_TOP_PROPERTY),
+
+			new MarkerManager(CSSConstants.CSS_MARKER_END_PROPERTY),
 			new MarkerManager(CSSConstants.CSS_MARKER_MID_PROPERTY),
 			new MarkerManager(CSSConstants.CSS_MARKER_START_PROPERTY), new MaskManager(),
 			new OpacityManager(CSSConstants.CSS_OPACITY_PROPERTY, false), new OverflowManager(),
@@ -197,7 +205,7 @@ public class SVGCSSEngine extends CSSEngine {
 	 * The shorthand managers for SVG.
 	 */
 	public static final ShorthandManager[] SVG_SHORTHAND_MANAGERS = { new FontShorthandManager(),
-			new MarkerShorthandManager(), };
+			new MarginShorthandManager(), new MarkerShorthandManager(), };
 
 	//
 	// The property indexes.
@@ -243,7 +251,12 @@ public class SVGCSSEngine extends CSSEngine {
 	public static final int LETTER_SPACING_INDEX = KERNING_INDEX + 1;
 	public static final int LIGHTING_COLOR_INDEX = LETTER_SPACING_INDEX + 1;
 	public static final int LINE_HEIGHT_INDEX = LIGHTING_COLOR_INDEX + 1;
-	public static final int MARKER_END_INDEX = LINE_HEIGHT_INDEX + 1;
+
+	public static final int MARGIN_BOTTOM_INDEX = LINE_HEIGHT_INDEX + 1;
+	public static final int MARGIN_LEFT_INDEX = MARGIN_BOTTOM_INDEX + 1;
+	public static final int MARGIN_RIGHT_INDEX = MARGIN_LEFT_INDEX + 1;
+	public static final int MARGIN_TOP_INDEX = MARGIN_RIGHT_INDEX + 1;
+	public static final int MARKER_END_INDEX = MARGIN_TOP_INDEX + 1;
 
 	public static final int MARKER_MID_INDEX = MARKER_END_INDEX + 1;
 	public static final int MARKER_START_INDEX = MARKER_MID_INDEX + 1;

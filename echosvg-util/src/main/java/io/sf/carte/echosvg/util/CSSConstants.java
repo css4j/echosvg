@@ -72,6 +72,16 @@ public interface CSSConstants {
 	String CSS_LETTER_SPACING_PROPERTY = "letter-spacing";
 	String CSS_LIGHTING_COLOR_PROPERTY = "lighting-color";
 	String CSS_LINE_HEIGHT_PROPERTY = "line-height";
+	/** Property name for margin shorthand */
+	String CSS_MARGIN_PROPERTY = "margin";
+	/** Property name for top-margin */
+	String CSS_MARGIN_TOP_PROPERTY = "margin-top";
+	/** Property name for right-margin */
+	String CSS_MARGIN_RIGHT_PROPERTY = "margin-right";
+	/** Property name for bottom-margin */
+	String CSS_MARGIN_BOTTOM_PROPERTY = "margin-bottom";
+	/** Property name for left-margin */
+	String CSS_MARGIN_LEFT_PROPERTY = "margin-left";
 	String CSS_MARKER_PROPERTY = "marker";
 	String CSS_MARKER_END_PROPERTY = "marker-end";
 	String CSS_MARKER_MID_PROPERTY = "marker-mid";

@@ -818,10 +818,10 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 
 	protected void initCSSPropertyIndexes(Element e) {
 		CSSEngine eng = CSSUtilities.getCSSEngine(e);
-		marginTopIndex = eng.getPropertyIndex(SVG12CSSConstants.CSS_MARGIN_TOP_PROPERTY);
-		marginRightIndex = eng.getPropertyIndex(SVG12CSSConstants.CSS_MARGIN_RIGHT_PROPERTY);
-		marginBottomIndex = eng.getPropertyIndex(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY);
-		marginLeftIndex = eng.getPropertyIndex(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY);
+		marginTopIndex = eng.getPropertyIndex(CSSConstants.CSS_MARGIN_TOP_PROPERTY);
+		marginRightIndex = eng.getPropertyIndex(CSSConstants.CSS_MARGIN_RIGHT_PROPERTY);
+		marginBottomIndex = eng.getPropertyIndex(CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY);
+		marginLeftIndex = eng.getPropertyIndex(CSSConstants.CSS_MARGIN_LEFT_PROPERTY);
 		indentIndex = eng.getPropertyIndex(SVG12CSSConstants.CSS_INDENT_PROPERTY);
 		textAlignIndex = eng.getPropertyIndex(SVG12CSSConstants.CSS_TEXT_ALIGN_PROPERTY);
 		lineHeightIndex = eng.getLineHeightIndex();

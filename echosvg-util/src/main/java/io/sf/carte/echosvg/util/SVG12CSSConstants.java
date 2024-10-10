@@ -29,16 +29,6 @@ package io.sf.carte.echosvg.util;
  */
 public interface SVG12CSSConstants extends CSSConstants {
 
-	/** Property name for margin shorthand */
-	String CSS_MARGIN_PROPERTY = "margin";
-	/** Property name for top-margin */
-	String CSS_MARGIN_TOP_PROPERTY = "margin-top";
-	/** Property name for right-margin */
-	String CSS_MARGIN_RIGHT_PROPERTY = "margin-right";
-	/** Property name for bottom-margin */
-	String CSS_MARGIN_BOTTOM_PROPERTY = "margin-bottom";
-	/** Property name for left-margin */
-	String CSS_MARGIN_LEFT_PROPERTY = "margin-left";
 	/** property name for indent */
 	String CSS_INDENT_PROPERTY = "indent";
 	/** property name for text-align */
