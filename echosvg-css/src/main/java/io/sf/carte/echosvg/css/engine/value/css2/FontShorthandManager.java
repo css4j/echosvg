@@ -102,6 +102,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 	}
 
 	static LexicalUnit NORMAL_LU;
+
 	static LexicalUnit BOLD_LU;
 
 	static LexicalUnit MEDIUM_LU;
@@ -110,6 +111,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 	static LexicalUnit SZ_8PT_LU;
 
 	static LexicalUnit FONT_FAMILY_LU;
+
 	static {
 		CSSParser parser = new CSSParser();
 		try {
@@ -180,8 +182,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 
 		case VAR:
 		case ATTR:
-			setPendingLonghands(eng, ph, lunit, imp,
-					eng.getPropertyIndex(CSSConstants.CSS_LINE_HEIGHT_PROPERTY));
+			setPendingLonghands(eng, ph, lunit, imp);
 			return;
 
 		default:
@@ -196,12 +197,11 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 		LexicalUnit fontFamily = null;
 
 		ValueManager[] vMgrs = eng.getValueManagers();
-		int fst, fv, fw, fsz, lh;
+		int fst, fv, fw, fsz;
 		fst = eng.getPropertyIndex(CSSConstants.CSS_FONT_STYLE_PROPERTY);
 		fv = eng.getPropertyIndex(CSSConstants.CSS_FONT_VARIANT_PROPERTY);
 		fw = eng.getPropertyIndex(CSSConstants.CSS_FONT_WEIGHT_PROPERTY);
-		fsz = eng.getPropertyIndex(CSSConstants.CSS_FONT_SIZE_PROPERTY);
-		lh = eng.getPropertyIndex(CSSConstants.CSS_LINE_HEIGHT_PROPERTY);
+		fsz = eng.getFontSizeIndex();
 
 		IdentifierManager fstVM = (IdentifierManager) vMgrs[fst];
 		IdentifierManager fvVM = (IdentifierManager) vMgrs[fv];
@@ -267,7 +267,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 
 			case VAR:
 			case ATTR:
-				setPendingLonghands(eng, ph, lunit, imp, lh);
+				setPendingLonghands(eng, ph, lunit, imp);
 				return;
 
 			default: // All other must be size,'/line-height', family
@@ -306,7 +306,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 
 		case VAR:
 		case ATTR:
-			setPendingLonghands(eng, ph, lunit, imp, lh);
+			setPendingLonghands(eng, ph, lunit, imp);
 			return;
 
 		case CALC:
@@ -361,7 +361,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 
 		case VAR:
 		case ATTR:
-			setPendingLonghands(eng, ph, lunit, imp, lh);
+			setPendingLonghands(eng, ph, lunit, imp);
 			return;
 
 		default:
@@ -387,9 +387,7 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 		ph.property(CSSConstants.CSS_FONT_VARIANT_PROPERTY, fontVariant, imp);
 		ph.property(CSSConstants.CSS_FONT_WEIGHT_PROPERTY, fontWeight, imp);
 		ph.property(CSSConstants.CSS_FONT_SIZE_PROPERTY, fontSize, imp);
-		if (lh != -1) {
-			ph.property(CSSConstants.CSS_LINE_HEIGHT_PROPERTY, lineHeight, imp);
-		}
+		ph.property(CSSConstants.CSS_LINE_HEIGHT_PROPERTY, lineHeight, imp);
 	}
 
 	private Value createFontSizeCalc(LexicalUnit lu) throws DOMException {
@@ -415,17 +413,14 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 		return calc;
 	}
 
-	private void setPendingLonghands(CSSEngine eng, PropertyHandler ph, LexicalUnit lunit, boolean imp,
-			int lh) {
+	private void setPendingLonghands(CSSEngine eng, PropertyHandler ph, LexicalUnit lunit, boolean imp) {
 		PendingValue pending = new PendingValue(getPropertyName(), lunit);
 		ph.pendingValue(CSSConstants.CSS_FONT_FAMILY_PROPERTY, pending, imp);
 		ph.pendingValue(CSSConstants.CSS_FONT_STYLE_PROPERTY, pending, imp);
 		ph.pendingValue(CSSConstants.CSS_FONT_VARIANT_PROPERTY, pending, imp);
 		ph.pendingValue(CSSConstants.CSS_FONT_WEIGHT_PROPERTY, pending, imp);
 		ph.pendingValue(CSSConstants.CSS_FONT_SIZE_PROPERTY, pending, imp);
-		if (lh != -1) {
-			ph.pendingValue(CSSConstants.CSS_LINE_HEIGHT_PROPERTY, pending, imp);
-		}
+		ph.pendingValue(CSSConstants.CSS_LINE_HEIGHT_PROPERTY, pending, imp);
 	}
 
 }

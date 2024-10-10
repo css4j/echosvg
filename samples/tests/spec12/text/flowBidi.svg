@@ -36,6 +36,7 @@
     svg {
       font-family: 'Roboto';
       font-size:   12px;
+      line-height: 1.1;
     }
   ]]>
   </style>

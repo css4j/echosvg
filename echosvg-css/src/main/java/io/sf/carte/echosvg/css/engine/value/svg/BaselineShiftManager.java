@@ -151,7 +151,7 @@ public class BaselineShiftManager extends LengthManager {
 		if (value.getUnitType() == CSSUnit.CSS_PERCENTAGE) {
 			sm.putLineHeightRelative(idx, true);
 
-			int fsi = engine.getLineHeightIndex();
+			int lhi = engine.getLineHeightIndex();
 			CSSStylableElement parent;
 			parent = (CSSStylableElement) elt.getParentNode();
 			if (parent == null) {
@@ -160,10 +160,10 @@ public class BaselineShiftManager extends LengthManager {
 				// http://www.w3.org/TR/SVG11/text.html#BaselineShiftProperty
 				parent = elt;
 			}
-			Value fs = engine.getComputedStyle(parent, pseudo, fsi);
-			float fsv = lengthValue(fs);
+			Value lh = engine.getComputedStyle(parent, null, lhi);
+			float flh = lineHeightValue(parent, null, engine, lh);
 			float v = value.getFloatValue();
-			return new FloatValue(CSSUnit.CSS_NUMBER, (fsv * v) / 100f);
+			return new FloatValue(CSSUnit.CSS_PX, flh * v * 0.01f);
 		}
 		return super.computeValue(elt, pseudo, engine, idx, sm, value);
 	}

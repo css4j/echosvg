@@ -17,13 +17,14 @@
 
  */
 
-package io.sf.carte.echosvg.css.engine.value.svg12;
+package io.sf.carte.echosvg.css.engine.value.css2;
 
 import java.util.Locale;
 
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
@@ -37,7 +38,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
- * This class provides a factory for the 'margin-*' properties values.
+ * This class provides a factory for the 'line-height' property values.
  *
  * <p>
  * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
@@ -95,7 +96,7 @@ public class LineHeightManager extends LengthManager {
 	 */
 	@Override
 	public Value getDefaultValue() {
-		return SVG12ValueConstants.NORMAL_VALUE;
+		return ValueConstants.NORMAL_VALUE;
 	}
 
 	/**
@@ -108,7 +109,7 @@ public class LineHeightManager extends LengthManager {
 		case IDENT: {
 			String s = lu.getStringValue().toLowerCase(Locale.ROOT);
 			if (CSSConstants.CSS_NORMAL_VALUE.equals(s))
-				return SVG12ValueConstants.NORMAL_VALUE;
+				return ValueConstants.NORMAL_VALUE;
 			throw createInvalidIdentifierDOMException(lu.getStringValue());
 		}
 
@@ -139,43 +140,54 @@ public class LineHeightManager extends LengthManager {
 		if (value.getCssValueType() != Value.CssType.TYPED)
 			return value;
 
-		switch (value.getUnitType()) {
-		case CSSUnit.CSS_NUMBER:
-			return new LineHeightValue(CSSUnit.CSS_NUMBER, value.getFloatValue(), true);
-
-		case CSSUnit.CSS_PERCENTAGE: {
-			float v = value.getFloatValue();
-			int fsidx = engine.getFontSizeIndex();
-			float fs = engine.getComputedStyle(elt, pseudo, fsidx).getFloatValue();
-			return new FloatValue(CSSUnit.CSS_NUMBER, v * fs * 0.01f);
+		if (value.getPrimitiveType() == Type.IDENT) {
+			// Can only be 'normal'
+			return new FloatValue(CSSUnit.CSS_NUMBER, DEFAULT_LINE_HEIGHT);
 		}
 
+		switch (value.getUnitType()) {
+		case CSSUnit.CSS_NUMBER:
+			// The computed value of a <number> line-height is itself
+			return value;
+
+		case CSSUnit.CSS_PERCENTAGE:
+			return fontSizeRelative(elt, pseudo, engine, sm, value.getFloatValue() * 0.01f);
+
 		case CSSUnit.CSS_LH:
-			float lh;
-			float v = value.getFloatValue();
+			float f = value.getFloatValue();
 			CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
 			if (p != null) {
 				int lhidx = engine.getLineHeightIndex();
-				lh = engine.getComputedStyle(p, null, lhidx).getFloatValue();
+				Value v = engine.getComputedStyle(p, null, lhidx);
+				float lh = v.getFloatValue();
+				return new FloatValue(v.getUnitType(), f * lh);
 			} else {
-				lh = 1.2f * engine.getCSSContext().getMediumFontSize();
+				return new FloatValue(CSSUnit.CSS_NUMBER, f * DEFAULT_LINE_HEIGHT);
 			}
-			return new FloatValue(CSSUnit.CSS_NUMBER, v * lh);
 
 		case CSSUnit.CSS_RLH:
-			v = value.getFloatValue();
+			f = value.getFloatValue();
 			CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
 			if (root != elt) {
 				int lhidx = engine.getLineHeightIndex();
-				lh = engine.getComputedStyle(root, null, lhidx).getFloatValue();
+				Value v = engine.getComputedStyle(root, null, lhidx);
+				float lh = v.getFloatValue();
+				return new FloatValue(v.getUnitType(), f * lh);
 			} else {
-				lh = 1.2f * engine.getCSSContext().getMediumFontSize();
+				return new FloatValue(CSSUnit.CSS_NUMBER, f * DEFAULT_LINE_HEIGHT);
 			}
-			return new FloatValue(CSSUnit.CSS_NUMBER, v * lh);
 
 		default:
 			return super.computeValue(elt, pseudo, engine, idx, sm, value);
 		}
+	}
+
+	private Value fontSizeRelative(CSSStylableElement elt, String pseudo, CSSEngine engine, StyleMap sm,
+			float lineHeight) {
+		int fsidx = engine.getFontSizeIndex();
+		Value v = engine.getComputedStyle(elt, pseudo, fsidx);
+		float fs = v.getFloatValue();
+		return new FloatValue(CSSUnit.CSS_PX, lineHeight * fs);
 	}
 
 }

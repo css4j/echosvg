@@ -25,7 +25,6 @@ import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.css.engine.value.svg.OpacityManager;
 import io.sf.carte.echosvg.css.engine.value.svg.SVGColorManager;
-import io.sf.carte.echosvg.css.engine.value.svg12.LineHeightManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.MarginLengthManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.MarginShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.svg12.TextAlignManager;
@@ -51,7 +50,6 @@ public class SVG12CSSEngine extends SVGCSSEngine {
 	 */
 	public SVG12CSSEngine(Document doc, ParsedURL uri, Parser p, CSSContext ctx) {
 		super(doc, uri, p, SVG_VALUE_MANAGERS, SVG_SHORTHAND_MANAGERS, ctx);
-		lineHeightIndex = LINE_HEIGHT_INDEX;
 	}
 
 	/**
@@ -67,13 +65,12 @@ public class SVG12CSSEngine extends SVGCSSEngine {
 	public SVG12CSSEngine(Document doc, ParsedURL uri, Parser p, ValueManager[] vms, ShorthandManager[] sms,
 			CSSContext ctx) {
 		super(doc, uri, p, mergeArrays(SVG_VALUE_MANAGERS, vms), mergeArrays(SVG_SHORTHAND_MANAGERS, sms), ctx);
-		lineHeightIndex = LINE_HEIGHT_INDEX;
 	}
 
 	/**
 	 * The value managers for SVG.
 	 */
-	public static final ValueManager[] SVG_VALUE_MANAGERS = { new LineHeightManager(),
+	public static final ValueManager[] SVG_VALUE_MANAGERS = {
 			new MarginLengthManager(SVG12CSSConstants.CSS_INDENT_PROPERTY),
 			new MarginLengthManager(SVG12CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY),
 			new MarginLengthManager(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY),
@@ -90,8 +87,7 @@ public class SVG12CSSEngine extends SVGCSSEngine {
 	//
 	// The property indexes.
 	//
-	public static final int LINE_HEIGHT_INDEX = SVGCSSEngine.FINAL_INDEX + 1;
-	public static final int INDENT_INDEX = LINE_HEIGHT_INDEX + 1;
+	public static final int INDENT_INDEX = SVGCSSEngine.FINAL_INDEX + 1;
 	public static final int MARGIN_BOTTOM_INDEX = INDENT_INDEX + 1;
 	public static final int MARGIN_LEFT_INDEX = MARGIN_BOTTOM_INDEX + 1;
 	public static final int MARGIN_RIGHT_INDEX = MARGIN_LEFT_INDEX + 1;

@@ -48,11 +48,12 @@ Batik:
 7) EchoSVG does not depend on `xml-apis-ext-1.3.04.jar` to provide the SVGOM and
    SMIL APIs (see [#15](https://github.com/css4j/echosvg/issues/15)).
    If `xml-apis-ext` happens to be in your modulepath, you could configure an
-   exclusion for it (in Maven or Gradle), then use `svgom-api` and `smil-api`
-   from the [Web APIs](https://github.com/css4j/web-apis) project instead. If
-   your project requires the old SAC api which is provided by `xml-apis-ext` as
-   well, you can use [`sac.jar`](https://mvnrepository.com/artifact/org.w3c.css/sac)
-   as a replacement.
+   exclusion for it (in Maven or Gradle), and let `svgom-api` and `smil-api`
+   (transitive dependencies of EchoSVG from the [Web APIs](https://github.com/css4j/web-apis)
+   project) do the job, as they are compatible with Batik. If your project
+   requires the old SAC api which is provided by `xml-apis-ext` as well, you can
+   use [`sac.jar`](https://mvnrepository.com/artifact/org.w3c.css/sac) as a
+   replacement.
 
 8) `EchoSVGSecurityManager` is deprecated for removal due to Security Manager
    API being deprecated for removal since Java 17. Similarly,
@@ -66,8 +67,13 @@ Batik:
 10) `SVGAnimationElementBridge.initializeAnimation()` gained a `BridgeContext`
    argument and now returns a `boolean`.
 
+### Upgrading to EchoSVG 2.0
+
 11) The old and deprecated `CSSValue` API was replaced by an API close to W3C's
    Typed OM. One of the consequences is that if your scripts call `getPresentationAttribute`
    on `SVGStylable` objects, `getPresentationAttributeValue` should be called
    instead, obtaining a `CSSStyleValue`. Note that modern SVGOM has neither of
    those methods.
+
+12) The line-height property now has a global default of 1.1, instead of the
+   mixture of 1.1 and 1 that Batik uses.

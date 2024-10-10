@@ -44,7 +44,5 @@ public interface SVG12ValueConstants extends SVGValueConstants {
 	Value END_VALUE = IdentValue.createConstant(CSSConstants.CSS_END_VALUE);
 	/** The 'full' keyword. */
 	Value FULL_VALUE = IdentValue.createConstant(SVG12CSSConstants.CSS_FULL_VALUE);
-	/** The 'normal' keyword, for 'line-height'. */
-	Value NORMAL_VALUE = IdentValue.createConstant(CSSConstants.CSS_NORMAL_VALUE);
 
 }

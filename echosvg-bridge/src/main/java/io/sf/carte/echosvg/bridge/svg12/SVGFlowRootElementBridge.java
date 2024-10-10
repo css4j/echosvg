@@ -35,6 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
@@ -60,9 +61,7 @@ import io.sf.carte.echosvg.bridge.UserAgent;
 import io.sf.carte.echosvg.constants.XMLConstants;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
-import io.sf.carte.echosvg.css.engine.value.ComputedValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
-import io.sf.carte.echosvg.css.engine.value.svg12.LineHeightValue;
 import io.sf.carte.echosvg.css.engine.value.svg12.SVG12ValueConstants;
 import io.sf.carte.echosvg.dom.AbstractNode;
 import io.sf.carte.echosvg.dom.events.NodeEventTarget;
@@ -825,7 +824,7 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 		marginLeftIndex = eng.getPropertyIndex(SVG12CSSConstants.CSS_MARGIN_LEFT_PROPERTY);
 		indentIndex = eng.getPropertyIndex(SVG12CSSConstants.CSS_INDENT_PROPERTY);
 		textAlignIndex = eng.getPropertyIndex(SVG12CSSConstants.CSS_TEXT_ALIGN_PROPERTY);
-		lineHeightIndex = eng.getPropertyIndex(CSSConstants.CSS_LINE_HEIGHT_PROPERTY);
+		lineHeightIndex = eng.getLineHeightIndex();
 	}
 
 	public BlockInfo makeBlockInfo(BridgeContext ctx, Element element) {
@@ -881,23 +880,22 @@ public class SVGFlowRootElementBridge extends SVG12TextElementBridge {
 		String ln = element.getLocalName();
 		boolean rgnBr;
 		rgnBr = ln.equals(SVG12Constants.SVG_FLOW_REGION_BREAK_TAG);
-		return new BlockInfo(top, right, bottom, left, indent, textAlign, lineHeight, fontList, fontAttrs, rgnBr);
+		return new BlockInfo(top, right, bottom, left, indent, textAlign, lineHeight, fontList, fontAttrs,
+				rgnBr);
 	}
 
-	protected float getLineHeight(BridgeContext ctx, Element element, float fontSize) {
-		if (lineHeightIndex == -1)
+	private float getLineHeight(BridgeContext ctx, Element element, float fontSize) {
+		if (lineHeightIndex == -1) {
 			initCSSPropertyIndexes(element);
-
-		Value v = CSSUtilities.getComputedStyle(element, lineHeightIndex);
-		if (v.getCssValueType() == CSSValue.CssType.KEYWORD || v.isIdentifier(CSSConstants.CSS_NORMAL_VALUE)) {
-			return fontSize * 1.1f;
 		}
 
+		Value v = CSSUtilities.getComputedStyle(element, lineHeightIndex);
+
 		float lineHeight = v.getFloatValue();
-		if (v instanceof ComputedValue)
-			v = ((ComputedValue) v).getComputedValue();
-		if ((v instanceof LineHeightValue) && ((LineHeightValue) v).getFontSizeRelative())
+		if (v.getUnitType() == CSSUnit.CSS_NUMBER) {
 			lineHeight *= fontSize;
+		}
+
 		return lineHeight;
 	}
 

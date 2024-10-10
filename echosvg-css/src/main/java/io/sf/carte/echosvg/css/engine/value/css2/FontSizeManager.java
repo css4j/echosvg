@@ -179,32 +179,32 @@ public class FontSizeManager extends LengthManager {
 				return value;
 
 			case CSSUnit.CSS_MM:
-				float v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v * 3.779527559055f);
+				float v = value.getFloatValue();
+				return new FloatValue(CSSUnit.CSS_PX, v * 3.779527559055f);
 
 			case CSSUnit.CSS_CM:
-				v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v * 37.79527559055f);
+				v = value.getFloatValue();
+				return new FloatValue(CSSUnit.CSS_PX, v * 37.79527559055f);
 
 			case CSSUnit.CSS_IN:
-				v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v * 96f);
+				v = value.getFloatValue();
+				return new FloatValue(CSSUnit.CSS_PX, v * 96f);
 
 			case CSSUnit.CSS_PT:
-				v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v / 0.75f);
+				v = value.getFloatValue();
+				return new FloatValue(CSSUnit.CSS_PX, v / 0.75f);
 
 			case CSSUnit.CSS_PC:
-				v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v * 16f);
+				v = value.getFloatValue();
+				return new FloatValue(CSSUnit.CSS_PX, v * 16f);
 
 			case CSSUnit.CSS_EM:
 				doParentRelative = true;
-				scale = lengthValue(value);
+				scale = value.getFloatValue();
 				break;
 			case CSSUnit.CSS_EX:
 				doParentRelative = true;
-				scale = lengthValue(value) * 0.5f; // !!! x-height
+				scale = value.getFloatValue() * 0.5f; // !!! x-height
 				break;
 			case CSSUnit.CSS_PERCENTAGE:
 				doParentRelative = true;
@@ -212,73 +212,73 @@ public class FontSizeManager extends LengthManager {
 				break;
 			case CSSUnit.CSS_LH:
 				sm.putLineHeightRelative(idx, true);
-				scale = lengthValue(value);
+				scale = value.getFloatValue();
 				int lhidx = engine.getLineHeightIndex();
 				CSSStylableElement p = CSSEngine.getParentCSSStylableElement(elt);
 				float lh;
 				if (p == null) {
-					lh = 1.2f * engine.getCSSContext().getMediumFontSize();
+					lh = DEFAULT_LINE_HEIGHT * engine.getCSSContext().getMediumFontSize();
 				} else {
 					Value cs = engine.getComputedStyle(p, null, lhidx);
-					lh = lengthValue(cs);
+					lh = lineHeightValue(p, null, engine, cs);
 				}
-				return new FloatValue(CSSUnit.CSS_NUMBER, lh * scale);
+				return new FloatValue(CSSUnit.CSS_PX, lh * scale);
 			case CSSUnit.CSS_REM:
 				sm.putRootFontSizeRelative(idx, true);
-				scale = lengthValue(value);
+				scale = value.getFloatValue();
 				return rootRelative(elt, engine, idx, scale);
 			case CSSUnit.CSS_REX:
 				sm.putRootFontSizeRelative(idx, true);
-				scale = lengthValue(value) * 0.5f;
+				scale = value.getFloatValue() * 0.5f;
 				return rootRelative(elt, engine, idx, scale);
 			case CSSUnit.CSS_RLH:
 				sm.putLineHeightRelative(idx, true);
-				scale = lengthValue(value);
+				scale = value.getFloatValue();
 				lhidx = engine.getLineHeightIndex();
 				CSSStylableElement root = (CSSStylableElement) elt.getOwnerDocument().getDocumentElement();
 				if (elt == root) {
-					lh = 1.2f * engine.getCSSContext().getMediumFontSize();
+					lh = DEFAULT_LINE_HEIGHT * engine.getCSSContext().getMediumFontSize();
 				} else {
 					Value cs = engine.getComputedStyle(root, null, lhidx);
-					lh = lengthValue(cs);
+					lh = lineHeightValue(root, null, engine, cs);
 				}
-				return new FloatValue(CSSUnit.CSS_NUMBER, lh * scale);
+				return new FloatValue(CSSUnit.CSS_PX, lh * scale);
 			case CSSUnit.CSS_VW:
 				sm.putViewportRelative(idx, true);
-				v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER,
+				v = value.getFloatValue();
+				return new FloatValue(CSSUnit.CSS_PX,
 						v * engine.getCSSContext().getViewport(elt).getWidth() * 0.01f);
 			case CSSUnit.CSS_VH:
 				sm.putViewportRelative(idx, true);
-				v = lengthValue(value);
-				return new FloatValue(CSSUnit.CSS_NUMBER,
+				v = value.getFloatValue();
+				return new FloatValue(CSSUnit.CSS_PX,
 						v * engine.getCSSContext().getViewport(elt).getHeight() * 0.01f);
 			case CSSUnit.CSS_VMIN:
 				sm.putViewportRelative(idx, true);
-				v = lengthValue(value);
+				v = value.getFloatValue();
 				Viewport vp = engine.getCSSContext().getViewport(elt);
 				float w = vp.getWidth();
 				float h = vp.getHeight();
 				float min = Math.min(w, h);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v * min * 0.01f);
+				return new FloatValue(CSSUnit.CSS_PX, v * min * 0.01f);
 			case CSSUnit.CSS_VMAX:
 				sm.putViewportRelative(idx, true);
-				v = lengthValue(value);
+				v = value.getFloatValue();
 				vp = engine.getCSSContext().getViewport(elt);
 				w = vp.getWidth();
 				h = vp.getHeight();
 				float max = Math.max(w, h);
-				return new FloatValue(CSSUnit.CSS_NUMBER, v * max * 0.01f);
+				return new FloatValue(CSSUnit.CSS_PX, v * max * 0.01f);
 			default:
 				// Maybe it is one of the new absolute length units
-				return new FloatValue(CSSUnit.CSS_NUMBER,
+				return new FloatValue(CSSUnit.CSS_PX,
 						NumberValue.floatValueConversion(value.getFloatValue(), value.getUnitType(),
 								CSSUnit.CSS_PX));
 			}
 		} else if (pType == Type.EXPRESSION) {
 			try {
 				Value calc = evaluateCalc((CalcValue) value, elt, pseudo, engine, idx, sm, CSSUnit.CSS_PX);
-				return new FloatValue(CSSUnit.CSS_NUMBER, calc.getFloatValue());
+				return new FloatValue(CSSUnit.CSS_PX, calc.getFloatValue());
 			} catch (Exception e) {
 				return isInheritedProperty() ? null : getDefaultValue();
 			}
@@ -302,9 +302,9 @@ public class FontSizeManager extends LengthManager {
 				fs = ctx.getMediumFontSize();
 			} else {
 				Value cs = engine.getComputedStyle(p, null, idx);
-				fs = lengthValue(cs);
+				fs = cs.getFloatValue();
 			}
-			return new FloatValue(CSSUnit.CSS_NUMBER, fs * scale);
+			return new FloatValue(CSSUnit.CSS_PX, fs * scale);
 		}
 
 		// absolute identifiers
@@ -350,7 +350,7 @@ public class FontSizeManager extends LengthManager {
 				}
 			}
 		}
-		return new FloatValue(CSSUnit.CSS_NUMBER, fs);
+		return new FloatValue(CSSUnit.CSS_PX, fs);
 	}
 
 	private Value rootRelative(CSSStylableElement elt, CSSEngine engine, int idx, float scale) {
@@ -358,12 +358,12 @@ public class FontSizeManager extends LengthManager {
 		if (elt == root) {
 			CSSContext ctx = engine.getCSSContext();
 			float f = ctx.getMediumFontSize() * scale;
-			return new FloatValue(CSSUnit.CSS_NUMBER, f);
+			return new FloatValue(CSSUnit.CSS_PX, f);
 		}
 
 		Value cs = engine.getComputedStyle(root, null, idx);
-		float f = lengthValue(cs) * scale;
-		return new FloatValue(CSSUnit.CSS_NUMBER, f);
+		float f = cs.getFloatValue() * scale;
+		return new FloatValue(CSSUnit.CSS_PX, f);
 	}
 
 	/**

@@ -36,6 +36,12 @@
      xmlns:xlink="http://www.w3.org/1999/xlink">
    <title>Test of Text wrapping stuff.</title>
 
+<style type="text/css"><![CDATA[
+  svg {
+    line-height: 1.1;
+  }
+]]></style>
+
    <text class="title" x="50%" y="40">Test of Text wrapping stuff</text>
 
    <g id="content">

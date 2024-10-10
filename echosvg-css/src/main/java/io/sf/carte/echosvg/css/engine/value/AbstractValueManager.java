@@ -106,10 +106,16 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 		return value;
 	}
 
+	/**
+	 * Obtain the float value, making sure that it is a <number> or a <length>.
+	 * 
+	 * @param cv the value.
+	 * @return the float value
+	 */
 	protected float lengthValue(Value cv) {
 		short unit = cv.getUnitType();
 		if (!CSSUnit.isLengthUnitType(unit) && unit != CSSUnit.CSS_NUMBER) {
-			throw createDOMException(unit);
+			throw createDOMException(cv);
 		}
 		return cv.getFloatValue();
 	}
@@ -118,8 +124,8 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 	 * Creates an INVALID_ACCESS_ERR exception.
 	 * @param unit the unit.
 	 */
-	protected DOMException createDOMException(int unit) {
-		Object[] p = { unit };
+	protected DOMException createDOMException(Value cv) {
+		Object[] p = { cv.getCssText(), cv.getUnitType() };
 		String s = Messages.formatMessage("invalid.value.access", p);
 		return new DOMException(DOMException.INVALID_ACCESS_ERR, s);
 	}
