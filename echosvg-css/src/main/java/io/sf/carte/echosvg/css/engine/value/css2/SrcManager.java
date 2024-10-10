@@ -22,8 +22,13 @@ import java.util.Locale;
 
 import org.w3c.dom.DOMException;
 
+import io.sf.carte.doc.style.css.CSSValue;
+import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSEngineUserAgent;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
 import io.sf.carte.echosvg.css.engine.value.RevertValue;
@@ -83,11 +88,6 @@ public class SrcManager extends IdentifierManager {
 	@Override
 	public boolean isAdditiveProperty() {
 		return false;
-	}
-
-	@Override
-	public boolean allowsURL() {
-		return true;
 	}
 
 	/**
@@ -223,6 +223,23 @@ public class SrcManager extends IdentifierManager {
 				throw createMalformedLexicalUnitDOMException();
 			}
 		}
+	}
+
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		if (sm.isAttrTainted(idx) && value.getCssValueType() == CSSValue.CssType.LIST) {
+			for (Value v : (ListValue) value) {
+				if (v.getPrimitiveType() == Type.URI) {
+					CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
+					if (ua != null) {
+						ua.displayMessage("attr()-tainted value: " + value.getCssText());
+					}
+					return null;
+				}
+			}
+		}
+		return super.computeValue(elt, pseudo, engine, idx, sm, value);
 	}
 
 	/**

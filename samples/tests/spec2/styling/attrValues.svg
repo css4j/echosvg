@@ -40,37 +40,35 @@ circle, ellipse {
 }
 
 @media screen and (100px <= width <= 900px) {
-  circle {
-    stroke-width: attr(stroke-width length);
-  }
-  g {
-    fill: attr(data-color color); /* Has no effect, fill can't take attr() */
-    stroke: attr(data-color color); /* Has no effect, stroke can't take attr() */
-    stroke-width: attr(stroke-width length);
+  circle, ellipse {
+    fill: attr(data-color color, #9ad6c2);
+    stroke: attr(data-stroke color);
+    stroke-width: attr(data-stroke-width length);
   }
 }
 
 text.itemdesc {
-  font: bold attr(data-font-size length) "Open Sans", sans-serif;
-  fill: var(--textColor);
+  font: bold attr(data-font-size length,14pt) "Open Sans", sans-serif;
+  fill: attr(data-color color, var(--textColor));
 }
 
 /*]]>*/
   </style>
 
   <g>
-  <circle cx="250" cy="300" r="20"/>
-  <circle cx="150" cy="150" r="20"/>
-  <circle cx="280" cy="150" r="20"/>
-  <circle cx="120" cy="300" r="20"/>
-  <ellipse cx="250" cy="300" rx="100" ry="130" transform="rotate(-20 250 300)" data-color="#406080"/>
-  <ellipse cx="150" cy="150" rx="100" ry="130" transform="rotate(-20 150 150)" data-color="#406080"/>
-  <ellipse cx="280" cy="150" rx="100" ry="130" transform="rotate(30 280 150)" data-color="#406080"/>
-  <ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)" data-color="#406080"/>
-  <text x="80" y="50" class="itemdesc" text-anchor="middle" data-font-size="10pt">Media Queries</text>
-  <text x="320" y="50" class="itemdesc" text-anchor="middle" data-font-size="11pt">Conditional rules</text>
-  <text x="91" y="400" class="itemdesc" text-anchor="middle" data-font-size="14pt">Color Level 4 / calc()</text>
-  <text x="300" y="400" class="itemdesc" text-anchor="middle" data-font-size="16pt">Custom Properties</text>
+  <circle cx="250" cy="300" r="20" data-color="#f4d16a" data-stroke="#183361" data-stroke-width="6px"/>
+  <circle cx="150" cy="150" r="20" data-color="#1e674d" data-stroke="rgb(14, 46, 53)" data-stroke-width="4px"/>
+  <circle cx="280" cy="150" r="20" data-color="#e76f3b" data-stroke="#074c1a" data-stroke-width="6px"/>
+  <circle cx="120" cy="300" r="20" data-stroke="#3b707b" data-stroke-width="4px"/>
+  <ellipse cx="250" cy="300" rx="100" ry="130" transform="rotate(-20 250 300)" data-color="#afcc7b76" data-stroke="#3c598bef" data-stroke-width="3px"/>
+  <ellipse cx="150" cy="150" rx="100" ry="130" transform="rotate(-20 150 150)" data-color="#5462bf76" data-stroke="#003e49ef" data-stroke-width="3px"/>
+  <ellipse cx="280" cy="150" rx="100" ry="130" transform="rotate(30 280 150)" data-color="#e3928476" data-stroke="#9b84d7ef" data-stroke-width="2px"/>
+  <ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)" data-color="#70b5c476" data-stroke="#34ae56ef" data-stroke-width="2px"/>
+  <text x="80" y="50" class="itemdesc" text-anchor="middle" data-color="#30433f" data-font-size="10pt">Media Queries</text>
+  <text x="320" y="50" class="itemdesc" text-anchor="middle" data-color="#29405a" data-font-size="11pt">Conditional rules</text>
+  <text x="91" y="400" class="itemdesc" text-anchor="middle" data-color="#1a2843" data-font-size="14pt">Color Level 4 / calc()</text>
+  <text x="300" y="400" class="itemdesc" text-anchor="middle" data-color="#270b00" data-font-size="16pt">Custom Properties</text>
+  <text x="190" y="470" class="itemdesc" text-anchor="middle">and the advanced attr() value</text>
   </g>
 
 </svg>

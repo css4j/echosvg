@@ -25,6 +25,7 @@ import org.w3c.dom.DOMException;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSEngineUserAgent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
@@ -95,11 +96,6 @@ public class CursorManager extends AbstractValueManager {
 	@Override
 	public boolean isAdditiveProperty() {
 		return false;
-	}
-
-	@Override
-	public boolean allowsURL() {
-		return true;
 	}
 
 	/**
@@ -202,8 +198,16 @@ public class CursorManager extends AbstractValueManager {
 			int len = value.getLength();
 			ListValue result = new ListValue(' ');
 			for (int i = 0; i < len; i++) {
-				Value v = value.item(0);
+				Value v = value.item(i);
 				if (v.getPrimitiveType() == Type.URI) {
+					if (sm.isAttrTainted(idx)) {
+						CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
+						if (ua != null) {
+							ua.displayMessage("attr()-tainted value: " + value.getCssText());
+						}
+						return null;
+					}
+
 					// For performance, use the absolute value as the cssText now.
 					String uri = v.getURIValue();
 					result.append(new URIValue(uri, uri));
@@ -213,6 +217,7 @@ public class CursorManager extends AbstractValueManager {
 			}
 			return result;
 		}
+
 		return super.computeValue(elt, pseudo, engine, idx, sm, value);
 	}
 

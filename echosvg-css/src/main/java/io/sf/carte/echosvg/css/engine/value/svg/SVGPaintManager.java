@@ -22,6 +22,7 @@ import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSEngineUserAgent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.ListValue;
@@ -81,11 +82,6 @@ public class SVGPaintManager extends SVGColorManager {
 	 */
 	@Override
 	public boolean isAdditiveProperty() {
-		return true;
-	}
-
-	@Override
-	public boolean allowsURL() {
 		return true;
 	}
 
@@ -152,8 +148,15 @@ public class SVGPaintManager extends SVGColorManager {
 		if (value.getCssValueType() == Value.CssType.LIST) {
 			Value v = value.item(0);
 			if (v.getPrimitiveType() == Value.Type.URI) {
+				if (sm.isAttrTainted(idx)) {
+					CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
+					if (ua != null) {
+						ua.displayMessage("attr()-tainted value: " + value.getCssText());
+					}
+					return null;
+				}
 				v = value.item(1);
-				if (v.isIdentifier(CSSConstants.CSS_NONE_VALUE)) {
+				if (v == null || v.isIdentifier(CSSConstants.CSS_NONE_VALUE)) {
 					return value;
 				}
 				Value t = super.computeValue(elt, pseudo, engine, idx, sm, v);

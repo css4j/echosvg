@@ -52,6 +52,8 @@ public class StyleMap {
 	public static final int ROOT_LINE_HEIGHT_RELATIVE_MASK = 0x0800;
 	public static final int ROOT_FONT_SIZE_RELATIVE_MASK = 0x1000;
 	public static final int VIEWPORT_RELATIVE_MASK = 0x2000;
+	public static final int CUSTOM_PTY_RELATIVE_MASK = 0x4000;
+	public static final int ATTR_TAINTED_MASK = 0x8000;
 
 	public static final int ORIGIN_MASK = 0xE0000000; // 3 last bits
 
@@ -109,6 +111,8 @@ public class StyleMap {
 
 	/**
 	 * Returns the value at the given index, null if unspecified.
+	 * 
+	 * @param i the property index.
 	 */
 	public Value getValue(int i) {
 		return values[i];
@@ -116,6 +120,8 @@ public class StyleMap {
 
 	/**
 	 * Returns the mask of the given property value.
+	 * 
+	 * @param i the property index.
 	 */
 	public int getMask(int i) {
 		return masks[i];
@@ -123,6 +129,8 @@ public class StyleMap {
 
 	/**
 	 * Tells whether the given property value is important.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isImportant(int i) {
 		return (masks[i] & IMPORTANT_MASK) != 0;
@@ -130,6 +138,8 @@ public class StyleMap {
 
 	/**
 	 * Tells whether the given property value is computed.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isComputed(int i) {
 		return (masks[i] & COMPUTED_MASK) != 0;
@@ -137,6 +147,8 @@ public class StyleMap {
 
 	/**
 	 * Tells whether the given cascaded property value is null.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isNullCascaded(int i) {
 		return (masks[i] & NULL_CASCADED_MASK) != 0;
@@ -145,6 +157,8 @@ public class StyleMap {
 	/**
 	 * Tells whether the given cascaded property value was inherited from it's
 	 * parent or set locally.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isInherited(int i) {
 		return (masks[i] & INHERITED_MASK) != 0;
@@ -152,6 +166,8 @@ public class StyleMap {
 
 	/**
 	 * Returns the origin value.
+	 * 
+	 * @param i the property index.
 	 */
 	public int getOrigin(int i) {
 		return (masks[i] & ORIGIN_MASK);
@@ -159,6 +175,8 @@ public class StyleMap {
 
 	/**
 	 * Tells whether the given property value is relative to 'color'.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isColorRelative(int i) {
 		return (masks[i] & COLOR_RELATIVE_MASK) != 0;
@@ -167,6 +185,8 @@ public class StyleMap {
 	/**
 	 * Tells whether the given property value is relative to the parent's property
 	 * value.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isParentRelative(int i) {
 		return (masks[i] & PARENT_RELATIVE_MASK) != 0;
@@ -174,6 +194,8 @@ public class StyleMap {
 
 	/**
 	 * Tells whether the given property value is relative to 'line-height'.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isLineHeightRelative(int i) {
 		return (masks[i] & LINE_HEIGHT_RELATIVE_MASK) != 0;
@@ -181,6 +203,8 @@ public class StyleMap {
 
 	/**
 	 * Tells whether the given property value is relative to 'font-size'.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isFontSizeRelative(int i) {
 		return (masks[i] & FONT_SIZE_RELATIVE_MASK) != 0;
@@ -189,6 +213,8 @@ public class StyleMap {
 	/**
 	 * Tells whether the given property value is relative to 'line-height' of the
 	 * {@code :root} element.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isRootLineHeightRelative(int i) {
 		return (masks[i] & ROOT_LINE_HEIGHT_RELATIVE_MASK) != 0;
@@ -197,6 +223,8 @@ public class StyleMap {
 	/**
 	 * Tells whether the given property value is relative to 'font-size' of the
 	 * {@code :root} element.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isRootFontSizeRelative(int i) {
 		return (masks[i] & ROOT_FONT_SIZE_RELATIVE_MASK) != 0;
@@ -205,6 +233,8 @@ public class StyleMap {
 	/**
 	 * Tells whether the given property value is relative to the width of the
 	 * containing block.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isBlockWidthRelative(int i) {
 		return (masks[i] & BLOCK_WIDTH_RELATIVE_MASK) != 0;
@@ -213,6 +243,8 @@ public class StyleMap {
 	/**
 	 * Tells whether the given property value is relative to the height of the
 	 * containing block.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isBlockHeightRelative(int i) {
 		return (masks[i] & BLOCK_HEIGHT_RELATIVE_MASK) != 0;
@@ -220,9 +252,29 @@ public class StyleMap {
 
 	/**
 	 * Tells whether the given property value is relative to the viewport.
+	 * 
+	 * @param i the property index.
 	 */
 	public boolean isViewportRelative(int i) {
 		return (masks[i] & VIEWPORT_RELATIVE_MASK) != 0;
+	}
+
+	/**
+	 * Tells whether the given property value is relative to a custom property.
+	 * 
+	 * @param i the property index.
+	 */
+	public boolean isCustomPtyRelative(int i) {
+		return (masks[i] & CUSTOM_PTY_RELATIVE_MASK) != 0;
+	}
+
+	/**
+	 * Tells whether the given property value is attr()-tainted.
+	 * 
+	 * @param i the property index.
+	 */
+	public boolean isAttrTainted(int i) {
+		return (masks[i] & ATTR_TAINTED_MASK) != 0;
 	}
 
 	/**
@@ -247,6 +299,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the priority of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putImportant(int i, boolean b) {
 		if (b)
@@ -257,6 +312,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the origin of the given value.
+	 * 
+	 * @param i   the property index.
+	 * @param val the origin.
 	 */
 	public void putOrigin(int i, int val) {
 		masks[i] &= ~ORIGIN_MASK;
@@ -265,6 +323,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the computed flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putComputed(int i, boolean b) {
 		if (b)
@@ -275,6 +336,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the null-cascaded flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putNullCascaded(int i, boolean b) {
 		if (b)
@@ -286,6 +350,9 @@ public class StyleMap {
 	/**
 	 * Sets the inherited flag of a property value. If true this computed value was
 	 * inherited from it's parent.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putInherited(int i, boolean b) {
 		if (b)
@@ -296,6 +363,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the color-relative flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putColorRelative(int i, boolean b) {
 		if (b)
@@ -306,6 +376,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the parent-relative flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putParentRelative(int i, boolean b) {
 		if (b)
@@ -316,6 +389,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the line-height-relative flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putLineHeightRelative(int i, boolean b) {
 		if (b)
@@ -326,6 +402,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the font-size-relative flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putFontSizeRelative(int i, boolean b) {
 		if (b)
@@ -336,6 +415,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the root-line-height-relative flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putRootLineHeightRelative(int i, boolean b) {
 		if (b)
@@ -346,6 +428,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the root-font-size-relative flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putRootFontSizeRelative(int i, boolean b) {
 		if (b)
@@ -356,6 +441,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the block-width-relative flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putBlockWidthRelative(int i, boolean b) {
 		if (b)
@@ -366,6 +454,9 @@ public class StyleMap {
 
 	/**
 	 * Sets the block-height-relative flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putBlockHeightRelative(int i, boolean b) {
 		if (b)
@@ -376,12 +467,41 @@ public class StyleMap {
 
 	/**
 	 * Sets the viewport-relative flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
 	 */
 	public void putViewportRelative(int i, boolean b) {
 		if (b)
 			masks[i] |= VIEWPORT_RELATIVE_MASK;
 		else
 			masks[i] &= ~VIEWPORT_RELATIVE_MASK;
+	}
+
+	/**
+	 * Sets the custom-property-relative flag of a property value.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} sets the flag, unsets otherwise.
+	 */
+	public void putCustomPtyRelative(int i, boolean b) {
+		if (b)
+			masks[i] |= CUSTOM_PTY_RELATIVE_MASK;
+		else
+			masks[i] &= ~CUSTOM_PTY_RELATIVE_MASK;
+	}
+
+	/**
+	 * Marks or clears a property as attr()-tainted.
+	 * 
+	 * @param i the property index.
+	 * @param b if {@code true} marks the property as attr()-tainted.
+	 */
+	public void putAttrTainted(int i, boolean b) {
+		if (b)
+			masks[i] |= ATTR_TAINTED_MASK;
+		else
+			masks[i] &= ~ATTR_TAINTED_MASK;
 	}
 
 	/**

@@ -76,11 +76,6 @@ public class FilterManager extends AbstractValueManager {
 		return false;
 	}
 
-	@Override
-	public boolean allowsURL() {
-		return true;
-	}
-
 	/**
 	 * Implements {@link ValueManager#getPropertyType()}.
 	 */

@@ -60,19 +60,6 @@ public interface ValueManager {
 	boolean isAdditiveProperty();
 
 	/**
-	 * Allows URL values.
-	 * <p>
-	 * If this property accepts URL values, then {@code attr()} values cannot be
-	 * used.
-	 * </p>
-	 * 
-	 * @return {@code true} if URL values are allowed by this property.
-	 */
-	default boolean allowsURL() {
-		return false;
-	}
-
-	/**
 	 * Returns the type of value this manager handles. This should be one of the
 	 * TYPE_* constants defined in {@link io.sf.carte.echosvg.util.SVGTypes}.
 	 */

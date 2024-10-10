@@ -1210,6 +1210,8 @@ public abstract class CSSEngine {
 		LexicalUnit lu = lexval;
 		do {
 			if (lu.getLexicalUnitType() == LexicalType.VAR) {
+				sm.putCustomPtyRelative(propIdx, true);
+
 				LexicalUnit newlu;
 				LexicalUnit param = lu.getParameters();
 				String propertyName = param.getStringValue(); // Property name
@@ -1266,19 +1268,8 @@ public abstract class CSSEngine {
 				}
 				continue;
 			} else if (lu.getLexicalUnitType() == LexicalType.ATTR) {
-				if (valueManagers[propIdx].allowsURL()) {
-					return null;
-				}
 				boolean isLexval = lu == lexval;
 				LexicalUnit newlu = replacementAttrUnit(sm, lu, elt, parent, counter, ptySet, propIdx);
-				try {
-					counter.replaceCounter += lu.countReplaceBy(newlu);
-				} catch (CSSBudgetException e) {
-					throw createAttrResourceLimitException(e);
-				}
-				if (counter.replaceCounter >= REPLACE_COUNT_LIMIT) {
-					throw createAttrResourceLimitException();
-				}
 
 				if (newlu == null) {
 					// The current lexical unit can be removed
@@ -1288,6 +1279,17 @@ public abstract class CSSEngine {
 						lexval = lu;
 					}
 					continue;
+				}
+
+				sm.putAttrTainted(propIdx, true);
+
+				try {
+					counter.replaceCounter += lu.countReplaceBy(newlu);
+				} catch (CSSBudgetException e) {
+					throw createAttrResourceLimitException(e);
+				}
+				if (counter.replaceCounter >= REPLACE_COUNT_LIMIT) {
+					throw createAttrResourceLimitException();
 				}
 
 				if (newlu.getLexicalUnitType() != LexicalType.EMPTY) {
@@ -1611,7 +1613,7 @@ public abstract class CSSEngine {
 		}
 
 		// Return fallback
-		return lu == null ? null : replaceLexicalProxy(sm, lu, elt, parent, counter, ptySet, propIdx);
+		return lu == null ? null : replaceLexicalProxy(sm, lu.clone(), elt, parent, counter, ptySet, propIdx);
 	}
 
 	private static boolean unitMatchesAttrType(LexicalUnit lunit, String attrtype) {
@@ -3070,13 +3072,15 @@ public abstract class CSSEngine {
 				boolean lh = (lineHeightIndex == -1) ? false : updated[lineHeightIndex];
 				boolean cl = (colorIndex == -1) ? false : updated[colorIndex];
 				boolean isRoot = elt.getOwnerDocument().getDocumentElement() == elt;
+				boolean cp = styleDeclarationUpdateHandler.updatedCustomProperties;
 
 				for (int i = getNumberOfProperties() - 1; i >= 0; --i) {
 					if (updated[i]) {
 						count++;
 					} else if ((fs && style.isFontSizeRelative(i)) || (lh && style.isLineHeightRelative(i))
 							|| (cl && style.isColorRelative(i)) || (fs && isRoot && style.isRootFontSizeRelative(i))
-							|| (lh && isRoot && style.isRootLineHeightRelative(i))) {
+							|| (lh && isRoot && style.isRootLineHeightRelative(i))
+							|| (cp && style.isCustomPtyRelative(i))) {
 						updated[i] = true;
 						clearComputedValue(style, i);
 						count++;
@@ -3218,13 +3222,15 @@ public abstract class CSSEngine {
 			boolean lh = (lineHeightIndex == -1) ? false : updated[lineHeightIndex];
 			boolean cl = (colorIndex == -1) ? false : updated[colorIndex];
 			boolean isRootFs = fs && elt.getOwnerDocument().getDocumentElement() == elt;
+			boolean cp = styleDeclarationUpdateHandler.updatedCustomProperties;
 
 			int count = 0;
 			for (int i = getNumberOfProperties() - 1; i >= 0; --i) {
 				if (updated[i]) {
 					count++;
 				} else if ((fs && style.isFontSizeRelative(i)) || (lh && style.isLineHeightRelative(i))
-						|| (cl && style.isColorRelative(i)) || (isRootFs && style.isRootFontSizeRelative(i))) {
+						|| (cl && style.isColorRelative(i)) || (isRootFs && style.isRootFontSizeRelative(i))
+						|| (cp && style.isCustomPtyRelative(i))) {
 					updated[i] = true;
 					clearComputedValue(style, i);
 					count++;
@@ -3288,6 +3294,7 @@ public abstract class CSSEngine {
 
 		public StyleMap styleMap;
 		public boolean[] updatedProperties = new boolean[getNumberOfProperties()];
+		public boolean updatedCustomProperties;
 
 		/**
 		 * <b>SAC</b>: Implements
@@ -3317,6 +3324,11 @@ public abstract class CSSEngine {
 				styleMap.putValue(i, v);
 				styleMap.putOrigin(i, StyleMap.INLINE_AUTHOR_ORIGIN);
 			}
+		}
+
+		@Override
+		public void lexicalProperty(String name, LexicalUnit value, boolean important) {
+			updatedCustomProperties = true;
 		}
 
 		@Override

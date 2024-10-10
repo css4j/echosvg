@@ -27,6 +27,7 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.property.StyleValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSEngineUserAgent;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
 
@@ -98,6 +99,14 @@ public abstract class AbstractValueManager extends AbstractValueFactory implemen
 			Value value) {
 
 		if (value.getPrimitiveType() == Type.URI) {
+			if (sm.isAttrTainted(idx)) {
+				CSSEngineUserAgent ua = engine.getCSSEngineUserAgent();
+				if (ua != null) {
+					ua.displayMessage("attr()-tainted value: " + value.getCssText());
+				}
+				return null;
+			}
+
 			// For performance, set the parsed value as the cssText now.
 			String uri = value.getURIValue();
 			return new URIValue(uri, uri);
