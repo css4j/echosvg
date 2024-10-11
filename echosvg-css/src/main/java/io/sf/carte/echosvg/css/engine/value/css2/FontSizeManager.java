@@ -31,10 +31,10 @@ import io.sf.carte.echosvg.css.engine.CSSContext;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.StyleMap;
-import io.sf.carte.echosvg.css.engine.value.CalcValue;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.LengthManager;
+import io.sf.carte.echosvg.css.engine.value.NumericDelegateValue;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
 import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
@@ -167,7 +167,7 @@ public class FontSizeManager extends LengthManager {
 	 */
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
-			Value value) {
+			final Value value) {
 		float scale = 1.0f;
 		boolean doParentRelative = false;
 
@@ -275,9 +275,10 @@ public class FontSizeManager extends LengthManager {
 						NumberValue.floatValueConversion(value.getFloatValue(), value.getUnitType(),
 								CSSUnit.CSS_PX));
 			}
-		} else if (pType == Type.EXPRESSION) {
+		} else if (pType == Type.EXPRESSION || pType == Type.MATH_FUNCTION) {
 			try {
-				Value calc = evaluateCalc((CalcValue) value, elt, pseudo, engine, idx, sm, CSSUnit.CSS_PX);
+				Value calc = evaluateMath((NumericDelegateValue<?>) value, elt, pseudo, engine, idx, sm,
+						CSSUnit.CSS_PX);
 				return new FloatValue(CSSUnit.CSS_PX, calc.getFloatValue());
 			} catch (Exception e) {
 				return isInheritedProperty() ? null : getDefaultValue();
@@ -311,7 +312,7 @@ public class FontSizeManager extends LengthManager {
 		CSSContext ctx = engine.getCSSContext();
 		float fs = ctx.getMediumFontSize();
 
-		if (value.getPrimitiveType() == Type.IDENT) {
+		if (pType == Type.IDENT) {
 			String s = value.getIdentifierValue();
 			switch (s.charAt(0)) {
 			case 'm':
@@ -350,6 +351,7 @@ public class FontSizeManager extends LengthManager {
 				}
 			}
 		}
+
 		return new FloatValue(CSSUnit.CSS_PX, fs);
 	}
 

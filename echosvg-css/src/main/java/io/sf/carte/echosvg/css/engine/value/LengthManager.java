@@ -97,6 +97,17 @@ public abstract class LengthManager extends AbstractValueManager {
 		case CALC:
 			return createCalc(lu);
 
+		case FUNCTION:
+			Value v;
+			try {
+				v = createMathFunction(lu, "<length-percentage>");
+			} catch (Exception e) {
+				DOMException ife = createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+				ife.initCause(e);
+				throw ife;
+			}
+			return v;
+
 		default:
 			break;
 		}
@@ -128,12 +139,13 @@ public abstract class LengthManager extends AbstractValueManager {
 	@Override
 	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
 			Value value) {
-		if (value.getPrimitiveType() != Type.NUMERIC) {
-			if (value.getPrimitiveType() != Type.EXPRESSION) {
+		Type pType = value.getPrimitiveType();
+		if (pType != Type.NUMERIC) {
+			if (pType != Type.EXPRESSION && pType != Type.MATH_FUNCTION) {
 				return value;
 			}
 			try {
-				return evaluateCalc((CalcValue) value, elt, pseudo, engine, idx, sm, CSSUnit.CSS_PX);
+				return evaluateMath((NumericDelegateValue<?>) value, elt, pseudo, engine, idx, sm, CSSUnit.CSS_PX);
 			} catch (Exception e) {
 				return isInheritedProperty() ? null : getDefaultValue();
 			}
@@ -305,11 +317,6 @@ public abstract class LengthManager extends AbstractValueManager {
 			return v.getFloatValue();
 		}
 		return NumberValue.floatValueConversion(v.getFloatValue(), unit, CSSUnit.CSS_PX);
-	}
-
-	protected Value evaluateCalc(CalcValue value, CSSStylableElement elt, String pseudo, CSSEngine engine,
-			int idx, StyleMap sm, short destUnit) throws DOMException {
-		return value.evaluate(elt, pseudo, engine, idx, sm, destUnit);
 	}
 
 	//

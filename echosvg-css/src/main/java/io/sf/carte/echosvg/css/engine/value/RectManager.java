@@ -129,6 +129,17 @@ public abstract class RectManager extends LengthManager {
 		case CALC:
 			return createCalc(lu);
 
+		case FUNCTION:
+			Value v;
+			try {
+				v = createMathFunction(lu, "<length-percentage>");
+			} catch (Exception e) {
+				DOMException mrd = createMalformedRectDOMException();
+				mrd.initCause(e);
+				throw mrd;
+			}
+			return v;
+
 		default:
 			break;
 		}

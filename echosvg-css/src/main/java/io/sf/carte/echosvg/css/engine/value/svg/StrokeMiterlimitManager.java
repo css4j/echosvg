@@ -25,10 +25,13 @@ import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.CSSProxyValueException;
 import io.sf.carte.echosvg.css.engine.value.CalcValue;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
+import io.sf.carte.echosvg.css.engine.value.NumericDelegateValue;
 import io.sf.carte.echosvg.css.engine.value.RevertValue;
 import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
@@ -133,6 +136,17 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
 			}
 			return ((CalcValue) calc).evaluate(null, null, engine, -1, null, CSSUnit.CSS_NUMBER);
 
+		case FUNCTION:
+			Value v;
+			try {
+				v = createMathFunction(lu, "<number>");
+			} catch (Exception e) {
+				DOMException ife = createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+				ife.initCause(e);
+				throw ife;
+			}
+			return ((NumericDelegateValue<?>) v).evaluate(null, null, engine, -1, null, CSSUnit.CSS_NUMBER);
+
 		default:
 		}
 		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
@@ -147,6 +161,12 @@ public class StrokeMiterlimitManager extends AbstractValueManager {
 			return new FloatValue(unitType, floatValue);
 		}
 		throw createInvalidFloatTypeDOMException(unitType);
+	}
+
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		return value;
 	}
 
 }

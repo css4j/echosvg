@@ -18,33 +18,33 @@
  */
 package io.sf.carte.echosvg.css.engine.value;
 
-import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSMathFunctionValue;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.property.Evaluator;
 
 /**
- * {@code calc()} value.
+ * Mathematical function value.
  *
  * @author See Git history.
  * @version $Id$
  */
-public class CalcValue extends NumericDelegateValue<CSSExpressionValue> {
+public class MathFunctionValue extends NumericDelegateValue<CSSMathFunctionValue> {
 
 	/**
 	 * Creates a new value.
 	 */
-	public CalcValue(CSSExpressionValue expr) {
-		super(expr);
+	public MathFunctionValue(CSSMathFunctionValue func) {
+		super(func);
 	}
 
 	@Override
 	public Type getPrimitiveType() {
-		return Type.EXPRESSION;
+		return Type.MATH_FUNCTION;
 	}
 
 	@Override
 	protected CSSTypedValue evaluate(Evaluator eval) {
-		return eval.evaluateExpression(getNumericDelegate());
+		return eval.evaluateFunction(getNumericDelegate());
 	}
 
 }

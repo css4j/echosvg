@@ -62,6 +62,10 @@ g {
     --ellipse-stroke-width: calc(2*var(--onePixel));
     --textFontSize: calc(2 * 5pt);
 
+    --linear-gb: 0.001399396 0.06030292;
+    --s-gb: 29.80392% 47.8431373%;
+    --s-rg: 13.33333% 24.70588%;
+
     font: bold var(--textFontSize) "Open Sans", sans-serif;
 }
 
@@ -91,7 +95,7 @@ ellipse {
   }
 }
 
-@media screen and (100px <= width <= 9000px) {
+@media screen and (100px <= width <= 3000px) {
   circle {
     stroke-width: var(--circle-stroke-width);
   }
@@ -104,6 +108,20 @@ ellipse {
   text.itemdesc {
     font-family: "Ubuntu Mono";
     font-size: calc(var(--textFontSize) + 2pt);
+  }
+}
+
+@media screen and (prefers-color-scheme: light) {
+  #txtcl4 {
+    fill: color(srgb-linear 0.130013 var(--linear-gb));
+  }
+
+  #txtcp {
+    fill: rgb(24.705882% var(--s-gb));
+  }
+
+  #txtcr {
+    fill: rgb(var(--s-rg) 36.07843%);
   }
 }
 
@@ -171,9 +189,9 @@ style="fill:var(--fillColorYellowAlpha); stroke:var(--fillColorYellow)"/>
   <ellipse cx="120" cy="300" rx="100" ry="130" transform="rotate(30 120 300)"
 style="fill:var(--fillColorGreenAlpha); stroke:var(--fillColorGreen)"/>
   <text x="80" y="50" class="itemdesc" text-anchor="middle">Media Queries</text>
-  <text x="320" y="50" class="itemdesc" text-anchor="middle">Conditional rules</text>
-  <text x="91" y="400" class="itemdesc" text-anchor="middle">Color Level 4 / calc()</text>
-  <text x="300" y="400" class="itemdesc" text-anchor="middle">Custom Properties (*)</text>
+  <text x="320" y="50" class="itemdesc" text-anchor="middle" id="txtcr">Conditional rules</text>
+  <text x="91" y="400" class="itemdesc" text-anchor="middle" id="txtcl4">Color Level 4 / calc()</text>
+  <text x="300" y="400" class="itemdesc" text-anchor="middle" id="txtcp">Custom Properties (*)</text>
   <text x="190" y="455" class="itemdesc" text-anchor="middle"
 style="fill:var(--pty-not-set);">* and registered custom properties</text>
   </g>

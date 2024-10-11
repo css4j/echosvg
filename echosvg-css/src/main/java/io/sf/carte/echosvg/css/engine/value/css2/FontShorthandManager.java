@@ -29,7 +29,6 @@ import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.CSSExpressionValue;
-import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.CSSValueSyntax.Match;
 import io.sf.carte.doc.style.css.nsac.CSSParseException;
@@ -310,10 +309,14 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 			return;
 
 		case CALC:
-			Value calc = createFontSizeCalc(lu);
-			if (calc.getCssValueType() == CSSValue.CssType.PROXY) {
-				throw new CSSProxyValueException();
-			} else if (calc.getPrimitiveType() != Type.EXPRESSION || ((CalcValue) calc).getExpressionDelegate()
+			Value calc;
+			try {
+				calc = createFontSizeCalc(lu);
+			} catch (CSSProxyValueException e) {
+				setPendingLonghands(eng, ph, lunit, imp);
+				return;
+			}
+			if (calc.getPrimitiveType() != Type.EXPRESSION || ((CalcValue) calc).getNumericDelegate()
 					.matches(new SyntaxParser().parseSyntax("<length-percentage>")) != Match.TRUE) {
 				throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 			}
@@ -396,6 +399,9 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 
 		Type pType = cssValue.getPrimitiveType();
 		if (pType != Type.EXPRESSION) {
+			if (pType == Type.LEXICAL) {
+				throw new CSSProxyValueException();
+			}
 			createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 		}
 

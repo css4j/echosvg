@@ -25,9 +25,12 @@ import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.StyleMap;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
 import io.sf.carte.echosvg.css.engine.value.CalcValue;
 import io.sf.carte.echosvg.css.engine.value.FloatValue;
+import io.sf.carte.echosvg.css.engine.value.NumericDelegateValue;
 import io.sf.carte.echosvg.css.engine.value.RevertValue;
 import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
@@ -136,6 +139,17 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
 			}
 			return f;
 
+		case FUNCTION:
+			Value v;
+			try {
+				v = createMathFunction(lu, "<angle>");
+			} catch (Exception e) {
+				DOMException ife = createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+				ife.initCause(e);
+				throw ife;
+			}
+			return ((NumericDelegateValue<?>) v).evaluate(null, null, engine, -1, null, CSSUnit.CSS_DEG);
+
 		default:
 			break;
 		}
@@ -157,6 +171,12 @@ public abstract class GlyphOrientationManager extends AbstractValueManager {
 			float f = NumberValue.floatValueConversion(floatValue, type, CSSUnit.CSS_DEG);
 			return new FloatValue(CSSUnit.CSS_DEG, f);
 		}
+	}
+
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		return value;
 	}
 
 }

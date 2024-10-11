@@ -244,39 +244,45 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		LexicalUnit lu = lunit.getParameters();
 
 		boolean pcntSpecified = lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
-		NumericValue red = createRGBColorComponent(lu);
-		lu = lu.getNextLexicalUnit();
-		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
-			lu = lu.getNextLexicalUnit();
-		}
-
-		pcntSpecified = pcntSpecified || lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
-		NumericValue green = createRGBColorComponent(lu);
-		lu = lu.getNextLexicalUnit();
-		if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
-			lu = lu.getNextLexicalUnit();
-		}
-
-		pcntSpecified = pcntSpecified || lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
-		NumericValue blue = createRGBColorComponent(lu);
-
-		// Alpha channel
-		lu = lu.getNextLexicalUnit();
-		NumericValue alpha;
 		boolean alphaPcntSpecified = false;
-		if (lu != null) {
-			if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA
-					|| lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_SLASH) {
+
+		NumericValue red, green, blue, alpha;
+		try {
+			red = createRGBColorComponent(lu);
+			lu = lu.getNextLexicalUnit();
+			if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
 				lu = lu.getNextLexicalUnit();
-				if (lu == null) {
-					throw new DOMException(DOMException.SYNTAX_ERR, "Invalid color: " + lunit.getCssText());
-				}
 			}
-			alphaPcntSpecified = lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
-			alpha = createColorComponent(lu);
-		} else {
-			alpha = null;
+
+			pcntSpecified = pcntSpecified || lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
+			green = createRGBColorComponent(lu);
+			lu = lu.getNextLexicalUnit();
+			if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA) {
+				lu = lu.getNextLexicalUnit();
+			}
+
+			pcntSpecified = pcntSpecified || lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
+			blue = createRGBColorComponent(lu);
+
+			// Alpha channel
+			lu = lu.getNextLexicalUnit();
+			if (lu != null) {
+				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_COMMA
+						|| lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_SLASH) {
+					lu = lu.getNextLexicalUnit();
+					if (lu == null) {
+						throw new DOMException(DOMException.SYNTAX_ERR, "Invalid color: " + lunit.getCssText());
+					}
+				}
+				alphaPcntSpecified = lu.getLexicalUnitType() == LexicalType.PERCENTAGE;
+				alpha = createColorComponent(lu);
+			} else {
+				alpha = null;
+			}
+		} catch (CSSProxyValueException e) {
+			return createLexicalValue(lunit);
 		}
+
 		return createRGBColor(red, green, blue, pcntSpecified, alpha, alphaPcntSpecified);
 	}
 
@@ -291,7 +297,7 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		return c;
 	}
 
-	private ColorFunction createColorFunction(LexicalUnit lunit) {
+	private Value createColorFunction(LexicalUnit lunit) {
 		LexicalUnit lu = lunit.getParameters();
 		AbstractValueList<NumericValue> components = new AbstractValueList<>(' ', 4);
 
@@ -310,24 +316,27 @@ public abstract class AbstractColorManager extends IdentifierManager {
 		// Components
 		NumericValue alpha = null;
 		NumericValue primi;
-		while (true) {
-			primi = createColorComponent(lu);
-			components.add(primi);
-			lu = lu.getNextLexicalUnit();
-
-			if (lu == null) {
-				break;
-			}
-			if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_SLASH) {
-				lu = lu.getNextLexicalUnit(); // Alpha
-				alpha = createColorComponent(lu);
+		try {
+			while (true) {
+				primi = createColorComponent(lu);
+				components.add(primi);
 				lu = lu.getNextLexicalUnit();
-				if (lu != null) {
-					throw new DOMException(DOMException.SYNTAX_ERR,
-							"Wrong value: " + lunit.toString());
+
+				if (lu == null) {
+					break;
 				}
-				break;
+				if (lu.getLexicalUnitType() == LexicalUnit.LexicalType.OPERATOR_SLASH) {
+					lu = lu.getNextLexicalUnit(); // Alpha
+					alpha = createColorComponent(lu);
+					lu = lu.getNextLexicalUnit();
+					if (lu != null) {
+						throw new DOMException(DOMException.SYNTAX_ERR, "Wrong value: " + lunit.toString());
+					}
+					break;
+				}
 			}
+		} catch (CSSProxyValueException e) {
+			return createLexicalValue(lunit);
 		}
 
 		ColorFunction color = new ColorFunction(colorSpace, components);
@@ -367,6 +376,22 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			}
 			return evaluateComponentExpression((CalcValue) calc);
 
+		case FUNCTION:
+			Value v;
+			try {
+				v = createMathFunction(lu, "<number|percentage>");
+			} catch (Exception e) {
+				DOMException ife = createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+				ife.initCause(e);
+				throw ife;
+			}
+			if (v.getCssValueType() == CSSValue.CssType.PROXY) {
+				throw new CSSProxyValueException();
+			} else if (v.getPrimitiveType() != Type.MATH_FUNCTION) {
+				break;
+			}
+			return evaluateComponentFunction((MathFunctionValue) v);
+
 		default:
 		}
 		throw createInvalidRGBComponentUnitDOMException(lu.getLexicalUnitType());
@@ -399,6 +424,22 @@ public abstract class AbstractColorManager extends IdentifierManager {
 			}
 			return evaluateComponentExpression((CalcValue) calc);
 
+		case FUNCTION:
+			Value v;
+			try {
+				v = createMathFunction(lu, "<number|percentage>");
+			} catch (Exception e) {
+				DOMException ife = createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+				ife.initCause(e);
+				throw ife;
+			}
+			if (v.getCssValueType() == CSSValue.CssType.PROXY) {
+				throw new CSSProxyValueException();
+			} else if (v.getPrimitiveType() != Type.MATH_FUNCTION) {
+				break;
+			}
+			return evaluateComponentFunction((MathFunctionValue) v);
+
 		default:
 		}
 		throw createInvalidComponentUnitDOMException(lu.getLexicalUnitType());
@@ -406,7 +447,13 @@ public abstract class AbstractColorManager extends IdentifierManager {
 
 	private FloatValue evaluateComponentExpression(CalcValue calc) {
 		PercentageEvaluator eval = new PercentageEvaluator();
-		CSSTypedValue result = eval.evaluateExpression(calc.getExpressionDelegate());
+		CSSTypedValue result = eval.evaluateExpression(calc.getNumericDelegate());
+		return new FloatValue(CSSUnit.CSS_NUMBER, result.getFloatValue(CSSUnit.CSS_NUMBER));
+	}
+
+	private FloatValue evaluateComponentFunction(MathFunctionValue calc) {
+		PercentageEvaluator eval = new PercentageEvaluator();
+		CSSTypedValue result = eval.evaluateFunction(calc.getNumericDelegate());
 		return new FloatValue(CSSUnit.CSS_NUMBER, result.getFloatValue(CSSUnit.CSS_NUMBER));
 	}
 

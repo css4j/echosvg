@@ -125,6 +125,7 @@ public class AbstractSamplesRendering {
 			throws TranscoderException, IOException {
 		RenderingTest runner = new RenderingTest();
 		runner.setValidating(validating);
+		runner.setMedia(SVGRenderingAccuracyTest.DEFAULT_MEDIUM);
 		runner.setFile(file);
 		runner.runTest(getBelowThresholdAllowed(), getOverThresholdAllowed());
 	}
