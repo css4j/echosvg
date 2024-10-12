@@ -613,7 +613,7 @@ public abstract class AbstractDocument extends AbstractParentNode
 				}
 			}
 
-			if (l.size() == 0) {
+			if (l.isEmpty()) {
 				elementsById.remove(id);
 			}
 		} finally {

@@ -322,8 +322,7 @@ public class ContentManager {
 			HashSet<Node> removed = new HashSet<>(previouslySelectedNodes);
 			removed.removeAll(newlySelectedNodes);
 
-			HashSet<Node> added = new HashSet<>();
-			added.addAll(newlySelectedNodes);
+			HashSet<Node> added = new HashSet<>(newlySelectedNodes);
 			added.removeAll(previouslySelectedNodes);
 
 			if (!first) {

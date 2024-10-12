@@ -81,10 +81,9 @@ public class SVGLocatableSupport {
 	public static SVGRect getBBox(Element elt) {
 		final SVGOMElement svgelt = (SVGOMElement) elt;
 		SVGContext svgctx = svgelt.getSVGContext();
-		if (svgctx == null)
+		if (svgctx == null || svgctx.getBBox() == null) {
 			return null;
-		if (svgctx.getBBox() == null)
-			return null;
+		}
 
 		return new SVGRect() {
 			@Override

@@ -310,7 +310,7 @@ public class BackgroundRable8Bit extends AbstractRable {
 			}
 		}
 
-		if (srcs.size() == 0)
+		if (srcs.isEmpty())
 			return null;
 
 		Filter ret = null;

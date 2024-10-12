@@ -150,7 +150,7 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	 */
 	protected static int[] convertOrder(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_ORDER_ATTRIBUTE);
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			return new int[] { 3, 3 };
 		}
 		int[] orderXY = new int[2];
@@ -184,7 +184,7 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	protected static float[] convertKernelMatrix(Element filterElement, int[] orderXY, BridgeContext ctx) {
 
 		String s = filterElement.getAttributeNS(null, SVG_KERNEL_MATRIX_ATTRIBUTE);
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			throw new BridgeException(ctx, filterElement, ERR_ATTRIBUTE_MISSING,
 					new Object[] { SVG_KERNEL_MATRIX_ATTRIBUTE });
 		}
@@ -218,7 +218,7 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	protected static float convertDivisor(Element filterElement, float[] kernelMatrix, BridgeContext ctx) {
 
 		String s = filterElement.getAttributeNS(null, SVG_DIVISOR_ATTRIBUTE);
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			// default is sum of kernel values (if sum is zero then 1.0)
 			float sum = 0;
 			for (float aKernelMatrix : kernelMatrix) {
@@ -248,7 +248,7 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 		int[] targetXY = new int[2];
 		// 'targetX' attribute - default is floor(orderX / 2)
 		String s = filterElement.getAttributeNS(null, SVG_TARGET_X_ATTRIBUTE);
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			targetXY[0] = orderXY[0] / 2;
 		} else {
 			try {
@@ -265,7 +265,7 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 		}
 		// 'targetY' attribute - default is floor(orderY / 2)
 		s = filterElement.getAttributeNS(null, SVG_TARGET_Y_ATTRIBUTE);
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			targetXY[1] = orderXY[1] / 2;
 		} else {
 			try {
@@ -292,7 +292,7 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	 */
 	protected static double[] convertKernelUnitLength(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_KERNEL_UNIT_LENGTH_ATTRIBUTE);
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			return null;
 		}
 		double[] units = new double[2];
@@ -325,10 +325,7 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	 */
 	protected static PadMode convertEdgeMode(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_EDGE_MODE_ATTRIBUTE);
-		if (s.length() == 0) {
-			return PadMode.REPLICATE;
-		}
-		if (SVG_DUPLICATE_VALUE.equals(s)) {
+		if (s.isEmpty() || SVG_DUPLICATE_VALUE.equals(s)) {
 			return PadMode.REPLICATE;
 		}
 		if (SVG_WRAP_VALUE.equals(s)) {
@@ -350,7 +347,7 @@ public class SVGFeConvolveMatrixElementBridge extends AbstractSVGFilterPrimitive
 	 */
 	protected static boolean convertPreserveAlpha(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_PRESERVE_ALPHA_ATTRIBUTE);
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			return false;
 		}
 		if (SVG_TRUE_VALUE.equals(s)) {

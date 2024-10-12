@@ -175,12 +175,10 @@ public class SVGMultiImageElementBridge extends SVGImageElementBridge {
 		Dimension[] mindary = new Dimension[elems.size()];
 		Dimension[] maxdary = new Dimension[elems.size()];
 		Element[] elemary = new Element[elems.size()];
-		Iterator<Dimension> mindi = minDim.iterator();
 		Iterator<Dimension> maxdi = maxDim.iterator();
 		Iterator<Element> ei = elems.iterator();
 		int n = 0;
-		while (mindi.hasNext()) {
-			Dimension minD = mindi.next();
+		for (Dimension minD : minDim) {
 			Dimension maxD = maxdi.next();
 			int i = 0;
 			if (minD != null) {

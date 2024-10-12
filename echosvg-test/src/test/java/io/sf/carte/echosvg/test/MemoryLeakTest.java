@@ -249,7 +249,7 @@ public abstract class MemoryLeakTest {
 
 		checkAllObjects();
 
-		if (entries.size() == 0) {
+		if (entries.isEmpty()) {
 			return null;
 		}
 		return "Not all registered objects cleared: " +

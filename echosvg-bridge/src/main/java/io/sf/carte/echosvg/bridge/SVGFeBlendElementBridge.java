@@ -124,10 +124,7 @@ public class SVGFeBlendElementBridge extends AbstractSVGFilterPrimitiveElementBr
 	 */
 	protected static CompositeRule convertMode(Element filterElement, BridgeContext ctx) {
 		String rule = filterElement.getAttributeNS(null, SVG_MODE_ATTRIBUTE);
-		if (rule.length() == 0) {
-			return CompositeRule.OVER;
-		}
-		if (SVG_NORMAL_VALUE.equals(rule)) {
+		if (rule.isEmpty() || SVG_NORMAL_VALUE.equals(rule)) {
 			return CompositeRule.OVER;
 		}
 		if (SVG_MULTIPLY_VALUE.equals(rule)) {

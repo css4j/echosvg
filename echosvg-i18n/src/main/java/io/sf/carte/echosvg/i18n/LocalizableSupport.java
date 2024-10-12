@@ -289,7 +289,7 @@ public class LocalizableSupport implements Localizable {
 		ResourceBundle rb = null;
 		if (cls == null) {
 			// Old behavour
-			if (resourceBundles.size() == 0) {
+			if (resourceBundles.isEmpty()) {
 				rb = lookupResourceBundle(bundleName, null);
 				resourceBundles.add(rb);
 			}

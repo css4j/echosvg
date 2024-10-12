@@ -96,22 +96,14 @@ public class BaseScriptingEnvironment {
 	public static boolean isDynamicDocument(BridgeContext ctx, Document doc) {
 		Element elt = doc.getDocumentElement();
 		if ((elt != null) && SVGConstants.SVG_NAMESPACE_URI.equals(elt.getNamespaceURI())) {
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONABORT_ATTRIBUTE).length() > 0) {
+			if (!elt.getAttributeNS(null, SVGConstants.SVG_ONABORT_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONERROR_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONRESIZE_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONUNLOAD_ATTRIBUTE).isEmpty()) {
 				return true;
 			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONERROR_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONRESIZE_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONUNLOAD_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONSCROLL_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONZOOM_ATTRIBUTE).length() > 0) {
+			if (!elt.getAttributeNS(null, SVGConstants.SVG_ONSCROLL_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONZOOM_ATTRIBUTE).isEmpty()) {
 				return true;
 			}
 			return isDynamicElement(ctx, doc.getDocumentElement());
@@ -134,55 +126,33 @@ public class BaseScriptingEnvironment {
 			}
 		}
 		if (SVGConstants.SVG_NAMESPACE_URI.equals(elt.getNamespaceURI())) {
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONKEYUP_ATTRIBUTE).length() > 0) {
+			if (!elt.getAttributeNS(null, SVGConstants.SVG_ONKEYUP_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONKEYDOWN_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONKEYPRESS_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONLOAD_ATTRIBUTE).isEmpty()) {
 				return true;
 			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONKEYDOWN_ATTRIBUTE).length() > 0) {
+			if (!elt.getAttributeNS(null, SVGConstants.SVG_ONERROR_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONACTIVATE_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONCLICK_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONFOCUSIN_ATTRIBUTE).isEmpty()) {
 				return true;
 			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONKEYPRESS_ATTRIBUTE).length() > 0) {
+			if (!elt.getAttributeNS(null, SVGConstants.SVG_ONFOCUSOUT_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONMOUSEDOWN_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONMOUSEMOVE_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONMOUSEOUT_ATTRIBUTE).isEmpty()) {
 				return true;
 			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONLOAD_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONERROR_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONACTIVATE_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONCLICK_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONFOCUSIN_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONFOCUSOUT_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONMOUSEDOWN_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONMOUSEMOVE_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONMOUSEOUT_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONMOUSEOVER_ATTRIBUTE).length() > 0) {
-				return true;
-			}
-			if (elt.getAttributeNS(null, SVGConstants.SVG_ONMOUSEUP_ATTRIBUTE).length() > 0) {
+			if (!elt.getAttributeNS(null, SVGConstants.SVG_ONMOUSEOVER_ATTRIBUTE).isEmpty()
+					|| !elt.getAttributeNS(null, SVGConstants.SVG_ONMOUSEUP_ATTRIBUTE).isEmpty()) {
 				return true;
 			}
 		}
 
 		for (Node n = elt.getFirstChild(); n != null; n = n.getNextSibling()) {
-			if (n.getNodeType() == Node.ELEMENT_NODE) {
-				if (isDynamicElement(ctx, (Element) n)) {
-					return true;
-				}
+			if (n.getNodeType() == Node.ELEMENT_NODE && isDynamicElement(ctx, (Element) n)) {
+				return true;
 			}
 		}
 		return false;
@@ -438,7 +408,7 @@ public class BaseScriptingEnvironment {
 			String desc = null;
 			Reader reader = null;
 
-			if (href.length() > 0) {
+			if (!href.isEmpty()) {
 				desc = href;
 
 				// External script.

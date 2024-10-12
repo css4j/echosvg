@@ -401,7 +401,7 @@ public class StrokingTextPainter extends BasicTextPainter {
 
 			// if could not resolve at least one of the fontFamilies
 			// then use the default font
-			if (fonts.size() == 0) {
+			if (fonts.isEmpty()) {
 				// create a list of fonts of the correct size
 				fonts.add(getFontFamilyResolver().getDefault().deriveFont(fontSize, aci));
 			}
@@ -1277,10 +1277,7 @@ public class StrokingTextPainter extends BasicTextPainter {
 	public Mark getMark(TextNode node, int index, boolean leadingEdge) {
 		AttributedCharacterIterator aci;
 		aci = node.getAttributedCharacterIterator();
-		if (aci == null)
-			return null;
-
-		if ((index < aci.getBeginIndex()) || (index > aci.getEndIndex()))
+		if (aci == null || index < aci.getBeginIndex() || index > aci.getEndIndex())
 			return null;
 
 		TextHit textHit = new TextHit(index, leadingEdge);

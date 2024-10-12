@@ -77,7 +77,7 @@ public class ColorFunction extends ColorValue implements CSSColor {
 		// Clone channels if the list belongs to some other value
 		boolean clone = channels instanceof AbstractValue && ((AbstractValue) channels).handler != null;
 		int len = channels.getLength();
-		this.channels = new AbstractValueList<NumericValue>(' ', len);
+		this.channels = new AbstractValueList<>(' ', len);
 		for (NumericValue channel : channels) {
 			if (clone) {
 				channel = channel.clone();

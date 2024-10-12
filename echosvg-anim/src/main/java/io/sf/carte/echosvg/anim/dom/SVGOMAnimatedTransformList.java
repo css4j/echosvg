@@ -375,7 +375,7 @@ public class SVGOMAnimatedTransformList extends AbstractSVGAnimatedValue impleme
 		 */
 		@Override
 		protected String getValueAsString() {
-			if (itemList.size() == 0) {
+			if (itemList.isEmpty()) {
 				return "";
 			}
 			StringBuilder sb = new StringBuilder(itemList.size() * 8);

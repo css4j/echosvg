@@ -68,7 +68,7 @@ public class SVGOMStyleElement extends SVGOMElement implements CSSStyleSheetNode
 
 	static {
 		attributeInitializer = new AttributeInitializer(1);
-		attributeInitializer.addAttribute(XMLConstants.XML_NAMESPACE_URI, "xml", "space", "preserve");
+		attributeInitializer.addAttribute(XML_NAMESPACE_URI, "xml", XML_SPACE_ATTRIBUTE, XML_PRESERVE_VALUE);
 	}
 
 	/**
@@ -115,31 +115,29 @@ public class SVGOMStyleElement extends SVGOMElement implements CSSStyleSheetNode
 	 */
 	@Override
 	public StyleSheet getCSSStyleSheet() {
-		if (styleSheet == null) {
-			if (getType().equals(CSSConstants.CSS_MIME_TYPE)) {
-				SVGOMDocument doc = (SVGOMDocument) getOwnerDocument();
-				CSSEngine e = doc.getCSSEngine();
-				String text = "";
-				Node n = getFirstChild();
-				if (n != null) {
-					StringBuilder sb = new StringBuilder();
-					while (n != null) {
-						if (n.getNodeType() == Node.CDATA_SECTION_NODE || n.getNodeType() == Node.TEXT_NODE)
-							sb.append(n.getNodeValue());
-						n = n.getNextSibling();
-					}
-					text = sb.toString();
+		if (styleSheet == null && CSSConstants.CSS_MIME_TYPE.equals(getType())) {
+			SVGOMDocument doc = (SVGOMDocument) getOwnerDocument();
+			CSSEngine e = doc.getCSSEngine();
+			String text = "";
+			Node n = getFirstChild();
+			if (n != null) {
+				StringBuilder sb = new StringBuilder();
+				while (n != null) {
+					if (n.getNodeType() == Node.CDATA_SECTION_NODE || n.getNodeType() == Node.TEXT_NODE)
+						sb.append(n.getNodeValue());
+					n = n.getNextSibling();
 				}
-				ParsedURL burl = null;
-				String bu = getBaseURI();
-				if (bu != null) {
-					burl = new ParsedURL(bu);
-				}
-				String media = getAttributeNS(null, SVG_MEDIA_ATTRIBUTE);
-				styleSheet = e.parseStyleSheet(text, burl, media);
-				addEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified",
-						domCharacterDataModifiedListener, false, null);
+				text = sb.toString();
 			}
+			ParsedURL burl = null;
+			String bu = getBaseURI();
+			if (bu != null) {
+				burl = new ParsedURL(bu);
+			}
+			String media = getAttributeNS(null, SVG_MEDIA_ATTRIBUTE);
+			styleSheet = e.parseStyleSheet(text, burl, media);
+			addEventListenerNS(XMLConstants.XML_EVENTS_NAMESPACE_URI, "DOMCharacterDataModified",
+					domCharacterDataModifiedListener, false, null);
 		}
 		return styleSheet;
 	}

@@ -231,7 +231,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 				docSubtreeListener, true);
 
 		// Remove all imports.
-		int nSlots = imports.values().size();
+		int nSlots = imports.size();
 		ImportRecord[] irs = new ImportRecord[nSlots];
 		imports.values().toArray(irs);
 		for (ImportRecord ir : irs) {
@@ -531,7 +531,7 @@ public class DefaultXBLManager implements XBLManager, XBLConstants {
 	protected DefinitionRecord getActiveDefinition(String namespaceURI, String localName) {
 		@SuppressWarnings("unchecked")
 		TreeSet<DefinitionRecord> defs = (TreeSet<DefinitionRecord>) definitionLists.get(namespaceURI, localName);
-		if (defs == null || defs.size() == 0) {
+		if (defs == null || defs.isEmpty()) {
 			return null;
 		}
 		return defs.first();

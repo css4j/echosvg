@@ -70,7 +70,7 @@ public class EventDispatcher {
 			// throw errors.
 			try {
 				synchronized (listeners) {
-					if (listeners.size() == 0)
+					if (listeners.isEmpty())
 						return;
 					ll = listeners.toArray();
 					break;

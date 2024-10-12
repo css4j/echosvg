@@ -124,7 +124,7 @@ public class SVGFeMorphologyElementBridge extends AbstractSVGFilterPrimitiveElem
 	 */
 	protected static float[] convertRadius(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_RADIUS_ATTRIBUTE);
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			return new float[] { 0, 0 };
 		}
 		float[] radii = new float[2];
@@ -155,10 +155,7 @@ public class SVGFeMorphologyElementBridge extends AbstractSVGFilterPrimitiveElem
 	 */
 	protected static boolean convertOperator(Element filterElement, BridgeContext ctx) {
 		String s = filterElement.getAttributeNS(null, SVG_OPERATOR_ATTRIBUTE);
-		if (s.length() == 0) {
-			return false;
-		}
-		if (SVG_ERODE_VALUE.equals(s)) {
+		if (s.isEmpty() || SVG_ERODE_VALUE.equals(s)) {
 			return false;
 		}
 		if (SVG_DILATE_VALUE.equals(s)) {

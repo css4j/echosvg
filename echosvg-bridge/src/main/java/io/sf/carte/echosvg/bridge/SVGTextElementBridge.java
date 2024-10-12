@@ -2778,11 +2778,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			SoftReference<Element> sr = (SoftReference<Element>) aci.getAttribute(TEXT_COMPOUND_ID);
 			Element elem = sr.get();
 
-			if (elem == null)
-				continue;
-			if (elems.contains(elem))
-				continue;
-			if (!isTextSensitive(elem))
+			if (elem == null || elems.contains(elem) || !isTextSensitive(elem))
 				continue;
 
 			Rectangle2D glBounds = layout.getBounds2D();
@@ -2827,9 +2823,7 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			SoftReference<Element> sr = (SoftReference<Element>) aci.getAttribute(TEXT_COMPOUND_ID);
 			Element elem = sr.get();
 
-			if (elem == null)
-				continue;
-			if (reject.contains(elem))
+			if (elem == null || reject.contains(elem))
 				continue;
 			if (!isTextSensitive(elem)) {
 				reject.add(elem);
@@ -2896,15 +2890,12 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			@SuppressWarnings("unchecked")
 			SoftReference<Element> sr = (SoftReference<Element>) aci.getAttribute(TEXT_COMPOUND_ID);
 			Element runElem = sr.get();
-			if (runElem == null)
-				continue;
-
 			// Only consider runElem if it is sensitive.
-			if (checkSensitivity && !isTextSensitive(runElem))
+			if (runElem == null || (checkSensitivity && !isTextSensitive(runElem)))
 				continue;
 
 			Element p = runElem;
-			while ((p != null) && (p != txtElem) && (p != elem)) {
+			while (p != null && p != txtElem && p != elem) {
 				p = (Element) txtBridge.getParentNode(p);
 			}
 			if (p != elem)
@@ -2966,15 +2957,12 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			@SuppressWarnings("unchecked")
 			SoftReference<Element> sr = (SoftReference<Element>) aci.getAttribute(TEXT_COMPOUND_ID);
 			Element runElem = sr.get();
-			if (runElem == null)
-				continue;
-
 			// Only consider runElem if it is sensitive.
-			if (checkSensitivity && !isTextSensitive(runElem))
+			if (runElem == null || (checkSensitivity && !isTextSensitive(runElem)))
 				continue;
 
 			Element p = runElem;
-			while ((p != null) && (p != txtElem) && (p != elem)) {
+			while (p != null && p != txtElem && p != elem) {
 				p = (Element) txtBridge.getParentNode(p);
 			}
 			if (p != elem)

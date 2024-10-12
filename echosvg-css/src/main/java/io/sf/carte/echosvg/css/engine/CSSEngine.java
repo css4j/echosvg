@@ -549,7 +549,7 @@ public abstract class CSSEngine {
 		@Override
 		public CSSTypedValue getInitialColor() {
 			String pcs = cssContext.getPrefersColorScheme();
-			return pcs != null && "dark".equals(pcs) ?
+			return "dark".equals(pcs) ?
 					darkmodeInitialColor() : super.getInitialColor();
 		}
 
@@ -1393,15 +1393,15 @@ public abstract class CSSEngine {
 			}
 		}
 
-		if (custom == null) {
-			if (definition != null) {
+		if (definition != null) {
+			if (custom == null) {
 				custom = definition.getInitialValue();
-			}
-		} else if (definition != null) {
-			CSSValueSyntax syntax = definition.getSyntax();
-			// syntax is never null
-			if (custom.matches(syntax) == Match.FALSE) {
-				custom = definition.getInitialValue();
+			} else {
+				CSSValueSyntax syntax = definition.getSyntax();
+				// syntax is never null
+				if (custom.matches(syntax) == Match.FALSE) {
+					custom = definition.getInitialValue();
+				}
 			}
 		}
 
@@ -3460,13 +3460,8 @@ public abstract class CSSEngine {
 	 * Handles an attribute change in the document.
 	 */
 	protected void handleAttrModified(Element e, Attr attr, short attrChange, String prevValue, String newValue) {
-		if (!(e instanceof CSSStylableElement)) {
-			// Not a stylable element.
-			return;
-		}
-
-		if (newValue.equals(prevValue)) {
-			return; // no change really...
+		if (!(e instanceof CSSStylableElement) || newValue.equals(prevValue)) {
+			return; // Either not a stylable element or no actual change
 		}
 
 		String attrNS = attr.getNamespaceURI();
@@ -3475,23 +3470,20 @@ public abstract class CSSEngine {
 		CSSStylableElement elt = (CSSStylableElement) e;
 		StyleMap style = elt.getComputedStyleMap(null);
 		if (style != null) {
-			if (attrNS == styleNamespaceURI || attrNS != null && attrNS.equals(styleNamespaceURI)) {
-				if (name.equals(styleLocalName)) {
-					// The style declaration attribute has been modified.
-					inlineStyleAttributeUpdated(elt, style, attrChange, prevValue, newValue);
-					return;
-				}
+			if ((attrNS == styleNamespaceURI || attrNS != null && attrNS.equals(styleNamespaceURI))
+					&& name.equals(styleLocalName)) {
+				// The style declaration attribute has been modified.
+				inlineStyleAttributeUpdated(elt, style, attrChange, prevValue, newValue);
+				return;
 			}
 
-			if (nonCSSPresentationalHints != null) {
-				if (attrNS == nonCSSPresentationalHintsNamespaceURI
-						|| attrNS != null && attrNS.equals(nonCSSPresentationalHintsNamespaceURI)) {
-					if (nonCSSPresentationalHints.contains(name)) {
-						// The 'name' attribute which represents a non CSS
-						// presentational hint has been modified.
-						nonCSSPresentationalHintUpdated(elt, style, name, attrChange, newValue);
-						return;
-					}
+			if ((nonCSSPresentationalHints != null) && (attrNS == nonCSSPresentationalHintsNamespaceURI
+					|| attrNS != null && attrNS.equals(nonCSSPresentationalHintsNamespaceURI))) {
+				if (nonCSSPresentationalHints.contains(name)) {
+					// The 'name' attribute which represents a non CSS
+					// presentational hint has been modified.
+					nonCSSPresentationalHintUpdated(elt, style, name, attrChange, newValue);
+					return;
 				}
 			}
 		}

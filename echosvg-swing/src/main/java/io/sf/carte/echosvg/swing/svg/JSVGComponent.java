@@ -897,7 +897,7 @@ public class JSVGComponent extends JGVTComponent {
 			return null;
 		CompositeGraphicsNode cgn = (CompositeGraphicsNode) gn;
 		List<GraphicsNode> children = cgn.getChildren();
-		if (children.size() == 0)
+		if (children.isEmpty())
 			return null;
 		gn = children.get(0);
 		if (!(gn instanceof CanvasGraphicsNode))

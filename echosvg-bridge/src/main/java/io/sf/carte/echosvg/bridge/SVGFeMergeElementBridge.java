@@ -81,11 +81,7 @@ public class SVGFeMergeElementBridge extends AbstractSVGFilterPrimitiveElementBr
 		List<Filter> srcs = extractFeMergeNode(filterElement, filteredElement, filteredNode, inputFilter, filterMap,
 				ctx);
 
-		if (srcs == null) {
-			return null; // <!> FIXME: no subelement found, result unspecified
-		}
-
-		if (srcs.size() == 0) {
+		if (srcs == null || srcs.isEmpty()) {
 			return null; // <!> FIXME: no subelement found, result unspecified
 		}
 

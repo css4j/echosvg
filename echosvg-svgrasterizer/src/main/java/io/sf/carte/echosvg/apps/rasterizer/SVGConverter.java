@@ -458,7 +458,7 @@ public class SVGConverter {
 				}
 			}
 
-			if (this.sources.size() == 0) {
+			if (this.sources.isEmpty()) {
 				this.sources = null;
 			}
 		}

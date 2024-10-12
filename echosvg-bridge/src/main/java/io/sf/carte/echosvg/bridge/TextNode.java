@@ -235,10 +235,8 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
 	 */
 	@Override
 	public Rectangle2D getPrimitiveBounds() {
-		if (primitiveBounds == null) {
-			if (aci != null) {
-				primitiveBounds = textPainter.getBounds2D(this);
-			}
+		if (primitiveBounds == null && aci != null) {
+			primitiveBounds = textPainter.getBounds2D(this);
 		}
 		return primitiveBounds;
 	}
@@ -250,10 +248,8 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
 	 */
 	@Override
 	public Rectangle2D getGeometryBounds() {
-		if (geometryBounds == null) {
-			if (aci != null) {
-				geometryBounds = textPainter.getGeometryBounds(this);
-			}
+		if (geometryBounds == null && aci != null) {
+			geometryBounds = textPainter.getGeometryBounds(this);
 		}
 		return geometryBounds;
 	}
@@ -273,10 +269,8 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
 	 */
 	@Override
 	public Shape getOutline() {
-		if (outline == null) {
-			if (aci != null) {
-				outline = textPainter.getOutline(this);
-			}
+		if (outline == null && aci != null) {
+			outline = textPainter.getOutline(this);
 		}
 		return outline;
 	}
@@ -294,7 +288,7 @@ public class TextNode extends AbstractGraphicsNode implements Selectable {
 	// Selection methods
 	//
 	public void setSelection(Mark begin, Mark end) {
-		if ((begin.getTextNode() != this) || (end.getTextNode() != this))
+		if (begin.getTextNode() != this || end.getTextNode() != this)
 			throw new RuntimeException("Markers not from this TextNode");
 
 		beginMark = begin;

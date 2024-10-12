@@ -176,16 +176,14 @@ public class SVGOMDocument extends AbstractStylableDocument
 
 		for (Node n = getDocumentElement().getFirstChild(); n != null; n = n.getNextSibling()) {
 			String ns = n.getNamespaceURI();
-			if (ns != null && ns.equals(SVG_NAMESPACE_URI)) {
-				if (n.getLocalName().equals(SVG_TITLE_TAG)) {
-					preserve = ((SVGLangSpace) n).getXMLspace().equals("preserve");
-					for (n = n.getFirstChild(); n != null; n = n.getNextSibling()) {
-						if (n.getNodeType() == Node.TEXT_NODE) {
-							sb.append(n.getNodeValue());
-						}
+			if (ns != null && SVG_NAMESPACE_URI.equals(ns) && SVG_TITLE_TAG.equals(n.getLocalName())) {
+				preserve = XML_PRESERVE_VALUE.equals(((SVGLangSpace) n).getXMLspace());
+				for (n = n.getFirstChild(); n != null; n = n.getNextSibling()) {
+					if (n.getNodeType() == Node.TEXT_NODE) {
+						sb.append(n.getNodeValue());
 					}
-					break;
 				}
+				break;
 			}
 		}
 
@@ -709,10 +707,7 @@ public class SVGOMDocument extends AbstractStylableDocument
 
 	// DocumentCSS ////////////////////////////////////////////////////////////
 
-	/**
-	 * This does not implement {@code DocumentCSS#getOverrideStyle(Element,String)}
-	 * anymore, as it does not support Typed OM.
-	 */
+	@Override
 	public CSSStyleDeclaration getOverrideStyle(Element elt, String pseudoElt) {
 		if (elt instanceof SVGStylableElement && pseudoElt == null) {
 			return ((SVGStylableElement) elt).getOverrideStyle();

@@ -63,8 +63,7 @@ public class UpdateManager {
 		try {
 			String s = System.getProperty("io.sf.carte.echosvg.min_repaint_time", "20");
 			value = Integer.parseInt(s);
-		} catch (SecurityException se) {
-		} catch (NumberFormatException nfe) {
+		} catch (SecurityException | NumberFormatException nfe) {
 		} finally {
 			MIN_REPAINT_TIME = value;
 		}
@@ -628,9 +627,7 @@ public class UpdateManager {
 	TimerTask repaintTimerTask = null;
 
 	void createRepaintTimer() {
-		if (repaintTimerTask != null)
-			return;
-		if (allResumeTime < 0)
+		if (repaintTimerTask != null || allResumeTime < 0)
 			return;
 		if (repaintTriggerTimer == null)
 			repaintTriggerTimer = new Timer(true);
@@ -648,9 +645,7 @@ public class UpdateManager {
 	 * it will construct a timer even if one
 	 */
 	void resetRepaintTimer() {
-		if (repaintTimerTask == null)
-			return;
-		if (allResumeTime < 0)
+		if (repaintTimerTask == null || allResumeTime < 0)
 			return;
 		if (repaintTriggerTimer == null)
 			repaintTriggerTimer = new Timer(true);
@@ -684,7 +679,7 @@ public class UpdateManager {
 	boolean releaseRedrawSuspension(int index) {
 		if (index > nextSuspensionIndex)
 			return false;
-		if (suspensionList.size() == 0)
+		if (suspensionList.isEmpty())
 			return true;
 
 		int lo = 0, hi = suspensionList.size() - 1;
@@ -707,7 +702,7 @@ public class UpdateManager {
 			return true; // currently not in list but was at some point...
 
 		suspensionList.remove(lo);
-		if (suspensionList.size() == 0) {
+		if (suspensionList.isEmpty()) {
 			// No more active suspensions
 			allResumeTime = -1;
 			resetRepaintTimer();

@@ -708,10 +708,9 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 	 */
 	@Override
 	public short getPercentageInterpretation(String ns, String an, boolean isCSS) {
-		if (isCSS || ns == null) {
-			if (an.equals(CSSConstants.CSS_BASELINE_SHIFT_PROPERTY) || an.equals(CSSConstants.CSS_FONT_SIZE_PROPERTY)) {
-				return PERCENTAGE_FONT_SIZE;
-			}
+		if ((isCSS || ns == null) && (CSSConstants.CSS_BASELINE_SHIFT_PROPERTY.equals(an)
+				|| CSSConstants.CSS_FONT_SIZE_PROPERTY.equals(an))) {
+			return PERCENTAGE_FONT_SIZE;
 		}
 		if (!isCSS) {
 			DoublyIndexedTable<String, String> t = getTraitInformationTable();

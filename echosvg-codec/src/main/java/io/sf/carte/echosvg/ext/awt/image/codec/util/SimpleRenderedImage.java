@@ -288,7 +288,7 @@ public abstract class SimpleRenderedImage implements RenderedImage {
 			}
 		}
 
-		if (names.size() == 0) {
+		if (names.isEmpty()) {
 			return null;
 		}
 

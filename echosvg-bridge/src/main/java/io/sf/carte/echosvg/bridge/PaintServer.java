@@ -669,7 +669,7 @@ public abstract class PaintServer implements SVGConstants, CSSConstants, ErrorCo
 			} else if (f > 100f) {
 				f = 100f;
 			}
-			return f * 0.01f;
+			return f / 100f;
 		}
 		throw new IllegalArgumentException("Invalid color component: " + item.getCssText());
 	}

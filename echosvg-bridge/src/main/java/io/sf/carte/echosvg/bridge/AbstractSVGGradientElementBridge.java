@@ -212,10 +212,8 @@ public abstract class AbstractSVGGradientElementBridge extends AnimatableGeneric
 			if (stops == null) {
 				stops = new LinkedList<>();
 			}
-			if (previous != null) {
-				if (stop.offset < previous.offset) {
-					stop.offset = previous.offset;
-				}
+			if ((previous != null) && (stop.offset < previous.offset)) {
+				stop.offset = previous.offset;
 			}
 			stops.add(stop);
 			previous = stop;

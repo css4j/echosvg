@@ -604,10 +604,8 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 			}
 		}
 
-		if (interpreter == null) {
-			if (userAgent != null) {
-				userAgent.displayError(new Exception("Unknown language: " + language));
-			}
+		if (interpreter == null && userAgent != null) {
+			userAgent.displayError(new Exception("Unknown language: " + language));
 		}
 
 		return interpreter;
@@ -865,7 +863,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 	public void closeViewport(Element e) {
 		// viewportMap.remove(e); FIXME: potential memory leak
 		viewportStack.remove(0);
-		if (viewportStack.size() == 0) {
+		if (viewportStack.isEmpty()) {
 			viewportStack = null;
 		}
 	}
@@ -1769,7 +1767,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 	public Viewport getViewport(Element e) {
 		if (viewportStack != null) {
 			// building time
-			if (viewportStack.size() == 0) {
+			if (viewportStack.isEmpty()) {
 				// outermost svg element
 				return viewportMap.get(userAgent);
 			} else {
@@ -1939,10 +1937,7 @@ public class BridgeContext implements ErrorConstants, CSSContext, ColorContext, 
 		// This is a bit of a hack but don't count
 		// title and desc as children of root SVG since
 		// we don't show tool tips for them anyways.
-		if (SVGConstants.SVG_TITLE_TAG.equals(tag)) {
-			return (e.getParentNode() != doc.getRootElement());
-		}
-		if (SVGConstants.SVG_DESC_TAG.equals(tag)) {
+		if (SVGConstants.SVG_TITLE_TAG.equals(tag) || SVGConstants.SVG_DESC_TAG.equals(tag)) {
 			return (e.getParentNode() != doc.getRootElement());
 		}
 		if (SVGConstants.SVG_CURSOR_TAG.equals(tag))

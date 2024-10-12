@@ -120,7 +120,7 @@ public abstract class NumericDelegateValue<D extends CSSMathValue> extends Numer
 		return new FloatValue(u, f);
 	}
 
-	abstract protected CSSTypedValue evaluate(Evaluator eval);
+	protected abstract CSSTypedValue evaluate(Evaluator eval);
 
 	protected FloatValue absoluteValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx,
 			StyleMap sm, FloatValue relative) throws DOMException {
