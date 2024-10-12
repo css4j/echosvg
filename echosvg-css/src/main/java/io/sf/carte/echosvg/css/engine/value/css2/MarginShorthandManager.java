@@ -24,6 +24,7 @@ import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit.LexicalType;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.value.AbstractValueFactory;
+import io.sf.carte.echosvg.css.engine.value.CSSProxyValueException;
 import io.sf.carte.echosvg.css.engine.value.PendingValue;
 import io.sf.carte.echosvg.css.engine.value.ShorthandManager;
 import io.sf.carte.echosvg.css.engine.value.ValueConstants;
@@ -104,7 +105,8 @@ public class MarginShorthandManager extends AbstractValueFactory implements Shor
 		LexicalUnit[] lus = new LexicalUnit[4];
 		int cnt = 0;
 		while (lu != null) {
-			if (lu.getLexicalUnitType() == LexicalType.VAR) {
+			LexicalType luType = lu.getLexicalUnitType();
+			if (luType == LexicalType.VAR || luType == LexicalType.ATTR) {
 				setPendingLonghands(eng, ph, lunit, imp);
 				return;
 			}
@@ -127,10 +129,15 @@ public class MarginShorthandManager extends AbstractValueFactory implements Shor
 		default:
 		}
 
-		ph.property(CSSConstants.CSS_MARGIN_TOP_PROPERTY, lus[0], imp);
-		ph.property(CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, lus[1], imp);
-		ph.property(CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, lus[2], imp);
-		ph.property(CSSConstants.CSS_MARGIN_LEFT_PROPERTY, lus[3], imp);
+		try {
+			ph.property(CSSConstants.CSS_MARGIN_TOP_PROPERTY, lus[0], imp);
+			ph.property(CSSConstants.CSS_MARGIN_RIGHT_PROPERTY, lus[1], imp);
+			ph.property(CSSConstants.CSS_MARGIN_BOTTOM_PROPERTY, lus[2], imp);
+			ph.property(CSSConstants.CSS_MARGIN_LEFT_PROPERTY, lus[3], imp);
+		} catch (CSSProxyValueException e) {
+			// Maybe a calc() with a var() inside
+			setPendingLonghands(eng, ph, lunit, imp);
+		}
 	}
 
 	private void setPendingLonghands(CSSEngine eng, PropertyHandler ph, LexicalUnit lunit, boolean imp) {

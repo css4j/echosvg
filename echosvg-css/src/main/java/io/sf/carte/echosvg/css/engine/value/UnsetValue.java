@@ -32,7 +32,7 @@ public final class UnsetValue extends KeywordValue {
 	/**
 	 * Creates a new UnsetValue object.
 	 */
-	UnsetValue() {
+	private UnsetValue() {
 	}
 
 	@Override

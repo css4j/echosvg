@@ -63,7 +63,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
  * It is worth noting that there is a potential ambiguity between font-size and
  * font-weight since in SVG they can both be unitless. This is solved by
  * considering the 'last' number before an 'ident' or '/' to be font-size and
- * any preceeding number to be font-weight.
+ * any preceding number to be font-weight.
  *
  * <p>
  * Original author: <a href="mailto:deweese@apache.org">deweese</a>.
@@ -385,12 +385,16 @@ public class FontShorthandManager extends AbstractValueFactory implements Shorth
 		if (lineHeight == null)
 			lineHeight = NORMAL_LU;
 
-		ph.property(CSSConstants.CSS_FONT_FAMILY_PROPERTY, fontFamily, imp);
-		ph.property(CSSConstants.CSS_FONT_STYLE_PROPERTY, fontStyle, imp);
-		ph.property(CSSConstants.CSS_FONT_VARIANT_PROPERTY, fontVariant, imp);
-		ph.property(CSSConstants.CSS_FONT_WEIGHT_PROPERTY, fontWeight, imp);
-		ph.property(CSSConstants.CSS_FONT_SIZE_PROPERTY, fontSize, imp);
-		ph.property(CSSConstants.CSS_LINE_HEIGHT_PROPERTY, lineHeight, imp);
+		try {
+			ph.property(CSSConstants.CSS_FONT_FAMILY_PROPERTY, fontFamily, imp);
+			ph.property(CSSConstants.CSS_FONT_STYLE_PROPERTY, fontStyle, imp);
+			ph.property(CSSConstants.CSS_FONT_VARIANT_PROPERTY, fontVariant, imp);
+			ph.property(CSSConstants.CSS_FONT_WEIGHT_PROPERTY, fontWeight, imp);
+			ph.property(CSSConstants.CSS_FONT_SIZE_PROPERTY, fontSize, imp);
+			ph.property(CSSConstants.CSS_LINE_HEIGHT_PROPERTY, lineHeight, imp);
+		} catch (CSSProxyValueException e) {
+			setPendingLonghands(eng, ph, lunit, imp);
+		}
 	}
 
 	private Value createFontSizeCalc(LexicalUnit lu) throws DOMException {

@@ -37,7 +37,7 @@ public final class InheritValue extends KeywordValue {
 	/**
 	 * Creates a new InheritValue object.
 	 */
-	InheritValue() {
+	private InheritValue() {
 	}
 
 	@Override

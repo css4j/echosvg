@@ -1550,7 +1550,7 @@ public abstract class CSSEngine {
 					substValue = substValue.clone();
 				} else {
 					try {
-						return parser.parsePropertyValue(new StringReader(""));
+						return parser.parsePropertyValue(new StringReader("\"\""));
 					} catch (CSSParseException | IOException e1) {
 					}
 				}

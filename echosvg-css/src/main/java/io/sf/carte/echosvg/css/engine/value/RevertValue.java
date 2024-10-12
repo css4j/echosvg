@@ -32,7 +32,7 @@ public final class RevertValue extends KeywordValue {
 	/**
 	 * Creates a new UnsetValue object.
 	 */
-	RevertValue() {
+	private RevertValue() {
 	}
 
 	@Override
