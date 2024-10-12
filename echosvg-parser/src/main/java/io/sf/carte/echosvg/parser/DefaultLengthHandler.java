@@ -18,6 +18,8 @@
  */
 package io.sf.carte.echosvg.parser;
 
+import org.w3c.css.om.unit.CSSUnit;
+
 /**
  * This class provides an adapter for LengthHandler
  *
@@ -26,11 +28,6 @@ package io.sf.carte.echosvg.parser;
  * @version $Id$
  */
 public class DefaultLengthHandler implements LengthHandler {
-
-	/**
-	 * The only instance of this class.
-	 */
-	public static final LengthHandler INSTANCE = new DefaultLengthHandler();
 
 	/**
 	 * This class does not need to be instantiated.
@@ -52,67 +49,77 @@ public class DefaultLengthHandler implements LengthHandler {
 	public void lengthValue(float v) throws ParseException {
 	}
 
-	/**
-	 * Implements {@link LengthHandler#em()}.
-	 */
 	@Override
 	public void em() throws ParseException {
+		setUnit(CSSUnit.CSS_EM);
 	}
 
-	/**
-	 * Implements {@link LengthHandler#ex()}.
-	 */
 	@Override
 	public void ex() throws ParseException {
+		setUnit(CSSUnit.CSS_EX);
 	}
 
-	/**
-	 * Implements {@link LengthHandler#in()}.
-	 */
+	@Override
+	public void lh() throws ParseException {
+		setUnit(CSSUnit.CSS_LH);
+	}
+
 	@Override
 	public void in() throws ParseException {
+		setUnit(CSSUnit.CSS_IN);
 	}
 
-	/**
-	 * Implements {@link LengthHandler#cm()}.
-	 */
 	@Override
 	public void cm() throws ParseException {
+		setUnit(CSSUnit.CSS_CM);
 	}
 
-	/**
-	 * Implements {@link LengthHandler#mm()}.
-	 */
 	@Override
 	public void mm() throws ParseException {
+		setUnit(CSSUnit.CSS_MM);
 	}
 
-	/**
-	 * Implements {@link LengthHandler#pc()}.
-	 */
 	@Override
 	public void pc() throws ParseException {
+		setUnit(CSSUnit.CSS_PC);
 	}
 
-	/**
-	 * Implements {@link LengthHandler#pt()}.
-	 */
 	@Override
 	public void pt() throws ParseException {
+		setUnit(CSSUnit.CSS_PT);
 	}
 
-	/**
-	 * Implements {@link LengthHandler#px()}.
-	 */
 	@Override
 	public void px() throws ParseException {
+		setUnit(CSSUnit.CSS_PX);
 	}
 
-	/**
-	 * Implements {@link LengthHandler#percentage()}.
-	 */
 	@Override
 	public void percentage() throws ParseException {
+		setUnit(CSSUnit.CSS_PERCENTAGE);
+	}
+
+	@Override
+	public void vh() throws ParseException {
+		setUnit(CSSUnit.CSS_VH);
+	}
+
+	@Override
+	public void vw() throws ParseException {
+		setUnit(CSSUnit.CSS_VW);
+	}
+
+	@Override
+	public void vmax() throws ParseException {
+		setUnit(CSSUnit.CSS_VMAX);
+	}
+
+	@Override
+	public void vmin() throws ParseException {
+		setUnit(CSSUnit.CSS_VMIN);
+	}
+
+	protected void setUnit(short unit) {
 	}
 
 	/**

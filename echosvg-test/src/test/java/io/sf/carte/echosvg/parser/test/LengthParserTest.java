@@ -104,6 +104,11 @@ public class LengthParserTest {
 		}
 
 		@Override
+		public void lh() throws ParseException {
+			buffer.append("lh");
+		}
+
+		@Override
 		public void in() throws ParseException {
 			buffer.append("in");
 		}
@@ -136,6 +141,26 @@ public class LengthParserTest {
 		@Override
 		public void percentage() throws ParseException {
 			buffer.append("%");
+		}
+
+		@Override
+		public void vh() throws ParseException {
+			buffer.append("vh");
+		}
+
+		@Override
+		public void vw() throws ParseException {
+			buffer.append("vw");
+		}
+
+		@Override
+		public void vmax() throws ParseException {
+			buffer.append("vmax");
+		}
+
+		@Override
+		public void vmin() throws ParseException {
+			buffer.append("vmin");
 		}
 
 		@Override

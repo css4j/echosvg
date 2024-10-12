@@ -135,6 +135,21 @@ public abstract class AnimatableGenericSVGBridge extends AnimatableSVGBridge
 		return 0f;
 	}
 
+	@Override
+	public float getLineHeight() {
+		return 0f;
+	}
+
+	@Override
+	public float getRootFontSize() {
+		return 0f;
+	}
+
+	@Override
+	public float getRootLineHeight() {
+		return 0f;
+	}
+
 	// BridgeUpdateHandler ///////////////////////////////////////////////////
 
 	@Override

@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.anim.values;
 
-import org.w3c.dom.svg.SVGLength;
+import org.w3c.css.om.unit.CSSUnit;
 
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 
@@ -32,18 +32,12 @@ import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 public class AnimatableLengthValue extends AnimatableValue {
 
 	/**
-	 * Length units.
-	 */
-	protected static final String[] UNITS = { "", "%", "em", "ex", "px", "cm", "mm", "in", "pt", "pc" };
-
-	/**
-	 * The length type.
+	 * The length type according to {@link CSSUnit}.
 	 */
 	protected short lengthType;
 
 	/**
-	 * The length value. This should be one of the constants defined in
-	 * {@link SVGLength}.
+	 * The length value.
 	 */
 	protected float lengthValue;
 
@@ -97,7 +91,7 @@ public class AnimatableLengthValue extends AnimatableValue {
 			if (!compatibleTypes(res.lengthType, res.percentageInterpretation, toLength.lengthType,
 					toLength.percentageInterpretation)) {
 				res.lengthValue = target.svgToUserSpace(res.lengthValue, res.lengthType, res.percentageInterpretation);
-				res.lengthType = SVGLength.SVG_LENGTHTYPE_NUMBER;
+				res.lengthType = CSSUnit.CSS_NUMBER;
 				toValue = toLength.target.svgToUserSpace(toLength.lengthValue, toLength.lengthType,
 						toLength.percentageInterpretation);
 			} else {
@@ -112,7 +106,7 @@ public class AnimatableLengthValue extends AnimatableValue {
 			if (!compatibleTypes(res.lengthType, res.percentageInterpretation, accLength.lengthType,
 					accLength.percentageInterpretation)) {
 				res.lengthValue = target.svgToUserSpace(res.lengthValue, res.lengthType, res.percentageInterpretation);
-				res.lengthType = SVGLength.SVG_LENGTHTYPE_NUMBER;
+				res.lengthType = CSSUnit.CSS_NUMBER;
 				accValue = accLength.target.svgToUserSpace(accLength.lengthValue, accLength.lengthType,
 						accLength.percentageInterpretation);
 			} else {
@@ -137,9 +131,9 @@ public class AnimatableLengthValue extends AnimatableValue {
 	 * @param pi2 the second percentage interpretation type
 	 */
 	public static boolean compatibleTypes(short t1, short pi1, short t2, short pi2) {
-		return t1 == t2 && (t1 != SVGLength.SVG_LENGTHTYPE_PERCENTAGE || pi1 == pi2)
-				|| t1 == SVGLength.SVG_LENGTHTYPE_NUMBER && t2 == SVGLength.SVG_LENGTHTYPE_PX
-				|| t1 == SVGLength.SVG_LENGTHTYPE_PX && t2 == SVGLength.SVG_LENGTHTYPE_NUMBER;
+		return t1 == t2 && (t1 != CSSUnit.CSS_PERCENTAGE || pi1 == pi2)
+				|| t1 == CSSUnit.CSS_NUMBER && t2 == CSSUnit.CSS_PX
+				|| t1 == CSSUnit.CSS_PX && t2 == CSSUnit.CSS_NUMBER;
 	}
 
 	/**
@@ -182,7 +176,7 @@ public class AnimatableLengthValue extends AnimatableValue {
 	 */
 	@Override
 	public AnimatableValue getZeroValue() {
-		return new AnimatableLengthValue(target, SVGLength.SVG_LENGTHTYPE_NUMBER, 0f, percentageInterpretation);
+		return new AnimatableLengthValue(target, CSSUnit.CSS_NUMBER, 0f, percentageInterpretation);
 	}
 
 	/**
@@ -192,7 +186,7 @@ public class AnimatableLengthValue extends AnimatableValue {
 	 */
 	@Override
 	public String getCssText() {
-		return formatNumber(lengthValue) + UNITS[lengthType - 1];
+		return formatNumber(lengthValue) + CSSUnit.dimensionUnitString(lengthType);
 	}
 
 }

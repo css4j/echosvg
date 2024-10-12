@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGException;
@@ -27,6 +28,7 @@ import org.w3c.dom.svg.SVGLengthList;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGList;
 import io.sf.carte.echosvg.dom.svg.ListHandler;
 import io.sf.carte.echosvg.dom.svg.SVGItem;
+import io.sf.carte.echosvg.parser.DefaultLengthHandler;
 import io.sf.carte.echosvg.parser.LengthListHandler;
 import io.sf.carte.echosvg.parser.LengthListParser;
 import io.sf.carte.echosvg.parser.ParseException;
@@ -131,7 +133,7 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 	@Override
 	protected SVGItem createSVGItem(Object newItem) {
 		SVGLength l = (SVGLength) newItem;
-		return new SVGLengthItem(l.getUnitType(), l.getValueInSpecifiedUnits(), direction);
+		return new SVGLengthItem(l.getCSSUnitType(), l.getValueInSpecifiedUnits(), direction);
 	}
 
 	/**
@@ -229,7 +231,7 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 	 * Helper class to interface the {@link LengthListParser} and the
 	 * {@link ListHandler}.
 	 */
-	protected class LengthListBuilder implements LengthListHandler {
+	protected class LengthListBuilder extends DefaultLengthHandler implements LengthListHandler {
 
 		/**
 		 * The ListHandler to pass newly created {@link SVGLengthItem} objects to.
@@ -266,7 +268,7 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 		 */
 		@Override
 		public void startLength() throws ParseException {
-			currentType = SVGLength.SVG_LENGTHTYPE_NUMBER;
+			currentType = CSSUnit.CSS_NUMBER;
 			currentValue = 0.0f;
 		}
 
@@ -278,76 +280,9 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 			currentValue = v;
 		}
 
-		/**
-		 * Implements {@link LengthListHandler#em()}.
-		 */
 		@Override
-		public void em() throws ParseException {
-			currentType = SVGLength.SVG_LENGTHTYPE_EMS;
-		}
-
-		/**
-		 * Implements {@link LengthListHandler#ex()}.
-		 */
-		@Override
-		public void ex() throws ParseException {
-			currentType = SVGLength.SVG_LENGTHTYPE_EXS;
-		}
-
-		/**
-		 * Implements {@link LengthListHandler#in()}.
-		 */
-		@Override
-		public void in() throws ParseException {
-			currentType = SVGLength.SVG_LENGTHTYPE_IN;
-		}
-
-		/**
-		 * Implements {@link LengthListHandler#cm()}.
-		 */
-		@Override
-		public void cm() throws ParseException {
-			currentType = SVGLength.SVG_LENGTHTYPE_CM;
-		}
-
-		/**
-		 * Implements {@link LengthListHandler#mm()}.
-		 */
-		@Override
-		public void mm() throws ParseException {
-			currentType = SVGLength.SVG_LENGTHTYPE_MM;
-		}
-
-		/**
-		 * Implements {@link LengthListHandler#pc()}.
-		 */
-		@Override
-		public void pc() throws ParseException {
-			currentType = SVGLength.SVG_LENGTHTYPE_PC;
-		}
-
-		/**
-		 * Implements {@link LengthListHandler#pt()}.
-		 */
-		@Override
-		public void pt() throws ParseException {
-			currentType = SVGLength.SVG_LENGTHTYPE_EMS;
-		}
-
-		/**
-		 * Implements {@link LengthListHandler#px()}.
-		 */
-		@Override
-		public void px() throws ParseException {
-			currentType = SVGLength.SVG_LENGTHTYPE_PX;
-		}
-
-		/**
-		 * Implements {@link LengthListHandler#percentage()}.
-		 */
-		@Override
-		public void percentage() throws ParseException {
-			currentType = SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
+		protected void setUnit(short unit) {
+			currentType = unit;
 		}
 
 		/**

@@ -18,27 +18,28 @@
  */
 package io.sf.carte.echosvg.anim.values;
 
-import org.w3c.dom.svg.SVGLength;
+import org.w3c.css.om.unit.CSSUnit;
 
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 
 /**
  * An SVG length list value in the animation system.
  *
- * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class AnimatableLengthListValue extends AnimatableValue {
 
 	/**
-	 * The length types.
+	 * The length types as in CSSUnit.
 	 */
 	protected short[] lengthTypes;
 
 	/**
-	 * The length values. These should be one of the constants defined in
-	 * {@link SVGLength}.
+	 * The length values.
 	 */
 	protected float[] lengthValues;
 
@@ -117,7 +118,7 @@ public class AnimatableLengthListValue extends AnimatableValue {
 						|| hasAcc && !AnimatableLengthValue.compatibleTypes(newLengthType, percentageInterpretation,
 								accLengthList.lengthTypes[i], accLengthList.percentageInterpretation)) {
 					newLengthValue = target.svgToUserSpace(newLengthValue, newLengthType, percentageInterpretation);
-					newLengthType = SVGLength.SVG_LENGTHTYPE_NUMBER;
+					newLengthType = CSSUnit.CSS_NUMBER;
 					if (hasTo) {
 						toV = to.target.svgToUserSpace(toLengthList.lengthValues[i], toLengthList.lengthTypes[i],
 								toLengthList.percentageInterpretation);
@@ -196,12 +197,12 @@ public class AnimatableLengthListValue extends AnimatableValue {
 		StringBuilder sb = new StringBuilder();
 		if (lengthValues.length > 0) {
 			sb.append(formatNumber(lengthValues[0]));
-			sb.append(AnimatableLengthValue.UNITS[lengthTypes[0] - 1]);
+			sb.append(CSSUnit.dimensionUnitString(lengthTypes[0]));
 		}
 		for (int i = 1; i < lengthValues.length; i++) {
 			sb.append(',');
 			sb.append(formatNumber(lengthValues[i]));
-			sb.append(AnimatableLengthValue.UNITS[lengthTypes[i] - 1]);
+			sb.append(CSSUnit.dimensionUnitString(lengthTypes[i]));
 		}
 		return sb.toString();
 	}

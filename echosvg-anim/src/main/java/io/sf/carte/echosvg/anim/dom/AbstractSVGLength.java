@@ -18,10 +18,12 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGLength;
 
+import io.sf.carte.doc.style.css.property.NumberValue;
 import io.sf.carte.echosvg.parser.LengthParser;
 import io.sf.carte.echosvg.parser.ParseException;
 import io.sf.carte.echosvg.parser.UnitProcessor;
@@ -60,7 +62,7 @@ public abstract class AbstractSVGLength implements SVGLength {
 	public static final short OTHER_LENGTH = UnitProcessor.OTHER_LENGTH;
 
 	/**
-	 * The type of this length.
+	 * The unit of this length, as one of the constants in {@link CSSUnit}.
 	 */
 	protected short unitType;
 
@@ -80,11 +82,6 @@ public abstract class AbstractSVGLength implements SVGLength {
 	protected UnitProcessor.Context context;
 
 	/**
-	 * The unit string representations.
-	 */
-	protected static final String[] UNITS = { "", "", "%", "em", "ex", "px", "cm", "mm", "in", "pt", "pc" };
-
-	/**
 	 * Return the SVGElement associated to this length.
 	 */
 	protected abstract SVGOMElement getAssociatedElement();
@@ -96,16 +93,58 @@ public abstract class AbstractSVGLength implements SVGLength {
 		context = new DefaultContext();
 		this.direction = direction;
 		this.value = 0.0f;
-		this.unitType = SVGLength.SVG_LENGTHTYPE_NUMBER;
+		this.unitType = CSSUnit.CSS_NUMBER;
 	}
 
-	/**
-	 * <b>DOM</b>: Implements {@link SVGLength#getUnitType()}.
-	 */
 	@Override
-	public short getUnitType() {
+	public short getCSSUnitType() {
 		revalidate();
 		return unitType;
+	}
+
+	@Override
+	public short getUnitType() {
+		return getSVGUnitType(getCSSUnitType());
+	}
+
+	private static short getSVGUnitType(short cssUnit) {
+		short svgUnit;
+		switch (cssUnit) {
+		case CSSUnit.CSS_NUMBER:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_NUMBER;
+			break;
+		case CSSUnit.CSS_PX:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_PX;
+			break;
+		case CSSUnit.CSS_EM:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_EMS;
+			break;
+		case CSSUnit.CSS_EX:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_EXS;
+			break;
+		case CSSUnit.CSS_IN:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_IN;
+			break;
+		case CSSUnit.CSS_CM:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_CM;
+			break;
+		case CSSUnit.CSS_MM:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_MM;
+			break;
+		case CSSUnit.CSS_PC:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_PC;
+			break;
+		case CSSUnit.CSS_PT:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_PT;
+			break;
+		case CSSUnit.CSS_PERCENTAGE:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
+			break;
+		default:
+			svgUnit = SVGLength.SVG_LENGTHTYPE_UNKNOWN;
+			break;
+		}
+		return svgUnit;
 	}
 
 	/**
@@ -115,7 +154,7 @@ public abstract class AbstractSVGLength implements SVGLength {
 	public float getValue() {
 		revalidate();
 		try {
-			return UnitProcessor.svgToUserSpace(value, unitType, direction, context);
+			return UnitProcessor.cssToUserSpace(value, unitType, direction, context);
 		} catch (IllegalArgumentException ex) {
 			// XXX Should we throw an exception here when the length
 			// type is unknown?
@@ -128,7 +167,7 @@ public abstract class AbstractSVGLength implements SVGLength {
 	 */
 	@Override
 	public void setValue(float value) throws DOMException {
-		this.value = UnitProcessor.userSpaceToSVG(value, unitType, direction, context);
+		this.value = UnitProcessor.userSpaceToCSS(value, unitType, direction, context);
 		reset();
 	}
 
@@ -157,10 +196,10 @@ public abstract class AbstractSVGLength implements SVGLength {
 	@Override
 	public String getValueAsString() {
 		revalidate();
-		if (unitType == SVGLength.SVG_LENGTHTYPE_UNKNOWN) {
+		if (unitType == CSSUnit.CSS_INVALID) {
 			return "";
 		}
-		return Float.toString(value) + UNITS[unitType];
+		return Float.toString(value) + CSSUnit.dimensionUnitString(unitType);
 	}
 
 	/**
@@ -176,18 +215,60 @@ public abstract class AbstractSVGLength implements SVGLength {
 	 * <b>DOM</b>: Implements {@link SVGLength#newValueSpecifiedUnits(short,float)}.
 	 */
 	@Override
-	public void newValueSpecifiedUnits(short unit, float value) {
+	public void newValueSpecifiedCSSUnits(short unit, float value) {
 		unitType = unit;
 		this.value = value;
 		reset();
 	}
 
-	/**
-	 * <b>DOM</b>: Implements {@link SVGLength#convertToSpecifiedUnits(short)}.
-	 */
 	@Override
-	public void convertToSpecifiedUnits(short unit) {
+	public void newValueSpecifiedUnits(short unitType, float valueInSpecifiedUnits) throws DOMException {
+		newValueSpecifiedCSSUnits(getCSSUnitType(unitType), valueInSpecifiedUnits);
+	}
+
+	private static short getCSSUnitType(short svgUnit) throws DOMException {
+		short cssUnit;
+		switch (svgUnit) {
+		case SVGLength.SVG_LENGTHTYPE_NUMBER:
+			cssUnit = CSSUnit.CSS_NUMBER;
+			break;
+		case SVGLength.SVG_LENGTHTYPE_PX:
+			cssUnit = CSSUnit.CSS_PX;
+			break;
+		case SVGLength.SVG_LENGTHTYPE_EMS:
+			cssUnit = CSSUnit.CSS_EM;
+			break;
+		case SVGLength.SVG_LENGTHTYPE_EXS:
+			cssUnit = CSSUnit.CSS_EX;
+			break;
+		case SVGLength.SVG_LENGTHTYPE_IN:
+			cssUnit = CSSUnit.CSS_IN;
+			break;
+		case SVGLength.SVG_LENGTHTYPE_CM:
+			cssUnit = CSSUnit.CSS_CM;
+			break;
+		case SVGLength.SVG_LENGTHTYPE_MM:
+			cssUnit = CSSUnit.CSS_MM;
+			break;
+		case SVGLength.SVG_LENGTHTYPE_PC:
+			cssUnit = CSSUnit.CSS_PC;
+			break;
+		case SVGLength.SVG_LENGTHTYPE_PT:
+			cssUnit = CSSUnit.CSS_PT;
+			break;
+		case SVGLength.SVG_LENGTHTYPE_PERCENTAGE:
+			cssUnit = CSSUnit.CSS_PERCENTAGE;
+			break;
+		default:
+			throw new DOMException(DOMException.NOT_SUPPORTED_ERR, "Unit not supported: " + svgUnit);
+		}
+		return cssUnit;
+	}
+
+	@Override
+	public void convertToSpecifiedUnits(short unit) throws DOMException {
 		float v = getValue();
+		v = NumberValue.floatValueConversion(v, unitType, getCSSUnitType(unit));
 		unitType = unit;
 		setValue(v);
 	}
@@ -224,7 +305,7 @@ public abstract class AbstractSVGLength implements SVGLength {
 			unitType = ur.unit;
 			value = ur.value;
 		} catch (ParseException e) {
-			unitType = SVG_LENGTHTYPE_UNKNOWN;
+			unitType = CSSUnit.CSS_INVALID;
 			value = 0;
 		}
 	}
@@ -261,6 +342,24 @@ public abstract class AbstractSVGLength implements SVGLength {
 		@Override
 		public float getXHeight() {
 			return 0.5f;
+		}
+
+		@Override
+		public float getLineHeight() {
+			return getAssociatedElement().getSVGContext().getLineHeight();
+		}
+
+		/**
+		 * Returns the :root font-size value.
+		 */
+		@Override
+		public float getRootFontSize() {
+			return getAssociatedElement().getSVGContext().getRootFontSize();
+		}
+
+		@Override
+		public float getRootLineHeight() {
+			return getAssociatedElement().getSVGContext().getRootLineHeight();
 		}
 
 		/**

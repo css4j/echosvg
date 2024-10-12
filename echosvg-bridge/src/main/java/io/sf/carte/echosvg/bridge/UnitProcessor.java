@@ -150,7 +150,7 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 	 */
 	public static float svgToObjectBoundingBox(String s, String attr, short d, Context ctx) {
 		try {
-			return io.sf.carte.echosvg.parser.UnitProcessor.svgToObjectBoundingBox(s, attr, d, ctx);
+			return io.sf.carte.echosvg.parser.UnitProcessor.cssToObjectBoundingBox(s, attr, d, ctx);
 		} catch (ParseException pEx) {
 			throw new BridgeException(getBridgeContext(ctx), ctx.getElement(), pEx,
 					ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attr, s, pEx });
@@ -259,7 +259,7 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 	 */
 	public static float svgToUserSpace(String s, String attr, short d, Context ctx) {
 		try {
-			return io.sf.carte.echosvg.parser.UnitProcessor.svgToUserSpace(s, attr, d, ctx);
+			return io.sf.carte.echosvg.parser.UnitProcessor.cssToUserSpace(s, attr, d, ctx);
 		} catch (ParseException pEx) {
 			throw new BridgeException(getBridgeContext(ctx), ctx.getElement(), pEx,
 					ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED, new Object[] { attr, s, pEx, });
@@ -321,6 +321,23 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 		@Override
 		public float getFontSize() {
 			return CSSUtilities.getComputedStyle(e, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
+		}
+
+		@Override
+		public float getLineHeight() {
+			return CSSUtilities.getComputedStyle(e, SVGCSSEngine.LINE_HEIGHT_INDEX).getFloatValue();
+		}
+
+		@Override
+		public float getRootFontSize() {
+			Element root = e.getOwnerDocument().getDocumentElement();
+			return CSSUtilities.getComputedStyle(root, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
+		}
+
+		@Override
+		public float getRootLineHeight() {
+			Element root = e.getOwnerDocument().getDocumentElement();
+			return CSSUtilities.getComputedStyle(root, SVGCSSEngine.LINE_HEIGHT_INDEX).getFloatValue();
 		}
 
 		/**

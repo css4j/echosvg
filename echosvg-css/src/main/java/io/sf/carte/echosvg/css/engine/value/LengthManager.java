@@ -259,14 +259,14 @@ public abstract class LengthManager extends AbstractValueManager {
 
 			v = value.getFloatValue();
 			return new FloatValue(CSSUnit.CSS_PX, v *
-					engine.getCSSContext().getViewport(elt).getWidth() * 0.01f);
+					engine.getCSSContext().getViewport(elt).getWidth() / 100f);
 
 		case CSSUnit.CSS_VH:
 			sm.putViewportRelative(idx, true);
 
 			v = value.getFloatValue();
 			return new FloatValue(CSSUnit.CSS_PX, v *
-					engine.getCSSContext().getViewport(elt).getHeight() * 0.01f);
+					engine.getCSSContext().getViewport(elt).getHeight() / 100f);
 
 		case CSSUnit.CSS_VMIN:
 			sm.putViewportRelative(idx, true);
@@ -276,7 +276,7 @@ public abstract class LengthManager extends AbstractValueManager {
 			float w = vp.getWidth();
 			float h = vp.getHeight();
 			float min = Math.min(w, h);
-			return new FloatValue(CSSUnit.CSS_PX, v * min * 0.01f);
+			return new FloatValue(CSSUnit.CSS_PX, v * min / 100f);
 
 		case CSSUnit.CSS_VMAX:
 			sm.putViewportRelative(idx, true);
@@ -286,7 +286,7 @@ public abstract class LengthManager extends AbstractValueManager {
 			w = vp.getWidth();
 			h = vp.getHeight();
 			float max = Math.max(w, h);
-			return new FloatValue(CSSUnit.CSS_PX, v * max * 0.01f);
+			return new FloatValue(CSSUnit.CSS_PX, v * max / 100f);
 
 		case CSSUnit.CSS_INVALID:
 		case CSSUnit.CSS_OTHER:

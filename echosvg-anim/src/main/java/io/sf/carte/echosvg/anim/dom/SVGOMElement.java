@@ -20,6 +20,7 @@ package io.sf.carte.echosvg.anim.dom;
 
 import java.util.LinkedList;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
@@ -29,7 +30,6 @@ import org.w3c.dom.svg.SVGAnimatedNumber;
 import org.w3c.dom.svg.SVGElement;
 import org.w3c.dom.svg.SVGException;
 import org.w3c.dom.svg.SVGFitToViewBox;
-import org.w3c.dom.svg.SVGLength;
 import org.w3c.dom.svg.SVGSVGElement;
 
 import io.sf.carte.echosvg.anim.values.AnimatableNumberOptionalNumberValue;
@@ -746,8 +746,8 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 	 * Converts the given SVG length into user units.
 	 * 
 	 * @param v        the SVG length value
-	 * @param type     the SVG length units (one of the
-	 *                 {@link SVGLength}.SVG_LENGTH_* constants)
+	 * @param type     the CSS unit (one of the
+	 *                 {@link CSSUnit}.CSS_* constants)
 	 * @param pcInterp how to interpretet percentage values (one of the
 	 *                 {@link SVGContext}.PERCENTAGE_* constants)
 	 * @return the SVG value in user units
@@ -757,11 +757,11 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 		if (unitContext == null) {
 			unitContext = new UnitContext();
 		}
-		if (pcInterp == PERCENTAGE_FONT_SIZE && type == SVGLength.SVG_LENGTHTYPE_PERCENTAGE) {
+		if (pcInterp == PERCENTAGE_FONT_SIZE && type == CSSUnit.CSS_PERCENTAGE) {
 			// XXX
 			return 0f;
 		} else {
-			return UnitProcessor.svgToUserSpace(v, type, (short) (3 - pcInterp), unitContext);
+			return UnitProcessor.cssToUserSpace(v, type, (short) (3 - pcInterp), unitContext);
 		}
 	}
 
@@ -888,6 +888,21 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 		@Override
 		public float getFontSize() {
 			return getSVGContext().getFontSize();
+		}
+
+		@Override
+		public float getLineHeight() {
+			return getSVGContext().getLineHeight();
+		}
+
+		@Override
+		public float getRootFontSize() {
+			return getSVGContext().getRootFontSize();
+		}
+
+		@Override
+		public float getRootLineHeight() {
+			return getSVGContext().getRootLineHeight();
 		}
 
 		/**

@@ -109,4 +109,19 @@ public interface SVGContext {
 	 */
 	float getFontSize();
 
+	/**
+	 * Returns the line-height on the associated element.
+	 */
+	float getLineHeight();
+
+	/**
+	 * Returns the font-size on the {@code :root} element.
+	 */
+	float getRootFontSize();
+
+	/**
+	 * Returns the line-height on the {@code :root} element.
+	 */
+	float getRootLineHeight();
+
 }

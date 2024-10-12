@@ -149,7 +149,7 @@ public class SVGOMAnimatedLengthList extends AbstractSVGAnimatedValue implements
 		float[] values = new float[n];
 		for (int i = 0; i < n; i++) {
 			SVGLength l = ll.getItem(i);
-			types[i] = l.getUnitType();
+			types[i] = l.getCSSUnitType();
 			values[i] = l.getValueInSpecifiedUnits();
 		}
 		return new AnimatableLengthListValue(target, types, values,

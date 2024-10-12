@@ -18,6 +18,7 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGAnimatedLength;
@@ -109,7 +110,7 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 		AnimSVGLength length = new AnimSVGLength(direction);
 		length.parse(getDefaultValue());
 		try {
-			return UnitProcessor.svgToUserSpace(length.value, length.unitType, direction,
+			return UnitProcessor.cssToUserSpace(length.value, length.unitType, direction,
 					length.context);
 		} catch (IllegalArgumentException ex) {
 			// Only if the default is broken
@@ -161,7 +162,7 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 			if (baseVal.missing) {
 				throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_MISSING,
 						null);
-			} else if (baseVal.unitType == SVGLength.SVG_LENGTHTYPE_UNKNOWN) {
+			} else if (baseVal.unitType == CSSUnit.CSS_INVALID) {
 				throw new LiveAttributeException(element, localName, LiveAttributeException.ERR_ATTRIBUTE_MALFORMED,
 						baseVal.getValueAsString());
 			}
@@ -197,7 +198,7 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 	@Override
 	public AnimatableValue getUnderlyingValue(AnimationTarget target) {
 		SVGLength base = getBaseVal();
-		return new AnimatableLengthValue(target, base.getUnitType(), base.getValueInSpecifiedUnits(),
+		return new AnimatableLengthValue(target, base.getCSSUnitType(), base.getValueInSpecifiedUnits(),
 				target.getPercentageInterpretation(getNamespaceURI(), getLocalName(), false));
 	}
 
@@ -339,9 +340,14 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 			super(direction);
 		}
 
-		/**
-		 * <b>DOM</b>: Implements {@link SVGLength#getUnitType()}.
-		 */
+		@Override
+		public short getCSSUnitType() {
+			if (hasAnimVal) {
+				return super.getCSSUnitType();
+			}
+			return getBaseVal().getCSSUnitType();
+		}
+
 		@Override
 		public short getUnitType() {
 			if (hasAnimVal) {
@@ -350,9 +356,6 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 			return getBaseVal().getUnitType();
 		}
 
-		/**
-		 * <b>DOM</b>: Implements {@link SVGLength#getValue()}.
-		 */
 		@Override
 		public float getValue() {
 			if (hasAnimVal) {
@@ -361,9 +364,6 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 			return getBaseVal().getValue();
 		}
 
-		/**
-		 * <b>DOM</b>: Implements {@link SVGLength#getValueInSpecifiedUnits()}.
-		 */
 		@Override
 		public float getValueInSpecifiedUnits() {
 			if (hasAnimVal) {
@@ -372,9 +372,6 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 			return getBaseVal().getValueInSpecifiedUnits();
 		}
 
-		/**
-		 * <b>DOM</b>: Implements {@link SVGLength#getValueAsString()}.
-		 */
 		@Override
 		public String getValueAsString() {
 			if (hasAnimVal) {
@@ -383,41 +380,31 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 			return getBaseVal().getValueAsString();
 		}
 
-		/**
-		 * <b>DOM</b>: Implements {@link SVGLength#setValue(float)}.
-		 */
 		@Override
 		public void setValue(float value) throws DOMException {
 			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
 		}
 
-		/**
-		 * <b>DOM</b>: Implements {@link SVGLength#setValueInSpecifiedUnits(float)}.
-		 */
 		@Override
 		public void setValueInSpecifiedUnits(float value) throws DOMException {
 			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
 		}
 
-		/**
-		 * <b>DOM</b>: Implements {@link SVGLength#setValueAsString(String)}.
-		 */
 		@Override
 		public void setValueAsString(String value) throws DOMException {
 			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
 		}
 
-		/**
-		 * <b>DOM</b>: Implements {@link SVGLength#newValueSpecifiedUnits(short,float)}.
-		 */
+		@Override
+		public void newValueSpecifiedCSSUnits(short unit, float value) {
+			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
+		}
+
 		@Override
 		public void newValueSpecifiedUnits(short unit, float value) {
 			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
 		}
 
-		/**
-		 * <b>DOM</b>: Implements {@link SVGLength#convertToSpecifiedUnits(short)}.
-		 */
 		@Override
 		public void convertToSpecifiedUnits(short unit) {
 			throw element.createDOMException(DOMException.NO_MODIFICATION_ALLOWED_ERR, "readonly.length", null);
@@ -434,11 +421,11 @@ public abstract class AbstractSVGAnimatedLength extends AbstractSVGAnimatedValue
 		/**
 		 * Sets the animated value.
 		 * 
-		 * @param type one of the values defines in org.w3c.dom.svg.SVGLength
-		 * @param val  the length
+		 * @param type one of the values defines in {@link org.w3c.css.om.unit.CSSUnit CSSUnit}.
+		 * @param val  the length.
 		 */
 		protected void setAnimatedValue(int type, float val) {
-			super.newValueSpecifiedUnits((short) type, val);
+			super.newValueSpecifiedCSSUnits((short) type, val);
 		}
 
 	}

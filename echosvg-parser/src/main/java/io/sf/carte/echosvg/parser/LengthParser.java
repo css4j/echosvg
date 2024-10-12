@@ -30,6 +30,11 @@ import java.io.IOException;
 public class LengthParser extends AbstractParser {
 
 	/**
+	 * The instance of a no-op LengthHandler.
+	 */
+	private static final LengthHandler NOOP_LENGTH_HANDLER_INSTANCE = new DefaultLengthHandler();
+
+	/**
 	 * The length handler used to report parse events.
 	 */
 	protected LengthHandler lengthHandler;
@@ -38,7 +43,7 @@ public class LengthParser extends AbstractParser {
 	 * Creates a new LengthParser.
 	 */
 	public LengthParser() {
-		lengthHandler = DefaultLengthHandler.INSTANCE;
+		lengthHandler = NOOP_LENGTH_HANDLER_INSTANCE;
 	}
 
 	/**
@@ -423,6 +428,15 @@ public class LengthParser extends AbstractParser {
 			lengthHandler.cm();
 			current = reader.read();
 			break;
+		case 'l':
+			current = reader.read();
+			if (current != 'h') {
+				reportCharacterExpectedError('l', current);
+				break;
+			}
+			lengthHandler.lh();
+			current = reader.read();
+			break;
 		case 'm':
 			current = reader.read();
 			if (current != 'm') {
@@ -435,6 +449,45 @@ public class LengthParser extends AbstractParser {
 		case '%':
 			lengthHandler.percentage();
 			current = reader.read();
+			break;
+		case 'v':
+			current = reader.read();
+			switch (current) {
+			case 'w':
+				lengthHandler.vw();
+				current = reader.read();
+				break;
+			case 'h':
+				lengthHandler.vh();
+				current = reader.read();
+				break;
+			case 'm':
+				switch (current) {
+				case 'i':
+					current = reader.read();
+					if (current != 'n') {
+						reportCharacterExpectedError('n', current);
+						break;
+					}
+					lengthHandler.vmin();
+					current = reader.read();
+					break;
+				case 'a':
+					current = reader.read();
+					if (current != 'x') {
+						reportCharacterExpectedError('x', current);
+						break;
+					}
+					lengthHandler.vmax();
+					current = reader.read();
+					break;
+				default:
+					reportUnexpectedCharacterError(current);
+				}
+				break;
+			default:
+				reportUnexpectedCharacterError(current);
+			}
 			break;
 		}
 	}

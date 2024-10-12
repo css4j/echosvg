@@ -35,7 +35,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.css.CSSStyleDeclaration;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.svg.SVGAngle;
-import org.w3c.dom.svg.SVGLength;
 import org.w3c.dom.svg.SVGPreserveAspectRatio;
 
 import io.sf.carte.doc.style.css.CSSValue.CssType;
@@ -1406,7 +1405,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 
 			@Override
 			public void startLength() throws ParseException {
-				type = SVGLength.SVG_LENGTHTYPE_NUMBER;
+				type = CSSUnit.CSS_NUMBER;
 			}
 
 			@Override
@@ -1415,48 +1414,8 @@ public class SVGAnimationEngine extends AnimationEngine {
 			}
 
 			@Override
-			public void em() throws ParseException {
-				type = SVGLength.SVG_LENGTHTYPE_EMS;
-			}
-
-			@Override
-			public void ex() throws ParseException {
-				type = SVGLength.SVG_LENGTHTYPE_EXS;
-			}
-
-			@Override
-			public void in() throws ParseException {
-				type = SVGLength.SVG_LENGTHTYPE_IN;
-			}
-
-			@Override
-			public void cm() throws ParseException {
-				type = SVGLength.SVG_LENGTHTYPE_CM;
-			}
-
-			@Override
-			public void mm() throws ParseException {
-				type = SVGLength.SVG_LENGTHTYPE_MM;
-			}
-
-			@Override
-			public void pc() throws ParseException {
-				type = SVGLength.SVG_LENGTHTYPE_PC;
-			}
-
-			@Override
-			public void pt() throws ParseException {
-				type = SVGLength.SVG_LENGTHTYPE_PT;
-			}
-
-			@Override
-			public void px() throws ParseException {
-				type = SVGLength.SVG_LENGTHTYPE_PX;
-			}
-
-			@Override
-			public void percentage() throws ParseException {
-				type = SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
+			protected void setUnit(short unit) {
+				type = unit;
 			}
 
 			@Override

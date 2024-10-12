@@ -159,7 +159,22 @@ public abstract class SVGDescriptiveElementBridge extends AbstractSVGBridge
 
 	@Override
 	public float getFontSize() {
-		return 0;
+		return 0f;
+	}
+
+	@Override
+	public float getLineHeight() {
+		return 0f;
+	}
+
+	@Override
+	public float getRootFontSize() {
+		return 0f;
+	}
+
+	@Override
+	public float getRootLineHeight() {
+		return 0f;
 	}
 
 }

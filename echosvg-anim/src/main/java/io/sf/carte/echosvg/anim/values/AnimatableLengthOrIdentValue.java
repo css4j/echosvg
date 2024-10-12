@@ -18,7 +18,7 @@
  */
 package io.sf.carte.echosvg.anim.values;
 
-import org.w3c.dom.svg.SVGLength;
+import org.w3c.css.om.unit.CSSUnit;
 
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 
@@ -101,7 +101,7 @@ public class AnimatableLengthOrIdentValue extends AnimatableLengthValue {
 	 */
 	@Override
 	public AnimatableValue getZeroValue() {
-		return new AnimatableLengthOrIdentValue(target, SVGLength.SVG_LENGTHTYPE_NUMBER, 0f, percentageInterpretation);
+		return new AnimatableLengthOrIdentValue(target, CSSUnit.CSS_NUMBER, 0f, percentageInterpretation);
 	}
 
 	/**

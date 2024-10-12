@@ -21,7 +21,7 @@ package io.sf.carte.echosvg.parser;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import org.w3c.dom.svg.SVGLength;
+import org.w3c.css.om.unit.CSSUnit;
 
 /**
  * A handler class that generates an array of shorts and an array floats from
@@ -87,7 +87,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 	/**
 	 * Invoked when the length list attribute starts.
 	 * 
-	 * @exception ParseException if an error occures while processing the number
+	 * @exception ParseException if an error occurs while processing the number
 	 *                           list.
 	 */
 	@Override
@@ -103,7 +103,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 	/**
 	 * Invoked when a float value has been parsed.
 	 * 
-	 * @exception ParseException if an error occures while processing the number
+	 * @exception ParseException if an error occurs while processing the number
 	 */
 	public void numberValue(float v) throws ParseException {
 	}
@@ -128,7 +128,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 	 */
 	@Override
 	public void startLength() throws ParseException {
-		currentUnit = SVGLength.SVG_LENGTHTYPE_NUMBER;
+		currentUnit = CSSUnit.CSS_NUMBER;
 	}
 
 	/**
@@ -140,82 +140,15 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 		count++;
 	}
 
-	/**
-	 * Implements {@link LengthHandler#em()}.
-	 */
 	@Override
-	public void em() throws ParseException {
-		currentUnit = SVGLength.SVG_LENGTHTYPE_EMS;
-	}
-
-	/**
-	 * Implements {@link LengthHandler#ex()}.
-	 */
-	@Override
-	public void ex() throws ParseException {
-		currentUnit = SVGLength.SVG_LENGTHTYPE_EXS;
-	}
-
-	/**
-	 * Implements {@link LengthHandler#in()}.
-	 */
-	@Override
-	public void in() throws ParseException {
-		currentUnit = SVGLength.SVG_LENGTHTYPE_IN;
-	}
-
-	/**
-	 * Implements {@link LengthHandler#cm()}.
-	 */
-	@Override
-	public void cm() throws ParseException {
-		currentUnit = SVGLength.SVG_LENGTHTYPE_CM;
-	}
-
-	/**
-	 * Implements {@link LengthHandler#mm()}.
-	 */
-	@Override
-	public void mm() throws ParseException {
-		currentUnit = SVGLength.SVG_LENGTHTYPE_MM;
-	}
-
-	/**
-	 * Implements {@link LengthHandler#pc()}.
-	 */
-	@Override
-	public void pc() throws ParseException {
-		currentUnit = SVGLength.SVG_LENGTHTYPE_PC;
-	}
-
-	/**
-	 * Implements {@link LengthHandler#pt()}.
-	 */
-	@Override
-	public void pt() throws ParseException {
-		currentUnit = SVGLength.SVG_LENGTHTYPE_PT;
-	}
-
-	/**
-	 * Implements {@link LengthHandler#px()}.
-	 */
-	@Override
-	public void px() throws ParseException {
-		currentUnit = SVGLength.SVG_LENGTHTYPE_PX;
-	}
-
-	/**
-	 * Implements {@link LengthHandler#percentage()}.
-	 */
-	@Override
-	public void percentage() throws ParseException {
-		currentUnit = SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
+	protected void setUnit(short unit) {
+		currentUnit = unit;
 	}
 
 	/**
 	 * Invoked when the length list attribute ends.
 	 * 
-	 * @exception ParseException if an error occures while processing the number
+	 * @exception ParseException if an error occurs while processing the number
 	 *                           list.
 	 */
 	@Override

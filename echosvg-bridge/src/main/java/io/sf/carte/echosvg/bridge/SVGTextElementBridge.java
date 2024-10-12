@@ -1926,6 +1926,23 @@ public class SVGTextElementBridge extends AbstractGraphicsNodeBridge implements 
 			return CSSUtilities.getComputedStyle(e, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
 		}
 
+		@Override
+		public float getLineHeight() {
+			return CSSUtilities.getComputedStyle(e, SVGCSSEngine.LINE_HEIGHT_INDEX).getFloatValue();
+		}
+
+		@Override
+		public float getRootFontSize() {
+			Element root = e.getOwnerDocument().getDocumentElement();
+			return CSSUtilities.getComputedStyle(root, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
+		}
+
+		@Override
+		public float getRootLineHeight() {
+			Element root = e.getOwnerDocument().getDocumentElement();
+			return CSSUtilities.getComputedStyle(root, SVGCSSEngine.LINE_HEIGHT_INDEX).getFloatValue();
+		}
+
 	}
 
 	/**

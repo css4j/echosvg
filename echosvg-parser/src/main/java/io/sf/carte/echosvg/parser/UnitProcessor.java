@@ -18,8 +18,8 @@
  */
 package io.sf.carte.echosvg.parser;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGLength;
 
 /**
  * This class provides methods to convert SVG length and coordinate to float in
@@ -67,12 +67,12 @@ public abstract class UnitProcessor {
 	 * @param d    the direction of the value
 	 * @param ctx  the context used to resolve relative value
 	 */
-	public static float svgToObjectBoundingBox(String s, String attr, short d, Context ctx) throws ParseException {
+	public static float cssToObjectBoundingBox(String s, String attr, short d, Context ctx) throws ParseException {
 		LengthParser lengthParser = new LengthParser();
 		UnitResolver ur = new UnitResolver();
 		lengthParser.setLengthHandler(ur);
 		lengthParser.parse(s);
-		return svgToObjectBoundingBox(ur.value, ur.unit, d, ctx);
+		return cssToObjectBoundingBox(ur.value, ur.unit, d, ctx);
 	}
 
 	/**
@@ -80,32 +80,23 @@ public abstract class UnitProcessor {
 	 * units.
 	 *
 	 * @param value the value
-	 * @param type  the type of the value
+	 * @param type  the type of the value according to CSSUnit
 	 * @param d     the direction of the value
 	 * @param ctx   the context used to resolve relative value
 	 */
-	public static float svgToObjectBoundingBox(float value, short type, short d, Context ctx) {
+	public static float cssToObjectBoundingBox(float value, short type, short d, Context ctx) {
 		switch (type) {
-		case SVGLength.SVG_LENGTHTYPE_NUMBER:
+		case CSSUnit.CSS_NUMBER:
 			// as is
 			return value;
-		case SVGLength.SVG_LENGTHTYPE_PERCENTAGE:
+		case CSSUnit.CSS_PERCENTAGE:
 			// If a percentage value is used, it is converted to a
 			// 'bounding box' space coordinate by division by 100
 			return value / 100f;
-		case SVGLength.SVG_LENGTHTYPE_PX:
-		case SVGLength.SVG_LENGTHTYPE_MM:
-		case SVGLength.SVG_LENGTHTYPE_CM:
-		case SVGLength.SVG_LENGTHTYPE_IN:
-		case SVGLength.SVG_LENGTHTYPE_PT:
-		case SVGLength.SVG_LENGTHTYPE_PC:
-		case SVGLength.SVG_LENGTHTYPE_EMS:
-		case SVGLength.SVG_LENGTHTYPE_EXS:
+		default:
 			// <!> FIXME: resolve units in userSpace but consider them
 			// in the objectBoundingBox coordinate system
-			return svgToUserSpace(value, type, d, ctx);
-		default:
-			throw new IllegalArgumentException("Length has unknown type");
+			return cssToUserSpace(value, type, d, ctx);
 		}
 	}
 
@@ -121,12 +112,12 @@ public abstract class UnitProcessor {
 	 * @param d    the direction of the coordinate
 	 * @param ctx  the context used to resolve relative value
 	 */
-	public static float svgToUserSpace(String s, String attr, short d, Context ctx) throws ParseException {
+	public static float cssToUserSpace(String s, String attr, short d, Context ctx) throws ParseException {
 		LengthParser lengthParser = new LengthParser();
 		UnitResolver ur = new UnitResolver();
 		lengthParser.setLengthHandler(ur);
 		lengthParser.parse(s);
-		return svgToUserSpace(ur.value, ur.unit, d, ctx);
+		return cssToUserSpace(ur.value, ur.unit, d, ctx);
 	}
 
 	/**
@@ -134,31 +125,44 @@ public abstract class UnitProcessor {
 	 * units.
 	 *
 	 * @param v    the value to convert
-	 * @param type the type of the value
+	 * @param type the type of the value according to CSSUnit
 	 * @param d    HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
 	 * @param ctx  the context used to resolve relative value
+	 * @return the value in user space units.
 	 */
-	public static float svgToUserSpace(float v, short type, short d, Context ctx) {
+	public static float cssToUserSpace(float v, short type, short d, Context ctx) {
 		switch (type) {
-		case SVGLength.SVG_LENGTHTYPE_NUMBER:
-		case SVGLength.SVG_LENGTHTYPE_PX:
+		case CSSUnit.CSS_NUMBER:
+		case CSSUnit.CSS_PX:
 			return v;
-		case SVGLength.SVG_LENGTHTYPE_MM:
-			return v * 3.779527559055f; // 96 / 25.4
-		case SVGLength.SVG_LENGTHTYPE_CM:
-			return v * 37.79527559055f; // 96 / 2.54
-		case SVGLength.SVG_LENGTHTYPE_IN:
-			return v * 96f;
-		case SVGLength.SVG_LENGTHTYPE_PT:
-			return v / 0.75f; // Mult. by 96 / 72
-		case SVGLength.SVG_LENGTHTYPE_PC:
-			return v * 16f; // 96 / 6
-		case SVGLength.SVG_LENGTHTYPE_EMS:
-			return emsToPixels(v, d, ctx);
-		case SVGLength.SVG_LENGTHTYPE_EXS:
-			return exsToPixels(v, d, ctx);
-		case SVGLength.SVG_LENGTHTYPE_PERCENTAGE:
+		case CSSUnit.CSS_PERCENTAGE:
 			return percentagesToPixels(v, d, ctx);
+		case CSSUnit.CSS_EM:
+			return emsToPixels(v, d, ctx);
+		case CSSUnit.CSS_EX:
+			return exsToPixels(v, d, ctx);
+		case CSSUnit.CSS_LH:
+			return lhToPixels(v, d, ctx);
+		case CSSUnit.CSS_VW:
+			return vwToPixels(v, d, ctx);
+		case CSSUnit.CSS_VH:
+			return vhToPixels(v, d, ctx);
+		case CSSUnit.CSS_VMIN:
+			return vminToPixels(v, d, ctx);
+		case CSSUnit.CSS_VMAX:
+			return vmaxToPixels(v, d, ctx);
+		case CSSUnit.CSS_MM:
+			return v * 3.779527559055f; // 96 / 25.4
+		case CSSUnit.CSS_CM:
+			return v * 37.79527559055f; // 96 / 2.54
+		case CSSUnit.CSS_IN:
+			return v * 96f;
+		case CSSUnit.CSS_PT:
+			return v / 0.75f; // Mult. by 96 / 72
+		case CSSUnit.CSS_PC:
+			return v * 16f; // 96 / 6
+		case CSSUnit.CSS_QUARTER_MM:
+			return v * 0.94488188976f; // 96 / 25.4 / 4
 		default:
 			throw new IllegalArgumentException("Length has unknown type");
 		}
@@ -169,30 +173,43 @@ public abstract class UnitProcessor {
 	 * units.
 	 *
 	 * @param v    the value to convert
-	 * @param type the type of the value
+	 * @param type the type of the value according to CSSUnit
 	 * @param d    HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
 	 * @param ctx  the context used to resolve relative value
+	 * @return the value in the given unit.
 	 */
-	public static float userSpaceToSVG(float v, short type, short d, Context ctx) {
+	public static float userSpaceToCSS(float v, short type, short d, Context ctx) {
 		switch (type) {
-		case SVGLength.SVG_LENGTHTYPE_NUMBER:
-		case SVGLength.SVG_LENGTHTYPE_PX:
+		case CSSUnit.CSS_NUMBER:
+		case CSSUnit.CSS_PX:
 			return v;
-		case SVGLength.SVG_LENGTHTYPE_MM:
+		case CSSUnit.CSS_MM:
 			return v * 0.26458333333333f; // 25.4/96
-		case SVGLength.SVG_LENGTHTYPE_CM:
+		case CSSUnit.CSS_CM:
 			return v * 0.026458333333333f; // 2.54/96
-		case SVGLength.SVG_LENGTHTYPE_IN:
+		case CSSUnit.CSS_IN:
 			return v / 96f;
-		case SVGLength.SVG_LENGTHTYPE_PT:
+		case CSSUnit.CSS_PT:
 			return v * 0.75f; // 72/96
-		case SVGLength.SVG_LENGTHTYPE_PC:
+		case CSSUnit.CSS_PC:
 			return v / 16f;
-		case SVGLength.SVG_LENGTHTYPE_EMS:
+		case CSSUnit.CSS_QUARTER_MM:
+			return v * 1.0583333333333f; // 25.4*4/96
+		case CSSUnit.CSS_EM:
 			return pixelsToEms(v, d, ctx);
-		case SVGLength.SVG_LENGTHTYPE_EXS:
+		case CSSUnit.CSS_EX:
 			return pixelsToExs(v, d, ctx);
-		case SVGLength.SVG_LENGTHTYPE_PERCENTAGE:
+		case CSSUnit.CSS_LH:
+			return pixelsToLh(v, d, ctx);
+		case CSSUnit.CSS_VW:
+			return pixelsToVw(v, d, ctx);
+		case CSSUnit.CSS_VH:
+			return pixelsToVh(v, d, ctx);
+		case CSSUnit.CSS_VMIN:
+			return pixelsToVmin(v, d, ctx);
+		case CSSUnit.CSS_VMAX:
+			return pixelsToVmax(v, d, ctx);
+		case CSSUnit.CSS_PERCENTAGE:
 			return pixelsToPercentages(v, d, ctx);
 		default:
 			throw new IllegalArgumentException("Length has unknown type");
@@ -294,9 +311,115 @@ public abstract class UnitProcessor {
 	}
 
 	/**
+	 * Converts user units to lh units.
+	 *
+	 * @param v   the value to convert
+	 * @param d   HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
+	 * @param ctx the context
+	 */
+	protected static float pixelsToLh(float v, short d, Context ctx) {
+		return v / ctx.getLineHeight();
+	}
+
+	/**
+	 * Converts lh units to user units.
+	 *
+	 * @param v   the value to convert
+	 * @param d   HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
+	 * @param ctx the context
+	 */
+	protected static float lhToPixels(float v, short d, Context ctx) {
+		return v * ctx.getLineHeight();
+	}
+
+	/**
+	 * Converts user units to rem units.
+	 *
+	 * @param v   the value to convert
+	 * @param d   HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
+	 * @param ctx the context
+	 */
+	protected static float pixelsToRem(float v, short d, Context ctx) {
+		return v / ctx.getRootFontSize();
+	}
+
+	/**
+	 * Converts rem units to user units.
+	 *
+	 * @param v   the value to convert
+	 * @param d   HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
+	 * @param ctx the context
+	 */
+	protected static float remToPixels(float v, short d, Context ctx) {
+		return v * ctx.getRootFontSize();
+	}
+
+	/**
+	 * Converts user units to rlh units.
+	 *
+	 * @param v   the value to convert
+	 * @param d   HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
+	 * @param ctx the context
+	 */
+	protected static float pixelsToRlh(float v, short d, Context ctx) {
+		return v / ctx.getRootLineHeight();
+	}
+
+	/**
+	 * Converts rlh units to user units.
+	 *
+	 * @param v   the value to convert
+	 * @param d   HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
+	 * @param ctx the context
+	 */
+	protected static float rlhToPixels(float v, short d, Context ctx) {
+		return v * ctx.getRootLineHeight();
+	}
+
+	private static float pixelsToVw(float v, short d, Context ctx) {
+		return v / ctx.getViewportWidth() * 100f;
+	}
+
+	private static float pixelsToVh(float v, short d, Context ctx) {
+		return v / ctx.getViewportHeight() * 100f;
+	}
+
+	private static float pixelsToVmax(float v, short d, Context ctx) {
+		float w = ctx.getViewportWidth();
+		float h = ctx.getViewportHeight();
+		return v / Math.max(w, h) * 100f;
+	}
+
+	private static float pixelsToVmin(float v, short d, Context ctx) {
+		float w = ctx.getViewportWidth();
+		float h = ctx.getViewportHeight();
+		return v / Math.min(w, h) * 100f;
+	}
+
+	private static float vwToPixels(float v, short d, Context ctx) {
+		return v * ctx.getViewportWidth() / 100f;
+	}
+
+	private static float vhToPixels(float v, short d, Context ctx) {
+		return v * ctx.getViewportHeight() / 100f;
+	}
+
+	private static float vmaxToPixels(float v, short d, Context ctx) {
+		float w = ctx.getViewportWidth();
+		float h = ctx.getViewportHeight();
+		return v * Math.max(w, h) / 100f;
+	}
+
+	private static float vminToPixels(float v, short d, Context ctx) {
+		float w = ctx.getViewportWidth();
+		float h = ctx.getViewportHeight();
+		return v * Math.min(w, h) / 100f;
+	}
+
+	/**
 	 * A LengthHandler that convert units.
 	 */
-	public static class UnitResolver implements LengthHandler {
+	public static class UnitResolver extends DefaultLengthHandler {
 
 		/**
 		 * The length value.
@@ -306,7 +429,7 @@ public abstract class UnitProcessor {
 		/**
 		 * The length type.
 		 */
-		public short unit = SVGLength.SVG_LENGTHTYPE_NUMBER;
+		public short unit = CSSUnit.CSS_NUMBER;
 
 		/**
 		 * Implements {@link LengthHandler#startLength()}.
@@ -323,76 +446,9 @@ public abstract class UnitProcessor {
 			this.value = v;
 		}
 
-		/**
-		 * Implements {@link LengthHandler#em()}.
-		 */
 		@Override
-		public void em() throws ParseException {
-			this.unit = SVGLength.SVG_LENGTHTYPE_EMS;
-		}
-
-		/**
-		 * Implements {@link LengthHandler#ex()}.
-		 */
-		@Override
-		public void ex() throws ParseException {
-			this.unit = SVGLength.SVG_LENGTHTYPE_EXS;
-		}
-
-		/**
-		 * Implements {@link LengthHandler#in()}.
-		 */
-		@Override
-		public void in() throws ParseException {
-			this.unit = SVGLength.SVG_LENGTHTYPE_IN;
-		}
-
-		/**
-		 * Implements {@link LengthHandler#cm()}.
-		 */
-		@Override
-		public void cm() throws ParseException {
-			this.unit = SVGLength.SVG_LENGTHTYPE_CM;
-		}
-
-		/**
-		 * Implements {@link LengthHandler#mm()}.
-		 */
-		@Override
-		public void mm() throws ParseException {
-			this.unit = SVGLength.SVG_LENGTHTYPE_MM;
-		}
-
-		/**
-		 * Implements {@link LengthHandler#pc()}.
-		 */
-		@Override
-		public void pc() throws ParseException {
-			this.unit = SVGLength.SVG_LENGTHTYPE_PC;
-		}
-
-		/**
-		 * Implements {@link LengthHandler#pt()}.
-		 */
-		@Override
-		public void pt() throws ParseException {
-			this.unit = SVGLength.SVG_LENGTHTYPE_PT;
-		}
-
-		/**
-		 * Implements {@link LengthHandler#px()}.
-		 */
-		@Override
-		public void px() throws ParseException {
-			this.unit = SVGLength.SVG_LENGTHTYPE_PX;
-		}
-
-		/**
-		 * Implements {@link LengthHandler#percentage()}.
-		 */
-		@Override
-		public void percentage() throws ParseException {
-			this.unit = SVGLength.SVG_LENGTHTYPE_PERCENTAGE;
+		protected void setUnit(short unit) {
+			this.unit = unit;
 		}
 
 		/**
@@ -428,6 +484,21 @@ public abstract class UnitProcessor {
 		 * Returns the x-height value.
 		 */
 		float getXHeight();
+
+		/**
+		 * Returns the line-height value.
+		 */
+		float getLineHeight();
+
+		/**
+		 * Returns the font-size value of the :root element.
+		 */
+		float getRootFontSize();
+
+		/**
+		 * Returns the line-height value of the :root element.
+		 */
+		float getRootLineHeight();
 
 		/**
 		 * Returns the viewport width used to compute units.
