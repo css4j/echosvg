@@ -16,14 +16,20 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.css.engine.value.css2;
+package io.sf.carte.echosvg.css.engine.value.css;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
 
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
-import io.sf.carte.echosvg.css.engine.value.RectManager;
+import io.sf.carte.echosvg.css.engine.CSSStylableElement;
+import io.sf.carte.echosvg.css.engine.StyleMap;
+import io.sf.carte.echosvg.css.engine.value.AbstractValueManager;
+import io.sf.carte.echosvg.css.engine.value.CalcValue;
+import io.sf.carte.echosvg.css.engine.value.FloatValue;
+import io.sf.carte.echosvg.css.engine.value.NumericDelegateValue;
 import io.sf.carte.echosvg.css.engine.value.RevertValue;
 import io.sf.carte.echosvg.css.engine.value.UnsetValue;
 import io.sf.carte.echosvg.css.engine.value.Value;
@@ -33,7 +39,7 @@ import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
- * This class provides a manager for the 'clip' property values.
+ * This class provides a manager for the 'font-size-adjust' property values.
  *
  * <p>
  * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
@@ -41,14 +47,14 @@ import io.sf.carte.echosvg.util.SVGTypes;
  * </p>
  * @version $Id$
  */
-public class ClipManager extends RectManager {
+public class FontSizeAdjustManager extends AbstractValueManager {
 
 	/**
 	 * Implements {@link ValueManager#isInheritedProperty()}.
 	 */
 	@Override
 	public boolean isInheritedProperty() {
-		return false;
+		return true;
 	}
 
 	/**
@@ -72,7 +78,7 @@ public class ClipManager extends RectManager {
 	 */
 	@Override
 	public int getPropertyType() {
-		return SVGTypes.TYPE_CLIP_VALUE;
+		return SVGTypes.TYPE_FONT_SIZE_ADJUST_VALUE;
 	}
 
 	/**
@@ -80,7 +86,7 @@ public class ClipManager extends RectManager {
 	 */
 	@Override
 	public String getPropertyName() {
-		return CSSConstants.CSS_CLIP_PROPERTY;
+		return CSSConstants.CSS_FONT_SIZE_ADJUST_PROPERTY;
 	}
 
 	/**
@@ -88,7 +94,7 @@ public class ClipManager extends RectManager {
 	 */
 	@Override
 	public Value getDefaultValue() {
-		return ValueConstants.AUTO_VALUE;
+		return ValueConstants.NONE_VALUE;
 	}
 
 	/**
@@ -97,11 +103,17 @@ public class ClipManager extends RectManager {
 	@Override
 	public Value createValue(LexicalUnit lu, CSSEngine engine) throws DOMException {
 		switch (lu.getLexicalUnitType()) {
+		case INTEGER:
+			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getIntegerValue());
+
+		case REAL:
+			return new FloatValue(CSSUnit.CSS_NUMBER, lu.getFloatValue());
+
 		case IDENT:
-			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
-				return ValueConstants.AUTO_VALUE;
+			if (lu.getStringValue().equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+				return ValueConstants.NONE_VALUE;
 			}
-			break;
+			throw createInvalidIdentifierDOMException(lu.getStringValue());
 
 		case INHERIT:
 			return ValueConstants.INHERIT_VALUE;
@@ -119,10 +131,29 @@ public class ClipManager extends RectManager {
 		case ATTR:
 			return createLexicalValue(lu);
 
+		case CALC:
+			Value calc = createCalc(lu);
+			if (calc.getPrimitiveType() != Type.EXPRESSION) {
+				// In principle this means that a var() was found
+				return calc;
+			}
+			return ((CalcValue) calc).evaluate(null, null, engine, -1, null, CSSUnit.CSS_NUMBER);
+
+		case FUNCTION:
+			Value v;
+			try {
+				v = createMathFunction(lu, "<number>");
+			} catch (Exception e) {
+				DOMException ife = createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
+				ife.initCause(e);
+				throw ife;
+			}
+			return ((NumericDelegateValue<?>) v).evaluate(null, null, engine, -1, null, CSSUnit.CSS_NUMBER);
+
 		default:
 			break;
 		}
-		return super.createValue(lu, engine);
+		throw createInvalidLexicalUnitDOMException(lu.getLexicalUnitType());
 	}
 
 	@Override
@@ -130,10 +161,27 @@ public class ClipManager extends RectManager {
 		if (type != Type.IDENT) {
 			throw createInvalidStringTypeDOMException(type);
 		}
-		if (!value.equalsIgnoreCase(CSSConstants.CSS_AUTO_VALUE)) {
-			throw createInvalidIdentifierDOMException(value);
+		if (value.equalsIgnoreCase(CSSConstants.CSS_NONE_VALUE)) {
+			return ValueConstants.NONE_VALUE;
 		}
-		return ValueConstants.AUTO_VALUE;
+		throw createInvalidIdentifierDOMException(value);
+	}
+
+	/**
+	 * Implements {@link ValueManager#createFloatValue(short,float)}.
+	 */
+	@Override
+	public Value createFloatValue(short type, float floatValue) throws DOMException {
+		if (type == CSSUnit.CSS_NUMBER) {
+			return new FloatValue(type, floatValue);
+		}
+		throw createInvalidFloatTypeDOMException(type);
+	}
+
+	@Override
+	public Value computeValue(CSSStylableElement elt, String pseudo, CSSEngine engine, int idx, StyleMap sm,
+			Value value) {
+		return value;
 	}
 
 }

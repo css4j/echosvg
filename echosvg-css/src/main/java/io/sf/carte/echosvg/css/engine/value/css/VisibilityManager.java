@@ -17,7 +17,7 @@
 
  */
 
-package io.sf.carte.echosvg.css.engine.value.css2;
+package io.sf.carte.echosvg.css.engine.value.css;
 
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.StringMap;

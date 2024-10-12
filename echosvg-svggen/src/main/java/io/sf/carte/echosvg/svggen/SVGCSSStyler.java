@@ -44,7 +44,7 @@ public class SVGCSSStyler implements SVGSyntax {
 	/**
 	 * Invoking this method removes all the styling attributes (such as 'fill' or
 	 * 'fill-opacity') from the input element and its descendant and replaces them
-	 * with their CSS2 property counterparts.
+	 * with their CSS property counterparts.
 	 *
 	 * @param node SVG Node to be converted to use style
 	 */

@@ -22,7 +22,7 @@
 module io.sf.carte.echosvg.css {
 	exports io.sf.carte.echosvg.css;
 	exports io.sf.carte.echosvg.css.engine;
-	exports io.sf.carte.echosvg.css.engine.value.css2;
+	exports io.sf.carte.echosvg.css.engine.value.css;
 	exports io.sf.carte.echosvg.css.engine.value.svg;
 	exports io.sf.carte.echosvg.css.dom;
 	exports io.sf.carte.echosvg.css.engine.value;

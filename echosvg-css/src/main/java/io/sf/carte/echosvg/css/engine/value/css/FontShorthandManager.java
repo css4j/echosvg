@@ -17,7 +17,7 @@
 
  */
 
-package io.sf.carte.echosvg.css.engine.value.css2;
+package io.sf.carte.echosvg.css.engine.value.css;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -53,7 +53,7 @@ import io.sf.carte.echosvg.css.engine.value.ValueManager;
 import io.sf.carte.echosvg.util.CSSConstants;
 
 /**
- * This class provides support for the CSS2 'font' shorthand property.
+ * This class provides support for the CSS 'font' shorthand property.
  *
  * The form of this property is: [ [ &lt;font-style&gt; || &lt;font-variant&gt;
  * || &lt;font-weight&gt; ]? &lt;font-size&gt; [ / &lt;line-height&gt; ]?

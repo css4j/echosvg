@@ -77,3 +77,6 @@ Batik:
 
 12) The line-height property now has a global default of 1.1, instead of the
    mixture of 1.1 and 1 that Batik uses.
+
+13) The `css.engine.value.css2` package was renamed to `css.engine.value.css`,
+   given that CSS as a whole isn't versioned anymore.

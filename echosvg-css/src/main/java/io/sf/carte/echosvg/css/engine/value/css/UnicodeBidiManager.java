@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.css.engine.value.css2;
+package io.sf.carte.echosvg.css.engine.value.css;
 
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
@@ -27,23 +27,22 @@ import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
- * This class provides a manager for the 'font-style' property values.
+ * This class provides a manager for the 'unicode-bidi' property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class FontStyleManager extends IdentifierManager {
+public class UnicodeBidiManager extends IdentifierManager {
 
 	/**
 	 * The identifier values.
 	 */
 	protected static final StringMap values = new StringMap();
 	static {
-		values.put(CSSConstants.CSS_ALL_VALUE, ValueConstants.ALL_VALUE);
-		values.put(CSSConstants.CSS_ITALIC_VALUE, ValueConstants.ITALIC_VALUE);
+		values.put(CSSConstants.CSS_BIDI_OVERRIDE_VALUE, ValueConstants.BIDI_OVERRIDE_VALUE);
+		values.put(CSSConstants.CSS_EMBED_VALUE, ValueConstants.EMBED_VALUE);
 		values.put(CSSConstants.CSS_NORMAL_VALUE, ValueConstants.NORMAL_VALUE);
-		values.put(CSSConstants.CSS_OBLIQUE_VALUE, ValueConstants.OBLIQUE_VALUE);
 	}
 
 	/**
@@ -52,7 +51,7 @@ public class FontStyleManager extends IdentifierManager {
 	 */
 	@Override
 	public boolean isInheritedProperty() {
-		return true;
+		return false;
 	}
 
 	/**
@@ -60,7 +59,7 @@ public class FontStyleManager extends IdentifierManager {
 	 */
 	@Override
 	public boolean isAnimatableProperty() {
-		return true;
+		return false;
 	}
 
 	/**
@@ -85,7 +84,7 @@ public class FontStyleManager extends IdentifierManager {
 	 */
 	@Override
 	public String getPropertyName() {
-		return CSSConstants.CSS_FONT_STYLE_PROPERTY;
+		return CSSConstants.CSS_UNICODE_BIDI_PROPERTY;
 	}
 
 	/**

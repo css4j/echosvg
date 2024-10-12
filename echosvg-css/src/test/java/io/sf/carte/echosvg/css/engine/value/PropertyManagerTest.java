@@ -59,8 +59,8 @@ public class PropertyManagerTest {
 		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.BaselineShiftManager", false, "baseline",
 				"baseline | sub | super");
 
-		// css.engine.value.css2.clip
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.ClipManager", false, "auto", "auto");
+		// css.engine.value.css.clip
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.ClipManager", false, "auto", "auto");
 
 		// css.engine.value.svg.clip-path
 		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ClipPathManager", false, "none", "none");
@@ -88,15 +88,15 @@ public class PropertyManagerTest {
 		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.ColorRenderingManager", true, "auto",
 				"auto | optimizeSpeed | optimizeQuality");
 
-		// css.engine.value.css2.cursor
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.CursorManager", true, "auto",
+		// css.engine.value.css.cursor
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.CursorManager", true, "auto",
 				"auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize| text | wait | help ");
 
-		// css.engine.value.css2.direction
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.DirectionManager", true, "ltr", "ltr | rtl");
+		// css.engine.value.css.direction
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.DirectionManager", true, "ltr", "ltr | rtl");
 
-		// css.engine.value.css2.display
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.DisplayManager", false, "inline",
+		// css.engine.value.css.display
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.DisplayManager", false, "inline",
 				"inline | block | list-item | run-in | compact | marker | table | inline-table | table-row-group | table-header-group | table-footer-group | table-row | table-column-group | table-column | table-cell | table-caption | none");
 
 		// css.engine.value.svg.dominant-baseline
@@ -131,33 +131,33 @@ public class PropertyManagerTest {
 				"");
 
 		// IGNORE
-		// css.engine.value.css2.font
-		// testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontManager",
+		// css.engine.value.css.font
+		// testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.FontManager",
 		// true, "1", "");
 
-		// css.engine.value.css2.font-family
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontFamilyManager", true, "__USER_AGENT__", "");
+		// css.engine.value.css.font-family
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.FontFamilyManager", true, "__USER_AGENT__", "");
 
-		// css.engine.value.css2.font-size
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontSizeManager", true, "medium", "medium");
+		// css.engine.value.css.font-size
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.FontSizeManager", true, "medium", "medium");
 
-		// css.engine.value.css2.font-size-adjust
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontSizeAdjustManager", true, "none", "none");
+		// css.engine.value.css.font-size-adjust
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.FontSizeAdjustManager", true, "none", "none");
 
-		// css.engine.value.css2.font-stretch
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontStretchManager", true, "normal",
+		// css.engine.value.css.font-stretch
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.FontStretchManager", true, "normal",
 				"normal | wider | narrower | ultra-condensed | extra-condensed | condensed | semi-condensed | semi-expanded | expanded | extra-expanded | ultra-expanded");
 
-		// css.engine.value.css2.font-style
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontStyleManager", true, "normal",
+		// css.engine.value.css.font-style
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.FontStyleManager", true, "normal",
 				"normal | italic | oblique");
 
-		// css.engine.value.css2.font-variant
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontVariantManager", true, "normal",
+		// css.engine.value.css.font-variant
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.FontVariantManager", true, "normal",
 				"normal | small-caps");
 
-		// css.engine.value.css2.font-weigth
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.FontWeightManager", true, "normal",
+		// css.engine.value.css.font-weigth
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.FontWeightManager", true, "normal",
 				"normal | bold | bolder | lighter | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900");
 
 		// css.engine.value.svg.glyph-orientation-horizontal
@@ -207,8 +207,8 @@ public class PropertyManagerTest {
 		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$DefaultOpacityManager", false,
 				"1", "");
 
-		// css.engine.value.css2.overflow
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.OverflowManager", false, "visible",
+		// css.engine.value.css.overflow
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.OverflowManager", false, "visible",
 				"visible | hidden | scroll | auto");
 
 		// css.engine.value.svg.pointer-events
@@ -260,7 +260,7 @@ public class PropertyManagerTest {
 				"start | middle | end");
 
 		// css.engine.value.svg.text-decoration
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.TextDecorationManager", false, "none",
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.TextDecorationManager", false, "none",
 				"none | underline | overline | line-through | blink");
 
 		// css.engine.value.svg.text-rendering
@@ -268,18 +268,18 @@ public class PropertyManagerTest {
 				"auto | optimizeSpeed | optimizeLegibility | geometricPrecision");
 
 		// css.engine.value.svg.unicode-bidi
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.UnicodeBidiManager", false, "normal",
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.UnicodeBidiManager", false, "normal",
 				"normal | embed | bidi-override");
 
-		// css.engine.value.css2.visibility
-		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css2.VisibilityManager", true, "visible",
+		// css.engine.value.css.visibility
+		testPropertyManager("io.sf.carte.echosvg.css.engine.value.css.VisibilityManager", true, "visible",
 				"visible | hidden | collapse");
 
-		// css.engine.value.css2.word-spacing
+		// css.engine.value.css.word-spacing
 		testPropertyManager("io.sf.carte.echosvg.css.engine.value.PropertyManagerTest$WordSpacingManager", true,
 				"normal", "normal");
 
-		// css.engine.value.css2.writing-mode
+		// css.engine.value.css.writing-mode
 		testPropertyManager("io.sf.carte.echosvg.css.engine.value.svg.WritingModeManager", true, "lr-tb",
 				"lr-tb | rl-tb | tb-rl | lr | rl | tb");
 	}

@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.css.engine.value.css2;
+package io.sf.carte.echosvg.css.engine.value.css;
 
 import io.sf.carte.echosvg.css.engine.value.IdentifierManager;
 import io.sf.carte.echosvg.css.engine.value.StringMap;
@@ -27,22 +27,21 @@ import io.sf.carte.echosvg.util.CSSConstants;
 import io.sf.carte.echosvg.util.SVGTypes;
 
 /**
- * This class provides a manager for the 'unicode-bidi' property values.
+ * This class provides a manager for the 'direction' property values.
  *
  * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
  * @author For later modifications, see Git history.
  * @version $Id$
  */
-public class UnicodeBidiManager extends IdentifierManager {
+public class DirectionManager extends IdentifierManager {
 
 	/**
 	 * The identifier values.
 	 */
 	protected static final StringMap values = new StringMap();
 	static {
-		values.put(CSSConstants.CSS_BIDI_OVERRIDE_VALUE, ValueConstants.BIDI_OVERRIDE_VALUE);
-		values.put(CSSConstants.CSS_EMBED_VALUE, ValueConstants.EMBED_VALUE);
-		values.put(CSSConstants.CSS_NORMAL_VALUE, ValueConstants.NORMAL_VALUE);
+		values.put(CSSConstants.CSS_LTR_VALUE, ValueConstants.LTR_VALUE);
+		values.put(CSSConstants.CSS_RTL_VALUE, ValueConstants.RTL_VALUE);
 	}
 
 	/**
@@ -51,7 +50,7 @@ public class UnicodeBidiManager extends IdentifierManager {
 	 */
 	@Override
 	public boolean isInheritedProperty() {
-		return false;
+		return true;
 	}
 
 	/**
@@ -84,7 +83,7 @@ public class UnicodeBidiManager extends IdentifierManager {
 	 */
 	@Override
 	public String getPropertyName() {
-		return CSSConstants.CSS_UNICODE_BIDI_PROPERTY;
+		return CSSConstants.CSS_DIRECTION_PROPERTY;
 	}
 
 	/**
@@ -93,7 +92,7 @@ public class UnicodeBidiManager extends IdentifierManager {
 	 */
 	@Override
 	public Value getDefaultValue() {
-		return ValueConstants.NORMAL_VALUE;
+		return ValueConstants.LTR_VALUE;
 	}
 
 	/**

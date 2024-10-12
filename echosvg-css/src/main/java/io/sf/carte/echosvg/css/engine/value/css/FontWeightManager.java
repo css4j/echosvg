@@ -16,7 +16,7 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.css.engine.value.css2;
+package io.sf.carte.echosvg.css.engine.value.css;
 
 import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.DOMException;
