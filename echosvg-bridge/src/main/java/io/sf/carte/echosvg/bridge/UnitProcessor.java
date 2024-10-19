@@ -348,6 +348,11 @@ public abstract class UnitProcessor extends io.sf.carte.echosvg.parser.UnitProce
 			return 0.5f;
 		}
 
+		@Override
+		public float getRootXHeight() {
+			return 0.5f;
+		}
+
 		/**
 		 * Returns the viewport width used to compute units.
 		 */

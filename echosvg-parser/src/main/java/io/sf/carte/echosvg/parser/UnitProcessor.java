@@ -143,6 +143,12 @@ public abstract class UnitProcessor {
 			return exsToPixels(v, d, ctx);
 		case CSSUnit.CSS_LH:
 			return lhToPixels(v, d, ctx);
+		case CSSUnit.CSS_REM:
+			return remToPixels(v, d, ctx);
+		case CSSUnit.CSS_REX:
+			return rexToPixels(v, d, ctx);
+		case CSSUnit.CSS_RLH:
+			return rlhToPixels(v, d, ctx);
 		case CSSUnit.CSS_VW:
 			return vwToPixels(v, d, ctx);
 		case CSSUnit.CSS_VH:
@@ -201,6 +207,12 @@ public abstract class UnitProcessor {
 			return pixelsToExs(v, d, ctx);
 		case CSSUnit.CSS_LH:
 			return pixelsToLh(v, d, ctx);
+		case CSSUnit.CSS_REM:
+			return pixelsToRem(v, d, ctx);
+		case CSSUnit.CSS_REX:
+			return pixelsToRex(v, d, ctx);
+		case CSSUnit.CSS_RLH:
+			return pixelsToRlh(v, d, ctx);
 		case CSSUnit.CSS_VW:
 			return pixelsToVw(v, d, ctx);
 		case CSSUnit.CSS_VH:
@@ -355,6 +367,30 @@ public abstract class UnitProcessor {
 	}
 
 	/**
+	 * Converts user units to rex units.
+	 *
+	 * @param v   the value to convert
+	 * @param d   HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
+	 * @param ctx the context
+	 */
+	protected static float pixelsToRex(float v, short d, Context ctx) {
+		float xh = ctx.getRootXHeight();
+		return v / xh / ctx.getRootFontSize();
+	}
+
+	/**
+	 * Converts rex units to user units.
+	 *
+	 * @param v   the value to convert
+	 * @param d   HORIZONTAL_LENGTH, VERTICAL_LENGTH, or OTHER_LENGTH
+	 * @param ctx the context
+	 */
+	protected static float rexToPixels(float v, short d, Context ctx) {
+		float xh = ctx.getRootXHeight();
+		return v * xh * ctx.getRootFontSize();
+	}
+
+	/**
 	 * Converts user units to rlh units.
 	 *
 	 * @param v   the value to convert
@@ -494,6 +530,11 @@ public abstract class UnitProcessor {
 		 * Returns the font-size value of the :root element.
 		 */
 		float getRootFontSize();
+
+		/**
+		 * Returns the x-height value of the :root element.
+		 */
+		float getRootXHeight();
 
 		/**
 		 * Returns the line-height value of the :root element.

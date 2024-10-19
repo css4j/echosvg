@@ -23,6 +23,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.lang.ref.SoftReference;
 
+import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.DocumentEvent;
@@ -35,9 +36,12 @@ import io.sf.carte.echosvg.anim.dom.AbstractSVGAnimatedLength;
 import io.sf.carte.echosvg.anim.dom.AnimatedLiveAttributeValue;
 import io.sf.carte.echosvg.anim.dom.SVGOMAnimatedTransformList;
 import io.sf.carte.echosvg.anim.dom.SVGOMElement;
+import io.sf.carte.echosvg.css.CSSSecurityException;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSEngineEvent;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
+import io.sf.carte.echosvg.css.engine.value.LengthManager;
+import io.sf.carte.echosvg.css.engine.value.Value;
 import io.sf.carte.echosvg.dom.events.AbstractEvent;
 import io.sf.carte.echosvg.dom.svg.AbstractSVGTransformList;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
@@ -603,7 +607,7 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 	 */
 	@Override
 	public float getFontSize() {
-		return CSSUtilities.getComputedStyle(e, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
+		return fontSizeValue(e);
 	}
 
 	/**
@@ -611,19 +615,51 @@ public abstract class AbstractGraphicsNodeBridge extends AnimatableSVGBridge
 	 */
 	@Override
 	public float getLineHeight() {
-		return CSSUtilities.getComputedStyle(e, SVGCSSEngine.LINE_HEIGHT_INDEX).getFloatValue();
+		return lineHeightValue(e);
 	}
 
 	@Override
 	public float getRootFontSize() {
 		Element root = e.getOwnerDocument().getDocumentElement();
-		return CSSUtilities.getComputedStyle(root, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
+		return fontSizeValue(root);
 	}
 
 	@Override
 	public float getRootLineHeight() {
 		Element root = e.getOwnerDocument().getDocumentElement();
-		return CSSUtilities.getComputedStyle(root, SVGCSSEngine.LINE_HEIGHT_INDEX).getFloatValue();
+		return lineHeightValue(root);
+	}
+
+	private float fontSizeValue(Element elt) {
+		try {
+			return CSSUtilities.getComputedStyle(elt, SVGCSSEngine.FONT_SIZE_INDEX).getFloatValue();
+		} catch (CSSSecurityException ex) {
+		}
+
+		if (ctx != null) {
+			return ctx.getUserAgent().getMediumFontSize();
+		}
+
+		return 12f;
+	}
+
+	private float lineHeightValue(Element elt) {
+		Value v;
+		try {
+			v = CSSUtilities.getComputedStyle(elt, SVGCSSEngine.LINE_HEIGHT_INDEX);
+		} catch (CSSSecurityException ex) {
+			return fontSizeValue(elt) * LengthManager.DEFAULT_LINE_HEIGHT;
+		}
+
+		float fv = v.getFloatValue();
+		short unit = v.getUnitType();
+		if (unit == CSSUnit.CSS_NUMBER) {
+			float fs = fontSizeValue(elt);
+			return fs * fv;
+		}
+
+		// Must be pixels
+		return fv;
 	}
 
 }

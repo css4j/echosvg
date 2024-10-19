@@ -56,7 +56,7 @@ public abstract class LengthManager extends AbstractValueManager {
 	 * on a path". Web browsers use a default based on the font family, close to 1.2
 	 * </p>
 	 */
-	protected static final float DEFAULT_LINE_HEIGHT = 1.1f;
+	public static final float DEFAULT_LINE_HEIGHT = 1.1f;
 
 	/**
 	 * precomputed square-root of 2.0

@@ -32,6 +32,7 @@ import io.sf.carte.doc.style.css.CSSValue.CssType;
 import io.sf.carte.doc.style.css.CSSValue.Type;
 import io.sf.carte.echosvg.anim.dom.SVGOMDocument;
 import io.sf.carte.echosvg.constants.XMLConstants;
+import io.sf.carte.echosvg.css.CSSSecurityException;
 import io.sf.carte.echosvg.css.engine.CSSEngine;
 import io.sf.carte.echosvg.css.engine.CSSStylableElement;
 import io.sf.carte.echosvg.css.engine.SVGCSSEngine;
@@ -78,7 +79,7 @@ public abstract class CSSUtilities implements CSSConstants, ErrorConstants, XMLC
 	/**
 	 * Returns the computed style of the given property.
 	 */
-	public static Value getComputedStyle(Element e, int property) {
+	public static Value getComputedStyle(Element e, int property) throws CSSSecurityException {
 		CSSEngine engine = getCSSEngine(e);
 		if (engine == null)
 			return null;

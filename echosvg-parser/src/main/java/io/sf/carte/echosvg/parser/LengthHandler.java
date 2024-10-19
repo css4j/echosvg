@@ -115,6 +115,27 @@ public interface LengthHandler {
 	void percentage() throws ParseException;
 
 	/**
+	 * Invoked when 'rem' has been parsed.
+	 * 
+	 * @exception ParseException if an error occurs while processing the length
+	 */
+	void rem() throws ParseException;
+
+	/**
+	 * Invoked when 'rex' has been parsed.
+	 * 
+	 * @exception ParseException if an error occurs while processing the length
+	 */
+	void rex() throws ParseException;
+
+	/**
+	 * Invoked when 'rlh' has been parsed.
+	 * 
+	 * @exception ParseException if an error occurs while processing the length
+	 */
+	void rlh() throws ParseException;
+
+	/**
 	 * Invoked when 'vh' has been parsed.
 	 * 
 	 * @exception ParseException if an error occurs while processing the length

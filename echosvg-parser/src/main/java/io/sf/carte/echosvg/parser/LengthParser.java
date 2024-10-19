@@ -450,6 +450,37 @@ public class LengthParser extends AbstractParser {
 			lengthHandler.percentage();
 			current = reader.read();
 			break;
+		case 'r':
+			current = reader.read();
+			switch (current) {
+			case 'e':
+				current = reader.read();
+				switch (current) {
+				case 'm':
+					lengthHandler.rem();
+					current = reader.read();
+					break;
+				case 'x':
+					lengthHandler.rex();
+					current = reader.read();
+					break;
+				default:
+					reportUnexpectedCharacterError(current);
+				}
+				break;
+			case 'l':
+				current = reader.read();
+				if (current != 'h') {
+					reportCharacterExpectedError('h', current);
+					break;
+				}
+				lengthHandler.rlh();
+				current = reader.read();
+				break;
+			default:
+				reportUnexpectedCharacterError(current);
+			}
+			break;
 		case 'v':
 			current = reader.read();
 			switch (current) {
@@ -462,6 +493,7 @@ public class LengthParser extends AbstractParser {
 				current = reader.read();
 				break;
 			case 'm':
+				current = reader.read();
 				switch (current) {
 				case 'i':
 					current = reader.read();

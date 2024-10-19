@@ -912,6 +912,11 @@ public abstract class SVGOMElement extends AbstractElement implements SVGElement
 			return 0.5f;
 		}
 
+		@Override
+		public float getRootXHeight() {
+			return 0.5f;
+		}
+
 		/**
 		 * Returns the viewport width used to compute units.
 		 */

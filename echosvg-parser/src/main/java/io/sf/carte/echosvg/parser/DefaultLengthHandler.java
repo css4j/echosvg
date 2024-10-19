@@ -100,6 +100,21 @@ public class DefaultLengthHandler implements LengthHandler {
 	}
 
 	@Override
+	public void rem() throws ParseException {
+		setUnit(CSSUnit.CSS_REM);
+	}
+
+	@Override
+	public void rex() throws ParseException {
+		setUnit(CSSUnit.CSS_REX);
+	}
+
+	@Override
+	public void rlh() throws ParseException {
+		setUnit(CSSUnit.CSS_RLH);
+	}
+
+	@Override
 	public void vh() throws ParseException {
 		setUnit(CSSUnit.CSS_VH);
 	}

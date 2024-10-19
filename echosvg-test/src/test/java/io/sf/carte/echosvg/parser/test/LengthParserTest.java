@@ -73,6 +73,20 @@ public class LengthParserTest {
 		testLengthParser("-0px", "0.0px");
 
 		testLengthParser("0000%", "0.0%");
+
+		testLengthParser("1rem", "1.0rem");
+
+		testLengthParser("02rex", "2.0rex");
+
+		testLengthParser("2rlh", "2.0rlh");
+
+		testLengthParser(".2vh", "0.2vh");
+
+		testLengthParser("2vw", "2.0vw");
+
+		testLengthParser("2.667vmin", "2.667vmin");
+
+		testLengthParser("2.3vmax", "2.3vmax");
 	}
 
 	private class TestHandler extends DefaultLengthHandler {
@@ -141,6 +155,21 @@ public class LengthParserTest {
 		@Override
 		public void percentage() throws ParseException {
 			buffer.append("%");
+		}
+
+		@Override
+		public void rem() throws ParseException {
+			buffer.append("rem");
+		}
+
+		@Override
+		public void rex() throws ParseException {
+			buffer.append("rex");
+		}
+
+		@Override
+		public void rlh() throws ParseException {
+			buffer.append("rlh");
 		}
 
 		@Override

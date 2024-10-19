@@ -358,6 +358,11 @@ public abstract class AbstractSVGLength implements SVGLength {
 		}
 
 		@Override
+		public float getRootXHeight() {
+			return 0.5f;
+		}
+
+		@Override
 		public float getRootLineHeight() {
 			return getAssociatedElement().getSVGContext().getRootLineHeight();
 		}
