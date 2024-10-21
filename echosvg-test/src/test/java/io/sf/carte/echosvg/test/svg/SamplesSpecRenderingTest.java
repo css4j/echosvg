@@ -845,6 +845,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	}
 
 	@Test
+	public void testTextArabicCharacters() throws TranscoderException, IOException {
+		testNV("samples/tests/spec/text/arabicCharacters.svg");
+	}
+
+	@Test
 	public void testTextBiDi() throws TranscoderException, IOException {
 		test("samples/tests/spec/text/textBiDi.svg");
 	}
