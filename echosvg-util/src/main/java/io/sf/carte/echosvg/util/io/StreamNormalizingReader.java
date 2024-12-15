@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import io.sf.carte.echosvg.util.EncodingUtilities;
@@ -157,7 +158,7 @@ public class StreamNormalizingReader extends NormalizingReader {
 	 * Creates the CharDecoder mapped with the given encoding name.
 	 */
 	protected CharDecoder createCharDecoder(InputStream is, String enc) throws IOException {
-		CharDecoderFactory cdf = charDecoderFactories.get(enc.toUpperCase());
+		CharDecoderFactory cdf = charDecoderFactories.get(enc.toUpperCase(Locale.ROOT));
 		if (cdf != null) {
 			return cdf.createCharDecoder(is);
 		}
