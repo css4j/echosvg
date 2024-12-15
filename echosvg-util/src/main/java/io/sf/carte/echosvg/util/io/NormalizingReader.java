@@ -26,8 +26,10 @@ import java.io.Reader;
  * are replaced by \n. The methods of this reader are not synchronized. The
  * input is buffered.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class NormalizingReader extends Reader {
@@ -40,6 +42,7 @@ public abstract class NormalizingReader extends Reader {
 	 * @param len  Maximum number of characters to read
 	 * @return The number of characters read, or -1 if the end of the stream has
 	 *         been reached
+	 * @throws IOException If an I/O error occurs
 	 */
 	@Override
 	public int read(char[] cbuf, int off, int len) throws IOException {
@@ -51,12 +54,12 @@ public abstract class NormalizingReader extends Reader {
 		if (c == -1) {
 			return -1;
 		}
-		int result = 0;
-		do {
+		cbuf[off] = (char) c;
+		int result = 1;
+		while (result < len && (c = read()) != -1) {
 			cbuf[result + off] = (char) c;
 			result++;
-			c = read();
-		} while (c != -1 && result < len);
+		}
 		return result;
 	}
 
