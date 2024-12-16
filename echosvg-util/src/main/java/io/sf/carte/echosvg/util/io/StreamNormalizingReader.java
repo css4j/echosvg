@@ -125,6 +125,10 @@ public class StreamNormalizingReader extends NormalizingReader {
 		case 10:
 			column = 0;
 			line++;
+			break;
+
+		default:
+			column++;
 		}
 		return result;
 	}
