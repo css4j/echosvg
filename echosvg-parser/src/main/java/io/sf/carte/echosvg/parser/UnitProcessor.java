@@ -68,9 +68,16 @@ public abstract class UnitProcessor {
 	 * @param ctx  the context used to resolve relative value
 	 */
 	public static float cssToObjectBoundingBox(String s, String attr, short d, Context ctx) throws ParseException {
-		LengthParser lengthParser = new LengthParser();
-		UnitResolver ur = new UnitResolver();
-		lengthParser.setLengthHandler(ur);
+		UnitResolver ur = new UnitResolver() {
+
+			@Override
+			protected float unitToPixels(short unitType, float floatValue, short percentageInterpretation) {
+				// Ignore the supplied percentage interpretation
+				return cssToObjectBoundingBox(floatValue, unitType, d, ctx);
+			}
+
+		};
+		LengthParser lengthParser = new LengthParser(ur);
 		lengthParser.parse(s);
 		return cssToObjectBoundingBox(ur.value, ur.unit, d, ctx);
 	}
@@ -113,9 +120,16 @@ public abstract class UnitProcessor {
 	 * @param ctx  the context used to resolve relative value
 	 */
 	public static float cssToUserSpace(String s, String attr, short d, Context ctx) throws ParseException {
-		LengthParser lengthParser = new LengthParser();
-		UnitResolver ur = new UnitResolver();
-		lengthParser.setLengthHandler(ur);
+		UnitResolver ur = new UnitResolver() {
+
+			@Override
+			protected float unitToPixels(short unitType, float floatValue, short percentageInterpretation) {
+				// Ignore the supplied percentage interpretation
+				return cssToUserSpace(floatValue, unitType, d, ctx);
+			}
+
+		};
+		LengthParser lengthParser = new LengthParser(ur);
 		lengthParser.parse(s);
 		return cssToUserSpace(ur.value, ur.unit, d, ctx);
 	}

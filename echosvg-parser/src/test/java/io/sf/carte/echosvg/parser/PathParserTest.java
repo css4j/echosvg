@@ -16,17 +16,13 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.parser.test;
+package io.sf.carte.echosvg.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
-
-import io.sf.carte.echosvg.parser.DefaultPathHandler;
-import io.sf.carte.echosvg.parser.ParseException;
-import io.sf.carte.echosvg.parser.PathParser;
 
 /**
  * To test the path parser.
@@ -38,14 +34,14 @@ import io.sf.carte.echosvg.parser.PathParser;
 public class PathParserTest {
 
 	/**
+	 * Test the parser.
 	 * 
 	 * @param sourcePath      The path to parse.
 	 * @param destinationPath The path after serialization.
 	 */
-	private void testPathParser(String sourcePath, String destinationPath) {
-		PathParser pp = new PathParser();
+	private void testPathParser(String sourcePath, String destinationPath) throws ParseException {
 		TestHandler handler = new TestHandler();
-		pp.setPathHandler(handler);
+		PathParser pp = new PathParser(handler);
 
 		pp.parse(new StringReader(sourcePath));
 
@@ -53,7 +49,7 @@ public class PathParserTest {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void test() {
 		testPathParser("M1 2", "M1.0 2.0");
 
 		testPathParser("m1.1 2.0", "m1.1 2.0");
@@ -128,12 +124,12 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void startPath() throws ParseException {
+		public void startPath() {
 			buffer = new StringBuilder();
 		}
 
 		@Override
-		public void movetoRel(float x, float y) throws ParseException {
+		public void movetoRel(float x, float y) {
 			buffer.append('m');
 			buffer.append(x);
 			buffer.append(' ');
@@ -141,7 +137,7 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void movetoAbs(float x, float y) throws ParseException {
+		public void movetoAbs(float x, float y) {
 			buffer.append('M');
 			buffer.append(x);
 			buffer.append(' ');
@@ -149,17 +145,17 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void endPath() throws ParseException {
+		public void endPath() {
 			resultPath = buffer.toString();
 		}
 
 		@Override
-		public void closePath() throws ParseException {
+		public void closePath() {
 			buffer.append('Z');
 		}
 
 		@Override
-		public void linetoRel(float x, float y) throws ParseException {
+		public void linetoRel(float x, float y) {
 			buffer.append('l');
 			buffer.append(x);
 			buffer.append(' ');
@@ -167,7 +163,7 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void linetoAbs(float x, float y) throws ParseException {
+		public void linetoAbs(float x, float y) {
 			buffer.append('L');
 			buffer.append(x);
 			buffer.append(' ');
@@ -175,31 +171,31 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void linetoHorizontalRel(float x) throws ParseException {
+		public void linetoHorizontalRel(float x) {
 			buffer.append('h');
 			buffer.append(x);
 		}
 
 		@Override
-		public void linetoHorizontalAbs(float x) throws ParseException {
+		public void linetoHorizontalAbs(float x) {
 			buffer.append('H');
 			buffer.append(x);
 		}
 
 		@Override
-		public void linetoVerticalRel(float y) throws ParseException {
+		public void linetoVerticalRel(float y) {
 			buffer.append('v');
 			buffer.append(y);
 		}
 
 		@Override
-		public void linetoVerticalAbs(float y) throws ParseException {
+		public void linetoVerticalAbs(float y) {
 			buffer.append('V');
 			buffer.append(y);
 		}
 
 		@Override
-		public void curvetoCubicRel(float x1, float y1, float x2, float y2, float x, float y) throws ParseException {
+		public void curvetoCubicRel(float x1, float y1, float x2, float y2, float x, float y) {
 			buffer.append('c');
 			buffer.append(x1);
 			buffer.append(' ');
@@ -215,7 +211,7 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void curvetoCubicAbs(float x1, float y1, float x2, float y2, float x, float y) throws ParseException {
+		public void curvetoCubicAbs(float x1, float y1, float x2, float y2, float x, float y) {
 			buffer.append('C');
 			buffer.append(x1);
 			buffer.append(' ');
@@ -231,7 +227,7 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void curvetoCubicSmoothRel(float x2, float y2, float x, float y) throws ParseException {
+		public void curvetoCubicSmoothRel(float x2, float y2, float x, float y) {
 			buffer.append('s');
 			buffer.append(x2);
 			buffer.append(' ');
@@ -243,7 +239,7 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void curvetoCubicSmoothAbs(float x2, float y2, float x, float y) throws ParseException {
+		public void curvetoCubicSmoothAbs(float x2, float y2, float x, float y) {
 			buffer.append('S');
 			buffer.append(x2);
 			buffer.append(' ');
@@ -255,7 +251,7 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void curvetoQuadraticRel(float x1, float y1, float x, float y) throws ParseException {
+		public void curvetoQuadraticRel(float x1, float y1, float x, float y) {
 			buffer.append('q');
 			buffer.append(x1);
 			buffer.append(' ');
@@ -267,7 +263,7 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void curvetoQuadraticAbs(float x1, float y1, float x, float y) throws ParseException {
+		public void curvetoQuadraticAbs(float x1, float y1, float x, float y) {
 			buffer.append('Q');
 			buffer.append(x1);
 			buffer.append(' ');
@@ -279,7 +275,7 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void curvetoQuadraticSmoothRel(float x, float y) throws ParseException {
+		public void curvetoQuadraticSmoothRel(float x, float y) {
 			buffer.append('t');
 			buffer.append(x);
 			buffer.append(' ');
@@ -287,7 +283,7 @@ public class PathParserTest {
 		}
 
 		@Override
-		public void curvetoQuadraticSmoothAbs(float x, float y) throws ParseException {
+		public void curvetoQuadraticSmoothAbs(float x, float y) {
 			buffer.append('T');
 			buffer.append(x);
 			buffer.append(' ');
@@ -296,7 +292,7 @@ public class PathParserTest {
 
 		@Override
 		public void arcRel(float rx, float ry, float xAxisRotation, boolean largeArcFlag, boolean sweepFlag, float x,
-				float y) throws ParseException {
+				float y) {
 			buffer.append('a');
 			buffer.append(rx);
 			buffer.append(' ');
@@ -315,7 +311,7 @@ public class PathParserTest {
 
 		@Override
 		public void arcAbs(float rx, float ry, float xAxisRotation, boolean largeArcFlag, boolean sweepFlag, float x,
-				float y) throws ParseException {
+				float y) {
 			buffer.append('A');
 			buffer.append(rx);
 			buffer.append(' ');

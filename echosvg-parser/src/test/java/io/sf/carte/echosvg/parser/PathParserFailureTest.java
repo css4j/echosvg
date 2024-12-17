@@ -16,22 +16,21 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.parser.test;
+package io.sf.carte.echosvg.parser;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.parser.ParseException;
-import io.sf.carte.echosvg.parser.PathParser;
-
 /**
  * To test the path parser.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class PathParserFailureTest {
@@ -41,16 +40,12 @@ public class PathParserFailureTest {
 	 * @param sourcePath The path to parse.
 	 */
 	private void testPathParserFailure(String sourcePath) {
-		PathParser pp = new PathParser();
-		try {
-			pp.parse(new StringReader(sourcePath));
-			fail("Must throw exception for: " + sourcePath);
-		} catch (ParseException e) {
-		}
+		PathParser pp = new PathParser(new DefaultPathHandler());
+		assertThrows(ParseException.class, () -> pp.parse(new StringReader(sourcePath)));
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void test() {
 		testPathParserFailure("m 1ee2 3");
 
 		testPathParserFailure("m 1e4e2 3");
@@ -92,8 +87,13 @@ public class PathParserFailureTest {
 		testPathParserFailure("m 1.5,6.7,a 2,2 0 1 1 2 2");
 
 		testPathParserFailure("m 1.5,6.7,A 4,4 0 1 1 2 2");
+	}
 
-		// Check for double path commands
+	/**
+	 * Check for double path commands
+	 */
+	@Test
+	public void testDoubleCommands() {
 		testPathParserFailure("m m 1,2");
 
 		testPathParserFailure("M M 1,2");

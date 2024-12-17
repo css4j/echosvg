@@ -144,12 +144,8 @@ public abstract class AbstractSVGLengthList extends AbstractSVGList implements S
 	 */
 	@Override
 	protected void doParse(String value, ListHandler handler) throws ParseException {
-
-		LengthListParser lengthListParser = new LengthListParser();
-
 		LengthListBuilder builder = new LengthListBuilder(handler);
-
-		lengthListParser.setLengthListHandler(builder);
+		LengthListParser lengthListParser = new LengthListParser(builder);
 		lengthListParser.parse(value);
 	}
 

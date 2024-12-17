@@ -298,9 +298,16 @@ public abstract class AbstractSVGLength implements SVGLength {
 	 */
 	protected void parse(String s) {
 		try {
-			LengthParser lengthParser = new LengthParser();
-			UnitProcessor.UnitResolver ur = new UnitProcessor.UnitResolver();
-			lengthParser.setLengthHandler(ur);
+			UnitProcessor.UnitResolver ur = new UnitProcessor.UnitResolver() {
+
+				@Override
+				protected float unitToPixels(short unitType, float floatValue, short pcntInterp) {
+					// Ignore the supplied percentage interpretation
+					return UnitProcessor.cssToUserSpace(floatValue, unitType, direction, context);
+				}
+
+			};
+			LengthParser lengthParser = new LengthParser(ur);
 			lengthParser.parse(s);
 			unitType = ur.unit;
 			value = ur.value;

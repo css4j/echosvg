@@ -27,15 +27,7 @@ package io.sf.carte.echosvg.parser;
  */
 public class DefaultAngleHandler implements AngleHandler {
 
-	/**
-	 * The only instance of this class.
-	 */
-	public static final AngleHandler INSTANCE = new DefaultAngleHandler();
-
-	/**
-	 * This class does not need to be instantiated.
-	 */
-	protected DefaultAngleHandler() {
+	public DefaultAngleHandler() {
 	}
 
 	/**
@@ -71,6 +63,10 @@ public class DefaultAngleHandler implements AngleHandler {
 	 */
 	@Override
 	public void rad() throws ParseException {
+	}
+
+	@Override
+	public void turn() throws ParseException {
 	}
 
 	/**

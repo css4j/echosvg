@@ -31,6 +31,15 @@ import java.io.IOException;
 public class LengthPairListParser extends LengthListParser {
 
 	/**
+	 * Creates a new LengthPairListParser.
+	 * 
+	 * @param lap The length array producer.
+	 */
+	public LengthPairListParser(LengthArrayProducer lap) {
+		super(lap);
+	}
+
+	/**
 	 * Parses the given reader.
 	 */
 	@Override
@@ -43,12 +52,16 @@ public class LengthPairListParser extends LengthListParser {
 		try {
 			for (;;) {
 				lengthHandler.startLength();
+				lengthStarted = true;
 				parseLength();
 				lengthHandler.endLength();
+				lengthStarted = false;
 				skipCommaSpaces();
 				lengthHandler.startLength();
+				lengthStarted = true;
 				parseLength();
 				lengthHandler.endLength();
+				lengthStarted = false;
 				skipSpaces();
 				if (current == -1) {
 					break;
@@ -61,6 +74,8 @@ public class LengthPairListParser extends LengthListParser {
 			}
 		} catch (NumberFormatException e) {
 			reportUnexpectedCharacterError(current);
+		} catch (CalcParseException e) {
+			cssParse(e);
 		}
 		((LengthListHandler) lengthHandler).endLengthList();
 	}

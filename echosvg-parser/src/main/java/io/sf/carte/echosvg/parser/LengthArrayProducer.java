@@ -36,7 +36,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 	/**
 	 * List of <code>float[]</code> objects.
 	 */
-	protected LinkedList<Object> vs;
+	protected LinkedList<float[]> vs;
 
 	/**
 	 * The current <code>float[]</code> object.
@@ -46,7 +46,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 	/**
 	 * List of <code>short[]</code> objects.
 	 */
-	protected LinkedList<Object> us;
+	protected LinkedList<short[]> us;
 
 	/**
 	 * The current <code>short[]</code> object.
@@ -66,7 +66,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 	/**
 	 * The unit for the current length.
 	 */
-	protected short currentUnit;
+	protected short currentUnit = CSSUnit.CSS_INVALID;
 
 	/**
 	 * Returns the array of length units accumulated.
@@ -106,6 +106,7 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 	 * @exception ParseException if an error occurs while processing the number
 	 */
 	public void numberValue(float v) throws ParseException {
+		throw new IllegalStateException("Unexpected <number>: " + v);
 	}
 
 	/**
@@ -155,9 +156,9 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 	public void endLengthList() throws ParseException {
 		float[] allValues = new float[count];
 		int pos = 0;
-		Iterator<Object> it = vs.iterator();
+		Iterator<float[]> it = vs.iterator();
 		while (it.hasNext()) {
-			float[] a = (float[]) it.next();
+			float[] a = it.next();
 			System.arraycopy(a, 0, allValues, pos, a.length);
 			pos += a.length;
 		}
@@ -167,9 +168,9 @@ public class LengthArrayProducer extends DefaultLengthListHandler {
 
 		short[] allUnits = new short[count];
 		pos = 0;
-		it = us.iterator();
-		while (it.hasNext()) {
-			short[] a = (short[]) it.next();
+		Iterator<short[]> uit = us.iterator();
+		while (uit.hasNext()) {
+			short[] a = uit.next();
 			System.arraycopy(a, 0, allUnits, pos, a.length);
 			pos += a.length;
 		}

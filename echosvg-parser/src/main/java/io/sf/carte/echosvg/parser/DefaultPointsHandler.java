@@ -28,14 +28,10 @@ package io.sf.carte.echosvg.parser;
 public class DefaultPointsHandler implements PointsHandler {
 
 	/**
-	 * The only instance of this class.
+	 * Instantiate a default handler.
 	 */
-	public static final DefaultPointsHandler INSTANCE = new DefaultPointsHandler();
-
-	/**
-	 * This class does not need to be instantiated.
-	 */
-	protected DefaultPointsHandler() {
+	public DefaultPointsHandler() {
+		super();
 	}
 
 	/**

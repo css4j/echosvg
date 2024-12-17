@@ -38,11 +38,10 @@ public class AWTPolygonProducer extends AWTPolylineProducer {
 	 * @param wr The winding rule to use for creating the path.
 	 */
 	public static Shape createShape(Reader r, int wr) throws IOException, ParseException {
-		PointsParser p = new PointsParser();
 		AWTPolygonProducer ph = new AWTPolygonProducer();
-
 		ph.setWindingRule(wr);
-		p.setPointsHandler(ph);
+
+		PointsParser p = new PointsParser(ph);
 		p.parse(r);
 
 		return ph.getShape();

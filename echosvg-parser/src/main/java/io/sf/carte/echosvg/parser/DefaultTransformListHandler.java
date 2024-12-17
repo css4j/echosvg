@@ -28,14 +28,10 @@ package io.sf.carte.echosvg.parser;
 public class DefaultTransformListHandler implements TransformListHandler {
 
 	/**
-	 * The only instance of this class.
+	 * Instantiate a default handler.
 	 */
-	public static final TransformListHandler INSTANCE = new DefaultTransformListHandler();
-
-	/**
-	 * This class does not need to be instantiated.
-	 */
-	protected DefaultTransformListHandler() {
+	public DefaultTransformListHandler() {
+		super();
 	}
 
 	/**

@@ -20,12 +20,16 @@ package io.sf.carte.echosvg.parser;
 
 import java.io.IOException;
 
+import org.w3c.css.om.unit.CSSUnit;
+
 /**
  * This class implements an event-based parser for the SVG points attribute
  * values (used with polyline and polygon elements).
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class PointsParser extends NumberParser {
@@ -33,7 +37,7 @@ public class PointsParser extends NumberParser {
 	/**
 	 * The points handler used to report parse events.
 	 */
-	protected PointsHandler pointsHandler;
+	private PointsHandler pointsHandler;
 
 	/**
 	 * Whether the last character was a 'e' or 'E'.
@@ -41,10 +45,19 @@ public class PointsParser extends NumberParser {
 	protected boolean eRead;
 
 	/**
-	 * Creates a new PointsParser.
+	 * Whether we are pending the processing of an 'y' value.
 	 */
-	public PointsParser() {
-		pointsHandler = DefaultPointsHandler.INSTANCE;
+	private boolean processingY = false;
+
+	private float lastX;
+
+	/**
+	 * Creates a new PointsParser with the given handler.
+
+	 * @param handler The transform list handler.
+	 */
+	public PointsParser(PointsHandler handler) {
+		pointsHandler = handler;
 	}
 
 	/**
@@ -86,15 +99,49 @@ public class PointsParser extends NumberParser {
 			if (current == -1) {
 				break loop;
 			}
-			float x = parseFloat();
+			float x;
+			try {
+				x = parseFloat();
+			} catch (CalcParseException e) {
+				processingY = false;
+				cssParse(e);
+				pointsHandler.endPoints();
+				return;
+			}
+
 			skipCommaSpaces();
-			float y = parseFloat();
+
+			float y;
+			try {
+				y = parseFloat();
+			} catch (CalcParseException e) {
+				lastX = x;
+				processingY = true;
+				cssParse(e);
+				pointsHandler.endPoints();
+				return;
+			}
 
 			pointsHandler.point(x, y);
 			skipCommaSpaces();
 		}
 
 		pointsHandler.endPoints();
+	}
+
+	@Override
+	protected void handleNumber(short unitType, float floatValue) throws ParseException {
+		if (unitType != CSSUnit.CSS_NUMBER) {
+			throw new ParseException(createErrorMessage("dimension.not.number",
+					new Object[] { CSSUnit.dimensionUnitString(unitType) }), -1, -1);
+		}
+
+		if (processingY) {
+			pointsHandler.point(lastX, floatValue);
+		} else {
+			lastX = floatValue;
+		}
+		processingY = !processingY;
 	}
 
 }

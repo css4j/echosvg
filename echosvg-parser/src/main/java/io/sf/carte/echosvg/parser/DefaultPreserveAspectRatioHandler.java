@@ -27,15 +27,7 @@ package io.sf.carte.echosvg.parser;
  */
 public class DefaultPreserveAspectRatioHandler implements PreserveAspectRatioHandler {
 
-	/**
-	 * The only instance of this class.
-	 */
-	public static final PreserveAspectRatioHandler INSTANCE = new DefaultPreserveAspectRatioHandler();
-
-	/**
-	 * This class does not need to be instantiated.
-	 */
-	protected DefaultPreserveAspectRatioHandler() {
+	public DefaultPreserveAspectRatioHandler() {
 	}
 
 	/**

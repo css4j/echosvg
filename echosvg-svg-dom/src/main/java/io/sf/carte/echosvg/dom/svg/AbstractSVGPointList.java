@@ -121,9 +121,8 @@ public abstract class AbstractSVGPointList extends AbstractSVGList implements SV
 	 */
 	@Override
 	protected void doParse(String value, ListHandler handler) throws ParseException {
-		PointsParser pointsParser = new PointsParser();
 		PointsListBuilder builder = new PointsListBuilder(handler);
-		pointsParser.setPointsHandler(builder);
+		PointsParser pointsParser = new PointsParser(builder);
 		pointsParser.parse(value);
 	}
 

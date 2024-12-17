@@ -121,11 +121,9 @@ public abstract class AbstractSVGPreserveAspectRatio implements SVGPreserveAspec
 	protected abstract DOMException createDOMException(short type, String key, Object[] args);
 
 	protected void setValueAsString(String value) throws DOMException {
-		PreserveAspectRatioParserHandler ph;
-		ph = new PreserveAspectRatioParserHandler();
+		PreserveAspectRatioParserHandler ph = new PreserveAspectRatioParserHandler();
+		PreserveAspectRatioParser p = new PreserveAspectRatioParser(ph);
 		try {
-			PreserveAspectRatioParser p = new PreserveAspectRatioParser();
-			p.setPreserveAspectRatioHandler(ph);
 			p.parse(value);
 			align = ph.getAlign();
 			meetOrSlice = ph.getMeetOrSlice();

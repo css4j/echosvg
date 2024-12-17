@@ -33,13 +33,15 @@ public class PreserveAspectRatioParser extends AbstractParser {
 	/**
 	 * The PreserveAspectRatio handler used to report parse events.
 	 */
-	protected PreserveAspectRatioHandler preserveAspectRatioHandler;
+	private PreserveAspectRatioHandler preserveAspectRatioHandler;
 
 	/**
 	 * Creates a new PreserveAspectRatioParser.
+	 * 
+	 * @param handler The handler.
 	 */
-	public PreserveAspectRatioParser() {
-		preserveAspectRatioHandler = DefaultPreserveAspectRatioHandler.INSTANCE;
+	public PreserveAspectRatioParser(PreserveAspectRatioHandler handler) {
+		preserveAspectRatioHandler = handler;
 	}
 
 	/**
@@ -54,7 +56,7 @@ public class PreserveAspectRatioParser extends AbstractParser {
 	 * parse, and the parser must begin using the new handler immediately.
 	 * </p>
 	 * 
-	 * @param handler The transform list handler.
+	 * @param handler The handler.
 	 */
 	public void setPreserveAspectRatioHandler(PreserveAspectRatioHandler handler) {
 		preserveAspectRatioHandler = handler;

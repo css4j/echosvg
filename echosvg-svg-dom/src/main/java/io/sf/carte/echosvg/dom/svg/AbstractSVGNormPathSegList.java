@@ -54,11 +54,9 @@ public abstract class AbstractSVGNormPathSegList extends AbstractSVGPathSegList 
 	 */
 	@Override
 	protected void doParse(String value, ListHandler handler) throws ParseException {
-		PathParser pathParser = new PathParser();
-
 		NormalizedPathSegListBuilder builder = new NormalizedPathSegListBuilder(handler);
+		PathParser pathParser = new PathParser(builder);
 
-		pathParser.setPathHandler(builder);
 		pathParser.parse(value);
 	}
 

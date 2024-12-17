@@ -33,13 +33,15 @@ public class PathParser extends NumberParser {
 	/**
 	 * The path handler used to report parse events.
 	 */
-	protected PathHandler pathHandler;
+	private PathHandler pathHandler;
 
 	/**
-	 * Creates a new PathParser.
+	 * Creates a new PathParser with the given handler.
+	 * 
+	 * @param handler The transform list handler.
 	 */
-	public PathParser() {
-		pathHandler = DefaultPathHandler.INSTANCE;
+	public PathParser(PathHandler handler) {
+		pathHandler = handler;
 	}
 
 	/**

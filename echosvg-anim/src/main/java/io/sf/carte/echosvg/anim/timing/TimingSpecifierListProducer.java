@@ -69,9 +69,8 @@ public class TimingSpecifierListProducer extends DefaultTimingSpecifierListHandl
 	 */
 	public static TimingSpecifier[] parseTimingSpecifierList(TimedElement owner, boolean isBegin, String spec,
 			boolean useSVG11AccessKeys, boolean useSVG12AccessKeys) {
-		TimingSpecifierListParser p = new TimingSpecifierListParser(useSVG11AccessKeys, useSVG12AccessKeys);
 		TimingSpecifierListProducer pp = new TimingSpecifierListProducer(owner, isBegin);
-		p.setTimingSpecifierListHandler(pp);
+		TimingSpecifierListParser p = new TimingSpecifierListParser(useSVG11AccessKeys, useSVG12AccessKeys, pp);
 		p.parse(spec);
 		TimingSpecifier[] specs = pp.getTimingSpecifiers();
 		return specs;

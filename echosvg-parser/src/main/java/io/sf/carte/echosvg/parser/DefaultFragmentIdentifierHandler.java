@@ -28,15 +28,8 @@ package io.sf.carte.echosvg.parser;
 public class DefaultFragmentIdentifierHandler extends DefaultPreserveAspectRatioHandler
 		implements FragmentIdentifierHandler {
 
-	/**
-	 * The only instance of this class.
-	 */
-	public static final FragmentIdentifierHandler INSTANCE = new DefaultFragmentIdentifierHandler();
-
-	/**
-	 * This class does not need to be instantiated.
-	 */
-	protected DefaultFragmentIdentifierHandler() {
+	public DefaultFragmentIdentifierHandler() {
+		super();
 	}
 
 	/**

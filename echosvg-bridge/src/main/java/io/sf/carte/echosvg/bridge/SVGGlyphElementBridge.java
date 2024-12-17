@@ -91,8 +91,7 @@ public class SVGGlyphElementBridge extends AbstractSVGBridge implements ErrorCon
 			// Glyph is supposed to use properties from text element.
 			app.setWindingRule(CSSUtilities.convertFillRule(textElement));
 			try {
-				PathParser pathParser = new PathParser();
-				pathParser.setPathHandler(app);
+				PathParser pathParser = new PathParser(app);
 				pathParser.parse(d);
 			} catch (ParseException pEx) {
 				throw new BridgeException(ctx, glyphElement, pEx, ERR_ATTRIBUTE_VALUE_MALFORMED,

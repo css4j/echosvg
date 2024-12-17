@@ -29,12 +29,7 @@ import java.util.Calendar;
  */
 public class DefaultTimingSpecifierHandler implements TimingSpecifierHandler {
 
-	/**
-	 * The default handler.
-	 */
-	public static final TimingSpecifierHandler INSTANCE = new DefaultTimingSpecifierHandler();
-
-	protected DefaultTimingSpecifierHandler() {
+	public DefaultTimingSpecifierHandler() {
 	}
 
 	/**

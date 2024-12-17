@@ -77,7 +77,6 @@ import io.sf.carte.echosvg.parser.DefaultLengthHandler;
 import io.sf.carte.echosvg.parser.DefaultPreserveAspectRatioHandler;
 import io.sf.carte.echosvg.parser.FloatArrayProducer;
 import io.sf.carte.echosvg.parser.LengthArrayProducer;
-import io.sf.carte.echosvg.parser.LengthHandler;
 import io.sf.carte.echosvg.parser.LengthListParser;
 import io.sf.carte.echosvg.parser.LengthParser;
 import io.sf.carte.echosvg.parser.NumberListParser;
@@ -1232,7 +1231,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		/**
 		 * Parser for preserveAspectRatio values.
 		 */
-		protected PreserveAspectRatioParser parser = new PreserveAspectRatioParser();
+		protected PreserveAspectRatioParser parser;
 
 		/**
 		 * Handler for the preserveAspectRatio parser.
@@ -1350,7 +1349,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 * Creates a new AnimatablePreserveAspectRatioValueFactory.
 		 */
 		public AnimatablePreserveAspectRatioValueFactory() {
-			parser.setPreserveAspectRatioHandler(handler);
+			parser = new PreserveAspectRatioParser(handler);
 		}
 
 		/**
@@ -1381,27 +1380,61 @@ public class SVGAnimationEngine extends AnimationEngine {
 	/**
 	 * Factory class for {@link AnimatableLengthValue}s.
 	 */
-	protected static class AnimatableLengthValueFactory implements Factory {
+	protected class AnimatableLengthValueFactory implements Factory {
 
 		/**
 		 * The parsed length unit type.
 		 */
-		protected short type;
+		private short type;
 
 		/**
 		 * The parsed length value.
 		 */
-		protected float value;
+		private float value;
 
 		/**
-		 * Parser for lengths.
+		 * Creates a new AnimatableLengthValueFactory.
 		 */
-		protected LengthParser parser = new LengthParser();
+		public AnimatableLengthValueFactory() {
+		}
+
+		/**
+		 * Creates a new AnimatableValue from a string.
+		 */
+		@Override
+		public AnimatableValue createValue(AnimationTarget target, String ns, String ln, boolean isCSS, String s) {
+			short pcInterp = target.getPercentageInterpretation(ns, ln, isCSS);
+
+			/*
+			 * Parser for lengths.
+			 */
+			LengthParser parser = new LengthParser(new AnimatableLengthHandler(target, pcInterp));
+
+			try {
+				parser.parse(s);
+				return new AnimatableLengthValue(target, type, value, pcInterp);
+			} catch (ParseException e) {
+				if (ctx.userAgent != null) {
+					ctx.userAgent.displayError(e);
+				}
+			}
+			return null;
+		}
 
 		/**
 		 * Handler for the length parser.
 		 */
-		protected LengthHandler handler = new DefaultLengthHandler() {
+		private class AnimatableLengthHandler extends DefaultLengthHandler {
+
+			private final AnimationTarget target;
+
+			private final short percentageInterpretation;
+
+			public AnimatableLengthHandler(AnimationTarget target, short pcInterp) {
+				super();
+				this.target = target;
+				this.percentageInterpretation = pcInterp;
+			}
 
 			@Override
 			public void startLength() throws ParseException {
@@ -1419,31 +1452,11 @@ public class SVGAnimationEngine extends AnimationEngine {
 			}
 
 			@Override
-			public void endLength() throws ParseException {
+			protected float unitToPixels(short unitType, float floatValue, short pcInterp) {
+				// Ignore the supplied percentage interpretation
+				return target.svgToUserSpace(floatValue, unitType, percentageInterpretation);
 			}
 
-		};
-
-		/**
-		 * Creates a new AnimatableLengthValueFactory.
-		 */
-		public AnimatableLengthValueFactory() {
-			parser.setLengthHandler(handler);
-		}
-
-		/**
-		 * Creates a new AnimatableValue from a string.
-		 */
-		@Override
-		public AnimatableValue createValue(AnimationTarget target, String ns, String ln, boolean isCSS, String s) {
-			short pcInterp = target.getPercentageInterpretation(ns, ln, isCSS);
-			try {
-				parser.parse(s);
-				return new AnimatableLengthValue(target, type, value, pcInterp);
-			} catch (ParseException e) {
-				// XXX Do something better than returning null.
-				return null;
-			}
 		}
 
 		/**
@@ -1459,23 +1472,12 @@ public class SVGAnimationEngine extends AnimationEngine {
 	/**
 	 * Factory class for {@link AnimatableLengthListValue}s.
 	 */
-	protected static class AnimatableLengthListValueFactory implements Factory {
-
-		/**
-		 * Parser for length lists.
-		 */
-		protected LengthListParser parser = new LengthListParser();
-
-		/**
-		 * The producer class that accumulates the lengths.
-		 */
-		protected LengthArrayProducer producer = new LengthArrayProducer();
+	protected class AnimatableLengthListValueFactory implements Factory {
 
 		/**
 		 * Creates a new AnimatableLengthListValueFactory.
 		 */
 		public AnimatableLengthListValueFactory() {
-			parser.setLengthListHandler(producer);
 		}
 
 		/**
@@ -1483,15 +1485,44 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 */
 		@Override
 		public AnimatableValue createValue(AnimationTarget target, String ns, String ln, boolean isCSS, String s) {
+			short pcInterp = target.getPercentageInterpretation(ns, ln, isCSS);
+			// The producer class that accumulates the lengths.
+			LengthArrayProducer producer = new AnimatableLengthArrayProducer(target, pcInterp);
+			// Parser for length lists.
+			LengthListParser parser = new LengthListParser(producer);
 			try {
-				short pcInterp = target.getPercentageInterpretation(ns, ln, isCSS);
 				parser.parse(s);
 				return new AnimatableLengthListValue(target, producer.getLengthTypeArray(),
 						producer.getLengthValueArray(), pcInterp);
 			} catch (ParseException e) {
-				// XXX Do something better than returning null.
+				if (ctx.userAgent != null) {
+					ctx.userAgent.displayError(e);
+				}
 				return null;
 			}
+		}
+
+		/**
+		 * Handler for the length list parser.
+		 */
+		private class AnimatableLengthArrayProducer extends LengthArrayProducer {
+
+			private final AnimationTarget target;
+
+			private final short percentageInterpretation;
+
+			public AnimatableLengthArrayProducer(AnimationTarget target, short pcInterp) {
+				super();
+				this.target = target;
+				this.percentageInterpretation = pcInterp;
+			}
+
+			@Override
+			protected float unitToPixels(short unitType, float floatValue, short pcInterp) {
+				// Ignore the supplied percentage interpretation
+				return target.svgToUserSpace(floatValue, unitType, percentageInterpretation);
+			}
+
 		}
 
 		/**
@@ -1513,7 +1544,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		/**
 		 * Parser for number lists.
 		 */
-		protected NumberListParser parser = new NumberListParser();
+		protected NumberListParser parser;
 
 		/**
 		 * The producer class that accumulates the numbers.
@@ -1524,7 +1555,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 * Creates a new AnimatableNumberListValueFactory.
 		 */
 		public AnimatableNumberListValueFactory() {
-			parser.setNumberListHandler(producer);
+			parser = new NumberListParser(producer);
 		}
 
 		/**
@@ -1560,7 +1591,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		/**
 		 * Parser for number lists.
 		 */
-		protected NumberListParser parser = new NumberListParser();
+		protected NumberListParser parser;
 
 		/**
 		 * The producer class that accumulates the numbers.
@@ -1571,7 +1602,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 * Creates a new AnimatableNumberListValueFactory.
 		 */
 		public AnimatableRectValueFactory() {
-			parser.setNumberListHandler(producer);
+			parser = new NumberListParser(producer);
 		}
 
 		/**
@@ -1612,7 +1643,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		/**
 		 * Parser for point lists.
 		 */
-		protected PointsParser parser = new PointsParser();
+		private final PointsParser parser;
 
 		/**
 		 * The producer class that accumulates the points.
@@ -1623,7 +1654,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 * Creates a new AnimatablePointListValueFactory.
 		 */
 		public AnimatablePointListValueFactory() {
-			parser.setPointsHandler(producer);
+			parser = new PointsParser(producer);
 		}
 
 		/**
@@ -1659,7 +1690,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		/**
 		 * Parser for path data.
 		 */
-		protected PathParser parser = new PathParser();
+		private PathParser parser;
 
 		/**
 		 * The producer class that accumulates the path segments.
@@ -1670,7 +1701,7 @@ public class SVGAnimationEngine extends AnimationEngine {
 		 * Creates a new AnimatablePathDataFactory.
 		 */
 		public AnimatablePathDataFactory() {
-			parser.setPathHandler(producer);
+			parser = new PathParser(producer);
 		}
 
 		/**
@@ -1871,6 +1902,8 @@ public class SVGAnimationEngine extends AnimationEngine {
 				}
 				case URI:
 					return AnimatablePaintValue.createURIPaintValue(target, v.getURIValue());
+				default:
+					break;
 				}
 			} else {
 				Value v1 = v.item(0);

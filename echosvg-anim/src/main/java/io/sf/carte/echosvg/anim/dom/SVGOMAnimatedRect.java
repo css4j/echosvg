@@ -18,19 +18,11 @@
  */
 package io.sf.carte.echosvg.anim.dom;
 
-import org.w3c.css.om.unit.CSSUnit;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.svg.SVGAnimatedRect;
 import org.w3c.dom.svg.SVGRect;
 
-import io.sf.carte.doc.style.css.CSSExpressionValue;
-import io.sf.carte.doc.style.css.CSSTypedValue;
-import io.sf.carte.doc.style.css.CSSValue.CssType;
-import io.sf.carte.doc.style.css.property.Evaluator;
-import io.sf.carte.doc.style.css.property.StyleValue;
-import io.sf.carte.doc.style.css.property.ValueFactory;
-import io.sf.carte.doc.style.css.property.ValueList;
 import io.sf.carte.echosvg.anim.values.AnimatableRectValue;
 import io.sf.carte.echosvg.anim.values.AnimatableValue;
 import io.sf.carte.echosvg.dom.svg.LiveAttributeException;
@@ -218,8 +210,7 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 
 			final String s = attr == null ? defaultValue : attr.getValue();
 			final float[] numbers = new float[4];
-			NumberListParser p = new NumberListParser();
-			p.setNumberListHandler(new DefaultNumberListHandler() {
+			NumberListParser p = new NumberListParser(new DefaultNumberListHandler() {
 				protected int count;
 
 				@Override
@@ -241,28 +232,14 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 					}
 					count++;
 				}
-
-				@Override
-				public void calcValue(int line, int column) throws ParseException {
-					throw new CalcParseException("Cannot handle calc().", line, column);
-				}
 			});
 			try {
 				p.parse(s);
-			} catch (CalcParseException cpe) {
-				ValueFactory factory = new ValueFactory();
-				try {
-					StyleValue value = factory.parseProperty(s);
-					if (!computeRectangle(value, numbers)) {
-						throw new LiveAttributeException(element, localName,
-								LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, s);
-					}
-				} catch (Exception e) {
-					LiveAttributeException ex = new LiveAttributeException(element, localName,
-							LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, s);
-					ex.initCause(e);
-					throw ex;
-				}
+			} catch (ParseException e) {
+				LiveAttributeException ex = new LiveAttributeException(element, localName,
+						LiveAttributeException.ERR_ATTRIBUTE_MALFORMED, s);
+				ex.initCause(e);
+				throw ex;
 			}
 			x = numbers[0];
 			y = numbers[1];
@@ -270,42 +247,6 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 			h = numbers[3];
 
 			valid = true;
-		}
-
-		private boolean computeRectangle(StyleValue value, float[] numbers) throws DOMException {
-			if (value.getCssValueType() != CssType.LIST) {
-				return false;
-			}
-			ValueList list = (ValueList) value;
-			if (list.getLength() != 4) {
-				return false;
-			}
-
-			for (int i = 0; i < 4; i++) {
-				StyleValue item = list.item(i);
-				if (item.getCssValueType() != CssType.TYPED) {
-					return false;
-				}
-				CSSTypedValue typed = (CSSTypedValue) item;
-				switch (item.getPrimitiveType()) {
-				case NUMERIC:
-					if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
-						return false;
-					}
-					break;
-				case EXPRESSION:
-					Evaluator eval = new Evaluator(CSSUnit.CSS_NUMBER);
-					typed = eval.evaluateExpression((CSSExpressionValue) typed);
-					if (typed.getUnitType() != CSSUnit.CSS_NUMBER) {
-						return false;
-					}
-					break;
-				default:
-					return false;
-				}
-				numbers[i] = typed.getFloatValue(CSSUnit.CSS_NUMBER);
-			}
-			return true;
 		}
 
 		/**
@@ -485,16 +426,6 @@ public class SVGOMAnimatedRect extends AbstractSVGAnimatedValue implements SVGAn
 				return super.toArray();
 			}
 			return ((SVGOMRect) getBaseVal()).toArray();
-		}
-
-	}
-
-	static class CalcParseException extends ParseException {
-
-		private static final long serialVersionUID = 1L;
-
-		public CalcParseException(String message, int line, int column) {
-			super(message, line, column);
 		}
 
 	}

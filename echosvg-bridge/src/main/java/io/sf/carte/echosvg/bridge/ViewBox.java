@@ -85,8 +85,7 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 		}
 
 		ViewHandler vh = new ViewHandler();
-		FragmentIdentifierParser p = new FragmentIdentifierParser();
-		p.setFragmentIdentifierHandler(vh);
+		FragmentIdentifierParser p = new FragmentIdentifierParser(vh);
 		p.parse(ref);
 
 		// Determine the 'view' element that ref refers to.
@@ -134,9 +133,8 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 				elt = ancestorSVG;
 			}
 			String aspectRatio = elt.getAttributeNS(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE);
-			PreserveAspectRatioParser pp = new PreserveAspectRatioParser();
 			ViewHandler ph = new ViewHandler();
-			pp.setPreserveAspectRatioHandler(ph);
+			PreserveAspectRatioParser pp = new PreserveAspectRatioParser(ph);
 			try {
 				pp.parse(aspectRatio);
 			} catch (ParseException pEx) {
@@ -231,9 +229,8 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 		}
 
 		// 'preserveAspectRatio' attribute
-		PreserveAspectRatioParser p = new PreserveAspectRatioParser();
 		ViewHandler ph = new ViewHandler();
-		p.setPreserveAspectRatioHandler(ph);
+		PreserveAspectRatioParser p = new PreserveAspectRatioParser(ph);
 		try {
 			p.parse(aspectRatio);
 		} catch (ParseException pEx) {
@@ -262,9 +259,8 @@ public abstract class ViewBox implements SVGConstants, ErrorConstants {
 		String aspectRatio = e.getAttributeNS(null, SVG_PRESERVE_ASPECT_RATIO_ATTRIBUTE);
 
 		// 'preserveAspectRatio' attribute
-		PreserveAspectRatioParser p = new PreserveAspectRatioParser();
 		ViewHandler ph = new ViewHandler();
-		p.setPreserveAspectRatioHandler(ph);
+		PreserveAspectRatioParser p = new PreserveAspectRatioParser(ph);
 		try {
 			p.parse(aspectRatio);
 		} catch (ParseException pEx) {

@@ -72,11 +72,9 @@ public class AWTPathProducer implements PathHandler, ShapeProducer {
 	 * @param wr The winding rule to use for creating the path.
 	 */
 	public static Shape createShape(Reader r, int wr) throws IOException, ParseException {
-		PathParser p = new PathParser();
 		AWTPathProducer ph = new AWTPathProducer();
-
 		ph.setWindingRule(wr);
-		p.setPathHandler(ph);
+		PathParser p = new PathParser(ph);
 		p.parse(r);
 
 		return ph.getShape();

@@ -33,13 +33,15 @@ public class TransformListParser extends NumberParser {
 	/**
 	 * The transform list handler used to report parse events.
 	 */
-	protected TransformListHandler transformListHandler;
+	private TransformListHandler transformListHandler;
 
 	/**
-	 * Creates a new TransformListParser.
+	 * Creates a new TransformListParser with the given handler.
+	 * 
+	 * @param handler The transform handler.
 	 */
-	public TransformListParser() {
-		transformListHandler = DefaultTransformListHandler.INSTANCE;
+	public TransformListParser(TransformListHandler handler) {
+		transformListHandler = handler;
 	}
 
 	/**

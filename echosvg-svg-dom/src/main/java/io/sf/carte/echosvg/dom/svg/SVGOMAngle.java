@@ -155,8 +155,7 @@ public class SVGOMAngle implements SVGAngle {
 	 */
 	protected void parse(String s) {
 		try {
-			AngleParser angleParser = new AngleParser();
-			angleParser.setAngleHandler(new DefaultAngleHandler() {
+			AngleParser angleParser = new AngleParser(new DefaultAngleHandler() {
 				@Override
 				public void angleValue(float v) throws ParseException {
 					value = v;
@@ -176,7 +175,15 @@ public class SVGOMAngle implements SVGAngle {
 				public void grad() throws ParseException {
 					setUnitType(SVG_ANGLETYPE_GRAD);
 				}
+
+				@Override
+				public void turn() {
+					value *= 360f;
+					setUnitType(SVG_ANGLETYPE_DEG);
+				}
+
 			});
+
 			setUnitType(SVG_ANGLETYPE_UNSPECIFIED);
 			angleParser.parse(s);
 		} catch (ParseException e) {

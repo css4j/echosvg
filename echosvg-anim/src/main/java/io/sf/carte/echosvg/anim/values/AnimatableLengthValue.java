@@ -18,34 +18,23 @@
  */
 package io.sf.carte.echosvg.anim.values;
 
-import org.w3c.css.om.unit.CSSUnit;
-
 import io.sf.carte.echosvg.anim.dom.AnimationTarget;
 
 /**
  * An SVG length value in the animation system.
  *
- * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
-public class AnimatableLengthValue extends AnimatableValue {
-
-	/**
-	 * The length type according to {@link CSSUnit}.
-	 */
-	protected short lengthType;
+public class AnimatableLengthValue extends AnimatableNumericValue {
 
 	/**
 	 * The length value.
 	 */
 	protected float lengthValue;
-
-	/**
-	 * How to interpret percentage values. One of the
-	 * {@link AnimationTarget}.PERCENTAGE_* constants.
-	 */
-	protected short percentageInterpretation;
 
 	/**
 	 * Creates a new AnimatableLengthValue with no length.
@@ -58,89 +47,8 @@ public class AnimatableLengthValue extends AnimatableValue {
 	 * Creates a new AnimatableLengthValue.
 	 */
 	public AnimatableLengthValue(AnimationTarget target, short type, float v, short pcInterp) {
-		super(target);
-		lengthType = type;
+		super(target, type, pcInterp);
 		lengthValue = v;
-		percentageInterpretation = pcInterp;
-	}
-
-	/**
-	 * Performs interpolation to the given value.
-	 */
-	@Override
-	public AnimatableValue interpolate(AnimatableValue result, AnimatableValue to, float interpolation,
-			AnimatableValue accumulation, int multiplier) {
-		AnimatableLengthValue res;
-		if (result == null) {
-			res = new AnimatableLengthValue(target);
-		} else {
-			res = (AnimatableLengthValue) result;
-		}
-
-		short oldLengthType = res.lengthType;
-		float oldLengthValue = res.lengthValue;
-		short oldPercentageInterpretation = res.percentageInterpretation;
-
-		res.lengthType = lengthType;
-		res.lengthValue = lengthValue;
-		res.percentageInterpretation = percentageInterpretation;
-
-		if (to != null) {
-			AnimatableLengthValue toLength = (AnimatableLengthValue) to;
-			float toValue;
-			if (!compatibleTypes(res.lengthType, res.percentageInterpretation, toLength.lengthType,
-					toLength.percentageInterpretation)) {
-				res.lengthValue = target.svgToUserSpace(res.lengthValue, res.lengthType, res.percentageInterpretation);
-				res.lengthType = CSSUnit.CSS_NUMBER;
-				toValue = toLength.target.svgToUserSpace(toLength.lengthValue, toLength.lengthType,
-						toLength.percentageInterpretation);
-			} else {
-				toValue = toLength.lengthValue;
-			}
-			res.lengthValue += interpolation * (toValue - res.lengthValue);
-		}
-
-		if (accumulation != null) {
-			AnimatableLengthValue accLength = (AnimatableLengthValue) accumulation;
-			float accValue;
-			if (!compatibleTypes(res.lengthType, res.percentageInterpretation, accLength.lengthType,
-					accLength.percentageInterpretation)) {
-				res.lengthValue = target.svgToUserSpace(res.lengthValue, res.lengthType, res.percentageInterpretation);
-				res.lengthType = CSSUnit.CSS_NUMBER;
-				accValue = accLength.target.svgToUserSpace(accLength.lengthValue, accLength.lengthType,
-						accLength.percentageInterpretation);
-			} else {
-				accValue = accLength.lengthValue;
-			}
-			res.lengthValue += multiplier * accValue;
-		}
-
-		if (oldPercentageInterpretation != res.percentageInterpretation || oldLengthType != res.lengthType
-				|| oldLengthValue != res.lengthValue) {
-			res.hasChanged = true;
-		}
-		return res;
-	}
-
-	/**
-	 * Determines if two SVG length types are compatible.
-	 * 
-	 * @param t1  the first SVG length type
-	 * @param pi1 the first percentage interpretation type
-	 * @param t2  the second SVG length type
-	 * @param pi2 the second percentage interpretation type
-	 */
-	public static boolean compatibleTypes(short t1, short pi1, short t2, short pi2) {
-		return t1 == t2 && (t1 != CSSUnit.CSS_PERCENTAGE || pi1 == pi2)
-				|| t1 == CSSUnit.CSS_NUMBER && t2 == CSSUnit.CSS_PX
-				|| t1 == CSSUnit.CSS_PX && t2 == CSSUnit.CSS_NUMBER;
-	}
-
-	/**
-	 * Returns the unit type of this length value.
-	 */
-	public int getLengthType() {
-		return lengthType;
 	}
 
 	/**
@@ -148,45 +56,6 @@ public class AnimatableLengthValue extends AnimatableValue {
 	 */
 	public float getLengthValue() {
 		return lengthValue;
-	}
-
-	/**
-	 * Returns whether two values of this type can have their distance computed, as
-	 * needed by paced animation.
-	 */
-	@Override
-	public boolean canPace() {
-		return true;
-	}
-
-	/**
-	 * Returns the absolute distance between this value and the specified other
-	 * value.
-	 */
-	@Override
-	public float distanceTo(AnimatableValue other) {
-		AnimatableLengthValue o = (AnimatableLengthValue) other;
-		float v1 = target.svgToUserSpace(lengthValue, lengthType, percentageInterpretation);
-		float v2 = target.svgToUserSpace(o.lengthValue, o.lengthType, o.percentageInterpretation);
-		return Math.abs(v1 - v2);
-	}
-
-	/**
-	 * Returns a zero value of this AnimatableValue's type.
-	 */
-	@Override
-	public AnimatableValue getZeroValue() {
-		return new AnimatableLengthValue(target, CSSUnit.CSS_NUMBER, 0f, percentageInterpretation);
-	}
-
-	/**
-	 * Returns the CSS text representation of the value. This could use
-	 * io.sf.carte.echosvg.css.engine.value.FloatValue.getCssText, but we don't want
-	 * a dependency on the CSS package.
-	 */
-	@Override
-	public String getCssText() {
-		return formatNumber(lengthValue) + CSSUnit.dimensionUnitString(lengthType);
 	}
 
 }

@@ -136,11 +136,8 @@ public abstract class AbstractSVGNumberList extends AbstractSVGList implements S
 	 */
 	@Override
 	protected void doParse(String value, ListHandler handler) throws ParseException {
-
-		NumberListParser NumberListParser = new NumberListParser();
 		NumberListBuilder builder = new NumberListBuilder(handler);
-
-		NumberListParser.setNumberListHandler(builder);
+		NumberListParser NumberListParser = new NumberListParser(builder);
 		NumberListParser.parse(value);
 	}
 

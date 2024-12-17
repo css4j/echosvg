@@ -18,6 +18,9 @@
  */
 package io.sf.carte.echosvg.parser;
 
+import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSMathFunctionValue;
+
 /**
  * This interface must be implemented and then registered as the handler of a
  * <code>LengthParser</code> instance in order to be notified of parsing events.
@@ -85,6 +88,13 @@ public interface LengthHandler {
 	 * @exception ParseException if an error occurs while processing the length
 	 */
 	void mm() throws ParseException;
+
+	/**
+	 * Invoked when 'Q' (quarters of millimeter) has been parsed.
+	 * 
+	 * @exception ParseException if an error occurs while processing the length
+	 */
+	void q() throws ParseException;
 
 	/**
 	 * Invoked when 'pc' has been parsed.
@@ -162,6 +172,22 @@ public interface LengthHandler {
 	 * @exception ParseException if an error occurs while processing the length
 	 */
 	void vmin() throws ParseException;
+
+	/**
+	 * A mathematical expression was found.
+	 * 
+	 * @param value the expression value.
+	 * @param pcInterp the percentage interpretation, if applicable.
+	 */
+	void mathExpression(CSSExpressionValue value, short pcInterp) throws ParseException;
+
+	/**
+	 * A mathematical function was found.
+	 * 
+	 * @param value the function value.
+	 * @param pcInterp the percentage interpretation, if applicable.
+	 */
+	void mathFunction(CSSMathFunctionValue value, short pcInterp) throws ParseException;
 
 	/**
 	 * Invoked when the length attribute ends.

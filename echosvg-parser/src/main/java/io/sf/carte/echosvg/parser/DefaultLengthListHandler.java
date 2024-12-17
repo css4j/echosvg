@@ -27,15 +27,7 @@ package io.sf.carte.echosvg.parser;
  */
 public class DefaultLengthListHandler extends DefaultLengthHandler implements LengthListHandler {
 
-	/**
-	 * The only instance of this class.
-	 */
-	public static final LengthListHandler INSTANCE = new DefaultLengthListHandler();
-
-	/**
-	 * This class does not need to be instantiated.
-	 */
-	protected DefaultLengthListHandler() {
+	public DefaultLengthListHandler() {
 	}
 
 	/**

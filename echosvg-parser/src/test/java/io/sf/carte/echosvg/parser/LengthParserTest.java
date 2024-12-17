@@ -16,23 +16,22 @@
    limitations under the License.
 
  */
-package io.sf.carte.echosvg.parser.test;
+package io.sf.carte.echosvg.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.parser.DefaultLengthHandler;
-import io.sf.carte.echosvg.parser.LengthParser;
-import io.sf.carte.echosvg.parser.ParseException;
-
 /**
  * To test the length parser.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class LengthParserTest {
@@ -43,9 +42,8 @@ public class LengthParserTest {
 	 * @param destinationLength The length after serialization.
 	 */
 	private void testLengthParser(String sourceLength, String destinationLength) {
-		LengthParser pp = new LengthParser();
 		TestHandler handler = new TestHandler();
-		pp.setLengthHandler(handler);
+		LengthParser pp = new LengthParser(handler);
 
 		pp.parse(new StringReader(sourceLength));
 
@@ -53,7 +51,7 @@ public class LengthParserTest {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void test() {
 		testLengthParser("123.456", "123.456");
 
 		testLengthParser("123em", "123.0em");
@@ -69,6 +67,8 @@ public class LengthParserTest {
 		testLengthParser("-000456789.pc", "-456789.0pc");
 
 		testLengthParser("-0.00456789pt", "-0.00456789pt");
+
+		testLengthParser("2q", "2.0Q");
 
 		testLengthParser("-0px", "0.0px");
 
@@ -89,6 +89,16 @@ public class LengthParserTest {
 		testLengthParser("2.3vmax", "2.3vmax");
 	}
 
+	@Test
+	public void testCalc() {
+		testLengthParser("calc(2*2mm)", "15.118111px");
+	}
+
+	@Test
+	public void testCalcInvalidUnit() {
+		assertThrows(ParseException.class, () -> testLengthParser("calc(2*2s)", ""));
+	}
+
 	private class TestHandler extends DefaultLengthHandler {
 
 		private StringBuilder buffer;
@@ -98,102 +108,114 @@ public class LengthParserTest {
 		}
 
 		@Override
-		public void startLength() throws ParseException {
+		public void startLength() {
 			buffer = new StringBuilder();
 		}
 
 		@Override
-		public void lengthValue(float v) throws ParseException {
+		public void lengthValue(float v) {
 			buffer.append(v);
 		}
 
 		@Override
-		public void em() throws ParseException {
+		public void em() {
 			buffer.append("em");
 		}
 
 		@Override
-		public void ex() throws ParseException {
+		public void ex() {
 			buffer.append("ex");
 		}
 
 		@Override
-		public void lh() throws ParseException {
+		public void lh() {
 			buffer.append("lh");
 		}
 
 		@Override
-		public void in() throws ParseException {
+		public void in() {
 			buffer.append("in");
 		}
 
 		@Override
-		public void cm() throws ParseException {
+		public void cm() {
 			buffer.append("cm");
 		}
 
 		@Override
-		public void mm() throws ParseException {
+		public void mm() {
 			buffer.append("mm");
 		}
 
 		@Override
-		public void pc() throws ParseException {
+		public void q() {
+			buffer.append("Q");
+		}
+
+		@Override
+		public void pc() {
 			buffer.append("pc");
 		}
 
 		@Override
-		public void pt() throws ParseException {
+		public void pt() {
 			buffer.append("pt");
 		}
 
 		@Override
-		public void px() throws ParseException {
+		public void px() {
 			buffer.append("px");
 		}
 
 		@Override
-		public void percentage() throws ParseException {
+		public void percentage() {
 			buffer.append("%");
 		}
 
 		@Override
-		public void rem() throws ParseException {
+		public void rem() {
 			buffer.append("rem");
 		}
 
 		@Override
-		public void rex() throws ParseException {
+		public void rex() {
 			buffer.append("rex");
 		}
 
 		@Override
-		public void rlh() throws ParseException {
+		public void rlh() {
 			buffer.append("rlh");
 		}
 
 		@Override
-		public void vh() throws ParseException {
+		public void vh() {
 			buffer.append("vh");
 		}
 
 		@Override
-		public void vw() throws ParseException {
+		public void vw() {
 			buffer.append("vw");
 		}
 
 		@Override
-		public void vmax() throws ParseException {
+		public void vmax() {
 			buffer.append("vmax");
 		}
 
 		@Override
-		public void vmin() throws ParseException {
+		public void vmin() {
 			buffer.append("vmin");
 		}
 
 		@Override
-		public void endLength() throws ParseException {
+		protected void setUnit(short unit) {
+			if (!LengthParser.handleUnit(unit, this)) {
+				throw new ParseException("Invalid unit.", -1, -1);
+			}
+		}
+
+		@Override
+		public void endLength() {
 			resultLength = buffer.toString();
 		}
 

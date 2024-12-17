@@ -42,10 +42,8 @@ public class AWTTransformProducer implements TransformListHandler {
 	 * @param r The reader used to read the transform specification.
 	 */
 	public static AffineTransform createAffineTransform(Reader r) throws ParseException {
-		TransformListParser p = new TransformListParser();
 		AWTTransformProducer th = new AWTTransformProducer();
-
-		p.setTransformListHandler(th);
+		TransformListParser p = new TransformListParser(th);
 		p.parse(r);
 
 		return th.getAffineTransform();
@@ -57,10 +55,8 @@ public class AWTTransformProducer implements TransformListHandler {
 	 * @param s The transform specification.
 	 */
 	public static AffineTransform createAffineTransform(String s) throws ParseException {
-		TransformListParser p = new TransformListParser();
 		AWTTransformProducer th = new AWTTransformProducer();
-
-		p.setTransformListHandler(th);
+		TransformListParser p = new TransformListParser(th);
 		p.parse(s);
 
 		return th.getAffineTransform();

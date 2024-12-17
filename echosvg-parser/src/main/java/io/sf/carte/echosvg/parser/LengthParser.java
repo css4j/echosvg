@@ -20,19 +20,21 @@ package io.sf.carte.echosvg.parser;
 
 import java.io.IOException;
 
+import org.w3c.css.om.unit.CSSUnit;
+
+import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSMathFunctionValue;
+
 /**
  * This class implements an event-based parser for the SVG length values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class LengthParser extends AbstractParser {
-
-	/**
-	 * The instance of a no-op LengthHandler.
-	 */
-	private static final LengthHandler NOOP_LENGTH_HANDLER_INSTANCE = new DefaultLengthHandler();
 
 	/**
 	 * The length handler used to report parse events.
@@ -41,9 +43,11 @@ public class LengthParser extends AbstractParser {
 
 	/**
 	 * Creates a new LengthParser.
+	 * 
+	 * @param handler The length handler.
 	 */
-	public LengthParser() {
-		lengthHandler = NOOP_LENGTH_HANDLER_INSTANCE;
+	public LengthParser(LengthHandler handler) {
+		lengthHandler = handler;
 	}
 
 	/**
@@ -58,7 +62,7 @@ public class LengthParser extends AbstractParser {
 	 * parse, and the parser must begin using the new handler immediately.
 	 * </p>
 	 * 
-	 * @param handler The transform list handler.
+	 * @param handler The length handler.
 	 */
 	public void setLengthHandler(LengthHandler handler) {
 		lengthHandler = handler;
@@ -78,7 +82,11 @@ public class LengthParser extends AbstractParser {
 		current = reader.read();
 		skipSpaces();
 
-		parseLength();
+		try {
+			parseLength();
+		} catch (CalcParseException e) {
+			cssParse(e);
+		}
 
 		skipSpaces();
 		if (current != -1) {
@@ -108,6 +116,12 @@ public class LengthParser extends AbstractParser {
 			mantPos = false;
 		case '+':
 			current = reader.read();
+			break;
+		case 'c':
+		case 'C':
+			// calc() ?
+			handleCalc();
+			return;
 		}
 
 		m1: switch (current) {
@@ -450,6 +464,11 @@ public class LengthParser extends AbstractParser {
 			lengthHandler.percentage();
 			current = reader.read();
 			break;
+		case 'Q':
+		case 'q':
+			lengthHandler.q();
+			current = reader.read();
+			break;
 		case 'r':
 			current = reader.read();
 			switch (current) {
@@ -522,6 +541,108 @@ public class LengthParser extends AbstractParser {
 			}
 			break;
 		}
+	}
+
+	@Override
+	protected void handleNumber(short unitType, float floatValue) throws ParseException {
+		if (unitType != CSSUnit.CSS_NUMBER && !CSSUnit.isLengthUnitType(unitType)) {
+			throw new ParseException("Not a length: " + CSSUnit.dimensionUnitString(unitType), -1, -1);
+		}
+
+		lengthHandler.lengthValue(floatValue);
+
+		if (!handleUnit(unitType, lengthHandler)) {
+			reportError("character.unexpected", new Object[] { CSSUnit.dimensionUnitString(unitType) });
+		}
+	}
+
+	static boolean handleUnit(short unitType, LengthHandler lengthHandler) throws ParseException {
+		switch (unitType) {
+		case CSSUnit.CSS_PX:
+			lengthHandler.px();
+			break;
+		case CSSUnit.CSS_NUMBER:
+			// Quirks mode
+			break;
+		case CSSUnit.CSS_PERCENTAGE:
+			lengthHandler.percentage();
+			break;
+		case CSSUnit.CSS_IN:
+			lengthHandler.in();
+			break;
+		case CSSUnit.CSS_PC:
+			lengthHandler.pc();
+			break;
+		case CSSUnit.CSS_PT:
+			lengthHandler.pt();
+			break;
+		case CSSUnit.CSS_CM:
+			lengthHandler.cm();
+			break;
+		case CSSUnit.CSS_MM:
+			lengthHandler.mm();
+			break;
+		case CSSUnit.CSS_QUARTER_MM:
+			lengthHandler.q();
+			break;
+		case CSSUnit.CSS_EM:
+			lengthHandler.em();
+			break;
+		case CSSUnit.CSS_EX:
+			lengthHandler.ex();
+			break;
+		case CSSUnit.CSS_LH:
+			lengthHandler.lh();
+			break;
+		case CSSUnit.CSS_REM:
+			lengthHandler.rem();
+			break;
+		case CSSUnit.CSS_RLH:
+			lengthHandler.rlh();
+			break;
+		case CSSUnit.CSS_REX:
+			lengthHandler.rex();
+			break;
+		case CSSUnit.CSS_VH:
+			lengthHandler.vh();
+			break;
+		case CSSUnit.CSS_VMAX:
+			lengthHandler.vmax();
+			break;
+		case CSSUnit.CSS_VMIN:
+			lengthHandler.vmin();
+			break;
+		case CSSUnit.CSS_VW:
+			lengthHandler.vw();
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	protected short getPreferredUnit() {
+		return CSSUnit.CSS_PX;
+	}
+
+	@Override
+	protected void handleMathExpression(CSSExpressionValue value) throws ParseException {
+		lengthHandler.mathExpression(value, getPercentageInterpretation());
+	}
+
+	@Override
+	protected void handleMathFunction(CSSMathFunctionValue value) throws ParseException {
+		lengthHandler.mathFunction(value, getPercentageInterpretation());
+	}
+
+	/**
+	 * Gets the percentage interpretation that applies, if any.
+	 * 
+	 * @return the percentage interpretation.
+	 */
+	protected short getPercentageInterpretation() {
+		return UnitProcessor.HORIZONTAL_LENGTH;
 	}
 
 }

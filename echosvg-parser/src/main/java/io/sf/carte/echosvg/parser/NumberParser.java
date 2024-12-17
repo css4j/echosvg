@@ -44,15 +44,17 @@ public abstract class NumberParser extends AbstractParser {
 		boolean expPos = true;
 
 		switch (current) {
-		case 'c':
-		case 'C':
-			// calc() ?
-			return handleCalc();
 		case '-':
 			mantPos = false;
 			// fallthrough
 		case '+':
 			current = reader.read();
+			break;
+		case 'c':
+		case 'C':
+			// calc() ?
+			handleCalc();
+			return 0.0f;
 		}
 
 		m1: switch (current) {
@@ -332,71 +334,6 @@ public abstract class NumberParser extends AbstractParser {
 		for (int i = 0; i < pow10.length; i++) {
 			pow10[i] = Math.pow(10, i);
 		}
-	}
-
-	/**
-	 * Handle a possible {@code calc()} value.
-	 * <p>
-	 * Any handling of numbers must deal with calc().
-	 * </p>
-	 * <p>
-	 * From https://www.w3.org/TR/css3-values/#funcdef-calc
-	 * </p>
-	 * <p>
-	 * [calc()] "can be used wherever [...] &lt;number&gt; or &lt;integer&gt; values
-	 * are allowed."
-	 * </p>
-	 * 
-	 * @return 0.
-	 * @throws IOException if an I/O error occurs.
-	 */
-	private float handleCalc() throws IOException {
-		int line = reader.getLine();
-		int column = reader.getColumn();
-
-		char[] calcLCRef = { 'a', 'l', 'c', '(' };
-		char[] calcUCRef = { 'A', 'L', 'C', '(' };
-		char[] calcBuf = new char[4];
-
-		reader.read(calcBuf);
-
-		if (equalsAny(calcLCRef, calcUCRef, calcBuf)) {
-			handleCalc(line, column);
-		} else {
-			reportError("character.unexpected", new Object[] { current }, line, column);
-		}
-
-		return 0.0f;
-	}
-
-	private static boolean equalsAny(char[] lcRef, char[] ucRef, char[] buf) {
-		// Assume that lcRef and ucRef have the same length
-		if (lcRef.length != buf.length) {
-			return false;
-		}
-
-		for (int i = 0; i < lcRef.length; i++) {
-			char c = buf[i];
-			if (c != lcRef[i] && c != ucRef[i]) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Report that we found a calc() value.
-	 * 
-	 * @param line   the line number.
-	 * @param column the column number.
-	 */
-	protected void handleCalc(int line, int column) {
-		reportError("character.unexpected", new Object[] { 'c' }, line, column);
-	}
-
-	private void reportError(String key, Object[] args, int line, int column) {
-		errorHandler.error(new ParseException(createErrorMessage(key, args), line, column));
 	}
 
 }

@@ -21,9 +21,10 @@ package io.sf.carte.echosvg.parser;
 /**
  * This interface must be implemented and then registred as the handler of a
  * <code>AngleParser</code> instance in order to be notified of parsing events.
- *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ *  <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public interface AngleHandler {
@@ -62,6 +63,13 @@ public interface AngleHandler {
 	 * @exception ParseException if an error occured while processing the angle
 	 */
 	void rad() throws ParseException;
+
+	/**
+	 * Invoked when 'turn' has been parsed.
+	 * 
+	 * @exception ParseException if an error occured while processing the angle
+	 */
+	void turn() throws ParseException;
 
 	/**
 	 * Invoked when the angle attribute parsing ends.

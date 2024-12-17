@@ -174,10 +174,8 @@ public abstract class AbstractSVGTransformList extends AbstractSVGList implement
 	 */
 	@Override
 	protected void doParse(String value, ListHandler handler) throws ParseException {
-
-		TransformListParser transformListParser = new TransformListParser();
 		TransformListBuilder builder = new TransformListBuilder(handler);
-		transformListParser.setTransformListHandler(builder);
+		TransformListParser transformListParser = new TransformListParser(builder);
 		transformListParser.parse(value);
 	}
 

@@ -36,10 +36,11 @@ public class TimingSpecifierListParser extends TimingSpecifierParser {
 	 * @param useSVG11AccessKeys allows the use of accessKey() timing specifiers
 	 *                           with a single character
 	 * @param useSVG12AccessKeys allows the use of accessKey() with a DOM 3 key name
+	 * @param handler            the list handler.
 	 */
-	public TimingSpecifierListParser(boolean useSVG11AccessKeys, boolean useSVG12AccessKeys) {
-		super(useSVG11AccessKeys, useSVG12AccessKeys);
-		timingSpecifierHandler = DefaultTimingSpecifierListHandler.INSTANCE;
+	public TimingSpecifierListParser(boolean useSVG11AccessKeys, boolean useSVG12AccessKeys,
+			TimingSpecifierListHandler handler) {
+		super(useSVG11AccessKeys, useSVG12AccessKeys, handler);
 	}
 
 	/**

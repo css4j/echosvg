@@ -122,13 +122,18 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 					}
 
 					@Override
+					public void turn() {
+						theAngle *= 360f;
+						theUnit = SVGAngle.SVG_ANGLETYPE_DEG;
+					}
+
+					@Override
 					public void endAngle() throws ParseException {
 					}
 
 				}
-				AngleParser ap = new AngleParser();
 				Handler h = new Handler();
-				ap.setAngleHandler(h);
+				AngleParser ap = new AngleParser(h);
 				try {
 					ap.parse(rotateString);
 				} catch (ParseException pEx) {
@@ -173,8 +178,7 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 		}
 		try {
 			AWTPathProducer app = new AWTPathProducer();
-			PathParser pp = new PathParser();
-			pp.setPathHandler(app);
+			PathParser pp = new PathParser(app);
 			pp.parse(pathString);
 			return (ExtendedGeneralPath) app.getShape();
 		} catch (ParseException pEx) {
@@ -253,9 +257,8 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 
 	protected AnimatableValue[] parseValues(String s) {
 		try {
-			LengthPairListParser lplp = new LengthPairListParser();
-			LengthArrayProducer lap = new LengthArrayProducer();
-			lplp.setLengthListHandler(lap);
+			LengthArrayProducer lap = new AnimatableLengthArrayProducer();
+			LengthPairListParser lplp = new LengthPairListParser(lap);
 			lplp.parse(s);
 			short[] types = lap.getLengthTypeArray();
 			float[] values = lap.getLengthValueArray();
@@ -272,6 +275,22 @@ public class SVGAnimateMotionElementBridge extends SVGAnimateElementBridge {
 			throw new BridgeException(ctx, element, pEx, ErrorConstants.ERR_ATTRIBUTE_VALUE_MALFORMED,
 					new Object[] { SVG_VALUES_ATTRIBUTE, s });
 		}
+	}
+
+	/**
+	 * Handler for the length list parser.
+	 */
+	private class AnimatableLengthArrayProducer extends LengthArrayProducer {
+
+		public AnimatableLengthArrayProducer() {
+			super();
+		}
+
+		@Override
+		protected float unitToPixels(short unitType, float floatValue, short percentageInterpretation) {
+			return animationTarget.svgToUserSpace(floatValue, unitType, percentageInterpretation);
+		}
+
 	}
 
 	/**

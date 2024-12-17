@@ -87,7 +87,7 @@ public class SVGOMAnimatedRectTest {
 		SVGOMAnimatedRect animRect = createAnimatedRect("-10 -20 500 450mm");
 		SVGRect rect = animRect.getBaseVal();
 
-		assertThrows(ParseException.class, () -> rect.getX());
+		assertThrows(LiveAttributeException.class, () -> rect.getX());
 	}
 
 	@Test

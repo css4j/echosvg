@@ -19,20 +19,26 @@
 package io.sf.carte.echosvg.parser;
 
 import org.w3c.css.om.unit.CSSUnit;
+import org.w3c.dom.DOMException;
+
+import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSMathFunctionValue;
+import io.sf.carte.doc.style.css.CSSTypedValue;
+import io.sf.carte.doc.style.css.property.Evaluator;
+import io.sf.carte.doc.style.css.property.NumberValue;
 
 /**
  * This class provides an adapter for LengthHandler
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class DefaultLengthHandler implements LengthHandler {
 
-	/**
-	 * This class does not need to be instantiated.
-	 */
-	protected DefaultLengthHandler() {
+	public DefaultLengthHandler() {
 	}
 
 	/**
@@ -77,6 +83,11 @@ public class DefaultLengthHandler implements LengthHandler {
 	@Override
 	public void mm() throws ParseException {
 		setUnit(CSSUnit.CSS_MM);
+	}
+
+	@Override
+	public void q() throws ParseException {
+		setUnit(CSSUnit.CSS_QUARTER_MM);
 	}
 
 	@Override
@@ -132,6 +143,95 @@ public class DefaultLengthHandler implements LengthHandler {
 	@Override
 	public void vmin() throws ParseException {
 		setUnit(CSSUnit.CSS_VMIN);
+	}
+
+	@Override
+	public void mathExpression(CSSExpressionValue value, short pcInterp) throws ParseException {
+		Evaluator eval = new LengthEvaluator(pcInterp);
+		float floatValue;
+		short unitType;
+
+		try {
+			CSSTypedValue typed = eval.evaluateExpression(value);
+			unitType = typed.getUnitType();
+			if (unitType != CSSUnit.CSS_NUMBER) {
+				unitType = CSSUnit.CSS_PX;
+			}
+			floatValue = typed.getFloatValue(unitType);
+		} catch (RuntimeException e) {
+			throw new ParseException(e);
+		}
+
+		lengthValue(floatValue);
+		setUnit(unitType);
+	}
+
+	@Override
+	public void mathFunction(CSSMathFunctionValue value, short pcInterp) throws ParseException {
+		Evaluator eval = new LengthEvaluator(pcInterp);
+		float floatValue;
+		short unitType;
+
+		try {
+			CSSTypedValue typed = eval.evaluateFunction(value);
+			unitType = typed.getUnitType();
+			if (unitType != CSSUnit.CSS_NUMBER) {
+				unitType = CSSUnit.CSS_PX;
+			}
+			floatValue = typed.getFloatValue(unitType);
+		} catch (RuntimeException e) {
+			throw new ParseException(e);
+		}
+
+		lengthValue(floatValue);
+		setUnit(unitType);
+	}
+
+	protected class LengthEvaluator extends Evaluator {
+
+		private short percentageInterpretation;
+
+		/**
+		 * Instantiate a length evaluator.
+		 * 
+		 * @param pcInterp the percentage interpretation.
+		 */
+		public LengthEvaluator(short pcInterp) {
+			super(CSSUnit.CSS_PX);
+			this.percentageInterpretation = pcInterp;
+		}
+
+		@Override
+		protected CSSTypedValue absoluteTypedValue(CSSTypedValue typed) {
+			short unitType = typed.getUnitType();
+			if (CSSUnit.isRelativeLengthUnitType(unitType)) {
+				float f = unitToPixels(unitType, typed.getFloatValue(unitType), percentageInterpretation);
+				return NumberValue.createCSSNumberValue(CSSUnit.CSS_PX, f);
+			} else {
+				return typed;
+			}
+		}
+
+		@Override
+		protected float percentage(CSSTypedValue typed, short resultType) throws DOMException {
+			float f = unitToPixels(CSSUnit.CSS_PERCENTAGE, typed.getFloatValue(CSSUnit.CSS_PERCENTAGE),
+					percentageInterpretation);
+			return NumberValue.floatValueConversion(f, CSSUnit.CSS_PX, resultType);
+		}
+
+		/**
+		 * Gets the percentage interpretation that was passed by the handler caller.
+		 * 
+		 * @return the percentage interpretation.
+		 */
+		protected short getPercentageInterpretation() {
+			return percentageInterpretation;
+		}
+
+	}
+
+	protected float unitToPixels(short unitType, float floatValue, short percentageInterpretation) {
+		throw new ParseException("Do not know how to convert to " + CSSUnit.dimensionUnitString(unitType), -1, -1);
 	}
 
 	protected void setUnit(short unit) {

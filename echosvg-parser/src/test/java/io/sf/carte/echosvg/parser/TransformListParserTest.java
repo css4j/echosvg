@@ -17,7 +17,7 @@
 
  */
 
-package io.sf.carte.echosvg.parser.test;
+package io.sf.carte.echosvg.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,15 +25,13 @@ import java.io.StringReader;
 
 import org.junit.jupiter.api.Test;
 
-import io.sf.carte.echosvg.parser.DefaultTransformListHandler;
-import io.sf.carte.echosvg.parser.ParseException;
-import io.sf.carte.echosvg.parser.TransformListParser;
-
 /**
  * To test the transform list parser.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class TransformListParserTest {
@@ -42,10 +40,10 @@ public class TransformListParserTest {
 	 * @param sourceTransform      The transform to parse.
 	 * @param destinationTransform The transform after serialization.
 	 */
-	private void testTransformListParser(String sourceTransform, String destinationTransform) {
-		TransformListParser pp = new TransformListParser();
+	private void testTransformListParser(String sourceTransform, String destinationTransform)
+			throws ParseException {
 		TestHandler handler = new TestHandler();
-		pp.setTransformListHandler(handler);
+		TransformListParser pp = new TransformListParser(handler);
 
 		pp.parse(new StringReader(sourceTransform));
 
@@ -53,21 +51,33 @@ public class TransformListParserTest {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void testMatrix() {
 		testTransformListParser("matrix(1 2 3 4 5 6)", "matrix(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)");
+	}
 
+	@Test
+	public void testTranslate() {
 		testTransformListParser("translate(1)", "translate(1.0)");
 
 		testTransformListParser("translate(1e2 3e4)", "translate(100.0, 30000.0)");
+	}
 
+	@Test
+	public void testScale() {
 		testTransformListParser("scale(1e-2)", "scale(0.01)");
 
 		testTransformListParser("scale(-1e-2 -3e-4)", "scale(-0.01, -3.0E-4)");
+	}
 
+	@Test
+	public void testSkew() {
 		testTransformListParser("skewX(1.234)", "skewX(1.234)");
 
 		testTransformListParser("skewY(.1)", "skewY(0.1)");
+	}
 
+	@Test
+	public void testFunctionLists() {
 		testTransformListParser("translate(1,2) skewY(.1)", "translate(1.0, 2.0) skewY(0.1)");
 
 		testTransformListParser("scale(1,2),skewX(.1e1)", "scale(1.0, 2.0) skewX(1.0)");
@@ -86,13 +96,13 @@ public class TransformListParserTest {
 		}
 
 		@Override
-		public void startTransformList() throws ParseException {
+		public void startTransformList() {
 			buffer = new StringBuilder();
 			first = true;
 		}
 
 		@Override
-		public void matrix(float a, float b, float c, float d, float e, float f) throws ParseException {
+		public void matrix(float a, float b, float c, float d, float e, float f) {
 			if (!first) {
 				buffer.append(' ');
 			}
@@ -113,7 +123,7 @@ public class TransformListParserTest {
 		}
 
 		@Override
-		public void rotate(float theta) throws ParseException {
+		public void rotate(float theta) {
 			if (!first) {
 				buffer.append(' ');
 			}
@@ -121,7 +131,7 @@ public class TransformListParserTest {
 		}
 
 		@Override
-		public void rotate(float theta, float cx, float cy) throws ParseException {
+		public void rotate(float theta, float cx, float cy) {
 			if (!first) {
 				buffer.append(' ');
 			}
@@ -129,7 +139,7 @@ public class TransformListParserTest {
 		}
 
 		@Override
-		public void translate(float tx) throws ParseException {
+		public void translate(float tx) {
 			if (!first) {
 				buffer.append(' ');
 			}
@@ -140,7 +150,7 @@ public class TransformListParserTest {
 		}
 
 		@Override
-		public void translate(float tx, float ty) throws ParseException {
+		public void translate(float tx, float ty) {
 			if (!first) {
 				buffer.append(' ');
 			}
@@ -153,7 +163,7 @@ public class TransformListParserTest {
 		}
 
 		@Override
-		public void scale(float sx) throws ParseException {
+		public void scale(float sx) {
 			if (!first) {
 				buffer.append(' ');
 			}
@@ -164,7 +174,7 @@ public class TransformListParserTest {
 		}
 
 		@Override
-		public void scale(float sx, float sy) throws ParseException {
+		public void scale(float sx, float sy) {
 			if (!first) {
 				buffer.append(' ');
 			}
@@ -177,7 +187,7 @@ public class TransformListParserTest {
 		}
 
 		@Override
-		public void skewX(float skx) throws ParseException {
+		public void skewX(float skx) {
 			if (!first) {
 				buffer.append(' ');
 			}
@@ -188,7 +198,7 @@ public class TransformListParserTest {
 		}
 
 		@Override
-		public void skewY(float sky) throws ParseException {
+		public void skewY(float sky) {
 			if (!first) {
 				buffer.append(' ');
 			}
@@ -199,7 +209,7 @@ public class TransformListParserTest {
 		}
 
 		@Override
-		public void endTransformList() throws ParseException {
+		public void endTransformList() {
 			resultTransform = buffer.toString();
 		}
 

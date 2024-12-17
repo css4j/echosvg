@@ -20,20 +20,29 @@ package io.sf.carte.echosvg.parser;
 
 import java.io.IOException;
 
+import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSMathFunctionValue;
+
 /**
  * This class implements an event-based parser for the SVG length list values.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public class LengthListParser extends LengthParser {
 
+	boolean lengthStarted = false;
+
 	/**
 	 * Creates a new LengthListParser.
+	 * 
+	 * @param handler The length list handler.
 	 */
-	public LengthListParser() {
-		lengthHandler = DefaultLengthListHandler.INSTANCE;
+	public LengthListParser(LengthListHandler handler) {
+		super(handler);
 	}
 
 	/**
@@ -48,7 +57,7 @@ public class LengthListParser extends LengthParser {
 	 * parse, and the parser must begin using the new handler immediately.
 	 * </p>
 	 * 
-	 * @param handler The transform list handler.
+	 * @param handler The length list handler.
 	 */
 	public void setLengthListHandler(LengthListHandler handler) {
 		lengthHandler = handler;
@@ -74,17 +83,58 @@ public class LengthListParser extends LengthParser {
 		try {
 			for (;;) {
 				lengthHandler.startLength();
+				lengthStarted = true;
 				parseLength();
 				lengthHandler.endLength();
+				lengthStarted = false;
 				skipCommaSpaces();
 				if (current == -1) {
 					break;
 				}
 			}
+		} catch (CalcParseException e) {
+			cssParse(e);
 		} catch (NumberFormatException e) {
 			reportUnexpectedCharacterError(current);
 		}
+
 		((LengthListHandler) lengthHandler).endLengthList();
+	}
+
+	@Override
+	protected void handleNumber(short unitType, float floatValue) throws ParseException {
+		if (!lengthStarted) {
+			lengthHandler.startLength();
+		}
+
+		super.handleNumber(unitType, floatValue);
+
+		lengthHandler.endLength();
+		lengthStarted = false;
+	}
+
+	@Override
+	protected void handleMathExpression(CSSExpressionValue value) throws ParseException {
+		if (!lengthStarted) {
+			lengthHandler.startLength();
+		}
+
+		super.handleMathExpression(value);
+
+		lengthHandler.endLength();
+		lengthStarted = false;
+	}
+
+	@Override
+	protected void handleMathFunction(CSSMathFunctionValue value) throws ParseException {
+		if (!lengthStarted) {
+			lengthHandler.startLength();
+		}
+
+		super.handleMathFunction(value);
+
+		lengthHandler.endLength();
+		lengthStarted = false;
 	}
 
 }

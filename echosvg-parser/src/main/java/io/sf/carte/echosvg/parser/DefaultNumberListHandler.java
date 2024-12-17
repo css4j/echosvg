@@ -26,15 +26,7 @@ package io.sf.carte.echosvg.parser;
  */
 public class DefaultNumberListHandler implements NumberListHandler {
 
-	/**
-	 * The only instance of this class.
-	 */
-	public static final NumberListHandler INSTANCE = new DefaultNumberListHandler();
-
-	/**
-	 * This class does not need to be instantiated.
-	 */
-	protected DefaultNumberListHandler() {
+	public DefaultNumberListHandler() {
 	}
 
 	/**

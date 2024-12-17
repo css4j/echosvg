@@ -28,14 +28,10 @@ package io.sf.carte.echosvg.parser;
 public class DefaultPathHandler implements PathHandler {
 
 	/**
-	 * The only instance of this class.
+	 * Public constructor.
 	 */
-	public static final PathHandler INSTANCE = new DefaultPathHandler();
-
-	/**
-	 * This class does not need to be instantiated.
-	 */
-	protected DefaultPathHandler() {
+	public DefaultPathHandler() {
+		super();
 	}
 
 	/**

@@ -26,6 +26,7 @@ module io.sf.carte.echosvg.parser {
 	requires io.sf.carte.echosvg.i18n;
 	requires io.sf.carte.echosvg.xml;
 
+	requires transitive io.sf.carte.css4j;
 	requires transitive org.w3c.dom.svg;
 
 	requires transitive java.desktop;

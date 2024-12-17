@@ -20,10 +20,25 @@ package io.sf.carte.echosvg.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PushbackReader;
 import java.io.Reader;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import org.w3c.css.om.unit.CSSUnit;
+import org.w3c.dom.DOMException;
+
+import io.sf.carte.doc.style.css.CSSExpressionValue;
+import io.sf.carte.doc.style.css.CSSMathFunctionValue;
+import io.sf.carte.doc.style.css.CSSTypedValue;
+import io.sf.carte.doc.style.css.CSSValue;
+import io.sf.carte.doc.style.css.nsac.CSSException;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
+import io.sf.carte.doc.style.css.parser.CSSParser;
+import io.sf.carte.doc.style.css.property.Evaluator;
+import io.sf.carte.doc.style.css.property.ValueFactory;
+import io.sf.carte.doc.style.css.property.ValueList;
 import io.sf.carte.echosvg.i18n.LocalizableSupport;
 import io.sf.carte.echosvg.util.io.NormalizingReader;
 import io.sf.carte.echosvg.util.io.StreamNormalizingReader;
@@ -33,8 +48,10 @@ import io.sf.carte.echosvg.util.io.StringNormalizingReader;
  * This class is the superclass of all parsers. It provides localization and
  * error handling methods.
  *
- * @author <a href="mailto:stephane@hillion.org">Stephane Hillion</a>
- * @author For later modifications, see Git history.
+ * <p>
+ * Original author: <a href="mailto:stephane@hillion.org">Stephane Hillion</a>.
+ * For later modifications, see Git history.
+ * </p>
  * @version $Id$
  */
 public abstract class AbstractParser implements Parser {
@@ -151,7 +168,190 @@ public abstract class AbstractParser implements Parser {
 			doParse();
 		} catch (IOException e) {
 			errorHandler.error(new ParseException(createErrorMessage("io.exception", null), e));
+		} catch (CalcParseException e) {
+			cssParse(e);
 		}
+	}
+
+	/**
+	 * Reparse with a CSS parser.
+	 * 
+	 * @param cpe the exception triggered by {@code calc()}.
+	 * @throws ParseException
+	 */
+	void cssParse(CalcParseException cpe) throws ParseException {
+		// Unread 'calc('
+		PushbackReader pbre = new PushbackReader(reader, 5);
+		char[] cbuf = { 'c', 'a', 'l', 'c', '(' };
+		try {
+			pbre.unread(cbuf);
+		} catch (IOException e) {
+			errorHandler.error(cpe);
+		}
+
+		/*
+		 * Reparse with a CSS parser
+		 */
+		CSSParser parser = new CSSParser();
+		LexicalUnit lunit;
+		try {
+			lunit = parser.parsePropertyValue(pbre);
+		} catch (CSSException e) {
+			DOMException ex = new DOMException(DOMException.SYNTAX_ERR, e.getMessage());
+			ex.initCause(e);
+			ParseException pex = new ParseException(ex);
+			pex.lineNumber = cpe.getLineNumber();
+			pex.columnNumber = cpe.getColumnNumber();
+			errorHandler.error(pex);
+			return;
+		} catch (IOException e) {
+			throw new ParseException(e);
+		}
+
+		try {
+			CSSValue cssvalue = (new ValueFactory()).createCSSValue(lunit);
+			handleStyleValue(cssvalue);
+		} catch (ParseException pex) {
+			pex.lineNumber = cpe.getLineNumber();
+			pex.columnNumber = cpe.getColumnNumber();
+			errorHandler.error(pex);
+		} catch (Exception ex) {
+			// Most likely a DOMException
+			ParseException pex = new ParseException(ex);
+			pex.lineNumber = cpe.getLineNumber();
+			pex.columnNumber = cpe.getColumnNumber();
+			errorHandler.error(pex);
+		}
+
+		// The parser should have consumed the stream
+		current = -1;
+	}
+
+	private void handleStyleValue(CSSValue cssvalue) throws ParseException {
+		switch (cssvalue.getCssValueType()) {
+		case LIST:
+			ValueList list = (ValueList) cssvalue;
+			handleListStart(list.isCommaSeparated());
+			Iterator<? extends CSSValue> it = list.iterator();
+			while (it.hasNext()) {
+				handleStyleValue(it.next());
+			}
+			handleListEnd(list.isCommaSeparated());
+			break;
+		case TYPED:
+			handleTyped((CSSTypedValue) cssvalue);
+			break;
+		default:
+			errorHandler.error(
+					new ParseException(createErrorMessage("non.css.context",
+							new Object[] { cssvalue.getCssText() }), -1, -1));
+		}
+	}
+
+	/**
+	 * The processing of a list begins.
+	 * 
+	 * @param commaSeparated {@code true} if the list is comma-separated.
+	 */
+	protected void handleListStart(boolean commaSeparated) {
+	}
+
+	/**
+	 * The processing of a list ends.
+	 * 
+	 * @param commaSeparated {@code true} if the list is comma-separated.
+	 */
+	protected void handleListEnd(boolean commaSeparated) {
+	}
+
+	private void handleTyped(CSSTypedValue cssvalue) throws ParseException {
+		switch (cssvalue.getPrimitiveType()) {
+		case NUMERIC:
+			handleNumber(cssvalue.getUnitType(), cssvalue.getFloatValue(cssvalue.getUnitType()));
+			break;
+		case EXPRESSION:
+			handleMathExpression((CSSExpressionValue) cssvalue);
+			break;
+		case MATH_FUNCTION:
+			handleMathFunction((CSSMathFunctionValue) cssvalue);
+			break;
+		case IDENT:
+			handleIdent(cssvalue.getStringValue());
+			break;
+		default:
+			errorHandler.error(
+					new ParseException(createErrorMessage("non.css.context",
+							new Object[] { cssvalue.getCssText() }), -1, -1));
+		}
+	}
+
+	protected void handleNumber(short unitType, float floatValue) throws ParseException {
+		errorHandler.error(new ParseException(createErrorMessage("unexpected.value",
+				new Object[] { Float.toString(floatValue) + CSSUnit.dimensionUnitString(unitType) }), -1, -1));
+	}
+
+	protected void handleMathExpression(CSSExpressionValue cssvalue) throws ParseException {
+		Evaluator eval = new Evaluator(getPreferredUnit());
+		float floatValue;
+		short unitType;
+
+		try {
+			CSSTypedValue typed = eval.evaluateExpression(cssvalue);
+			unitType = typed.getUnitType();
+			if (unitType != getPreferredUnit()) {
+				if (getPreferredUnit() == CSSUnit.CSS_NUMBER) {
+					throw new ParseException("Invalid unit.", -1, -1);
+				} else if (unitType == CSSUnit.CSS_NUMBER) {
+					unitType = getPreferredUnit();
+				}
+			}
+			floatValue = typed.getFloatValue(unitType);
+		} catch (RuntimeException e) {
+			throw new ParseException(e);
+		}
+
+		handleNumber(unitType, floatValue);
+	}
+
+	protected void handleMathFunction(CSSMathFunctionValue cssvalue) throws ParseException {
+		Evaluator eval = new Evaluator(getPreferredUnit());
+		float floatValue;
+		short unitType;
+
+		try {
+			CSSTypedValue typed = eval.evaluateFunction(cssvalue);
+			unitType = typed.getUnitType();
+			if (unitType != getPreferredUnit()) {
+				if (getPreferredUnit() == CSSUnit.CSS_NUMBER) {
+					throw new ParseException("Invalid unit.", -1, -1);
+				} else if (unitType == CSSUnit.CSS_NUMBER) {
+					unitType = getPreferredUnit();
+				}
+			}
+			floatValue = typed.getFloatValue(unitType);
+		} catch (RuntimeException e) {
+			throw new ParseException(e);
+		}
+
+		handleNumber(unitType, floatValue);
+	}
+
+	protected short getPreferredUnit() {
+		return CSSUnit.CSS_NUMBER;
+	}
+
+	/**
+	 * Handle an identifier.
+	 * <p>
+	 * Path commands, for example, would be processed as identifiers.
+	 * </p>
+	 * 
+	 * @param ident the identifier.
+	 * @throws ParseException if the identifier is invalid in this parsing context.
+	 */
+	protected void handleIdent(String ident) throws ParseException {
+		errorHandler.error(new ParseException(createErrorMessage("unexpected.identifier",
+				new Object[] { ident }), -1, -1));
 	}
 
 	/**
@@ -159,6 +359,59 @@ public abstract class AbstractParser implements Parser {
 	 * initialized itself.
 	 */
 	protected abstract void doParse() throws ParseException, IOException;
+
+	/**
+	 * Handle a possible {@code calc()} value.
+	 * <p>
+	 * Any handling of numbers must deal with calc().
+	 * </p>
+	 * <p>
+	 * From https://www.w3.org/TR/css3-values/#funcdef-calc
+	 * </p>
+	 * <p>
+	 * [calc()] "can be used wherever [...] &lt;number&gt; or &lt;integer&gt; values
+	 * are allowed."
+	 * </p>
+	 * 
+	 * @throws IOException if an I/O error occurs.
+	 */
+	void handleCalc() throws IOException {
+		int line = reader.getLine();
+		int column = reader.getColumn();
+
+		char[] calcLCRef = { 'a', 'l', 'c', '(' };
+		char[] calcUCRef = { 'A', 'L', 'C', '(' };
+		char[] calcBuf = new char[4];
+
+		reader.read(calcBuf);
+
+		if (equalsAny(calcLCRef, calcUCRef, calcBuf)) {
+			throw new CalcParseException("Cannot handle calc().", line, column);
+		} else {
+			reportError("character.unexpected", new Object[] { current }, line, column);
+		}
+	}
+
+	private static boolean equalsAny(char[] lcRef, char[] ucRef, char[] buf) {
+		// Assume that lcRef and ucRef have the same length
+		if (lcRef.length != buf.length) {
+			return false;
+		}
+
+		for (int i = 0; i < lcRef.length; i++) {
+			char c = buf[i];
+			if (c != lcRef[i] && c != ucRef[i]) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private void reportError(String key, Object[] objects, int line, int column) {
+		errorHandler.error(new ParseException(createErrorMessage(key, new Object[] { current }),
+				line, column));
+	}
 
 	/**
 	 * Signals an error to the error handler.
@@ -178,7 +431,6 @@ public abstract class AbstractParser implements Parser {
 	 */
 	protected void reportCharacterExpectedError(char expectedChar, int currentChar) {
 		reportError("character.expected", new Object[] { expectedChar, currentChar });
-
 	}
 
 	/**
@@ -188,7 +440,6 @@ public abstract class AbstractParser implements Parser {
 	 */
 	protected void reportUnexpectedCharacterError(int currentChar) {
 		reportError("character.unexpected", new Object[] { currentChar });
-
 	}
 
 	/**

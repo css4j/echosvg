@@ -19,30 +19,14 @@
 package io.sf.carte.echosvg.parser;
 
 /**
- * An adapter class for {@link TimingSpecifierListHandler}.
- *
- * @author <a href="mailto:cam%40mcc%2eid%2eau">Cameron McCormack</a>
- * @author For later modifications, see Git history.
- * @version $Id$
+ * Found a {@code calc()} value while parsing.
  */
-public class DefaultTimingSpecifierListHandler extends DefaultTimingSpecifierHandler
-		implements TimingSpecifierListHandler {
+public class CalcParseException extends ParseException {
 
-	public DefaultTimingSpecifierListHandler() {
-	}
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Invoked when parsing of a timing specifier list commences.
-	 */
-	@Override
-	public void startTimingSpecifierList() {
-	}
-
-	/**
-	 * Invoked when parsing of a timing specifier list ends.
-	 */
-	@Override
-	public void endTimingSpecifierList() {
+	public CalcParseException(String message, int line, int column) {
+		super(message, line, column);
 	}
 
 }

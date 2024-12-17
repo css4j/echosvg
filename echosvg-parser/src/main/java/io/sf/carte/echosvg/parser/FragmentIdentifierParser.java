@@ -44,13 +44,13 @@ public class FragmentIdentifierParser extends NumberParser {
 	/**
 	 * The FragmentIdentifierHandler.
 	 */
-	protected FragmentIdentifierHandler fragmentIdentifierHandler;
+	private FragmentIdentifierHandler fragmentIdentifierHandler;
 
 	/**
 	 * Creates a new FragmentIdentifier parser.
 	 */
-	public FragmentIdentifierParser() {
-		fragmentIdentifierHandler = DefaultFragmentIdentifierHandler.INSTANCE;
+	public FragmentIdentifierParser(FragmentIdentifierHandler handler) {
+		fragmentIdentifierHandler = handler;
 	}
 
 	/**

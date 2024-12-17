@@ -87,8 +87,7 @@ public class SVGTextPathElementBridge extends AnimatableGenericSVGBridge impleme
 			AWTPathProducer app = new AWTPathProducer();
 			app.setWindingRule(CSSUtilities.convertFillRule(pathElement));
 			try {
-				PathParser pathParser = new PathParser();
-				pathParser.setPathHandler(app);
+				PathParser pathParser = new PathParser(app);
 				pathParser.parse(s);
 			} catch (ParseException pEx) {
 				throw new BridgeException(ctx, pathElement, pEx, ERR_ATTRIBUTE_VALUE_MALFORMED,

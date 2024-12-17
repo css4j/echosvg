@@ -21,10 +21,8 @@ package io.sf.carte.echosvg.parser;
 /**
  * An handler interface for parsing NumberLists.
  *
- * <p>
- * Original author: tonny@kiyut.com.
- * For later modifications, see Git history.
- * </p>
+ * @author tonny@kiyut.com
+ * @author For later modifications, see Git history.
  * @version $Id$
  */
 public interface NumberListHandler {
@@ -65,16 +63,5 @@ public interface NumberListHandler {
 	 * @exception ParseException if an error occures while processing the number
 	 */
 	void numberValue(float v) throws ParseException;
-
-	/**
-	 * Report that a {@code calc()} function was found.
-	 * 
-	 * @param line   the line number where it was found.
-	 * @param column the column number where it was found.
-	 * @throws ParseException if the {@code calc()} value cannot be handled.
-	 */
-	default void calcValue(int line, int column) throws ParseException {
-		throw new ParseException("Cannot handle calc().", line, column);
-	}
 
 }

@@ -20,6 +20,8 @@ package io.sf.carte.echosvg.parser;
 
 import java.io.IOException;
 
+import org.w3c.css.om.unit.CSSUnit;
+
 /**
  * This class implements an event-based parser for the SVG angle values.
  *
@@ -32,7 +34,12 @@ public class AngleParser extends NumberParser {
 	/**
 	 * The angle handler used to report parse events.
 	 */
-	protected AngleHandler angleHandler = DefaultAngleHandler.INSTANCE;
+	private AngleHandler angleHandler;
+
+	public AngleParser(AngleHandler handler) {
+		super();
+		angleHandler = handler;
+	}
 
 	/**
 	 * Allows an application to register an angle handler.
@@ -131,6 +138,25 @@ public class AngleParser extends NumberParser {
 					angleHandler.rad();
 					current = reader.read();
 					break;
+				case 't':
+					current = reader.read();
+					if (current != 'u') {
+						reportCharacterExpectedError('u', current);
+						break;
+					}
+					current = reader.read();
+					if (current != 'r') {
+						reportCharacterExpectedError('r', current);
+						break;
+					}
+					current = reader.read();
+					if (current != 'n') {
+						reportCharacterExpectedError('n', current);
+						break;
+					}
+					angleHandler.turn();
+					current = reader.read();
+					break;
 				default:
 					reportUnexpectedCharacterError(current);
 				}
@@ -142,8 +168,41 @@ public class AngleParser extends NumberParser {
 			}
 		} catch (NumberFormatException e) {
 			reportUnexpectedCharacterError(current);
+		} catch (CalcParseException e) {
+			cssParse(e);
 		}
 		angleHandler.endAngle();
+	}
+
+	@Override
+	protected void handleNumber(short unitType, float floatValue) throws ParseException {
+		if (!CSSUnit.isAngleUnitType(unitType)) {
+			throw new ParseException("Not an angle: " + CSSUnit.dimensionUnitString(unitType), -1, -1);
+		}
+
+		angleHandler.angleValue(floatValue);
+
+		switch (unitType) {
+		case CSSUnit.CSS_DEG:
+			angleHandler.deg();
+			break;
+		case CSSUnit.CSS_GRAD:
+			angleHandler.grad();
+			break;
+		case CSSUnit.CSS_RAD:
+			angleHandler.rad();
+			break;
+		case CSSUnit.CSS_TURN:
+			angleHandler.turn();
+			break;
+		default:
+			reportError("character.unexpected", new Object[] { CSSUnit.dimensionUnitString(unitType) });
+		}
+	}
+
+	@Override
+	protected short getPreferredUnit() {
+		return CSSUnit.CSS_DEG;
 	}
 
 }
