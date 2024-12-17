@@ -261,10 +261,12 @@ public final class TurbulencePatternRed extends AbstractRed {
 
 		for (k = 0; k < 4; k++) {
 			for (i = 0; i < BSize; i++) {
-				u = (((seed = random(seed)) % (BSize + BSize)) - BSize);
-				v = (((seed = random(seed)) % (BSize + BSize)) - BSize);
+				do {
+					u = (((seed = random(seed)) % (BSize + BSize)) - BSize);
+					v = (((seed = random(seed)) % (BSize + BSize)) - BSize);
+				} while (u == 0.0 && v == 0.0);
 
-				s = 1 / Math.sqrt(u * u + v * v);
+				s = 1d / Math.sqrt(u * u + v * v);
 				gradient[i * 8 + k * 2] = u * s;
 				gradient[i * 8 + k * 2 + 1] = v * s;
 			}

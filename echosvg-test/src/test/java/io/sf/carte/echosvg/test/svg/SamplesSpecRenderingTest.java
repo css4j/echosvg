@@ -174,6 +174,11 @@ public class SamplesSpecRenderingTest extends AbstractSamplesRendering {
 	}
 
 	@Test
+	public void testFilterFeTurbulenceDivZero() throws TranscoderException, IOException {
+		test("samples/tests/spec/filters/feTurbulenceDivZero.svg");
+	}
+
+	@Test
 	public void testFilterRegions() throws TranscoderException, IOException {
 		test("samples/tests/spec/filters/filterRegions.svg");
 	}
