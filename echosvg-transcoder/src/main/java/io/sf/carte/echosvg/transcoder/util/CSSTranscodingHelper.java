@@ -69,6 +69,7 @@ import io.sf.carte.doc.style.css.nsac.CombinatorCondition;
 import io.sf.carte.doc.style.css.nsac.CombinatorSelector;
 import io.sf.carte.doc.style.css.nsac.Condition;
 import io.sf.carte.doc.style.css.nsac.ConditionalSelector;
+import io.sf.carte.doc.style.css.nsac.LexicalUnit;
 import io.sf.carte.doc.style.css.nsac.Selector;
 import io.sf.carte.doc.style.css.nsac.SelectorList;
 import io.sf.carte.doc.style.css.om.AbstractCSSCanvas;
@@ -1101,7 +1102,9 @@ public class CSSTranscodingHelper {
 			}
 
 			@Override
-			public boolean supports(String property, CSSValue value) {
+			public boolean supports(String property, LexicalUnit lunit) {
+				ValueFactory valueFactory = new ValueFactory();
+				CSSValue value = valueFactory.createCSSValue(lunit);
 				if ("color".equalsIgnoreCase(property)
 						|| "background-color".equalsIgnoreCase(property)) {
 					return supportsColor(value);
@@ -1183,8 +1186,16 @@ public class CSSTranscodingHelper {
 
 		private class MyCanvas extends AbstractCSSCanvas {
 
+			private CSSDocument document;
+
 			protected MyCanvas(CSSDocument doc) {
-				super(doc);
+				super();
+				document = doc;
+			}
+
+			@Override
+			public CSSDocument getDocument() {
+				return document;
 			}
 
 			@Override
