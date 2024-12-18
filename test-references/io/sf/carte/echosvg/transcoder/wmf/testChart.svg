@@ -47,16 +47,11 @@ nrRJUdsAAAAASUVORK5CYII=" xlink:type="simple" xlink:actuate="onLoad" height="10"
 IAwD0dz/0hFUsPaXLgZm8UCApA57BvjAAX5Q4B82OMIC5zDBNXS4hwZrePECjbwg
 7jXDpPgAAAAASUVORK5CYII=" xlink:type="simple" xlink:actuate="onLoad" height="10" preserveAspectRatio="none" xlink:show="embed"
       /></pattern
-      ><pattern x="0" y="0" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" patternUnits="userSpaceOnUse" xlink:actuate="onLoad" id="pattern10" height="10" preserveAspectRatio="xMidYMid meet" xlink:show="other"
-      ><image x="0" y="0" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAOElEQVR4Xo3KyQ0A
-IAwDQfffNMgRRJB7n/YAwJokaoJVdPh7K+yeDIdrhP1ysjiF7MUlZBe3kBFvJahw
-nrRJUdsAAAAASUVORK5CYII=" xlink:type="simple" xlink:actuate="onLoad" height="10" preserveAspectRatio="none" xlink:show="embed"
-      /></pattern
-      ><pattern x="0" y="0" width="8" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" patternUnits="userSpaceOnUse" xlink:actuate="onLoad" id="pattern11" height="8" preserveAspectRatio="xMidYMid meet" xlink:show="other"
+      ><pattern x="0" y="0" width="8" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" patternUnits="userSpaceOnUse" xlink:actuate="onLoad" id="pattern10" height="8" preserveAspectRatio="xMidYMid meet" xlink:show="other"
       ><image x="0" y="0" width="8" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAIAAABLbSncAAAAGElEQVR4XmP4DwMM
 aAAugQzoIQEEpEsAALJFpFzMsrW0AAAAAElFTkSuQmCC" xlink:type="simple" xlink:actuate="onLoad" height="8" preserveAspectRatio="none" xlink:show="embed"
       /></pattern
-      ><pattern x="0" y="0" width="8" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" patternUnits="userSpaceOnUse" xlink:actuate="onLoad" id="pattern12" height="8" preserveAspectRatio="xMidYMid meet" xlink:show="other"
+      ><pattern x="0" y="0" width="8" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" patternUnits="userSpaceOnUse" xlink:actuate="onLoad" id="pattern11" height="8" preserveAspectRatio="xMidYMid meet" xlink:show="other"
       ><image x="0" y="0" width="8" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAIAAABLbSncAAAALUlEQVR4XmNgwAX+
 //+PLgQB/8EAXZQBJoFFDi6BLocsgSKHJoGQQxcGA6A4AOgHU60zJxb9AAAAAElF
 TkSuQmCC" xlink:type="simple" xlink:actuate="onLoad" height="8" preserveAspectRatio="none" xlink:show="embed"
@@ -212,9 +207,9 @@ TkSuQmCC" xlink:type="simple" xlink:actuate="onLoad" height="8" preserveAspectRa
       /><rect fill="none" x="579.9685" width="45.6945" stroke-width="0.0378" height="45.6567" y="628.2331"
       /><rect x="675.6661" y="618.7842" fill="yellow" width="64.5543" height="45.6567" stroke="none" stroke-width="0.0378"
       /><rect fill="none" x="675.6661" width="64.5543" stroke-width="0.0378" height="45.6567" y="618.7842"
-      /><rect x="656.7685" y="634.1292" fill="url(#pattern10)" width="48.0378" height="45.6945" stroke="none" stroke-width="0.0378"
+      /><rect x="656.7685" y="634.1292" fill="url(#pattern8)" width="48.0378" height="45.6945" stroke="none" stroke-width="0.0378"
       /><rect fill="none" x="656.7685" width="48.0378" stroke-width="0.0378" height="45.6945" y="634.1292"
-      /><rect x="714.6331" y="634.1292" fill="url(#pattern10)" width="44.485" height="45.6945" stroke="none" stroke-width="0.0378"
+      /><rect x="714.6331" y="634.1292" fill="url(#pattern8)" width="44.485" height="45.6945" stroke="none" stroke-width="0.0378"
       /><rect fill="none" x="714.6331" width="44.485" stroke-width="0.0378" height="45.6945" y="634.1292"
       /><text x="934.1892" font-size="15px" y="721.9653" font-family="'Times New Roman'" stroke="none" stroke-width="0.0378" xml:space="preserve"
       >Text</text
@@ -239,10 +234,10 @@ TkSuQmCC" xlink:type="simple" xlink:actuate="onLoad" height="8" preserveAspectRa
       ><text x="131.0781" font-size="15px" y="725.4047" font-family="'Times New Roman'" stroke="none" stroke-width="0.0378" xml:space="preserve"
       >Basic Fill Patterns</text
     ></g
-    ><g stroke-linecap="butt" font-size="15px" fill="url(#pattern11)" font-family="'Times New Roman'" stroke-linejoin="round" stroke="url(#pattern11)" stroke-width="0.0378"
+    ><g stroke-linecap="butt" font-size="15px" fill="url(#pattern10)" font-family="'Times New Roman'" stroke-linejoin="round" stroke="url(#pattern10)" stroke-width="0.0378"
     ><rect x="354.3685" width="44.485" height="44.485" y="661.304" stroke="none"
       /><rect fill="none" x="354.3685" width="44.485" height="44.485" y="661.304" stroke="black"
-      /><rect fill="url(#pattern12)" x="411.0614" width="49.2095" height="44.485" y="661.304" stroke="none"
+      /><rect fill="url(#pattern11)" x="411.0614" width="49.2095" height="44.485" y="661.304" stroke="none"
       /><rect fill="none" x="411.0614" width="49.2095" height="44.485" y="661.304" stroke="black"
     /></g
   ></g

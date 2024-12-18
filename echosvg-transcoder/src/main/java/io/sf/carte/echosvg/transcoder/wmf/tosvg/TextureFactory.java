@@ -27,6 +27,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import io.sf.carte.echosvg.transcoder.wmf.WMFConstants;
 
@@ -196,5 +197,25 @@ public final class TextureFactory {
 			this.foreground = foreground;
 			this.background = background;
 		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(background, foreground, textureId);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null || getClass() != obj.getClass()) {
+				return false;
+			}
+			ColoredTexture other = (ColoredTexture) obj;
+			return textureId == other.textureId && Objects.equals(background, other.background)
+					&& Objects.equals(foreground, other.foreground);
+		}
+
 	}
+
 }
