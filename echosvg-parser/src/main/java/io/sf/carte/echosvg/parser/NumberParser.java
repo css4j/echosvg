@@ -358,6 +358,7 @@ public abstract class NumberParser extends AbstractParser {
 		char[] calcUCRef = { 'A', 'L', 'C', '(' };
 		char[] calcBuf = new char[4];
 
+		// For performance, ignore the number of bytes read
 		reader.read(calcBuf);
 
 		if (equalsAny(calcLCRef, calcUCRef, calcBuf)) {
@@ -370,10 +371,8 @@ public abstract class NumberParser extends AbstractParser {
 	}
 
 	private static boolean equalsAny(char[] lcRef, char[] ucRef, char[] buf) {
-		// Assume that lcRef and ucRef have the same length
-		if (lcRef.length != buf.length) {
-			return false;
-		}
+		// The caller must make sure that buf, lcRef and ucRef have the same length
+		assert lcRef.length == buf.length;
 
 		for (int i = 0; i < lcRef.length; i++) {
 			char c = buf[i];
